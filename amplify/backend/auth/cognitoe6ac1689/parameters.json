@@ -1,0 +1,77 @@
+{
+    "identityPoolName": "themeetinghouse",
+    "allowUnauthenticatedIdentities": true,
+    "thirdPartyAuth": true,
+    "lambdaLogPolicy": "cognitoe6ac1689_lambda_log_policy",
+    "openIdLambdaRoleName": "cognitoe6ac1689_openid_lambda_role",
+    "openIdRolePolicy": "cognitoe6ac1689_openid_pass_role_policy",
+    "openIdLambdaIAMPolicy": "cognitoe6ac1689_openid_lambda_iam_policy",
+    "openIdLogPolicy": "cognitoe6ac1689_openid_lambda_log_policy",
+    "userPoolName": "The Meeting House",
+    "autoVerifiedAttributes": [
+        "email"
+    ],
+    "mfaConfiguration": "OPTIONAL",
+    "mfaTypes": [
+        "TOTP"
+    ],
+    "roleName": "cognitoe6ac1689_sns-role",
+    "roleExternalId": "cognitoe6ac1689_role_external_id",
+    "policyName": "cognitoe6ac1689-sns-policy",
+    "smsAuthenticationMessage": "Your authentication code is {####}",
+    "smsVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Your verification code",
+    "emailVerificationMessage": "Your verification code is {####}",
+    "defaultPasswordPolicy": false,
+    "passwordPolicyMinLength": 8,
+    "passwordPolicyCharacters": [
+        "Requires Lowercase",
+        "Requires Uppercase",
+        "Requires Numbers",
+        "Requires Symbols"
+    ],
+    "requiredAttributes": [
+        "email"
+    ],
+    "userpoolClientName": "cognitoe6ac1689_app_client",
+    "userpoolClientGenerateSecret": true,
+    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientReadAttributes": [
+        "email"
+    ],
+    "mfaLambdaRole": "cognitoe6ac1689_totp_lambda_role",
+    "mfaLambdaLogPolicy": "cognitoe6ac1689_totp_lambda_log_policy",
+    "mfaPassRolePolicy": "cognitoe6ac1689_totp_pass_role_policy",
+    "mfaLambdaIAMPolicy": "cognitoe6ac1689_totp_lambda_iam_policy",
+    "userpoolClientLambdaRole": "cognitoe6ac1689_userpoolclient_lambda_role",
+    "userpoolClientLogPolicy": "cognitoe6ac1689_userpoolclient_lambda_log_policy",
+    "userpoolClientLambdaPolicy": "cognitoe6ac1689_userpoolclient_lambda_iam_policy",
+    "userpoolClientSetAttributes": false,
+    "useDefault": "manual",
+    "authSelections": "identityPoolAndUserPool",
+    "resourceName": "cognitoe6ac1689",
+    "authProviders": [
+        "graph.facebook.com",
+        "accounts.google.com",
+        "www.amazon.com"
+    ],
+    "selectedParties": "{\"graph.facebook.com\":\"q\",\"accounts.google.com\":\"w\",\"www.amazon.com\":\"e\"}",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    },
+    "unauthRoleArn": {
+        "Fn::GetAtt": [
+            "UnauthRole",
+            "Arn"
+        ]
+    }
+}
