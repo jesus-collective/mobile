@@ -1,6 +1,6 @@
 {
 	"auth": {
-		"cognitoe6ac1689": {
+		"cognitodevtmh": {
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation"
 		}

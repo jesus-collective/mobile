@@ -218,7 +218,7 @@ Resources:
   # Depends on UserPool for ID reference
     Type: "AWS::Cognito::UserPoolClient"
     Properties:
-      ClientName: cognitoe6ac1689_app_clientWeb
+      ClientName: cognitodevtmh_app_clientWeb
       
       RefreshTokenValidity: !Ref userpoolClientRefreshTokenValidity
       UserPoolId: !Ref UserPool
@@ -360,7 +360,7 @@ Resources:
             - Effect: Allow
               Action:
                 - 'iam:PassRole'
-              Resource: !If [ShouldNotCreateEnvResources, 'arn:aws:iam:::role/cognitoe6ac1689_totp_lambda_role', !Join ['',['arn:aws:iam:::role/cognitoe6ac1689_totp_lambda_role', '-', !Ref env]]]
+              Resource: !If [ShouldNotCreateEnvResources, 'arn:aws:iam:::role/cognitodevtmh_totp_lambda_role', !Join ['',['arn:aws:iam:::role/cognitodevtmh_totp_lambda_role', '-', !Ref env]]]
   MFALambda:
   # Lambda which sets MFA config values
   # Depends on MFALambdaRole for role ARN
@@ -471,7 +471,7 @@ Resources:
   # Always created
     Type: AWS::Cognito::IdentityPool
     Properties: 
-      IdentityPoolName: !If [ShouldNotCreateEnvResources, 'themeetinghouse', !Join ['',['themeetinghouse', '__', !Ref env]]]
+      IdentityPoolName: !If [ShouldNotCreateEnvResources, 'tmhident', !Join ['',['tmhident', '__', !Ref env]]]
       
       CognitoIdentityProviders:
         - ClientId:  !Ref UserPoolClient
@@ -486,13 +486,13 @@ Resources:
       SupportedLoginProviders: 
         
           
-          graph.facebook.com: 'q'
+          graph.facebook.com: 'abc'
                   
           
-          accounts.google.com: 'w'
+          accounts.google.com: 'def'
                   
           
-          www.amazon.com: 'e'
+          www.amazon.com: 'ghi'
                    
       
       AllowUnauthenticatedIdentities: !Ref allowUnauthenticatedIdentities
@@ -542,12 +542,12 @@ Outputs :
   
   
   GoogleWebClient:
-    Value: w
+    Value: def
    
    
   
   
   FacebookWebClient:
-    Value: q
+    Value: abc
    
   

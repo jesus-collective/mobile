@@ -1,12 +1,12 @@
 {
-    "identityPoolName": "themeetinghouse",
+    "identityPoolName": "tmhident",
     "allowUnauthenticatedIdentities": true,
     "thirdPartyAuth": true,
-    "lambdaLogPolicy": "cognitoe6ac1689_lambda_log_policy",
-    "openIdLambdaRoleName": "cognitoe6ac1689_openid_lambda_role",
-    "openIdRolePolicy": "cognitoe6ac1689_openid_pass_role_policy",
-    "openIdLambdaIAMPolicy": "cognitoe6ac1689_openid_lambda_iam_policy",
-    "openIdLogPolicy": "cognitoe6ac1689_openid_lambda_log_policy",
+    "lambdaLogPolicy": "cognitodevtmh_lambda_log_policy",
+    "openIdLambdaRoleName": "cognitodevtmh_openid_lambda_role",
+    "openIdRolePolicy": "cognitodevtmh_openid_pass_role_policy",
+    "openIdLambdaIAMPolicy": "cognitodevtmh_openid_lambda_iam_policy",
+    "openIdLogPolicy": "cognitodevtmh_openid_lambda_log_policy",
     "userPoolName": "The Meeting House",
     "autoVerifiedAttributes": [
         "email"
@@ -15,9 +15,9 @@
     "mfaTypes": [
         "TOTP"
     ],
-    "roleName": "cognitoe6ac1689_sns-role",
-    "roleExternalId": "cognitoe6ac1689_role_external_id",
-    "policyName": "cognitoe6ac1689-sns-policy",
+    "roleName": "cognitodevtmh_sns-role",
+    "roleExternalId": "cognitodevtmh_role_external_id",
+    "policyName": "cognitodevtmh-sns-policy",
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
     "emailVerificationSubject": "Your verification code",
@@ -33,29 +33,29 @@
     "requiredAttributes": [
         "email"
     ],
-    "userpoolClientName": "cognitoe6ac1689_app_client",
+    "userpoolClientName": "cognitodevtmh_app_client",
     "userpoolClientGenerateSecret": true,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "mfaLambdaRole": "cognitoe6ac1689_totp_lambda_role",
-    "mfaLambdaLogPolicy": "cognitoe6ac1689_totp_lambda_log_policy",
-    "mfaPassRolePolicy": "cognitoe6ac1689_totp_pass_role_policy",
-    "mfaLambdaIAMPolicy": "cognitoe6ac1689_totp_lambda_iam_policy",
-    "userpoolClientLambdaRole": "cognitoe6ac1689_userpoolclient_lambda_role",
-    "userpoolClientLogPolicy": "cognitoe6ac1689_userpoolclient_lambda_log_policy",
-    "userpoolClientLambdaPolicy": "cognitoe6ac1689_userpoolclient_lambda_iam_policy",
+    "mfaLambdaRole": "cognitodevtmh_totp_lambda_role",
+    "mfaLambdaLogPolicy": "cognitodevtmh_totp_lambda_log_policy",
+    "mfaPassRolePolicy": "cognitodevtmh_totp_pass_role_policy",
+    "mfaLambdaIAMPolicy": "cognitodevtmh_totp_lambda_iam_policy",
+    "userpoolClientLambdaRole": "cognitodevtmh_userpoolclient_lambda_role",
+    "userpoolClientLogPolicy": "cognitodevtmh_userpoolclient_lambda_log_policy",
+    "userpoolClientLambdaPolicy": "cognitodevtmh_userpoolclient_lambda_iam_policy",
     "userpoolClientSetAttributes": false,
     "useDefault": "manual",
     "authSelections": "identityPoolAndUserPool",
-    "resourceName": "cognitoe6ac1689",
+    "resourceName": "cognitodevtmh",
     "authProviders": [
         "graph.facebook.com",
         "accounts.google.com",
         "www.amazon.com"
     ],
-    "selectedParties": "{\"graph.facebook.com\":\"q\",\"accounts.google.com\":\"w\",\"www.amazon.com\":\"e\"}",
+    "selectedParties": "{\"graph.facebook.com\":\"abc\",\"accounts.google.com\":\"def\",\"www.amazon.com\":\"ghi\"}",
     "authRoleName": {
         "Ref": "AuthRoleName"
     },
