@@ -1,7 +1,7 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "prebuild": "aws s3 cp s3://${S3BUCKET}/aws-exports.js ./src/aws-exports.js",
+    "prebuild": "amplify push",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
@@ -14,7 +14,8 @@
     "expo": "^32.0.0",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
-    "react-native-scripts": "^2.0.1"
+    "react-native-scripts": "^2.0.1",
+    "react-navigation": "^3.3.2"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0"

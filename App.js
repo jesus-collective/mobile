@@ -2,23 +2,27 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Amplify from 'aws-amplify';
 import awsConfig from './src/aws-exports';
-
+import {createStackNavigator, createAppContainer} from 'react-navigation';
+import { Button } from 'react-native';
+import HomeScreen from './screens/HomeScreen/HomeScreen'
+import ProfileScreen from './screens/ProfileScreen/ProfileScreen'
 Amplify.configure(awsConfig);
 
-import { withAuthenticator } from 'aws-amplify-react-native';
+import { Authenticator } from 'aws-amplify-react-native';
 
 
-class App extends React.Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
-    );
-  }
-}
 
-export default withAuthenticator(App);
+
+
+const MainNavigator = createStackNavigator({
+  Home: HomeScreen,
+  Profile: ProfileScreen
+});
+
+const App = createAppContainer(MainNavigator);
+
+export default App;
+
 
 const styles = StyleSheet.create({
   container: {
