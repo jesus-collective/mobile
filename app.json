@@ -11,6 +11,9 @@
     "version": "6.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "facebookScheme":"fb579712102531269",
+    "facebookAppId":"579712102531269",
+    "facebookDisplayName":"The Meeting House",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
