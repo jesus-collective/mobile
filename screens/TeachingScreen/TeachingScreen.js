@@ -11,7 +11,7 @@ import { Authenticator } from 'aws-amplify-react-native';
 
  export default class TeachingScreen extends Component {
   static navigationOptions = {
-    title: 'Welcome',
+    title: 'Teaching',
   };
   render() {
     const {navigate} = this.props.navigation;
