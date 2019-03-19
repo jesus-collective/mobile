@@ -9,4 +9,10 @@ To setup a local copy of The Meeting House App for development you will need an 
     a) amplify configure
     b) amplify push
     
+To create deployment packages run:
 
+expo build:ios
+expo build:android
+
+1. Download the resulting files.
+2. Upload the files to the Apple or Google Play store.
