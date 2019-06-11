@@ -22,12 +22,12 @@ export default class HomeScreen extends Component {
     const { navigate } = this.props.navigation;
     return (
        
-        <Header style={{backgroundColor: "#f0493e"}}>
+        <Header style={{backgroundColor: "#ffffff"}}>
         <Left>
           <Button
             transparent
             onPress={this.openDrawer}>
-            <Icon name="menu"  style={{color: "#ffffff"}}  />
+            <Icon name="menu"  style={{color: "#000000"}}  />
           </Button>
         </Left>
         <Body style={{flex: 3}}>
@@ -39,7 +39,7 @@ export default class HomeScreen extends Component {
                              />
                     </View>
                     <View  >
-                        <Title  style={{ color:'#ffffff', paddingTop: 12, }}>{this.props.title}</Title> 
+                        <Title  style={{ color:'#000000', paddingTop: 12, }}>{this.props.title}</Title> 
                     </View>
                 </View>
         
@@ -49,13 +49,13 @@ export default class HomeScreen extends Component {
         <Button
             transparent
             onPress={this.props.onAdd}>
-            <Icon type="AntDesign" name="plus" />
+            <Icon type="AntDesign" name="plus"  style={{color: "#000000"}} />
           </Button>
         }
         <Button
             transparent
             onPress={this.openLogin}>
-            <Icon name="person" style={{color: "#ffffff"}}/>
+            <Icon name="person" style={{color: "#000000"}}/>
           </Button>
         </Right> 
         </Header>        
