@@ -1,19 +1,19 @@
 {
   "expo": {
-    "name": "The Meeting House",
-    "slug": "TheMeetingHouse",
+    "name": "Jesus Collective",
+    "slug": "JesusCollective",
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": [
       "ios",
       "android"
     ],
-    "version": "6.0.0",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "facebookScheme":"fb579712102531269",
     "facebookAppId":"579712102531269",
-    "facebookDisplayName":"The Meeting House",
+    "facebookDisplayName":"Jesus Collective",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
