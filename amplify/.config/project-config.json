@@ -3,11 +3,11 @@
     "version": "2.0",
     "frontend": "javascript",
     "javascript": {
-        "framework": "react-native",
+        "framework": "react",
         "config": {
             "SourceDir": "src",
-            "DistributionDir": "dist",
-            "BuildCommand": "npm run-script build",
+            "DistributionDir": "out",
+            "BuildCommand": "npm run-script export",
             "StartCommand": "npm run-script start"
         }
     },

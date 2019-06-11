@@ -17,7 +17,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#231F20"
+      "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -28,10 +28,15 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.fluidesign.mobileroadie.13460",
-      "buildNumber": "3"
+      "buildNumber": "12",
+      "config":{
+      "usesNonExemptEncryption": true
+      }
     },
     "android": {
+      "versionCode": 12,
       "package": "com.themeetinghouse.androidapp"
+
     }
   }
 }

@@ -1,6 +1,7 @@
 import { Drawer, Container, Header,Left,Icon,Body,Title,Right,Button } from 'native-base';
 import { DrawerActions } from 'react-navigation';
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import React from 'react';
 
 export default class HomeScreen extends Component {
@@ -15,6 +16,9 @@ export default class HomeScreen extends Component {
     }
 
     render() {
+      HomeScreen.propTypes = {
+        onAdd: PropTypes.func
+    };
     const { navigate } = this.props.navigation;
    // const {navigate} = this.props.navigation;
    
@@ -33,6 +37,13 @@ export default class HomeScreen extends Component {
           <Title>{this.props.title}</Title>
         </Body>
         <Right>
+        {this.props.onAdd==null?null:
+        <Button
+            transparent
+            onPress={this.props.onAdd}>
+            <Icon type="AntDesign" name="plus" />
+          </Button>
+        }
         <Button
             transparent
             onPress={this.openLogin}>
