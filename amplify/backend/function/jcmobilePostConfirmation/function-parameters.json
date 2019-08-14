@@ -1,0 +1,14 @@
+{
+    "trigger": true,
+    "modules": [
+        "add-to-group"
+    ],
+    "parentResource": "jcmobile",
+    "functionName": "jcmobilePostConfirmation",
+    "parentStack": "auth",
+    "triggerEnvs": "[]",
+    "triggerTemplate": "PostConfirmation.json.ejs",
+    "roleName": "jcmobilePostConfirmation",
+    "skipEdit": true,
+    "resourceName": "jcmobilePostConfirmation"
+}

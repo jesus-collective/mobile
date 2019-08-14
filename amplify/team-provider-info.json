@@ -1,0 +1,27 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "jc-mobile-dev-20190809190418-authRole",
+            "UnauthRoleArn": "arn:aws:iam::119330689042:role/jc-mobile-dev-20190809190418-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::119330689042:role/jc-mobile-dev-20190809190418-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
+            "UnauthRoleName": "jc-mobile-dev-20190809190418-unauthRole",
+            "StackName": "jc-mobile-dev-20190809190418",
+            "StackId": "arn:aws:cloudformation:us-east-1:119330689042:stack/jc-mobile-dev-20190809190418/0449b340-bafa-11e9-a6fb-0a0b50a105f6"
+        },
+        "categories": {
+            "function": {
+                "jcmobilePostConfirmation": {
+                    "GROUP": "verifiedUsers"
+                }
+            },
+            "auth": {
+                "jcmobile": {
+                    "facebookAppId": "abc",
+                    "googleClientId": "def"
+                }
+            }
+        }
+    }
+}
