@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import { Container, Content, Text } from 'native-base';
+import { Container,Content, Text } from 'native-base';
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
 import MyConversations from '../../components/MyConversations/MyConversations';
@@ -31,7 +31,7 @@ export default class HomeScreen extends React.Component<Props, State>{
   render() {
     return (
 
-      <Container >
+      <Container ><Text>test</Text>
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
         <MyMap visible={this.state.showMap}></MyMap>
 

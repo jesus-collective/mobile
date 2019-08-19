@@ -1,22 +1,29 @@
 import React from "react";
+import Amplify from 'aws-amplify'
+import { API, graphqlOperation } from 'aws-amplify';
 
 import HomeScreen from "./HomeScreen";
 import CoursesScreen from "../CoursesScreen/CoursesScreen";
 import ExploreScreen from "../ExploreScreen/ExploreScreen";
 import SupportScreen from "../SupportScreen/SupportScreen";
 import KidsAndYouthScreen from "../KidsAndYouthScreen/KidsAndYouthScreen";
-
+import { View } from 'react-native'
 import GetInvolvedScreen from "../GetInvolvedScreen/GetInvolvedScreen";
 import ContactScreen from "../ContactScreen/ContactScreen";
 import NewsScreen from "../NewsScreen/NewsScreen";
 import ProfileScreen from "../ProfileScreen/ProfileScreen";
-
+import SignUpScreen1 from '../../components/Auth/SignUpScreen1'
+import SignUpScreen2 from '../../components/Auth/SignUpScreen2'
+import SignUpScreen3 from '../../components/Auth/SignUpScreen3'
+import { Auth } from 'aws-amplify';
+import { Text } from 'react-native'
+import * as queries from '../../src/graphql/queries';
+import * as mutations from '../../src/graphql/mutations';
 import LoginScreen from "../LoginScreen/LoginScreen";
-import SignUpScreen1 from "../SignUpScreen/SignUpScreen1";
-import SignUpScreen2 from "../SignUpScreen/SignUpScreen2";
-import SignUpScreen3 from "../SignUpScreen/SignUpScreen3";
 import SideBar from "../../components/Sidebar/Sidebar";
 import { createDrawerNavigator, createAppContainer } from "react-navigation";
+import awsconfig from '../../src/aws-exports';
+Amplify.configure(awsconfig);
 const HomeScreenRouter = createDrawerNavigator(
   {
     HomeScreen: { screen: HomeScreen },
@@ -28,13 +35,130 @@ const HomeScreenRouter = createDrawerNavigator(
     NewsScreen: { screen: NewsScreen },
     ProfileScreen: { screen: ProfileScreen },
     CoursesScreen: { screen: CoursesScreen },
-    LoginScreen: { screen: LoginScreen },
-    SignUpScreen1: { screen: SignUpScreen1 },
-    SignUpScreen2: { screen: SignUpScreen2 },
-    SignUpScreen3: { screen: SignUpScreen3 },
+    LoginScreen: { screen: LoginScreen }
   },
   {
     contentComponent: props => <SideBar {...props} />
   }
 );
-export default createAppContainer(HomeScreenRouter);
+const AppContainer = createAppContainer(HomeScreenRouter);
+interface Props {
+  authState?: any;
+
+}
+interface State {
+  hasCompletedPersonalProfile: boolean;
+  hasPaidState: string;
+  userExists: boolean;
+}
+
+export default class App extends React.Component<Props, State>{
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      hasCompletedPersonalProfile: false,
+      hasPaidState: "Not Started",
+      userExists: false
+    }
+
+    this.performStartup()
+  }
+  async performStartup() {
+    await this.ensureUserExists()
+    await this.checkIfPaid()
+    await this.checkIfCompletedProfile()
+  }
+  private user: any
+  async ensureUserExists() {
+    var userExists: boolean = false
+    this.user = await Auth.currentAuthenticatedUser();
+    const { attributes } = this.user;
+    console.log(this.user)
+    try {
+      const getUser = await API.graphql(graphqlOperation(queries.getUser, { id: this.user['username'] }));
+      if (getUser.data.getUser === null) {
+        console.log("Trying to create")
+        var inputData = {
+          id: this.user['username'],
+          given_name: attributes['given_name'],
+          family_name: attributes['family_name'],
+          email: attributes['email'],
+          phone: attributes['phone_number']
+        }
+        try {
+          var createUser = await API.graphql(graphqlOperation(mutations.createUser, {
+            input: inputData
+          }));
+          userExists = true
+        } catch (e) {
+          console.log(e)
+        }
+        console.log(createUser)
+      }
+      else {
+        userExists = true
+        console.log("User exists")
+      }
+    }
+    catch (e) {
+      console.log(e)
+    }
+    this.setState({ userExists: userExists })
+
+  }
+  async checkIfPaid() {
+    console.log("checkIfPaid")
+    if (this.state.userExists) {
+      const getUser = await API.graphql(graphqlOperation(queries.getUser, { id: this.user['username'] }));
+      console.log(getUser)
+      if (getUser.data.getUser.hasPaidState == null)
+        this.setState({ hasPaidState: "Not Started" })
+
+      else {
+        console.log(getUser.data.getUser.hasPaidState)
+        this.setState({ hasPaidState: getUser.data.getUser.hasPaidState })
+      }
+    }
+    //  console.log(attributes['username'])
+  }
+  onPaidStateChanged() {
+    console.log("onPaidStateChanged")
+    this.checkIfPaid()
+  }
+  onProfileComplete() {
+    console.log("onProfileComplete")
+    this.checkIfCompletedProfile()
+  }
+  async checkIfCompletedProfile() {
+    console.log("checkIfCompletedProfile")
+    if (this.state.userExists) {
+      const getUser = await API.graphql(graphqlOperation(queries.getUser, { id: this.user['username'] }));
+      if ((getUser.data.getUser.aboutMeShort != null) && (getUser.data.getUser.aboutMeLong != null))
+        this.setState({ hasCompletedPersonalProfile: true })
+    }
+  }
+  render() {
+    //  console.log(this.props.authState)
+    if (this.props.authState == 'signedIn')
+      if (this.state.hasPaidState === "Not Started") {
+        return (<SignUpScreen1 payStateChanged={() => this.onPaidStateChanged()} />)
+        //  return <SignUpScreen2 />
+      }
+      else if (this.state.hasPaidState === "In Progress") {
+        return (<SignUpScreen2 payStateChanged={() => this.onPaidStateChanged()} />)
+        //  return <SignUpScreen2 />
+      }
+      else if (this.state.hasPaidState === "Complete") {
+        if (!this.state.hasCompletedPersonalProfile) {
+          return (<SignUpScreen3 profileComplete={() => this.onProfileComplete()} />)
+        }
+        else
+          return (<View style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1 }}><AppContainer ></AppContainer></View>)
+      }
+      else
+        return (<Text>Payment Issue - Unknown State</Text>)
+
+    else
+      return null
+  }
+}

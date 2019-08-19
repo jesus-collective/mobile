@@ -100,13 +100,7 @@ Parameters:
                     
   authProviders:
     Type: CommaDelimitedList
-      
-  facebookAppId:
-    Type: String
               
-  googleClientId:
-    Type: String
-                      
   usernameAttributes:
     Type: CommaDelimitedList
       
@@ -124,7 +118,13 @@ Parameters:
               
   dependsOn:
     Type: CommaDelimitedList
-    
+      
+  facebookAppId:
+    Type: String
+              
+  googleClientId:
+    Type: String
+            
 Conditions:
   ShouldNotCreateEnvResources: !Equals [ !Ref env, NONE ]
 

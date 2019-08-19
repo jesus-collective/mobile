@@ -1,8 +1,6 @@
-import { View, StyleProvider, Card, CardItem, List, ListItem, Right, Button, Container } from 'native-base';
+import { View } from 'native-base';
 import * as React from 'react';
 import styles from '../style.js'
-import getTheme from '../../native-base-theme/components';
-import material from '../../native-base-theme/variables/material';
 import { Image, Text } from 'react-native';
 
 interface Props {
@@ -29,7 +27,19 @@ export default class MyResources extends React.Component<Props, State> {
                 <Text style={styles.signUpSidebarProgressText3}>Payment</Text>
                 <Text style={styles.signUpSidebarProgressText4}>Individual Profile</Text>
                 <Text style={styles.signUpSidebarProgressText5}>Get In</Text>
+                {(this.props.position=="1")&&
+                <Image source={require('../../assets/SignUp/progress-1.png')} style={styles.signUpSidebarProgress} />
+                }
+                {(this.props.position=="2")&&
+                <Image source={require('../../assets/SignUp/progress-2.png')} style={styles.signUpSidebarProgress} />
+                }
+                {(this.props.position=="3")&&
                 <Image source={require('../../assets/SignUp/progress-3.png')} style={styles.signUpSidebarProgress} />
+                }
+                {(this.props.position=="4")&&
+                <Image source={require('../../assets/SignUp/progress-4.png')} style={styles.signUpSidebarProgress} />
+                }
+
               </View>
             )}
         <Image source={require('../../assets/JC-Logo-RGB-KO2.png')} style={styles.signUpSidebarLogo} />

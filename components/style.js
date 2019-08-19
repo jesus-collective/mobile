@@ -42,8 +42,8 @@ export default EStyleSheet.create({
         // color:'#F0493E'
     },
     authView: Platform.OS === 'web'?
-        { left: "40%", width: "40%", top: 150, height: "70%" }:
-        { left: "2%", width: "96%", top: "10%", height: "70%" },
+        { left: "40%", width: "40%", top: 150, height: "90%" }:
+        { left: "2%", width: "96%", top: "10%", height: "90%" },
 
     signUpSidebarPanel: Platform.OS === 'web'?
         { zIndex: 1, position: "fixed", left: 0, minWidth: 196, width: "25%", height: "100%", top: 0 }:
@@ -81,9 +81,16 @@ export default EStyleSheet.create({
 
     signUpProfile: Platform.OS === 'web'?
         {position:"absolute", left: "30%", width: "65%", top: 100, height: "100%" }:
-        {position:"absolute", left: "2%", width: "96%", top: 100+Constants.statusBarHeight , height: "100%" }
+        {position:"absolute", left: "2%", width: "96%", top: 100+Constants.statusBarHeight , height: "100%" },
     
-
-
+    signUpScreen1PaymentColumn1:Platform.OS === 'web'?
+        { position: "absolute", left: "35%", width: "25%", top: 100, height: "100%" }:
+        {  },
+    signUpScreen1PaymentColumn2:Platform.OS === 'web'?
+        { position: "absolute", left: "70%", width: "25%", top: 100, height: "100%" }:
+        {  },
+    signUpScreen1PaymentBody:Platform.OS === 'web'? 
+         { width: "100%", left: 0, top: 0, height: "100%" }:
+         {width: "100%", left: 0, top: 0, height: "100%"}
 }
 )

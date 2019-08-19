@@ -1,0 +1,20 @@
+{
+    "appName": "jcmobile",
+    "roleName": "pinpointLambdaRole85c945b3",
+    "cloudWatchPolicyName": "cloudWatchPolicy85c945b3",
+    "pinpointPolicyName": "pinpointPolicy85c945b3",
+    "authPolicyName": "pinpoint_amplify_85c945b3",
+    "unauthPolicyName": "pinpoint_amplify_85c945b3",
+    "authRoleName": {
+        "Ref": "AuthRoleName"
+    },
+    "unauthRoleName": {
+        "Ref": "UnauthRoleName"
+    },
+    "authRoleArn": {
+        "Fn::GetAtt": [
+            "AuthRole",
+            "Arn"
+        ]
+    }
+}

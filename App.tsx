@@ -6,22 +6,30 @@ import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import FederatedSignin from './components/FederatedSignin/FederatedSignin'
-import SignUpSidebar from './components/SignUpSidebar/SignUpSidebar'
-import { AmplifyTheme, Authenticator, } from 'aws-amplify-react-native';
-import { Auth } from 'aws-amplify';
-import { View } from 'native-base';
+import { AmplifyTheme, Authenticator } from 'aws-amplify-react-native';
+import MySignIn from './components/Auth/MySignIn'
+import MySignUp from './components/Auth/MySignUp'
+import MyConfirmSignIn from './components/Auth/MyConfirmSignIn'
+import MyRequireNewPassword from './components/Auth/MyRequireNewPassword'
+import MyConfirmSignUp from './components/Auth/MyConfirmSignUp'
+import MyVerifyContact from './components/Auth/MyVerifyContact'
+import MyForgotPassword from './components/Auth/MyForgotPassword'
+import MyLoading from './components/Auth/MyLoading'
+
+
 import { NavigationScreenProp } from 'react-navigation';
 import { I18n } from 'aws-amplify';
-import styles from './components/style.js'
-import { Text } from 'react-native'
-
+import { Ionicons } from '@expo/vector-icons';
 Amplify.configure(awsConfig);
 
 
 const MyDisabledButton = Object.assign({}, AmplifyTheme.button, { backgroundColor: '#979797', alignItems: 'center', padding: 16 });
 const MyButton = Object.assign({}, AmplifyTheme.button, { backgroundColor: '#F0493E', alignItems: 'center', padding: 16 });
-const MyTheme = Object.assign({}, AmplifyTheme, { button: MyButton, buttonDisabled: MyDisabledButton });
+const mySection = Object.assign({}, AmplifyTheme.section, { marginTop: 0, padding: 0});
+const myNavBar = Object.assign({}, AmplifyTheme.navBar, { width: 0, height: 0 });
+const myContainer = Object.assign({}, AmplifyTheme.container, { marginTop: 0 });
+//const MyTheme = Object.assign({}, AmplifyTheme, { navBar: myNavBar, s });
+const MyTheme = Object.assign({}, AmplifyTheme, {container:myContainer, navBar:myNavBar,section: mySection,button: MyButton, buttonDisabled: MyDisabledButton });
 
 
 const authScreenLabels = {
@@ -40,7 +48,8 @@ I18n.setLanguage('en');
 I18n.putVocabularies(authScreenLabels);
 
 interface Props {
-  navigation: NavigationScreenProp<any, any>
+  navigation: NavigationScreenProp<any, any>,
+  onStateChange(state:string,data:any):any
 }
 interface State {
   isLoggedIn: boolean
@@ -64,24 +73,31 @@ export default class AwesomeApp extends React.Component<Props, State> {
     this.state = {
       fontLoaded: false,
       isLoggedIn: false
+     
     };
-  //  this.ionViewCanEnter();
+    //  this.ionViewCanEnter();
   }
 
-  async componentWillMount() {
-    await Font.loadAsync({
-      'Graphik-Bold-App': require('./assets/font/commercial-type-1906-WOIKTV-app/graphik/Graphik-Bold-App.ttf'),
-      'Graphik-Medium-App': require('./assets/font/commercial-type-1906-WOIKTV-app/graphik/Graphik-Medium-App.ttf'),
-      'Graphik-Regular-App': require('./assets/font/commercial-type-1906-WOIKTV-app/graphik/Graphik-Regular-App.ttf'),
-      'Graphik-Semibold-App': require('./assets/font/commercial-type-1906-WOIKTV-app/graphik/Graphik-Semibold-App.ttf'),
-      'GraphikXXCondensed-Black-App': require('./assets/font/commercial-type-1906-WOIKTV-app/graphik_xx_condensed/GraphikXXCondensed-Black-App.ttf')
+  async UNSAFE_componentWillMount() {
+   // console.log("test")
+    try {
+      await Font.loadAsync({
+        'Graphik-Bold-App': require('./assets/font/commercial-type-1906-WOIKTV-app/graphik/Graphik-Bold-App.ttf'),
+        'Graphik-Medium-App': require('./assets/font/commercial-type-1906-WOIKTV-app/graphik/Graphik-Medium-App.ttf'),
+        'Graphik-Regular-App': require('./assets/font/commercial-type-1906-WOIKTV-app/graphik/Graphik-Regular-App.ttf'),
+        'Graphik-Semibold-App': require('./assets/font/commercial-type-1906-WOIKTV-app/graphik/Graphik-Semibold-App.ttf'),
+        'GraphikXXCondensed-Black-App': require('./assets/font/commercial-type-1906-WOIKTV-app/graphik_xx_condensed/GraphikXXCondensed-Black-App.ttf'),
 
-      // 'Helvetica Neue': require('native-base/Fonts/Roboto_medium.ttf')
-      //...Ionicons.font,
-    });
-    await Asset.fromModule(require("./components/Header/icon.png")).downloadAsync()
+        // 'Helvetica Neue': require('native-base/Fonts/Roboto_medium.ttf')
+        ...Ionicons.font
+      });
+    }
+    catch (e) {
+      console.error(e);
+    }
 
     this.setState({ fontLoaded: true });
+    Asset.fromModule(require("./components/Header/icon.png")).downloadAsync()
     Asset.fromModule(require("./assets/JC-Logo-RGB-KO2.png")).downloadAsync()
     Asset.fromModule(require("./assets/leftPanel.png")).downloadAsync()
     Asset.fromModule(require("./assets/profile-placeholder.png")).downloadAsync()
@@ -90,32 +106,37 @@ export default class AwesomeApp extends React.Component<Props, State> {
     Asset.fromModule(require("./assets/SignUp/progress-3.png")).downloadAsync()
     Asset.fromModule(require("./assets/SignUp/progress-4.png")).downloadAsync()
   }
-  ionViewCanEnter() {
-    Auth.currentAuthenticatedUser()
-      .then(() => { this.setState({ isLoggedIn: true }) })
-      .catch(() => { this.setState({ isLoggedIn: false }) });
-  }
+  
   render() {
     if (this.state.fontLoaded) {
-      // console.log(this.ionViewCanEnter())
-    /*  if (this.state.isLoggedIn) {
-        console.log("logged in")
-        return <Text>tesT</Text>
-      }
-      else*/
-        return (
-          <View>
-            <View style={styles.authView}>
-              <Authenticator onStateChange={this.ionViewCanEnter()} theme={MyTheme} usernameAttributes='email' federated={federated}
-                signUpConfig={{
-                  signUpFields: [{ displayOrder: 6, key: "family_name", label: "Last Name", required: true },
-                  { displayOrder: 5, key: "given_name", label: "First Name", required: true }]
-                }}></Authenticator>
-            </View>
-            <SignUpSidebar text="It's the time to unite, equip and amplify." />
-          </View>)
+
+      return (
+        <Authenticator hideDefault={true}  theme={MyTheme}
+          usernameAttributes='email' federated={federated}
+          signUpConfig={{
+            signUpFields: [{ displayOrder: 6, key: "family_name", label: "Last Name", required: true },
+            { displayOrder: 5, key: "given_name", label: "First Name", required: true }]
+          }}>
+          <HomeScreen />
+          <MySignIn />
+          <MyConfirmSignIn />
+          <MyRequireNewPassword />
+          <MySignUp signUpConfig={{
+            signUpFields: [{ displayOrder: 6, key: "family_name", label: "Last Name", required: true },
+            { displayOrder: 5, key: "given_name", label: "First Name", required: true }]
+          }}
+          />
+          <MyConfirmSignUp />
+          <MyVerifyContact />
+          <MyForgotPassword />
+          <MyLoading />
+         
+
+        </Authenticator>
+
+      )
     } else {
-      return <Text>Loading...</Text>
+      return <AppLoading />
     }
   }
 }
