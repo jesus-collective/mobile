@@ -47,7 +47,7 @@ export default class PeopleScreen extends React.PureComponent<IProps, IState>{
         <View>
           <Swiper style={{ height: 50 }}
             cards={['Test', 'of', 'people', 'list', 'for', 'fun', '!!!']}
-            renderCard={(card) => {
+            renderCard={(card:any) => {
               return (
                 <View style={styles.card}>
                   <Text style={styles.text}>{card}</Text>
@@ -56,7 +56,7 @@ export default class PeopleScreen extends React.PureComponent<IProps, IState>{
             }}
             horizontalSwipe={false}
             verticalSwipe={true}
-            onSwiped={(cardIndex) => { console.log(cardIndex) }}
+            onSwiped={(cardIndex:any) => { console.log(cardIndex) }}
             onSwipedAll={() => { console.log('onSwipedAll') }}
             cardIndex={0}
             showSecondCard={true}
