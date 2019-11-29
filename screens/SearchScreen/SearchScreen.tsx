@@ -9,18 +9,20 @@ import { Drawer, Container, Content, Text,Left,Icon,Body,Title,Right,Button } fr
 import { DrawerActions } from 'react-navigation';
 
 import Header from '../../components/Header/Header'
+import Footer from '../../components/Footer/Footer'
 
- export default class TmhuScreen extends Component {
+ export default class SearchScreen extends Component {
  
   render() {
     const {navigate} = this.props.navigation;
     return (
       <Container>
-       <Header title="TMH-U" navigation={this.props.navigation} />    
+       <Header title="Search" navigation={this.props.navigation} />    
        <Content padder>
-        <Text style={{fontSize:20,fontWeight:"bold"}}>TMH-U - Coming Soon</Text>
+        <Text style={{fontSize:20,fontWeight:"bold"}}>Search - Coming Soon</Text>
       </Content>
-     
+      <Footer title="Search" navigation={this.props.navigation}></Footer>
+
       </Container>
 
     );

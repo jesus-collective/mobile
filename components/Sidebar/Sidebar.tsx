@@ -5,57 +5,10 @@ import { Linking } from '@aws-amplify/core';
 import awsConfig from '../../src/aws-exports';
 import Amplify, { Analytics } from 'aws-amplify';
 import * as Font from 'expo-font'
-
+import routes from '../routes'
 Amplify.configure(awsConfig);
 
-const routes = [
-  {
-    name: "This Week",
-    route: "HomeScreen"
-  },
-  {
-    name: "News & Events",
-    route: "NewsScreen"
-  },
-  {
-    name: "Teaching",
-    route: "TeachingScreen"
-  },
-  {
-    name: "Home Church",
-    route: "HomeChurchScreen"
-  },
-  {
-    name: "People",
-    route: "PeopleScreen"
-  },
 
-  {
-    name: "TMH-U",
-    route: "TmhuScreen"
-  },
-  {
-    name: "Giving",
-    url: "http://themeetinghouse.com/giving"
-  },
-  {
-    name: "Jesus Collective",
-    url: "https://www.jesuscollective.com"
-  },
-  {
-    name: "Profile",
-    route: "ProfileScreen"
-  },
-  {
-    name: "Feedback",
-    url: "mailto:george.bell@themeetinghouse.com?subject=App%20Feedback"
-  },
-  {
-    name: "Social",
-    route: "SocialScreen"
-  },
-
-];
 export default class SideBar extends React.Component {
   constructor(props) {
     super(props);
@@ -64,7 +17,7 @@ export default class SideBar extends React.Component {
     }
   }
   
-  handleClick(data) {
+  openScreen(data) {
     Analytics.record({
       name: 'navigateTo',
       attributes: { screen: data.name }
@@ -86,7 +39,7 @@ export default class SideBar extends React.Component {
             return (
               <ListItem
                 button
-                onPress={() => this.handleClick(data)}>
+                onPress={() => this.openScreen(data)}>
                 
                   <Text style={{fontFamily:'Graphik-Regular-App'}}>{data.name}</Text>
              

@@ -44,20 +44,12 @@ export default class HomeScreen extends React.PureComponent<IProps, IState>  {
     return (
       <Header style={{ backgroundColor: "#000000" }}>
         <Left>
-          <Button
-            transparent
-            onPress={this.openDrawer}>
-            <MaterialIcons name="menu" style={{ color: "#ffffff" }} />
-          </Button>
+         
         </Left>
         <Body style={{ flex: 3 }}>
 
           <View style={{ flexDirection: "row", justifyContent: 'center' }}>
-            <View >
-              <Image style={{ width: 45, height: 45, justifyContent: 'flex-start' }}
-                source={require('./icon.png')}
-              />
-            </View>
+           
             <View>
                 <Title style={{ fontFamily:'Graphik-Bold-App',color: '#ffffff', paddingTop: 15, }}>
                   {this.props.title}

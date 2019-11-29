@@ -7,7 +7,7 @@ import PeopleScreen from "../PeopleScreen/PeopleScreen";
 import ProfileScreen from "../ProfileScreen/ProfileScreen";
 import LoginScreen from "../LoginScreen/LoginScreen";
 import TeachingScreen from "../TeachingScreen/TeachingScreen";
-import TmhuScreen from "../TmhuScreen/TmhuScreen";
+import Searchcreen from "../SearchScreen/SearchScreen";
 import SideBar from "../../components/Sidebar/Sidebar";
 import HomeChurchScreen from "../HomeChurchScreen/HomeChurchScreen"
 import { createDrawerNavigator,createAppContainer } from "react-navigation";
@@ -17,7 +17,7 @@ const HomeScreenRouter = createDrawerNavigator(
     NewsScreen: { screen: NewsScreen},
     ProfileScreen: { screen: ProfileScreen},
     LoginScreen: { screen: LoginScreen},
-    TmhuScreen: {screen: TmhuScreen},
+    SearchScreen: {screen: Searchcreen},
     PeopleScreen: {screen: PeopleScreen},
     TeachingScreen: { screen: TeachingScreen},
     HomeChurchScreen: {screen: HomeChurchScreen},

@@ -13,6 +13,7 @@ import { DrawerActions } from 'react-navigation';
 import { SearchBar } from "react-native-elements";
 import { ListItem, Card, CardItem, Body, List, Fab, Content, Text, Tab, Tabs, Separator, ScrollableTab, TabHeading } from "native-base";
 import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 import VideoCard from '../../components/VideoCard/VideoCard'
 import * as TeachingTabs from './TeachingTabs'
 
@@ -372,6 +373,8 @@ export default class TeachingScreen extends React.PureComponent<IProps2, IState2
               </Tab>);
           })}
         </Tabs>
+        <Footer title="Home" navigation={this.props.navigation}></Footer>
+
       </Container>
     );
   }
