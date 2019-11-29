@@ -12,147 +12,158 @@ Parameters:
   unauthRoleArn:
     Type: String
 
+  
+  
+  
+
     
   identityPoolName:
     Type: String
-              
+                
   allowUnauthenticatedIdentities:
-    Type: String
-            
-  thirdPartyAuth:
-    Type: String
-          
-  lambdaLogPolicy:
     Type: String
             
   openIdLambdaRoleName:
     Type: String
-            
-  openIdRolePolicy:
+              
+  resourceNameTruncated:
     Type: String
-            
-  openIdLambdaIAMPolicy:
-    Type: String
-            
-  openIdLogPolicy:
-    Type: String
-            
+              
   userPoolName:
     Type: String
-                  
+                      
   autoVerifiedAttributes:
     Type: CommaDelimitedList
       
   mfaConfiguration:
     Type: String
-                  
+                      
   mfaTypes:
     Type: CommaDelimitedList
       
-  roleName:
-    Type: String
-            
-  roleExternalId:
-    Type: String
-            
-  policyName:
-    Type: String
-            
   smsAuthenticationMessage:
     Type: String
-            
+              
   smsVerificationMessage:
     Type: String
-            
+              
   emailVerificationSubject:
     Type: String
-            
+              
   emailVerificationMessage:
     Type: String
-              
+                
   defaultPasswordPolicy:
     Type: String
-              
+                
   passwordPolicyMinLength:
     Type: Number
-              
+                  
   passwordPolicyCharacters:
     Type: CommaDelimitedList
-            
+              
   requiredAttributes:
     Type: CommaDelimitedList
       
   userpoolClientName:
     Type: String
-              
+                
   userpoolClientGenerateSecret:
     Type: String
-              
+                
   userpoolClientRefreshTokenValidity:
     Type: Number
+                  
+  userpoolClientWriteAttributes:
+    Type: CommaDelimitedList
               
   userpoolClientReadAttributes:
     Type: CommaDelimitedList
       
   mfaLambdaRole:
     Type: String
-            
-  mfaLambdaLogPolicy:
-    Type: String
-            
-  mfaPassRolePolicy:
-    Type: String
-            
-  mfaLambdaIAMPolicy:
-    Type: String
-            
+              
   userpoolClientLambdaRole:
     Type: String
-            
-  userpoolClientLogPolicy:
+                
+  userpoolClientSetAttributes:
+    Type: String
+              
+  thirdPartyAuth:
     Type: String
             
+  lambdaLogPolicy:
+    Type: String
+              
+  openIdRolePolicy:
+    Type: String
+              
+  openIdLambdaIAMPolicy:
+    Type: String
+              
+  openIdLogPolicy:
+    Type: String
+              
+  roleName:
+    Type: String
+              
+  roleExternalId:
+    Type: String
+              
+  policyName:
+    Type: String
+              
+  mfaLambdaLogPolicy:
+    Type: String
+              
+  mfaPassRolePolicy:
+    Type: String
+              
+  mfaLambdaIAMPolicy:
+    Type: String
+              
+  userpoolClientLogPolicy:
+    Type: String
+              
   userpoolClientLambdaPolicy:
     Type: String
               
-  userpoolClientSetAttributes:
-    Type: String
-          
   useDefault:
     Type: String
-            
+              
   authSelections:
     Type: String
-            
+              
   resourceName:
     Type: String
-                  
+                      
   authProviders:
     Type: CommaDelimitedList
       
+  selectedParties:
+    Type: String
+                                                              
   facebookAppId:
     Type: String
-            
+              
   googleClientId:
     Type: String
-            
+              
   amazonAppId:
     Type: String
             
-  selectedParties:
-    Type: String
-                                                  
 Conditions:
   ShouldNotCreateEnvResources: !Equals [ !Ref env, NONE ]
 
 Resources:
+  
   
   # BEGIN SNS ROLE RESOURCE
   SNSRole: 
   # Created to allow the UserPool SMS Config to publish via the Simple Notification Service during MFA Process
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !If [ShouldNotCreateEnvResources, !Ref roleName, !Join ['',[!Ref roleName, '-', !Ref env]]]
+      RoleName: !If [ShouldNotCreateEnvResources, 'cognit79c0e771_sns-role', !Join ['',['cognit79c0e771_sns-role', '-', !Ref env]]]
       AssumeRolePolicyDocument: 
         Version: "2012-10-17"
         Statement: 
@@ -164,10 +175,10 @@ Resources:
               - "sts:AssumeRole"
             Condition: 
               StringEquals:
-                sts:ExternalId: !Ref roleExternalId
+                sts:ExternalId: cognit79c0e771_role_external_id
       Policies: 
         - 
-          PolicyName: !Ref policyName
+          PolicyName: cognit79c0e771-sns-policy
           PolicyDocument: 
             Version: "2012-10-17"
             Statement: 
@@ -184,6 +195,7 @@ Resources:
     UpdateReplacePolicy: Retain
     Properties:
       UserPoolName: !If [ShouldNotCreateEnvResources, !Ref userPoolName, !Join ['',[!Ref userPoolName, '-', !Ref env]]]
+      
       Schema: 
         
         -
@@ -191,6 +203,8 @@ Resources:
           Required: true
           Mutable: true
         
+      
+      
       
       AutoVerifiedAttributes: !Ref autoVerifiedAttributes
       
@@ -205,14 +219,16 @@ Resources:
           RequireNumbers: true
           RequireSymbols: true
           RequireUppercase: true
+          
       MfaConfiguration: !Ref mfaConfiguration
       SmsVerificationMessage: !Ref smsVerificationMessage
       SmsConfiguration: 
         SnsCallerArn: !GetAtt SNSRole.Arn
-        ExternalId: !Ref roleExternalId 
+        ExternalId: cognit79c0e771_role_external_id
           
     DependsOn: SNSRole
     
+  
   UserPoolClientWeb:
   # Created provide application access to user pool
   # Depends on UserPool for ID reference
@@ -276,12 +292,12 @@ Resources:
             - '       response.send(event, context, response.SUCCESS, {''appSecret'': res.UserPoolClient.ClientSecret});'   
             - '     })'
             - '     .catch((err) => {'
-            - '       response.send(event, context, response.FAILURE, {err});'
+            - '       response.send(event, context, response.FAILED, {err});'
             - '     });'
             - ' }'
             - '};'
       Handler: index.handler
-      Runtime: nodejs6.10
+      Runtime: nodejs8.10
       Timeout: '300'
       Role: !GetAtt 
         - UserPoolClientRole
@@ -293,7 +309,7 @@ Resources:
   # Marked as depending on UserPoolClientRole for easier to understand CFN sequencing
     Type: 'AWS::IAM::Policy'
     Properties:
-      PolicyName: !Ref userpoolClientLambdaPolicy
+      PolicyName: cognit79c0e771_userpoolclient_lambda_iam_policy
       Roles: 
         - !If [ShouldNotCreateEnvResources, !Ref userpoolClientLambdaRole, !Join ['',[!Ref userpoolClientLambdaRole, '-', !Ref env]]]
       PolicyDocument:
@@ -310,7 +326,7 @@ Resources:
   # Marked as depending on UserPoolClientLambdaPolicy for easier to understand CFN sequencing
     Type: 'AWS::IAM::Policy'
     Properties:
-      PolicyName: !Ref userpoolClientLogPolicy
+      PolicyName: cognit79c0e771_userpoolclient_lambda_log_policy
       Roles: 
         - !If [ShouldNotCreateEnvResources, !Ref userpoolClientLambdaRole, !Join ['',[!Ref userpoolClientLambdaRole, '-', !Ref env]]]
       PolicyDocument:
@@ -337,6 +353,11 @@ Resources:
       userpoolId: !Ref UserPool
     DependsOn: UserPoolClientLogPolicy
   
+
+  
+  
+
+  
   # BEGIN MFA LAMBDA RESOURCES
   MFALambdaRole:
   # Created to execute Lambda which sets MFA config values
@@ -353,7 +374,7 @@ Resources:
             Action:
               - 'sts:AssumeRole'
       Policies:
-      - PolicyName: !Ref mfaPassRolePolicy
+      - PolicyName: cognit79c0e771_totp_pass_role_policy
         PolicyDocument:
           Version: 2012-10-17
           Statement:
@@ -392,19 +413,19 @@ Resources:
             - '       SoftwareTokenMfaConfiguration: {Enabled: event.ResourceProperties.totpEnabled.toLowerCase() === ''true'' ? true : false}'
             - '     };'
             - '   } catch(e) {'
-            - '     response.send(event, context, response.FAILURE, {e});'
+            - '     response.send(event, context, response.FAILED, {e});'
             - '   };'
             - '   identity.setUserPoolMfaConfig(totpParams).promise()'
             - '     .then((res) => {'
             - '       response.send(event, context, response.SUCCESS, {res});'   
             - '     })'
             - '     .catch((err) => {'
-            - '       response.send(event, context, response.FAILURE, {err});'
+            - '       response.send(event, context, response.FAILED, {err});'
             - '     });'
             - ' }'
             - '};'
       Handler: index.handler
-      Runtime: nodejs6.10
+      Runtime: nodejs8.10
       Timeout: '300'
       Role: !GetAtt 
         - MFALambdaRole
@@ -416,7 +437,7 @@ Resources:
   # Marked as depending on MFALambda for easier to understand CFN sequencing
     Type: 'AWS::IAM::Policy'
     Properties:
-      PolicyName: !Ref mfaLambdaIAMPolicy
+      PolicyName: cognit79c0e771_totp_lambda_iam_policy
       Roles: 
         - !If [ShouldNotCreateEnvResources, !Ref mfaLambdaRole, !Join ['',[!Ref mfaLambdaRole, '-', !Ref env]]]
       PolicyDocument:
@@ -432,7 +453,7 @@ Resources:
   # Marked as depending on MFALambdaPolicy for easier to understand CFN sequencing
     Type: 'AWS::IAM::Policy'
     Properties:
-      PolicyName: !Ref mfaLambdaLogPolicy
+      PolicyName: cognit79c0e771_totp_lambda_log_policy
       Roles: 
         - !If [ShouldNotCreateEnvResources, !Ref mfaLambdaRole, !Join ['',[!Ref mfaLambdaRole, '-', !Ref env]]]
       PolicyDocument:
@@ -460,13 +481,13 @@ Resources:
       totpEnabled: true
       smsConfigCaller: !GetAtt SNSRole.Arn
       smsAuthenticationMessage: !Ref smsAuthenticationMessage
-      smsConfigExternalId: !Ref roleExternalId 
+      smsConfigExternalId: cognit79c0e771_role_external_id
     DependsOn: MFALogPolicy
   
     
   # BEGIN IDENTITY POOL RESOURCES
   
-  
+ 
   IdentityPool:
   # Always created
     Type: AWS::Cognito::IdentityPool
@@ -485,15 +506,14 @@ Resources:
             
       SupportedLoginProviders: 
         
-          
-          graph.facebook.com: '579712102531269'
-                  
-          
-          accounts.google.com: 'def'
-                  
-          
-          www.amazon.com: 'ghi'
-                   
+        graph.facebook.com: !Ref facebookAppId
+        
+        
+        accounts.google.com: !Ref googleClientId
+        
+        
+        www.amazon.com: !Ref amazonAppId
+        
       
       AllowUnauthenticatedIdentities: !Ref allowUnauthenticatedIdentities
        
@@ -522,6 +542,8 @@ Outputs :
     Value: !GetAtt IdentityPool.Name 
   
   
+  
+  
   UserPoolId:
     Value: !Ref 'UserPool'
     Description:  Id for the user pool
@@ -542,12 +564,16 @@ Outputs :
   
   
   GoogleWebClient:
-    Value: def
+    Value: !Ref googleClientId
    
    
   
   
   FacebookWebClient:
-    Value: 579712102531269
+    Value: !Ref facebookAppId
+   
+  
+  AmazonWebClient:
+    Value: !Ref amazonAppId
    
   

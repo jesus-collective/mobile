@@ -8,13 +8,21 @@ const awsmobile = {
     "aws_user_pools_web_client_id": "3vcsprpflitom2se5un0m6bqm7",
     "oauth": {},
     "federationTarget": "COGNITO_IDENTITY_POOLS",
-    "aws_appsync_graphqlEndpoint": "https://chx7bfj4sbgtfoam6myzmyhafu.appsync-api.us-east-1.amazonaws.com/graphql",
+    "aws_appsync_graphqlEndpoint": "https://4etvlewcdnamtpf7pl2engjw6y.appsync-api.us-east-1.amazonaws.com/graphql",
     "aws_appsync_region": "us-east-1",
-    "aws_appsync_authenticationType": "AMAZON_COGNITO_USER_POOLS",
+    "aws_appsync_authenticationType": "API_KEY",
+    "aws_appsync_apiKey": "da2-b5fz4t7epfczvjlgbjroyt4cc4",
+    "aws_cloud_logic_custom": [
+        {
+            "name": "image",
+            "endpoint": "https://5va6fu7lrh.execute-api.us-east-1.amazonaws.com/dev",
+            "region": "us-east-1"
+        }
+    ],
     "aws_content_delivery_bucket": "heeetingouse-20190312104205-hostingbucket-dev",
     "aws_content_delivery_bucket_region": "us-east-1",
-    "aws_content_delivery_url": "http://heeetingouse-20190312104205-hostingbucket-dev.s3-website-us-east-1.amazonaws.com",
-    "aws_mobile_analytics_app_id": "9228df96ac634f629edc870f3e1b2fd5",
+    "aws_content_delivery_url": "https://d8q4vcydfrbf3.cloudfront.net",
+    "aws_mobile_analytics_app_id": "b63823c5d1ee467cbc2e2b252a389419",
     "aws_mobile_analytics_app_region": "us-east-1"
 };
 

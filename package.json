@@ -8,10 +8,11 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@aws-amplify/cli": "^3.17.0",
     "@unimodules/core": "~4.0.0",
     "@unimodules/react-native-adapter": "~4.0.0",
     "apollo-client": "^2.6.0",
-    "aws-amplify": "1.1.28",
+    "aws-amplify": "^1.2.4",
     "aws-amplify-react-native": "^2.1.12",
     "aws-appsync": "^1.8.0",
     "aws-appsync-react": "^1.2.8",

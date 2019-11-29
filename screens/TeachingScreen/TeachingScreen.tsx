@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import { Component } from 'react';
 import awsConfig from '../../src/aws-exports';
-import * as queries from '../../src/graphql/queries';
+import * as customQueries from '../../src/graphql-custom/customQueries';
 import * as mutations from '../../src/graphql/mutations';
 import Amplify, { API, graphqlOperation, Analytics } from 'aws-amplify';
 import FederatedSignin from '../../components/FederatedSignin/FederatedSignin'
@@ -16,6 +16,7 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import VideoCard from '../../components/VideoCard/VideoCard'
 import * as TeachingTabs from './TeachingTabs'
+import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
 
 const styles = StyleSheet.create({
   root: {
@@ -143,7 +144,7 @@ export default class TeachingScreen extends React.PureComponent<IProps2, IState2
       data: [],
       currentTab: {
         adult: "adult-sunday",
-        kids: "kids-sunday",
+        kids: "ky-youth",
         youth: "youth-sunday",
         base: "this-week"
       },
@@ -151,10 +152,12 @@ export default class TeachingScreen extends React.PureComponent<IProps2, IState2
     };
   }
   onUpdateCurrentTabData() {
-    console.log("onUpdateCurrentTabData: " + this.state.currentTabData[this.state.currentTab.base]);
+    console.log(this.state.currentTab.base)
+    console.log(this.state.currentTabData)
+    console.log("onUpdateCurrentTabData: " + this.state.currentTab[this.state.currentTab.base]);
     Analytics.record({ name: 'teachTabVisit',
-    attributes: { tab: this.state.currentTabData[this.state.currentTab.base] } });
-    this.list(this.state.currentTabData[this.state.currentTab.base])
+    attributes: { tab: this.state.currentTab[this.state.currentTab.base] } });
+    this.list(this.state.currentTab[this.state.currentTab.base])
   }
 
   componentDidUpdate(prevProps:IProps2, prevState:IState2) {
@@ -181,15 +184,22 @@ export default class TeachingScreen extends React.PureComponent<IProps2, IState2
     );
   };
   list(videoTypes) {
-    const listVideos = API.graphql(graphqlOperation(queries.listVideos, { filter: { videoTypes: { contains: videoTypes } } }));
-    listVideos.then(json => {
-      console.log("Success queries.listVideos: " + json)
+   // const listVideos = API.graphql(graphqlOperation(queries.listVideos, }));
+   console.log(videoTypes)
+    var getVideoByVideoType: any = API.graphql({
+      query: customQueries.getVideoByVideoType,
+      variables: { nextToken: null, sortDirection: "ASC", limit: 20, videoTypes: "adult-sunday", publishedDate: { lt: "a" }},
+      authMode: GRAPHQL_AUTH_MODE.API_KEY
+    });
+    getVideoByVideoType.then(json => {
+      console.log("Success queries.getVideoByVideoType: " + json)
 
       const temp = this.state.data;
-      temp[videoTypes] = json.data.listVideos.items
+      temp[videoTypes] = json.data.getVideoByVideoType.items
+    //  console.log(json.data.getVideoByVideoType.items)
       this.setState({ data: temp });
     }).catch(err => {
-      console.log("Error queries.listVideos: " + err);
+      console.log("Error queries.getVideoByVideoType: " + err);
       console.log(err);
     });
 
@@ -198,7 +208,7 @@ export default class TeachingScreen extends React.PureComponent<IProps2, IState2
     console.log("search: " + string + " " + videoTypes)
     Analytics.record({ name: 'teachSearch',
     attributes: { videoType: videoTypes, searchString:string } });
-    const searchVideo = API.graphql(graphqlOperation(queries.searchVideos, { filter: { videoTypes: { match: videoTypes }, description: { matchPhrasePrefix: string + "*" } } }));
+    const searchVideo = API.graphql(graphqlOperation(customQueries.searchVideos, { filter: { videoTypes: { match: videoTypes }, description: { matchPhrasePrefix: string + "*" } } }));
     searchVideo.then(json => {
       console.log("Success queries.searchVideos: " + json)
 
@@ -228,10 +238,15 @@ export default class TeachingScreen extends React.PureComponent<IProps2, IState2
       return (<Content>
         <SectionList
           sections={[
-            { title: 'D', data: this.getListData(name) }
+            { title: name, data: this.getListData("adult-sunday") }
           ]}
+          
           ItemSeparatorComponent={this.renderSeparator}
-          renderItem={({ item }) =>
+          renderItem={({item}) =>
+          {
+            //console.log(item)
+            console.log(item)
+            return (
             <View style={styles.container}>
               <TouchableOpacity onPress={() => { }}>
                 <Image style={styles.image} style={{ width: 96, height: 54 }} source={{ uri: item.Youtube.snippet.thumbnails.default.url }} />
@@ -248,8 +263,8 @@ export default class TeachingScreen extends React.PureComponent<IProps2, IState2
                </View>
               
               </TouchableOpacity>
-            </View>
-
+            </View>)
+          }
 
 
           }
@@ -301,7 +316,7 @@ export default class TeachingScreen extends React.PureComponent<IProps2, IState2
             return (<Tab key={item2.name} heading={<TabHeading style={{ backgroundColor: '#444444' }}><Text style={{ fontSize: 10, color: "#ffffff" }} >{item2.title}</Text></TabHeading>}>
               <SearchBar placeholder={item2.searchPlaceHolder} onChangeText={(e) => { this.updateSearch(e, item2.name) }} value={this.state.searching}></SearchBar>
               <VideoList searching={this.state.searching} data={this.getSearchData(item2.name)} ></VideoList>
-              {this.renderList(item2.name)}
+              {this.renderList("adult-sunday")}
               {this.renderFab(item2)}
             </Tab>);
           })}

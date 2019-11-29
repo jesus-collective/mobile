@@ -16,22 +16,22 @@ export const TabSetup =
             fab:{test:"test"}
         },
         {
-            name:"adult-bbq",
+            name:"bbq",
             title:"BBQ",
             searchPlaceHolder:"Search BBQ's"
         },
         {
-            name:"adult-lifestories",
+            name:"lifestories",
             title:"Life Stories",
             searchPlaceHolder:"Search Life Stories"
         },
         {
-            name:"adult-compassion",
+            name:"compassion",
             title:"Compassion Stories",
             searchPlaceHolder:"Search Compassion Stories"
         },
         {
-            name:"adult-afterparty",
+            name:"afterparty",
             title:"After Party",
             searchPlaceHolder:"Search After Party"
         },
@@ -53,21 +53,26 @@ export const TabSetup =
     title:"Youth",
     subTabs:[
         {
-            name:"youth-sunday",
-            title:"Sunday",
-            searchPlaceHolder:"Search Youth Sunday Teaching"
+            name:"ky-youth",
+            title:"Youth",
+            searchPlaceHolder:"Search Youth"
         },
         {
-            name:"youth-games",
-            title:"Games",
-            searchPlaceHolder:"Search Youth Games"
+            name:"ky-kids",
+            title:"Kids",
+            searchPlaceHolder:"Search Kids"
         },
         {
-            name:"youth-lifestories",
-            title:"Life Stories",
-            searchPlaceHolder:"Search Youth Life Stories"
+            name:"ky-jrhigh",
+            title:"Jr. High",
+            searchPlaceHolder:"Search Jr High"
         },
-
+        
+        {
+            name:"ky-srhigh",
+            title:"Sr. High",
+            searchPlaceHolder:"Search Sr High"
+        }
     ]
 },
 {

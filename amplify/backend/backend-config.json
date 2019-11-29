@@ -2,16 +2,50 @@
 	"auth": {
 		"cognitodevtmh": {
 			"service": "Cognito",
-			"providerPlugin": "awscloudformation"
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
 		}
 	},
 	"api": {
-		"meetinghouse": {
+		"themeetinghouse": {
 			"service": "AppSync",
 			"providerPlugin": "awscloudformation",
 			"output": {
-				"securityType": "AMAZON_COGNITO_USER_POOLS"
+				"authConfig": {
+					"additionalAuthenticationProviders": [
+						{
+							"authenticationType": "AMAZON_COGNITO_USER_POOLS",
+							"userPoolConfig": {
+								"userPoolId": "authcognitodevtmh"
+							}
+						},
+						{
+							"authenticationType": "AWS_IAM"
+						}
+					],
+					"defaultAuthentication": {
+						"authenticationType": "API_KEY",
+						"apiKeyConfig": {
+							"description": "website",
+							"apiKeyExpirationDays": 180
+						}
+					}
+				}
 			}
+		},
+		"image": {
+			"service": "API Gateway",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "themeetinghousea5cd4619",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			]
 		}
 	},
 	"hosting": {
@@ -20,5 +54,31 @@
 			"providerPlugin": "awscloudformation"
 		}
 	},
-	"function": {}
+	"function": {
+		"themeetinghousea5cd4619": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true,
+			"dependsOn": [
+				{
+					"category": "hosting",
+					"resourceName": "S3AndCloudFront",
+					"attributes": [
+						"HostingBucketName"
+					]
+				}
+			]
+		},
+		"emailHomeChurch": {
+			"service": "Lambda",
+			"providerPlugin": "awscloudformation",
+			"build": true
+		}
+	},
+	"analytics": {
+		"themeetinghouse": {
+			"service": "Pinpoint",
+			"providerPlugin": "awscloudformation"
+		}
+	}
 }
