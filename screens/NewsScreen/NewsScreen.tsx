@@ -27,7 +27,13 @@ const styles = StyleSheet.create({
     marginTop: 10
   }
 })
-export default class NewsScreen extends Component {
+interface IProps {
+  navigation: any
+}
+interface IState {
+
+}
+export default class NewsScreen extends React.PureComponent<IProps, IState> {
   onAdd() {
     this.setModalVisible(true)
   }

@@ -32,7 +32,7 @@ export default class HomeScreen extends React.PureComponent<IProps, IState>  {
 
 
   }
-  openScreen(data) {
+  openScreen(data:any) {
     Analytics.record({
       name: 'navigateTo',
       attributes: { screen: data.name }

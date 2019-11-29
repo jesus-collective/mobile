@@ -8,8 +8,13 @@ Amplify.configure(awsConfig);
 import { Picker, Switch, ListItem, View, Content, Separator, Form, Text, Label, Item, Input, CheckBox, Drawer, Container, Left, Icon, Body, Title, Right, Button } from 'native-base';
 import { DrawerActions } from 'react-navigation';
 
+interface IProps {
+  navigation: any
+}
+interface IState {
 
-export default class ProfileScreen extends Component {
+}
+export default class ProfileScreen extends React.PureComponent<IProps, IState> {
 
   render() {
     const { navigate } = this.props.navigation;

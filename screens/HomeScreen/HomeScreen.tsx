@@ -8,7 +8,13 @@ import VideoCard from '../../components/VideoCard/VideoCard'
 
 import Header from '../../components/Header/Header'
 import Footer from '../../components/Footer/Footer'
-export default class HomeScreen extends Component {
+interface IProps {
+  navigation: any
+}
+interface IState {
+
+}
+export default class HomeScreen extends React.PureComponent<IProps, IState> {
 
 
   render() {

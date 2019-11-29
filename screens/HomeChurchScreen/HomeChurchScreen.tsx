@@ -7,17 +7,30 @@ Amplify.configure(awsConfig);
 import { View } from 'react-native'
 import { Text, Drawer, Container, Left, Icon, Card, CardItem, Body, Title, Right, Button } from 'native-base';
 import { DrawerActions } from 'react-navigation';
-import { Marker,Callout, MapView,  Location, Permissions, Constants } from 'expo';
+import {  MapView, Location, Permissions, Constants } from 'expo';
 import Header from '../../components/Header/Header'
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
 import { ApolloProvider, withApollo } from "react-apollo";
 import gql from 'graphql-tag';
-import { Modal, TouchableHighlight,  StyleSheet } from 'react-native'
+import { Modal, TouchableHighlight, StyleSheet } from 'react-native'
 
-class HomeChurchScreen extends Component {
+interface IProps {
+  navigation: any,
+  groupType:any,
+  client:any
+}
+interface IState {
+  groupType:any
+  groups: any,
+  mapRegion: any,
+  hasLocationPermissions: any,
+  locationResult: any,
+  showFilter: any
+}
+class HomeChurchScreen extends React.PureComponent<IProps, IState> {
 
-  constructor(props) {
+  constructor(props:IProps) {
     super(props)
     Cache.clear();
     this.state = {
@@ -53,7 +66,7 @@ class HomeChurchScreen extends Component {
     this.setState({ mapRegion: { latitude: location.coords.latitude, longitude: location.coords.longitude, latitudeDelta: 0.0922, longitudeDelta: 0.0421 } });
   };
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps:IProps, prevState:IState) {
     if (prevState.groupType != this.state.groupType) {
       this.getHomeChurchGroups()
     }
@@ -61,14 +74,14 @@ class HomeChurchScreen extends Component {
 
   async getHomeChurchGroups() {
     if (this.state.groupType != null) {
-      var promises = this.state.groupType.map((item) => {
+      var promises = this.state.groupType.map((item:any) => {
 
 
         this.props.client.query({
           query: gql(queries.f1ListGroups),
           variables: { itemId: item.id }
         }
-        ).then((e) => {
+        ).then((e:any) => {
           this.setState({ groups: this.state.groups.concat(e.data.F1ListGroups.groups.group) });
 
           // this.setState({ groupType: e.data.F1ListGroups.groups.group })
@@ -94,7 +107,7 @@ class HomeChurchScreen extends Component {
 
     this.props.client.query({
       query: gql(queries.f1ListGroupTypes)
-    }).then((e) => {
+    }).then((e:any) => {
       this.setState({ groupType: e.data.F1ListGroupTypes.groupTypes.groupType })
       console.log();
     });
@@ -114,14 +127,14 @@ class HomeChurchScreen extends Component {
        });
      }*/
   }
-  
+
 
   renderText() {
-    
+
     if (this.state.groups == null)
       return null
     else
-      return this.state.groups.map(item => (
+      return this.state.groups.map((item:any) => (
         <MapView.Marker key={item.id}
           coordinate={{
             latitude: item.location.address.latitude,
@@ -158,7 +171,7 @@ class HomeChurchScreen extends Component {
     console.log(this.state.showFilter)
     this.setState({ showFilter: !this.state.showFilter })
   }
-  _handleMapRegionChange = mapRegion => {
+  _handleMapRegionChange = (mapRegion:any) => {
     console.log(mapRegion);
     this.setState({ mapRegion });
   };
@@ -185,36 +198,36 @@ class HomeChurchScreen extends Component {
         alignItems: 'center',
         backgroundColor: '#ede3f2',
         padding: 10,
-      
+
       },
       modal: {
         flex: 1,
-        
+
         padding: 10,
-        paddingTop:40
+        paddingTop: 40
       },
       text: {
         color: '#3f2949',
         marginTop: 10
       }
     })
-      return (
-        <Modal animationType={"slide"} transparent={false}
+    return (
+      <Modal animationType={"slide"} transparent={false}
         visible={this.state.showFilter}
         onRequestClose={() => { console.log("Modal has been closed.") }}>
 
         <View style={styles.modal}>
-            <Text>By Distance: </Text>
-            <Text>By Site: </Text>
-            <Text>By Childcare: </Text>
-            <Text>By Gender: </Text>
-            <TouchableHighlight
+          <Text>By Distance: </Text>
+          <Text>By Site: </Text>
+          <Text>By Childcare: </Text>
+          <Text>By Gender: </Text>
+          <TouchableHighlight
             onPress={() => {
               this.onFilter();
             }}><Text>Close</Text></TouchableHighlight>
-          </View>
-        </Modal>
-      )
+        </View>
+      </Modal>
+    )
   }
   render() {
     const { navigate } = this.props.navigation;
@@ -234,12 +247,12 @@ class HomeChurchScreen extends Component {
           }}
 
         >{this.renderText()}
-          
+
 
         </MapView>
 
-          <Button onPress={() => { this.onFilter() }} style={{ position: 'absolute', height:30, borderRadius: 20, backgroundColor: 'rgba(50,50,50,0.7)', alignSelf: "center", top: 100 }}><Text>Filter...</Text></Button>
-          {this.renderFilterCallout()}
+        <Button onPress={() => { this.onFilter() }} style={{ position: 'absolute', height: 30, borderRadius: 20, backgroundColor: 'rgba(50,50,50,0.7)', alignSelf: "center", top: 100 }}><Text>Filter...</Text></Button>
+        {this.renderFilterCallout()}
 
       </Container>
 

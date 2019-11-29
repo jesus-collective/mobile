@@ -6,7 +6,7 @@ import FederatedSignin from '../../components/FederatedSignin/FederatedSignin'
 Amplify.configure(awsConfig);
 import Header from '../../components/Header/Header'
 import { Authenticator } from 'aws-amplify-react-native';
-import { Drawer, Container,Left,Icon,Body,Title,Right,Button } from 'native-base';
+import { Drawer, Container, Left, Icon, Body, Title, Right, Button } from 'native-base';
 import { DrawerActions } from 'react-navigation';
 
 
@@ -16,17 +16,23 @@ const federated = {
   facebook_app_id: '579712102531269',
   amazon_client_id: ''
 };
- export default class LoginScreen extends Component {
-  
+interface IProps {
+  navigation: any
+}
+interface IState {
+
+}
+export default class LoginScreen extends React.PureComponent<IProps, IState> {
+
   render() {
-    const {navigate} = this.props.navigation;
+    const { navigate } = this.props.navigation;
     return (
       <Container>
-       <Header title="Login" navigation={this.props.navigation} />    
-      
-      <Authenticator federated={federated} >
-      <FederatedSignin></FederatedSignin>
-      </Authenticator>
+        <Header title="Login" navigation={this.props.navigation} />
+
+        <Authenticator federated={federated} >
+          <FederatedSignin></FederatedSignin>
+        </Authenticator>
       </Container>
 
     );

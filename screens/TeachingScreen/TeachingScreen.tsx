@@ -86,6 +86,7 @@ interface IState{
     searching:string;
    
 }
+
 class VideoList extends React.PureComponent<IProps, IState>  {
   constructor(props:IProps) {
     super(props)
@@ -112,7 +113,7 @@ class VideoList extends React.PureComponent<IProps, IState>  {
       return (null)
     else return (
       <Content>
-        {this.state.data.map(item => (
+        {this.state.data.map((item:any) => (
           <VideoCard speakers={item.speakers} episodeTitle={item.episodeTitle} videoId={item.Youtube.contentDetails.videoId} description={item.description}></VideoCard>
         ))
         }
@@ -122,7 +123,7 @@ class VideoList extends React.PureComponent<IProps, IState>  {
   }
 }
 interface IProps2{
-
+  navigation:any
 }
 interface IState2{
   searching:string;
@@ -134,6 +135,7 @@ interface IState2{
     base:string;
   }
   currentTabData:{[id:string]:any};
+  active:any;
 }
 
 export default class TeachingScreen extends React.PureComponent<IProps2, IState2>   {
@@ -183,7 +185,7 @@ export default class TeachingScreen extends React.PureComponent<IProps2, IState2
       />
     );
   };
-  list(videoTypes) {
+  list(videoTypes:any) {
    // const listVideos = API.graphql(graphqlOperation(queries.listVideos, }));
    console.log(videoTypes)
     var getVideoByVideoType: any = API.graphql({
@@ -191,14 +193,14 @@ export default class TeachingScreen extends React.PureComponent<IProps2, IState2
       variables: { nextToken: null, sortDirection: "ASC", limit: 20, videoTypes: "adult-sunday", publishedDate: { lt: "a" }},
       authMode: GRAPHQL_AUTH_MODE.API_KEY
     });
-    getVideoByVideoType.then(json => {
+    getVideoByVideoType.then((json:any) => {
       console.log("Success queries.getVideoByVideoType: " + json)
 
       const temp = this.state.data;
       temp[videoTypes] = json.data.getVideoByVideoType.items
     //  console.log(json.data.getVideoByVideoType.items)
       this.setState({ data: temp });
-    }).catch(err => {
+    }).catch((err:any) => {
       console.log("Error queries.getVideoByVideoType: " + err);
       console.log(err);
     });
@@ -209,13 +211,13 @@ export default class TeachingScreen extends React.PureComponent<IProps2, IState2
     Analytics.record({ name: 'teachSearch',
     attributes: { videoType: videoTypes, searchString:string } });
     const searchVideo = API.graphql(graphqlOperation(customQueries.searchVideos, { filter: { videoTypes: { match: videoTypes }, description: { matchPhrasePrefix: string + "*" } } }));
-    searchVideo.then(json => {
+    searchVideo.then((json:any) => {
       console.log("Success queries.searchVideos: " + json)
 
       const temp = this.state.data;
       temp["search-" + videoTypes.replace(".$", "")] = json.data.searchVideos.items;
       this.setState({ data: temp });
-    }).catch(err => {
+    }).catch((err:any) => {
       console.log("Error queries.searchVideos: " + err);
       console.log(err);
     });
@@ -291,7 +293,7 @@ export default class TeachingScreen extends React.PureComponent<IProps2, IState2
     else
       return this.state.data[name];
   }
-  renderFab(item) {
+  renderFab(item:any) {
     if (item.fab != null)
       return (
         <Fab
@@ -305,14 +307,14 @@ export default class TeachingScreen extends React.PureComponent<IProps2, IState2
         </Fab>);
     else return null
   }
-  renderSubTabs(item) {
+  renderSubTabs(item:any) {
     if (item.subTabs != null)
       return (
         <Tabs tabContainerStyle={{ height: 10, backgroundColor: "red" }}
-          onChangeTab={(e) => { this.onSubTabChange(e) }}
+          onChangeTab={(e:any) => { this.onSubTabChange(e) }}
           tabBarUnderlineStyle={{ backgroundColor: "black", height: 1 }}
           renderTabBar={() => <ScrollableTab style={{ backgroundColor: "#444444", height: 30 }} />}>
-          {item.subTabs.map((item2) => {
+          {item.subTabs.map((item2:any) => {
             return (<Tab key={item2.name} heading={<TabHeading style={{ backgroundColor: '#444444' }}><Text style={{ fontSize: 10, color: "#ffffff" }} >{item2.title}</Text></TabHeading>}>
               <SearchBar placeholder={item2.searchPlaceHolder} onChangeText={(e) => { this.updateSearch(e, item2.name) }} value={this.state.searching}></SearchBar>
               <VideoList searching={this.state.searching} data={this.getSearchData(item2.name)} ></VideoList>
@@ -324,7 +326,7 @@ export default class TeachingScreen extends React.PureComponent<IProps2, IState2
     else
       return (
         <Tabs tabContainerStyle={{ height: 10, backgroundColor: "red" }}
-        onChangeTab={(e) => { this.onSubTabChange(e) }}
+        onChangeTab={(e:any) => { this.onSubTabChange(e) }}
         tabBarUnderlineStyle={{ backgroundColor: "black", height: 1 }}
         renderTabBar={() => <ScrollableTab style={{ backgroundColor: "#444444", height: 30 }} />}>
         
@@ -380,7 +382,7 @@ export default class TeachingScreen extends React.PureComponent<IProps2, IState2
     return (
       <Container>
         <Header title="Teaching" navigation={this.props.navigation} />
-        <Tabs renderTabBar={() => <ScrollableTab />} onChangeTab={(e) => { this.onTabChange(e) }}>
+        <Tabs renderTabBar={() => <ScrollableTab />} onChangeTab={(e:any) => { this.onTabChange(e) }}>
           {TeachingTabs.TabSetup.map((item) => {
             return (
               <Tab key={item.name} heading={item.title} >

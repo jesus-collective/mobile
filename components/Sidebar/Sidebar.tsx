@@ -8,16 +8,21 @@ import * as Font from 'expo-font'
 import routes from '../routes'
 Amplify.configure(awsConfig);
 
+interface IProps{
+  navigation:any
+}
+interface IState{
 
-export default class SideBar extends React.Component {
-  constructor(props) {
+}
+export default class SideBar extends React.PureComponent<IProps, IState>  {
+  constructor(props:IProps) {
     super(props);
     this.state = {
       fontLoaded: false
     }
   }
   
-  openScreen(data) {
+  openScreen(data:any) {
     Analytics.record({
       name: 'navigateTo',
       attributes: { screen: data.name }
