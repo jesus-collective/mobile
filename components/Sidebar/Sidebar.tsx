@@ -4,25 +4,26 @@ import { Container, Content, Text, List, ListItem, Header } from "native-base";
 import { Linking } from '@aws-amplify/core';
 import awsConfig from '../../src/aws-exports';
 import Amplify, { Analytics } from 'aws-amplify';
+import * as Font from 'expo-font'
 
 Amplify.configure(awsConfig);
 
 const routes = [
   {
-    name:"This Week",
-    route:"HomeScreen"
+    name: "This Week",
+    route: "HomeScreen"
   },
   {
-    name:"News & Events",
-    route:"NewsScreen"
+    name: "News & Events",
+    route: "NewsScreen"
   },
   {
-    name:"Teaching",
-    route:"TeachingScreen"
+    name: "Teaching",
+    route: "TeachingScreen"
   },
   {
-    name:"Home Church",
-    route:"HomeChurchScreen"
+    name: "Home Church",
+    route: "HomeChurchScreen"
   },
   {
     name: "People",
@@ -56,33 +57,48 @@ const routes = [
 
 ];
 export default class SideBar extends React.Component {
-  handleClick(data){
-    Analytics.record({ name: 'navigateTo',
-    attributes: { screen: data.name } });
+  constructor(props) {
+    super(props);
+    this.state = {
+      fontLoaded: false
+    }
+  }
+  
+  handleClick(data) {
+    Analytics.record({
+      name: 'navigateTo',
+      attributes: { screen: data.name }
+    });
 
-    if (data.route!=null)
+    if (data.route != null)
       return this.props.navigation.navigate(data.route);
     else
-      return  Linking.openURL(data.url);
+      return Linking.openURL(data.url);
   }
   render() {
     return (
       <Container><Content>
-      <Header></Header>
-      <List
-            dataArray={routes}
-            renderRow={data => {
-              return (
-                <ListItem
-                  button
-                  onPress={() => this.handleClick(data) }>
-                  <Text>{data.name}</Text>
-                </ListItem>
-              );
-            }}
-          />
+        <Header></Header>
+       
+        <List
+          dataArray={routes}
+          renderRow={data => {
+            return (
+              <ListItem
+                button
+                onPress={() => this.handleClick(data)}>
+                
+                  <Text style={{fontFamily:'Graphik-Regular-App'}}>{data.name}</Text>
+             
+
+
+              </ListItem>
+            );
+          }}
+        /> 
+      
       </Content>
       </Container>
-     )
-    }
+    )
+  }
 }

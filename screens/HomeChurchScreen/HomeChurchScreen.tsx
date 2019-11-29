@@ -2,14 +2,13 @@
 import { Component } from 'react';
 import Amplify, { Cache, API, graphqlOperation, Analytics } from 'aws-amplify';
 import awsConfig from '../../src/aws-exports';
-import FederatedSignin from '../../components/FederatedSignin/FederatedSignin.js'
+import FederatedSignin from '../../components/FederatedSignin/FederatedSignin'
 Amplify.configure(awsConfig);
 import { View } from 'react-native'
-import { Authenticator } from 'aws-amplify-react-native';
 import { Text, Drawer, Container, Left, Icon, Card, CardItem, Body, Title, Right, Button } from 'native-base';
 import { DrawerActions } from 'react-navigation';
-import { Callout, MapView, Marker, Location, Permissions, Constants } from 'expo';
-import Header from '../../components/Header/Header.js'
+import { Marker,Callout, MapView,  Location, Permissions, Constants } from 'expo';
+import Header from '../../components/Header/Header'
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
 import { ApolloProvider, withApollo } from "react-apollo";

@@ -2,14 +2,13 @@
 import { Component } from 'react';
 import Amplify from 'aws-amplify';
 import awsConfig from '../../src/aws-exports';
-import FederatedSignin from '../../components/FederatedSignin/FederatedSignin.js'
+import FederatedSignin from '../../components/FederatedSignin/FederatedSignin'
 Amplify.configure(awsConfig);
 import { Modal, TouchableHighlight, Text, View, StyleSheet } from 'react-native'
-import { Authenticator } from 'aws-amplify-react-native';
 import { Drawer, Content, Item, Input, Container, Left, Icon, Body, Title, Right, Button } from 'native-base';
 import { DrawerActions } from 'react-navigation';
 
-import Header from '../../components/Header/Header.js'
+import Header from '../../components/Header/Header'
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
@@ -36,7 +35,7 @@ export default class NewsScreen extends Component {
     modalVisible: false,
   };
 
-  setModalVisible(visible) {
+  setModalVisible(visible:boolean) {
     this.setState({ modalVisible: visible });
   }
 

@@ -3,7 +3,6 @@ import React from 'react';
 import { Button, Text, View }  from "react-native"
 import {Facebook} from 'expo';
 
-import { Authenticator } from 'aws-amplify-react-native';
 // To federated sign in from Facebook
 export default class FederatedSignin extends React.Component {
     constructor(props) {

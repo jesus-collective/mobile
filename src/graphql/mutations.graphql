@@ -1,0 +1,1822 @@
+# this is an auto generated file. This will be overwritten
+mutation CreateTnSeries($input: CreateTNSeriesInput!) {
+  createTNSeries(input: $input) {
+    id
+    TNident
+    title
+    description
+    imageUrl
+    public
+    thumbnail
+    startDate
+    endDate
+    sermonCommentCount
+    homeChurchCommentCount
+    sermons {
+      items {
+        id
+        TNident
+        title
+        speaker
+        deliveryDate
+        description
+        audioUrl
+        mediaEntries {
+          type
+          contentType
+          kind
+          label
+          url
+        }
+        public
+        series_FK
+        series {
+          id
+          TNident
+          title
+          description
+          imageUrl
+          public
+          thumbnail
+          startDate
+          endDate
+          sermonCommentCount
+          homeChurchCommentCount
+          sermons {
+            items {
+              id
+              TNident
+              title
+              speaker
+              deliveryDate
+              description
+              audioUrl
+              mediaEntries {
+                type
+                contentType
+                kind
+                label
+                url
+              }
+              public
+              series_FK
+              series {
+                id
+                TNident
+                title
+                description
+                imageUrl
+                public
+                thumbnail
+                startDate
+                endDate
+                sermonCommentCount
+                homeChurchCommentCount
+                sermons {
+                  items {
+                    id
+                    TNident
+                    title
+                    speaker
+                    deliveryDate
+                    description
+                    audioUrl
+                    mediaEntries {
+                      type
+                      contentType
+                      kind
+                      label
+                      url
+                    }
+                    public
+                    series_FK
+                    series {
+                      id
+                      TNident
+                      title
+                      description
+                      imageUrl
+                      public
+                      thumbnail
+                      startDate
+                      endDate
+                      sermonCommentCount
+                      homeChurchCommentCount
+                    }
+                    sermonNoteCount
+                    quoteNoteCount
+                    homeChurchNoteCount
+                    sermonCommentCount
+                  }
+                  nextToken
+                }
+              }
+              sermonNoteCount
+              quoteNoteCount
+              homeChurchNoteCount
+              sermonCommentCount
+            }
+            nextToken
+          }
+        }
+        sermonNoteCount
+        quoteNoteCount
+        homeChurchNoteCount
+        sermonCommentCount
+      }
+      nextToken
+    }
+  }
+}
+mutation UpdateTnSeries($input: UpdateTNSeriesInput!) {
+  updateTNSeries(input: $input) {
+    id
+    TNident
+    title
+    description
+    imageUrl
+    public
+    thumbnail
+    startDate
+    endDate
+    sermonCommentCount
+    homeChurchCommentCount
+    sermons {
+      items {
+        id
+        TNident
+        title
+        speaker
+        deliveryDate
+        description
+        audioUrl
+        mediaEntries {
+          type
+          contentType
+          kind
+          label
+          url
+        }
+        public
+        series_FK
+        series {
+          id
+          TNident
+          title
+          description
+          imageUrl
+          public
+          thumbnail
+          startDate
+          endDate
+          sermonCommentCount
+          homeChurchCommentCount
+          sermons {
+            items {
+              id
+              TNident
+              title
+              speaker
+              deliveryDate
+              description
+              audioUrl
+              mediaEntries {
+                type
+                contentType
+                kind
+                label
+                url
+              }
+              public
+              series_FK
+              series {
+                id
+                TNident
+                title
+                description
+                imageUrl
+                public
+                thumbnail
+                startDate
+                endDate
+                sermonCommentCount
+                homeChurchCommentCount
+                sermons {
+                  items {
+                    id
+                    TNident
+                    title
+                    speaker
+                    deliveryDate
+                    description
+                    audioUrl
+                    mediaEntries {
+                      type
+                      contentType
+                      kind
+                      label
+                      url
+                    }
+                    public
+                    series_FK
+                    series {
+                      id
+                      TNident
+                      title
+                      description
+                      imageUrl
+                      public
+                      thumbnail
+                      startDate
+                      endDate
+                      sermonCommentCount
+                      homeChurchCommentCount
+                    }
+                    sermonNoteCount
+                    quoteNoteCount
+                    homeChurchNoteCount
+                    sermonCommentCount
+                  }
+                  nextToken
+                }
+              }
+              sermonNoteCount
+              quoteNoteCount
+              homeChurchNoteCount
+              sermonCommentCount
+            }
+            nextToken
+          }
+        }
+        sermonNoteCount
+        quoteNoteCount
+        homeChurchNoteCount
+        sermonCommentCount
+      }
+      nextToken
+    }
+  }
+}
+mutation DeleteTnSeries($input: DeleteTNSeriesInput!) {
+  deleteTNSeries(input: $input) {
+    id
+    TNident
+    title
+    description
+    imageUrl
+    public
+    thumbnail
+    startDate
+    endDate
+    sermonCommentCount
+    homeChurchCommentCount
+    sermons {
+      items {
+        id
+        TNident
+        title
+        speaker
+        deliveryDate
+        description
+        audioUrl
+        mediaEntries {
+          type
+          contentType
+          kind
+          label
+          url
+        }
+        public
+        series_FK
+        series {
+          id
+          TNident
+          title
+          description
+          imageUrl
+          public
+          thumbnail
+          startDate
+          endDate
+          sermonCommentCount
+          homeChurchCommentCount
+          sermons {
+            items {
+              id
+              TNident
+              title
+              speaker
+              deliveryDate
+              description
+              audioUrl
+              mediaEntries {
+                type
+                contentType
+                kind
+                label
+                url
+              }
+              public
+              series_FK
+              series {
+                id
+                TNident
+                title
+                description
+                imageUrl
+                public
+                thumbnail
+                startDate
+                endDate
+                sermonCommentCount
+                homeChurchCommentCount
+                sermons {
+                  items {
+                    id
+                    TNident
+                    title
+                    speaker
+                    deliveryDate
+                    description
+                    audioUrl
+                    mediaEntries {
+                      type
+                      contentType
+                      kind
+                      label
+                      url
+                    }
+                    public
+                    series_FK
+                    series {
+                      id
+                      TNident
+                      title
+                      description
+                      imageUrl
+                      public
+                      thumbnail
+                      startDate
+                      endDate
+                      sermonCommentCount
+                      homeChurchCommentCount
+                    }
+                    sermonNoteCount
+                    quoteNoteCount
+                    homeChurchNoteCount
+                    sermonCommentCount
+                  }
+                  nextToken
+                }
+              }
+              sermonNoteCount
+              quoteNoteCount
+              homeChurchNoteCount
+              sermonCommentCount
+            }
+            nextToken
+          }
+        }
+        sermonNoteCount
+        quoteNoteCount
+        homeChurchNoteCount
+        sermonCommentCount
+      }
+      nextToken
+    }
+  }
+}
+mutation CreateTnSermon($input: CreateTNSermonInput!) {
+  createTNSermon(input: $input) {
+    id
+    TNident
+    title
+    speaker
+    deliveryDate
+    description
+    audioUrl
+    mediaEntries {
+      type
+      contentType
+      kind
+      label
+      url
+    }
+    public
+    series_FK
+    series {
+      id
+      TNident
+      title
+      description
+      imageUrl
+      public
+      thumbnail
+      startDate
+      endDate
+      sermonCommentCount
+      homeChurchCommentCount
+      sermons {
+        items {
+          id
+          TNident
+          title
+          speaker
+          deliveryDate
+          description
+          audioUrl
+          mediaEntries {
+            type
+            contentType
+            kind
+            label
+            url
+          }
+          public
+          series_FK
+          series {
+            id
+            TNident
+            title
+            description
+            imageUrl
+            public
+            thumbnail
+            startDate
+            endDate
+            sermonCommentCount
+            homeChurchCommentCount
+            sermons {
+              items {
+                id
+                TNident
+                title
+                speaker
+                deliveryDate
+                description
+                audioUrl
+                mediaEntries {
+                  type
+                  contentType
+                  kind
+                  label
+                  url
+                }
+                public
+                series_FK
+                series {
+                  id
+                  TNident
+                  title
+                  description
+                  imageUrl
+                  public
+                  thumbnail
+                  startDate
+                  endDate
+                  sermonCommentCount
+                  homeChurchCommentCount
+                  sermons {
+                    items {
+                      id
+                      TNident
+                      title
+                      speaker
+                      deliveryDate
+                      description
+                      audioUrl
+                      public
+                      series_FK
+                      sermonNoteCount
+                      quoteNoteCount
+                      homeChurchNoteCount
+                      sermonCommentCount
+                    }
+                    nextToken
+                  }
+                }
+                sermonNoteCount
+                quoteNoteCount
+                homeChurchNoteCount
+                sermonCommentCount
+              }
+              nextToken
+            }
+          }
+          sermonNoteCount
+          quoteNoteCount
+          homeChurchNoteCount
+          sermonCommentCount
+        }
+        nextToken
+      }
+    }
+    sermonNoteCount
+    quoteNoteCount
+    homeChurchNoteCount
+    sermonCommentCount
+  }
+}
+mutation UpdateTnSermon($input: UpdateTNSermonInput!) {
+  updateTNSermon(input: $input) {
+    id
+    TNident
+    title
+    speaker
+    deliveryDate
+    description
+    audioUrl
+    mediaEntries {
+      type
+      contentType
+      kind
+      label
+      url
+    }
+    public
+    series_FK
+    series {
+      id
+      TNident
+      title
+      description
+      imageUrl
+      public
+      thumbnail
+      startDate
+      endDate
+      sermonCommentCount
+      homeChurchCommentCount
+      sermons {
+        items {
+          id
+          TNident
+          title
+          speaker
+          deliveryDate
+          description
+          audioUrl
+          mediaEntries {
+            type
+            contentType
+            kind
+            label
+            url
+          }
+          public
+          series_FK
+          series {
+            id
+            TNident
+            title
+            description
+            imageUrl
+            public
+            thumbnail
+            startDate
+            endDate
+            sermonCommentCount
+            homeChurchCommentCount
+            sermons {
+              items {
+                id
+                TNident
+                title
+                speaker
+                deliveryDate
+                description
+                audioUrl
+                mediaEntries {
+                  type
+                  contentType
+                  kind
+                  label
+                  url
+                }
+                public
+                series_FK
+                series {
+                  id
+                  TNident
+                  title
+                  description
+                  imageUrl
+                  public
+                  thumbnail
+                  startDate
+                  endDate
+                  sermonCommentCount
+                  homeChurchCommentCount
+                  sermons {
+                    items {
+                      id
+                      TNident
+                      title
+                      speaker
+                      deliveryDate
+                      description
+                      audioUrl
+                      public
+                      series_FK
+                      sermonNoteCount
+                      quoteNoteCount
+                      homeChurchNoteCount
+                      sermonCommentCount
+                    }
+                    nextToken
+                  }
+                }
+                sermonNoteCount
+                quoteNoteCount
+                homeChurchNoteCount
+                sermonCommentCount
+              }
+              nextToken
+            }
+          }
+          sermonNoteCount
+          quoteNoteCount
+          homeChurchNoteCount
+          sermonCommentCount
+        }
+        nextToken
+      }
+    }
+    sermonNoteCount
+    quoteNoteCount
+    homeChurchNoteCount
+    sermonCommentCount
+  }
+}
+mutation DeleteTnSermon($input: DeleteTNSermonInput!) {
+  deleteTNSermon(input: $input) {
+    id
+    TNident
+    title
+    speaker
+    deliveryDate
+    description
+    audioUrl
+    mediaEntries {
+      type
+      contentType
+      kind
+      label
+      url
+    }
+    public
+    series_FK
+    series {
+      id
+      TNident
+      title
+      description
+      imageUrl
+      public
+      thumbnail
+      startDate
+      endDate
+      sermonCommentCount
+      homeChurchCommentCount
+      sermons {
+        items {
+          id
+          TNident
+          title
+          speaker
+          deliveryDate
+          description
+          audioUrl
+          mediaEntries {
+            type
+            contentType
+            kind
+            label
+            url
+          }
+          public
+          series_FK
+          series {
+            id
+            TNident
+            title
+            description
+            imageUrl
+            public
+            thumbnail
+            startDate
+            endDate
+            sermonCommentCount
+            homeChurchCommentCount
+            sermons {
+              items {
+                id
+                TNident
+                title
+                speaker
+                deliveryDate
+                description
+                audioUrl
+                mediaEntries {
+                  type
+                  contentType
+                  kind
+                  label
+                  url
+                }
+                public
+                series_FK
+                series {
+                  id
+                  TNident
+                  title
+                  description
+                  imageUrl
+                  public
+                  thumbnail
+                  startDate
+                  endDate
+                  sermonCommentCount
+                  homeChurchCommentCount
+                  sermons {
+                    items {
+                      id
+                      TNident
+                      title
+                      speaker
+                      deliveryDate
+                      description
+                      audioUrl
+                      public
+                      series_FK
+                      sermonNoteCount
+                      quoteNoteCount
+                      homeChurchNoteCount
+                      sermonCommentCount
+                    }
+                    nextToken
+                  }
+                }
+                sermonNoteCount
+                quoteNoteCount
+                homeChurchNoteCount
+                sermonCommentCount
+              }
+              nextToken
+            }
+          }
+          sermonNoteCount
+          quoteNoteCount
+          homeChurchNoteCount
+          sermonCommentCount
+        }
+        nextToken
+      }
+    }
+    sermonNoteCount
+    quoteNoteCount
+    homeChurchNoteCount
+    sermonCommentCount
+  }
+}
+mutation CreateResource($input: CreateResourceInput!) {
+  createResource(input: $input) {
+    id
+  }
+}
+mutation UpdateResource($input: UpdateResourceInput!) {
+  updateResource(input: $input) {
+    id
+  }
+}
+mutation DeleteResource($input: DeleteResourceInput!) {
+  deleteResource(input: $input) {
+    id
+  }
+}
+mutation CreateVideo($input: CreateVideoInput!) {
+  createVideo(input: $input) {
+    id
+    createdBy
+    createdDate
+    locations {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+    episodeTitle
+    episodeNumber
+    seriesTitle
+    publishedDate
+    recordedDate
+    description
+    closedCaptioning
+    referencedMedia
+    campaigns
+    bibleVerses
+    topics
+    qandeh
+    length
+    YoutubeIdent
+    Youtube {
+      id
+      kind
+      etag
+      snippet {
+        publishedAt
+        channelId
+        title
+        description
+        thumbnails {
+          default {
+            url
+            width
+            height
+          }
+          medium {
+            url
+            width
+            height
+          }
+          high {
+            url
+            width
+            height
+          }
+          standard {
+            url
+            width
+            height
+          }
+          maxres {
+            url
+            width
+            height
+          }
+        }
+        channelTitle
+        localized {
+          title
+          description
+        }
+      }
+      contentDetails {
+        videoId
+        videoPublishedAt
+      }
+    }
+    videoTypes
+  }
+}
+mutation UpdateVideo($input: UpdateVideoInput!) {
+  updateVideo(input: $input) {
+    id
+    createdBy
+    createdDate
+    locations {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+    episodeTitle
+    episodeNumber
+    seriesTitle
+    publishedDate
+    recordedDate
+    description
+    closedCaptioning
+    referencedMedia
+    campaigns
+    bibleVerses
+    topics
+    qandeh
+    length
+    YoutubeIdent
+    Youtube {
+      id
+      kind
+      etag
+      snippet {
+        publishedAt
+        channelId
+        title
+        description
+        thumbnails {
+          default {
+            url
+            width
+            height
+          }
+          medium {
+            url
+            width
+            height
+          }
+          high {
+            url
+            width
+            height
+          }
+          standard {
+            url
+            width
+            height
+          }
+          maxres {
+            url
+            width
+            height
+          }
+        }
+        channelTitle
+        localized {
+          title
+          description
+        }
+      }
+      contentDetails {
+        videoId
+        videoPublishedAt
+      }
+    }
+    videoTypes
+  }
+}
+mutation DeleteVideo($input: DeleteVideoInput!) {
+  deleteVideo(input: $input) {
+    id
+    createdBy
+    createdDate
+    locations {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+    episodeTitle
+    episodeNumber
+    seriesTitle
+    publishedDate
+    recordedDate
+    description
+    closedCaptioning
+    referencedMedia
+    campaigns
+    bibleVerses
+    topics
+    qandeh
+    length
+    YoutubeIdent
+    Youtube {
+      id
+      kind
+      etag
+      snippet {
+        publishedAt
+        channelId
+        title
+        description
+        thumbnails {
+          default {
+            url
+            width
+            height
+          }
+          medium {
+            url
+            width
+            height
+          }
+          high {
+            url
+            width
+            height
+          }
+          standard {
+            url
+            width
+            height
+          }
+          maxres {
+            url
+            width
+            height
+          }
+        }
+        channelTitle
+        localized {
+          title
+          description
+        }
+      }
+      contentDetails {
+        videoId
+        videoPublishedAt
+      }
+    }
+    videoTypes
+  }
+}
+mutation CreateBlog($input: CreateBlogInput!) {
+  createBlog(input: $input) {
+    id
+    createdBy
+    createdDate
+    postedDate
+    locations {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+    title
+    content
+    version
+  }
+}
+mutation UpdateBlog($input: UpdateBlogInput!) {
+  updateBlog(input: $input) {
+    id
+    createdBy
+    createdDate
+    postedDate
+    locations {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+    title
+    content
+    version
+  }
+}
+mutation DeleteBlog($input: DeleteBlogInput!) {
+  deleteBlog(input: $input) {
+    id
+    createdBy
+    createdDate
+    postedDate
+    locations {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+    title
+    content
+    version
+  }
+}
+mutation CreateNews($input: CreateNewsInput!) {
+  createNews(input: $input) {
+    id
+    createdBy
+    createdDate
+    postedDate
+    locations {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+    title
+    content
+    startDate
+    endDate
+  }
+}
+mutation UpdateNews($input: UpdateNewsInput!) {
+  updateNews(input: $input) {
+    id
+    createdBy
+    createdDate
+    postedDate
+    locations {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+    title
+    content
+    startDate
+    endDate
+  }
+}
+mutation DeleteNews($input: DeleteNewsInput!) {
+  deleteNews(input: $input) {
+    id
+    createdBy
+    createdDate
+    postedDate
+    locations {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+    title
+    content
+    startDate
+    endDate
+  }
+}
+mutation CreateEvent($input: CreateEventInput!) {
+  createEvent(input: $input) {
+    id
+    createdBy
+    createdDate
+    postedDate
+    locations {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+    startTime
+    endTime
+    title
+    description
+  }
+}
+mutation UpdateEvent($input: UpdateEventInput!) {
+  updateEvent(input: $input) {
+    id
+    createdBy
+    createdDate
+    postedDate
+    locations {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+    startTime
+    endTime
+    title
+    description
+  }
+}
+mutation DeleteEvent($input: DeleteEventInput!) {
+  deleteEvent(input: $input) {
+    id
+    createdBy
+    createdDate
+    postedDate
+    locations {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+    startTime
+    endTime
+    title
+    description
+  }
+}
+mutation CreateGroup($input: CreateGroupInput!) {
+  createGroup(input: $input) {
+    id
+    canJoin
+    visibleToNonMembers
+    status
+    name
+    admin {
+      sub
+      title
+      name
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      website
+      status
+    }
+    members {
+      sub
+      title
+      name
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      website
+      status
+    }
+    type
+  }
+}
+mutation UpdateGroup($input: UpdateGroupInput!) {
+  updateGroup(input: $input) {
+    id
+    canJoin
+    visibleToNonMembers
+    status
+    name
+    admin {
+      sub
+      title
+      name
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      website
+      status
+    }
+    members {
+      sub
+      title
+      name
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      website
+      status
+    }
+    type
+  }
+}
+mutation DeleteGroup($input: DeleteGroupInput!) {
+  deleteGroup(input: $input) {
+    id
+    canJoin
+    visibleToNonMembers
+    status
+    name
+    admin {
+      sub
+      title
+      name
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      website
+      status
+    }
+    members {
+      sub
+      title
+      name
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      website
+      status
+    }
+    type
+  }
+}
+mutation CreateOrganization($input: CreateOrganizationInput!) {
+  createOrganization(input: $input) {
+    id
+    canJoin
+    visibleToNonMembers
+    status
+    name
+    admin {
+      sub
+      title
+      name
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      website
+      status
+    }
+    members {
+      sub
+      title
+      name
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      website
+      status
+    }
+    location
+    address
+    phone
+    email
+    instagram
+    twitter
+    facebook
+    website
+    sites {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+  }
+}
+mutation UpdateOrganization($input: UpdateOrganizationInput!) {
+  updateOrganization(input: $input) {
+    id
+    canJoin
+    visibleToNonMembers
+    status
+    name
+    admin {
+      sub
+      title
+      name
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      website
+      status
+    }
+    members {
+      sub
+      title
+      name
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      website
+      status
+    }
+    location
+    address
+    phone
+    email
+    instagram
+    twitter
+    facebook
+    website
+    sites {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+  }
+}
+mutation DeleteOrganization($input: DeleteOrganizationInput!) {
+  deleteOrganization(input: $input) {
+    id
+    canJoin
+    visibleToNonMembers
+    status
+    name
+    admin {
+      sub
+      title
+      name
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      website
+      status
+    }
+    members {
+      sub
+      title
+      name
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      website
+      status
+    }
+    location
+    address
+    phone
+    email
+    instagram
+    twitter
+    facebook
+    website
+    sites {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+  }
+}
+mutation CreateLocation($input: CreateLocationInput!) {
+  createLocation(input: $input) {
+    id
+    url
+    site_name
+    directions
+    welcome
+    welcome_img
+    welcome_vid_youtube
+    phone
+    email
+    instagram
+    twitter
+    facebook
+    location {
+      longitude
+      latitude
+      address
+    }
+    visible
+  }
+}
+mutation UpdateLocation($input: UpdateLocationInput!) {
+  updateLocation(input: $input) {
+    id
+    url
+    site_name
+    directions
+    welcome
+    welcome_img
+    welcome_vid_youtube
+    phone
+    email
+    instagram
+    twitter
+    facebook
+    location {
+      longitude
+      latitude
+      address
+    }
+    visible
+  }
+}
+mutation DeleteLocation($input: DeleteLocationInput!) {
+  deleteLocation(input: $input) {
+    id
+    url
+    site_name
+    directions
+    welcome
+    welcome_img
+    welcome_vid_youtube
+    phone
+    email
+    instagram
+    twitter
+    facebook
+    location {
+      longitude
+      latitude
+      address
+    }
+    visible
+  }
+}
+mutation CreateStaff($input: CreateStaffInput!) {
+  createStaff(input: $input) {
+    sub
+    title
+    name
+    phone
+    email
+    instagram
+    twitter
+    facebook
+    website
+    status
+  }
+}
+mutation UpdateStaff($input: UpdateStaffInput!) {
+  updateStaff(input: $input) {
+    sub
+    title
+    name
+    phone
+    email
+    instagram
+    twitter
+    facebook
+    website
+    status
+  }
+}
+mutation DeleteStaff($input: DeleteStaffInput!) {
+  deleteStaff(input: $input) {
+    sub
+    title
+    name
+    phone
+    email
+    instagram
+    twitter
+    facebook
+    website
+    status
+  }
+}
+mutation CreateRegion($input: CreateRegionInput!) {
+  createRegion(input: $input) {
+    id
+    name
+    status
+    sites {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+  }
+}
+mutation UpdateRegion($input: UpdateRegionInput!) {
+  updateRegion(input: $input) {
+    id
+    name
+    status
+    sites {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+  }
+}
+mutation DeleteRegion($input: DeleteRegionInput!) {
+  deleteRegion(input: $input) {
+    id
+    name
+    status
+    sites {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+  }
+}

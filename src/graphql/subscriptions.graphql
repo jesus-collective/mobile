@@ -1,0 +1,1822 @@
+# this is an auto generated file. This will be overwritten
+subscription OnCreateTnSeries {
+  onCreateTNSeries {
+    id
+    TNident
+    title
+    description
+    imageUrl
+    public
+    thumbnail
+    startDate
+    endDate
+    sermonCommentCount
+    homeChurchCommentCount
+    sermons {
+      items {
+        id
+        TNident
+        title
+        speaker
+        deliveryDate
+        description
+        audioUrl
+        mediaEntries {
+          type
+          contentType
+          kind
+          label
+          url
+        }
+        public
+        series_FK
+        series {
+          id
+          TNident
+          title
+          description
+          imageUrl
+          public
+          thumbnail
+          startDate
+          endDate
+          sermonCommentCount
+          homeChurchCommentCount
+          sermons {
+            items {
+              id
+              TNident
+              title
+              speaker
+              deliveryDate
+              description
+              audioUrl
+              mediaEntries {
+                type
+                contentType
+                kind
+                label
+                url
+              }
+              public
+              series_FK
+              series {
+                id
+                TNident
+                title
+                description
+                imageUrl
+                public
+                thumbnail
+                startDate
+                endDate
+                sermonCommentCount
+                homeChurchCommentCount
+                sermons {
+                  items {
+                    id
+                    TNident
+                    title
+                    speaker
+                    deliveryDate
+                    description
+                    audioUrl
+                    mediaEntries {
+                      type
+                      contentType
+                      kind
+                      label
+                      url
+                    }
+                    public
+                    series_FK
+                    series {
+                      id
+                      TNident
+                      title
+                      description
+                      imageUrl
+                      public
+                      thumbnail
+                      startDate
+                      endDate
+                      sermonCommentCount
+                      homeChurchCommentCount
+                    }
+                    sermonNoteCount
+                    quoteNoteCount
+                    homeChurchNoteCount
+                    sermonCommentCount
+                  }
+                  nextToken
+                }
+              }
+              sermonNoteCount
+              quoteNoteCount
+              homeChurchNoteCount
+              sermonCommentCount
+            }
+            nextToken
+          }
+        }
+        sermonNoteCount
+        quoteNoteCount
+        homeChurchNoteCount
+        sermonCommentCount
+      }
+      nextToken
+    }
+  }
+}
+subscription OnUpdateTnSeries {
+  onUpdateTNSeries {
+    id
+    TNident
+    title
+    description
+    imageUrl
+    public
+    thumbnail
+    startDate
+    endDate
+    sermonCommentCount
+    homeChurchCommentCount
+    sermons {
+      items {
+        id
+        TNident
+        title
+        speaker
+        deliveryDate
+        description
+        audioUrl
+        mediaEntries {
+          type
+          contentType
+          kind
+          label
+          url
+        }
+        public
+        series_FK
+        series {
+          id
+          TNident
+          title
+          description
+          imageUrl
+          public
+          thumbnail
+          startDate
+          endDate
+          sermonCommentCount
+          homeChurchCommentCount
+          sermons {
+            items {
+              id
+              TNident
+              title
+              speaker
+              deliveryDate
+              description
+              audioUrl
+              mediaEntries {
+                type
+                contentType
+                kind
+                label
+                url
+              }
+              public
+              series_FK
+              series {
+                id
+                TNident
+                title
+                description
+                imageUrl
+                public
+                thumbnail
+                startDate
+                endDate
+                sermonCommentCount
+                homeChurchCommentCount
+                sermons {
+                  items {
+                    id
+                    TNident
+                    title
+                    speaker
+                    deliveryDate
+                    description
+                    audioUrl
+                    mediaEntries {
+                      type
+                      contentType
+                      kind
+                      label
+                      url
+                    }
+                    public
+                    series_FK
+                    series {
+                      id
+                      TNident
+                      title
+                      description
+                      imageUrl
+                      public
+                      thumbnail
+                      startDate
+                      endDate
+                      sermonCommentCount
+                      homeChurchCommentCount
+                    }
+                    sermonNoteCount
+                    quoteNoteCount
+                    homeChurchNoteCount
+                    sermonCommentCount
+                  }
+                  nextToken
+                }
+              }
+              sermonNoteCount
+              quoteNoteCount
+              homeChurchNoteCount
+              sermonCommentCount
+            }
+            nextToken
+          }
+        }
+        sermonNoteCount
+        quoteNoteCount
+        homeChurchNoteCount
+        sermonCommentCount
+      }
+      nextToken
+    }
+  }
+}
+subscription OnDeleteTnSeries {
+  onDeleteTNSeries {
+    id
+    TNident
+    title
+    description
+    imageUrl
+    public
+    thumbnail
+    startDate
+    endDate
+    sermonCommentCount
+    homeChurchCommentCount
+    sermons {
+      items {
+        id
+        TNident
+        title
+        speaker
+        deliveryDate
+        description
+        audioUrl
+        mediaEntries {
+          type
+          contentType
+          kind
+          label
+          url
+        }
+        public
+        series_FK
+        series {
+          id
+          TNident
+          title
+          description
+          imageUrl
+          public
+          thumbnail
+          startDate
+          endDate
+          sermonCommentCount
+          homeChurchCommentCount
+          sermons {
+            items {
+              id
+              TNident
+              title
+              speaker
+              deliveryDate
+              description
+              audioUrl
+              mediaEntries {
+                type
+                contentType
+                kind
+                label
+                url
+              }
+              public
+              series_FK
+              series {
+                id
+                TNident
+                title
+                description
+                imageUrl
+                public
+                thumbnail
+                startDate
+                endDate
+                sermonCommentCount
+                homeChurchCommentCount
+                sermons {
+                  items {
+                    id
+                    TNident
+                    title
+                    speaker
+                    deliveryDate
+                    description
+                    audioUrl
+                    mediaEntries {
+                      type
+                      contentType
+                      kind
+                      label
+                      url
+                    }
+                    public
+                    series_FK
+                    series {
+                      id
+                      TNident
+                      title
+                      description
+                      imageUrl
+                      public
+                      thumbnail
+                      startDate
+                      endDate
+                      sermonCommentCount
+                      homeChurchCommentCount
+                    }
+                    sermonNoteCount
+                    quoteNoteCount
+                    homeChurchNoteCount
+                    sermonCommentCount
+                  }
+                  nextToken
+                }
+              }
+              sermonNoteCount
+              quoteNoteCount
+              homeChurchNoteCount
+              sermonCommentCount
+            }
+            nextToken
+          }
+        }
+        sermonNoteCount
+        quoteNoteCount
+        homeChurchNoteCount
+        sermonCommentCount
+      }
+      nextToken
+    }
+  }
+}
+subscription OnCreateTnSermon {
+  onCreateTNSermon {
+    id
+    TNident
+    title
+    speaker
+    deliveryDate
+    description
+    audioUrl
+    mediaEntries {
+      type
+      contentType
+      kind
+      label
+      url
+    }
+    public
+    series_FK
+    series {
+      id
+      TNident
+      title
+      description
+      imageUrl
+      public
+      thumbnail
+      startDate
+      endDate
+      sermonCommentCount
+      homeChurchCommentCount
+      sermons {
+        items {
+          id
+          TNident
+          title
+          speaker
+          deliveryDate
+          description
+          audioUrl
+          mediaEntries {
+            type
+            contentType
+            kind
+            label
+            url
+          }
+          public
+          series_FK
+          series {
+            id
+            TNident
+            title
+            description
+            imageUrl
+            public
+            thumbnail
+            startDate
+            endDate
+            sermonCommentCount
+            homeChurchCommentCount
+            sermons {
+              items {
+                id
+                TNident
+                title
+                speaker
+                deliveryDate
+                description
+                audioUrl
+                mediaEntries {
+                  type
+                  contentType
+                  kind
+                  label
+                  url
+                }
+                public
+                series_FK
+                series {
+                  id
+                  TNident
+                  title
+                  description
+                  imageUrl
+                  public
+                  thumbnail
+                  startDate
+                  endDate
+                  sermonCommentCount
+                  homeChurchCommentCount
+                  sermons {
+                    items {
+                      id
+                      TNident
+                      title
+                      speaker
+                      deliveryDate
+                      description
+                      audioUrl
+                      public
+                      series_FK
+                      sermonNoteCount
+                      quoteNoteCount
+                      homeChurchNoteCount
+                      sermonCommentCount
+                    }
+                    nextToken
+                  }
+                }
+                sermonNoteCount
+                quoteNoteCount
+                homeChurchNoteCount
+                sermonCommentCount
+              }
+              nextToken
+            }
+          }
+          sermonNoteCount
+          quoteNoteCount
+          homeChurchNoteCount
+          sermonCommentCount
+        }
+        nextToken
+      }
+    }
+    sermonNoteCount
+    quoteNoteCount
+    homeChurchNoteCount
+    sermonCommentCount
+  }
+}
+subscription OnUpdateTnSermon {
+  onUpdateTNSermon {
+    id
+    TNident
+    title
+    speaker
+    deliveryDate
+    description
+    audioUrl
+    mediaEntries {
+      type
+      contentType
+      kind
+      label
+      url
+    }
+    public
+    series_FK
+    series {
+      id
+      TNident
+      title
+      description
+      imageUrl
+      public
+      thumbnail
+      startDate
+      endDate
+      sermonCommentCount
+      homeChurchCommentCount
+      sermons {
+        items {
+          id
+          TNident
+          title
+          speaker
+          deliveryDate
+          description
+          audioUrl
+          mediaEntries {
+            type
+            contentType
+            kind
+            label
+            url
+          }
+          public
+          series_FK
+          series {
+            id
+            TNident
+            title
+            description
+            imageUrl
+            public
+            thumbnail
+            startDate
+            endDate
+            sermonCommentCount
+            homeChurchCommentCount
+            sermons {
+              items {
+                id
+                TNident
+                title
+                speaker
+                deliveryDate
+                description
+                audioUrl
+                mediaEntries {
+                  type
+                  contentType
+                  kind
+                  label
+                  url
+                }
+                public
+                series_FK
+                series {
+                  id
+                  TNident
+                  title
+                  description
+                  imageUrl
+                  public
+                  thumbnail
+                  startDate
+                  endDate
+                  sermonCommentCount
+                  homeChurchCommentCount
+                  sermons {
+                    items {
+                      id
+                      TNident
+                      title
+                      speaker
+                      deliveryDate
+                      description
+                      audioUrl
+                      public
+                      series_FK
+                      sermonNoteCount
+                      quoteNoteCount
+                      homeChurchNoteCount
+                      sermonCommentCount
+                    }
+                    nextToken
+                  }
+                }
+                sermonNoteCount
+                quoteNoteCount
+                homeChurchNoteCount
+                sermonCommentCount
+              }
+              nextToken
+            }
+          }
+          sermonNoteCount
+          quoteNoteCount
+          homeChurchNoteCount
+          sermonCommentCount
+        }
+        nextToken
+      }
+    }
+    sermonNoteCount
+    quoteNoteCount
+    homeChurchNoteCount
+    sermonCommentCount
+  }
+}
+subscription OnDeleteTnSermon {
+  onDeleteTNSermon {
+    id
+    TNident
+    title
+    speaker
+    deliveryDate
+    description
+    audioUrl
+    mediaEntries {
+      type
+      contentType
+      kind
+      label
+      url
+    }
+    public
+    series_FK
+    series {
+      id
+      TNident
+      title
+      description
+      imageUrl
+      public
+      thumbnail
+      startDate
+      endDate
+      sermonCommentCount
+      homeChurchCommentCount
+      sermons {
+        items {
+          id
+          TNident
+          title
+          speaker
+          deliveryDate
+          description
+          audioUrl
+          mediaEntries {
+            type
+            contentType
+            kind
+            label
+            url
+          }
+          public
+          series_FK
+          series {
+            id
+            TNident
+            title
+            description
+            imageUrl
+            public
+            thumbnail
+            startDate
+            endDate
+            sermonCommentCount
+            homeChurchCommentCount
+            sermons {
+              items {
+                id
+                TNident
+                title
+                speaker
+                deliveryDate
+                description
+                audioUrl
+                mediaEntries {
+                  type
+                  contentType
+                  kind
+                  label
+                  url
+                }
+                public
+                series_FK
+                series {
+                  id
+                  TNident
+                  title
+                  description
+                  imageUrl
+                  public
+                  thumbnail
+                  startDate
+                  endDate
+                  sermonCommentCount
+                  homeChurchCommentCount
+                  sermons {
+                    items {
+                      id
+                      TNident
+                      title
+                      speaker
+                      deliveryDate
+                      description
+                      audioUrl
+                      public
+                      series_FK
+                      sermonNoteCount
+                      quoteNoteCount
+                      homeChurchNoteCount
+                      sermonCommentCount
+                    }
+                    nextToken
+                  }
+                }
+                sermonNoteCount
+                quoteNoteCount
+                homeChurchNoteCount
+                sermonCommentCount
+              }
+              nextToken
+            }
+          }
+          sermonNoteCount
+          quoteNoteCount
+          homeChurchNoteCount
+          sermonCommentCount
+        }
+        nextToken
+      }
+    }
+    sermonNoteCount
+    quoteNoteCount
+    homeChurchNoteCount
+    sermonCommentCount
+  }
+}
+subscription OnCreateResource {
+  onCreateResource {
+    id
+  }
+}
+subscription OnUpdateResource {
+  onUpdateResource {
+    id
+  }
+}
+subscription OnDeleteResource {
+  onDeleteResource {
+    id
+  }
+}
+subscription OnCreateVideo {
+  onCreateVideo {
+    id
+    createdBy
+    createdDate
+    locations {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+    episodeTitle
+    episodeNumber
+    seriesTitle
+    publishedDate
+    recordedDate
+    description
+    closedCaptioning
+    referencedMedia
+    campaigns
+    bibleVerses
+    topics
+    qandeh
+    length
+    YoutubeIdent
+    Youtube {
+      id
+      kind
+      etag
+      snippet {
+        publishedAt
+        channelId
+        title
+        description
+        thumbnails {
+          default {
+            url
+            width
+            height
+          }
+          medium {
+            url
+            width
+            height
+          }
+          high {
+            url
+            width
+            height
+          }
+          standard {
+            url
+            width
+            height
+          }
+          maxres {
+            url
+            width
+            height
+          }
+        }
+        channelTitle
+        localized {
+          title
+          description
+        }
+      }
+      contentDetails {
+        videoId
+        videoPublishedAt
+      }
+    }
+    videoTypes
+  }
+}
+subscription OnUpdateVideo {
+  onUpdateVideo {
+    id
+    createdBy
+    createdDate
+    locations {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+    episodeTitle
+    episodeNumber
+    seriesTitle
+    publishedDate
+    recordedDate
+    description
+    closedCaptioning
+    referencedMedia
+    campaigns
+    bibleVerses
+    topics
+    qandeh
+    length
+    YoutubeIdent
+    Youtube {
+      id
+      kind
+      etag
+      snippet {
+        publishedAt
+        channelId
+        title
+        description
+        thumbnails {
+          default {
+            url
+            width
+            height
+          }
+          medium {
+            url
+            width
+            height
+          }
+          high {
+            url
+            width
+            height
+          }
+          standard {
+            url
+            width
+            height
+          }
+          maxres {
+            url
+            width
+            height
+          }
+        }
+        channelTitle
+        localized {
+          title
+          description
+        }
+      }
+      contentDetails {
+        videoId
+        videoPublishedAt
+      }
+    }
+    videoTypes
+  }
+}
+subscription OnDeleteVideo {
+  onDeleteVideo {
+    id
+    createdBy
+    createdDate
+    locations {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+    episodeTitle
+    episodeNumber
+    seriesTitle
+    publishedDate
+    recordedDate
+    description
+    closedCaptioning
+    referencedMedia
+    campaigns
+    bibleVerses
+    topics
+    qandeh
+    length
+    YoutubeIdent
+    Youtube {
+      id
+      kind
+      etag
+      snippet {
+        publishedAt
+        channelId
+        title
+        description
+        thumbnails {
+          default {
+            url
+            width
+            height
+          }
+          medium {
+            url
+            width
+            height
+          }
+          high {
+            url
+            width
+            height
+          }
+          standard {
+            url
+            width
+            height
+          }
+          maxres {
+            url
+            width
+            height
+          }
+        }
+        channelTitle
+        localized {
+          title
+          description
+        }
+      }
+      contentDetails {
+        videoId
+        videoPublishedAt
+      }
+    }
+    videoTypes
+  }
+}
+subscription OnCreateBlog {
+  onCreateBlog {
+    id
+    createdBy
+    createdDate
+    postedDate
+    locations {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+    title
+    content
+    version
+  }
+}
+subscription OnUpdateBlog {
+  onUpdateBlog {
+    id
+    createdBy
+    createdDate
+    postedDate
+    locations {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+    title
+    content
+    version
+  }
+}
+subscription OnDeleteBlog {
+  onDeleteBlog {
+    id
+    createdBy
+    createdDate
+    postedDate
+    locations {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+    title
+    content
+    version
+  }
+}
+subscription OnCreateNews {
+  onCreateNews {
+    id
+    createdBy
+    createdDate
+    postedDate
+    locations {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+    title
+    content
+    startDate
+    endDate
+  }
+}
+subscription OnUpdateNews {
+  onUpdateNews {
+    id
+    createdBy
+    createdDate
+    postedDate
+    locations {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+    title
+    content
+    startDate
+    endDate
+  }
+}
+subscription OnDeleteNews {
+  onDeleteNews {
+    id
+    createdBy
+    createdDate
+    postedDate
+    locations {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+    title
+    content
+    startDate
+    endDate
+  }
+}
+subscription OnCreateEvent {
+  onCreateEvent {
+    id
+    createdBy
+    createdDate
+    postedDate
+    locations {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+    startTime
+    endTime
+    title
+    description
+  }
+}
+subscription OnUpdateEvent {
+  onUpdateEvent {
+    id
+    createdBy
+    createdDate
+    postedDate
+    locations {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+    startTime
+    endTime
+    title
+    description
+  }
+}
+subscription OnDeleteEvent {
+  onDeleteEvent {
+    id
+    createdBy
+    createdDate
+    postedDate
+    locations {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+    startTime
+    endTime
+    title
+    description
+  }
+}
+subscription OnCreateGroup {
+  onCreateGroup {
+    id
+    canJoin
+    visibleToNonMembers
+    status
+    name
+    admin {
+      sub
+      title
+      name
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      website
+      status
+    }
+    members {
+      sub
+      title
+      name
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      website
+      status
+    }
+    type
+  }
+}
+subscription OnUpdateGroup {
+  onUpdateGroup {
+    id
+    canJoin
+    visibleToNonMembers
+    status
+    name
+    admin {
+      sub
+      title
+      name
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      website
+      status
+    }
+    members {
+      sub
+      title
+      name
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      website
+      status
+    }
+    type
+  }
+}
+subscription OnDeleteGroup {
+  onDeleteGroup {
+    id
+    canJoin
+    visibleToNonMembers
+    status
+    name
+    admin {
+      sub
+      title
+      name
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      website
+      status
+    }
+    members {
+      sub
+      title
+      name
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      website
+      status
+    }
+    type
+  }
+}
+subscription OnCreateOrganization {
+  onCreateOrganization {
+    id
+    canJoin
+    visibleToNonMembers
+    status
+    name
+    admin {
+      sub
+      title
+      name
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      website
+      status
+    }
+    members {
+      sub
+      title
+      name
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      website
+      status
+    }
+    location
+    address
+    phone
+    email
+    instagram
+    twitter
+    facebook
+    website
+    sites {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+  }
+}
+subscription OnUpdateOrganization {
+  onUpdateOrganization {
+    id
+    canJoin
+    visibleToNonMembers
+    status
+    name
+    admin {
+      sub
+      title
+      name
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      website
+      status
+    }
+    members {
+      sub
+      title
+      name
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      website
+      status
+    }
+    location
+    address
+    phone
+    email
+    instagram
+    twitter
+    facebook
+    website
+    sites {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+  }
+}
+subscription OnDeleteOrganization {
+  onDeleteOrganization {
+    id
+    canJoin
+    visibleToNonMembers
+    status
+    name
+    admin {
+      sub
+      title
+      name
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      website
+      status
+    }
+    members {
+      sub
+      title
+      name
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      website
+      status
+    }
+    location
+    address
+    phone
+    email
+    instagram
+    twitter
+    facebook
+    website
+    sites {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+  }
+}
+subscription OnCreateLocation {
+  onCreateLocation {
+    id
+    url
+    site_name
+    directions
+    welcome
+    welcome_img
+    welcome_vid_youtube
+    phone
+    email
+    instagram
+    twitter
+    facebook
+    location {
+      longitude
+      latitude
+      address
+    }
+    visible
+  }
+}
+subscription OnUpdateLocation {
+  onUpdateLocation {
+    id
+    url
+    site_name
+    directions
+    welcome
+    welcome_img
+    welcome_vid_youtube
+    phone
+    email
+    instagram
+    twitter
+    facebook
+    location {
+      longitude
+      latitude
+      address
+    }
+    visible
+  }
+}
+subscription OnDeleteLocation {
+  onDeleteLocation {
+    id
+    url
+    site_name
+    directions
+    welcome
+    welcome_img
+    welcome_vid_youtube
+    phone
+    email
+    instagram
+    twitter
+    facebook
+    location {
+      longitude
+      latitude
+      address
+    }
+    visible
+  }
+}
+subscription OnCreateStaff {
+  onCreateStaff {
+    sub
+    title
+    name
+    phone
+    email
+    instagram
+    twitter
+    facebook
+    website
+    status
+  }
+}
+subscription OnUpdateStaff {
+  onUpdateStaff {
+    sub
+    title
+    name
+    phone
+    email
+    instagram
+    twitter
+    facebook
+    website
+    status
+  }
+}
+subscription OnDeleteStaff {
+  onDeleteStaff {
+    sub
+    title
+    name
+    phone
+    email
+    instagram
+    twitter
+    facebook
+    website
+    status
+  }
+}
+subscription OnCreateRegion {
+  onCreateRegion {
+    id
+    name
+    status
+    sites {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+  }
+}
+subscription OnUpdateRegion {
+  onUpdateRegion {
+    id
+    name
+    status
+    sites {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+  }
+}
+subscription OnDeleteRegion {
+  onDeleteRegion {
+    id
+    name
+    status
+    sites {
+      id
+      url
+      site_name
+      directions
+      welcome
+      welcome_img
+      welcome_vid_youtube
+      phone
+      email
+      instagram
+      twitter
+      facebook
+      location {
+        longitude
+        latitude
+        address
+      }
+      visible
+    }
+  }
+}

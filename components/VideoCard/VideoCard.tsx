@@ -5,8 +5,23 @@ import { ListItem, Card, CardItem, Body, List, Fab, Content, Text, Tab, Tabs, Se
 import { Share,StyleSheet, TouchableOpacity, WebView, Image, SectionList, View } from 'react-native'
 import {  Drawer, Container, Left, Icon, Title, Right, Button } from 'native-base';
 
-export default class VideoCard extends Component {
-    constructor(props) {
+interface IProps {
+  videoId: string;
+  episodeTitle: string;
+  speakers: [];
+  description:string;
+}
+
+
+interface IState {
+  videoId: string;
+  episodeTitle: string;
+  speakers: [];
+  description:string;
+}
+
+export default class VideoCard extends React.PureComponent<IProps, IState>  {
+    constructor(props:IProps) {
       super(props)
       this.state = {
         videoId: props.videoId,
@@ -15,7 +30,7 @@ export default class VideoCard extends Component {
         description: props.description,
       };
     }
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps:IProps) {
       // You don't have to do this check first, but it can help prevent an unneeded render
       if (nextProps.videoId !== this.state.videoId) {
         this.setState({ videoId: nextProps.videoId });
@@ -49,7 +64,7 @@ export default class VideoCard extends Component {
           // dismissed
         }
       } catch (error) {
-        alert(error.message);
+       // alert(error.message);
       }
     };
     render() {

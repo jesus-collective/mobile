@@ -4,18 +4,16 @@ import awsConfig from '../../src/aws-exports';
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
 import Amplify, { API, graphqlOperation, Analytics } from 'aws-amplify';
-import FederatedSignin from '../../components/FederatedSignin/FederatedSignin.js'
+import FederatedSignin from '../../components/FederatedSignin/FederatedSignin'
 Amplify.configure(awsConfig);
 
 import { Share,StyleSheet, TouchableOpacity, WebView, Image, SectionList, View } from 'react-native'
-import { Authenticator } from 'aws-amplify-react-native';
 import {  Drawer, Container, Left, Icon, Title, Right, Button } from 'native-base';
 import { DrawerActions } from 'react-navigation';
 import { SearchBar } from "react-native-elements";
 import { ListItem, Card, CardItem, Body, List, Fab, Content, Text, Tab, Tabs, Separator, ScrollableTab, TabHeading } from "native-base";
-import Header from '../../components/Header/Header.js';
-import VideoCard from '../../components/VideoCard/VideoCard.js'
-import YouTube from 'react-native-youtube'
+import Header from '../../components/Header/Header';
+import VideoCard from '../../components/VideoCard/VideoCard'
 import * as TeachingTabs from './TeachingTabs'
 
 const styles = StyleSheet.create({
@@ -36,12 +34,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 25,
-    color: "#000000"
+    color: "#520000"
   },
   container: {
     paddingVertical: 12,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
     flexDirection: 'row',
     alignItems: 'flex-start'
   },
@@ -78,9 +74,18 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
+interface IProps{
+    data:any;
+    searching:string;
+}
 
-class VideoList extends Component {
-  constructor(props) {
+interface IState{
+  data:any;
+    searching:string;
+   
+}
+class VideoList extends React.PureComponent<IProps, IState>  {
+  constructor(props:IProps) {
     super(props)
     this.state = {
       data: props.data,
@@ -88,7 +93,7 @@ class VideoList extends Component {
 
     };
   }
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps:IProps) {
     // You don't have to do this check first, but it can help prevent an unneeded render
     if (nextProps.data !== this.state.data) {
       this.setState({ data: nextProps.data });
@@ -114,8 +119,23 @@ class VideoList extends Component {
     )
   }
 }
-export default class TeachingScreen extends Component {
-  constructor(props) {
+interface IProps2{
+
+}
+interface IState2{
+  searching:string;
+  data: [];
+  currentTab:{
+    adult:string;
+    kids:string;
+    youth:string;
+    base:string;
+  }
+  currentTabData:{[id:string]:any};
+}
+
+export default class TeachingScreen extends React.PureComponent<IProps2, IState2>   {
+  constructor(props:IProps2) {
     super(props)
     this.state = {
       searching: '',
@@ -125,23 +145,24 @@ export default class TeachingScreen extends Component {
         kids: "kids-sunday",
         youth: "youth-sunday",
         base: "this-week"
-      }
+      },
+      currentTabData:[]
     };
   }
   onUpdateCurrentTabData() {
-    console.log("onUpdateCurrentTabData: " + this.state.currentTab[this.state.currentTab.base]);
+    console.log("onUpdateCurrentTabData: " + this.state.currentTabData[this.state.currentTab.base]);
     Analytics.record({ name: 'teachTabVisit',
-    attributes: { tab: this.state.currentTab[this.state.currentTab.base] } });
-    this.list(this.state.currentTab[this.state.currentTab.base])
+    attributes: { tab: this.state.currentTabData[this.state.currentTab.base] } });
+    this.list(this.state.currentTabData[this.state.currentTab.base])
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps:IProps2, prevState:IState2) {
     if (prevState.currentTab !== this.state.currentTab) {
       console.log("componentDidUpdate currentTab")
       this.onUpdateCurrentTabData();
     }
   }
-  updateSearch(search, videoType) {
+  updateSearch(search:string, videoType:string) {
     console.log("updateSearch: " + search + videoType)
     this.setState({ searching: search });
     this.search(search, videoType.replace(".$", ""));
@@ -172,7 +193,7 @@ export default class TeachingScreen extends Component {
     });
 
   }
-  search(string, videoTypes) {
+  search(string:string, videoTypes:string) {
     console.log("search: " + string + " " + videoTypes)
     Analytics.record({ name: 'teachSearch',
     attributes: { videoType: videoTypes, searchString:string } });
@@ -190,18 +211,18 @@ export default class TeachingScreen extends Component {
 
   }
 
-  onSubTabChange(tab) {
+  onSubTabChange(tab:string) {
     var temp = { ...this.state.currentTab };
     temp[temp.base] = tab.ref.key.replace(".$", "")
     this.setState({ currentTab: temp });
   }
 
-  onTabChange(tab) {
+  onTabChange(tab:string) {
     var temp = { ...this.state.currentTab };
     temp.base = tab.ref.key.replace(".$", "");
     this.setState({ currentTab: temp });
   }
-  renderList(name) {
+  renderList(name:string) {
     if (this.state.searching == null || this.state.searching == "")
       return (<Content>
         <SectionList
@@ -242,13 +263,13 @@ export default class TeachingScreen extends Component {
 
 
   }
-  getSearchData(videoType) {
+  getSearchData(videoType:string) {
     if (this.state.data[videoType] == null)
       return [];
     else
       return this.state.data[videoType];
   }
-  getListData(name) {
+  getListData(name:string) {
     if (this.state.data[name] == null)
       return [];
     else

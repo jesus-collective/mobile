@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import HomeScreen from "../HomeScreen/HomeScreen.js";
+import HomeScreen from "./HomeScreen";
 
-import NewsScreen from "../NewsScreen/NewsScreen.js";
-import SocialScreen from "../SocialScreen/SocialScreen.js";
-import PeopleScreen from "../PeopleScreen/PeopleScreen.js";
-import ProfileScreen from "../ProfileScreen/ProfileScreen.js";
-import LoginScreen from "../LoginScreen/LoginScreen.js";
-import TeachingScreen from "../TeachingScreen/TeachingScreen.js";
-import TmhuScreen from "../TmhuScreen/TmhuScreen.js";
-import SideBar from "../../components/Sidebar/Sidebar.js";
-import HomeChurchScreen from "../HomeChurchScreen/HomeChurchScreen.js"
+import NewsScreen from "../NewsScreen/NewsScreen";
+import SocialScreen from "../SocialScreen/SocialScreen";
+import PeopleScreen from "../PeopleScreen/PeopleScreen";
+import ProfileScreen from "../ProfileScreen/ProfileScreen";
+import LoginScreen from "../LoginScreen/LoginScreen";
+import TeachingScreen from "../TeachingScreen/TeachingScreen";
+import TmhuScreen from "../TmhuScreen/TmhuScreen";
+import SideBar from "../../components/Sidebar/Sidebar";
+import HomeChurchScreen from "../HomeChurchScreen/HomeChurchScreen"
 import { createDrawerNavigator,createAppContainer } from "react-navigation";
 const HomeScreenRouter = createDrawerNavigator(
   {

@@ -3,7 +3,7 @@
     "name": "The Meeting House",
     "slug": "TheMeetingHouse",
     "privacy": "public",
-    "sdkVersion": "32.0.0",
+    "sdkVersion": "35.0.0",
     "platforms": [
       "ios",
       "android"
@@ -11,9 +11,9 @@
     "version": "6.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "facebookScheme":"fb579712102531269",
-    "facebookAppId":"579712102531269",
-    "facebookDisplayName":"The Meeting House",
+    "facebookScheme": "fb579712102531269",
+    "facebookAppId": "579712102531269",
+    "facebookDisplayName": "The Meeting House",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -29,14 +29,13 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.fluidesign.mobileroadie.13460",
       "buildNumber": "12",
-      "config":{
-      "usesNonExemptEncryption": true
+      "config": {
+        "usesNonExemptEncryption": true
       }
     },
     "android": {
       "versionCode": 12,
       "package": "com.themeetinghouse.androidapp"
-
     }
   }
 }

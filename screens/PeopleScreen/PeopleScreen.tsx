@@ -2,15 +2,14 @@
 import { Component } from 'react';
 import Amplify from 'aws-amplify';
 import awsConfig from '../../src/aws-exports';
-import FederatedSignin from '../../components/FederatedSignin/FederatedSignin.js'
+import FederatedSignin from '../../components/FederatedSignin/FederatedSignin'
 Amplify.configure(awsConfig);
 
-import { Authenticator } from 'aws-amplify-react-native';
 import {   View, Drawer, Container, Left,Icon,Body,Title,Right,Button } from 'native-base';
 import { DrawerActions } from 'react-navigation';
 import {StyleSheet, Text} from 'react-native'
 import Swiper from 'react-native-deck-swiper'
-import Header from '../../components/Header/Header.js'
+import Header from '../../components/Header/Header'
 
  export default class PeopleScreen extends Component {
  
@@ -41,7 +40,7 @@ import Header from '../../components/Header/Header.js'
        <Header title="People" navigation={this.props.navigation} />    
        <View>
        <Swiper style={{height:50}}
-            cards={['DO', 'MORE', 'OF', 'WHAT', 'MAKES', 'YOU', 'HAPPY']}
+            cards={['Test', 'of', 'people', 'list', 'for', 'fun', '!!!']}
             renderCard={(card) => {
                 return (
                     <View style={styles.card}>

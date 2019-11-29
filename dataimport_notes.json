@@ -1,0 +1,238 @@
+{
+    "sermonNotes": [
+        {
+            "id": 1554031044962,
+            "noteType": "note",
+            "content": "Week 1: Deconstruction<br>\n<strong>Week 2: Doubt<\/strong>",
+            "position": 1,
+            "timecode": null,
+            "sermons_FK": "1554030797016"
+        },
+        {
+            "id": 1554031044963,
+            "noteType": "heading1",
+            "content": "APPETIZER: Spiritual Parkour",
+            "position": 2,
+            "timecode": null,
+            "sermons_FK": "1554030797016"
+        },
+        {
+            "id": 1554031044964,
+            "noteType": "note",
+            "content": "\u2022 Is faith in God creatively leaping from question to question hoping you don\u2019t end up in a dumpster?",
+            "position": 3,
+            "timecode": null,
+            "sermons_FK": "1554030797016"
+        },
+        {
+            "id": 1554031044965,
+            "noteType": "note",
+            "content": "The evolving path of faith in Jesus\u2026",
+            "position": 4,
+            "timecode": null,
+            "sermons_FK": "1554030797016"
+        },
+        {
+            "id": 1554031044966,
+            "noteType": "note",
+            "content": "Faith is not a blind leap into the pond, rather, a long walk around the lake",
+            "position": 5,
+            "timecode": null,
+            "sermons_FK": "1554030797016"
+        },
+        {
+            "id": 1554031044967,
+            "noteType": "note",
+            "content": "FAITH\/BELIEVE:",
+            "position": 6,
+            "timecode": null,
+            "sermons_FK": "1554030797016"
+        },
+        {
+            "id": 1554031044968,
+            "noteType": "note",
+            "content": "PISTEUO -- \u03c0\u03b9\u03c3\u03c4\u03b5\u1f7b\u03c9",
+            "position": 7,
+            "timecode": null,
+            "sermons_FK": "1554030797016"
+        },
+        {
+            "id": 1554031044969,
+            "noteType": "note",
+            "content": "Trusting in, conviction of, resulting in action\/loyalty",
+            "position": 8,
+            "timecode": null,
+            "sermons_FK": "1554030797016"
+        },
+        {
+            "id": 1554031044970,
+            "noteType": "heading1",
+            "content": "DINE IN: Darn you, Doubt.",
+            "position": 9,
+            "timecode": null,
+            "sermons_FK": "1554030797016"
+        },
+        {
+            "id": 1554031044971,
+            "noteType": "note",
+            "content": "Can God be trusted?",
+            "position": 10,
+            "timecode": null,
+            "sermons_FK": "1554030797016"
+        },
+        {
+            "id": 1554031044972,
+            "noteType": "note",
+            "content": "Does life mean something?",
+            "position": 11,
+            "timecode": null,
+            "sermons_FK": "1554030797016"
+        },
+        {
+            "id": 1554031044973,
+            "noteType": "verseRelated",
+            "content": "<span class=\"verse\" verseid=\"1554031044975\" chapterverse=\"John 20:19-29\">John 20:19-29<\/span>",
+            "position": 12,
+            "timecode": null,
+            "sermons_FK": "1554030797016"
+        },
+        {
+            "id": 1554031044976,
+            "noteType": "note",
+            "content": "The disciples are facing:",
+            "position": 13,
+            "timecode": null,
+            "sermons_FK": "1554030797016"
+        },
+        {
+            "id": 1554031044977,
+            "noteType": "note",
+            "content": "\u2022 Death of their Messiah and movement",
+            "position": 14,
+            "timecode": null,
+            "sermons_FK": "1554030797016"
+        },
+        {
+            "id": 1554031044978,
+            "noteType": "note",
+            "content": "\u2022 Loss of identity, hope, way of life",
+            "position": 15,
+            "timecode": null,
+            "sermons_FK": "1554030797016"
+        },
+        {
+            "id": 1554031044979,
+            "noteType": "note",
+            "content": "\u2022 Returning to the ordinary (farming, fishing, carpentry)",
+            "position": 16,
+            "timecode": null,
+            "sermons_FK": "1554030797016"
+        },
+        {
+            "id": 1554031044980,
+            "noteType": "heading1",
+            "content": "TAKE OUT: Faithing Our Doubts\u2026 Together",
+            "position": 17,
+            "timecode": null,
+            "sermons_FK": "1554030797016"
+        },
+        {
+            "id": 1554031044981,
+            "noteType": "note",
+            "content": "The Thomas Question",
+            "position": 18,
+            "timecode": null,
+            "sermons_FK": "1554030797016"
+        },
+        {
+            "id": 1554031044982,
+            "noteType": "note",
+            "content": "When the disciples are in a time of suffering and confusion, they gather together.",
+            "position": 19,
+            "timecode": null,
+            "sermons_FK": "1554030797016"
+        },
+        {
+            "id": 1554031044983,
+            "noteType": "note",
+            "content": "\u2022 Suffering",
+            "position": 20,
+            "timecode": null,
+            "sermons_FK": "1554030797016"
+        },
+        {
+            "id": 1554031044984,
+            "noteType": "note",
+            "content": "\u2022 Loneliness",
+            "position": 21,
+            "timecode": null,
+            "sermons_FK": "1554030797016"
+        },
+        {
+            "id": 1554031044985,
+            "noteType": "note",
+            "content": "\u2022 Together",
+            "position": 22,
+            "timecode": null,
+            "sermons_FK": "1554030797016"
+        },
+        {
+            "id": 1554031044986,
+            "noteType": "note",
+            "content": "Julian, Jesus, and the Galilieans",
+            "position": 23,
+            "timecode": null,
+            "sermons_FK": "1554030797016"
+        },
+        {
+            "id": 1554031044987,
+            "noteType": "note",
+            "content": "When the Church becomes an unstoppable force for good?...",
+            "position": 24,
+            "timecode": null,
+            "sermons_FK": "1554030797016"
+        },
+        {
+            "id": 1554031044988,
+            "noteType": "verseRelated",
+            "content": "<span class=\"verse\" verseid=\"1554031044989\" chapterverse=\"Matthew 7:7-8\">Matthew 7:7-8<\/span>, <span class=\"verse\" verseid=\"1554031044990\" chapterverse=\"Acts 1:11\">Acts 1:11<\/span>, <span class=\"verse\" verseid=\"1554031044991\" chapterverse=\"Hebrews 10:25\">Hebrews 10:25<\/span>",
+            "position": 25,
+            "timecode": null,
+            "sermons_FK": "1554030797016"
+        }
+    ],
+    "sermonVerses": [
+        {
+            "id": "1554031044975",
+            "chapterVerse": "John 20:19-29",
+            "translation": "NIV",
+            "content": " <h3 class=\"s\"> <span  class=\"text John-20-19\">Jesus Appears to His Disciples<\/span><\/h3><p><span class=\"text John-20-19\"><sup id=\"John.20.19-John.20.29\" class=\"v \">19\u00a0<\/sup>On the evening of that first day of the week, when the disciples were together, with the doors locked for fear of the Jewish leaders, Jesus came and stood among them and said, <span class=\"woj\">\u201cPeace be with you!\u201d<\/span><\/span> <span  class=\"text John-20-20\"><sup id=\"x.99\" class=\"v \">20\u00a0<\/sup>After he said this, he showed them his hands and side. The disciples were overjoyed when they saw the Lord.<\/span><\/p> <p><span  class=\"text John-20-21\"><sup id=\"x.99\" class=\"v \">21\u00a0<\/sup>Again Jesus said, <span class=\"woj\">\u201cPeace be with you! As the Father has sent me, I am sending you.\u201d<\/span><\/span> <span  class=\"text John-20-22\"><sup id=\"x.99\" class=\"v \">22\u00a0<\/sup>And with that he breathed on them and said, <span class=\"woj\">\u201cReceive the Holy Spirit.<\/span><\/span> <span  class=\"text John-20-23\"><span class=\"woj\"><sup id=\"x.99\" class=\"v \">23\u00a0<\/sup>If you forgive anyone\u2019s sins, their sins are forgiven; if you do not forgive them, they are not forgiven.\u201d<\/span><\/span><\/p> <h3 class=\"s\"> <span  class=\"text John-20-24\">Jesus Appears to Thomas<\/span><\/h3><p><span class=\"text John-20-24\"><sup id=\"x.99\" class=\"v \">24\u00a0<\/sup>Now Thomas (also known as Didymus), one of the Twelve, was not with the disciples when Jesus came.<\/span> <span  class=\"text John-20-25\"><sup id=\"x.99\" class=\"v \">25\u00a0<\/sup>So the other disciples told him, \u201cWe have seen the Lord!\u201d<\/span><\/p><p><span class=\"text John-20-25\">But he said to them, \u201cUnless I see the nail marks in his hands and put my finger where the nails were, and put my hand into his side, I will not believe.\u201d<\/span><\/p> <p><span  class=\"text John-20-26\"><sup id=\"x.99\" class=\"v \">26\u00a0<\/sup>A week later his disciples were in the house again, and Thomas was with them. Though the doors were locked, Jesus came and stood among them and said, <span class=\"woj\">\u201cPeace be with you!\u201d<\/span><\/span> <span  class=\"text John-20-27\"><sup id=\"x.99\" class=\"v \">27\u00a0<\/sup>Then he said to Thomas, <span class=\"woj\">\u201cPut your finger here; see my hands. Reach out your hand and put it into my side. Stop doubting and believe.\u201d<\/span><\/span><\/p> <p><span  class=\"text John-20-28\"><sup id=\"x.99\" class=\"v \">28\u00a0<\/sup>Thomas said to him, \u201cMy Lord and my God!\u201d<\/span><\/p> <p><span  class=\"text John-20-29\"><sup id=\"x.99\" class=\"v \">29\u00a0<\/sup>Then Jesus told him, <span class=\"woj\">\u201cBecause you have seen me, you have believed; blessed are those who have not seen and yet have believed.\u201d<\/span><\/span><\/p> ",
+            "sermons_FK": "1554030797016",
+            "notes_FK": "1554031044973"
+        },
+        {
+            "id": "1554031044989",
+            "chapterVerse": "Matthew 7:7-8",
+            "translation": "NIV",
+            "content": " <h3 class=\"s\"> <span  class=\"text Matt-7-7\">Ask, Seek, Knock<\/span><\/h3><p><span class=\"text Matt-7-7\"><span class=\"woj\"><sup id=\"Matt.7.7-Matt.7.8\" class=\"v \">7\u00a0<\/sup>\u201cAsk and it will be given to you; seek and you will find; knock and the door will be opened to you.<\/span><\/span> <span  class=\"text Matt-7-8\"><span class=\"woj\"><sup id=\"x.99\" class=\"v \">8\u00a0<\/sup>For everyone who asks receives; the one who seeks finds; and to the one who knocks, the door will be opened.<\/span><\/span><\/p> ",
+            "sermons_FK": "1554030797016",
+            "notes_FK": "1554031044988"
+        },
+        {
+            "id": "1554031044990",
+            "chapterVerse": "Acts 1:11",
+            "translation": "NIV",
+            "content": "<p> <span  class=\"text Acts-1-11\"><sup id=\"Acts.1.11\" class=\"v \">11\u00a0<\/sup>\u201cMen of Galilee,\u201d they said, \u201cwhy do you stand here looking into the sky? This same Jesus, who has been taken from you into heaven, will come back in the same way you have seen him go into heaven.\u201d<\/span><\/p> ",
+            "sermons_FK": "1554030797016",
+            "notes_FK": "1554031044988"
+        },
+        {
+            "id": "1554031044991",
+            "chapterVerse": "Hebrews 10:25",
+            "translation": "NIV",
+            "content": "<p> <span  class=\"text Heb-10-25\"><sup id=\"Heb.10.25\" class=\"v \">25\u00a0<\/sup>not giving up meeting together, as some are in the habit of doing, but encouraging one another\u2014and all the more as you see the Day approaching.<\/span><\/p> ",
+            "sermons_FK": "1554030797016",
+            "notes_FK": "1554031044988"
+        }
+    ]
+}
