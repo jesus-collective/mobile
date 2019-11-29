@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import { Container, Content, Text, List, ListItem, Header } from "native-base";
-import { Linking } from '@aws-amplify/core';
+import { Linking } from 'react-native';
 import awsConfig from '../../src/aws-exports';
 import Amplify, { Analytics } from 'aws-amplify';
 import * as Font from 'expo-font'

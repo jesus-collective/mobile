@@ -7,7 +7,7 @@ import { View, Image, Text } from 'react-native';
 import * as Font from 'expo-font'
 import { MaterialIcons } from '@expo/vector-icons';
 import Amplify, { Analytics } from 'aws-amplify';
-import { Linking } from '@aws-amplify/core';
+import { Linking } from 'react-native';
 import routes from '../routes'
 interface IProps {
   navigation: any;
