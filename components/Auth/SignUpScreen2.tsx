@@ -6,7 +6,6 @@ Amplify.configure(awsConfig);
 import { View } from 'native-base';
 import { Text, Button } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
-import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
 import { API, graphqlOperation } from 'aws-amplify';
 import { Auth } from 'aws-amplify';

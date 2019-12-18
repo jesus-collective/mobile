@@ -15,7 +15,10 @@ import MyConfirmSignUp from './components/Auth/MyConfirmSignUp'
 import MyVerifyContact from './components/Auth/MyVerifyContact'
 import MyForgotPassword from './components/Auth/MyForgotPassword'
 import MyLoading from './components/Auth/MyLoading'
+import { View } from 'native-base';
+import SignUpSidebar from './components/SignUpSidebar/SignUpSidebar'
 
+import { Platform } from 'react-native';
 
 import { NavigationScreenProp } from 'react-navigation';
 import { I18n } from 'aws-amplify';
@@ -25,22 +28,22 @@ Amplify.configure(awsConfig);
 
 const MyDisabledButton = Object.assign({}, AmplifyTheme.button, { backgroundColor: '#979797', alignItems: 'center', padding: 16 });
 const MyButton = Object.assign({}, AmplifyTheme.button, { backgroundColor: '#F0493E', alignItems: 'center', padding: 16 });
-const mySection = Object.assign({}, AmplifyTheme.section, { marginTop: 0, padding: 0});
+const mySection = Object.assign({}, AmplifyTheme.section, { marginTop: 0, padding: 0 });
 const myNavBar = Object.assign({}, AmplifyTheme.navBar, { width: 0, height: 0 });
-const myContainer = Object.assign({}, AmplifyTheme.container, { marginTop: 0 });
+const myContainer = Object.assign({}, AmplifyTheme.container, { marginTop: 0, width: "100%", height: "100%" });
 //const MyTheme = Object.assign({}, AmplifyTheme, { navBar: myNavBar, s });
-const MyTheme = Object.assign({}, AmplifyTheme, {container:myContainer, navBar:myNavBar,section: mySection,button: MyButton, buttonDisabled: MyDisabledButton });
+const MyTheme = Object.assign({}, AmplifyTheme, { container: myContainer, navBar: myNavBar, section: mySection, button: MyButton, buttonDisabled: MyDisabledButton });
 
 
 const authScreenLabels = {
   en: {
-    'Sign in to your account': 'Login to Jesus Collective',
+    'Sign in to your account': 'Sign in to Jesus Collective',
 
-    'Sign Up': 'Get Started',
-    'Sign Up Account': 'Get Started',
+    'Sign Up': 'Create an Account',
+    'Sign Up Account': 'Create an Account',
     'Sign in with Facebook': 'Use Facebook Account',
     'Sign in with Google': 'Use Google Account',
-    'Forgot Password': 'Forgot your password?',
+    'Forgot Password': 'Forgot password?',
   }
 };
 
@@ -49,7 +52,7 @@ I18n.putVocabularies(authScreenLabels);
 
 interface Props {
   navigation: NavigationScreenProp<any, any>,
-  onStateChange(state:string,data:any):any
+  onStateChange(state: string, data: any): any
 }
 interface State {
   isLoggedIn: boolean
@@ -73,13 +76,13 @@ export default class AwesomeApp extends React.Component<Props, State> {
     this.state = {
       fontLoaded: false,
       isLoggedIn: false
-     
+
     };
     //  this.ionViewCanEnter();
   }
 
   async UNSAFE_componentWillMount() {
-   // console.log("test")
+    // console.log("test")
     try {
       await Font.loadAsync({
         'Graphik-Bold-App': require('./assets/font/commercial-type-1906-WOIKTV-app/graphik/Graphik-Bold-App.ttf'),
@@ -106,34 +109,40 @@ export default class AwesomeApp extends React.Component<Props, State> {
     Asset.fromModule(require("./assets/SignUp/progress-3.png")).downloadAsync()
     Asset.fromModule(require("./assets/SignUp/progress-4.png")).downloadAsync()
   }
-  
+
   render() {
     if (this.state.fontLoaded) {
 
       return (
-        <Authenticator hideDefault={true}  theme={MyTheme}
-          usernameAttributes='email' federated={federated}
-          signUpConfig={{
-            signUpFields: [{ displayOrder: 6, key: "family_name", label: "Last Name", required: true },
-            { displayOrder: 5, key: "given_name", label: "First Name", required: true }]
-          }}>
-          <HomeScreen />
-          <MySignIn />
-          <MyConfirmSignIn />
-          <MyRequireNewPassword />
-          <MySignUp signUpConfig={{
-            signUpFields: [{ displayOrder: 6, key: "family_name", label: "Last Name", required: true },
-            { displayOrder: 5, key: "given_name", label: "First Name", required: true }]
-          }}
-          />
-          <MyConfirmSignUp />
-          <MyVerifyContact />
-          <MyForgotPassword />
-          <MyLoading />
-         
+        <View style={{
+          width: "100%", top: 0, left: 0, height: "100%"}}>
+          {Platform.OS !== 'web'?<SignUpSidebar text="It’s time to unite, equip, and amplify a Jesus-centred movement." />:null}
 
-        </Authenticator>
+          <Authenticator hideDefault={true} theme={MyTheme}
+            usernameAttributes='email' federated={federated}
+            signUpConfig={{
+              signUpFields: [{ displayOrder: 6, key: "family_name", label: "Last Name", required: true },
+              { displayOrder: 5, key: "given_name", label: "First Name", required: true }]
+            }} style={{
+              width: "100%", top: "0", left: "0", height: "100%"
+            }}>
+            <HomeScreen />
+            <MySignIn />
+            <MyConfirmSignIn />
+            <MyRequireNewPassword />
+            <MySignUp signUpConfig={{
+              signUpFields: [{ displayOrder: 6, key: "family_name", label: "Last Name", required: true },
+              { displayOrder: 5, key: "given_name", label: "First Name", required: true }]
+            }}
+            />
+            <MyConfirmSignUp />
+            <MyVerifyContact />
+            <MyForgotPassword />
+            <MyLoading />
 
+
+          </Authenticator>
+        </View>
       )
     } else {
       return <AppLoading />

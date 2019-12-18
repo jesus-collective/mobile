@@ -73,11 +73,11 @@ export default EStyleSheet.create({
 
     signUpSidebarView: Platform.OS === 'web'?
         { position: "fixed" , width: "25%", height: "100%", left: "0%", top: "0%" }:
-        { position: "relative", width: "100%", height: "100%", left: "0%", top: 0 },
+        { position: "relative", width: "100%", height: "20%", left: "0%", top: 0 },
 
     signUpSidebarText: Platform.OS === 'web'?
-    { zIndex: 3, position: "absolute", width: "80%", height: "10%", left: "10%", top: "40%", fontFamily: "Graphik-Bold-App", fontSize: 24, lineHeight: 48, color: "#FFFFFF" }:
-    { zIndex: 3, position: "absolute", width: "80%", height: "10%", left: "10%", top: "40%", fontFamily: "Graphik-Bold-App", fontSize: 24, lineHeight: 48, color: "#FFFFFF" },
+    { zIndex: 3, position: "absolute", width: "80%", height: "10%", left: "10%", top: "40%", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 30, color: "#FFFFFF" }:
+    { display:"none", zIndex: 3, position: "absolute", width: "80%", height: "10%", left: "10%", top: "40%", fontFamily: "Graphik-Bold-App", fontSize: 24, lineHeight: 48, color: "#FFFFFF" },
 
     signUpProfile: Platform.OS === 'web'?
         {position:"absolute", left: "30%", width: "65%", top: 100, height: "100%" }:

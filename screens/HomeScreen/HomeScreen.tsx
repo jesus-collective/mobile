@@ -29,15 +29,12 @@ export default class HomeScreen extends React.Component<Props, State>{
   }
 
   render() {
+    console.log("Homepage")
     return (
 
-      <Container ><Text>test</Text>
+      <Container >
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
         <MyMap visible={this.state.showMap}></MyMap>
-
-
-        <Text onPress={() => this.props.navigation.navigate("SignUpScreen1")}>Test</Text>
-
         <Content>
           <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
             <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>

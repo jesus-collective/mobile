@@ -1,4 +1,4 @@
-import { Text, View, Input, Form, Item, Label } from 'native-base';
+import { Text, View, Input, Form, Item, Label,Content } from 'native-base';
 import { Button, Image } from 'react-native'
 import * as React from 'react';
 import * as queries from '../../src/graphql/queries';
@@ -21,7 +21,7 @@ export default class MyProfile extends React.Component<Props, State> {
     this.getUserDetails()
   }
   async getUserDetails() {
-
+    console.log("getUserDetails")
     var user = await Auth.currentAuthenticatedUser();
     try {
       const getUser = await API.graphql(graphqlOperation(queries.getUser, { id: user['username'] }));
@@ -59,7 +59,7 @@ export default class MyProfile extends React.Component<Props, State> {
   render() {
     return (
       (this.state.UserDetails != null ?
-        <View>
+        <Content>
           <View style={{ flexDirection: "row" }}>
             <Text style={{ fontWeight: "bold" }}>Create Your Individual Profile</Text>
             <Button color="#F0493E" title="Save and Publish Your Profile" onPress={() => this.finalizeProfile()} />
@@ -74,7 +74,7 @@ export default class MyProfile extends React.Component<Props, State> {
               <Text>My Current Role not defined</Text>
               <Text style={{ fontWeight: "bold" }}>Partner</Text>
               <Text>One Sentence about me</Text>
-              <Input  value={this.state.UserDetails.aboutMeShort}
+              <Input value={this.state.UserDetails.aboutMeShort}
                 onChange={(e) => { this.handleInputChange(e, "aboutMeShort") }} placeholder="Short sentence about me" />
               <Text>Location not defined</Text>
               <Text>Joined not defined</Text>
@@ -82,31 +82,38 @@ export default class MyProfile extends React.Component<Props, State> {
               <Text>Private Information</Text>
               <Item floatingLabel>
                 <Label>Address</Label>
-                <Input />
+                <Input value={this.state.UserDetails.address}
+                  onChange={(e) => { this.handleInputChange(e, "address") }} />
               </Item>
               <Item floatingLabel>
                 <Label>City</Label>
-                <Input />
+                <Input value={this.state.UserDetails.city}
+                  onChange={(e) => { this.handleInputChange(e, "city") }} />
               </Item>
               <Item floatingLabel>
                 <Label>Province/State</Label>
-                <Input />
+                <Input value={this.state.UserDetails.province}
+                  onChange={(e) => { this.handleInputChange(e, "province") }} />
               </Item>
               <Item floatingLabel>
                 <Label>Postal/Zip Code</Label>
-                <Input />
+                <Input value={this.state.UserDetails.postalCode}
+                  onChange={(e) => { this.handleInputChange(e, "postalCode") }} />
               </Item>
               <Item floatingLabel>
                 <Label>Country</Label>
-                <Input />
+                <Input value={this.state.UserDetails.country}
+                  onChange={(e) => { this.handleInputChange(e, "country") }} />
               </Item>
               <Item floatingLabel>
                 <Label>Email Address</Label>
-                <Input />
+                <Input value={this.state.UserDetails.email}
+                  onChange={(e) => { this.handleInputChange(e, "email") }} />
               </Item>
               <Item floatingLabel>
                 <Label>Phone #</Label>
-                <Input />
+                <Input value={this.state.UserDetails.phone}
+                  onChange={(e) => { this.handleInputChange(e, "phone") }} />
               </Item>
 
 
@@ -118,20 +125,27 @@ export default class MyProfile extends React.Component<Props, State> {
                 onChange={(e) => { this.handleInputChange(e, "aboutMeLong") }} placeholder="type here" />
               <Text style={{ fontWeight: "bold" }}>My Interests</Text>
               <Text>You can select 7 key interests</Text>
-              <Input placeholder="Current Role" />
+              <Input placeholder="Current Role" value={this.state.UserDetails.currentRole}
+                onChange={(e) => { this.handleInputChange(e, "currentRole") }} />
               <Text>Describe your current Scope</Text>
-              <Input placeholder="Type here." />
+              <Input placeholder="Type here." value={this.state.UserDetails.currentScope}
+                onChange={(e) => { this.handleInputChange(e, "currentScope") }} />
               <Text>Identify your personality type indicator</Text>
-              <Input placeholder="Type here. like (MBTI, DISC, APEST, Birkman, Enneagram + Wing, Kolbe Index, other, N/A" />
+              <Input placeholder="Type here. like (MBTI, DISC, APEST, Birkman, Enneagram + Wing, Kolbe Index, other, N/A" value={this.state.UserDetails.personality}
+                onChange={(e) => { this.handleInputChange(e, "personality") }} />
               <Text style={{ fontWeight: "bold" }}>Tell us more about your organization</Text>
-              <Input placeholder="Organization Name" />
-              <Input placeholder="Type of organization" />
-              <Input placeholder="How many employees do you have?" />
+              <Input placeholder="Organization Name" value={this.state.UserDetails.orgName}
+                onChange={(e) => { this.handleInputChange(e, "orgName") }} />
+              <Input placeholder="Type of organization" value={this.state.UserDetails.orgType}
+                onChange={(e) => { this.handleInputChange(e, "orgType") }} />
+              <Input placeholder="How many employees do you have?" value={this.state.UserDetails.orgSize}
+                onChange={(e) => { this.handleInputChange(e, "orgSize") }} />
               <Text>Description of church or ministry organization</Text>
-              <Input placeholder="Type here." />
+              <Input placeholder="Type here." value={this.state.UserDetails.orgDescription}
+                onChange={(e) => { this.handleInputChange(e, "orgDescription") }} />
             </View>
           </Form>
-        </View>
+        </Content>
         : null)
 
     )

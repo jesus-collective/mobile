@@ -21,7 +21,7 @@ export default class MySignIn extends SignIn<Props,State> {
                     <View style={styles.authView}>
                         {super.render()}
                     </View>
-                    {Platform.OS === 'web'?<SignUpSidebar text="It's the time to unite, equip and amplify." />:null}
+                    {Platform.OS === 'web'?<SignUpSidebar text="It’s time to unite, equip, and amplify a Jesus-centred movement." />:null}
                 </View>)
                 : null
 

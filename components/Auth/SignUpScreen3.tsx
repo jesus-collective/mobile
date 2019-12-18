@@ -4,10 +4,11 @@ import awsConfig from '../../src/aws-exports';
 import MyProfile from '../../components/MyProfile/MyProfile'
 import SignUpSidebar from '../../components/SignUpSidebar/SignUpSidebar'
 Amplify.configure(awsConfig);
-import { View } from 'native-base';
-import { Text, Button } from 'react-native';
+import { View ,Content} from 'native-base';
 import { NavigationScreenProp } from 'react-navigation';
 import styles from '../../components/style.js'
+import Constants from 'expo-constants';
+import {Dimensions} from 'react-native'
 
 interface Props {
   navigation?: NavigationScreenProp<any, any>,
@@ -27,10 +28,11 @@ export default class SignUpScreen3 extends React.Component<Props, State>{
 
     return (
       <View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>
+        <SignUpSidebar position="4"></SignUpSidebar>
         <View style={styles.signUpProfile}>
           <MyProfile finalizeProfile={() => { this.onFinalizeProfile() }} />
         </View>
-        <SignUpSidebar position="4"></SignUpSidebar>
+        
       </View>
 
     );

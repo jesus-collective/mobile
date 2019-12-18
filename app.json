@@ -3,7 +3,7 @@
     "name": "Jesus Collective",
     "slug": "JesusCollective",
     "privacy": "public",
-    "sdkVersion": "34.0.0",
+    "sdkVersion": "35.0.0",
     "platforms": [
       "ios",
       "android",
@@ -12,9 +12,9 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "facebookScheme":"fb579712102531269",
-    "facebookAppId":"579712102531269",
-    "facebookDisplayName":"Jesus Collective",
+    "facebookScheme": "fb579712102531269",
+    "facebookAppId": "579712102531269",
+    "facebookDisplayName": "Jesus Collective",
     "loading": {
       "icon": "./assets/icon.png"
     },
@@ -32,15 +32,17 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.jesuscollective.iosapp",
-      "buildNumber": "7"
+      "buildNumber": "8"
     },
     "android": {
-      "versionCode": 3,
+      "versionCode": 8,
       "package": "com.jesuscollective.androidapp"
     },
-    "web":{
-      "babel":{
-        "include": ["aws-amplify-react-native"]
+    "web": {
+      "babel": {
+        "include": [
+          "aws-amplify-react-native"
+        ]
       }
     }
   }

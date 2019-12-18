@@ -21,7 +21,8 @@ import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
 import LoginScreen from "../LoginScreen/LoginScreen";
 import SideBar from "../../components/Sidebar/Sidebar";
-import { createDrawerNavigator, createAppContainer } from "react-navigation";
+import { createDrawerNavigator } from "react-navigation-drawer";
+import {createAppContainer} from "react-navigation";
 import awsconfig from '../../src/aws-exports';
 Amplify.configure(awsconfig);
 const HomeScreenRouter = createDrawerNavigator(
@@ -123,6 +124,7 @@ export default class App extends React.Component<Props, State>{
   }
   onPaidStateChanged() {
     console.log("onPaidStateChanged")
+    this.ensureUserExists()
     this.checkIfPaid()
   }
   onProfileComplete() {
@@ -133,7 +135,25 @@ export default class App extends React.Component<Props, State>{
     console.log("checkIfCompletedProfile")
     if (this.state.userExists) {
       const getUser = await API.graphql(graphqlOperation(queries.getUser, { id: this.user['username'] }));
-      if ((getUser.data.getUser.aboutMeShort != null) && (getUser.data.getUser.aboutMeLong != null))
+      if ((getUser.data.getUser.aboutMeShort != null) 
+      && (getUser.data.getUser.aboutMeLong != null)
+      && (getUser.data.getUser.given_name != null)
+      && (getUser.data.getUser.family_name != null)
+      && (getUser.data.getUser.email != null)
+      && (getUser.data.getUser.phone != null)
+      && (getUser.data.getUser.address != null)
+      && (getUser.data.getUser.city != null)
+      && (getUser.data.getUser.province != null)
+      && (getUser.data.getUser.postalCode != null)
+      && (getUser.data.getUser.country != null)
+      && (getUser.data.getUser.interests != null)
+      && (getUser.data.getUser.currentRole != null)
+      && (getUser.data.getUser.currentScope != null)
+      && (getUser.data.getUser.personality != null)
+      && (getUser.data.getUser.orgName != null)
+      && (getUser.data.getUser.orgType != null)
+      && (getUser.data.getUser.orgSize != null)
+      && (getUser.data.getUser.orgDescription != null))
         this.setState({ hasCompletedPersonalProfile: true })
     }
   }
@@ -153,7 +173,7 @@ export default class App extends React.Component<Props, State>{
           return (<SignUpScreen3 profileComplete={() => this.onProfileComplete()} />)
         }
         else
-          return (<View style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1 }}><AppContainer ></AppContainer></View>)
+          return (<View style={{ backgroundColor:"red",position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1 }}><AppContainer ></AppContainer></View>)
       }
       else
         return (<Text>Payment Issue - Unknown State</Text>)

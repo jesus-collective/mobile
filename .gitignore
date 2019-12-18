@@ -2,6 +2,7 @@
 #
 .DS_Store
 
+web-build
 # Xcode
 #
 build/
@@ -57,7 +58,7 @@ buck-out/
 src/aws-exports.js
 
 .expo/packager-info.json
-
+.expo/web
 #amplify
 amplify/\#current-cloud-backend
 amplify/.config/local-*
