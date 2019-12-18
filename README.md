@@ -1,5 +1,5 @@
-# The Meeting House Mobile App
-To setup a local copy of The Meeting House App for development you will need an AWS account.
+# Jesus Collective Mobile App
+To setup a local copy of The Jesus Collective App for development you will need an AWS account.
 
 1. Setup a free AWS account.
 2. Install Node/NPM
