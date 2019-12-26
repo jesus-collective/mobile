@@ -92,5 +92,6 @@ export default EStyleSheet.create({
     signUpScreen1PaymentBody:Platform.OS === 'web'? 
          { width: "100%", left: 0, top: 0, height: "100%" }:
          {width: "100%", left: 0, top: 0, height: "100%"}
+    
 }
 )
