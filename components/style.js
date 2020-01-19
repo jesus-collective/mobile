@@ -2,8 +2,30 @@ import { Platform, StyleSheet } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Constants from 'expo-constants';
 import { Dimensions } from 'react-native'
-
+const mainColor = '#3ca897';
 export default EStyleSheet.create({
+
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: mainColor,
+    },
+    textInput: {
+        height: 40,
+        borderColor: 'white',
+        borderWidth: 1,
+        marginTop: 8,
+        borderRadius: 5,
+        padding: 3,
+    },
+    tag: {
+        backgroundColor: '#fff'
+    },
+    tagText: {
+        color: mainColor
+    },
+
     fontRegular: {
         fontFamily: "Graphik-Regular-App"
     },
@@ -11,13 +33,13 @@ export default EStyleSheet.create({
         fontFamily: 'Graphik-Regular-App', fontSize: 16
     },
     fontFormProfileImageButton: {
-        position: "absolute", left: 20, width:210, top: 150, backgroundColor: "#F0493E", textTransform: "capitalize"
+        position: "absolute", left: 20, width: 210, top: 150, backgroundColor: "#F0493E", textTransform: "capitalize"
     },
     fontFormProfileImageButtonText: {
-        fontFamily: 'Graphik-Regular-App', fontWeight:'bold', fontSize: 16, lineHeight: 24, display: "flex", alignItems: "center", textAlign: "center", letterSpacing: -0.3, color: "#FFFFFF", textTransform: null
+        fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 16, lineHeight: 24, display: "flex", alignItems: "center", textAlign: "center", letterSpacing: -0.3, color: "#FFFFFF", textTransform: null
     },
     fontFormProfileImageText: {
-        position: "absolute", left: 10, top: 200, fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 22, textAlign: "center", letterSpacing: -0.3, color: "#FFFFFF", width:230
+        position: "absolute", left: 10, top: 200, fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 22, textAlign: "center", letterSpacing: -0.3, color: "#FFFFFF", width: 230
     },
     fontFormMandatory: {
         fontFamily: 'Graphik-Regular-App', fontSize: 26, lineHeight: 33, color: "#F0493E"
@@ -41,7 +63,7 @@ export default EStyleSheet.create({
         fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333"
     },
     fontFormSmallInput: {
-        fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 25, letterSpacing: -0.3, color: "#333333", width: 250, height: 18, borderWidth: "0 0 1", borderColor: "#dddddd"
+        fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 25, letterSpacing: -0.3, color: "#333333", width: 250, height: 18, borderWidth: 0, borderColor: "#dddddd"
     },
     fontFormSmallGrey: {
         fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", opacity: 0.5
@@ -49,22 +71,22 @@ export default EStyleSheet.create({
     fontFormSmallHeader: {
         fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 26, letterSpacing: -0.3, textTransform: "uppercase", color: "#333333"
     },
-    fontFormSmall:{
+    fontFormSmall: {
         fontFamily: 'Graphik-Regular-App', fontSize: 12, lineHeight: 21, textTransform: "uppercase", color: "#333333", opacity: 0.5
     },
-    fontBold:{
+    fontBold: {
         fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 24
     },
-    fontTitle:{
+    fontTitle: {
         fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 24
     },
-    fontDetail:{
+    fontDetail: {
         fontFamily: 'Graphik-Regular-App', fontSize: 14, color: '#aaaaaa'
     },
-    fontSliderHeader:{
+    fontSliderHeader: {
         fontFamily: 'Graphik-Regular-App', fontSize: 16, color: '#000000'
     },
-    fontSliderButtons:{
+    fontSliderButtons: {
         fontFamily: 'Graphik-Regular-App', fontSize: 16, color: '#F0493E'
     },
     sliderButton:

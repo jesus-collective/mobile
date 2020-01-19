@@ -1,4 +1,4 @@
-import { Button, Text, View, Input, Form, Item, Label, Content } from 'native-base';
+import { Icon, Button, Text, View, Input, Form, Item, Label, Content } from 'native-base';
 import { Image } from 'react-native'
 import * as React from 'react';
 import * as queries from '../../src/graphql/queries';
@@ -6,18 +6,30 @@ import * as mutations from '../../src/graphql/mutations';
 import { API, graphqlOperation } from 'aws-amplify';
 import { Auth } from 'aws-amplify';
 import styles from '../../components/style.js'
+import TagInput from 'react-native-tags-input';
+import { Dimensions } from 'react-native'
+const mainColor = '#3ca897';
 
 interface Props {
   finalizeProfile(): void
 }
 interface State {
   UserDetails: any
+  tags: any
+  tagsColor: any
+  tagsText: any
 }
 export default class MyProfile extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      UserDetails: null
+      UserDetails: null,
+      tags: {
+        tag: '',
+        tagsArray: []
+      },
+      tagsColor: mainColor,
+      tagsText: '#fff',
     }
     this.getUserDetails()
   }
@@ -57,6 +69,11 @@ export default class MyProfile extends React.Component<Props, State> {
       console.log(e)
     }
   }
+  updateTagState = (state) => {
+    this.setState({
+      tags: state
+    })
+  };
   render() {
     return (
       (this.state.UserDetails != null ?
@@ -81,7 +98,7 @@ export default class MyProfile extends React.Component<Props, State> {
 
               <Text style={styles.fontFormText}><Text style={styles.fontFormMandatory}>*</Text>One Sentence about me</Text>
               <Input style={styles.fontFormAboutMe} value={this.state.UserDetails.aboutMeShort}
-                onChange={(e) => { this.handleInputChange(e, "aboutMeShort") }} placeholder="Short sentence about me" />
+                onChange={(e) => { this.handleInputChange(e, "aboutMeShort") }} multiline={true} placeholder="Short sentence about me" />
               <Text style={styles.fontFormSmallDarkGrey}><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/pin 2.svg')}></Image>Location not defined</Text>
               <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/calendar.svg')}></Image>Joined not defined</Text>
               <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/church.svg')}></Image>Organization Name not defined</Text>
@@ -123,33 +140,64 @@ export default class MyProfile extends React.Component<Props, State> {
                     onChange={(e) => { this.handleInputChange(e, "phone") }} />
                 </Item>
               </View>
-
             </View>
             <View style={{ marginLeft: 10, width: "65%" }}>
               <Text style={styles.font}>Tell us more about you</Text>
               <Text style={styles.fontBold}>About me</Text>
               <Input value={this.state.UserDetails.aboutMeLong}
-                onChange={(e) => { this.handleInputChange(e, "aboutMeLong") }} placeholder="type here" />
+                onChange={(e) => { this.handleInputChange(e, "aboutMeLong") }} multiline={true} placeholder="type here" />
               <Text style={styles.fontBold}>My Interests</Text>
               <Text style={styles.font}>You can select 7 key interests</Text>
-              <Input placeholder="Current Role" value={this.state.UserDetails.currentRole}
-                onChange={(e) => { this.handleInputChange(e, "currentRole") }} />
+              <TagInput
+                updateState={this.updateTagState}
+                tags={this.state.tags}
+                placeholder="Tags..."
+                label='Press comma & space to add a tag'
+                labelStyle={{ color: '#fff' }}
+                leftElement={<Icon name={'tag-multiple'} type={'material-community'} color={this.state.tagsText} />}
+                leftElementContainerStyle={{ marginLeft: 3 }}
+                containerStyle={{ width: (Dimensions.get('window').width - 40) }}
+                inputContainerStyle={[styles.textInput, { backgroundColor: this.state.tagsColor }]}
+                inputStyle={{ color: this.state.tagsText }}
+                onFocus={() => this.setState({ tagsColor: '#fff', tagsText: mainColor })}
+                onBlur={() => this.setState({ tagsColor: mainColor, tagsText: '#fff' })}
+                autoCorrect={false}
+                tagStyle={styles.tag}
+                tagTextStyle={styles.tagText}
+                keysForTag={' '}
+              />
+              <Item stackedLabel>
+                <Label style={styles.fontFormSmall}>Current Role</Label>
+                <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.currentRole}
+                  onChange={(e) => { this.handleInputChange(e, "currentRole") }} />
+              </Item>
               <Text style={styles.font}>Describe your current Scope</Text>
               <Input placeholder="Type here." value={this.state.UserDetails.currentScope}
-                onChange={(e) => { this.handleInputChange(e, "currentScope") }} />
+                onChange={(e) => { this.handleInputChange(e, "currentScope") }} multiline={true} />
               <Text style={styles.font}>Identify your personality type indicator</Text>
               <Input placeholder="Type here. like (MBTI, DISC, APEST, Birkman, Enneagram + Wing, Kolbe Index, other, N/A" value={this.state.UserDetails.personality}
-                onChange={(e) => { this.handleInputChange(e, "personality") }} />
+                onChange={(e) => { this.handleInputChange(e, "personality") }} multiline={true} />
+              
+
               <Text style={styles.fontBold}>Tell us more about your organization</Text>
-              <Input placeholder="Organization Name" value={this.state.UserDetails.orgName}
-                onChange={(e) => { this.handleInputChange(e, "orgName") }} />
-              <Input placeholder="Type of organization" value={this.state.UserDetails.orgType}
-                onChange={(e) => { this.handleInputChange(e, "orgType") }} />
-              <Input placeholder="How many employees do you have?" value={this.state.UserDetails.orgSize}
-                onChange={(e) => { this.handleInputChange(e, "orgSize") }} />
+              <Item stackedLabel>
+                <Label style={styles.fontFormSmall}>Organization Name</Label>
+                <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.orgName}
+                  onChange={(e) => { this.handleInputChange(e, "orgName") }} />
+              </Item>
+              <Item stackedLabel>
+                <Label style={styles.fontFormSmall}>Type of organization</Label>
+                <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.orgType}
+                  onChange={(e) => { this.handleInputChange(e, "orgType") }} />
+              </Item>
+              <Item stackedLabel>
+                <Label style={styles.fontFormSmall}>How many employees do you have?</Label>
+                <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.orgSize}
+                  onChange={(e) => { this.handleInputChange(e, "orgSize") }} />
+              </Item>
               <Text style={styles.font}>Description of church or ministry organization</Text>
               <Input placeholder="Type here." value={this.state.UserDetails.orgDescription}
-                onChange={(e) => { this.handleInputChange(e, "orgDescription") }} />
+                onChange={(e) => { this.handleInputChange(e, "orgDescription") }} multiline={true}  />
             </View>
           </Form>
         </Content>
