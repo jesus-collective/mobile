@@ -38,6 +38,13 @@ export default EStyleSheet.create({
     fontFormProfileImageButtonText: {
         fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 16, lineHeight: 24, display: "flex", alignItems: "center", textAlign: "center", letterSpacing: -0.3, color: "#FFFFFF", textTransform: null
     },
+    saveProfileButton: {
+       backgroundColor: "#F0493E", textTransform: "capitalize"
+    },
+    saveProfileButtonText: {
+        fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 16, lineHeight: 24, display: "flex", alignItems: "center", textAlign: "center", letterSpacing: -0.3, color: "#FFFFFF", textTransform: null
+    },
+
     fontFormProfileImageText: {
         position: "absolute", left: 10, top: 200, fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 22, textAlign: "center", letterSpacing: -0.3, color: "#FFFFFF", width: 230
     },

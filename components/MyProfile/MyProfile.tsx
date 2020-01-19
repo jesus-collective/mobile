@@ -80,7 +80,7 @@ export default class MyProfile extends React.Component<Props, State> {
         <Content>
           <View style={{ justifyContent: "space-between", flexDirection: "row", width: "100%" }}>
             <Text style={styles.fontTitle}>Create your profile</Text>
-            <Button color="#F0493E" title="Save and Publish Your Profile" onPress={() => this.finalizeProfile()} />
+            <Button style={styles.saveProfileButton} onPress={() => this.finalizeProfile()}><Text uppercase={false} style={styles.saveProfileButtonText}>Save and Publish Your Profile</Text></Button>
           </View>
 
           <Form style={{ display: "flex", flexDirection: "row" }}>
@@ -154,7 +154,7 @@ export default class MyProfile extends React.Component<Props, State> {
                 placeholder="Tags..."
                 label='Press comma & space to add a tag'
                 labelStyle={{ color: '#fff' }}
-                leftElement={<Icon name={'tag-multiple'} type={'material-community'} color={this.state.tagsText} />}
+                //leftElement={<Icon name={'tag-multiple'} type={'material-community'} color={this.state.tagsText} />}
                 leftElementContainerStyle={{ marginLeft: 3 }}
                 containerStyle={{ width: (Dimensions.get('window').width - 40) }}
                 inputContainerStyle={[styles.textInput, { backgroundColor: this.state.tagsColor }]}
@@ -177,7 +177,7 @@ export default class MyProfile extends React.Component<Props, State> {
               <Text style={styles.font}>Identify your personality type indicator</Text>
               <Input placeholder="Type here. like (MBTI, DISC, APEST, Birkman, Enneagram + Wing, Kolbe Index, other, N/A" value={this.state.UserDetails.personality}
                 onChange={(e) => { this.handleInputChange(e, "personality") }} multiline={true} />
-              
+
 
               <Text style={styles.fontBold}>Tell us more about your organization</Text>
               <Item stackedLabel>
@@ -197,7 +197,7 @@ export default class MyProfile extends React.Component<Props, State> {
               </Item>
               <Text style={styles.font}>Description of church or ministry organization</Text>
               <Input placeholder="Type here." value={this.state.UserDetails.orgDescription}
-                onChange={(e) => { this.handleInputChange(e, "orgDescription") }} multiline={true}  />
+                onChange={(e) => { this.handleInputChange(e, "orgDescription") }} multiline={true} />
             </View>
           </Form>
         </Content>
