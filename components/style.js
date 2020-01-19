@@ -1,46 +1,78 @@
 import { Platform, StyleSheet } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Constants from 'expo-constants';
+import { Dimensions } from 'react-native'
+
 export default EStyleSheet.create({
-    font:
-    {
-        fontFamily: 'Graphik-Regular-App',
-        fontSize: 16
+    fontRegular: {
+        fontFamily: "Graphik-Regular-App"
     },
-    fontBold:
-    {
-        fontFamily: 'Graphik-Regular-App',
-        fontWeight: 'bold',
-        fontSize: 24
+    font: {
+        fontFamily: 'Graphik-Regular-App', fontSize: 16
     },
-    fontTitle:
-    {
-        fontFamily: 'Graphik-Regular-App',
-        fontWeight: 'bold',
-        fontSize: 24
+    fontFormProfileImageButton: {
+        position: "absolute", left: 20, width:210, top: 150, backgroundColor: "#F0493E", textTransform: "capitalize"
     },
-    fontDetail:
-    {
-        fontFamily: 'Graphik-Regular-App',
-        fontSize: 14,
-        color: '#aaaaaa'
+    fontFormProfileImageButtonText: {
+        fontFamily: 'Graphik-Regular-App', fontWeight:'bold', fontSize: 16, lineHeight: 24, display: "flex", alignItems: "center", textAlign: "center", letterSpacing: -0.3, color: "#FFFFFF", textTransform: null
     },
-    fontSliderHeader:
-    {
-        fontFamily: 'Graphik-Regular-App',
-        fontSize: 16,
-        color: '#000000'
+    fontFormProfileImageText: {
+        position: "absolute", left: 10, top: 200, fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 22, textAlign: "center", letterSpacing: -0.3, color: "#FFFFFF", width:230
     },
-    fontSliderButtons:
-    {
-        fontFamily: 'Graphik-Regular-App',
-        fontSize: 16,
-        color: '#F0493E'
+    fontFormMandatory: {
+        fontFamily: 'Graphik-Regular-App', fontSize: 26, lineHeight: 33, color: "#F0493E"
+    },
+    fontFormName: {
+        fontFamily: 'Graphik-Regular-App', fontSize: 30, lineHeight: 36, textAlign: "center", color: "#333333"
+    },
+    fontFormText: {
+        fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 25, letterSpacing: -0.3, color: "#333333", opacity: 0.7
+    },
+    fontFormRole: {
+        fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, textAlign: "center", color: "#333333", opacity: 0.6
+    },
+    fontFormUserType: {
+        fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, textAlign: "center", textTransform: "uppercase", color: "#333333"
+    },
+    fontFormAboutMe: {
+        fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28, color: "#333333", borderColor: "#dddddd", borderWidth: 1, height: 200, width: 250
+    },
+    fontFormSmallDarkGrey: {
+        fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333"
+    },
+    fontFormSmallInput: {
+        fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 25, letterSpacing: -0.3, color: "#333333", width: 250, height: 18, borderWidth: 1, borderColor: "#dddddd"
+    },
+    fontFormSmallGrey: {
+        fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", opacity: 0.5
+    },
+    fontFormSmallHeader: {
+        fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 26, letterSpacing: -0.3, textTransform: "uppercase", color: "#333333"
+    },
+    fontFormSmall:{
+        fontFamily: 'Graphik-Regular-App', fontSize: 12, lineHeight: 21, textTransform: "uppercase", color: "#333333", opacity: 0.5
+    },
+    fontBold:{
+        fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 24
+    },
+    fontTitle:{
+        fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 24
+    },
+    fontDetail:{
+        fontFamily: 'Graphik-Regular-App', fontSize: 14, color: '#aaaaaa'
+    },
+    fontSliderHeader:{
+        fontFamily: 'Graphik-Regular-App', fontSize: 16, color: '#000000'
+    },
+    fontSliderButtons:{
+        fontFamily: 'Graphik-Regular-App', fontSize: 16, color: '#F0493E'
     },
     sliderButton:
     {
         // color:'#F0493E'
     },
+    flexRow:
+        { flexDirection: 'row' },
     authView: Platform.OS === 'web' ?
         { left: "40%", width: "40%", top: 100, height: "auto" } :
         { left: "2%", width: "96%", top: "0%", height: "100%" },
@@ -80,9 +112,12 @@ export default EStyleSheet.create({
         { display: "none", zIndex: 3, position: "absolute", width: "80%", height: "10%", left: "10%", top: "40%", fontFamily: "Graphik-Bold-App", fontSize: 24, lineHeight: 48, color: "#FFFFFF" },
 
     signUpProfile: Platform.OS === 'web' ?
-        { position: "absolute", left: "30%", width: "65%", top: 100, height: "100%" } :
+        { position: "absolute", left: "30%", width: "65%", top: 10 } :
         { position: "absolute", left: "2%", width: "96%", top: 100 + Constants.statusBarHeight, height: "100%" },
 
+    signUpScreen1Content: Platform.OS === 'web' ?
+        { position: "absolute", width: "100%" } :
+        { position: "absolute", width: "100%", height: Dimensions.get('window').height - (100 + Constants.statusBarHeight), left: 0, top: 100 + Constants.statusBarHeight },
     signUpScreen1PaymentColumn1: Platform.OS === 'web' ?
         { position: "absolute", left: "35%", width: "25%", top: 100, height: "100%" } :
         {},
