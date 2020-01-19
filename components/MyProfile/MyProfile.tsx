@@ -82,43 +82,43 @@ export default class MyProfile extends React.Component<Props, State> {
               <Text style={styles.fontFormText}><Text style={styles.fontFormMandatory}>*</Text>One Sentence about me</Text>
               <Input style={styles.fontFormAboutMe} value={this.state.UserDetails.aboutMeShort}
                 onChange={(e) => { this.handleInputChange(e, "aboutMeShort") }} placeholder="Short sentence about me" />
-              <Text style={styles.fontFormSmallDarkGrey}>Location not defined</Text>
-              <Text style={styles.fontFormSmallGrey}>Joined not defined</Text>
-              <Text style={styles.fontFormSmallGrey}>Organization Name not defined</Text>
+              <Text style={styles.fontFormSmallDarkGrey}><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/pin 2.svg')}></Image>Location not defined</Text>
+              <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/calendar.svg')}></Image>Joined not defined</Text>
+              <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/church.svg')}></Image>Organization Name not defined</Text>
               <Text style={styles.fontFormSmallHeader}>Private Information</Text>
               <View style={{ backgroundColor: '#F3F5F9' }}>
                 <Item stackedLabel>
-                  <Label style={styles.fontFormSmall}>Address</Label>
+                  <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Address</Label>
                   <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.address}
                     onChange={(e) => { this.handleInputChange(e, "address") }} />
                 </Item>
                 <Item stackedLabel>
-                  <Label style={styles.fontFormSmall}>City</Label>
+                  <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>City</Label>
                   <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.city}
                     onChange={(e) => { this.handleInputChange(e, "city") }} />
                 </Item>
                 <Item stackedLabel>
-                  <Label style={styles.fontFormSmall}>Province/State</Label>
+                  <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Province/State</Label>
                   <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.province}
                     onChange={(e) => { this.handleInputChange(e, "province") }} />
                 </Item>
                 <Item stackedLabel>
-                  <Label style={styles.fontFormSmall}>Postal/Zip Code</Label>
+                  <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Postal/Zip Code</Label>
                   <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.postalCode}
                     onChange={(e) => { this.handleInputChange(e, "postalCode") }} />
                 </Item>
                 <Item stackedLabel>
-                  <Label style={styles.fontFormSmall}>Country</Label>
+                  <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Country</Label>
                   <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.country}
                     onChange={(e) => { this.handleInputChange(e, "country") }} />
                 </Item>
                 <Item stackedLabel>
-                  <Label style={styles.fontFormSmall}>Email Address</Label>
+                  <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Email Address</Label>
                   <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.email}
                     onChange={(e) => { this.handleInputChange(e, "email") }} />
                 </Item>
                 <Item stackedLabel>
-                  <Label style={styles.fontFormSmall}>Phone #</Label>
+                  <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Phone #</Label>
                   <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.phone}
                     onChange={(e) => { this.handleInputChange(e, "phone") }} />
                 </Item>
