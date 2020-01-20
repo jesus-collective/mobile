@@ -24,6 +24,8 @@ import SideBar from "../../components/Sidebar/Sidebar";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import {createAppContainer} from "react-navigation";
 import awsconfig from '../../src/aws-exports';
+import { NavigationScreenProp } from 'react-navigation';
+
 Amplify.configure(awsconfig);
 const HomeScreenRouter = createDrawerNavigator(
   {
@@ -45,6 +47,7 @@ const HomeScreenRouter = createDrawerNavigator(
 const AppContainer = createAppContainer(HomeScreenRouter);
 interface Props {
   authState?: any;
+  navigation: NavigationScreenProp<any, any>
 
 }
 interface State {
@@ -61,7 +64,6 @@ export default class App extends React.Component<Props, State>{
       hasPaidState: "Not Started",
       userExists: false
     }
-
     this.performStartup()
   }
   async performStartup() {
@@ -133,6 +135,7 @@ export default class App extends React.Component<Props, State>{
   }
   async checkIfCompletedProfile() {
     console.log("checkIfCompletedProfile")
+   // this.setState({ hasCompletedPersonalProfile: true })
     if (this.state.userExists) {
       const getUser = await API.graphql(graphqlOperation(queries.getUser, { id: this.user['username'] }));
       if ((getUser.data.getUser.aboutMeShort != null) 
@@ -158,6 +161,7 @@ export default class App extends React.Component<Props, State>{
     }
   }
   render() {
+
     //  console.log(this.props.authState)
     if (this.props.authState == 'signedIn')
       if (this.state.hasPaidState === "Not Started") {
@@ -173,7 +177,9 @@ export default class App extends React.Component<Props, State>{
           return (<SignUpScreen3 profileComplete={() => this.onProfileComplete()} />)
         }
         else
+        {
           return (<View style={{ backgroundColor:"red",position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1 }}><AppContainer ></AppContainer></View>)
+        }
       }
       else
         return (<Text>Payment Issue - Unknown State</Text>)

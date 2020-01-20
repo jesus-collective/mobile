@@ -1,6 +1,8 @@
 import * as React from 'react';
-import { NavigationScreenProp } from 'react-navigation';
 import { Container, Content, Text, List, ListItem, Header } from "native-base";
+import {  NavigationScreenProp } from 'react-navigation';
+
+
 const routes = [
   {
     name: "Home",
@@ -56,6 +58,7 @@ interface State {
 
 }
 export default class SideBar extends React.Component<Props, State> {
+  
   render() {
     return (
       <Container><Content>
