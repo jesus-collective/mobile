@@ -39,7 +39,8 @@ export default class HomeScreen extends React.Component<Props, State>{
         <Content>
           <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
             <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
-              <MyCourses wrap={true} navigation={this.props.navigation}></MyCourses>
+              <MyEvents wrap={true} navigation={this.props.navigation}></MyEvents>
+             
             </Container>
             <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
               <MyPeople wrap={false} navigation={this.props.navigation}></MyPeople>

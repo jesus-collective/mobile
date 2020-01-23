@@ -2,6 +2,8 @@
 import Amplify from 'aws-amplify';
 import awsConfig from '../../src/aws-exports';
 import Header from '../../components/Header/Header'
+import MyProfile from '../../components/MyProfile/MyProfile'
+
 Amplify.configure(awsConfig);
 
 import { Container} from 'native-base';
@@ -20,7 +22,7 @@ export default class ProfileScreen extends React.Component <Props,State>{
     return (
       <Container>
         <Header title="Profile" navigation={this.props.navigation} />
-
+        <MyProfile navigation={this.props.navigation}/>
       </Container>
     );
   }

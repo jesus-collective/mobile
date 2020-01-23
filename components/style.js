@@ -2,7 +2,7 @@ import { Platform, StyleSheet } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Constants from 'expo-constants';
 import { Dimensions } from 'react-native'
-const mainColor = '#3ca897';
+const mainColor = '#ffffff';
 export default EStyleSheet.create({
 
     container: {
@@ -23,7 +23,7 @@ export default EStyleSheet.create({
         backgroundColor: '#fff'
     },
     tagText: {
-        color: mainColor
+        color: "#000000"
     },
 
     fontRegular: {
@@ -36,13 +36,13 @@ export default EStyleSheet.create({
         position: "absolute", left: 20, width: 210, top: 150, backgroundColor: "#F0493E", textTransform: "capitalize"
     },
     fontFormProfileImageButtonText: {
-        fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 16, lineHeight: 24, display: "flex", alignItems: "center", textAlign: "center", letterSpacing: -0.3, color: "#FFFFFF", textTransform: null
+        fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 14, lineHeight: 24, display: "flex", alignItems: "center", textAlign: "center", letterSpacing: -0.3, color: "#FFFFFF", textTransform: null
     },
     saveProfileButton: {
-       backgroundColor: "#F0493E", textTransform: "capitalize"
+        backgroundColor: "#F0493E", textTransform: "capitalize"
     },
     saveProfileButtonText: {
-        fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 16, lineHeight: 24, display: "flex", alignItems: "center", textAlign: "center", letterSpacing: -0.3, color: "#FFFFFF", textTransform: null
+        fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 16, lineHeight: 24, display: "flex", alignItems: "center", textAlign: "center", letterSpacing: -0.3, color: "#FFFFFF", textTransform: null
     },
 
     fontFormProfileImageText: {
@@ -82,19 +82,79 @@ export default EStyleSheet.create({
         fontFamily: 'Graphik-Regular-App', fontSize: 12, lineHeight: 21, textTransform: "uppercase", color: "#333333", opacity: 0.5
     },
     fontBold: {
-        fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 24
+        fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24
     },
     fontTitle: {
-        fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 24
+        fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 20, height: 75
     },
     fontDetail: {
         fontFamily: 'Graphik-Regular-App', fontSize: 14, color: '#aaaaaa'
     },
     fontSliderHeader: {
-        fontFamily: 'Graphik-Regular-App', fontSize: 16, color: '#000000'
+        fontFamily: 'Graphik-Bold-App', fontWeight:'bold', fontSize: 16, color: '#000000'
     },
     fontSliderButtons: {
-        fontFamily: 'Graphik-Regular-App', fontSize: 16, color: '#F0493E'
+        fontFamily: 'Graphik-Bold-App', fontSize: 16, color: '#F0493E', fontWeight: "bold"
+    },
+    fontCourseHeaderBold: {
+        fontFamily: 'Graphik-Bold-App',
+        fontWeight: "bold",
+        fontSize: 30,
+        lineHeight: 35,
+        textAlign: "center",
+        color: "#FFFFFF"
+    },
+    fontCourseHeader: {
+        fontFamily: 'Graphik-Regular-App',
+        fontWeight: "normal",
+        fontSize: 30,
+        lineHeight: 35,
+        textAlign: "center",
+        color: "#FFFFFF"
+    },
+    fontCourseHeaderTime: {
+        fontFamily: 'Graphik-Regular-App',
+        fontWeight: "normal",
+        fontSize: 10,
+        lineHeight: 35,
+        textAlign: "center",
+        color: "#FFFFFF"
+    },
+    fontCourseHeaderDescription: {
+        fontFamily: 'Graphik-Regular-App',
+        fontWeight: "normal",
+        fontSize: 14,
+        lineHeight: 35,
+        textAlign: "center",
+        color: "#FFFFFF"
+    },
+    fontConnectWith: {
+        fontFamily: 'Graphik-Bold-App',
+        fontWeight: "bold",
+        fontSize: 14,
+        lineHeight: 25,
+        color: "#000000",
+        letterSpacing: -0.3
+    },
+    fontConnectWithName: {
+        fontFamily: 'Graphik-Bold-App',
+        fontWeight: "bold",
+        fontSize: 14,
+        lineHeight: 16,
+        color: "#000000",
+        letterSpacing: -0.3
+    },
+    fontConnectWithRole: {
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 12,
+        lineHeight: 16,
+        color: "#000000",
+        letterSpacing: -0.3,
+        color: "#333333"
+    },
+    connectWithSliderButton: {
+        padding: 0,
+        height: 25
     },
     sliderButton:
     {

@@ -1,21 +1,15 @@
-import { Content, Left, Right, Body, StyleProvider, Container, Card, CardItem, Button, Text } from 'native-base';
+import { Input, Content, Left, Right, Body, StyleProvider, Container, Card, CardItem, Button, Text } from 'native-base';
 import * as React from 'react';
 import styles from '../style.js'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import { Image } from 'react-native'
-import { NavigationScreenProp } from 'react-navigation';
-interface Props {
-  navigation: NavigationScreenProp<any, any>
-}
+
+interface Props { }
 interface State { }
-export default class MyConversations extends React.Component<Props, State> {
+export default class MessageBoard extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-  }
-  openConversation() {
-    console.log("Navigate to conversationScreen")
-    this.props.navigation.navigate("ConversationScreen");
   }
   render() {
 
@@ -26,29 +20,38 @@ export default class MyConversations extends React.Component<Props, State> {
           "name": "Dave Smith",
           "role": "Youth Pastor in Calgary Area",
           "image": "../../assets/profile-placeholder.png",
-          "message": "Hi community! We’re looking for a good resource for our sunday school kids program. Could you share your thoughs and resources if possible? Thank you!"
+          "message": "Hi community! We’re looking for a good resource for our sunday school kids program. Could you share your thoughs and resources if possible? Thank you!",
+          "date": "2019-01-01 20:30:45"
         },
         {
           "id": "122",
           "name": "Jason Petrovic",
           "role": "Communications Manager",
           "image": "../../assets/profile-placeholder.png",
-          "message": "Everyone who is interested in joining our youth summer workshop with pastor @Zachary Soreff starting next weekend, this is last call for your signups! "
+          "message": "Everyone who is interested in joining our youth summer workshop with pastor @Zachary Soreff starting next weekend, this is last call for your signups! ",
+          "date": "2019-01-01 20:30:45"
         },
         {
           "id": "123",
           "name": "Zachary Soreff",
           "role": "Community Pastor in Calgary Area",
           "image": "../../assets/profile-placeholder.png",
-          "message": "Our team just published latest addition to the summer kids camps curriculum. Let us know any feedback - http://jesuscollective.com/345663"
+          "message": "Our team just published latest addition to the summer kids camps curriculum. Let us know any feedback - http://jesuscollective.com/345663",
+          "date": "2019-01-01 20:30:45"
         },
       ]
     return (
       <StyleProvider style={getTheme(material)}>
 
-        <Container style={{ width:"100%", flexDirection: 'column', alignItems: 'flex-start', minHeight: 500 }} >
-          <Button transparent onPress={() => {this.openConversation()}}><Text style={styles.fontConnectWith}>Latest Conversations</Text></Button>
+        <Container style={{ width: "100%", flexDirection: 'column', alignItems: 'flex-start', minHeight: 500 }} >
+
           <Content>
+            <Card style={{ minHeight: 50 }}>
+              <Input multiline={true} style={{
+                width: "100%", height: 100, borderWidth:1
+              }} placeholder="type here" />
+              <Button bordered style={styles.sliderButton}><Text>Post</Text></Button>
+            </Card>
             {items.map((item) => {
               return (
                 <Card key={item.id} style={{ minHeight: 50 }}>
@@ -61,7 +64,7 @@ export default class MyConversations extends React.Component<Props, State> {
                       </Body>
                     </Left>
                     <Right>
-                      <Button bordered style={styles.connectWithSliderButton} onPress={() => {this.openConversation()}}><Text>Open</Text></Button>
+                      <Text>{item.date}</Text>
                     </Right>
                   </CardItem>
                   <CardItem>

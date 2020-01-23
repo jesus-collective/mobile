@@ -19,20 +19,20 @@ export default class HeaderJC extends React.Component<Props, State> {
   openDrawer = () => {
     this.props.navigation.dispatch(DrawerActions.openDrawer());
   }
-  openLogin = () => {
-    this.props.navigation.navigate("LoginScreen");
+  openProfile = () => {
+    this.props.navigation.navigate("ProfileScreen");
   }
   openSearch = () => {
-    this.props.navigation.navigate("LoginScreen");
+    this.props.navigation.navigate("SearchScreen");
   }
   openEvents = () => {
-    this.props.navigation.navigate("LoginScreen");
+    this.props.navigation.navigate("EventsScreen");
   }
   openResources = () => {
-    this.props.navigation.navigate("LoginScreen");
+    this.props.navigation.navigate("ResourcesScreen");
   }
   openGroups = () => {
-    this.props.navigation.navigate("LoginScreen");
+    this.props.navigation.navigate("GroupsScreen");
   }
   openHome = () => {
     this.props.navigation.navigate("HomeScreen");
@@ -107,7 +107,7 @@ export default class HeaderJC extends React.Component<Props, State> {
           </Button>
           <Button
             transparent
-            onPress={this.openLogin}>
+            onPress={this.openProfile}>
             <Ionicons name="md-person" style={styles.icon} />
           </Button>
         </Right>

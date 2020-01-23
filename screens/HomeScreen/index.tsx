@@ -20,6 +20,13 @@ import { Text } from 'react-native'
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
 import LoginScreen from "../LoginScreen/LoginScreen";
+import GroupScreen from "../GroupScreen/GroupScreen";
+import EventScreen from "../EventScreen/EventScreen";
+import GroupsScreen from "../GroupsScreen/GroupsScreen";
+import EventsScreen from "../EventsScreen/EventsScreen";
+import ConversationScreen from "../ConversationScreen/ConversationScreen";
+import ResourcesScreen from "../ResourcesScreen/ResourcesScreen";
+import CourseScreen from "../CourseScreen/CourseScreen"
 import SideBar from "../../components/Sidebar/Sidebar";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import {createAppContainer} from "react-navigation";
@@ -38,7 +45,14 @@ const HomeScreenRouter = createDrawerNavigator(
     NewsScreen: { screen: NewsScreen },
     ProfileScreen: { screen: ProfileScreen },
     CoursesScreen: { screen: CoursesScreen },
-    LoginScreen: { screen: LoginScreen }
+    LoginScreen: { screen: LoginScreen },
+    GroupScreen:{ screen:GroupScreen},
+    EventScreen:{screen:EventScreen},
+    GroupsScreen:{ screen:GroupsScreen},
+    EventsScreen:{screen:EventsScreen},
+    ConversationScreen:{screen:ConversationScreen},
+    CourseScreen:{screen:CourseScreen},
+    ResourcesScreen:{screen:ResourcesScreen}
   },
   {
     contentComponent: props => <SideBar {...props} />
@@ -135,7 +149,7 @@ export default class App extends React.Component<Props, State>{
   }
   async checkIfCompletedProfile() {
     console.log("checkIfCompletedProfile")
-   // this.setState({ hasCompletedPersonalProfile: true })
+    this.setState({ hasCompletedPersonalProfile: true })
     if (this.state.userExists) {
       const getUser = await API.graphql(graphqlOperation(queries.getUser, { id: this.user['username'] }));
       if ((getUser.data.getUser.aboutMeShort != null) 
@@ -178,7 +192,7 @@ export default class App extends React.Component<Props, State>{
         }
         else
         {
-          return (<View style={{ backgroundColor:"red",position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1 }}><AppContainer ></AppContainer></View>)
+          return (<View style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1 }}><AppContainer ></AppContainer></View>)
         }
       }
       else
