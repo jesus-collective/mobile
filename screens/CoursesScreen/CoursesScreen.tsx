@@ -3,12 +3,8 @@ import { Container,Content, Text } from 'native-base';
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
 import MyConversations from '../../components/MyConversations/MyConversations';
-import MyEvents from '../../components/MyEvents/MyEvents';
 import MyGroups from '../../components/MyGroups/MyGroups';
-import MyResources from '../../components/MyResources/MyResources';
-import MyCourses from '../../components/MyCourses/MyCourses'
 import MyPeople from '../../components/MyPeople/MyPeople';
-import MyOrganizations from '../../components/MyOrganizations/MyOrganizations';
 import { NavigationScreenProp } from 'react-navigation';
 interface Props {
   navigation: NavigationScreenProp<any, any>
@@ -39,7 +35,7 @@ export default class HomeScreen extends React.Component<Props, State>{
         <Content>
           <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
             <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
-              <MyCourses wrap={true} navigation={this.props.navigation}></MyCourses>
+              <MyGroups  type="course"  wrap={true} navigation={this.props.navigation}></MyGroups>
             </Container>
             <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
               <MyPeople wrap={false} navigation={this.props.navigation}></MyPeople>

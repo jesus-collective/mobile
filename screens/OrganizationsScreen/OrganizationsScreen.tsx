@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import { Container,Content, Text } from 'native-base';
+import { Container, Content, Text } from 'native-base';
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
 import MyConversations from '../../components/MyConversations/MyConversations';
@@ -35,9 +35,7 @@ export default class HomeScreen extends React.Component<Props, State>{
         <Content>
           <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
             <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
-            
-              <MyGroups  type="resource"  wrap={true} navigation={this.props.navigation}></MyGroups>
-             
+              <MyGroups type="organization" wrap={true} navigation={this.props.navigation}></MyGroups>
             </Container>
             <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
               <MyPeople wrap={false} navigation={this.props.navigation}></MyPeople>

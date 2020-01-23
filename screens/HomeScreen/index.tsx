@@ -27,6 +27,7 @@ import EventsScreen from "../EventsScreen/EventsScreen";
 import ConversationScreen from "../ConversationScreen/ConversationScreen";
 import ResourcesScreen from "../ResourcesScreen/ResourcesScreen";
 import CourseScreen from "../CourseScreen/CourseScreen"
+import OrganizationsScreen from "../OrganizationsScreen/OrganizationsScreen"
 import SideBar from "../../components/Sidebar/Sidebar";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import {createAppContainer} from "react-navigation";
@@ -52,7 +53,8 @@ const HomeScreenRouter = createDrawerNavigator(
     EventsScreen:{screen:EventsScreen},
     ConversationScreen:{screen:ConversationScreen},
     CourseScreen:{screen:CourseScreen},
-    ResourcesScreen:{screen:ResourcesScreen}
+    ResourcesScreen:{screen:ResourcesScreen},
+    OrganizationsScreen:{screen:OrganizationsScreen}
   },
   {
     contentComponent: props => <SideBar {...props} />
