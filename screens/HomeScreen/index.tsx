@@ -57,10 +57,14 @@ const HomeScreenRouter = createDrawerNavigator(
     OrganizationsScreen:{screen:OrganizationsScreen}
   },
   {
-    contentComponent: props => <SideBar {...props} />
+    contentComponent: props => <SideBar {...props} />,
+    defaultNavigationOptions: {drawerLockMode:"locked-closed"}
   }
 );
+
 const AppContainer = createAppContainer(HomeScreenRouter);
+  
+
 interface Props {
   authState?: any;
   navigation: NavigationScreenProp<any, any>

@@ -4,9 +4,9 @@ import styles from '../style.js'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import { Image } from 'react-native'
-
-interface Props { 
-  groupId:string
+import Dante from 'Dante2'
+interface Props {
+  groupId: string
 }
 interface State { }
 export default class MessageBoard extends React.Component<Props, State> {
@@ -45,13 +45,12 @@ export default class MessageBoard extends React.Component<Props, State> {
     return (
       <StyleProvider style={getTheme(material)}>
 
-        <Container style={{ width: "100%", flexDirection: 'column', alignItems: 'flex-start', minHeight: 500 }} >
+        <Container style={{ overflow:"visible" ,width: "100%", flexDirection: 'column', alignItems: 'flex-start', minHeight: 500 }} >
 
-          <Content>
-            <Card style={{ minHeight: 50 }}>
-              <Input multiline={true} style={{
-                width: "100%", height: 100, borderWidth:1
-              }} placeholder="type here" />
+          <Content style={{overflow:"visible" }}>
+            <Card style={{ marginTop: 40, padding: 0, minHeight: 50,overflow:"visible" }}>
+              <Dante
+                body_placeholder={'Enter a message'} />
               <Button bordered style={styles.sliderButton}><Text>Post</Text></Button>
             </Card>
             {items.map((item) => {
