@@ -75,8 +75,7 @@ export default class GroupScreen extends React.Component<Props, State>{
                 <Text>Group</Text>
                 <Text>Sponsored</Text>
 
-                <EditableText placeholder="Enter Group Name" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.name} 
-                isEditable={this.state.isEditable}></EditableText>
+                <EditableText placeholder="Enter Group Name" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
                 <EditableText placeholder="Enter Group Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
 
                 <Text>Organizer</Text>
