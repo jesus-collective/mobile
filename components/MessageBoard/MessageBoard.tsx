@@ -6,44 +6,44 @@ import material from '../../native-base-theme/variables/material';
 import { Image } from 'react-native'
 import Dante from 'Dante2'
 interface Props {
-  
-
-  groupId: string
+    groupId: string
+    navigation:any
 }
 interface State { }
 export default class MessageBoard extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
   }
+
+ items =
+  [
+    {
+      "id": "121",
+      "name": "Dave Smith",
+      "role": "Youth Pastor in Calgary Area",
+      "image": "../../assets/profile-placeholder.png",
+      "message": "Hi community! We’re looking for a good resource for our sunday school kids program. Could you share your thoughs and resources if possible? Thank you!",
+      "date": "2019-01-01 20:30:45"
+    },
+    {
+      "id": "122",
+      "name": "Jason Petrovic",
+      "role": "Communications Manager",
+      "image": "../../assets/profile-placeholder.png",
+      "message": "Everyone who is interested in joining our youth summer workshop with pastor @Zachary Soreff starting next weekend, this is last call for your signups! ",
+      "date": "2019-01-01 20:30:45"
+    },
+    {
+      "id": "123",
+      "name": "Zachary Soreff",
+      "role": "Community Pastor in Calgary Area",
+      "image": "../../assets/profile-placeholder.png",
+      "message": "Our team just published latest addition to the summer kids camps curriculum. Let us know any feedback - http://jesuscollective.com/345663",
+      "date": "2019-01-01 20:30:45"
+    },
+  ]
   render() {
 
-    const items =
-      [
-        {
-          "id": "121",
-          "name": "Dave Smith",
-          "role": "Youth Pastor in Calgary Area",
-          "image": "../../assets/profile-placeholder.png",
-          "message": "Hi community! We’re looking for a good resource for our sunday school kids program. Could you share your thoughs and resources if possible? Thank you!",
-          "date": "2019-01-01 20:30:45"
-        },
-        {
-          "id": "122",
-          "name": "Jason Petrovic",
-          "role": "Communications Manager",
-          "image": "../../assets/profile-placeholder.png",
-          "message": "Everyone who is interested in joining our youth summer workshop with pastor @Zachary Soreff starting next weekend, this is last call for your signups! ",
-          "date": "2019-01-01 20:30:45"
-        },
-        {
-          "id": "123",
-          "name": "Zachary Soreff",
-          "role": "Community Pastor in Calgary Area",
-          "image": "../../assets/profile-placeholder.png",
-          "message": "Our team just published latest addition to the summer kids camps curriculum. Let us know any feedback - http://jesuscollective.com/345663",
-          "date": "2019-01-01 20:30:45"
-        },
-      ]
     return (
       <StyleProvider style={getTheme(material)}>
 
@@ -51,11 +51,9 @@ export default class MessageBoard extends React.Component<Props, State> {
 
           <Content style={{overflow:"visible" }}>
             <Card style={{ marginTop: 40, padding: 0, minHeight: 50,overflow:"visible" }}>
-              <Dante
-                body_placeholder={'Enter a message'} />
-              <Button bordered style={styles.sliderButton}><Text>Post</Text></Button>
+                <Button bordered style={styles.sliderButton}><Text>Post</Text></Button>
             </Card>
-            {items.map((item) => {
+            {this.items.map((item) => {
               return (
                 <Card key={item.id} style={{ minHeight: 50 }}>
                   <CardItem>

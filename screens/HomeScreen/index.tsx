@@ -15,7 +15,7 @@ import { createAppContainer } from "react-navigation";
 import awsconfig from '../../src/aws-exports';
 import { NavigationScreenProp } from 'react-navigation';
 
-const ConversationScreen  = lazy(() => import('../ConversationScreen/ConversationScreen'));
+const ConversationScreen = lazy(() => import('../ConversationScreen/ConversationScreen'));
 const OrganizationsScreen = lazy(() => import('../OrganizationsScreen/OrganizationsScreen'));
 const OrganizationScreen = lazy(() => import('../OrganizationScreen/OrganizationScreen'));
 const CourseScreen = lazy(() => import('../CourseScreen/CourseScreen'));
@@ -55,7 +55,12 @@ const MainAppRouter = createStackNavigator({
 },
   {
     initialRouteName: 'HomeScreen',
-    headerMode:'none'
+    headerMode: 'none',
+    mode:'modal',
+    defaultNavigationOptions: {
+      gestureEnabled: false,
+      cardOverlayEnabled:false
+    }
   })
 
 const HomeScreenRouter = createDrawerNavigator(

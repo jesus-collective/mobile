@@ -11,6 +11,23 @@ export default EStyleSheet.create({
         alignItems: 'center',
         backgroundColor: mainColor,
     },
+    groupNameInput:{
+        borderColor: 'white',
+        borderWidth: 1,
+        marginTop: 8,
+        borderRadius: 5,
+        padding: 3,
+        flex:"0"
+    },
+    groupDescriptionInput:{
+        borderColor: 'white',
+        borderWidth: 1,
+        marginTop: 8,
+        borderRadius: 5,
+        padding: 3,
+        flex:"0",
+        minHeight:100
+    },
     textInput: {
         height: 40,
         borderColor: 'white',

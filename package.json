@@ -9,12 +9,15 @@
     "eject": "npx expo eject"
   },
   "dependencies": {
+    "@emotion/core": "^10.0.27",
+    "@emotion/styled": "^10.0.27",
     "@types/googlemaps": "^3.38.1",
-    "Dante2": "^0.5.0-rc4",
+    "Dante2": "^0.5.0-rc24",
     "aws-amplify": "^1.2.4",
     "aws-amplify-react-native": "^2.2.3",
     "aws-sdk": "^2.585.0",
     "babel-preset-expo": "^8.0.0",
+    "emotion-theming": "^10.0.27",
     "expo": "^36.0.0",
     "native-base": "^2.13.8",
     "react": "16.9.0",
