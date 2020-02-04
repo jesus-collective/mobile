@@ -47,7 +47,7 @@ export default class GroupScreen extends React.Component<Props, State>{
   getInitialData(props) {
     var z: CreateGroupInput = {
       //owner:String!
-      type: "group",
+      type: "organization",
       name: "",
       description: "",
       memberCount: 1,

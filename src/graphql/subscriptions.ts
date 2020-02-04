@@ -1,8 +1,8 @@
 // tslint:disable
 // this is an auto generated file. This will be overwritten
 
-export const onCreateUser = `subscription OnCreateUser {
-  onCreateUser {
+export const onCreateUser = `subscription OnCreateUser($owner: String!) {
+  onCreateUser(owner: $owner) {
     id
     given_name
     family_name
@@ -29,8 +29,8 @@ export const onCreateUser = `subscription OnCreateUser {
   }
 }
 `;
-export const onUpdateUser = `subscription OnUpdateUser {
-  onUpdateUser {
+export const onUpdateUser = `subscription OnUpdateUser($owner: String!) {
+  onUpdateUser(owner: $owner) {
     id
     given_name
     family_name
@@ -57,8 +57,8 @@ export const onUpdateUser = `subscription OnUpdateUser {
   }
 }
 `;
-export const onDeleteUser = `subscription OnDeleteUser {
-  onDeleteUser {
+export const onDeleteUser = `subscription OnDeleteUser($owner: String!) {
+  onDeleteUser(owner: $owner) {
     id
     given_name
     family_name
@@ -82,6 +82,645 @@ export const onDeleteUser = `subscription OnDeleteUser {
     orgType
     orgSize
     orgDescription
+  }
+}
+`;
+export const onCreateGroup = `subscription OnCreateGroup($owner: String!) {
+  onCreateGroup(owner: $owner) {
+    id
+    owner
+    type
+    name
+    description
+    memberCount
+    members {
+      id
+      given_name
+      family_name
+      email
+      phone
+      owner
+      hasPaidState
+      address
+      city
+      province
+      postalCode
+      country
+      profileImage
+      aboutMeShort
+      aboutMeLong
+      interests
+      currentRole
+      currentScope
+      personality
+      orgName
+      orgType
+      orgSize
+      orgDescription
+    }
+    image
+    time
+    lastUpdated
+    location
+    length
+    effort
+    cost
+    organizerGroup {
+      id
+      owner
+      type
+      name
+      description
+      memberCount
+      members {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+      }
+      image
+      time
+      lastUpdated
+      location
+      length
+      effort
+      cost
+      organizerGroup {
+        id
+        owner
+        type
+        name
+        description
+        memberCount
+        image
+        time
+        lastUpdated
+        location
+        length
+        effort
+        cost
+      }
+      organizerUser {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+      }
+      instructors {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+      }
+    }
+    organizerUser {
+      id
+      given_name
+      family_name
+      email
+      phone
+      owner
+      hasPaidState
+      address
+      city
+      province
+      postalCode
+      country
+      profileImage
+      aboutMeShort
+      aboutMeLong
+      interests
+      currentRole
+      currentScope
+      personality
+      orgName
+      orgType
+      orgSize
+      orgDescription
+    }
+    instructors {
+      id
+      given_name
+      family_name
+      email
+      phone
+      owner
+      hasPaidState
+      address
+      city
+      province
+      postalCode
+      country
+      profileImage
+      aboutMeShort
+      aboutMeLong
+      interests
+      currentRole
+      currentScope
+      personality
+      orgName
+      orgType
+      orgSize
+      orgDescription
+    }
+  }
+}
+`;
+export const onUpdateGroup = `subscription OnUpdateGroup($owner: String!) {
+  onUpdateGroup(owner: $owner) {
+    id
+    owner
+    type
+    name
+    description
+    memberCount
+    members {
+      id
+      given_name
+      family_name
+      email
+      phone
+      owner
+      hasPaidState
+      address
+      city
+      province
+      postalCode
+      country
+      profileImage
+      aboutMeShort
+      aboutMeLong
+      interests
+      currentRole
+      currentScope
+      personality
+      orgName
+      orgType
+      orgSize
+      orgDescription
+    }
+    image
+    time
+    lastUpdated
+    location
+    length
+    effort
+    cost
+    organizerGroup {
+      id
+      owner
+      type
+      name
+      description
+      memberCount
+      members {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+      }
+      image
+      time
+      lastUpdated
+      location
+      length
+      effort
+      cost
+      organizerGroup {
+        id
+        owner
+        type
+        name
+        description
+        memberCount
+        image
+        time
+        lastUpdated
+        location
+        length
+        effort
+        cost
+      }
+      organizerUser {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+      }
+      instructors {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+      }
+    }
+    organizerUser {
+      id
+      given_name
+      family_name
+      email
+      phone
+      owner
+      hasPaidState
+      address
+      city
+      province
+      postalCode
+      country
+      profileImage
+      aboutMeShort
+      aboutMeLong
+      interests
+      currentRole
+      currentScope
+      personality
+      orgName
+      orgType
+      orgSize
+      orgDescription
+    }
+    instructors {
+      id
+      given_name
+      family_name
+      email
+      phone
+      owner
+      hasPaidState
+      address
+      city
+      province
+      postalCode
+      country
+      profileImage
+      aboutMeShort
+      aboutMeLong
+      interests
+      currentRole
+      currentScope
+      personality
+      orgName
+      orgType
+      orgSize
+      orgDescription
+    }
+  }
+}
+`;
+export const onDeleteGroup = `subscription OnDeleteGroup($owner: String!) {
+  onDeleteGroup(owner: $owner) {
+    id
+    owner
+    type
+    name
+    description
+    memberCount
+    members {
+      id
+      given_name
+      family_name
+      email
+      phone
+      owner
+      hasPaidState
+      address
+      city
+      province
+      postalCode
+      country
+      profileImage
+      aboutMeShort
+      aboutMeLong
+      interests
+      currentRole
+      currentScope
+      personality
+      orgName
+      orgType
+      orgSize
+      orgDescription
+    }
+    image
+    time
+    lastUpdated
+    location
+    length
+    effort
+    cost
+    organizerGroup {
+      id
+      owner
+      type
+      name
+      description
+      memberCount
+      members {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+      }
+      image
+      time
+      lastUpdated
+      location
+      length
+      effort
+      cost
+      organizerGroup {
+        id
+        owner
+        type
+        name
+        description
+        memberCount
+        image
+        time
+        lastUpdated
+        location
+        length
+        effort
+        cost
+      }
+      organizerUser {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+      }
+      instructors {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+      }
+    }
+    organizerUser {
+      id
+      given_name
+      family_name
+      email
+      phone
+      owner
+      hasPaidState
+      address
+      city
+      province
+      postalCode
+      country
+      profileImage
+      aboutMeShort
+      aboutMeLong
+      interests
+      currentRole
+      currentScope
+      personality
+      orgName
+      orgType
+      orgSize
+      orgDescription
+    }
+    instructors {
+      id
+      given_name
+      family_name
+      email
+      phone
+      owner
+      hasPaidState
+      address
+      city
+      province
+      postalCode
+      country
+      profileImage
+      aboutMeShort
+      aboutMeLong
+      interests
+      currentRole
+      currentScope
+      personality
+      orgName
+      orgType
+      orgSize
+      orgDescription
+    }
+  }
+}
+`;
+export const onCreateCourseInfo = `subscription OnCreateCourseInfo($owner: String!) {
+  onCreateCourseInfo(owner: $owner) {
+    id
+    summary
+    course {
+      week
+      name
+      sections {
+        section
+        name
+      }
+    }
+  }
+}
+`;
+export const onUpdateCourseInfo = `subscription OnUpdateCourseInfo($owner: String!) {
+  onUpdateCourseInfo(owner: $owner) {
+    id
+    summary
+    course {
+      week
+      name
+      sections {
+        section
+        name
+      }
+    }
+  }
+}
+`;
+export const onDeleteCourseInfo = `subscription OnDeleteCourseInfo($owner: String!) {
+  onDeleteCourseInfo(owner: $owner) {
+    id
+    summary
+    course {
+      week
+      name
+      sections {
+        section
+        name
+      }
+    }
   }
 }
 `;

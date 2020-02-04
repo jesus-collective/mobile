@@ -1,38 +1,42 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import Amplify from 'aws-amplify'
 import { API, graphqlOperation } from 'aws-amplify';
 
 import HomeScreen from "./HomeScreen";
-import CoursesScreen from "../CoursesScreen/CoursesScreen";
-import ExploreScreen from "../ExploreScreen/ExploreScreen";
-import SupportScreen from "../SupportScreen/SupportScreen";
-import KidsAndYouthScreen from "../KidsAndYouthScreen/KidsAndYouthScreen";
 import { View } from 'react-native'
-import GetInvolvedScreen from "../GetInvolvedScreen/GetInvolvedScreen";
-import ContactScreen from "../ContactScreen/ContactScreen";
-import NewsScreen from "../NewsScreen/NewsScreen";
-import ProfileScreen from "../ProfileScreen/ProfileScreen";
-import SignUpScreen1 from '../../components/Auth/SignUpScreen1'
-import SignUpScreen2 from '../../components/Auth/SignUpScreen2'
-import SignUpScreen3 from '../../components/Auth/SignUpScreen3'
 import { Auth } from 'aws-amplify';
 import { Text } from 'react-native'
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
-import LoginScreen from "../LoginScreen/LoginScreen";
-import GroupScreen from "../GroupScreen/GroupScreen";
-import EventScreen from "../EventScreen/EventScreen";
-import GroupsScreen from "../GroupsScreen/GroupsScreen";
-import EventsScreen from "../EventsScreen/EventsScreen";
-import ConversationScreen from "../ConversationScreen/ConversationScreen";
-import ResourcesScreen from "../ResourcesScreen/ResourcesScreen";
-import CourseScreen from "../CourseScreen/CourseScreen"
-import OrganizationsScreen from "../OrganizationsScreen/OrganizationsScreen"
 import SideBar from "../../components/Sidebar/Sidebar";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import {createAppContainer} from "react-navigation";
 import awsconfig from '../../src/aws-exports';
 import { NavigationScreenProp } from 'react-navigation';
+
+
+const OrganizationsScreen = lazy(() => import('../OrganizationsScreen/OrganizationsScreen'));
+const OrganizationScreen = lazy(() => import('../OrganizationScreen/OrganizationScreen'));
+const CourseScreen = lazy(() => import('../CourseScreen/CourseScreen'));
+const LoginScreen = lazy(() => import('../LoginScreen/LoginScreen'));
+const GroupScreen = lazy(() => import('../GroupScreen/GroupScreen'));
+const SignUpScreen1 = lazy(() => import('../../components/Auth/SignUpScreen1'));
+const SignUpScreen2 = lazy(() => import('../../components/Auth/SignUpScreen2'));
+const SignUpScreen3 = lazy(() => import('../../components/Auth/SignUpScreen3'));
+const CoursesScreen = lazy(() => import('../CoursesScreen/CoursesScreen'));
+const ExploreScreen = lazy(() => import('../ExploreScreen/ExploreScreen'));
+const SupportScreen = lazy(() => import('../SupportScreen/SupportScreen'));
+const KidsAndYouthScreen = lazy(() => import('../KidsAndYouthScreen/KidsAndYouthScreen'));
+const GetInvolvedScreen = lazy(() => import('../GetInvolvedScreen/GetInvolvedScreen'));
+const ContactScreen = lazy(() => import('../ContactScreen/ContactScreen'));
+const EventScreen = lazy(() => import('../EventScreen/EventScreen'));
+const GroupsScreen = lazy(() => import('../GroupsScreen/GroupsScreen'));
+const EventsScreen = lazy(() => import('../EventsScreen/EventsScreen'));
+const ConversationScreen = lazy(() => import('../ConversationScreen/ConversationScreen'));
+const ResourceScreen = lazy(() => import('../ResourceScreen/ResourceScreen'));
+const ResourcesScreen = lazy(() => import('../ResourcesScreen/ResourcesScreen'));
+const ProfileScreen = lazy(() => import('../ProfileScreen/ProfileScreen'));
+const NewsScreen = lazy(() => import('../NewsScreen/NewsScreen'));
 
 Amplify.configure(awsconfig);
 const HomeScreenRouter = createDrawerNavigator(
@@ -54,7 +58,9 @@ const HomeScreenRouter = createDrawerNavigator(
     ConversationScreen:{screen:ConversationScreen},
     CourseScreen:{screen:CourseScreen},
     ResourcesScreen:{screen:ResourcesScreen},
-    OrganizationsScreen:{screen:OrganizationsScreen}
+    ResourceScreen:{screen:ResourceScreen},
+    OrganizationsScreen:{screen:OrganizationsScreen},
+    OrganizationScreen:{screen:OrganizationScreen}
   },
   {
     contentComponent: props => <SideBar {...props} />,
@@ -185,20 +191,20 @@ export default class App extends React.Component<Props, State>{
     //  console.log(this.props.authState)
     if (this.props.authState == 'signedIn')
       if (this.state.hasPaidState === "Not Started") {
-        return (<SignUpScreen1 payStateChanged={() => this.onPaidStateChanged()} />)
+        return (<Suspense fallback={null}><SignUpScreen1 payStateChanged={() => this.onPaidStateChanged()} /></Suspense>)
         //  return <SignUpScreen2 />
       }
       else if (this.state.hasPaidState === "In Progress") {
-        return (<SignUpScreen2 payStateChanged={() => this.onPaidStateChanged()} />)
+        return (<Suspense fallback={null}><SignUpScreen2 payStateChanged={() => this.onPaidStateChanged()} /></Suspense>)
         //  return <SignUpScreen2 />
       }
       else if (this.state.hasPaidState === "Complete") {
         if (!this.state.hasCompletedPersonalProfile) {
-          return (<SignUpScreen3 profileComplete={() => this.onProfileComplete()} />)
+          return (<Suspense fallback={null}><SignUpScreen3 profileComplete={() => this.onProfileComplete()} /></Suspense>)
         }
         else
         {
-          return (<View style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1 }}><AppContainer ></AppContainer></View>)
+          return (<Suspense fallback={null}><View style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1 }}><AppContainer ></AppContainer></View></Suspense>)
         }
       }
       else

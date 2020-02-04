@@ -112,7 +112,7 @@ export default class HeaderJC extends React.Component<Props, State> {
         </Body>
         {this.menu.map((item) => {
           return (
-            <Body style={{ display: "flex", flexDirection: 'column', alignSelf: "flex-start", alignItems: "flex-start", justifyContent: 'flex-start' }}>
+            <Body key={item.name} style={{ display: "flex", flexDirection: 'column', alignSelf: "flex-start", alignItems: "flex-start", justifyContent: 'flex-start' }}>
               <Button
                 transparent
                 onPress={this.openEvents}
@@ -120,7 +120,7 @@ export default class HeaderJC extends React.Component<Props, State> {
                 <Text style={styles.footerCenterMenuButtonsTextWhite}>{item.name}</Text>
               </Button>
               {item.submenu.map((item2) => {
-                return (<Button
+                return (<Button key={item2.name}
                   transparent
                   onPress={this.openEvents}
                   style={styles.footerCenterMenuButtons}>

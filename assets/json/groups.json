@@ -1,307 +1,387 @@
 [
-    {
-      "id": "group-west-regional-cluster",
-      "type": "group",
-      "name": "West Regional Cluster",
-      "description": "Churches and leaders out west sharing challenges, opportunities, and shaping each other together.",
-      "memberCount": 15,
-      "image": ""
+  {
+    "id": "group-template",
+    "type": "group",
+    "name": "West Regional Cluster",
+    "description": "Churches and leaders out west sharing challenges, opportunities, and shaping each other together.",
+    "memberCount": 0,
+    "image": ""
+  },
+  {
+    "id": "event-template",
+    "type": "event",
+    "name": "Jesus Collective Partner Retreat",
+    "description": "It’s here! Our chance to spend time together, speak into priorities…",
+    "time": "Friday, July 5, 2019 @ 3:00 PM to 5:00 PM",
+    "location": "123 Sesame St.",
+    "memberCount": 0
+  },
+  {
+    "id": "resource-template",
+    "type": "resource",
+    "name": "Peace Curriculum",
+    "lastupdated": "July 3, 2019",
+    "image": ""
+  },
+  {
+    "id": "org-template",
+    "type": "organization",
+    "name": "The Meeting House Oakville",
+    "kind": "Publisher",
+    "image": ""
+  },
+  {
+    "id": "course-template",
+    "type": "course",
+    "name": "Leadership Formation",
+    "lastupdated": "July 3, 2019",
+    "image": "",
+    "description": "Personal Development With Hands On Practical Learning. All In a Facilitated And Peer Learning Environment.",
+    "time": "01 Aug - 12 Sep",
+    "length": "6 weeks",
+    "effort": "4-6 hours/week",
+    "cost": "Free",
+    "location": "Calgary Community Center",
+    "organizer": {
+      "name": "Jesus Collective",
+      "image": "../../assets/profile-placeholder.png"
     },
-    {
-      "id": "group-jesus-centered-theology",
-      "type": "group",
-      "name": "Jesus Centered Theology",
-      "description": "Leaders passionate about shaping the meaning of ‘Jesus-centred’ together…",
-      "memberCount": 13,
-      "image": ""
-    },
-    {
-      "id": "group-jesus-centered-theology",
-      "type": "group",
-      "name": "Jesus Centered Theology",
-      "description": "Leaders passionate about shaping the meaning of ‘Jesus-centred’ together…",
-      "memberCount": 13,
-      "image": ""
-    },
-    {
-      "id": "group-jesus-centered-theology",
-      "type": "group",
-      "name": "Jesus Centered Theology",
-      "description": "Leaders passionate about shaping the meaning of ‘Jesus-centred’ together…",
-      "memberCount": 13,
-      "image": ""
-    },
-    {
-      "id": "group-jesus-centered-theology",
-      "type": "group",
-      "name": "Jesus Centered Theology",
-      "description": "Leaders passionate about shaping the meaning of ‘Jesus-centred’ together…",
-      "memberCount": 13,
-      "image": ""
-    },
-    {
-      "id": "group-west-regional-cluster",
-      "type": "group",
-      "name": "West Regional Cluster - Online Gathering",
-      "description": "Churches and leaders out west sharing challenges, opportunities, and shaping each other together.",
-      "location": "Online",
-      "memberCount": 15,
-      "image": ""
-    },
-    {
-      "id": "group-jesus-centered-theology",
-      "type": "event",
-      "name": "Jesus Collective Partner Retreat",
-      "description": "It’s here! Our chance to spend time together, speak into priorities…",
-      "time": "Friday, July 5, 2019 @ 3:00 PM to 5:00 PM",
-      "location": "123 Sesame St.",
-      "memberCount": 13
-
-    },
-    {
-      "id": "group-jesus-centered-theology",
-      "type": "event",
-      "name": "Jesus Collective Partner Retreat",
-      "description": "It’s here! Our chance to spend time together, speak into priorities…",
-      "time": "Friday, July 5, 2019 @ 3:00 PM to 5:00 PM",
-      "location": "123 Sesame St.",
-      "memberCount": 13
-
-    },
-    {
-      "id": "group-jesus-centered-theology",
-      "type": "event",
-      "name": "Jesus Collective Partner Retreat",
-      "description": "It’s here! Our chance to spend time together, speak into priorities…",
-      "time": "Friday, July 5, 2019 @ 3:00 PM to 5:00 PM",
-      "location": "123 Sesame St.",
-      "memberCount": 13
-
-    },
-    {
-      "id": "group-jesus-centered-theology",
-      "type": "event",
-      "name": "Jesus Collective Partner Retreat",
-      "description": "It’s here! Our chance to spend time together, speak into priorities…",
-      "time": "Friday, July 5, 2019 @ 3:00 PM to 5:00 PM",
-      "location": "123 Sesame St.",
-      "memberCount": 13
-
-    },
-    {
-      "id": "group-jesus-centered-theology",
-      "type": "event",
-      "name": "Jesus Collective Partner Retreat",
-      "description": "It’s here! Our chance to spend time together, speak into priorities…",
-      "time": "Friday, July 5, 2019 @ 3:00 PM to 5:00 PM",
-      "location": "123 Sesame St.",
-      "memberCount": 13
-
-    },
-    {
-      "id": "group-jesus-centered-theology",
-      "type": "event",
-      "name": "Jesus Collective Partner Retreat",
-      "description": "It’s here! Our chance to spend time together, speak into priorities…",
-      "time": "Friday, July 5, 2019 @ 3:00 PM to 5:00 PM",
-      "location": "123 Sesame St.",
-      "memberCount": 13
-
-    },
-    {
-      "id": "group-jesus-centered-theology",
-      "type": "event",
-      "name": "Jesus Collective Partner Retreat",
-      "description": "It’s here! Our chance to spend time together, speak into priorities…",
-      "time": "Friday, July 5, 2019 @ 3:00 PM to 5:00 PM",
-      "location": "123 Sesame St.",
-      "memberCount": 13
-
-    },
-    {
-      "id": "peace-curriculum",
-      "type": "resource",
-      "name": "Peace Curriculum",
-      "lastupdated": "July 3, 2019",
-      "image": ""
-    },
-    {
-      "id": "kids-and-youth",
-      "type": "resource",
-      "name": "Kids & Youth Curriculum",
-      "lastupdated": "July 3, 2019",
-      "image": ""
-    },
-    {
-      "id": "homechurch-leaders-training",
-      "type": "resource",
-      "name": "Homechurch Leaders Training",
-      "lastupdated": "July 3, 2019",
-      "image": ""
-    },
-    {
-      "id": "woodland-hills-teaching",
-      "type": "resource",
-      "name": "Woodland Hills Teaching",
-      "lastupdated": "July 3, 2019",
-      "image": ""
-    },
-    {
-      "id": "themeetinghouse-teaching",
-      "type": "resource",
-      "name": "The Meeting House Teaching",
-      "lastupdated": "July 3, 2019",
-      "image": ""
-    },
-    {
-      "id": "org-tmh-oakville",
-      "type": "organization",
-      "name": "The Meeting House Oakville",
-      "kind": "Publisher",
-      "image": ""
-    },
-    {
-      "id": "org-tmh-newmarket",
-      "type": "organization",
-      "name": "The Meeting House Newmarket",
-      "kind": "Community Church",
-      "image": ""
-    },
-    {
-      "id": "org-tmh-newmarket",
-      "type": "organization",
-      "name": "The Meeting House Newmarket",
-      "kind": "Community Church",
-      "image": ""
-    },
-    {
-      "id": "org-tmh-newmarket",
-      "type": "organization",
-      "name": "The Meeting House Newmarket",
-      "kind": "Community Church",
-      "image": ""
-    },
-    {
-      "id": "org-tmh-newmarket",
-      "type": "organization",
-      "name": "The Meeting House Newmarket",
-      "kind": "Community Church",
-      "image": ""
-    },  
-    {
-      "id": "org-tmh-newmarket",
-      "type": "organization",
-      "name": "The Meeting House Newmarket",
-      "kind": "Community Church",
-      "image": ""
-    },
-    {
-      "id": "course-leadership-formation",
-      "type": "course",
-      "name": "Leadership Formation",
-      "lastupdated": "July 3, 2019",
-      "image": "",
-      "description": "Personal Development With Hands On Practical Learning. All In a Facilitated And Peer Learning Environment.",
-      "time": "01 Aug - 12 Sep",
-      "length":"6 weeks",
-      "effort":"4-6 hours/week",
-      "cost":"Free",
-      "location": "Calgary Community Center",  
-      "organizer": {
-        "name": "Jesus Collective",
+    "instructors": [
+      {
+        "name": "Dave Smith",
         "image": "../../assets/profile-placeholder.png"
       },
-      "instructors": [
-        {
-          "name": "Dave Smith",
-          "image": "../../assets/profile-placeholder.png"
-        },
-        {
-          "name": "Ed Teach",
-          "image": "../../assets/profile-placeholder.png"
-        }
-      ],
-      "summary": "Congratulations! You’ve taken the first step to understanding the Leadership in church environment. We urge you to immerse yourself in the experience and explore all the resources curated for you. About this course This is six-week program that will prepare on your journey as a church leader. We’ll explore different topics and interact with other members to form unique learning experience. Week 1: Focus on understanding the basics Week 2: How to communicate Week 3: Explore different topics and issues that church faces today Week 4: Practical examples and interaction Week 5: How to solve conflicts Week 6: Servant leadership Course runs every day over the period of six weeks. You’re being updated on a daily basis and all assigments are scheduled ahead. All participants are grouped in cohorts units usaully of 12 people and divided into smaller triads groups of 3 people. Participants engage deeply around content in a cohort experience that helps them to integrate new understandings into the practice of their current ministry context.  At the end of the 6 week intensive, participants then practice their new learning in their church leadership roles, and our desire is that they would come back for another intensive experience or opt into the longer developmental cohort. What other people say “ Arcu bibendum at varius vel pharetra vel. Dui vivamus arcu felis bibendum. Mauris pellentesque pulvinar pellentesque habitant morbi tristique. Pellentesque dignissim enim sit amet venenatis urna cursus eget nunc.” Rena Chiu “ Arcu bibendum at varius vel pharetra vel. Dui vivamus arcu felis bibendum” Rena Chiu “ Arcu bibendum at varius vel pharetra vel. Dui vivamus arcu felis bibendum. Mauris pellentesque pulvinar pellentesque habitant morbi tristique. Pellentesque dignissim enim sit amet venenatis urna cursus eget nunc.” Rena Chiu",
-      "course": [
-        {
-          "week": 1,
-          "name": "Understanding the basics",
-          "sections": [
-            {
-              "section": 1,
-              "name": "Introduction into the topic"
-            },
-            {
-              "section": 2,
-              "name": "Basic principles that we use"
-            }
-          ]
-        },
-        {
-          "week": 2,
-          "name": "Understanding the basics",
-          "sections": [
-            {
-              "section": 1,
-              "name": "Introduction into the topic"
-            },
-            {
-              "section": 2,
-              "name": "Basic principles that we use"
-            }
-          ]
-        }
-      ]
+      {
+        "name": "Ed Teach",
+        "image": "../../assets/profile-placeholder.png"
+      }
+    ],
+    "summary": "Congratulations! You’ve taken the first step to understanding the Leadership in church environment. We urge you to immerse yourself in the experience and explore all the resources curated for you. About this course This is six-week program that will prepare on your journey as a church leader. We’ll explore different topics and interact with other members to form unique learning experience. Week 1: Focus on understanding the basics Week 2: How to communicate Week 3: Explore different topics and issues that church faces today Week 4: Practical examples and interaction Week 5: How to solve conflicts Week 6: Servant leadership Course runs every day over the period of six weeks. You’re being updated on a daily basis and all assigments are scheduled ahead. All participants are grouped in cohorts units usaully of 12 people and divided into smaller triads groups of 3 people. Participants engage deeply around content in a cohort experience that helps them to integrate new understandings into the practice of their current ministry context.  At the end of the 6 week intensive, participants then practice their new learning in their church leadership roles, and our desire is that they would come back for another intensive experience or opt into the longer developmental cohort. What other people say “ Arcu bibendum at varius vel pharetra vel. Dui vivamus arcu felis bibendum. Mauris pellentesque pulvinar pellentesque habitant morbi tristique. Pellentesque dignissim enim sit amet venenatis urna cursus eget nunc.” Rena Chiu “ Arcu bibendum at varius vel pharetra vel. Dui vivamus arcu felis bibendum” Rena Chiu “ Arcu bibendum at varius vel pharetra vel. Dui vivamus arcu felis bibendum. Mauris pellentesque pulvinar pellentesque habitant morbi tristique. Pellentesque dignissim enim sit amet venenatis urna cursus eget nunc.” Rena Chiu",
+    "course": [
+      {
+        "week": 1,
+        "name": "Understanding the basics",
+        "sections": [
+          {
+            "section": 1,
+            "name": "Introduction into the topic"
+          },
+          {
+            "section": 2,
+            "name": "Basic principles that we use"
+          }
+        ]
+      },
+      {
+        "week": 2,
+        "name": "Understanding the basics",
+        "sections": [
+          {
+            "section": 1,
+            "name": "Introduction into the topic"
+          },
+          {
+            "section": 2,
+            "name": "Basic principles that we use"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "group-west-regional-cluster1",
+    "type": "group",
+    "name": "West Regional Cluster",
+    "description": "Churches and leaders out west sharing challenges, opportunities, and shaping each other together.",
+    "memberCount": 15,
+    "image": ""
+  },
+  {
+    "id": "group-jesus-centered-theology2",
+    "type": "group",
+    "name": "Jesus Centered Theology",
+    "description": "Leaders passionate about shaping the meaning of ‘Jesus-centred’ together…",
+    "memberCount": 13,
+    "image": ""
+  },
+  {
+    "id": "group-jesus-centered-theology3",
+    "type": "group",
+    "name": "Jesus Centered Theology",
+    "description": "Leaders passionate about shaping the meaning of ‘Jesus-centred’ together…",
+    "memberCount": 13,
+    "image": ""
+  },
+  {
+    "id": "group-jesus-centered-theology4",
+    "type": "group",
+    "name": "Jesus Centered Theology",
+    "description": "Leaders passionate about shaping the meaning of ‘Jesus-centred’ together…",
+    "memberCount": 13,
+    "image": ""
+  },
+  {
+    "id": "group-jesus-centered-theology5",
+    "type": "group",
+    "name": "Jesus Centered Theology",
+    "description": "Leaders passionate about shaping the meaning of ‘Jesus-centred’ together…",
+    "memberCount": 13,
+    "image": ""
+  },
+  {
+    "id": "group-west-regional-cluster6",
+    "type": "group",
+    "name": "West Regional Cluster - Online Gathering",
+    "description": "Churches and leaders out west sharing challenges, opportunities, and shaping each other together.",
+    "location": "Online",
+    "memberCount": 15,
+    "image": ""
+  },
+  {
+    "id": "group-jesus-centered-theology7",
+    "type": "event",
+    "name": "Jesus Collective Partner Retreat",
+    "description": "It’s here! Our chance to spend time together, speak into priorities…",
+    "time": "Friday, July 5, 2019 @ 3:00 PM to 5:00 PM",
+    "location": "123 Sesame St.",
+    "memberCount": 13
+  },
+  {
+    "id": "group-jesus-centered-theology8",
+    "type": "event",
+    "name": "Jesus Collective Partner Retreat",
+    "description": "It’s here! Our chance to spend time together, speak into priorities…",
+    "time": "Friday, July 5, 2019 @ 3:00 PM to 5:00 PM",
+    "location": "123 Sesame St.",
+    "memberCount": 13
+  },
+  {
+    "id": "group-jesus-centered-theology9",
+    "type": "event",
+    "name": "Jesus Collective Partner Retreat",
+    "description": "It’s here! Our chance to spend time together, speak into priorities…",
+    "time": "Friday, July 5, 2019 @ 3:00 PM to 5:00 PM",
+    "location": "123 Sesame St.",
+    "memberCount": 13
+  },
+  {
+    "id": "group-jesus-centered-theology10",
+    "type": "event",
+    "name": "Jesus Collective Partner Retreat",
+    "description": "It’s here! Our chance to spend time together, speak into priorities…",
+    "time": "Friday, July 5, 2019 @ 3:00 PM to 5:00 PM",
+    "location": "123 Sesame St.",
+    "memberCount": 13
+  },
+  {
+    "id": "group-jesus-centered-theology11",
+    "type": "event",
+    "name": "Jesus Collective Partner Retreat",
+    "description": "It’s here! Our chance to spend time together, speak into priorities…",
+    "time": "Friday, July 5, 2019 @ 3:00 PM to 5:00 PM",
+    "location": "123 Sesame St.",
+    "memberCount": 13
+  },
+  {
+    "id": "group-jesus-centered-theology12",
+    "type": "event",
+    "name": "Jesus Collective Partner Retreat",
+    "description": "It’s here! Our chance to spend time together, speak into priorities…",
+    "time": "Friday, July 5, 2019 @ 3:00 PM to 5:00 PM",
+    "location": "123 Sesame St.",
+    "memberCount": 13
+  },
+  {
+    "id": "group-jesus-centered-theology13",
+    "type": "event",
+    "name": "Jesus Collective Partner Retreat",
+    "description": "It’s here! Our chance to spend time together, speak into priorities…",
+    "time": "Friday, July 5, 2019 @ 3:00 PM to 5:00 PM",
+    "location": "123 Sesame St.",
+    "memberCount": 13
+  },
+  {
+    "id": "peace-curriculum14",
+    "type": "resource",
+    "name": "Peace Curriculum",
+    "lastupdated": "July 3, 2019",
+    "image": ""
+  },
+  {
+    "id": "kids-and-youth15",
+    "type": "resource",
+    "name": "Kids & Youth Curriculum",
+    "lastupdated": "July 3, 2019",
+    "image": ""
+  },
+  {
+    "id": "homechurch-leaders-training16",
+    "type": "resource",
+    "name": "Homechurch Leaders Training",
+    "lastupdated": "July 3, 2019",
+    "image": ""
+  },
+  {
+    "id": "woodland-hills-teaching17",
+    "type": "resource",
+    "name": "Woodland Hills Teaching",
+    "lastupdated": "July 3, 2019",
+    "image": ""
+  },
+  {
+    "id": "themeetinghouse-teaching18",
+    "type": "resource",
+    "name": "The Meeting House Teaching",
+    "lastupdated": "July 3, 2019",
+    "image": ""
+  },
+  {
+    "id": "org-tmh-oakville19",
+    "type": "organization",
+    "name": "The Meeting House Oakville",
+    "kind": "Publisher",
+    "image": ""
+  },
+  {
+    "id": "org-tmh-newmarket20",
+    "type": "organization",
+    "name": "The Meeting House Newmarket",
+    "kind": "Community Church",
+    "image": ""
+  },
+  {
+    "id": "org-tmh-newmarket21",
+    "type": "organization",
+    "name": "The Meeting House Newmarket",
+    "kind": "Community Church",
+    "image": ""
+  },
+  {
+    "id": "org-tmh-newmarket22",
+    "type": "organization",
+    "name": "The Meeting House Newmarket",
+    "kind": "Community Church",
+    "image": ""
+  },
+  {
+    "id": "org-tmh-newmarket23",
+    "type": "organization",
+    "name": "The Meeting House Newmarket",
+    "kind": "Community Church",
+    "image": ""
+  },
+  {
+    "id": "org-tmh-newmarket24",
+    "type": "organization",
+    "name": "The Meeting House Newmarket",
+    "kind": "Community Church",
+    "image": ""
+  },
+  {
+    "id": "course-leadership-formation25",
+    "type": "course",
+    "name": "Leadership Formation",
+    "lastupdated": "July 3, 2019",
+    "image": "",
+    "description": "Personal Development With Hands On Practical Learning. All In a Facilitated And Peer Learning Environment.",
+    "time": "01 Aug - 12 Sep",
+    "length": "6 weeks",
+    "effort": "4-6 hours/week",
+    "cost": "Free",
+    "location": "Calgary Community Center",
+    "organizer": {
+      "name": "Jesus Collective",
+      "image": "../../assets/profile-placeholder.png"
     },
-    {
-      "id": "course-spiritual-parenting-101",
-      "type": "course",
-      "name": "Spiritual Parenting 101",
-      "lastupdated": "July 3, 2019",
-      "image": ""
-    },
-    {
-      "id": "course-spiritual-parenting-101",
-      "type": "course",
-      "name": "Spiritual Parenting 101",
-      "lastupdated": "July 3, 2019",
-      "image": ""
-    },
-    {
-      "id": "course-spiritual-parenting-101",
-      "type": "course",
-      "name": "Spiritual Parenting 101",
-      "lastupdated": "July 3, 2019",
-      "image": ""
-    },
-    {
-      "id": "course-spiritual-parenting-101",
-      "type": "course",
-      "name": "Spiritual Parenting 101",
-      "lastupdated": "July 3, 2019",
-      "image": ""
-    },
-    {
-      "id": "course-spiritual-parenting-101",
-      "type": "course",
-      "name": "Spiritual Parenting 101",
-      "lastupdated": "July 3, 2019",
-      "image": ""
-    },
-    {
-      "id": "course-spiritual-parenting-101",
-      "type": "course",
-      "name": "Spiritual Parenting 101",
-      "lastupdated": "July 3, 2019",
-      "image": ""
-    }, 
-    {
-      "id": "course-spiritual-parenting-101",
-      "type": "course",
-      "name": "Spiritual Parenting 101",
-      "lastupdated": "July 3, 2019",
-      "image": ""
-    }
-
-
-  ]
+    "instructors": [
+      {
+        "name": "Dave Smith",
+        "image": "../../assets/profile-placeholder.png"
+      },
+      {
+        "name": "Ed Teach",
+        "image": "../../assets/profile-placeholder.png"
+      }
+    ],
+    "summary": "Congratulations! You’ve taken the first step to understanding the Leadership in church environment. We urge you to immerse yourself in the experience and explore all the resources curated for you. About this course This is six-week program that will prepare on your journey as a church leader. We’ll explore different topics and interact with other members to form unique learning experience. Week 1: Focus on understanding the basics Week 2: How to communicate Week 3: Explore different topics and issues that church faces today Week 4: Practical examples and interaction Week 5: How to solve conflicts Week 6: Servant leadership Course runs every day over the period of six weeks. You’re being updated on a daily basis and all assigments are scheduled ahead. All participants are grouped in cohorts units usaully of 12 people and divided into smaller triads groups of 3 people. Participants engage deeply around content in a cohort experience that helps them to integrate new understandings into the practice of their current ministry context.  At the end of the 6 week intensive, participants then practice their new learning in their church leadership roles, and our desire is that they would come back for another intensive experience or opt into the longer developmental cohort. What other people say “ Arcu bibendum at varius vel pharetra vel. Dui vivamus arcu felis bibendum. Mauris pellentesque pulvinar pellentesque habitant morbi tristique. Pellentesque dignissim enim sit amet venenatis urna cursus eget nunc.” Rena Chiu “ Arcu bibendum at varius vel pharetra vel. Dui vivamus arcu felis bibendum” Rena Chiu “ Arcu bibendum at varius vel pharetra vel. Dui vivamus arcu felis bibendum. Mauris pellentesque pulvinar pellentesque habitant morbi tristique. Pellentesque dignissim enim sit amet venenatis urna cursus eget nunc.” Rena Chiu",
+    "course": [
+      {
+        "week": 1,
+        "name": "Understanding the basics",
+        "sections": [
+          {
+            "section": 1,
+            "name": "Introduction into the topic"
+          },
+          {
+            "section": 2,
+            "name": "Basic principles that we use"
+          }
+        ]
+      },
+      {
+        "week": 2,
+        "name": "Understanding the basics",
+        "sections": [
+          {
+            "section": 1,
+            "name": "Introduction into the topic"
+          },
+          {
+            "section": 2,
+            "name": "Basic principles that we use"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "course-spiritual-parenting-101",
+    "type": "course",
+    "name": "Spiritual Parenting 101",
+    "lastupdated": "July 3, 2019",
+    "image": ""
+  },
+  {
+    "id": "course-spiritual-parenting-102",
+    "type": "course",
+    "name": "Spiritual Parenting 101",
+    "lastupdated": "July 3, 2019",
+    "image": ""
+  },
+  {
+    "id": "course-spiritual-parenting-103",
+    "type": "course",
+    "name": "Spiritual Parenting 101",
+    "lastupdated": "July 3, 2019",
+    "image": ""
+  },
+  {
+    "id": "course-spiritual-parenting-104",
+    "type": "course",
+    "name": "Spiritual Parenting 101",
+    "lastupdated": "July 3, 2019",
+    "image": ""
+  },
+  {
+    "id": "course-spiritual-parenting-105",
+    "type": "course",
+    "name": "Spiritual Parenting 101",
+    "lastupdated": "July 3, 2019",
+    "image": ""
+  },
+  {
+    "id": "course-spiritual-parenting-106",
+    "type": "course",
+    "name": "Spiritual Parenting 101",
+    "lastupdated": "July 3, 2019",
+    "image": ""
+  },
+  {
+    "id": "course-spiritual-parenting-107",
+    "type": "course",
+    "name": "Spiritual Parenting 101",
+    "lastupdated": "July 3, 2019",
+    "image": ""
+  }
+]
