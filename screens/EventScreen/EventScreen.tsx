@@ -38,12 +38,12 @@ export default class EventScreen extends React.Component<Props, State>{
       canSave: true,
       canLeave: false,
       isEditable: true
-  }
+    }
 
   }
   getInitialData(props) {
     var z: CreateGroupInput = {
-      id:"event-"+Date.now(),
+      id: "event-" + Date.now(),
       //owner:String!
       type: "event",
       name: "",
@@ -61,6 +61,27 @@ export default class EventScreen extends React.Component<Props, State>{
   }
   mapChanged = () => {
     this.setState({ showMap: !this.state.showMap })
+  }
+  validate(): boolean {
+    if (this.state.data.name == "")
+      return false
+    if (this.state.data.description == "")
+      return false
+    if (this.state.data.time == "")
+      return false
+    if (this.state.data.location == "")
+      return false
+    return true
+  }
+  createNew() {
+    if (this.validate()) {
+
+    }
+  }
+  save() {
+    if (this.validate()) {
+
+    }
   }
 
   render() {
@@ -93,11 +114,11 @@ export default class EventScreen extends React.Component<Props, State>{
                   null
                 }
                 {this.state.createNew ?
-                  <Button bordered style={styles.sliderButton}><Text>Create Group</Text></Button>
+                  <Button onPress={() => { this.createNew() }} bordered style={styles.sliderButton}><Text>Create Group</Text></Button>
                   : null
                 }
                 {this.state.canSave ?
-                  <Button bordered style={styles.sliderButton}><Text>Save Group</Text></Button>
+                  <Button onPress={() => { this.save() }} bordered style={styles.sliderButton}><Text>Save Group</Text></Button>
                   : null
                 }
               </Container>

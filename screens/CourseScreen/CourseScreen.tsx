@@ -43,13 +43,15 @@ export default class CourseScreen extends React.Component<Props, State>{
   }
   getInitialData(props) {
     var z: CreateGroupInput = {
-      id:"course-"+Date.now(),
+      id: "course-" + Date.now(),
       //owner:String!
       type: "course",
       name: "",
       description: "",
       memberCount: 1,
       image: "",
+      length: "",
+      time: "",
       organizerUser: { name: "" },
       instructors: [],
       course: []
@@ -64,9 +66,30 @@ export default class CourseScreen extends React.Component<Props, State>{
   mapChanged = () => {
     this.setState({ showMap: !this.state.showMap })
   }
+  validate(): boolean {
+    if (this.state.data.name == "")
+      return false
+    if (this.state.data.description == "")
+      return false
+    if (this.state.data.length == "")
+      return false
+    if (this.state.data.time == "")
+      return false
+    return true
+  }
+  createNew() {
+    if (this.validate()) {
+
+    }
+  }
+  save() {
+    if (this.validate()) {
+
+    }
+  }
 
   render() {
-    console.log("EventScreen")
+    console.log("CourseScreen")
     return (
       <StyleProvider style={getTheme(material)}>
 
@@ -74,9 +97,9 @@ export default class CourseScreen extends React.Component<Props, State>{
           <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
           <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
           <Content style={{ backgroundColor: "#F0493E", flex: 20 }}>
-          <EditableText placeholder="Enter Course Time" multiline={false} textStyle={styles.fontCourseHeaderTime} inputStyle={styles.groupNameInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableText>
-          <Text style={styles.fontCourseHeaderTime}> - </Text>
-          <EditableText placeholder="Enter Course Length" multiline={false} textStyle={styles.fontCourseHeaderTime} inputStyle={styles.groupNameInput} value={this.state.data.length} isEditable={this.state.isEditable}></EditableText>
+            <EditableText placeholder="Enter Course Time" multiline={false} textStyle={styles.fontCourseHeaderTime} inputStyle={styles.groupNameInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableText>
+            <Text style={styles.fontCourseHeaderTime}> - </Text>
+            <EditableText placeholder="Enter Course Length" multiline={false} textStyle={styles.fontCourseHeaderTime} inputStyle={styles.groupNameInput} value={this.state.data.length} isEditable={this.state.isEditable}></EditableText>
 
             <EditableText placeholder="Enter Course Name" multiline={false} textStyle={styles.fontCourseHeaderBold} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
 

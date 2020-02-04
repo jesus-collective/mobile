@@ -43,7 +43,7 @@ export default class GroupScreen extends React.Component<Props, State>{
   }
   getInitialData(props) {
     var z: CreateGroupInput = {
-      id:"group-"+Date.now(),
+      id: "group-" + Date.now(),
       //owner:String!
       type: "group",
       name: "",
@@ -61,7 +61,23 @@ export default class GroupScreen extends React.Component<Props, State>{
   mapChanged = () => {
     this.setState({ showMap: !this.state.showMap })
   }
+  validate(): boolean {
+    if (this.state.data.name == "")
+      return false
+    if (this.state.data.description == "")
+      return false
+    return true
+  }
+  createNew() {
+    if (this.validate()) {
 
+    }
+  }
+  save() {
+    if (this.validate()) {
+
+    }
+  }
   render() {
     console.log("GroupScreen")
     return (
@@ -71,7 +87,7 @@ export default class GroupScreen extends React.Component<Props, State>{
           <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
           <Content>
             <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
-              <Container style={{ flex: 30, flexDirection: "column",alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+              <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                 <Text>Group</Text>
                 <Text>Sponsored</Text>
 
@@ -92,11 +108,11 @@ export default class GroupScreen extends React.Component<Props, State>{
                   null
                 }
                 {this.state.createNew ?
-                  <Button bordered style={styles.sliderButton}><Text>Create Group</Text></Button>
+                  <Button onPress={() => { this.createNew() }} bordered style={styles.sliderButton}><Text>Create Group</Text></Button>
                   : null
                 }
                 {this.state.canSave ?
-                  <Button bordered style={styles.sliderButton}><Text>Save Group</Text></Button>
+                  <Button onPress={() => { this.save() }} bordered style={styles.sliderButton}><Text>Save Group</Text></Button>
                   : null
                 }
               </Container>
