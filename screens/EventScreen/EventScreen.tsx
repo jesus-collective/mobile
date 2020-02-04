@@ -7,7 +7,6 @@ import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import MessageBoard from '../../components/MessageBoard/MessageBoard'
 import EditableText from '../../components/EditableText/EditableText'
-
 import { Image } from 'react-native'
 import { API } from 'aws-amplify';
 import { CreateGroupInput } from '../../src/API'
@@ -23,7 +22,9 @@ interface State {
   canSave: boolean
   canLeave: boolean
   isEditable: boolean
+  validationError:String
 }
+
 
 
 export default class EventScreen extends React.Component<Props, State>{
@@ -37,7 +38,8 @@ export default class EventScreen extends React.Component<Props, State>{
       data: this.getInitialData(props),
       canSave: true,
       canLeave: false,
-      isEditable: true
+      isEditable: true,
+      validationError:""
     }
 
   }
@@ -53,6 +55,7 @@ export default class EventScreen extends React.Component<Props, State>{
       time: "",
       location: ""
     }
+
     const data = require('../../assets/json/groups.json');
     if (props.navigation.state.params.create)
       return z
@@ -63,14 +66,23 @@ export default class EventScreen extends React.Component<Props, State>{
     this.setState({ showMap: !this.state.showMap })
   }
   validate(): boolean {
-    if (this.state.data.name == "")
+    if (this.state.data.name == "") {
+      this.setState({validationError:"Event must have a name"})
       return false
-    if (this.state.data.description == "")
+    }
+    if (this.state.data.description == ""){
+      this.setState({validationError:"Event must have a description"})
       return false
-    if (this.state.data.time == "")
+    }
+    if (this.state.data.time == ""){
+      this.setState({validationError:"Event must have a time"})
       return false
-    if (this.state.data.location == "")
+    }
+    if (this.state.data.location == ""){
+      this.setState({validationError:"Event must have a location"})
       return false
+    }
+    this.setState({validationError:""})
     return true
   }
   createNew() {
@@ -83,7 +95,11 @@ export default class EventScreen extends React.Component<Props, State>{
 
     }
   }
-
+  updateValue(field:any,value:any){
+    var temp=this.state.data
+    temp[field]=value
+    this.setState({data:temp})
+  }
   render() {
     console.log("EventScreen")
     return (
@@ -96,10 +112,10 @@ export default class EventScreen extends React.Component<Props, State>{
               <Container style={{ flex: 30, flexDirection: "column", justifyContent: 'flex-start' }}>
                 <Text>Event</Text>
                 <Text>Sponsored</Text>
-                <EditableText placeholder="Enter Event Name" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
-                <EditableText placeholder="Enter Event Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
-                <EditableText placeholder="Enter Event Time" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableText>
-                <EditableText placeholder="Enter Event Location" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.location} isEditable={this.state.isEditable}></EditableText>
+                <EditableText onChange={(value:any)=>{this.updateValue("name",value)}} placeholder="Enter Event Name" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
+                <EditableText onChange={(value:any)=>{this.updateValue("description",value)}} placeholder="Enter Event Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
+                <EditableText onChange={(value:any)=>{this.updateValue("time",value)}} placeholder="Enter Event Time" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableText>
+                <EditableText onChange={(value:any)=>{this.updateValue("location",value)}} placeholder="Enter Event Location" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.location} isEditable={this.state.isEditable}></EditableText>
 
                 <Text>Organizer</Text>
                 <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
@@ -121,6 +137,7 @@ export default class EventScreen extends React.Component<Props, State>{
                   <Button onPress={() => { this.save() }} bordered style={styles.sliderButton}><Text>Save Group</Text></Button>
                   : null
                 }
+                <Text>{this.state.validationError}</Text>
               </Container>
               <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                 <MessageBoard navigation={this.props.navigation} groupId={this.state.data.id}></MessageBoard>

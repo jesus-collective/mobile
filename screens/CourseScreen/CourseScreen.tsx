@@ -21,9 +21,9 @@ interface State {
   canSave: boolean
   canLeave: boolean
   isEditable: boolean
-
-
+  validationError:String
 }
+
 
 
 export default class CourseScreen extends React.Component<Props, State>{
@@ -37,9 +37,10 @@ export default class CourseScreen extends React.Component<Props, State>{
       data: this.getInitialData(props),
       canSave: true,
       canLeave: false,
-      isEditable: true
-
+      isEditable: true,
+      validationError:""
     }
+
   }
   getInitialData(props) {
     var z: CreateGroupInput = {
@@ -56,25 +57,34 @@ export default class CourseScreen extends React.Component<Props, State>{
       instructors: [],
       course: []
     }
+
     const data = require('../../assets/json/groups.json');
     if (props.navigation.state.params.create)
       return z
     else
       return data.filter(item => item.id == props.navigation.state.params.id)[0]
   }
-
   mapChanged = () => {
     this.setState({ showMap: !this.state.showMap })
   }
   validate(): boolean {
-    if (this.state.data.name == "")
+    if (this.state.data.name == "") {
+      this.setState({validationError:"Course must have a name"})
       return false
-    if (this.state.data.description == "")
+    }
+    if (this.state.data.description == ""){
+      this.setState({validationError:"Course must have a description"})
       return false
-    if (this.state.data.length == "")
+    }
+    if (this.state.data.length == ""){
+      this.setState({validationError:"Course must have a length"})
       return false
-    if (this.state.data.time == "")
+    }
+    if (this.state.data.time == ""){
+      this.setState({validationError:"Course must have a time"})
       return false
+    }
+    this.setState({validationError:""})
     return true
   }
   createNew() {
@@ -87,24 +97,27 @@ export default class CourseScreen extends React.Component<Props, State>{
 
     }
   }
-
+  updateValue(field:any,value:any){
+    var temp=this.state.data
+    temp[field]=value
+    this.setState({data:temp})
+  }
   render() {
     console.log("CourseScreen")
     return (
       <StyleProvider style={getTheme(material)}>
-
         <Container >
           <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
           <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
           <Content style={{ backgroundColor: "#F0493E", flex: 20 }}>
-            <EditableText placeholder="Enter Course Time" multiline={false} textStyle={styles.fontCourseHeaderTime} inputStyle={styles.groupNameInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableText>
+            <EditableText onChange={(value:any)=>{this.updateValue("time",value)}} placeholder="Enter Course Time" multiline={false} textStyle={styles.fontCourseHeaderTime} inputStyle={styles.groupNameInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableText>
             <Text style={styles.fontCourseHeaderTime}> - </Text>
-            <EditableText placeholder="Enter Course Length" multiline={false} textStyle={styles.fontCourseHeaderTime} inputStyle={styles.groupNameInput} value={this.state.data.length} isEditable={this.state.isEditable}></EditableText>
+            <EditableText onChange={(value:any)=>{this.updateValue("length",value)}} placeholder="Enter Course Length" multiline={false} textStyle={styles.fontCourseHeaderTime} inputStyle={styles.groupNameInput} value={this.state.data.length} isEditable={this.state.isEditable}></EditableText>
 
-            <EditableText placeholder="Enter Course Name" multiline={false} textStyle={styles.fontCourseHeaderBold} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
+            <EditableText onChange={(value:any)=>{this.updateValue("name",value)}} placeholder="Enter Course Name" multiline={false} textStyle={styles.fontCourseHeaderBold} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
 
             <Text style={styles.fontCourseHeader}>Course</Text>
-            <EditableText placeholder="Enter Course Description" multiline={true} textStyle={styles.fontCourseHeaderDescription} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
+            <EditableText onChange={(value:any)=>{this.updateValue("description",value)}} placeholder="Enter Course Description" multiline={true} textStyle={styles.fontCourseHeaderDescription} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
           </Content>
           <Content style={{ flex: 80 }}>
             <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>

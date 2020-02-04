@@ -31,8 +31,6 @@ export default class MessageBoard extends React.Component<Props, State> {
         console.log(props)
     }
     onChanged(val:any){
-        console.log(val)
-        console.log(val.target.value)
         this.props.onChange(val.target.value)
     }
    

@@ -86,8 +86,6 @@ export default class GroupScreen extends React.Component<Props, State>{
     }
   }
   updateValue(field:any,value:any){
-    console.log(field)
-    console.log(value)
     var temp=this.state.data
     temp[field]=value
     this.setState({data:temp})
