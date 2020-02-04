@@ -1,11 +1,12 @@
 import { Container, Content, Left, Body, Right, Button } from 'native-base';
-import { DrawerActions, NavigationScreenProp } from 'react-navigation';
+import { DrawerActions } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Image, Text } from 'react-native';
-import styles from '../Footer/style.js'
+import styles from '../Footer/style.js';
+
 interface Props {
-  navigation: NavigationScreenProp<any, any>,
+  navigation: any
   title: string,
   onMapChange?(): any
 }
@@ -13,7 +14,7 @@ interface State { }
 
 
 
-export default class HeaderJC extends React.Component<Props, State> {
+export default class FooterJC extends React.Component<Props, State> {
 
   constructor(props: Props) {
     super(props);
@@ -84,10 +85,6 @@ export default class HeaderJC extends React.Component<Props, State> {
   }
   openCourses = () => {
     this.props.navigation.navigate("CoursesScreen");
-  }
-  showMap = () => {
-    if (this.props.onMapChange != null)
-      this.props.onMapChange()
   }
   render() {
     //const { navigate } = this.props.navigation;

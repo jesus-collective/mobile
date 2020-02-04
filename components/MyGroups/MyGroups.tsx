@@ -5,12 +5,12 @@ import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Image } from 'react-native'
-import { DrawerActions, NavigationScreenProp } from 'react-navigation';
+
 import { Auth } from 'aws-amplify';
 
 
 interface Props {
-  navigation: NavigationScreenProp<any, any>
+  navigation: any
   wrap: Boolean
   type: String
 }
@@ -119,15 +119,15 @@ export default class MyGroups extends React.Component<Props, State> {
   openSingle(id: any) {
     console.log({ "Navigate to": this.state.openSingle })
     console.log(id)
-    this.props.navigation.navigate(this.state.openSingle, { id: id, create:false })
+    this.props.navigation.push(this.state.openSingle, { id: id, create:false })
   }
   createSingle(){
     console.log({ "Navigate to": this.state.openSingle })
-    this.props.navigation.navigate(this.state.openSingle, { create:true })
+    this.props.navigation.push(this.state.openSingle, { create:true })
   }
   openMultiple() {
     console.log({ "Navigate to": this.state.openMultiple })
-    this.props.navigation.navigate(this.state.openMultiple);
+    this.props.navigation.push(this.state.openMultiple);
   }
 
   renderGroup(item: any) {

@@ -10,11 +10,12 @@ import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
 import SideBar from "../../components/Sidebar/Sidebar";
 import { createDrawerNavigator } from "react-navigation-drawer";
-import {createAppContainer} from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
+import { createAppContainer } from "react-navigation";
 import awsconfig from '../../src/aws-exports';
 import { NavigationScreenProp } from 'react-navigation';
 
-
+const ConversationScreen  = lazy(() => import('../ConversationScreen/ConversationScreen'));
 const OrganizationsScreen = lazy(() => import('../OrganizationsScreen/OrganizationsScreen'));
 const OrganizationScreen = lazy(() => import('../OrganizationScreen/OrganizationScreen'));
 const CourseScreen = lazy(() => import('../CourseScreen/CourseScreen'));
@@ -32,16 +33,34 @@ const ContactScreen = lazy(() => import('../ContactScreen/ContactScreen'));
 const EventScreen = lazy(() => import('../EventScreen/EventScreen'));
 const GroupsScreen = lazy(() => import('../GroupsScreen/GroupsScreen'));
 const EventsScreen = lazy(() => import('../EventsScreen/EventsScreen'));
-const ConversationScreen = lazy(() => import('../ConversationScreen/ConversationScreen'));
 const ResourceScreen = lazy(() => import('../ResourceScreen/ResourceScreen'));
 const ResourcesScreen = lazy(() => import('../ResourcesScreen/ResourcesScreen'));
 const ProfileScreen = lazy(() => import('../ProfileScreen/ProfileScreen'));
 const NewsScreen = lazy(() => import('../NewsScreen/NewsScreen'));
 
 Amplify.configure(awsconfig);
+const MainAppRouter = createStackNavigator({
+  HomeScreen: { screen: HomeScreen },
+  GroupScreen: { screen: GroupScreen },
+  GroupsScreen: { screen: GroupsScreen },
+  EventScreen: { screen: EventScreen },
+  EventsScreen: { screen: EventsScreen },
+  ResourcesScreen: { screen: ResourcesScreen },
+  ResourceScreen: { screen: ResourceScreen },
+  OrganizationsScreen: { screen: OrganizationsScreen },
+  OrganizationScreen: { screen: OrganizationScreen },
+  CourseScreen: { screen: CourseScreen },
+  CoursesScreen: { screen: CoursesScreen },
+  ConversationScreen: { screen: ConversationScreen }
+},
+  {
+    initialRouteName: 'HomeScreen',
+    headerMode:'none'
+  })
+
 const HomeScreenRouter = createDrawerNavigator(
   {
-    HomeScreen: { screen: HomeScreen },
+    HomeScreen: { screen: MainAppRouter },
     ExploreScreen: { screen: ExploreScreen },
     SupportScreen: { screen: SupportScreen },
     GetInvolvedScreen: { screen: GetInvolvedScreen },
@@ -49,27 +68,16 @@ const HomeScreenRouter = createDrawerNavigator(
     KidsAndYouthScreen: { screen: KidsAndYouthScreen },
     NewsScreen: { screen: NewsScreen },
     ProfileScreen: { screen: ProfileScreen },
-    CoursesScreen: { screen: CoursesScreen },
-    LoginScreen: { screen: LoginScreen },
-    GroupScreen:{ screen:GroupScreen},
-    EventScreen:{screen:EventScreen},
-    GroupsScreen:{ screen:GroupsScreen},
-    EventsScreen:{screen:EventsScreen},
-    ConversationScreen:{screen:ConversationScreen},
-    CourseScreen:{screen:CourseScreen},
-    ResourcesScreen:{screen:ResourcesScreen},
-    ResourceScreen:{screen:ResourceScreen},
-    OrganizationsScreen:{screen:OrganizationsScreen},
-    OrganizationScreen:{screen:OrganizationScreen}
+    LoginScreen: { screen: LoginScreen }
   },
   {
     contentComponent: props => <SideBar {...props} />,
-    defaultNavigationOptions: {drawerLockMode:"locked-closed"}
+    defaultNavigationOptions: { drawerLockMode: "locked-closed" }
   }
 );
 
 const AppContainer = createAppContainer(HomeScreenRouter);
-  
+
 
 interface Props {
   authState?: any;
@@ -104,7 +112,7 @@ export default class App extends React.Component<Props, State>{
     const { attributes } = this.user;
     console.log(this.user)
     try {
-      const getUser = await API.graphql(graphqlOperation(queries.getUser, { id: this.user['username'] }));
+      const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: this.user['username'] }));
       if (getUser.data.getUser === null) {
         console.log("Trying to create")
         var inputData = {
@@ -138,7 +146,7 @@ export default class App extends React.Component<Props, State>{
   async checkIfPaid() {
     console.log("checkIfPaid")
     if (this.state.userExists) {
-      const getUser = await API.graphql(graphqlOperation(queries.getUser, { id: this.user['username'] }));
+      const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: this.user['username'] }));
       console.log(getUser)
       if (getUser.data.getUser.hasPaidState == null)
         this.setState({ hasPaidState: "Not Started" })
@@ -163,26 +171,26 @@ export default class App extends React.Component<Props, State>{
     console.log("checkIfCompletedProfile")
     this.setState({ hasCompletedPersonalProfile: true })
     if (this.state.userExists) {
-      const getUser = await API.graphql(graphqlOperation(queries.getUser, { id: this.user['username'] }));
-      if ((getUser.data.getUser.aboutMeShort != null) 
-      && (getUser.data.getUser.aboutMeLong != null)
-      && (getUser.data.getUser.given_name != null)
-      && (getUser.data.getUser.family_name != null)
-      && (getUser.data.getUser.email != null)
-      && (getUser.data.getUser.phone != null)
-      && (getUser.data.getUser.address != null)
-      && (getUser.data.getUser.city != null)
-      && (getUser.data.getUser.province != null)
-      && (getUser.data.getUser.postalCode != null)
-      && (getUser.data.getUser.country != null)
-      && (getUser.data.getUser.interests != null)
-      && (getUser.data.getUser.currentRole != null)
-      && (getUser.data.getUser.currentScope != null)
-      && (getUser.data.getUser.personality != null)
-      && (getUser.data.getUser.orgName != null)
-      && (getUser.data.getUser.orgType != null)
-      && (getUser.data.getUser.orgSize != null)
-      && (getUser.data.getUser.orgDescription != null))
+      const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: this.user['username'] }));
+      if ((getUser.data.getUser.aboutMeShort != null)
+        && (getUser.data.getUser.aboutMeLong != null)
+        && (getUser.data.getUser.given_name != null)
+        && (getUser.data.getUser.family_name != null)
+        && (getUser.data.getUser.email != null)
+        && (getUser.data.getUser.phone != null)
+        && (getUser.data.getUser.address != null)
+        && (getUser.data.getUser.city != null)
+        && (getUser.data.getUser.province != null)
+        && (getUser.data.getUser.postalCode != null)
+        && (getUser.data.getUser.country != null)
+        && (getUser.data.getUser.interests != null)
+        && (getUser.data.getUser.currentRole != null)
+        && (getUser.data.getUser.currentScope != null)
+        && (getUser.data.getUser.personality != null)
+        && (getUser.data.getUser.orgName != null)
+        && (getUser.data.getUser.orgType != null)
+        && (getUser.data.getUser.orgSize != null)
+        && (getUser.data.getUser.orgDescription != null))
         this.setState({ hasCompletedPersonalProfile: true })
     }
   }
@@ -202,8 +210,7 @@ export default class App extends React.Component<Props, State>{
         if (!this.state.hasCompletedPersonalProfile) {
           return (<Suspense fallback={null}><SignUpScreen3 profileComplete={() => this.onProfileComplete()} /></Suspense>)
         }
-        else
-        {
+        else {
           return (<Suspense fallback={null}><View style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1 }}><AppContainer ></AppContainer></View></Suspense>)
         }
       }

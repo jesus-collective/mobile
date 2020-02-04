@@ -3,6 +3,7 @@ import * as React from 'react';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 
 interface Props{
+  navigation: any
   visible:boolean
 }
 interface State{}

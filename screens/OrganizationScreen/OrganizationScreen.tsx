@@ -2,20 +2,17 @@
 import { StyleProvider, Container, Content, Text, Button } from 'native-base';
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
-import MyConversations from '../../components/MyConversations/MyConversations';
-import MyGroups from '../../components/MyGroups/MyGroups';
-import MyPeople from '../../components/MyPeople/MyPeople';
 import styles from '../../components/style.js'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import MessageBoard from '../../components/MessageBoard/MessageBoard'
-import { NavigationScreenProp } from 'react-navigation';
+
 import { Image } from 'react-native'
 import { API } from 'aws-amplify';
 import { CreateGroupInput } from '../../src/API'
 
 interface Props {
-  navigation: NavigationScreenProp<any, any>
+  navigation: any
 
 
 }
@@ -69,7 +66,7 @@ export default class GroupScreen extends React.Component<Props, State>{
       <StyleProvider style={getTheme(material)}>
         <Container >
           <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-          <MyMap visible={this.state.showMap}></MyMap>
+          <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
           <Content>
             <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
               <Container style={{ flex: 30, flexDirection: "column", justifyContent: 'flex-start' }}>

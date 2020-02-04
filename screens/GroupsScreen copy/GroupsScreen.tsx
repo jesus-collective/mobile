@@ -5,7 +5,6 @@ import MyMap from '../../components/MyMap/MyMap';
 import MyConversations from '../../components/MyConversations/MyConversations';
 import MyGroups from '../../components/MyGroups/MyGroups';
 import MyPeople from '../../components/MyPeople/MyPeople';
-
 interface Props {
   navigation: any
 }

@@ -3,20 +3,17 @@ import { Container, Content, Text, Button } from 'native-base';
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
 import MyConversations from '../../components/MyConversations/MyConversations';
-import MyEvents from '../../components/MyEvents/MyEvents';
 import MyGroups from '../../components/MyGroups/MyGroups';
-import MyResources from '../../components/MyResources/MyResources';
 import MyPeople from '../../components/MyPeople/MyPeople';
-import MyOrganizations from '../../components/MyOrganizations/MyOrganizations';
 import styles from '../../components/style.js'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import MessageBoard from '../../components/MessageBoard/MessageBoard'
-import { NavigationScreenProp } from 'react-navigation';
+
 import { Image } from 'react-native'
 
 interface Props {
-  navigation: NavigationScreenProp<any, any>
+  navigation: any
 }
 interface State {
   showMap: boolean
@@ -62,7 +59,7 @@ export default class ConversationScreen extends React.Component<Props, State>{
 
       <Container >
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-        <MyMap visible={this.state.showMap}></MyMap>
+        <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
         <Content>
           <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
             <Container style={{ flex: 30, flexDirection: "column", justifyContent: 'flex-start' }}>
@@ -80,7 +77,7 @@ export default class ConversationScreen extends React.Component<Props, State>{
 
             </Container>
             <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-              <MessageBoard></MessageBoard>
+              <MessageBoard ></MessageBoard>
             </Container>
           </Container>
         </Content>

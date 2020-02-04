@@ -5,9 +5,9 @@ import MyMap from '../../components/MyMap/MyMap';
 import MyConversations from '../../components/MyConversations/MyConversations';
 import MyGroups from '../../components/MyGroups/MyGroups';
 import MyPeople from '../../components/MyPeople/MyPeople';
-import { NavigationScreenProp } from 'react-navigation';
+
 interface Props {
-  navigation: NavigationScreenProp<any, any>
+  navigation: any
 }
 interface State {
   showMap: boolean
@@ -31,7 +31,7 @@ export default class HomeScreen extends React.Component<Props, State>{
 
       <Container >
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-        <MyMap visible={this.state.showMap}></MyMap>
+        <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
         <Content>
           <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
             <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>

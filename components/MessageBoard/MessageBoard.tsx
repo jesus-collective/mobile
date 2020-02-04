@@ -6,6 +6,8 @@ import material from '../../native-base-theme/variables/material';
 import { Image } from 'react-native'
 import Dante from 'Dante2'
 interface Props {
+  
+
   groupId: string
 }
 interface State { }

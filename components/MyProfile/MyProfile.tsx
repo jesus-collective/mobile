@@ -8,13 +8,12 @@ import { Auth } from 'aws-amplify';
 import styles from '../../components/style.js'
 import TagInput from 'react-native-tags-input';
 import { Dimensions } from 'react-native'
-import { NavigationScreenProp } from 'react-navigation';
 
 const mainColor = '#ffffff';
 
 interface Props {
   finalizeProfile(): void
-  navigation: NavigationScreenProp<any, any>
+  navigation: any
 
 }
 interface State {
@@ -41,7 +40,7 @@ export default class MyProfile extends React.Component<Props, State> {
     console.log("getUserDetails")
     var user = await Auth.currentAuthenticatedUser();
     try {
-      const getUser = await API.graphql(graphqlOperation(queries.getUser, { id: user['username'] }));
+      const getUser:any = await API.graphql(graphqlOperation(queries.getUser, { id: user['username'] }));
       this.setState({
         UserDetails: getUser.data.getUser
       }
