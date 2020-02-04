@@ -4,7 +4,11 @@ export default StyleSheet.create({
 
     footerContainer: {
         backgroundColor: '#333333',
-        padding: 20
+        padding: 20,
+        flex:0,
+        minHeight:200,
+        width:'100%',
+        height:200
     },
 
     icon: {

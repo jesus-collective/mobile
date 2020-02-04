@@ -22,6 +22,7 @@ interface State {
   canSave: boolean
   canLeave: boolean
   isEditable: boolean
+  validationError:String
 }
 
 
@@ -37,7 +38,8 @@ export default class GroupScreen extends React.Component<Props, State>{
       data: this.getInitialData(props),
       canSave: true,
       canLeave: false,
-      isEditable: true
+      isEditable: true,
+      validationError:""
     }
 
   }
@@ -62,10 +64,15 @@ export default class GroupScreen extends React.Component<Props, State>{
     this.setState({ showMap: !this.state.showMap })
   }
   validate(): boolean {
-    if (this.state.data.name == "")
+    if (this.state.data.name == "") {
+      this.setState({validationError:"Group must have a name"})
       return false
-    if (this.state.data.description == "")
+    }
+    if (this.state.data.description == ""){
+      this.setState({validationError:"Group must have a description"})
       return false
+    }
+    this.setState({validationError:""})
     return true
   }
   createNew() {
@@ -77,6 +84,13 @@ export default class GroupScreen extends React.Component<Props, State>{
     if (this.validate()) {
 
     }
+  }
+  updateValue(field:any,value:any){
+    console.log(field)
+    console.log(value)
+    var temp=this.state.data
+    temp[field]=value
+    this.setState({data:temp})
   }
   render() {
     console.log("GroupScreen")
@@ -91,8 +105,8 @@ export default class GroupScreen extends React.Component<Props, State>{
                 <Text>Group</Text>
                 <Text>Sponsored</Text>
 
-                <EditableText placeholder="Enter Group Name" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
-                <EditableText placeholder="Enter Group Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
+                <EditableText onChange={(value:any)=>{this.updateValue("name",value)}} placeholder="Enter Group Name" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
+                <EditableText onChange={(value:any)=>{this.updateValue("description",value)}} placeholder="Enter Group Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
 
                 <Text>Organizer</Text>
                 <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
@@ -115,6 +129,7 @@ export default class GroupScreen extends React.Component<Props, State>{
                   <Button onPress={() => { this.save() }} bordered style={styles.sliderButton}><Text>Save Group</Text></Button>
                   : null
                 }
+                <Text>{this.state.validationError}</Text>
               </Container>
               <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                 <MessageBoard navigation={this.props.navigation} groupId={this.state.data.id}></MessageBoard>

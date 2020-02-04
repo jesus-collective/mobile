@@ -90,7 +90,7 @@ export default class FooterJC extends React.Component<Props, State> {
     //const { navigate } = this.props.navigation;
     return (
 
-      <Content style={styles.footerContainer}>
+      <Container style={styles.footerContainer}>
         <Body style={{
           display: "flex",
           flexDirection: 'row',
@@ -131,7 +131,7 @@ export default class FooterJC extends React.Component<Props, State> {
 
         </Body>
 
-      </Content >
+      </Container >
     )
   }
 }

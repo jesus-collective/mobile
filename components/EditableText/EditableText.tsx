@@ -7,9 +7,10 @@ interface Props {
     inputStyle: any,
     multiline:boolean,
     placeholder:string
+    onChange(string)
 }
 interface State {
-    value: string,
+   // value: string,
     isEditable: boolean,
     textStyle: any,
     inputStyle: any,
@@ -20,7 +21,7 @@ export default class MessageBoard extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            value: props.value,
+           // value: props.value,
             isEditable: props.isEditable,
             textStyle: props.textStyle,
             inputStyle: props.inputStyle,
@@ -29,10 +30,16 @@ export default class MessageBoard extends React.Component<Props, State> {
         }
         console.log(props)
     }
+    onChanged(val:any){
+        console.log(val)
+        console.log(val.target.value)
+        this.props.onChange(val.target.value)
+    }
+   
     render() {
         if (this.state.isEditable)
-            return <Input placeholder={this.state.placeholder} multiline={this.state.multiline} style={this.state.inputStyle} value={this.state.value}></Input>
+            return <Input onChange={(value)=>{this.onChanged(value)}} placeholder={this.state.placeholder} multiline={this.state.multiline} style={this.state.inputStyle} value={this.props.value}></Input>
         else
-            return <Text style={this.state.textStyle}>{this.state.value}</Text>
+            return <Text style={this.state.textStyle}>{this.props.value}</Text>
     }
 }

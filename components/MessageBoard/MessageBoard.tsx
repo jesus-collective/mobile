@@ -48,7 +48,7 @@ export default class MessageBoard extends React.Component<Props, State> {
       <StyleProvider style={getTheme(material)}>
 
         <Container style={{ overflow:"visible" ,width: "100%", flexDirection: 'column', alignItems: 'flex-start', minHeight: 500 }} >
-
+          
           <Content style={{overflow:"visible" }}>
             <Card style={{ marginTop: 40, padding: 0, minHeight: 50,overflow:"visible" }}>
                 <Button bordered style={styles.sliderButton}><Text>Post</Text></Button>

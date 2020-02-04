@@ -1,7 +1,7 @@
 ﻿import React from 'react';
-import { Container, Content, Text } from 'native-base';
+import { Container, Content, Text, Footer } from 'native-base';
 import Header from '../../components/Header/Header'
-import Footer from '../../components/Footer/Footer'
+import FooterJC from '../../components/Footer/Footer'
 import MyMap from '../../components/MyMap/MyMap';
 import MyConversations from '../../components/MyConversations/MyConversations';
 import MyGroups from '../../components/MyGroups/MyGroups';
@@ -31,9 +31,10 @@ export default class HomeScreen extends React.Component<Props, State>{
       <Container >
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
         <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
-        <Content>
-          <Content style={{ display: "flex", flexDirection: "column", width: "100%" }}>
-            <Container style={{ display: "flex", flexDirection: "row" }}>
+
+        <Container style={{ flexGrow: 1, overflow: "scroll" }}>
+          <Container style={{display: "block"}}>
+            <Container style={{ height:2000,flex: 1, display: "flex", flexDirection: "row" }}>
               <Container style={{ flex: 70, flexDirection: "column" }}>
                 <MyGroups type="event" wrap={false} navigation={this.props.navigation}></MyGroups>
                 <MyGroups type="group" wrap={false} navigation={this.props.navigation}></MyGroups>
@@ -44,17 +45,20 @@ export default class HomeScreen extends React.Component<Props, State>{
               <Container style={{ flex: 30, flexDirection: "column" }}>
                 <MyPeople wrap={false} navigation={this.props.navigation}></MyPeople>
                 <MyConversations navigation={this.props.navigation}> </MyConversations>
-                <Container ></Container>
+                <Container style={{ flex: 10 }}></Container>
               </Container>
             </Container>
 
+           
+          <FooterJC title="Jesus Collective" navigation={this.props.navigation} ></FooterJC>
 
-          </Content>
+          </Container>
 
-          <Footer title="Jesus Collective" navigation={this.props.navigation} ></Footer>
-        </Content>
+        </Container>
+
+
+
       </Container>
-
     );
   }
 }

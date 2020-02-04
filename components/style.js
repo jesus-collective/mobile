@@ -17,7 +17,7 @@ export default EStyleSheet.create({
         marginTop: 8,
         borderRadius: 5,
         padding: 3,
-        flex:"0"
+        flex:0
     },
     groupDescriptionInput:{
         borderColor: 'white',
@@ -25,7 +25,7 @@ export default EStyleSheet.create({
         marginTop: 8,
         borderRadius: 5,
         padding: 3,
-        flex:"0",
+        flex:0,
         minHeight:100
     },
     textInput: {

@@ -191,7 +191,7 @@ export default class MyGroups extends React.Component<Props, State> {
           <Container style={{ minHeight: 400, width: "100%", flexDirection: 'column', justifyContent: 'flex-start' }}>
             <Container style={{ minHeight: 45, flexGrow: 0, flexDirection: 'row', justifyContent: 'space-between' }} >
               <Button transparent onPress={() => { this.openMultiple() }}><Text style={styles.fontSliderHeader}>{this.state.titleString}</Text></Button>
-              <Container style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: "flex-start" }}>
+              <Container style={{ maxHeight:45,flexDirection: 'row', justifyContent: 'flex-end', alignItems: "flex-start" }}>
                 <Button transparent onPress={() => { this.openMultiple() }}><Text style={styles.fontSliderButtons}>Show All</Text></Button>
                 <Button transparent onPress={() => { this.openMultiple() }}><Text style={styles.fontSliderButtons}>Show Recommended</Text></Button>
                 {this.state.showCreateButton ?
