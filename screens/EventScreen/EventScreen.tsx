@@ -7,6 +7,7 @@ import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import MessageBoard from '../../components/MessageBoard/MessageBoard'
 import EditableText from '../../components/EditableText/EditableText'
+import Validate from '../../components/Validate/Validate'
 import { Image } from 'react-native'
 import { API } from 'aws-amplify';
 import { CreateGroupInput } from '../../src/API'
@@ -66,24 +67,9 @@ export default class EventScreen extends React.Component<Props, State>{
     this.setState({ showMap: !this.state.showMap })
   }
   validate(): boolean {
-    if (this.state.data.name == "") {
-      this.setState({validationError:"Event must have a name"})
-      return false
-    }
-    if (this.state.data.description == ""){
-      this.setState({validationError:"Event must have a description"})
-      return false
-    }
-    if (this.state.data.time == ""){
-      this.setState({validationError:"Event must have a time"})
-      return false
-    }
-    if (this.state.data.location == ""){
-      this.setState({validationError:"Event must have a location"})
-      return false
-    }
-    this.setState({validationError:""})
-    return true
+    var validation:any=Validate.Event(this.state.data)
+    this.setState({validationError:validation.validationError})
+    return validation.result
   }
   createNew() {
     if (this.validate()) {
