@@ -5,8 +5,9 @@ import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Image } from 'react-native'
-
-import { Auth } from 'aws-amplify';
+import * as queries from '../../src/graphql/queries';
+import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
+import { API, graphqlOperation, Auth } from 'aws-amplify';
 
 
 interface Props {
@@ -37,9 +38,10 @@ export default class MyGroups extends React.Component<Props, State> {
         titleString: "Events",
         type: props.type,
         cardWidth: 250,
-        data: data.filter(item => item.type == props.type),
+        data: null,
         showCreateButton: false
       }
+      this.setInitialData(props)
     }
     else if (props.type == "group") {
       this.state =
@@ -50,9 +52,10 @@ export default class MyGroups extends React.Component<Props, State> {
         titleString: "Groups",
         type: props.type,
         cardWidth: 250,
-        data: data.filter(item => item.type == props.type),
+        data: null,
         showCreateButton: false
       }
+      this.setInitialData(props)
     }
     else if (props.type == "resource") {
       this.state =
@@ -91,10 +94,10 @@ export default class MyGroups extends React.Component<Props, State> {
         titleString: "Courses",
         type: props.type,
         cardWidth: 200,
-        data: data.filter(item => item.type == props.type),
+        data: null,
         showCreateButton: false
       }
-
+      this.setInitialData(props)
     }
 
     else {
@@ -114,16 +117,27 @@ export default class MyGroups extends React.Component<Props, State> {
     user.then((user: any) => {
       this.setState({ showCreateButton: user.signInUserSession.accessToken.payload["cognito:groups"].includes("verifiedUsers") })
     })
+    
+  }
+  setInitialData(props) {
+    var listGroup:any = API.graphql({
+      query: queries.listGroups,
+      variables: { filter: {id: {beginsWith:props.type+"-" }} },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
 
+    listGroup.then((json) => {
+      this.setState({ data: json.data.listGroups.items })
+    })
   }
   openSingle(id: any) {
     console.log({ "Navigate to": this.state.openSingle })
     console.log(id)
-    this.props.navigation.push(this.state.openSingle, { id: id, create:false })
+    this.props.navigation.push(this.state.openSingle, { id: id, create: false })
   }
-  createSingle(){
+  createSingle() {
     console.log({ "Navigate to": this.state.openSingle })
-    this.props.navigation.push(this.state.openSingle, { create:true })
+    this.props.navigation.push(this.state.openSingle, { create: true })
   }
   openMultiple() {
     console.log({ "Navigate to": this.state.openMultiple })
@@ -191,7 +205,7 @@ export default class MyGroups extends React.Component<Props, State> {
           <Container style={{ minHeight: 400, width: "100%", flexDirection: 'column', justifyContent: 'flex-start' }}>
             <Container style={{ minHeight: 45, flexGrow: 0, flexDirection: 'row', justifyContent: 'space-between' }} >
               <Button transparent onPress={() => { this.openMultiple() }}><Text style={styles.fontSliderHeader}>{this.state.titleString}</Text></Button>
-              <Container style={{ maxHeight:45,flexDirection: 'row', justifyContent: 'flex-end', alignItems: "flex-start" }}>
+              <Container style={{ maxHeight: 45, flexDirection: 'row', justifyContent: 'flex-end', alignItems: "flex-start" }}>
                 <Button transparent onPress={() => { this.openMultiple() }}><Text style={styles.fontSliderButtons}>Show All</Text></Button>
                 <Button transparent onPress={() => { this.openMultiple() }}><Text style={styles.fontSliderButtons}>Show Recommended</Text></Button>
                 {this.state.showCreateButton ?
@@ -201,26 +215,29 @@ export default class MyGroups extends React.Component<Props, State> {
               </Container>
             </Container>
             <Container style={{ overflow: "scroll", minHeight: 330, flexWrap: this.props.wrap ? "wrap" : "nowrap", flexGrow: 1, width: "100%", flexDirection: 'row', justifyContent: "flex-start", alignItems: "flex-start" }}>
-              {this.state.data.map((item) => {
-                return (
-                  <ListItem key={item.id} style={{ alignSelf: "flex-start" }} button onPress={() => { this.openSingle(item.id) }}>
-                    {this.state.type == "group" ?
-                      this.renderGroup(item) :
-                      this.state.type == "event" ?
-                        this.renderEvent(item) :
-                        this.state.type == "resource" ?
-                          this.renderResource(item) :
-                          this.state.type == "organization" ?
-                            this.renderOrganization(item) :
-                            this.state.type == "course" ?
-                              this.renderCourse(item) :
-                              null
-                    }
+              {this.state.data ?
+                this.state.data.map((item) => {
+                  return (
+                    <ListItem key={item.id} style={{ alignSelf: "flex-start" }} button onPress={() => { this.openSingle(item.id) }}>
+                      {this.state.type == "group" ?
+                        this.renderGroup(item) :
+                        this.state.type == "event" ?
+                          this.renderEvent(item) :
+                          this.state.type == "resource" ?
+                            this.renderResource(item) :
+                            this.state.type == "organization" ?
+                              this.renderOrganization(item) :
+                              this.state.type == "course" ?
+                                this.renderCourse(item) :
+                                null
+                      }
 
 
-                  </ListItem>
-                )
-              })}
+                    </ListItem>
+                  )
+                })
+                : null
+              }
 
             </Container>
           </Container>
