@@ -41,7 +41,7 @@ export default class MyGroups extends React.Component<Props, State> {
         data: null,
         showCreateButton: false
       }
-      this.setInitialData(props)
+
     }
     else if (props.type == "group") {
       this.state =
@@ -55,7 +55,7 @@ export default class MyGroups extends React.Component<Props, State> {
         data: null,
         showCreateButton: false
       }
-      this.setInitialData(props)
+
     }
     else if (props.type == "resource") {
       this.state =
@@ -66,7 +66,7 @@ export default class MyGroups extends React.Component<Props, State> {
         titleString: "Resources",
         type: props.type,
         cardWidth: 250,
-        data: data.filter(item => item.type == props.type),
+        data: null,
         showCreateButton: false
       }
 
@@ -80,7 +80,7 @@ export default class MyGroups extends React.Component<Props, State> {
         titleString: "Organizations",
         type: props.type,
         cardWidth: 200,
-        data: data.filter(item => item.type == props.type),
+        data: null,
         showCreateButton: false
       }
 
@@ -97,7 +97,7 @@ export default class MyGroups extends React.Component<Props, State> {
         data: null,
         showCreateButton: false
       }
-      this.setInitialData(props)
+
     }
 
     else {
@@ -109,20 +109,21 @@ export default class MyGroups extends React.Component<Props, State> {
         titleString: "",
         createString: "",
         cardWidth: 300,
-        data: data.filter(item => item.type == props.type),
+        data: null,
         showCreateButton: false
       }
     }
+    this.setInitialData(props)
     var user = Auth.currentAuthenticatedUser();
     user.then((user: any) => {
       this.setState({ showCreateButton: user.signInUserSession.accessToken.payload["cognito:groups"].includes("verifiedUsers") })
     })
-    
+
   }
   setInitialData(props) {
-    var listGroup:any = API.graphql({
+    var listGroup: any = API.graphql({
       query: queries.listGroups,
-      variables: { filter: {id: {beginsWith:props.type+"-" }} },
+      variables: { filter: { id: { beginsWith: props.type + "-" } } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
 

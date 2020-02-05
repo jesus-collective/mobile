@@ -14,7 +14,9 @@ import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
 import awsconfig from '../../src/aws-exports';
 import { NavigationScreenProp } from 'react-navigation';
-
+import { Linking } from 'expo';
+import {createBrowserApp} from '@react-navigation/web';
+import {Platform} from "react-native";
 const ConversationScreen = lazy(() => import('../ConversationScreen/ConversationScreen'));
 const OrganizationsScreen = lazy(() => import('../OrganizationsScreen/OrganizationsScreen'));
 const OrganizationScreen = lazy(() => import('../OrganizationScreen/OrganizationScreen'));
@@ -40,36 +42,52 @@ const NewsScreen = lazy(() => import('../NewsScreen/NewsScreen'));
 
 Amplify.configure(awsconfig);
 const MainAppRouter = createStackNavigator({
-  HomeScreen: { screen: HomeScreen },
-  GroupScreen: { screen: GroupScreen },
-  GroupsScreen: { screen: GroupsScreen },
-  EventScreen: { screen: EventScreen },
-  EventsScreen: { screen: EventsScreen },
-  ResourcesScreen: { screen: ResourcesScreen },
-  ResourceScreen: { screen: ResourceScreen },
-  OrganizationsScreen: { screen: OrganizationsScreen },
-  OrganizationScreen: { screen: OrganizationScreen },
-  CourseScreen: { screen: CourseScreen },
-  CoursesScreen: { screen: CoursesScreen },
-  ConversationScreen: { screen: ConversationScreen }
+  HomeScreen: { screen: HomeScreen, path: "home" },
+  GroupScreen: { screen: GroupScreen, path:"group" },
+  GroupsScreen: { screen: GroupsScreen, path: "groups" },
+  EventScreen: { screen: EventScreen, path:"event" },
+  EventsScreen: { screen: EventsScreen, path: "events" },
+  ResourcesScreen: { screen: ResourcesScreen, path: "resources" },
+  ResourceScreen: { screen: ResourceScreen, path:"resource" },
+  OrganizationsScreen: { screen: OrganizationsScreen, path: "orgs" },
+  OrganizationScreen: { screen: OrganizationScreen,path:"org" },
+  CourseScreen: { screen: CourseScreen,path:"course" },
+  CoursesScreen: { screen: CoursesScreen, path: "courses" },
+  ConversationScreen: { screen: ConversationScreen, path: "conversations" }
 },
   {
     initialRouteName: 'HomeScreen',
     headerMode: 'none',
-    mode:'modal',
+    mode: 'card',
     defaultNavigationOptions: {
+      animationEnabled: false,
       gestureEnabled: false,
-      cardOverlayEnabled:false
+      cardOverlayEnabled: false
     }
   })
 
 const HomeScreenRouter = createDrawerNavigator(
   {
-    HomeScreen: { screen: MainAppRouter },
-    ExploreScreen: { screen: ExploreScreen },
-    SupportScreen: { screen: SupportScreen },
-    GetInvolvedScreen: { screen: GetInvolvedScreen },
-    ContactScreen: { screen: ContactScreen },
+    HomeScreen: {
+      screen: MainAppRouter,
+      path: 'app'
+    },
+    ExploreScreen: {
+      screen: ExploreScreen,
+      path: 'explore'
+    },
+    SupportScreen: {
+      screen: SupportScreen,
+      path: 'support'
+    },
+    GetInvolvedScreen: {
+      screen: GetInvolvedScreen,
+      path: 'getinvolved'
+    },
+    ContactScreen: {
+      screen: ContactScreen,
+      path: 'contact'
+    },
     KidsAndYouthScreen: { screen: KidsAndYouthScreen },
     NewsScreen: { screen: NewsScreen },
     ProfileScreen: { screen: ProfileScreen },
@@ -80,8 +98,12 @@ const HomeScreenRouter = createDrawerNavigator(
     defaultNavigationOptions: { drawerLockMode: "locked-closed" }
   }
 );
+//const prefix = Linking.makeUrl('https://192.168.0.12:19006');
 
-const AppContainer = createAppContainer(HomeScreenRouter);
+
+const isWeb = Platform.OS === 'web';
+ 
+const AppContainer = isWeb ? createBrowserApp(HomeScreenRouter): createAppContainer(HomeScreenRouter);
 
 
 interface Props {
@@ -94,6 +116,7 @@ interface State {
   hasPaidState: string;
   userExists: boolean;
 }
+
 
 export default class App extends React.Component<Props, State>{
   constructor(props: Props) {
@@ -172,6 +195,7 @@ export default class App extends React.Component<Props, State>{
     console.log("onProfileComplete")
     this.checkIfCompletedProfile()
   }
+
   async checkIfCompletedProfile() {
     console.log("checkIfCompletedProfile")
     this.setState({ hasCompletedPersonalProfile: true })
@@ -216,7 +240,12 @@ export default class App extends React.Component<Props, State>{
           return (<Suspense fallback={null}><SignUpScreen3 profileComplete={() => this.onProfileComplete()} /></Suspense>)
         }
         else {
-          return (<Suspense fallback={null}><View style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1 }}><AppContainer ></AppContainer></View></Suspense>)
+          return (
+            <Suspense fallback={null}>
+              <View style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1 }}>
+                <AppContainer></AppContainer>
+              </View>
+            </Suspense>)
         }
       }
       else

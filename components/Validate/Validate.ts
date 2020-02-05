@@ -28,6 +28,24 @@ export default class Validate {
         return { result: true, validationError: "" }
 
     }
+
+    static Resource(data: any):ValidationResult {
+        if (data.name == "")
+            return { result: false, validationError: "Resource must have a name" }
+        if (data.description == "")
+            return { result: false, validationError: "Resource must have a description" }
+        return { result: true, validationError: "" }
+
+    }
+
+    static Organization(data: any):ValidationResult {
+        if (data.name == "")
+            return { result: false, validationError: "Organization must have a name" }
+        if (data.description == "")
+            return { result: false, validationError: "Organization must have a description" }
+        return { result: true, validationError: "" }
+
+    }
     static Event(data: any): ValidationResult {
         if (data.name == "")
             return { result: false, validationError: "Event must have a name" }
