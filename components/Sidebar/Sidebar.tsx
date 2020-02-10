@@ -77,7 +77,7 @@ export default class SideBar extends React.Component<Props, State> {
             return (
               <ListItem
                 button
-                onPress={() => this.props.navigation.navigate(data.route)}>
+                onPress={() => this.props.navigation.push(data.route)}>
                 <Text>{data.name}</Text>
               </ListItem>
             );

@@ -27,6 +27,7 @@ interface State {
   canSave: boolean
   canLeave: boolean
   isEditable: boolean
+  canDelete:boolean
   validationError: String
 }
 
@@ -44,6 +45,7 @@ export default class GroupScreen extends React.Component<Props, State>{
       canSave: true,
       canLeave: false,
       isEditable: true,
+      canDelete:true,
       validationError: ""
     }
     this.setInitialData(props)
@@ -90,7 +92,7 @@ export default class GroupScreen extends React.Component<Props, State>{
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       createGroup.then((json: any) => {
-        this.setState({ canSave: true, createNew: false })
+        this.setState({ canDelete:true, canSave: true, createNew: false })
         console.log({ "Success mutations.createGroup": json });
       }).catch((err: any) => {
         console.log({ "Error mutations.createGroup": err });
@@ -105,13 +107,26 @@ export default class GroupScreen extends React.Component<Props, State>{
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       updateGroup.then((json: any) => {
-        this.setState({ canSave: true, createNew: false })
+        this.setState({ canDelete:true, canSave: true, createNew: false })
         console.log({ "Success mutations.updateGroup": json });
       }).catch((err: any) => {
         console.log({ "Error mutations.updateGroup": err });
       });
     }
 
+  }
+  delete() {
+    var deleteGroup: any = API.graphql({
+      query: mutations.deleteGroup,
+      variables: { input: {id:this.state.data.id} },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+    deleteGroup.then((json: any) => {
+      console.log({ "Success mutations.deleteGroup": json });
+      this.props.navigation.push("HomeScreen")
+    }).catch((err: any) => {
+      console.log({ "Error mutations.deleteGroup": err });
+    });
   }
   updateValue(field: any, value: any) {
     var temp = this.state.data
@@ -154,6 +169,10 @@ export default class GroupScreen extends React.Component<Props, State>{
                   }
                   {this.state.canSave ?
                     <Button onPress={() => { this.save() }} bordered style={styles.sliderButton}><Text>Save Organization</Text></Button>
+                    : null
+                  }
+                   {this.state.canDelete ?
+                    <Button onPress={() => { this.delete() }} bordered style={styles.sliderButton}><Text>Delete Organization</Text></Button>
                     : null
                   }
                   <Text>{this.state.validationError}</Text>

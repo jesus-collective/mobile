@@ -17,7 +17,7 @@ export default class MyPeople extends React.Component<Props, State> {
   }
   openConversation() {
     console.log("Navigate to conversationScreen")
-    this.props.navigation.navigate("ConversationScreen");
+    this.props.navigation.push("ConversationScreen");
   }
   render() {
     const items =

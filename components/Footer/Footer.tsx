@@ -66,25 +66,25 @@ export default class FooterJC extends React.Component<Props, State> {
     this.props.navigation.dispatch(DrawerActions.openDrawer());
   }
   openProfile = () => {
-    this.props.navigation.navigate("ProfileScreen");
+    this.props.navigation.push("ProfileScreen");
   }
   openSearch = () => {
-    this.props.navigation.navigate("SearchScreen");
+    this.props.navigation.push("SearchScreen");
   }
   openEvents = () => {
-    this.props.navigation.navigate("EventsScreen");
+    this.props.navigation.push("EventsScreen");
   }
   openResources = () => {
-    this.props.navigation.navigate("ResourcesScreen");
+    this.props.navigation.push("ResourcesScreen");
   }
   openGroups = () => {
-    this.props.navigation.navigate("GroupsScreen");
+    this.props.navigation.push("GroupsScreen");
   }
   openHome = () => {
-    this.props.navigation.navigate("HomeScreen");
+    this.props.navigation.push("HomeScreen");
   }
   openCourses = () => {
-    this.props.navigation.navigate("CoursesScreen");
+    this.props.navigation.push("CoursesScreen");
   }
   render() {
     //const { navigate } = this.props.navigation;
