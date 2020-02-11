@@ -1,6 +1,134 @@
 // tslint:disable
 // this is an auto generated file. This will be overwritten
 
+export const onCreateMessage = `subscription OnCreateMessage($roomId: ID!) {
+  onCreateMessage(roomId: $roomId) {
+    id
+    content
+    when
+    roomId
+    userId
+    owner
+    author {
+      id
+      given_name
+      family_name
+      email
+      phone
+      owner
+      hasPaidState
+      address
+      city
+      province
+      postalCode
+      country
+      profileImage
+      aboutMeShort
+      aboutMeLong
+      interests
+      currentRole
+      currentScope
+      personality
+      orgName
+      orgType
+      orgSize
+      orgDescription
+      groups {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+    }
+    room {
+      id
+      owner
+      type
+      name
+      description
+      memberCount
+      members {
+        nextToken
+      }
+      image
+      time
+      lastUpdated
+      location
+      length
+      effort
+      cost
+      organizerGroup {
+        id
+        owner
+        type
+        name
+        description
+        memberCount
+        image
+        time
+        lastUpdated
+        location
+        length
+        effort
+        cost
+      }
+      organizerUser {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+      }
+      instructors {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+      }
+      messages {
+        nextToken
+      }
+    }
+  }
+}
+`;
 export const onCreateUser = `subscription OnCreateUser($owner: String!) {
   onCreateUser(owner: $owner) {
     id
@@ -26,6 +154,25 @@ export const onCreateUser = `subscription OnCreateUser($owner: String!) {
     orgType
     orgSize
     orgDescription
+    groups {
+      items {
+        id
+        groupID
+        userID
+      }
+      nextToken
+    }
+    messages {
+      items {
+        id
+        content
+        when
+        roomId
+        userId
+        owner
+      }
+      nextToken
+    }
   }
 }
 `;
@@ -54,6 +201,25 @@ export const onUpdateUser = `subscription OnUpdateUser($owner: String!) {
     orgType
     orgSize
     orgDescription
+    groups {
+      items {
+        id
+        groupID
+        userID
+      }
+      nextToken
+    }
+    messages {
+      items {
+        id
+        content
+        when
+        roomId
+        userId
+        owner
+      }
+      nextToken
+    }
   }
 }
 `;
@@ -82,50 +248,34 @@ export const onDeleteUser = `subscription OnDeleteUser($owner: String!) {
     orgType
     orgSize
     orgDescription
+    groups {
+      items {
+        id
+        groupID
+        userID
+      }
+      nextToken
+    }
+    messages {
+      items {
+        id
+        content
+        when
+        roomId
+        userId
+        owner
+      }
+      nextToken
+    }
   }
 }
 `;
-export const onCreateGroup = `subscription OnCreateGroup($owner: String!) {
-  onCreateGroup(owner: $owner) {
+export const onCreateGroupMember = `subscription OnCreateGroupMember {
+  onCreateGroupMember {
     id
-    owner
-    type
-    name
-    description
-    memberCount
-    members {
-      id
-      given_name
-      family_name
-      email
-      phone
-      owner
-      hasPaidState
-      address
-      city
-      province
-      postalCode
-      country
-      profileImage
-      aboutMeShort
-      aboutMeLong
-      interests
-      currentRole
-      currentScope
-      personality
-      orgName
-      orgType
-      orgSize
-      orgDescription
-    }
-    image
-    time
-    lastUpdated
-    location
-    length
-    effort
-    cost
-    organizerGroup {
+    groupID
+    userID
+    group {
       id
       owner
       type
@@ -133,29 +283,7 @@ export const onCreateGroup = `subscription OnCreateGroup($owner: String!) {
       description
       memberCount
       members {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        hasPaidState
-        address
-        city
-        province
-        postalCode
-        country
-        profileImage
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        orgDescription
+        nextToken
       }
       image
       time
@@ -229,6 +357,402 @@ export const onCreateGroup = `subscription OnCreateGroup($owner: String!) {
         orgSize
         orgDescription
       }
+      messages {
+        nextToken
+      }
+    }
+    user {
+      id
+      given_name
+      family_name
+      email
+      phone
+      owner
+      hasPaidState
+      address
+      city
+      province
+      postalCode
+      country
+      profileImage
+      aboutMeShort
+      aboutMeLong
+      interests
+      currentRole
+      currentScope
+      personality
+      orgName
+      orgType
+      orgSize
+      orgDescription
+      groups {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+    }
+  }
+}
+`;
+export const onUpdateGroupMember = `subscription OnUpdateGroupMember {
+  onUpdateGroupMember {
+    id
+    groupID
+    userID
+    group {
+      id
+      owner
+      type
+      name
+      description
+      memberCount
+      members {
+        nextToken
+      }
+      image
+      time
+      lastUpdated
+      location
+      length
+      effort
+      cost
+      organizerGroup {
+        id
+        owner
+        type
+        name
+        description
+        memberCount
+        image
+        time
+        lastUpdated
+        location
+        length
+        effort
+        cost
+      }
+      organizerUser {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+      }
+      instructors {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+      }
+      messages {
+        nextToken
+      }
+    }
+    user {
+      id
+      given_name
+      family_name
+      email
+      phone
+      owner
+      hasPaidState
+      address
+      city
+      province
+      postalCode
+      country
+      profileImage
+      aboutMeShort
+      aboutMeLong
+      interests
+      currentRole
+      currentScope
+      personality
+      orgName
+      orgType
+      orgSize
+      orgDescription
+      groups {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+    }
+  }
+}
+`;
+export const onDeleteGroupMember = `subscription OnDeleteGroupMember {
+  onDeleteGroupMember {
+    id
+    groupID
+    userID
+    group {
+      id
+      owner
+      type
+      name
+      description
+      memberCount
+      members {
+        nextToken
+      }
+      image
+      time
+      lastUpdated
+      location
+      length
+      effort
+      cost
+      organizerGroup {
+        id
+        owner
+        type
+        name
+        description
+        memberCount
+        image
+        time
+        lastUpdated
+        location
+        length
+        effort
+        cost
+      }
+      organizerUser {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+      }
+      instructors {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+      }
+      messages {
+        nextToken
+      }
+    }
+    user {
+      id
+      given_name
+      family_name
+      email
+      phone
+      owner
+      hasPaidState
+      address
+      city
+      province
+      postalCode
+      country
+      profileImage
+      aboutMeShort
+      aboutMeLong
+      interests
+      currentRole
+      currentScope
+      personality
+      orgName
+      orgType
+      orgSize
+      orgDescription
+      groups {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+    }
+  }
+}
+`;
+export const onCreateGroup = `subscription OnCreateGroup($owner: String!) {
+  onCreateGroup(owner: $owner) {
+    id
+    owner
+    type
+    name
+    description
+    memberCount
+    members {
+      items {
+        id
+        groupID
+        userID
+      }
+      nextToken
+    }
+    image
+    time
+    lastUpdated
+    location
+    length
+    effort
+    cost
+    organizerGroup {
+      id
+      owner
+      type
+      name
+      description
+      memberCount
+      members {
+        nextToken
+      }
+      image
+      time
+      lastUpdated
+      location
+      length
+      effort
+      cost
+      organizerGroup {
+        id
+        owner
+        type
+        name
+        description
+        memberCount
+        image
+        time
+        lastUpdated
+        location
+        length
+        effort
+        cost
+      }
+      organizerUser {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+      }
+      instructors {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+      }
+      messages {
+        nextToken
+      }
     }
     organizerUser {
       id
@@ -254,6 +778,12 @@ export const onCreateGroup = `subscription OnCreateGroup($owner: String!) {
       orgType
       orgSize
       orgDescription
+      groups {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
     }
     instructors {
       id
@@ -279,6 +809,23 @@ export const onCreateGroup = `subscription OnCreateGroup($owner: String!) {
       orgType
       orgSize
       orgDescription
+      groups {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+    }
+    messages {
+      items {
+        id
+        content
+        when
+        roomId
+        userId
+        owner
+      }
+      nextToken
     }
   }
 }
@@ -292,29 +839,12 @@ export const onUpdateGroup = `subscription OnUpdateGroup($owner: String!) {
     description
     memberCount
     members {
-      id
-      given_name
-      family_name
-      email
-      phone
-      owner
-      hasPaidState
-      address
-      city
-      province
-      postalCode
-      country
-      profileImage
-      aboutMeShort
-      aboutMeLong
-      interests
-      currentRole
-      currentScope
-      personality
-      orgName
-      orgType
-      orgSize
-      orgDescription
+      items {
+        id
+        groupID
+        userID
+      }
+      nextToken
     }
     image
     time
@@ -331,29 +861,7 @@ export const onUpdateGroup = `subscription OnUpdateGroup($owner: String!) {
       description
       memberCount
       members {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        hasPaidState
-        address
-        city
-        province
-        postalCode
-        country
-        profileImage
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        orgDescription
+        nextToken
       }
       image
       time
@@ -427,6 +935,9 @@ export const onUpdateGroup = `subscription OnUpdateGroup($owner: String!) {
         orgSize
         orgDescription
       }
+      messages {
+        nextToken
+      }
     }
     organizerUser {
       id
@@ -452,6 +963,12 @@ export const onUpdateGroup = `subscription OnUpdateGroup($owner: String!) {
       orgType
       orgSize
       orgDescription
+      groups {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
     }
     instructors {
       id
@@ -477,6 +994,23 @@ export const onUpdateGroup = `subscription OnUpdateGroup($owner: String!) {
       orgType
       orgSize
       orgDescription
+      groups {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+    }
+    messages {
+      items {
+        id
+        content
+        when
+        roomId
+        userId
+        owner
+      }
+      nextToken
     }
   }
 }
@@ -490,29 +1024,12 @@ export const onDeleteGroup = `subscription OnDeleteGroup($owner: String!) {
     description
     memberCount
     members {
-      id
-      given_name
-      family_name
-      email
-      phone
-      owner
-      hasPaidState
-      address
-      city
-      province
-      postalCode
-      country
-      profileImage
-      aboutMeShort
-      aboutMeLong
-      interests
-      currentRole
-      currentScope
-      personality
-      orgName
-      orgType
-      orgSize
-      orgDescription
+      items {
+        id
+        groupID
+        userID
+      }
+      nextToken
     }
     image
     time
@@ -529,29 +1046,7 @@ export const onDeleteGroup = `subscription OnDeleteGroup($owner: String!) {
       description
       memberCount
       members {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        hasPaidState
-        address
-        city
-        province
-        postalCode
-        country
-        profileImage
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        orgDescription
+        nextToken
       }
       image
       time
@@ -625,6 +1120,9 @@ export const onDeleteGroup = `subscription OnDeleteGroup($owner: String!) {
         orgSize
         orgDescription
       }
+      messages {
+        nextToken
+      }
     }
     organizerUser {
       id
@@ -650,6 +1148,12 @@ export const onDeleteGroup = `subscription OnDeleteGroup($owner: String!) {
       orgType
       orgSize
       orgDescription
+      groups {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
     }
     instructors {
       id
@@ -675,6 +1179,23 @@ export const onDeleteGroup = `subscription OnDeleteGroup($owner: String!) {
       orgType
       orgSize
       orgDescription
+      groups {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+    }
+    messages {
+      items {
+        id
+        content
+        when
+        roomId
+        userId
+        owner
+      }
+      nextToken
     }
   }
 }

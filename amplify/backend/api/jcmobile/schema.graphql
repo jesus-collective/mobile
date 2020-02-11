@@ -31,6 +31,20 @@ type User
 	orgType:String
 	orgSize:String
 	orgDescription:String
+
+	groups: [GroupMember] @connection(keyName: "byGroup", fields: ["id"])
+	messages: [Message] @connection(name: "UserMessages", keyField: "userId", sortField: "when")
+
+}
+type GroupMember
+  @model(queries: null)
+  @key(name: "byGroup", fields: ["groupID", "userID"])
+  @key(name: "byUser", fields: ["userID", "groupID"]) {
+  id: ID!
+  groupID: ID!
+  userID: ID!
+  group: Group! @connection(fields: ["groupID"])
+  user: User! @connection(fields: ["userID"])
 }
 type Group
 @model
@@ -46,7 +60,7 @@ type Group
 	name:String!
 	description:String!
 	memberCount:Int
-	members:User
+  	members: [GroupMember] @connection(keyName: "byUser", fields: ["id"])
 	image:String!
 	time:String
 	lastUpdated:String
@@ -57,6 +71,8 @@ type Group
 	organizerGroup:[Group]
 	organizerUser:[User]
 	instructors:[User]
+	messages: [Message] @connection(name: "RoomMessages", keyField: "roomId", sortField: "when")
+
   }
 type CourseInfo
 @model
@@ -78,4 +94,25 @@ type CourseWeek{
 type CourseSection{
 	section:Int
 	name:String
+}
+
+
+type Message @model(subscriptions: null) 
+ @key(name: "ByRoom",fields: ["roomId", "when"], queryField:"messagesByRoom")
+ @auth(
+    rules: [
+      {allow: owner, ownerField: "owner", mutations: [create, update, delete]},
+  ])
+   {
+  id: ID!
+  content: String!
+  when: String!
+  roomId: ID
+  userId: ID
+  owner: String
+  author: User @connection(name: "UserMessages", keyField: "userId")
+  room: Group @connection(name: "RoomMessages", keyField: "roomId")
+}
+type Subscription {
+  onCreateMessage(roomId: ID!): Message @aws_subscribe(mutations: ["createMessage"])
 }

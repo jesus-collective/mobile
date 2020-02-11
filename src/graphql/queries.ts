@@ -26,6 +26,25 @@ export const getUser = `query GetUser($id: ID!) {
     orgType
     orgSize
     orgDescription
+    groups {
+      items {
+        id
+        groupID
+        userID
+      }
+      nextToken
+    }
+    messages {
+      items {
+        id
+        content
+        when
+        roomId
+        userId
+        owner
+      }
+      nextToken
+    }
   }
 }
 `;
@@ -59,6 +78,12 @@ export const listUsers = `query ListUsers(
       orgType
       orgSize
       orgDescription
+      groups {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
     }
     nextToken
   }
@@ -73,29 +98,12 @@ export const getGroup = `query GetGroup($id: ID!) {
     description
     memberCount
     members {
-      id
-      given_name
-      family_name
-      email
-      phone
-      owner
-      hasPaidState
-      address
-      city
-      province
-      postalCode
-      country
-      profileImage
-      aboutMeShort
-      aboutMeLong
-      interests
-      currentRole
-      currentScope
-      personality
-      orgName
-      orgType
-      orgSize
-      orgDescription
+      items {
+        id
+        groupID
+        userID
+      }
+      nextToken
     }
     image
     time
@@ -112,29 +120,7 @@ export const getGroup = `query GetGroup($id: ID!) {
       description
       memberCount
       members {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        hasPaidState
-        address
-        city
-        province
-        postalCode
-        country
-        profileImage
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        orgDescription
+        nextToken
       }
       image
       time
@@ -207,6 +193,9 @@ export const getGroup = `query GetGroup($id: ID!) {
         orgType
         orgSize
         orgDescription
+      }
+      messages {
+        nextToken
       }
     }
     organizerUser {
@@ -233,6 +222,12 @@ export const getGroup = `query GetGroup($id: ID!) {
       orgType
       orgSize
       orgDescription
+      groups {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
     }
     instructors {
       id
@@ -258,6 +253,23 @@ export const getGroup = `query GetGroup($id: ID!) {
       orgType
       orgSize
       orgDescription
+      groups {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+    }
+    messages {
+      items {
+        id
+        content
+        when
+        roomId
+        userId
+        owner
+      }
+      nextToken
     }
   }
 }
@@ -276,29 +288,7 @@ export const listGroups = `query ListGroups(
       description
       memberCount
       members {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        hasPaidState
-        address
-        city
-        province
-        postalCode
-        country
-        profileImage
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        orgDescription
+        nextToken
       }
       image
       time
@@ -371,6 +361,9 @@ export const listGroups = `query ListGroups(
         orgType
         orgSize
         orgDescription
+      }
+      messages {
+        nextToken
       }
     }
     nextToken
@@ -404,6 +397,260 @@ export const listCourseInfos = `query ListCourseInfos(
       course {
         week
         name
+      }
+    }
+    nextToken
+  }
+}
+`;
+export const getMessage = `query GetMessage($id: ID!) {
+  getMessage(id: $id) {
+    id
+    content
+    when
+    roomId
+    userId
+    owner
+    author {
+      id
+      given_name
+      family_name
+      email
+      phone
+      owner
+      hasPaidState
+      address
+      city
+      province
+      postalCode
+      country
+      profileImage
+      aboutMeShort
+      aboutMeLong
+      interests
+      currentRole
+      currentScope
+      personality
+      orgName
+      orgType
+      orgSize
+      orgDescription
+      groups {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+    }
+    room {
+      id
+      owner
+      type
+      name
+      description
+      memberCount
+      members {
+        nextToken
+      }
+      image
+      time
+      lastUpdated
+      location
+      length
+      effort
+      cost
+      organizerGroup {
+        id
+        owner
+        type
+        name
+        description
+        memberCount
+        image
+        time
+        lastUpdated
+        location
+        length
+        effort
+        cost
+      }
+      organizerUser {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+      }
+      instructors {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+      }
+      messages {
+        nextToken
+      }
+    }
+  }
+}
+`;
+export const listMessages = `query ListMessages(
+  $filter: ModelMessageFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      content
+      when
+      roomId
+      userId
+      owner
+      author {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+      }
+      room {
+        id
+        owner
+        type
+        name
+        description
+        memberCount
+        image
+        time
+        lastUpdated
+        location
+        length
+        effort
+        cost
+      }
+    }
+    nextToken
+  }
+}
+`;
+export const messagesByRoom = `query MessagesByRoom(
+  $roomId: ID
+  $when: ModelStringKeyConditionInput
+  $sortDirection: ModelSortDirection
+  $filter: ModelMessageFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  messagesByRoom(
+    roomId: $roomId
+    when: $when
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      content
+      when
+      roomId
+      userId
+      owner
+      author {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+      }
+      room {
+        id
+        owner
+        type
+        name
+        description
+        memberCount
+        image
+        time
+        lastUpdated
+        location
+        length
+        effort
+        cost
       }
     }
     nextToken

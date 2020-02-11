@@ -68,7 +68,7 @@ export default class GroupScreen extends React.Component<Props, State>{
     else {
       var getGroup: any = API.graphql({
         query: queries.getGroup,
-        variables: { id: props.navigation.state.params.id },
+        variables: { id: props.navigation.state.params.id,messages:{sortDirection:"ASC"} },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
 

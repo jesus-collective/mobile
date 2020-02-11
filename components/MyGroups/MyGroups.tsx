@@ -29,7 +29,7 @@ interface State {
 export default class MyGroups extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    const data = require('../../assets/json/groups.json');
+   // const data = require('../../assets/json/groups.json');
     if (props.type == "event") {
       this.state = {
         openSingle: "EventScreen",
