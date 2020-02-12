@@ -25,8 +25,9 @@ interface State {
   createNew: boolean
   canSave: boolean
   canLeave: boolean
+  canJoin: boolean
   isEditable: boolean
-  canDelete:boolean
+  canDelete: boolean
   validationError: String
 }
 
@@ -43,8 +44,9 @@ export default class CourseScreen extends React.Component<Props, State>{
       data: null,
       canSave: true,
       canLeave: false,
+      canJoin: false,
       isEditable: true,
-      canDelete:true,
+      canDelete: true,
       validationError: ""
     }
     this.setInitialData(props)
@@ -65,9 +67,9 @@ export default class CourseScreen extends React.Component<Props, State>{
           time: "",
           effort: "",
           cost: "",
-       //   organizerUser: { name: "" },
-       //   instructors: [],
-       //   course: []
+          //   organizerUser: { name: "" },
+          //   instructors: [],
+          //   course: []
         }
         this.setState({ data: z })
       })
@@ -99,7 +101,7 @@ export default class CourseScreen extends React.Component<Props, State>{
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       createGroup.then((json: any) => {
-        this.setState({ canDelete:true, canSave: true, createNew: false })
+        this.setState({ canDelete: true, canSave: true, createNew: false })
         console.log({ "Success mutations.createGroup": json });
       }).catch((err: any) => {
         console.log({ "Error mutations.createGroup": err });
@@ -114,7 +116,7 @@ export default class CourseScreen extends React.Component<Props, State>{
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       updateGroup.then((json: any) => {
-        this.setState({ canDelete:true, canSave: true, createNew: false })
+        this.setState({ canDelete: true, canSave: true, createNew: false })
         console.log({ "Success mutations.updateGroup": json });
       }).catch((err: any) => {
         console.log({ "Error mutations.updateGroup": err });
@@ -122,10 +124,16 @@ export default class CourseScreen extends React.Component<Props, State>{
     }
 
   }
+  leave() {
+
+  }
+  join() {
+
+  }
   delete() {
     var deleteGroup: any = API.graphql({
       query: mutations.deleteGroup,
-      variables: { input: {id:this.state.data.id} },
+      variables: { input: { id: this.state.data.id } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
     deleteGroup.then((json: any) => {
@@ -196,8 +204,12 @@ export default class CourseScreen extends React.Component<Props, State>{
                 </Container>
                 <Container style={{ flex: 15, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                   <Button bordered style={styles.sliderButton}><Text>Join Course</Text></Button>
+                  {this.state.canJoin ?
+                    <Button onPress={() => { this.join() }} bordered style={styles.sliderButton}><Text>Join Course</Text></Button> :
+                    null
+                  }
                   {this.state.canLeave ?
-                    <Button bordered style={styles.sliderButton}><Text>Leave Course</Text></Button> :
+                    <Button onPress={() => { this.leave() }} bordered style={styles.sliderButton}><Text>Leave Course</Text></Button> :
                     null
                   }
                   {this.state.createNew ?

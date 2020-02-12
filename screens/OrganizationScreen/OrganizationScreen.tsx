@@ -26,8 +26,9 @@ interface State {
   createNew: boolean
   canSave: boolean
   canLeave: boolean
+  canJoin: boolean
   isEditable: boolean
-  canDelete:boolean
+  canDelete: boolean
   validationError: String
 }
 
@@ -44,8 +45,9 @@ export default class GroupScreen extends React.Component<Props, State>{
       data: null,
       canSave: true,
       canLeave: false,
+      canJoin: false,
       isEditable: true,
-      canDelete:true,
+      canDelete: true,
       validationError: ""
     }
     this.setInitialData(props)
@@ -92,7 +94,7 @@ export default class GroupScreen extends React.Component<Props, State>{
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       createGroup.then((json: any) => {
-        this.setState({ canDelete:true, canSave: true, createNew: false })
+        this.setState({ canDelete: true, canSave: true, createNew: false })
         console.log({ "Success mutations.createGroup": json });
       }).catch((err: any) => {
         console.log({ "Error mutations.createGroup": err });
@@ -107,7 +109,7 @@ export default class GroupScreen extends React.Component<Props, State>{
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       updateGroup.then((json: any) => {
-        this.setState({ canDelete:true, canSave: true, createNew: false })
+        this.setState({ canDelete: true, canSave: true, createNew: false })
         console.log({ "Success mutations.updateGroup": json });
       }).catch((err: any) => {
         console.log({ "Error mutations.updateGroup": err });
@@ -115,10 +117,16 @@ export default class GroupScreen extends React.Component<Props, State>{
     }
 
   }
+  leave() {
+
+  }
+  join() {
+
+  }
   delete() {
     var deleteGroup: any = API.graphql({
       query: mutations.deleteGroup,
-      variables: { input: {id:this.state.data.id} },
+      variables: { input: { id: this.state.data.id } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
     deleteGroup.then((json: any) => {
@@ -152,15 +160,21 @@ export default class GroupScreen extends React.Component<Props, State>{
 
                   <Text>Organizer</Text>
                   <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
-                  <Text>Members ({this.state.data.memberCount})</Text>
+                  <Text>Members ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
 
                   {
                     this.state.data.members == null ? <Text>No Members Yet</Text> :
-                      this.state.data.members.map((item: any) => {
-                        return (<Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />)
-                      })}
+                      this.state.data.members.items.length == 0 ?
+                        <Text>No Members Yet</Text> :
+                        this.state.data.members.items.map((item: any) => {
+                          return (<Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />)
+                        })}
+                  {this.state.canJoin ?
+                    <Button onPress={() => { this.join() }} bordered style={styles.sliderButton}><Text>Join Organization</Text></Button> :
+                    null
+                  }
                   {this.state.canLeave ?
-                    <Button bordered style={styles.sliderButton}><Text>Leave Organization</Text></Button> :
+                    <Button onPress={() => { this.leave() }} bordered style={styles.sliderButton}><Text>Leave Organization</Text></Button> :
                     null
                   }
                   {this.state.createNew ?
@@ -171,7 +185,7 @@ export default class GroupScreen extends React.Component<Props, State>{
                     <Button onPress={() => { this.save() }} bordered style={styles.sliderButton}><Text>Save Organization</Text></Button>
                     : null
                   }
-                   {this.state.canDelete ?
+                  {this.state.canDelete ?
                     <Button onPress={() => { this.delete() }} bordered style={styles.sliderButton}><Text>Delete Organization</Text></Button>
                     : null
                   }
