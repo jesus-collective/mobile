@@ -186,7 +186,7 @@ export default class GroupScreen extends React.Component<Props, State>{
                     : null
                   }
                   {this.state.canDelete ?
-                    <Button onPress={() => { this.delete() }} bordered style={styles.sliderButton}><Text>Delete Organization</Text></Button>
+                    <Button onPress={() => { if (window.confirm('Are you sure you wish to delete this organization?')) this.delete() }} bordered style={styles.sliderButton}><Text>Delete Organization</Text></Button>
                     : null
                   }
                   <Text>{this.state.validationError}</Text>

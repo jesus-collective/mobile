@@ -221,7 +221,7 @@ export default class CourseScreen extends React.Component<Props, State>{
                     : null
                   }
                   {this.state.canDelete ?
-                    <Button onPress={() => { this.delete() }} bordered style={styles.sliderButton}><Text>Delete Course</Text></Button>
+                    <Button onPress={() => { if (window.confirm('Are you sure you wish to delete this course?')) this.delete() }} bordered style={styles.sliderButton}><Text>Delete Course</Text></Button>
                     : null
                   }
                   <EditableText onChange={(value: any) => { this.updateValue("time", value) }} placeholder="Enter Course Time" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableText>
