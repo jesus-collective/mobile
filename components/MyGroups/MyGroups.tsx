@@ -29,7 +29,6 @@ interface State {
 export default class MyGroups extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-   // const data = require('../../assets/json/groups.json');
     if (props.type == "event") {
       this.state = {
         openSingle: "EventScreen",
@@ -144,7 +143,18 @@ export default class MyGroups extends React.Component<Props, State> {
     console.log({ "Navigate to": this.state.openMultiple })
     this.props.navigation.push(this.state.openMultiple);
   }
+  canJoin(id: any): boolean {
+    return true
+  }
+  canLeave(id: any): boolean {
+    return true
+  }
+  join(id: any) {
 
+  }
+  leave(id: any) {
+
+  }
   renderGroup(item: any) {
     return <Card style={{ alignSelf: "flex-start", padding: "0px", width: this.state.cardWidth }
     } >
@@ -153,7 +163,8 @@ export default class MyGroups extends React.Component<Props, State> {
       </CardItem>
       <CardItem ><Text style={styles.fontTitle}>{item.name}</Text></CardItem>
       <CardItem ><Text style={styles.fontDetail}>{item.description}</Text></CardItem>
-      <CardItem ><Button><Text style={styles.font}>Join</Text></Button><Right></Right></CardItem>
+      {this.canJoin(item.id) ? <CardItem ><Button onPress={() => { this.join(item.id) }}><Text style={styles.font}>Join</Text></Button><Right></Right></CardItem> : null}
+      {this.canLeave(item.id) ? <CardItem ><Button onPress={() => { this.leave(item.id) }}><Text style={styles.font}>Leave</Text></Button><Right></Right></CardItem> : null}
     </Card >
   }
   renderEvent(item: any) {
@@ -162,7 +173,8 @@ export default class MyGroups extends React.Component<Props, State> {
       <CardItem ><Text style={styles.fontTitle}>{item.name}</Text></CardItem>
       <CardItem ><Text style={styles.fontDetail}>{item.description}</Text></CardItem>
       <CardItem ><Text style={styles.fontDetail}>{item.location}</Text></CardItem>
-      <CardItem ><Button><Text style={styles.font}>Attend</Text></Button><Right></Right></CardItem>
+      {this.canJoin(item.id) ? <CardItem ><Button onPress={() => { this.join(item.id) }}><Text style={styles.font}>Attend</Text></Button><Right></Right></CardItem> : null}
+      {this.canLeave(item.id) ? <CardItem ><Button onPress={() => { this.leave(item.id) }}><Text style={styles.font}>Don't Attend</Text></Button><Right></Right></CardItem> : null}
     </Card>
   }
   renderResource(item: any) {
@@ -172,7 +184,8 @@ export default class MyGroups extends React.Component<Props, State> {
       </CardItem>
       <CardItem ><Text style={styles.fontTitle}>{item.name}</Text></CardItem>
       <CardItem ><Text style={styles.fontDetail}>Last Updated: {item.lastupdated}</Text></CardItem>
-      <CardItem ><Button><Text style={styles.font}>View</Text></Button><Right></Right></CardItem>
+      {this.canJoin(item.id) ? <CardItem ><Button onPress={() => { this.join(item.id) }}><Text style={styles.font}>Join</Text></Button><Right></Right></CardItem> : null}
+      {this.canLeave(item.id) ? <CardItem ><Button onPress={() => { this.leave(item.id) }}><Text style={styles.font}>Leave</Text></Button><Right></Right></CardItem> : null}
     </Card>
   }
   renderOrganization(item: any) {
@@ -182,7 +195,8 @@ export default class MyGroups extends React.Component<Props, State> {
       </CardItem>
       <CardItem ><Text style={styles.fontTitle}>{item.name}</Text></CardItem>
       <CardItem ><Text style={styles.fontDetail}>{item.kind}</Text></CardItem>
-      <CardItem ><Button><Text style={styles.font}>View</Text></Button><Right></Right></CardItem>
+      {this.canJoin(item.id) ? <CardItem ><Button onPress={() => { this.join(item.id) }}><Text style={styles.font}>Join</Text></Button><Right></Right></CardItem> : null}
+      {this.canLeave(item.id) ? <CardItem ><Button onPress={() => { this.leave(item.id) }}><Text style={styles.font}>Leave</Text></Button><Right></Right></CardItem> : null}
     </Card>
   }
   renderCourse(item: any) {
@@ -192,7 +206,8 @@ export default class MyGroups extends React.Component<Props, State> {
       </CardItem>
       <CardItem ><Text style={styles.fontTitle}>{item.name}</Text></CardItem>
       <CardItem ><Text style={styles.fontDetail}>Last Updated: {item.lastupdated}</Text></CardItem>
-      <CardItem ><Button><Text style={styles.font}>View</Text></Button><Right></Right></CardItem>
+      {this.canJoin(item.id) ? <CardItem ><Button onPress={() => { this.join(item.id) }}><Text style={styles.font}>Join</Text></Button><Right></Right></CardItem> : null}
+      {this.canLeave(item.id) ? <CardItem ><Button onPress={() => { this.leave(item.id) }}><Text style={styles.font}>Leave</Text></Button><Right></Right></CardItem> : null}
     </Card>
   }
   render() {
