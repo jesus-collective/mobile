@@ -30,6 +30,7 @@ interface State {
   isEditable: boolean
   canDelete: boolean
   validationError: String
+  currentUser:String
 }
 
 
@@ -48,8 +49,10 @@ export default class GroupScreen extends React.Component<Props, State>{
       canJoin: false,
       isEditable: true,
       canDelete: true,
-      validationError: ""
+      validationError: "",
+      currentUser:null
     }
+    Auth.currentAuthenticatedUser().then((user: any) => {this.setState({currentUser:user.username})})
     this.setInitialData(props)
   }
 
@@ -119,10 +122,31 @@ export default class GroupScreen extends React.Component<Props, State>{
 
   }
   leave() {
-
+  
+    var deleteGroupMember: any = API.graphql({
+      query: mutations.deleteGroupMember,
+      variables: { input: {id:this.state.data.id} },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+    deleteGroupMember.then((json: any) => {
+     // this.setState({ canDelete: true, canSave: true, createNew: false })
+      console.log({ "Success mutations.deleteGroupMember": json });
+    }).catch((err: any) => {
+      console.log({ "Error mutations.deleteGroupMember": err });
+    });
   }
   join() {
-
+    var createGroupMember: any = API.graphql({
+      query: mutations.createGroupMember,
+      variables: { input: {groupId:this.state.data.id,userId:this.state.currentUser} },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+    createGroupMember.then((json: any) => {
+    //  this.setState({ canDelete: true, canSave: true, createNew: false })
+      console.log({ "Success mutations.createGroupMember": json });
+    }).catch((err: any) => {
+      console.log({ "Error mutations.createGroupMember": err });
+    });
   }
   delete() {
     var deleteGroup: any = API.graphql({

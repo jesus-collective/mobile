@@ -115,8 +115,8 @@ export default class MessageBoard extends React.Component<Props, State> {
               </Card>
               {this.state.data.items.map((item: any) => {
                 return (
-                  <Card key={item.id} style={{ backgroundColor: this.state.selfId === item.userId ? "#ff0000" : "0000ff", minHeight: 50 }}>
-                    <CardItem>
+                  <Card key={item.id} style={{borderRadius: 15, minHeight: 50 }}>
+                    <CardItem style={{borderBottomLeftRadius:0, borderBottomRightRadius:0, borderTopLeftRadius: 15, borderTopRightRadius: 15, backgroundColor:this.state.selfId === item.userId ? "#99ff99" : "#9999ff"}}>
                       <Left>
                         <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
                         <Body>
@@ -132,7 +132,7 @@ export default class MessageBoard extends React.Component<Props, State> {
                         <Text>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
                       </Right>
                     </CardItem>
-                    <CardItem>
+                    <CardItem style={{borderTopLeftRadius:0, borderTopRightRadius:0, borderBottomLeftRadius: 15, borderBottomRightRadius: 15, backgroundColor:this.state.selfId === item.userId ? "#99ff99" : "#9999ff"}}>
                       <Text style={styles.fontConnectWithRole}>{item.content}</Text>
                     </CardItem>
                   </Card>)
