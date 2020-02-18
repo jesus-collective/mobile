@@ -5,6 +5,7 @@ import MyMap from '../../components/MyMap/MyMap';
 import styles from '../../components/style.js'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
+
 import EditableText from '../../components/EditableText/EditableText'
 import Validate from '../../components/Validate/Validate'
 import { Image } from 'react-native'
@@ -14,6 +15,7 @@ import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
 
+const data = require('./course.json');
 
 interface Props {
   navigation: any
@@ -29,6 +31,7 @@ interface State {
   isEditable: boolean
   canDelete: boolean
   validationError: String
+  canGotoActiveCourse:boolean
 }
 
 
@@ -47,7 +50,8 @@ export default class CourseScreen extends React.Component<Props, State>{
       canJoin: false,
       isEditable: true,
       canDelete: true,
-      validationError: ""
+      validationError: "",
+      canGotoActiveCourse:true
     }
     this.setInitialData(props)
   }
@@ -108,11 +112,21 @@ export default class CourseScreen extends React.Component<Props, State>{
       });
     }
   }
+  clean(item)
+  {
+    delete item.members
+    delete item.messages
+    delete item.organizerGroup
+    delete item.organizerUser
+    delete item.instructors
+    return item
+  }
   save() {
     if (this.validate()) {
+      console.log(this.state.data)
       var updateGroup: any = API.graphql({
         query: mutations.updateGroup,
-        variables: { input: this.state.data },
+        variables: { input: this.clean(this.state.data) },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       updateGroup.then((json: any) => {
@@ -129,6 +143,10 @@ export default class CourseScreen extends React.Component<Props, State>{
   }
   join() {
 
+  }
+  gotoActiveCourse(){
+    console.log(this.props.navigation)
+    this.props.navigation.push("CourseHomeScreen", { id: this.state.data.id, create: false })
   }
   delete() {
     var deleteGroup: any = API.graphql({
@@ -185,22 +203,28 @@ export default class CourseScreen extends React.Component<Props, State>{
                 )*/}
                 </Container>
                 <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                  <Text>{this.state.data.summary}</Text>
+
+                  {data.introduction.map((item: any) => {
+                    return <Text>{item}</Text>
+                  })}
+
                   <Text>Course Details</Text>
-                  {/*this.state.data.course.map((item) => {
+
+
+                  {data.courseDetails.map((item: any, index1) => {
                     return (
-                      <Container>
-                        <Text>Week {item.week}</Text>
-                        <Text>Week {item.week} - {item.name}</Text>
-                        {item.sections.map((item2) => {
+                      <Card>
+                        <Text>{item.week}</Text>
+                        <Text>{item.date} - {item.leader}</Text>
+                        {item.events.map((item2, index2) => {
                           return (
-                            <Text>{item.week}.{item2.section} - {item2.name}</Text>
+                            <Text>{index1+1}.{index2+1} - {item2.name}</Text>
                           )
                         })}
 
-                      </Container>
+                      </Card>
                     )
-                  })*/}
+                  })}
                 </Container>
                 <Container style={{ flex: 15, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                   <Button bordered style={styles.sliderButton}><Text>Join Course</Text></Button>
@@ -222,6 +246,10 @@ export default class CourseScreen extends React.Component<Props, State>{
                   }
                   {this.state.canDelete ?
                     <Button onPress={() => { if (window.confirm('Are you sure you wish to delete this course?')) this.delete() }} bordered style={styles.sliderButton}><Text>Delete Course</Text></Button>
+                    : null
+                  }
+                  {this.state.canGotoActiveCourse ?
+                    <Button onPress={() => this.gotoActiveCourse() } bordered style={styles.sliderButton}><Text>Go to Course</Text></Button>
                     : null
                   }
                   <EditableText onChange={(value: any) => { this.updateValue("time", value) }} placeholder="Enter Course Time" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableText>

@@ -20,13 +20,16 @@ import {Platform} from "react-native";
 const ConversationScreen = lazy(() => import('../ConversationScreen/ConversationScreen'));
 const OrganizationsScreen = lazy(() => import('../OrganizationsScreen/OrganizationsScreen'));
 const OrganizationScreen = lazy(() => import('../OrganizationScreen/OrganizationScreen'));
-const CourseScreen = lazy(() => import('../CourseScreen/CourseScreen'));
 const LoginScreen = lazy(() => import('../LoginScreen/LoginScreen'));
 const GroupScreen = lazy(() => import('../GroupScreen/GroupScreen'));
 const SignUpScreen1 = lazy(() => import('../../components/Auth/SignUpScreen1'));
 const SignUpScreen2 = lazy(() => import('../../components/Auth/SignUpScreen2'));
 const SignUpScreen3 = lazy(() => import('../../components/Auth/SignUpScreen3'));
 const CoursesScreen = lazy(() => import('../CoursesScreen/CoursesScreen'));
+const CourseScreen = lazy(() => import('../CourseScreen/CourseScreen'));
+const CourseHomeScreen = lazy(() => import('../CourseHomeScreen/CourseHomeScreen'));
+const CourseDetailScreen = lazy(() => import('../CourseDetailScreen/CourseDetailScreen'));
+const CourseCoachingScreen = lazy(() => import('../CourseCoachingScreen/CourseCoachingScreen'));
 const ExploreScreen = lazy(() => import('../ExploreScreen/ExploreScreen'));
 const SupportScreen = lazy(() => import('../SupportScreen/SupportScreen'));
 const KidsAndYouthScreen = lazy(() => import('../KidsAndYouthScreen/KidsAndYouthScreen'));
@@ -53,6 +56,9 @@ const MainAppRouter = createStackNavigator({
   OrganizationScreen: { screen: OrganizationScreen,path:"org" },
   CourseScreen: { screen: CourseScreen,path:"course" },
   CoursesScreen: { screen: CoursesScreen, path: "courses" },
+  CourseHomeScreen: { screen: CourseHomeScreen,path:"courseHome" },
+  CourseDetailScreen: { screen: CourseDetailScreen,path:"courseDetail" },
+  CourseCoachingScreen: { screen: CourseCoachingScreen,path:"courseCoaching" },
   ConversationScreen: { screen: ConversationScreen, path: "conversations" }
 },
   {
