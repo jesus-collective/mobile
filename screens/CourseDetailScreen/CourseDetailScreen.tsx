@@ -6,7 +6,6 @@ import styles from '../../components/style.js'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 
-import EditableText from '../../components/EditableText/EditableText'
 import Validate from '../../components/Validate/Validate'
 import { Image } from 'react-native'
 import { API, graphqlOperation, Auth } from 'aws-amplify';
@@ -15,6 +14,7 @@ import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
 import MessageBoard from '../../components/MessageBoard/MessageBoard'
+import CourseHeader from '../../components/CourseHeader/CourseHeader';
 const data = require('../CourseScreen/course.json');
 
 interface Props {
@@ -90,20 +90,7 @@ export default class CourseScreen extends React.Component<Props, State>{
           <Container style={{ flexDirection: "row" }}>
             <CourseSidebar courseId={this.state.data.id}></CourseSidebar>
             <Container style={{ flex: 85 }}>
-              <Container style={{ backgroundColor: "#F0493E", flex: 20 }}>
-                <Text style={styles.fontCourseHeaderTime}>{this.state.data.time} - {this.state.data.length}</Text>
-                <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Course Name" multiline={false} textStyle={styles.fontCourseHeaderBold} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={false}></EditableText>
-                <Text style={styles.fontCourseHeader}>Course</Text>
-                <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Course Description" multiline={true} textStyle={styles.fontCourseHeaderDescription} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={false}></EditableText>
-                <Container style={{ flexDirection: "row", width: "100%", justifyContent: "flex-start", backgroundColor: "F0493E" }}>
-                  {data.courseDetails.map((item: any, index1) => {
-                    return (
-                      <Button onPress={() => { this.setActiveWeek(index1) }}><Text>{item.week}</Text></Button>
-                    )
-                  }
-                  )}
-                </Container>
-              </Container>
+              <CourseHeader onChangeWeek={(week) => { this.setActiveWeek(week) }} courseData={data} groupData={this.state.data}></CourseHeader>
               <Content style={{ flex: 85 }}>
                 <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
                   <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>

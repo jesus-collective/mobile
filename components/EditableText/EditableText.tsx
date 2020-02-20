@@ -4,10 +4,10 @@ interface Props {
     value: string,
     isEditable: boolean,
     textStyle: any,
-    inputStyle: any,
+    inputStyle?: any,
     multiline:boolean,
-    placeholder:string
-    onChange(string)
+    placeholder?:string,
+    onChange?(string)
 }
 interface State {
    // value: string,
