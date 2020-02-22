@@ -123,7 +123,6 @@ export default class CourseScreen extends React.Component<Props, State>{
   }
   save() {
     if (this.validate()) {
-      console.log(this.state.data)
       var updateGroup: any = API.graphql({
         query: mutations.updateGroup,
         variables: { input: this.clean(this.state.data) },

@@ -15,7 +15,7 @@ import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
 import CourseHeader from '../../components/CourseHeader/CourseHeader';
-
+import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 const data = require('../CourseScreen/course.json');
 
 interface Props {
@@ -25,12 +25,7 @@ interface State {
   showMap: boolean
   loadId: string
   data: any
-  createNew: boolean
-  canSave: boolean
-  canLeave: boolean
-  canJoin: boolean
   isEditable: boolean
-  canDelete: boolean
   validationError: String
 }
 
@@ -43,50 +38,25 @@ export default class CourseScreen extends React.Component<Props, State>{
     this.state = {
       showMap: false,
       loadId: props.navigation.state.params.id,
-      createNew: props.navigation.state.params.create,
       data: null,
-      canSave: true,
-      canLeave: false,
-      canJoin: false,
       isEditable: true,
-      canDelete: true,
       validationError: ""
     }
     this.setInitialData(props)
   }
 
   setInitialData(props) {
-    if (props.navigation.state.params.create)
-      Auth.currentAuthenticatedUser().then((user: any) => {
-        var z: CreateGroupInput = {
-          id: "course-" + Date.now(),
-          owner: user.username,
-          type: "course",
-          name: "",
-          description: "",
-          memberCount: 1,
-          image: "temp",
-          length: "",
-          time: "",
-          effort: "",
-          cost: "",
-          //   organizerUser: { name: "" },
-          //   instructors: [],
-          //   course: []
-        }
-        this.setState({ data: z })
-      })
-    else {
-      var getGroup: any = API.graphql({
-        query: queries.getGroup,
-        variables: { id: props.navigation.state.params.id },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-      });
 
-      getGroup.then((json) => {
-        this.setState({ data: json.data.getGroup })
-      })
-    }
+    var getGroup: any = API.graphql({
+      query: queries.getGroup,
+      variables: { id: props.navigation.state.params.id },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+
+    getGroup.then((json) => {
+      this.setState({ data: json.data.getGroup })
+    })
+
   }
 
   openHome = () => {
@@ -100,56 +70,8 @@ export default class CourseScreen extends React.Component<Props, State>{
     this.setState({ validationError: validation.validationError })
     return validation.result
   }
-  createNew() {
-    if (this.validate()) {
-      var createGroup: any = API.graphql({
-        query: mutations.createGroup,
-        variables: { input: this.state.data },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-      });
-      createGroup.then((json: any) => {
-        this.setState({ canDelete: true, canSave: true, createNew: false })
-        console.log({ "Success mutations.createGroup": json });
-      }).catch((err: any) => {
-        console.log({ "Error mutations.createGroup": err });
-      });
-    }
-  }
-  save() {
-    if (this.validate()) {
-      var updateGroup: any = API.graphql({
-        query: mutations.updateGroup,
-        variables: { input: this.state.data },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-      });
-      updateGroup.then((json: any) => {
-        this.setState({ canDelete: true, canSave: true, createNew: false })
-        console.log({ "Success mutations.updateGroup": json });
-      }).catch((err: any) => {
-        console.log({ "Error mutations.updateGroup": err });
-      });
-    }
 
-  }
-  leave() {
 
-  }
-  join() {
-
-  }
-  delete() {
-    var deleteGroup: any = API.graphql({
-      query: mutations.deleteGroup,
-      variables: { input: { id: this.state.data.id } },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-    });
-    deleteGroup.then((json: any) => {
-      console.log({ "Success mutations.deleteGroup": json });
-      this.props.navigation.push("HomeScreen")
-    }).catch((err: any) => {
-      console.log({ "Error mutations.deleteGroup": err });
-    });
-  }
   updateValue(field: any, value: any) {
     var temp = this.state.data
     temp[field] = value
@@ -165,86 +87,78 @@ export default class CourseScreen extends React.Component<Props, State>{
           <Container style={{ flexDirection: "row" }}>
             <CourseSidebar courseId={this.state.data.id}></CourseSidebar>
             <Container style={{ flex: 85 }}>
-              <CourseHeader  courseData={data} groupData={this.state.data}></CourseHeader>
+              <CourseHeader courseData={data} groupData={this.state.data}></CourseHeader>
 
               <Content style={{ flex: 80 }}>
                 <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
-                  <Container style={{ flex: 15, flexDirection: "column", justifyContent: 'flex-start' }}>
-
+                  <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
                     <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
-                    <Text>{//this.state.data.organizerUser.name
-                    }
-                    </Text>
-                    <Text>Publisher</Text>
-                    <Button bordered style={styles.sliderButton}><Text>Contact Us</Text></Button>
+                    <Button><Text>Book a Call</Text></Button>
+                    <Button><Text>Send Message</Text></Button>
+                    <Text>Hi </Text>
+                    <Text>I’m Jon Hand and welcome to our six-week leadership journey. I’ll be your instructor. You can go ahead and start viewing content. We will officially kick-off on Monday with our Zoom Video Call.
 
-                    {/*this.state.data.instructors.map((item: any) => {
-                    return (<Card><Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
-                      <Text>{item.name}</Text>
-                      <Text>Instructor</Text>
-                      <Button bordered style={styles.sliderButton}><Text>Ask Question</Text></Button>
-                    </Card>)
-                  }
-                )*/}
+If there is anything that I can help you with, feel free to ask anytime. Talk soon!
+
+Jon </Text>
+                    <Text>Syllabus</Text>
+                    <Card>
+                      <Text>Leadership Formation Course</Text>
+                      <Button><Text>Download</Text></Button>
+
+                    </Card>
+                    <Text>My Coach</Text>
+                    <Card>
+                      <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
+                      <Text>Jon Hand</Text>
+                      <Text>Youth Leader in Calgary Area</Text>
+                      <Button><Text>View profile</Text></Button>
+                    </Card>
+                    <Text>My Triad</Text>
+                    <Card>
+                      <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
+                      <Text>Jon Hand</Text>
+                      <Text>Youth Leader in Calgary Area</Text>
+                      <Button><Text>View profile</Text></Button>
+                    </Card>
+                    <Text>My Cohort</Text>
+                    <Card>
+                      <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
+                      <Text>Jon Hand</Text>
+                      <Text>Youth Leader in Calgary Area</Text>
+                      <Button><Text>View profile</Text></Button>
+                    </Card>
                   </Container>
-                  <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                  <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
 
-                    {data.introduction.map((item: any) => {
-                      return <Text>{item}</Text>
-                    })}
+                    <Text>To-Do</Text>
+                    <Card>
+                      <Text> Coaching call with Jon Hand</Text>
+                    </Card>
 
-                    <Text>Course Details</Text>
-
-
-                    {data.courseDetails.map((item: any, index1) => {
-                      return (
-                        <Card>
-                          <Text>{item.week}</Text>
-                          <Text>{item.date} - {item.leader}</Text>
-                          {item.events.map((item2, index2) => {
-                            return (
-                              <Text>{index1 + 1}.{index2 + 1} - {item2.name}</Text>
-                            )
-                          })}
-
-                        </Card>
-                      )
-                    })}
+                    <Text>My Calendar</Text>
+                    <Calendar
+                      // Collection of dates that have to be marked. Default = {}
+                      current={'2020-05-01'}
+                      markedDates={{
+                        '2020-05-16': { selected: true, marked: true, selectedColor: 'blue' },
+                        '2020-05-17': { marked: true },
+                        '2020-05-18': { marked: true, dotColor: 'red', activeOpacity: 0 },
+                        '2020-05-19': { disabled: true, disableTouchEvent: true }
+                      }}
+                    />
+                    <Text>Course Activity</Text>
+                    <Button><Text>Today</Text></Button>
+                    <Button><Text>Yesterday</Text></Button>
+                    <Button><Text>This Week</Text></Button>
+                    <Text>Adam posted assignement to review</Text>
                   </Container>
-                  <Container style={{ flex: 15, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <Button bordered style={styles.sliderButton}><Text>Join Course</Text></Button>
-                    {this.state.canJoin ?
-                      <Button onPress={() => { this.join() }} bordered style={styles.sliderButton}><Text>Join Course</Text></Button> :
-                      null
-                    }
-                    {this.state.canLeave ?
-                      <Button onPress={() => { this.leave() }} bordered style={styles.sliderButton}><Text>Leave Course</Text></Button> :
-                      null
-                    }
-                    {this.state.createNew ?
-                      <Button onPress={() => { this.createNew() }} bordered style={styles.sliderButton}><Text>Create Course</Text></Button>
-                      : null
-                    }
-                    {this.state.canSave ?
-                      <Button onPress={() => { this.save() }} bordered style={styles.sliderButton}><Text>Save Course</Text></Button>
-                      : null
-                    }
-                    {this.state.canDelete ?
-                      <Button onPress={() => { if (window.confirm('Are you sure you wish to delete this course?')) this.delete() }} bordered style={styles.sliderButton}><Text>Delete Course</Text></Button>
-                      : null
-                    }
-                    <EditableText onChange={(value: any) => { this.updateValue("time", value) }} placeholder="Enter Course Time" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableText>
-                    <EditableText onChange={(value: any) => { this.updateValue("length", value) }} placeholder="Enter Course Length" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.length} isEditable={this.state.isEditable}></EditableText>
-                    <EditableText onChange={(value: any) => { this.updateValue("effort", value) }} placeholder="Enter Course Effort" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.effort} isEditable={this.state.isEditable}></EditableText>
-                    <EditableText onChange={(value: any) => { this.updateValue("cost", value) }} placeholder="Enter Course Cost" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.cost} isEditable={this.state.isEditable}></EditableText>
-                    <Text>{this.state.validationError}</Text>
 
-                  </Container>
                 </Container>
               </Content>
             </Container>
           </Container>
-        </StyleProvider>
+        </StyleProvider >
         :
         null
 

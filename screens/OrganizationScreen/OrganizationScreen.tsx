@@ -101,11 +101,20 @@ export default class GroupScreen extends React.Component<Props, State>{
       });
     }
   }
+  clean(item)
+  {
+    delete item.members
+    delete item.messages
+    delete item.organizerGroup
+    delete item.organizerUser
+    delete item.instructors
+    return item
+  }
   save() {
     if (this.validate()) {
       var updateGroup: any = API.graphql({
         query: mutations.updateGroup,
-        variables: { input: this.state.data },
+        variables: { input: this.clean(this.state.data) },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       updateGroup.then((json: any) => {

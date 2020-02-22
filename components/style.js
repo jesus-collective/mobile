@@ -104,6 +104,9 @@ export default EStyleSheet.create({
     fontTitle: {
         fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 20, height: 75
     },
+    profileFontTitle: {
+        fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 20, height: 75
+    },
     fontDetail: {
         fontFamily: 'Graphik-Regular-App', fontSize: 14, color: '#aaaaaa'
     },

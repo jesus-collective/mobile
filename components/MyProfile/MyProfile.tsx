@@ -82,7 +82,7 @@ export default class MyProfile extends React.Component<Props, State> {
       (this.state.UserDetails != null ?
         <Content>
           <View style={{ justifyContent: "space-between", flexDirection: "row", width: "100%" }}>
-            <Text style={styles.fontTitle}>Create your profile</Text>
+            <Text style={styles.profileFontTitle}>Create your profile</Text>
             <Button style={styles.saveProfileButton} onPress={() => this.finalizeProfile()}><Text uppercase={false} style={styles.saveProfileButtonText}>Save and Publish Your Profile</Text></Button>
           </View>
 

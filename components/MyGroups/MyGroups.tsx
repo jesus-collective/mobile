@@ -147,7 +147,7 @@ export default class MyGroups extends React.Component<Props, State> {
     return true
   }
   canLeave(id: any): boolean {
-    return true
+    return false
   }
   join(id: any) {
 
@@ -156,56 +156,56 @@ export default class MyGroups extends React.Component<Props, State> {
 
   }
   renderGroup(item: any) {
-    return <Card style={{ alignSelf: "flex-start", padding: "0px", width: this.state.cardWidth }
+    return <Card style={{minHeight: 330, alignSelf: "flex-start", padding: "0px", width: this.state.cardWidth }
     } >
       <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0 }} >
         <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 20 }} source={require('../../assets/svg/pattern.svg')}></Image>
       </CardItem>
-      <CardItem ><Text style={styles.fontTitle}>{item.name}</Text></CardItem>
-      <CardItem ><Text style={styles.fontDetail}>{item.description}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetail}>{item.description}</Text></CardItem>
       {this.canJoin(item.id) ? <CardItem ><Button onPress={() => { this.join(item.id) }}><Text style={styles.font}>Join</Text></Button><Right></Right></CardItem> : null}
       {this.canLeave(item.id) ? <CardItem ><Button onPress={() => { this.leave(item.id) }}><Text style={styles.font}>Leave</Text></Button><Right></Right></CardItem> : null}
     </Card >
   }
   renderEvent(item: any) {
-    return <Card style={{ alignSelf: "flex-start", padding: "0px", width: this.state.cardWidth }}>
-      <CardItem ><Text style={styles.fontDetail}>{item.time}</Text></CardItem>
-      <CardItem ><Text style={styles.fontTitle}>{item.name}</Text></CardItem>
-      <CardItem ><Text style={styles.fontDetail}>{item.description}</Text></CardItem>
-      <CardItem ><Text style={styles.fontDetail}>{item.location}</Text></CardItem>
+    return <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: "0px", width: this.state.cardWidth }}>
+      <CardItem ><Text  ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetail}>{item.time}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
+      <CardItem ><Text  ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetail}>{item.description}</Text></CardItem>
+      <CardItem ><Text  ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetail}>{item.location}</Text></CardItem>
       {this.canJoin(item.id) ? <CardItem ><Button onPress={() => { this.join(item.id) }}><Text style={styles.font}>Attend</Text></Button><Right></Right></CardItem> : null}
       {this.canLeave(item.id) ? <CardItem ><Button onPress={() => { this.leave(item.id) }}><Text style={styles.font}>Don't Attend</Text></Button><Right></Right></CardItem> : null}
     </Card>
   }
   renderResource(item: any) {
-    return <Card style={{ alignSelf: "flex-start", padding: "0px", width: this.state.cardWidth }}>
+    return <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: "0px", width: this.state.cardWidth }}>
       <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0 }}>
         <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 20 }} source={require('../../assets/svg/pattern.svg')}></Image>
       </CardItem>
-      <CardItem ><Text style={styles.fontTitle}>{item.name}</Text></CardItem>
-      <CardItem ><Text style={styles.fontDetail}>Last Updated: {item.lastupdated}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetail}>Last Updated: {item.lastupdated}</Text></CardItem>
       {this.canJoin(item.id) ? <CardItem ><Button onPress={() => { this.join(item.id) }}><Text style={styles.font}>Join</Text></Button><Right></Right></CardItem> : null}
       {this.canLeave(item.id) ? <CardItem ><Button onPress={() => { this.leave(item.id) }}><Text style={styles.font}>Leave</Text></Button><Right></Right></CardItem> : null}
     </Card>
   }
   renderOrganization(item: any) {
-    return <Card style={{ alignSelf: "flex-start", padding: "0px", width: this.state.cardWidth }}>
+    return <Card style={{ minHeight: 330,alignSelf: "flex-start", padding: "0px", width: this.state.cardWidth }}>
       <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0 }}>
         <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 20 }} source={require('../../assets/svg/pattern.svg')}></Image>
       </CardItem>
-      <CardItem ><Text style={styles.fontTitle}>{item.name}</Text></CardItem>
-      <CardItem ><Text style={styles.fontDetail}>{item.kind}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetail}>{item.kind}</Text></CardItem>
       {this.canJoin(item.id) ? <CardItem ><Button onPress={() => { this.join(item.id) }}><Text style={styles.font}>Join</Text></Button><Right></Right></CardItem> : null}
       {this.canLeave(item.id) ? <CardItem ><Button onPress={() => { this.leave(item.id) }}><Text style={styles.font}>Leave</Text></Button><Right></Right></CardItem> : null}
     </Card>
   }
   renderCourse(item: any) {
-    return <Card style={{ alignSelf: "flex-start", padding: "0px", width: this.state.cardWidth }}>
+    return <Card style={{ minHeight: 330,alignSelf: "flex-start", padding: "0px", width: this.state.cardWidth }}>
       <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0 }}>
         <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 20 }} source={require('../../assets/svg/pattern.svg')}></Image>
       </CardItem>
-      <CardItem ><Text style={styles.fontTitle}>{item.name}</Text></CardItem>
-      <CardItem ><Text style={styles.fontDetail}>Last Updated: {item.lastupdated}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetail}>Last Updated: {item.lastupdated}</Text></CardItem>
       {this.canJoin(item.id) ? <CardItem ><Button onPress={() => { this.join(item.id) }}><Text style={styles.font}>Join</Text></Button><Right></Right></CardItem> : null}
       {this.canLeave(item.id) ? <CardItem ><Button onPress={() => { this.leave(item.id) }}><Text style={styles.font}>Leave</Text></Button><Right></Right></CardItem> : null}
     </Card>
@@ -218,7 +218,7 @@ export default class MyGroups extends React.Component<Props, State> {
       return (
         <StyleProvider style={getTheme(material)}>
 
-          <Container style={{ minHeight: 400, width: "100%", flexDirection: 'column', justifyContent: 'flex-start' }}>
+          <Container style={{ padding:10, minHeight: 445, width: "100%", flexDirection: 'column', justifyContent: 'flex-start' }}>
             <Container style={{ minHeight: 45, flexGrow: 0, flexDirection: 'row', justifyContent: 'space-between' }} >
               <Button transparent onPress={() => { this.openMultiple() }}><Text style={styles.fontSliderHeader}>{this.state.titleString}</Text></Button>
               <Container style={{ maxHeight: 45, flexDirection: 'row', justifyContent: 'flex-end', alignItems: "flex-start" }}>
@@ -230,11 +230,11 @@ export default class MyGroups extends React.Component<Props, State> {
                 }
               </Container>
             </Container>
-            <Container style={{ overflow: "scroll", minHeight: 330, flexWrap: this.props.wrap ? "wrap" : "nowrap", flexGrow: 1, width: "100%", flexDirection: 'row', justifyContent: "flex-start", alignItems: "flex-start" }}>
+            <Container style={{ overflow: "scroll", minHeight: 400, flexWrap: this.props.wrap ? "wrap" : "nowrap", flexGrow: 1, width: "100%", flexDirection: 'row', justifyContent: "flex-start", alignItems: "flex-start" }}>
               {this.state.data ?
                 this.state.data.map((item) => {
                   return (
-                    <ListItem key={item.id} style={{ alignSelf: "flex-start" }} button onPress={() => { this.openSingle(item.id) }}>
+                    <ListItem noBorder key={item.id} style={{ alignSelf: "flex-start" }} button onPress={() => { this.openSingle(item.id) }}>
                       {this.state.type == "group" ?
                         this.renderGroup(item) :
                         this.state.type == "event" ?
