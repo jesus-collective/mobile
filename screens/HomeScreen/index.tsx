@@ -41,7 +41,10 @@ const EventsScreen = lazy(() => import('../EventsScreen/EventsScreen'));
 const ResourceScreen = lazy(() => import('../ResourceScreen/ResourceScreen'));
 const ResourcesScreen = lazy(() => import('../ResourcesScreen/ResourcesScreen'));
 const ProfileScreen = lazy(() => import('../ProfileScreen/ProfileScreen'));
+const ProfilesScreen = lazy(() => import('../ProfilesScreen/ProfilesScreen'));
+
 const NewsScreen = lazy(() => import('../NewsScreen/NewsScreen'));
+const SearchScreen = lazy(() => import('../SearchScreen/SearchScreen'));
 
 Amplify.configure(awsconfig);
 const MainAppRouter = createStackNavigator({
@@ -59,7 +62,10 @@ const MainAppRouter = createStackNavigator({
   CourseHomeScreen: { screen: CourseHomeScreen,path:"courseHome" },
   CourseDetailScreen: { screen: CourseDetailScreen,path:"courseDetail" },
   CourseCoachingScreen: { screen: CourseCoachingScreen,path:"courseCoaching" },
-  ConversationScreen: { screen: ConversationScreen, path: "conversations" }
+  ConversationScreen: { screen: ConversationScreen, path: "conversations" },
+  SearchScreen: { screen: SearchScreen, path: "search" },
+  ProfileScreen: { screen: ProfileScreen, path: "profile" },
+  ProfilesScreen: { screen: ProfilesScreen, path: "profiles" },
 },
   {
     initialRouteName: 'HomeScreen',

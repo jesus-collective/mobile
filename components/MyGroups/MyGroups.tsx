@@ -1,4 +1,4 @@
-import { StyleProvider, Card, CardItem, List, ListItem, Right, Button, Text, Container } from 'native-base';
+import { Left,Body, StyleProvider, Card, CardItem, List, ListItem, Right, Button, Text, Container } from 'native-base';
 import * as React from 'react';
 import styles from '../style.js'
 import getTheme from '../../native-base-theme/components';
@@ -98,7 +98,20 @@ export default class MyGroups extends React.Component<Props, State> {
       }
 
     }
+    else if (props.type == "profile") {
+      this.state =
+      {
+        openSingle: "ProfileScreen",
+        openMultiple: "ProfilesScreen",
+        createString: "+ Create Course",
+        titleString: "Profiles",
+        type: props.type,
+        cardWidth: 200,
+        data: null,
+        showCreateButton: false
+      }
 
+    }
     else {
       this.state =
       {
@@ -115,20 +128,39 @@ export default class MyGroups extends React.Component<Props, State> {
     this.setInitialData(props)
     var user = Auth.currentAuthenticatedUser();
     user.then((user: any) => {
-      this.setState({ showCreateButton: user.signInUserSession.accessToken.payload["cognito:groups"].includes("verifiedUsers") })
+      if (props.type != "profile")
+        this.setState({ showCreateButton: user.signInUserSession.accessToken.payload["cognito:groups"].includes("verifiedUsers") })
     })
 
   }
   setInitialData(props) {
-    var listGroup: any = API.graphql({
-      query: queries.listGroups,
-      variables: { filter: { id: { beginsWith: props.type + "-" } } },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-    });
+    if (props.type == "profile") 
+    {
+      var listUsers: any = API.graphql({
+        query: queries.listUsers,
+        variables: { filter: null },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+      });
+      listUsers.then((json) => {
+        this.setState({ data: json.data.listUsers.items })
+      }).catch(
+        (e: any) => {
+          console.log(e)
+          this.setState({ data: e.data.listUsers.items })
+        }
+      )
+    }
+    else {
+      var listGroup: any = API.graphql({
+        query: queries.listGroups,
+        variables: { filter: { id: { beginsWith: props.type + "-" } } },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+      });
 
-    listGroup.then((json) => {
-      this.setState({ data: json.data.listGroups.items })
-    })
+      listGroup.then((json) => {
+        this.setState({ data: json.data.listGroups.items })
+      })
+    }
   }
   openSingle(id: any) {
     console.log({ "Navigate to": this.state.openSingle })
@@ -156,7 +188,7 @@ export default class MyGroups extends React.Component<Props, State> {
 
   }
   renderGroup(item: any) {
-    return <Card style={{minHeight: 330, alignSelf: "flex-start", padding: "0px", width: this.state.cardWidth }
+    return <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: "0px", width: this.state.cardWidth }
     } >
       <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0 }} >
         <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 20 }} source={require('../../assets/svg/pattern.svg')}></Image>
@@ -167,12 +199,27 @@ export default class MyGroups extends React.Component<Props, State> {
       {this.canLeave(item.id) ? <CardItem ><Button onPress={() => { this.leave(item.id) }}><Text style={styles.font}>Leave</Text></Button><Right></Right></CardItem> : null}
     </Card >
   }
+  renderProfile(item: any) {
+    return  <Card key={item.id} style={{ width: "100%", minHeight: 50 }}>
+    <CardItem>
+      <Left>
+        <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
+        <Body>
+          <Text style={styles.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
+          <Text style={styles.fontConnectWithRole}>{item.currentRole}</Text>
+          <Button bordered style={styles.connectWithSliderButton} onPress={() => { //this.openConversation() 
+          }}><Text>Start Conversation</Text></Button>
+        </Body>
+      </Left>
+    </CardItem>
+  </Card>
+  }
   renderEvent(item: any) {
     return <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: "0px", width: this.state.cardWidth }}>
-      <CardItem ><Text  ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetail}>{item.time}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetail}>{item.time}</Text></CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
-      <CardItem ><Text  ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetail}>{item.description}</Text></CardItem>
-      <CardItem ><Text  ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetail}>{item.location}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetail}>{item.description}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetail}>{item.location}</Text></CardItem>
       {this.canJoin(item.id) ? <CardItem ><Button onPress={() => { this.join(item.id) }}><Text style={styles.font}>Attend</Text></Button><Right></Right></CardItem> : null}
       {this.canLeave(item.id) ? <CardItem ><Button onPress={() => { this.leave(item.id) }}><Text style={styles.font}>Don't Attend</Text></Button><Right></Right></CardItem> : null}
     </Card>
@@ -189,7 +236,7 @@ export default class MyGroups extends React.Component<Props, State> {
     </Card>
   }
   renderOrganization(item: any) {
-    return <Card style={{ minHeight: 330,alignSelf: "flex-start", padding: "0px", width: this.state.cardWidth }}>
+    return <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: "0px", width: this.state.cardWidth }}>
       <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0 }}>
         <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 20 }} source={require('../../assets/svg/pattern.svg')}></Image>
       </CardItem>
@@ -200,7 +247,7 @@ export default class MyGroups extends React.Component<Props, State> {
     </Card>
   }
   renderCourse(item: any) {
-    return <Card style={{ minHeight: 330,alignSelf: "flex-start", padding: "0px", width: this.state.cardWidth }}>
+    return <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: "0px", width: this.state.cardWidth }}>
       <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0 }}>
         <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 20 }} source={require('../../assets/svg/pattern.svg')}></Image>
       </CardItem>
@@ -218,7 +265,7 @@ export default class MyGroups extends React.Component<Props, State> {
       return (
         <StyleProvider style={getTheme(material)}>
 
-          <Container style={{ padding:10, minHeight: 445, width: "100%", flexDirection: 'column', justifyContent: 'flex-start' }}>
+          <Container style={{ padding: 10, minHeight: 445, width: "100%", flexDirection: 'column', justifyContent: 'flex-start' }}>
             <Container style={{ minHeight: 45, flexGrow: 0, flexDirection: 'row', justifyContent: 'space-between' }} >
               <Button transparent onPress={() => { this.openMultiple() }}><Text style={styles.fontSliderHeader}>{this.state.titleString}</Text></Button>
               <Container style={{ maxHeight: 45, flexDirection: 'row', justifyContent: 'flex-end', alignItems: "flex-start" }}>
@@ -245,7 +292,9 @@ export default class MyGroups extends React.Component<Props, State> {
                               this.renderOrganization(item) :
                               this.state.type == "course" ?
                                 this.renderCourse(item) :
-                                null
+                                this.state.type == "profile" ?
+                                  this.renderProfile(item) :
+                                  null
                       }
 
 

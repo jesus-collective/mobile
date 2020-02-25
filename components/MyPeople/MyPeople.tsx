@@ -59,12 +59,16 @@ export default class MyPeople extends React.Component<Props, State> {
     console.log("Navigate to conversationScreen")
     this.props.navigation.push("ConversationScreen");
   }
+  showProfiles(){
+    console.log("Navigate to conversationScreen")
+    this.props.navigation.push("ProfilesScreen");
+  }
   render() {
     return (
       <StyleProvider style={getTheme(material)}>
 
         <Container style={{ width: "100%", flexDirection: 'column', alignItems: 'flex-start', minHeight: 300 }} >
-          <Button transparent><Text style={styles.fontConnectWith}>People you may connect with</Text></Button>
+          <Button onPress={()=>{this.showProfiles()}} transparent><Text style={styles.fontConnectWith}>People you may connect with</Text></Button>
           <Content style={{ width: "100%" }}>
             {this.state.data.map((item: any) => {
               return (
