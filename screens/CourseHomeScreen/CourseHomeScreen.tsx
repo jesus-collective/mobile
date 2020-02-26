@@ -6,7 +6,7 @@ import styles from '../../components/style.js'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 
-import EditableText from '../../components/EditableText/EditableText'
+import EditableText from '../../components/Editable/EditableText'
 import Validate from '../../components/Validate/Validate'
 import { Image } from 'react-native'
 import { API, graphqlOperation, Auth } from 'aws-amplify';

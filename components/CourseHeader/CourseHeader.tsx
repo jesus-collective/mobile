@@ -4,8 +4,8 @@ import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Image, Text } from 'react-native';
 import styles from '../style.js'
-import EditableText from '../../components/EditableText/EditableText'
-
+import EditableText from '../Editable/EditableText'
+var moment = require('moment');
 interface Props {
     groupData: any
     courseData: any
@@ -26,7 +26,7 @@ class CourseHeader extends React.Component<Props, State> {
             this.props.groupData ?
                 this.props.courseData ?
                     <Container style={{ backgroundColor: "#F0493E", flex: 20 }}>
-                        <Text style={styles.fontCourseHeaderTime}>{this.props.groupData.time} - {this.props.groupData.length}</Text>
+                        <Text style={styles.fontCourseHeaderTime}>{moment(this.props.groupData.time).format('MMMM Do YYYY')} - {this.props.groupData.length}</Text>
                         <EditableText multiline={false} textStyle={styles.fontCourseHeaderBold} value={this.props.groupData.name} isEditable={false}></EditableText>
                         <Text style={styles.fontCourseHeader}>Course</Text>
                         <EditableText multiline={true} textStyle={styles.fontCourseHeaderDescription} value={this.props.groupData.description} isEditable={false}></EditableText>

@@ -114,7 +114,7 @@ export default class MyProfile extends React.Component<Props, State> {
                 </Button>
                 <Text style={styles.fontFormProfileImageText}>Upload a picture of minimum 500px wide. Maximum size is 700kb.</Text>
               </View>
-              <Text style={styles.fontFormName}>Vanessa Smith</Text>
+              <Text style={styles.fontFormName}>{this.state.UserDetails.given_name} {this.state.UserDetails.family_name}</Text>
               <Text style={styles.fontFormRole}>My Current Role not defined</Text>
               <Text style={styles.fontFormUserType}>Partner</Text>
 

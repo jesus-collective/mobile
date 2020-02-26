@@ -1,7 +1,8 @@
 import React, { Suspense, lazy } from "react";
 import Amplify from 'aws-amplify'
 import { API, graphqlOperation } from 'aws-amplify';
-
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
 import HomeScreen from "./HomeScreen";
 import { View } from 'react-native'
 import { Auth } from 'aws-amplify';
@@ -255,7 +256,9 @@ export default class App extends React.Component<Props, State>{
           return (
             <Suspense fallback={null}>
               <View style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1 }}>
+              <MuiPickersUtilsProvider utils={MomentUtils}>
                 <AppContainer></AppContainer>
+                </MuiPickersUtilsProvider>
               </View>
             </Suspense>)
         }

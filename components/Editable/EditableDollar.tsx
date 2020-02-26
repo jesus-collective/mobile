@@ -1,5 +1,10 @@
 import React from 'react';
-import { Input, Content, Left, Right, Body, StyleProvider, Container, Card, CardItem, Button, Text } from 'native-base';
+import { Content, Left, Right, Body, StyleProvider, Container, Card, CardItem, Button, Text } from 'native-base';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
 interface Props {
     value: string,
     isEditable: boolean,
@@ -35,9 +40,20 @@ export default class MessageBoard extends React.Component<Props, State> {
     }
    
     render() {
+        
+        
         if (this.state.isEditable)
-            return <Input onChange={(value)=>{this.onChanged(value)}} placeholder={this.state.placeholder} multiline={this.state.multiline} style={this.state.inputStyle} value={this.props.value}></Input>
+            return (<FormControl fullWidth>
+            <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
+            <Input
+             
+              value={this.props.value}
+              onChange={(value)=>{this.onChanged(value)}}
+              startAdornment={<InputAdornment position="start">$</InputAdornment>}
+            />
+          </FormControl>)
+            
         else
-            return <Text style={this.state.textStyle}>{this.props.value}</Text>
+            return <Text style={this.state.textStyle}>${this.props.value}</Text>
     }
 }

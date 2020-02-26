@@ -6,7 +6,8 @@ import styles from '../../components/style.js'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import MessageBoard from '../../components/MessageBoard/MessageBoard'
-import EditableText from '../../components/EditableText/EditableText'
+import EditableDate from '../../components/Editable/EditableDate'
+import EditableText from '../../components/Editable/EditableText'
 import Validate from '../../components/Validate/Validate'
 import { Image } from 'react-native'
 import { API, graphqlOperation, Auth } from 'aws-amplify';
@@ -168,7 +169,7 @@ export default class EventScreen extends React.Component<Props, State>{
                   <Text>Sponsored</Text>
                   <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Event Name" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
                   <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Event Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
-                  <EditableText onChange={(value: any) => { this.updateValue("time", value) }} placeholder="Enter Event Time" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableText>
+                  <EditableDate type="datetime" onChange={(value: any) => { this.updateValue("time", value) }} placeholder="Enter Event Time" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableDate>
                   <EditableText onChange={(value: any) => { this.updateValue("location", value) }} placeholder="Enter Event Location" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.location} isEditable={this.state.isEditable}></EditableText>
 
                   <Text>Organizer</Text>

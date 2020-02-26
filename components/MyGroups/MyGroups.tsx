@@ -8,7 +8,7 @@ import { Image } from 'react-native'
 import * as queries from '../../src/graphql/queries';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
 import { API, graphqlOperation, Auth } from 'aws-amplify';
-
+var moment = require('moment');
 
 interface Props {
   navigation: any
@@ -216,7 +216,7 @@ export default class MyGroups extends React.Component<Props, State> {
   }
   renderEvent(item: any) {
     return <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: "0px", width: this.state.cardWidth }}>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetail}>{item.time}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetail}>{moment(item.time).format('MMMM Do YYYY, h:mm a')}</Text></CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetail}>{item.description}</Text></CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetail}>{item.location}</Text></CardItem>
