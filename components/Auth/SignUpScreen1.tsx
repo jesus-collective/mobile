@@ -12,6 +12,7 @@ import * as mutations from '../../src/graphql/mutations';
 import { API, graphqlOperation } from 'aws-amplify';
 import { Auth } from 'aws-amplify';
 
+import { Platform } from 'react-native';
 interface Props {
   navigation?: NavigationScreenProp<any, any>,
   authState?: any

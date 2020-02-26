@@ -27,7 +27,7 @@ export default class SignUpScreen3 extends React.Component<Props, State>{
     // const { navigate } = this.props.navigation;
 
     return (
-      <View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>
+      <View style={styles.signUpScreen1PaymentBody}>
         <SignUpSidebar position="4"></SignUpSidebar>
         <View style={styles.signUpProfile}>
           <MyProfile navigation={this.props.navigation} finalizeProfile={() => { this.onFinalizeProfile() }} />

@@ -57,6 +57,7 @@ interface Props {
 interface State {
   isLoggedIn: boolean
   fontLoaded: boolean
+  authState:any
 }
 const federated = {
   google_client_id: '',
@@ -75,7 +76,8 @@ export default class AwesomeApp extends React.Component<Props, State> {
     super(props);
     this.state = {
       fontLoaded: false,
-      isLoggedIn: false
+      isLoggedIn: false,
+      authState:""
 
     };
     //  this.ionViewCanEnter();
@@ -115,11 +117,17 @@ export default class AwesomeApp extends React.Component<Props, State> {
 
       return (
         <View style={{
-          width: "100%", top: 0, left: 0, height: "100%"}}>
-          {Platform.OS !== 'web'?<SignUpSidebar text="It’s time to unite, equip, and amplify a Jesus-centred movement." />:null}
+          width: "100%", top: 0, left: 0, height: "100%"
+        }}>
+          {Platform.OS !== 'web' ?
+            this.state.authState != "signedIn" ?
+              <SignUpSidebar text="It’s time to unite, equip, and amplify a Jesus-centred movement." />
+              : null
+            : null
+          }
 
           <Authenticator hideDefault={true} theme={MyTheme}
-            usernameAttributes='email' federated={federated}
+            usernameAttributes='email' onStateChange={(authState) => this.setState({authState:authState})} federated={federated}
             signUpConfig={{
               signUpFields: [{ displayOrder: 6, key: "family_name", label: "Last Name", required: true },
               { displayOrder: 5, key: "given_name", label: "First Name", required: true }]

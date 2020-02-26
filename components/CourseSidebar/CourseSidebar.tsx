@@ -1,5 +1,7 @@
 import { Container, Header, Left, Body, Right, Button } from 'native-base';
-import { withNavigation, DrawerActions } from 'react-navigation';
+import { withNavigation } from 'react-navigation';
+import { DrawerActions  } from 'react-navigation-drawer';
+
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Image, Text } from 'react-native';

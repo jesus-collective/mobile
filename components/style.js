@@ -3,6 +3,7 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import Constants from 'expo-constants';
 import { Dimensions } from 'react-native'
 const mainColor = '#ffffff';
+
 export default EStyleSheet.create({
 
     container: {
@@ -226,7 +227,7 @@ export default EStyleSheet.create({
 
     signUpScreen1Content: Platform.OS === 'web' ?
         { position: "absolute", width: "100%" } :
-        { position: "absolute", width: "100%", height: Dimensions.get('window').height - (100 + Constants.statusBarHeight), left: 0, top: 100 + Constants.statusBarHeight },
+        { position: "absolute", width: "100%", height: "100%", left: 0, top: 0  },
     signUpScreen1PaymentColumn1: Platform.OS === 'web' ?
         { position: "absolute", left: "35%", width: "25%", top: 100, height: "100%" } :
         {},
@@ -235,5 +236,5 @@ export default EStyleSheet.create({
         {},
     signUpScreen1PaymentBody: Platform.OS === 'web' ?
         { width: "100%", left: 0, top: 0, height: "100%" } :
-        { width: "100%", left: 0, top: 0, height: "100%" }
+        { position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1  }
 })

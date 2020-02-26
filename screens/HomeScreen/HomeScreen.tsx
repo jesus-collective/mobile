@@ -6,11 +6,16 @@ import MyMap from '../../components/MyMap/MyMap';
 import MyConversations from '../../components/MyConversations/MyConversations';
 import MyGroups from '../../components/MyGroups/MyGroups';
 import MyPeople from '../../components/MyPeople/MyPeople';
+import { Platform } from 'react-native';
+import { Dimensions } from 'react-native'
+
 interface Props {
   navigation: any
 }
 interface State {
   showMap: boolean
+  width:any
+  height:any
 }
 
 
@@ -18,8 +23,14 @@ export default class HomeScreen extends React.Component<Props, State>{
   constructor(props: Props) {
     super(props);
     this.state = {
-      showMap: false
+      showMap: false,
+      width:Dimensions.get('window').width,
+      height:Dimensions.get('window').height
     }
+    Dimensions.addEventListener('change', (e) => {
+      const { width, height } = e.window;
+      this.setState({width, height});
+    })
   }
   mapChanged = () => {
     this.setState({ showMap: !this.state.showMap })
@@ -33,8 +44,8 @@ export default class HomeScreen extends React.Component<Props, State>{
         <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
 
         <Container style={{ flexGrow: 1, overflow: "scroll" }}>
-          <Container style={{display: "block"}}>
-            <Container style={{ height:2300,flex: 1, display: "flex", flexDirection: "row" }}>
+          <Container style={{ display: "block" }}>
+            <Container style={{ height: 2300, flex: 1, display: "flex", flexDirection: "row" }}>
               <Container style={{ flex: 70, flexDirection: "column" }}>
                 <MyGroups type="event" wrap={false} navigation={this.props.navigation}></MyGroups>
                 <MyGroups type="group" wrap={false} navigation={this.props.navigation}></MyGroups>
@@ -49,8 +60,11 @@ export default class HomeScreen extends React.Component<Props, State>{
               </Container>
             </Container>
 
-           
-          <FooterJC title="Jesus Collective" navigation={this.props.navigation} ></FooterJC>
+
+            {
+              Platform.OS == 'web' && this.state.width>720  ? <FooterJC title="Jesus Collective" navigation={this.props.navigation} ></FooterJC>
+                : null
+            }
 
           </Container>
 

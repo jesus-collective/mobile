@@ -9,6 +9,7 @@ import { NavigationScreenProp } from 'react-navigation';
 import * as mutations from '../../src/graphql/mutations';
 import { API, graphqlOperation } from 'aws-amplify';
 import { Auth } from 'aws-amplify';
+import styles from '../../components/style.js'
 
 interface Props {
   navigation?: NavigationScreenProp<any, any>,
@@ -34,13 +35,14 @@ export default class SignUpScreen2 extends React.Component<Props, State>{
     // const { navigate } = this.props.navigation;
 
     return (
-      <View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>
+      <View style={styles.signUpScreen1PaymentBody}>
+         <SignUpSidebar position="3"></SignUpSidebar>
         <View style={{ position: "absolute", left: "35%", width: "25%", top: 100, height: "100%" }}>
           <Text>Payment Succesful</Text>
 
           <Button color="#F0493E" title="Setup Profile" onPress={() => this.makePayment()} />
         </View>
-        <SignUpSidebar position="3"></SignUpSidebar>
+       
       </View>
 
     );
