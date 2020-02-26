@@ -12,8 +12,9 @@ import { Dimensions } from 'react-native'
 const mainColor = '#ffffff';
 
 interface Props {
-  finalizeProfile(): void
+  finalizeProfile?(): void
   navigation: any
+  loadId?: any
 
 }
 interface State {
@@ -38,17 +39,35 @@ export default class MyProfile extends React.Component<Props, State> {
   }
   async getUserDetails() {
     console.log("getUserDetails")
-    var user = await Auth.currentAuthenticatedUser();
-    try {
-      const getUser:any = await API.graphql(graphqlOperation(queries.getUser, { id: user['username'] }));
-      this.setState({
-        UserDetails: getUser.data.getUser
+    if (this.props.loadId) {
+      try {
+        const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: this.props.loadId }));
+        this.setState({
+          UserDetails: getUser.data.getUser
+        }
+        )
+        console.log(this.state.UserDetails)
       }
-      )
-      console.log(this.state.UserDetails)
+      catch (e) {
+        this.setState({
+          UserDetails: e.data.getUser
+        })
+        console.log(e)
+      }
     }
-    catch (e) {
-      console.log(e)
+    else {
+      var user = await Auth.currentAuthenticatedUser();
+      try {
+        const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: user['username'] }));
+        this.setState({
+          UserDetails: getUser.data.getUser
+        }
+        )
+        console.log(this.state.UserDetails)
+      }
+      catch (e) {
+        console.log(e)
+      }
     }
   }
   handleInputChange(event: any, name: string) {
@@ -147,7 +166,7 @@ export default class MyProfile extends React.Component<Props, State> {
             <View style={{ marginLeft: 10, width: "65%" }}>
               <Text style={styles.font}>Tell us more about you</Text>
               <Text style={styles.fontBold}>About me</Text>
-              <Input style={{borderWidth:1, borderColor:"#dddddd"}} value={this.state.UserDetails.aboutMeLong}
+              <Input style={{ borderWidth: 1, borderColor: "#dddddd" }} value={this.state.UserDetails.aboutMeLong}
                 onChange={(e) => { this.handleInputChange(e, "aboutMeLong") }} multiline={true} placeholder="type here" />
               <Text style={styles.fontBold}>My Interests</Text>
               <Text style={styles.font}>You can select 7 key interests</Text>
@@ -160,8 +179,8 @@ export default class MyProfile extends React.Component<Props, State> {
                 //leftElement={<Icon name={'tag-multiple'} type={'material-community'} color={this.state.tagsText} />}
                 leftElementContainerStyle={{ marginLeft: 0 }}
                 containerStyle={{ width: (Dimensions.get('window').width - 40) }}
-                inputContainerStyle={[styles.textInput, {  backgroundColor: this.state.tagsColor }]}
-                inputStyle={{ borderWidth:1, borderColor:"#dddddd", color: this.state.tagsText }}
+                inputContainerStyle={[styles.textInput, { backgroundColor: this.state.tagsColor }]}
+                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", color: this.state.tagsText }}
                 onFocus={() => this.setState({ tagsColor: '#fff', tagsText: "#000000" })}
                 onBlur={() => this.setState({ tagsColor: mainColor, tagsText: '#000000' })}
                 autoCorrect={false}
@@ -175,10 +194,10 @@ export default class MyProfile extends React.Component<Props, State> {
                   onChange={(e) => { this.handleInputChange(e, "currentRole") }} />
               </Item>
               <Text style={styles.font}>Describe your current Scope</Text>
-              <Input style={{borderWidth:1, borderColor:"#dddddd"}} placeholder="Type here." value={this.state.UserDetails.currentScope}
+              <Input style={{ borderWidth: 1, borderColor: "#dddddd" }} placeholder="Type here." value={this.state.UserDetails.currentScope}
                 onChange={(e) => { this.handleInputChange(e, "currentScope") }} multiline={true} />
               <Text style={styles.font}>Identify your personality type indicator</Text>
-              <Input style={{borderWidth:1, borderColor:"#dddddd"}}  placeholder="Type here. like (MBTI, DISC, APEST, Birkman, Enneagram + Wing, Kolbe Index, other, N/A" value={this.state.UserDetails.personality}
+              <Input style={{ borderWidth: 1, borderColor: "#dddddd" }} placeholder="Type here. like (MBTI, DISC, APEST, Birkman, Enneagram + Wing, Kolbe Index, other, N/A" value={this.state.UserDetails.personality}
                 onChange={(e) => { this.handleInputChange(e, "personality") }} multiline={true} />
 
 
@@ -199,7 +218,7 @@ export default class MyProfile extends React.Component<Props, State> {
                   onChange={(e) => { this.handleInputChange(e, "orgSize") }} />
               </Item>
               <Text style={styles.font}>Description of church or ministry organization</Text>
-              <Input style={{borderWidth:1, borderColor:"#dddddd"}}  placeholder="Type here." value={this.state.UserDetails.orgDescription}
+              <Input style={{ borderWidth: 1, borderColor: "#dddddd" }} placeholder="Type here." value={this.state.UserDetails.orgDescription}
                 onChange={(e) => { this.handleInputChange(e, "orgDescription") }} multiline={true} />
             </View>
           </Form>

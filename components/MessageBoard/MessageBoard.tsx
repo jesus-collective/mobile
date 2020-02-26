@@ -3,7 +3,7 @@ import * as React from 'react';
 import styles from '../style.js'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
-import { Image, TextComponent } from 'react-native'
+import { Image, TextComponent, TouchableOpacity } from 'react-native'
 import Dante from 'Dante2'
 import { CreateMessageInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
@@ -40,8 +40,8 @@ export default class MessageBoard extends React.Component<Props, State> {
       {
         next: (todoData) => {
           var temp: any = this.state.data
-          if (temp===null)
-            temp={items:[]}
+          if (temp === null)
+            temp = { items: [] }
           if (temp.items == null)
             temp.items = [todoData.value.data.onCreateMessage]
           else
@@ -100,6 +100,10 @@ export default class MessageBoard extends React.Component<Props, State> {
       })
     })
   }
+  showProfile(id){
+    console.log("Navigate to profileScreen")
+    this.props.navigation.push("ProfileScreen", { id: id, create: false });
+  }
   render() {
 
     return (
@@ -115,27 +119,29 @@ export default class MessageBoard extends React.Component<Props, State> {
               </Card>
               {this.state.data.items.map((item: any) => {
                 return (
-                  <Card key={item.id} style={{borderRadius: 15, minHeight: 50 }}>
-                    <CardItem style={{borderBottomLeftRadius:0, borderBottomRightRadius:0, borderTopLeftRadius: 15, borderTopRightRadius: 15, backgroundColor:this.state.selfId === item.userId ? "#99ff99" : "#9999ff"}}>
-                      <Left>
-                        <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
-                        <Body>
-                          <Text style={styles.fontConnectWithName}>
-                            {item.author != null ? item.author.given_name : null} {item.author != null ? item.author.family_name : null}
-                          </Text>
-                          <Text style={styles.fontConnectWithRole}>
-                            {item.author != null ? item.author.currentRole : null}
-                          </Text>
-                        </Body>
-                      </Left>
-                      <Right>
-                        <Text>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
-                      </Right>
-                    </CardItem>
-                    <CardItem style={{borderTopLeftRadius:0, borderTopRightRadius:0, borderBottomLeftRadius: 15, borderBottomRightRadius: 15, backgroundColor:this.state.selfId === item.userId ? "#99ff99" : "#9999ff"}}>
-                      <Text style={styles.fontConnectWithRole}>{item.content}</Text>
-                    </CardItem>
-                  </Card>)
+                  <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
+                    <Card key={item.id} style={{ borderRadius: 15, minHeight: 50 }}>
+                      <CardItem style={{ borderBottomLeftRadius: 0, borderBottomRightRadius: 0, borderTopLeftRadius: 15, borderTopRightRadius: 15, backgroundColor: this.state.selfId === item.userId ? "#99ff99" : "#9999ff" }}>
+                        <Left>
+                          <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
+                          <Body>
+                            <Text style={styles.fontConnectWithName}>
+                              {item.author != null ? item.author.given_name : null} {item.author != null ? item.author.family_name : null}
+                            </Text>
+                            <Text style={styles.fontConnectWithRole}>
+                              {item.author != null ? item.author.currentRole : null}
+                            </Text>
+                          </Body>
+                        </Left>
+                        <Right>
+                          <Text>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
+                        </Right>
+                      </CardItem>
+                      <CardItem style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0, borderBottomLeftRadius: 15, borderBottomRightRadius: 15, backgroundColor: this.state.selfId === item.userId ? "#99ff99" : "#9999ff" }}>
+                        <Text style={styles.fontConnectWithRole}>{item.content}</Text>
+                      </CardItem>
+                    </Card>
+                  </TouchableOpacity>)
               })}
             </Content>
 

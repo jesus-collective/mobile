@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import { Accordion, StyleProvider, Card, Container, Content, Text, Button } from 'native-base';
+import { Icon, Picker, Accordion, StyleProvider, Card, Container, Content, Text, Button } from 'native-base';
 import CourseSidebar from '../../components/CourseSidebar/CourseSidebar'
 import MyMap from '../../components/MyMap/MyMap';
 import styles from '../../components/style.js'
@@ -8,14 +8,14 @@ import material from '../../native-base-theme/variables/material';
 
 import EditableText from '../../components/EditableText/EditableText'
 import Validate from '../../components/Validate/Validate'
-import { Image } from 'react-native'
+import { Image, View } from 'react-native'
 import { API, graphqlOperation, Auth } from 'aws-amplify';
 import { CreateGroupInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
 import CourseHeader from '../../components/CourseHeader/CourseHeader';
-
+import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 const data = require('../CourseScreen/course.json');
 
 interface Props {
@@ -25,12 +25,7 @@ interface State {
   showMap: boolean
   loadId: string
   data: any
-  createNew: boolean
-  canSave: boolean
-  canLeave: boolean
-  canJoin: boolean
   isEditable: boolean
-  canDelete: boolean
   validationError: String
 }
 
@@ -43,50 +38,25 @@ export default class CourseScreen extends React.Component<Props, State>{
     this.state = {
       showMap: false,
       loadId: props.navigation.state.params.id,
-      createNew: props.navigation.state.params.create,
       data: null,
-      canSave: true,
-      canLeave: false,
-      canJoin: false,
       isEditable: true,
-      canDelete: true,
       validationError: ""
     }
     this.setInitialData(props)
   }
 
   setInitialData(props) {
-    if (props.navigation.state.params.create)
-      Auth.currentAuthenticatedUser().then((user: any) => {
-        var z: CreateGroupInput = {
-          id: "course-" + Date.now(),
-          owner: user.username,
-          type: "course",
-          name: "",
-          description: "",
-          memberCount: 1,
-          image: "temp",
-          length: "",
-          time: "",
-          effort: "",
-          cost: "",
-          //   organizerUser: { name: "" },
-          //   instructors: [],
-          //   course: []
-        }
-        this.setState({ data: z })
-      })
-    else {
-      var getGroup: any = API.graphql({
-        query: queries.getGroup,
-        variables: { id: props.navigation.state.params.id },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-      });
 
-      getGroup.then((json) => {
-        this.setState({ data: json.data.getGroup })
-      })
-    }
+    var getGroup: any = API.graphql({
+      query: queries.getGroup,
+      variables: { id: props.navigation.state.params.id },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+
+    getGroup.then((json) => {
+      this.setState({ data: json.data.getGroup })
+    })
+
   }
 
   openHome = () => {
@@ -100,62 +70,12 @@ export default class CourseScreen extends React.Component<Props, State>{
     this.setState({ validationError: validation.validationError })
     return validation.result
   }
-  createNew() {
-    if (this.validate()) {
-      var createGroup: any = API.graphql({
-        query: mutations.createGroup,
-        variables: { input: this.state.data },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-      });
-      createGroup.then((json: any) => {
-        this.setState({ canDelete: true, canSave: true, createNew: false })
-        console.log({ "Success mutations.createGroup": json });
-      }).catch((err: any) => {
-        console.log({ "Error mutations.createGroup": err });
-      });
-    }
-  }
-  save() {
-    if (this.validate()) {
-      var updateGroup: any = API.graphql({
-        query: mutations.updateGroup,
-        variables: { input: this.state.data },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-      });
-      updateGroup.then((json: any) => {
-        this.setState({ canDelete: true, canSave: true, createNew: false })
-        console.log({ "Success mutations.updateGroup": json });
-      }).catch((err: any) => {
-        console.log({ "Error mutations.updateGroup": err });
-      });
-    }
 
-  }
-  leave() {
-
-  }
-  join() {
-
-  }
-  delete() {
-    var deleteGroup: any = API.graphql({
-      query: mutations.deleteGroup,
-      variables: { input: { id: this.state.data.id } },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-    });
-    deleteGroup.then((json: any) => {
-      console.log({ "Success mutations.deleteGroup": json });
-      this.props.navigation.push("HomeScreen")
-    }).catch((err: any) => {
-      console.log({ "Error mutations.deleteGroup": err });
-    });
-  }
   updateValue(field: any, value: any) {
     var temp = this.state.data
     temp[field] = value
     this.setState({ data: temp })
   }
-  
   render() {
 
     //console.log(acc)
@@ -164,82 +84,124 @@ export default class CourseScreen extends React.Component<Props, State>{
       this.state.data ?
         <StyleProvider style={getTheme(material)}>
           <Container style={{ flexDirection: "row" }}>
-           <CourseSidebar courseId={this.state.data.id}></CourseSidebar>
-            <Container style={{ flex: 85 }}>              
-            <CourseHeader courseData={data} groupData={this.state.data}></CourseHeader>
+            <CourseSidebar courseId={this.state.data.id}></CourseSidebar>
+            <Container style={{ flex: 85 }}>
+              <CourseHeader courseData={data} groupData={this.state.data}></CourseHeader>
 
 
               <Content style={{ flex: 80 }}>
                 <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
-                  <Container style={{ flex: 15, flexDirection: "column", justifyContent: 'flex-start' }}>
-
+                  <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
                     <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
-                    <Text>{//this.state.data.organizerUser.name
-                    }
-                    </Text>
-                    <Text>Publisher</Text>
-                    <Button bordered style={styles.sliderButton}><Text>Contact Us</Text></Button>
+                    <Button><Text>Book a Call</Text></Button>
+                    <Button><Text>Send Message</Text></Button>
+                    <Text>Hi </Text>
+                    <Text>For your journey in leadership formation, I’d like to invite you to our bi-weekly coaching sessions where we can connect and discuss issues in more details. Let’s schedule our Coaching Calls - talk soon!
 
-                    {/*this.state.data.instructors.map((item: any) => {
-                    return (<Card><Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
-                      <Text>{item.name}</Text>
-                      <Text>Instructor</Text>
-                      <Button bordered style={styles.sliderButton}><Text>Ask Question</Text></Button>
-                    </Card>)
-                  }
-                )*/}
+Thanks!
+- Jon</Text>
+                    <Container>
+                      <Text>Schedule your</Text>
+                      <Text>30 Minute Coaching Call</Text>
+                     
+                      <Container style={{ flexDirection: "row" }}>
+                      <Container style={{flex:50}}>
+                      <Picker
+                        mode="dropdown"
+                        iosIcon={<Icon name="arrow-down" />}
+                        style={{ width: undefined }}
+                        placeholder="Select your Coach"
+                        placeholderStyle={{ color: "#bfc6ea" }}
+                        placeholderIconColor="#007aff"
+
+                      >
+                        {//   selectedValue={this.state.selected2}
+                          // onValueChange={this.onValueChange2.bind(this)}
+                        }
+                        <Picker.Item label="Jon Hand" value="key0" />
+
+                      </Picker>
+                        <Agenda
+                          // The list of items that have to be displayed in agenda. If you want to render item as empty date
+                          // the value of date key has to be an empty array []. If there exists no value for date key it is
+                          // considered that the date in question is not yet loaded
+                          items={{
+                            '2020-05-22': [{ name: 'item 1 - any js object' }],
+                            '2020-05-23': [{ name: 'item 2 - any js object', height: 80 }],
+                            '2020-05-24': [],
+                            '2020-05-25': [{ name: 'item 3 - any js object' }, { name: 'any js object' }]
+                          }}
+                          loadItemsForMonth={(month) => { console.log('trigger items loading') }}
+                          // Callback that fires when the calendar is opened or closed
+                         // onCalendarToggled={(calendarOpened) => { console.log(calendarOpened) }}
+                          // Callback that gets called on day press
+                          onDayPress={(day) => { console.log('day pressed') }}
+                          // Callback that gets called when day changes while scrolling agenda list
+                          onDayChange={(day) => { console.log('day changed') }}
+                          // Initially selected day
+                          selected={'2020-05-23'}
+                          // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
+                          minDate={'2020-05-10'}
+                          // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
+                          maxDate={'2020-05-30'}
+                          // Max amount of months allowed to scroll to the past. Default = 50
+                          pastScrollRange={50}
+                          // Max amount of months allowed to scroll to the future. Default = 50
+                          futureScrollRange={50}
+                          // Specify how each item should be rendered in agenda
+                         // renderItem={(item, firstItemInDay) => { return (<View><Text>test</Text></View>); }}
+                          // Specify how each date should be rendered. day can be undefined if the item is not first in that day.
+                         // renderDay={(day, item) => { return (<View />); }}
+                          // Specify how empty date content with no items should be rendered
+                         // renderEmptyDate={() => { return (<View />); }}
+                          // Specify how agenda knob should look like
+                          //renderKnob={() => { return (<View />); }}
+                          // Specify what should be rendered instead of ActivityIndicator
+                          //renderEmptyData={() => { return (<View />); }}
+                          // Specify your item comparison function for increased performance
+                         // rowHasChanged={(r1, r2) => { return r1.text !== r2.text }}
+                          // Hide knob button. Default = false
+                          //hideKnob={true}
+                          // By default, agenda dates are marked if they have at least one item, but you can override this if needed
+                          markedDates={{
+                            '2020-05-23': { selected: true, marked: true },
+                            '2020-05-24': { marked: true },
+                            '2020-05-25': { disabled: true }
+                          }}
+                          // If disabledByDefault={true} dates flagged as not disabled will be enabled. Default = false
+                         // disabledByDefault={true}
+                          // If provided, a standard RefreshControl will be added for "Pull to Refresh" functionality. Make sure to also set the refreshing prop correctly.
+                          onRefresh={() => console.log('refreshing...')}
+                          // Set this true while waiting for new data from a refresh
+                          refreshing={false}
+                          // Add a custom RefreshControl component, used to provide pull-to-refresh functionality for the ScrollView.
+                        //  refreshControl={null}
+                          // Agenda theme
+                          theme={{
+
+                            agendaDayTextColor: 'yellow',
+                            agendaDayNumColor: 'green',
+                            agendaTodayColor: 'red',
+                            agendaKnobColor: 'blue'
+                          }}
+                          // Agenda container style
+                          
+                        >
+
+                        </Agenda> 
+                         </Container>
+                        <Container style={{flex:50}}>
+                          <Text>Please confirm</Text>
+                          <Text>you’re going to schedule coaching call with Jon Hand.</Text>
+                          <Text>30 minutes</Text>
+                          <Text>Monday, August 23  -  1:30 PM – 2:00 PM</Text>
+                          <Button><Text>Yes, schedule call</Text></Button>
+                        </Container>
+                      </Container>
+                    </Container>
                   </Container>
-                  <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                  <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
 
-                    {data.introduction.map((item: any) => {
-                      return <Text>{item}</Text>
-                    })}
-
-                    <Text>Course Details</Text>
-
-
-                    {data.courseDetails.map((item: any, index1) => {
-                      return (
-                        <Card>
-                          <Text>{item.week}</Text>
-                          <Text>{item.date} - {item.leader}</Text>
-                          {item.events.map((item2, index2) => {
-                            return (
-                              <Text>{index1 + 1}.{index2 + 1} - {item2.name}</Text>
-                            )
-                          })}
-
-                        </Card>
-                      )
-                    })}
-                  </Container>
-                  <Container style={{ flex: 15, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <Button bordered style={styles.sliderButton}><Text>Join Course</Text></Button>
-                    {this.state.canJoin ?
-                      <Button onPress={() => { this.join() }} bordered style={styles.sliderButton}><Text>Join Course</Text></Button> :
-                      null
-                    }
-                    {this.state.canLeave ?
-                      <Button onPress={() => { this.leave() }} bordered style={styles.sliderButton}><Text>Leave Course</Text></Button> :
-                      null
-                    }
-                    {this.state.createNew ?
-                      <Button onPress={() => { this.createNew() }} bordered style={styles.sliderButton}><Text>Create Course</Text></Button>
-                      : null
-                    }
-                    {this.state.canSave ?
-                      <Button onPress={() => { this.save() }} bordered style={styles.sliderButton}><Text>Save Course</Text></Button>
-                      : null
-                    }
-                    {this.state.canDelete ?
-                      <Button onPress={() => { if (window.confirm('Are you sure you wish to delete this course?')) this.delete() }} bordered style={styles.sliderButton}><Text>Delete Course</Text></Button>
-                      : null
-                    }
-                    <EditableText onChange={(value: any) => { this.updateValue("time", value) }} placeholder="Enter Course Time" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableText>
-                    <EditableText onChange={(value: any) => { this.updateValue("length", value) }} placeholder="Enter Course Length" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.length} isEditable={this.state.isEditable}></EditableText>
-                    <EditableText onChange={(value: any) => { this.updateValue("effort", value) }} placeholder="Enter Course Effort" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.effort} isEditable={this.state.isEditable}></EditableText>
-                    <EditableText onChange={(value: any) => { this.updateValue("cost", value) }} placeholder="Enter Course Cost" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.cost} isEditable={this.state.isEditable}></EditableText>
-                    <Text>{this.state.validationError}</Text>
 
                   </Container>
                 </Container>

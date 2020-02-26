@@ -4,7 +4,7 @@ import styles from '../style.js'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { Image } from 'react-native'
+import { Image,TouchableOpacity } from 'react-native'
 import * as queries from '../../src/graphql/queries';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
 import { API, graphqlOperation, Auth } from 'aws-amplify';
@@ -60,8 +60,12 @@ export default class MyPeople extends React.Component<Props, State> {
     this.props.navigation.push("ConversationScreen");
   }
   showProfiles(){
-    console.log("Navigate to conversationScreen")
+    console.log("Navigate to profilesScreen")
     this.props.navigation.push("ProfilesScreen");
+  }
+  showProfile(id){
+    console.log("Navigate to profileScreen")
+    this.props.navigation.push("ProfileScreen", { id: id, create: false });
   }
   render() {
     return (
@@ -72,8 +76,10 @@ export default class MyPeople extends React.Component<Props, State> {
           <Content style={{ width: "100%" }}>
             {this.state.data.map((item: any) => {
               return (
-                <Card key={item.id} style={{ width: "100%", minHeight: 50 }}>
-                  <CardItem>
+                <TouchableOpacity key={item.id} onPress={() => {this.showProfile(item.id)}}>   
+                <Card style={{ width: "100%", minHeight: 50 }}>
+                  <CardItem >
+                    
                     <Left>
                       <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
                       <Body>
@@ -83,7 +89,9 @@ export default class MyPeople extends React.Component<Props, State> {
                       </Body>
                     </Left>
                   </CardItem>
-                </Card>)
+                </Card>
+                </TouchableOpacity>
+               )
             })}
           </Content>
 
