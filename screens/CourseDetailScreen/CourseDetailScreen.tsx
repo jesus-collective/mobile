@@ -15,7 +15,8 @@ import * as queries from '../../src/graphql/queries';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
 import MessageBoard from '../../components/MessageBoard/MessageBoard'
 import CourseHeader from '../../components/CourseHeader/CourseHeader';
-const data = require('../CourseScreen/course.json');
+import { TouchableOpacity } from 'react-native';
+const data = require('../CourseOverviewScreen/course.json');
 
 interface Props {
   navigation: any
@@ -27,6 +28,7 @@ interface State {
   isEditable: boolean
   validationError: String
   activeWeek: any
+  activeLesson: any
 }
 
 
@@ -41,7 +43,8 @@ export default class CourseScreen extends React.Component<Props, State>{
       data: null,
       isEditable: true,
       validationError: "",
-      activeWeek: 0
+      activeWeek: 0,
+      activeLesson: null
     }
     this.setInitialData(props)
   }
@@ -78,8 +81,79 @@ export default class CourseScreen extends React.Component<Props, State>{
     temp[field] = value
     this.setState({ data: temp })
   }
-  setActiveWeek(index) {
-    this.setState({ activeWeek: index })
+  setActiveWeek(index: any) {
+    this.setState({
+      activeWeek: index,
+      activeLesson: null
+    })
+  }
+  setActiveLesson(index: any) {
+    this.setState({
+      activeLesson: index
+    })
+  }
+  renderWeekDetails(week) {
+    console.log(this.state.activeLesson)
+    return (
+      this.state.activeLesson == null ?
+        <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+          <Text>{week.week}</Text>
+          <Text>{week.date}</Text>
+          <Text>{week.leader}</Text>
+          {week.events.map((item: any, lesson: any) => {
+            return <TouchableOpacity key={lesson} onPress={() => { this.setActiveLesson(lesson) }}>
+              <Card style={{ minHeight: "40px", maxHeight: "100px", width: "80% " }}>
+                <Container style={{ flexDirection: "row" }}>
+                  <Text>MON</Text>
+                  <Container style={{ flexDirection: "column", minHeight: "40px", maxHeight: "80px" }}>
+                    <Text>{item.name}</Text>
+                    <Container style={{ flexDirection: "row", minHeight: "40px", maxHeight: "80px" }}>
+                      <Text><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/time.svg')} />3 hours</Text>
+                      <Text><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/document.svg')} />Assignment</Text>
+                    </Container>
+                  </Container>
+                  <Text>Completed</Text>
+                  <Text><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/checkmark.svg')} /></Text>
+                </Container>
+              </Card>
+            </TouchableOpacity>
+          })}
+        </Container>
+        : null
+    )
+  }
+  renderLessonDetails(week: any) {
+    console.log(this.state.activeLesson)
+    const lesson = week.events[this.state.activeLesson]
+    return (
+      this.state.activeLesson != null ?
+        <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+          <Button onPress={() => { this.setActiveWeek(this.state.activeWeek) }}><Text>Return</Text></Button>
+          <Text>{week.week}</Text>
+          <Text>{week.date}</Text>
+          <Text>{week.leader}</Text>
+          <Text>Lesson {this.state.activeLesson + 1} - {lesson.name}</Text>
+          <Text>{lesson.time}</Text>
+          {lesson.description.map((item) => {
+            return <Text>{item}</Text>
+          })}
+          {lesson.assignment ? (
+            <Container>
+              <Text>{lesson.assignment.due}</Text>
+              {
+                lesson.assignment.description.map((item: any) => {
+                  return <Text>{item}</Text>
+                })
+
+              }
+            </Container>
+          )
+            : null
+          }
+          
+        </Container>
+        : null
+    )
   }
   render() {
     const week = data.courseDetails[this.state.activeWeek]
@@ -93,28 +167,8 @@ export default class CourseScreen extends React.Component<Props, State>{
               <CourseHeader onChangeWeek={(week) => { this.setActiveWeek(week) }} courseData={data} groupData={this.state.data}></CourseHeader>
               <Content style={{ flex: 85 }}>
                 <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
-                  <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <Text>{week.week}</Text>
-                    <Text>{week.date}</Text>
-                    <Text>{week.leader}</Text>
-                    {week.events.map((item) => {
-                      return <Card style={{ minHeight: "40px", maxHeight: "100px", width: "80% " }}>
-                        <Container style={{ flexDirection: "row" }}>
-                          <Text>MON</Text>
-                          <Container style={{ flexDirection: "column", minHeight: "40px", maxHeight: "80px" }}>
-                            <Text>{item.name}</Text>
-                            <Container style={{ flexDirection: "row", minHeight: "40px", maxHeight: "80px" }}>
-                              <Text><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/time.svg')} />3 hours</Text>
-                              <Text><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/document.svg')} />Assignment</Text>
-                            </Container>
-                          </Container>
-                          <Text>Completed</Text>
-
-                          <Text><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/checkmark.svg')} /></Text>
-                        </Container>
-                      </Card>
-                    })}
-                  </Container>
+                  {this.renderWeekDetails(week)}
+                  {this.renderLessonDetails(week)}
                   <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                     <Container style={{ flex: 5, flexDirection: "row" }}>
                       <Button transparent><Text>Cohort</Text></Button>

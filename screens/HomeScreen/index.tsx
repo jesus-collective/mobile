@@ -27,7 +27,7 @@ const SignUpScreen1 = lazy(() => import('../../components/Auth/SignUpScreen1'));
 const SignUpScreen2 = lazy(() => import('../../components/Auth/SignUpScreen2'));
 const SignUpScreen3 = lazy(() => import('../../components/Auth/SignUpScreen3'));
 const CoursesScreen = lazy(() => import('../CoursesScreen/CoursesScreen'));
-const CourseScreen = lazy(() => import('../CourseScreen/CourseScreen'));
+const CourseOverviewScreen = lazy(() => import('../CourseOverviewScreen/CourseOverviewScreen'));
 const CourseHomeScreen = lazy(() => import('../CourseHomeScreen/CourseHomeScreen'));
 const CourseDetailScreen = lazy(() => import('../CourseDetailScreen/CourseDetailScreen'));
 const CourseCoachingScreen = lazy(() => import('../CourseCoachingScreen/CourseCoachingScreen'));
@@ -58,7 +58,7 @@ const MainAppRouter = createStackNavigator({
   ResourceScreen: { screen: ResourceScreen, path:"resource" },
   OrganizationsScreen: { screen: OrganizationsScreen, path: "orgs" },
   OrganizationScreen: { screen: OrganizationScreen,path:"org" },
-  CourseScreen: { screen: CourseScreen,path:"course" },
+  CourseOverviewScreen: { screen: CourseOverviewScreen,path:"courseOverview" },
   CoursesScreen: { screen: CoursesScreen, path: "courses" },
   CourseHomeScreen: { screen: CourseHomeScreen,path:"courseHome" },
   CourseDetailScreen: { screen: CourseDetailScreen,path:"courseDetail" },

@@ -31,6 +31,9 @@ class CourseSidebar extends React.Component<Props, State> {
     openCourseHome = () => {
         this.props.navigation.push("CourseHomeScreen", { id: this.props.courseId, create: false });
     }
+    openCourseOverview = () => {
+        this.props.navigation.push("CourseOverviewScreen", { id: this.props.courseId, create: false });
+    }
     openCourseDetails = () => {
         this.props.navigation.push("CourseDetailScreen", { id: this.props.courseId, create: false });
     }
@@ -48,6 +51,7 @@ class CourseSidebar extends React.Component<Props, State> {
                         source={require('../../components/Header/icon.png')}
                     /></Button>
                 <Button transparent onPress={this.openCourseHome}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/home.svg')} /><Text style={styles.courseSidebarFontRegular}>Home</Text></Button>
+                <Button transparent onPress={this.openCourseOverview}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/home.svg')} /><Text style={styles.courseSidebarFontRegular}>Overview</Text></Button>
                 <Button transparent onPress={this.openCourseDetails}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/education.svg')} /><Text style={styles.courseSidebarFontRegular}>Course</Text></Button>
                 <Button transparent onPress={this.openCourseCoaching}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/calendar.svg')} /><Text style={styles.courseSidebarFontRegular}>Coaching</Text></Button>
                 <Container style={{backgroundColor:"#00000000"}}>

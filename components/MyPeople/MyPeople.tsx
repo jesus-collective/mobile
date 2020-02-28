@@ -4,7 +4,7 @@ import styles from '../style.js'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import { FontAwesome5 } from '@expo/vector-icons';
-import { Image,TouchableOpacity } from 'react-native'
+import { Image, TouchableOpacity } from 'react-native'
 import * as queries from '../../src/graphql/queries';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
 import { API, graphqlOperation, Auth } from 'aws-amplify';
@@ -59,11 +59,11 @@ export default class MyPeople extends React.Component<Props, State> {
     console.log("Navigate to conversationScreen")
     this.props.navigation.push("ConversationScreen");
   }
-  showProfiles(){
+  showProfiles() {
     console.log("Navigate to profilesScreen")
     this.props.navigation.push("ProfilesScreen");
   }
-  showProfile(id){
+  showProfile(id) {
     console.log("Navigate to profileScreen")
     this.props.navigation.push("ProfileScreen", { id: id, create: false });
   }
@@ -72,26 +72,25 @@ export default class MyPeople extends React.Component<Props, State> {
       <StyleProvider style={getTheme(material)}>
 
         <Container style={{ width: "100%", flexDirection: 'column', alignItems: 'flex-start', minHeight: 300 }} >
-          <Button onPress={()=>{this.showProfiles()}} transparent><Text style={styles.fontConnectWith}>People you may connect with</Text></Button>
+          <Button onPress={() => { this.showProfiles() }} transparent><Text style={styles.fontConnectWith}>People you may connect with</Text></Button>
           <Content style={{ width: "100%" }}>
             {this.state.data.map((item: any) => {
               return (
-                <TouchableOpacity key={item.id} onPress={() => {this.showProfile(item.id)}}>   
-                <Card style={{ width: "100%", minHeight: 50 }}>
-                  <CardItem >
-                    
-                    <Left>
-                      <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
-                      <Body>
-                        <Text style={styles.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
-                        <Text style={styles.fontConnectWithRole}>{item.currentRole}</Text>
-                        <Button bordered style={styles.connectWithSliderButton} onPress={() => { this.openConversation() }}><Text>Start Conversation</Text></Button>
-                      </Body>
-                    </Left>
-                  </CardItem>
-                </Card>
+                <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.id) }}>
+                  <Card style={{ width: "100%", minHeight: 50 }}>
+                    <CardItem >
+                      <Left>
+                        <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
+                        <Body>
+                          <Text style={styles.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
+                          <Text style={styles.fontConnectWithRole}>{item.currentRole}</Text>
+                          <Button bordered style={styles.connectWithSliderButton} onPress={() => { this.openConversation() }}><Text>Start Conversation</Text></Button>
+                        </Body>
+                      </Left>
+                    </CardItem>
+                  </Card>
                 </TouchableOpacity>
-               )
+              )
             })}
           </Content>
 

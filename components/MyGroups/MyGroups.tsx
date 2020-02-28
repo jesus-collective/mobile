@@ -87,7 +87,7 @@ export default class MyGroups extends React.Component<Props, State> {
     else if (props.type == "course") {
       this.state =
       {
-        openSingle: "CourseScreen",
+        openSingle: "CourseHomeScreen",
         openMultiple: "CoursesScreen",
         createString: "+ Create Course",
         titleString: "Courses",
