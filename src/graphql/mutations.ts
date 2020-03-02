@@ -1075,45 +1075,156 @@ export const deleteGroup = `mutation DeleteGroup($input: DeleteGroupInput!) {
 export const createCourseInfo = `mutation CreateCourseInfo($input: CreateCourseInfoInput!) {
   createCourseInfo(input: $input) {
     id
+    designedBy
     summary
-    course {
+    courseDetails {
       week
+      date
       name
-      sections {
-        section
+      leader
+      lessons {
         name
+        time
+        description
       }
     }
+    subTitle
+    instructor {
+      id
+      given_name
+      family_name
+      email
+      phone
+      owner
+      hasPaidState
+      address
+      city
+      province
+      postalCode
+      country
+      profileImage
+      aboutMeShort
+      aboutMeLong
+      interests
+      currentRole
+      currentScope
+      personality
+      orgName
+      orgType
+      orgSize
+      orgDescription
+      groups {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+    }
+    introduction
   }
 }
 `;
 export const updateCourseInfo = `mutation UpdateCourseInfo($input: UpdateCourseInfoInput!) {
   updateCourseInfo(input: $input) {
     id
+    designedBy
     summary
-    course {
+    courseDetails {
       week
+      date
       name
-      sections {
-        section
+      leader
+      lessons {
         name
+        time
+        description
       }
     }
+    subTitle
+    instructor {
+      id
+      given_name
+      family_name
+      email
+      phone
+      owner
+      hasPaidState
+      address
+      city
+      province
+      postalCode
+      country
+      profileImage
+      aboutMeShort
+      aboutMeLong
+      interests
+      currentRole
+      currentScope
+      personality
+      orgName
+      orgType
+      orgSize
+      orgDescription
+      groups {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+    }
+    introduction
   }
 }
 `;
 export const deleteCourseInfo = `mutation DeleteCourseInfo($input: DeleteCourseInfoInput!) {
   deleteCourseInfo(input: $input) {
     id
+    designedBy
     summary
-    course {
+    courseDetails {
       week
+      date
       name
-      sections {
-        section
+      leader
+      lessons {
         name
+        time
+        description
       }
     }
+    subTitle
+    instructor {
+      id
+      given_name
+      family_name
+      email
+      phone
+      owner
+      hasPaidState
+      address
+      city
+      province
+      postalCode
+      country
+      profileImage
+      aboutMeShort
+      aboutMeLong
+      interests
+      currentRole
+      currentScope
+      personality
+      orgName
+      orgType
+      orgSize
+      orgDescription
+      groups {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+    }
+    introduction
   }
 }
 `;

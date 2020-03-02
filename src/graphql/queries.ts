@@ -373,15 +373,52 @@ export const listGroups = `query ListGroups(
 export const getCourseInfo = `query GetCourseInfo($id: ID!) {
   getCourseInfo(id: $id) {
     id
+    designedBy
     summary
-    course {
+    courseDetails {
       week
+      date
       name
-      sections {
-        section
+      leader
+      lessons {
         name
+        time
+        description
       }
     }
+    subTitle
+    instructor {
+      id
+      given_name
+      family_name
+      email
+      phone
+      owner
+      hasPaidState
+      address
+      city
+      province
+      postalCode
+      country
+      profileImage
+      aboutMeShort
+      aboutMeLong
+      interests
+      currentRole
+      currentScope
+      personality
+      orgName
+      orgType
+      orgSize
+      orgDescription
+      groups {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+    }
+    introduction
   }
 }
 `;
@@ -393,11 +430,41 @@ export const listCourseInfos = `query ListCourseInfos(
   listCourseInfos(filter: $filter, limit: $limit, nextToken: $nextToken) {
     items {
       id
+      designedBy
       summary
-      course {
+      courseDetails {
         week
+        date
         name
+        leader
       }
+      subTitle
+      instructor {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+      }
+      introduction
     }
     nextToken
   }
@@ -654,6 +721,109 @@ export const messagesByRoom = `query MessagesByRoom(
       }
     }
     nextToken
+  }
+}
+`;
+export const searchGroups = `query SearchGroups(
+  $filter: SearchableGroupFilterInput
+  $sort: SearchableGroupSortInput
+  $limit: Int
+  $nextToken: String
+) {
+  searchGroups(
+    filter: $filter
+    sort: $sort
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      owner
+      type
+      name
+      description
+      memberCount
+      members {
+        nextToken
+      }
+      image
+      time
+      lastUpdated
+      location
+      length
+      effort
+      cost
+      organizerGroup {
+        id
+        owner
+        type
+        name
+        description
+        memberCount
+        image
+        time
+        lastUpdated
+        location
+        length
+        effort
+        cost
+      }
+      organizerUser {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+      }
+      instructors {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+      }
+      messages {
+        nextToken
+      }
+    }
+    nextToken
+    total
   }
 }
 `;

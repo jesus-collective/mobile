@@ -21,6 +21,7 @@ interface Props {
 }
 interface State {
   showMap: boolean
+  data: any
 }
 
 
@@ -29,11 +30,29 @@ export default class GroupScreen extends React.Component<Props, State>{
   constructor(props: Props) {
     super(props);
     this.state = {
-      showMap: false
+      showMap: false,
+      data:[]
     }
   }
   mapChanged = () => {
     this.setState({ showMap: !this.state.showMap })
+  }
+  search(item) {
+    console.log(item.target.value)
+    var searchGroups: any = API.graphql({
+      query: queries.searchGroups,
+      variables: { filter: { name: { match: item.target.value } } }
+    });
+
+    searchGroups.then((json) => {
+      console.log(json)
+      this.setState({ data: json.data.searchGroups.items })
+    }).catch((e:any) => {
+      console.log(e)
+    }
+
+    );
+
   }
   render() {
     console.log("SearchScreen")
@@ -43,8 +62,13 @@ export default class GroupScreen extends React.Component<Props, State>{
         <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
         <Content>
           <Container>
-            <input placeholder="Search..."></input>
+            <input onChange={(item: any) => { this.search(item) }} placeholder="Search..."></input>
             <Text>Results:</Text>
+            {this.state.data.map((item:any) => {
+              return (
+                <Text key={item.id}>{item.name}</Text>
+              )
+            })}
           </Container>
         </Content>
       </Container>

@@ -16,7 +16,7 @@ import * as queries from '../../src/graphql/queries';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
 import CourseHeader from '../../components/CourseHeader/CourseHeader';
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
-const data = require('../CourseScreen/course.json');
+const data = require('../CourseOverviewScreen/course.json');
 
 interface Props {
   navigation: any

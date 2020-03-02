@@ -1203,45 +1203,156 @@ export const onDeleteGroup = `subscription OnDeleteGroup($owner: String!) {
 export const onCreateCourseInfo = `subscription OnCreateCourseInfo($owner: String!) {
   onCreateCourseInfo(owner: $owner) {
     id
+    designedBy
     summary
-    course {
+    courseDetails {
       week
+      date
       name
-      sections {
-        section
+      leader
+      lessons {
         name
+        time
+        description
       }
     }
+    subTitle
+    instructor {
+      id
+      given_name
+      family_name
+      email
+      phone
+      owner
+      hasPaidState
+      address
+      city
+      province
+      postalCode
+      country
+      profileImage
+      aboutMeShort
+      aboutMeLong
+      interests
+      currentRole
+      currentScope
+      personality
+      orgName
+      orgType
+      orgSize
+      orgDescription
+      groups {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+    }
+    introduction
   }
 }
 `;
 export const onUpdateCourseInfo = `subscription OnUpdateCourseInfo($owner: String!) {
   onUpdateCourseInfo(owner: $owner) {
     id
+    designedBy
     summary
-    course {
+    courseDetails {
       week
+      date
       name
-      sections {
-        section
+      leader
+      lessons {
         name
+        time
+        description
       }
     }
+    subTitle
+    instructor {
+      id
+      given_name
+      family_name
+      email
+      phone
+      owner
+      hasPaidState
+      address
+      city
+      province
+      postalCode
+      country
+      profileImage
+      aboutMeShort
+      aboutMeLong
+      interests
+      currentRole
+      currentScope
+      personality
+      orgName
+      orgType
+      orgSize
+      orgDescription
+      groups {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+    }
+    introduction
   }
 }
 `;
 export const onDeleteCourseInfo = `subscription OnDeleteCourseInfo($owner: String!) {
   onDeleteCourseInfo(owner: $owner) {
     id
+    designedBy
     summary
-    course {
+    courseDetails {
       week
+      date
       name
-      sections {
-        section
+      leader
+      lessons {
         name
+        time
+        description
       }
     }
+    subTitle
+    instructor {
+      id
+      given_name
+      family_name
+      email
+      phone
+      owner
+      hasPaidState
+      address
+      city
+      province
+      postalCode
+      country
+      profileImage
+      aboutMeShort
+      aboutMeLong
+      interests
+      currentRole
+      currentScope
+      personality
+      orgName
+      orgType
+      orgSize
+      orgDescription
+      groups {
+        nextToken
+      }
+      messages {
+        nextToken
+      }
+    }
+    introduction
   }
 }
 `;

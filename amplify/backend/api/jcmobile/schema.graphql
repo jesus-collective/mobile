@@ -48,6 +48,7 @@ type GroupMember
 }
 type Group
 @model
+@searchable
 @auth(rules: [
  { allow: owner, ownerField: "owner" },
  { allow: groups, groups: ["verifiedUsers"],operations: [read]}
@@ -58,6 +59,7 @@ type Group
 	owner:String!
 	type:String!
 	name:String!
+	
 	description:String!
 	memberCount:Int
   	members: [GroupMember] @connection(keyName: "byUser", fields: ["id"])
@@ -82,18 +84,30 @@ type CourseInfo
 ])
   {
 	id:ID!
-	summary:String
-	course:[CourseWeek]
+	designedBy:String
+	summary:[String]
+	courseDetails:[CourseWeek]
+	subTitle:String
+	instructor: User
+	introduction:[String]
   }
 
 type CourseWeek{
-		week:Int
-		name:String
-		sections:[CourseSection]
-}
-type CourseSection{
-	section:Int
+	week:String
+	date:String
 	name:String
+	leader:String
+	lessons:[CourseLesson]
+}
+type CourseLesson{
+	name:String
+	time:String
+	description:[String]
+	assignment:[CourseAssignment]
+}
+type CourseAssignment{
+	due:String
+	description:String
 }
 
 
