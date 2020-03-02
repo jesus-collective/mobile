@@ -204,6 +204,7 @@ Resources:
         
         
         
+        
       
       
       AutoVerifiedAttributes: !Ref autoVerifiedAttributes
@@ -245,6 +246,7 @@ Resources:
       FunctionName: !Ref functionjcmobilePostConfirmationName
       SourceArn: !GetAtt UserPool.Arn
     
+  
   
    
     

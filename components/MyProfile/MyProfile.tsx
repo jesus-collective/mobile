@@ -3,7 +3,7 @@ import { Image } from 'react-native'
 import * as React from 'react';
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
-import { API, graphqlOperation } from 'aws-amplify';
+import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { Auth } from 'aws-amplify';
 import styles from '../../components/style.js'
 import TagInput from 'react-native-tags-input';
@@ -22,6 +22,7 @@ interface State {
   tags: any
   tagsColor: any
   tagsText: any
+  profileImage:any
 }
 export default class MyProfile extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -34,6 +35,7 @@ export default class MyProfile extends React.Component<Props, State> {
       },
       tagsColor: mainColor,
       tagsText: '#fff',
+      profileImage:""
     }
     this.getUserDetails()
   }
@@ -46,6 +48,7 @@ export default class MyProfile extends React.Component<Props, State> {
           UserDetails: getUser.data.getUser
         }
         )
+        this.getProfileImage(this.props.loadId)
         console.log(this.state.UserDetails)
       }
       catch (e) {
@@ -63,6 +66,7 @@ export default class MyProfile extends React.Component<Props, State> {
           UserDetails: getUser.data.getUser
         }
         )
+        this.getProfileImage(user['username'])
         console.log(this.state.UserDetails)
       }
       catch (e) {
@@ -96,6 +100,22 @@ export default class MyProfile extends React.Component<Props, State> {
       tags: state
     })
   };
+  onProfileImageChange(e) {
+    const file = e.target.files[0];
+    Storage.put('example.png', file, {
+      level: 'protected',
+      contentType: 'image/png'
+    })
+      .then(result => console.log(result))
+      .catch(err => console.log(err));
+  }
+  getProfileImage(id) {
+    Storage.get('example.png', {
+    level: 'protected', contentType: 'image/png'
+    })
+      .then(result => this.setState({profileImage:result}))
+      .catch(err => console.log(err));
+  }
   render() {
     return (
       (this.state.UserDetails != null ?
@@ -108,7 +128,16 @@ export default class MyProfile extends React.Component<Props, State> {
           <Form style={{ display: "flex", flexDirection: "row" }}>
             <View style={{ width: "35%" }}>
               <View>
-                <Image style={{ width: "250px", height: "290px" }} source={require('../../assets/profile-placeholder.png')}></Image>
+                <Image style={{ width: "250px", height: "290px" }} 
+                source={this.state.profileImage==""?'../../assets/profile-placeholder.png':this.state.profileImage}>
+                  
+                </Image>
+
+                <input
+                  type="file" accept='image/png'
+                  onChange={(e) => this.onProfileImageChange(e)}
+                />
+
                 <Button style={styles.fontFormProfileImageButton}>
                   <Text uppercase={false} style={styles.fontFormProfileImageButtonText}>Upload Profile Picture</Text>
                 </Button>

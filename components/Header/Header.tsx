@@ -5,6 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import {  Image, Text } from 'react-native';
 import styles from '../Header/style.js'
+import { Auth } from 'aws-amplify';
 
 interface Props {
   navigation: any
@@ -21,8 +22,9 @@ export default class HeaderJC extends React.Component<Props, State> {
   openDrawer = () => {
     this.props.navigation.dispatch(DrawerActions.openDrawer());
   }
-  openProfile = () => {
-    this.props.navigation.push("ProfileScreen");
+   openProfile = async () => {
+    var user = await Auth.currentAuthenticatedUser();
+    this.props.navigation.push("ProfileScreen", {id:user['username'] , create: false});
   }
   openSearch = () => {
     this.props.navigation.push("SearchScreen");
