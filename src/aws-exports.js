@@ -16,7 +16,7 @@ const awsmobile = {
     "aws_content_delivery_bucket": "jc-mobile-20190818234527-hostingbucket-dev",
     "aws_content_delivery_bucket_region": "us-east-1",
     "aws_content_delivery_url": "https://d3uxxql9osbe4a.cloudfront.net",
-    "aws_user_files_s3_bucket": "jc-content-dev",
+    "aws_user_files_s3_bucket": "jc-profile20190809190418-dev",
     "aws_user_files_s3_bucket_region": "us-east-1"
 };
 

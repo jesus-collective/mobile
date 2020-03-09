@@ -2,39 +2,6 @@
 	"AWSTemplateFormatVersion": "2010-09-09",
 	"Description": "Lambda resource stack creation using Amplify CLI",
 	"Parameters": {
-		"GROUP": {
-			"Type": "String",
-			"Default": ""
-		},
-		"modules": {
-			"Type": "String",
-			"Default": "",
-			"Description": "Comma-delimmited list of modules to be executed by a lambda trigger. Sent to resource as an env variable."
-		},
-		"resourceName": {
-			"Type": "String",
-			"Default": ""
-		},
-		"trigger": {
-			"Type": "String",
-			"Default": "true"
-		},
-		"functionName": {
-			"Type": "String",
-			"Default": ""
-		},
-		"roleName": {
-			"Type": "String",
-			"Default": ""
-		},
-		"parentResource": {
-			"Type": "String",
-			"Default": ""
-		},
-		"parentStack": {
-			"Type": "String",
-			"Default": ""
-		},
 		"env": {
 			"Type": "String"
 		}
@@ -61,12 +28,12 @@
 				"FunctionName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"jcmobilePostConfirmation",
+						"S3Trigger839efa13",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"jcmobilePostConfirmation",
+									"S3Trigger839efa13",
 									"-",
 									{
 										"Ref": "env"
@@ -80,15 +47,6 @@
 					"Variables": {
 						"ENV": {
 							"Ref": "env"
-						},
-						"MODULES": {
-							"Ref": "modules"
-						},
-						"REGION": {
-							"Ref": "AWS::Region"
-						},
-						"GROUP": {
-							"Ref": "GROUP"
 						}
 					}
 				},
@@ -102,7 +60,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "jc-mobile-dev-20190809190418-deployment",
-					"S3Key": "amplify-builds/jcmobilePostConfirmation-454f66507a3354476239-build.zip"
+					"S3Key": "amplify-builds/S3Trigger839efa13-427972452b393235796b-build.zip"
 				}
 			}
 		},
@@ -112,12 +70,12 @@
 				"RoleName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"jcmobilePostConfirmation",
+						"S3Trigger839efa13LambdaRole839efa13",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"jcmobilePostConfirmation",
+									"S3Trigger839efa13LambdaRole839efa13",
 									"-",
 									{
 										"Ref": "env"

@@ -8,6 +8,10 @@ import { Auth } from 'aws-amplify';
 import styles from '../../components/style.js'
 import TagInput from 'react-native-tags-input';
 import { Dimensions } from 'react-native'
+import Amplify from 'aws-amplify'
+import awsconfig from '../../src/aws-exports';
+
+Amplify.configure(awsconfig);
 
 const mainColor = '#ffffff';
 
@@ -22,7 +26,7 @@ interface State {
   tags: any
   tagsColor: any
   tagsText: any
-  profileImage:any
+  profileImage: any
 }
 export default class MyProfile extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -35,7 +39,7 @@ export default class MyProfile extends React.Component<Props, State> {
       },
       tagsColor: mainColor,
       tagsText: '#fff',
-      profileImage:""
+      profileImage: ""
     }
     this.getUserDetails()
   }
@@ -46,9 +50,9 @@ export default class MyProfile extends React.Component<Props, State> {
         const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: this.props.loadId }));
         this.setState({
           UserDetails: getUser.data.getUser
-        }
+        }, ()=>this.getProfileImage(this.props.loadId)
         )
-        this.getProfileImage(this.props.loadId)
+       
         console.log(this.state.UserDetails)
       }
       catch (e) {
@@ -64,9 +68,9 @@ export default class MyProfile extends React.Component<Props, State> {
         const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: user['username'] }));
         this.setState({
           UserDetails: getUser.data.getUser
-        }
+        },()=>this.getProfileImage(user['username'])
         )
-        this.getProfileImage(user['username'])
+        
         console.log(this.state.UserDetails)
       }
       catch (e) {
@@ -88,7 +92,10 @@ export default class MyProfile extends React.Component<Props, State> {
 
   async finalizeProfile() {
     try {
-      const updateUser = await API.graphql(graphqlOperation(mutations.updateUser, { input: this.state.UserDetails }));
+      var toSave=this.state.UserDetails
+      delete toSave.groups
+      delete toSave.messages
+      const updateUser = await API.graphql(graphqlOperation(mutations.updateUser, { input: toSave }));
       console.log(updateUser)
       this.props.finalizeProfile()
     } catch (e) {
@@ -100,21 +107,39 @@ export default class MyProfile extends React.Component<Props, State> {
       tags: state
     })
   };
-  onProfileImageChange(e) {
+  async onProfileImageChange(e:any) {
     const file = e.target.files[0];
-    Storage.put('example.png', file, {
+    var user = await Auth.currentAuthenticatedUser();
+    var userId = this.getValueFromKey(user.storage, 'aws.cognito.identity-id')
+   
+    Storage.put('profileImage.png', file, {
       level: 'protected',
-      contentType: 'image/png'
+      contentType: 'image/png',
+      identityId:userId
     })
-      .then(result => console.log(result))
+      .then(result => {
+        console.log(result)
+        var updateData = { ...this.state.UserDetails }
+        updateData['profileImage'] = userId
+        this.setState({
+          UserDetails: updateData
+        });
+      })
       .catch(err => console.log(err));
   }
   getProfileImage(id) {
-    Storage.get('example.png', {
-    level: 'protected', contentType: 'image/png'
+    console.log(this.state.UserDetails.profileImage)
+    Storage.get('profileImage.png', {
+      level: 'protected', 
+      contentType: 'image/png',
+      identityId: this.state.UserDetails.profileImage?this.state.UserDetails.profileImage:""
     })
-      .then(result => this.setState({profileImage:result}))
+      .then(result => this.setState({ profileImage: result }))
       .catch(err => console.log(err));
+  }
+  getValueFromKey(myObject: any, string: any) {
+    const key = Object.keys(myObject).filter(k => k.includes(string));
+    return key.length ? myObject[key[0]] : "";
   }
   render() {
     return (
@@ -128,9 +153,9 @@ export default class MyProfile extends React.Component<Props, State> {
           <Form style={{ display: "flex", flexDirection: "row" }}>
             <View style={{ width: "35%" }}>
               <View>
-                <Image style={{ width: "250px", height: "290px" }} 
-                source={this.state.profileImage==""?'../../assets/profile-placeholder.png':this.state.profileImage}>
-                  
+                <Image style={{ width: "250px", height: "290px" }}
+                  source={this.state.profileImage == "" ? '../../assets/profile-placeholder.png' : this.state.profileImage}>
+
                 </Image>
 
                 <input

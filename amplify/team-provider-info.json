@@ -8,7 +8,8 @@
             "DeploymentBucketName": "jc-mobile-dev-20190809190418-deployment",
             "UnauthRoleName": "jc-mobile-dev-20190809190418-unauthRole",
             "StackName": "jc-mobile-dev-20190809190418",
-            "StackId": "arn:aws:cloudformation:us-east-1:119330689042:stack/jc-mobile-dev-20190809190418/0449b340-bafa-11e9-a6fb-0a0b50a105f6"
+            "StackId": "arn:aws:cloudformation:us-east-1:119330689042:stack/jc-mobile-dev-20190809190418/0449b340-bafa-11e9-a6fb-0a0b50a105f6",
+            "AmplifyAppId": "d30rbl645sjuc9"
         },
         "categories": {
             "function": {
