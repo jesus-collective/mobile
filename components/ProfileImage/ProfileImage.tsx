@@ -37,7 +37,7 @@ export default class MyProfile extends React.Component<Props, State> {
     getProfileImage(user) {
         console.log(user.profileImage)
         if (user.profileImage == "" || user.profileImage == null) {
-            console.log('empty profile image')
+            
             this.state = { profileImage: null, showEmpty: true }
         }
         else {
@@ -47,7 +47,7 @@ export default class MyProfile extends React.Component<Props, State> {
                 identityId: user.profileImage
             })
                 .then(result => {
-                    console.log(result);
+                    
                     this.setState({ profileImage: result })
                 })
                 .catch(err => {
@@ -58,7 +58,7 @@ export default class MyProfile extends React.Component<Props, State> {
     }
 
     render() {
-        console.log(this.state)
+        
         return (
             this.state.profileImage != null ?
                 <Image style={this.props.size == 'small' ?

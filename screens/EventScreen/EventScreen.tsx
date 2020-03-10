@@ -15,6 +15,7 @@ import { CreateGroupInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
+import ProfileImage from '../../components/ProfileImage/ProfileImage'
 
 
 interface Props {
@@ -155,6 +156,7 @@ export default class EventScreen extends React.Component<Props, State>{
     this.setState({ data: temp })
   }
   render() {
+    console.log(this.state.data)
     console.log("EventScreen")
     return (
       this.state.data ?
@@ -173,7 +175,7 @@ export default class EventScreen extends React.Component<Props, State>{
                   <EditableText onChange={(value: any) => { this.updateValue("location", value) }} placeholder="Enter Event Location" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.location} isEditable={this.state.isEditable}></EditableText>
 
                   <Text>Organizer</Text>
-                  <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
+                  <ProfileImage user={this.state.data.ownerUser} size="small" />
                   <Text>Attending ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
 
                   {
@@ -181,7 +183,7 @@ export default class EventScreen extends React.Component<Props, State>{
                       this.state.data.members.items.length == 0 ?
                         <Text>No Attendees Yet</Text> :
                         this.state.data.members.items.map((item: any) => {
-                          return (<Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />)
+                          return (<ProfileImage user={item} size="small" />)
                         })}
                   {this.state.canJoin ?
                     <Button onPress={() => { this.join() }} bordered style={styles.sliderButton}><Text>Attend</Text></Button> :

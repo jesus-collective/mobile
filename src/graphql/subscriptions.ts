@@ -34,6 +34,9 @@ export const onCreateMessage = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        owns {
+          nextToken
+        }
         groups {
           nextToken
         }
@@ -44,6 +47,31 @@ export const onCreateMessage = /* GraphQL */ `
       room {
         id
         owner
+        ownerUser {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          hasPaidState
+          address
+          city
+          province
+          postalCode
+          country
+          profileImage
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          orgDescription
+        }
         type
         name
         description
@@ -156,6 +184,24 @@ export const onCreateUser = /* GraphQL */ `
       orgType
       orgSize
       orgDescription
+      owns {
+        items {
+          id
+          owner
+          type
+          name
+          description
+          memberCount
+          image
+          time
+          lastUpdated
+          location
+          length
+          effort
+          cost
+        }
+        nextToken
+      }
       groups {
         items {
           id
@@ -204,6 +250,24 @@ export const onUpdateUser = /* GraphQL */ `
       orgType
       orgSize
       orgDescription
+      owns {
+        items {
+          id
+          owner
+          type
+          name
+          description
+          memberCount
+          image
+          time
+          lastUpdated
+          location
+          length
+          effort
+          cost
+        }
+        nextToken
+      }
       groups {
         items {
           id
@@ -252,6 +316,24 @@ export const onDeleteUser = /* GraphQL */ `
       orgType
       orgSize
       orgDescription
+      owns {
+        items {
+          id
+          owner
+          type
+          name
+          description
+          memberCount
+          image
+          time
+          lastUpdated
+          location
+          length
+          effort
+          cost
+        }
+        nextToken
+      }
       groups {
         items {
           id
@@ -283,6 +365,31 @@ export const onCreateGroupMember = /* GraphQL */ `
       group {
         id
         owner
+        ownerUser {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          hasPaidState
+          address
+          city
+          province
+          postalCode
+          country
+          profileImage
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          orgDescription
+        }
         type
         name
         description
@@ -390,6 +497,9 @@ export const onCreateGroupMember = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        owns {
+          nextToken
+        }
         groups {
           nextToken
         }
@@ -409,6 +519,31 @@ export const onUpdateGroupMember = /* GraphQL */ `
       group {
         id
         owner
+        ownerUser {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          hasPaidState
+          address
+          city
+          province
+          postalCode
+          country
+          profileImage
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          orgDescription
+        }
         type
         name
         description
@@ -516,6 +651,9 @@ export const onUpdateGroupMember = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        owns {
+          nextToken
+        }
         groups {
           nextToken
         }
@@ -535,6 +673,31 @@ export const onDeleteGroupMember = /* GraphQL */ `
       group {
         id
         owner
+        ownerUser {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          hasPaidState
+          address
+          city
+          province
+          postalCode
+          country
+          profileImage
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          orgDescription
+        }
         type
         name
         description
@@ -642,6 +805,9 @@ export const onDeleteGroupMember = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        owns {
+          nextToken
+        }
         groups {
           nextToken
         }
@@ -657,6 +823,40 @@ export const onCreateGroup = /* GraphQL */ `
     onCreateGroup(owner: $owner) {
       id
       owner
+      ownerUser {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
       type
       name
       description
@@ -679,6 +879,31 @@ export const onCreateGroup = /* GraphQL */ `
       organizerGroup {
         id
         owner
+        ownerUser {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          hasPaidState
+          address
+          city
+          province
+          postalCode
+          country
+          profileImage
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          orgDescription
+        }
         type
         name
         description
@@ -786,6 +1011,9 @@ export const onCreateGroup = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        owns {
+          nextToken
+        }
         groups {
           nextToken
         }
@@ -817,6 +1045,9 @@ export const onCreateGroup = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        owns {
+          nextToken
+        }
         groups {
           nextToken
         }
@@ -843,6 +1074,40 @@ export const onUpdateGroup = /* GraphQL */ `
     onUpdateGroup(owner: $owner) {
       id
       owner
+      ownerUser {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
       type
       name
       description
@@ -865,6 +1130,31 @@ export const onUpdateGroup = /* GraphQL */ `
       organizerGroup {
         id
         owner
+        ownerUser {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          hasPaidState
+          address
+          city
+          province
+          postalCode
+          country
+          profileImage
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          orgDescription
+        }
         type
         name
         description
@@ -972,6 +1262,9 @@ export const onUpdateGroup = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        owns {
+          nextToken
+        }
         groups {
           nextToken
         }
@@ -1003,6 +1296,9 @@ export const onUpdateGroup = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        owns {
+          nextToken
+        }
         groups {
           nextToken
         }
@@ -1029,6 +1325,40 @@ export const onDeleteGroup = /* GraphQL */ `
     onDeleteGroup(owner: $owner) {
       id
       owner
+      ownerUser {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
       type
       name
       description
@@ -1051,6 +1381,31 @@ export const onDeleteGroup = /* GraphQL */ `
       organizerGroup {
         id
         owner
+        ownerUser {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          hasPaidState
+          address
+          city
+          province
+          postalCode
+          country
+          profileImage
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          orgDescription
+        }
         type
         name
         description
@@ -1158,6 +1513,9 @@ export const onDeleteGroup = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        owns {
+          nextToken
+        }
         groups {
           nextToken
         }
@@ -1189,6 +1547,9 @@ export const onDeleteGroup = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        owns {
+          nextToken
+        }
         groups {
           nextToken
         }
@@ -1252,6 +1613,9 @@ export const onCreateCourseInfo = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        owns {
+          nextToken
+        }
         groups {
           nextToken
         }
@@ -1305,6 +1669,9 @@ export const onUpdateCourseInfo = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        owns {
+          nextToken
+        }
         groups {
           nextToken
         }
@@ -1358,6 +1725,9 @@ export const onDeleteCourseInfo = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        owns {
+          nextToken
+        }
         groups {
           nextToken
         }

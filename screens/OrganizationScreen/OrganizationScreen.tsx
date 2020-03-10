@@ -14,6 +14,7 @@ import { CreateGroupInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
+import ProfileImage from '../../components/ProfileImage/ProfileImage'
 
 
 interface Props {
@@ -151,6 +152,7 @@ export default class GroupScreen extends React.Component<Props, State>{
     this.setState({ data: temp })
   }
   render() {
+    console.log(this.state.data)
     console.log("GroupScreen")
     return (
       this.state.data ?
@@ -168,7 +170,7 @@ export default class GroupScreen extends React.Component<Props, State>{
                   <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Organization Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
 
                   <Text>Organizer</Text>
-                  <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
+                  <ProfileImage user={this.state.data.ownerUser} size="small" />
                   <Text>Members ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
 
                   {
@@ -176,7 +178,7 @@ export default class GroupScreen extends React.Component<Props, State>{
                       this.state.data.members.items.length == 0 ?
                         <Text>No Members Yet</Text> :
                         this.state.data.members.items.map((item: any) => {
-                          return (<Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />)
+                          return (<ProfileImage user={item} size="small" />)
                         })}
                   {this.state.canJoin ?
                     <Button onPress={() => { this.join() }} bordered style={styles.sliderButton}><Text>Join Organization</Text></Button> :

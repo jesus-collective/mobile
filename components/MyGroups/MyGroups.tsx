@@ -1,4 +1,4 @@
-import { Left,Body, StyleProvider, Card, CardItem, List, ListItem, Right, Button, Text, Container } from 'native-base';
+import { Left, Body, StyleProvider, Card, CardItem, List, ListItem, Right, Button, Text, Container } from 'native-base';
 import * as React from 'react';
 import styles from '../style.js'
 import getTheme from '../../native-base-theme/components';
@@ -6,6 +6,7 @@ import material from '../../native-base-theme/variables/material';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Image } from 'react-native'
 import * as queries from '../../src/graphql/queries';
+import * as mutations from '../../src/graphql/mutations';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
 import { API, graphqlOperation, Auth } from 'aws-amplify';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
@@ -136,8 +137,7 @@ export default class MyGroups extends React.Component<Props, State> {
 
   }
   setInitialData(props) {
-    if (props.type == "profile") 
-    {
+    if (props.type == "profile") {
       var listUsers: any = API.graphql({
         query: queries.listUsers,
         variables: { filter: null },
@@ -183,7 +183,20 @@ export default class MyGroups extends React.Component<Props, State> {
   canLeave(id: any): boolean {
     return false
   }
-  join(id: any) {
+  async join(id: any) {
+    var user = await Auth.currentAuthenticatedUser();
+    try {
+      var createGroupMember: any = API.graphql({
+        query: mutations.createGroupMember,
+        variables: { input: { groupID: id, userID: user['username'] } },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+      });
+      createGroupMember.then((json) => {
+       // this.setState({ data: json.data.listGroups.items })
+      })
+    } catch (e) {
+      console.log(e)
+    }
 
   }
   leave(id: any) {
@@ -202,19 +215,19 @@ export default class MyGroups extends React.Component<Props, State> {
     </Card >
   }
   renderProfile(item: any) {
-    return  <Card key={item.id} style={{ width: "100%", minHeight: 50 }}>
-    <CardItem>
-      <Left>
-        <ProfileImage user={item} size="small"></ProfileImage>
-        <Body>
-          <Text style={styles.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
-          <Text style={styles.fontConnectWithRole}>{item.currentRole}</Text>
-          <Button bordered style={styles.connectWithSliderButton} onPress={() => { //this.openConversation() 
-          }}><Text>Start Conversation</Text></Button>
-        </Body>
-      </Left>
-    </CardItem>
-  </Card>
+    return <Card key={item.id} style={{ width: "100%", minHeight: 50 }}>
+      <CardItem>
+        <Left>
+          <ProfileImage user={item} size="small"></ProfileImage>
+          <Body>
+            <Text style={styles.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
+            <Text style={styles.fontConnectWithRole}>{item.currentRole}</Text>
+            <Button bordered style={styles.connectWithSliderButton} onPress={() => { //this.openConversation() 
+            }}><Text>Start Conversation</Text></Button>
+          </Body>
+        </Left>
+      </CardItem>
+    </Card>
   }
   renderEvent(item: any) {
     return <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: '0%', width: this.state.cardWidth }}>

@@ -32,7 +32,8 @@ type User
 	orgSize:String
 	orgDescription:String
 
-	groups: [GroupMember] @connection(keyName: "byGroup", fields: ["id"])
+	owns: [Group] @connection(name: "OwnerUser", keyField: "owner")
+	groups: [GroupMember] @connection(name: "UserMembers", keyField: "userID")
 	messages: [Message] @connection(name: "UserMessages", keyField: "userId", sortField: "when")
 
 }
@@ -41,10 +42,10 @@ type GroupMember
   @key(name: "byGroup", fields: ["groupID", "userID"])
   @key(name: "byUser", fields: ["userID", "groupID"]) {
   id: ID!
-  groupID: ID!
-  userID: ID!
-  group: Group! @connection(fields: ["groupID"])
-  user: User! @connection(fields: ["userID"])
+  groupID: ID
+  userID: ID
+  group: Group @connection(name: "GroupMembers", keyField: "groupID")
+  user: User @connection(name: "UserMembers", keyField: "userID")
 }
 type Group
 @model
@@ -57,12 +58,13 @@ type Group
 {
 	id:ID!
 	owner:String!
+	ownerUser: User @connection(name: "OwnerUser", keyField: "owner")
 	type:String!
 	name:String!
 	
 	description:String!
 	memberCount:Int
-  	members: [GroupMember] @connection(keyName: "byUser", fields: ["id"])
+  	members: [GroupMember] @connection(name: "GroupMembers", keyField: "groupID")
 	image:String!
 	time:String
 	lastUpdated:String

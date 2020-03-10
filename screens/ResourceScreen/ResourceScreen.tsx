@@ -14,6 +14,7 @@ import { CreateGroupInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
+import ProfileImage from '../../components/ProfileImage/ProfileImage'
 
 
 interface Props {
@@ -46,7 +47,7 @@ export default class GroupScreen extends React.Component<Props, State>{
       data: null,
       canSave: true,
       canLeave: false,
-      canJoin: false,
+      canJoin: true,
       isEditable: true,
       canDelete: true,
       validationError: "",
@@ -138,7 +139,7 @@ export default class GroupScreen extends React.Component<Props, State>{
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
     deleteGroupMember.then((json: any) => {
-     // this.setState({ canDelete: true, canSave: true, createNew: false })
+      this.setState({ canJoin: true, canLeave: false })
       console.log({ "Success mutations.deleteGroupMember": json });
     }).catch((err: any) => {
       console.log({ "Error mutations.deleteGroupMember": err });
@@ -147,11 +148,12 @@ export default class GroupScreen extends React.Component<Props, State>{
   join() {
     var createGroupMember: any = API.graphql({
       query: mutations.createGroupMember,
-      variables: { input: {groupId:this.state.data.id,userId:this.state.currentUser} },
+      variables: { input: {groupID:this.state.data.id,userID:this.state.currentUser} },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
     createGroupMember.then((json: any) => {
-    //  this.setState({ canDelete: true, canSave: true, createNew: false })
+      
+      this.setState({ canJoin: false, canLeave: true })
       console.log({ "Success mutations.createGroupMember": json });
     }).catch((err: any) => {
       console.log({ "Error mutations.createGroupMember": err });
@@ -176,6 +178,7 @@ export default class GroupScreen extends React.Component<Props, State>{
     this.setState({ data: temp })
   }
   render() {
+    console.log(this.state.data)
     console.log("GroupScreen")
     return (
       this.state.data ?
@@ -193,7 +196,7 @@ export default class GroupScreen extends React.Component<Props, State>{
                   <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Resource Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
 
                   <Text>Organizer</Text>
-                  <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
+                  <ProfileImage user={this.state.data.ownerUser} size="small" />
                   <Text>Members ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
 
                   {
@@ -201,7 +204,7 @@ export default class GroupScreen extends React.Component<Props, State>{
                       this.state.data.members.items.length == 0 ?
                         <Text>No Members Yet</Text> :
                         this.state.data.members.items.map((item: any) => {
-                          return (<Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />)
+                          return (<ProfileImage user={item} size="small" />)
                         })}
                   {this.state.canJoin ?
                     <Button onPress={() => { this.join() }} bordered style={styles.sliderButton}><Text>Join Resource</Text></Button> :

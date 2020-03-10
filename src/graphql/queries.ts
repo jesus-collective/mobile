@@ -27,6 +27,24 @@ export const getUser = /* GraphQL */ `
       orgType
       orgSize
       orgDescription
+      owns {
+        items {
+          id
+          owner
+          type
+          name
+          description
+          memberCount
+          image
+          time
+          lastUpdated
+          location
+          length
+          effort
+          cost
+        }
+        nextToken
+      }
       groups {
         items {
           id
@@ -80,6 +98,9 @@ export const listUsers = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        owns {
+          nextToken
+        }
         groups {
           nextToken
         }
@@ -96,6 +117,40 @@ export const getGroup = /* GraphQL */ `
     getGroup(id: $id) {
       id
       owner
+      ownerUser {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+      }
       type
       name
       description
@@ -118,6 +173,31 @@ export const getGroup = /* GraphQL */ `
       organizerGroup {
         id
         owner
+        ownerUser {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          hasPaidState
+          address
+          city
+          province
+          postalCode
+          country
+          profileImage
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          orgDescription
+        }
         type
         name
         description
@@ -225,6 +305,9 @@ export const getGroup = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        owns {
+          nextToken
+        }
         groups {
           nextToken
         }
@@ -256,6 +339,9 @@ export const getGroup = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        owns {
+          nextToken
+        }
         groups {
           nextToken
         }
@@ -287,6 +373,31 @@ export const listGroups = /* GraphQL */ `
       items {
         id
         owner
+        ownerUser {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          hasPaidState
+          address
+          city
+          province
+          postalCode
+          country
+          profileImage
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          orgDescription
+        }
         type
         name
         description
@@ -416,6 +527,9 @@ export const getCourseInfo = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        owns {
+          nextToken
+        }
         groups {
           nextToken
         }
@@ -509,6 +623,9 @@ export const getMessage = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        owns {
+          nextToken
+        }
         groups {
           nextToken
         }
@@ -519,6 +636,31 @@ export const getMessage = /* GraphQL */ `
       room {
         id
         owner
+        ownerUser {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          hasPaidState
+          address
+          city
+          province
+          postalCode
+          country
+          profileImage
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          orgDescription
+        }
         type
         name
         description
@@ -749,6 +891,31 @@ export const searchGroups = /* GraphQL */ `
       items {
         id
         owner
+        ownerUser {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          hasPaidState
+          address
+          city
+          province
+          postalCode
+          country
+          profileImage
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          orgDescription
+        }
         type
         name
         description
