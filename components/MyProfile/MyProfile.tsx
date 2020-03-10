@@ -167,7 +167,7 @@ export default class MyProfile extends React.Component<Props, State> {
               </View>
               <View style={{ marginBottom: 40, alignSelf: "center" }}>
                 <Text style={styles.fontFormName}>{this.state.UserDetails.given_name} {this.state.UserDetails.family_name}</Text>
-                <Text style={styles.fontFormRole}>My Current Role not defined</Text>
+                <Text style={styles.fontFormRole}>{this.state.UserDetails.currentRole?this.state.UserDetails.currentRole:'My Current Role not defined'}</Text>
                 <Text style={styles.fontFormUserType}>Partner</Text>
 
                 <Text style={styles.fontFormText}><Text style={styles.fontFormMandatory}>*</Text>One Sentence about me</Text>

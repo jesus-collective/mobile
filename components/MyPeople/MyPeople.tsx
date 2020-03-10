@@ -8,6 +8,7 @@ import { Image, TouchableOpacity } from 'react-native'
 import * as queries from '../../src/graphql/queries';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
 import { API, graphqlOperation, Auth } from 'aws-amplify';
+import ProfileImage from '../../components/ProfileImage/ProfileImage'
 
 interface Props {
   navigation: any
@@ -21,6 +22,7 @@ interface State {
   //createString: String
   titleString: String
   data: any
+  
   //showCreateButton: Boolean
 }
 export default class MyPeople extends React.Component<Props, State> {
@@ -33,7 +35,8 @@ export default class MyPeople extends React.Component<Props, State> {
       titleString: "People you may connect with",
       //type: props.type,
       //cardWidth: 250,
-      data: [],
+      data: []
+   
       // showCreateButton: false
     }
     this.setInitialData(props)
@@ -48,13 +51,16 @@ export default class MyPeople extends React.Component<Props, State> {
     listUsers.then((json) => {
       console.log(json)
       this.setState({ data: json.data.listUsers.items })
+     
     }).catch(
       (e: any) => {
         console.log(e)
         this.setState({ data: e.data.listUsers.items })
+      
       }
     )
   }
+ 
   openConversation() {
     console.log("Navigate to conversationScreen")
     this.props.navigation.push("ConversationScreen");
@@ -67,6 +73,7 @@ export default class MyPeople extends React.Component<Props, State> {
     console.log("Navigate to profileScreen")
     this.props.navigation.push("ProfileScreen", { id: id, create: false });
   }
+ 
   render() {
     return (
       <StyleProvider style={getTheme(material)}>
@@ -80,7 +87,9 @@ export default class MyPeople extends React.Component<Props, State> {
                   <Card style={{ width: "100%", minHeight: 50 }}>
                     <CardItem >
                       <Left>
-                        <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
+                        <ProfileImage user={item} size='small'>
+                        </ProfileImage>
+                       
                         <Body>
                           <Text style={styles.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
                           <Text style={styles.fontConnectWithRole}>{item.currentRole}</Text>

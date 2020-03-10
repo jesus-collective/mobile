@@ -8,6 +8,8 @@ import { Image } from 'react-native'
 import * as queries from '../../src/graphql/queries';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
 import { API, graphqlOperation, Auth } from 'aws-amplify';
+import ProfileImage from '../../components/ProfileImage/ProfileImage'
+
 var moment = require('moment');
 
 interface Props {
@@ -203,7 +205,7 @@ export default class MyGroups extends React.Component<Props, State> {
     return  <Card key={item.id} style={{ width: "100%", minHeight: 50 }}>
     <CardItem>
       <Left>
-        <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
+        <ProfileImage user={item} size="small"></ProfileImage>
         <Body>
           <Text style={styles.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
           <Text style={styles.fontConnectWithRole}>{item.currentRole}</Text>

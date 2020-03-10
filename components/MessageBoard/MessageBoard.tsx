@@ -12,6 +12,7 @@ import * as subscriptions from '../../src/graphql/subscriptions';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
 import { API, graphqlOperation, Auth } from 'aws-amplify';
 import { Observable as rxObservable, of } from "rxjs";
+import ProfileImage from '../../components/ProfileImage/ProfileImage'
 
 interface Props {
   groupId: string
@@ -123,7 +124,7 @@ export default class MessageBoard extends React.Component<Props, State> {
                     <Card key={item.id} style={{ borderRadius: 15, minHeight: 50 }}>
                       <CardItem style={{ borderBottomLeftRadius: 0, borderBottomRightRadius: 0, borderTopLeftRadius: 15, borderTopRightRadius: 15, backgroundColor: this.state.selfId === item.userId ? "#99ff99" : "#9999ff" }}>
                         <Left>
-                          <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
+                          <ProfileImage size="small" user={item.author}></ProfileImage>
                           <Body>
                             <Text style={styles.fontConnectWithName}>
                               {item.author != null ? item.author.given_name : null} {item.author != null ? item.author.family_name : null}
