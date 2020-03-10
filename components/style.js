@@ -12,22 +12,22 @@ export default EStyleSheet.create({
         alignItems: 'center',
         backgroundColor: mainColor,
     },
-    groupNameInput:{
+    groupNameInput: {
         borderColor: 'white',
         borderWidth: 1,
         marginTop: 8,
         borderRadius: 5,
         padding: 3,
-        flex:0
+        flex: 0
     },
-    groupDescriptionInput:{
+    groupDescriptionInput: {
         borderColor: 'white',
         borderWidth: 1,
         marginTop: 8,
         borderRadius: 5,
         padding: 3,
-        flex:0,
-        minHeight:100
+        flex: 0,
+        minHeight: 100
     },
     textInput: {
         height: 40,
@@ -49,12 +49,6 @@ export default EStyleSheet.create({
     },
     font: {
         fontFamily: 'Graphik-Regular-App', fontSize: 16
-    },
-    fontFormProfileImageButton: {
-        position: "absolute", left: 20, width: 210, top: 150, backgroundColor: "#F0493E", textTransform: "capitalize"
-    },
-    fontFormProfileImageButtonText: {
-        fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 14, lineHeight: 24, display: "flex", alignItems: "center", textAlign: "center", letterSpacing: -0.3, color: "#FFFFFF", textTransform: null
     },
     saveProfileButton: {
         backgroundColor: "#F0493E", textTransform: "capitalize"
@@ -112,7 +106,7 @@ export default EStyleSheet.create({
         fontFamily: 'Graphik-Regular-App', fontSize: 14, color: '#aaaaaa'
     },
     fontSliderHeader: {
-        fontFamily: 'Graphik-Bold-App', fontWeight:'bold', fontSize: 16, color: '#000000'
+        fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 16, color: '#000000'
     },
     fontSliderButtons: {
         fontFamily: 'Graphik-Bold-App', fontSize: 16, color: '#F0493E', fontWeight: "bold"
@@ -227,7 +221,7 @@ export default EStyleSheet.create({
 
     signUpScreen1Content: Platform.OS === 'web' ?
         { position: "absolute", width: "100%" } :
-        { position: "absolute", width: "100%", height: "100%", left: 0, top: 0  },
+        { position: "absolute", width: "100%", height: "100%", left: 0, top: 0 },
     signUpScreen1PaymentColumn1: Platform.OS === 'web' ?
         { position: "absolute", left: "35%", width: "25%", top: 100, height: "100%" } :
         {},
@@ -236,5 +230,21 @@ export default EStyleSheet.create({
         {},
     signUpScreen1PaymentBody: Platform.OS === 'web' ?
         { width: "100%", left: 0, top: 0, height: "100%" } :
-        { position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1  }
+        { position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1 },
+
+    fontFormProfileImageButton: {
+        backgroundColor: "#F0493E", textTransform: "capitalize"
+    },
+    fontFormProfileImageButtonText: {
+        fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 12, lineHeight: 24, display: "flex", alignItems: "center", textAlign: "center", letterSpacing: -0.3, color: "#FFFFFF", textTransform: null
+    },
+
+    fileInputWrapper:
+        { left: 20, width: 210, top: 150, overflow: "hidden", position: "absolute"},
+
+    fileInputWrapperBtn:
+        { display: "inline-block", width: 200, height: 40 }
+
+
+
 })
