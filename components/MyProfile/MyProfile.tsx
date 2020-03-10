@@ -154,7 +154,7 @@ export default class MyProfile extends React.Component<Props, State> {
             <View style={{ flex: 30, flexDirection: "column" }}>
               <View style={{ alignSelf: "center" }}>
                 <Image style={{ width: "250px", height: "290px", borderRadius: 120 }}
-                  source={this.state.profileImage == "" ? '../../assets/profile-placeholder.png' : this.state.profileImage}>
+                  source={this.state.profileImage == "" ? require('../../assets/profile-placeholder.png') : this.state.profileImage}>
 
                 </Image>
                 <View style={styles.fileInputWrapper}>
