@@ -10,6 +10,7 @@ import * as mutations from '../../src/graphql/mutations';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
 import { API, graphqlOperation, Auth } from 'aws-amplify';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 var moment = require('moment');
 
@@ -17,6 +18,7 @@ interface Props {
   navigation: any
   wrap: Boolean
   type: String
+  showMore:Boolean
 }
 interface State {
   openSingle: string
@@ -27,6 +29,8 @@ interface State {
   titleString: String
   data: any
   showCreateButton: Boolean
+  currentUser: String
+  nextToken: any
 }
 
 export default class MyGroups extends React.Component<Props, State> {
@@ -40,8 +44,10 @@ export default class MyGroups extends React.Component<Props, State> {
         titleString: "Events",
         type: props.type,
         cardWidth: 250,
-        data: null,
-        showCreateButton: false
+        data: [],
+        showCreateButton: false,
+        currentUser: null,
+        nextToken: null
       }
 
     }
@@ -54,8 +60,10 @@ export default class MyGroups extends React.Component<Props, State> {
         titleString: "Groups",
         type: props.type,
         cardWidth: 250,
-        data: null,
-        showCreateButton: false
+        data: [],
+        showCreateButton: false,
+        currentUser: null,
+        nextToken: null
       }
 
     }
@@ -68,8 +76,10 @@ export default class MyGroups extends React.Component<Props, State> {
         titleString: "Resources",
         type: props.type,
         cardWidth: 250,
-        data: null,
-        showCreateButton: false
+        data: [],
+        showCreateButton: false,
+        currentUser: null,
+        nextToken: null
       }
 
     }
@@ -82,8 +92,10 @@ export default class MyGroups extends React.Component<Props, State> {
         titleString: "Organizations",
         type: props.type,
         cardWidth: 200,
-        data: null,
-        showCreateButton: false
+        data: [],
+        showCreateButton: false,
+        currentUser: null,
+        nextToken: null
       }
 
     }
@@ -96,8 +108,10 @@ export default class MyGroups extends React.Component<Props, State> {
         titleString: "Courses",
         type: props.type,
         cardWidth: 200,
-        data: null,
-        showCreateButton: false
+        data: [],
+        showCreateButton: false,
+        currentUser: null,
+        nextToken: null
       }
 
     }
@@ -110,8 +124,10 @@ export default class MyGroups extends React.Component<Props, State> {
         titleString: "Profiles",
         type: props.type,
         cardWidth: 200,
-        data: null,
-        showCreateButton: false
+        data: [],
+        showCreateButton: false,
+        currentUser: null,
+        nextToken: null
       }
 
     }
@@ -124,13 +140,16 @@ export default class MyGroups extends React.Component<Props, State> {
         titleString: "",
         createString: "",
         cardWidth: 300,
-        data: null,
-        showCreateButton: false
+        data: [],
+        showCreateButton: false,
+        currentUser: null,
+        nextToken: null
       }
     }
     this.setInitialData(props)
     var user = Auth.currentAuthenticatedUser();
     user.then((user: any) => {
+      this.setState({ currentUser: user.username })
       if (props.type != "profile")
         this.setState({ showCreateButton: user.signInUserSession.accessToken.payload["cognito:groups"].includes("verifiedUsers") })
     })
@@ -140,11 +159,16 @@ export default class MyGroups extends React.Component<Props, State> {
     if (props.type == "profile") {
       var listUsers: any = API.graphql({
         query: queries.listUsers,
-        variables: { filter: null },
+        variables: { limit: 20,filter: null, nextToken: this.state.nextToken },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       listUsers.then((json) => {
-        this.setState({ data: json.data.listUsers.items })
+        var temp = [...this.state.data, ...json.data.listUsers.items]
+       
+        this.setState({
+          data: temp,
+          nextToken: json.data.listUsers.nextToken
+        })
       }).catch(
         (e: any) => {
           console.log(e)
@@ -154,13 +178,19 @@ export default class MyGroups extends React.Component<Props, State> {
     }
     else {
       var listGroup: any = API.graphql({
-        query: queries.listGroups,
-        variables: { filter: { id: { beginsWith: props.type + "-" } } },
+        query: queries.groupByType,
+        variables: { limit: 20, type: props.type, nextToken: this.state.nextToken },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
 
       listGroup.then((json) => {
-        this.setState({ data: json.data.listGroups.items })
+       
+        var temp = [...this.state.data, ...json.data.groupByType.items]
+       
+        this.setState({
+          data: temp,
+          nextToken: json.data.groupByType.nextToken
+        })
       })
     }
   }
@@ -183,24 +213,34 @@ export default class MyGroups extends React.Component<Props, State> {
   canLeave(id: any): boolean {
     return false
   }
-  async join(id: any) {
-    var user = await Auth.currentAuthenticatedUser();
-    try {
-      var createGroupMember: any = API.graphql({
-        query: mutations.createGroupMember,
-        variables: { input: { groupID: id, userID: user['username'] } },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-      });
-      createGroupMember.then((json) => {
-       // this.setState({ data: json.data.listGroups.items })
-      })
-    } catch (e) {
-      console.log(e)
-    }
+  join(id: any) {
+    var createGroupMember: any = API.graphql({
+      query: mutations.createGroupMember,
+      variables: { input: { groupID: id, userID: this.state.currentUser } },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+    createGroupMember.then((json: any) => {
 
+      // this.setState({ canJoin: false, canLeave: true })
+      console.log({ "Success mutations.createGroupMember": json });
+    }).catch((err: any) => {
+      console.log({ "Error mutations.createGroupMember": err });
+    });
   }
   leave(id: any) {
-
+    /* var user = await Auth.currentAuthenticatedUser();
+     try {
+       var createGroupMember: any = API.graphql({
+         query: mutations.deleteGroupMember,
+         variables: { input: { groupID: id, userID: user['username'] } },
+         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+       });
+       createGroupMember.then((json) => {
+        // this.setState({ data: json.data.listGroups.items })
+       })
+     } catch (e) {
+       console.log(e)
+     }*/
   }
   renderGroup(item: any) {
     return <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: "0%", width: this.state.cardWidth }
@@ -318,7 +358,15 @@ export default class MyGroups extends React.Component<Props, State> {
                 })
                 : null
               }
-
+              {this.state.nextToken ?
+              this.props.showMore?
+              <TouchableOpacity onPress={()=>{this.setInitialData(this.props)}} >
+                <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: '0%', width: this.state.cardWidth }}>
+                  <CardItem   ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>Load more...</Text></CardItem>
+                </Card>
+                </TouchableOpacity>
+                : null
+                :null}
             </Container>
           </Container>
         </StyleProvider>

@@ -50,6 +50,7 @@ type GroupMember
 type Group
 @model
 @searchable
+ @key(name: "byType", fields: ["type", "id"], queryField:"groupByType")
 @auth(rules: [
  { allow: owner, ownerField: "owner" },
  { allow: groups, groups: ["verifiedUsers"],operations: [read]}

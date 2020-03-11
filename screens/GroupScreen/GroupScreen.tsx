@@ -31,6 +31,7 @@ interface State {
   isEditable: boolean
   canDelete: boolean
   validationError: String
+  currentUser:String
 }
 
 
@@ -46,11 +47,13 @@ export default class GroupScreen extends React.Component<Props, State>{
       data: null,
       canSave: true,
       canLeave: false,
-      canJoin: false,
+      canJoin: true,
       isEditable: true,
       canDelete: true,
-      validationError: ""
-    }
+      validationError: "",
+      currentUser:null
+    }    
+    Auth.currentAuthenticatedUser().then((user: any) => {this.setState({currentUser:user.username})})
     this.setInitialData(props)
   }
 
@@ -132,7 +135,18 @@ export default class GroupScreen extends React.Component<Props, State>{
 
   }
   join() {
-
+    var createGroupMember: any = API.graphql({
+      query: mutations.createGroupMember,
+      variables: { input: {groupID:this.state.data.id,userID:this.state.currentUser} },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+    createGroupMember.then((json: any) => {
+      
+      this.setState({ canJoin: false, canLeave: true })
+      console.log({ "Success mutations.createGroupMember": json });
+    }).catch((err: any) => {
+      console.log({ "Error mutations.createGroupMember": err });
+    });
   }
   delete() {
     var deleteGroup: any = API.graphql({

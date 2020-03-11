@@ -806,6 +806,138 @@ export const listMessages = /* GraphQL */ `
     }
   }
 `;
+export const groupByType = /* GraphQL */ `
+  query GroupByType(
+    $type: String
+    $id: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelGroupFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    groupByType(
+      type: $type
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        owner
+        ownerUser {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          hasPaidState
+          address
+          city
+          province
+          postalCode
+          country
+          profileImage
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          orgDescription
+        }
+        type
+        name
+        description
+        memberCount
+        members {
+          nextToken
+        }
+        image
+        time
+        lastUpdated
+        location
+        length
+        effort
+        cost
+        organizerGroup {
+          id
+          owner
+          type
+          name
+          description
+          memberCount
+          image
+          time
+          lastUpdated
+          location
+          length
+          effort
+          cost
+        }
+        organizerUser {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          hasPaidState
+          address
+          city
+          province
+          postalCode
+          country
+          profileImage
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          orgDescription
+        }
+        instructors {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          hasPaidState
+          address
+          city
+          province
+          postalCode
+          country
+          profileImage
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          orgDescription
+        }
+        messages {
+          nextToken
+        }
+      }
+      nextToken
+    }
+  }
+`;
 export const messagesByRoom = /* GraphQL */ `
   query MessagesByRoom(
     $roomId: ID

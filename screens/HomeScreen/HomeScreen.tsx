@@ -47,11 +47,11 @@ export default class HomeScreen extends React.Component<Props, State>{
           <Container style={{ display: "block" }}>
             <Container style={{ height: 2300, flex: 1, display: "flex", flexDirection: "row" }}>
               <Container style={{ flex: 70, flexDirection: "column" }}>
-                <MyGroups type="event" wrap={false} navigation={this.props.navigation}></MyGroups>
-                <MyGroups type="group" wrap={false} navigation={this.props.navigation}></MyGroups>
-                <MyGroups type="resource" wrap={false} navigation={this.props.navigation}></MyGroups>
-                <MyGroups type="organization" wrap={false} navigation={this.props.navigation}></MyGroups>
-                <MyGroups type="course" wrap={false} navigation={this.props.navigation}></MyGroups>
+                <MyGroups showMore={false} type="event" wrap={false} navigation={this.props.navigation}></MyGroups>
+                <MyGroups showMore={false} type="group" wrap={false} navigation={this.props.navigation}></MyGroups>
+                <MyGroups showMore={false} type="resource" wrap={false} navigation={this.props.navigation}></MyGroups>
+                <MyGroups showMore={false} type="organization" wrap={false} navigation={this.props.navigation}></MyGroups>
+                <MyGroups showMore={false} type="course" wrap={false} navigation={this.props.navigation}></MyGroups>
               </Container>
               <Container style={{ flex: 30, flexDirection: "column" }}>
                 <MyPeople wrap={false} navigation={this.props.navigation}></MyPeople>

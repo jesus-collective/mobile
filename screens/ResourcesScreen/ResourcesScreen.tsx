@@ -36,7 +36,7 @@ export default class HomeScreen extends React.Component<Props, State>{
           <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
             <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
             
-              <MyGroups  type="resource"  wrap={true} navigation={this.props.navigation}></MyGroups>
+              <MyGroups showMore={true}  type="resource"  wrap={true} navigation={this.props.navigation}></MyGroups>
              
             </Container>
             <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
