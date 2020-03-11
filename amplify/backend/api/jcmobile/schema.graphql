@@ -77,7 +77,8 @@ type Group
 	organizerUser:[User]
 	instructors:[User]
 	messages: [Message] @connection(name: "RoomMessages", keyField: "roomId", sortField: "when")
-
+	eventType:String
+	eventUrl:String
   }
 type CourseInfo
 @model

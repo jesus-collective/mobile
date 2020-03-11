@@ -88,6 +88,8 @@ export type CreateGroupInput = {
   length?: string | null,
   effort?: string | null,
   cost?: string | null,
+  eventType?: string | null,
+  eventUrl?: string | null,
 };
 
 export type UpdateGroupInput = {
@@ -104,6 +106,8 @@ export type UpdateGroupInput = {
   length?: string | null,
   effort?: string | null,
   cost?: string | null,
+  eventType?: string | null,
+  eventUrl?: string | null,
 };
 
 export type DeleteGroupInput = {
@@ -243,6 +247,8 @@ export type ModelGroupFilterInput = {
   length?: ModelStringFilterInput | null,
   effort?: ModelStringFilterInput | null,
   cost?: ModelStringFilterInput | null,
+  eventType?: ModelStringFilterInput | null,
+  eventUrl?: ModelStringFilterInput | null,
   and?: Array< ModelGroupFilterInput | null > | null,
   or?: Array< ModelGroupFilterInput | null > | null,
   not?: ModelGroupFilterInput | null,
@@ -321,6 +327,8 @@ export type SearchableGroupFilterInput = {
   length?: SearchableStringFilterInput | null,
   effort?: SearchableStringFilterInput | null,
   cost?: SearchableStringFilterInput | null,
+  eventType?: SearchableStringFilterInput | null,
+  eventUrl?: SearchableStringFilterInput | null,
   and?: Array< SearchableGroupFilterInput | null > | null,
   or?: Array< SearchableGroupFilterInput | null > | null,
   not?: SearchableGroupFilterInput | null,
@@ -387,6 +395,8 @@ export enum SearchableGroupSortableFields {
   length = "length",
   effort = "effort",
   cost = "cost",
+  eventType = "eventType",
+  eventUrl = "eventUrl",
 }
 
 
@@ -443,6 +453,8 @@ export type CreateUserMutation = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -519,6 +531,8 @@ export type UpdateUserMutation = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -595,6 +609,8 @@ export type DeleteUserMutation = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -694,6 +710,8 @@ export type CreateGroupMemberMutation = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       organizerUser:  Array< {
         __typename: "User",
@@ -751,6 +769,8 @@ export type CreateGroupMemberMutation = {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
       } | null,
+      eventType: string | null,
+      eventUrl: string | null,
     } | null,
     user:  {
       __typename: "User",
@@ -863,6 +883,8 @@ export type UpdateGroupMemberMutation = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       organizerUser:  Array< {
         __typename: "User",
@@ -920,6 +942,8 @@ export type UpdateGroupMemberMutation = {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
       } | null,
+      eventType: string | null,
+      eventUrl: string | null,
     } | null,
     user:  {
       __typename: "User",
@@ -1032,6 +1056,8 @@ export type DeleteGroupMemberMutation = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       organizerUser:  Array< {
         __typename: "User",
@@ -1089,6 +1115,8 @@ export type DeleteGroupMemberMutation = {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
       } | null,
+      eventType: string | null,
+      eventUrl: string | null,
     } | null,
     user:  {
       __typename: "User",
@@ -1259,6 +1287,8 @@ export type CreateGroupMutation = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       organizerUser:  Array< {
         __typename: "User",
@@ -1316,6 +1346,8 @@ export type CreateGroupMutation = {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
       } | null,
+      eventType: string | null,
+      eventUrl: string | null,
     } | null > | null,
     organizerUser:  Array< {
       __typename: "User",
@@ -1406,6 +1438,8 @@ export type CreateGroupMutation = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    eventType: string | null,
+    eventUrl: string | null,
   } | null,
 };
 
@@ -1537,6 +1571,8 @@ export type UpdateGroupMutation = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       organizerUser:  Array< {
         __typename: "User",
@@ -1594,6 +1630,8 @@ export type UpdateGroupMutation = {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
       } | null,
+      eventType: string | null,
+      eventUrl: string | null,
     } | null > | null,
     organizerUser:  Array< {
       __typename: "User",
@@ -1684,6 +1722,8 @@ export type UpdateGroupMutation = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    eventType: string | null,
+    eventUrl: string | null,
   } | null,
 };
 
@@ -1815,6 +1855,8 @@ export type DeleteGroupMutation = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       organizerUser:  Array< {
         __typename: "User",
@@ -1872,6 +1914,8 @@ export type DeleteGroupMutation = {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
       } | null,
+      eventType: string | null,
+      eventUrl: string | null,
     } | null > | null,
     organizerUser:  Array< {
       __typename: "User",
@@ -1962,6 +2006,8 @@ export type DeleteGroupMutation = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    eventType: string | null,
+    eventUrl: string | null,
   } | null,
 };
 
@@ -2274,6 +2320,8 @@ export type CreateMessageMutation = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       organizerUser:  Array< {
         __typename: "User",
@@ -2331,6 +2379,8 @@ export type CreateMessageMutation = {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
       } | null,
+      eventType: string | null,
+      eventUrl: string | null,
     } | null,
   } | null,
 };
@@ -2446,6 +2496,8 @@ export type UpdateMessageMutation = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       organizerUser:  Array< {
         __typename: "User",
@@ -2503,6 +2555,8 @@ export type UpdateMessageMutation = {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
       } | null,
+      eventType: string | null,
+      eventUrl: string | null,
     } | null,
   } | null,
 };
@@ -2618,6 +2672,8 @@ export type DeleteMessageMutation = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       organizerUser:  Array< {
         __typename: "User",
@@ -2675,6 +2731,8 @@ export type DeleteMessageMutation = {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
       } | null,
+      eventType: string | null,
+      eventUrl: string | null,
     } | null,
   } | null,
 };
@@ -2726,6 +2784,8 @@ export type GetUserQuery = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -2934,6 +2994,8 @@ export type GetGroupQuery = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       organizerUser:  Array< {
         __typename: "User",
@@ -2991,6 +3053,8 @@ export type GetGroupQuery = {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
       } | null,
+      eventType: string | null,
+      eventUrl: string | null,
     } | null > | null,
     organizerUser:  Array< {
       __typename: "User",
@@ -3081,6 +3145,8 @@ export type GetGroupQuery = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    eventType: string | null,
+    eventUrl: string | null,
   } | null,
 };
 
@@ -3153,6 +3219,8 @@ export type ListGroupsQuery = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       organizerUser:  Array< {
         __typename: "User",
@@ -3210,6 +3278,8 @@ export type ListGroupsQuery = {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
       } | null,
+      eventType: string | null,
+      eventUrl: string | null,
     } | null > | null,
     nextToken: string | null,
   } | null,
@@ -3446,6 +3516,8 @@ export type GetMessageQuery = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       organizerUser:  Array< {
         __typename: "User",
@@ -3503,6 +3575,8 @@ export type GetMessageQuery = {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
       } | null,
+      eventType: string | null,
+      eventUrl: string | null,
     } | null,
   } | null,
 };
@@ -3565,6 +3639,8 @@ export type ListMessagesQuery = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null,
     } | null > | null,
     nextToken: string | null,
@@ -3643,6 +3719,8 @@ export type GroupByTypeQuery = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       organizerUser:  Array< {
         __typename: "User",
@@ -3700,6 +3778,8 @@ export type GroupByTypeQuery = {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
       } | null,
+      eventType: string | null,
+      eventUrl: string | null,
     } | null > | null,
     nextToken: string | null,
   } | null,
@@ -3766,6 +3846,8 @@ export type MessagesByRoomQuery = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null,
     } | null > | null,
     nextToken: string | null,
@@ -3842,6 +3924,8 @@ export type SearchGroupsQuery = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       organizerUser:  Array< {
         __typename: "User",
@@ -3899,6 +3983,8 @@ export type SearchGroupsQuery = {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
       } | null,
+      eventType: string | null,
+      eventUrl: string | null,
     } | null > | null,
     nextToken: string | null,
     total: number | null,
@@ -4016,6 +4102,8 @@ export type OnCreateMessageSubscription = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       organizerUser:  Array< {
         __typename: "User",
@@ -4073,6 +4161,8 @@ export type OnCreateMessageSubscription = {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
       } | null,
+      eventType: string | null,
+      eventUrl: string | null,
     } | null,
   } | null,
 };
@@ -4124,6 +4214,8 @@ export type OnCreateUserSubscription = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -4200,6 +4292,8 @@ export type OnUpdateUserSubscription = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -4276,6 +4370,8 @@ export type OnDeleteUserSubscription = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       nextToken: string | null,
     } | null,
@@ -4371,6 +4467,8 @@ export type OnCreateGroupMemberSubscription = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       organizerUser:  Array< {
         __typename: "User",
@@ -4428,6 +4526,8 @@ export type OnCreateGroupMemberSubscription = {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
       } | null,
+      eventType: string | null,
+      eventUrl: string | null,
     } | null,
     user:  {
       __typename: "User",
@@ -4536,6 +4636,8 @@ export type OnUpdateGroupMemberSubscription = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       organizerUser:  Array< {
         __typename: "User",
@@ -4593,6 +4695,8 @@ export type OnUpdateGroupMemberSubscription = {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
       } | null,
+      eventType: string | null,
+      eventUrl: string | null,
     } | null,
     user:  {
       __typename: "User",
@@ -4701,6 +4805,8 @@ export type OnDeleteGroupMemberSubscription = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       organizerUser:  Array< {
         __typename: "User",
@@ -4758,6 +4864,8 @@ export type OnDeleteGroupMemberSubscription = {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
       } | null,
+      eventType: string | null,
+      eventUrl: string | null,
     } | null,
     user:  {
       __typename: "User",
@@ -4928,6 +5036,8 @@ export type OnCreateGroupSubscription = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       organizerUser:  Array< {
         __typename: "User",
@@ -4985,6 +5095,8 @@ export type OnCreateGroupSubscription = {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
       } | null,
+      eventType: string | null,
+      eventUrl: string | null,
     } | null > | null,
     organizerUser:  Array< {
       __typename: "User",
@@ -5075,6 +5187,8 @@ export type OnCreateGroupSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    eventType: string | null,
+    eventUrl: string | null,
   } | null,
 };
 
@@ -5206,6 +5320,8 @@ export type OnUpdateGroupSubscription = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       organizerUser:  Array< {
         __typename: "User",
@@ -5263,6 +5379,8 @@ export type OnUpdateGroupSubscription = {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
       } | null,
+      eventType: string | null,
+      eventUrl: string | null,
     } | null > | null,
     organizerUser:  Array< {
       __typename: "User",
@@ -5353,6 +5471,8 @@ export type OnUpdateGroupSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    eventType: string | null,
+    eventUrl: string | null,
   } | null,
 };
 
@@ -5484,6 +5604,8 @@ export type OnDeleteGroupSubscription = {
         length: string | null,
         effort: string | null,
         cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
       } | null > | null,
       organizerUser:  Array< {
         __typename: "User",
@@ -5541,6 +5663,8 @@ export type OnDeleteGroupSubscription = {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
       } | null,
+      eventType: string | null,
+      eventUrl: string | null,
     } | null > | null,
     organizerUser:  Array< {
       __typename: "User",
@@ -5631,6 +5755,8 @@ export type OnDeleteGroupSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    eventType: string | null,
+    eventUrl: string | null,
   } | null,
 };
 

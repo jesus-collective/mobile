@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import { StyleProvider, Container, Content, Text, Button } from 'native-base';
+import { Icon, Picker, StyleProvider, Container, Content, Text, Button } from 'native-base';
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
 import styles from '../../components/style.js'
@@ -8,6 +8,7 @@ import material from '../../native-base-theme/variables/material';
 import MessageBoard from '../../components/MessageBoard/MessageBoard'
 import EditableDate from '../../components/Editable/EditableDate'
 import EditableText from '../../components/Editable/EditableText'
+import EditableUrl from '../../components/Editable/EditableUrl'
 import Validate from '../../components/Validate/Validate'
 import { Image } from 'react-native'
 import { API, graphqlOperation, Auth } from 'aws-amplify';
@@ -32,7 +33,7 @@ interface State {
   isEditable: boolean
   canDelete: boolean
   validationError: String
-  currentUser:String
+  currentUser: String
 }
 
 
@@ -52,9 +53,9 @@ export default class EventScreen extends React.Component<Props, State>{
       isEditable: true,
       canDelete: true,
       validationError: "",
-      currentUser:null
-    }    
-    Auth.currentAuthenticatedUser().then((user: any) => {this.setState({currentUser:user.username})})
+      currentUser: null
+    }
+    Auth.currentAuthenticatedUser().then((user: any) => { this.setState({ currentUser: user.username }) })
     this.setInitialData(props)
   }
 
@@ -109,13 +110,13 @@ export default class EventScreen extends React.Component<Props, State>{
       });
     }
   }
-  clean(item)
-  {
+  clean(item) {
     delete item.members
     delete item.messages
     delete item.organizerGroup
     delete item.organizerUser
     delete item.instructors
+    delete item.ownerUser
     return item
   }
   save() {
@@ -140,11 +141,11 @@ export default class EventScreen extends React.Component<Props, State>{
   join() {
     var createGroupMember: any = API.graphql({
       query: mutations.createGroupMember,
-      variables: { input: {groupID:this.state.data.id,userID:this.state.currentUser} },
+      variables: { input: { groupID: this.state.data.id, userID: this.state.currentUser } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
     createGroupMember.then((json: any) => {
-      
+
       this.setState({ canJoin: false, canLeave: true })
       console.log({ "Success mutations.createGroupMember": json });
     }).catch((err: any) => {
@@ -187,8 +188,34 @@ export default class EventScreen extends React.Component<Props, State>{
                   <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Event Name" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
                   <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Event Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
                   <EditableDate type="datetime" onChange={(value: any) => { this.updateValue("time", value) }} placeholder="Enter Event Time" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableDate>
-                  <EditableText onChange={(value: any) => { this.updateValue("location", value) }} placeholder="Enter Event Location" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.location} isEditable={this.state.isEditable}></EditableText>
+                  {this.state.isEditable ? <Picker
+                    mode="dropdown"
+                    iosIcon={<Icon name="arrow-down" />}
+                    style={{ width: undefined }}
+                    placeholder="Event type"
+                    placeholderStyle={{ color: "#bfc6ea" }}
+                    placeholderIconColor="#007aff"
+                    selectedValue={this.state.data.eventType}
+                    onValueChange={(value: any) => { this.updateValue("eventType", value) }}
+                  >
+                    <Picker.Item label="Zoom" value="zoom" />
+                    <Picker.Item label="Location" value="location" />
+                    <Picker.Item label="Eventbrite" value="eventbrite" />
 
+                  </Picker>
+                    : null}
+                  {this.state.data.eventType != "location" ?
+                    <EditableUrl title={this.state.data.eventType}
+                      onChange={(value: any) => { this.updateValue("eventUrl", value) }}
+                      placeholder="Enter Event URL" multiline={false} textStyle={styles.fontRegular}
+                      inputStyle={styles.groupNameInput} value={this.state.data.eventUrl}
+                      isEditable={false}></EditableUrl>
+                    :
+                    <EditableText onChange={(value: any) => { this.updateValue("location", value) }}
+                      placeholder="Enter Event Location" multiline={false} textStyle={styles.fontRegular}
+                      inputStyle={styles.groupNameInput} value={this.state.data.location}
+                      isEditable={this.state.isEditable}></EditableText>
+                  }
                   <Text>Organizer</Text>
                   <ProfileImage user={this.state.data.ownerUser} size="small" />
                   <Text>Attending ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>

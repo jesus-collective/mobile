@@ -42,6 +42,8 @@ export const getUser = /* GraphQL */ `
           length
           effort
           cost
+          eventType
+          eventUrl
         }
         nextToken
       }
@@ -226,6 +228,8 @@ export const getGroup = /* GraphQL */ `
           length
           effort
           cost
+          eventType
+          eventUrl
         }
         organizerUser {
           id
@@ -280,6 +284,8 @@ export const getGroup = /* GraphQL */ `
         messages {
           nextToken
         }
+        eventType
+        eventUrl
       }
       organizerUser {
         id
@@ -360,6 +366,8 @@ export const getGroup = /* GraphQL */ `
         }
         nextToken
       }
+      eventType
+      eventUrl
     }
   }
 `;
@@ -426,6 +434,8 @@ export const listGroups = /* GraphQL */ `
           length
           effort
           cost
+          eventType
+          eventUrl
         }
         organizerUser {
           id
@@ -480,6 +490,8 @@ export const listGroups = /* GraphQL */ `
         messages {
           nextToken
         }
+        eventType
+        eventUrl
       }
       nextToken
     }
@@ -689,6 +701,8 @@ export const getMessage = /* GraphQL */ `
           length
           effort
           cost
+          eventType
+          eventUrl
         }
         organizerUser {
           id
@@ -743,6 +757,8 @@ export const getMessage = /* GraphQL */ `
         messages {
           nextToken
         }
+        eventType
+        eventUrl
       }
     }
   }
@@ -800,6 +816,8 @@ export const listMessages = /* GraphQL */ `
           length
           effort
           cost
+          eventType
+          eventUrl
         }
       }
       nextToken
@@ -879,6 +897,8 @@ export const groupByType = /* GraphQL */ `
           length
           effort
           cost
+          eventType
+          eventUrl
         }
         organizerUser {
           id
@@ -933,6 +953,8 @@ export const groupByType = /* GraphQL */ `
         messages {
           nextToken
         }
+        eventType
+        eventUrl
       }
       nextToken
     }
@@ -1001,6 +1023,8 @@ export const messagesByRoom = /* GraphQL */ `
           length
           effort
           cost
+          eventType
+          eventUrl
         }
       }
       nextToken
@@ -1076,6 +1100,8 @@ export const searchGroups = /* GraphQL */ `
           length
           effort
           cost
+          eventType
+          eventUrl
         }
         organizerUser {
           id
@@ -1130,6 +1156,8 @@ export const searchGroups = /* GraphQL */ `
         messages {
           nextToken
         }
+        eventType
+        eventUrl
       }
       nextToken
       total

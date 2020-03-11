@@ -42,6 +42,8 @@ export const createUser = /* GraphQL */ `
           length
           effort
           cost
+          eventType
+          eventUrl
         }
         nextToken
       }
@@ -108,6 +110,8 @@ export const updateUser = /* GraphQL */ `
           length
           effort
           cost
+          eventType
+          eventUrl
         }
         nextToken
       }
@@ -174,6 +178,8 @@ export const deleteUser = /* GraphQL */ `
           length
           effort
           cost
+          eventType
+          eventUrl
         }
         nextToken
       }
@@ -261,6 +267,8 @@ export const createGroupMember = /* GraphQL */ `
           length
           effort
           cost
+          eventType
+          eventUrl
         }
         organizerUser {
           id
@@ -315,6 +323,8 @@ export const createGroupMember = /* GraphQL */ `
         messages {
           nextToken
         }
+        eventType
+        eventUrl
       }
       user {
         id
@@ -415,6 +425,8 @@ export const updateGroupMember = /* GraphQL */ `
           length
           effort
           cost
+          eventType
+          eventUrl
         }
         organizerUser {
           id
@@ -469,6 +481,8 @@ export const updateGroupMember = /* GraphQL */ `
         messages {
           nextToken
         }
+        eventType
+        eventUrl
       }
       user {
         id
@@ -569,6 +583,8 @@ export const deleteGroupMember = /* GraphQL */ `
           length
           effort
           cost
+          eventType
+          eventUrl
         }
         organizerUser {
           id
@@ -623,6 +639,8 @@ export const deleteGroupMember = /* GraphQL */ `
         messages {
           nextToken
         }
+        eventType
+        eventUrl
       }
       user {
         id
@@ -775,6 +793,8 @@ export const createGroup = /* GraphQL */ `
           length
           effort
           cost
+          eventType
+          eventUrl
         }
         organizerUser {
           id
@@ -829,6 +849,8 @@ export const createGroup = /* GraphQL */ `
         messages {
           nextToken
         }
+        eventType
+        eventUrl
       }
       organizerUser {
         id
@@ -909,6 +931,8 @@ export const createGroup = /* GraphQL */ `
         }
         nextToken
       }
+      eventType
+      eventUrl
     }
   }
 `;
@@ -1026,6 +1050,8 @@ export const updateGroup = /* GraphQL */ `
           length
           effort
           cost
+          eventType
+          eventUrl
         }
         organizerUser {
           id
@@ -1080,6 +1106,8 @@ export const updateGroup = /* GraphQL */ `
         messages {
           nextToken
         }
+        eventType
+        eventUrl
       }
       organizerUser {
         id
@@ -1160,6 +1188,8 @@ export const updateGroup = /* GraphQL */ `
         }
         nextToken
       }
+      eventType
+      eventUrl
     }
   }
 `;
@@ -1277,6 +1307,8 @@ export const deleteGroup = /* GraphQL */ `
           length
           effort
           cost
+          eventType
+          eventUrl
         }
         organizerUser {
           id
@@ -1331,6 +1363,8 @@ export const deleteGroup = /* GraphQL */ `
         messages {
           nextToken
         }
+        eventType
+        eventUrl
       }
       organizerUser {
         id
@@ -1411,6 +1445,8 @@ export const deleteGroup = /* GraphQL */ `
         }
         nextToken
       }
+      eventType
+      eventUrl
     }
   }
 `;
@@ -1681,6 +1717,8 @@ export const createMessage = /* GraphQL */ `
           length
           effort
           cost
+          eventType
+          eventUrl
         }
         organizerUser {
           id
@@ -1735,6 +1773,8 @@ export const createMessage = /* GraphQL */ `
         messages {
           nextToken
         }
+        eventType
+        eventUrl
       }
     }
   }
@@ -1838,6 +1878,8 @@ export const updateMessage = /* GraphQL */ `
           length
           effort
           cost
+          eventType
+          eventUrl
         }
         organizerUser {
           id
@@ -1892,6 +1934,8 @@ export const updateMessage = /* GraphQL */ `
         messages {
           nextToken
         }
+        eventType
+        eventUrl
       }
     }
   }
@@ -1995,6 +2039,8 @@ export const deleteMessage = /* GraphQL */ `
           length
           effort
           cost
+          eventType
+          eventUrl
         }
         organizerUser {
           id
@@ -2049,6 +2095,8 @@ export const deleteMessage = /* GraphQL */ `
         messages {
           nextToken
         }
+        eventType
+        eventUrl
       }
     }
   }
