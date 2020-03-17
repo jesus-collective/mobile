@@ -204,7 +204,7 @@ export default class CourseScreen extends React.Component<Props, State>{
                   </Container>
                   <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
 
-                    {data.introduction.map((item: any) => {
+                    {data.courseInfo.introduction.map((item: any) => {
                       return <Text>{item}</Text>
                     })}
 
@@ -216,7 +216,7 @@ export default class CourseScreen extends React.Component<Props, State>{
                         <Card>
                           <Text>{item.week}</Text>
                           <Text>{item.date} - {item.leader}</Text>
-                          {item.events.map((item2, index2) => {
+                          {item.lessons.map((item2, index2) => {
                             return (
                               <Text>{index1 + 1}.{index2 + 1} - {item2.name}</Text>
                             )
