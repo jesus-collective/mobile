@@ -3,13 +3,12 @@
     "name": "Jesus Collective",
     "slug": "JesusCollective",
     "privacy": "public",
-    "sdkVersion": "36.0.0",
     "platforms": [
       "ios",
       "android",
       "web"
     ],
-    "scheme":"jc",
+    "scheme": "jc",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
