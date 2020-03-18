@@ -15,6 +15,7 @@
     "@material-ui/core": "^4.9.5",
     "@material-ui/pickers": "^3.2.10",
     "@react-native-community/masked-view": "^0.1.7",
+    "@react-native-community/netinfo": "^5.6.2",
     "@react-navigation/web": "^1.0.0-alpha.9",
     "@types/googlemaps": "^3.39.3",
     "Dante2": "^0.5.0-rc25",

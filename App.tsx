@@ -17,7 +17,7 @@ import MyForgotPassword from './components/Auth/MyForgotPassword'
 import MyLoading from './components/Auth/MyLoading'
 import { View } from 'native-base';
 import SignUpSidebar from './components/SignUpSidebar/SignUpSidebar'
-
+import { Dimensions } from 'react-native'
 import { Platform } from 'react-native';
 
 import { NavigationScreenProp } from 'react-navigation';
@@ -57,7 +57,7 @@ interface Props {
 interface State {
   isLoggedIn: boolean
   fontLoaded: boolean
-  authState:any
+  authState: any
 }
 const federated = {
   google_client_id: '',
@@ -77,7 +77,7 @@ export default class AwesomeApp extends React.Component<Props, State> {
     this.state = {
       fontLoaded: false,
       isLoggedIn: false,
-      authState:""
+      authState: ""
 
     };
     //  this.ionViewCanEnter();
@@ -119,15 +119,18 @@ export default class AwesomeApp extends React.Component<Props, State> {
         <View style={{
           width: "100%", top: 0, left: 0, height: "100%"
         }}>
-          {Platform.OS !== 'web' ?
-            this.state.authState != "signedIn" ?
-              <SignUpSidebar text="It’s time to unite, equip, and amplify a Jesus-centred movement." />
-              : null
+          {Platform.OS !== 'web' || Dimensions.get('window').width <= 720 ?
+            
+              this.state.authState != "signedIn" ?
+
+                <SignUpSidebar text="It’s time to unite, equip, and amplify a Jesus-centred movement." />
+                : null
+              
             : null
           }
 
           <Authenticator hideDefault={true} theme={MyTheme}
-            usernameAttributes='email' onStateChange={(authState) => this.setState({authState:authState})} federated={federated}
+            usernameAttributes='email' onStateChange={(authState) => this.setState({ authState: authState })} federated={federated}
             signUpConfig={{
               signUpFields: [{ displayOrder: 6, key: "family_name", label: "Last Name", required: true },
               { displayOrder: 5, key: "given_name", label: "First Name", required: true }]

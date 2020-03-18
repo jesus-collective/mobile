@@ -12,12 +12,15 @@ import * as mutations from '../../src/graphql/mutations';
 import SideBar from "../../components/Sidebar/Sidebar";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { createStackNavigator } from "react-navigation-stack";
+import { createSwitchNavigator } from "react-navigation";
 import { createAppContainer } from "react-navigation";
 import awsconfig from '../../src/aws-exports';
 import { NavigationScreenProp } from 'react-navigation';
+import { Dimensions } from 'react-native'
+
 import { Linking } from 'expo';
-import {createBrowserApp} from '@react-navigation/web';
-import {Platform} from "react-native";
+import { createBrowserApp } from '@react-navigation/web';
+import { Platform } from "react-native";
 const ConversationScreen = lazy(() => import('../ConversationScreen/ConversationScreen'));
 const OrganizationsScreen = lazy(() => import('../OrganizationsScreen/OrganizationsScreen'));
 const OrganizationScreen = lazy(() => import('../OrganizationScreen/OrganizationScreen'));
@@ -48,21 +51,24 @@ const NewsScreen = lazy(() => import('../NewsScreen/NewsScreen'));
 const SearchScreen = lazy(() => import('../SearchScreen/SearchScreen'));
 
 Amplify.configure(awsconfig);
+
+
+
 const MainAppRouter = createStackNavigator({
   HomeScreen: { screen: HomeScreen, path: "home" },
-  GroupScreen: { screen: GroupScreen, path:"group" },
+  GroupScreen: { screen: GroupScreen, path: "group" },
   GroupsScreen: { screen: GroupsScreen, path: "groups" },
-  EventScreen: { screen: EventScreen, path:"event" },
+  EventScreen: { screen: EventScreen, path: "event" },
   EventsScreen: { screen: EventsScreen, path: "events" },
   ResourcesScreen: { screen: ResourcesScreen, path: "resources" },
-  ResourceScreen: { screen: ResourceScreen, path:"resource" },
+  ResourceScreen: { screen: ResourceScreen, path: "resource" },
   OrganizationsScreen: { screen: OrganizationsScreen, path: "orgs" },
-  OrganizationScreen: { screen: OrganizationScreen,path:"org" },
-  CourseOverviewScreen: { screen: CourseOverviewScreen,path:"courseOverview" },
+  OrganizationScreen: { screen: OrganizationScreen, path: "org" },
+  CourseOverviewScreen: { screen: CourseOverviewScreen, path: "courseOverview" },
   CoursesScreen: { screen: CoursesScreen, path: "courses" },
-  CourseHomeScreen: { screen: CourseHomeScreen,path:"courseHome" },
-  CourseDetailScreen: { screen: CourseDetailScreen,path:"courseDetail" },
-  CourseCoachingScreen: { screen: CourseCoachingScreen,path:"courseCoaching" },
+  CourseHomeScreen: { screen: CourseHomeScreen, path: "courseHome" },
+  CourseDetailScreen: { screen: CourseDetailScreen, path: "courseDetail" },
+  CourseCoachingScreen: { screen: CourseCoachingScreen, path: "courseCoaching" },
   ConversationScreen: { screen: ConversationScreen, path: "conversations" },
   SearchScreen: { screen: SearchScreen, path: "search" },
   ProfileScreen: { screen: ProfileScreen, path: "profile" },
@@ -78,6 +84,13 @@ const MainAppRouter = createStackNavigator({
       cardOverlayEnabled: false
     }
   })
+
+class AuthLoadingScreen extends React.Component {
+  render() {
+    return <Text>Loading</Text>
+  }
+}
+
 
 const HomeScreenRouter = createDrawerNavigator(
   {
@@ -112,11 +125,25 @@ const HomeScreenRouter = createDrawerNavigator(
   }
 );
 //const prefix = Linking.makeUrl('https://192.168.0.12:19006');
-
+class AuthStack extends React.Component {
+  render() {
+    return <Text>Loading</Text>
+  }
+}
+const MainRouter = createSwitchNavigator(
+  {
+    Starter: AuthLoadingScreen,
+    // App: HomeScreenRouter, 
+    Auth: AuthStack
+  },
+  {
+    initialRouteName: 'Starter'
+  }
+);
 
 const isWeb = Platform.OS === 'web';
- 
-const AppContainer = isWeb ? createBrowserApp(HomeScreenRouter): createAppContainer(HomeScreenRouter);
+
+const AppContainer = isWeb && Dimensions.get('window').width > 720 ? createBrowserApp(MainRouter) : createAppContainer(MainRouter);
 
 
 interface Props {
@@ -128,6 +155,7 @@ interface State {
   hasCompletedPersonalProfile: boolean;
   hasPaidState: string;
   userExists: boolean;
+  user: any;
 }
 
 
@@ -137,7 +165,8 @@ export default class App extends React.Component<Props, State>{
     this.state = {
       hasCompletedPersonalProfile: false,
       hasPaidState: "Not Started",
-      userExists: false
+      userExists: false,
+      user: null
     }
     this.performStartup()
   }
@@ -149,40 +178,43 @@ export default class App extends React.Component<Props, State>{
   private user: any
   async ensureUserExists() {
     var userExists: boolean = false
-    this.user = await Auth.currentAuthenticatedUser();
-    const { attributes } = this.user;
-    console.log(this.user)
-    try {
-      const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: this.user['username'] }));
-      if (getUser.data.getUser === null) {
-        console.log("Trying to create")
-        var inputData = {
-          id: this.user['username'],
-          given_name: attributes['given_name'],
-          family_name: attributes['family_name'],
-          email: attributes['email'],
-          phone: attributes['phone_number']
-        }
-        try {
-          var createUser = await API.graphql(graphqlOperation(mutations.createUser, {
-            input: inputData
-          }));
-          userExists = true
-        } catch (e) {
-          console.log(e)
-        }
-        console.log(createUser)
-      }
-      else {
-        userExists = true
-        console.log("User exists")
-      }
-    }
-    catch (e) {
-      console.log(e)
-    }
-    this.setState({ userExists: userExists })
+    this.user = await Auth.currentAuthenticatedUser().
+      catch((e) => { console.log('No currrent authenticated user') });
+    if (this.user != null) {
+      const { attributes } = this.user;
+      console.log(this.user)
 
+      try {
+        const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: this.user['username'] }));
+        if (getUser.data.getUser === null) {
+          console.log("Trying to create")
+          var inputData = {
+            id: this.user['username'],
+            given_name: attributes['given_name'],
+            family_name: attributes['family_name'],
+            email: attributes['email'],
+            phone: attributes['phone_number']
+          }
+          try {
+            var createUser = await API.graphql(graphqlOperation(mutations.createUser, {
+              input: inputData
+            }));
+            userExists = true
+          } catch (e) {
+            console.log(e)
+          }
+          console.log(createUser)
+        }
+        else {
+          userExists = true
+          console.log("User exists")
+        }
+      }
+      catch (e) {
+        console.log(e)
+      }
+      this.setState({ userExists: userExists })
+    }
   }
   async checkIfPaid() {
     console.log("checkIfPaid")
@@ -256,8 +288,8 @@ export default class App extends React.Component<Props, State>{
           return (
             <Suspense fallback={null}>
               <View style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1 }}>
-              <MuiPickersUtilsProvider utils={MomentUtils}>
-                <AppContainer></AppContainer>
+                <MuiPickersUtilsProvider utils={MomentUtils}>
+                  <AppContainer></AppContainer>
                 </MuiPickersUtilsProvider>
               </View>
             </Suspense>)

@@ -177,58 +177,58 @@ export default EStyleSheet.create({
     },
     flexRow:
         { flexDirection: 'row' },
-    authView: Platform.OS === 'web' ?
+    authView: Platform.OS === 'web' && Dimensions.get('window').width > 720?
         { left: "40%", width: "40%", top: 100, height: "auto" } :
         { left: "2%", width: "96%", top: "0%", height: "100%" },
 
-    signUpSidebarPanel: Platform.OS === 'web' ?
+    signUpSidebarPanel: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { zIndex: 1, position: "fixed", left: 0, minWidth: 196, width: "25%", height: "100%", top: 0 } :
         { zIndex: 1, position: "relative", left: 0, width: "100%", height: 100 + Constants.statusBarHeight, top: 0 },
-    signUpSidebarLogo: { zIndex: 2, position: "absolute", left: 20, width: 156, height: 43, top: Platform.OS === 'web' ? 20 : 20 + Constants.statusBarHeight },
+    signUpSidebarLogo: { zIndex: 2, position: "absolute", left: 20, width: 156, height: 43, top: Platform.OS === 'web'&& Dimensions.get('window').width > 720  ? 20 : 20 + Constants.statusBarHeight },
 
-    signUpSidebarProgress: Platform.OS === 'web' ?
+    signUpSidebarProgress: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { zIndex: 3, position: "fixed", left: 20, width: 20, height: 300, top: "40%" } :
         { zIndex: 3, display: "none", position: "relative", left: 20, width: 20, height: 300, top: "40%" },
 
-    signUpSidebarProgressText1: Platform.OS === 'web' ?
+    signUpSidebarProgressText1: Platform.OS === 'web'&& Dimensions.get('window').width > 720  ?
         { zIndex: 3, position: "absolute", width: "95%", height: "10%", left: "50px", top: "calc(40vh - 18px)", fontFamily: "Graphik-Bold-App", fontSize: 12, lineHeight: 48, color: "#FFFFFF" } :
         { zIndex: 3, position: "absolute", width: "50%", height: "10%", left: "65%", top: 20 + Constants.statusBarHeight, fontFamily: "Graphik-Bold-App", fontSize: 12, lineHeight: 48, color: "#FFFFFF" },
-    signUpSidebarProgressText2: Platform.OS === 'web' ?
+    signUpSidebarProgressText2: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { zIndex: 3, position: "absolute", width: "95%", height: "10%", left: "50px", top: "calc(40vh + 36px)", fontFamily: "Graphik-Bold-App", fontSize: 12, lineHeight: 48, color: "#FFFFFF" } :
         { zIndex: 3, position: "absolute", width: "50%", height: "10%", left: "65%", top: 20 + Constants.statusBarHeight, fontFamily: "Graphik-Bold-App", fontSize: 12, lineHeight: 48, color: "#FFFFFF" },
-    signUpSidebarProgressText3: Platform.OS === 'web' ?
+    signUpSidebarProgressText3: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { zIndex: 3, position: "absolute", width: "95%", height: "10%", left: "50px", top: "calc(40vh + 90px)", fontFamily: "Graphik-Bold-App", fontSize: 12, lineHeight: 48, color: "#FFFFFF" } :
         { zIndex: 3, position: "absolute", width: "50%", height: "10%", left: "65%", top: 20 + Constants.statusBarHeight, fontFamily: "Graphik-Bold-App", fontSize: 12, lineHeight: 48, color: "#FFFFFF" },
-    signUpSidebarProgressText4: Platform.OS === 'web' ?
+    signUpSidebarProgressText4: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { zIndex: 3, position: "absolute", width: "95%", height: "10%", left: "50px", top: "calc(40vh + 144px)", fontFamily: "Graphik-Bold-App", fontSize: 12, lineHeight: 48, color: "#FFFFFF" } :
         { zIndex: 3, position: "absolute", width: "50%", height: "10%", left: "65%", top: 20 + Constants.statusBarHeight, fontFamily: "Graphik-Bold-App", fontSize: 12, lineHeight: 48, color: "#FFFFFF" },
-    signUpSidebarProgressText5: Platform.OS === 'web' ?
+    signUpSidebarProgressText5: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { zIndex: 3, position: "absolute", width: "95%", height: "10%", left: "50px", top: "calc(40vh + 198px)", fontFamily: "Graphik-Bold-App", fontSize: 12, lineHeight: 48, color: "#FFFFFF" } :
         { zIndex: 3, position: "absolute", width: "50%", height: "10%", left: "65%", top: 20 + Constants.statusBarHeight, fontFamily: "Graphik-Bold-App", fontSize: 12, lineHeight: 48, color: "#FFFFFF" },
     signUpSidebarProgressTextView: { zIndex: 3, position: "absolute", width: "100%", height: "100%", left: "0%", top: "0%" },
 
-    signUpSidebarView: Platform.OS === 'web' ?
+    signUpSidebarView: Platform.OS === 'web'&& Dimensions.get('window').width > 720  ?
         { position: "fixed", width: "25%", height: "100%", left: "0%", top: "0%" } :
         { position: "relative", width: "100%", height: "20%", left: "0%", top: 0 },
 
-    signUpSidebarText: Platform.OS === 'web' ?
+    signUpSidebarText: Platform.OS === 'web'&& Dimensions.get('window').width > 720  ?
         { zIndex: 3, position: "absolute", width: "80%", height: "10%", left: "10%", top: "40%", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 30, color: "#FFFFFF" } :
         { display: "none", zIndex: 3, position: "absolute", width: "80%", height: "10%", left: "10%", top: "40%", fontFamily: "Graphik-Bold-App", fontSize: 24, lineHeight: 48, color: "#FFFFFF" },
 
-    signUpProfile: Platform.OS === 'web' ?
+    signUpProfile: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { position: "absolute", left: "30%", width: "65%", top: 10 } :
         { position: "absolute", left: "2%", width: "96%", top: 100 + Constants.statusBarHeight, height: "100%" },
 
-    signUpScreen1Content: Platform.OS === 'web' ?
+    signUpScreen1Content: Platform.OS === 'web'&& Dimensions.get('window').width > 720  ?
         { position: "absolute", width: "100%" } :
         { position: "absolute", width: "100%", height: "100%", left: 0, top: 0 },
-    signUpScreen1PaymentColumn1: Platform.OS === 'web' ?
+    signUpScreen1PaymentColumn1: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { position: "absolute", left: "35%", width: "25%", top: 100, height: "100%" } :
         {},
-    signUpScreen1PaymentColumn2: Platform.OS === 'web' ?
+    signUpScreen1PaymentColumn2: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { position: "absolute", left: "70%", width: "25%", top: 100, height: "100%" } :
         {},
-    signUpScreen1PaymentBody: Platform.OS === 'web' ?
+    signUpScreen1PaymentBody: Platform.OS === 'web'&& Dimensions.get('window').width > 720  ?
         { width: "100%", left: 0, top: 0, height: "100%" } :
         { position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1 },
 
@@ -242,8 +242,9 @@ export default EStyleSheet.create({
     fileInputWrapper:
         { left: 20, width: 210, top: 150, overflow: "hidden", position: "absolute"},
 
-    fileInputWrapperBtn:
-        { display: "inline-block", width: 200, height: 40 }
+    fileInputWrapperBtn: Platform.OS === 'web'&& Dimensions.get('window').width > 720  ?
+        { display: "inline-block", width: 200, height: 40 } :
+        {}
 
 
 

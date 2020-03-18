@@ -4,6 +4,8 @@ import styles from '../../components/style.js'
 import SignUpSidebar from '../../components/SignUpSidebar/SignUpSidebar'
 import { View } from 'native-base';
 import { Platform } from 'react-native';
+import { Dimensions } from 'react-native'
+
 interface Props {
     authState: any
 }
@@ -21,7 +23,7 @@ export default class MyLoading extends Loading<Props,State> {
                     <View style={styles.authView}>
                         {super.render()}
                     </View>
-                    {Platform.OS === 'web'?<SignUpSidebar text="It’s time to unite, equip, and amplify a Jesus-centred movement." />:null}
+                    {Platform.OS === 'web' && Dimensions.get('window').width > 720?<SignUpSidebar text="It’s time to unite, equip, and amplify a Jesus-centred movement." />:null}
                 </View>)
                 : null
 

@@ -1,4 +1,5 @@
 import {Platform, StyleSheet} from 'react-native';
+import { Dimensions } from 'react-native'
 
 export default StyleSheet.create({
 
@@ -17,10 +18,10 @@ export default StyleSheet.create({
     },
     leftButtons: {
       
-        display: Platform.OS === 'web' ? 'none' : 'flex',
+        display: Platform.OS === 'web' && Dimensions.get('window').width > 720 ? 'none' : 'flex',
     },
     centerMenuButtons: {
-        display: Platform.OS === 'web' ? 'flex' : 'none',
+        display: Platform.OS === 'web' && Dimensions.get('window').width > 720 ? 'flex' : 'none',
         
     },
     centerMenuButtonsText: {
