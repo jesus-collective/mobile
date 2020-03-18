@@ -100,7 +100,7 @@ export default class CourseScreen extends React.Component<Props, State>{
           <Text>{week.week}</Text>
           <Text>{week.date}</Text>
           <Text>{week.leader}</Text>
-          {week.events.map((item: any, lesson: any) => {
+          {week.lessons.map((item: any, lesson: any) => {
             return <TouchableOpacity key={lesson} onPress={() => { this.setActiveLesson(lesson) }}>
               <Card style={{ minHeight: "40px", maxHeight: "100px", width: "80% " }}>
                 <Container style={{ flexDirection: "row" }}>
@@ -124,7 +124,7 @@ export default class CourseScreen extends React.Component<Props, State>{
   }
   renderLessonDetails(week: any) {
     console.log(this.state.activeLesson)
-    const lesson = week.events[this.state.activeLesson]
+    const lesson = week.lessons[this.state.activeLesson]
     return (
       this.state.activeLesson != null ?
         <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
