@@ -14,6 +14,7 @@ interface Props {
   navigation?: NavigationScreenProp<any, any>,
   authState?: any
   profileComplete(): void
+ 
 }
 interface State {
 

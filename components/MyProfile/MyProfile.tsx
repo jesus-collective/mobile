@@ -10,6 +10,7 @@ import TagInput from 'react-native-tags-input';
 import { Dimensions } from 'react-native'
 import Amplify from 'aws-amplify'
 import awsconfig from '../../src/aws-exports';
+import Validate from '../Validate/Validate';
 
 Amplify.configure(awsconfig);
 
@@ -27,6 +28,7 @@ interface State {
   tagsColor: any
   tagsText: any
   profileImage: any
+  validationText:any
 }
 export default class MyProfile extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -39,7 +41,8 @@ export default class MyProfile extends React.Component<Props, State> {
       },
       tagsColor: mainColor,
       tagsText: '#fff',
-      profileImage: ""
+      profileImage: "",
+      validationText:null
     }
     this.getUserDetails()
   }
@@ -91,16 +94,22 @@ export default class MyProfile extends React.Component<Props, State> {
   }
 
   async finalizeProfile() {
-    try {
-      var toSave = this.state.UserDetails
-      delete toSave.groups
-      delete toSave.messages
-      const updateUser = await API.graphql(graphqlOperation(mutations.updateUser, { input: toSave }));
-      console.log(updateUser)
-      this.props.finalizeProfile()
-    } catch (e) {
-      console.log(e)
+
+    var validation = Validate.Profile(this.state.UserDetails)
+    if (validation.result) {
+      try {
+        var toSave = this.state.UserDetails
+        delete toSave.groups
+        delete toSave.messages
+        delete toSave.owns
+        const updateUser = await API.graphql(graphqlOperation(mutations.updateUser, { input: toSave }));
+        console.log(updateUser)
+        this.props.finalizeProfile()
+      } catch (e) {
+        console.log(e)
+      }
     }
+    this.setState({validationText:validation.validationError})
   }
   updateTagState = (state) => {
     this.setState({
@@ -148,6 +157,7 @@ export default class MyProfile extends React.Component<Props, State> {
           <View style={{ justifyContent: "space-between", flexDirection: "row", width: "100%" }}>
             <Text style={styles.profileFontTitle}>Create your profile</Text>
             <Button style={styles.saveProfileButton} onPress={() => this.finalizeProfile()}><Text uppercase={false} style={styles.saveProfileButtonText}>Save and Publish Your Profile</Text></Button>
+            <Text>{this.state.validationText}</Text>
           </View>
 
           <Form style={{ display: "flex", flexDirection: "row" }}>
@@ -167,7 +177,7 @@ export default class MyProfile extends React.Component<Props, State> {
               </View>
               <View style={{ marginBottom: 40, alignSelf: "center" }}>
                 <Text style={styles.fontFormName}>{this.state.UserDetails.given_name} {this.state.UserDetails.family_name}</Text>
-                <Text style={styles.fontFormRole}>{this.state.UserDetails.currentRole?this.state.UserDetails.currentRole:'My Current Role not defined'}</Text>
+                <Text style={styles.fontFormRole}>{this.state.UserDetails.currentRole ? this.state.UserDetails.currentRole : 'My Current Role not defined'}</Text>
                 <Text style={styles.fontFormUserType}>Partner</Text>
 
                 <Text style={styles.fontFormText}><Text style={styles.fontFormMandatory}>*</Text>One Sentence about me</Text>

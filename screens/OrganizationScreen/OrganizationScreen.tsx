@@ -76,10 +76,10 @@ export default class GroupScreen extends React.Component<Props, State>{
         variables: { id: props.navigation.state.params.id },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
-
-      getGroup.then((json) => {
+      var processResults=(json) => {
         this.setState({ data: json.data.getGroup })
-      })
+      }
+      getGroup.then(processResults).catch(processResults)
     }
   }
   mapChanged = () => {

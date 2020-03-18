@@ -18,7 +18,7 @@ interface Props {
   navigation: any
   wrap: Boolean
   type: String
-  showMore:Boolean
+  showMore: Boolean
 }
 interface State {
   openSingle: string
@@ -159,22 +159,17 @@ export default class MyGroups extends React.Component<Props, State> {
     if (props.type == "profile") {
       var listUsers: any = API.graphql({
         query: queries.listUsers,
-        variables: { limit: 20,filter: null, nextToken: this.state.nextToken },
+        variables: { limit: 20, filter: null, nextToken: this.state.nextToken },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
-      listUsers.then((json) => {
+      var processList = (json) => {
         var temp = [...this.state.data, ...json.data.listUsers.items]
-       
         this.setState({
           data: temp,
           nextToken: json.data.listUsers.nextToken
         })
-      }).catch(
-        (e: any) => {
-          console.log(e)
-          this.setState({ data: e.data.listUsers.items })
-        }
-      )
+      }
+      listUsers.then(processList).catch(processList)
     }
     else {
       var listGroup: any = API.graphql({
@@ -183,15 +178,15 @@ export default class MyGroups extends React.Component<Props, State> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
 
-      listGroup.then((json) => {
-       
+      var processList = (json) => {
+        console.log(json)
         var temp = [...this.state.data, ...json.data.groupByType.items]
-       
         this.setState({
           data: temp,
           nextToken: json.data.groupByType.nextToken
         })
-      })
+      }
+      listGroup.then(processList).catch(processList)
     }
   }
   openSingle(id: any) {
@@ -359,14 +354,14 @@ export default class MyGroups extends React.Component<Props, State> {
                 : null
               }
               {this.state.nextToken ?
-              this.props.showMore?
-              <TouchableOpacity onPress={()=>{this.setInitialData(this.props)}} >
-                <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: '0%', width: this.state.cardWidth }}>
-                  <CardItem   ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>Load more...</Text></CardItem>
-                </Card>
-                </TouchableOpacity>
-                : null
-                :null}
+                this.props.showMore ?
+                  <TouchableOpacity onPress={() => { this.setInitialData(this.props) }} >
+                    <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: '0%', width: this.state.cardWidth }}>
+                      <CardItem   ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>Load more...</Text></CardItem>
+                    </Card>
+                  </TouchableOpacity>
+                  : null
+                : null}
             </Container>
           </Container>
         </StyleProvider>

@@ -118,10 +118,10 @@ export default class AwesomeApp extends React.Component<Props, State> {
       return (
         <View style={{
           width: "100%", top: 0, left: 0, height: "100%"
-        }}>
+        }}>{console.log({"authstate":this.state.authState})}
           {Platform.OS !== 'web' || Dimensions.get('window').width <= 720 ?
             
-              this.state.authState != "signedIn" ?
+              this.state.authState != "signedIn" && this.state.authState!="loading"&& this.state.authState!="" ?
 
                 <SignUpSidebar text="It’s time to unite, equip, and amplify a Jesus-centred movement." />
                 : null

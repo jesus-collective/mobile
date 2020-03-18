@@ -17,6 +17,7 @@ import { createAppContainer } from "react-navigation";
 import awsconfig from '../../src/aws-exports';
 import { NavigationScreenProp } from 'react-navigation';
 import { Dimensions } from 'react-native'
+import Validate from '../../components/Validate/Validate'
 
 import { Linking } from 'expo';
 import { createBrowserApp } from '@react-navigation/web';
@@ -85,11 +86,7 @@ const MainAppRouter = createStackNavigator({
     }
   })
 
-class AuthLoadingScreen extends React.Component {
-  render() {
-    return <Text>Loading</Text>
-  }
-}
+
 
 
 const HomeScreenRouter = createDrawerNavigator(
@@ -125,25 +122,10 @@ const HomeScreenRouter = createDrawerNavigator(
   }
 );
 //const prefix = Linking.makeUrl('https://192.168.0.12:19006');
-class AuthStack extends React.Component {
-  render() {
-    return <Text>Loading</Text>
-  }
-}
-const MainRouter = createSwitchNavigator(
-  {
-    Starter: AuthLoadingScreen,
-    // App: HomeScreenRouter, 
-    Auth: AuthStack
-  },
-  {
-    initialRouteName: 'Starter'
-  }
-);
 
 const isWeb = Platform.OS === 'web';
 
-const AppContainer = isWeb && Dimensions.get('window').width > 720 ? createBrowserApp(MainRouter) : createAppContainer(MainRouter);
+const AppContainer = isWeb && Dimensions.get('window').width > 720 ? createBrowserApp(HomeScreenRouter) : createAppContainer(HomeScreenRouter);
 
 
 interface Props {
@@ -152,7 +134,7 @@ interface Props {
 
 }
 interface State {
-  hasCompletedPersonalProfile: boolean;
+  hasCompletedPersonalProfile: string;
   hasPaidState: string;
   userExists: boolean;
   user: any;
@@ -163,8 +145,8 @@ export default class App extends React.Component<Props, State>{
   constructor(props: Props) {
     super(props);
     this.state = {
-      hasCompletedPersonalProfile: false,
-      hasPaidState: "Not Started",
+      hasCompletedPersonalProfile: "Unknown",
+      hasPaidState: "Complete",
       userExists: false,
       user: null
     }
@@ -222,8 +204,7 @@ export default class App extends React.Component<Props, State>{
       const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: this.user['username'] }));
       console.log(getUser)
       if (getUser.data.getUser.hasPaidState == null)
-        this.setState({ hasPaidState: "Not Started" })
-
+        this.setState({ hasPaidState: "Complete" })
       else {
         console.log(getUser.data.getUser.hasPaidState)
         this.setState({ hasPaidState: getUser.data.getUser.hasPaidState })
@@ -243,36 +224,25 @@ export default class App extends React.Component<Props, State>{
 
   async checkIfCompletedProfile() {
     console.log("checkIfCompletedProfile")
-    this.setState({ hasCompletedPersonalProfile: true })
-    if (this.state.userExists) {
+    if (this.state.userExists && this.state.hasPaidState == "Complete") {
       const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: this.user['username'] }));
-      if ((getUser.data.getUser.aboutMeShort != null)
-        && (getUser.data.getUser.aboutMeLong != null)
-        && (getUser.data.getUser.given_name != null)
-        && (getUser.data.getUser.family_name != null)
-        && (getUser.data.getUser.email != null)
-        && (getUser.data.getUser.phone != null)
-        && (getUser.data.getUser.address != null)
-        && (getUser.data.getUser.city != null)
-        && (getUser.data.getUser.province != null)
-        && (getUser.data.getUser.postalCode != null)
-        && (getUser.data.getUser.country != null)
-        && (getUser.data.getUser.interests != null)
-        && (getUser.data.getUser.currentRole != null)
-        && (getUser.data.getUser.currentScope != null)
-        && (getUser.data.getUser.personality != null)
-        && (getUser.data.getUser.orgName != null)
-        && (getUser.data.getUser.orgType != null)
-        && (getUser.data.getUser.orgSize != null)
-        && (getUser.data.getUser.orgDescription != null))
-        this.setState({ hasCompletedPersonalProfile: true })
+      var response = Validate.Profile(getUser.data.getUser)
+      if (response.result)
+        this.setState({ hasCompletedPersonalProfile: "Completed" })
+      else
+        this.setState({ hasCompletedPersonalProfile: "Incomplete" })
+
+
     }
+
   }
   render() {
-
     //  console.log(this.props.authState)
     if (this.props.authState == 'signedIn')
-      if (this.state.hasPaidState === "Not Started") {
+      if (this.state.hasPaidState === "Loading") {
+        return <Suspense fallback={null}></Suspense>
+      }
+      else if (this.state.hasPaidState === "Not Started") {
         return (<Suspense fallback={null}><SignUpScreen1 payStateChanged={() => this.onPaidStateChanged()} /></Suspense>)
         //  return <SignUpScreen2 />
       }
@@ -281,7 +251,10 @@ export default class App extends React.Component<Props, State>{
         //  return <SignUpScreen2 />
       }
       else if (this.state.hasPaidState === "Complete") {
-        if (!this.state.hasCompletedPersonalProfile) {
+        if (this.state.hasCompletedPersonalProfile=="Uknown") {
+          return null
+        }
+        else if (this.state.hasCompletedPersonalProfile=="Incomplete") {
           return (<Suspense fallback={null}><SignUpScreen3 profileComplete={() => this.onProfileComplete()} /></Suspense>)
         }
         else {

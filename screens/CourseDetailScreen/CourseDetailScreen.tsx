@@ -57,10 +57,10 @@ export default class CourseScreen extends React.Component<Props, State>{
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
 
-    getGroup.then((json) => {
+    var processResults=(json) => {
       this.setState({ data: json.data.getGroup })
-    })
-
+    }
+    getGroup.then(processResults).catch(processResults)
   }
 
   openHome = () => {
