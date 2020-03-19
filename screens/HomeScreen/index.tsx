@@ -237,7 +237,6 @@ export default class App extends React.Component<Props, State>{
 
   }
   render() {
-    //  console.log(this.props.authState)
     if (this.props.authState == 'signedIn')
       if (this.state.hasPaidState === "Loading") {
         return <Suspense fallback={null}></Suspense>
@@ -251,10 +250,10 @@ export default class App extends React.Component<Props, State>{
         //  return <SignUpScreen2 />
       }
       else if (this.state.hasPaidState === "Complete") {
-        if (this.state.hasCompletedPersonalProfile=="Uknown") {
+        if (this.state.hasCompletedPersonalProfile == "Unknown") {
           return null
         }
-        else if (this.state.hasCompletedPersonalProfile=="Incomplete") {
+        else if (this.state.hasCompletedPersonalProfile == "Incomplete") {
           return (<Suspense fallback={null}><SignUpScreen3 profileComplete={() => this.onProfileComplete()} /></Suspense>)
         }
         else {

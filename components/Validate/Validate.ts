@@ -42,7 +42,10 @@ export default class Validate {
             return { result: false, validationError: "Profile must have - organization size" }
         if (data.orgDescription == null || data.orgDescription == "")
             return { result: false, validationError: "Profile must have - organization description" }
+        if (data.profileImage == null || data.profileImage == "")
+            return { result: false, validationError: "Profile must have - profile image" }
 
+        
         return { result: true, validationError: "" }
     }
     static Course(data: any): ValidationResult {

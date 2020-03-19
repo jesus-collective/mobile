@@ -132,7 +132,7 @@ export default class MyProfile extends React.Component<Props, State> {
         updateData['profileImage'] = userId
         this.setState({
           UserDetails: updateData
-        });
+        },() => this.getProfileImage(this.props.loadId));
       })
       .catch(err => console.log(err));
   }

@@ -119,7 +119,8 @@ type Message @model(subscriptions: null)
  @key(name: "ByRoom",fields: ["roomId", "when"], queryField:"messagesByRoom")
  @auth(
     rules: [
-      {allow: owner, ownerField: "owner", mutations: [create, update, delete]},
+      {allow: owner, ownerField: "owner", operations: [create, update, delete]},
+	  {allow: private, operations: [read]}
   ])
    {
   id: ID!

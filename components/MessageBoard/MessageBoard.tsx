@@ -63,14 +63,16 @@ export default class MessageBoard extends React.Component<Props, State> {
         variables: { roomId: this.props.groupId, sortDirection: "DESC" },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
-
-      messagesByRoom.then((json) => {
+      var processMessages = (json) => {
+        console.log(json)
         this.setState({
           created: true,
           data: json.data.messagesByRoom,
           message: ""
         })
-      })
+      }
+      messagesByRoom.then(processMessages).catch(processMessages)
+
     }
   }
   updateInput(value: any) {
@@ -101,7 +103,7 @@ export default class MessageBoard extends React.Component<Props, State> {
       })
     })
   }
-  showProfile(id){
+  showProfile(id) {
     console.log("Navigate to profileScreen")
     this.props.navigation.push("ProfileScreen", { id: id, create: false });
   }
