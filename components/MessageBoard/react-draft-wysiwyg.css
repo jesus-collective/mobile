@@ -1,0 +1,39 @@
+.customWrapper{
+    background-color: #eeeeee;
+    font-family: 'Graphik-Regular-App';
+    border-radius: 10px;
+    border:1px;
+}
+.customWrapperSendmessage{
+    background-color: #eeeeee;
+    font-family: 'Graphik-Regular-App';
+    border-radius: 10px;
+    border:1px;
+    margin-left: 10px;
+    height:145px;
+}
+.customToolbar{
+    background-color: #eeeeee;
+    font-family: 'Graphik-Regular-App';
+    border-radius: 10px;
+    border:1px;
+}
+.customEditor{
+    height:57px;
+    padding-left:0px;
+    padding-right: 10px;
+    padding-top:0px;
+    padding-bottom: 0px;
+    border-radius: 10px;
+}
+.customEditorSendmessage{
+    height:57px;
+    padding-left:10px;
+    padding-right: 10px;
+    padding-top:0px;
+    padding-bottom: 0px;
+    border:0.5px;
+    border-style:solid;
+    border-color: #777777;
+    border-radius: 10px;
+}

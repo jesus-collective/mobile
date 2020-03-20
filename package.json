@@ -30,6 +30,7 @@
     "react": "16.9.0",
     "react-datepicker": "^2.14.0",
     "react-dom": "16.9.0",
+    "react-draft-wysiwyg": "^1.14.4",
     "react-google-maps": "^9.4.5",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.1.tar.gz",
     "react-native-calendars": "^1.264.0",

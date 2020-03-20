@@ -13,6 +13,10 @@ import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
 import { API, graphqlOperation, Auth } from 'aws-amplify';
 import { Observable as rxObservable, of } from "rxjs";
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
+import { convertFromRaw } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import './react-draft-wysiwyg.css';
 
 interface Props {
   groupId: string
@@ -22,7 +26,9 @@ interface State {
   data: any,
   created: boolean,
   message: string,
-  selfId: String
+  UserDetails: any,
+  textHeight: any,
+  editorState: any
 }
 export default class MessageBoard extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -31,7 +37,9 @@ export default class MessageBoard extends React.Component<Props, State> {
       data: null,
       created: false,
       message: "",
-      selfId: null
+      UserDetails: null,
+      textHeight: 10,
+      editorState: null
     }
     this.setInitialData(props)
     const subscription: any = API.graphql(
@@ -52,7 +60,18 @@ export default class MessageBoard extends React.Component<Props, State> {
       });
   }
 
-  setInitialData(props) {
+  async setInitialData(props) {
+    var user = await Auth.currentAuthenticatedUser();
+    try {
+      const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: user['username'] }));
+      this.setState({
+        UserDetails: getUser.data.getUser
+      })
+      console.log(this.state.UserDetails)
+    }
+    catch (e) {
+      console.log(e)
+    }
 
     if (props.navigation.state.params.create)
       this.setState({ created: false })
@@ -75,12 +94,14 @@ export default class MessageBoard extends React.Component<Props, State> {
 
     }
   }
+  updateEditorInput(value: any) {
+    this.setState({ editorState: value })
+  }
   updateInput(value: any) {
-    this.setState({ message: value.target.value })
+    this.setState({ message: JSON.stringify(value) })
   }
   saveMessage() {
     Auth.currentAuthenticatedUser().then((user: any) => {
-      this.setState({ selfId: user.username })
       var z: CreateMessageInput = {
         id: Date.now().toString(),
         content: this.state.message,
@@ -112,19 +133,31 @@ export default class MessageBoard extends React.Component<Props, State> {
     return (
       (this.state.message != null && this.state.created) ?
         <StyleProvider style={getTheme(material)}>
-
-          <Container style={{ overflow: "visible", width: "100%", flexDirection: 'column', alignItems: 'flex-start', minHeight: 500 }} >
-
-            <Content style={{ overflow: "visible" }}>
-              <Input style={{ borderWidth: 1 }} value={this.state.message} onChange={(value: any) => { this.updateInput(value) }}></Input>
-              <Card style={{ marginTop: 40, padding: 0, minHeight: 50, overflow: "visible" }}>
-                <Button onPress={() => { this.saveMessage() }} bordered style={styles.sliderButton}><Text>Post</Text></Button>
-              </Card>
+          <Container style={{ marginTop:10,overflow: "visible", width: "100%", flexDirection: 'column', minHeight: 500 }} >
+            <Container style={{ maxHeight: Math.max(155 + 10, this.state.textHeight + 10), overflow: "visible", flexDirection: "row" }}>
+              {
+                this.state.UserDetails != null ?
+                  <ProfileImage size="small" user={this.state.UserDetails}></ProfileImage>
+                  : null
+              }
+              <Editor
+                placeholder="Write a message..."
+                editorState={this.state.editorState}
+                toolbarClassName="customToolbar"
+                wrapperClassName="customWrapperSendmessage"
+                editorClassName="customEditorSendmessage"
+                onEditorStateChange={(z) => { this.updateEditorInput(z) }}
+                onContentStateChange={(z) => {this.updateInput(z)}}
+                
+              />
+              <Button onPress={() => { this.saveMessage() }} bordered style={styles.postButton}><Text>Post</Text></Button>
+            </Container>
+            <Content style={{ zIndex:-1,overflow: "visible", flexDirection: "column" }}>
               {this.state.data.items.map((item: any) => {
                 return (
                   <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
-                    <Card key={item.id} style={{ borderRadius: 15, minHeight: 50 }}>
-                      <CardItem style={{ borderBottomLeftRadius: 0, borderBottomRightRadius: 0, borderTopLeftRadius: 15, borderTopRightRadius: 15, backgroundColor: this.state.selfId === item.userId ? "#99ff99" : "#9999ff" }}>
+                    <Card key={item.id} style={{ borderRadius: 10, minHeight: 50 }}>
+                      <CardItem style={{ borderBottomLeftRadius: 0, borderBottomRightRadius: 0, borderTopLeftRadius: 10, borderTopRightRadius: 10, backgroundColor: "#eeeeee" }}>
                         <Left>
                           <ProfileImage size="small" user={item.author}></ProfileImage>
                           <Body>
@@ -137,11 +170,22 @@ export default class MessageBoard extends React.Component<Props, State> {
                           </Body>
                         </Left>
                         <Right>
-                          <Text>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
+                          <Text style={styles.fontConnectWithRole}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
                         </Right>
                       </CardItem>
-                      <CardItem style={{ borderTopLeftRadius: 0, borderTopRightRadius: 0, borderBottomLeftRadius: 15, borderBottomRightRadius: 15, backgroundColor: this.state.selfId === item.userId ? "#99ff99" : "#9999ff" }}>
-                        <Text style={styles.fontConnectWithRole}>{item.content}</Text>
+                      <CardItem style={{ marginTop:0, paddingTop:0, paddingBottom:0, borderTopLeftRadius: 0, borderTopRightRadius: 0, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, backgroundColor: "#eeeeee" }}>
+                      
+                        {item.content.includes("zzzaaazzz2")?
+                       
+                         
+                        <Editor
+                          readOnly
+                          toolbarHidden
+                          initialContentState={JSON.parse(item.content)}
+                          toolbarClassName="customToolbar"
+                          wrapperClassName="customWrapper"
+                          editorClassName="customEditor"
+                        />:null}
                       </CardItem>
                     </Card>
                   </TouchableOpacity>)
@@ -149,7 +193,7 @@ export default class MessageBoard extends React.Component<Props, State> {
             </Content>
 
           </Container>
-        </StyleProvider>
+        </StyleProvider >
         : null
 
     )

@@ -171,6 +171,16 @@ export default EStyleSheet.create({
         padding: 0,
         height: 25
     },
+    postButton:
+    {
+        paddingTop:10,
+        paddingBottom:10,
+        alignSelf:"flex-end",
+        marginBottom:20,
+        marginLeft:10,
+        marginRight:10
+        // color:'#F0493E'
+    },
     sliderButton:
     {
         // color:'#F0493E'
