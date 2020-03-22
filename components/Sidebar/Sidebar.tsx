@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Container, Content, Text, List, ListItem, Header } from "native-base";
-
+import { Container, Content,  List, ListItem, Header } from "native-base";
+import {Text} from 'react-native'
 
 const routes = [
   {

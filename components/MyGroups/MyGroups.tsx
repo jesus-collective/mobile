@@ -1,5 +1,8 @@
-import { Left, Body, StyleProvider, Card, CardItem, List, ListItem, Right, Button, Text, Container } from 'native-base';
+import { Left, Body, StyleProvider, Card, CardItem, List, ListItem, Right, Container } from 'native-base';
+import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
+
 import * as React from 'react';
+import { Text } from 'react-native'
 import styles from '../style.js'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
@@ -11,7 +14,7 @@ import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
 import { API, graphqlOperation, Auth } from 'aws-amplify';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { TouchableOpacity } from 'react-native-gesture-handler';
-
+import {constants} from '../../src/constants'
 var moment = require('moment');
 
 interface Props {
@@ -222,6 +225,9 @@ export default class MyGroups extends React.Component<Props, State> {
       console.log({ "Error mutations.createGroupMember": err });
     });
   }
+  openConversation() {
+
+  }
   leave(id: any) {
     /* var user = await Auth.currentAuthenticatedUser();
      try {
@@ -245,8 +251,8 @@ export default class MyGroups extends React.Component<Props, State> {
       </CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetail}>{item.description}</Text></CardItem>
-      {this.canJoin(item.id) ? <CardItem ><Button onPress={() => { this.join(item.id) }}><Text style={styles.font}>Join</Text></Button><Right></Right></CardItem> : null}
-      {this.canLeave(item.id) ? <CardItem ><Button onPress={() => { this.leave(item.id) }}><Text style={styles.font}>Leave</Text></Button><Right></Right></CardItem> : null}
+      {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id) }}>Join</JCButton><Right></Right></CardItem> : null}
+      {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id) }}>Leave</JCButton><Right></Right></CardItem> : null}
     </Card >
   }
   renderProfile(item: any) {
@@ -257,8 +263,7 @@ export default class MyGroups extends React.Component<Props, State> {
           <Body>
             <Text style={styles.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
             <Text style={styles.fontConnectWithRole}>{item.currentRole}</Text>
-            <Button bordered style={styles.connectWithSliderButton} onPress={() => { //this.openConversation() 
-            }}><Text>Start Conversation</Text></Button>
+            <JCButton buttonType={ButtonTypes.OutlineSmall} onPress={() => { this.openConversation() }}>Start Conversation</JCButton>
           </Body>
         </Left>
       </CardItem>
@@ -270,8 +275,8 @@ export default class MyGroups extends React.Component<Props, State> {
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetail}>{item.description}</Text></CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetail}>{item.location}</Text></CardItem>
-      {this.canJoin(item.id) ? <CardItem ><Button onPress={() => { this.join(item.id) }}><Text style={styles.font}>Attend</Text></Button><Right></Right></CardItem> : null}
-      {this.canLeave(item.id) ? <CardItem ><Button onPress={() => { this.leave(item.id) }}><Text style={styles.font}>Don't Attend</Text></Button><Right></Right></CardItem> : null}
+      {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id) }}>Attend</JCButton><Right></Right></CardItem> : null}
+      {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id) }}>Don't Attend</JCButton><Right></Right></CardItem> : null}
     </Card>
   }
   renderResource(item: any) {
@@ -281,8 +286,8 @@ export default class MyGroups extends React.Component<Props, State> {
       </CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetail}>Last Updated: {item.lastupdated}</Text></CardItem>
-      {this.canJoin(item.id) ? <CardItem ><Button onPress={() => { this.join(item.id) }}><Text style={styles.font}>Join</Text></Button><Right></Right></CardItem> : null}
-      {this.canLeave(item.id) ? <CardItem ><Button onPress={() => { this.leave(item.id) }}><Text style={styles.font}>Leave</Text></Button><Right></Right></CardItem> : null}
+      {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id) }}>Join</JCButton><Right></Right></CardItem> : null}
+      {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id) }}>Leave</JCButton><Right></Right></CardItem> : null}
     </Card>
   }
   renderOrganization(item: any) {
@@ -292,8 +297,8 @@ export default class MyGroups extends React.Component<Props, State> {
       </CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetail}>{item.kind}</Text></CardItem>
-      {this.canJoin(item.id) ? <CardItem ><Button onPress={() => { this.join(item.id) }}><Text style={styles.font}>Join</Text></Button><Right></Right></CardItem> : null}
-      {this.canLeave(item.id) ? <CardItem ><Button onPress={() => { this.leave(item.id) }}><Text style={styles.font}>Leave</Text></Button><Right></Right></CardItem> : null}
+      {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id) }}>Join</JCButton><Right></Right></CardItem> : null}
+      {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id) }}>Leave</JCButton><Right></Right></CardItem> : null}
     </Card>
   }
   renderCourse(item: any) {
@@ -303,68 +308,70 @@ export default class MyGroups extends React.Component<Props, State> {
       </CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetail}>Last Updated: {item.lastupdated}</Text></CardItem>
-      {this.canJoin(item.id) ? <CardItem ><Button onPress={() => { this.join(item.id) }}><Text style={styles.font}>Join</Text></Button><Right></Right></CardItem> : null}
-      {this.canLeave(item.id) ? <CardItem ><Button onPress={() => { this.leave(item.id) }}><Text style={styles.font}>Leave</Text></Button><Right></Right></CardItem> : null}
+      {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id) }}>Join</JCButton><Right></Right></CardItem> : null}
+      {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id) }}>Leave</JCButton><Right></Right></CardItem> : null}
     </Card>
   }
   render() {
-
-    if (this.state.titleString == null)
+    if (!constants["SETTING_ISVISIBLE_"+this.state.type])
       return null
     else
-      return (
-        <StyleProvider style={getTheme(material)}>
+      if (this.state.titleString == null)
+        return null
+      else
+        return (
+          <StyleProvider style={getTheme(material)}>
 
-          <Container style={{ padding: 10, minHeight: 445, width: "100%", flexDirection: 'column', justifyContent: 'flex-start' }}>
-            <Container style={{ minHeight: 45, flexGrow: 0, flexDirection: 'row', justifyContent: 'space-between' }} >
-              <Button transparent onPress={() => { this.openMultiple() }}><Text style={styles.fontSliderHeader}>{this.state.titleString}</Text></Button>
-              <Container style={{ maxHeight: 45, flexDirection: 'row', justifyContent: 'flex-end', alignItems: "flex-start" }}>
-                <Button transparent onPress={() => { this.openMultiple() }}><Text style={styles.fontSliderButtons}>Show All</Text></Button>
-                <Button transparent onPress={() => { this.openMultiple() }}><Text style={styles.fontSliderButtons}>Show Recommended</Text></Button>
-                {this.state.showCreateButton ?
-                  <Button bordered onPress={() => { this.createSingle() }} style={styles.sliderButton}><Text style={styles.fontSliderButtons}>{this.state.createString}</Text></Button>
+            <Container style={{ padding: 10, minHeight: 445, width: "100%", flexDirection: 'column', justifyContent: 'flex-start' }}>
+              <Container style={{ minHeight: 45, flexGrow: 0, flexDirection: 'row', justifyContent: 'space-between' }} >
+                <JCButton buttonType={ButtonTypes.TransparentBoldBlack} onPress={() => { this.openMultiple() }}>{this.state.titleString}</JCButton>
+                <Container style={{ maxHeight: 45, flexDirection: 'row', justifyContent: 'flex-end', alignItems: "flex-start" }}>
+                  <JCButton buttonType={ButtonTypes.TransparentBoldOrange} onPress={() => { this.openMultiple() }}>Show All</JCButton>
+                  {constants["SETTING_ISVISIBLE_SHOWRECOMMENDED"]?<JCButton buttonType={ButtonTypes.TransparentBoldOrange} onPress={() => { this.openMultiple() }}>Show Recommended</JCButton>:null}
+                  {this.state.showCreateButton && constants["SETTING_ISVISIBLE_CREATE_"+this.state.type]?
+                    <JCButton buttonType={ButtonTypes.OutlineBold} onPress={() => { this.createSingle() }}>{this.state.createString}</JCButton>
+                    : null
+                  }
+                </Container>
+              </Container>
+              <Container style={{ overflow: "scroll", minHeight: 400, flexWrap: this.props.wrap ? "wrap" : "nowrap", flexGrow: 1, width: "100%", flexDirection: 'row', justifyContent: "flex-start", alignItems: "flex-start" }}>
+                {this.state.data ?
+                  this.state.data.map((item) => {
+                    return (
+                      <ListItem noBorder key={item.id} style={{ alignSelf: "flex-start" }} button onPress={() => { this.openSingle(item.id) }}>
+                        {this.state.type == "group" ?
+                          this.renderGroup(item) :
+                          this.state.type == "event" ?
+                            this.renderEvent(item) :
+                            this.state.type == "resource" ?
+                              this.renderResource(item) :
+                              this.state.type == "organization" ?
+                                this.renderOrganization(item) :
+                                this.state.type == "course" ?
+                                  this.renderCourse(item) :
+                                  this.state.type == "profile" ?
+                                    this.renderProfile(item) :
+                                    null
+                        }
+
+
+                      </ListItem>
+                    )
+                  })
                   : null
                 }
+                {this.state.nextToken ?
+                  this.props.showMore ?
+                    <TouchableOpacity onPress={() => { this.setInitialData(this.props) }} >
+                      <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: '0%', width: this.state.cardWidth }}>
+                        <CardItem   ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>Load more...</Text></CardItem>
+                      </Card>
+                    </TouchableOpacity>
+                    : null
+                  : null}
               </Container>
             </Container>
-            <Container style={{ overflow: "scroll", minHeight: 400, flexWrap: this.props.wrap ? "wrap" : "nowrap", flexGrow: 1, width: "100%", flexDirection: 'row', justifyContent: "flex-start", alignItems: "flex-start" }}>
-              {this.state.data ?
-                this.state.data.map((item) => {
-                  return (
-                    <ListItem noBorder key={item.id} style={{ alignSelf: "flex-start" }} button onPress={() => { this.openSingle(item.id) }}>
-                      {this.state.type == "group" ?
-                        this.renderGroup(item) :
-                        this.state.type == "event" ?
-                          this.renderEvent(item) :
-                          this.state.type == "resource" ?
-                            this.renderResource(item) :
-                            this.state.type == "organization" ?
-                              this.renderOrganization(item) :
-                              this.state.type == "course" ?
-                                this.renderCourse(item) :
-                                this.state.type == "profile" ?
-                                  this.renderProfile(item) :
-                                  null
-                      }
-
-
-                    </ListItem>
-                  )
-                })
-                : null
-              }
-              {this.state.nextToken ?
-                this.props.showMore ?
-                  <TouchableOpacity onPress={() => { this.setInitialData(this.props) }} >
-                    <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: '0%', width: this.state.cardWidth }}>
-                      <CardItem   ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>Load more...</Text></CardItem>
-                    </Card>
-                  </TouchableOpacity>
-                  : null
-                : null}
-            </Container>
-          </Container>
-        </StyleProvider>
-      )
+          </StyleProvider>
+        )
   }
 }

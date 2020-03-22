@@ -109,7 +109,13 @@ export default EStyleSheet.create({
         fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 16, color: '#000000'
     },
     fontSliderButtons: {
-        fontFamily: 'Graphik-Bold-App', fontSize: 16, color: '#F0493E', fontWeight: "bold"
+        fontFamily: 'Graphik-Bold-App', fontSize: 16, color: '#F0493E', fontWeight: "bold",padding:10
+    },
+    fontStartConversation: {
+        fontFamily: 'Graphik-Regular-App', fontSize: 16, color: '#F0493E',padding:5
+    },
+    fontOrangeButton:{
+        fontFamily: 'Graphik-Regular-App', fontSize: 12, color: '#ffffFF', padding:10
     },
     fontCourseHeaderBold: {
         fontFamily: 'Graphik-Bold-App',
@@ -178,8 +184,15 @@ export default EStyleSheet.create({
         alignSelf:"flex-end",
         marginBottom:20,
         marginLeft:10,
-        marginRight:10
-        // color:'#F0493E'
+        marginRight:10,
+        color:"#F0493E",
+    },
+    postButtonText:{
+        color:"#F0493E",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16, 
+        padding:5
+        
     },
     sliderButton:
     {

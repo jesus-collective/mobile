@@ -1,5 +1,5 @@
-import { Icon, Button, Text, View, Input, Form, Item, Label, Content } from 'native-base';
-import { Image } from 'react-native'
+import { Icon, Button,  View, Input, Form, Item, Label, Content } from 'native-base';
+import { Text,Image } from 'react-native'
 import * as React from 'react';
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
@@ -249,7 +249,7 @@ export default class MyProfile extends React.Component<Props, State> {
                 autoCorrect={false}
                 tagStyle={styles.tag}
                 tagTextStyle={styles.tagText}
-                keysForTag={' '}
+                //keysForTag={' '}
               />
               <Item stackedLabel>
                 <Label style={styles.fontFormSmall}>Current Role</Label>

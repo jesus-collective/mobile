@@ -1,13 +1,17 @@
 ﻿import React from 'react';
-import { StyleProvider, Card, Container, Content, Text, Button } from 'native-base';
+import { StyleProvider, Card, Container, Content } from 'native-base';
+import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
+
+import {Text} from 'react-native'
+
 import CourseSidebar from '../../components/CourseSidebar/CourseSidebar'
 import MyMap from '../../components/MyMap/MyMap';
 import styles from '../../components/style.js'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
-import EditableDate from '../../components/Editable/EditableDate'
-import EditableText from '../../components/Editable/EditableText'
-import EditableDollar from '../../components/Editable/EditableDollar'
+import EditableDate from '../../components/Forms/EditableDate'
+import EditableText from '../../components/Forms/EditableText'
+import EditableDollar from '../../components/Forms/EditableDollar'
 import Validate from '../../components/Validate/Validate'
 import { Image } from 'react-native'
 import { API, graphqlOperation, Auth } from 'aws-amplify';
@@ -192,13 +196,13 @@ export default class CourseScreen extends React.Component<Props, State>{
                     }
                     </Text>
                     <Text>Publisher</Text>
-                    <Button bordered style={styles.sliderButton}><Text>Contact Us</Text></Button>
+                    <JCButton buttonType={ButtonTypes.Outline} onPress={()=>{}} >Contact Us</JCButton>
 
                     {/*this.state.data.instructors.map((item: any) => {
                     return (<Card><Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
                       <Text>{item.name}</Text>
                       <Text>Instructor</Text>
-                      <Button bordered style={styles.sliderButton}><Text>Ask Question</Text></Button>
+                      <JCButton bordered style={styles.sliderButton}><Text>Ask Question</Text></Button>
                     </Card>)
                   }
                 )*/}
@@ -228,29 +232,29 @@ export default class CourseScreen extends React.Component<Props, State>{
                     })}
                   </Container>
                   <Container style={{ flex: 15, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <Button bordered style={styles.sliderButton}><Text>Join Course</Text></Button>
+                    <JCButton buttonType={ButtonTypes.Outline} onPress={()=>{}} >Join Course</JCButton>
                     {this.state.canJoin ?
-                      <Button onPress={() => { this.join() }} bordered style={styles.sliderButton}><Text>Join Course</Text></Button> :
+                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.join() }} >Join Course</JCButton> :
                       null
                     }
                     {this.state.canLeave ?
-                      <Button onPress={() => { this.leave() }} bordered style={styles.sliderButton}><Text>Leave Course</Text></Button> :
+                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.leave() }} >Leave Course</JCButton> :
                       null
                     }
                     {this.state.createNew ?
-                      <Button onPress={() => { this.createNew() }} bordered style={styles.sliderButton}><Text>Create Course</Text></Button>
+                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.createNew() }}>Create Course</JCButton>
                       : null
                     }
                     {this.state.canSave ?
-                      <Button onPress={() => { this.save() }} bordered style={styles.sliderButton}><Text>Save Course</Text></Button>
+                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.save() }}>Save Course</JCButton>
                       : null
                     }
                     {this.state.canDelete ?
-                      <Button onPress={() => { if (window.confirm('Are you sure you wish to delete this course?')) this.delete() }} bordered style={styles.sliderButton}><Text>Delete Course</Text></Button>
+                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { if (window.confirm('Are you sure you wish to delete this course?')) this.delete() }} >Delete Course</JCButton>
                       : null
                     }
                     {this.state.canGotoActiveCourse ?
-                      <Button onPress={() => this.gotoActiveCourse()} bordered style={styles.sliderButton}><Text>Go to Course</Text></Button>
+                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => this.gotoActiveCourse()} >Go to Course</JCButton>
                       : null
                     }
                     <EditableDate type="date" onChange={(value: any) => { this.updateValue("time", value) }} placeholder="Enter Course Start Date" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableDate>

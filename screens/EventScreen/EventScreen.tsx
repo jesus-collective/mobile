@@ -1,14 +1,18 @@
 ﻿import React from 'react';
-import { Icon, Picker, StyleProvider, Container, Content, Text, Button } from 'native-base';
+import { Icon, Picker, StyleProvider, Container, Content } from 'native-base';
+import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
+
+import {Text} from 'react-native'
+
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
 import styles from '../../components/style.js'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import MessageBoard from '../../components/MessageBoard/MessageBoard'
-import EditableDate from '../../components/Editable/EditableDate'
-import EditableText from '../../components/Editable/EditableText'
-import EditableUrl from '../../components/Editable/EditableUrl'
+import EditableDate from '../../components/Forms/EditableDate'
+import EditableText from '../../components/Forms/EditableText'
+import EditableUrl from '../../components/Forms/EditableUrl'
 import Validate from '../../components/Validate/Validate'
 import { Image } from 'react-native'
 import { API, graphqlOperation, Auth } from 'aws-amplify';
@@ -228,23 +232,23 @@ export default class EventScreen extends React.Component<Props, State>{
                           return (<ProfileImage user={item} size="small" />)
                         })}
                   {this.state.canJoin ?
-                    <Button onPress={() => { this.join() }} bordered style={styles.sliderButton}><Text>Attend</Text></Button> :
+                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.join() }} >Attend</JCButton> :
                     null
                   }
                   {this.state.canLeave ?
-                    <Button onPress={() => { this.leave() }} bordered style={styles.sliderButton}><Text>Don't Attend</Text></Button> :
+                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.leave() }} >Don't Attend</JCButton> :
                     null
                   }
                   {this.state.createNew ?
-                    <Button onPress={() => { this.createNew() }} bordered style={styles.sliderButton}><Text>Create Event</Text></Button>
+                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.createNew() }} >Create Event</JCButton>
                     : null
                   }
                   {this.state.canSave ?
-                    <Button onPress={() => { this.save() }} bordered style={styles.sliderButton}><Text>Save Event</Text></Button>
+                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.save() }} >Save Event</JCButton>
                     : null
                   }
                   {this.state.canDelete ?
-                    <Button onPress={() => { if (window.confirm('Are you sure you wish to delete this event?')) this.delete() }} bordered style={styles.sliderButton}><Text>Delete Event</Text></Button>
+                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { if (window.confirm('Are you sure you wish to delete this event?')) this.delete() }}>Delete Event</JCButton>
                     : null
                   }
                   <Text>{this.state.validationError}</Text>

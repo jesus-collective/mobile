@@ -1,5 +1,8 @@
 ﻿import React from 'react';
-import { Accordion, StyleProvider, Card, Container, Content, Text, Button, Left, Right, CardItem, Body } from 'native-base';
+import { Accordion, StyleProvider, Card, Container, Content, Left, Right, CardItem, Body } from 'native-base';
+import {Text} from 'react-native'
+import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
+
 import CourseSidebar from '../../components/CourseSidebar/CourseSidebar'
 import MyMap from '../../components/MyMap/MyMap';
 import styles from '../../components/style.js'
@@ -128,7 +131,7 @@ export default class CourseScreen extends React.Component<Props, State>{
     return (
       this.state.activeLesson != null ?
         <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-          <Button onPress={() => { this.setActiveWeek(this.state.activeWeek) }}><Text>Return</Text></Button>
+          <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.setActiveWeek(this.state.activeWeek) }}>Return</JCButton>
           <Text>{week.week}</Text>
           <Text>{week.date}</Text>
           <Text>{week.leader}</Text>
@@ -171,9 +174,9 @@ export default class CourseScreen extends React.Component<Props, State>{
                   {this.renderLessonDetails(week)}
                   <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                     <Container style={{ flex: 5, flexDirection: "row" }}>
-                      <Button transparent><Text>Cohort</Text></Button>
-                      <Button transparent><Text>Triad</Text></Button>
-                      <Button transparent><Text>Instructor</Text></Button>
+                      <JCButton buttonType={ButtonTypes.Outline} onPress={()=>{}}>Cohort</JCButton>
+                      <JCButton buttonType={ButtonTypes.Outline} onPress={()=>{}}>Triad</JCButton>
+                      <JCButton buttonType={ButtonTypes.Outline} onPress={()=>{}}>Instructor</JCButton>
                     </Container>
                     <Container style={{ flex: 95, flexDirection: "row" }}>
                       <MessageBoard navigation={this.props.navigation} groupId={this.state.data.id}></MessageBoard>

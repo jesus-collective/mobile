@@ -1,11 +1,12 @@
 import { Container, Content, Left, Body, Right, Button } from 'native-base';
 
-import { DrawerActions  } from 'react-navigation-drawer';
+import { DrawerActions } from 'react-navigation-drawer';
 
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Image, Text } from 'react-native';
 import styles from '../Footer/style.js';
+import { constants } from '../../src/constants'
 
 interface Props {
   navigation: any
@@ -30,37 +31,38 @@ export default class FooterJC extends React.Component<Props, State> {
         { name: "Team" }
       ]
     },
-    {
+    constants["SETTING_ISVISIBLE_event"] ? {
       name: "Events",
       submenu: [
-        { name: "My Events" },
-        { name: "Recommended" }
+        constants["SETTING_ISVISIBLE_SHOWMY"] ? { name: "My Events" }: null,
+        constants["SETTING_ISVISIBLE_SHOWRECOMMENDED"] ? { name: "Recommended" } : null
 
       ]
-    },
-    {
+    } : null
+    ,
+    constants["SETTING_ISVISIBLE_group"] ? {
       name: "Groups",
       submenu: [
-        { name: "My Events" },
-        { name: "Recommended" }
+        constants["SETTING_ISVISIBLE_SHOWMY"] ? { name: "My Groups" }: null,
+        constants["SETTING_ISVISIBLE_SHOWRECOMMENDED"] ? { name: "Recommended" } : null
 
       ]
-    },
-    {
+    } : null,
+    constants["SETTING_ISVISIBLE_resource"] ? {
       name: "Resources",
-      submenu: [
+      submenu: false?[
         { name: "Kids&Youth" },
         { name: "Training" },
         { name: "Adult Teaching" }
 
-      ]
-    },
+      ]:[]
+    } : null,
     {
       name: "Contact Us",
       submenu: [
-         { name: "Get Involved" },
-         { name: "Connect With Us" }
-     
+        { name: "Get Involved" },
+        { name: "Connect With Us" }
+
       ]
     },
   ]
@@ -100,35 +102,37 @@ export default class FooterJC extends React.Component<Props, State> {
           alignItems: 'stretch'
 
         }}>
-          <Body style={{ minWidth:400,display: "flex", flexDirection: 'column', alignSelf: "stretch", alignItems: "flex-start", justifyContent: "space-evenly" }}>
-          <Button
-            transparent
-            onPress={this.openHome}>
-            <Image style={styles.logo}
-              source={require('./icon.png')}
-            /></Button>
-          <Text style={styles.copywriteText}>© 2019 Jesus Collective. All Rights Reserved.</Text>
-        </Body>
-        {this.menu.map((item) => {
-          return (
-            <Body key={item.name} style={{ display: "flex", flexDirection: 'column', alignSelf: "flex-start", alignItems: "flex-start", justifyContent: 'flex-start' }}>
-              <Button
-                transparent
-                onPress={this.openEvents}
-                style={styles.footerCenterMenuButtonsWhite}>
-                <Text style={styles.footerCenterMenuButtonsTextWhite}>{item.name}</Text>
-              </Button>
-              {item.submenu.map((item2) => {
-                return (<Button key={item2.name}
-                  transparent
-                  onPress={this.openEvents}
-                  style={styles.footerCenterMenuButtons}>
-                  <Text style={styles.footerCenterMenuButtonsText}>{item2.name}</Text>
-                </Button>)
-              })}
-            </Body>
-          )
-        })}
+          <Body style={{ minWidth: 400, display: "flex", flexDirection: 'column', alignSelf: "stretch", alignItems: "flex-start", justifyContent: "space-evenly" }}>
+            <Button
+              transparent
+              onPress={this.openHome}>
+              <Image style={styles.logo}
+                source={require('./icon.png')}
+              /></Button>
+            <Text style={styles.copywriteText}>© 2019 Jesus Collective. All Rights Reserved.</Text>
+          </Body>
+          {this.menu.map((item) => {
+            if (item != null)
+              return (
+                <Body key={item.name} style={{ display: "flex", flexDirection: 'column', alignSelf: "flex-start", alignItems: "flex-start", justifyContent: 'flex-start' }}>
+                  <Button
+                    transparent
+                    onPress={this.openEvents}
+                    style={styles.footerCenterMenuButtonsWhite}>
+                    <Text style={styles.footerCenterMenuButtonsTextWhite}>{item.name}</Text>
+                  </Button>
+                  {item.submenu.map((item2) => {
+                    if (item2 != null)
+                      return (<Button key={item2.name}
+                        transparent
+                        onPress={this.openEvents}
+                        style={styles.footerCenterMenuButtons}>
+                        <Text style={styles.footerCenterMenuButtonsText}>{item2.name}</Text>
+                      </Button>)
+                  })}
+                </Body>
+              )
+          })}
 
 
         </Body>

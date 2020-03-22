@@ -1,4 +1,5 @@
-import { StyleProvider, Content, Body, Right, Left, Card, CardItem, Container, Button, Text } from 'native-base';
+import { StyleProvider, Content, Body, Right, Left, Card, CardItem, Container, Button } from 'native-base';
+import { Text } from 'react-native';
 import * as React from 'react';
 import styles from '../style.js'
 import getTheme from '../../native-base-theme/components';
@@ -9,6 +10,7 @@ import * as queries from '../../src/graphql/queries';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
 import { API, graphqlOperation, Auth } from 'aws-amplify';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
+import { constants } from '../../src/constants'
 
 interface Props {
   navigation: any
@@ -22,7 +24,7 @@ interface State {
   //createString: String
   titleString: String
   data: any
-  
+
   //showCreateButton: Boolean
 }
 export default class MyPeople extends React.Component<Props, State> {
@@ -36,7 +38,7 @@ export default class MyPeople extends React.Component<Props, State> {
       //type: props.type,
       //cardWidth: 250,
       data: []
-   
+
       // showCreateButton: false
     }
     this.setInitialData(props)
@@ -51,16 +53,16 @@ export default class MyPeople extends React.Component<Props, State> {
     listUsers.then((json) => {
       console.log(json)
       this.setState({ data: json.data.listUsers.items })
-     
+
     }).catch(
       (e: any) => {
         console.log(e)
         this.setState({ data: e.data.listUsers.items })
-      
+
       }
     )
   }
- 
+
   openConversation() {
     console.log("Navigate to conversationScreen")
     this.props.navigation.push("ConversationScreen");
@@ -73,39 +75,42 @@ export default class MyPeople extends React.Component<Props, State> {
     console.log("Navigate to profileScreen")
     this.props.navigation.push("ProfileScreen", { id: id, create: false });
   }
- 
+
   render() {
-    return (
-      <StyleProvider style={getTheme(material)}>
+    if (!constants["SETTING_ISVISIBLE_profile"])
+      return null
+    else
+      return (
+        <StyleProvider style={getTheme(material)}>
 
-        <Container style={{ width: "100%", flexDirection: 'column', alignItems: 'flex-start', minHeight: 300 }} >
-          <Button onPress={() => { this.showProfiles() }} transparent><Text style={styles.fontConnectWith}>People you may connect with</Text></Button>
-          <Content style={{ width: "100%" }}>
-            {this.state.data.map((item: any) => {
-              return (
-                <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.id) }}>
-                  <Card style={{ width: "100%", minHeight: 50 }}>
-                    <CardItem >
-                      <Left>
-                        <ProfileImage user={item} size='small'>
-                        </ProfileImage>
-                       
-                        <Body>
-                          <Text style={styles.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
-                          <Text style={styles.fontConnectWithRole}>{item.currentRole}</Text>
-                          <Button bordered style={styles.connectWithSliderButton} onPress={() => { this.openConversation() }}><Text>Start Conversation</Text></Button>
-                        </Body>
-                      </Left>
-                    </CardItem>
-                  </Card>
-                </TouchableOpacity>
-              )
-            })}
-          </Content>
+          <Container style={{ width: "100%", flexDirection: 'column', alignItems: 'flex-start', minHeight: 300 }} >
+            <Button onPress={() => { this.showProfiles() }} transparent><Text style={styles.fontConnectWith}>People you may connect with</Text></Button>
+            <Content style={{ width: "100%" }}>
+              {this.state.data.map((item: any) => {
+                return (
+                  <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.id) }}>
+                    <Card style={{ width: "100%", minHeight: 50 }}>
+                      <CardItem >
+                        <Left>
+                          <ProfileImage user={item} size='small'>
+                          </ProfileImage>
 
-        </Container>
-      </StyleProvider>
+                          <Body>
+                            <Text style={styles.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
+                            <Text style={styles.fontConnectWithRole}>{item.currentRole}</Text>
+                            <Button bordered style={styles.connectWithSliderButton} onPress={() => { this.openConversation() }}><Text style={styles.fontStartConversation}>Start Conversation</Text></Button>
+                          </Body>
+                        </Left>
+                      </CardItem>
+                    </Card>
+                  </TouchableOpacity>
+                )
+              })}
+            </Content>
 
-    )
+          </Container>
+        </StyleProvider>
+
+      )
   }
 }

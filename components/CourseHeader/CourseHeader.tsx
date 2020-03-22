@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Image, Text } from 'react-native';
 import styles from '../style.js'
-import EditableText from '../Editable/EditableText'
+import EditableText from '../Forms/EditableText'
 var moment = require('moment');
 interface Props {
     groupData: any

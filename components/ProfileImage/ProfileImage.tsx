@@ -1,4 +1,4 @@
-import { Icon, Button, Text, View, Input, Form, Item, Label, Content } from 'native-base';
+import { Icon, Button, View, Input, Form, Item, Label, Content } from 'native-base';
 import { Image } from 'react-native'
 import * as React from 'react';
 import * as queries from '../../src/graphql/queries';

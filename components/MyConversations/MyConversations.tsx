@@ -1,9 +1,11 @@
-import { Content, Left, Right, Body, StyleProvider, Container, Card, CardItem, Button, Text } from 'native-base';
+import { Content, Left, Right, Body, StyleProvider, Container, Card, CardItem, Button } from 'native-base';
+import { Text } from 'react-native'
 import * as React from 'react';
 import styles from '../style.js'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import { Image } from 'react-native'
+import { constants } from '../../src/constants'
 
 interface Props {
   navigation: any
@@ -43,37 +45,40 @@ export default class MyConversations extends React.Component<Props, State> {
           "message": "Our team just published latest addition to the summer kids camps curriculum. Let us know any feedback - http://jesuscollective.com/345663"
         },
       ]
-    return (
-      <StyleProvider style={getTheme(material)}>
+    if (!constants["SETTING_ISVISIBLE_conversation"])
+      return null
+    else
+      return (
+        <StyleProvider style={getTheme(material)}>
 
-        <Container style={{ width:"100%", flexDirection: 'column', alignItems: 'flex-start', minHeight: 500 }} >
-          <Button transparent onPress={() => {this.openConversation()}}><Text style={styles.fontConnectWith}>Latest Conversations</Text></Button>
-          <Content>
-            {items.map((item) => {
-              return (
-                <Card key={item.id} style={{ minHeight: 50 }}>
-                  <CardItem>
-                    <Left>
-                      <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
-                      <Body>
-                        <Text style={styles.fontConnectWithName}>{item.name}</Text>
-                        <Text style={styles.fontConnectWithRole}>{item.role}</Text>
-                      </Body>
-                    </Left>
-                    <Right>
-                      <Button bordered style={styles.connectWithSliderButton} onPress={() => {this.openConversation()}}><Text>Open</Text></Button>
-                    </Right>
-                  </CardItem>
-                  <CardItem>
-                    <Text style={styles.fontConnectWithRole}>{item.message}</Text>
-                  </CardItem>
-                </Card>)
-            })}
-          </Content>
+          <Container style={{ width: "100%", flexDirection: 'column', alignItems: 'flex-start', minHeight: 500 }} >
+            <Button transparent onPress={() => { this.openConversation() }}><Text style={styles.fontConnectWith}>Latest Conversations</Text></Button>
+            <Content>
+              {items.map((item) => {
+                return (
+                  <Card key={item.id} style={{ minHeight: 50 }}>
+                    <CardItem>
+                      <Left>
+                        <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
+                        <Body>
+                          <Text style={styles.fontConnectWithName}>{item.name}</Text>
+                          <Text style={styles.fontConnectWithRole}>{item.role}</Text>
+                        </Body>
+                      </Left>
+                      <Right>
+                        <Button bordered style={styles.connectWithSliderButton} onPress={() => { this.openConversation() }}><Text style={styles.fontStartConversation}>Open</Text></Button>
+                      </Right>
+                    </CardItem>
+                    <CardItem>
+                      <Text style={styles.fontConnectWithRole}>{item.message}</Text>
+                    </CardItem>
+                  </Card>)
+              })}
+            </Content>
 
-        </Container>
-      </StyleProvider>
+          </Container>
+        </StyleProvider>
 
-    )
+      )
   }
 }

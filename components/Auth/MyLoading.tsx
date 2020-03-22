@@ -2,7 +2,9 @@ import React from 'react';
 import { Loading} from 'aws-amplify-react-native';
 import styles from '../../components/style.js'
 import SignUpSidebar from '../../components/SignUpSidebar/SignUpSidebar'
-import { View ,Text} from 'native-base';
+import { View} from 'native-base';
+import {Text} from 'react-native'
+
 import { Platform } from 'react-native';
 import { Dimensions } from 'react-native'
 

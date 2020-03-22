@@ -1,12 +1,16 @@
 ﻿import React from 'react';
-import { StyleProvider, Container, Content, Text, Button } from 'native-base';
+import { StyleProvider, Container, Content } from 'native-base';
+import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
+
+import {Text} from 'react-native'
+
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
 import styles from '../../components/style.js'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import MessageBoard from '../../components/MessageBoard/MessageBoard'
-import EditableText from '../../components/Editable/EditableText'
+import EditableText from '../../components/Forms/EditableText'
 import Validate from '../../components/Validate/Validate'
 import { Image } from 'react-native'
 import { API, graphqlOperation, Auth } from 'aws-amplify';
@@ -207,23 +211,23 @@ export default class GroupScreen extends React.Component<Props, State>{
                           return (<ProfileImage user={item} size="small" />)
                         })}
                   {this.state.canJoin ?
-                    <Button onPress={() => { this.join() }} bordered style={styles.sliderButton}><Text>Join Resource</Text></Button> :
+                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.join() }} >Join Resource</JCButton> :
                     null
                   }
                   {this.state.canLeave ?
-                    <Button onPress={() => { this.leave() }} bordered style={styles.sliderButton}><Text>Leave Resource</Text></Button> :
+                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.leave() }} >Leave Resource</JCButton> :
                     null
                   }
                   {this.state.createNew ?
-                    <Button onPress={() => { this.createNew() }} bordered style={styles.sliderButton}><Text>Create Resource</Text></Button>
+                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.createNew() }} >Create Resource</JCButton>
                     : null
                   }
                   {this.state.canSave ?
-                    <Button onPress={() => { this.save() }} bordered style={styles.sliderButton}><Text>Save Resource</Text></Button>
+                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.save() }} >Save Resource</JCButton>
                     : null
                   }
                   {this.state.canDelete ?
-                    <Button onPress={() => { if (window.confirm('Are you sure you wish to delete this resource?')) this.delete() }} bordered style={styles.sliderButton}><Text>Delete Resource</Text></Button>
+                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { if (window.confirm('Are you sure you wish to delete this resource?')) this.delete() }} >Delete Resource</JCButton>
                     : null
                   }
                   <Text>{this.state.validationError}</Text>

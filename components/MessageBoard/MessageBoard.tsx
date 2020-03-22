@@ -1,5 +1,7 @@
-import { Input, Content, Left, Right, Body, StyleProvider, Container, Card, CardItem, Button, Text } from 'native-base';
+import { Input, Content, Left, Right, Body, StyleProvider, Container, Card, CardItem } from 'native-base';
 import * as React from 'react';
+import { Text } from 'react-native'
+import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 import styles from '../style.js'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
@@ -10,17 +12,20 @@ import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import * as subscriptions from '../../src/graphql/subscriptions';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
-import { API, graphqlOperation, Auth } from 'aws-amplify';
+import { API, graphqlOperation, Auth, Storage } from 'aws-amplify';
 import { Observable as rxObservable, of } from "rxjs";
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { convertFromRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './react-draft-wysiwyg.css';
+import { v1 as uuidv1 } from 'uuid';
+
 
 interface Props {
   groupId: string
   navigation: any
+
 }
 interface State {
   data: any,
@@ -133,7 +138,7 @@ export default class MessageBoard extends React.Component<Props, State> {
     return (
       (this.state.message != null && this.state.created) ?
         <StyleProvider style={getTheme(material)}>
-          <Container style={{ marginTop:10,overflow: "visible", width: "100%", flexDirection: 'column', minHeight: 500 }} >
+          <Container style={{ marginTop: 10, overflow: "visible", width: "100%", flexDirection: 'column', minHeight: 500 }} >
             <Container style={{ maxHeight: Math.max(155 + 10, this.state.textHeight + 10), overflow: "visible", flexDirection: "row" }}>
               {
                 this.state.UserDetails != null ?
@@ -147,12 +152,37 @@ export default class MessageBoard extends React.Component<Props, State> {
                 wrapperClassName="customWrapperSendmessage"
                 editorClassName="customEditorSendmessage"
                 onEditorStateChange={(z) => { this.updateEditorInput(z) }}
-                onContentStateChange={(z) => {this.updateInput(z)}}
-                
+                onContentStateChange={(z) => { this.updateInput(z) }}
+                toolbar={{
+                  image: {
+                    uploadCallback: async (z1) => {
+                      var id = uuidv1()
+                      console.log(z1);
+                      //  return { data: { link:"cnn.com" }}
+                      var upload = await Storage.put("messages/" + id + ".png", z1, {
+                        level: 'protected',
+                        contentType: z1.type,
+                      })
+                      var download = await Storage.get("messages/" + id + ".png", {
+                        level: 'protected',
+                        contentType: z1.type,
+                        identityId: this.state.UserDetails.profileImage ? this.state.UserDetails.profileImage : ""
+                      })
+                      return { data: { link: download } }
+                    },
+                    previewImage: true,
+                    alt: { present: true, mandatory: true },
+                    defaultSize: {
+                      height: 'auto',
+                      width: 'auto',
+                    }
+                  }
+                }}
+
               />
-              <Button onPress={() => { this.saveMessage() }} bordered style={styles.postButton}><Text>Post</Text></Button>
+              <JCButton buttonType={ButtonTypes.PostOutline} onPress={() => { this.saveMessage() }} >Post</JCButton>
             </Container>
-            <Content style={{ zIndex:-1,overflow: "visible", flexDirection: "column" }}>
+            <Content style={{ zIndex: -1, overflow: "visible", flexDirection: "column" }}>
               {this.state.data.items.map((item: any) => {
                 return (
                   <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
@@ -173,11 +203,8 @@ export default class MessageBoard extends React.Component<Props, State> {
                           <Text style={styles.fontConnectWithRole}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
                         </Right>
                       </CardItem>
-                      <CardItem style={{ marginTop:0, paddingTop:0, paddingBottom:0, borderTopLeftRadius: 0, borderTopRightRadius: 0, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, backgroundColor: "#eeeeee" }}>
-                      
-                        {item.content.includes("zzzaaazzz2")?
-                       
-                         
+                      <CardItem style={{ marginTop: 0, paddingTop: 0, paddingBottom: 0, borderTopLeftRadius: 0, borderTopRightRadius: 0, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, backgroundColor: "#eeeeee" }}>
+
                         <Editor
                           readOnly
                           toolbarHidden
@@ -185,7 +212,7 @@ export default class MessageBoard extends React.Component<Props, State> {
                           toolbarClassName="customToolbar"
                           wrapperClassName="customWrapper"
                           editorClassName="customEditor"
-                        />:null}
+                        />
                       </CardItem>
                     </Card>
                   </TouchableOpacity>)

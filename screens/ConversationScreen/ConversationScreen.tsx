@@ -1,5 +1,7 @@
 ﻿import React from 'react';
-import { Container, Content, Text, Button } from 'native-base';
+import { Container, Content } from 'native-base';
+import {Text} from 'react-native'
+
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
 import MyConversations from '../../components/MyConversations/MyConversations';

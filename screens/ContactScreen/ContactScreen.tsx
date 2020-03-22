@@ -1,9 +1,12 @@
 ﻿import React from 'react';
 import Amplify from 'aws-amplify';
 import awsConfig from '../../src/aws-exports';
+import {Text} from 'react-native'
+
 Amplify.configure(awsConfig);
 
-import {Text, Container} from 'native-base';
+import { Container} from 'native-base';
+
 import Header from '../../components/Header/Header'
 import JCBrowser from '../../components/JCBrowser/JCBrowser';
 import { NavigationScreenProp } from 'react-navigation';

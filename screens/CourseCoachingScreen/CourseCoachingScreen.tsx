@@ -1,12 +1,15 @@
 ﻿import React from 'react';
-import { Icon, Picker, Accordion, StyleProvider, Card, Container, Content, Text, Button } from 'native-base';
+import { Icon, Picker, Accordion, StyleProvider, Card, Container, Content } from 'native-base';
+import {Text} from 'react-native'
+import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
+
 import CourseSidebar from '../../components/CourseSidebar/CourseSidebar'
 import MyMap from '../../components/MyMap/MyMap';
 import styles from '../../components/style.js'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 
-import EditableText from '../../components/Editable/EditableText'
+import EditableText from '../../components/Forms/EditableText'
 import Validate from '../../components/Validate/Validate'
 import { Image, View } from 'react-native'
 import { API, graphqlOperation, Auth } from 'aws-amplify';
@@ -91,8 +94,8 @@ export default class CourseScreen extends React.Component<Props, State>{
                 <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
                   <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
                     <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
-                    <Button><Text>Book a Call</Text></Button>
-                    <Button><Text>Send Message</Text></Button>
+                    <JCButton buttonType={ButtonTypes.Outline} onPress={()=>{}}>Book a Call</JCButton>
+                    <JCButton buttonType={ButtonTypes.Outline} onPress={()=>{}}>Send Message</JCButton>
                     <Text>Hi </Text>
                     <Text>For your journey in leadership formation, I’d like to invite you to our bi-weekly coaching sessions where we can connect and discuss issues in more details. Let’s schedule our Coaching Calls - talk soon!
 
@@ -126,7 +129,7 @@ Thanks!
                           <Text>you’re going to schedule coaching call with Jon Hand.</Text>
                           <Text>30 minutes</Text>
                           <Text>Monday, August 23  -  1:30 PM – 2:00 PM</Text>
-                          <Button><Text>Yes, schedule call</Text></Button>
+                          <JCButton buttonType={ButtonTypes.Outline} onPress={()=>{}}>Yes, schedule call</JCButton>
                         </Container>
                       </Container>
                     </Container>

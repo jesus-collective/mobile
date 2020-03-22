@@ -1,7 +1,9 @@
 import React from 'react';
 import { withNavigation  } from 'react-navigation';
 
-import { Input, Content, Left, Right, Body, StyleProvider, Container, Card, CardItem, Button, Text } from 'native-base';
+import { Input, Content, Left, Right, Body, StyleProvider, Container, Card, CardItem, Button } from 'native-base';
+import {Text} from 'react-native'
+
 interface Props {
     value: string,
     title: string,

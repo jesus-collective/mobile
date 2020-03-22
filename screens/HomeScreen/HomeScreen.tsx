@@ -1,5 +1,7 @@
 ﻿import React from 'react';
-import { Container, Content, Text, Footer } from 'native-base';
+import { Container, Content, Footer } from 'native-base';
+import {Text} from 'react-native'
+
 import Header from '../../components/Header/Header'
 import FooterJC from '../../components/Footer/Footer'
 import MyMap from '../../components/MyMap/MyMap';
