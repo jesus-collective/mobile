@@ -34,7 +34,7 @@ interface State {
             multiline: props.multiline,
             placeholder: props.placeholder
         }
-        console.log(props)
+       // console.log(props)
     }
     onChanged(val: any) {
         this.props.onChange(val.target.value)

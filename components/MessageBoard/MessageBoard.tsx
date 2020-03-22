@@ -72,7 +72,7 @@ export default class MessageBoard extends React.Component<Props, State> {
       this.setState({
         UserDetails: getUser.data.getUser
       })
-      console.log(this.state.UserDetails)
+     // console.log(this.state.UserDetails)
     }
     catch (e) {
       console.log(e)
@@ -88,7 +88,7 @@ export default class MessageBoard extends React.Component<Props, State> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       var processMessages = (json) => {
-        console.log(json)
+      //  console.log(json)
         this.setState({
           created: true,
           data: json.data.messagesByRoom,
@@ -157,8 +157,7 @@ export default class MessageBoard extends React.Component<Props, State> {
                   image: {
                     uploadCallback: async (z1) => {
                       var id = uuidv1()
-                      console.log(z1);
-                      //  return { data: { link:"cnn.com" }}
+                    
                       var upload = await Storage.put("messages/" + id + ".png", z1, {
                         level: 'protected',
                         contentType: z1.type,

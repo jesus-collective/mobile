@@ -96,7 +96,7 @@ export default class CourseScreen extends React.Component<Props, State>{
     })
   }
   renderWeekDetails(week) {
-    console.log(this.state.activeLesson)
+    //console.log(this.state.activeLesson)
     return (
       this.state.activeLesson == null ?
         <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
@@ -126,7 +126,7 @@ export default class CourseScreen extends React.Component<Props, State>{
     )
   }
   renderLessonDetails(week: any) {
-    console.log(this.state.activeLesson)
+   // console.log(this.state.activeLesson)
     const lesson = week.lessons[this.state.activeLesson]
     return (
       this.state.activeLesson != null ?
