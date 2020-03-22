@@ -37,7 +37,7 @@ export default class MessageBoard extends React.Component<Props, State> {
             placeholder: props.placeholder,
 
         }
-        console.log(props)
+       // console.log(props)
     }
     onChanged(val: any) {
         this.props.onChange(val.format())
@@ -69,7 +69,7 @@ export default class MessageBoard extends React.Component<Props, State> {
                         format='MMMM Do YYYY, h:mm a'
                         label={this.state.placeholder}
                         value={moment(this.props.value)}
-                        onChange={(value) => { console.log(value); this.onChanged(value) }}
+                        onChange={(value) => {  this.onChanged(value) }}
                         //onError={console.log}
                         disablePast
 

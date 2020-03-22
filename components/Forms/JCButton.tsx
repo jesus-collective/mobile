@@ -29,7 +29,6 @@ class EditableUrl extends React.Component<Props, State> {
         this.props.onPress()
     }
     render() {
-        console.log(ButtonTypes[this.props.buttonType]+"Button")
         return <Button style={styles[ButtonTypes[this.props.buttonType]+"Button"]} onPress={() => { this.onPress() }}>
             <Text style={styles[ButtonTypes[this.props.buttonType]+"Text"]}>{this.props.children}</Text>
         </Button>

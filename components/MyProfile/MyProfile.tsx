@@ -53,10 +53,10 @@ export default class MyProfile extends React.Component<Props, State> {
         const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: this.props.loadId }));
         this.setState({
           UserDetails: getUser.data.getUser
-        }, () => this.getProfileImage(this.props.loadId)
+        }, () => this.getProfileImage()
         )
 
-        console.log(this.state.UserDetails)
+        //console.log(this.state.UserDetails)
       }
       catch (e) {
         this.setState({
@@ -103,7 +103,7 @@ export default class MyProfile extends React.Component<Props, State> {
         delete toSave.messages
         delete toSave.owns
         const updateUser = await API.graphql(graphqlOperation(mutations.updateUser, { input: toSave }));
-        console.log(updateUser)
+      //  console.log(updateUser)
         this.props.finalizeProfile()
       } catch (e) {
         console.log(e)
@@ -127,17 +127,17 @@ export default class MyProfile extends React.Component<Props, State> {
       identityId: userId
     })
       .then(result => {
-        console.log(result)
+       // console.log(result)
         var updateData = { ...this.state.UserDetails }
         updateData['profileImage'] = userId
         this.setState({
           UserDetails: updateData
-        },() => this.getProfileImage(this.props.loadId));
+        },() => this.getProfileImage());
       })
       .catch(err => console.log(err));
   }
-  getProfileImage(id) {
-    console.log(this.state.UserDetails.profileImage)
+  getProfileImage() {
+    //console.log(this.state.UserDetails.profileImage)
     Storage.get('profileImage.png', {
       level: 'protected',
       contentType: 'image/png',

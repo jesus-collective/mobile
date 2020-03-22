@@ -30,13 +30,17 @@ export default class MyProfile extends React.Component<Props, State> {
             profileImage: null,
             showEmpty: false
         }
-        this.getProfileImage(props.user)
+    
+           
+        this.getProfileImage(props.user?props.user.profileImage:null)
         
     }
-
+    componentDidUpdate(prevProps) {
+        if  (prevProps.user !== this.props.user) 
+        this.getProfileImage(this.props.user?this.props.user.profileImage:null)
+    }
     getProfileImage(user) {
-        console.log(user.profileImage)
-        if (user.profileImage == "" || user.profileImage == null) {
+        if (user == "" || user == null) {
             
             this.state = { profileImage: null, showEmpty: true }
         }
@@ -44,7 +48,7 @@ export default class MyProfile extends React.Component<Props, State> {
             Storage.get('profileImage.png', {
                 level: 'protected',
                 contentType: 'image/png',
-                identityId: user.profileImage
+                identityId: user
             })
                 .then(result => {
                     

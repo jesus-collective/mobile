@@ -2,7 +2,7 @@
 import { Icon, Picker, StyleProvider, Container, Content } from 'native-base';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
-import {Text} from 'react-native'
+import { Text } from 'react-native'
 
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
@@ -38,6 +38,7 @@ interface State {
   canDelete: boolean
   validationError: String
   currentUser: String
+  currentUserProfile: any
 }
 
 
@@ -57,12 +58,26 @@ export default class EventScreen extends React.Component<Props, State>{
       isEditable: true,
       canDelete: true,
       validationError: "",
-      currentUser: null
+      currentUser: null,
+      currentUserProfile: null
     }
-    Auth.currentAuthenticatedUser().then((user: any) => { this.setState({ currentUser: user.username }) })
+    Auth.currentAuthenticatedUser().then((user: any) => {
+      this.setState({
+        currentUser: user.username
+      })
+      const getUser: any = API.graphql(graphqlOperation(queries.getUser, { id: user['username'] }));
+      getUser.then((json) => {
+        this.setState({
+          currentUserProfile: json.data.getUser
+        })
+      })
+    })
     this.setInitialData(props)
   }
-
+  getValueFromKey(myObject: any, string: any) {
+    const key = Object.keys(myObject).filter(k => k.includes(string));
+    return key.length ? myObject[key[0]] : "";
+  }
   setInitialData(props) {
     if (props.navigation.state.params.create)
       Auth.currentAuthenticatedUser().then((user: any) => {
@@ -85,7 +100,7 @@ export default class EventScreen extends React.Component<Props, State>{
         variables: { id: props.navigation.state.params.id },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
-      var processResults=(json) => {
+      var processResults = (json) => {
         this.setState({ data: json.data.getGroup })
       }
       getGroup.then(processResults).catch(processResults)
@@ -155,7 +170,6 @@ export default class EventScreen extends React.Component<Props, State>{
     }).catch((err: any) => {
       console.log({ "Error mutations.createGroupMember": err });
     });
-
   }
   delete() {
     var deleteGroup: any = API.graphql({
@@ -176,7 +190,7 @@ export default class EventScreen extends React.Component<Props, State>{
     this.setState({ data: temp })
   }
   render() {
-    console.log(this.state.data)
+    //console.log(this.state.data)
     console.log("EventScreen")
     return (
       this.state.data ?
@@ -221,7 +235,7 @@ export default class EventScreen extends React.Component<Props, State>{
                       isEditable={this.state.isEditable}></EditableText>
                   }
                   <Text>Organizer</Text>
-                  <ProfileImage user={this.state.data.ownerUser} size="small" />
+                  <ProfileImage user={this.state.data.ownerUser?this.state.data.ownerUser:this.state.currentUserProfile} size="small" />
                   <Text>Attending ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
 
                   {

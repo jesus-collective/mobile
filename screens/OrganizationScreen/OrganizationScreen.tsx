@@ -2,7 +2,7 @@
 import { StyleProvider, Container, Content } from 'native-base';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
-import {Text} from 'react-native'
+import { Text } from 'react-native'
 
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
@@ -12,7 +12,7 @@ import material from '../../native-base-theme/variables/material';
 import MessageBoard from '../../components/MessageBoard/MessageBoard'
 import EditableText from '../../components/Forms/EditableText'
 import Validate from '../../components/Validate/Validate'
-import { Image } from 'react-native'
+
 import { API, graphqlOperation, Auth } from 'aws-amplify';
 import { CreateGroupInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
@@ -35,7 +35,8 @@ interface State {
   isEditable: boolean
   canDelete: boolean
   validationError: String
-  currentUser:String
+  currentUser: String
+  currentUserProfile: any
 }
 
 
@@ -55,10 +56,25 @@ export default class GroupScreen extends React.Component<Props, State>{
       isEditable: true,
       canDelete: true,
       validationError: "",
-      currentUser:null
+      currentUser: null,
+      currentUserProfile: null
     }
-    Auth.currentAuthenticatedUser().then((user: any) => {this.setState({currentUser:user.username})})
+    Auth.currentAuthenticatedUser().then((user: any) => {
+      this.setState({
+        currentUser: user.username
+      })
+      const getUser: any = API.graphql(graphqlOperation(queries.getUser, { id: user['username'] }));
+      getUser.then((json) => {
+        this.setState({
+          currentUserProfile: json.data.getUser
+        })
+      })
+    })
     this.setInitialData(props)
+  }
+  getValueFromKey(myObject: any, string: any) {
+    const key = Object.keys(myObject).filter(k => k.includes(string));
+    return key.length ? myObject[key[0]] : "";
   }
   setInitialData(props) {
     if (props.navigation.state.params.create)
@@ -80,7 +96,7 @@ export default class GroupScreen extends React.Component<Props, State>{
         variables: { id: props.navigation.state.params.id },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
-      var processResults=(json) => {
+      var processResults = (json) => {
         this.setState({ data: json.data.getGroup })
       }
       getGroup.then(processResults).catch(processResults)
@@ -109,13 +125,13 @@ export default class GroupScreen extends React.Component<Props, State>{
       });
     }
   }
-  clean(item)
-  {
+  clean(item) {
     delete item.members
     delete item.messages
     delete item.organizerGroup
     delete item.organizerUser
     delete item.instructors
+    delete item.ownerUser
     return item
   }
   save() {
@@ -140,11 +156,11 @@ export default class GroupScreen extends React.Component<Props, State>{
   join() {
     var createGroupMember: any = API.graphql({
       query: mutations.createGroupMember,
-      variables: { input: {groupID:this.state.data.id,userID:this.state.currentUser} },
+      variables: { input: { groupID: this.state.data.id, userID: this.state.currentUser } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
     createGroupMember.then((json: any) => {
-      
+
       this.setState({ canJoin: false, canLeave: true })
       console.log({ "Success mutations.createGroupMember": json });
     }).catch((err: any) => {
@@ -170,8 +186,8 @@ export default class GroupScreen extends React.Component<Props, State>{
     this.setState({ data: temp })
   }
   render() {
-    console.log(this.state.data)
-    console.log("GroupScreen")
+    //console.log(this.state.data)
+    console.log("OrganizationScreen")
     return (
       this.state.data ?
         <StyleProvider style={getTheme(material)}>
@@ -188,7 +204,7 @@ export default class GroupScreen extends React.Component<Props, State>{
                   <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Organization Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
 
                   <Text>Organizer</Text>
-                  <ProfileImage user={this.state.data.ownerUser} size="small" />
+                  <ProfileImage user={this.state.data.ownerUser?this.state.data.ownerUser:this.state.currentUserProfile} size="small" />
                   <Text>Members ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
 
                   {

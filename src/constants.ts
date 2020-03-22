@@ -9,7 +9,7 @@
     SETTING_ISVISIBLE_conversation: false,
     SETTING_ISVISIBLE_CREATE_course: false,
     SETTING_ISVISIBLE_CREATE_organization: false,
-    SETTING_ISVISIBLE_CREATE_resource: false,
+    SETTING_ISVISIBLE_CREATE_resource: true,
     SETTING_ISVISIBLE_CREATE_group: true,
     SETTING_ISVISIBLE_CREATE_event: true,
     SETTING_ISVISIBLE_CREATE_conversation: false,

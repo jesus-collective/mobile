@@ -182,7 +182,7 @@ export default class MyGroups extends React.Component<Props, State> {
       });
 
       var processList = (json) => {
-        console.log(json)
+       // console.log(json)
         var temp = [...this.state.data, ...json.data.groupByType.items]
         this.setState({
           data: temp,
@@ -194,7 +194,7 @@ export default class MyGroups extends React.Component<Props, State> {
   }
   openSingle(id: any) {
     console.log({ "Navigate to": this.state.openSingle })
-    console.log(id)
+   // console.log(id)
     this.props.navigation.push(this.state.openSingle, { id: id, create: false })
   }
   createSingle() {

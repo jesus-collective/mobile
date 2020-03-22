@@ -150,7 +150,7 @@ export default class CourseScreen extends React.Component<Props, State>{
 
   }
   gotoActiveCourse() {
-    console.log(this.props.navigation)
+    //console.log(this.props.navigation)
     this.props.navigation.push("CourseHomeScreen", { id: this.state.data.id, create: false })
   }
   delete() {

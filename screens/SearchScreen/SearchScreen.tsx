@@ -47,7 +47,7 @@ export default class GroupScreen extends React.Component<Props, State>{
     });
 
     searchGroups.then((json) => {
-      console.log(json)
+     // console.log(json)
       this.setState({ data: json.data.searchGroups.items })
     }).catch((e:any) => {
       console.log(e)

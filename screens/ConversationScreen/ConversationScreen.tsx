@@ -56,7 +56,7 @@ export default class ConversationScreen extends React.Component<Props, State>{
     ]
 
   render() {
-    console.log("EventScreen")
+    console.log("ConversationScreen")
     return (
 
       <Container >
