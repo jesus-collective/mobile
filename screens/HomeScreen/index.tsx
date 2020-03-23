@@ -138,6 +138,7 @@ interface State {
   hasPaidState: string;
   userExists: boolean;
   user: any;
+  authState: any
 }
 
 
@@ -148,14 +149,17 @@ export default class App extends React.Component<Props, State>{
       hasCompletedPersonalProfile: "Unknown",
       hasPaidState: "Complete",
       userExists: false,
-      user: null
+      user: null,
+      authState: props.authState
     }
     this.performStartup()
   }
   async performStartup() {
-    await this.ensureUserExists()
-    await this.checkIfPaid()
-    await this.checkIfCompletedProfile()
+    if (this.state.authState == 'signedIn') {
+      await this.ensureUserExists()
+      await this.checkIfPaid()
+      await this.checkIfCompletedProfile()
+    }
   }
   private user: any
   async ensureUserExists() {
@@ -212,6 +216,15 @@ export default class App extends React.Component<Props, State>{
     }
     //  console.log(attributes['username'])
   }
+  componentWillReceiveProps(nextProps) {
+    // Any time props.email changes, update state.
+    if (nextProps.authState !== this.props.authState) {
+      this.setState({
+        authState: nextProps.authState
+      }, ()=>{this.performStartup()});
+     
+    }
+  }
   onPaidStateChanged() {
     console.log("onPaidStateChanged")
     this.ensureUserExists()
@@ -237,7 +250,10 @@ export default class App extends React.Component<Props, State>{
 
   }
   render() {
-    if (this.props.authState == 'signedIn')
+    if (this.state.authState == 'signedIn') {
+      console.log("User has signed in")
+      console.log({ "Paid state": this.state.hasPaidState })
+      console.log({ "Profile state": this.state.hasCompletedPersonalProfile })
       if (this.state.hasPaidState === "Loading") {
         return <Suspense fallback={null}></Suspense>
       }
@@ -269,7 +285,7 @@ export default class App extends React.Component<Props, State>{
       }
       else
         return (<Text>Payment Issue - Unknown State</Text>)
-
+    }
     else
       return null
   }

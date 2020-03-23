@@ -1,5 +1,5 @@
-import { Icon, Button,  View, Input, Form, Item, Label, Content } from 'native-base';
-import { Text,Image } from 'react-native'
+import { Icon, Button, View, Input, Form, Item, Label, Content } from 'native-base';
+import { Text, Image } from 'react-native'
 import * as React from 'react';
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
@@ -28,7 +28,7 @@ interface State {
   tagsColor: any
   tagsText: any
   profileImage: any
-  validationText:any
+  validationText: any
 }
 export default class MyProfile extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -42,7 +42,7 @@ export default class MyProfile extends React.Component<Props, State> {
       tagsColor: mainColor,
       tagsText: '#fff',
       profileImage: "",
-      validationText:null
+      validationText: null
     }
     this.getUserDetails()
   }
@@ -103,13 +103,13 @@ export default class MyProfile extends React.Component<Props, State> {
         delete toSave.messages
         delete toSave.owns
         const updateUser = await API.graphql(graphqlOperation(mutations.updateUser, { input: toSave }));
-      //  console.log(updateUser)
+        //  console.log(updateUser)
         this.props.finalizeProfile()
       } catch (e) {
         console.log(e)
       }
     }
-    this.setState({validationText:validation.validationError})
+    this.setState({ validationText: validation.validationError })
   }
   updateTagState = (state) => {
     this.setState({
@@ -127,12 +127,12 @@ export default class MyProfile extends React.Component<Props, State> {
       identityId: userId
     })
       .then(result => {
-       // console.log(result)
+        // console.log(result)
         var updateData = { ...this.state.UserDetails }
         updateData['profileImage'] = userId
         this.setState({
           UserDetails: updateData
-        },() => this.getProfileImage());
+        }, () => this.getProfileImage());
       })
       .catch(err => console.log(err));
   }
@@ -141,7 +141,11 @@ export default class MyProfile extends React.Component<Props, State> {
     Storage.get('profileImage.png', {
       level: 'protected',
       contentType: 'image/png',
-      identityId: this.state.UserDetails.profileImage ? this.state.UserDetails.profileImage : ""
+      identityId: this.state.UserDetails ?
+        this.state.UserDetails.profileImage ?
+          this.state.UserDetails.profileImage 
+          : ""
+        : ""
     })
       .then(result => this.setState({ profileImage: result }))
       .catch(err => console.log(err));
@@ -150,6 +154,12 @@ export default class MyProfile extends React.Component<Props, State> {
     const key = Object.keys(myObject).filter(k => k.includes(string));
     return key.length ? myObject[key[0]] : "";
   }
+  logout() {
+    Auth.signOut()
+      .then(data => console.log(data))
+      .catch(err => console.log(err));
+
+  }
   render() {
     return (
       (this.state.UserDetails != null ?
@@ -157,6 +167,7 @@ export default class MyProfile extends React.Component<Props, State> {
           <View style={{ justifyContent: "space-between", flexDirection: "row", width: "100%" }}>
             <Text style={styles.profileFontTitle}>Create your profile</Text>
             <Button style={styles.saveProfileButton} onPress={() => this.finalizeProfile()}><Text uppercase={false} style={styles.saveProfileButtonText}>Save and Publish Your Profile</Text></Button>
+            <Button style={styles.saveProfileButton} onPress={() => this.logout()}><Text uppercase={false} style={styles.saveProfileButtonText}>Logout</Text></Button>
             <Text>{this.state.validationText}</Text>
           </View>
 
@@ -249,7 +260,7 @@ export default class MyProfile extends React.Component<Props, State> {
                 autoCorrect={false}
                 tagStyle={styles.tag}
                 tagTextStyle={styles.tagText}
-                //keysForTag={' '}
+              //keysForTag={' '}
               />
               <Item stackedLabel>
                 <Label style={styles.fontFormSmall}>Current Role</Label>
