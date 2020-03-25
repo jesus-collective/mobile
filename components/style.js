@@ -256,10 +256,10 @@ export default EStyleSheet.create({
         { position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1 },
 
     fontFormProfileImageButton: {
-        backgroundColor: "#F0493E", textTransform: "capitalize"
+        backgroundColor: "#F0493E", paddingRight:10, paddingLeft:30
     },
     fontFormProfileImageButtonText: {
-        fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 12, lineHeight: 24, display: "flex", alignItems: "center", textAlign: "center", letterSpacing: -0.3, color: "#FFFFFF", textTransform: null
+        fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 12, lineHeight: 12, letterSpacing: -0.3, color: "#FFFFFF"
     },
 
     fileInputWrapper:

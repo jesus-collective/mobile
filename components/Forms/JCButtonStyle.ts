@@ -7,6 +7,7 @@ const mainColor = '#ffffff';
 export default EStyleSheet.create({
     PostOutlineButton:
     {
+        top:-100,
         paddingTop:10,
         paddingBottom:10,
         alignSelf:"flex-end",
@@ -172,39 +173,7 @@ export default EStyleSheet.create({
         padding:10,
         fontWeight: "bold"
         
-    },
-    saveProfileButton: {
-        backgroundColor: "#F0493E", textTransform: "capitalize"
-    },
-    saveProfileButtonText: {
-        fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 16, lineHeight: 24, display: "flex", alignItems: "center", textAlign: "center", letterSpacing: -0.3, color: "#FFFFFF", textTransform: null
-    },
-
-    fontSliderHeader: {
-        fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 16, color: '#000000'
-    },
-    fontSliderButtons: {
-        fontFamily: 'Graphik-Bold-App', fontSize: 16, color: '#F0493E', fontWeight: "bold",padding:10
-    },
-    fontStartConversation: {
-        fontFamily: 'Graphik-Regular-App', fontSize: 16, color: '#F0493E',padding:5
-    },
-    fontOrangeButton:{
-        fontFamily: 'Graphik-Regular-App', fontSize: 12, color: '#ffffFF', padding:10
-    },
-    
-    connectWithSliderButton: {
-        padding: 0,
-        height: 25
-    },
-    
-   
-    fontFormProfileImageButton: {
-        backgroundColor: "#F0493E", textTransform: "capitalize"
-    },
-    fontFormProfileImageButtonText: {
-        fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 12, lineHeight: 24, display: "flex", alignItems: "center", textAlign: "center", letterSpacing: -0.3, color: "#FFFFFF", textTransform: null
-    },
+    }
 
 
 })

@@ -138,9 +138,10 @@ export default class MessageBoard extends React.Component<Props, State> {
     return (
       (this.state.message != null && this.state.created) ?
         <StyleProvider style={getTheme(material)}>
-          <Container style={{ marginTop: 10, overflow: "visible", width: "100%", flexDirection: 'column', minHeight: 500 }} >
-            <Container style={{ maxHeight: Math.max(155 + 10, this.state.textHeight + 10), overflow: "visible", flexDirection: "row" }}>
-              {
+          <Container style={{ display:"inline",marginTop: 10, overflow: "visible", width: "100%"}} >
+           <Content >
+            
+           {
                 this.state.UserDetails != null ?
                   <ProfileImage size="small" user={this.state.UserDetails}></ProfileImage>
                   : null
@@ -179,9 +180,14 @@ export default class MessageBoard extends React.Component<Props, State> {
                 }}
 
               />
-              <JCButton buttonType={ButtonTypes.PostOutline} onPress={() => { this.saveMessage() }} >Post</JCButton>
-            </Container>
-            <Content style={{ zIndex: -1, overflow: "visible", flexDirection: "column" }}>
+                  <JCButton buttonType={ButtonTypes.PostOutline} onPress={() => { this.saveMessage() }} >Post</JCButton>
+                 
+              </Content>
+            
+             
+           
+            
+            
               {this.state.data.items.map((item: any) => {
                 return (
                   <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
@@ -216,7 +222,7 @@ export default class MessageBoard extends React.Component<Props, State> {
                     </Card>
                   </TouchableOpacity>)
               })}
-            </Content>
+           
 
           </Container>
         </StyleProvider >

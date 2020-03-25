@@ -11,6 +11,8 @@ import { Dimensions } from 'react-native'
 import Amplify from 'aws-amplify'
 import awsconfig from '../../src/aws-exports';
 import Validate from '../Validate/Validate';
+import moment from 'moment';
+import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
 Amplify.configure(awsconfig);
 
@@ -71,7 +73,7 @@ export default class MyProfile extends React.Component<Props, State> {
         const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: user['username'] }));
         this.setState({
           UserDetails: getUser.data.getUser
-        }, () => this.getProfileImage(user['username'])
+        }, () => this.getProfileImage()
         )
 
         console.log(this.state.UserDetails)
@@ -166,8 +168,9 @@ export default class MyProfile extends React.Component<Props, State> {
         <Content>
           <View style={{ justifyContent: "space-between", flexDirection: "row", width: "100%" }}>
             <Text style={styles.profileFontTitle}>Create your profile</Text>
-            <Button style={styles.saveProfileButton} onPress={() => this.finalizeProfile()}><Text uppercase={false} style={styles.saveProfileButtonText}>Save and Publish Your Profile</Text></Button>
-            <Button style={styles.saveProfileButton} onPress={() => this.logout()}><Text uppercase={false} style={styles.saveProfileButtonText}>Logout</Text></Button>
+            
+            <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.finalizeProfile()}>Save and Publish Your Profile</JCButton>
+            <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.logout()}>Logout</JCButton>
             <Text>{this.state.validationText}</Text>
           </View>
 
@@ -179,7 +182,7 @@ export default class MyProfile extends React.Component<Props, State> {
 
                 </Image>
                 <View style={styles.fileInputWrapper}>
-                  <Button style={styles.fontFormProfileImageButton}><Text style={styles.fontFormProfileImageButtonText}>Upload Profile Picture</Text></Button>
+                  <JCButton buttonType={ButtonTypes.Solid} onPress={()=>{}}>Upload Profile Picture</JCButton>
                   <input style={{ fontSize: "200px", position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='image/png' onChange={(e) => this.onProfileImageChange(e)} />
                 </View>
 
@@ -195,8 +198,8 @@ export default class MyProfile extends React.Component<Props, State> {
                 <Input style={styles.fontFormAboutMe} value={this.state.UserDetails.aboutMeShort}
                   onChange={(e) => { this.handleInputChange(e, "aboutMeShort") }} multiline={true} placeholder="Short sentence about me" />
                 <Text style={styles.fontFormSmallDarkGrey}><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/pin 2.svg')}></Image>Location not defined</Text>
-                <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/calendar.svg')}></Image>Joined not defined</Text>
-                <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/church.svg')}></Image>Organization Name not defined</Text>
+                <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/calendar.svg')}></Image>{this.state.UserDetails.joined?moment(this.state.UserDetails.joined).format('MMMM Do YYYY'):"Join date unknown"}</Text>
+                <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/church.svg')}></Image>{this.state.UserDetails.orgName?this.state.UserDetails.orgName:"Organization Name not defined"}</Text>
               </View>
               <Text style={styles.fontFormSmallHeader}>Private Information</Text>
               <View style={{ backgroundColor: '#F3F5F9' }}>

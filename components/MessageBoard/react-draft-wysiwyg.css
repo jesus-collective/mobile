@@ -3,31 +3,40 @@
     font-family: 'Graphik-Regular-App';
     border-radius: 10px;
     border:1px;
+   
 }
 .customWrapperSendmessage{
+    position: relative;
     background-color: #eeeeee;
     font-family: 'Graphik-Regular-App';
     border-radius: 10px;
     border:1px;
     margin-left: 10px;
-    height:145px;
+    height:unset;
+    width:85%;
+    left:50px;
+    top:-50px;
 }
 .customToolbar{
     background-color: #eeeeee;
     font-family: 'Graphik-Regular-App';
     border-radius: 10px;
     border:1px;
+    height:unset;
+    width:90%;
 }
 .customEditor{
-    height:57px;
+    height:unset;
     padding-left:0px;
     padding-right: 10px;
     padding-top:0px;
     padding-bottom: 0px;
     border-radius: 10px;
+    
 }
 .customEditorSendmessage{
-    height:57px;
+    position: relative;
+    height:unset;
     padding-left:10px;
     padding-right: 10px;
     padding-top:0px;
@@ -36,4 +45,7 @@
     border-style:solid;
     border-color: #777777;
     border-radius: 10px;
+    max-height:200px;
+   
+    
 }

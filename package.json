@@ -6,7 +6,9 @@
     "start": "npx expo start",
     "android": "npx expo start --android",
     "ios": "npx expo start --ios",
-    "eject": "npx expo eject"
+    "eject": "npx expo eject",
+    "backup": "export z=$(date +%Y%m%d%H%M%S); mkdir backup/$z; cd backup/$z; dynamodump export-all-data --region=us-east-1"
+
   },
   "dependencies": {
     "@date-io/moment": "^2.4.0",

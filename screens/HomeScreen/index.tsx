@@ -22,6 +22,7 @@ import Validate from '../../components/Validate/Validate'
 import { Linking } from 'expo';
 import { createBrowserApp } from '@react-navigation/web';
 import { Platform } from "react-native";
+import moment from "moment";
 const ConversationScreen = lazy(() => import('../ConversationScreen/ConversationScreen'));
 const OrganizationsScreen = lazy(() => import('../OrganizationsScreen/OrganizationsScreen'));
 const OrganizationScreen = lazy(() => import('../OrganizationScreen/OrganizationScreen'));
@@ -179,7 +180,8 @@ export default class App extends React.Component<Props, State>{
             given_name: attributes['given_name'],
             family_name: attributes['family_name'],
             email: attributes['email'],
-            phone: attributes['phone_number']
+            phone: attributes['phone_number'],
+            joined: moment().format()
           }
           try {
             var createUser = await API.graphql(graphqlOperation(mutations.createUser, {
