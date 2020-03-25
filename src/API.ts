@@ -26,6 +26,7 @@ export type CreateUserInput = {
   orgType?: string | null,
   orgSize?: string | null,
   orgDescription?: string | null,
+  joined?: string | null,
 };
 
 export type UpdateUserInput = {
@@ -52,6 +53,7 @@ export type UpdateUserInput = {
   orgType?: string | null,
   orgSize?: string | null,
   orgDescription?: string | null,
+  joined?: string | null,
 };
 
 export type DeleteUserInput = {
@@ -202,6 +204,7 @@ export type ModelUserFilterInput = {
   orgType?: ModelStringFilterInput | null,
   orgSize?: ModelStringFilterInput | null,
   orgDescription?: ModelStringFilterInput | null,
+  joined?: ModelStringFilterInput | null,
   and?: Array< ModelUserFilterInput | null > | null,
   or?: Array< ModelUserFilterInput | null > | null,
   not?: ModelUserFilterInput | null,
@@ -436,6 +439,7 @@ export type CreateUserMutation = {
     orgType: string | null,
     orgSize: string | null,
     orgDescription: string | null,
+    joined: string | null,
     owns:  {
       __typename: "ModelGroupConnection",
       items:  Array< {
@@ -514,6 +518,7 @@ export type UpdateUserMutation = {
     orgType: string | null,
     orgSize: string | null,
     orgDescription: string | null,
+    joined: string | null,
     owns:  {
       __typename: "ModelGroupConnection",
       items:  Array< {
@@ -592,6 +597,7 @@ export type DeleteUserMutation = {
     orgType: string | null,
     orgSize: string | null,
     orgDescription: string | null,
+    joined: string | null,
     owns:  {
       __typename: "ModelGroupConnection",
       items:  Array< {
@@ -679,6 +685,7 @@ export type CreateGroupMemberMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null,
       type: string,
       name: string,
@@ -738,6 +745,7 @@ export type CreateGroupMemberMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       instructors:  Array< {
         __typename: "User",
@@ -764,6 +772,7 @@ export type CreateGroupMemberMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       messages:  {
         __typename: "ModelMessageConnection",
@@ -797,6 +806,7 @@ export type CreateGroupMemberMutation = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -852,6 +862,7 @@ export type UpdateGroupMemberMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null,
       type: string,
       name: string,
@@ -911,6 +922,7 @@ export type UpdateGroupMemberMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       instructors:  Array< {
         __typename: "User",
@@ -937,6 +949,7 @@ export type UpdateGroupMemberMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       messages:  {
         __typename: "ModelMessageConnection",
@@ -970,6 +983,7 @@ export type UpdateGroupMemberMutation = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -1025,6 +1039,7 @@ export type DeleteGroupMemberMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null,
       type: string,
       name: string,
@@ -1084,6 +1099,7 @@ export type DeleteGroupMemberMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       instructors:  Array< {
         __typename: "User",
@@ -1110,6 +1126,7 @@ export type DeleteGroupMemberMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       messages:  {
         __typename: "ModelMessageConnection",
@@ -1143,6 +1160,7 @@ export type DeleteGroupMemberMutation = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -1193,6 +1211,7 @@ export type CreateGroupMutation = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -1256,6 +1275,7 @@ export type CreateGroupMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null,
       type: string,
       name: string,
@@ -1315,6 +1335,7 @@ export type CreateGroupMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       instructors:  Array< {
         __typename: "User",
@@ -1341,6 +1362,7 @@ export type CreateGroupMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       messages:  {
         __typename: "ModelMessageConnection",
@@ -1374,6 +1396,7 @@ export type CreateGroupMutation = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -1412,6 +1435,7 @@ export type CreateGroupMutation = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -1477,6 +1501,7 @@ export type UpdateGroupMutation = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -1540,6 +1565,7 @@ export type UpdateGroupMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null,
       type: string,
       name: string,
@@ -1599,6 +1625,7 @@ export type UpdateGroupMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       instructors:  Array< {
         __typename: "User",
@@ -1625,6 +1652,7 @@ export type UpdateGroupMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       messages:  {
         __typename: "ModelMessageConnection",
@@ -1658,6 +1686,7 @@ export type UpdateGroupMutation = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -1696,6 +1725,7 @@ export type UpdateGroupMutation = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -1761,6 +1791,7 @@ export type DeleteGroupMutation = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -1824,6 +1855,7 @@ export type DeleteGroupMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null,
       type: string,
       name: string,
@@ -1883,6 +1915,7 @@ export type DeleteGroupMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       instructors:  Array< {
         __typename: "User",
@@ -1909,6 +1942,7 @@ export type DeleteGroupMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       messages:  {
         __typename: "ModelMessageConnection",
@@ -1942,6 +1976,7 @@ export type DeleteGroupMutation = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -1980,6 +2015,7 @@ export type DeleteGroupMutation = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -2060,6 +2096,7 @@ export type CreateCourseInfoMutation = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -2126,6 +2163,7 @@ export type UpdateCourseInfoMutation = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -2192,6 +2230,7 @@ export type DeleteCourseInfoMutation = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -2247,6 +2286,7 @@ export type CreateMessageMutation = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -2289,6 +2329,7 @@ export type CreateMessageMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null,
       type: string,
       name: string,
@@ -2348,6 +2389,7 @@ export type CreateMessageMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       instructors:  Array< {
         __typename: "User",
@@ -2374,6 +2416,7 @@ export type CreateMessageMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       messages:  {
         __typename: "ModelMessageConnection",
@@ -2423,6 +2466,7 @@ export type UpdateMessageMutation = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -2465,6 +2509,7 @@ export type UpdateMessageMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null,
       type: string,
       name: string,
@@ -2524,6 +2569,7 @@ export type UpdateMessageMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       instructors:  Array< {
         __typename: "User",
@@ -2550,6 +2596,7 @@ export type UpdateMessageMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       messages:  {
         __typename: "ModelMessageConnection",
@@ -2599,6 +2646,7 @@ export type DeleteMessageMutation = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -2641,6 +2689,7 @@ export type DeleteMessageMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null,
       type: string,
       name: string,
@@ -2700,6 +2749,7 @@ export type DeleteMessageMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       instructors:  Array< {
         __typename: "User",
@@ -2726,6 +2776,7 @@ export type DeleteMessageMutation = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       messages:  {
         __typename: "ModelMessageConnection",
@@ -2767,6 +2818,7 @@ export type GetUserQuery = {
     orgType: string | null,
     orgSize: string | null,
     orgDescription: string | null,
+    joined: string | null,
     owns:  {
       __typename: "ModelGroupConnection",
       items:  Array< {
@@ -2849,6 +2901,7 @@ export type ListUsersQuery = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -2900,6 +2953,7 @@ export type GetGroupQuery = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -2963,6 +3017,7 @@ export type GetGroupQuery = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null,
       type: string,
       name: string,
@@ -3022,6 +3077,7 @@ export type GetGroupQuery = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       instructors:  Array< {
         __typename: "User",
@@ -3048,6 +3104,7 @@ export type GetGroupQuery = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       messages:  {
         __typename: "ModelMessageConnection",
@@ -3081,6 +3138,7 @@ export type GetGroupQuery = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -3119,6 +3177,7 @@ export type GetGroupQuery = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -3188,6 +3247,7 @@ export type ListGroupsQuery = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null,
       type: string,
       name: string,
@@ -3247,6 +3307,7 @@ export type ListGroupsQuery = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       instructors:  Array< {
         __typename: "User",
@@ -3273,6 +3334,7 @@ export type ListGroupsQuery = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       messages:  {
         __typename: "ModelMessageConnection",
@@ -3334,6 +3396,7 @@ export type GetCourseInfoQuery = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -3398,6 +3461,7 @@ export type ListCourseInfosQuery = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null,
       introduction: Array< string | null > | null,
     } | null > | null,
@@ -3443,6 +3507,7 @@ export type GetMessageQuery = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -3485,6 +3550,7 @@ export type GetMessageQuery = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null,
       type: string,
       name: string,
@@ -3544,6 +3610,7 @@ export type GetMessageQuery = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       instructors:  Array< {
         __typename: "User",
@@ -3570,6 +3637,7 @@ export type GetMessageQuery = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       messages:  {
         __typename: "ModelMessageConnection",
@@ -3623,6 +3691,7 @@ export type ListMessagesQuery = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null,
       room:  {
         __typename: "Group",
@@ -3688,6 +3757,7 @@ export type GroupByTypeQuery = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null,
       type: string,
       name: string,
@@ -3747,6 +3817,7 @@ export type GroupByTypeQuery = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       instructors:  Array< {
         __typename: "User",
@@ -3773,6 +3844,7 @@ export type GroupByTypeQuery = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       messages:  {
         __typename: "ModelMessageConnection",
@@ -3830,6 +3902,7 @@ export type MessagesByRoomQuery = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null,
       room:  {
         __typename: "Group",
@@ -3893,6 +3966,7 @@ export type SearchGroupsQuery = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null,
       type: string,
       name: string,
@@ -3952,6 +4026,7 @@ export type SearchGroupsQuery = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       instructors:  Array< {
         __typename: "User",
@@ -3978,6 +4053,7 @@ export type SearchGroupsQuery = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       messages:  {
         __typename: "ModelMessageConnection",
@@ -4029,6 +4105,7 @@ export type OnCreateMessageSubscription = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -4071,6 +4148,7 @@ export type OnCreateMessageSubscription = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null,
       type: string,
       name: string,
@@ -4130,6 +4208,7 @@ export type OnCreateMessageSubscription = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       instructors:  Array< {
         __typename: "User",
@@ -4156,6 +4235,7 @@ export type OnCreateMessageSubscription = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       messages:  {
         __typename: "ModelMessageConnection",
@@ -4197,6 +4277,7 @@ export type OnCreateUserSubscription = {
     orgType: string | null,
     orgSize: string | null,
     orgDescription: string | null,
+    joined: string | null,
     owns:  {
       __typename: "ModelGroupConnection",
       items:  Array< {
@@ -4275,6 +4356,7 @@ export type OnUpdateUserSubscription = {
     orgType: string | null,
     orgSize: string | null,
     orgDescription: string | null,
+    joined: string | null,
     owns:  {
       __typename: "ModelGroupConnection",
       items:  Array< {
@@ -4353,6 +4435,7 @@ export type OnDeleteUserSubscription = {
     orgType: string | null,
     orgSize: string | null,
     orgDescription: string | null,
+    joined: string | null,
     owns:  {
       __typename: "ModelGroupConnection",
       items:  Array< {
@@ -4436,6 +4519,7 @@ export type OnCreateGroupMemberSubscription = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null,
       type: string,
       name: string,
@@ -4495,6 +4579,7 @@ export type OnCreateGroupMemberSubscription = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       instructors:  Array< {
         __typename: "User",
@@ -4521,6 +4606,7 @@ export type OnCreateGroupMemberSubscription = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       messages:  {
         __typename: "ModelMessageConnection",
@@ -4554,6 +4640,7 @@ export type OnCreateGroupMemberSubscription = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -4605,6 +4692,7 @@ export type OnUpdateGroupMemberSubscription = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null,
       type: string,
       name: string,
@@ -4664,6 +4752,7 @@ export type OnUpdateGroupMemberSubscription = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       instructors:  Array< {
         __typename: "User",
@@ -4690,6 +4779,7 @@ export type OnUpdateGroupMemberSubscription = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       messages:  {
         __typename: "ModelMessageConnection",
@@ -4723,6 +4813,7 @@ export type OnUpdateGroupMemberSubscription = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -4774,6 +4865,7 @@ export type OnDeleteGroupMemberSubscription = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null,
       type: string,
       name: string,
@@ -4833,6 +4925,7 @@ export type OnDeleteGroupMemberSubscription = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       instructors:  Array< {
         __typename: "User",
@@ -4859,6 +4952,7 @@ export type OnDeleteGroupMemberSubscription = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       messages:  {
         __typename: "ModelMessageConnection",
@@ -4892,6 +4986,7 @@ export type OnDeleteGroupMemberSubscription = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -4942,6 +5037,7 @@ export type OnCreateGroupSubscription = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -5005,6 +5101,7 @@ export type OnCreateGroupSubscription = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null,
       type: string,
       name: string,
@@ -5064,6 +5161,7 @@ export type OnCreateGroupSubscription = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       instructors:  Array< {
         __typename: "User",
@@ -5090,6 +5188,7 @@ export type OnCreateGroupSubscription = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       messages:  {
         __typename: "ModelMessageConnection",
@@ -5123,6 +5222,7 @@ export type OnCreateGroupSubscription = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -5161,6 +5261,7 @@ export type OnCreateGroupSubscription = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -5226,6 +5327,7 @@ export type OnUpdateGroupSubscription = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -5289,6 +5391,7 @@ export type OnUpdateGroupSubscription = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null,
       type: string,
       name: string,
@@ -5348,6 +5451,7 @@ export type OnUpdateGroupSubscription = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       instructors:  Array< {
         __typename: "User",
@@ -5374,6 +5478,7 @@ export type OnUpdateGroupSubscription = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       messages:  {
         __typename: "ModelMessageConnection",
@@ -5407,6 +5512,7 @@ export type OnUpdateGroupSubscription = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -5445,6 +5551,7 @@ export type OnUpdateGroupSubscription = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -5510,6 +5617,7 @@ export type OnDeleteGroupSubscription = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -5573,6 +5681,7 @@ export type OnDeleteGroupSubscription = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null,
       type: string,
       name: string,
@@ -5632,6 +5741,7 @@ export type OnDeleteGroupSubscription = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       instructors:  Array< {
         __typename: "User",
@@ -5658,6 +5768,7 @@ export type OnDeleteGroupSubscription = {
         orgType: string | null,
         orgSize: string | null,
         orgDescription: string | null,
+        joined: string | null,
       } | null > | null,
       messages:  {
         __typename: "ModelMessageConnection",
@@ -5691,6 +5802,7 @@ export type OnDeleteGroupSubscription = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -5729,6 +5841,7 @@ export type OnDeleteGroupSubscription = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -5809,6 +5922,7 @@ export type OnCreateCourseInfoSubscription = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -5875,6 +5989,7 @@ export type OnUpdateCourseInfoSubscription = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
@@ -5941,6 +6056,7 @@ export type OnDeleteCourseInfoSubscription = {
       orgType: string | null,
       orgSize: string | null,
       orgDescription: string | null,
+      joined: string | null,
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,

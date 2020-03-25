@@ -27,6 +27,7 @@ export const getUser = /* GraphQL */ `
       orgType
       orgSize
       orgDescription
+      joined
       owns {
         items {
           id
@@ -100,6 +101,7 @@ export const listUsers = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        joined
         owns {
           nextToken
         }
@@ -143,6 +145,7 @@ export const getGroup = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        joined
         owns {
           nextToken
         }
@@ -199,6 +202,7 @@ export const getGroup = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         type
         name
@@ -255,6 +259,7 @@ export const getGroup = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         instructors {
           id
@@ -280,6 +285,7 @@ export const getGroup = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         messages {
           nextToken
@@ -311,6 +317,7 @@ export const getGroup = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        joined
         owns {
           nextToken
         }
@@ -345,6 +352,7 @@ export const getGroup = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        joined
         owns {
           nextToken
         }
@@ -405,6 +413,7 @@ export const listGroups = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         type
         name
@@ -461,6 +470,7 @@ export const listGroups = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         instructors {
           id
@@ -486,6 +496,7 @@ export const listGroups = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         messages {
           nextToken
@@ -539,6 +550,7 @@ export const getCourseInfo = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        joined
         owns {
           nextToken
         }
@@ -595,6 +607,7 @@ export const listCourseInfos = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         introduction
       }
@@ -635,6 +648,7 @@ export const getMessage = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        joined
         owns {
           nextToken
         }
@@ -672,6 +686,7 @@ export const getMessage = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         type
         name
@@ -728,6 +743,7 @@ export const getMessage = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         instructors {
           id
@@ -753,6 +769,7 @@ export const getMessage = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         messages {
           nextToken
@@ -801,6 +818,7 @@ export const listMessages = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         room {
           id
@@ -868,6 +886,7 @@ export const groupByType = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         type
         name
@@ -924,6 +943,7 @@ export const groupByType = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         instructors {
           id
@@ -949,6 +969,7 @@ export const groupByType = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         messages {
           nextToken
@@ -1008,6 +1029,7 @@ export const messagesByRoom = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         room {
           id
@@ -1071,6 +1093,7 @@ export const searchGroups = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         type
         name
@@ -1127,6 +1150,7 @@ export const searchGroups = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         instructors {
           id
@@ -1152,6 +1176,7 @@ export const searchGroups = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         messages {
           nextToken

@@ -27,6 +27,7 @@ export const createUser = /* GraphQL */ `
       orgType
       orgSize
       orgDescription
+      joined
       owns {
         items {
           id
@@ -95,6 +96,7 @@ export const updateUser = /* GraphQL */ `
       orgType
       orgSize
       orgDescription
+      joined
       owns {
         items {
           id
@@ -163,6 +165,7 @@ export const deleteUser = /* GraphQL */ `
       orgType
       orgSize
       orgDescription
+      joined
       owns {
         items {
           id
@@ -238,6 +241,7 @@ export const createGroupMember = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         type
         name
@@ -294,6 +298,7 @@ export const createGroupMember = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         instructors {
           id
@@ -319,6 +324,7 @@ export const createGroupMember = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         messages {
           nextToken
@@ -350,6 +356,7 @@ export const createGroupMember = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        joined
         owns {
           nextToken
         }
@@ -396,6 +403,7 @@ export const updateGroupMember = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         type
         name
@@ -452,6 +460,7 @@ export const updateGroupMember = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         instructors {
           id
@@ -477,6 +486,7 @@ export const updateGroupMember = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         messages {
           nextToken
@@ -508,6 +518,7 @@ export const updateGroupMember = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        joined
         owns {
           nextToken
         }
@@ -554,6 +565,7 @@ export const deleteGroupMember = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         type
         name
@@ -610,6 +622,7 @@ export const deleteGroupMember = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         instructors {
           id
@@ -635,6 +648,7 @@ export const deleteGroupMember = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         messages {
           nextToken
@@ -666,6 +680,7 @@ export const deleteGroupMember = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        joined
         owns {
           nextToken
         }
@@ -708,6 +723,7 @@ export const createGroup = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        joined
         owns {
           nextToken
         }
@@ -764,6 +780,7 @@ export const createGroup = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         type
         name
@@ -820,6 +837,7 @@ export const createGroup = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         instructors {
           id
@@ -845,6 +863,7 @@ export const createGroup = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         messages {
           nextToken
@@ -876,6 +895,7 @@ export const createGroup = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        joined
         owns {
           nextToken
         }
@@ -910,6 +930,7 @@ export const createGroup = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        joined
         owns {
           nextToken
         }
@@ -965,6 +986,7 @@ export const updateGroup = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        joined
         owns {
           nextToken
         }
@@ -1021,6 +1043,7 @@ export const updateGroup = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         type
         name
@@ -1077,6 +1100,7 @@ export const updateGroup = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         instructors {
           id
@@ -1102,6 +1126,7 @@ export const updateGroup = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         messages {
           nextToken
@@ -1133,6 +1158,7 @@ export const updateGroup = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        joined
         owns {
           nextToken
         }
@@ -1167,6 +1193,7 @@ export const updateGroup = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        joined
         owns {
           nextToken
         }
@@ -1222,6 +1249,7 @@ export const deleteGroup = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        joined
         owns {
           nextToken
         }
@@ -1278,6 +1306,7 @@ export const deleteGroup = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         type
         name
@@ -1334,6 +1363,7 @@ export const deleteGroup = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         instructors {
           id
@@ -1359,6 +1389,7 @@ export const deleteGroup = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         messages {
           nextToken
@@ -1390,6 +1421,7 @@ export const deleteGroup = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        joined
         owns {
           nextToken
         }
@@ -1424,6 +1456,7 @@ export const deleteGroup = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        joined
         owns {
           nextToken
         }
@@ -1492,6 +1525,7 @@ export const createCourseInfo = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        joined
         owns {
           nextToken
         }
@@ -1548,6 +1582,7 @@ export const updateCourseInfo = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        joined
         owns {
           nextToken
         }
@@ -1604,6 +1639,7 @@ export const deleteCourseInfo = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        joined
         owns {
           nextToken
         }
@@ -1651,6 +1687,7 @@ export const createMessage = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        joined
         owns {
           nextToken
         }
@@ -1688,6 +1725,7 @@ export const createMessage = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         type
         name
@@ -1744,6 +1782,7 @@ export const createMessage = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         instructors {
           id
@@ -1769,6 +1808,7 @@ export const createMessage = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         messages {
           nextToken
@@ -1812,6 +1852,7 @@ export const updateMessage = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        joined
         owns {
           nextToken
         }
@@ -1849,6 +1890,7 @@ export const updateMessage = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         type
         name
@@ -1905,6 +1947,7 @@ export const updateMessage = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         instructors {
           id
@@ -1930,6 +1973,7 @@ export const updateMessage = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         messages {
           nextToken
@@ -1973,6 +2017,7 @@ export const deleteMessage = /* GraphQL */ `
         orgType
         orgSize
         orgDescription
+        joined
         owns {
           nextToken
         }
@@ -2010,6 +2055,7 @@ export const deleteMessage = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         type
         name
@@ -2066,6 +2112,7 @@ export const deleteMessage = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         instructors {
           id
@@ -2091,6 +2138,7 @@ export const deleteMessage = /* GraphQL */ `
           orgType
           orgSize
           orgDescription
+          joined
         }
         messages {
           nextToken
