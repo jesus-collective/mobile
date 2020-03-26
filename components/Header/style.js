@@ -7,7 +7,9 @@ export default StyleSheet.create({
         backgroundColor: '#333333',
        
     },
-
+    resourceContainer:{
+        backgroundColor: '#292929'
+    },
     icon: {
         color: '#aaaaaa'
     },

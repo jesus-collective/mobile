@@ -74,13 +74,14 @@ type Group
 	length:String
 	effort:String
 	cost:String
-	organizerGroup:[Group]
-	organizerUser:[User]
-	instructors:[User]
+	#organizerGroup:[Group]
+	#organizerUser:[User]
+	#instructors:[User]
 	messages: [Message] @connection(name: "RoomMessages", keyField: "roomId", sortField: "when")
 	eventType:String
 	eventUrl:String
   }
+  
 type CourseInfo
 @model
 @auth(rules: [
@@ -91,26 +92,34 @@ type CourseInfo
 	id:ID!
 	designedBy:String
 	summary:[String]
-	courseDetails:[CourseWeek]
+	courseDetails:[CourseWeek] @connection
 	subTitle:String
-	instructor: User
+	#instructor: User
 	introduction:[String]
   }
 
-type CourseWeek{
+type CourseWeek
+@model
+{
+	id:ID!
 	week:String
 	date:String
 	name:String
 	leader:String
-	lessons:[CourseLesson]
+	lessons:[CourseLesson] @connection
 }
-type CourseLesson{
+type CourseLesson
+@model
+{
+	id:ID!
 	name:String
 	time:String
 	description:[String]
-	assignment:[CourseAssignment]
+	assignment:[CourseAssignment] @connection
 }
-type CourseAssignment{
+type CourseAssignment
+@model{
+	id:ID!
 	due:String
 	description:String
 }
@@ -135,4 +144,53 @@ type Message @model(subscriptions: null)
 }
 type Subscription {
   onCreateMessage(roomId: ID!): Message @aws_subscribe(mutations: ["createMessage"])
+}
+
+
+
+
+type ResourceRoot
+@model
+{
+	id: ID!
+	type:String
+	resources:[Resource] @connection (name: "RootResources")
+
+}
+type Resource
+@model
+{
+	id:ID!
+	type:String
+	menuTitle:String
+	title:String
+	image:String
+	description:String
+	#currentSeries:ResourceSeries @connection
+	series:[ResourceSeries] @connection (name: "SeriesResources")
+	root:ResourceRoot @connection (name: "RootResources")
+}
+type ResourceSeries
+@model
+{
+	id:ID!
+	type:String
+	title:String
+	description:String
+	image:String
+	episodes:[ResourceEpisode] @connection (name: "SeriesEpisodes")
+	resource:Resource @connection (name: "SeriesResources")
+}
+
+type ResourceEpisode
+@model
+{
+	id:ID!
+	type:String
+	title:String
+	description:String
+	youtube:String
+	lowLink:String
+	hiLink:String
+	series:ResourceSeries  @connection (name: "SeriesEpisodes")
 }

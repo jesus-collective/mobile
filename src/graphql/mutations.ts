@@ -257,75 +257,6 @@ export const createGroupMember = /* GraphQL */ `
         length
         effort
         cost
-        organizerGroup {
-          id
-          owner
-          type
-          name
-          description
-          memberCount
-          image
-          time
-          lastUpdated
-          location
-          length
-          effort
-          cost
-          eventType
-          eventUrl
-        }
-        organizerUser {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          hasPaidState
-          address
-          city
-          province
-          postalCode
-          country
-          profileImage
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          orgDescription
-          joined
-        }
-        instructors {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          hasPaidState
-          address
-          city
-          province
-          postalCode
-          country
-          profileImage
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          orgDescription
-          joined
-        }
         messages {
           nextToken
         }
@@ -419,75 +350,6 @@ export const updateGroupMember = /* GraphQL */ `
         length
         effort
         cost
-        organizerGroup {
-          id
-          owner
-          type
-          name
-          description
-          memberCount
-          image
-          time
-          lastUpdated
-          location
-          length
-          effort
-          cost
-          eventType
-          eventUrl
-        }
-        organizerUser {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          hasPaidState
-          address
-          city
-          province
-          postalCode
-          country
-          profileImage
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          orgDescription
-          joined
-        }
-        instructors {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          hasPaidState
-          address
-          city
-          province
-          postalCode
-          country
-          profileImage
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          orgDescription
-          joined
-        }
         messages {
           nextToken
         }
@@ -581,75 +443,6 @@ export const deleteGroupMember = /* GraphQL */ `
         length
         effort
         cost
-        organizerGroup {
-          id
-          owner
-          type
-          name
-          description
-          memberCount
-          image
-          time
-          lastUpdated
-          location
-          length
-          effort
-          cost
-          eventType
-          eventUrl
-        }
-        organizerUser {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          hasPaidState
-          address
-          city
-          province
-          postalCode
-          country
-          profileImage
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          orgDescription
-          joined
-        }
-        instructors {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          hasPaidState
-          address
-          city
-          province
-          postalCode
-          country
-          profileImage
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          orgDescription
-          joined
-        }
         messages {
           nextToken
         }
@@ -753,194 +546,6 @@ export const createGroup = /* GraphQL */ `
       length
       effort
       cost
-      organizerGroup {
-        id
-        owner
-        ownerUser {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          hasPaidState
-          address
-          city
-          province
-          postalCode
-          country
-          profileImage
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          orgDescription
-          joined
-        }
-        type
-        name
-        description
-        memberCount
-        members {
-          nextToken
-        }
-        image
-        time
-        lastUpdated
-        location
-        length
-        effort
-        cost
-        organizerGroup {
-          id
-          owner
-          type
-          name
-          description
-          memberCount
-          image
-          time
-          lastUpdated
-          location
-          length
-          effort
-          cost
-          eventType
-          eventUrl
-        }
-        organizerUser {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          hasPaidState
-          address
-          city
-          province
-          postalCode
-          country
-          profileImage
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          orgDescription
-          joined
-        }
-        instructors {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          hasPaidState
-          address
-          city
-          province
-          postalCode
-          country
-          profileImage
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          orgDescription
-          joined
-        }
-        messages {
-          nextToken
-        }
-        eventType
-        eventUrl
-      }
-      organizerUser {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        hasPaidState
-        address
-        city
-        province
-        postalCode
-        country
-        profileImage
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        orgDescription
-        joined
-        owns {
-          nextToken
-        }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-      }
-      instructors {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        hasPaidState
-        address
-        city
-        province
-        postalCode
-        country
-        profileImage
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        orgDescription
-        joined
-        owns {
-          nextToken
-        }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-      }
       messages {
         items {
           id
@@ -1016,194 +621,6 @@ export const updateGroup = /* GraphQL */ `
       length
       effort
       cost
-      organizerGroup {
-        id
-        owner
-        ownerUser {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          hasPaidState
-          address
-          city
-          province
-          postalCode
-          country
-          profileImage
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          orgDescription
-          joined
-        }
-        type
-        name
-        description
-        memberCount
-        members {
-          nextToken
-        }
-        image
-        time
-        lastUpdated
-        location
-        length
-        effort
-        cost
-        organizerGroup {
-          id
-          owner
-          type
-          name
-          description
-          memberCount
-          image
-          time
-          lastUpdated
-          location
-          length
-          effort
-          cost
-          eventType
-          eventUrl
-        }
-        organizerUser {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          hasPaidState
-          address
-          city
-          province
-          postalCode
-          country
-          profileImage
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          orgDescription
-          joined
-        }
-        instructors {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          hasPaidState
-          address
-          city
-          province
-          postalCode
-          country
-          profileImage
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          orgDescription
-          joined
-        }
-        messages {
-          nextToken
-        }
-        eventType
-        eventUrl
-      }
-      organizerUser {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        hasPaidState
-        address
-        city
-        province
-        postalCode
-        country
-        profileImage
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        orgDescription
-        joined
-        owns {
-          nextToken
-        }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-      }
-      instructors {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        hasPaidState
-        address
-        city
-        province
-        postalCode
-        country
-        profileImage
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        orgDescription
-        joined
-        owns {
-          nextToken
-        }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-      }
       messages {
         items {
           id
@@ -1279,194 +696,6 @@ export const deleteGroup = /* GraphQL */ `
       length
       effort
       cost
-      organizerGroup {
-        id
-        owner
-        ownerUser {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          hasPaidState
-          address
-          city
-          province
-          postalCode
-          country
-          profileImage
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          orgDescription
-          joined
-        }
-        type
-        name
-        description
-        memberCount
-        members {
-          nextToken
-        }
-        image
-        time
-        lastUpdated
-        location
-        length
-        effort
-        cost
-        organizerGroup {
-          id
-          owner
-          type
-          name
-          description
-          memberCount
-          image
-          time
-          lastUpdated
-          location
-          length
-          effort
-          cost
-          eventType
-          eventUrl
-        }
-        organizerUser {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          hasPaidState
-          address
-          city
-          province
-          postalCode
-          country
-          profileImage
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          orgDescription
-          joined
-        }
-        instructors {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          hasPaidState
-          address
-          city
-          province
-          postalCode
-          country
-          profileImage
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          orgDescription
-          joined
-        }
-        messages {
-          nextToken
-        }
-        eventType
-        eventUrl
-      }
-      organizerUser {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        hasPaidState
-        address
-        city
-        province
-        postalCode
-        country
-        profileImage
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        orgDescription
-        joined
-        owns {
-          nextToken
-        }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-      }
-      instructors {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        hasPaidState
-        address
-        city
-        province
-        postalCode
-        country
-        profileImage
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        orgDescription
-        joined
-        owns {
-          nextToken
-        }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-      }
       messages {
         items {
           id
@@ -1490,52 +719,16 @@ export const createCourseInfo = /* GraphQL */ `
       designedBy
       summary
       courseDetails {
-        week
-        date
-        name
-        leader
-        lessons {
+        items {
+          id
+          week
+          date
           name
-          time
-          description
+          leader
         }
+        nextToken
       }
       subTitle
-      instructor {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        hasPaidState
-        address
-        city
-        province
-        postalCode
-        country
-        profileImage
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        orgDescription
-        joined
-        owns {
-          nextToken
-        }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-      }
       introduction
     }
   }
@@ -1547,52 +740,16 @@ export const updateCourseInfo = /* GraphQL */ `
       designedBy
       summary
       courseDetails {
-        week
-        date
-        name
-        leader
-        lessons {
+        items {
+          id
+          week
+          date
           name
-          time
-          description
+          leader
         }
+        nextToken
       }
       subTitle
-      instructor {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        hasPaidState
-        address
-        city
-        province
-        postalCode
-        country
-        profileImage
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        orgDescription
-        joined
-        owns {
-          nextToken
-        }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-      }
       introduction
     }
   }
@@ -1604,53 +761,158 @@ export const deleteCourseInfo = /* GraphQL */ `
       designedBy
       summary
       courseDetails {
-        week
-        date
-        name
-        leader
-        lessons {
+        items {
+          id
+          week
+          date
+          name
+          leader
+        }
+        nextToken
+      }
+      subTitle
+      introduction
+    }
+  }
+`;
+export const createCourseWeek = /* GraphQL */ `
+  mutation CreateCourseWeek($input: CreateCourseWeekInput!) {
+    createCourseWeek(input: $input) {
+      id
+      week
+      date
+      name
+      leader
+      lessons {
+        items {
+          id
           name
           time
           description
         }
+        nextToken
       }
-      subTitle
-      instructor {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        hasPaidState
-        address
-        city
-        province
-        postalCode
-        country
-        profileImage
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        orgDescription
-        joined
-        owns {
-          nextToken
+    }
+  }
+`;
+export const updateCourseWeek = /* GraphQL */ `
+  mutation UpdateCourseWeek($input: UpdateCourseWeekInput!) {
+    updateCourseWeek(input: $input) {
+      id
+      week
+      date
+      name
+      leader
+      lessons {
+        items {
+          id
+          name
+          time
+          description
         }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
+        nextToken
       }
-      introduction
+    }
+  }
+`;
+export const deleteCourseWeek = /* GraphQL */ `
+  mutation DeleteCourseWeek($input: DeleteCourseWeekInput!) {
+    deleteCourseWeek(input: $input) {
+      id
+      week
+      date
+      name
+      leader
+      lessons {
+        items {
+          id
+          name
+          time
+          description
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const createCourseLesson = /* GraphQL */ `
+  mutation CreateCourseLesson($input: CreateCourseLessonInput!) {
+    createCourseLesson(input: $input) {
+      id
+      name
+      time
+      description
+      assignment {
+        items {
+          id
+          due
+          description
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const updateCourseLesson = /* GraphQL */ `
+  mutation UpdateCourseLesson($input: UpdateCourseLessonInput!) {
+    updateCourseLesson(input: $input) {
+      id
+      name
+      time
+      description
+      assignment {
+        items {
+          id
+          due
+          description
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const deleteCourseLesson = /* GraphQL */ `
+  mutation DeleteCourseLesson($input: DeleteCourseLessonInput!) {
+    deleteCourseLesson(input: $input) {
+      id
+      name
+      time
+      description
+      assignment {
+        items {
+          id
+          due
+          description
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const createCourseAssignment = /* GraphQL */ `
+  mutation CreateCourseAssignment($input: CreateCourseAssignmentInput!) {
+    createCourseAssignment(input: $input) {
+      id
+      due
+      description
+    }
+  }
+`;
+export const updateCourseAssignment = /* GraphQL */ `
+  mutation UpdateCourseAssignment($input: UpdateCourseAssignmentInput!) {
+    updateCourseAssignment(input: $input) {
+      id
+      due
+      description
+    }
+  }
+`;
+export const deleteCourseAssignment = /* GraphQL */ `
+  mutation DeleteCourseAssignment($input: DeleteCourseAssignmentInput!) {
+    deleteCourseAssignment(input: $input) {
+      id
+      due
+      description
     }
   }
 `;
@@ -1741,75 +1003,6 @@ export const createMessage = /* GraphQL */ `
         length
         effort
         cost
-        organizerGroup {
-          id
-          owner
-          type
-          name
-          description
-          memberCount
-          image
-          time
-          lastUpdated
-          location
-          length
-          effort
-          cost
-          eventType
-          eventUrl
-        }
-        organizerUser {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          hasPaidState
-          address
-          city
-          province
-          postalCode
-          country
-          profileImage
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          orgDescription
-          joined
-        }
-        instructors {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          hasPaidState
-          address
-          city
-          province
-          postalCode
-          country
-          profileImage
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          orgDescription
-          joined
-        }
         messages {
           nextToken
         }
@@ -1906,75 +1099,6 @@ export const updateMessage = /* GraphQL */ `
         length
         effort
         cost
-        organizerGroup {
-          id
-          owner
-          type
-          name
-          description
-          memberCount
-          image
-          time
-          lastUpdated
-          location
-          length
-          effort
-          cost
-          eventType
-          eventUrl
-        }
-        organizerUser {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          hasPaidState
-          address
-          city
-          province
-          postalCode
-          country
-          profileImage
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          orgDescription
-          joined
-        }
-        instructors {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          hasPaidState
-          address
-          city
-          province
-          postalCode
-          country
-          profileImage
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          orgDescription
-          joined
-        }
         messages {
           nextToken
         }
@@ -2071,80 +1195,362 @@ export const deleteMessage = /* GraphQL */ `
         length
         effort
         cost
-        organizerGroup {
-          id
-          owner
-          type
-          name
-          description
-          memberCount
-          image
-          time
-          lastUpdated
-          location
-          length
-          effort
-          cost
-          eventType
-          eventUrl
-        }
-        organizerUser {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          hasPaidState
-          address
-          city
-          province
-          postalCode
-          country
-          profileImage
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          orgDescription
-          joined
-        }
-        instructors {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          hasPaidState
-          address
-          city
-          province
-          postalCode
-          country
-          profileImage
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          orgDescription
-          joined
-        }
         messages {
           nextToken
         }
         eventType
         eventUrl
+      }
+    }
+  }
+`;
+export const createResourceRoot = /* GraphQL */ `
+  mutation CreateResourceRoot($input: CreateResourceRootInput!) {
+    createResourceRoot(input: $input) {
+      id
+      type
+      resources {
+        items {
+          id
+          type
+          menuTitle
+          title
+          image
+          description
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const updateResourceRoot = /* GraphQL */ `
+  mutation UpdateResourceRoot($input: UpdateResourceRootInput!) {
+    updateResourceRoot(input: $input) {
+      id
+      type
+      resources {
+        items {
+          id
+          type
+          menuTitle
+          title
+          image
+          description
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const deleteResourceRoot = /* GraphQL */ `
+  mutation DeleteResourceRoot($input: DeleteResourceRootInput!) {
+    deleteResourceRoot(input: $input) {
+      id
+      type
+      resources {
+        items {
+          id
+          type
+          menuTitle
+          title
+          image
+          description
+        }
+        nextToken
+      }
+    }
+  }
+`;
+export const createResource = /* GraphQL */ `
+  mutation CreateResource($input: CreateResourceInput!) {
+    createResource(input: $input) {
+      id
+      type
+      menuTitle
+      title
+      image
+      description
+      series {
+        items {
+          id
+          type
+          title
+          description
+          image
+        }
+        nextToken
+      }
+      root {
+        id
+        type
+        resources {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const updateResource = /* GraphQL */ `
+  mutation UpdateResource($input: UpdateResourceInput!) {
+    updateResource(input: $input) {
+      id
+      type
+      menuTitle
+      title
+      image
+      description
+      series {
+        items {
+          id
+          type
+          title
+          description
+          image
+        }
+        nextToken
+      }
+      root {
+        id
+        type
+        resources {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const deleteResource = /* GraphQL */ `
+  mutation DeleteResource($input: DeleteResourceInput!) {
+    deleteResource(input: $input) {
+      id
+      type
+      menuTitle
+      title
+      image
+      description
+      series {
+        items {
+          id
+          type
+          title
+          description
+          image
+        }
+        nextToken
+      }
+      root {
+        id
+        type
+        resources {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const createResourceSeries = /* GraphQL */ `
+  mutation CreateResourceSeries($input: CreateResourceSeriesInput!) {
+    createResourceSeries(input: $input) {
+      id
+      type
+      title
+      description
+      image
+      episodes {
+        items {
+          id
+          type
+          title
+          description
+          youtube
+          lowLink
+          hiLink
+        }
+        nextToken
+      }
+      resource {
+        id
+        type
+        menuTitle
+        title
+        image
+        description
+        series {
+          nextToken
+        }
+        root {
+          id
+          type
+        }
+      }
+    }
+  }
+`;
+export const updateResourceSeries = /* GraphQL */ `
+  mutation UpdateResourceSeries($input: UpdateResourceSeriesInput!) {
+    updateResourceSeries(input: $input) {
+      id
+      type
+      title
+      description
+      image
+      episodes {
+        items {
+          id
+          type
+          title
+          description
+          youtube
+          lowLink
+          hiLink
+        }
+        nextToken
+      }
+      resource {
+        id
+        type
+        menuTitle
+        title
+        image
+        description
+        series {
+          nextToken
+        }
+        root {
+          id
+          type
+        }
+      }
+    }
+  }
+`;
+export const deleteResourceSeries = /* GraphQL */ `
+  mutation DeleteResourceSeries($input: DeleteResourceSeriesInput!) {
+    deleteResourceSeries(input: $input) {
+      id
+      type
+      title
+      description
+      image
+      episodes {
+        items {
+          id
+          type
+          title
+          description
+          youtube
+          lowLink
+          hiLink
+        }
+        nextToken
+      }
+      resource {
+        id
+        type
+        menuTitle
+        title
+        image
+        description
+        series {
+          nextToken
+        }
+        root {
+          id
+          type
+        }
+      }
+    }
+  }
+`;
+export const createResourceEpisode = /* GraphQL */ `
+  mutation CreateResourceEpisode($input: CreateResourceEpisodeInput!) {
+    createResourceEpisode(input: $input) {
+      id
+      type
+      title
+      description
+      youtube
+      lowLink
+      hiLink
+      series {
+        id
+        type
+        title
+        description
+        image
+        episodes {
+          nextToken
+        }
+        resource {
+          id
+          type
+          menuTitle
+          title
+          image
+          description
+        }
+      }
+    }
+  }
+`;
+export const updateResourceEpisode = /* GraphQL */ `
+  mutation UpdateResourceEpisode($input: UpdateResourceEpisodeInput!) {
+    updateResourceEpisode(input: $input) {
+      id
+      type
+      title
+      description
+      youtube
+      lowLink
+      hiLink
+      series {
+        id
+        type
+        title
+        description
+        image
+        episodes {
+          nextToken
+        }
+        resource {
+          id
+          type
+          menuTitle
+          title
+          image
+          description
+        }
+      }
+    }
+  }
+`;
+export const deleteResourceEpisode = /* GraphQL */ `
+  mutation DeleteResourceEpisode($input: DeleteResourceEpisodeInput!) {
+    deleteResourceEpisode(input: $input) {
+      id
+      type
+      title
+      description
+      youtube
+      lowLink
+      hiLink
+      series {
+        id
+        type
+        title
+        description
+        image
+        episodes {
+          nextToken
+        }
+        resource {
+          id
+          type
+          menuTitle
+          title
+          image
+          description
+        }
       }
     }
   }
