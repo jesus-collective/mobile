@@ -108,6 +108,7 @@ class ResourceViewer extends React.Component<Props, State> {
         this.setState({ data: resourceRoute[0] })
     }
     changeResource = (index) => {
+        console.log({ "changeResource": index })
         this.setState({ currentResource: index })
     }
     updateResource = async (index, item, value) => {
@@ -130,6 +131,37 @@ class ResourceViewer extends React.Component<Props, State> {
             this.setState({ data: resourceRoute[0] })
         }
     }
+    getValueFromKey(myObject: any, string: any) {
+        const key = Object.keys(myObject).filter(k => k.includes(string));
+        return key.length ? myObject[key[0]] : "";
+    }
+    updateResourceImage = async (index1, e) => {
+
+        const file = e.target.files[0];
+        var user = await Auth.currentAuthenticatedUser();
+        var userId = this.getValueFromKey(user.storage, 'aws.cognito.identity-id')
+        var id = uuidv1()
+        Storage.put('resource/' + id + '.jpg', file, {
+            level: 'protected',
+            contentType: 'image/jpg',
+            identityId: userId
+        })
+            .then(result => {
+
+                Storage.get('resource/' + id + '.jpg', {
+                    level: 'protected'
+                }).then(result2 => {
+                    console.log(result2)
+                    this.updateResource(index1, "image", result2)
+                })
+
+
+                // console.log(result)
+
+            })
+            .catch(err => console.log(err));
+
+    }
     render() {
 
         return (this.state.data != null ?
@@ -140,7 +172,8 @@ class ResourceViewer extends React.Component<Props, State> {
                     createResource: this.createResource,
                     changeResource: this.changeResource,
                     updateResource: this.updateResource,
-                    deleteResource: this.deleteResource
+                    deleteResource: this.deleteResource,
+                    updateResourceImage: this.updateResourceImage
                 }
             }}>
                 <Container style={{ padding: 0, margin: 0 }}>

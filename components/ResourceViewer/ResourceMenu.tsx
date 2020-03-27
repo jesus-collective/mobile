@@ -26,7 +26,7 @@ class ResourceMenu extends React.Component<Props, State> {
     navigateToResource(id) {
         console.log(id)
     }
-    inputRef = React.createRef();
+   
     render() {
 
         //const { navigate } = this.props.navigation;

@@ -4,5 +4,6 @@ export const ResourceContext = React.createContext({ actions: {
     createResource: null,
     changeResource: null,
     updateResource: null,
-    deleteResource: null
+    deleteResource: null,
+    updateResourceImage: null
 } , state:null})

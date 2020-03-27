@@ -48,7 +48,7 @@ export default class MessageBoard extends React.Component<Props, State> {
       if (this.state.isEditMode)
         return <Input onSubmitEditing={(value) => { this.onChanged(value) }} onChange={(val) => { this.setState({ value: val.target.value }) }} placeholder={this.state.placeholder} style={this.state.inputStyle} value={this.state.value}></Input>
       else
-        return <Button onLongPress={() => { this.setState({ isEditMode: true }) }} transparent onPress={() => { this.props.onPress }}><Text style={this.state.textStyle}>{this.props.value}</Text></Button>
+        return <Button onLongPress={() => { this.setState({ isEditMode: true }) }} transparent onPress={() => { this.props.onPress() }}><Text style={this.state.textStyle}>{this.props.value}</Text></Button>
     else
       return <Button
         transparent

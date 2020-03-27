@@ -109,13 +109,13 @@ export default EStyleSheet.create({
         fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 16, color: '#000000'
     },
     fontSliderButtons: {
-        fontFamily: 'Graphik-Bold-App', fontSize: 16, color: '#F0493E', fontWeight: "bold",padding:10
+        fontFamily: 'Graphik-Bold-App', fontSize: 16, color: '#F0493E', fontWeight: "bold", padding: 10
     },
     fontStartConversation: {
-        fontFamily: 'Graphik-Regular-App', fontSize: 16, color: '#F0493E',padding:5
+        fontFamily: 'Graphik-Regular-App', fontSize: 16, color: '#F0493E', padding: 5
     },
-    fontOrangeButton:{
-        fontFamily: 'Graphik-Regular-App', fontSize: 12, color: '#ffffFF', padding:10
+    fontOrangeButton: {
+        fontFamily: 'Graphik-Regular-App', fontSize: 12, color: '#ffffFF', padding: 10
     },
     fontCourseHeaderBold: {
         fontFamily: 'Graphik-Bold-App',
@@ -124,6 +124,16 @@ export default EStyleSheet.create({
         lineHeight: 35,
         textAlign: "center",
         color: "#FFFFFF"
+    },
+    fontResourceHeaderBold: {
+        fontFamily: 'Graphik-Bold-App',
+        fontWeight: "bold",
+        fontSize: 30,
+        lineHeight: 35,
+        alignSelf:"center",
+        textAlign: "center",
+        color: "#FFFFFF",
+        width:"100%"
     },
     fontCourseHeader: {
         fontFamily: 'Graphik-Regular-App',
@@ -148,6 +158,16 @@ export default EStyleSheet.create({
         lineHeight: 35,
         textAlign: "center",
         color: "#FFFFFF"
+    },
+    fontResourceHeaderDescription: {
+        fontFamily: 'Graphik-Regular-App',
+        fontWeight: "normal",
+        fontSize: 14,
+        lineHeight: 35,
+        textAlign: "center",
+        color: "#FFFFFF",
+        width:"100%",
+        alignSelf:"center"
     },
     fontConnectWith: {
         fontFamily: 'Graphik-Bold-App',
@@ -179,20 +199,20 @@ export default EStyleSheet.create({
     },
     postButton:
     {
-        paddingTop:10,
-        paddingBottom:10,
-        alignSelf:"flex-end",
-        marginBottom:20,
-        marginLeft:10,
-        marginRight:10,
-        color:"#F0493E",
+        paddingTop: 10,
+        paddingBottom: 10,
+        alignSelf: "flex-end",
+        marginBottom: 20,
+        marginLeft: 10,
+        marginRight: 10,
+        color: "#F0493E",
     },
-    postButtonText:{
-        color:"#F0493E",
+    postButtonText: {
+        color: "#F0493E",
         fontFamily: 'Graphik-Regular-App',
-        fontSize: 16, 
-        padding:5
-        
+        fontSize: 16,
+        padding: 5
+
     },
     sliderButton:
     {
@@ -200,20 +220,20 @@ export default EStyleSheet.create({
     },
     flexRow:
         { flexDirection: 'row' },
-    authView: Platform.OS === 'web' && Dimensions.get('window').width > 720?
+    authView: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { left: "40%", width: "40%", top: 100, height: "auto" } :
         { left: "2%", width: "96%", top: "0%", height: "100%" },
 
     signUpSidebarPanel: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { zIndex: 1, position: "fixed", left: 0, minWidth: 196, width: "25%", height: "100%", top: 0 } :
         { zIndex: 1, position: "relative", left: 0, width: "100%", height: 100 + Constants.statusBarHeight, top: 0 },
-    signUpSidebarLogo: { zIndex: 2, position: "absolute", left: 20, width: 156, height: 43, top: Platform.OS === 'web'&& Dimensions.get('window').width > 720  ? 20 : 20 + Constants.statusBarHeight },
+    signUpSidebarLogo: { zIndex: 2, position: "absolute", left: 20, width: 156, height: 43, top: Platform.OS === 'web' && Dimensions.get('window').width > 720 ? 20 : 20 + Constants.statusBarHeight },
 
     signUpSidebarProgress: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { zIndex: 3, position: "fixed", left: 20, width: 20, height: 300, top: "40%" } :
         { zIndex: 3, display: "none", position: "relative", left: 20, width: 20, height: 300, top: "40%" },
 
-    signUpSidebarProgressText1: Platform.OS === 'web'&& Dimensions.get('window').width > 720  ?
+    signUpSidebarProgressText1: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { zIndex: 3, position: "absolute", width: "95%", height: "10%", left: "50px", top: "calc(40vh - 18px)", fontFamily: "Graphik-Bold-App", fontSize: 12, lineHeight: 48, color: "#FFFFFF" } :
         { zIndex: 3, position: "absolute", width: "50%", height: "10%", left: "65%", top: 20 + Constants.statusBarHeight, fontFamily: "Graphik-Bold-App", fontSize: 12, lineHeight: 48, color: "#FFFFFF" },
     signUpSidebarProgressText2: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
@@ -230,11 +250,11 @@ export default EStyleSheet.create({
         { zIndex: 3, position: "absolute", width: "50%", height: "10%", left: "65%", top: 20 + Constants.statusBarHeight, fontFamily: "Graphik-Bold-App", fontSize: 12, lineHeight: 48, color: "#FFFFFF" },
     signUpSidebarProgressTextView: { zIndex: 3, position: "absolute", width: "100%", height: "100%", left: "0%", top: "0%" },
 
-    signUpSidebarView: Platform.OS === 'web'&& Dimensions.get('window').width > 720  ?
+    signUpSidebarView: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { position: "fixed", width: "25%", height: "100%", left: "0%", top: "0%" } :
         { position: "relative", width: "100%", height: "20%", left: "0%", top: 0 },
 
-    signUpSidebarText: Platform.OS === 'web'&& Dimensions.get('window').width > 720  ?
+    signUpSidebarText: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { zIndex: 3, position: "absolute", width: "80%", height: "10%", left: "10%", top: "40%", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 30, color: "#FFFFFF" } :
         { display: "none", zIndex: 3, position: "absolute", width: "80%", height: "10%", left: "10%", top: "40%", fontFamily: "Graphik-Bold-App", fontSize: 24, lineHeight: 48, color: "#FFFFFF" },
 
@@ -242,7 +262,7 @@ export default EStyleSheet.create({
         { position: "absolute", left: "30%", width: "65%", top: 10 } :
         { position: "absolute", left: "2%", width: "96%", top: 100 + Constants.statusBarHeight, height: "100%" },
 
-    signUpScreen1Content: Platform.OS === 'web'&& Dimensions.get('window').width > 720  ?
+    signUpScreen1Content: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { position: "absolute", width: "100%" } :
         { position: "absolute", width: "100%", height: "100%", left: 0, top: 0 },
     signUpScreen1PaymentColumn1: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
@@ -251,23 +271,31 @@ export default EStyleSheet.create({
     signUpScreen1PaymentColumn2: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { position: "absolute", left: "70%", width: "25%", top: 100, height: "100%" } :
         {},
-    signUpScreen1PaymentBody: Platform.OS === 'web'&& Dimensions.get('window').width > 720  ?
+    signUpScreen1PaymentBody: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { width: "100%", left: 0, top: 0, height: "100%" } :
         { position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1 },
 
     fontFormProfileImageButton: {
-        backgroundColor: "#F0493E", paddingRight:10, paddingLeft:30
+        backgroundColor: "#F0493E", paddingRight: 10, paddingLeft: 30
     },
     fontFormProfileImageButtonText: {
         fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 12, lineHeight: 12, letterSpacing: -0.3, color: "#FFFFFF"
     },
 
     fileInputWrapper:
-        { left: 20, width: 210, top: 150, overflow: "hidden", position: "absolute"},
+        { left: 20, width: 210, top: 150, overflow: "hidden", position: "absolute" },
 
-    fileInputWrapperBtn: Platform.OS === 'web'&& Dimensions.get('window').width > 720  ?
+    fileInputWrapperBtn: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { display: "inline-block", width: 200, height: 40 } :
-        {}
+        {},
+    resourcefileInputWrapper:
+        { width: "100%", overflow: "hidden", position: "absolute" },
+    resourcefileFieldWrapper:
+        {  alignSelf:"center", top:"5vw",width: "50%", overflow: "hidden", position: "absolute" },
+
+    resourceImageIcon: {
+        color: "#aaaaaa"
+    }
 
 
 
