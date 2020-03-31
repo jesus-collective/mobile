@@ -96,7 +96,7 @@ export default class Validate {
             return { result: false, validationError: "Event must have a name" }
         if (data.description == "")
             return { result: false, validationError: "Event must have a description" }
-        if (data.time == "")
+        if (data.time == ""||data.time == null)
             return { result: false, validationError: "Event must have a time" }
         if (data.location == "")
             return { result: false, validationError: "Event must have a location" }

@@ -59,7 +59,8 @@ export default class MessageBoard extends React.Component<Props, State> {
                         onError={console.log}
                         disablePast
                         minutesStep={15}
-
+                        emptyLabel="Date not set"
+                        initialFocusedDate={moment().add(5, 'days').format()}
 
                     />)
             else
@@ -72,7 +73,8 @@ export default class MessageBoard extends React.Component<Props, State> {
                         onChange={(value) => {  this.onChanged(value) }}
                         //onError={console.log}
                         disablePast
-
+                        emptyLabel="Date not set"
+                        initialFocusedDate={moment().add(5, 'days').format()}
 
 
                     />)

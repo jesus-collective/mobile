@@ -12,6 +12,7 @@ import material from '../../native-base-theme/variables/material';
 import MessageBoard from '../../components/MessageBoard/MessageBoard'
 import EditableDate from '../../components/Forms/EditableDate'
 import EditableText from '../../components/Forms/EditableText'
+import EditableLocation from '../../components/Forms/EditableLocation'
 import EditableUrl from '../../components/Forms/EditableUrl'
 import Validate from '../../components/Validate/Validate'
 import { Image } from 'react-native'
@@ -22,8 +23,7 @@ import * as queries from '../../src/graphql/queries';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import Zoom from '../../components/Zoom/Zoom'
-
-
+import moment from 'moment'
 interface Props {
   navigation: any
 }
@@ -90,7 +90,7 @@ export default class EventScreen extends React.Component<Props, State>{
           description: "",
           memberCount: 1,
           image: "temp",
-          time: "",
+          time: null,
           location: ""
         }
         this.setState({ data: z })
@@ -230,10 +230,10 @@ export default class EventScreen extends React.Component<Props, State>{
                       inputStyle={styles.groupNameInput} value={this.state.data.eventUrl}
                       isEditable={false}></EditableUrl>
                     :
-                    <EditableText onChange={(value: any) => { this.updateValue("location", value) }}
+                    <EditableLocation onChange={(value: any) => { this.updateValue("location", value) }}
                       placeholder="Enter Event Location" multiline={false} textStyle={styles.fontRegular}
                       inputStyle={styles.groupNameInput} value={this.state.data.location}
-                      isEditable={this.state.isEditable}></EditableText>
+                      isEditable={this.state.isEditable}></EditableLocation>
                   }
                   <Text>Organizer</Text>
                   <ProfileImage user={this.state.data.ownerUser?this.state.data.ownerUser:this.state.currentUserProfile} size="small" />
