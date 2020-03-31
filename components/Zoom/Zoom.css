@@ -1,0 +1,69 @@
+
+   
+    #zmmtg-root {
+        top:56px;
+        left:30%;
+        width: 70%;
+        height: -webkit-calc(100vh - 56px);
+        height: -moz-calc(100vh - 56px);
+        height: calc(100vh - 56px);
+        position: absolute;
+      }
+      .meeting-client{
+        top:56px;
+        left:30%;
+        width: 70%;
+      }
+      .meeting-client-inner{
+        
+       
+        width: 100%;
+        height: -webkit-calc(100vh - 56px);
+        height: -moz-calc(100vh - 56px);
+        height: calc(100vh - 56px);
+        position: relative;
+      }
+      
+      #wc-footer {
+        bottom:0px;
+        position: absolute;
+      }
+      
+      #dialog-join {
+        top:56px;
+        left:30%;
+        width: 70%;
+        height: calc(100%-56px);
+        position: relative;
+      }
+      #wc-loading{
+        width: 70%!important;
+      
+      }
+        #sv-active-speaker-view, .main-layout {
+        position: relative;
+        left:0px;
+        right:0px;
+       
+      }
+      .active-main{
+          left:0px!important;
+          width:100%!important;
+          margin-left:0!important;
+          margin-right:0!important;
+      }
+      #sv-active-video{
+          width:100%!important;
+          height:auto!important;
+          left:0px;
+          margin-left:0;
+      }
+      .suspension-window {
+        position: absolute;
+        width: 70%
+      }
+      
+      #dialog-invite {
+       width:5 0%!important
+      }
+   

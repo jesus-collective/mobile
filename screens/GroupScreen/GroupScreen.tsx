@@ -1,7 +1,6 @@
 ﻿import React from 'react';
 import { StyleProvider, Container, Content } from 'native-base';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
-
 import { Text } from 'react-native'
 
 import Header from '../../components/Header/Header'
@@ -19,6 +18,7 @@ import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
+
 
 
 interface Props {
@@ -59,6 +59,8 @@ export default class GroupScreen extends React.Component<Props, State>{
       currentUser: null,
       currentUserProfile: null
     }
+
+
     Auth.currentAuthenticatedUser().then((user: any) => {
       this.setState({
         currentUser: user.username
@@ -72,6 +74,9 @@ export default class GroupScreen extends React.Component<Props, State>{
     })
     this.setInitialData(props)
   }
+  
+  
+
   getValueFromKey(myObject: any, string: any) {
     const key = Object.keys(myObject).filter(k => k.includes(string));
     return key.length ? myObject[key[0]] : "";
@@ -204,7 +209,7 @@ export default class GroupScreen extends React.Component<Props, State>{
                   <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Group Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
 
                   <Text>Organizer</Text>
-                  <ProfileImage user={this.state.data.ownerUser?this.state.data.ownerUser:this.state.currentUserProfile} size="small" />
+                  <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
                   <Text>Members ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
 
                   {
@@ -237,8 +242,8 @@ export default class GroupScreen extends React.Component<Props, State>{
                   <Text>{this.state.validationError}</Text>
                 </Container>
                 <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                  <MessageBoard navigation={this.props.navigation} groupId={this.state.data.id}></MessageBoard>
-                </Container>
+                 <MessageBoard navigation={this.props.navigation} groupId={this.state.data.id}></MessageBoard>
+                </Container>      
               </Container>
             </Content>
           </Container>

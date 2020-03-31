@@ -21,6 +21,7 @@ import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
+import Zoom from '../../components/Zoom/Zoom'
 
 
 interface Props {
@@ -269,6 +270,7 @@ export default class EventScreen extends React.Component<Props, State>{
                 </Container>
                 <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                   <MessageBoard navigation={this.props.navigation} groupId={this.state.data.id}></MessageBoard>
+                {/*  <Zoom></Zoom>*/}
                 </Container>
               </Container>
             </Content>
