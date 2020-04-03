@@ -13,9 +13,7 @@ import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
 var moment = require('moment');
 interface Props {
-    title: any
-    description: any
-    image: any
+   
 }
 
 class ResourceHeader extends React.Component<Props, State> {

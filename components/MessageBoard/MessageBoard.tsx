@@ -18,7 +18,7 @@ import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { convertFromRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import './react-draft-wysiwyg.css';
+import './MessageBoard.css';
 import { v1 as uuidv1 } from 'uuid';
 
 

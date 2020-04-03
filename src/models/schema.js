@@ -1003,6 +1003,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "extendedDescription": {
+                    "name": "extendedDescription",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "series": {
                     "name": "series",
                     "isArray": true,
@@ -1077,6 +1084,41 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "category": {
+                    "name": "category",
+                    "isArray": true,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "status": {
+                    "name": "status",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "allFiles": {
+                    "name": "allFiles",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "playlist": {
+                    "name": "playlist",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "playlistImage": {
+                    "name": "playlistImage",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "episodes": {
                     "name": "episodes",
                     "isArray": true,
@@ -1123,6 +1165,13 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "episodeNumber": {
+                    "name": "episodeNumber",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "type": {
                     "name": "type",
                     "isArray": false,
@@ -1144,22 +1193,36 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "youtube": {
-                    "name": "youtube",
+                "videoPreview": {
+                    "name": "videoPreview",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
-                "lowLink": {
-                    "name": "lowLink",
+                "videoLowRes": {
+                    "name": "videoLowRes",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
-                "hiLink": {
-                    "name": "hiLink",
+                "videoHiRes": {
+                    "name": "videoHiRes",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "lessonPlan": {
+                    "name": "lessonPlan",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "activityPage": {
+                    "name": "activityPage",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -1182,5 +1245,5 @@ export const schema = {
         }
     },
     "enums": {},
-    "version": "ef79762f8acfc9d7cbe5a39f9129ecbe"
+    "version": "a3af29ee95305c9762f8ff36d2189596"
 };

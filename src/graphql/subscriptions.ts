@@ -1025,6 +1025,7 @@ export const onCreateResourceRoot = /* GraphQL */ `
           title
           image
           description
+          extendedDescription
         }
         nextToken
       }
@@ -1044,6 +1045,7 @@ export const onUpdateResourceRoot = /* GraphQL */ `
           title
           image
           description
+          extendedDescription
         }
         nextToken
       }
@@ -1063,6 +1065,7 @@ export const onDeleteResourceRoot = /* GraphQL */ `
           title
           image
           description
+          extendedDescription
         }
         nextToken
       }
@@ -1078,6 +1081,7 @@ export const onCreateResource = /* GraphQL */ `
       title
       image
       description
+      extendedDescription
       series {
         items {
           id
@@ -1085,6 +1089,11 @@ export const onCreateResource = /* GraphQL */ `
           title
           description
           image
+          category
+          status
+          allFiles
+          playlist
+          playlistImage
         }
         nextToken
       }
@@ -1107,6 +1116,7 @@ export const onUpdateResource = /* GraphQL */ `
       title
       image
       description
+      extendedDescription
       series {
         items {
           id
@@ -1114,6 +1124,11 @@ export const onUpdateResource = /* GraphQL */ `
           title
           description
           image
+          category
+          status
+          allFiles
+          playlist
+          playlistImage
         }
         nextToken
       }
@@ -1136,6 +1151,7 @@ export const onDeleteResource = /* GraphQL */ `
       title
       image
       description
+      extendedDescription
       series {
         items {
           id
@@ -1143,6 +1159,11 @@ export const onDeleteResource = /* GraphQL */ `
           title
           description
           image
+          category
+          status
+          allFiles
+          playlist
+          playlistImage
         }
         nextToken
       }
@@ -1164,15 +1185,23 @@ export const onCreateResourceSeries = /* GraphQL */ `
       title
       description
       image
+      category
+      status
+      allFiles
+      playlist
+      playlistImage
       episodes {
         items {
           id
+          episodeNumber
           type
           title
           description
-          youtube
-          lowLink
-          hiLink
+          videoPreview
+          videoLowRes
+          videoHiRes
+          lessonPlan
+          activityPage
         }
         nextToken
       }
@@ -1183,6 +1212,7 @@ export const onCreateResourceSeries = /* GraphQL */ `
         title
         image
         description
+        extendedDescription
         series {
           nextToken
         }
@@ -1202,15 +1232,23 @@ export const onUpdateResourceSeries = /* GraphQL */ `
       title
       description
       image
+      category
+      status
+      allFiles
+      playlist
+      playlistImage
       episodes {
         items {
           id
+          episodeNumber
           type
           title
           description
-          youtube
-          lowLink
-          hiLink
+          videoPreview
+          videoLowRes
+          videoHiRes
+          lessonPlan
+          activityPage
         }
         nextToken
       }
@@ -1221,6 +1259,7 @@ export const onUpdateResourceSeries = /* GraphQL */ `
         title
         image
         description
+        extendedDescription
         series {
           nextToken
         }
@@ -1240,15 +1279,23 @@ export const onDeleteResourceSeries = /* GraphQL */ `
       title
       description
       image
+      category
+      status
+      allFiles
+      playlist
+      playlistImage
       episodes {
         items {
           id
+          episodeNumber
           type
           title
           description
-          youtube
-          lowLink
-          hiLink
+          videoPreview
+          videoLowRes
+          videoHiRes
+          lessonPlan
+          activityPage
         }
         nextToken
       }
@@ -1259,6 +1306,7 @@ export const onDeleteResourceSeries = /* GraphQL */ `
         title
         image
         description
+        extendedDescription
         series {
           nextToken
         }
@@ -1274,18 +1322,26 @@ export const onCreateResourceEpisode = /* GraphQL */ `
   subscription OnCreateResourceEpisode {
     onCreateResourceEpisode {
       id
+      episodeNumber
       type
       title
       description
-      youtube
-      lowLink
-      hiLink
+      videoPreview
+      videoLowRes
+      videoHiRes
+      lessonPlan
+      activityPage
       series {
         id
         type
         title
         description
         image
+        category
+        status
+        allFiles
+        playlist
+        playlistImage
         episodes {
           nextToken
         }
@@ -1296,6 +1352,7 @@ export const onCreateResourceEpisode = /* GraphQL */ `
           title
           image
           description
+          extendedDescription
         }
       }
     }
@@ -1305,18 +1362,26 @@ export const onUpdateResourceEpisode = /* GraphQL */ `
   subscription OnUpdateResourceEpisode {
     onUpdateResourceEpisode {
       id
+      episodeNumber
       type
       title
       description
-      youtube
-      lowLink
-      hiLink
+      videoPreview
+      videoLowRes
+      videoHiRes
+      lessonPlan
+      activityPage
       series {
         id
         type
         title
         description
         image
+        category
+        status
+        allFiles
+        playlist
+        playlistImage
         episodes {
           nextToken
         }
@@ -1327,6 +1392,7 @@ export const onUpdateResourceEpisode = /* GraphQL */ `
           title
           image
           description
+          extendedDescription
         }
       }
     }
@@ -1336,18 +1402,26 @@ export const onDeleteResourceEpisode = /* GraphQL */ `
   subscription OnDeleteResourceEpisode {
     onDeleteResourceEpisode {
       id
+      episodeNumber
       type
       title
       description
-      youtube
-      lowLink
-      hiLink
+      videoPreview
+      videoLowRes
+      videoHiRes
+      lessonPlan
+      activityPage
       series {
         id
         type
         title
         description
         image
+        category
+        status
+        allFiles
+        playlist
+        playlistImage
         episodes {
           nextToken
         }
@@ -1358,6 +1432,7 @@ export const onDeleteResourceEpisode = /* GraphQL */ `
           title
           image
           description
+          extendedDescription
         }
       }
     }

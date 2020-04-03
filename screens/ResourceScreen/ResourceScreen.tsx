@@ -19,7 +19,7 @@ import * as queries from '../../src/graphql/queries';
 import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import ResourceViewer from '../../components/ResourceViewer/ResourceViewer'
-
+import ImportKidsandYouth from './ImportKidsandYouth'
 
 
 interface Props {
@@ -208,7 +208,7 @@ export default class GroupScreen extends React.Component<Props, State>{
             <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
             <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
             <ResourceViewer navigation={this.props.navigation} groupId={this.state.data.id}></ResourceViewer>
-           
+          
           </Container>
         </StyleProvider>
         :

@@ -572,6 +572,7 @@ export const getResourceRoot = /* GraphQL */ `
           title
           image
           description
+          extendedDescription
         }
         nextToken
       }
@@ -605,6 +606,7 @@ export const getResource = /* GraphQL */ `
       title
       image
       description
+      extendedDescription
       series {
         items {
           id
@@ -612,6 +614,11 @@ export const getResource = /* GraphQL */ `
           title
           description
           image
+          category
+          status
+          allFiles
+          playlist
+          playlistImage
         }
         nextToken
       }
@@ -639,6 +646,7 @@ export const listResources = /* GraphQL */ `
         title
         image
         description
+        extendedDescription
         series {
           nextToken
         }
@@ -659,15 +667,23 @@ export const getResourceSeries = /* GraphQL */ `
       title
       description
       image
+      category
+      status
+      allFiles
+      playlist
+      playlistImage
       episodes {
         items {
           id
+          episodeNumber
           type
           title
           description
-          youtube
-          lowLink
-          hiLink
+          videoPreview
+          videoLowRes
+          videoHiRes
+          lessonPlan
+          activityPage
         }
         nextToken
       }
@@ -678,6 +694,7 @@ export const getResourceSeries = /* GraphQL */ `
         title
         image
         description
+        extendedDescription
         series {
           nextToken
         }
@@ -702,6 +719,11 @@ export const listResourceSeriess = /* GraphQL */ `
         title
         description
         image
+        category
+        status
+        allFiles
+        playlist
+        playlistImage
         episodes {
           nextToken
         }
@@ -712,6 +734,7 @@ export const listResourceSeriess = /* GraphQL */ `
           title
           image
           description
+          extendedDescription
         }
       }
       nextToken
@@ -722,18 +745,26 @@ export const getResourceEpisode = /* GraphQL */ `
   query GetResourceEpisode($id: ID!) {
     getResourceEpisode(id: $id) {
       id
+      episodeNumber
       type
       title
       description
-      youtube
-      lowLink
-      hiLink
+      videoPreview
+      videoLowRes
+      videoHiRes
+      lessonPlan
+      activityPage
       series {
         id
         type
         title
         description
         image
+        category
+        status
+        allFiles
+        playlist
+        playlistImage
         episodes {
           nextToken
         }
@@ -744,6 +775,7 @@ export const getResourceEpisode = /* GraphQL */ `
           title
           image
           description
+          extendedDescription
         }
       }
     }
@@ -762,18 +794,26 @@ export const listResourceEpisodes = /* GraphQL */ `
     ) {
       items {
         id
+        episodeNumber
         type
         title
         description
-        youtube
-        lowLink
-        hiLink
+        videoPreview
+        videoLowRes
+        videoHiRes
+        lessonPlan
+        activityPage
         series {
           id
           type
           title
           description
           image
+          category
+          status
+          allFiles
+          playlist
+          playlistImage
         }
       }
       nextToken

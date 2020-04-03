@@ -166,6 +166,7 @@ type Resource
 	title:String
 	image:String
 	description:String
+	extendedDescription:String
 	#currentSeries:ResourceSeries @connection
 	series:[ResourceSeries] @connection (name: "SeriesResources")
 	root:ResourceRoot @connection (name: "RootResources")
@@ -174,10 +175,15 @@ type ResourceSeries
 @model
 {
 	id:ID!
-	type:String
-	title:String
-	description:String
-	image:String
+	type: String
+	title: String
+	description: String
+	image: String
+	category: [String]
+    status: String
+	allFiles: String
+	playlist: String
+	playlistImage: String
 	episodes:[ResourceEpisode] @connection (name: "SeriesEpisodes")
 	resource:Resource @connection (name: "SeriesResources")
 }
@@ -186,11 +192,14 @@ type ResourceEpisode
 @model
 {
 	id:ID!
+	episodeNumber:Int
 	type:String
 	title:String
 	description:String
-	youtube:String
-	lowLink:String
-	hiLink:String
+	videoPreview:String
+	videoLowRes:String
+	videoHiRes:String
+	lessonPlan:String
+	activityPage:String
 	series:ResourceSeries  @connection (name: "SeriesEpisodes")
 }

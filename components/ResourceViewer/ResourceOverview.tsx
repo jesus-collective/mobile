@@ -9,10 +9,9 @@ import MyMap from '../../components/MyMap/MyMap';
 import styles from '../../components/style.js'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
-import MessageBoard from '../../components/MessageBoard/MessageBoard'
 import EditableText from '../../components/Forms/EditableText'
 import Validate from '../../components/Validate/Validate'
-import { API, graphqlOperation, Auth, DataStore, Predicates } from 'aws-amplify';
+import { API, graphqlOperation, Auth} from 'aws-amplify';
 import { CreateGroupInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
@@ -21,6 +20,8 @@ import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import ResourceViewer from '../../components/ResourceViewer/ResourceViewer'
 import { withNavigation } from 'react-navigation';
 import { ResourceRoot, Resource, ResourceEpisode, ResourceSeries } from "../../src/models";
+import EditableRichText from '../Forms/EditableRichText'
+import { ResourceContext } from './ResourceContext';
 
 interface Props {
     navigation: any
@@ -40,7 +41,8 @@ interface State {
     currentUserProfile: any
 }
 
-class ResourceContent extends React.Component<Props, State>{
+class ResourceOverview extends React.Component<Props, State>{
+    static Consumer = ResourceContext.Consumer;
     constructor(props: Props) {
         super(props);
 
@@ -195,11 +197,11 @@ class ResourceContent extends React.Component<Props, State>{
         temp[field] = value
         this.setState({ data: temp })
     }
-   
+
     render() {
         return (
-            this.state.data!=null?
-           
+            this.state.data != null ?
+
 
                 <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
 
@@ -207,8 +209,8 @@ class ResourceContent extends React.Component<Props, State>{
                         <Text>Resource</Text>
                         <Text>Sponsored</Text>
 
-                        <EditableText onChange={(value: any) => { this.updateValue("name", value);this.updateOverview("title",value) }} placeholder="Enter Resource Name" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
-                        <EditableText onChange={(value: any) => { this.updateValue("description", value);this.updateOverview("description",value)  }} placeholder="Enter Resource Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
+                        <EditableText onChange={(value: any) => { this.updateValue("name", value); this.updateOverview("title", value) }} placeholder="Enter Resource Name" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
+                        <EditableText onChange={(value: any) => { this.updateValue("description", value); this.updateOverview("description", value) }} placeholder="Enter Resource Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
 
                         <Text>Organizer</Text>
                         <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
@@ -244,12 +246,18 @@ class ResourceContent extends React.Component<Props, State>{
                         <Text>{this.state.validationError}</Text>
                     </Container>
                     <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                        <MessageBoard navigation={this.props.navigation} groupId={this.state.data.id}></MessageBoard>
-
+                        <ResourceOverview.Consumer>
+                            {({ state, actions }) => {
+                                return <Container style={{ display: "inline", marginTop: 10, overflow: "visible", width: "100%" }} >
+                                   
+                                    <EditableRichText onChange={(val) => { actions.updateResource(state.currentResource, "extendedDescription", val) }} value={state.data.resources[state.currentResource].extendedDescription} isEditable={true} textStyle=""></EditableRichText>
+                                </Container>
+                            }}
+                        </ResourceOverview.Consumer>
                     </Container>
                 </Container>
-           :null
+                : null
         )
     }
 }
-export default withNavigation(ResourceContent)
+export default withNavigation(ResourceOverview)

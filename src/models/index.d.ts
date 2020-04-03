@@ -138,6 +138,7 @@ export declare class Resource {
   readonly title?: string;
   readonly image?: string;
   readonly description?: string;
+  readonly extendedDescription?: string;
   readonly series?: ResourceSeries[];
   readonly root?: ResourceRoot;
   constructor(init: ModelInit<Resource>);
@@ -150,6 +151,11 @@ export declare class ResourceSeries {
   readonly title?: string;
   readonly description?: string;
   readonly image?: string;
+  readonly category?: string[];
+  readonly status?: string;
+  readonly allFiles?: string;
+  readonly playlist?: string;
+  readonly playlistImage?: string;
   readonly episodes?: ResourceEpisode[];
   readonly resource?: Resource;
   constructor(init: ModelInit<ResourceSeries>);
@@ -158,12 +164,15 @@ export declare class ResourceSeries {
 
 export declare class ResourceEpisode {
   readonly id: string;
+  readonly episodeNumber?: number;
   readonly type?: string;
   readonly title?: string;
   readonly description?: string;
-  readonly youtube?: string;
-  readonly lowLink?: string;
-  readonly hiLink?: string;
+  readonly videoPreview?: string;
+  readonly videoLowRes?: string;
+  readonly videoHiRes?: string;
+  readonly lessonPlan?: string;
+  readonly activityPage?: string;
   readonly series?: ResourceSeries;
   constructor(init: ModelInit<ResourceEpisode>);
   static copyOf(source: ResourceEpisode, mutator: (draft: MutableModel<ResourceEpisode>) => MutableModel<ResourceEpisode> | void): ResourceEpisode;

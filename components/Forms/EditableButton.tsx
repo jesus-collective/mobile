@@ -50,11 +50,7 @@ export default class MessageBoard extends React.Component<Props, State> {
       else
         return <Button onLongPress={() => { this.setState({ isEditMode: true }) }} transparent onPress={() => { this.props.onPress() }}><Text style={this.state.textStyle}>{this.props.value}</Text></Button>
     else
-      return <Button
-        transparent
-      >
-        <Text style={this.state.textStyle}>{this.props.value}</Text>
-      </Button>
+      return <Button transparent onPress={() => { this.props.onPress() }}><Text style={this.state.textStyle}>{this.props.value}</Text></Button>
 
 
   }

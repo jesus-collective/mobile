@@ -1217,6 +1217,7 @@ export const createResourceRoot = /* GraphQL */ `
           title
           image
           description
+          extendedDescription
         }
         nextToken
       }
@@ -1236,6 +1237,7 @@ export const updateResourceRoot = /* GraphQL */ `
           title
           image
           description
+          extendedDescription
         }
         nextToken
       }
@@ -1255,6 +1257,7 @@ export const deleteResourceRoot = /* GraphQL */ `
           title
           image
           description
+          extendedDescription
         }
         nextToken
       }
@@ -1270,6 +1273,7 @@ export const createResource = /* GraphQL */ `
       title
       image
       description
+      extendedDescription
       series {
         items {
           id
@@ -1277,6 +1281,11 @@ export const createResource = /* GraphQL */ `
           title
           description
           image
+          category
+          status
+          allFiles
+          playlist
+          playlistImage
         }
         nextToken
       }
@@ -1299,6 +1308,7 @@ export const updateResource = /* GraphQL */ `
       title
       image
       description
+      extendedDescription
       series {
         items {
           id
@@ -1306,6 +1316,11 @@ export const updateResource = /* GraphQL */ `
           title
           description
           image
+          category
+          status
+          allFiles
+          playlist
+          playlistImage
         }
         nextToken
       }
@@ -1328,6 +1343,7 @@ export const deleteResource = /* GraphQL */ `
       title
       image
       description
+      extendedDescription
       series {
         items {
           id
@@ -1335,6 +1351,11 @@ export const deleteResource = /* GraphQL */ `
           title
           description
           image
+          category
+          status
+          allFiles
+          playlist
+          playlistImage
         }
         nextToken
       }
@@ -1356,15 +1377,23 @@ export const createResourceSeries = /* GraphQL */ `
       title
       description
       image
+      category
+      status
+      allFiles
+      playlist
+      playlistImage
       episodes {
         items {
           id
+          episodeNumber
           type
           title
           description
-          youtube
-          lowLink
-          hiLink
+          videoPreview
+          videoLowRes
+          videoHiRes
+          lessonPlan
+          activityPage
         }
         nextToken
       }
@@ -1375,6 +1404,7 @@ export const createResourceSeries = /* GraphQL */ `
         title
         image
         description
+        extendedDescription
         series {
           nextToken
         }
@@ -1394,15 +1424,23 @@ export const updateResourceSeries = /* GraphQL */ `
       title
       description
       image
+      category
+      status
+      allFiles
+      playlist
+      playlistImage
       episodes {
         items {
           id
+          episodeNumber
           type
           title
           description
-          youtube
-          lowLink
-          hiLink
+          videoPreview
+          videoLowRes
+          videoHiRes
+          lessonPlan
+          activityPage
         }
         nextToken
       }
@@ -1413,6 +1451,7 @@ export const updateResourceSeries = /* GraphQL */ `
         title
         image
         description
+        extendedDescription
         series {
           nextToken
         }
@@ -1432,15 +1471,23 @@ export const deleteResourceSeries = /* GraphQL */ `
       title
       description
       image
+      category
+      status
+      allFiles
+      playlist
+      playlistImage
       episodes {
         items {
           id
+          episodeNumber
           type
           title
           description
-          youtube
-          lowLink
-          hiLink
+          videoPreview
+          videoLowRes
+          videoHiRes
+          lessonPlan
+          activityPage
         }
         nextToken
       }
@@ -1451,6 +1498,7 @@ export const deleteResourceSeries = /* GraphQL */ `
         title
         image
         description
+        extendedDescription
         series {
           nextToken
         }
@@ -1466,18 +1514,26 @@ export const createResourceEpisode = /* GraphQL */ `
   mutation CreateResourceEpisode($input: CreateResourceEpisodeInput!) {
     createResourceEpisode(input: $input) {
       id
+      episodeNumber
       type
       title
       description
-      youtube
-      lowLink
-      hiLink
+      videoPreview
+      videoLowRes
+      videoHiRes
+      lessonPlan
+      activityPage
       series {
         id
         type
         title
         description
         image
+        category
+        status
+        allFiles
+        playlist
+        playlistImage
         episodes {
           nextToken
         }
@@ -1488,6 +1544,7 @@ export const createResourceEpisode = /* GraphQL */ `
           title
           image
           description
+          extendedDescription
         }
       }
     }
@@ -1497,18 +1554,26 @@ export const updateResourceEpisode = /* GraphQL */ `
   mutation UpdateResourceEpisode($input: UpdateResourceEpisodeInput!) {
     updateResourceEpisode(input: $input) {
       id
+      episodeNumber
       type
       title
       description
-      youtube
-      lowLink
-      hiLink
+      videoPreview
+      videoLowRes
+      videoHiRes
+      lessonPlan
+      activityPage
       series {
         id
         type
         title
         description
         image
+        category
+        status
+        allFiles
+        playlist
+        playlistImage
         episodes {
           nextToken
         }
@@ -1519,6 +1584,7 @@ export const updateResourceEpisode = /* GraphQL */ `
           title
           image
           description
+          extendedDescription
         }
       }
     }
@@ -1528,18 +1594,26 @@ export const deleteResourceEpisode = /* GraphQL */ `
   mutation DeleteResourceEpisode($input: DeleteResourceEpisodeInput!) {
     deleteResourceEpisode(input: $input) {
       id
+      episodeNumber
       type
       title
       description
-      youtube
-      lowLink
-      hiLink
+      videoPreview
+      videoLowRes
+      videoHiRes
+      lessonPlan
+      activityPage
       series {
         id
         type
         title
         description
         image
+        category
+        status
+        allFiles
+        playlist
+        playlistImage
         episodes {
           nextToken
         }
@@ -1550,6 +1624,7 @@ export const deleteResourceEpisode = /* GraphQL */ `
           title
           image
           description
+          extendedDescription
         }
       }
     }

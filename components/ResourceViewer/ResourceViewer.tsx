@@ -60,6 +60,7 @@ class ResourceViewer extends React.Component<Props, State> {
                 title: "Overview",
                 image: "test.jpg",
                 description: "...",
+                extendedDescription:null,
                 series: [series[0]]
             })
         );
@@ -76,18 +77,20 @@ class ResourceViewer extends React.Component<Props, State> {
 
     }
     async setInitialData(props) {
-        //   await DataStore.delete(ResourceSeries, Predicates.ALL)
-        //   await DataStore.delete(ResourceRoot, Predicates.ALL)
-        //   await DataStore.delete(Resource, Predicates.ALL)
+       //    await DataStore.delete(ResourceSeries, Predicates.ALL)
+      //     await DataStore.delete(ResourceRoot, Predicates.ALL)
+      //     await DataStore.delete(Resource, Predicates.ALL)
+    //       await DataStore.delete(ResourceEpisode, Predicates.ALL)
         const getResourceRoot = await DataStore.query(ResourceRoot);
         if (getResourceRoot.length == 0) {
 
             this.createResourceRoot();
         }
         else {
+           
             this.setState({ data: getResourceRoot[0], currentResource: 0 })
         }
-
+      
     }
     createResource = async () => {
         const resource = await DataStore.save(
@@ -107,6 +110,7 @@ class ResourceViewer extends React.Component<Props, State> {
         console.log(resourceRoute)
         this.setState({ data: resourceRoute[0] })
     }
+   
     changeResource = (index) => {
         console.log({ "changeResource": index })
         this.setState({ currentResource: index })
@@ -179,11 +183,11 @@ class ResourceViewer extends React.Component<Props, State> {
                 <Container style={{ padding: 0, margin: 0 }}>
                     <ResourceMenu></ResourceMenu>
                     <Content >
-                        <ResourceHeader title={this.state.data.title} description={this.state.data.description} image={this.state.data.image}></ResourceHeader>
+                        <ResourceHeader></ResourceHeader>
                         {this.state.currentResource == 0 ?
                             <ResourceOverview></ResourceOverview>
                             :
-                            <ResourceContent resource={this.state.data.resources[0]}></ResourceContent>}
+                            <ResourceContent></ResourceContent>}
                     </Content>
                 </Container>
             </ResourceViewer.Provider>
