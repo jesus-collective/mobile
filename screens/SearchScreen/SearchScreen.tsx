@@ -15,7 +15,6 @@ import { API, graphqlOperation, Auth } from 'aws-amplify';
 import { CreateGroupInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
-import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
 
 
 interface Props {

@@ -10,7 +10,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Image } from 'react-native'
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
-import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
+import {GRAPHQL_AUTH_MODE} from 'aws-amplify-react-native'
 import { API, graphqlOperation, Auth } from 'aws-amplify';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { TouchableOpacity } from 'react-native-gesture-handler';

@@ -6,16 +6,13 @@ import styles from '../style.js'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import { Image, TextComponent, TouchableOpacity } from 'react-native'
-import Dante from 'Dante2'
 import { CreateMessageInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import * as subscriptions from '../../src/graphql/subscriptions';
-import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
+import {GRAPHQL_AUTH_MODE} from 'aws-amplify-react-native'
 import { API, graphqlOperation, Auth, Storage } from 'aws-amplify';
-import { Observable as rxObservable, of } from "rxjs";
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
-import { convertFromRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import './MessageBoard.css';

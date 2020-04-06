@@ -21,7 +21,7 @@ interface State {
 
 export default class GroupScreen extends React.Component<Props, State>{
     API_KEY = 'C8Z1xof_SaC2MX5HyuWeLA';
-   
+    API_SECRET = 'GKi0Z2aYgF5Alo7gOUrnp2rlnxuSUpLPowIE';
     meetConfig = {
         apiKey: this.API_KEY,
         apiSecret: this.API_SECRET,

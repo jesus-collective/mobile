@@ -13,7 +13,6 @@ import awsconfig from '../../src/aws-exports';
 import { } from '@material-ui/core';
 import ResourceMenu from './ResourceMenu'
 import ResourceHeader from './ResourceHeader'
-import { GRAPHQL_AUTH_MODE } from '@aws-amplify/api/lib/types';
 import { withNavigation } from 'react-navigation';
 import ResourceOverview from './ResourceOverview'
 import ResourceContent from './ResourceContent'
