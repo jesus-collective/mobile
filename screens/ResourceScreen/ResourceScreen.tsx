@@ -6,20 +6,15 @@ import { Text } from 'react-native'
 
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
-import styles from '../../components/style.js'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
-import MessageBoard from '../../components/MessageBoard/MessageBoard'
-import EditableText from '../../components/Forms/EditableText'
 import Validate from '../../components/Validate/Validate'
 import { API, graphqlOperation, Auth } from 'aws-amplify';
 import { CreateGroupInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
-import {GRAPHQL_AUTH_MODE} from 'aws-amplify-react-native'
-import ProfileImage from '../../components/ProfileImage/ProfileImage'
+import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import ResourceViewer from '../../components/ResourceViewer/ResourceViewer'
-import ImportKidsandYouth from './ImportKidsandYouth'
 
 
 interface Props {
@@ -208,7 +203,7 @@ export default class GroupScreen extends React.Component<Props, State>{
             <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
             <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
             <ResourceViewer navigation={this.props.navigation} groupId={this.state.data.id}></ResourceViewer>
-          
+            
           </Container>
         </StyleProvider>
         :

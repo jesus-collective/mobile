@@ -10,7 +10,7 @@ import { CreateMessageInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import * as subscriptions from '../../src/graphql/subscriptions';
-import {GRAPHQL_AUTH_MODE} from 'aws-amplify-react-native'
+import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import { API, graphqlOperation, Auth, Storage } from 'aws-amplify';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { Editor } from 'react-draft-wysiwyg';

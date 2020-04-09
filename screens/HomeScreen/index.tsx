@@ -3,26 +3,25 @@ import Amplify from 'aws-amplify'
 import { API, graphqlOperation } from 'aws-amplify';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
-import HomeScreen from "./HomeScreen";
 import { View } from 'react-native'
 import { Auth } from 'aws-amplify';
 import { Text } from 'react-native'
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
-import SideBar from "../../components/Sidebar/Sidebar";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { createStackNavigator } from "react-navigation-stack";
-import { createSwitchNavigator } from "react-navigation";
 import { createAppContainer } from "react-navigation";
 import awsconfig from '../../src/aws-exports';
 import { NavigationScreenProp } from 'react-navigation';
 import { Dimensions } from 'react-native'
-import Validate from '../../components/Validate/Validate'
+import  Validate  from '../../components/Validate/Validate'
 
-import { Linking } from 'expo';
 import { createBrowserApp } from '@react-navigation/web';
 import { Platform } from "react-native";
 import moment from "moment";
+
+const HomeScreen = lazy(() => import("./HomeScreen"));
+const SideBar = lazy(() => import("../../components/Sidebar/Sidebar"));
 const ConversationScreen = lazy(() => import('../ConversationScreen/ConversationScreen'));
 const OrganizationsScreen = lazy(() => import('../OrganizationsScreen/OrganizationsScreen'));
 const OrganizationScreen = lazy(() => import('../OrganizationScreen/OrganizationScreen'));
@@ -251,20 +250,23 @@ export default class App extends React.Component<Props, State>{
     }
 
   }
+  renderFallback(){
+    return <Text>loading...</Text>
+  }
   render() {
     if (this.state.authState == 'signedIn') {
       console.log("User has signed in")
       console.log({ "Paid state": this.state.hasPaidState })
       console.log({ "Profile state": this.state.hasCompletedPersonalProfile })
       if (this.state.hasPaidState === "Loading") {
-        return <Suspense fallback={null}></Suspense>
+        return <Suspense fallback={this.renderFallback()}></Suspense>
       }
       else if (this.state.hasPaidState === "Not Started") {
-        return (<Suspense fallback={null}><SignUpScreen1 payStateChanged={() => this.onPaidStateChanged()} /></Suspense>)
+        return (<Suspense fallback={this.renderFallback()}><SignUpScreen1 payStateChanged={() => this.onPaidStateChanged()} /></Suspense>)
         //  return <SignUpScreen2 />
       }
       else if (this.state.hasPaidState === "In Progress") {
-        return (<Suspense fallback={null}><SignUpScreen2 payStateChanged={() => this.onPaidStateChanged()} /></Suspense>)
+        return (<Suspense fallback={this.renderFallback()}><SignUpScreen2 payStateChanged={() => this.onPaidStateChanged()} /></Suspense>)
         //  return <SignUpScreen2 />
       }
       else if (this.state.hasPaidState === "Complete") {
@@ -272,11 +274,11 @@ export default class App extends React.Component<Props, State>{
           return null
         }
         else if (this.state.hasCompletedPersonalProfile == "Incomplete") {
-          return (<Suspense fallback={null}><SignUpScreen3 profileComplete={() => this.onProfileComplete()} /></Suspense>)
+          return (<Suspense fallback={this.renderFallback()}><SignUpScreen3 profileComplete={() => this.onProfileComplete()} /></Suspense>)
         }
         else {
           return (
-            <Suspense fallback={null}>
+            <Suspense fallback={this.renderFallback()}>
               <View style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1 }}>
                 <MuiPickersUtilsProvider utils={MomentUtils}>
                   <AppContainer></AppContainer>

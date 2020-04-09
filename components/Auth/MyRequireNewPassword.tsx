@@ -10,7 +10,7 @@ interface Props {
     authState: any
 }
 interface State { }
-export default class MyRequireNewPassword extends RequireNewPassword<Props,State> {
+class MyRequireNewPassword extends RequireNewPassword<Props,State> {
     constructor(props: Props) {
         super(props);
     }
@@ -31,3 +31,4 @@ export default class MyRequireNewPassword extends RequireNewPassword<Props,State
         );
     }
 }
+export default MyRequireNewPassword as React.ComponentType<any>

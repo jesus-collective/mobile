@@ -9,7 +9,7 @@ interface Props {
     authState: any
 }
 interface State { }
-export default class MySignIn extends SignIn<Props, State> {
+class MySignIn extends SignIn<Props, State> {
     constructor(props: Props) {
         super(props);
     }
@@ -33,3 +33,4 @@ export default class MySignIn extends SignIn<Props, State> {
         );
     }
 }
+export default MySignIn as React.ComponentType<any>

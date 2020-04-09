@@ -315,28 +315,28 @@ class IndexApp extends React.Component<Props, State>{
                     }))
 
                     if (ptb_series_playlist.substring(0, 3) == "<im") {
-                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue[0], updated => {
+                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue, updated => {
                             updated.playlist = "",
                                 updated.playlistImage = ptb_series_playlist.substring(ptb_series_playlist.indexOf("src=\"") + 5, ptb_series_playlist.indexOf("\"", ptb_series_playlist.indexOf("src=\"") + 5))
 
                         }))
                     }
-                    if (jsonValue[0].playlist.substring(0, 3) == "me ") {
-                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue[0], updated => {
+                    if (jsonValue.playlist.substring(0, 3) == "me ") {
+                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue, updated => {
                             updated.playlist = "",
                                 updated.playlistImage = ptb_series_playlist.substring(ptb_series_playlist.indexOf("embed/") + 6, ptb_series_playlist.indexOf("?", ptb_series_playlist.indexOf("embed/") + 6))
 
                         }))
                     }
-                    if (jsonValue[0].playlist.substring(0, 17) == "https://youtu.be/") {
-                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue[0], updated => {
+                    if (jsonValue.playlist.substring(0, 17) == "https://youtu.be/") {
+                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue, updated => {
                             updated.playlist = "",
                                 updated.playlistImage = ptb_series_playlist.substring(ptb_series_playlist.indexOf("/"))
                         }))
 
                     }
-                    if (jsonValue[0].playlist.substring(0, 3) != "PLB") {
-                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue[0], updated => {
+                    if (jsonValue.playlist.substring(0, 3) != "PLB") {
+                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue, updated => {
                             updated.playlist = ""
 
                         }))
@@ -408,7 +408,7 @@ class IndexApp extends React.Component<Props, State>{
                             videoLowRes: ptb_episode_1_video_message_file_low_res,
                             videoPreview: ptb_episode_1_video_preview
                         }))
-                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue[0], updated => {
+                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue, updated => {
                             updated.episodes = updated.episodes.concat(episode1)
                         }))
                     }
@@ -477,7 +477,7 @@ class IndexApp extends React.Component<Props, State>{
                             videoLowRes: ptb_episode_2_video_message_file_low_res,
                             videoPreview: ptb_episode_2_video_preview
                         }))
-                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue[0], updated => {
+                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue, updated => {
                             updated.episodes = updated.episodes.concat(episode2)
                         }))
                     }
@@ -547,7 +547,7 @@ class IndexApp extends React.Component<Props, State>{
                             videoLowRes: ptb_episode_3_video_message_file_low_res,
                             videoPreview: ptb_episode_3_video_preview
                         }))
-                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue[0], updated => {
+                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue, updated => {
                             updated.episodes = updated.episodes.concat(episode3)
                         }))
                     }
@@ -618,7 +618,7 @@ class IndexApp extends React.Component<Props, State>{
                             videoLowRes: ptb_episode_4_video_message_file_low_res,
                             videoPreview: ptb_episode_4_video_preview
                         }))
-                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue[0], updated => {
+                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue, updated => {
                             updated.episodes = updated.episodes.concat(episode4)
                         }))
                     }
@@ -689,7 +689,7 @@ class IndexApp extends React.Component<Props, State>{
                             videoLowRes: ptb_episode_5_video_message_file_low_res,
                             videoPreview: ptb_episode_5_video_preview
                         }))
-                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue[0], updated => {
+                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue, updated => {
                             updated.episodes = updated.episodes.concat(episode5)
                         }))
                     }
@@ -760,7 +760,7 @@ class IndexApp extends React.Component<Props, State>{
                             videoLowRes: ptb_episode_6_video_message_file_low_res,
                             videoPreview: ptb_episode_6_video_preview
                         }))
-                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue[0], updated => {
+                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue, updated => {
                             updated.episodes = updated.episodes.concat(episode6)
                         }))
                     }
@@ -832,7 +832,7 @@ class IndexApp extends React.Component<Props, State>{
                             videoLowRes: ptb_episode_7_video_message_file_low_res,
                             videoPreview: ptb_episode_7_video_preview
                         }))
-                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue[0], updated => {
+                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue, updated => {
                             updated.episodes = updated.episodes.concat(episode7)
                         }))
                     }
@@ -904,7 +904,7 @@ class IndexApp extends React.Component<Props, State>{
                             videoLowRes: ptb_episode_8_video_message_file_low_res,
                             videoPreview: ptb_episode_8_video_preview
                         }))
-                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue[0], updated => {
+                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue, updated => {
                             updated.episodes = updated.episodes.concat(episode8)
                         }))
                     }
@@ -931,32 +931,32 @@ class IndexApp extends React.Component<Props, State>{
             console.log("start end2")
            
 
-            var start1=async ()=>{await asyncForEach(res3.filter((z) => { if (z.jsonValue[0].type == "ky-srhigh") return z.jsonValue[0] }),async (item)=>{
-                sr = await DataStore.save(Resource.copyOf(sr[0], updated => {
+            var start1=async ()=>{await asyncForEach(res3.filter((z) => { if (z.jsonValue.type == "ky-srhigh") return z.jsonValue }),async (item)=>{
+                sr = await DataStore.save(Resource.copyOf(sr, updated => {
                     updated.series = updated.series.concat(item.jsonValue)
                     
                 }))
                 console.log(sr)
             })}
            
-            var start5=async ()=>{await asyncForEach(res3.filter((z) => { if (z.jsonValue[0].type == "ky-jrhigh") return z.jsonValue[0] }),async (item)=>{
-                jr = await DataStore.save(Resource.copyOf(jr[0], updated => {
+            var start5=async ()=>{await asyncForEach(res3.filter((z) => { if (z.jsonValue.type == "ky-jrhigh") return z.jsonValue }),async (item)=>{
+                jr = await DataStore.save(Resource.copyOf(jr, updated => {
                     updated.series = updated.series.concat(item.jsonValue)
                     
                 }))
                 console.log(jr)
             })
         }
-            var start2=async ()=>{await asyncForEach(res3.filter((z) => { if (z.jsonValue[0].type == "ky-youth") return z.jsonValue[0] }),async (item)=>{
-                youth = await DataStore.save(Resource.copyOf(youth[0], updated => {
+            var start2=async ()=>{await asyncForEach(res3.filter((z) => { if (z.jsonValue.type == "ky-youth") return z.jsonValue }),async (item)=>{
+                youth = await DataStore.save(Resource.copyOf(youth, updated => {
                     updated.series = updated.series.concat(item.jsonValue)
                     
                 }))
                 console.log(youth)
             })}
 
-            var start3=async ()=>{await asyncForEach(res3.filter((z) => { if (z.jsonValue[0].type == "ky-kids") return z.jsonValue[0] }),async (item)=>{
-                kids = await DataStore.save(Resource.copyOf(kids[0], updated => {
+            var start3=async ()=>{await asyncForEach(res3.filter((z) => { if (z.jsonValue.type == "ky-kids") return z.jsonValue }),async (item)=>{
+                kids = await DataStore.save(Resource.copyOf(kids, updated => {
                     updated.series = updated.series.concat(item.jsonValue)
                     
                 }))
@@ -964,8 +964,8 @@ class IndexApp extends React.Component<Props, State>{
             })}
             
            
-            var start4=async ()=>{await asyncForEach(res3.filter((z) => { if (z.jsonValue[0].type == "ky-preschool") return z.jsonValue[0] }),async (item)=>{
-                pre = await DataStore.save(Resource.copyOf(pre[0], updated => {
+            var start4=async ()=>{await asyncForEach(res3.filter((z) => { if (z.jsonValue.type == "ky-preschool") return z.jsonValue }),async (item)=>{
+                pre = await DataStore.save(Resource.copyOf(pre, updated => {
                     updated.series = updated.series.concat(item.jsonValue)
                     
                 }))

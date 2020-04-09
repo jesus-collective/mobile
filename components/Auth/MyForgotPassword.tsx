@@ -10,7 +10,7 @@ interface Props {
     authState: any
 }
 interface State { }
-export default class MyForgotPassword extends ForgotPassword<Props,State> {
+class MyForgotPassword extends ForgotPassword<Props,State> {
     constructor(props: Props) {
         super(props);
     }
@@ -31,3 +31,4 @@ export default class MyForgotPassword extends ForgotPassword<Props,State> {
         );
     }
 }
+export default MyForgotPassword as React.ComponentType<any>

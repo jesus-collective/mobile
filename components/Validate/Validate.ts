@@ -1,8 +1,10 @@
+
+
 type ValidationResult = {
     result: boolean,
     validationError: String
 }
-export default class Validate {
+export default class Validate{
     static Profile(data: any): ValidationResult {
         if (data.aboutMeShort == null || data.aboutMeShort == "")
             return { result: false, validationError: "Profile must have - short about me" }

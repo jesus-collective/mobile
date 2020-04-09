@@ -1,52 +1,7 @@
 export const schema = {
     "models": {
         "Message": {
-            "syncable": true,
             "name": "Message",
-            "pluralName": "Messages",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {
-                        "subscriptions": null
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "ByRoom",
-                        "fields": [
-                            "roomId",
-                            "when"
-                        ],
-                        "queryField": "messagesByRoom"
-                    }
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "provider": "userPools",
-                                "ownerField": "owner",
-                                "allow": "owner",
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete"
-                                ],
-                                "identityClaim": "cognito:username"
-                            },
-                            {
-                                "allow": "private",
-                                "operations": [
-                                    "read"
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ],
             "fields": {
                 "id": {
                     "name": "id",
@@ -116,16 +71,26 @@ export const schema = {
                         "targetName": "messageRoomId"
                     }
                 }
-            }
-        },
-        "User": {
+            },
             "syncable": true,
-            "name": "User",
-            "pluralName": "Users",
+            "pluralName": "Messages",
             "attributes": [
                 {
                     "type": "model",
-                    "properties": {}
+                    "properties": {
+                        "subscriptions": null
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "ByRoom",
+                        "fields": [
+                            "roomId",
+                            "when"
+                        ],
+                        "queryField": "messagesByRoom"
+                    }
                 },
                 {
                     "type": "auth",
@@ -135,20 +100,15 @@ export const schema = {
                                 "provider": "userPools",
                                 "ownerField": "owner",
                                 "allow": "owner",
-                                "identityClaim": "cognito:username",
                                 "operations": [
                                     "create",
                                     "update",
                                     "delete"
-                                ]
+                                ],
+                                "identityClaim": "cognito:username"
                             },
                             {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
-                                    "verifiedUsers"
-                                ],
+                                "allow": "private",
                                 "operations": [
                                     "read"
                                 ]
@@ -156,7 +116,10 @@ export const schema = {
                         ]
                     }
                 }
-            ],
+            ]
+        },
+        "User": {
+            "name": "User",
             "fields": {
                 "id": {
                     "name": "id",
@@ -365,31 +328,13 @@ export const schema = {
                         "associatedWith": "author"
                     }
                 }
-            }
-        },
-        "Group": {
+            },
             "syncable": true,
-            "name": "Group",
-            "pluralName": "Groups",
+            "pluralName": "Users",
             "attributes": [
                 {
                     "type": "model",
                     "properties": {}
-                },
-                {
-                    "type": "searchable",
-                    "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byType",
-                        "fields": [
-                            "type",
-                            "id"
-                        ],
-                        "queryField": "groupByType"
-                    }
                 },
                 {
                     "type": "auth",
@@ -420,7 +365,10 @@ export const schema = {
                         ]
                     }
                 }
-            ],
+            ]
+        },
+        "Group": {
+            "name": "Group",
             "fields": {
                 "id": {
                     "name": "id",
@@ -566,40 +514,62 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 }
-            }
-        },
-        "GroupMember": {
+            },
             "syncable": true,
-            "name": "GroupMember",
-            "pluralName": "GroupMembers",
+            "pluralName": "Groups",
             "attributes": [
                 {
                     "type": "model",
-                    "properties": {
-                        "queries": null
-                    }
+                    "properties": {}
+                },
+                {
+                    "type": "searchable",
+                    "properties": {}
                 },
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byGroup",
+                        "name": "byType",
                         "fields": [
-                            "groupID",
-                            "userID"
-                        ]
+                            "type",
+                            "id"
+                        ],
+                        "queryField": "groupByType"
                     }
                 },
                 {
-                    "type": "key",
+                    "type": "auth",
                     "properties": {
-                        "name": "byUser",
-                        "fields": [
-                            "userID",
-                            "groupID"
+                        "rules": [
+                            {
+                                "provider": "userPools",
+                                "ownerField": "owner",
+                                "allow": "owner",
+                                "identityClaim": "cognito:username",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "verifiedUsers"
+                                ],
+                                "operations": [
+                                    "read"
+                                ]
+                            }
                         ]
                     }
                 }
-            ],
+            ]
+        },
+        "GroupMember": {
+            "name": "GroupMember",
             "fields": {
                 "id": {
                     "name": "id",
@@ -648,47 +618,40 @@ export const schema = {
                         "targetName": "groupMemberUserId"
                     }
                 }
-            }
-        },
-        "CourseInfo": {
+            },
             "syncable": true,
-            "name": "CourseInfo",
-            "pluralName": "CourseInfos",
+            "pluralName": "GroupMembers",
             "attributes": [
                 {
                     "type": "model",
-                    "properties": {}
+                    "properties": {
+                        "queries": null
+                    }
                 },
                 {
-                    "type": "auth",
+                    "type": "key",
                     "properties": {
-                        "rules": [
-                            {
-                                "provider": "userPools",
-                                "ownerField": "owner",
-                                "allow": "owner",
-                                "identityClaim": "cognito:username",
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete"
-                                ]
-                            },
-                            {
-                                "groupClaim": "cognito:groups",
-                                "provider": "userPools",
-                                "allow": "groups",
-                                "groups": [
-                                    "verifiedUsers"
-                                ],
-                                "operations": [
-                                    "read"
-                                ]
-                            }
+                        "name": "byGroup",
+                        "fields": [
+                            "groupID",
+                            "userID"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byUser",
+                        "fields": [
+                            "userID",
+                            "groupID"
                         ]
                     }
                 }
-            ],
+            ]
+        },
+        "CourseInfo": {
+            "name": "CourseInfo",
             "fields": {
                 "id": {
                     "name": "id",
@@ -738,18 +701,47 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 }
-            }
-        },
-        "CourseWeek": {
+            },
             "syncable": true,
-            "name": "CourseWeek",
-            "pluralName": "CourseWeeks",
+            "pluralName": "CourseInfos",
             "attributes": [
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "provider": "userPools",
+                                "ownerField": "owner",
+                                "allow": "owner",
+                                "identityClaim": "cognito:username",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete"
+                                ]
+                            },
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "verifiedUsers"
+                                ],
+                                "operations": [
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
                 }
-            ],
+            ]
+        },
+        "CourseWeek": {
+            "name": "CourseWeek",
             "fields": {
                 "id": {
                     "name": "id",
@@ -806,18 +798,18 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 }
-            }
-        },
-        "CourseLesson": {
+            },
             "syncable": true,
-            "name": "CourseLesson",
-            "pluralName": "CourseLessons",
+            "pluralName": "CourseWeeks",
             "attributes": [
                 {
                     "type": "model",
                     "properties": {}
                 }
-            ],
+            ]
+        },
+        "CourseLesson": {
+            "name": "CourseLesson",
             "fields": {
                 "id": {
                     "name": "id",
@@ -867,18 +859,18 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 }
-            }
-        },
-        "CourseAssignment": {
+            },
             "syncable": true,
-            "name": "CourseAssignment",
-            "pluralName": "CourseAssignments",
+            "pluralName": "CourseLessons",
             "attributes": [
                 {
                     "type": "model",
                     "properties": {}
                 }
-            ],
+            ]
+        },
+        "CourseAssignment": {
+            "name": "CourseAssignment",
             "fields": {
                 "id": {
                     "name": "id",
@@ -908,18 +900,18 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 }
-            }
-        },
-        "ResourceRoot": {
+            },
             "syncable": true,
-            "name": "ResourceRoot",
-            "pluralName": "ResourceRoots",
+            "pluralName": "CourseAssignments",
             "attributes": [
                 {
                     "type": "model",
                     "properties": {}
                 }
-            ],
+            ]
+        },
+        "ResourceRoot": {
+            "name": "ResourceRoot",
             "fields": {
                 "id": {
                     "name": "id",
@@ -948,18 +940,18 @@ export const schema = {
                         "associatedWith": "root"
                     }
                 }
-            }
-        },
-        "Resource": {
+            },
             "syncable": true,
-            "name": "Resource",
-            "pluralName": "Resources",
+            "pluralName": "ResourceRoots",
             "attributes": [
                 {
                     "type": "model",
                     "properties": {}
                 }
-            ],
+            ]
+        },
+        "Resource": {
+            "name": "Resource",
             "fields": {
                 "id": {
                     "name": "id",
@@ -1036,18 +1028,18 @@ export const schema = {
                         "targetName": "resourceRootId"
                     }
                 }
-            }
-        },
-        "ResourceSeries": {
+            },
             "syncable": true,
-            "name": "ResourceSeries",
-            "pluralName": "ResourceSeries",
+            "pluralName": "Resources",
             "attributes": [
                 {
                     "type": "model",
                     "properties": {}
                 }
-            ],
+            ]
+        },
+        "ResourceSeries": {
+            "name": "ResourceSeries",
             "fields": {
                 "id": {
                     "name": "id",
@@ -1145,18 +1137,18 @@ export const schema = {
                         "targetName": "resourceSeriesResourceId"
                     }
                 }
-            }
-        },
-        "ResourceEpisode": {
+            },
             "syncable": true,
-            "name": "ResourceEpisode",
-            "pluralName": "ResourceEpisodes",
+            "pluralName": "ResourceSeries",
             "attributes": [
                 {
                     "type": "model",
                     "properties": {}
                 }
-            ],
+            ]
+        },
+        "ResourceEpisode": {
+            "name": "ResourceEpisode",
             "fields": {
                 "id": {
                     "name": "id",
@@ -1241,9 +1233,18 @@ export const schema = {
                         "targetName": "resourceEpisodeSeriesId"
                     }
                 }
-            }
+            },
+            "syncable": true,
+            "pluralName": "ResourceEpisodes",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                }
+            ]
         }
     },
     "enums": {},
+    "nonModels": {},
     "version": "a3af29ee95305c9762f8ff36d2189596"
 };

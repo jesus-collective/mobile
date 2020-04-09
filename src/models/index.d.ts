@@ -2,6 +2,8 @@ import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplif
 
 
 
+
+
 export declare class Message {
   readonly id: string;
   readonly content: string;

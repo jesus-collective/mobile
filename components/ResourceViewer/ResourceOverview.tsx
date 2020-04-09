@@ -11,11 +11,11 @@ import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import EditableText from '../../components/Forms/EditableText'
 import Validate from '../../components/Validate/Validate'
-import { API, graphqlOperation, Auth} from 'aws-amplify';
+import { API, graphqlOperation, Auth } from 'aws-amplify';
 import { CreateGroupInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
-import {GRAPHQL_AUTH_MODE} from 'aws-amplify-react-native'
+import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import ResourceViewer from '../../components/ResourceViewer/ResourceViewer'
 import { withNavigation } from 'react-navigation';
@@ -248,10 +248,11 @@ class ResourceOverview extends React.Component<Props, State>{
                     <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                         <ResourceOverview.Consumer>
                             {({ state, actions }) => {
-                                return <Container style={{ display: "inline", marginTop: 10, overflow: "visible", width: "100%" }} >
-                                   
+
+                                return (state.data.resources[state.currentResource] ? <Container style={{ display: "inline", marginTop: 10, overflow: "visible", width: "100%" }} >
+
                                     <EditableRichText onChange={(val) => { actions.updateResource(state.currentResource, "extendedDescription", val) }} value={state.data.resources[state.currentResource].extendedDescription} isEditable={true} textStyle=""></EditableRichText>
-                                </Container>
+                                </Container> : null)
                             }}
                         </ResourceOverview.Consumer>
                     </Container>

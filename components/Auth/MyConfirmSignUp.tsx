@@ -10,7 +10,7 @@ interface Props {
     authState: any
 }
 interface State { }
-export default class MyConfirmSignUp extends ConfirmSignUp<Props,State> {
+class MyConfirmSignUp extends ConfirmSignUp<Props,State> {
     constructor(props: Props) {
         super(props);
     }
@@ -31,3 +31,4 @@ export default class MyConfirmSignUp extends ConfirmSignUp<Props,State> {
         );
     }
 }
+export default MyConfirmSignUp as React.ComponentType<any>

@@ -20,6 +20,7 @@ import { v1 as uuidv1 } from 'uuid';
 import { ResourceRoot, Resource, ResourceEpisode, ResourceSeries } from "../../src/models";
 import { DataStore, Predicates } from '@aws-amplify/datastore'
 import { ResourceContext } from './ResourceContext';
+import ImportKidsandYouth from '../../screens/ResourceScreen/ImportKidsandYouth'
 Amplify.configure(awsconfig);
 
 const mainColor = '#ffffff';
@@ -60,33 +61,36 @@ class ResourceViewer extends React.Component<Props, State> {
                 image: "test.jpg",
                 description: "...",
                 extendedDescription:null,
-                series: [series[0]]
+                series: [series]
             })
         );
         const resourceRoot = await DataStore.save(
             new ResourceRoot({
                 type: `curriculum`,
-                resources: [resource[0]]
+                resources: [resource]
             })
         );
 
         console.log(resourceRoot[0])
-        this.setState({ data: resourceRoot[0], currentResource: 0 })
+        this.setState({ data: resourceRoot, currentResource: 0 })
 
 
     }
     async setInitialData(props) {
        //    await DataStore.delete(ResourceSeries, Predicates.ALL)
-      //     await DataStore.delete(ResourceRoot, Predicates.ALL)
-      //     await DataStore.delete(Resource, Predicates.ALL)
-    //       await DataStore.delete(ResourceEpisode, Predicates.ALL)
+       //    await DataStore.delete(ResourceRoot, Predicates.ALL)
+       //    await DataStore.delete(Resource, Predicates.ALL)
+       //    await DataStore.delete(ResourceEpisode, Predicates.ALL)
+  
         const getResourceRoot = await DataStore.query(ResourceRoot);
+        const getResourceRoot2 = await DataStore.query(ResourceEpisode);
         if (getResourceRoot.length == 0) {
 
             this.createResourceRoot();
         }
         else {
-           
+           console.log(getResourceRoot)
+           console.log(getResourceRoot2)
             this.setState({ data: getResourceRoot[0], currentResource: 0 })
         }
       
@@ -187,7 +191,9 @@ class ResourceViewer extends React.Component<Props, State> {
                             <ResourceOverview></ResourceOverview>
                             :
                             <ResourceContent></ResourceContent>}
+                           {/*  <ImportKidsandYouth></ImportKidsandYouth>*/}
                     </Content>
+                   
                 </Container>
             </ResourceViewer.Provider>
             : null)

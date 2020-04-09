@@ -1,11 +1,23 @@
 const createExpoWebpackConfig = require("@expo/webpack-config");
 const path = require("path");
 const merge = require("webpack-merge");
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
-module.exports = async function(env, argv) {
+module.exports = async function (env, argv) {
   const config = await createExpoWebpackConfig(env, argv);
-
+ 
+   /* config.plugins.push(
+      new BundleAnalyzerPlugin({
+        path: 'web-report',
+      })
+    );*/
+  
   return merge(config, {
+    optimization: {
+      splitChunks: {
+        chunks: 'all',
+      },
+    },
     resolve: {
       alias: {
         "react-native/Libraries/Renderer/shims/ReactNativePropRegistry":

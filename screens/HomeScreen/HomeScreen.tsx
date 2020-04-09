@@ -1,15 +1,16 @@
-﻿import React from 'react';
-import { Container, Content, Footer } from 'native-base';
-import {Text} from 'react-native'
+﻿import React,{lazy} from 'react';
+import { Container} from 'native-base';
 
-import Header from '../../components/Header/Header'
-import FooterJC from '../../components/Footer/Footer'
-import MyMap from '../../components/MyMap/MyMap';
-import MyConversations from '../../components/MyConversations/MyConversations';
-import MyGroups from '../../components/MyGroups/MyGroups';
-import MyPeople from '../../components/MyPeople/MyPeople';
 import { Platform } from 'react-native';
 import { Dimensions } from 'react-native'
+
+const MyConversations = lazy(() => import( '../../components/MyConversations/MyConversations'));
+const MyGroups = lazy(() => import('../../components/MyGroups/MyGroups'));
+const MyPeople = lazy(() => import( '../../components/MyPeople/MyPeople'));
+
+const Header = lazy(() => import('../../components/Header/Header'));
+const FooterJC = lazy(() => import('../../components/Footer/Footer'));
+const MyMap = lazy(() => import('../../components/MyMap/MyMap'));
 
 interface Props {
   navigation: any
@@ -57,7 +58,7 @@ export default class HomeScreen extends React.Component<Props, State>{
               </Container>
               <Container style={{ flex: 30, flexDirection: "column" }}>
                 <MyPeople wrap={false} navigation={this.props.navigation}></MyPeople>
-                <MyConversations navigation={this.props.navigation}> </MyConversations>
+                <MyConversations navigation={this.props.navigation}></MyConversations>
                 <Container style={{ flex: 10 }}></Container>
               </Container>
             </Container>

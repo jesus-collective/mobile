@@ -10,7 +10,7 @@ interface Props {
     authState: any
 }
 interface State { }
-export default class MyVerifyContact extends VerifyContact<Props,State> {
+class MyVerifyContact extends VerifyContact<Props,State> {
     constructor(props: Props) {
         super(props);
     }
@@ -31,3 +31,4 @@ export default class MyVerifyContact extends VerifyContact<Props,State> {
         );
     }
 }
+export default MyVerifyContact as React.ComponentType<any>

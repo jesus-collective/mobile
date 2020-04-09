@@ -1,28 +1,29 @@
-import React from 'react';
+import React,{lazy} from 'react';
 import Amplify from 'aws-amplify';
 import awsConfig from './src/aws-exports';
-import HomeScreen from "./screens/HomeScreen/index";
 import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import { AmplifyTheme, Authenticator } from 'aws-amplify-react-native';
-import MySignIn from './components/Auth/MySignIn'
-import MySignUp from './components/Auth/MySignUp'
-import MyConfirmSignIn from './components/Auth/MyConfirmSignIn'
-import MyRequireNewPassword from './components/Auth/MyRequireNewPassword'
-import MyConfirmSignUp from './components/Auth/MyConfirmSignUp'
-import MyVerifyContact from './components/Auth/MyVerifyContact'
-import MyForgotPassword from './components/Auth/MyForgotPassword'
-import MyLoading from './components/Auth/MyLoading'
 import { View } from 'native-base';
-import SignUpSidebar from './components/SignUpSidebar/SignUpSidebar'
 import { Dimensions } from 'react-native'
 import { Platform } from 'react-native';
-
 import { NavigationScreenProp } from 'react-navigation';
 import { I18n } from 'aws-amplify';
 import { Ionicons } from '@expo/vector-icons';
+import MyLoading from './components/Auth/MyLoading';
+import HomeScreen from './screens/HomeScreen/index';
+import MySignIn from './components/Auth/MySignIn';
+import MySignUp from './components/Auth/MySignUp';
+import MyConfirmSignIn from './components/Auth/MyConfirmSignIn';
+import MyRequireNewPassword from './components/Auth/MyRequireNewPassword';
+import MyConfirmSignUp from './components/Auth/MyConfirmSignUp';
+import MyVerifyContact from './components/Auth/MyVerifyContact';
+import MyForgotPassword from './components/Auth/MyForgotPassword';
+
+const SignUpSidebar = lazy(() => import('./components/SignUpSidebar/SignUpSidebar'));
+
 Amplify.configure(awsConfig);
 
 

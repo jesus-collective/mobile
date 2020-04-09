@@ -4,10 +4,9 @@ import * as React from 'react';
 import styles from '../style.js'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
-import { FontAwesome5 } from '@expo/vector-icons';
 import { Image, TouchableOpacity } from 'react-native'
 import * as queries from '../../src/graphql/queries';
-import {GRAPHQL_AUTH_MODE} from 'aws-amplify-react-native'
+import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import { API, graphqlOperation, Auth } from 'aws-amplify';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { constants } from '../../src/constants'
