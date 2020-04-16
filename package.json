@@ -23,7 +23,7 @@
     "@zoomus/websdk": "^1.7.2",
     "Dante2": "^0.5.0-rc25",
     "aws-amplify": "^3.0.5",
-    "aws-amplify-react-native": "^4.0.2",
+    "aws-amplify-react-native": "^4.0.4",
     "aws-sdk": "^2.640.0",
     "babel-preset-expo": "^8.1.0",
     "emotion-theming": "^10.0.27",

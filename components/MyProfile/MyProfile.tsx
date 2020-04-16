@@ -1,5 +1,5 @@
 import { Icon, Button, View, Input, Form, Item, Label, Content } from 'native-base';
-import { Text, Image } from 'react-native'
+import {  Text, Image } from 'react-native'
 import * as React from 'react';
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
@@ -145,7 +145,7 @@ export default class MyProfile extends React.Component<Props, State> {
       contentType: 'image/png',
       identityId: this.state.UserDetails ?
         this.state.UserDetails.profileImage ?
-          this.state.UserDetails.profileImage 
+          this.state.UserDetails.profileImage
           : ""
         : ""
     })
@@ -162,19 +162,21 @@ export default class MyProfile extends React.Component<Props, State> {
       .catch(err => console.log(err));
 
   }
+  
   render() {
+   
     return (
       (this.state.UserDetails != null ?
         <Content>
           <View style={{ justifyContent: "space-between", flexDirection: "row", width: "100%" }}>
             <Text style={styles.profileFontTitle}>Create your profile</Text>
-            
+
             <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.finalizeProfile()}>Save and Publish Your Profile</JCButton>
             <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.logout()}>Logout</JCButton>
             <Text>{this.state.validationText}</Text>
           </View>
 
-          <Form style={{ display: "flex", flexDirection: "row" }}>
+          <Form style={{ marginBottom:20, display: "flex", flexDirection: "row" }}>
             <View style={{ flex: 30, flexDirection: "column" }}>
               <View style={{ alignSelf: "center" }}>
                 <Image style={{ width: "250px", height: "290px", borderRadius: 120 }}
@@ -182,8 +184,8 @@ export default class MyProfile extends React.Component<Props, State> {
 
                 </Image>
                 <View style={styles.fileInputWrapper}>
-                  <JCButton buttonType={ButtonTypes.Solid} onPress={()=>{}}>Upload Profile Picture</JCButton>
-                  <input style={{ fontSize: "200px", position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='image/png' onChange={(e) => this.onProfileImageChange(e)} />
+                  <JCButton buttonType={ButtonTypes.Solid} onPress={() => { }}>Upload Profile Picture</JCButton>
+                  <input  style={{ fontSize: "200px", position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='image/png' onChange={(e) => this.onProfileImageChange(e)} />
                 </View>
 
 
@@ -198,8 +200,8 @@ export default class MyProfile extends React.Component<Props, State> {
                 <Input style={styles.fontFormAboutMe} value={this.state.UserDetails.aboutMeShort}
                   onChange={(e) => { this.handleInputChange(e, "aboutMeShort") }} multiline={true} placeholder="Short sentence about me" />
                 <Text style={styles.fontFormSmallDarkGrey}><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/pin 2.svg')}></Image>Location not defined</Text>
-                <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/calendar.svg')}></Image>{this.state.UserDetails.joined?moment(this.state.UserDetails.joined).format('MMMM Do YYYY'):"Join date unknown"}</Text>
-                <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/church.svg')}></Image>{this.state.UserDetails.orgName?this.state.UserDetails.orgName:"Organization Name not defined"}</Text>
+                <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/calendar.svg')}></Image>{this.state.UserDetails.joined ? moment(this.state.UserDetails.joined).format('MMMM Do YYYY') : "Join date unknown"}</Text>
+                <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/church.svg')}></Image>{this.state.UserDetails.orgName ? this.state.UserDetails.orgName : "Organization Name not defined"}</Text>
               </View>
               <Text style={styles.fontFormSmallHeader}>Private Information</Text>
               <View style={{ backgroundColor: '#F3F5F9' }}>
@@ -247,24 +249,29 @@ export default class MyProfile extends React.Component<Props, State> {
                 onChange={(e) => { this.handleInputChange(e, "aboutMeLong") }} multiline={true} placeholder="type here" />
               <Text style={styles.fontBold}>My Interests</Text>
               <Text style={styles.font}>You can select 7 key interests</Text>
-              <TagInput
-                updateState={this.updateTagState}
-                tags={this.state.tags}
-                placeholder="Tags..."
-                label='Press space to add a tag'
-                labelStyle={{ color: '#000000' }}
-                //leftElement={<Icon name={'tag-multiple'} type={'material-community'} color={this.state.tagsText} />}
-                leftElementContainerStyle={{ marginLeft: 0 }}
-                containerStyle={{ width: (Dimensions.get('window').width - 40) }}
-                inputContainerStyle={[styles.textInput, { backgroundColor: this.state.tagsColor }]}
-                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", color: this.state.tagsText }}
-                onFocus={() => this.setState({ tagsColor: '#fff', tagsText: "#000000" })}
-                onBlur={() => this.setState({ tagsColor: mainColor, tagsText: '#000000' })}
-                autoCorrect={false}
-                tagStyle={styles.tag}
-                tagTextStyle={styles.tagText}
-              //keysForTag={' '}
-              />
+             
+                <TagInput
+                  updateState={this.updateTagState}
+                  tags={this.state.tags}
+                  placeholder="Tags..."
+                  label='Press space to add a tag'
+
+                  //leftElement={<Icon name={'tag-multiple'} type={'material-community'} color={this.state.tagsText} />}
+
+
+                  onFocus={() => this.setState({ tagsColor: '#fff', tagsText: "#000000" })}
+                  onBlur={() => this.setState({ tagsColor: mainColor, tagsText: '#000000' })}
+                  autoCorrect={false}
+                  scrollViewProps={{contentContainerStyle:{justifyContent:"center"}}}
+                  inputStyle={{ borderWidth: 1, borderColor: "#dddddd", color: this.state.tagsText }}
+                  containerStyle={{ justifyContent: "center", width: (Dimensions.get('window').width - 40) }}
+                  inputContainerStyle={[styles.textInput, { backgroundColor: this.state.tagsColor }]}
+                  labelStyle={{ color: '#000000' }}
+                  tagStyle={styles.tag}
+                  tagTextStyle={styles.tagText}
+                  leftElementContainerStyle={{ marginLeft: 0 }}
+                //keysForTag={' '}
+                />
               <Item stackedLabel>
                 <Label style={styles.fontFormSmall}>Current Role</Label>
                 <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.currentRole}
@@ -292,7 +299,7 @@ export default class MyProfile extends React.Component<Props, State> {
                   onChange={(e) => { this.handleInputChange(e, "orgType") }} />
               </Item>
               <Item stackedLabel>
-                <Label style={styles.fontFormSmall}>How many employees do you have?</Label>
+                <Label style={styles.fontFormSmall}>How many employees are there in your organization?</Label>
                 <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.orgSize}
                   onChange={(e) => { this.handleInputChange(e, "orgSize") }} />
               </Item>
