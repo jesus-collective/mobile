@@ -13,9 +13,9 @@ import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import ResourceViewer from '../../components/ResourceViewer/ResourceViewer'
 import { withNavigation } from 'react-navigation';
 import { ResourceRoot, Resource, ResourceEpisode, ResourceSeries } from "../../src/models";
-
+import { WebView } from 'react-native-webview'
 interface Props { }
-
+interface State{}
 class ResourceContent extends React.Component<Props, State>{
     constructor(props: Props) {
         super(props)
@@ -28,28 +28,44 @@ class ResourceContent extends React.Component<Props, State>{
                     return (
                         <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
                             <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
-                                <Text>Current Series</Text> 
+                                <Text>Current Series</Text>
                                 <Text>Schedule</Text>
-                                {state.data.resources[state.currentResource].series[0].episodes.map((episode)=>{
-                                    return (
-                                        <Card>
-                                            <CardItem><Text>{episode.videoPreview}</Text></CardItem>
-                                            <CardItem><Text>{episode.title}</Text></CardItem>
-                                           
-                                        </Card>
-                                    )
-                                })}
+                                <Container style={{ overflow: "scroll", minHeight: 400, flexWrap: this.props.wrap ? "wrap" : "nowrap", flexGrow: 1, width: "100%", flexDirection: 'row', justifyContent: "flex-start", alignItems: "flex-start" }}>
+
+                                    {state.data.resources[state.currentResource].series[0].episodes.map((episode) => {
+                                        return (
+                                            <Card style={{ padding: "0px", marginLeft: "10px", marginRight: "10px", width: "300px" }}>
+                                                <CardItem style={{ width: "300px", paddingLeft: "0px", paddingRight: "0px", margin: "0px" }}>
+                                                    <iframe style={{ padding: 0, border: 0, width: 300, height: 168 }}
+                                                        src={"https://www.youtube.com/embed/" + episode.videoPreview.replace("https://youtu.be/", "")}
+
+                                                    />
+                                                </CardItem>
+                                                <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text>{episode.title}</Text></CardItem>
+                                                <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text>{episode.descripition}</Text></CardItem>
+                                            </Card>
+                                        )
+                                    })}
+                                </Container>
                                 <Text>More Series</Text>
-                                {state.data.resources[state.currentResource].series.map((series) => {
-                                    return (
-                                        <Card>
-                                             <CardItem><Text>{series.playlist}</Text></CardItem>
-                                             <CardItem><Text>{series.title}</Text></CardItem>
-                                             <CardItem><Text>{series.category}</Text></CardItem> 
-                                            
-                                        </Card>
-                                    )
-                                })}
+                                <Container style={{ overflow: "scroll", minHeight: 400, flexWrap: this.props.wrap ? "wrap" : "nowrap", flexGrow: 1, width: "100%", flexDirection: 'row', justifyContent: "flex-start", alignItems: "flex-start" }}>
+
+                                    {state.data.resources[state.currentResource].series.map((series) => {
+                                        return (
+                                            <Card>
+                                                <CardItem style={{ width: "300px", paddingLeft: "0px", paddingRight: "0px", margin: "0px" }}>
+                                                    <iframe style={{ padding: 0, border: 0, width: 300, height: 168 }}
+                                                        src={"https://www.youtube.com/embed/videoseries?list=" + series.playlist}
+
+                                                    />
+                                                </CardItem>
+                                                <CardItem><Text>{series.title}</Text></CardItem>
+                                                <CardItem><Text>{series.category}</Text></CardItem>
+
+                                            </Card>
+                                        )
+                                    })}
+                                </Container>
                             </Container>
                             <Container style={{ flex: 30, flexDirection: "column", justifyContent: 'flex-start' }}>
                             </Container>
