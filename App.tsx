@@ -1,4 +1,4 @@
-import React,{lazy} from 'react';
+import React, { lazy, Suspense } from 'react';
 import Amplify from 'aws-amplify';
 import awsConfig from './src/aws-exports';
 import { AppLoading } from 'expo';
@@ -112,21 +112,24 @@ export default class AwesomeApp extends React.Component<Props, State> {
     Asset.fromModule(require("./assets/SignUp/progress-3.png")).downloadAsync()
     Asset.fromModule(require("./assets/SignUp/progress-4.png")).downloadAsync()
   }
-
+  renderFallback(){
+    return null
+  }
   render() {
     if (this.state.fontLoaded) {
 
       return (
         <View style={{
           width: "100%", top: 0, left: 0, height: "100%"
-        }}>{console.log({"authstate":this.state.authState})}
+        }}>{console.log({ "authstate": this.state.authState })}
           {Platform.OS !== 'web' || Dimensions.get('window').width <= 720 ?
-            
-              this.state.authState != "signedIn" && this.state.authState!="loading"&& this.state.authState!="" ?
 
+            this.state.authState != "signedIn" && this.state.authState != "loading" && this.state.authState != "" ?
+              <Suspense fallback={this.renderFallback()}>
                 <SignUpSidebar text="It’s time to unite, equip, and amplify a Jesus-centred movement." />
-                : null
-              
+              </Suspense>
+              : null
+
             : null
           }
 
