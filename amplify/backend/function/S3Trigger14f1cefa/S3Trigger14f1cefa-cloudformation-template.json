@@ -60,7 +60,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "jc-mobile-dev-20190809190418-deployment",
-					"S3Key": "amplify-builds/S3Trigger14f1cefa-49697342357773715252-build.zip"
+					"S3Key": "amplify-builds/S3Trigger14f1cefa-77792f4e66636c527672-build.zip"
 				}
 			}
 		},
