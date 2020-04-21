@@ -122,19 +122,19 @@ export default class MyProfile extends React.Component<Props, State> {
   async onProfileImageChange(e: any) {
     const file = e.target.files[0];
     var user = await Auth.currentCredentials();
-    var userId =user.identityId
+    var userId = user.identityId
     const lastDot = file.name.lastIndexOf('.');
     const ext = file.name.substring(lastDot + 1);
     const fn = 'profile/upload/profile-' + new Date().getTime() + '.' + ext
-    const fnSave = fn.replace("/upload", "").replace(".", "-[size].").replace("."+ext,".png")
-   
+    const fnSave = fn.replace("/upload", "").replace(".", "-[size].").replace("." + ext, ".png")
+
     Storage.put(fn, file, {
       level: 'protected',
       contentType: file.type,
       identityId: userId
     })
       .then(result => {
-       
+
         var updateData = { ...this.state.UserDetails }
         updateData['profileImage'] = {
           userId: userId,
@@ -143,27 +143,30 @@ export default class MyProfile extends React.Component<Props, State> {
           filenameMedium: fnSave.replace('[size]', 'medium'),
           filenameSmall: fnSave.replace('[size]', 'small')
         }
-       
+
         this.setState({
           UserDetails: updateData
-        }, () => this.getProfileImage());
+        }, () => {
+          this.getProfileImage()
+
+
+
+        });
       })
       .catch(err => console.log(err));
   }
+
   getProfileImage() {
+    console.log("get profile image")
     //console.log(this.state.UserDetails.profileImage)
     if (this.state.UserDetails.profileImage != null)
-      Storage.get(this.state.UserDetails.profileImage.filenameMedium, {
+      Storage.get(this.state.UserDetails.profileImage.filenameUpload, {
         level: 'protected',
-        contentType: 'image/png',
-        identityId: this.state.UserDetails ?
-          this.state.UserDetails.profileImage.userId ?
-            this.state.UserDetails.profileImage.userId
-            : ""
-          : ""
+        identityId: this.state.UserDetails.profileImage.userId
       })
         .then(result => this.setState({ profileImage: result }))
-        .catch(err => console.log(err));
+        .catch(err => { console.log(err) });
+
   }
   getValueFromKey(myObject: any, string: any) {
     const key = Object.keys(myObject).filter(k => k.includes(string));
@@ -193,8 +196,8 @@ export default class MyProfile extends React.Component<Props, State> {
             <View style={{ flex: 30, flexDirection: "column" }}>
               <View style={{ alignSelf: "center" }}>
                 <Image style={{ width: "250px", height: "290px", borderRadius: 120 }}
-                  source={this.state.profileImage == "" ? require('../../assets/profile-placeholder.png') : this.state.profileImage}>
-
+                  source={this.state.profileImage == "" ? require('../../assets/profile-placeholder.png') : this.state.profileImage}  onError={() => {this.getProfileImage()}}>
+                 
                 </Image>
                 <View style={styles.fileInputWrapper}>
                   <JCButton buttonType={ButtonTypes.Solid} onPress={() => { }}>Upload Profile Picture</JCButton>
@@ -202,7 +205,7 @@ export default class MyProfile extends React.Component<Props, State> {
                 </View>
 
 
-                <Text style={styles.fontFormProfileImageText}>Upload a picture of minimum 500px wide. Maximum size is 700kb.</Text>
+                {/*<Text style={styles.fontFormProfileImageText}>Upload a picture of minimum 500px wide. Maximum size is 700kb.</Text>*/}
               </View>
               <View style={{ marginBottom: 40, alignSelf: "center" }}>
                 <Text style={styles.fontFormName}>{this.state.UserDetails.given_name} {this.state.UserDetails.family_name}</Text>
