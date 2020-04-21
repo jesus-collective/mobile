@@ -3,16 +3,25 @@ const path = require("path");
 const merge = require("webpack-merge");
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
+const ManifestPlugin = require('webpack-manifest-plugin');
+const DynamicCdnWebpackPlugin = require('dynamic-cdn-webpack-plugin');
+
 module.exports = async function (env, argv) {
   const config = await createExpoWebpackConfig(env, argv);
- 
-   /* config.plugins.push(
-      new BundleAnalyzerPlugin({
-        path: 'web-report',
-      })
-    );*/
-  
+
+  /* config.plugins.push(
+     new BundleAnalyzerPlugin({
+       path: 'web-report',
+     })
+   );*/
+
   return merge(config, {
+    plugins: [
+      new ManifestPlugin({
+        fileName: 'manifest.json'
+      }),
+      new DynamicCdnWebpackPlugin()
+    ],
     optimization: {
       splitChunks: {
         chunks: 'all',

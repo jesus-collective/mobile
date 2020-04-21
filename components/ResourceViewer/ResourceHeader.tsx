@@ -8,33 +8,55 @@ import styles from '../style.js'
 import EditableText from '../Forms/EditableText'
 const Context = React.createContext("resource")
 import { ResourceContext } from './ResourceContext';
+import { API, graphqlOperation, Storage } from 'aws-amplify';
+import { Auth } from 'aws-amplify';
+import Amplify from 'aws-amplify'
+import awsconfig from '../../src/aws-exports';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
+
+Amplify.configure(awsconfig);
 
 
 var moment = require('moment');
 interface Props {
 
 }
-
+interface State {
+    imageUrl: any
+    image: any
+}
 class ResourceHeader extends React.Component<Props, State> {
     static Consumer = ResourceContext.Consumer;
     constructor(props: Props) {
         super(props);
+        this.state = {
+            imageUrl: null,
+            image: null
+        }
+    }
+    async getImage(img) {
+        var z = await Storage.get(img.filenameLarge, {
+            level: 'protected',
+            contentType: 'image/png',
+            identityId: img.userId
+        })
+        this.setState({ imageUrl: z, image: img })
     }
     render() {
         //const { navigate } = this.props.navigation;
         return (
             <ResourceHeader.Consumer>
                 {({ state, actions }) => {
-
+                    if (this.state.imageUrl == null || this.state.image != state.data.resources[state.currentResource].image)
+                        this.getImage(state.data.resources[state.currentResource].image)
                     return (<Container style={{ backgroundColor: "#F0493E", height: "20vw" }}>
-                        {state.data.resources[state.currentResource] ?
+                        {this.state.imageUrl ?
                             <Image style={{ position: "relative", width: "100%", height: "20vw" }}
-                                source={state.data.resources[state.currentResource].image}>
+                                source={this.state.imageUrl}>
                             </ Image> : null}
                         <View style={styles.resourcefileInputWrapper}>
                             <JCButton buttonType={ButtonTypes.Transparent} onPress={() => { }}><Ionicons size={32} name="ios-image" style={styles.resourceImageIcon} /></JCButton>
-                            <input style={{ fontSize: "200px", position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='image/jpg' onChange={(e) => actions.updateResourceImage(state.currentResource, e)} />
+                            <input style={{ fontSize: "200px", position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='image/*' onChange={(e) => actions.updateResourceImage(state.currentResource, e)} />
                         </View>
                         {state.data.resources[state.currentResource] ?
                             <View style={styles.resourcefileFieldWrapper}>

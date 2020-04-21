@@ -17,7 +17,13 @@ export const getUser = /* GraphQL */ `
       province
       postalCode
       country
-      profileImage
+      profileImage {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
       aboutMeShort
       aboutMeLong
       interests
@@ -91,7 +97,13 @@ export const listUsers = /* GraphQL */ `
         province
         postalCode
         country
-        profileImage
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         aboutMeShort
         aboutMeLong
         interests
@@ -135,7 +147,13 @@ export const getGroup = /* GraphQL */ `
         province
         postalCode
         country
-        profileImage
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         aboutMeShort
         aboutMeLong
         interests
@@ -215,7 +233,6 @@ export const listGroups = /* GraphQL */ `
           province
           postalCode
           country
-          profileImage
           aboutMeShort
           aboutMeLong
           interests
@@ -424,7 +441,13 @@ export const getMessage = /* GraphQL */ `
         province
         postalCode
         country
-        profileImage
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         aboutMeShort
         aboutMeLong
         interests
@@ -462,7 +485,6 @@ export const getMessage = /* GraphQL */ `
           province
           postalCode
           country
-          profileImage
           aboutMeShort
           aboutMeLong
           interests
@@ -525,7 +547,6 @@ export const listMessages = /* GraphQL */ `
           province
           postalCode
           country
-          profileImage
           aboutMeShort
           aboutMeLong
           interests
@@ -571,7 +592,6 @@ export const getResourceRoot = /* GraphQL */ `
           type
           menuTitle
           title
-          image
           description
           extendedDescription
         }
@@ -605,7 +625,13 @@ export const getResource = /* GraphQL */ `
       type
       menuTitle
       title
-      image
+      image {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
       description
       extendedDescription
       series {
@@ -645,7 +671,13 @@ export const listResources = /* GraphQL */ `
         type
         menuTitle
         title
-        image
+        image {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         description
         extendedDescription
         series {
@@ -693,7 +725,13 @@ export const getResourceSeries = /* GraphQL */ `
         type
         menuTitle
         title
-        image
+        image {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         description
         extendedDescription
         series {
@@ -733,7 +771,6 @@ export const listResourceSeriess = /* GraphQL */ `
           type
           menuTitle
           title
-          image
           description
           extendedDescription
         }
@@ -774,7 +811,6 @@ export const getResourceEpisode = /* GraphQL */ `
           type
           menuTitle
           title
-          image
           description
           extendedDescription
         }
@@ -854,7 +890,6 @@ export const groupByType = /* GraphQL */ `
           province
           postalCode
           country
-          profileImage
           aboutMeShort
           aboutMeLong
           interests
@@ -928,7 +963,6 @@ export const messagesByRoom = /* GraphQL */ `
           province
           postalCode
           country
-          profileImage
           aboutMeShort
           aboutMeLong
           interests
@@ -992,7 +1026,6 @@ export const searchGroups = /* GraphQL */ `
           province
           postalCode
           country
-          profileImage
           aboutMeShort
           aboutMeLong
           interests

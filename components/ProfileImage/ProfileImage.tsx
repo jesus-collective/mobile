@@ -45,10 +45,10 @@ export default class MyProfile extends React.Component<Props, State> {
             this.state = { profileImage: null, showEmpty: true }
         }
         else {
-            Storage.get('profileImage.png', {
+            Storage.get(this.props.size=="small"?user.filenameSmall:this.props.size=="medium"?user.filenameMedium:user.filenameLarge, {
                 level: 'protected',
                 contentType: 'image/png',
-                identityId: user
+                identityId: user.userId
             })
                 .then(result => {
                     

@@ -17,7 +17,13 @@ export const createUser = /* GraphQL */ `
       province
       postalCode
       country
-      profileImage
+      profileImage {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
       aboutMeShort
       aboutMeLong
       interests
@@ -86,7 +92,13 @@ export const updateUser = /* GraphQL */ `
       province
       postalCode
       country
-      profileImage
+      profileImage {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
       aboutMeShort
       aboutMeLong
       interests
@@ -155,7 +167,13 @@ export const deleteUser = /* GraphQL */ `
       province
       postalCode
       country
-      profileImage
+      profileImage {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
       aboutMeShort
       aboutMeLong
       interests
@@ -231,7 +249,6 @@ export const createGroupMember = /* GraphQL */ `
           province
           postalCode
           country
-          profileImage
           aboutMeShort
           aboutMeLong
           interests
@@ -277,7 +294,13 @@ export const createGroupMember = /* GraphQL */ `
         province
         postalCode
         country
-        profileImage
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         aboutMeShort
         aboutMeLong
         interests
@@ -324,7 +347,6 @@ export const updateGroupMember = /* GraphQL */ `
           province
           postalCode
           country
-          profileImage
           aboutMeShort
           aboutMeLong
           interests
@@ -370,7 +392,13 @@ export const updateGroupMember = /* GraphQL */ `
         province
         postalCode
         country
-        profileImage
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         aboutMeShort
         aboutMeLong
         interests
@@ -417,7 +445,6 @@ export const deleteGroupMember = /* GraphQL */ `
           province
           postalCode
           country
-          profileImage
           aboutMeShort
           aboutMeLong
           interests
@@ -463,7 +490,13 @@ export const deleteGroupMember = /* GraphQL */ `
         province
         postalCode
         country
-        profileImage
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         aboutMeShort
         aboutMeLong
         interests
@@ -506,7 +539,13 @@ export const createGroup = /* GraphQL */ `
         province
         postalCode
         country
-        profileImage
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         aboutMeShort
         aboutMeLong
         interests
@@ -581,7 +620,13 @@ export const updateGroup = /* GraphQL */ `
         province
         postalCode
         country
-        profileImage
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         aboutMeShort
         aboutMeLong
         interests
@@ -656,7 +701,13 @@ export const deleteGroup = /* GraphQL */ `
         province
         postalCode
         country
-        profileImage
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         aboutMeShort
         aboutMeLong
         interests
@@ -939,7 +990,13 @@ export const createMessage = /* GraphQL */ `
         province
         postalCode
         country
-        profileImage
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         aboutMeShort
         aboutMeLong
         interests
@@ -977,7 +1034,6 @@ export const createMessage = /* GraphQL */ `
           province
           postalCode
           country
-          profileImage
           aboutMeShort
           aboutMeLong
           interests
@@ -1035,7 +1091,13 @@ export const updateMessage = /* GraphQL */ `
         province
         postalCode
         country
-        profileImage
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         aboutMeShort
         aboutMeLong
         interests
@@ -1073,7 +1135,6 @@ export const updateMessage = /* GraphQL */ `
           province
           postalCode
           country
-          profileImage
           aboutMeShort
           aboutMeLong
           interests
@@ -1131,7 +1192,13 @@ export const deleteMessage = /* GraphQL */ `
         province
         postalCode
         country
-        profileImage
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         aboutMeShort
         aboutMeLong
         interests
@@ -1169,7 +1236,6 @@ export const deleteMessage = /* GraphQL */ `
           province
           postalCode
           country
-          profileImage
           aboutMeShort
           aboutMeLong
           interests
@@ -1216,7 +1282,6 @@ export const createResourceRoot = /* GraphQL */ `
           type
           menuTitle
           title
-          image
           description
           extendedDescription
         }
@@ -1236,7 +1301,6 @@ export const updateResourceRoot = /* GraphQL */ `
           type
           menuTitle
           title
-          image
           description
           extendedDescription
         }
@@ -1256,7 +1320,6 @@ export const deleteResourceRoot = /* GraphQL */ `
           type
           menuTitle
           title
-          image
           description
           extendedDescription
         }
@@ -1272,7 +1335,13 @@ export const createResource = /* GraphQL */ `
       type
       menuTitle
       title
-      image
+      image {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
       description
       extendedDescription
       series {
@@ -1307,7 +1376,13 @@ export const updateResource = /* GraphQL */ `
       type
       menuTitle
       title
-      image
+      image {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
       description
       extendedDescription
       series {
@@ -1342,7 +1417,13 @@ export const deleteResource = /* GraphQL */ `
       type
       menuTitle
       title
-      image
+      image {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
       description
       extendedDescription
       series {
@@ -1403,7 +1484,13 @@ export const createResourceSeries = /* GraphQL */ `
         type
         menuTitle
         title
-        image
+        image {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         description
         extendedDescription
         series {
@@ -1450,7 +1537,13 @@ export const updateResourceSeries = /* GraphQL */ `
         type
         menuTitle
         title
-        image
+        image {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         description
         extendedDescription
         series {
@@ -1497,7 +1590,13 @@ export const deleteResourceSeries = /* GraphQL */ `
         type
         menuTitle
         title
-        image
+        image {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         description
         extendedDescription
         series {
@@ -1543,7 +1642,6 @@ export const createResourceEpisode = /* GraphQL */ `
           type
           menuTitle
           title
-          image
           description
           extendedDescription
         }
@@ -1583,7 +1681,6 @@ export const updateResourceEpisode = /* GraphQL */ `
           type
           menuTitle
           title
-          image
           description
           extendedDescription
         }
@@ -1623,7 +1720,6 @@ export const deleteResourceEpisode = /* GraphQL */ `
           type
           menuTitle
           title
-          image
           description
           extendedDescription
         }

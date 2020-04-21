@@ -1,5 +1,5 @@
 import { Icon, Button, View, Input, Form, Item, Label, Content } from 'native-base';
-import {  Text, Image } from 'react-native'
+import { Text, Image } from 'react-native'
 import * as React from 'react';
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
@@ -61,9 +61,10 @@ export default class MyProfile extends React.Component<Props, State> {
         //console.log(this.state.UserDetails)
       }
       catch (e) {
-        this.setState({
-          UserDetails: e.data.getUser
-        })
+        if (e.data.getUser != null)
+          this.setState({
+            UserDetails: e.data.getUser
+          })
         console.log(e)
       }
     }
@@ -120,18 +121,29 @@ export default class MyProfile extends React.Component<Props, State> {
   };
   async onProfileImageChange(e: any) {
     const file = e.target.files[0];
-    var user = await Auth.currentAuthenticatedUser();
-    var userId = this.getValueFromKey(user.storage, 'aws.cognito.identity-id')
-
-    Storage.put('profileImage.png', file, {
+    var user = await Auth.currentCredentials();
+    var userId =user.identityId
+    const lastDot = file.name.lastIndexOf('.');
+    const ext = file.name.substring(lastDot + 1);
+    const fn = 'profile/upload/profile-' + new Date().getTime() + '.' + ext
+    const fnSave = fn.replace("/upload", "").replace(".", "-[size].").replace("."+ext,".png")
+   
+    Storage.put(fn, file, {
       level: 'protected',
-      contentType: 'image/png',
+      contentType: file.type,
       identityId: userId
     })
       .then(result => {
-        // console.log(result)
+       
         var updateData = { ...this.state.UserDetails }
-        updateData['profileImage'] = userId
+        updateData['profileImage'] = {
+          userId: userId,
+          filenameUpload: fn,
+          filenameLarge: fnSave.replace('[size]', 'large'),
+          filenameMedium: fnSave.replace('[size]', 'medium'),
+          filenameSmall: fnSave.replace('[size]', 'small')
+        }
+       
         this.setState({
           UserDetails: updateData
         }, () => this.getProfileImage());
@@ -140,17 +152,18 @@ export default class MyProfile extends React.Component<Props, State> {
   }
   getProfileImage() {
     //console.log(this.state.UserDetails.profileImage)
-    Storage.get('profileImage.png', {
-      level: 'protected',
-      contentType: 'image/png',
-      identityId: this.state.UserDetails ?
-        this.state.UserDetails.profileImage ?
-          this.state.UserDetails.profileImage
+    if (this.state.UserDetails.profileImage != null)
+      Storage.get(this.state.UserDetails.profileImage.filenameMedium, {
+        level: 'protected',
+        contentType: 'image/png',
+        identityId: this.state.UserDetails ?
+          this.state.UserDetails.profileImage.userId ?
+            this.state.UserDetails.profileImage.userId
+            : ""
           : ""
-        : ""
-    })
-      .then(result => this.setState({ profileImage: result }))
-      .catch(err => console.log(err));
+      })
+        .then(result => this.setState({ profileImage: result }))
+        .catch(err => console.log(err));
   }
   getValueFromKey(myObject: any, string: any) {
     const key = Object.keys(myObject).filter(k => k.includes(string));
@@ -162,9 +175,9 @@ export default class MyProfile extends React.Component<Props, State> {
       .catch(err => console.log(err));
 
   }
-  
+
   render() {
-   
+
     return (
       (this.state.UserDetails != null ?
         <Content>
@@ -176,7 +189,7 @@ export default class MyProfile extends React.Component<Props, State> {
             <Text>{this.state.validationText}</Text>
           </View>
 
-          <Form style={{ marginBottom:20, display: "flex", flexDirection: "row" }}>
+          <Form style={{ marginBottom: 20, display: "flex", flexDirection: "row" }}>
             <View style={{ flex: 30, flexDirection: "column" }}>
               <View style={{ alignSelf: "center" }}>
                 <Image style={{ width: "250px", height: "290px", borderRadius: 120 }}
@@ -185,7 +198,7 @@ export default class MyProfile extends React.Component<Props, State> {
                 </Image>
                 <View style={styles.fileInputWrapper}>
                   <JCButton buttonType={ButtonTypes.Solid} onPress={() => { }}>Upload Profile Picture</JCButton>
-                  <input  style={{ fontSize: "200px", position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='image/png' onChange={(e) => this.onProfileImageChange(e)} />
+                  <input style={{ fontSize: "200px", position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='image/*' onChange={(e) => this.onProfileImageChange(e)} />
                 </View>
 
 
@@ -249,29 +262,29 @@ export default class MyProfile extends React.Component<Props, State> {
                 onChange={(e) => { this.handleInputChange(e, "aboutMeLong") }} multiline={true} placeholder="type here" />
               <Text style={styles.fontBold}>My Interests</Text>
               <Text style={styles.font}>You can select 7 key interests</Text>
-             
-                <TagInput
-                  updateState={this.updateTagState}
-                  tags={this.state.tags}
-                  placeholder="Tags..."
-                  label='Press space to add a tag'
 
-                  //leftElement={<Icon name={'tag-multiple'} type={'material-community'} color={this.state.tagsText} />}
+              <TagInput
+                updateState={this.updateTagState}
+                tags={this.state.tags}
+                placeholder="Tags..."
+                label='Press space to add a tag'
+
+                //leftElement={<Icon name={'tag-multiple'} type={'material-community'} color={this.state.tagsText} />}
 
 
-                  onFocus={() => this.setState({ tagsColor: '#fff', tagsText: "#000000" })}
-                  onBlur={() => this.setState({ tagsColor: mainColor, tagsText: '#000000' })}
-                  autoCorrect={false}
-                  scrollViewProps={{contentContainerStyle:{justifyContent:"center"}}}
-                  inputStyle={{ borderWidth: 1, borderColor: "#dddddd", color: this.state.tagsText }}
-                  containerStyle={{ justifyContent: "center", width: (Dimensions.get('window').width - 40) }}
-                  inputContainerStyle={[styles.textInput, { backgroundColor: this.state.tagsColor }]}
-                  labelStyle={{ color: '#000000' }}
-                  tagStyle={styles.tag}
-                  tagTextStyle={styles.tagText}
-                  leftElementContainerStyle={{ marginLeft: 0 }}
-                //keysForTag={' '}
-                />
+                onFocus={() => this.setState({ tagsColor: '#fff', tagsText: "#000000" })}
+                onBlur={() => this.setState({ tagsColor: mainColor, tagsText: '#000000' })}
+                autoCorrect={false}
+                scrollViewProps={{ contentContainerStyle: { justifyContent: "center" } }}
+                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", color: this.state.tagsText }}
+                containerStyle={{ justifyContent: "center", width: (Dimensions.get('window').width - 40) }}
+                inputContainerStyle={[styles.textInput, { backgroundColor: this.state.tagsColor }]}
+                labelStyle={{ color: '#000000' }}
+                tagStyle={styles.tag}
+                tagTextStyle={styles.tagText}
+                leftElementContainerStyle={{ marginLeft: 0 }}
+              //keysForTag={' '}
+              />
               <Item stackedLabel>
                 <Label style={styles.fontFormSmall}>Current Role</Label>
                 <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.currentRole}

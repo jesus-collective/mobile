@@ -40,13 +40,16 @@ export default class EditableRichText extends React.Component<Props, State> {
         }
     }
     onChanged(val: any) {
+     
         this.props.onChange(val.target.value)
         this.setState({ isEditMode: false })
     }
     updateEditorInput(value: any) {
+       
         this.setState({ editorState: value })
     }
     updateInput(value: any) {
+       
         this.setState({ value: JSON.stringify(value) },
             this.props.onChange(this.state.value)
         )

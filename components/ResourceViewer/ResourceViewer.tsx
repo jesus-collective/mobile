@@ -60,7 +60,7 @@ class ResourceViewer extends React.Component<Props, State> {
                 title: "Overview",
                 image: "test.jpg",
                 description: "...",
-                extendedDescription:null,
+                extendedDescription: null,
                 series: [series]
             })
         );
@@ -77,23 +77,23 @@ class ResourceViewer extends React.Component<Props, State> {
 
     }
     async setInitialData(props) {
-       //    await DataStore.delete(ResourceSeries, Predicates.ALL)
-       //    await DataStore.delete(ResourceRoot, Predicates.ALL)
-       //    await DataStore.delete(Resource, Predicates.ALL)
-       //    await DataStore.delete(ResourceEpisode, Predicates.ALL)
-  
+        //    await DataStore.delete(ResourceSeries, Predicates.ALL)
+        //    await DataStore.delete(ResourceRoot, Predicates.ALL)
+        //    await DataStore.delete(Resource, Predicates.ALL)
+        //    await DataStore.delete(ResourceEpisode, Predicates.ALL)
+
         const getResourceRoot = await DataStore.query(ResourceRoot);
-        const getResourceRoot2 = await DataStore.query(ResourceEpisode);
+        //  const getResourceRoot2 = await DataStore.query(ResourceEpisode);
         if (getResourceRoot.length == 0) {
 
             this.createResourceRoot();
         }
         else {
-           console.log(getResourceRoot)
-           console.log(getResourceRoot2)
+            console.log(getResourceRoot)
+            //   console.log(getResourceRoot2)
             this.setState({ data: getResourceRoot[0], currentResource: 0 })
         }
-      
+
     }
     createResource = async () => {
         const resource = await DataStore.save(
@@ -111,9 +111,9 @@ class ResourceViewer extends React.Component<Props, State> {
             })
         );
         console.log(resourceRoute)
-        this.setState({ data: resourceRoute[0] })
+        this.setState({ data: resourceRoute })
     }
-   
+
     changeResource = (index) => {
         console.log({ "changeResource": index })
         this.setState({ currentResource: index })
@@ -125,7 +125,7 @@ class ResourceViewer extends React.Component<Props, State> {
             })
         );
         console.log(resourceRoute)
-        this.setState({ data: resourceRoute[0] })
+        this.setState({ data: resourceRoute })
     }
     deleteResource = async (index) => {
         if (index > 0) {
@@ -135,7 +135,7 @@ class ResourceViewer extends React.Component<Props, State> {
                 })
             );
             console.log(resourceRoute)
-            this.setState({ data: resourceRoute[0] })
+            this.setState({ data: resourceRoute })
         }
     }
     getValueFromKey(myObject: any, string: any) {
@@ -143,23 +143,35 @@ class ResourceViewer extends React.Component<Props, State> {
         return key.length ? myObject[key[0]] : "";
     }
     updateResourceImage = async (index1, e) => {
-
+       
         const file = e.target.files[0];
-        var user = await Auth.currentAuthenticatedUser();
-        var userId = this.getValueFromKey(user.storage, 'aws.cognito.identity-id')
-        var id = uuidv1()
-        Storage.put('resource/' + id + '.jpg', file, {
+        const lastDot = file.name.lastIndexOf('.');
+        const ext = file.name.substring(lastDot + 1);
+        var user = await Auth.currentCredentials();
+        var userId = user.identityId
+        const fn = 'resources/upload/group-' + this.state.data.resources[index1].id + '-' + new Date().getTime() + '-upload.' + ext
+        const fnSave = fn.replace("/upload", "").replace("-upload.", "-[size].").replace("." + ext, ".png")
+
+
+        Storage.put(fn, file, {
             level: 'protected',
-            contentType: 'image/jpg',
+            contentType: file.type,
             identityId: userId
         })
             .then(result => {
 
-                Storage.get('resource/' + id + '.jpg', {
-                    level: 'protected'
+                Storage.get(fnSave.replace("-[size].", "-large."), {
+                    level: 'protected',
+                    identityId: userId
                 }).then(result2 => {
                     console.log(result2)
-                    this.updateResource(index1, "image", result2)
+                    this.updateResource(index1, "image", {
+                        userId: userId,
+                        filenameUpload: fn,
+                        filenameLarge: fnSave.replace('[size]', 'large'),
+                        filenameMedium: fnSave.replace('[size]', 'medium'),
+                        filenameSmall: fnSave.replace('[size]', 'small')
+                    })
                 })
 
 
@@ -191,9 +203,9 @@ class ResourceViewer extends React.Component<Props, State> {
                             <ResourceOverview></ResourceOverview>
                             :
                             <ResourceContent></ResourceContent>}
-                           {/*  <ImportKidsandYouth></ImportKidsandYouth>*/}
+                        {/*  <ImportKidsandYouth></ImportKidsandYouth>*/}
                     </Content>
-                   
+
                 </Container>
             </ResourceViewer.Provider>
             : null)

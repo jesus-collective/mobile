@@ -20,7 +20,7 @@ type User
 	postalCode:String @auth(rules: [{ allow: owner, ownerField: "owner" }])
 	country:String 
 
-	profileImage:String
+	profileImage:Image
 	aboutMeShort:String
 	aboutMeLong:String
 	interests:String
@@ -37,6 +37,13 @@ type User
 	groups: [GroupMember] @connection(name: "UserMembers", keyField: "userID")
 	messages: [Message] @connection(name: "UserMessages", keyField: "userId", sortField: "when")
 
+}
+type Image{
+	userId:String
+	filenameSmall:String
+	filenameMedium:String
+	filenameLarge:String
+	filenameUpload:String
 }
 type GroupMember
   @model(queries: null)
@@ -164,7 +171,7 @@ type Resource
 	type:String
 	menuTitle:String
 	title:String
-	image:String
+	image:Image
 	description:String
 	extendedDescription:String
 	#currentSeries:ResourceSeries @connection
