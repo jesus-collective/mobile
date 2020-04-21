@@ -160,7 +160,7 @@ class ResourceViewer extends React.Component<Props, State> {
         })
             .then(result => {
 
-                Storage.get(fnSave.replace("-[size].", "-large."), {
+                Storage.get(fn, {
                     level: 'protected',
                     identityId: userId
                 }).then(result2 => {
