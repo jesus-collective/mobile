@@ -4,8 +4,8 @@ import { Text } from 'react-native'
 import { Editor } from 'react-draft-wysiwyg';
 import { API, graphqlOperation, Auth, Storage } from 'aws-amplify';
 
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import './EditableRichText.css';
+//import './react-draft-wysiwyg.css';
+//import './EditableRichText.css';
 import { v1 as uuidv1 } from 'uuid';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
