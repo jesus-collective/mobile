@@ -2,7 +2,14 @@ import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplif
 
 
 
-
+export declare class Image {
+  readonly userId?: string;
+  readonly filenameSmall?: string;
+  readonly filenameMedium?: string;
+  readonly filenameLarge?: string;
+  readonly filenameUpload?: string;
+  constructor(init: ModelInit<Image>);
+}
 
 export declare class Message {
   readonly id: string;
@@ -30,7 +37,7 @@ export declare class User {
   readonly province?: string;
   readonly postalCode?: string;
   readonly country?: string;
-  readonly profileImage?: string;
+  readonly profileImage?: Image;
   readonly aboutMeShort?: string;
   readonly aboutMeLong?: string;
   readonly interests?: string;
@@ -138,7 +145,7 @@ export declare class Resource {
   readonly type?: string;
   readonly menuTitle?: string;
   readonly title?: string;
-  readonly image?: string;
+  readonly image?: Image;
   readonly description?: string;
   readonly extendedDescription?: string;
   readonly series?: ResourceSeries[];

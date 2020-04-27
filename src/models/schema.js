@@ -208,7 +208,9 @@ export const schema = {
                 "profileImage": {
                     "name": "profileImage",
                     "isArray": false,
-                    "type": "String",
+                    "type": {
+                        "nonModel": "Image"
+                    },
                     "isRequired": false,
                     "attributes": []
                 },
@@ -984,7 +986,9 @@ export const schema = {
                 "image": {
                     "name": "image",
                     "isArray": false,
-                    "type": "String",
+                    "type": {
+                        "nonModel": "Image"
+                    },
                     "isRequired": false,
                     "attributes": []
                 },
@@ -1245,6 +1249,47 @@ export const schema = {
         }
     },
     "enums": {},
-    "nonModels": {},
-    "version": "a3af29ee95305c9762f8ff36d2189596"
+    "nonModels": {
+        "Image": {
+            "name": "Image",
+            "fields": {
+                "userId": {
+                    "name": "userId",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "filenameSmall": {
+                    "name": "filenameSmall",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "filenameMedium": {
+                    "name": "filenameMedium",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "filenameLarge": {
+                    "name": "filenameLarge",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "filenameUpload": {
+                    "name": "filenameUpload",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                }
+            }
+        }
+    },
+    "version": "44766055996c2537a43beae8bbbd7db3"
 };

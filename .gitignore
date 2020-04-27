@@ -69,3 +69,5 @@ dist/
 node_modules/
 awsconfiguration.json
 backup/
+.vscode/.react/AppEntry.bundle
+.vscode/.react/AppEntry.map

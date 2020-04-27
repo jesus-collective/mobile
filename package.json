@@ -4,6 +4,7 @@
     "prebuild": "npx amplify push",
     "build": "npx expo build:web",
     "start": "npx expo start",
+    "debug": "npx expo start",
     "android": "npx expo start --android",
     "ios": "npx expo start --ios",
     "eject": "npx expo eject",
