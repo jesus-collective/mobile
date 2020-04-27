@@ -71,3 +71,6 @@ awsconfiguration.json
 backup/
 .vscode/.react/AppEntry.bundle
 .vscode/.react/AppEntry.map
+
+report.*.json
+coverage/
