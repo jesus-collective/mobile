@@ -103,7 +103,7 @@ export default EStyleSheet.create({
         fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 20, height: 75
     },
     fontDetail: {
-        fontFamily: 'Graphik-Regular-App', fontSize: 14, color: '#aaaaaa'
+        fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16 , color: '#aaaaaa'
     },
     fontSliderHeader: {
         fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 16, color: '#000000'
