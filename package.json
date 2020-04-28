@@ -12,10 +12,20 @@
     "backup": "export z=$(date +%Y%m%d%H%M%S); mkdir backup/$z; cd backup/$z; dynamodump export-all-data --region=us-east-1"
   },
   "jest": {
-    "preset": "jest-expo",
+    "preset": "@testing-library/react-native",
+    "setupFiles": [
+      "jest-expo/jest-preset.js",
+      "@testing-library/react-native/jest-preset",
+      "./node_modules/react-native-gesture-handler/jestSetup.js",
+      "<rootDir>/jest.setup.ts"
+    ],
     "transformIgnorePatterns": [
       "node_modules/(?!(jest-)?react-native|@aws-sdk|aws-amplify-react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|@sentry/.*)"
     ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less|scss|sass)$": "<rootDir>/__mocks__/styleMock.js"
+    },
     "testEnvironment": "jsdom",
     "collectCoverage": true,
     "collectCoverageFrom": [
@@ -25,8 +35,7 @@
       "!**/babel.config.js",
       "!**/jest.setup.js"
     ],
-    
-    "coverageDirectory":"coverage",
+    "coverageDirectory": "coverage",
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -95,6 +104,11 @@
     "@expo/webpack-config": "^0.11.18",
     "@sheerun/mutationobserver-shim": "^0.3.3",
     "@testing-library/react": "^10.0.3",
+    "@testing-library/react-native": "^5.0.3",
+    "@testing-library/user-event": "^10.1.0",
+    "isomorphic-fetch": "^2.2.1",
+    "jest-fetch-mock": "^3.0.3",
+    "node-fetch": "^2.6.0",
     "@types/react": "^16.9.11",
     "@types/react-native": "^0.60.15",
     "babel-plugin-dynamic-import-node": "^2.3.3",
