@@ -25,6 +25,8 @@
       "!**/babel.config.js",
       "!**/jest.setup.js"
     ],
+    
+    "coverageDirectory":"coverage",
     "moduleFileExtensions": [
       "ts",
       "tsx",
