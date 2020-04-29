@@ -97,13 +97,22 @@ export default EStyleSheet.create({
         fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24
     },
     fontTitle: {
-        fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 20, height: 75
+        fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24, lineHeight: 30, height: 90, color: '#333333'
+    },
+    fontTitleGroup: {
+        fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24, lineHeight: 30, height: 90, color: '#333333', paddingTop: 29,
     },
     profileFontTitle: {
         fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 20, height: 75
     },
-    fontDetail: {
-        fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16 , color: '#aaaaaa'
+    fontDetailTop: {
+        fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, color: '#333333', opacity: 0.4, paddingTop: 23
+    },
+    fontDetailMiddle: {
+        fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 22, color: '#333333', opacity: 0.7
+    },
+    fontDetailBottom: {
+        fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, color: '#333333', opacity: 0.5
     },
     fontSliderHeader: {
         fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 16, color: '#000000'
@@ -180,18 +189,19 @@ export default EStyleSheet.create({
     fontConnectWithName: {
         fontFamily: 'Graphik-Bold-App',
         fontWeight: "bold",
-        fontSize: 14,
-        lineHeight: 16,
+        fontSize: 20,
+        lineHeight: 25,
         color: "#000000",
         letterSpacing: -0.3
     },
     fontConnectWithRole: {
         fontFamily: 'Graphik-Regular-App',
-        fontSize: 12,
-        lineHeight: 16,
+        fontSize: 14,
+        lineHeight: 22,
         color: "#000000",
         letterSpacing: -0.3,
-        color: "#333333"
+        color: "#333333",
+        paddingBottom: 9, 
     },
     connectWithSliderButton: {
         padding: 0,
