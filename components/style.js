@@ -97,13 +97,19 @@ export default EStyleSheet.create({
         fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24
     },
     fontTitle: {
-        fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 20, height: 75
+        fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24, lineHeight: 30, height: 90, color: '#333333'
     },
     profileFontTitle: {
         fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 20, height: 75
     },
-    fontDetail: {
-        fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, color: '#aaaaaa'
+    fontDetailTop: {
+        fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, color: '#333333', opacity: 0.4, paddingTop: 23
+    },
+    fontDetailMiddle: {
+        fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 22, color: '#333333', opacity: 0.7
+    },
+    fontDetailBottom: {
+        fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, color: '#333333', opacity: 0.5
     },
     fontSliderHeader: {
         fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 16, color: '#000000'
@@ -130,10 +136,10 @@ export default EStyleSheet.create({
         fontWeight: "bold",
         fontSize: 30,
         lineHeight: 35,
-        alignSelf:"center",
+        alignSelf: "center",
         textAlign: "center",
         color: "#FFFFFF",
-        width:"100%"
+        width: "100%"
     },
     fontCourseHeader: {
         fontFamily: 'Graphik-Regular-App',
@@ -166,8 +172,8 @@ export default EStyleSheet.create({
         lineHeight: 35,
         textAlign: "center",
         color: "#FFFFFF",
-        width:"100%",
-        alignSelf:"center"
+        width: "100%",
+        alignSelf: "center"
     },
     fontConnectWith: {
         fontFamily: 'Graphik-Bold-App',
@@ -291,7 +297,7 @@ export default EStyleSheet.create({
     resourcefileInputWrapper:
         { width: "100%", overflow: "hidden", position: "absolute" },
     resourcefileFieldWrapper:
-        {  alignSelf:"center", top:"5vw",width: "50%", overflow: "hidden", position: "absolute" },
+        { alignSelf: "center", top: "5vw", width: "50%", overflow: "hidden", position: "absolute" },
 
     resourceImageIcon: {
         color: "#aaaaaa"

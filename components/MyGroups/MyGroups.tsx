@@ -10,7 +10,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Image } from 'react-native'
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
-import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
+import GRAPHQL_AUTH_MODE, { Greetings } from 'aws-amplify-react-native'
 import { API, graphqlOperation, Auth } from 'aws-amplify';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -270,11 +270,11 @@ export default class MyGroups extends React.Component<Props, State> {
     </Card>
   }
   renderEvent(item: any) {
-    return <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: '0%', width: this.state.cardWidth }}>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetail}>{moment(item.time).format('MMMM Do YYYY, h:mm a')}</Text></CardItem>
+    return <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: '0%', paddingLeft: '0.5rem', paddingRight: '0.5rem', borderRadius: 4, width: this.state.cardWidth }}>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailTop}>{moment(item.time).format('MMMM Do YYYY, h:mm a')}</Text></CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetail}>{item.description}</Text></CardItem>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetail}>{item.location}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetailMiddle}>{item.description}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailBottom}>{item.location}</Text></CardItem>
       {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id) }}>Attend</JCButton><Right></Right></CardItem> : null}
       {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id) }}>Don't Attend</JCButton><Right></Right></CardItem> : null}
     </Card>
