@@ -64,13 +64,13 @@ test('sign in', async () => {
     var email = getByTestId('aws-amplify__auth--email-input')
     var password = getByPlaceholderText('Enter your password')
     var button= getByTestId('aws-amplify__auth--sign-in-button')
-    email.props.value = "george_vic_bell@hotmail.com"
-    password.props.value = "Tacobell#1"
-    email.props.onChangeText("george_vic_bell@hotmail.com")
-    password.props.onChangeText("Tacobell#1")
+    email.props.value = "xxx"
+    password.props.value = "xxx"
+    email.props.onChangeText("xxx")
+    password.props.onChangeText("xxx")
 
-    fireEvent.change(email, { target: { value: 'george_vic_bell@hotmail.com' } });
-    fireEvent.change(password, { target: { value: 'Tacobell#1' } })
+    fireEvent.change(email, { target: { value: 'xxx' } });
+    fireEvent.change(password, { target: { value: 'xxx' } })
     fireEvent.press(button)
 
     const items2 = await findByText("California")

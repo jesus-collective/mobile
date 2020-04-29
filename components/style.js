@@ -139,10 +139,10 @@ export default EStyleSheet.create({
         fontWeight: "bold",
         fontSize: 30,
         lineHeight: 35,
-        alignSelf:"center",
+        alignSelf: "center",
         textAlign: "center",
         color: "#FFFFFF",
-        width:"100%"
+        width: "100%"
     },
     fontCourseHeader: {
         fontFamily: 'Graphik-Regular-App',
@@ -175,8 +175,8 @@ export default EStyleSheet.create({
         lineHeight: 35,
         textAlign: "center",
         color: "#FFFFFF",
-        width:"100%",
-        alignSelf:"center"
+        width: "100%",
+        alignSelf: "center"
     },
     fontConnectWith: {
         fontFamily: 'Graphik-Bold-App',
@@ -301,7 +301,7 @@ export default EStyleSheet.create({
     resourcefileInputWrapper:
         { width: "100%", overflow: "hidden", position: "absolute" },
     resourcefileFieldWrapper:
-        {  alignSelf:"center", top:"5vw",width: "50%", overflow: "hidden", position: "absolute" },
+        { alignSelf: "center", top: "5vw", width: "50%", overflow: "hidden", position: "absolute" },
 
     resourceImageIcon: {
         color: "#aaaaaa"
