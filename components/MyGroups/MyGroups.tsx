@@ -46,7 +46,7 @@ export default class MyGroups extends React.Component<Props, State> {
         createString: "+ Create Event",
         titleString: "Events",
         type: props.type,
-        cardWidth: 250,
+        cardWidth: 350,
         data: [],
         showCreateButton: false,
         currentUser: null,
@@ -62,7 +62,7 @@ export default class MyGroups extends React.Component<Props, State> {
         createString: "+ Create Group",
         titleString: "Groups",
         type: props.type,
-        cardWidth: 250,
+        cardWidth: 350,
         data: [],
         showCreateButton: false,
         currentUser: null,
@@ -78,7 +78,7 @@ export default class MyGroups extends React.Component<Props, State> {
         createString: "+ Create Resource",
         titleString: "Resources",
         type: props.type,
-        cardWidth: 250,
+        cardWidth: 200,
         data: [],
         showCreateButton: false,
         currentUser: null,
@@ -244,13 +244,13 @@ export default class MyGroups extends React.Component<Props, State> {
      }*/
   }
   renderGroup(item: any) {
-    return <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: "0%", width: this.state.cardWidth }
+    return <Card style={{ height: 350, alignSelf: "flex-start", padding: '0%', paddingLeft: '0.25rem', paddingRight: '0.25rem', borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", width: this.state.cardWidth }
     } >
       <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0 }} >
-        <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 20 }} source={require('../../assets/svg/pattern.svg')}></Image>
+        <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 70 }} source={require('../../assets/svg/pattern.svg')}></Image>
       </CardItem>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetail}>{item.description}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitleGroup}>{item.name}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetailMiddle}>{item.description}</Text></CardItem>
       {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id) }}>Join</JCButton><Right></Right></CardItem> : null}
       {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id) }}>Leave</JCButton><Right></Right></CardItem> : null}
     </Card >
@@ -270,7 +270,7 @@ export default class MyGroups extends React.Component<Props, State> {
     </Card>
   }
   renderEvent(item: any) {
-    return <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: '0%', paddingLeft: '0.5rem', paddingRight: '0.5rem', borderRadius: 4, width: this.state.cardWidth }}>
+    return <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: '0%', paddingLeft: '0.25rem', paddingRight: '0.25rem', borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", width: this.state.cardWidth }}>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailTop}>{moment(item.time).format('MMMM Do YYYY, h:mm a')}</Text></CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetailMiddle}>{item.description}</Text></CardItem>
@@ -280,12 +280,12 @@ export default class MyGroups extends React.Component<Props, State> {
     </Card>
   }
   renderResource(item: any) {
-    return <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: '0%', width: this.state.cardWidth }}>
+    return <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: '0%', paddingLeft: '0.25rem', paddingRight: '0.25rem', borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", width: this.state.cardWidth }}>
       <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0 }}>
-        <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 20 }} source={require('../../assets/svg/pattern.svg')}></Image>
+        <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 70 }} source={require('../../assets/svg/pattern.svg')}></Image>
       </CardItem>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetail}>Last Updated: {item.lastupdated}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitleGroup}>{item.name}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailMiddle}>Last Updated: {item.lastupdated}</Text></CardItem>
       {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id) }}>Join</JCButton><Right></Right></CardItem> : null}
       {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id) }}>Leave</JCButton><Right></Right></CardItem> : null}
     </Card>

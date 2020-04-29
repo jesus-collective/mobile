@@ -91,22 +91,26 @@ export default EStyleSheet.create({
     },
     SolidButton:
     {
-        paddingTop:10,
-        paddingBottom:10,
+        paddingTop:6,
+        paddingBottom:6,
+        paddingLeft: 29,
+        paddingRight: 29,
         marginBottom:20,
-        marginLeft:10,
-        marginRight:10,
+        marginLeft:0,
+        marginRight:0,
      //   color:"#F0493E",
         backgroundColor:"#F0493E",
         borderWidth:1,
         borderColor:"#F0493E",
-        boxShadow:"unset"
+        boxShadow:"unset",
+        borderRadius: 4,
     },
     SolidText:{
         color:"#ffffff",
         fontFamily: 'Graphik-Regular-App',
         fontSize: 16, 
-        padding:10
+        padding:10,
+        fontWeight: 600,
         
     },
 
