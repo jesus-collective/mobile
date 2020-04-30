@@ -1,5 +1,5 @@
-import React, { Suspense, lazy } from "react";
-import Amplify from 'aws-amplify'
+import React, { Suspense, lazy, useEffect } from "react";
+import Amplify, { Analytics } from 'aws-amplify'
 import { API, graphqlOperation } from 'aws-amplify';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
@@ -14,7 +14,7 @@ import { createAppContainer } from "react-navigation";
 import awsconfig from '../../src/aws-exports';
 import { NavigationScreenProp } from 'react-navigation';
 import { Dimensions } from 'react-native'
-import  Validate  from '../../components/Validate/Validate'
+import Validate from '../../components/Validate/Validate'
 
 import { createBrowserApp } from '@react-navigation/web';
 import { Platform } from "react-native";
@@ -86,8 +86,25 @@ const MainAppRouter = createStackNavigator({
     }
   })
 
-
-
+const mapObj = f => obj =>
+  Object.keys(obj).reduce((acc, key) => ({ ...acc, [key]: f(obj[key]) }), {});
+const toArrayOfStrings = value => [`${value}`];
+const mapToArrayOfStrings = mapObj(toArrayOfStrings);
+async function trackUserId() {
+  try {
+    const { attributes } = await Auth.currentAuthenticatedUser();
+    const userAttributes = mapToArrayOfStrings(attributes);
+    Analytics.updateEndpoint({
+      address: attributes.email,
+      channelType: 'EMAIL',
+      optOut: 'NONE',
+      userId: attributes.sub,
+      userAttributes,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 const HomeScreenRouter = createDrawerNavigator(
   {
@@ -217,13 +234,13 @@ export default class App extends React.Component<Props, State>{
     }
     //  console.log(attributes['username'])
   }
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     // Any time props.email changes, update state.
     if (nextProps.authState !== this.props.authState) {
       this.setState({
         authState: nextProps.authState
-      }, ()=>{this.performStartup()});
-     
+      }, () => { this.performStartup() });
+
     }
   }
   onPaidStateChanged() {
@@ -250,7 +267,7 @@ export default class App extends React.Component<Props, State>{
     }
 
   }
-  renderFallback(){
+  renderFallback() {
     return <Text>loading...</Text>
   }
   render() {
@@ -277,7 +294,9 @@ export default class App extends React.Component<Props, State>{
           return (<Suspense fallback={this.renderFallback()}><SignUpScreen3 profileComplete={() => this.onProfileComplete()} /></Suspense>)
         }
         else {
+          trackUserId();
           return (
+
             <Suspense fallback={this.renderFallback()}>
               <View style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1 }}>
                 <MuiPickersUtilsProvider utils={MomentUtils}>

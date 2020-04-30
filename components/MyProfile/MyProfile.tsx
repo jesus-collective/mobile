@@ -212,7 +212,7 @@ export default class MyProfile extends React.Component<Props, State> {
                 <Text style={styles.fontFormRole}>{this.state.UserDetails.currentRole ? this.state.UserDetails.currentRole : 'My Current Role not defined'}</Text>
                 <Text style={styles.fontFormUserType}>Partner</Text>
 
-                <Text style={styles.fontFormText}><Text style={styles.fontFormMandatory}>*</Text>One Sentence about me</Text>
+                <Text style={styles.fontFormText}><Text style={styles.fontFormMandatory}>*</Text>One sentence about me</Text>
                 <Input style={styles.fontFormAboutMe} value={this.state.UserDetails.aboutMeShort}
                   onChange={(e) => { this.handleInputChange(e, "aboutMeShort") }} multiline={true} placeholder="Short sentence about me" />
                 <Text style={styles.fontFormSmallDarkGrey}><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/pin 2.svg')}></Image>Location not defined</Text>
@@ -294,7 +294,7 @@ export default class MyProfile extends React.Component<Props, State> {
                   onChange={(e) => { this.handleInputChange(e, "currentRole") }} />
               </Item>
               <Text style={styles.fontFormSmall}>&nbsp;</Text>
-              <Text style={styles.fontFormSmall}>Describe your current Scope</Text>
+              <Text style={styles.fontFormSmall}>Describe your current scope</Text>
               <Input style={{ borderWidth: 1, borderColor: "#dddddd" }} placeholder="Type here." value={this.state.UserDetails.currentScope}
                 onChange={(e) => { this.handleInputChange(e, "currentScope") }} multiline={true} />
               <Text style={styles.fontFormSmall}>&nbsp;</Text>

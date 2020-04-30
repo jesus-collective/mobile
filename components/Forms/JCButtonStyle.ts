@@ -110,7 +110,7 @@ export default EStyleSheet.create({
         fontFamily: 'Graphik-Regular-App',
         fontSize: 16, 
         padding:10,
-        fontWeight: 600,
+        fontWeight: "600",
         
     },
 

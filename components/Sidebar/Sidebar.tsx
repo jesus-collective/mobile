@@ -73,9 +73,10 @@ export default class SideBar extends React.Component<Props, State> {
         <Header></Header>
         <List
           dataArray={routes}
+          keyExtractor={data=>data.name}
           renderRow={data => {
             return (
-              <ListItem
+              <ListItem 
                 button
                 onPress={() => this.props.navigation.push(data.route)}>
                 <Text>{data.name}</Text>

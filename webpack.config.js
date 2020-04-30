@@ -30,7 +30,7 @@ module.exports = async function (env, argv) {
     resolve: {
       alias: {
         "react-native/Libraries/Renderer/shims/ReactNativePropRegistry":
-          "react-native-web/dist/modules/ReactNativePropRegistry",
+        "react-native-web/dist/modules/ReactNativePropRegistry",
         "react-native": "react-native-web",
         'react-native-maps': 'react-native-web-maps'
       }
@@ -60,7 +60,8 @@ module.exports = async function (env, argv) {
             path.resolve("node_modules/react-native-web"),
             path.resolve("node_modules/react-native-tab-view"),
             path.resolve("node_modules/aws-amplify-react-native"),
-            path.resolve("node_modules/static-container")
+            path.resolve("node_modules/static-container"),
+            path.resolve("node_modules/@zoomus")
           ]
         }
       ]
