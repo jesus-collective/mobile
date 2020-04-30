@@ -99,6 +99,9 @@ export default EStyleSheet.create({
     fontTitle: {
         fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24, lineHeight: 30, height: 90, color: '#333333'
     },
+    fontTitleGroup: {
+        fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24, lineHeight: 30, height: 90, color: '#333333', paddingTop: 29,
+    },
     profileFontTitle: {
         fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 20, height: 75
     },
@@ -186,18 +189,19 @@ export default EStyleSheet.create({
     fontConnectWithName: {
         fontFamily: 'Graphik-Bold-App',
         fontWeight: "bold",
-        fontSize: 14,
-        lineHeight: 16,
+        fontSize: 20,
+        lineHeight: 25,
         color: "#000000",
         letterSpacing: -0.3
     },
     fontConnectWithRole: {
         fontFamily: 'Graphik-Regular-App',
-        fontSize: 12,
-        lineHeight: 16,
+        fontSize: 14,
+        lineHeight: 22,
         color: "#000000",
         letterSpacing: -0.3,
-        color: "#333333"
+        color: "#333333",
+        paddingBottom: 9, 
     },
     connectWithSliderButton: {
         padding: 0,
