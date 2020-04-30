@@ -15,8 +15,6 @@ test('loads and displays login', async () => {
         <AwesomeApp navigation={null} onStateChange={() => { }} />
     )
     const items = await findByText("SIGN IN")
-
-    fireEvent.press(getByText('SIGN IN'))
     expect(getByText('SIGN IN'))
 })
 test('loads and displays create account', async () => {
@@ -52,7 +50,7 @@ test('loads and displays confirm code', async () => {
 
 })
 
-
+/*
 test('sign in', async () => {
     const { findByTestId, debug, getByText, findByPlaceholderText, findAllByPlaceholderText, findByLabelText, getByLabelText, getByTestId, findByText, getByPlaceholderText } = render(
         <AwesomeApp navigation={null} onStateChange={() => { }} />
@@ -77,3 +75,4 @@ test('sign in', async () => {
     debug()
     expect(getByText('California')).toHaveAttribute('style')
 })
+*/
