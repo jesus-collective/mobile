@@ -291,7 +291,7 @@ export default class MyGroups extends React.Component<Props, State> {
     </Card>
   }
   renderOrganization(item: any) {
-    return <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: '0%', width: this.state.cardWidth }}>
+    return <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: '0%', paddingLeft: '0.25rem', paddingRight: '0.25rem', borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", width: this.state.cardWidth }}>
       <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0 }}>
         <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 20 }} source={require('../../assets/svg/pattern.svg')}></Image>
       </CardItem>
@@ -302,7 +302,7 @@ export default class MyGroups extends React.Component<Props, State> {
     </Card>
   }
   renderCourse(item: any) {
-    return <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: '0%', width: this.state.cardWidth }}>
+    return <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: '0%', paddingLeft: '0.25rem', paddingRight: '0.25rem', borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", width: this.state.cardWidth }}>
       <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0 }}>
         <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 20 }} source={require('../../assets/svg/pattern.svg')}></Image>
       </CardItem>
@@ -322,8 +322,8 @@ export default class MyGroups extends React.Component<Props, State> {
         return (
           <StyleProvider style={getTheme(material)}>
 
-            <Container style={{ padding: 10, minHeight: 445, width: "100%", flexDirection: 'column', justifyContent: 'flex-start' }}>
-              <Container style={{ minHeight: 45, flexGrow: 0, flexDirection: 'row', justifyContent: 'space-between' }} >
+            <Container style={{ padding: 10, minHeight: 515, width: "100%", flexDirection: 'column', justifyContent: 'flex-start' }}>
+              <Container style={{ minHeight: 45, flexGrow: 0, flexDirection: 'row', justifyContent: 'space-between', marginTop: 60 }} >
                 <JCButton buttonType={ButtonTypes.TransparentBoldBlack} onPress={() => { this.openMultiple() }}>{this.state.titleString}</JCButton>
                 <Container style={{ maxHeight: 45, flexDirection: 'row', justifyContent: 'flex-end', alignItems: "flex-start" }}>
                   <JCButton buttonType={ButtonTypes.TransparentBoldOrange} onPress={() => { this.openMultiple() }}>Show All</JCButton>
