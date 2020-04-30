@@ -82,13 +82,13 @@ export default class MyPeople extends React.Component<Props, State> {
       return (
         <StyleProvider style={getTheme(material)}>
 
-          <Container style={{ width: "100%", flexDirection: 'column', alignItems: 'flex-start', minHeight: 700, marginTop: 70 }} >
+          <Container style={{ width: "100%", flexDirection: 'column', alignItems: 'flex-start', minHeight: 685, marginTop: 70, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)" }} >
             <Button onPress={() => { this.showProfiles() }} transparent><Text style={styles.fontConnectWith}>People you may connect with</Text></Button>
             <Content style={{ width: "100%" }}>
               {this.state.data.map((item: any) => {
                 return (
                   <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.id) }}>
-                    <Card style={{ width: "100%", minHeight: 50 }}>
+                    <Card style={{ width: "92.5%", minHeight: 50, paddingTop: 28, paddingBottom: 28 }}>
                       <CardItem >
                         <Left>
                           <ProfileImage user={item} size='small'>
