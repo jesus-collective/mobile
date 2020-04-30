@@ -82,7 +82,7 @@ export default class MyPeople extends React.Component<Props, State> {
       return (
         <StyleProvider style={getTheme(material)}>
 
-          <Container style={{ width: "100%", flexDirection: 'column', alignItems: 'flex-start', minHeight: 400 }} >
+          <Container style={{ width: "100%", flexDirection: 'column', alignItems: 'flex-start', minHeight: 700, marginTop: 70 }} >
             <Button onPress={() => { this.showProfiles() }} transparent><Text style={styles.fontConnectWith}>People you may connect with</Text></Button>
             <Content style={{ width: "100%" }}>
               {this.state.data.map((item: any) => {
