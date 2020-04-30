@@ -152,7 +152,8 @@ export default EStyleSheet.create({
     TransparentBoldBlackText:{
         color:"#000000",
         fontFamily: 'Graphik-Bold-App',
-        fontSize: 16, 
+        fontSize: 20, 
+        lineHeight: 25,
         padding:10,
         fontWeight: "bold"
     },

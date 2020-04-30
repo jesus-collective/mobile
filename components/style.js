@@ -181,7 +181,7 @@ export default EStyleSheet.create({
     fontConnectWith: {
         fontFamily: 'Graphik-Bold-App',
         fontWeight: "bold",
-        fontSize: 14,
+        fontSize: 20,
         lineHeight: 25,
         color: "#000000",
         letterSpacing: -0.3
