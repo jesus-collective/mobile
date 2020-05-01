@@ -51,13 +51,13 @@ export default class MyConversations extends React.Component<Props, State> {
       return (
         <StyleProvider style={getTheme(material)}>
 
-          <Container style={{ width: "100%", flexDirection: 'column', alignItems: 'flex-start', minHeight: 500 }} >
+          <Container style={{ width: "100%", flexDirection: 'column', alignItems: 'flex-start', minHeight: 725, marginTop: 50 }} >
             <Button transparent onPress={() => { this.openConversation() }}><Text style={styles.fontConnectWith}>Latest Conversations</Text></Button>
             <Content>
               {items.map((item) => {
                 return (
-                  <Card key={item.id} style={{ minHeight: 50 }}>
-                    <CardItem>
+                  <Card key={item.id} style={{ minHeight: 50, width: "92.5%", boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none" }}>
+                    <CardItem style={{ paddingTop: 28,}}>
                       <Left>
                         <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
                         <Body>
