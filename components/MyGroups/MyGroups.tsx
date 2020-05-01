@@ -14,7 +14,7 @@ import GRAPHQL_AUTH_MODE, { Greetings } from 'aws-amplify-react-native'
 import { API, graphqlOperation, Auth } from 'aws-amplify';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import {constants} from '../../src/constants'
+import { constants } from '../../src/constants'
 var moment = require('moment');
 
 interface Props {
@@ -182,7 +182,7 @@ export default class MyGroups extends React.Component<Props, State> {
       });
 
       var processList = (json) => {
-       // console.log(json)
+        // console.log(json)
         var temp = [...this.state.data, ...json.data.groupByType.items]
         this.setState({
           data: temp,
@@ -194,7 +194,7 @@ export default class MyGroups extends React.Component<Props, State> {
   }
   openSingle(id: any) {
     console.log({ "Navigate to": this.state.openSingle })
-   // console.log(id)
+    // console.log(id)
     this.props.navigation.push(this.state.openSingle, { id: id, create: false })
   }
   createSingle() {
@@ -313,7 +313,7 @@ export default class MyGroups extends React.Component<Props, State> {
     </Card>
   }
   render() {
-    if (!constants["SETTING_ISVISIBLE_"+this.state.type])
+    if (!constants["SETTING_ISVISIBLE_" + this.state.type])
       return null
     else
       if (this.state.titleString == null)
@@ -327,8 +327,8 @@ export default class MyGroups extends React.Component<Props, State> {
                 <JCButton buttonType={ButtonTypes.TransparentBoldBlack} onPress={() => { this.openMultiple() }}>{this.state.titleString}</JCButton>
                 <Container style={{ maxHeight: 45, flexDirection: 'row', justifyContent: 'flex-end', alignItems: "flex-start" }}>
                   <JCButton buttonType={ButtonTypes.TransparentBoldOrange} onPress={() => { this.openMultiple() }}>Show All</JCButton>
-                  {constants["SETTING_ISVISIBLE_SHOWRECOMMENDED"]?<JCButton buttonType={ButtonTypes.TransparentBoldOrange} onPress={() => { this.openMultiple() }}>Show Recommended</JCButton>:null}
-                  {this.state.showCreateButton && constants["SETTING_ISVISIBLE_CREATE_"+this.state.type]?
+                  {constants["SETTING_ISVISIBLE_SHOWRECOMMENDED"] ? <JCButton buttonType={ButtonTypes.TransparentBoldOrange} onPress={() => { this.openMultiple() }}>Show Recommended</JCButton> : null}
+                  {this.state.showCreateButton && constants["SETTING_ISVISIBLE_CREATE_" + this.state.type] ?
                     <JCButton buttonType={ButtonTypes.OutlineBold} onPress={() => { this.createSingle() }}>{this.state.createString}</JCButton>
                     : null
                   }

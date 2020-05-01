@@ -1,5 +1,5 @@
-/* tslint:disable */
-/* eslint-disable */
+// tslint:disable
+// eslint-disable
 // this is an auto generated file. This will be overwritten
 
 export const onCreateMessage = /* GraphQL */ `
@@ -44,13 +44,19 @@ export const onCreateMessage = /* GraphQL */ `
         joined
         owns {
           nextToken
+          startedAt
         }
         groups {
           nextToken
+          startedAt
         }
         messages {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
       }
       room {
         id
@@ -79,6 +85,9 @@ export const onCreateMessage = /* GraphQL */ `
           orgSize
           orgDescription
           joined
+          _version
+          _deleted
+          _lastChangedAt
         }
         type
         name
@@ -86,6 +95,7 @@ export const onCreateMessage = /* GraphQL */ `
         memberCount
         members {
           nextToken
+          startedAt
         }
         image
         time
@@ -96,10 +106,17 @@ export const onCreateMessage = /* GraphQL */ `
         cost
         messages {
           nextToken
+          startedAt
         }
         eventType
         eventUrl
+        _version
+        _deleted
+        _lastChangedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -153,16 +170,24 @@ export const onCreateUser = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       groups {
         items {
           id
           groupID
           userID
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       messages {
         items {
@@ -172,9 +197,16 @@ export const onCreateUser = /* GraphQL */ `
           roomId
           userId
           owner
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -228,16 +260,24 @@ export const onUpdateUser = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       groups {
         items {
           id
           groupID
           userID
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       messages {
         items {
@@ -247,9 +287,16 @@ export const onUpdateUser = /* GraphQL */ `
           roomId
           userId
           owner
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -303,16 +350,24 @@ export const onDeleteUser = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       groups {
         items {
           id
           groupID
           userID
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       messages {
         items {
@@ -322,9 +377,16 @@ export const onDeleteUser = /* GraphQL */ `
           roomId
           userId
           owner
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -361,6 +423,9 @@ export const onCreateGroupMember = /* GraphQL */ `
           orgSize
           orgDescription
           joined
+          _version
+          _deleted
+          _lastChangedAt
         }
         type
         name
@@ -368,6 +433,7 @@ export const onCreateGroupMember = /* GraphQL */ `
         memberCount
         members {
           nextToken
+          startedAt
         }
         image
         time
@@ -378,9 +444,13 @@ export const onCreateGroupMember = /* GraphQL */ `
         cost
         messages {
           nextToken
+          startedAt
         }
         eventType
         eventUrl
+        _version
+        _deleted
+        _lastChangedAt
       }
       user {
         id
@@ -415,14 +485,23 @@ export const onCreateGroupMember = /* GraphQL */ `
         joined
         owns {
           nextToken
+          startedAt
         }
         groups {
           nextToken
+          startedAt
         }
         messages {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -459,6 +538,9 @@ export const onUpdateGroupMember = /* GraphQL */ `
           orgSize
           orgDescription
           joined
+          _version
+          _deleted
+          _lastChangedAt
         }
         type
         name
@@ -466,6 +548,7 @@ export const onUpdateGroupMember = /* GraphQL */ `
         memberCount
         members {
           nextToken
+          startedAt
         }
         image
         time
@@ -476,9 +559,13 @@ export const onUpdateGroupMember = /* GraphQL */ `
         cost
         messages {
           nextToken
+          startedAt
         }
         eventType
         eventUrl
+        _version
+        _deleted
+        _lastChangedAt
       }
       user {
         id
@@ -513,14 +600,23 @@ export const onUpdateGroupMember = /* GraphQL */ `
         joined
         owns {
           nextToken
+          startedAt
         }
         groups {
           nextToken
+          startedAt
         }
         messages {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -557,6 +653,9 @@ export const onDeleteGroupMember = /* GraphQL */ `
           orgSize
           orgDescription
           joined
+          _version
+          _deleted
+          _lastChangedAt
         }
         type
         name
@@ -564,6 +663,7 @@ export const onDeleteGroupMember = /* GraphQL */ `
         memberCount
         members {
           nextToken
+          startedAt
         }
         image
         time
@@ -574,9 +674,13 @@ export const onDeleteGroupMember = /* GraphQL */ `
         cost
         messages {
           nextToken
+          startedAt
         }
         eventType
         eventUrl
+        _version
+        _deleted
+        _lastChangedAt
       }
       user {
         id
@@ -611,14 +715,23 @@ export const onDeleteGroupMember = /* GraphQL */ `
         joined
         owns {
           nextToken
+          startedAt
         }
         groups {
           nextToken
+          startedAt
         }
         messages {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -660,13 +773,19 @@ export const onCreateGroup = /* GraphQL */ `
         joined
         owns {
           nextToken
+          startedAt
         }
         groups {
           nextToken
+          startedAt
         }
         messages {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
       }
       type
       name
@@ -677,8 +796,12 @@ export const onCreateGroup = /* GraphQL */ `
           id
           groupID
           userID
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       image
       time
@@ -695,11 +818,18 @@ export const onCreateGroup = /* GraphQL */ `
           roomId
           userId
           owner
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       eventType
       eventUrl
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -741,13 +871,19 @@ export const onUpdateGroup = /* GraphQL */ `
         joined
         owns {
           nextToken
+          startedAt
         }
         groups {
           nextToken
+          startedAt
         }
         messages {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
       }
       type
       name
@@ -758,8 +894,12 @@ export const onUpdateGroup = /* GraphQL */ `
           id
           groupID
           userID
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       image
       time
@@ -776,11 +916,18 @@ export const onUpdateGroup = /* GraphQL */ `
           roomId
           userId
           owner
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       eventType
       eventUrl
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -822,13 +969,19 @@ export const onDeleteGroup = /* GraphQL */ `
         joined
         owns {
           nextToken
+          startedAt
         }
         groups {
           nextToken
+          startedAt
         }
         messages {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
       }
       type
       name
@@ -839,8 +992,12 @@ export const onDeleteGroup = /* GraphQL */ `
           id
           groupID
           userID
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       image
       time
@@ -857,11 +1014,18 @@ export const onDeleteGroup = /* GraphQL */ `
           roomId
           userId
           owner
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       eventType
       eventUrl
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -878,11 +1042,18 @@ export const onCreateCourseInfo = /* GraphQL */ `
           date
           name
           leader
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       subTitle
       introduction
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -899,11 +1070,18 @@ export const onUpdateCourseInfo = /* GraphQL */ `
           date
           name
           leader
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       subTitle
       introduction
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -920,11 +1098,18 @@ export const onDeleteCourseInfo = /* GraphQL */ `
           date
           name
           leader
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
       subTitle
       introduction
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -942,9 +1127,16 @@ export const onCreateCourseWeek = /* GraphQL */ `
           name
           time
           description
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -962,9 +1154,16 @@ export const onUpdateCourseWeek = /* GraphQL */ `
           name
           time
           description
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -982,9 +1181,16 @@ export const onDeleteCourseWeek = /* GraphQL */ `
           name
           time
           description
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -1000,9 +1206,16 @@ export const onCreateCourseLesson = /* GraphQL */ `
           id
           due
           description
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -1018,9 +1231,16 @@ export const onUpdateCourseLesson = /* GraphQL */ `
           id
           due
           description
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -1036,9 +1256,16 @@ export const onDeleteCourseLesson = /* GraphQL */ `
           id
           due
           description
+          _version
+          _deleted
+          _lastChangedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -1048,6 +1275,9 @@ export const onCreateCourseAssignment = /* GraphQL */ `
       id
       due
       description
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -1057,6 +1287,9 @@ export const onUpdateCourseAssignment = /* GraphQL */ `
       id
       due
       description
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
@@ -1066,6 +1299,9 @@ export const onDeleteCourseAssignment = /* GraphQL */ `
       id
       due
       description
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;

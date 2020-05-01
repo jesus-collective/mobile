@@ -6,6 +6,7 @@ import MomentUtils from '@date-io/moment';
 import { View } from 'react-native'
 import { Auth } from 'aws-amplify';
 import { Text } from 'react-native'
+import GRAPHQL_AUTH_MODE, { Greetings } from 'aws-amplify-react-native'
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
 import { createDrawerNavigator } from "react-navigation-drawer";
@@ -179,6 +180,7 @@ export default class App extends React.Component<Props, State>{
     }
   }
   private user: any
+  
   async ensureUserExists() {
     var userExists: boolean = false
     this.user = await Auth.currentAuthenticatedUser().

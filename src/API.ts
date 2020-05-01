@@ -27,6 +27,7 @@ export type CreateUserInput = {
   orgSize?: string | null,
   orgDescription?: string | null,
   joined?: string | null,
+  _version?: number | null,
 };
 
 export type ImageInput = {
@@ -62,35 +63,74 @@ export type UpdateUserInput = {
   orgSize?: string | null,
   orgDescription?: string | null,
   joined?: string | null,
+  _version?: number | null,
 };
 
 export type DeleteUserInput = {
   id?: string | null,
+  _version?: number | null,
 };
 
 export type CreateGroupMemberInput = {
   id?: string | null,
   groupID?: string | null,
   userID?: string | null,
+  user?: UserInput | null,
+  _version?: number | null,
+};
+
+export type UserInput = {
+  id: string,
+  given_name: string,
+  family_name: string,
+  email?: string | null,
+  phone?: string | null,
+  owner?: string | null,
+  hasPaidState?: string | null,
+  address?: string | null,
+  city?: string | null,
+  province?: string | null,
+  postalCode?: string | null,
+  country?: string | null,
+  profileImage?: ImageInput | null,
+  aboutMeShort?: string | null,
+  aboutMeLong?: string | null,
+  interests?: string | null,
+  currentRole?: string | null,
+  currentScope?: string | null,
+  personality?: string | null,
+  orgName?: string | null,
+  orgType?: string | null,
+  orgSize?: string | null,
+  orgDescription?: string | null,
+  joined?: string | null,
+  _version: number,
+  _deleted?: boolean | null,
+  _lastChangedAt: number,
 };
 
 export type UpdateGroupMemberInput = {
   id: string,
   groupID?: string | null,
   userID?: string | null,
+  user?: UserInput | null,
+  _version?: number | null,
 };
 
 export type DeleteGroupMemberInput = {
   id?: string | null,
+  _version?: number | null,
 };
 
 export type CreateGroupInput = {
   id?: string | null,
   owner: string,
+  ownerUser?: UserInput | null,
   type: string,
   name: string,
   description: string,
   memberCount?: number | null,
+  members?: Array< GroupMemberInput | null > | null,
   image: string,
   time?: string | null,
   lastUpdated?: string | null,
@@ -100,15 +140,28 @@ export type CreateGroupInput = {
   cost?: string | null,
   eventType?: string | null,
   eventUrl?: string | null,
+  _version?: number | null,
+};
+
+export type GroupMemberInput = {
+  id: string,
+  groupID?: string | null,
+  userID?: string | null,
+  user?: UserInput | null,
+  _version: number,
+  _deleted?: boolean | null,
+  _lastChangedAt: number,
 };
 
 export type UpdateGroupInput = {
   id: string,
   owner?: string | null,
+  ownerUser?: UserInput | null,
   type?: string | null,
   name?: string | null,
   description?: string | null,
   memberCount?: number | null,
+  members?: Array< GroupMemberInput | null > | null,
   image?: string | null,
   time?: string | null,
   lastUpdated?: string | null,
@@ -118,10 +171,12 @@ export type UpdateGroupInput = {
   cost?: string | null,
   eventType?: string | null,
   eventUrl?: string | null,
+  _version?: number | null,
 };
 
 export type DeleteGroupInput = {
   id?: string | null,
+  _version?: number | null,
 };
 
 export type CreateCourseInfoInput = {
@@ -130,6 +185,7 @@ export type CreateCourseInfoInput = {
   summary?: Array< string | null > | null,
   subTitle?: string | null,
   introduction?: Array< string | null > | null,
+  _version?: number | null,
 };
 
 export type UpdateCourseInfoInput = {
@@ -138,10 +194,12 @@ export type UpdateCourseInfoInput = {
   summary?: Array< string | null > | null,
   subTitle?: string | null,
   introduction?: Array< string | null > | null,
+  _version?: number | null,
 };
 
 export type DeleteCourseInfoInput = {
   id?: string | null,
+  _version?: number | null,
 };
 
 export type CreateCourseWeekInput = {
@@ -150,6 +208,7 @@ export type CreateCourseWeekInput = {
   date?: string | null,
   name?: string | null,
   leader?: string | null,
+  _version?: number | null,
   courseInfoCourseDetailsId?: string | null,
 };
 
@@ -159,11 +218,13 @@ export type UpdateCourseWeekInput = {
   date?: string | null,
   name?: string | null,
   leader?: string | null,
+  _version?: number | null,
   courseInfoCourseDetailsId?: string | null,
 };
 
 export type DeleteCourseWeekInput = {
   id?: string | null,
+  _version?: number | null,
 };
 
 export type CreateCourseLessonInput = {
@@ -171,6 +232,7 @@ export type CreateCourseLessonInput = {
   name?: string | null,
   time?: string | null,
   description?: Array< string | null > | null,
+  _version?: number | null,
   courseWeekLessonsId?: string | null,
 };
 
@@ -179,17 +241,20 @@ export type UpdateCourseLessonInput = {
   name?: string | null,
   time?: string | null,
   description?: Array< string | null > | null,
+  _version?: number | null,
   courseWeekLessonsId?: string | null,
 };
 
 export type DeleteCourseLessonInput = {
   id?: string | null,
+  _version?: number | null,
 };
 
 export type CreateCourseAssignmentInput = {
   id?: string | null,
   due?: string | null,
   description?: string | null,
+  _version?: number | null,
   courseLessonAssignmentId?: string | null,
 };
 
@@ -197,11 +262,13 @@ export type UpdateCourseAssignmentInput = {
   id: string,
   due?: string | null,
   description?: string | null,
+  _version?: number | null,
   courseLessonAssignmentId?: string | null,
 };
 
 export type DeleteCourseAssignmentInput = {
   id?: string | null,
+  _version?: number | null,
 };
 
 export type CreateMessageInput = {
@@ -211,6 +278,32 @@ export type CreateMessageInput = {
   roomId?: string | null,
   userId?: string | null,
   owner?: string | null,
+  author?: UserInput | null,
+  room?: GroupInput | null,
+  _version?: number | null,
+};
+
+export type GroupInput = {
+  id: string,
+  owner: string,
+  ownerUser?: UserInput | null,
+  type: string,
+  name: string,
+  description: string,
+  memberCount?: number | null,
+  members?: Array< GroupMemberInput | null > | null,
+  image: string,
+  time?: string | null,
+  lastUpdated?: string | null,
+  location?: string | null,
+  length?: string | null,
+  effort?: string | null,
+  cost?: string | null,
+  eventType?: string | null,
+  eventUrl?: string | null,
+  _version: number,
+  _deleted?: boolean | null,
+  _lastChangedAt: number,
 };
 
 export type UpdateMessageInput = {
@@ -220,10 +313,14 @@ export type UpdateMessageInput = {
   roomId?: string | null,
   userId?: string | null,
   owner?: string | null,
+  author?: UserInput | null,
+  room?: GroupInput | null,
+  _version?: number | null,
 };
 
 export type DeleteMessageInput = {
   id?: string | null,
+  _version?: number | null,
 };
 
 export type CreateResourceRootInput = {
@@ -442,6 +539,15 @@ export type ModelStringFilterInput = {
   beginsWith?: string | null,
 };
 
+export type ModelGroupMemberFilterInput = {
+  id?: ModelIDFilterInput | null,
+  groupID?: ModelIDFilterInput | null,
+  userID?: ModelIDFilterInput | null,
+  and?: Array< ModelGroupMemberFilterInput | null > | null,
+  or?: Array< ModelGroupMemberFilterInput | null > | null,
+  not?: ModelGroupMemberFilterInput | null,
+};
+
 export type ModelGroupFilterInput = {
   id?: ModelIDFilterInput | null,
   owner?: ModelStringFilterInput | null,
@@ -593,15 +699,6 @@ export enum ModelSortDirection {
   DESC = "DESC",
 }
 
-
-export type ModelGroupMemberFilterInput = {
-  id?: ModelIDFilterInput | null,
-  groupID?: ModelIDFilterInput | null,
-  userID?: ModelIDFilterInput | null,
-  and?: Array< ModelGroupMemberFilterInput | null > | null,
-  or?: Array< ModelGroupMemberFilterInput | null > | null,
-  not?: ModelGroupMemberFilterInput | null,
-};
 
 export type ModelStringKeyConditionInput = {
   eq?: string | null,
@@ -763,8 +860,12 @@ export type CreateUserMutation = {
         cost: string | null,
         eventType: string | null,
         eventUrl: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     groups:  {
       __typename: "ModelGroupMemberConnection",
@@ -773,8 +874,12 @@ export type CreateUserMutation = {
         id: string,
         groupID: string | null,
         userID: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     messages:  {
       __typename: "ModelMessageConnection",
@@ -786,9 +891,16 @@ export type CreateUserMutation = {
         roomId: string | null,
         userId: string | null,
         owner: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -849,8 +961,12 @@ export type UpdateUserMutation = {
         cost: string | null,
         eventType: string | null,
         eventUrl: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     groups:  {
       __typename: "ModelGroupMemberConnection",
@@ -859,8 +975,12 @@ export type UpdateUserMutation = {
         id: string,
         groupID: string | null,
         userID: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     messages:  {
       __typename: "ModelMessageConnection",
@@ -872,9 +992,16 @@ export type UpdateUserMutation = {
         roomId: string | null,
         userId: string | null,
         owner: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -935,8 +1062,12 @@ export type DeleteUserMutation = {
         cost: string | null,
         eventType: string | null,
         eventUrl: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     groups:  {
       __typename: "ModelGroupMemberConnection",
@@ -945,8 +1076,12 @@ export type DeleteUserMutation = {
         id: string,
         groupID: string | null,
         userID: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     messages:  {
       __typename: "ModelMessageConnection",
@@ -958,9 +1093,16 @@ export type DeleteUserMutation = {
         roomId: string | null,
         userId: string | null,
         owner: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -1003,6 +1145,9 @@ export type CreateGroupMemberMutation = {
         orgSize: string | null,
         orgDescription: string | null,
         joined: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null,
       type: string,
       name: string,
@@ -1011,6 +1156,7 @@ export type CreateGroupMemberMutation = {
       members:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       image: string,
       time: string | null,
@@ -1022,9 +1168,13 @@ export type CreateGroupMemberMutation = {
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       eventType: string | null,
       eventUrl: string | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
     user:  {
       __typename: "User",
@@ -1062,16 +1212,25 @@ export type CreateGroupMemberMutation = {
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       groups:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -1114,6 +1273,9 @@ export type UpdateGroupMemberMutation = {
         orgSize: string | null,
         orgDescription: string | null,
         joined: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null,
       type: string,
       name: string,
@@ -1122,6 +1284,7 @@ export type UpdateGroupMemberMutation = {
       members:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       image: string,
       time: string | null,
@@ -1133,9 +1296,13 @@ export type UpdateGroupMemberMutation = {
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       eventType: string | null,
       eventUrl: string | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
     user:  {
       __typename: "User",
@@ -1173,16 +1340,25 @@ export type UpdateGroupMemberMutation = {
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       groups:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -1225,6 +1401,9 @@ export type DeleteGroupMemberMutation = {
         orgSize: string | null,
         orgDescription: string | null,
         joined: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null,
       type: string,
       name: string,
@@ -1233,6 +1412,7 @@ export type DeleteGroupMemberMutation = {
       members:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       image: string,
       time: string | null,
@@ -1244,9 +1424,13 @@ export type DeleteGroupMemberMutation = {
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       eventType: string | null,
       eventUrl: string | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
     user:  {
       __typename: "User",
@@ -1284,16 +1468,25 @@ export type DeleteGroupMemberMutation = {
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       groups:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -1342,15 +1535,21 @@ export type CreateGroupMutation = {
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       groups:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
     type: string,
     name: string,
@@ -1363,8 +1562,12 @@ export type CreateGroupMutation = {
         id: string,
         groupID: string | null,
         userID: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     image: string,
     time: string | null,
@@ -1383,11 +1586,18 @@ export type CreateGroupMutation = {
         roomId: string | null,
         userId: string | null,
         owner: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     eventType: string | null,
     eventUrl: string | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -1436,15 +1646,21 @@ export type UpdateGroupMutation = {
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       groups:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
     type: string,
     name: string,
@@ -1457,8 +1673,12 @@ export type UpdateGroupMutation = {
         id: string,
         groupID: string | null,
         userID: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     image: string,
     time: string | null,
@@ -1477,11 +1697,18 @@ export type UpdateGroupMutation = {
         roomId: string | null,
         userId: string | null,
         owner: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     eventType: string | null,
     eventUrl: string | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -1530,15 +1757,21 @@ export type DeleteGroupMutation = {
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       groups:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
     type: string,
     name: string,
@@ -1551,8 +1784,12 @@ export type DeleteGroupMutation = {
         id: string,
         groupID: string | null,
         userID: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     image: string,
     time: string | null,
@@ -1571,11 +1808,18 @@ export type DeleteGroupMutation = {
         roomId: string | null,
         userId: string | null,
         owner: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     eventType: string | null,
     eventUrl: string | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -1598,11 +1842,18 @@ export type CreateCourseInfoMutation = {
         date: string | null,
         name: string | null,
         leader: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     subTitle: string | null,
     introduction: Array< string | null > | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -1625,11 +1876,18 @@ export type UpdateCourseInfoMutation = {
         date: string | null,
         name: string | null,
         leader: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     subTitle: string | null,
     introduction: Array< string | null > | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -1652,11 +1910,18 @@ export type DeleteCourseInfoMutation = {
         date: string | null,
         name: string | null,
         leader: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     subTitle: string | null,
     introduction: Array< string | null > | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -1680,9 +1945,16 @@ export type CreateCourseWeekMutation = {
         name: string | null,
         time: string | null,
         description: Array< string | null > | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -1706,9 +1978,16 @@ export type UpdateCourseWeekMutation = {
         name: string | null,
         time: string | null,
         description: Array< string | null > | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -1732,9 +2011,16 @@ export type DeleteCourseWeekMutation = {
         name: string | null,
         time: string | null,
         description: Array< string | null > | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -1756,9 +2042,16 @@ export type CreateCourseLessonMutation = {
         id: string,
         due: string | null,
         description: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -1780,9 +2073,16 @@ export type UpdateCourseLessonMutation = {
         id: string,
         due: string | null,
         description: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -1804,9 +2104,16 @@ export type DeleteCourseLessonMutation = {
         id: string,
         due: string | null,
         description: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -1820,6 +2127,9 @@ export type CreateCourseAssignmentMutation = {
     id: string,
     due: string | null,
     description: string | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -1833,6 +2143,9 @@ export type UpdateCourseAssignmentMutation = {
     id: string,
     due: string | null,
     description: string | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -1846,6 +2159,9 @@ export type DeleteCourseAssignmentMutation = {
     id: string,
     due: string | null,
     description: string | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -1898,15 +2214,21 @@ export type CreateMessageMutation = {
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       groups:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
     room:  {
       __typename: "Group",
@@ -1937,6 +2259,9 @@ export type CreateMessageMutation = {
         orgSize: string | null,
         orgDescription: string | null,
         joined: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null,
       type: string,
       name: string,
@@ -1945,6 +2270,7 @@ export type CreateMessageMutation = {
       members:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       image: string,
       time: string | null,
@@ -1956,10 +2282,17 @@ export type CreateMessageMutation = {
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       eventType: string | null,
       eventUrl: string | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -2012,15 +2345,21 @@ export type UpdateMessageMutation = {
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       groups:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
     room:  {
       __typename: "Group",
@@ -2051,6 +2390,9 @@ export type UpdateMessageMutation = {
         orgSize: string | null,
         orgDescription: string | null,
         joined: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null,
       type: string,
       name: string,
@@ -2059,6 +2401,7 @@ export type UpdateMessageMutation = {
       members:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       image: string,
       time: string | null,
@@ -2070,10 +2413,17 @@ export type UpdateMessageMutation = {
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       eventType: string | null,
       eventUrl: string | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -2126,15 +2476,21 @@ export type DeleteMessageMutation = {
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       groups:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
     room:  {
       __typename: "Group",
@@ -2165,6 +2521,9 @@ export type DeleteMessageMutation = {
         orgSize: string | null,
         orgDescription: string | null,
         joined: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null,
       type: string,
       name: string,
@@ -2173,6 +2532,7 @@ export type DeleteMessageMutation = {
       members:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       image: string,
       time: string | null,
@@ -2184,10 +2544,17 @@ export type DeleteMessageMutation = {
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       eventType: string | null,
       eventUrl: string | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -2869,6 +3236,73 @@ export type DeleteResourceEpisodeMutation = {
   } | null,
 };
 
+export type SyncUsersQueryVariables = {
+  filter?: ModelUserFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncUsersQuery = {
+  syncUsers:  {
+    __typename: "ModelUserConnection",
+    items:  Array< {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      hasPaidState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: string | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null > | null,
+    nextToken: string | null,
+    startedAt: number | null,
+  } | null,
+};
+
 export type GetUserQueryVariables = {
   id: string,
 };
@@ -2926,8 +3360,12 @@ export type GetUserQuery = {
         cost: string | null,
         eventType: string | null,
         eventUrl: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     groups:  {
       __typename: "ModelGroupMemberConnection",
@@ -2936,8 +3374,12 @@ export type GetUserQuery = {
         id: string,
         groupID: string | null,
         userID: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     messages:  {
       __typename: "ModelMessageConnection",
@@ -2949,9 +3391,16 @@ export type GetUserQuery = {
         roomId: string | null,
         userId: string | null,
         owner: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -3000,17 +3449,173 @@ export type ListUsersQuery = {
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       groups:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null > | null,
     nextToken: string | null,
+    startedAt: number | null,
+  } | null,
+};
+
+export type SyncGroupMembersQueryVariables = {
+  filter?: ModelGroupMemberFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncGroupMembersQuery = {
+  syncGroupMembers:  {
+    __typename: "ModelGroupMemberConnection",
+    items:  Array< {
+      __typename: "GroupMember",
+      id: string,
+      groupID: string | null,
+      userID: string | null,
+      group:  {
+        __typename: "Group",
+        id: string,
+        owner: string,
+        type: string,
+        name: string,
+        description: string,
+        memberCount: number | null,
+        image: string,
+        time: string | null,
+        lastUpdated: string | null,
+        location: string | null,
+        length: string | null,
+        effort: string | null,
+        cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      user:  {
+        __typename: "User",
+        id: string,
+        given_name: string,
+        family_name: string,
+        email: string | null,
+        phone: string | null,
+        owner: string | null,
+        hasPaidState: string | null,
+        address: string | null,
+        city: string | null,
+        province: string | null,
+        postalCode: string | null,
+        country: string | null,
+        aboutMeShort: string | null,
+        aboutMeLong: string | null,
+        interests: string | null,
+        currentRole: string | null,
+        currentScope: string | null,
+        personality: string | null,
+        orgName: string | null,
+        orgType: string | null,
+        orgSize: string | null,
+        orgDescription: string | null,
+        joined: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null > | null,
+    nextToken: string | null,
+    startedAt: number | null,
+  } | null,
+};
+
+export type SyncGroupsQueryVariables = {
+  filter?: ModelGroupFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncGroupsQuery = {
+  syncGroups:  {
+    __typename: "ModelGroupConnection",
+    items:  Array< {
+      __typename: "Group",
+      id: string,
+      owner: string,
+      ownerUser:  {
+        __typename: "User",
+        id: string,
+        given_name: string,
+        family_name: string,
+        email: string | null,
+        phone: string | null,
+        owner: string | null,
+        hasPaidState: string | null,
+        address: string | null,
+        city: string | null,
+        province: string | null,
+        postalCode: string | null,
+        country: string | null,
+        aboutMeShort: string | null,
+        aboutMeLong: string | null,
+        interests: string | null,
+        currentRole: string | null,
+        currentScope: string | null,
+        personality: string | null,
+        orgName: string | null,
+        orgType: string | null,
+        orgSize: string | null,
+        orgDescription: string | null,
+        joined: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      type: string,
+      name: string,
+      description: string,
+      memberCount: number | null,
+      members:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      image: string,
+      time: string | null,
+      lastUpdated: string | null,
+      location: string | null,
+      length: string | null,
+      effort: string | null,
+      cost: string | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      eventType: string | null,
+      eventUrl: string | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null > | null,
+    nextToken: string | null,
+    startedAt: number | null,
   } | null,
 };
 
@@ -3059,15 +3664,21 @@ export type GetGroupQuery = {
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       groups:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
     type: string,
     name: string,
@@ -3080,8 +3691,12 @@ export type GetGroupQuery = {
         id: string,
         groupID: string | null,
         userID: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     image: string,
     time: string | null,
@@ -3100,11 +3715,18 @@ export type GetGroupQuery = {
         roomId: string | null,
         userId: string | null,
         owner: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     eventType: string | null,
     eventUrl: string | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -3146,6 +3768,9 @@ export type ListGroupsQuery = {
         orgSize: string | null,
         orgDescription: string | null,
         joined: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null,
       type: string,
       name: string,
@@ -3154,6 +3779,7 @@ export type ListGroupsQuery = {
       members:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       image: string,
       time: string | null,
@@ -3165,11 +3791,47 @@ export type ListGroupsQuery = {
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       eventType: string | null,
       eventUrl: string | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null > | null,
     nextToken: string | null,
+    startedAt: number | null,
+  } | null,
+};
+
+export type SyncCourseInfosQueryVariables = {
+  filter?: ModelCourseInfoFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncCourseInfosQuery = {
+  syncCourseInfos:  {
+    __typename: "ModelCourseInfoConnection",
+    items:  Array< {
+      __typename: "CourseInfo",
+      id: string,
+      designedBy: string | null,
+      summary: Array< string | null > | null,
+      courseDetails:  {
+        __typename: "ModelCourseWeekConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      subTitle: string | null,
+      introduction: Array< string | null > | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null > | null,
+    nextToken: string | null,
+    startedAt: number | null,
   } | null,
 };
 
@@ -3192,11 +3854,18 @@ export type GetCourseInfoQuery = {
         date: string | null,
         name: string | null,
         leader: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     subTitle: string | null,
     introduction: Array< string | null > | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -3217,11 +3886,47 @@ export type ListCourseInfosQuery = {
       courseDetails:  {
         __typename: "ModelCourseWeekConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       subTitle: string | null,
       introduction: Array< string | null > | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null > | null,
     nextToken: string | null,
+    startedAt: number | null,
+  } | null,
+};
+
+export type SyncCourseWeeksQueryVariables = {
+  filter?: ModelCourseWeekFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncCourseWeeksQuery = {
+  syncCourseWeeks:  {
+    __typename: "ModelCourseWeekConnection",
+    items:  Array< {
+      __typename: "CourseWeek",
+      id: string,
+      week: string | null,
+      date: string | null,
+      name: string | null,
+      leader: string | null,
+      lessons:  {
+        __typename: "ModelCourseLessonConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null > | null,
+    nextToken: string | null,
+    startedAt: number | null,
   } | null,
 };
 
@@ -3245,9 +3950,16 @@ export type GetCourseWeekQuery = {
         name: string | null,
         time: string | null,
         description: Array< string | null > | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -3270,9 +3982,44 @@ export type ListCourseWeeksQuery = {
       lessons:  {
         __typename: "ModelCourseLessonConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null > | null,
     nextToken: string | null,
+    startedAt: number | null,
+  } | null,
+};
+
+export type SyncCourseLessonsQueryVariables = {
+  filter?: ModelCourseLessonFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncCourseLessonsQuery = {
+  syncCourseLessons:  {
+    __typename: "ModelCourseLessonConnection",
+    items:  Array< {
+      __typename: "CourseLesson",
+      id: string,
+      name: string | null,
+      time: string | null,
+      description: Array< string | null > | null,
+      assignment:  {
+        __typename: "ModelCourseAssignmentConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null > | null,
+    nextToken: string | null,
+    startedAt: number | null,
   } | null,
 };
 
@@ -3294,9 +4041,16 @@ export type GetCourseLessonQuery = {
         id: string,
         due: string | null,
         description: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -3318,9 +4072,38 @@ export type ListCourseLessonsQuery = {
       assignment:  {
         __typename: "ModelCourseAssignmentConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null > | null,
     nextToken: string | null,
+    startedAt: number | null,
+  } | null,
+};
+
+export type SyncCourseAssignmentsQueryVariables = {
+  filter?: ModelCourseAssignmentFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncCourseAssignmentsQuery = {
+  syncCourseAssignments:  {
+    __typename: "ModelCourseAssignmentConnection",
+    items:  Array< {
+      __typename: "CourseAssignment",
+      id: string,
+      due: string | null,
+      description: string | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null > | null,
+    nextToken: string | null,
+    startedAt: number | null,
   } | null,
 };
 
@@ -3334,6 +4117,9 @@ export type GetCourseAssignmentQuery = {
     id: string,
     due: string | null,
     description: string | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -3351,8 +4137,89 @@ export type ListCourseAssignmentsQuery = {
       id: string,
       due: string | null,
       description: string | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null > | null,
     nextToken: string | null,
+    startedAt: number | null,
+  } | null,
+};
+
+export type SyncMessagesQueryVariables = {
+  filter?: ModelMessageFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncMessagesQuery = {
+  syncMessages:  {
+    __typename: "ModelMessageConnection",
+    items:  Array< {
+      __typename: "Message",
+      id: string,
+      content: string,
+      when: string,
+      roomId: string | null,
+      userId: string | null,
+      owner: string | null,
+      author:  {
+        __typename: "User",
+        id: string,
+        given_name: string,
+        family_name: string,
+        email: string | null,
+        phone: string | null,
+        owner: string | null,
+        hasPaidState: string | null,
+        address: string | null,
+        city: string | null,
+        province: string | null,
+        postalCode: string | null,
+        country: string | null,
+        aboutMeShort: string | null,
+        aboutMeLong: string | null,
+        interests: string | null,
+        currentRole: string | null,
+        currentScope: string | null,
+        personality: string | null,
+        orgName: string | null,
+        orgType: string | null,
+        orgSize: string | null,
+        orgDescription: string | null,
+        joined: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      room:  {
+        __typename: "Group",
+        id: string,
+        owner: string,
+        type: string,
+        name: string,
+        description: string,
+        memberCount: number | null,
+        image: string,
+        time: string | null,
+        lastUpdated: string | null,
+        location: string | null,
+        length: string | null,
+        effort: string | null,
+        cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null > | null,
+    nextToken: string | null,
+    startedAt: number | null,
   } | null,
 };
 
@@ -3405,15 +4272,21 @@ export type GetMessageQuery = {
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       groups:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
     room:  {
       __typename: "Group",
@@ -3444,6 +4317,9 @@ export type GetMessageQuery = {
         orgSize: string | null,
         orgDescription: string | null,
         joined: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null,
       type: string,
       name: string,
@@ -3452,6 +4328,7 @@ export type GetMessageQuery = {
       members:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       image: string,
       time: string | null,
@@ -3463,10 +4340,17 @@ export type GetMessageQuery = {
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       eventType: string | null,
       eventUrl: string | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -3512,6 +4396,9 @@ export type ListMessagesQuery = {
         orgSize: string | null,
         orgDescription: string | null,
         joined: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null,
       room:  {
         __typename: "Group",
@@ -3530,9 +4417,16 @@ export type ListMessagesQuery = {
         cost: string | null,
         eventType: string | null,
         eventUrl: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null > | null,
     nextToken: string | null,
+    startedAt: number | null,
   } | null,
 };
 
@@ -4134,6 +5028,9 @@ export type GroupMemberByGroupQuery = {
         cost: string | null,
         eventType: string | null,
         eventUrl: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null,
       user:  {
         __typename: "User",
@@ -4160,9 +5057,16 @@ export type GroupMemberByGroupQuery = {
         orgSize: string | null,
         orgDescription: string | null,
         joined: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null > | null,
     nextToken: string | null,
+    startedAt: number | null,
   } | null,
 };
 
@@ -4200,6 +5104,9 @@ export type GroupMemberByUserQuery = {
         cost: string | null,
         eventType: string | null,
         eventUrl: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null,
       user:  {
         __typename: "User",
@@ -4226,9 +5133,16 @@ export type GroupMemberByUserQuery = {
         orgSize: string | null,
         orgDescription: string | null,
         joined: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null > | null,
     nextToken: string | null,
+    startedAt: number | null,
   } | null,
 };
 
@@ -4273,6 +5187,9 @@ export type GroupByTypeQuery = {
         orgSize: string | null,
         orgDescription: string | null,
         joined: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null,
       type: string,
       name: string,
@@ -4281,6 +5198,7 @@ export type GroupByTypeQuery = {
       members:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       image: string,
       time: string | null,
@@ -4292,11 +5210,16 @@ export type GroupByTypeQuery = {
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       eventType: string | null,
       eventUrl: string | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null > | null,
     nextToken: string | null,
+    startedAt: number | null,
   } | null,
 };
 
@@ -4345,6 +5268,9 @@ export type MessagesByRoomQuery = {
         orgSize: string | null,
         orgDescription: string | null,
         joined: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null,
       room:  {
         __typename: "Group",
@@ -4363,9 +5289,16 @@ export type MessagesByRoomQuery = {
         cost: string | null,
         eventType: string | null,
         eventUrl: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null > | null,
     nextToken: string | null,
+    startedAt: number | null,
   } | null,
 };
 
@@ -4408,6 +5341,9 @@ export type SearchGroupsQuery = {
         orgSize: string | null,
         orgDescription: string | null,
         joined: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null,
       type: string,
       name: string,
@@ -4416,6 +5352,7 @@ export type SearchGroupsQuery = {
       members:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       image: string,
       time: string | null,
@@ -4427,9 +5364,13 @@ export type SearchGroupsQuery = {
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       eventType: string | null,
       eventUrl: string | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null > | null,
     nextToken: string | null,
     total: number | null,
@@ -4485,15 +5426,21 @@ export type OnCreateMessageSubscription = {
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       groups:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
     room:  {
       __typename: "Group",
@@ -4524,6 +5471,9 @@ export type OnCreateMessageSubscription = {
         orgSize: string | null,
         orgDescription: string | null,
         joined: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null,
       type: string,
       name: string,
@@ -4532,6 +5482,7 @@ export type OnCreateMessageSubscription = {
       members:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       image: string,
       time: string | null,
@@ -4543,10 +5494,17 @@ export type OnCreateMessageSubscription = {
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       eventType: string | null,
       eventUrl: string | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -4607,8 +5565,12 @@ export type OnCreateUserSubscription = {
         cost: string | null,
         eventType: string | null,
         eventUrl: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     groups:  {
       __typename: "ModelGroupMemberConnection",
@@ -4617,8 +5579,12 @@ export type OnCreateUserSubscription = {
         id: string,
         groupID: string | null,
         userID: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     messages:  {
       __typename: "ModelMessageConnection",
@@ -4630,9 +5596,16 @@ export type OnCreateUserSubscription = {
         roomId: string | null,
         userId: string | null,
         owner: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -4693,8 +5666,12 @@ export type OnUpdateUserSubscription = {
         cost: string | null,
         eventType: string | null,
         eventUrl: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     groups:  {
       __typename: "ModelGroupMemberConnection",
@@ -4703,8 +5680,12 @@ export type OnUpdateUserSubscription = {
         id: string,
         groupID: string | null,
         userID: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     messages:  {
       __typename: "ModelMessageConnection",
@@ -4716,9 +5697,16 @@ export type OnUpdateUserSubscription = {
         roomId: string | null,
         userId: string | null,
         owner: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -4779,8 +5767,12 @@ export type OnDeleteUserSubscription = {
         cost: string | null,
         eventType: string | null,
         eventUrl: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     groups:  {
       __typename: "ModelGroupMemberConnection",
@@ -4789,8 +5781,12 @@ export type OnDeleteUserSubscription = {
         id: string,
         groupID: string | null,
         userID: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     messages:  {
       __typename: "ModelMessageConnection",
@@ -4802,9 +5798,16 @@ export type OnDeleteUserSubscription = {
         roomId: string | null,
         userId: string | null,
         owner: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -4843,6 +5846,9 @@ export type OnCreateGroupMemberSubscription = {
         orgSize: string | null,
         orgDescription: string | null,
         joined: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null,
       type: string,
       name: string,
@@ -4851,6 +5857,7 @@ export type OnCreateGroupMemberSubscription = {
       members:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       image: string,
       time: string | null,
@@ -4862,9 +5869,13 @@ export type OnCreateGroupMemberSubscription = {
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       eventType: string | null,
       eventUrl: string | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
     user:  {
       __typename: "User",
@@ -4902,16 +5913,25 @@ export type OnCreateGroupMemberSubscription = {
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       groups:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -4950,6 +5970,9 @@ export type OnUpdateGroupMemberSubscription = {
         orgSize: string | null,
         orgDescription: string | null,
         joined: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null,
       type: string,
       name: string,
@@ -4958,6 +5981,7 @@ export type OnUpdateGroupMemberSubscription = {
       members:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       image: string,
       time: string | null,
@@ -4969,9 +5993,13 @@ export type OnUpdateGroupMemberSubscription = {
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       eventType: string | null,
       eventUrl: string | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
     user:  {
       __typename: "User",
@@ -5009,16 +6037,25 @@ export type OnUpdateGroupMemberSubscription = {
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       groups:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -5057,6 +6094,9 @@ export type OnDeleteGroupMemberSubscription = {
         orgSize: string | null,
         orgDescription: string | null,
         joined: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null,
       type: string,
       name: string,
@@ -5065,6 +6105,7 @@ export type OnDeleteGroupMemberSubscription = {
       members:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       image: string,
       time: string | null,
@@ -5076,9 +6117,13 @@ export type OnDeleteGroupMemberSubscription = {
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       eventType: string | null,
       eventUrl: string | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
     user:  {
       __typename: "User",
@@ -5116,16 +6161,25 @@ export type OnDeleteGroupMemberSubscription = {
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       groups:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -5174,15 +6228,21 @@ export type OnCreateGroupSubscription = {
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       groups:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
     type: string,
     name: string,
@@ -5195,8 +6255,12 @@ export type OnCreateGroupSubscription = {
         id: string,
         groupID: string | null,
         userID: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     image: string,
     time: string | null,
@@ -5215,11 +6279,18 @@ export type OnCreateGroupSubscription = {
         roomId: string | null,
         userId: string | null,
         owner: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     eventType: string | null,
     eventUrl: string | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -5268,15 +6339,21 @@ export type OnUpdateGroupSubscription = {
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       groups:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
     type: string,
     name: string,
@@ -5289,8 +6366,12 @@ export type OnUpdateGroupSubscription = {
         id: string,
         groupID: string | null,
         userID: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     image: string,
     time: string | null,
@@ -5309,11 +6390,18 @@ export type OnUpdateGroupSubscription = {
         roomId: string | null,
         userId: string | null,
         owner: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     eventType: string | null,
     eventUrl: string | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -5362,15 +6450,21 @@ export type OnDeleteGroupSubscription = {
       owns:  {
         __typename: "ModelGroupConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       groups:  {
         __typename: "ModelGroupMemberConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
       messages:  {
         __typename: "ModelMessageConnection",
         nextToken: string | null,
+        startedAt: number | null,
       } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
     } | null,
     type: string,
     name: string,
@@ -5383,8 +6477,12 @@ export type OnDeleteGroupSubscription = {
         id: string,
         groupID: string | null,
         userID: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     image: string,
     time: string | null,
@@ -5403,11 +6501,18 @@ export type OnDeleteGroupSubscription = {
         roomId: string | null,
         userId: string | null,
         owner: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     eventType: string | null,
     eventUrl: string | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -5430,11 +6535,18 @@ export type OnCreateCourseInfoSubscription = {
         date: string | null,
         name: string | null,
         leader: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     subTitle: string | null,
     introduction: Array< string | null > | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -5457,11 +6569,18 @@ export type OnUpdateCourseInfoSubscription = {
         date: string | null,
         name: string | null,
         leader: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     subTitle: string | null,
     introduction: Array< string | null > | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -5484,11 +6603,18 @@ export type OnDeleteCourseInfoSubscription = {
         date: string | null,
         name: string | null,
         leader: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
     subTitle: string | null,
     introduction: Array< string | null > | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -5508,9 +6634,16 @@ export type OnCreateCourseWeekSubscription = {
         name: string | null,
         time: string | null,
         description: Array< string | null > | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -5530,9 +6663,16 @@ export type OnUpdateCourseWeekSubscription = {
         name: string | null,
         time: string | null,
         description: Array< string | null > | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -5552,9 +6692,16 @@ export type OnDeleteCourseWeekSubscription = {
         name: string | null,
         time: string | null,
         description: Array< string | null > | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -5572,9 +6719,16 @@ export type OnCreateCourseLessonSubscription = {
         id: string,
         due: string | null,
         description: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -5592,9 +6746,16 @@ export type OnUpdateCourseLessonSubscription = {
         id: string,
         due: string | null,
         description: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -5612,9 +6773,16 @@ export type OnDeleteCourseLessonSubscription = {
         id: string,
         due: string | null,
         description: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
       } | null > | null,
       nextToken: string | null,
+      startedAt: number | null,
     } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -5624,6 +6792,9 @@ export type OnCreateCourseAssignmentSubscription = {
     id: string,
     due: string | null,
     description: string | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -5633,6 +6804,9 @@ export type OnUpdateCourseAssignmentSubscription = {
     id: string,
     due: string | null,
     description: string | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 
@@ -5642,6 +6816,9 @@ export type OnDeleteCourseAssignmentSubscription = {
     id: string,
     due: string | null,
     description: string | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
   } | null,
 };
 

@@ -214,7 +214,7 @@ class IndexApp extends React.Component<Props, State>{
             type: "curriculum",
             menuTitle: "Jr. High",
             title: "Jr. High",
-            image: "test.jpg",
+            image: null,
             description: "...",
             series: []
         }))
@@ -222,7 +222,7 @@ class IndexApp extends React.Component<Props, State>{
             type: "curriculum",
             menuTitle: "Sr. High",
             title: "Sr. High",
-            image: "test.jpg",
+            image: null,
             description: "...",
             series: []
         }))
@@ -230,7 +230,7 @@ class IndexApp extends React.Component<Props, State>{
             type: "curriculum",
             menuTitle: "Youth",
             title: "Youth",
-            image: "test.jpg",
+            image: null,
             description: "...",
             series: []
         }))
@@ -238,7 +238,7 @@ class IndexApp extends React.Component<Props, State>{
             type: "curriculum",
             menuTitle: "Kids",
             title: "Kids",
-            image: "test.jpg",
+            image: null,
             description: "...",
             series: []
         }))
@@ -246,7 +246,7 @@ class IndexApp extends React.Component<Props, State>{
             type: "curriculum",
             menuTitle: "Preschool",
             title: "Preschool",
-            image: "test.jpg",
+            image: null,
             description: "...",
             series: []
         }))
@@ -1236,7 +1236,7 @@ class IndexApp extends React.Component<Props, State>{
             <div>
 
                 <Button onPress={() => { this.importKidsAndYouth() }}><Text>Import Kids and Youth</Text></Button>
-                <Button onPress={() => { /*this.importKidsAndYouthVideos() */ }}><Text>Import Kids and Youth Videos</Text></Button>
+               
 
             </div >
         );

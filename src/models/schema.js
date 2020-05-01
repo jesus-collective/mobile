@@ -637,7 +637,8 @@ export const schema = {
                         "fields": [
                             "groupID",
                             "userID"
-                        ]
+                        ],
+                        "queryField": "groupMemberByGroup"
                     }
                 },
                 {
@@ -647,7 +648,8 @@ export const schema = {
                         "fields": [
                             "userID",
                             "groupID"
-                        ]
+                        ],
+                        "queryField": "groupMemberByUser"
                     }
                 }
             ]
@@ -1291,5 +1293,5 @@ export const schema = {
             }
         }
     },
-    "version": "44766055996c2537a43beae8bbbd7db3"
+    "version": "a9479c7f91b3cec5ffbdd89b2f583ef0"
 };

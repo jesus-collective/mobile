@@ -15,7 +15,7 @@ import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import ResourceViewer from '../../components/ResourceViewer/ResourceViewer'
-
+import ImportKidsAndYouth from './ImportKidsandYouth'
 
 interface Props {
   navigation: any
@@ -203,7 +203,7 @@ export default class GroupScreen extends React.Component<Props, State>{
             <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
             <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
             <ResourceViewer navigation={this.props.navigation} groupId={this.state.data.id}></ResourceViewer>
-            
+          {/*  <ImportKidsAndYouth></ImportKidsAndYouth>*/}
           </Container>
         </StyleProvider>
         :
