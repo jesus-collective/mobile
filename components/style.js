@@ -184,7 +184,9 @@ export default EStyleSheet.create({
         fontSize: 20,
         lineHeight: 25,
         color: "#000000",
-        letterSpacing: -0.3
+        letterSpacing: -0.3,
+        paddingLeft: 20,
+        marginTop: 40,
     },
     fontConnectWithName: {
         fontFamily: 'Graphik-Bold-App',
