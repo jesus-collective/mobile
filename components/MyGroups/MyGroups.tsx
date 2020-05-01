@@ -322,7 +322,7 @@ export default class MyGroups extends React.Component<Props, State> {
         return (
           <StyleProvider style={getTheme(material)}>
 
-            <Container style={{ padding: 10, minHeight: 460, width: "100%", flexDirection: 'column', justifyContent: 'flex-start' }}>
+            <Container style={{ padding: 10, minHeight: 470, width: "100%", flexDirection: 'column', justifyContent: 'flex-start' }}>
               <Container style={{ minHeight: 45, flexGrow: 0, flexDirection: 'row', justifyContent: 'space-between', marginTop: 30 }} >
                 <JCButton buttonType={ButtonTypes.TransparentBoldBlack} onPress={() => { this.openMultiple() }}>{this.state.titleString}</JCButton>
                 <Container style={{ maxHeight: 45, flexDirection: 'row', justifyContent: 'flex-end', alignItems: "flex-start" }}>

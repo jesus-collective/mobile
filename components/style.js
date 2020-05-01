@@ -186,8 +186,6 @@ export default EStyleSheet.create({
         color: "#000000",
         letterSpacing: -0.3,
         paddingLeft: 20,
-        marginTop: 40,
-        marginBottom: 40
     },
     fontConnectWithName: {
         fontFamily: 'Graphik-Bold-App',
@@ -205,6 +203,10 @@ export default EStyleSheet.create({
         letterSpacing: -0.3,
         color: "#333333",
         paddingBottom: 9, 
+    },
+    connectWithTopSectionButton: {
+        paddingTop: 30, 
+        paddingBottom: 25
     },
     connectWithSliderButton: {
         padding: 0,
