@@ -102,7 +102,24 @@ export default class GroupScreen extends React.Component<Props, State>{
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       var processResults = (json) => {
-        this.setState({ data: json.data.getGroup })
+       
+        this.setState({ data: json.data.getGroup },
+
+          () => {
+            var groupMemberByUser: any = API.graphql({
+              query: queries.groupMemberByUser,
+              variables: { userID: this.state.currentUser, groupID: { eq: this.state.data.id } },
+              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+            });
+            groupMemberByUser.then((json: any) => {
+              console.log({ "groupMemberByUser": json })
+              if (json.data.groupMemberByUser.items.length > 0)
+                this.setState({ canJoin: false, canLeave: true })
+              else
+                this.setState({ canJoin: true, canLeave: false })
+            })
+          }
+        )
       }
       getGroup.then(processResults).catch(processResults)
     }
@@ -156,6 +173,33 @@ export default class GroupScreen extends React.Component<Props, State>{
 
   }
   leave() {
+    var groupMemberByUser: any = API.graphql({
+      query: queries.groupMemberByUser,
+      variables: { userID: this.state.currentUser, groupID: { eq: this.state.data.id } },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+    groupMemberByUser.then((json: any) => {
+      console.log({ "Success queries.groupMemberByUser": json });
+
+      json.data.groupMemberByUser.items.map((item) => {
+        var deleteGroupMember: any = API.graphql({
+          query: mutations.deleteGroupMember,
+          variables: { input: { id: item.id } },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+        });
+        deleteGroupMember.then((json: any) => {
+
+          console.log({ "Success mutations.deleteGroupMember": json });
+        }).catch((err: any) => {
+          console.log({ "Error mutations.deleteGroupMember": err });
+        });
+      })
+      this.setState({ canJoin: true, canLeave: false })
+
+      // this.setState({ canJoin: true, canLeave: false })
+    }).catch((err: any) => {
+      console.log({ "Error queries.groupMemberByUser": err });
+    });
 
   }
   join() {

@@ -47,8 +47,8 @@ type Image{
 }
 type GroupMember
   @model(queries: null)
-  @key(name: "byGroup", fields: ["groupID", "userID"])
-  @key(name: "byUser", fields: ["userID", "groupID"]) {
+  @key(name: "byGroup", fields: ["groupID", "userID"], queryField:"groupMemberByGroup")
+  @key(name: "byUser", fields: ["userID", "groupID"], queryField:"groupMemberByUser") {
   id: ID!
   groupID: ID
   userID: ID

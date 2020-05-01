@@ -68,6 +68,7 @@ export default class EventScreen extends React.Component<Props, State>{
       })
       const getUser: any = API.graphql(graphqlOperation(queries.getUser, { id: user['username'] }));
       getUser.then((json) => {
+        
         this.setState({
           currentUserProfile: json.data.getUser
         })
@@ -102,7 +103,24 @@ export default class EventScreen extends React.Component<Props, State>{
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       var processResults = (json) => {
-        this.setState({ data: json.data.getGroup })
+       
+        this.setState({ data: json.data.getGroup },
+
+          () => {
+            var groupMemberByUser: any = API.graphql({
+              query: queries.groupMemberByUser,
+              variables: { userID: this.state.currentUser, groupID: { eq: this.state.data.id } },
+              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+            });
+            groupMemberByUser.then((json: any) => {
+              console.log({ "groupMemberByUser": json })
+              if (json.data.groupMemberByUser.items.length > 0)
+                this.setState({ canJoin: false, canLeave: true })
+              else
+                this.setState({ canJoin: true, canLeave: false })
+            })
+          }
+        )
       }
       getGroup.then(processResults).catch(processResults)
     }
@@ -156,6 +174,33 @@ export default class EventScreen extends React.Component<Props, State>{
 
   }
   leave() {
+    var groupMemberByUser: any = API.graphql({
+      query: queries.groupMemberByUser,
+      variables: { userID: this.state.currentUser, groupID: { eq: this.state.data.id } },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+    groupMemberByUser.then((json: any) => {
+      console.log({ "Success queries.groupMemberByUser": json });
+
+      json.data.groupMemberByUser.items.map((item) => {
+        var deleteGroupMember: any = API.graphql({
+          query: mutations.deleteGroupMember,
+          variables: { input: { id: item.id } },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+        });
+        deleteGroupMember.then((json: any) => {
+
+          console.log({ "Success mutations.deleteGroupMember": json });
+        }).catch((err: any) => {
+          console.log({ "Error mutations.deleteGroupMember": err });
+        });
+      })
+      this.setState({ canJoin: true, canLeave: false })
+
+      // this.setState({ canJoin: true, canLeave: false })
+    }).catch((err: any) => {
+      console.log({ "Error queries.groupMemberByUser": err });
+    });
 
   }
   join() {
@@ -236,7 +281,7 @@ export default class EventScreen extends React.Component<Props, State>{
                       isEditable={this.state.isEditable}></EditableLocation>
                   }
                   <Text>Organizer</Text>
-                  <ProfileImage user={this.state.data.ownerUser?this.state.data.ownerUser:this.state.currentUserProfile} size="small" />
+                  <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
                   <Text>Attending ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
 
                   {
@@ -270,7 +315,7 @@ export default class EventScreen extends React.Component<Props, State>{
                 </Container>
                 <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                   <MessageBoard navigation={this.props.navigation} groupId={this.state.data.id}></MessageBoard>
-                {/*  <Zoom></Zoom>*/}
+                  {/*  <Zoom></Zoom>*/}
                 </Container>
               </Container>
             </Content>

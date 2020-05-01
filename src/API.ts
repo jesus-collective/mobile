@@ -594,6 +594,15 @@ export enum ModelSortDirection {
 }
 
 
+export type ModelGroupMemberFilterInput = {
+  id?: ModelIDFilterInput | null,
+  groupID?: ModelIDFilterInput | null,
+  userID?: ModelIDFilterInput | null,
+  and?: Array< ModelGroupMemberFilterInput | null > | null,
+  or?: Array< ModelGroupMemberFilterInput | null > | null,
+  not?: ModelGroupMemberFilterInput | null,
+};
+
 export type ModelStringKeyConditionInput = {
   eq?: string | null,
   le?: string | null,
@@ -4088,6 +4097,138 @@ export type ListResourceEpisodesQuery = {
     } | null > | null,
     nextToken: string | null,
     startedAt: number | null,
+  } | null,
+};
+
+export type GroupMemberByGroupQueryVariables = {
+  groupID?: string | null,
+  userID?: ModelIDKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelGroupMemberFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type GroupMemberByGroupQuery = {
+  groupMemberByGroup:  {
+    __typename: "ModelGroupMemberConnection",
+    items:  Array< {
+      __typename: "GroupMember",
+      id: string,
+      groupID: string | null,
+      userID: string | null,
+      group:  {
+        __typename: "Group",
+        id: string,
+        owner: string,
+        type: string,
+        name: string,
+        description: string,
+        memberCount: number | null,
+        image: string,
+        time: string | null,
+        lastUpdated: string | null,
+        location: string | null,
+        length: string | null,
+        effort: string | null,
+        cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
+      } | null,
+      user:  {
+        __typename: "User",
+        id: string,
+        given_name: string,
+        family_name: string,
+        email: string | null,
+        phone: string | null,
+        owner: string | null,
+        hasPaidState: string | null,
+        address: string | null,
+        city: string | null,
+        province: string | null,
+        postalCode: string | null,
+        country: string | null,
+        aboutMeShort: string | null,
+        aboutMeLong: string | null,
+        interests: string | null,
+        currentRole: string | null,
+        currentScope: string | null,
+        personality: string | null,
+        orgName: string | null,
+        orgType: string | null,
+        orgSize: string | null,
+        orgDescription: string | null,
+        joined: string | null,
+      } | null,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type GroupMemberByUserQueryVariables = {
+  userID?: string | null,
+  groupID?: ModelIDKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelGroupMemberFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type GroupMemberByUserQuery = {
+  groupMemberByUser:  {
+    __typename: "ModelGroupMemberConnection",
+    items:  Array< {
+      __typename: "GroupMember",
+      id: string,
+      groupID: string | null,
+      userID: string | null,
+      group:  {
+        __typename: "Group",
+        id: string,
+        owner: string,
+        type: string,
+        name: string,
+        description: string,
+        memberCount: number | null,
+        image: string,
+        time: string | null,
+        lastUpdated: string | null,
+        location: string | null,
+        length: string | null,
+        effort: string | null,
+        cost: string | null,
+        eventType: string | null,
+        eventUrl: string | null,
+      } | null,
+      user:  {
+        __typename: "User",
+        id: string,
+        given_name: string,
+        family_name: string,
+        email: string | null,
+        phone: string | null,
+        owner: string | null,
+        hasPaidState: string | null,
+        address: string | null,
+        city: string | null,
+        province: string | null,
+        postalCode: string | null,
+        country: string | null,
+        aboutMeShort: string | null,
+        aboutMeLong: string | null,
+        interests: string | null,
+        currentRole: string | null,
+        currentScope: string | null,
+        personality: string | null,
+        orgName: string | null,
+        orgType: string | null,
+        orgSize: string | null,
+        orgDescription: string | null,
+        joined: string | null,
+      } | null,
+    } | null > | null,
+    nextToken: string | null,
   } | null,
 };
 

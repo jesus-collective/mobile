@@ -1,5 +1,5 @@
-// tslint:disable
-// eslint-disable
+/* tslint:disable */
+/* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
 export const getUser = /* GraphQL */ `
@@ -1096,6 +1096,142 @@ export const listResourceEpisodes = /* GraphQL */ `
       }
       nextToken
       startedAt
+    }
+  }
+`;
+export const groupMemberByGroup = /* GraphQL */ `
+  query GroupMemberByGroup(
+    $groupID: ID
+    $userID: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelGroupMemberFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    groupMemberByGroup(
+      groupID: $groupID
+      userID: $userID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        groupID
+        userID
+        group {
+          id
+          owner
+          type
+          name
+          description
+          memberCount
+          image
+          time
+          lastUpdated
+          location
+          length
+          effort
+          cost
+          eventType
+          eventUrl
+        }
+        user {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          hasPaidState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          orgDescription
+          joined
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const groupMemberByUser = /* GraphQL */ `
+  query GroupMemberByUser(
+    $userID: ID
+    $groupID: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelGroupMemberFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    groupMemberByUser(
+      userID: $userID
+      groupID: $groupID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        groupID
+        userID
+        group {
+          id
+          owner
+          type
+          name
+          description
+          memberCount
+          image
+          time
+          lastUpdated
+          location
+          length
+          effort
+          cost
+          eventType
+          eventUrl
+        }
+        user {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          hasPaidState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          orgDescription
+          joined
+        }
+      }
+      nextToken
     }
   }
 `;
