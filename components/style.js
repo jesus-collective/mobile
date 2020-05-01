@@ -240,7 +240,13 @@ export default EStyleSheet.create({
     '@media (min-width: 350) and (max-width: 768)': {
         connectWithSliderButton: {
           height: 45,
-        }
+        },
+
+        connectWithTopSectionButton: {
+            paddingTop: 50,
+            paddingBottom: 35,
+            paddingRight: 15
+        },
     },
 
     // Media Query Desktop Large Tablet
@@ -249,7 +255,7 @@ export default EStyleSheet.create({
           paddingTop: 50,
           paddingBottom: 35,
           paddingRight: 15
-        }
+        },
     },
         
     authView: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
