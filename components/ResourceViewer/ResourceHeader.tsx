@@ -35,13 +35,14 @@ class ResourceHeader extends React.Component<Props, State> {
         }
     }
     async getImage(img) {
-       
-        var z = await Storage.get(img.filenameLarge, {
-            level: 'protected',
-            contentType: 'image/png',
-            identityId: img.userId
-        })
-        this.setState({ imageUrl: z, image: img })
+        if (img != null){
+            var z = await Storage.get(img.filenameLarge, {
+                level: 'protected',
+                contentType: 'image/png',
+                identityId: img.userId
+            })
+            this.setState({ imageUrl: z, image: img })
+        }
     }
     render() {
         //const { navigate } = this.props.navigation;
@@ -53,7 +54,7 @@ class ResourceHeader extends React.Component<Props, State> {
                     return (<Container style={{ backgroundColor: "#F0493E", height: "20vw" }}>
                         {this.state.imageUrl ?
                             <Image style={{ position: "relative", width: "100%", height: "20vw" }}
-                                source={this.state.imageUrl} onError={()=>{this.getImage(state.data.resources[state.currentResource].image)}}>
+                                source={this.state.imageUrl} onError={() => { this.getImage(state.data.resources[state.currentResource].image) }}>
                             </ Image> : null}
                         <View style={styles.resourcefileInputWrapper}>
                             <JCButton buttonType={ButtonTypes.Transparent} onPress={() => { }}><Ionicons size={32} name="ios-image" style={styles.resourceImageIcon} /></JCButton>

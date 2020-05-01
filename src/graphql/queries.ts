@@ -1,5 +1,5 @@
-// tslint:disable
-// eslint-disable
+/* tslint:disable */
+/* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
 export const syncUsers = /* GraphQL */ `
@@ -496,7 +496,9 @@ export const listGroups = /* GraphQL */ `
           orgSize
           orgDescription
           joined
-        
+          _version
+          _deleted
+          _lastChangedAt
         }
         type
         name
@@ -519,7 +521,9 @@ export const listGroups = /* GraphQL */ `
         }
         eventType
         eventUrl
-      
+        _version
+        _deleted
+        _lastChangedAt
       }
       nextToken
       startedAt
@@ -543,7 +547,7 @@ export const syncCourseInfos = /* GraphQL */ `
         id
         designedBy
         summary
-        courseDetails {
+        courseWeeks {
           nextToken
           startedAt
         }
@@ -564,7 +568,7 @@ export const getCourseInfo = /* GraphQL */ `
       id
       designedBy
       summary
-      courseDetails {
+      courseWeeks {
         items {
           id
           week
@@ -597,7 +601,7 @@ export const listCourseInfos = /* GraphQL */ `
         id
         designedBy
         summary
-        courseDetails {
+        courseWeeks {
           nextToken
           startedAt
         }
@@ -631,6 +635,16 @@ export const syncCourseWeeks = /* GraphQL */ `
         date
         name
         leader
+        courseInfo {
+          id
+          designedBy
+          summary
+          subTitle
+          introduction
+          _version
+          _deleted
+          _lastChangedAt
+        }
         lessons {
           nextToken
           startedAt
@@ -652,6 +666,20 @@ export const getCourseWeek = /* GraphQL */ `
       date
       name
       leader
+      courseInfo {
+        id
+        designedBy
+        summary
+        courseWeeks {
+          nextToken
+          startedAt
+        }
+        subTitle
+        introduction
+        _version
+        _deleted
+        _lastChangedAt
+      }
       lessons {
         items {
           id
@@ -684,6 +712,16 @@ export const listCourseWeeks = /* GraphQL */ `
         date
         name
         leader
+        courseInfo {
+          id
+          designedBy
+          summary
+          subTitle
+          introduction
+          _version
+          _deleted
+          _lastChangedAt
+        }
         lessons {
           nextToken
           startedAt
@@ -715,7 +753,17 @@ export const syncCourseLessons = /* GraphQL */ `
         name
         time
         description
-        assignment {
+        courseWeek {
+          id
+          week
+          date
+          name
+          leader
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        assignments {
           nextToken
           startedAt
         }
@@ -735,7 +783,31 @@ export const getCourseLesson = /* GraphQL */ `
       name
       time
       description
-      assignment {
+      courseWeek {
+        id
+        week
+        date
+        name
+        leader
+        courseInfo {
+          id
+          designedBy
+          summary
+          subTitle
+          introduction
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        lessons {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      assignments {
         items {
           id
           due
@@ -765,7 +837,17 @@ export const listCourseLessons = /* GraphQL */ `
         name
         time
         description
-        assignment {
+        courseWeek {
+          id
+          week
+          date
+          name
+          leader
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        assignments {
           nextToken
           startedAt
         }
@@ -795,6 +877,15 @@ export const syncCourseAssignments = /* GraphQL */ `
         id
         due
         description
+        courseLesson {
+          id
+          name
+          time
+          description
+          _version
+          _deleted
+          _lastChangedAt
+        }
         _version
         _deleted
         _lastChangedAt
@@ -810,6 +901,29 @@ export const getCourseAssignment = /* GraphQL */ `
       id
       due
       description
+      courseLesson {
+        id
+        name
+        time
+        description
+        courseWeek {
+          id
+          week
+          date
+          name
+          leader
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        assignments {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+      }
       _version
       _deleted
       _lastChangedAt
@@ -831,6 +945,15 @@ export const listCourseAssignments = /* GraphQL */ `
         id
         due
         description
+        courseLesson {
+          id
+          name
+          time
+          description
+          _version
+          _deleted
+          _lastChangedAt
+        }
         _version
         _deleted
         _lastChangedAt
@@ -1093,9 +1216,13 @@ export const listMessages = /* GraphQL */ `
           cost
           eventType
           eventUrl
-         
+          _version
+          _deleted
+          _lastChangedAt
         }
-       
+        _version
+        _deleted
+        _lastChangedAt
       }
       nextToken
       startedAt
@@ -1118,6 +1245,7 @@ export const syncResourceRoots = /* GraphQL */ `
       items {
         id
         type
+        groupId
         resources {
           nextToken
           startedAt
@@ -1136,6 +1264,7 @@ export const getResourceRoot = /* GraphQL */ `
     getResourceRoot(id: $id) {
       id
       type
+      groupId
       resources {
         items {
           id
@@ -1167,6 +1296,7 @@ export const listResourceRoots = /* GraphQL */ `
       items {
         id
         type
+        groupId
         resources {
           nextToken
           startedAt
@@ -1214,6 +1344,7 @@ export const syncResources = /* GraphQL */ `
         root {
           id
           type
+          groupId
           _version
           _deleted
           _lastChangedAt
@@ -1265,6 +1396,7 @@ export const getResource = /* GraphQL */ `
       root {
         id
         type
+        groupId
         resources {
           nextToken
           startedAt
@@ -1307,6 +1439,7 @@ export const listResources = /* GraphQL */ `
         root {
           id
           type
+          groupId
           _version
           _deleted
           _lastChangedAt
@@ -1421,6 +1554,7 @@ export const getResourceSeries = /* GraphQL */ `
         root {
           id
           type
+          groupId
           _version
           _deleted
           _lastChangedAt
@@ -1689,7 +1823,9 @@ export const groupMemberByGroup = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
-       
+        _version
+        _deleted
+        _lastChangedAt
       }
       nextToken
       startedAt
@@ -1733,7 +1869,9 @@ export const groupMemberByUser = /* GraphQL */ `
           cost
           eventType
           eventUrl
-        
+          _version
+          _deleted
+          _lastChangedAt
         }
         user {
           id
@@ -1759,9 +1897,13 @@ export const groupMemberByUser = /* GraphQL */ `
           orgSize
           orgDescription
           joined
-         
+          _version
+          _deleted
+          _lastChangedAt
         }
-      
+        _version
+        _deleted
+        _lastChangedAt
       }
       nextToken
       startedAt

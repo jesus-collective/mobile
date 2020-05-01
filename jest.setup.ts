@@ -18,3 +18,4 @@ jest.mock('expo-file-system')
 
 jest.mock('expo-asset')
 jest.mock('expo-font')
+jest.mock('request-promise-core')

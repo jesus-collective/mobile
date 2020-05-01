@@ -93,7 +93,7 @@ export declare class CourseInfo {
   readonly id: string;
   readonly designedBy?: string;
   readonly summary?: string[];
-  readonly courseDetails?: CourseWeek[];
+  readonly courseWeeks?: CourseWeek[];
   readonly subTitle?: string;
   readonly introduction?: string[];
   constructor(init: ModelInit<CourseInfo>);
@@ -106,8 +106,8 @@ export declare class CourseWeek {
   readonly date?: string;
   readonly name?: string;
   readonly leader?: string;
+  readonly courseInfo?: CourseInfo;
   readonly lessons?: CourseLesson[];
-  readonly courseInfoCourseDetailsId?: string;
   constructor(init: ModelInit<CourseWeek>);
   static copyOf(source: CourseWeek, mutator: (draft: MutableModel<CourseWeek>) => MutableModel<CourseWeek> | void): CourseWeek;
 }
@@ -117,8 +117,8 @@ export declare class CourseLesson {
   readonly name?: string;
   readonly time?: string;
   readonly description?: string[];
-  readonly assignment?: CourseAssignment[];
-  readonly courseWeekLessonsId?: string;
+  readonly courseWeek?: CourseWeek;
+  readonly assignments?: CourseAssignment[];
   constructor(init: ModelInit<CourseLesson>);
   static copyOf(source: CourseLesson, mutator: (draft: MutableModel<CourseLesson>) => MutableModel<CourseLesson> | void): CourseLesson;
 }
@@ -127,7 +127,7 @@ export declare class CourseAssignment {
   readonly id: string;
   readonly due?: string;
   readonly description?: string;
-  readonly courseLessonAssignmentId?: string;
+  readonly courseLesson?: CourseLesson;
   constructor(init: ModelInit<CourseAssignment>);
   static copyOf(source: CourseAssignment, mutator: (draft: MutableModel<CourseAssignment>) => MutableModel<CourseAssignment> | void): CourseAssignment;
 }
@@ -135,6 +135,7 @@ export declare class CourseAssignment {
 export declare class ResourceRoot {
   readonly id: string;
   readonly type?: string;
+  readonly groupId?: string;
   readonly resources?: Resource[];
   constructor(init: ModelInit<ResourceRoot>);
   static copyOf(source: ResourceRoot, mutator: (draft: MutableModel<ResourceRoot>) => MutableModel<ResourceRoot> | void): ResourceRoot;

@@ -208,8 +208,19 @@ export type CreateCourseWeekInput = {
   date?: string | null,
   name?: string | null,
   leader?: string | null,
+  courseInfo?: CourseInfoInput | null,
   _version?: number | null,
-  courseInfoCourseDetailsId?: string | null,
+};
+
+export type CourseInfoInput = {
+  id: string,
+  designedBy?: string | null,
+  summary?: Array< string | null > | null,
+  subTitle?: string | null,
+  introduction?: Array< string | null > | null,
+  _version: number,
+  _deleted?: boolean | null,
+  _lastChangedAt: number,
 };
 
 export type UpdateCourseWeekInput = {
@@ -218,8 +229,8 @@ export type UpdateCourseWeekInput = {
   date?: string | null,
   name?: string | null,
   leader?: string | null,
+  courseInfo?: CourseInfoInput | null,
   _version?: number | null,
-  courseInfoCourseDetailsId?: string | null,
 };
 
 export type DeleteCourseWeekInput = {
@@ -232,8 +243,20 @@ export type CreateCourseLessonInput = {
   name?: string | null,
   time?: string | null,
   description?: Array< string | null > | null,
+  courseWeek?: CourseWeekInput | null,
   _version?: number | null,
-  courseWeekLessonsId?: string | null,
+};
+
+export type CourseWeekInput = {
+  id: string,
+  week?: string | null,
+  date?: string | null,
+  name?: string | null,
+  leader?: string | null,
+  courseInfo?: CourseInfoInput | null,
+  _version: number,
+  _deleted?: boolean | null,
+  _lastChangedAt: number,
 };
 
 export type UpdateCourseLessonInput = {
@@ -241,8 +264,8 @@ export type UpdateCourseLessonInput = {
   name?: string | null,
   time?: string | null,
   description?: Array< string | null > | null,
+  courseWeek?: CourseWeekInput | null,
   _version?: number | null,
-  courseWeekLessonsId?: string | null,
 };
 
 export type DeleteCourseLessonInput = {
@@ -254,16 +277,27 @@ export type CreateCourseAssignmentInput = {
   id?: string | null,
   due?: string | null,
   description?: string | null,
+  courseLesson?: CourseLessonInput | null,
   _version?: number | null,
-  courseLessonAssignmentId?: string | null,
+};
+
+export type CourseLessonInput = {
+  id: string,
+  name?: string | null,
+  time?: string | null,
+  description?: Array< string | null > | null,
+  courseWeek?: CourseWeekInput | null,
+  _version: number,
+  _deleted?: boolean | null,
+  _lastChangedAt: number,
 };
 
 export type UpdateCourseAssignmentInput = {
   id: string,
   due?: string | null,
   description?: string | null,
+  courseLesson?: CourseLessonInput | null,
   _version?: number | null,
-  courseLessonAssignmentId?: string | null,
 };
 
 export type DeleteCourseAssignmentInput = {
@@ -326,12 +360,14 @@ export type DeleteMessageInput = {
 export type CreateResourceRootInput = {
   id?: string | null,
   type?: string | null,
+  groupId?: string | null,
   _version?: number | null,
 };
 
 export type UpdateResourceRootInput = {
   id: string,
   type?: string | null,
+  groupId?: string | null,
   _version?: number | null,
 };
 
@@ -350,12 +386,12 @@ export type CreateResourceInput = {
   extendedDescription?: string | null,
   root?: ResourceRootInput | null,
   _version?: number | null,
-  resourceRootId?: string | null,
 };
 
 export type ResourceRootInput = {
   id: string,
   type?: string | null,
+  groupId?: string | null,
   _version: number,
   _deleted?: boolean | null,
   _lastChangedAt: number,
@@ -371,7 +407,6 @@ export type UpdateResourceInput = {
   extendedDescription?: string | null,
   root?: ResourceRootInput | null,
   _version?: number | null,
-  resourceRootId?: string | null,
 };
 
 export type DeleteResourceInput = {
@@ -392,7 +427,6 @@ export type CreateResourceSeriesInput = {
   playlistImage?: string | null,
   resource?: ResourceInput | null,
   _version?: number | null,
-  resourceSeriesResourceId?: string | null,
 };
 
 export type ResourceInput = {
@@ -422,7 +456,6 @@ export type UpdateResourceSeriesInput = {
   playlistImage?: string | null,
   resource?: ResourceInput | null,
   _version?: number | null,
-  resourceSeriesResourceId?: string | null,
 };
 
 export type DeleteResourceSeriesInput = {
@@ -443,7 +476,6 @@ export type CreateResourceEpisodeInput = {
   activityPage?: string | null,
   series?: ResourceSeriesInput | null,
   _version?: number | null,
-  resourceEpisodeSeriesId?: string | null,
 };
 
 export type ResourceSeriesInput = {
@@ -476,7 +508,6 @@ export type UpdateResourceEpisodeInput = {
   activityPage?: string | null,
   series?: ResourceSeriesInput | null,
   _version?: number | null,
-  resourceEpisodeSeriesId?: string | null,
 };
 
 export type DeleteResourceEpisodeInput = {
@@ -635,6 +666,7 @@ export type ModelMessageFilterInput = {
 export type ModelResourceRootFilterInput = {
   id?: ModelIDFilterInput | null,
   type?: ModelStringFilterInput | null,
+  groupId?: ModelStringFilterInput | null,
   and?: Array< ModelResourceRootFilterInput | null > | null,
   or?: Array< ModelResourceRootFilterInput | null > | null,
   not?: ModelResourceRootFilterInput | null,
@@ -1833,7 +1865,7 @@ export type CreateCourseInfoMutation = {
     id: string,
     designedBy: string | null,
     summary: Array< string | null > | null,
-    courseDetails:  {
+    courseWeeks:  {
       __typename: "ModelCourseWeekConnection",
       items:  Array< {
         __typename: "CourseWeek",
@@ -1867,7 +1899,7 @@ export type UpdateCourseInfoMutation = {
     id: string,
     designedBy: string | null,
     summary: Array< string | null > | null,
-    courseDetails:  {
+    courseWeeks:  {
       __typename: "ModelCourseWeekConnection",
       items:  Array< {
         __typename: "CourseWeek",
@@ -1901,7 +1933,7 @@ export type DeleteCourseInfoMutation = {
     id: string,
     designedBy: string | null,
     summary: Array< string | null > | null,
-    courseDetails:  {
+    courseWeeks:  {
       __typename: "ModelCourseWeekConnection",
       items:  Array< {
         __typename: "CourseWeek",
@@ -1937,6 +1969,22 @@ export type CreateCourseWeekMutation = {
     date: string | null,
     name: string | null,
     leader: string | null,
+    courseInfo:  {
+      __typename: "CourseInfo",
+      id: string,
+      designedBy: string | null,
+      summary: Array< string | null > | null,
+      courseWeeks:  {
+        __typename: "ModelCourseWeekConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      subTitle: string | null,
+      introduction: Array< string | null > | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
     lessons:  {
       __typename: "ModelCourseLessonConnection",
       items:  Array< {
@@ -1970,6 +2018,22 @@ export type UpdateCourseWeekMutation = {
     date: string | null,
     name: string | null,
     leader: string | null,
+    courseInfo:  {
+      __typename: "CourseInfo",
+      id: string,
+      designedBy: string | null,
+      summary: Array< string | null > | null,
+      courseWeeks:  {
+        __typename: "ModelCourseWeekConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      subTitle: string | null,
+      introduction: Array< string | null > | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
     lessons:  {
       __typename: "ModelCourseLessonConnection",
       items:  Array< {
@@ -2003,6 +2067,22 @@ export type DeleteCourseWeekMutation = {
     date: string | null,
     name: string | null,
     leader: string | null,
+    courseInfo:  {
+      __typename: "CourseInfo",
+      id: string,
+      designedBy: string | null,
+      summary: Array< string | null > | null,
+      courseWeeks:  {
+        __typename: "ModelCourseWeekConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      subTitle: string | null,
+      introduction: Array< string | null > | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
     lessons:  {
       __typename: "ModelCourseLessonConnection",
       items:  Array< {
@@ -2035,7 +2115,34 @@ export type CreateCourseLessonMutation = {
     name: string | null,
     time: string | null,
     description: Array< string | null > | null,
-    assignment:  {
+    courseWeek:  {
+      __typename: "CourseWeek",
+      id: string,
+      week: string | null,
+      date: string | null,
+      name: string | null,
+      leader: string | null,
+      courseInfo:  {
+        __typename: "CourseInfo",
+        id: string,
+        designedBy: string | null,
+        summary: Array< string | null > | null,
+        subTitle: string | null,
+        introduction: Array< string | null > | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      lessons:  {
+        __typename: "ModelCourseLessonConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    assignments:  {
       __typename: "ModelCourseAssignmentConnection",
       items:  Array< {
         __typename: "CourseAssignment",
@@ -2066,7 +2173,34 @@ export type UpdateCourseLessonMutation = {
     name: string | null,
     time: string | null,
     description: Array< string | null > | null,
-    assignment:  {
+    courseWeek:  {
+      __typename: "CourseWeek",
+      id: string,
+      week: string | null,
+      date: string | null,
+      name: string | null,
+      leader: string | null,
+      courseInfo:  {
+        __typename: "CourseInfo",
+        id: string,
+        designedBy: string | null,
+        summary: Array< string | null > | null,
+        subTitle: string | null,
+        introduction: Array< string | null > | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      lessons:  {
+        __typename: "ModelCourseLessonConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    assignments:  {
       __typename: "ModelCourseAssignmentConnection",
       items:  Array< {
         __typename: "CourseAssignment",
@@ -2097,7 +2231,34 @@ export type DeleteCourseLessonMutation = {
     name: string | null,
     time: string | null,
     description: Array< string | null > | null,
-    assignment:  {
+    courseWeek:  {
+      __typename: "CourseWeek",
+      id: string,
+      week: string | null,
+      date: string | null,
+      name: string | null,
+      leader: string | null,
+      courseInfo:  {
+        __typename: "CourseInfo",
+        id: string,
+        designedBy: string | null,
+        summary: Array< string | null > | null,
+        subTitle: string | null,
+        introduction: Array< string | null > | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      lessons:  {
+        __typename: "ModelCourseLessonConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    assignments:  {
       __typename: "ModelCourseAssignmentConnection",
       items:  Array< {
         __typename: "CourseAssignment",
@@ -2127,6 +2288,32 @@ export type CreateCourseAssignmentMutation = {
     id: string,
     due: string | null,
     description: string | null,
+    courseLesson:  {
+      __typename: "CourseLesson",
+      id: string,
+      name: string | null,
+      time: string | null,
+      description: Array< string | null > | null,
+      courseWeek:  {
+        __typename: "CourseWeek",
+        id: string,
+        week: string | null,
+        date: string | null,
+        name: string | null,
+        leader: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      assignments:  {
+        __typename: "ModelCourseAssignmentConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
     _version: number,
     _deleted: boolean | null,
     _lastChangedAt: number,
@@ -2143,6 +2330,32 @@ export type UpdateCourseAssignmentMutation = {
     id: string,
     due: string | null,
     description: string | null,
+    courseLesson:  {
+      __typename: "CourseLesson",
+      id: string,
+      name: string | null,
+      time: string | null,
+      description: Array< string | null > | null,
+      courseWeek:  {
+        __typename: "CourseWeek",
+        id: string,
+        week: string | null,
+        date: string | null,
+        name: string | null,
+        leader: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      assignments:  {
+        __typename: "ModelCourseAssignmentConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
     _version: number,
     _deleted: boolean | null,
     _lastChangedAt: number,
@@ -2159,6 +2372,32 @@ export type DeleteCourseAssignmentMutation = {
     id: string,
     due: string | null,
     description: string | null,
+    courseLesson:  {
+      __typename: "CourseLesson",
+      id: string,
+      name: string | null,
+      time: string | null,
+      description: Array< string | null > | null,
+      courseWeek:  {
+        __typename: "CourseWeek",
+        id: string,
+        week: string | null,
+        date: string | null,
+        name: string | null,
+        leader: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      assignments:  {
+        __typename: "ModelCourseAssignmentConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
     _version: number,
     _deleted: boolean | null,
     _lastChangedAt: number,
@@ -2567,6 +2806,7 @@ export type CreateResourceRootMutation = {
     __typename: "ResourceRoot",
     id: string,
     type: string | null,
+    groupId: string | null,
     resources:  {
       __typename: "ModelResourceConnection",
       items:  Array< {
@@ -2599,6 +2839,7 @@ export type UpdateResourceRootMutation = {
     __typename: "ResourceRoot",
     id: string,
     type: string | null,
+    groupId: string | null,
     resources:  {
       __typename: "ModelResourceConnection",
       items:  Array< {
@@ -2631,6 +2872,7 @@ export type DeleteResourceRootMutation = {
     __typename: "ResourceRoot",
     id: string,
     type: string | null,
+    groupId: string | null,
     resources:  {
       __typename: "ModelResourceConnection",
       items:  Array< {
@@ -2700,6 +2942,7 @@ export type CreateResourceMutation = {
       __typename: "ResourceRoot",
       id: string,
       type: string | null,
+      groupId: string | null,
       resources:  {
         __typename: "ModelResourceConnection",
         nextToken: string | null,
@@ -2761,6 +3004,7 @@ export type UpdateResourceMutation = {
       __typename: "ResourceRoot",
       id: string,
       type: string | null,
+      groupId: string | null,
       resources:  {
         __typename: "ModelResourceConnection",
         nextToken: string | null,
@@ -2822,6 +3066,7 @@ export type DeleteResourceMutation = {
       __typename: "ResourceRoot",
       id: string,
       type: string | null,
+      groupId: string | null,
       resources:  {
         __typename: "ModelResourceConnection",
         nextToken: string | null,
@@ -2900,6 +3145,7 @@ export type CreateResourceSeriesMutation = {
         __typename: "ResourceRoot",
         id: string,
         type: string | null,
+        groupId: string | null,
         _version: number,
         _deleted: boolean | null,
         _lastChangedAt: number,
@@ -2977,6 +3223,7 @@ export type UpdateResourceSeriesMutation = {
         __typename: "ResourceRoot",
         id: string,
         type: string | null,
+        groupId: string | null,
         _version: number,
         _deleted: boolean | null,
         _lastChangedAt: number,
@@ -3054,6 +3301,7 @@ export type DeleteResourceSeriesMutation = {
         __typename: "ResourceRoot",
         id: string,
         type: string | null,
+        groupId: string | null,
         _version: number,
         _deleted: boolean | null,
         _lastChangedAt: number,
@@ -3819,7 +4067,7 @@ export type SyncCourseInfosQuery = {
       id: string,
       designedBy: string | null,
       summary: Array< string | null > | null,
-      courseDetails:  {
+      courseWeeks:  {
         __typename: "ModelCourseWeekConnection",
         nextToken: string | null,
         startedAt: number | null,
@@ -3845,7 +4093,7 @@ export type GetCourseInfoQuery = {
     id: string,
     designedBy: string | null,
     summary: Array< string | null > | null,
-    courseDetails:  {
+    courseWeeks:  {
       __typename: "ModelCourseWeekConnection",
       items:  Array< {
         __typename: "CourseWeek",
@@ -3883,7 +4131,7 @@ export type ListCourseInfosQuery = {
       id: string,
       designedBy: string | null,
       summary: Array< string | null > | null,
-      courseDetails:  {
+      courseWeeks:  {
         __typename: "ModelCourseWeekConnection",
         nextToken: string | null,
         startedAt: number | null,
@@ -3916,6 +4164,17 @@ export type SyncCourseWeeksQuery = {
       date: string | null,
       name: string | null,
       leader: string | null,
+      courseInfo:  {
+        __typename: "CourseInfo",
+        id: string,
+        designedBy: string | null,
+        summary: Array< string | null > | null,
+        subTitle: string | null,
+        introduction: Array< string | null > | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
       lessons:  {
         __typename: "ModelCourseLessonConnection",
         nextToken: string | null,
@@ -3942,6 +4201,22 @@ export type GetCourseWeekQuery = {
     date: string | null,
     name: string | null,
     leader: string | null,
+    courseInfo:  {
+      __typename: "CourseInfo",
+      id: string,
+      designedBy: string | null,
+      summary: Array< string | null > | null,
+      courseWeeks:  {
+        __typename: "ModelCourseWeekConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      subTitle: string | null,
+      introduction: Array< string | null > | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
     lessons:  {
       __typename: "ModelCourseLessonConnection",
       items:  Array< {
@@ -3979,6 +4254,17 @@ export type ListCourseWeeksQuery = {
       date: string | null,
       name: string | null,
       leader: string | null,
+      courseInfo:  {
+        __typename: "CourseInfo",
+        id: string,
+        designedBy: string | null,
+        summary: Array< string | null > | null,
+        subTitle: string | null,
+        introduction: Array< string | null > | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
       lessons:  {
         __typename: "ModelCourseLessonConnection",
         nextToken: string | null,
@@ -4009,7 +4295,18 @@ export type SyncCourseLessonsQuery = {
       name: string | null,
       time: string | null,
       description: Array< string | null > | null,
-      assignment:  {
+      courseWeek:  {
+        __typename: "CourseWeek",
+        id: string,
+        week: string | null,
+        date: string | null,
+        name: string | null,
+        leader: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      assignments:  {
         __typename: "ModelCourseAssignmentConnection",
         nextToken: string | null,
         startedAt: number | null,
@@ -4034,7 +4331,34 @@ export type GetCourseLessonQuery = {
     name: string | null,
     time: string | null,
     description: Array< string | null > | null,
-    assignment:  {
+    courseWeek:  {
+      __typename: "CourseWeek",
+      id: string,
+      week: string | null,
+      date: string | null,
+      name: string | null,
+      leader: string | null,
+      courseInfo:  {
+        __typename: "CourseInfo",
+        id: string,
+        designedBy: string | null,
+        summary: Array< string | null > | null,
+        subTitle: string | null,
+        introduction: Array< string | null > | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      lessons:  {
+        __typename: "ModelCourseLessonConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    assignments:  {
       __typename: "ModelCourseAssignmentConnection",
       items:  Array< {
         __typename: "CourseAssignment",
@@ -4069,7 +4393,18 @@ export type ListCourseLessonsQuery = {
       name: string | null,
       time: string | null,
       description: Array< string | null > | null,
-      assignment:  {
+      courseWeek:  {
+        __typename: "CourseWeek",
+        id: string,
+        week: string | null,
+        date: string | null,
+        name: string | null,
+        leader: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      assignments:  {
         __typename: "ModelCourseAssignmentConnection",
         nextToken: string | null,
         startedAt: number | null,
@@ -4098,6 +4433,16 @@ export type SyncCourseAssignmentsQuery = {
       id: string,
       due: string | null,
       description: string | null,
+      courseLesson:  {
+        __typename: "CourseLesson",
+        id: string,
+        name: string | null,
+        time: string | null,
+        description: Array< string | null > | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
       _version: number,
       _deleted: boolean | null,
       _lastChangedAt: number,
@@ -4117,6 +4462,32 @@ export type GetCourseAssignmentQuery = {
     id: string,
     due: string | null,
     description: string | null,
+    courseLesson:  {
+      __typename: "CourseLesson",
+      id: string,
+      name: string | null,
+      time: string | null,
+      description: Array< string | null > | null,
+      courseWeek:  {
+        __typename: "CourseWeek",
+        id: string,
+        week: string | null,
+        date: string | null,
+        name: string | null,
+        leader: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      assignments:  {
+        __typename: "ModelCourseAssignmentConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
     _version: number,
     _deleted: boolean | null,
     _lastChangedAt: number,
@@ -4137,6 +4508,16 @@ export type ListCourseAssignmentsQuery = {
       id: string,
       due: string | null,
       description: string | null,
+      courseLesson:  {
+        __typename: "CourseLesson",
+        id: string,
+        name: string | null,
+        time: string | null,
+        description: Array< string | null > | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
       _version: number,
       _deleted: boolean | null,
       _lastChangedAt: number,
@@ -4444,6 +4825,7 @@ export type SyncResourceRootsQuery = {
       __typename: "ResourceRoot",
       id: string,
       type: string | null,
+      groupId: string | null,
       resources:  {
         __typename: "ModelResourceConnection",
         nextToken: string | null,
@@ -4467,6 +4849,7 @@ export type GetResourceRootQuery = {
     __typename: "ResourceRoot",
     id: string,
     type: string | null,
+    groupId: string | null,
     resources:  {
       __typename: "ModelResourceConnection",
       items:  Array< {
@@ -4503,6 +4886,7 @@ export type ListResourceRootsQuery = {
       __typename: "ResourceRoot",
       id: string,
       type: string | null,
+      groupId: string | null,
       resources:  {
         __typename: "ModelResourceConnection",
         nextToken: string | null,
@@ -4552,6 +4936,7 @@ export type SyncResourcesQuery = {
         __typename: "ResourceRoot",
         id: string,
         type: string | null,
+        groupId: string | null,
         _version: number,
         _deleted: boolean | null,
         _lastChangedAt: number,
@@ -4611,6 +4996,7 @@ export type GetResourceQuery = {
       __typename: "ResourceRoot",
       id: string,
       type: string | null,
+      groupId: string | null,
       resources:  {
         __typename: "ModelResourceConnection",
         nextToken: string | null,
@@ -4660,6 +5046,7 @@ export type ListResourcesQuery = {
         __typename: "ResourceRoot",
         id: string,
         type: string | null,
+        groupId: string | null,
         _version: number,
         _deleted: boolean | null,
         _lastChangedAt: number,
@@ -4784,6 +5171,7 @@ export type GetResourceSeriesQuery = {
         __typename: "ResourceRoot",
         id: string,
         type: string | null,
+        groupId: string | null,
         _version: number,
         _deleted: boolean | null,
         _lastChangedAt: number,
@@ -5377,12 +5765,12 @@ export type SearchGroupsQuery = {
   } | null,
 };
 
-export type OnCreateMessageSubscriptionVariables = {
+export type OnCreateMessageByRoomIdSubscriptionVariables = {
   roomId: string,
 };
 
-export type OnCreateMessageSubscription = {
-  onCreateMessage:  {
+export type OnCreateMessageByRoomIdSubscription = {
+  onCreateMessageByRoomId:  {
     __typename: "Message",
     id: string,
     content: string,
@@ -6526,7 +6914,7 @@ export type OnCreateCourseInfoSubscription = {
     id: string,
     designedBy: string | null,
     summary: Array< string | null > | null,
-    courseDetails:  {
+    courseWeeks:  {
       __typename: "ModelCourseWeekConnection",
       items:  Array< {
         __typename: "CourseWeek",
@@ -6560,7 +6948,7 @@ export type OnUpdateCourseInfoSubscription = {
     id: string,
     designedBy: string | null,
     summary: Array< string | null > | null,
-    courseDetails:  {
+    courseWeeks:  {
       __typename: "ModelCourseWeekConnection",
       items:  Array< {
         __typename: "CourseWeek",
@@ -6594,7 +6982,7 @@ export type OnDeleteCourseInfoSubscription = {
     id: string,
     designedBy: string | null,
     summary: Array< string | null > | null,
-    courseDetails:  {
+    courseWeeks:  {
       __typename: "ModelCourseWeekConnection",
       items:  Array< {
         __typename: "CourseWeek",
@@ -6626,6 +7014,22 @@ export type OnCreateCourseWeekSubscription = {
     date: string | null,
     name: string | null,
     leader: string | null,
+    courseInfo:  {
+      __typename: "CourseInfo",
+      id: string,
+      designedBy: string | null,
+      summary: Array< string | null > | null,
+      courseWeeks:  {
+        __typename: "ModelCourseWeekConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      subTitle: string | null,
+      introduction: Array< string | null > | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
     lessons:  {
       __typename: "ModelCourseLessonConnection",
       items:  Array< {
@@ -6655,6 +7059,22 @@ export type OnUpdateCourseWeekSubscription = {
     date: string | null,
     name: string | null,
     leader: string | null,
+    courseInfo:  {
+      __typename: "CourseInfo",
+      id: string,
+      designedBy: string | null,
+      summary: Array< string | null > | null,
+      courseWeeks:  {
+        __typename: "ModelCourseWeekConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      subTitle: string | null,
+      introduction: Array< string | null > | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
     lessons:  {
       __typename: "ModelCourseLessonConnection",
       items:  Array< {
@@ -6684,6 +7104,22 @@ export type OnDeleteCourseWeekSubscription = {
     date: string | null,
     name: string | null,
     leader: string | null,
+    courseInfo:  {
+      __typename: "CourseInfo",
+      id: string,
+      designedBy: string | null,
+      summary: Array< string | null > | null,
+      courseWeeks:  {
+        __typename: "ModelCourseWeekConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      subTitle: string | null,
+      introduction: Array< string | null > | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
     lessons:  {
       __typename: "ModelCourseLessonConnection",
       items:  Array< {
@@ -6712,7 +7148,34 @@ export type OnCreateCourseLessonSubscription = {
     name: string | null,
     time: string | null,
     description: Array< string | null > | null,
-    assignment:  {
+    courseWeek:  {
+      __typename: "CourseWeek",
+      id: string,
+      week: string | null,
+      date: string | null,
+      name: string | null,
+      leader: string | null,
+      courseInfo:  {
+        __typename: "CourseInfo",
+        id: string,
+        designedBy: string | null,
+        summary: Array< string | null > | null,
+        subTitle: string | null,
+        introduction: Array< string | null > | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      lessons:  {
+        __typename: "ModelCourseLessonConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    assignments:  {
       __typename: "ModelCourseAssignmentConnection",
       items:  Array< {
         __typename: "CourseAssignment",
@@ -6739,7 +7202,34 @@ export type OnUpdateCourseLessonSubscription = {
     name: string | null,
     time: string | null,
     description: Array< string | null > | null,
-    assignment:  {
+    courseWeek:  {
+      __typename: "CourseWeek",
+      id: string,
+      week: string | null,
+      date: string | null,
+      name: string | null,
+      leader: string | null,
+      courseInfo:  {
+        __typename: "CourseInfo",
+        id: string,
+        designedBy: string | null,
+        summary: Array< string | null > | null,
+        subTitle: string | null,
+        introduction: Array< string | null > | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      lessons:  {
+        __typename: "ModelCourseLessonConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    assignments:  {
       __typename: "ModelCourseAssignmentConnection",
       items:  Array< {
         __typename: "CourseAssignment",
@@ -6766,7 +7256,34 @@ export type OnDeleteCourseLessonSubscription = {
     name: string | null,
     time: string | null,
     description: Array< string | null > | null,
-    assignment:  {
+    courseWeek:  {
+      __typename: "CourseWeek",
+      id: string,
+      week: string | null,
+      date: string | null,
+      name: string | null,
+      leader: string | null,
+      courseInfo:  {
+        __typename: "CourseInfo",
+        id: string,
+        designedBy: string | null,
+        summary: Array< string | null > | null,
+        subTitle: string | null,
+        introduction: Array< string | null > | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      lessons:  {
+        __typename: "ModelCourseLessonConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    assignments:  {
       __typename: "ModelCourseAssignmentConnection",
       items:  Array< {
         __typename: "CourseAssignment",
@@ -6792,6 +7309,32 @@ export type OnCreateCourseAssignmentSubscription = {
     id: string,
     due: string | null,
     description: string | null,
+    courseLesson:  {
+      __typename: "CourseLesson",
+      id: string,
+      name: string | null,
+      time: string | null,
+      description: Array< string | null > | null,
+      courseWeek:  {
+        __typename: "CourseWeek",
+        id: string,
+        week: string | null,
+        date: string | null,
+        name: string | null,
+        leader: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      assignments:  {
+        __typename: "ModelCourseAssignmentConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
     _version: number,
     _deleted: boolean | null,
     _lastChangedAt: number,
@@ -6804,6 +7347,32 @@ export type OnUpdateCourseAssignmentSubscription = {
     id: string,
     due: string | null,
     description: string | null,
+    courseLesson:  {
+      __typename: "CourseLesson",
+      id: string,
+      name: string | null,
+      time: string | null,
+      description: Array< string | null > | null,
+      courseWeek:  {
+        __typename: "CourseWeek",
+        id: string,
+        week: string | null,
+        date: string | null,
+        name: string | null,
+        leader: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      assignments:  {
+        __typename: "ModelCourseAssignmentConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
     _version: number,
     _deleted: boolean | null,
     _lastChangedAt: number,
@@ -6816,6 +7385,425 @@ export type OnDeleteCourseAssignmentSubscription = {
     id: string,
     due: string | null,
     description: string | null,
+    courseLesson:  {
+      __typename: "CourseLesson",
+      id: string,
+      name: string | null,
+      time: string | null,
+      description: Array< string | null > | null,
+      courseWeek:  {
+        __typename: "CourseWeek",
+        id: string,
+        week: string | null,
+        date: string | null,
+        name: string | null,
+        leader: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      assignments:  {
+        __typename: "ModelCourseAssignmentConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type OnCreateMessageSubscriptionVariables = {
+  owner: string,
+};
+
+export type OnCreateMessageSubscription = {
+  onCreateMessage:  {
+    __typename: "Message",
+    id: string,
+    content: string,
+    when: string,
+    roomId: string | null,
+    userId: string | null,
+    owner: string | null,
+    author:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      hasPaidState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: string | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    room:  {
+      __typename: "Group",
+      id: string,
+      owner: string,
+      ownerUser:  {
+        __typename: "User",
+        id: string,
+        given_name: string,
+        family_name: string,
+        email: string | null,
+        phone: string | null,
+        owner: string | null,
+        hasPaidState: string | null,
+        address: string | null,
+        city: string | null,
+        province: string | null,
+        postalCode: string | null,
+        country: string | null,
+        aboutMeShort: string | null,
+        aboutMeLong: string | null,
+        interests: string | null,
+        currentRole: string | null,
+        currentScope: string | null,
+        personality: string | null,
+        orgName: string | null,
+        orgType: string | null,
+        orgSize: string | null,
+        orgDescription: string | null,
+        joined: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      type: string,
+      name: string,
+      description: string,
+      memberCount: number | null,
+      members:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      image: string,
+      time: string | null,
+      lastUpdated: string | null,
+      location: string | null,
+      length: string | null,
+      effort: string | null,
+      cost: string | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      eventType: string | null,
+      eventUrl: string | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type OnUpdateMessageSubscriptionVariables = {
+  owner: string,
+};
+
+export type OnUpdateMessageSubscription = {
+  onUpdateMessage:  {
+    __typename: "Message",
+    id: string,
+    content: string,
+    when: string,
+    roomId: string | null,
+    userId: string | null,
+    owner: string | null,
+    author:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      hasPaidState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: string | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    room:  {
+      __typename: "Group",
+      id: string,
+      owner: string,
+      ownerUser:  {
+        __typename: "User",
+        id: string,
+        given_name: string,
+        family_name: string,
+        email: string | null,
+        phone: string | null,
+        owner: string | null,
+        hasPaidState: string | null,
+        address: string | null,
+        city: string | null,
+        province: string | null,
+        postalCode: string | null,
+        country: string | null,
+        aboutMeShort: string | null,
+        aboutMeLong: string | null,
+        interests: string | null,
+        currentRole: string | null,
+        currentScope: string | null,
+        personality: string | null,
+        orgName: string | null,
+        orgType: string | null,
+        orgSize: string | null,
+        orgDescription: string | null,
+        joined: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      type: string,
+      name: string,
+      description: string,
+      memberCount: number | null,
+      members:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      image: string,
+      time: string | null,
+      lastUpdated: string | null,
+      location: string | null,
+      length: string | null,
+      effort: string | null,
+      cost: string | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      eventType: string | null,
+      eventUrl: string | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    _version: number,
+    _deleted: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type OnDeleteMessageSubscriptionVariables = {
+  owner: string,
+};
+
+export type OnDeleteMessageSubscription = {
+  onDeleteMessage:  {
+    __typename: "Message",
+    id: string,
+    content: string,
+    when: string,
+    roomId: string | null,
+    userId: string | null,
+    owner: string | null,
+    author:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      hasPaidState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: string | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    room:  {
+      __typename: "Group",
+      id: string,
+      owner: string,
+      ownerUser:  {
+        __typename: "User",
+        id: string,
+        given_name: string,
+        family_name: string,
+        email: string | null,
+        phone: string | null,
+        owner: string | null,
+        hasPaidState: string | null,
+        address: string | null,
+        city: string | null,
+        province: string | null,
+        postalCode: string | null,
+        country: string | null,
+        aboutMeShort: string | null,
+        aboutMeLong: string | null,
+        interests: string | null,
+        currentRole: string | null,
+        currentScope: string | null,
+        personality: string | null,
+        orgName: string | null,
+        orgType: string | null,
+        orgSize: string | null,
+        orgDescription: string | null,
+        joined: string | null,
+        _version: number,
+        _deleted: boolean | null,
+        _lastChangedAt: number,
+      } | null,
+      type: string,
+      name: string,
+      description: string,
+      memberCount: number | null,
+      members:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      image: string,
+      time: string | null,
+      lastUpdated: string | null,
+      location: string | null,
+      length: string | null,
+      effort: string | null,
+      cost: string | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+        startedAt: number | null,
+      } | null,
+      eventType: string | null,
+      eventUrl: string | null,
+      _version: number,
+      _deleted: boolean | null,
+      _lastChangedAt: number,
+    } | null,
     _version: number,
     _deleted: boolean | null,
     _lastChangedAt: number,
@@ -6827,6 +7815,7 @@ export type OnCreateResourceRootSubscription = {
     __typename: "ResourceRoot",
     id: string,
     type: string | null,
+    groupId: string | null,
     resources:  {
       __typename: "ModelResourceConnection",
       items:  Array< {
@@ -6855,6 +7844,7 @@ export type OnUpdateResourceRootSubscription = {
     __typename: "ResourceRoot",
     id: string,
     type: string | null,
+    groupId: string | null,
     resources:  {
       __typename: "ModelResourceConnection",
       items:  Array< {
@@ -6883,6 +7873,7 @@ export type OnDeleteResourceRootSubscription = {
     __typename: "ResourceRoot",
     id: string,
     type: string | null,
+    groupId: string | null,
     resources:  {
       __typename: "ModelResourceConnection",
       items:  Array< {
@@ -6948,6 +7939,7 @@ export type OnCreateResourceSubscription = {
       __typename: "ResourceRoot",
       id: string,
       type: string | null,
+      groupId: string | null,
       resources:  {
         __typename: "ModelResourceConnection",
         nextToken: string | null,
@@ -7005,6 +7997,7 @@ export type OnUpdateResourceSubscription = {
       __typename: "ResourceRoot",
       id: string,
       type: string | null,
+      groupId: string | null,
       resources:  {
         __typename: "ModelResourceConnection",
         nextToken: string | null,
@@ -7062,6 +8055,7 @@ export type OnDeleteResourceSubscription = {
       __typename: "ResourceRoot",
       id: string,
       type: string | null,
+      groupId: string | null,
       resources:  {
         __typename: "ModelResourceConnection",
         nextToken: string | null,
@@ -7136,6 +8130,7 @@ export type OnCreateResourceSeriesSubscription = {
         __typename: "ResourceRoot",
         id: string,
         type: string | null,
+        groupId: string | null,
         _version: number,
         _deleted: boolean | null,
         _lastChangedAt: number,
@@ -7209,6 +8204,7 @@ export type OnUpdateResourceSeriesSubscription = {
         __typename: "ResourceRoot",
         id: string,
         type: string | null,
+        groupId: string | null,
         _version: number,
         _deleted: boolean | null,
         _lastChangedAt: number,
@@ -7282,6 +8278,7 @@ export type OnDeleteResourceSeriesSubscription = {
         __typename: "ResourceRoot",
         id: string,
         type: string | null,
+        groupId: string | null,
         _version: number,
         _deleted: boolean | null,
         _lastChangedAt: number,

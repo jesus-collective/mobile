@@ -1,10 +1,10 @@
-// tslint:disable
-// eslint-disable
+/* tslint:disable */
+/* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateMessage = /* GraphQL */ `
-  subscription OnCreateMessage($roomId: ID!) {
-    onCreateMessage(roomId: $roomId) {
+export const onCreateMessageByRoomId = /* GraphQL */ `
+  subscription OnCreateMessageByRoomId($roomId: ID!) {
+    onCreateMessageByRoomId(roomId: $roomId) {
       id
       content
       when
@@ -1035,7 +1035,7 @@ export const onCreateCourseInfo = /* GraphQL */ `
       id
       designedBy
       summary
-      courseDetails {
+      courseWeeks {
         items {
           id
           week
@@ -1063,7 +1063,7 @@ export const onUpdateCourseInfo = /* GraphQL */ `
       id
       designedBy
       summary
-      courseDetails {
+      courseWeeks {
         items {
           id
           week
@@ -1091,7 +1091,7 @@ export const onDeleteCourseInfo = /* GraphQL */ `
       id
       designedBy
       summary
-      courseDetails {
+      courseWeeks {
         items {
           id
           week
@@ -1121,6 +1121,20 @@ export const onCreateCourseWeek = /* GraphQL */ `
       date
       name
       leader
+      courseInfo {
+        id
+        designedBy
+        summary
+        courseWeeks {
+          nextToken
+          startedAt
+        }
+        subTitle
+        introduction
+        _version
+        _deleted
+        _lastChangedAt
+      }
       lessons {
         items {
           id
@@ -1148,6 +1162,20 @@ export const onUpdateCourseWeek = /* GraphQL */ `
       date
       name
       leader
+      courseInfo {
+        id
+        designedBy
+        summary
+        courseWeeks {
+          nextToken
+          startedAt
+        }
+        subTitle
+        introduction
+        _version
+        _deleted
+        _lastChangedAt
+      }
       lessons {
         items {
           id
@@ -1175,6 +1203,20 @@ export const onDeleteCourseWeek = /* GraphQL */ `
       date
       name
       leader
+      courseInfo {
+        id
+        designedBy
+        summary
+        courseWeeks {
+          nextToken
+          startedAt
+        }
+        subTitle
+        introduction
+        _version
+        _deleted
+        _lastChangedAt
+      }
       lessons {
         items {
           id
@@ -1201,7 +1243,31 @@ export const onCreateCourseLesson = /* GraphQL */ `
       name
       time
       description
-      assignment {
+      courseWeek {
+        id
+        week
+        date
+        name
+        leader
+        courseInfo {
+          id
+          designedBy
+          summary
+          subTitle
+          introduction
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        lessons {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      assignments {
         items {
           id
           due
@@ -1226,7 +1292,31 @@ export const onUpdateCourseLesson = /* GraphQL */ `
       name
       time
       description
-      assignment {
+      courseWeek {
+        id
+        week
+        date
+        name
+        leader
+        courseInfo {
+          id
+          designedBy
+          summary
+          subTitle
+          introduction
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        lessons {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      assignments {
         items {
           id
           due
@@ -1251,7 +1341,31 @@ export const onDeleteCourseLesson = /* GraphQL */ `
       name
       time
       description
-      assignment {
+      courseWeek {
+        id
+        week
+        date
+        name
+        leader
+        courseInfo {
+          id
+          designedBy
+          summary
+          subTitle
+          introduction
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        lessons {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      assignments {
         items {
           id
           due
@@ -1275,6 +1389,29 @@ export const onCreateCourseAssignment = /* GraphQL */ `
       id
       due
       description
+      courseLesson {
+        id
+        name
+        time
+        description
+        courseWeek {
+          id
+          week
+          date
+          name
+          leader
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        assignments {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+      }
       _version
       _deleted
       _lastChangedAt
@@ -1287,6 +1424,29 @@ export const onUpdateCourseAssignment = /* GraphQL */ `
       id
       due
       description
+      courseLesson {
+        id
+        name
+        time
+        description
+        courseWeek {
+          id
+          week
+          date
+          name
+          leader
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        assignments {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+      }
       _version
       _deleted
       _lastChangedAt
@@ -1299,6 +1459,383 @@ export const onDeleteCourseAssignment = /* GraphQL */ `
       id
       due
       description
+      courseLesson {
+        id
+        name
+        time
+        description
+        courseWeek {
+          id
+          week
+          date
+          name
+          leader
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        assignments {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onCreateMessage = /* GraphQL */ `
+  subscription OnCreateMessage($owner: String!) {
+    onCreateMessage(owner: $owner) {
+      id
+      content
+      when
+      roomId
+      userId
+      owner
+      author {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+        joined
+        owns {
+          nextToken
+          startedAt
+        }
+        groups {
+          nextToken
+          startedAt
+        }
+        messages {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      room {
+        id
+        owner
+        ownerUser {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          hasPaidState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          orgDescription
+          joined
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        type
+        name
+        description
+        memberCount
+        members {
+          nextToken
+          startedAt
+        }
+        image
+        time
+        lastUpdated
+        location
+        length
+        effort
+        cost
+        messages {
+          nextToken
+          startedAt
+        }
+        eventType
+        eventUrl
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onUpdateMessage = /* GraphQL */ `
+  subscription OnUpdateMessage($owner: String!) {
+    onUpdateMessage(owner: $owner) {
+      id
+      content
+      when
+      roomId
+      userId
+      owner
+      author {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+        joined
+        owns {
+          nextToken
+          startedAt
+        }
+        groups {
+          nextToken
+          startedAt
+        }
+        messages {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      room {
+        id
+        owner
+        ownerUser {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          hasPaidState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          orgDescription
+          joined
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        type
+        name
+        description
+        memberCount
+        members {
+          nextToken
+          startedAt
+        }
+        image
+        time
+        lastUpdated
+        location
+        length
+        effort
+        cost
+        messages {
+          nextToken
+          startedAt
+        }
+        eventType
+        eventUrl
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onDeleteMessage = /* GraphQL */ `
+  subscription OnDeleteMessage($owner: String!) {
+    onDeleteMessage(owner: $owner) {
+      id
+      content
+      when
+      roomId
+      userId
+      owner
+      author {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        address
+        city
+        province
+        postalCode
+        country
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+        joined
+        owns {
+          nextToken
+          startedAt
+        }
+        groups {
+          nextToken
+          startedAt
+        }
+        messages {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      room {
+        id
+        owner
+        ownerUser {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          hasPaidState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          orgDescription
+          joined
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        type
+        name
+        description
+        memberCount
+        members {
+          nextToken
+          startedAt
+        }
+        image
+        time
+        lastUpdated
+        location
+        length
+        effort
+        cost
+        messages {
+          nextToken
+          startedAt
+        }
+        eventType
+        eventUrl
+        _version
+        _deleted
+        _lastChangedAt
+      }
       _version
       _deleted
       _lastChangedAt
@@ -1310,6 +1847,7 @@ export const onCreateResourceRoot = /* GraphQL */ `
     onCreateResourceRoot {
       id
       type
+      groupId
       resources {
         items {
           id
@@ -1336,6 +1874,7 @@ export const onUpdateResourceRoot = /* GraphQL */ `
     onUpdateResourceRoot {
       id
       type
+      groupId
       resources {
         items {
           id
@@ -1362,6 +1901,7 @@ export const onDeleteResourceRoot = /* GraphQL */ `
     onDeleteResourceRoot {
       id
       type
+      groupId
       resources {
         items {
           id
@@ -1421,6 +1961,7 @@ export const onCreateResource = /* GraphQL */ `
       root {
         id
         type
+        groupId
         resources {
           nextToken
           startedAt
@@ -1473,6 +2014,7 @@ export const onUpdateResource = /* GraphQL */ `
       root {
         id
         type
+        groupId
         resources {
           nextToken
           startedAt
@@ -1525,6 +2067,7 @@ export const onDeleteResource = /* GraphQL */ `
       root {
         id
         type
+        groupId
         resources {
           nextToken
           startedAt
@@ -1592,6 +2135,7 @@ export const onCreateResourceSeries = /* GraphQL */ `
         root {
           id
           type
+          groupId
           _version
           _deleted
           _lastChangedAt
@@ -1659,6 +2203,7 @@ export const onUpdateResourceSeries = /* GraphQL */ `
         root {
           id
           type
+          groupId
           _version
           _deleted
           _lastChangedAt
@@ -1726,6 +2271,7 @@ export const onDeleteResourceSeries = /* GraphQL */ `
         root {
           id
           type
+          groupId
           _version
           _deleted
           _lastChangedAt

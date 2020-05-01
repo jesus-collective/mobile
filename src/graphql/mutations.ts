@@ -1,5 +1,5 @@
-// tslint:disable
-// eslint-disable
+/* tslint:disable */
+/* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
 export const createUser = /* GraphQL */ `
@@ -917,7 +917,7 @@ export const createCourseInfo = /* GraphQL */ `
       id
       designedBy
       summary
-      courseDetails {
+      courseWeeks {
         items {
           id
           week
@@ -945,7 +945,7 @@ export const updateCourseInfo = /* GraphQL */ `
       id
       designedBy
       summary
-      courseDetails {
+      courseWeeks {
         items {
           id
           week
@@ -973,7 +973,7 @@ export const deleteCourseInfo = /* GraphQL */ `
       id
       designedBy
       summary
-      courseDetails {
+      courseWeeks {
         items {
           id
           week
@@ -1003,6 +1003,20 @@ export const createCourseWeek = /* GraphQL */ `
       date
       name
       leader
+      courseInfo {
+        id
+        designedBy
+        summary
+        courseWeeks {
+          nextToken
+          startedAt
+        }
+        subTitle
+        introduction
+        _version
+        _deleted
+        _lastChangedAt
+      }
       lessons {
         items {
           id
@@ -1030,6 +1044,20 @@ export const updateCourseWeek = /* GraphQL */ `
       date
       name
       leader
+      courseInfo {
+        id
+        designedBy
+        summary
+        courseWeeks {
+          nextToken
+          startedAt
+        }
+        subTitle
+        introduction
+        _version
+        _deleted
+        _lastChangedAt
+      }
       lessons {
         items {
           id
@@ -1057,6 +1085,20 @@ export const deleteCourseWeek = /* GraphQL */ `
       date
       name
       leader
+      courseInfo {
+        id
+        designedBy
+        summary
+        courseWeeks {
+          nextToken
+          startedAt
+        }
+        subTitle
+        introduction
+        _version
+        _deleted
+        _lastChangedAt
+      }
       lessons {
         items {
           id
@@ -1083,7 +1125,31 @@ export const createCourseLesson = /* GraphQL */ `
       name
       time
       description
-      assignment {
+      courseWeek {
+        id
+        week
+        date
+        name
+        leader
+        courseInfo {
+          id
+          designedBy
+          summary
+          subTitle
+          introduction
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        lessons {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      assignments {
         items {
           id
           due
@@ -1108,7 +1174,31 @@ export const updateCourseLesson = /* GraphQL */ `
       name
       time
       description
-      assignment {
+      courseWeek {
+        id
+        week
+        date
+        name
+        leader
+        courseInfo {
+          id
+          designedBy
+          summary
+          subTitle
+          introduction
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        lessons {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      assignments {
         items {
           id
           due
@@ -1133,7 +1223,31 @@ export const deleteCourseLesson = /* GraphQL */ `
       name
       time
       description
-      assignment {
+      courseWeek {
+        id
+        week
+        date
+        name
+        leader
+        courseInfo {
+          id
+          designedBy
+          summary
+          subTitle
+          introduction
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        lessons {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      assignments {
         items {
           id
           due
@@ -1157,6 +1271,29 @@ export const createCourseAssignment = /* GraphQL */ `
       id
       due
       description
+      courseLesson {
+        id
+        name
+        time
+        description
+        courseWeek {
+          id
+          week
+          date
+          name
+          leader
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        assignments {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+      }
       _version
       _deleted
       _lastChangedAt
@@ -1169,6 +1306,29 @@ export const updateCourseAssignment = /* GraphQL */ `
       id
       due
       description
+      courseLesson {
+        id
+        name
+        time
+        description
+        courseWeek {
+          id
+          week
+          date
+          name
+          leader
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        assignments {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+      }
       _version
       _deleted
       _lastChangedAt
@@ -1181,6 +1341,29 @@ export const deleteCourseAssignment = /* GraphQL */ `
       id
       due
       description
+      courseLesson {
+        id
+        name
+        time
+        description
+        courseWeek {
+          id
+          week
+          date
+          name
+          leader
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        assignments {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+      }
       _version
       _deleted
       _lastChangedAt
@@ -1546,6 +1729,7 @@ export const createResourceRoot = /* GraphQL */ `
     createResourceRoot(input: $input) {
       id
       type
+      groupId
       resources {
         items {
           id
@@ -1572,6 +1756,7 @@ export const updateResourceRoot = /* GraphQL */ `
     updateResourceRoot(input: $input) {
       id
       type
+      groupId
       resources {
         items {
           id
@@ -1598,6 +1783,7 @@ export const deleteResourceRoot = /* GraphQL */ `
     deleteResourceRoot(input: $input) {
       id
       type
+      groupId
       resources {
         items {
           id
@@ -1657,6 +1843,7 @@ export const createResource = /* GraphQL */ `
       root {
         id
         type
+        groupId
         resources {
           nextToken
           startedAt
@@ -1709,6 +1896,7 @@ export const updateResource = /* GraphQL */ `
       root {
         id
         type
+        groupId
         resources {
           nextToken
           startedAt
@@ -1761,6 +1949,7 @@ export const deleteResource = /* GraphQL */ `
       root {
         id
         type
+        groupId
         resources {
           nextToken
           startedAt
@@ -1828,6 +2017,7 @@ export const createResourceSeries = /* GraphQL */ `
         root {
           id
           type
+          groupId
           _version
           _deleted
           _lastChangedAt
@@ -1895,6 +2085,7 @@ export const updateResourceSeries = /* GraphQL */ `
         root {
           id
           type
+          groupId
           _version
           _deleted
           _lastChangedAt
@@ -1962,6 +2153,7 @@ export const deleteResourceSeries = /* GraphQL */ `
         root {
           id
           type
+          groupId
           _version
           _deleted
           _lastChangedAt

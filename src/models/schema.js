@@ -77,9 +77,7 @@ export const schema = {
             "attributes": [
                 {
                     "type": "model",
-                    "properties": {
-                        "subscriptions": null
-                    }
+                    "properties": {}
                 },
                 {
                     "type": "key",
@@ -678,8 +676,8 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "courseDetails": {
-                    "name": "courseDetails",
+                "courseWeeks": {
+                    "name": "courseWeeks",
                     "isArray": true,
                     "type": {
                         "model": "CourseWeek"
@@ -688,7 +686,7 @@ export const schema = {
                     "attributes": [],
                     "association": {
                         "connectionType": "HAS_MANY",
-                        "associatedWith": "courseInfoCourseDetailsId"
+                        "associatedWith": "courseInfo"
                     }
                 },
                 "subTitle": {
@@ -782,6 +780,19 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "courseInfo": {
+                    "name": "courseInfo",
+                    "isArray": false,
+                    "type": {
+                        "model": "CourseInfo"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetName": "courseWeekCourseInfoId"
+                    }
+                },
                 "lessons": {
                     "name": "lessons",
                     "isArray": true,
@@ -792,15 +803,8 @@ export const schema = {
                     "attributes": [],
                     "association": {
                         "connectionType": "HAS_MANY",
-                        "associatedWith": "courseWeekLessonsId"
+                        "associatedWith": "courseWeek"
                     }
-                },
-                "courseInfoCourseDetailsId": {
-                    "name": "courseInfoCourseDetailsId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
                 }
             },
             "syncable": true,
@@ -843,8 +847,21 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "assignment": {
-                    "name": "assignment",
+                "courseWeek": {
+                    "name": "courseWeek",
+                    "isArray": false,
+                    "type": {
+                        "model": "CourseWeek"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetName": "courseLessonCourseWeekId"
+                    }
+                },
+                "assignments": {
+                    "name": "assignments",
                     "isArray": true,
                     "type": {
                         "model": "CourseAssignment"
@@ -853,15 +870,8 @@ export const schema = {
                     "attributes": [],
                     "association": {
                         "connectionType": "HAS_MANY",
-                        "associatedWith": "courseLessonAssignmentId"
+                        "associatedWith": "courseLesson"
                     }
-                },
-                "courseWeekLessonsId": {
-                    "name": "courseWeekLessonsId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
                 }
             },
             "syncable": true,
@@ -897,12 +907,18 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "courseLessonAssignmentId": {
-                    "name": "courseLessonAssignmentId",
+                "courseLesson": {
+                    "name": "courseLesson",
                     "isArray": false,
-                    "type": "ID",
+                    "type": {
+                        "model": "CourseLesson"
+                    },
                     "isRequired": false,
-                    "attributes": []
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetName": "courseAssignmentCourseLessonId"
+                    }
                 }
             },
             "syncable": true,
@@ -926,6 +942,13 @@ export const schema = {
                 },
                 "type": {
                     "name": "type",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "groupId": {
+                    "name": "groupId",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -1293,5 +1316,5 @@ export const schema = {
             }
         }
     },
-    "version": "a9479c7f91b3cec5ffbdd89b2f583ef0"
+    "version": "fc8b05f4ee19ba3a8b71bec0f42bc5da"
 };

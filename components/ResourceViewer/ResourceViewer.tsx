@@ -45,12 +45,21 @@ class ResourceViewer extends React.Component<Props, State> {
     }
     async createResourceRoot() {
         console.log("test1")
-        const series = await DataStore.save(
+
+
+
+       const series = await DataStore.save(
             new ResourceSeries({
                 type: "curriculum",
                 title: "Overview",
-                image: "test.jpg",
-                description: "..."
+                image: "123",
+                description: "...",
+               
+                category: ["123"],
+                status: "123",
+                allFiles: "123",
+                playlist: "123",
+                playlistImage: "123"
             })
         );
         const resource = await DataStore.save(
@@ -58,29 +67,40 @@ class ResourceViewer extends React.Component<Props, State> {
                 type: "curriculum",
                 menuTitle: "Overview",
                 title: "Overview",
-                image: "test.jpg",
+                image: {
+                    userId: "123",
+                    filenameSmall: "123",
+                    filenameMedium: "123",
+                    filenameLarge: "123",
+                    filenameUpload: "123"
+                },
                 description: "...",
-                extendedDescription: null,
-                series: [series]
+                extendedDescription: "123",
+                //root: resourceRoot
+                 series: [series]
             })
         );
         const resourceRoot = await DataStore.save(
             new ResourceRoot({
                 type: `curriculum`,
+                groupId: this.props.groupId,
                 resources: [resource]
             })
-        );
+        ); 
 
-        console.log(resourceRoot[0])
+
+
+
+        console.log(resourceRoot)
         this.setState({ data: resourceRoot, currentResource: 0 })
 
 
     }
     async setInitialData(props) {
-        //    await DataStore.delete(ResourceSeries, Predicates.ALL)
-        //    await DataStore.delete(ResourceRoot, Predicates.ALL)
-        //    await DataStore.delete(Resource, Predicates.ALL)
-        //    await DataStore.delete(ResourceEpisode, Predicates.ALL)
+        await DataStore.delete(ResourceSeries, Predicates.ALL)
+        await DataStore.delete(ResourceRoot, Predicates.ALL)
+        await DataStore.delete(Resource, Predicates.ALL)
+        await DataStore.delete(ResourceEpisode, Predicates.ALL)
 
         const getResourceRoot = await DataStore.query(ResourceRoot);
         //  const getResourceRoot2 = await DataStore.query(ResourceEpisode);
@@ -101,7 +121,13 @@ class ResourceViewer extends React.Component<Props, State> {
                 type: "curriculum",
                 menuTitle: "New Resource",
                 title: "New Resource",
-                image: "test.jpg",
+                image: {
+                    userId: "123",
+                    filenameSmall: "123",
+                    filenameMedium: "123",
+                    filenameLarge: "123",
+                    filenameUpload: "123"
+                },
                 description: "..."
             })
         );
@@ -143,7 +169,7 @@ class ResourceViewer extends React.Component<Props, State> {
         return key.length ? myObject[key[0]] : "";
     }
     updateResourceImage = async (index1, e) => {
-       
+
         const file = e.target.files[0];
         const lastDot = file.name.lastIndexOf('.');
         const ext = file.name.substring(lastDot + 1);

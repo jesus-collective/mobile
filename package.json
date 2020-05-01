@@ -97,11 +97,13 @@
     "react-navigation-stack": "^2.3.1",
     "react-navigation-tabs": "^2.8.4",
     "react-places-autocomplete": "^7.2.1",
+    "request": "^2.88.2",
     "resize-observer-polyfill": "^1.5.1",
     "typescript": "^3.8.3"
   },
   "private": true,
   "devDependencies": {
+    "@aws-amplify/cli": "^4.18.1",
     "@babel/core": "^7.9.6",
     "@expo/webpack-config": "^0.12.3",
     "@sheerun/mutationobserver-shim": "^0.3.3",

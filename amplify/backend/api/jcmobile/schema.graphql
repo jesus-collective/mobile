@@ -47,6 +47,7 @@ type Image{
 }
 type GroupMember
   @model(queries: null)
+ 
   @key(name: "byGroup", fields: ["groupID", "userID"], queryField:"groupMemberByGroup")
   @key(name: "byUser", fields: ["userID", "groupID"], queryField:"groupMemberByUser") {
   id: ID!
@@ -58,6 +59,7 @@ type GroupMember
 type Group
 @model
 @searchable
+
  @key(name: "byType", fields: ["type", "id"], queryField:"groupByType")
 @auth(rules: [
  { allow: owner, ownerField: "owner" },
@@ -99,7 +101,7 @@ type CourseInfo
 	id:ID!
 	designedBy:String
 	summary:[String]
-	courseDetails:[CourseWeek] @connection
+	courseWeeks:[CourseWeek] @connection(name: "CourseInfoWeek", keyField: "id")
 	subTitle:String
 	#instructor: User
 	introduction:[String]
@@ -113,7 +115,8 @@ type CourseWeek
 	date:String
 	name:String
 	leader:String
-	lessons:[CourseLesson] @connection
+	courseInfo:CourseInfo @connection(name: "CourseInfoWeek", keyField: "id")
+	lessons:[CourseLesson] @connection(name: "CourseWeekLesson", keyField: "id")
 }
 type CourseLesson
 @model
@@ -122,17 +125,20 @@ type CourseLesson
 	name:String
 	time:String
 	description:[String]
-	assignment:[CourseAssignment] @connection
+	courseWeek: CourseWeek @connection(name: "CourseWeekLesson", keyField: "id")
+	assignments:[CourseAssignment] @connection(name: "CourseLessonAssignment", keyField: "id")
 }
 type CourseAssignment
 @model{
 	id:ID!
 	due:String
 	description:String
+	courseLesson:CourseLesson @connection(name: "CourseLessonAssignment", keyField: "id")
 }
 
 
-type Message @model(subscriptions: null) 
+type Message @model
+
  @key(name: "ByRoom",fields: ["roomId", "when"], queryField:"messagesByRoom")
  @auth(
     rules: [
@@ -150,22 +156,20 @@ type Message @model(subscriptions: null)
   room: Group @connection(name: "RoomMessages", keyField: "roomId")
 }
 type Subscription {
-  onCreateMessage(roomId: ID!): Message @aws_subscribe(mutations: ["createMessage"])
+  onCreateMessageByRoomId(roomId: ID!): Message @aws_subscribe(mutations: ["createMessage"])
 }
 
 
 
 
-type ResourceRoot
-@model
+type ResourceRoot @model
 {
 	id: ID!
 	type:String
-	resources:[Resource] @connection (name: "RootResources")
-
+	groupId:String
+	resources:[Resource]  @connection(name: "ResourceRootResource", keyField: "id")
 }
-type Resource
-@model
+type Resource @model
 {
 	id:ID!
 	type:String
@@ -175,11 +179,11 @@ type Resource
 	description:String
 	extendedDescription:String
 	#currentSeries:ResourceSeries @connection
-	series:[ResourceSeries] @connection (name: "SeriesResources")
-	root:ResourceRoot @connection (name: "RootResources")
+	series:[ResourceSeries] @connection(name: "ResourceSeries", keyField: "id")
+	root:ResourceRoot  @connection(name: "ResourceRootResource", keyField: "id")
 }
-type ResourceSeries
-@model
+type ResourceSeries @model
+
 {
 	id:ID!
 	type: String
@@ -191,12 +195,11 @@ type ResourceSeries
 	allFiles: String
 	playlist: String
 	playlistImage: String
-	episodes:[ResourceEpisode] @connection (name: "SeriesEpisodes")
-	resource:Resource @connection (name: "SeriesResources")
+	episodes:[ResourceEpisode] @connection(name: "ResourceSeriesEpisode", keyField: "id")
+	resource:Resource  @connection(name: "ResourceSeries", keyField: "id")
 }
 
-type ResourceEpisode
-@model
+type ResourceEpisode @model
 {
 	id:ID!
 	episodeNumber:Int
@@ -208,5 +211,5 @@ type ResourceEpisode
 	videoHiRes:String
 	lessonPlan:String
 	activityPage:String
-	series:ResourceSeries  @connection (name: "SeriesEpisodes")
+	series:ResourceSeries @connection(name: "ResourceSeriesEpisode", keyField: "id")
 }
