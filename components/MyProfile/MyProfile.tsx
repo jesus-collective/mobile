@@ -1,5 +1,5 @@
 import { Icon, Button, View, Input, Form, Item, Label, Content } from 'native-base';
-import { Text, Image } from 'react-native'
+import { Text, Image, Modal } from 'react-native'
 import * as React from 'react';
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
@@ -14,10 +14,172 @@ import Validate from '../Validate/Validate';
 import moment from 'moment';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+
+
 Amplify.configure(awsconfig);
 
 const mainColor = '#ffffff';
-
+const mapstyle = [
+  {
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#f5f5f5"
+      }
+    ]
+  },
+  {
+    "elementType": "labels.icon",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#616161"
+      }
+    ]
+  },
+  {
+    "elementType": "labels.text.stroke",
+    "stylers": [
+      {
+        "color": "#f5f5f5"
+      }
+    ]
+  },
+  {
+    "featureType": "administrative.land_parcel",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#bdbdbd"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#eeeeee"
+      }
+    ]
+  },
+  {
+    "featureType": "poi",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#757575"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.park",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#e5e5e5"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.park",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#9e9e9e"
+      }
+    ]
+  },
+  {
+    "featureType": "road",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#ffffff"
+      }
+    ]
+  },
+  {
+    "featureType": "road.arterial",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#757575"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#dadada"
+      }
+    ]
+  },
+  {
+    "featureType": "road.highway",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#616161"
+      }
+    ]
+  },
+  {
+    "featureType": "road.local",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#9e9e9e"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.line",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#e5e5e5"
+      }
+    ]
+  },
+  {
+    "featureType": "transit.station",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#eeeeee"
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "geometry",
+    "stylers": [
+      {
+        "color": "#c9c9c9"
+      }
+    ]
+  },
+  {
+    "featureType": "water",
+    "elementType": "labels.text.fill",
+    "stylers": [
+      {
+        "color": "#9e9e9e"
+      }
+    ]
+  }
+]
 interface Props {
   finalizeProfile?(): void
   navigation: any
@@ -31,6 +193,9 @@ interface State {
   tagsText: any
   profileImage: any
   validationText: any
+  mapVisible: any
+  mapCoord: any
+  
 }
 export default class MyProfile extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -44,7 +209,10 @@ export default class MyProfile extends React.Component<Props, State> {
       tagsColor: mainColor,
       tagsText: '#fff',
       profileImage: "",
-      validationText: null
+      validationText: null,
+      mapVisible: false,
+      mapCoord: { latitude: 0, longitude: 0 },
+     
     }
     this.getUserDetails()
   }
@@ -95,16 +263,20 @@ export default class MyProfile extends React.Component<Props, State> {
     });
     //console.log(this.state.UserDetails)
   }
-
+  clean(item) {
+    delete item.groups
+    delete item.messages
+    delete item.owns
+    delete item._deleted
+    delete item._lastChangedAt
+    return item
+  }
   async finalizeProfile() {
 
     var validation = Validate.Profile(this.state.UserDetails)
     if (validation.result) {
       try {
-        var toSave = this.state.UserDetails
-        delete toSave.groups
-        delete toSave.messages
-        delete toSave.owns
+        var toSave = this.clean(this.state.UserDetails)
         const updateUser = await API.graphql(graphqlOperation(mutations.updateUser, { input: toSave }));
         //  console.log(updateUser)
         this.props.finalizeProfile()
@@ -178,6 +350,13 @@ export default class MyProfile extends React.Component<Props, State> {
       .catch(err => console.log(err));
 
   }
+  showMap() {
+    this.setState({ mapVisible: true })
+  }
+  saveLocation() {
+    this.setState({ mapVisible: false })
+  }
+  
 
   render() {
 
@@ -191,13 +370,39 @@ export default class MyProfile extends React.Component<Props, State> {
             <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.logout()}>Logout</JCButton>
             <Text>{this.state.validationText}</Text>
           </View>
+          {this.state.mapVisible ? <View style={{ position: "fixed", left: 0, top: 0, width: "100%", height: "100%", zIndex: 100, backgroundColor: "#33333366" }}>
+            <View style={{ backgroundColor: "#ffffff", borderRadius: 10, padding: 10, margin: 10, left: "10%", top: "10%", width: "80%", height: "80%" }}>
+              <Text>Select a location (this will be public)</Text>
+              <JCButton buttonType={ButtonTypes.OutlineBold} onPress={() => this.saveLocation()}>Done</JCButton>
+              <MapView
+                provider={PROVIDER_GOOGLE}
+                style={{  left: 10, top: 10, width: 480, height: 480 }}
+               
+                initialRegion={{
+                  latitude: 43.78825,
+                  longitude: -78.4324,
+                  latitudeDelta: 6,
+                  longitudeDelta: 6,
+                }}
+              >
+                <MapView.Marker draggable
+                  coordinate={this.state.mapCoord}
+                  onDragEnd={(e) => {
+                    console.log(e)
+                    this.setState({ mapCoord: e.nativeEvent.coordinate })
+                  }}
+                />
+              </MapView>
 
+            </View>
+          </View> : null
+          }
           <Form style={{ marginBottom: 20, display: "flex", flexDirection: "row" }}>
             <View style={{ flex: 30, flexDirection: "column" }}>
               <View style={{ alignSelf: "center" }}>
                 <Image style={{ width: "250px", height: "290px", borderRadius: 120 }}
-                  source={this.state.profileImage == "" ? require('../../assets/profile-placeholder.png') : this.state.profileImage}  onError={() => {this.getProfileImage()}}>
-                 
+                  source={this.state.profileImage == "" ? require('../../assets/profile-placeholder.png') : this.state.profileImage} onError={() => { this.getProfileImage() }}>
+
                 </Image>
                 <View style={styles.fileInputWrapper}>
                   <JCButton buttonType={ButtonTypes.Solid} onPress={() => { }}>Upload Profile Picture</JCButton>
@@ -215,7 +420,7 @@ export default class MyProfile extends React.Component<Props, State> {
                 <Text style={styles.fontFormText}><Text style={styles.fontFormMandatory}>*</Text>One sentence about me</Text>
                 <Input style={styles.fontFormAboutMe} value={this.state.UserDetails.aboutMeShort}
                   onChange={(e) => { this.handleInputChange(e, "aboutMeShort") }} multiline={true} placeholder="Short sentence about me" />
-                <Text style={styles.fontFormSmallDarkGrey}><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/pin 2.svg')}></Image>Location not defined</Text>
+                <Text style={styles.fontFormSmallDarkGrey}><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/pin 2.svg')}></Image>Location not defined</Text><Text>( <JCButton buttonType={ButtonTypes.Transparent} onPress={() => this.showMap()}>Set</JCButton>)</Text>
                 <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/calendar.svg')}></Image>{this.state.UserDetails.joined ? moment(this.state.UserDetails.joined).format('MMMM Do YYYY') : "Join date unknown"}</Text>
                 <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/church.svg')}></Image>{this.state.UserDetails.orgName ? this.state.UserDetails.orgName : "Organization Name not defined"}</Text>
               </View>
