@@ -12,6 +12,7 @@ export default StyleSheet.create({
     },
     icon: {
         color: '#aaaaaa',
+        fontSize: 22, 
     },
     leftButtons: {
       
