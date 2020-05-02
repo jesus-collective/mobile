@@ -24,6 +24,10 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
         province
         postalCode
         country
+        location {
+          latitude
+          longitude
+        }
         profileImage {
           userId
           filenameSmall
@@ -135,6 +139,10 @@ export const onCreateUser = /* GraphQL */ `
       province
       postalCode
       country
+      location {
+        latitude
+        longitude
+      }
       profileImage {
         userId
         filenameSmall
@@ -225,6 +233,10 @@ export const onUpdateUser = /* GraphQL */ `
       province
       postalCode
       country
+      location {
+        latitude
+        longitude
+      }
       profileImage {
         userId
         filenameSmall
@@ -315,6 +327,10 @@ export const onDeleteUser = /* GraphQL */ `
       province
       postalCode
       country
+      location {
+        latitude
+        longitude
+      }
       profileImage {
         userId
         filenameSmall
@@ -465,6 +481,10 @@ export const onCreateGroupMember = /* GraphQL */ `
         province
         postalCode
         country
+        location {
+          latitude
+          longitude
+        }
         profileImage {
           userId
           filenameSmall
@@ -580,6 +600,10 @@ export const onUpdateGroupMember = /* GraphQL */ `
         province
         postalCode
         country
+        location {
+          latitude
+          longitude
+        }
         profileImage {
           userId
           filenameSmall
@@ -695,6 +719,10 @@ export const onDeleteGroupMember = /* GraphQL */ `
         province
         postalCode
         country
+        location {
+          latitude
+          longitude
+        }
         profileImage {
           userId
           filenameSmall
@@ -753,6 +781,10 @@ export const onCreateGroup = /* GraphQL */ `
         province
         postalCode
         country
+        location {
+          latitude
+          longitude
+        }
         profileImage {
           userId
           filenameSmall
@@ -851,6 +883,10 @@ export const onUpdateGroup = /* GraphQL */ `
         province
         postalCode
         country
+        location {
+          latitude
+          longitude
+        }
         profileImage {
           userId
           filenameSmall
@@ -949,6 +985,10 @@ export const onDeleteGroup = /* GraphQL */ `
         province
         postalCode
         country
+        location {
+          latitude
+          longitude
+        }
         profileImage {
           userId
           filenameSmall
@@ -1510,6 +1550,10 @@ export const onCreateMessage = /* GraphQL */ `
         province
         postalCode
         country
+        location {
+          latitude
+          longitude
+        }
         profileImage {
           userId
           filenameSmall
@@ -1628,6 +1672,10 @@ export const onUpdateMessage = /* GraphQL */ `
         province
         postalCode
         country
+        location {
+          latitude
+          longitude
+        }
         profileImage {
           userId
           filenameSmall
@@ -1746,6 +1794,10 @@ export const onDeleteMessage = /* GraphQL */ `
         province
         postalCode
         country
+        location {
+          latitude
+          longitude
+        }
         profileImage {
           userId
           filenameSmall

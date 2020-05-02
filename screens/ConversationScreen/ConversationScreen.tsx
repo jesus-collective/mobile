@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import { Container, Content } from 'native-base';
-import {Text} from 'react-native'
+import { Text } from 'react-native'
 
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
@@ -36,19 +36,19 @@ export default class ConversationScreen extends React.Component<Props, State>{
     [
       [
         {
-          "id":"1",
+          "id": "1",
           "name": "Dave Smith",
           "image": "../../assets/profile-placeholder.png"
         }
       ],
       [
         {
-          "id":"2",
+          "id": "2",
           "name": "Ed Marky",
           "image": "../../assets/profile-placeholder.png"
         },
         {
-          "id":"3",
+          "id": "3",
           "name": "John Dev",
           "image": "../../assets/profile-placeholder.png"
         }

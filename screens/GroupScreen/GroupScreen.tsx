@@ -74,8 +74,8 @@ export default class GroupScreen extends React.Component<Props, State>{
     })
     this.setInitialData(props)
   }
-  
-  
+
+
 
   getValueFromKey(myObject: any, string: any) {
     const key = Object.keys(myObject).filter(k => k.includes(string));
@@ -102,7 +102,7 @@ export default class GroupScreen extends React.Component<Props, State>{
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       var processResults = (json) => {
-       
+
         this.setState({ data: json.data.getGroup },
 
           () => {
@@ -288,8 +288,8 @@ export default class GroupScreen extends React.Component<Props, State>{
                   <Text>{this.state.validationError}</Text>
                 </Container>
                 <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                 <MessageBoard navigation={this.props.navigation} groupId={this.state.data.id}></MessageBoard>
-                </Container>      
+                  <MessageBoard navigation={this.props.navigation} groupId={this.state.data.id}></MessageBoard>
+                </Container>
               </Container>
             </Content>
           </Container>

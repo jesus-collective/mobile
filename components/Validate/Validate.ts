@@ -4,7 +4,7 @@ type ValidationResult = {
     result: boolean,
     validationError: String
 }
-export default class Validate{
+export default class Validate {
     static Profile(data: any): ValidationResult {
         if (data.aboutMeShort == null || data.aboutMeShort == "")
             return { result: false, validationError: "Profile must have - short about me" }
@@ -28,8 +28,8 @@ export default class Validate{
             return { result: false, validationError: "Profile must have - postalcode" }
         if (data.country == null || data.country == "")
             return { result: false, validationError: "Profile must have - country" }
-     //   if (data.interests == null || data.interests == "")
-     //       return { result: false, validationError: "Profile must have - interests" }
+        //   if (data.interests == null || data.interests == "")
+        //       return { result: false, validationError: "Profile must have - interests" }
         if (data.currentRole == null || data.currentRole == "")
             return { result: false, validationError: "Profile must have - current role" }
         if (data.currentScope == null || data.currentScope == "")
@@ -46,8 +46,9 @@ export default class Validate{
             return { result: false, validationError: "Profile must have - organization description" }
         if (data.profileImage == null || data.profileImage == "")
             return { result: false, validationError: "Profile must have - profile image" }
+        if (data.location == null)
+            return { result: false, validationError: "Profile must have - public location" }
 
-        
         return { result: true, validationError: "" }
     }
     static Course(data: any): ValidationResult {
@@ -98,7 +99,7 @@ export default class Validate{
             return { result: false, validationError: "Event must have a name" }
         if (data.description == "")
             return { result: false, validationError: "Event must have a description" }
-        if (data.time == ""||data.time == null)
+        if (data.time == "" || data.time == null)
             return { result: false, validationError: "Event must have a time" }
         if (data.location == "")
             return { result: false, validationError: "Event must have a location" }

@@ -1,6 +1,7 @@
 .editable-input {
-    height: 38px;
-  }
-  .editable-textarea {
-    height: 120px;
-  }
+  height: 38px;
+}
+
+.editable-textarea {
+  height: 120px;
+}

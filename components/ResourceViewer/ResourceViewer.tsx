@@ -48,13 +48,13 @@ class ResourceViewer extends React.Component<Props, State> {
 
 
 
-       const series = await DataStore.save(
+        const series = await DataStore.save(
             new ResourceSeries({
                 type: "curriculum",
                 title: "Overview",
                 image: "123",
                 description: "...",
-               
+
                 category: ["123"],
                 status: "123",
                 allFiles: "123",
@@ -77,7 +77,7 @@ class ResourceViewer extends React.Component<Props, State> {
                 description: "...",
                 extendedDescription: "123",
                 //root: resourceRoot
-                 series: [series]
+                series: [series]
             })
         );
         const resourceRoot = await DataStore.save(
@@ -86,7 +86,7 @@ class ResourceViewer extends React.Component<Props, State> {
                 groupId: this.props.groupId,
                 resources: [resource]
             })
-        ); 
+        );
 
 
 

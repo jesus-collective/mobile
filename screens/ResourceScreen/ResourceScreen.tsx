@@ -195,7 +195,7 @@ export default class GroupScreen extends React.Component<Props, State>{
     this.setState({ data: temp })
   }
   render() {
-  //console.log(this.state)
+    //console.log(this.state)
     console.log("ResourceScreen")
 
     return (
@@ -205,7 +205,7 @@ export default class GroupScreen extends React.Component<Props, State>{
             <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
             <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
             <ResourceViewer navigation={this.props.navigation} groupId={this.state.data.id}></ResourceViewer>
-          {/*  <ImportKidsAndYouth></ImportKidsAndYouth>*/}
+            {/*  <ImportKidsAndYouth></ImportKidsAndYouth>*/}
           </Container>
         </StyleProvider>
         :

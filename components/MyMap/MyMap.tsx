@@ -2,14 +2,14 @@
 import * as React from 'react';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 
-interface Props{
+interface Props {
   navigation: any
-  visible:boolean
+  visible: boolean
 }
-interface State{}
+interface State { }
 
-export default class MyMap extends React.Component<Props,State> {
-  constructor(props:Props) {
+export default class MyMap extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
   }
   mapstyle = [

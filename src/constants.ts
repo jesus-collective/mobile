@@ -1,4 +1,4 @@
- export const constants=
+export const constants =
 {
     SETTING_ISVISIBLE_course: false,
     SETTING_ISVISIBLE_organization: false,
@@ -14,8 +14,8 @@
     SETTING_ISVISIBLE_CREATE_event: true,
     SETTING_ISVISIBLE_CREATE_conversation: false,
 
-    SETTING_ISVISIBLE_SHOWRECOMMENDED:false,
-    SETTING_ISVISIBLE_SHOWMY:false,
-    SETTING_ISVISIBLE_SEARCH:false,
-    SETTING_ISVISIBLE_MAP:true
+    SETTING_ISVISIBLE_SHOWRECOMMENDED: false,
+    SETTING_ISVISIBLE_SHOWMY: false,
+    SETTING_ISVISIBLE_SEARCH: false,
+    SETTING_ISVISIBLE_MAP: true
 }

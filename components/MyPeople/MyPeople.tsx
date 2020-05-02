@@ -50,7 +50,7 @@ export default class MyPeople extends React.Component<Props, State> {
     });
 
     listUsers.then((json) => {
-     // console.log(json)
+      // console.log(json)
       this.setState({ data: json.data.listUsers.items })
 
     }).catch(

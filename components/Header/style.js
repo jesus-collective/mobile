@@ -1,13 +1,13 @@
-import {Platform, StyleSheet} from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { Dimensions } from 'react-native'
 
 export default StyleSheet.create({
 
     container: {
         backgroundColor: '#333333',
-       
+
     },
-    resourceContainer:{
+    resourceContainer: {
         backgroundColor: '#292929'
     },
     icon: {
@@ -15,7 +15,7 @@ export default StyleSheet.create({
         fontSize: 22,
     },
     leftButtons: {
-      
+
         display: Platform.OS === 'web' && Dimensions.get('window').width > 720 ? 'none' : 'flex',
     },
     centerMenuButtons: {
@@ -26,7 +26,7 @@ export default StyleSheet.create({
     },
     centerMenuButtonsText: {
         color: '#aaaaaa',
-        fontSize:15,
+        fontSize: 15,
         fontWeight: 'bold',
         marginRight: 30
     },
@@ -36,6 +36,7 @@ export default StyleSheet.create({
         width: 126,
         height: 33,
         marginRight: 70,
+
         marginTop:5,
         marginBottom:10,
     },
@@ -48,4 +49,5 @@ export default StyleSheet.create({
             display: 'none',
         },
     },
+
 });

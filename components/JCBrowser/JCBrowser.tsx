@@ -1,4 +1,4 @@
-import {  Container } from 'native-base';
+import { Container } from 'native-base';
 import * as React from 'react';
 import { WebView, Linking } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
@@ -9,14 +9,14 @@ interface State {
     url: string
 }
 export default class JCBrowser extends React.Component<Props, State> {
-    constructor(props:Props) {
+    constructor(props: Props) {
         super(props);
     }
     state = {
         url: this.props.url,
     };
 
-    isJesusCollectiveUrl(uri:string|undefined) {
+    isJesusCollectiveUrl(uri: string | undefined) {
         if (uri == undefined) return false;
         if (uri.startsWith("http://jesuscollective.com")) return true;
         if (uri.startsWith("https://jesuscollective.com")) return true;
@@ -24,13 +24,13 @@ export default class JCBrowser extends React.Component<Props, State> {
         if (uri.startsWith("https://www.jesuscollective.com")) return true;
         return false;
     }
-    webview:any;
+    webview: any;
     //    <NavigationEvents onWillFocus={payload => { this.setState({ url: this.props.url }); console.log('will focus', payload) }} />
 
     render() {
         return (
             <Container>
-            
+
                 <WebView
                     ref={(ref) => { this.webview = ref; }}
                     onLoadStart={(navState) => this.setState({ url: navState.nativeEvent.url })}
@@ -41,8 +41,8 @@ export default class JCBrowser extends React.Component<Props, State> {
                     onNavigationStateChange={(event) => {
                         if (!this.isJesusCollectiveUrl(event.url)) {
                             this.webview.stopLoading();
-                            if (event.url!=undefined)
-                            Linking.openURL(event.url);
+                            if (event.url != undefined)
+                                Linking.openURL(event.url);
                         }
                     }}
                     style={{ marginTop: 0 }}

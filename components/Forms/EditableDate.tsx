@@ -1,6 +1,6 @@
 import React from 'react';
 import { Input, Content, Left, Right, Body, StyleProvider, Container, Card, CardItem, Button } from 'native-base';
-import {Text} from 'react-native'
+import { Text } from 'react-native'
 
 import { KeyboardDatePicker, DateTimePicker, KeyboardDateTimePicker } from "@material-ui/pickers";
 var moment = require('moment');
@@ -37,7 +37,7 @@ export default class MessageBoard extends React.Component<Props, State> {
             placeholder: props.placeholder,
 
         }
-       // console.log(props)
+        // console.log(props)
     }
     onChanged(val: any) {
         this.props.onChange(val.format())
@@ -47,7 +47,7 @@ export default class MessageBoard extends React.Component<Props, State> {
 
 
         if (this.state.isEditable) {
-            if (this.props.type == 'datetime') 
+            if (this.props.type == 'datetime')
                 return (
                     <KeyboardDateTimePicker
                         variant="inline"
@@ -70,7 +70,7 @@ export default class MessageBoard extends React.Component<Props, State> {
                         format='MMMM Do YYYY, h:mm a'
                         label={this.state.placeholder}
                         value={moment(this.props.value)}
-                        onChange={(value) => {  this.onChanged(value) }}
+                        onChange={(value) => { this.onChanged(value) }}
                         //onError={console.log}
                         disablePast
                         emptyLabel="Date not set"

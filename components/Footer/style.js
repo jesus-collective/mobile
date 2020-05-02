@@ -6,10 +6,10 @@ export default StyleSheet.create({
     footerContainer: {
         backgroundColor: '#333333',
         padding: 20,
-        flex:0,
-        minHeight:200,
-        width:'100%',
-        height:200
+        flex: 0,
+        minHeight: 200,
+        width: '100%',
+        height: 200
     },
 
     icon: {
@@ -21,21 +21,21 @@ export default StyleSheet.create({
     },
     footerCenterMenuButtonsWhite: {
         alignItems: "flex-start",
-        marginTop:0,
-        paddingTop:0,
-        marginBottom:0,
-        paddingBottom:0,
-        height:45,
-        width:null
+        marginTop: 0,
+        paddingTop: 0,
+        marginBottom: 0,
+        paddingBottom: 0,
+        height: 45,
+        width: null
     },
     footerCenterMenuButtons: {
         alignItems: "flex-start",
-        marginTop:0,
-        paddingTop:0,
-        marginBottom:0,
-        paddingBottom:0,
-        height:35,
-        width:null
+        marginTop: 0,
+        paddingTop: 0,
+        marginBottom: 0,
+        paddingBottom: 0,
+        height: 35,
+        width: null
     },
     footerCenterMenuButtonsTextWhite: {
         fontFamily: "Graphik-Bold-App",
@@ -50,10 +50,10 @@ export default StyleSheet.create({
         fontSize: 13,
         fontWeight: 'bold',
         marginRight: 30,
-        marginTop:0,
-        paddingTop:0,
-        marginBottom:0,
-        paddingBottom:0
+        marginTop: 0,
+        paddingTop: 0,
+        marginBottom: 0,
+        paddingBottom: 0
     },
     logo: {
         resizeMode: "stretch",

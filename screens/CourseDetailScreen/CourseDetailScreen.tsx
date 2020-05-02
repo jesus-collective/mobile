@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import { Accordion, StyleProvider, Card, Container, Content, Left, Right, CardItem, Body } from 'native-base';
-import {Text} from 'react-native'
+import { Text } from 'react-native'
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
 import CourseSidebar from '../../components/CourseSidebar/CourseSidebar'
@@ -60,7 +60,7 @@ export default class CourseScreen extends React.Component<Props, State>{
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
 
-    var processResults=(json) => {
+    var processResults = (json) => {
       this.setState({ data: json.data.getGroup })
     }
     getGroup.then(processResults).catch(processResults)
@@ -126,7 +126,7 @@ export default class CourseScreen extends React.Component<Props, State>{
     )
   }
   renderLessonDetails(week: any) {
-   // console.log(this.state.activeLesson)
+    // console.log(this.state.activeLesson)
     const lesson = week.lessons[this.state.activeLesson]
     return (
       this.state.activeLesson != null ?
@@ -153,7 +153,7 @@ export default class CourseScreen extends React.Component<Props, State>{
           )
             : null
           }
-          
+
         </Container>
         : null
     )
@@ -174,9 +174,9 @@ export default class CourseScreen extends React.Component<Props, State>{
                   {this.renderLessonDetails(week)}
                   <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                     <Container style={{ flex: 5, flexDirection: "row" }}>
-                      <JCButton buttonType={ButtonTypes.Outline} onPress={()=>{}}>Cohort</JCButton>
-                      <JCButton buttonType={ButtonTypes.Outline} onPress={()=>{}}>Triad</JCButton>
-                      <JCButton buttonType={ButtonTypes.Outline} onPress={()=>{}}>Instructor</JCButton>
+                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { }}>Cohort</JCButton>
+                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { }}>Triad</JCButton>
+                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { }}>Instructor</JCButton>
                     </Container>
                     <Container style={{ flex: 95, flexDirection: "row" }}>
                       <MessageBoard navigation={this.props.navigation} groupId={this.state.data.id}></MessageBoard>

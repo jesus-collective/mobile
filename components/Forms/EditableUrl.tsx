@@ -1,8 +1,8 @@
 import React from 'react';
-import { withNavigation  } from 'react-navigation';
+import { withNavigation } from 'react-navigation';
 
 import { Input, Content, Left, Right, Body, StyleProvider, Container, Card, CardItem, Button } from 'native-base';
-import {Text} from 'react-native'
+import { Text } from 'react-native'
 
 interface Props {
     value: string,
@@ -13,7 +13,7 @@ interface Props {
     multiline: boolean,
     placeholder?: string,
     onChange?(string),
-    navigation:any
+    navigation: any
 }
 interface State {
     // value: string,
@@ -23,7 +23,7 @@ interface State {
     multiline: boolean,
     placeholder: string
 }
- class EditableUrl extends React.Component<Props, State> {
+class EditableUrl extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -34,16 +34,16 @@ interface State {
             multiline: props.multiline,
             placeholder: props.placeholder
         }
-       // console.log(props)
+        // console.log(props)
     }
     onChanged(val: any) {
         this.props.onChange(val.target.value)
     }
     navigate(id) {
-        
-        window.location.href=id
-       
-       
+
+        window.location.href = id
+
+
     }
     render() {
 

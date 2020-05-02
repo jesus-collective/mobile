@@ -1,12 +1,12 @@
-﻿import React,{lazy} from 'react';
-import { Container} from 'native-base';
+﻿import React, { lazy } from 'react';
+import { Container } from 'native-base';
 
 import { Platform } from 'react-native';
 import { Dimensions } from 'react-native'
 
-const MyConversations = lazy(() => import( '../../components/MyConversations/MyConversations'));
+const MyConversations = lazy(() => import('../../components/MyConversations/MyConversations'));
 const MyGroups = lazy(() => import('../../components/MyGroups/MyGroups'));
-const MyPeople = lazy(() => import( '../../components/MyPeople/MyPeople'));
+const MyPeople = lazy(() => import('../../components/MyPeople/MyPeople'));
 
 const Header = lazy(() => import('../../components/Header/Header'));
 const FooterJC = lazy(() => import('../../components/Footer/Footer'));
@@ -17,8 +17,8 @@ interface Props {
 }
 interface State {
   showMap: boolean
-  width:any
-  height:any
+  width: any
+  height: any
 }
 
 
@@ -27,12 +27,12 @@ export default class HomeScreen extends React.Component<Props, State>{
     super(props);
     this.state = {
       showMap: false,
-      width:Dimensions.get('window').width,
-      height:Dimensions.get('window').height
+      width: Dimensions.get('window').width,
+      height: Dimensions.get('window').height
     }
     Dimensions.addEventListener('change', (e) => {
       const { width, height } = e.window;
-      this.setState({width, height});
+      this.setState({ width, height });
     })
   }
   mapChanged = () => {
@@ -65,7 +65,7 @@ export default class HomeScreen extends React.Component<Props, State>{
 
 
             {
-              Platform.OS == 'web' && this.state.width>720  ? <FooterJC title="Jesus Collective" navigation={this.props.navigation} ></FooterJC>
+              Platform.OS == 'web' && this.state.width > 720 ? <FooterJC title="Jesus Collective" navigation={this.props.navigation} ></FooterJC>
                 : null
             }
 

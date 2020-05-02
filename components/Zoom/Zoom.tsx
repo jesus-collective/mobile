@@ -54,11 +54,11 @@ export default class GroupScreen extends React.Component<Props, State>{
         ZoomMtg.init({
             debug: true,
             leaveUrl: 'https://www.zoom.us',
-            showMeetingHeader:true,
-            audioPanelAlwaysOpen:true,
-            videoDrag:true,
-            videoHeader:true,
-            isLockBottom:true,
+            showMeetingHeader: true,
+            audioPanelAlwaysOpen: true,
+            videoDrag: true,
+            videoHeader: true,
+            isLockBottom: true,
             success: () => {
                 console.log("Done Init")
                 ZoomMtg.join(

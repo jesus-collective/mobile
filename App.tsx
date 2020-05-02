@@ -4,7 +4,7 @@ import awsConfig from './src/aws-exports';
 import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
-import EStyleSheet from 'react-native-extended-stylesheet'; 
+import EStyleSheet from 'react-native-extended-stylesheet';
 import { AmplifyTheme, Authenticator } from 'aws-amplify-react-native';
 import { View } from 'native-base';
 import { Dimensions } from 'react-native'

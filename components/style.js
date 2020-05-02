@@ -202,10 +202,10 @@ export default EStyleSheet.create({
         color: "#000000",
         letterSpacing: -0.3,
         color: "#333333",
-        paddingBottom: 9, 
+        paddingBottom: 9,
     },
     connectWithTopSectionButton: {
-        paddingTop: 30, 
+        paddingTop: 30,
         paddingBottom: 25
     },
     connectWithSliderButton: {
@@ -239,7 +239,7 @@ export default EStyleSheet.create({
     // Media Query Desktop Tablet
     '@media (min-width: 350) and (max-width: 768)': {
         connectWithSliderButton: {
-          height: 45,
+            height: 45,
         },
 
         connectWithTopSectionButton: {
@@ -252,12 +252,12 @@ export default EStyleSheet.create({
     // Media Query Desktop Large Tablet
     '@media (min-width: 769) and (max-width: 1024)': {
         connectWithTopSectionButton: {
-          paddingTop: 50,
-          paddingBottom: 35,
-          paddingRight: 15
+            paddingTop: 50,
+            paddingBottom: 35,
+            paddingRight: 15
         },
     },
-        
+
     authView: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { left: "40%", width: "40%", top: 100, height: "auto" } :
         { left: "2%", width: "96%", top: "0%", height: "100%" },

@@ -206,7 +206,7 @@ export default class GroupScreen extends React.Component<Props, State>{
                   <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Organization Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
 
                   <Text>Organizer</Text>
-                  <ProfileImage user={this.state.data.ownerUser?this.state.data.ownerUser:this.state.currentUserProfile} size="small" />
+                  <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
                   <Text>Members ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
 
                   {
