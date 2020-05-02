@@ -322,8 +322,8 @@ export default class MyGroups extends React.Component<Props, State> {
         return (
           <StyleProvider style={getTheme(material)}>
 
-            <Container style={{ padding: 10, minHeight: 515, width: "100%", flexDirection: 'column', justifyContent: 'flex-start' }}>
-              <Container style={{ minHeight: 45, flexGrow: 0, flexDirection: 'row', justifyContent: 'space-between', marginTop: 60 }} >
+            <Container style={{ padding: 10, minHeight: 470, width: "100%", flexDirection: 'column', justifyContent: 'flex-start' }}>
+              <Container style={{ minHeight: 45, flexGrow: 0, flexDirection: 'row', justifyContent: 'space-between', marginTop: 30 }} >
                 <JCButton buttonType={ButtonTypes.TransparentBoldBlack} onPress={() => { this.openMultiple() }}>{this.state.titleString}</JCButton>
                 <Container style={{ maxHeight: 45, flexDirection: 'row', justifyContent: 'flex-end', alignItems: "flex-start" }}>
                   <JCButton buttonType={ButtonTypes.TransparentBoldOrange} onPress={() => { this.openMultiple() }}>Show All</JCButton>
@@ -334,7 +334,7 @@ export default class MyGroups extends React.Component<Props, State> {
                   }
                 </Container>
               </Container>
-              <Container style={{ overflow: "scroll", minHeight: 400, flexWrap: this.props.wrap ? "wrap" : "nowrap", flexGrow: 1, width: "100%", flexDirection: 'row', justifyContent: "flex-start", alignItems: "flex-start" }}>
+              <Container style={{ overflowY: "hidden", minHeight: 375, flexWrap: this.props.wrap ? "wrap" : "nowrap", flexGrow: 1, width: "100%", flexDirection: 'row', justifyContent: "flex-start", alignItems: "flex-start" }}>
                 {this.state.data ?
                   this.state.data.map((item) => {
                     return (
