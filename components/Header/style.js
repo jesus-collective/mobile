@@ -12,15 +12,17 @@ export default StyleSheet.create({
     },
     icon: {
         color: '#aaaaaa',
-        fontSize: 22, 
+        fontSize: 22,
     },
     leftButtons: {
       
         display: Platform.OS === 'web' && Dimensions.get('window').width > 720 ? 'none' : 'flex',
     },
     centerMenuButtons: {
-        display: Platform.OS === 'web' && Dimensions.get('window').width > 720 ? 'flex' : 'none',
-        
+        display: Platform.OS === 'web' && Dimensions.get('window').width > 720 ? 'flex' : 'none',  
+    },
+    centerMenuButtons: {
+        paddingBottom: 12,
     },
     centerMenuButtonsText: {
         color: '#aaaaaa',
@@ -36,6 +38,14 @@ export default StyleSheet.create({
         marginRight: 70,
         marginTop:5,
         marginBottom:10,
-    }
-    
+    },
+        centerMenuButtons: {
+        display: Platform.OS === 'web' && Dimensions.get('window').width > 720 ? 'flex' : 'none',  
+    },
+    // Media Query Mobile
+    '@media only screen and (max-width: 600px)': {
+        centerMenuButtonsText: {
+            display: 'none',
+        },
+    },
 });
