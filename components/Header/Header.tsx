@@ -115,11 +115,13 @@ export default class HeaderJC extends React.Component<Props, State> {
         <Right>
           {
             constants["SETTING_ISVISIBLE_MAP"] ?
-              <Button
-                transparent
-                onPress={this.showMap}>
-                <Ionicons name="md-map" style={styles.icon} />
-              </Button> : null
+              this.props.onMapChange != null ?
+                <Button
+                  transparent
+                  onPress={this.showMap}>
+                  <Ionicons name="md-map" style={styles.icon} />
+                </Button> : null
+              : null
           }
           {
             constants["SETTING_ISVISIBLE_SEARCH"] ?
