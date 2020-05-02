@@ -15,6 +15,7 @@ export type CreateUserInput = {
   province?: string | null,
   postalCode?: string | null,
   country?: string | null,
+  location?: LatLongInput | null,
   profileImage?: ImageInput | null,
   aboutMeShort?: string | null,
   aboutMeLong?: string | null,
@@ -28,6 +29,11 @@ export type CreateUserInput = {
   orgDescription?: string | null,
   joined?: string | null,
   _version?: number | null,
+};
+
+export type LatLongInput = {
+  latitude?: string | null,
+  longitude?: string | null,
 };
 
 export type ImageInput = {
@@ -51,6 +57,7 @@ export type UpdateUserInput = {
   province?: string | null,
   postalCode?: string | null,
   country?: string | null,
+  location?: LatLongInput | null,
   profileImage?: ImageInput | null,
   aboutMeShort?: string | null,
   aboutMeLong?: string | null,
@@ -92,6 +99,7 @@ export type UserInput = {
   province?: string | null,
   postalCode?: string | null,
   country?: string | null,
+  location?: LatLongInput | null,
   profileImage?: ImageInput | null,
   aboutMeShort?: string | null,
   aboutMeLong?: string | null,
@@ -854,6 +862,11 @@ export type CreateUserMutation = {
     province: string | null,
     postalCode: string | null,
     country: string | null,
+    location:  {
+      __typename: "LatLong",
+      latitude: string | null,
+      longitude: string | null,
+    } | null,
     profileImage:  {
       __typename: "Image",
       userId: string | null,
@@ -955,6 +968,11 @@ export type UpdateUserMutation = {
     province: string | null,
     postalCode: string | null,
     country: string | null,
+    location:  {
+      __typename: "LatLong",
+      latitude: string | null,
+      longitude: string | null,
+    } | null,
     profileImage:  {
       __typename: "Image",
       userId: string | null,
@@ -1056,6 +1074,11 @@ export type DeleteUserMutation = {
     province: string | null,
     postalCode: string | null,
     country: string | null,
+    location:  {
+      __typename: "LatLong",
+      latitude: string | null,
+      longitude: string | null,
+    } | null,
     profileImage:  {
       __typename: "Image",
       userId: string | null,
@@ -1222,6 +1245,11 @@ export type CreateGroupMemberMutation = {
       province: string | null,
       postalCode: string | null,
       country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
       profileImage:  {
         __typename: "Image",
         userId: string | null,
@@ -1350,6 +1378,11 @@ export type UpdateGroupMemberMutation = {
       province: string | null,
       postalCode: string | null,
       country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
       profileImage:  {
         __typename: "Image",
         userId: string | null,
@@ -1478,6 +1511,11 @@ export type DeleteGroupMemberMutation = {
       province: string | null,
       postalCode: string | null,
       country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
       profileImage:  {
         __typename: "Image",
         userId: string | null,
@@ -1545,6 +1583,11 @@ export type CreateGroupMutation = {
       province: string | null,
       postalCode: string | null,
       country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
       profileImage:  {
         __typename: "Image",
         userId: string | null,
@@ -1656,6 +1699,11 @@ export type UpdateGroupMutation = {
       province: string | null,
       postalCode: string | null,
       country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
       profileImage:  {
         __typename: "Image",
         userId: string | null,
@@ -1767,6 +1815,11 @@ export type DeleteGroupMutation = {
       province: string | null,
       postalCode: string | null,
       country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
       profileImage:  {
         __typename: "Image",
         userId: string | null,
@@ -2431,6 +2484,11 @@ export type CreateMessageMutation = {
       province: string | null,
       postalCode: string | null,
       country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
       profileImage:  {
         __typename: "Image",
         userId: string | null,
@@ -2562,6 +2620,11 @@ export type UpdateMessageMutation = {
       province: string | null,
       postalCode: string | null,
       country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
       profileImage:  {
         __typename: "Image",
         userId: string | null,
@@ -2693,6 +2756,11 @@ export type DeleteMessageMutation = {
       province: string | null,
       postalCode: string | null,
       country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
       profileImage:  {
         __typename: "Image",
         userId: string | null,
@@ -3508,6 +3576,11 @@ export type SyncUsersQuery = {
       province: string | null,
       postalCode: string | null,
       country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
       profileImage:  {
         __typename: "Image",
         userId: string | null,
@@ -3570,6 +3643,11 @@ export type GetUserQuery = {
     province: string | null,
     postalCode: string | null,
     country: string | null,
+    location:  {
+      __typename: "LatLong",
+      latitude: string | null,
+      longitude: string | null,
+    } | null,
     profileImage:  {
       __typename: "Image",
       userId: string | null,
@@ -3675,6 +3753,11 @@ export type ListUsersQuery = {
       province: string | null,
       postalCode: string | null,
       country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
       profileImage:  {
         __typename: "Image",
         userId: string | null,
@@ -3890,6 +3973,11 @@ export type GetGroupQuery = {
       province: string | null,
       postalCode: string | null,
       country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
       profileImage:  {
         __typename: "Image",
         userId: string | null,
@@ -4631,6 +4719,11 @@ export type GetMessageQuery = {
       province: string | null,
       postalCode: string | null,
       country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
       profileImage:  {
         __typename: "Image",
         userId: string | null,
@@ -5792,6 +5885,11 @@ export type OnCreateMessageByRoomIdSubscription = {
       province: string | null,
       postalCode: string | null,
       country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
       profileImage:  {
         __typename: "Image",
         userId: string | null,
@@ -5915,6 +6013,11 @@ export type OnCreateUserSubscription = {
     province: string | null,
     postalCode: string | null,
     country: string | null,
+    location:  {
+      __typename: "LatLong",
+      latitude: string | null,
+      longitude: string | null,
+    } | null,
     profileImage:  {
       __typename: "Image",
       userId: string | null,
@@ -6016,6 +6119,11 @@ export type OnUpdateUserSubscription = {
     province: string | null,
     postalCode: string | null,
     country: string | null,
+    location:  {
+      __typename: "LatLong",
+      latitude: string | null,
+      longitude: string | null,
+    } | null,
     profileImage:  {
       __typename: "Image",
       userId: string | null,
@@ -6117,6 +6225,11 @@ export type OnDeleteUserSubscription = {
     province: string | null,
     postalCode: string | null,
     country: string | null,
+    location:  {
+      __typename: "LatLong",
+      latitude: string | null,
+      longitude: string | null,
+    } | null,
     profileImage:  {
       __typename: "Image",
       userId: string | null,
@@ -6279,6 +6392,11 @@ export type OnCreateGroupMemberSubscription = {
       province: string | null,
       postalCode: string | null,
       country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
       profileImage:  {
         __typename: "Image",
         userId: string | null,
@@ -6403,6 +6521,11 @@ export type OnUpdateGroupMemberSubscription = {
       province: string | null,
       postalCode: string | null,
       country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
       profileImage:  {
         __typename: "Image",
         userId: string | null,
@@ -6527,6 +6650,11 @@ export type OnDeleteGroupMemberSubscription = {
       province: string | null,
       postalCode: string | null,
       country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
       profileImage:  {
         __typename: "Image",
         userId: string | null,
@@ -6594,6 +6722,11 @@ export type OnCreateGroupSubscription = {
       province: string | null,
       postalCode: string | null,
       country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
       profileImage:  {
         __typename: "Image",
         userId: string | null,
@@ -6705,6 +6838,11 @@ export type OnUpdateGroupSubscription = {
       province: string | null,
       postalCode: string | null,
       country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
       profileImage:  {
         __typename: "Image",
         userId: string | null,
@@ -6816,6 +6954,11 @@ export type OnDeleteGroupSubscription = {
       province: string | null,
       postalCode: string | null,
       country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
       profileImage:  {
         __typename: "Image",
         userId: string | null,
@@ -7444,6 +7587,11 @@ export type OnCreateMessageSubscription = {
       province: string | null,
       postalCode: string | null,
       country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
       profileImage:  {
         __typename: "Image",
         userId: string | null,
@@ -7575,6 +7723,11 @@ export type OnUpdateMessageSubscription = {
       province: string | null,
       postalCode: string | null,
       country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
       profileImage:  {
         __typename: "Image",
         userId: string | null,
@@ -7706,6 +7859,11 @@ export type OnDeleteMessageSubscription = {
       province: string | null,
       postalCode: string | null,
       country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
       profileImage:  {
         __typename: "Image",
         userId: string | null,

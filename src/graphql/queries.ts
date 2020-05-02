@@ -28,6 +28,10 @@ export const syncUsers = /* GraphQL */ `
         province
         postalCode
         country
+        location {
+          latitude
+          longitude
+        }
         profileImage {
           userId
           filenameSmall
@@ -82,6 +86,10 @@ export const getUser = /* GraphQL */ `
       province
       postalCode
       country
+      location {
+        latitude
+        longitude
+      }
       profileImage {
         userId
         filenameSmall
@@ -177,6 +185,10 @@ export const listUsers = /* GraphQL */ `
         province
         postalCode
         country
+        location {
+          latitude
+          longitude
+        }
         profileImage {
           userId
           filenameSmall
@@ -382,6 +394,10 @@ export const getGroup = /* GraphQL */ `
         province
         postalCode
         country
+        location {
+          latitude
+          longitude
+        }
         profileImage {
           userId
           filenameSmall
@@ -1062,6 +1078,10 @@ export const getMessage = /* GraphQL */ `
         province
         postalCode
         country
+        location {
+          latitude
+          longitude
+        }
         profileImage {
           userId
           filenameSmall

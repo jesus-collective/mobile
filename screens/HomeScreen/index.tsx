@@ -180,7 +180,7 @@ export default class App extends React.Component<Props, State>{
     }
   }
   private user: any
-  
+
   async ensureUserExists() {
     var userExists: boolean = false
     this.user = await Auth.currentAuthenticatedUser().

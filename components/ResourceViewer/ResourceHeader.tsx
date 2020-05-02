@@ -35,7 +35,7 @@ class ResourceHeader extends React.Component<Props, State> {
         }
     }
     async getImage(img) {
-        if (img != null){
+        if (img != null) {
             var z = await Storage.get(img.filenameLarge, {
                 level: 'protected',
                 contentType: 'image/png',

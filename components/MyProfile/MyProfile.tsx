@@ -195,7 +195,7 @@ interface State {
   validationText: any
   mapVisible: any
   mapCoord: any
-  
+
 }
 export default class MyProfile extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -212,7 +212,7 @@ export default class MyProfile extends React.Component<Props, State> {
       validationText: null,
       mapVisible: false,
       mapCoord: { latitude: 0, longitude: 0 },
-     
+
     }
     this.getUserDetails()
   }
@@ -354,10 +354,10 @@ export default class MyProfile extends React.Component<Props, State> {
     this.setState({ mapVisible: true })
   }
   saveLocation() {
-    this.handleInputChange({target:{value:{latitude:this.state.mapCoord.latitude,longitude:this.state.mapCoord.longitude}}},"location")
+    this.handleInputChange({ target: { value: { latitude: this.state.mapCoord.latitude, longitude: this.state.mapCoord.longitude } } }, "location")
     this.setState({ mapVisible: false })
   }
-  
+
 
   render() {
 
@@ -377,8 +377,8 @@ export default class MyProfile extends React.Component<Props, State> {
               <JCButton buttonType={ButtonTypes.OutlineBold} onPress={() => this.saveLocation()}>Done</JCButton>
               <MapView
                 provider={PROVIDER_GOOGLE}
-                style={{  left: 10, top: 10, width: 480, height: 480 }}
-               
+                style={{ left: 10, top: 10, width: 480, height: 480 }}
+
                 initialRegion={{
                   latitude: 43.78825,
                   longitude: -78.4324,
@@ -390,7 +390,7 @@ export default class MyProfile extends React.Component<Props, State> {
                   coordinate={this.state.mapCoord}
                   onDragEnd={(e) => {
                     console.log(e)
-                    this.setState({ mapCoord: {latitude:e.latLng.lat(),longitude:e.latLng.lng()} })
+                    this.setState({ mapCoord: { latitude: e.latLng.lat(), longitude: e.latLng.lng() } })
                   }}
                 />
               </MapView>
@@ -421,7 +421,7 @@ export default class MyProfile extends React.Component<Props, State> {
                 <Text style={styles.fontFormText}><Text style={styles.fontFormMandatory}>*</Text>One sentence about me</Text>
                 <Input style={styles.fontFormAboutMe} value={this.state.UserDetails.aboutMeShort}
                   onChange={(e) => { this.handleInputChange(e, "aboutMeShort") }} multiline={true} placeholder="Short sentence about me" />
-                <Text style={styles.fontFormSmallDarkGrey}><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/pin 2.svg')}></Image>{this.state.UserDetails.location?"Lat: "+this.state.UserDetails.location.latitude+" Long:"+this.state.UserDetails.location.longitude:"Location not defined"}</Text><Text>( <JCButton buttonType={ButtonTypes.Transparent} onPress={() => this.showMap()}>{this.state.UserDetails.location!=null?"Change":"Set"}</JCButton>)</Text>
+                <Text style={styles.fontFormSmallDarkGrey}><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/pin 2.svg')}></Image>{this.state.UserDetails.location ? "Lat: " + this.state.UserDetails.location.latitude + " Long:" + this.state.UserDetails.location.longitude : "Location not defined"}</Text><Text>( <JCButton buttonType={ButtonTypes.Transparent} onPress={() => this.showMap()}>{this.state.UserDetails.location != null ? "Change" : "Set"}</JCButton>)</Text>
                 <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/calendar.svg')}></Image>{this.state.UserDetails.joined ? moment(this.state.UserDetails.joined).format('MMMM Do YYYY') : "Join date unknown"}</Text>
                 <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/church.svg')}></Image>{this.state.UserDetails.orgName ? this.state.UserDetails.orgName : "Organization Name not defined"}</Text>
               </View>

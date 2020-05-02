@@ -68,7 +68,7 @@ export default class EventScreen extends React.Component<Props, State>{
       })
       const getUser: any = API.graphql(graphqlOperation(queries.getUser, { id: user['username'] }));
       getUser.then((json) => {
-        
+
         this.setState({
           currentUserProfile: json.data.getUser
         })
@@ -103,7 +103,7 @@ export default class EventScreen extends React.Component<Props, State>{
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       var processResults = (json) => {
-       
+
         this.setState({ data: json.data.getGroup },
 
           () => {

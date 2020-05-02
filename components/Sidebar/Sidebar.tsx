@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Container, Content,  List, ListItem, Header } from "native-base";
-import {Text} from 'react-native'
+import { Container, Content, List, ListItem, Header } from "native-base";
+import { Text } from 'react-native'
 
 const routes = [
   {
@@ -50,12 +50,12 @@ const routes = [
     route: "ProfileScreen"
   },
   {
-    name:"Group",
-    route:"GroupScreen"
+    name: "Group",
+    route: "GroupScreen"
   },
   {
-    name:"Event",
-    route:"EventScreen"
+    name: "Event",
+    route: "EventScreen"
   }
 
 ];
@@ -66,17 +66,17 @@ interface State {
 
 }
 export default class SideBar extends React.Component<Props, State> {
-  
+
   render() {
     return (
       <Container><Content>
         <Header></Header>
         <List
           dataArray={routes}
-          keyExtractor={data=>data.name}
+          keyExtractor={data => data.name}
           renderRow={data => {
             return (
-              <ListItem 
+              <ListItem
                 button
                 onPress={() => this.props.navigation.push(data.route)}>
                 <Text>{data.name}</Text>

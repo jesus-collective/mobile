@@ -17,6 +17,10 @@ export const createUser = /* GraphQL */ `
       province
       postalCode
       country
+      location {
+        latitude
+        longitude
+      }
       profileImage {
         userId
         filenameSmall
@@ -107,6 +111,10 @@ export const updateUser = /* GraphQL */ `
       province
       postalCode
       country
+      location {
+        latitude
+        longitude
+      }
       profileImage {
         userId
         filenameSmall
@@ -197,6 +205,10 @@ export const deleteUser = /* GraphQL */ `
       province
       postalCode
       country
+      location {
+        latitude
+        longitude
+      }
       profileImage {
         userId
         filenameSmall
@@ -347,6 +359,10 @@ export const createGroupMember = /* GraphQL */ `
         province
         postalCode
         country
+        location {
+          latitude
+          longitude
+        }
         profileImage {
           userId
           filenameSmall
@@ -462,6 +478,10 @@ export const updateGroupMember = /* GraphQL */ `
         province
         postalCode
         country
+        location {
+          latitude
+          longitude
+        }
         profileImage {
           userId
           filenameSmall
@@ -577,6 +597,10 @@ export const deleteGroupMember = /* GraphQL */ `
         province
         postalCode
         country
+        location {
+          latitude
+          longitude
+        }
         profileImage {
           userId
           filenameSmall
@@ -635,6 +659,10 @@ export const createGroup = /* GraphQL */ `
         province
         postalCode
         country
+        location {
+          latitude
+          longitude
+        }
         profileImage {
           userId
           filenameSmall
@@ -733,6 +761,10 @@ export const updateGroup = /* GraphQL */ `
         province
         postalCode
         country
+        location {
+          latitude
+          longitude
+        }
         profileImage {
           userId
           filenameSmall
@@ -831,6 +863,10 @@ export const deleteGroup = /* GraphQL */ `
         province
         postalCode
         country
+        location {
+          latitude
+          longitude
+        }
         profileImage {
           userId
           filenameSmall
@@ -1392,6 +1428,10 @@ export const createMessage = /* GraphQL */ `
         province
         postalCode
         country
+        location {
+          latitude
+          longitude
+        }
         profileImage {
           userId
           filenameSmall
@@ -1510,6 +1550,10 @@ export const updateMessage = /* GraphQL */ `
         province
         postalCode
         country
+        location {
+          latitude
+          longitude
+        }
         profileImage {
           userId
           filenameSmall
@@ -1628,6 +1672,10 @@ export const deleteMessage = /* GraphQL */ `
         province
         postalCode
         country
+        location {
+          latitude
+          longitude
+        }
         profileImage {
           userId
           filenameSmall
