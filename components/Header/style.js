@@ -11,7 +11,7 @@ export default StyleSheet.create({
         backgroundColor: '#292929'
     },
     icon: {
-        color: '#aaaaaa'
+        color: '#aaaaaa',
     },
     leftButtons: {
       

@@ -49,7 +49,7 @@ export default class HomeScreen extends React.Component<Props, State>{
         <Container style={{ flexGrow: 1, overflow: "scroll" }}>
           <Container style={{ display: "block" }}>
             <Container style={{ height: 2300, flex: 1, display: "flex", flexDirection: "row" }}>
-              <Container style={{ flex: 70, flexDirection: "column" }}>
+              <Container style={{ flex: 70, flexDirection: "column", backgroundColor: "#F9FAFC" }}>
                 <MyGroups showMore={false} type="event" wrap={false} navigation={this.props.navigation}></MyGroups>
                 <MyGroups showMore={false} type="group" wrap={false} navigation={this.props.navigation}></MyGroups>
                 <MyGroups showMore={false} type="resource" wrap={false} navigation={this.props.navigation}></MyGroups>

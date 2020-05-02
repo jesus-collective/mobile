@@ -184,7 +184,8 @@ export default EStyleSheet.create({
         fontSize: 20,
         lineHeight: 25,
         color: "#000000",
-        letterSpacing: -0.3
+        letterSpacing: -0.3,
+        paddingLeft: 20,
     },
     fontConnectWithName: {
         fontFamily: 'Graphik-Bold-App',
@@ -202,6 +203,10 @@ export default EStyleSheet.create({
         letterSpacing: -0.3,
         color: "#333333",
         paddingBottom: 9, 
+    },
+    connectWithTopSectionButton: {
+        paddingTop: 30, 
+        paddingBottom: 25
     },
     connectWithSliderButton: {
         padding: 0,
@@ -230,6 +235,29 @@ export default EStyleSheet.create({
     },
     flexRow:
         { flexDirection: 'row' },
+
+    // Media Query Desktop Tablet
+    '@media (min-width: 350) and (max-width: 768)': {
+        connectWithSliderButton: {
+          height: 45,
+        },
+
+        connectWithTopSectionButton: {
+            paddingTop: 50,
+            paddingBottom: 35,
+            paddingRight: 15
+        },
+    },
+
+    // Media Query Desktop Large Tablet
+    '@media (min-width: 769) and (max-width: 1024)': {
+        connectWithTopSectionButton: {
+          paddingTop: 50,
+          paddingBottom: 35,
+          paddingRight: 15
+        },
+    },
+        
     authView: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { left: "40%", width: "40%", top: 100, height: "auto" } :
         { left: "2%", width: "96%", top: "0%", height: "100%" },

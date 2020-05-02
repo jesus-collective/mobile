@@ -66,8 +66,8 @@ export default class MyProfile extends React.Component<Props, State> {
         return (
             this.state.profileImage != null ?
                 <Image style={this.props.size == 'small' ?
-                    { width: "40px", height: "45px", borderRadius: 19 } :
-                    { width: "250px", height: "290px", borderRadius: 120 }
+                    { width: "40px", height: "45px", borderRadius: 19, marginRight: 10 } :
+                    { width: "250px", height: "290px", borderRadius: 120, marginRight: 10 }
 
                 }
                     source={this.state.profileImage}>
@@ -76,8 +76,8 @@ export default class MyProfile extends React.Component<Props, State> {
                 :
                 this.state.showEmpty ?
                     <Image style={this.props.size == 'small' ?
-                        { width: "40px", height: "45px", borderRadius: 19 } :
-                        { width: "250px", height: "290px", borderRadius: 120 }
+                        { width: "40px", height: "45px", borderRadius: 19, marginRight: 10 } :
+                        { width: "250px", height: "290px", borderRadius: 120, marginRight: 10 }
 
                     }
                         source={require('../../assets/profile-placeholder.png')}>
