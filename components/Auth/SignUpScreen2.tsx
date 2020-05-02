@@ -36,13 +36,13 @@ export default class SignUpScreen2 extends React.Component<Props, State>{
 
     return (
       <View style={styles.signUpScreen1PaymentBody}>
-         <SignUpSidebar position="3"></SignUpSidebar>
+        <SignUpSidebar position="3"></SignUpSidebar>
         <View style={{ position: "absolute", left: "35%", width: "25%", top: 100, height: "100%" }}>
           <Text>Payment Succesful</Text>
 
           <Button color="#F0493E" title="Setup Profile" onPress={() => this.makePayment()} />
         </View>
-       
+
       </View>
 
     );

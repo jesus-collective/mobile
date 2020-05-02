@@ -17,7 +17,7 @@ class MySignIn extends SignIn<Props, State> {
         //    console.log(this.props.authState)
         return (
 
-            this.props.authState === 'signIn'|| this.props.authState === "signedOut"||this.props.authState === "signedUp" ?
+            this.props.authState === 'signIn' || this.props.authState === "signedOut" || this.props.authState === "signedUp" ?
                 (<View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>
                     <View style={styles.authView}>
                         {super.render()}
