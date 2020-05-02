@@ -34,7 +34,7 @@ export default class FooterJC extends React.Component<Props, State> {
     constants["SETTING_ISVISIBLE_event"] ? {
       name: "Events",
       submenu: [
-        constants["SETTING_ISVISIBLE_SHOWMY"] ? { name: "My Events" }: null,
+        constants["SETTING_ISVISIBLE_SHOWMY"] ? { name: "My Events" } : null,
         constants["SETTING_ISVISIBLE_SHOWRECOMMENDED"] ? { name: "Recommended" } : null
 
       ]
@@ -43,19 +43,19 @@ export default class FooterJC extends React.Component<Props, State> {
     constants["SETTING_ISVISIBLE_group"] ? {
       name: "Groups",
       submenu: [
-        constants["SETTING_ISVISIBLE_SHOWMY"] ? { name: "My Groups" }: null,
+        constants["SETTING_ISVISIBLE_SHOWMY"] ? { name: "My Groups" } : null,
         constants["SETTING_ISVISIBLE_SHOWRECOMMENDED"] ? { name: "Recommended" } : null
 
       ]
     } : null,
     constants["SETTING_ISVISIBLE_resource"] ? {
       name: "Resources",
-      submenu: false?[
+      submenu: false ? [
         { name: "Kids&Youth" },
         { name: "Training" },
         { name: "Adult Teaching" }
 
-      ]:[]
+      ] : []
     } : null,
     {
       name: "Contact Us",

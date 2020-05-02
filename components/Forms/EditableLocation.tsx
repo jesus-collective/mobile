@@ -45,10 +45,10 @@ export default class MessageBoard extends React.Component<Props, State> {
     handleSelect = address => {
         this.setState({ value: address })
         this.props.onChange(address)
-     /* *  geocodeByAddress(address)
-            .then(results => getLatLng(results[0]))
-            .then(latLng => console.log('Success', latLng))
-            .catch(error => console.error('Error', error));*/
+        /* *  geocodeByAddress(address)
+               .then(results => getLatLng(results[0]))
+               .then(latLng => console.log('Success', latLng))
+               .catch(error => console.error('Error', error));*/
     };
     render() {
         console.log(this.state.value)
@@ -65,7 +65,7 @@ export default class MessageBoard extends React.Component<Props, State> {
                 shouldFetchSuggestions={true}
             >
                 {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-                    
+
                     <div>
                         <input
                             {...getInputProps({

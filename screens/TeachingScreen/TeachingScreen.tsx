@@ -8,13 +8,13 @@ Amplify.configure(awsConfig);
 import { Authenticator } from 'aws-amplify-react-native';
 import { NavigationScreenProp } from 'react-navigation';
 
-interface Props{
+interface Props {
   navigation: NavigationScreenProp<any, any>
 }
-interface State{
+interface State {
 
 }
-export default class TeachingScreen extends React.Component <Props,State>{
+export default class TeachingScreen extends React.Component<Props, State>{
   static navigationOptions = {
     title: 'Teaching',
   };

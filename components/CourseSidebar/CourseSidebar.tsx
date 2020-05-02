@@ -1,6 +1,6 @@
 import { Container, Header, Left, Body, Right, Button } from 'native-base';
 import { withNavigation } from 'react-navigation';
-import { DrawerActions  } from 'react-navigation-drawer';
+import { DrawerActions } from 'react-navigation-drawer';
 
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
@@ -54,7 +54,7 @@ class CourseSidebar extends React.Component<Props, State> {
                 <Button transparent onPress={this.openCourseOverview}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/home.svg')} /><Text style={styles.courseSidebarFontRegular}>Overview</Text></Button>
                 <Button transparent onPress={this.openCourseDetails}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/education.svg')} /><Text style={styles.courseSidebarFontRegular}>Course</Text></Button>
                 <Button transparent onPress={this.openCourseCoaching}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/calendar.svg')} /><Text style={styles.courseSidebarFontRegular}>Coaching</Text></Button>
-                <Container style={{backgroundColor:"#00000000"}}>
+                <Container style={{ backgroundColor: "#00000000" }}>
                     <AnimatedProgressWheel
                         size={120}
                         width={10}
@@ -64,7 +64,7 @@ class CourseSidebar extends React.Component<Props, State> {
                         animateFromValue={0}
                         duration={1000}
                     />
-                    <Container style={{ backgroundColor:"#00000000",position: "absolute", top: 15, left: 15 }}>
+                    <Container style={{ backgroundColor: "#00000000", position: "absolute", top: 15, left: 15 }}>
                         <AnimatedProgressWheel
                             size={90}
                             width={10}

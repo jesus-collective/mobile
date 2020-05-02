@@ -6,21 +6,21 @@ import MyProfile from '../../components/MyProfile/MyProfile'
 
 Amplify.configure(awsConfig);
 
-import { Container} from 'native-base';
+import { Container } from 'native-base';
 
 import { NavigationScreenProp } from 'react-navigation';
-interface Props{
+interface Props {
   navigation: NavigationScreenProp<any, any>
 }
-interface State{
+interface State {
   loadId: string
   createNew: boolean
   canSave: boolean
   isEditable: boolean
- 
+
 
 }
-export default class ProfileScreen extends React.Component <Props,State>{
+export default class ProfileScreen extends React.Component<Props, State>{
   constructor(props: Props) {
     super(props);
 
@@ -30,14 +30,14 @@ export default class ProfileScreen extends React.Component <Props,State>{
       canSave: true,
       isEditable: true
     }
-   
+
   }
   render() {
-//    const { navigate } = this.props.navigation;
+    //    const { navigate } = this.props.navigation;
     return (
       <Container>
         <Header title="Profile" navigation={this.props.navigation} />
-        <MyProfile loadId={this.state.loadId} navigation={this.props.navigation}/>
+        <MyProfile loadId={this.state.loadId} navigation={this.props.navigation} />
       </Container>
     );
   }

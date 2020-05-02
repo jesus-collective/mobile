@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import { StyleProvider, Container, Content } from 'native-base';
-import {Text} from 'react-native'
+import { Text } from 'react-native'
 
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
@@ -25,7 +25,7 @@ export default class GroupScreen extends React.Component<Props, State>{
     super(props);
     this.state = {
       showMap: false,
-      data:[]
+      data: []
     }
   }
   mapChanged = () => {
@@ -39,9 +39,9 @@ export default class GroupScreen extends React.Component<Props, State>{
     });
 
     searchGroups.then((json) => {
-     // console.log(json)
+      // console.log(json)
       this.setState({ data: json.data.searchGroups.items })
-    }).catch((e:any) => {
+    }).catch((e: any) => {
       console.log(e)
     }
 
@@ -58,7 +58,7 @@ export default class GroupScreen extends React.Component<Props, State>{
           <Container>
             <input onChange={(item: any) => { this.search(item) }} placeholder="Search..."></input>
             <Text>Results:</Text>
-            {this.state.data.map((item:any) => {
+            {this.state.data.map((item: any) => {
               return (
                 <Text key={item.id}>{item.name}</Text>
               )

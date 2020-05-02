@@ -30,28 +30,28 @@ export default class MyProfile extends React.Component<Props, State> {
             profileImage: null,
             showEmpty: false
         }
-    
-           
-        this.getProfileImage(props.user?props.user.profileImage:null)
-        
+
+
+        this.getProfileImage(props.user ? props.user.profileImage : null)
+
     }
     componentDidUpdate(prevProps) {
-        if  (prevProps.user !== this.props.user) 
-        this.getProfileImage(this.props.user?this.props.user.profileImage:null)
+        if (prevProps.user !== this.props.user)
+            this.getProfileImage(this.props.user ? this.props.user.profileImage : null)
     }
     getProfileImage(user) {
         if (user == "" || user == null) {
-            
+
             this.state = { profileImage: null, showEmpty: true }
         }
         else {
-            Storage.get(this.props.size=="small"?user.filenameSmall:this.props.size=="medium"?user.filenameMedium:user.filenameLarge, {
+            Storage.get(this.props.size == "small" ? user.filenameSmall : this.props.size == "medium" ? user.filenameMedium : user.filenameLarge, {
                 level: 'protected',
                 contentType: 'image/png',
                 identityId: user.userId
             })
                 .then(result => {
-                    
+
                     this.setState({ profileImage: result })
                 })
                 .catch(err => {
@@ -62,7 +62,7 @@ export default class MyProfile extends React.Component<Props, State> {
     }
 
     render() {
-        
+
         return (
             this.state.profileImage != null ?
                 <Image style={this.props.size == 'small' ?

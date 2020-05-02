@@ -2,7 +2,7 @@
 import { StyleProvider, Card, Container, Content } from 'native-base';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
-import {Text} from 'react-native'
+import { Text } from 'react-native'
 
 import CourseSidebar from '../../components/CourseSidebar/CourseSidebar'
 import MyMap from '../../components/MyMap/MyMap';
@@ -89,7 +89,7 @@ export default class CourseScreen extends React.Component<Props, State>{
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
 
-      var processResults=(json) => {
+      var processResults = (json) => {
         this.setState({ data: json.data.getGroup })
       }
       getGroup.then(processResults).catch(processResults)
@@ -197,7 +197,7 @@ export default class CourseScreen extends React.Component<Props, State>{
                     }
                     </Text>
                     <Text>Publisher</Text>
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={()=>{}} >Contact Us</JCButton>
+                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { }} >Contact Us</JCButton>
 
                     {/*this.state.data.instructors.map((item: any) => {
                     return (<Card><Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
@@ -233,7 +233,7 @@ export default class CourseScreen extends React.Component<Props, State>{
                     })}
                   </Container>
                   <Container style={{ flex: 15, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={()=>{}} >Join Course</JCButton>
+                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { }} >Join Course</JCButton>
                     {this.state.canJoin ?
                       <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.join() }} >Join Course</JCButton> :
                       null

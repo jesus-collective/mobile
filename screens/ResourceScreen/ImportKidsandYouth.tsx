@@ -253,10 +253,10 @@ class IndexApp extends React.Component<Props, State>{
         var getResourceRoot = await DataStore.query(ResourceRoot);
 
         console.log(getResourceRoot)
-       /* getResourceRoot=await DataStore.save(ResourceRoot.copyOf(getResourceRoot[0], updated => {
-            updated.resources = updated.resources.concat(jr[0], sr[0], kids[0], youth[0], pre[0])
-        })
-        )*/
+        /* getResourceRoot=await DataStore.save(ResourceRoot.copyOf(getResourceRoot[0], updated => {
+             updated.resources = updated.resources.concat(jr[0], sr[0], kids[0], youth[0], pre[0])
+         })
+         )*/
 
         var res = json.map(async (item: any) => {
             // console.log(item)
@@ -923,70 +923,79 @@ class IndexApp extends React.Component<Props, State>{
         console.log("start end")
         async function asyncForEach(array, callback) {
             for (let index = 0; index < array.length; index++) {
-              await callback(array[index], index, array);
+                await callback(array[index], index, array);
             }
-          }
-        Promise.all(res).then(async (res2)=>{
-            var res3:any=res2.filter(z=>z!=undefined)
-            console.log("start end2")
-           
-
-            var start1=async ()=>{await asyncForEach(res3.filter((z) => { if (z.jsonValue.type == "ky-srhigh") return z.jsonValue }),async (item)=>{
-                sr = await DataStore.save(Resource.copyOf(sr, updated => {
-                    updated.series = updated.series.concat(item.jsonValue)
-                    
-                }))
-                console.log(sr)
-            })}
-           
-            var start5=async ()=>{await asyncForEach(res3.filter((z) => { if (z.jsonValue.type == "ky-jrhigh") return z.jsonValue }),async (item)=>{
-                jr = await DataStore.save(Resource.copyOf(jr, updated => {
-                    updated.series = updated.series.concat(item.jsonValue)
-                    
-                }))
-                console.log(jr)
-            })
         }
-            var start2=async ()=>{await asyncForEach(res3.filter((z) => { if (z.jsonValue.type == "ky-youth") return z.jsonValue }),async (item)=>{
-                youth = await DataStore.save(Resource.copyOf(youth, updated => {
-                    updated.series = updated.series.concat(item.jsonValue)
-                    
-                }))
-                console.log(youth)
-            })}
+        Promise.all(res).then(async (res2) => {
+            var res3: any = res2.filter(z => z != undefined)
+            console.log("start end2")
 
-            var start3=async ()=>{await asyncForEach(res3.filter((z) => { if (z.jsonValue.type == "ky-kids") return z.jsonValue }),async (item)=>{
-                kids = await DataStore.save(Resource.copyOf(kids, updated => {
-                    updated.series = updated.series.concat(item.jsonValue)
-                    
-                }))
-                console.log(kids)
-            })}
-            
-           
-            var start4=async ()=>{await asyncForEach(res3.filter((z) => { if (z.jsonValue.type == "ky-preschool") return z.jsonValue }),async (item)=>{
-                pre = await DataStore.save(Resource.copyOf(pre, updated => {
-                    updated.series = updated.series.concat(item.jsonValue)
-                    
-                }))
-                console.log(pre)
-            })}
-            
+
+            var start1 = async () => {
+                await asyncForEach(res3.filter((z) => { if (z.jsonValue.type == "ky-srhigh") return z.jsonValue }), async (item) => {
+                    sr = await DataStore.save(Resource.copyOf(sr, updated => {
+                        updated.series = updated.series.concat(item.jsonValue)
+
+                    }))
+                    console.log(sr)
+                })
+            }
+
+            var start5 = async () => {
+                await asyncForEach(res3.filter((z) => { if (z.jsonValue.type == "ky-jrhigh") return z.jsonValue }), async (item) => {
+                    jr = await DataStore.save(Resource.copyOf(jr, updated => {
+                        updated.series = updated.series.concat(item.jsonValue)
+
+                    }))
+                    console.log(jr)
+                })
+            }
+            var start2 = async () => {
+                await asyncForEach(res3.filter((z) => { if (z.jsonValue.type == "ky-youth") return z.jsonValue }), async (item) => {
+                    youth = await DataStore.save(Resource.copyOf(youth, updated => {
+                        updated.series = updated.series.concat(item.jsonValue)
+
+                    }))
+                    console.log(youth)
+                })
+            }
+
+            var start3 = async () => {
+                await asyncForEach(res3.filter((z) => { if (z.jsonValue.type == "ky-kids") return z.jsonValue }), async (item) => {
+                    kids = await DataStore.save(Resource.copyOf(kids, updated => {
+                        updated.series = updated.series.concat(item.jsonValue)
+
+                    }))
+                    console.log(kids)
+                })
+            }
+
+
+            var start4 = async () => {
+                await asyncForEach(res3.filter((z) => { if (z.jsonValue.type == "ky-preschool") return z.jsonValue }), async (item) => {
+                    pre = await DataStore.save(Resource.copyOf(pre, updated => {
+                        updated.series = updated.series.concat(item.jsonValue)
+
+                    }))
+                    console.log(pre)
+                })
+            }
+
             Promise.all([start1(),
             start2(),
             start3(),
             start4(),
-            start5()]).then(async()=>{
-                getResourceRoot=await DataStore.save(ResourceRoot.copyOf(getResourceRoot[0], updated => {
+            start5()]).then(async () => {
+                getResourceRoot = await DataStore.save(ResourceRoot.copyOf(getResourceRoot[0], updated => {
                     updated.resources = updated.resources.concat(jr, sr, kids, youth, pre)
                 }))
                 console.log("end")
                 console.log(getResourceRoot)
                 console.log("end")
             })
-           
+
         })
-       
+
     }
 
     /*writeYoutube(vid1: any) {
@@ -1236,7 +1245,7 @@ class IndexApp extends React.Component<Props, State>{
             <div>
 
                 <Button onPress={() => { this.importKidsAndYouth() }}><Text>Import Kids and Youth</Text></Button>
-               
+
 
             </div >
         );

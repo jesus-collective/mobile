@@ -15,7 +15,7 @@ import { withNavigation } from 'react-navigation';
 import { ResourceRoot, Resource, ResourceEpisode, ResourceSeries } from "../../src/models";
 import { WebView } from 'react-native-webview'
 interface Props { }
-interface State{}
+interface State { }
 class ResourceContent extends React.Component<Props, State>{
     constructor(props: Props) {
         super(props)
