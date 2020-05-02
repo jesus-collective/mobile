@@ -155,6 +155,8 @@ export default class EventScreen extends React.Component<Props, State>{
     delete item.organizerUser
     delete item.instructors
     delete item.ownerUser
+    delete item._deleted
+    delete item._lastChangedAt
     return item
   }
   save() {

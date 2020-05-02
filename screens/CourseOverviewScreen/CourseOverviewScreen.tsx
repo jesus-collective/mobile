@@ -124,6 +124,8 @@ export default class CourseScreen extends React.Component<Props, State>{
     delete item.organizerGroup
     delete item.organizerUser
     delete item.instructors
+    delete item._deleted
+    delete item._lastChangedAt
     return item
   }
   save() {
