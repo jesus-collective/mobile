@@ -14,7 +14,7 @@ import EditableText from '../../components/Forms/EditableText'
 import EditableDollar from '../../components/Forms/EditableDollar'
 import Validate from '../../components/Validate/Validate'
 import { Image } from 'react-native'
-import { API, graphqlOperation, Auth } from 'aws-amplify';
+import { API, graphqlOperation, Auth, Analytics } from 'aws-amplify';
 import { CreateGroupInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
@@ -145,10 +145,18 @@ export default class CourseScreen extends React.Component<Props, State>{
 
   }
   leave() {
-
+    Analytics.record({
+      name: 'leftCourse',
+      // Attribute values must be strings
+      attributes: { id: this.state.data.id, name: this.state.data.name }
+    });
   }
   join() {
-
+    Analytics.record({
+      name: 'joinedCourse',
+      // Attribute values must be strings
+      attributes: { id: this.state.data.id, name: this.state.data.name }
+    });
   }
   gotoActiveCourse() {
     //console.log(this.props.navigation)

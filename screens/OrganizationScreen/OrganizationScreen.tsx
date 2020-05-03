@@ -13,7 +13,7 @@ import MessageBoard from '../../components/MessageBoard/MessageBoard'
 import EditableText from '../../components/Forms/EditableText'
 import Validate from '../../components/Validate/Validate'
 
-import { API, graphqlOperation, Auth } from 'aws-amplify';
+import { API, graphqlOperation, Auth, Analytics } from 'aws-amplify';
 import { CreateGroupInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
@@ -153,9 +153,18 @@ export default class GroupScreen extends React.Component<Props, State>{
 
   }
   leave() {
-
+    Analytics.record({
+      name: 'leftOrganization',
+      // Attribute values must be strings
+      attributes: { id: this.state.data.id, name: this.state.data.name }
+    });
   }
   join() {
+    Analytics.record({
+      name: 'joinedOrganization',
+      // Attribute values must be strings
+      attributes: { id: this.state.data.id, name: this.state.data.name }
+    });
     var createGroupMember: any = API.graphql({
       query: mutations.createGroupMember,
       variables: { input: { groupID: this.state.data.id, userID: this.state.currentUser } },

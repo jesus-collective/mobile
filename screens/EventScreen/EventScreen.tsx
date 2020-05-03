@@ -16,7 +16,7 @@ import EditableLocation from '../../components/Forms/EditableLocation'
 import EditableUrl from '../../components/Forms/EditableUrl'
 import Validate from '../../components/Validate/Validate'
 import { Image } from 'react-native'
-import { API, graphqlOperation, Auth } from 'aws-amplify';
+import { API, graphqlOperation, Auth, Analytics } from 'aws-amplify';
 import { CreateGroupInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
@@ -176,6 +176,11 @@ export default class EventScreen extends React.Component<Props, State>{
 
   }
   leave() {
+    Analytics.record({
+      name: 'leftEvent',
+      // Attribute values must be strings
+      attributes: { id: this.state.data.id, name: this.state.data.name }
+    });
     var groupMemberByUser: any = API.graphql({
       query: queries.groupMemberByUser,
       variables: { userID: this.state.currentUser, groupID: { eq: this.state.data.id } },
@@ -206,6 +211,11 @@ export default class EventScreen extends React.Component<Props, State>{
 
   }
   join() {
+    Analytics.record({
+      name: 'joinedEvent',
+      // Attribute values must be strings
+      attributes: { id: this.state.data.id, name: this.state.data.name }
+    });
     var createGroupMember: any = API.graphql({
       query: mutations.createGroupMember,
       variables: { input: { groupID: this.state.data.id, userID: this.state.currentUser } },

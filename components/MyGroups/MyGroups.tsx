@@ -11,7 +11,7 @@ import { Image } from 'react-native'
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
 import GRAPHQL_AUTH_MODE, { Greetings } from 'aws-amplify-react-native'
-import { API, graphqlOperation, Auth } from 'aws-amplify';
+import { API, graphqlOperation, Auth, Analytics } from 'aws-amplify';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { constants } from '../../src/constants'
@@ -211,7 +211,13 @@ export default class MyGroups extends React.Component<Props, State> {
   canLeave(id: any): boolean {
     return false
   }
-  join(id: any) {
+  join(id: any, name: any, groupType: any) {
+    Analytics.record({
+      name: 'joined' + groupType,
+      // Attribute values must be strings
+      attributes: { id: id, name: name }
+    });
+
     var createGroupMember: any = API.graphql({
       query: mutations.createGroupMember,
       variables: { input: { groupID: id, userID: this.state.currentUser } },
@@ -228,7 +234,12 @@ export default class MyGroups extends React.Component<Props, State> {
   openConversation() {
 
   }
-  leave(id: any) {
+  leave(id: any, name: any, groupType: any) {
+    Analytics.record({
+      name: 'left' + groupType,
+      // Attribute values must be strings
+      attributes: { id: id, name: name }
+    });
     /* var user = await Auth.currentAuthenticatedUser();
      try {
        var createGroupMember: any = API.graphql({
@@ -251,8 +262,8 @@ export default class MyGroups extends React.Component<Props, State> {
       </CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitleGroup}>{item.name}</Text></CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetailMiddle}>{item.description}</Text></CardItem>
-      {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id) }}>Join</JCButton><Right></Right></CardItem> : null}
-      {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id) }}>Leave</JCButton><Right></Right></CardItem> : null}
+      {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id, item.name, "Group") }}>Join</JCButton><Right></Right></CardItem> : null}
+      {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id, item.name, "Group") }}>Leave</JCButton><Right></Right></CardItem> : null}
     </Card >
   }
   renderProfile(item: any) {
@@ -275,8 +286,8 @@ export default class MyGroups extends React.Component<Props, State> {
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetailMiddle}>{item.description}</Text></CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailBottom}>{item.location}</Text></CardItem>
-      {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id) }}>Attend</JCButton><Right></Right></CardItem> : null}
-      {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id) }}>Don't Attend</JCButton><Right></Right></CardItem> : null}
+      {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id, item.name, "Event") }}>Attend</JCButton><Right></Right></CardItem> : null}
+      {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id, item.name, "Event") }}>Don't Attend</JCButton><Right></Right></CardItem> : null}
     </Card>
   }
   renderResource(item: any) {
@@ -286,8 +297,8 @@ export default class MyGroups extends React.Component<Props, State> {
       </CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitleGroup}>{item.name}</Text></CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailMiddle}>Last Updated: {item.lastupdated}</Text></CardItem>
-      {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id) }}>Join</JCButton><Right></Right></CardItem> : null}
-      {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id) }}>Leave</JCButton><Right></Right></CardItem> : null}
+      {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id, item.name, "Resource") }}>Join</JCButton><Right></Right></CardItem> : null}
+      {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id, item.name, "Resource") }}>Leave</JCButton><Right></Right></CardItem> : null}
     </Card>
   }
   renderOrganization(item: any) {
@@ -297,8 +308,8 @@ export default class MyGroups extends React.Component<Props, State> {
       </CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetail}>{item.kind}</Text></CardItem>
-      {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id) }}>Join</JCButton><Right></Right></CardItem> : null}
-      {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id) }}>Leave</JCButton><Right></Right></CardItem> : null}
+      {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id, item.name, "Organization") }}>Join</JCButton><Right></Right></CardItem> : null}
+      {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id, item.name, "Organization") }}>Leave</JCButton><Right></Right></CardItem> : null}
     </Card>
   }
   renderCourse(item: any) {
@@ -308,8 +319,8 @@ export default class MyGroups extends React.Component<Props, State> {
       </CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetail}>Last Updated: {item.lastupdated}</Text></CardItem>
-      {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id) }}>Join</JCButton><Right></Right></CardItem> : null}
-      {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id) }}>Leave</JCButton><Right></Right></CardItem> : null}
+      {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id, item.name, "Course") }}>Join</JCButton><Right></Right></CardItem> : null}
+      {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id, item.name, "Course") }}>Leave</JCButton><Right></Right></CardItem> : null}
     </Card>
   }
   render() {
