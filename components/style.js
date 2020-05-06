@@ -210,6 +210,28 @@ export default EStyleSheet.create({
         color: "#333333",
         paddingBottom: 9, 
     },
+    groupFormName: {
+        fontFamily: "Helvetica Neue, sans-serif",
+        fontWeight: 800,
+        fontSize: 16,
+        lineHeight: 21,
+        color: "#333333"
+    },
+    groupFormRole: {
+        fontFamily: "Helvetica Neue, sans-serif",
+        fontWeight: 400,
+        fontSize: 12,
+        lineHeight: 16,
+        color: "#333333"
+    },
+    groupFormDate: {
+        fontFamily: "Graphik-Regular-App",
+        fontWeight: 400,
+        fontSize: 12,
+        lineHeight: 16,
+        color: "#333333",
+        opacity: 0.5
+    },
     homePageContainers: {
         flex: 70, 
         flexDirection: "column", 
