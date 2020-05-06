@@ -212,14 +212,14 @@ export default EStyleSheet.create({
     },
     groupFormName: {
         fontFamily: "Helvetica Neue, sans-serif",
-        fontWeight: "800",
+        fontWeight: "bold",
         fontSize: 16,
         lineHeight: 21,
         color: "#333333"
     },
     groupFormRole: {
         fontFamily: "Helvetica Neue, sans-serif",
-        fontWeight: "400",
+        fontWeight: "normal",
         fontSize: 12,
         lineHeight: 16,
         color: "#333333"
