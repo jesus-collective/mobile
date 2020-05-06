@@ -69,6 +69,7 @@
     "babel-preset-expo": "^8.1.0",
     "emotion-theming": "^10.0.27",
     "expo": "^37.0.8",
+    "google-maps-react": "^2.0.6",
     "jquery": "^3.4.1",
     "moment": "^2.15.2",
     "native-base": "2.13.8",

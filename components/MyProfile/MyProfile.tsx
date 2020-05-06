@@ -13,173 +13,14 @@ import awsconfig from '../../src/aws-exports';
 import Validate from '../Validate/Validate';
 import moment from 'moment';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
-
+import MapSelector from './MapSelector'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
 
 Amplify.configure(awsconfig);
 
 const mainColor = '#ffffff';
-const mapstyle = [
-  {
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#f5f5f5"
-      }
-    ]
-  },
-  {
-    "elementType": "labels.icon",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#616161"
-      }
-    ]
-  },
-  {
-    "elementType": "labels.text.stroke",
-    "stylers": [
-      {
-        "color": "#f5f5f5"
-      }
-    ]
-  },
-  {
-    "featureType": "administrative.land_parcel",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#bdbdbd"
-      }
-    ]
-  },
-  {
-    "featureType": "poi",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#eeeeee"
-      }
-    ]
-  },
-  {
-    "featureType": "poi",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#757575"
-      }
-    ]
-  },
-  {
-    "featureType": "poi.park",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#e5e5e5"
-      }
-    ]
-  },
-  {
-    "featureType": "poi.park",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#9e9e9e"
-      }
-    ]
-  },
-  {
-    "featureType": "road",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#ffffff"
-      }
-    ]
-  },
-  {
-    "featureType": "road.arterial",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#757575"
-      }
-    ]
-  },
-  {
-    "featureType": "road.highway",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#dadada"
-      }
-    ]
-  },
-  {
-    "featureType": "road.highway",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#616161"
-      }
-    ]
-  },
-  {
-    "featureType": "road.local",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#9e9e9e"
-      }
-    ]
-  },
-  {
-    "featureType": "transit.line",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#e5e5e5"
-      }
-    ]
-  },
-  {
-    "featureType": "transit.station",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#eeeeee"
-      }
-    ]
-  },
-  {
-    "featureType": "water",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#c9c9c9"
-      }
-    ]
-  },
-  {
-    "featureType": "water",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#9e9e9e"
-      }
-    ]
-  }
-]
+
 interface Props {
   finalizeProfile?(): void
   navigation: any
@@ -351,9 +192,11 @@ export default class MyProfile extends React.Component<Props, State> {
 
   }
   showMap() {
+    console.log("showMap")
     this.setState({ mapVisible: true })
   }
   saveLocation() {
+    console.log("saveLocation")
     this.handleInputChange({ target: { value: { latitude: this.state.mapCoord.latitude, longitude: this.state.mapCoord.longitude } } }, "location")
     this.setState({ mapVisible: false })
   }
@@ -371,33 +214,14 @@ export default class MyProfile extends React.Component<Props, State> {
             <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.logout()}>Logout</JCButton>
             <Text>{this.state.validationText}</Text>
           </View>
-          {this.state.mapVisible ? <View style={{ position: "fixed", left: 0, top: 0, width: "100%", height: "100%", zIndex: 100, backgroundColor: "#33333366" }}>
-            <View style={{ backgroundColor: "#ffffff", borderRadius: 10, padding: 10, margin: 10, left: "10%", top: "10%", width: "80%", height: "80%" }}>
-              <Text>Select a location (this will be public)</Text>
-              <JCButton buttonType={ButtonTypes.OutlineBold} onPress={() => this.saveLocation()}>Done</JCButton>
-              <MapView
-                provider={PROVIDER_GOOGLE}
-                style={{ left: 10, top: 10, width: 480, height: 480 }}
 
-                initialRegion={{
-                  latitude: 43.78825,
-                  longitude: -78.4324,
-                  latitudeDelta: 6,
-                  longitudeDelta: 6,
-                }}
-              >
-                <MapView.Marker draggable
-                  coordinate={this.state.mapCoord}
-                  onDragEnd={(e) => {
-                    console.log(e)
-                    this.setState({ mapCoord: { latitude: e.latLng.lat(), longitude: e.latLng.lng() } })
-                  }}
-                />
-              </MapView>
+          <MapSelector mapVisible={this.state.mapVisible}
+            onClose={(coord) => {
+              console.log("onCloseMap");
+              this.setState({ mapVisible: false, mapCoord: { latitude: coord.latitude, longitude: coord.longitude } })
+            }}>
+          </MapSelector>
 
-            </View>
-          </View> : null
-          }
           <Form style={{ marginBottom: 20, display: "flex", flexDirection: "row" }}>
             <View style={{ flex: 30, flexDirection: "column" }}>
               <View style={{ alignSelf: "center" }}>
