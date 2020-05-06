@@ -257,7 +257,7 @@ export default class GroupScreen extends React.Component<Props, State>{
             <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
             <Content>
               <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start', background: "#F9FAFC" }}>
-                <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", minHeight: 800, width: 446 }}>
+                <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", minHeight: 700, width: 446 }}>
                   <Text style={{ fontSize: 12, lineHeight: 16,fontFamily: 'Helvetica-Neue, sans-serif', color: '#333333', textTransform: "uppercase", flex: 0 }}>Group</Text>
                   <Text style={{ fontSize: 12, lineHeight: 16,fontFamily: 'Helvetica-Neue, sans-serif', color: '#979797', textTransform: "uppercase", flex: 0 }}>Sponsored</Text>
 
@@ -271,28 +271,28 @@ export default class GroupScreen extends React.Component<Props, State>{
                   {
                     this.state.data.members == null ? <Text>No Members Yet</Text> :
                       this.state.data.members.items.length == 0 ?
-                        <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333" }}>No Members Yet</Text> :
+                        <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", marginBottom: 30 }}>No Members Yet</Text> :
                         this.state.data.members.items.map((item: any) => {
                           return (<ProfileImage user={item} size="small" />)
                         })}
                   {this.state.canJoin ?
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.join() }} >Join Group</JCButton> :
+                    <JCButton buttonType={ButtonTypes.OutlineBold} onPress={() => { this.join() }} >Join Group</JCButton> :
                     null
                   }
                   {this.state.canLeave ?
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.leave() }} >Leave Group</JCButton> :
+                    <JCButton buttonType={ButtonTypes.OutlineBold} onPress={() => { this.leave() }} >Leave Group</JCButton> :
                     null
                   }
                   {this.state.createNew ?
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.createNew() }} >Create Group</JCButton>
+                    <JCButton buttonType={ButtonTypes.OutlineBold} onPress={() => { this.createNew() }} >Create Group</JCButton>
                     : null
                   }
                   {this.state.canSave ?
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.save() }} >Save Group</JCButton>
+                    <JCButton buttonType={ButtonTypes.OutlineBold} onPress={() => { this.save() }} >Save Group</JCButton>
                     : null
                   }
                   {this.state.canDelete ?
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { if (window.confirm('Are you sure you wish to delete this group?')) this.delete() }}>Delete Group</JCButton>
+                    <JCButton buttonType={ButtonTypes.OutlineBold} onPress={() => { if (window.confirm('Are you sure you wish to delete this group?')) this.delete() }}>Delete Group</JCButton>
                     : null
                   }
                   <Text>{this.state.validationError}</Text>
