@@ -212,7 +212,7 @@ export default EStyleSheet.create({
     },
     groupFormName: {
         fontFamily: "Helvetica Neue, sans-serif",
-        fontWeight: 800,
+        fontWeight: "800",
         fontSize: 16,
         lineHeight: 21,
         color: "#333333"
