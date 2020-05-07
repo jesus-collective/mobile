@@ -5,13 +5,16 @@ import { Text } from 'react-native'
 import styles from './JCButtonStyle'
 export enum ButtonTypes {
     Solid,
+    SolidRightJustified,
     Outline,
     OutlineBold,
+    OutlineBoldNoMargin,
     OutlineSmall,
     PostOutline,
     Transparent,
     TransparentBoldBlack,
     TransparentBoldOrange
+    
 }
 export interface Props {
     onPress()

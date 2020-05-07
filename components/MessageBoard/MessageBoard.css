@@ -1,5 +1,5 @@
 .customWrapper {
-    background-color: #eeeeee;
+    background-color: #ffffff;
     font-family: 'Graphik-Regular-App';
     border-radius: 10px;
     border: 1px;
@@ -14,7 +14,7 @@
     border: 1px;
     margin-left: 10px;
     height: unset;
-    width: 85%;
+    width: 92.5%;
     left: 50px;
     top: -50px;
 }
@@ -26,6 +26,8 @@
     border: 1px;
     height: unset;
     width: 90%;
+    padding-top: 10px;
+    padding-bottom: 2px;
 }
 
 .customEditor {
@@ -45,10 +47,11 @@
     padding-right: 10px;
     padding-top: 0px;
     padding-bottom: 0px;
-    border: 0.5px;
+    border: 2px;
     border-style: solid;
-    border-color: #777777;
-    border-radius: 10px;
+    border-color: #eeeeee;
+    background-color: #ffffff;
+    border-radius: 0 0 10px 10px;
     max-height: 200px;
 
 

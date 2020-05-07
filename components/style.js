@@ -18,7 +18,11 @@ export default EStyleSheet.create({
         marginTop: 8,
         borderRadius: 5,
         padding: 3,
-        flex: 0
+        flex: 0, 
+        fontSize: 30,
+        lineHeight: 36,
+        fontWeight: "bold",
+        fontFamily: "Helvetica Neue, sans-serif"
     },
     groupDescriptionInput: {
         borderColor: 'white',
@@ -27,7 +31,12 @@ export default EStyleSheet.create({
         borderRadius: 5,
         padding: 3,
         flex: 0,
-        minHeight: 100
+        minHeight: 100,
+        fontSize: 16,
+        lineHeight: 23,
+        fontWeight: "normal",
+        fontFamily: "Helvetica Neue, sans-serif"
+
     },
     textInput: {
         height: 40,
@@ -49,6 +58,12 @@ export default EStyleSheet.create({
     },
     font: {
         fontFamily: 'Graphik-Regular-App', fontSize: 16
+    },
+    fontGroupNameDetailPage: {
+        fontSize: 30,
+        lineHeight: 36,
+        color: "#333333",
+        fontFamily: "Helvetica Neue, sans-serif"
     },
     saveProfileButton: {
         backgroundColor: "#F0493E", textTransform: "capitalize"
@@ -202,10 +217,37 @@ export default EStyleSheet.create({
         color: "#000000",
         letterSpacing: -0.3,
         color: "#333333",
-        paddingBottom: 9,
+        paddingBottom: 9, 
+    },
+    groupFormName: {
+        fontFamily: "Helvetica Neue, sans-serif",
+        fontWeight: "bold",
+        fontSize: 16,
+        lineHeight: 21,
+        color: "#333333"
+    },
+    groupFormRole: {
+        fontFamily: "Helvetica Neue, sans-serif",
+        fontWeight: "normal",
+        fontSize: 12,
+        lineHeight: 16,
+        color: "#333333"
+    },
+    groupFormDate: {
+        fontFamily: "Graphik-Regular-App",
+        fontWeight: "400",
+        fontSize: 12,
+        lineHeight: 16,
+        color: "#333333",
+        opacity: 0.5
+    },
+    homePageContainers: {
+        flex: 70, 
+        flexDirection: "column", 
+        backgroundColor: "#F9FAFC"
     },
     connectWithTopSectionButton: {
-        paddingTop: 30,
+        paddingTop: 30, 
         paddingBottom: 25
     },
     connectWithSliderButton: {
@@ -233,13 +275,14 @@ export default EStyleSheet.create({
     {
         // color:'#F0493E'
     },
-    flexRow:
-        { flexDirection: 'row' },
+    flexRow: { 
+        flexDirection: 'row' 
+    },
 
     // Media Query Desktop Tablet
     '@media (min-width: 350) and (max-width: 768)': {
         connectWithSliderButton: {
-            height: 45,
+          height: 45,
         },
 
         connectWithTopSectionButton: {
@@ -252,12 +295,12 @@ export default EStyleSheet.create({
     // Media Query Desktop Large Tablet
     '@media (min-width: 769) and (max-width: 1024)': {
         connectWithTopSectionButton: {
-            paddingTop: 50,
-            paddingBottom: 35,
-            paddingRight: 15
+          paddingTop: 50,
+          paddingBottom: 35,
+          paddingRight: 15
         },
     },
-
+        
     authView: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { left: "40%", width: "40%", top: 100, height: "auto" } :
         { left: "2%", width: "96%", top: "0%", height: "100%" },

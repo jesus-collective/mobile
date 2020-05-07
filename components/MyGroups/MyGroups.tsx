@@ -255,13 +255,13 @@ export default class MyGroups extends React.Component<Props, State> {
      }*/
   }
   renderGroup(item: any) {
-    return <Card style={{ height: 350, alignSelf: "flex-start", padding: '0%', paddingLeft: '0.25rem', paddingRight: '0.25rem', borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", width: this.state.cardWidth }
+    return <Card style={{ height: 365, alignSelf: "flex-start", padding: '0%', paddingLeft: '0.25rem', paddingRight: '0.25rem', borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", width: this.state.cardWidth }
     } >
       <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0 }} >
         <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 70 }} source={require('../../assets/svg/pattern.svg')}></Image>
       </CardItem>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitleGroup}>{item.name}</Text></CardItem>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetailMiddle}>{item.description}</Text></CardItem>
+      <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitleGroup}>{item.name}</Text></CardItem>
+      <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetailMiddle}>{item.description}</Text></CardItem>
       {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id, item.name, "Group") }}>Join</JCButton><Right></Right></CardItem> : null}
       {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id, item.name, "Group") }}>Leave</JCButton><Right></Right></CardItem> : null}
     </Card >
@@ -281,10 +281,10 @@ export default class MyGroups extends React.Component<Props, State> {
     </Card>
   }
   renderEvent(item: any) {
-    return <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: '0%', paddingLeft: '0.25rem', paddingRight: '0.25rem', borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", width: this.state.cardWidth }}>
+    return <Card style={{ minHeight: 395, alignSelf: "flex-start", padding: '0%', paddingLeft: '0.25rem', paddingRight: '0.25rem', borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", width: this.state.cardWidth }}>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailTop}>{moment(item.time).format('MMMM Do YYYY, h:mm a')}</Text></CardItem>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetailMiddle}>{item.description}</Text></CardItem>
+      <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
+      <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetailMiddle}>{item.description}</Text></CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailBottom}>{item.location}</Text></CardItem>
       {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id, item.name, "Event") }}>Attend</JCButton><Right></Right></CardItem> : null}
       {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id, item.name, "Event") }}>Don't Attend</JCButton><Right></Right></CardItem> : null}
@@ -333,8 +333,8 @@ export default class MyGroups extends React.Component<Props, State> {
         return (
           <StyleProvider style={getTheme(material)}>
 
-            <Container style={{ padding: 10, minHeight: 470, width: "100%", flexDirection: 'column', justifyContent: 'flex-start' }}>
-              <Container style={{ minHeight: 45, flexGrow: 0, flexDirection: 'row', justifyContent: 'space-between', marginTop: 30 }} >
+            <Container style={{ padding: 10, minHeight: 525, width: "100%", flexDirection: 'column', justifyContent: 'flex-start' }}>
+              <Container style={{ minHeight: 45, flexGrow: 0, flexDirection: 'row', justifyContent: 'space-between', marginTop: 30, paddingRight: 12 }} >
                 <JCButton buttonType={ButtonTypes.TransparentBoldBlack} onPress={() => { this.openMultiple() }}>{this.state.titleString}</JCButton>
                 <Container style={{ maxHeight: 45, flexDirection: 'row', justifyContent: 'flex-end', alignItems: "flex-start" }}>
                   <JCButton buttonType={ButtonTypes.TransparentBoldOrange} onPress={() => { this.openMultiple() }}>Show All</JCButton>

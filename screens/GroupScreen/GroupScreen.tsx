@@ -256,48 +256,48 @@ export default class GroupScreen extends React.Component<Props, State>{
             <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
             <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
             <Content>
-              <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
-                <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                  <Text>Group</Text>
-                  <Text>Sponsored</Text>
-
+              <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start', background: "#F9FAFC" }}>
+                <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30,paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", minHeight: 700, width: 446 }}>
+                  <Text style={{ fontSize: 12, lineHeight: 16,fontFamily: 'Helvetica-Neue, sans-serif', color: '#333333', textTransform: "uppercase", flex: 0, alignSelf: "flex-start" }}>Group</Text>
+                  <Text style={{ fontSize: 12, lineHeight: 16,fontFamily: 'Helvetica-Neue, sans-serif', color: '#979797', textTransform: "uppercase", flex: 0, alignSelf: "flex-end" }}>Sponsored</Text>
+               
                   <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Group Name" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
                   <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Group Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
 
-                  <Text>Organizer</Text>
+                  <Text style={{ fontFamily: "Helvetica Neue, sans-serif", fontSize: 16, lineHeight: 23, color: "#333333", paddingBottom: 12 }}>Organizer</Text>
                   <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
-                  <Text>Members ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
+                  <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", paddingTop: 48, paddingBottom: 12 }}>Members ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
 
                   {
                     this.state.data.members == null ? <Text>No Members Yet</Text> :
                       this.state.data.members.items.length == 0 ?
-                        <Text>No Members Yet</Text> :
+                        <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", marginBottom: 30 }}>No Members Yet</Text> :
                         this.state.data.members.items.map((item: any) => {
                           return (<ProfileImage user={item} size="small" />)
                         })}
                   {this.state.canJoin ?
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.join() }} >Join Group</JCButton> :
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Join Group</JCButton> :
                     null
                   }
                   {this.state.canLeave ?
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.leave() }} >Leave Group</JCButton> :
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Leave Group</JCButton> :
                     null
                   }
                   {this.state.createNew ?
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.createNew() }} >Create Group</JCButton>
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.createNew() }} >Create Group</JCButton>
                     : null
                   }
                   {this.state.canSave ?
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.save() }} >Save Group</JCButton>
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.save() }} >Save Group</JCButton>
                     : null
                   }
                   {this.state.canDelete ?
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { if (window.confirm('Are you sure you wish to delete this group?')) this.delete() }}>Delete Group</JCButton>
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this group?')) this.delete() }}>Delete Group</JCButton>
                     : null
                   }
                   <Text>{this.state.validationError}</Text>
                 </Container>
-                <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", minHeight: 800, width: 446 }}>
                   <MessageBoard navigation={this.props.navigation} groupId={this.state.data.id}></MessageBoard>
                 </Container>
               </Container>
