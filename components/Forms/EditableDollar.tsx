@@ -24,7 +24,7 @@ interface State {
     multiline: boolean,
     placeholder: string
 }
-export default class MessageBoard extends React.Component<Props, State> {
+export default class EditableDollar extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {

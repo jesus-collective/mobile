@@ -14,9 +14,9 @@ import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import { API, graphqlOperation, Auth, Storage } from 'aws-amplify';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { Editor } from 'react-draft-wysiwyg';
-//import './react-draft-wysiwyg.css';
+import './react-draft-wysiwyg.css';
 //TODO FIGURE OUT WHY THIS DOESN"T WORK
-//import './MessageBoard.css';
+import './MessageBoard.css';
 import { v1 as uuidv1 } from 'uuid';
 
 

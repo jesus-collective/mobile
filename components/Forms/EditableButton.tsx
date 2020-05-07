@@ -20,7 +20,7 @@ interface State {
   inputStyle: any,
   placeholder: string
 }
-export default class MessageBoard extends React.Component<Props, State> {
+export default class EditableButton extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {

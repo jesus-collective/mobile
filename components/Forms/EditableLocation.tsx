@@ -23,7 +23,7 @@ interface State {
     multiline: boolean,
     placeholder: string
 }
-export default class MessageBoard extends React.Component<Props, State> {
+export default class EditableLocation extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {

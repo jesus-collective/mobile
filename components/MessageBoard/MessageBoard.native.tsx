@@ -14,8 +14,9 @@ import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import { API, graphqlOperation, Auth, Storage } from 'aws-amplify';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { Editor } from 'react-draft-wysiwyg';
-import './react-draft-wysiwyg.css';
-import './MessageBoard.css';
+//import './react-draft-wysiwyg.css';
+//TODO FIGURE OUT WHY THIS DOESN"T WORK
+//import './MessageBoard.css';
 import { v1 as uuidv1 } from 'uuid';
 
 
@@ -135,8 +136,8 @@ export default class MessageBoard extends React.Component<Props, State> {
     return (
       (this.state.message != null && this.state.created) ?
         <StyleProvider style={getTheme(material)}>
-          <Container style={{ display: "inline", marginTop: 10, overflow: "visible", width: "100%" }} >
-            <Content >
+          <Container style={{ display: "inline", overflow: "visible", width: "100%", paddingTop: 30, paddingLeft: 30, paddingRight: 30, marginBottom: 60 }} >
+            <Content style={{ marginBottom: 40 }}>
 
               {
                 this.state.UserDetails != null ?
@@ -177,7 +178,7 @@ export default class MessageBoard extends React.Component<Props, State> {
                 }}
 
               />
-              <JCButton buttonType={ButtonTypes.PostOutline} onPress={() => { this.saveMessage() }} >Post</JCButton>
+              <JCButton buttonType={ButtonTypes.SolidRightJustified} onPress={() => { this.saveMessage() }} >Post</JCButton>
 
             </Content>
 
@@ -188,24 +189,24 @@ export default class MessageBoard extends React.Component<Props, State> {
             {this.state.data.items.map((item: any) => {
               return (
                 <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
-                  <Card key={item.id} style={{ borderRadius: 10, minHeight: 50 }}>
-                    <CardItem style={{ borderBottomLeftRadius: 0, borderBottomRightRadius: 0, borderTopLeftRadius: 10, borderTopRightRadius: 10, backgroundColor: "#eeeeee" }}>
+                  <Card key={item.id} style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }}>
+                    <CardItem style={{ borderBottomLeftRadius: 0, borderBottomRightRadius: 0, borderTopLeftRadius: 10, borderTopRightRadius: 10, backgroundColor: "#F9FAFC" }}>
                       <Left>
                         <ProfileImage size="small" user={item.author}></ProfileImage>
                         <Body>
-                          <Text style={styles.fontConnectWithName}>
+                          <Text style={styles.groupFormName}>
                             {item.author != null ? item.author.given_name : null} {item.author != null ? item.author.family_name : null}
                           </Text>
-                          <Text style={styles.fontConnectWithRole}>
+                          <Text style={styles.groupFormRole}>
                             {item.author != null ? item.author.currentRole : null}
                           </Text>
                         </Body>
                       </Left>
                       <Right>
-                        <Text style={styles.fontConnectWithRole}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
+                        <Text style={styles.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
                       </Right>
                     </CardItem>
-                    <CardItem style={{ marginTop: 0, paddingTop: 0, paddingBottom: 0, borderTopLeftRadius: 0, borderTopRightRadius: 0, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, backgroundColor: "#eeeeee" }}>
+                    <CardItem style={{ marginTop: 0, paddingTop: 0, paddingBottom: 0, borderTopLeftRadius: 0, borderTopRightRadius: 0, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, backgroundColor: "#ffffff" }}>
 
                       <Editor
                         readOnly

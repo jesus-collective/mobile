@@ -24,7 +24,7 @@ interface State {
     placeholder: string
 
 }
-export default class MessageBoard extends React.Component<Props, State> {
+export default class EditableDate extends React.Component<Props, State> {
     constructor(props: Props) {
 
         super(props);

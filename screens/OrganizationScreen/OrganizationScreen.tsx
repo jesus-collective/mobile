@@ -1,4 +1,4 @@
-﻿import React from 'react';
+﻿import React, { lazy } from 'react';
 import { StyleProvider, Container, Content } from 'native-base';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
@@ -9,7 +9,6 @@ import MyMap from '../../components/MyMap/MyMap';
 import styles from '../../components/style.js'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
-import MessageBoard from '../../components/MessageBoard/MessageBoard'
 import EditableText from '../../components/Forms/EditableText'
 import Validate from '../../components/Validate/Validate'
 
@@ -20,6 +19,7 @@ import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 
+const MessageBoard = lazy(() => import('../../components/MessageBoard/MessageBoard'));
 
 interface Props {
   navigation: any
