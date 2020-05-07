@@ -177,7 +177,7 @@ export default class MessageBoard extends React.Component<Props, State> {
                 }}
 
               />
-              <JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.saveMessage() }} >Post</JCButton>
+              <JCButton buttonType={ButtonTypes.SolidRightJustified} onPress={() => { this.saveMessage() }} >Post</JCButton>
 
             </Content>
 
@@ -188,7 +188,7 @@ export default class MessageBoard extends React.Component<Props, State> {
             {this.state.data.items.map((item: any) => {
               return (
                 <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
-                  <Card key={item.id} style={{ borderRadius: 10, minHeight: 50, marginBottom: 35 }}>
+                  <Card key={item.id} style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }}>
                     <CardItem style={{ borderBottomLeftRadius: 0, borderBottomRightRadius: 0, borderTopLeftRadius: 10, borderTopRightRadius: 10, backgroundColor: "#F9FAFC" }}>
                       <Left>
                         <ProfileImage size="small" user={item.author}></ProfileImage>
@@ -205,7 +205,7 @@ export default class MessageBoard extends React.Component<Props, State> {
                         <Text style={styles.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
                       </Right>
                     </CardItem>
-                    <CardItem style={{ marginTop: 0, paddingTop: 0, paddingBottom: 0, borderTopLeftRadius: 0, borderTopRightRadius: 0, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, backgroundColor: "#eeeeee" }}>
+                    <CardItem style={{ marginTop: 0, paddingTop: 0, paddingBottom: 0, borderTopLeftRadius: 0, borderTopRightRadius: 0, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, backgroundColor: "#ffffff" }}>
 
                       <Editor
                         readOnly

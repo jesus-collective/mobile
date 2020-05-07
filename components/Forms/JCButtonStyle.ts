@@ -182,6 +182,8 @@ export default EStyleSheet.create({
     {
         paddingTop: 10,
         paddingBottom: 10,
+        paddingLeft: 29,
+        paddingRight: 29,
         marginBottom: 20,
         marginLeft: 0,
         marginRight: 0,
@@ -199,5 +201,28 @@ export default EStyleSheet.create({
         fontWeight: "bold"
 
     },
+    SolidRightJustifiedButton: {
+        paddingTop: 6,
+        paddingBottom: 6,
+        paddingLeft: 29,
+        paddingRight: 29,
+        marginBottom: 20,
+        marginLeft: 0,
+        marginRight: 0,
+        //   color:"#F0493E",
+        backgroundColor: "#F0493E",
+        borderWidth: 1,
+        borderColor: "#F0493E",
+        boxShadow: "unset",
+        borderRadius: 4,
+        alignSelf: "flex-end"
+    },
+    SolidRightJustifiedText: {
+        color: "#ffffff",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        padding: 10,
+        fontWeight: "600",
+    }
 
 })
