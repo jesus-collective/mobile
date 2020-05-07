@@ -276,23 +276,23 @@ export default class GroupScreen extends React.Component<Props, State>{
                           return (<ProfileImage user={item} size="small" />)
                         })}
                   {this.state.canJoin ?
-                    <JCButton buttonType={ButtonTypes.OutlineBold} onPress={() => { this.join() }} >Join Group</JCButton> :
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Join Group</JCButton> :
                     null
                   }
                   {this.state.canLeave ?
-                    <JCButton buttonType={ButtonTypes.OutlineBold} onPress={() => { this.leave() }} >Leave Group</JCButton> :
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Leave Group</JCButton> :
                     null
                   }
                   {this.state.createNew ?
-                    <JCButton buttonType={ButtonTypes.OutlineBold} onPress={() => { this.createNew() }} >Create Group</JCButton>
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.createNew() }} >Create Group</JCButton>
                     : null
                   }
                   {this.state.canSave ?
-                    <JCButton buttonType={ButtonTypes.OutlineBold} onPress={() => { this.save() }} >Save Group</JCButton>
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.save() }} >Save Group</JCButton>
                     : null
                   }
                   {this.state.canDelete ?
-                    <JCButton buttonType={ButtonTypes.OutlineBold} onPress={() => { if (window.confirm('Are you sure you wish to delete this group?')) this.delete() }}>Delete Group</JCButton>
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this group?')) this.delete() }}>Delete Group</JCButton>
                     : null
                   }
                   <Text>{this.state.validationError}</Text>

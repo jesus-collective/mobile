@@ -18,7 +18,11 @@ export default EStyleSheet.create({
         marginTop: 8,
         borderRadius: 5,
         padding: 3,
-        flex: 0
+        flex: 0, 
+        fontSize: 30,
+        lineHeight: 36,
+        fontWeight: "bold",
+        fontFamily: "Helvetica Neue, sans-serif"
     },
     groupDescriptionInput: {
         borderColor: 'white',
@@ -27,7 +31,12 @@ export default EStyleSheet.create({
         borderRadius: 5,
         padding: 3,
         flex: 0,
-        minHeight: 100
+        minHeight: 100,
+        fontSize: 16,
+        lineHeight: 23,
+        fontWeight: "normal",
+        fontFamily: "Helvetica Neue, sans-serif"
+
     },
     textInput: {
         height: 40,
@@ -226,7 +235,7 @@ export default EStyleSheet.create({
     },
     groupFormDate: {
         fontFamily: "Graphik-Regular-App",
-        fontWeight: 400,
+        fontWeight: "400",
         fontSize: 12,
         lineHeight: 16,
         color: "#333333",

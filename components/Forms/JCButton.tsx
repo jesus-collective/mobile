@@ -7,11 +7,13 @@ export enum ButtonTypes {
     Solid,
     Outline,
     OutlineBold,
+    OutlineBoldNoMargin,
     OutlineSmall,
     PostOutline,
     Transparent,
     TransparentBoldBlack,
     TransparentBoldOrange
+    
 }
 export interface Props {
     onPress()
