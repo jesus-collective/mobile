@@ -282,7 +282,7 @@ export default EStyleSheet.create({
         display: "flex", 
         flexDirection: "row", 
         justifyContent: 'flex-start', 
-        background: "#F9FAFC"
+        backgroundColor: "#F9FAFC"
     },
     navPagesleftCard: {
         flex: 30, 
