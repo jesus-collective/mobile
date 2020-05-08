@@ -259,8 +259,8 @@ export default class EventScreen extends React.Component<Props, State>{
             <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
             <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
             <Content>
-              <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
-                <Container style={{ flex: 30, flexDirection: "column", justifyContent: 'flex-start' }}>
+              <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start', background: "#F9FAFC" }}>
+                <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", minHeight: 700, width: 446 }}>
                   <Text>Event</Text>
                   <Text>Sponsored</Text>
                   <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Event Name" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
