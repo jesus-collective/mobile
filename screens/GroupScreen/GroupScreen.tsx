@@ -269,7 +269,7 @@ export default class GroupScreen extends React.Component<Props, State>{
                   <Text style={{ fontFamily: "Helvetica Neue, sans-serif", fontSize: 16, lineHeight: 23, color: "#333333", paddingBottom: 12 }}>Organizer</Text>
                   <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
                   <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", paddingTop: 48, paddingBottom: 12 }}>Members ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
-
+                  <Container style={{ display: "flex", flexDirection: "row", marginBottom: 9}}>
                   {
                     this.state.data.members == null ? <Text>No Members Yet</Text> :
                       this.state.data.members.items.length == 0 ?
@@ -277,6 +277,7 @@ export default class GroupScreen extends React.Component<Props, State>{
                         this.state.data.members.items.map((item: any) => {
                           return (<ProfileImage user={item} size="small" />)
                         })}
+                  </Container>
                   {this.state.canJoin ?
                     <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Join Group</JCButton> :
                     null
