@@ -278,6 +278,81 @@ export default EStyleSheet.create({
     flexRow: { 
         flexDirection: 'row' 
     },
+    navPagesBackground: {
+        display: "flex", 
+        flexDirection: "row", 
+        justifyContent: 'flex-start', 
+        background: "#F9FAFC"
+    },
+    navPagesleftCard: {
+        flex: 30, 
+        flexDirection: "column", 
+        alignContent: 'flex-start', 
+        alignItems: 'flex-start', 
+        justifyContent: 'flex-start', 
+        paddingLeft: 30, 
+        paddingRight: 30, 
+        paddingTop: 40, 
+        marginLeft: 32, 
+        marginRight: 32, 
+        marginTop: 30, 
+        borderRadius: 4, 
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", 
+        border: "none", 
+        minHeight: "100%", 
+        width: 446
+    },
+    navPagesleftCardSmallTextLeft: {
+        fontSize: 12, 
+        lineHeight: 16, 
+        fontFamily: 'Helvetica-Neue, sans-serif', 
+        color: '#333333', 
+        textTransform: "uppercase", 
+        flex: 0, 
+        alignSelf: "flex-start"
+    },
+    navPagesleftCardSmallTextRight: {
+        fontSize: 12, 
+        lineHeight: 16, 
+        fontFamily: 'Helvetica-Neue, sans-serif', 
+        color: '#979797', 
+        textTransform: "uppercase", 
+        flex: 0, 
+        alignSelf: "flex-end"
+    },
+    navPagesleftCardOrganizerText: {
+        fontFamily: "Helvetica Neue, sans-serif", 
+        fontSize: 16, 
+        lineHeight: 23, 
+        color: "#333333", 
+        paddingBottom: 12
+    },
+    navPagesleftCardMembersText: {
+        fontFamily: "Graphik-Bold-App", 
+        fontSize: 20, 
+        lineHeight: 25, 
+        letterSpacing: -0.3, 
+        color: "#333333", 
+        paddingTop: 48, 
+        paddingBottom: 12
+    },
+    navPagesleftCardNoMembersText: {
+        fontFamily: "Graphik-Bold-App", 
+        fontSize: 20, 
+        lineHeight: 25, 
+        letterSpacing: -0.3, 
+        color: "#333333", 
+        marginBottom: 30
+    },
+    navPagesleftCardValidationErrorText: {
+        fontSize: 12, 
+        lineHeight: 16, 
+        fontFamily: 'Helvetica-Neue, sans-serif', 
+        color: '#F0493E', 
+        textTransform: "uppercase", 
+        flex: 0, 
+        alignSelf: "flex-start"
+    },
 
     // Media Query Desktop Tablet
     '@media (min-width: 350) and (max-width: 768)': {
