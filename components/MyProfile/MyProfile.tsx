@@ -227,7 +227,7 @@ export default class MyProfile extends React.Component<Props, State> {
 
           <Form style={{ marginBottom: 20, display: "flex", flexDirection: "row" }}>
             <View style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 0, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", minHeight: 700, width: 446 }}>
-              <View style={{ alignSelf: "center" }}>
+              <View style={{ alignSelf: "center", marginBottom: 90 }}>
                 <Image style={{ width: "250px", height: "290px", borderRadius: 120 }}
                   source={this.state.profileImage == "" ? require('../../assets/profile-placeholder.png') : this.state.profileImage} onError={() => { this.getProfileImage() }}>
 
