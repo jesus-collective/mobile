@@ -207,11 +207,11 @@ export default class MyProfile extends React.Component<Props, State> {
     return (
       (this.state.UserDetails != null ?
         <Content>
-          <View style={{ justifyContent: "space-between", flexDirection: "row", width: "100%" }}>
+          <View style={{ justifyContent: "space-between", flexDirection: "row", width: "100%", flexGrow: 0, marginTop: 30, paddingLeft: 32, minHeight: 45 }}>
             <Text style={styles.profileFontTitle}>Create your profile</Text>
 
-            <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.finalizeProfile()}>Save and Publish Your Profile</JCButton>
-            <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.logout()}>Logout</JCButton>
+            <JCButton buttonType={ButtonTypes.SolidRightJustified} onPress={() => this.finalizeProfile()}>Save and Publish Your Profile</JCButton>
+            <JCButton buttonType={ButtonTypes.SolidRightJustified} onPress={() => this.logout()}>Logout</JCButton>
             <Text>{this.state.validationText}</Text>
           </View>
 
@@ -223,7 +223,7 @@ export default class MyProfile extends React.Component<Props, State> {
           </MapSelector>
 
           <Form style={{ marginBottom: 20, display: "flex", flexDirection: "row" }}>
-            <View style={{ flex: 30, flexDirection: "column" }}>
+            <View style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", minHeight: 700, width: 446 }}>
               <View style={{ alignSelf: "center" }}>
                 <Image style={{ width: "250px", height: "290px", borderRadius: 120 }}
                   source={this.state.profileImage == "" ? require('../../assets/profile-placeholder.png') : this.state.profileImage} onError={() => { this.getProfileImage() }}>
