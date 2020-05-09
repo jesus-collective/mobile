@@ -272,7 +272,7 @@ export default class EventScreen extends React.Component<Props, State>{
                   {this.state.isEditable ? <Picker
                     mode="dropdown"
                     iosIcon={<Icon name="arrow-down" />}
-                    style={{ width: undefined }}
+                    style={{ width: undefined, fontSize: 14 }}
                     placeholder="Event type"
                     placeholderStyle={{ color: "#bfc6ea" }}
                     placeholderIconColor="#007aff"
@@ -330,7 +330,7 @@ export default class EventScreen extends React.Component<Props, State>{
                   }
                   <Text>{this.state.validationError}</Text>
                 </Container>
-                <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", minHeight: 1500, width: 446 }}>
                   <MessageBoard navigation={this.props.navigation} groupId={this.state.data.id}></MessageBoard>
                   {/*  <Zoom></Zoom>*/}
                 </Container>
