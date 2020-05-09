@@ -111,9 +111,29 @@ export default EStyleSheet.create({
         fontSize: 16,
         padding: 10,
         fontWeight: "600",
-
     },
-
+    SolidRightMarginButton: {
+        paddingTop: 6,
+        paddingBottom: 6,
+        paddingLeft: 29,
+        paddingRight: 29,
+        marginBottom: 20,
+        marginLeft: 120,
+        marginRight: 30,
+        //   color:"#F0493E",
+        backgroundColor: "#F0493E",
+        borderWidth: 1,
+        borderColor: "#F0493E",
+        boxShadow: "unset",
+        borderRadius: 4,
+    },
+    SolidRightMarginText: {
+        color: "#ffffff",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        padding: 10,
+        fontWeight: "600",
+    },
     TransparentButton:
     {
         paddingTop: 10,

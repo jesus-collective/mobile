@@ -209,10 +209,13 @@ export default class MyProfile extends React.Component<Props, State> {
         <Content>
           <View style={{ justifyContent: "space-between", flexDirection: "row", width: "100%", flexGrow: 0, marginTop: 30, paddingLeft: 32, minHeight: 45 }}>
             <Text style={styles.profileFontTitle}>Create your profile</Text>
-
-            <JCButton buttonType={ButtonTypes.SolidRightJustified} onPress={() => this.finalizeProfile()}>Save and Publish Your Profile</JCButton>
-            <JCButton buttonType={ButtonTypes.SolidRightJustified} onPress={() => this.logout()}>Logout</JCButton>
+            <View style={{ flex: 0, flexDirection: "row", alignSelf: "flex-end" }}>
+                <JCButton buttonType={ButtonTypes.SolidRightMargin} onPress={() => this.finalizeProfile()}>Save and Publish Your Profile</JCButton>
+                <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.logout()}>Logout</JCButton>
+            </View>
             <Text>{this.state.validationText}</Text>
+              
+
           </View>
 
           <MapSelector mapVisible={this.state.mapVisible}
@@ -223,7 +226,7 @@ export default class MyProfile extends React.Component<Props, State> {
           </MapSelector>
 
           <Form style={{ marginBottom: 20, display: "flex", flexDirection: "row" }}>
-            <View style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", minHeight: 700, width: 446 }}>
+            <View style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 0, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", minHeight: 700, width: 446 }}>
               <View style={{ alignSelf: "center" }}>
                 <Image style={{ width: "250px", height: "290px", borderRadius: 120 }}
                   source={this.state.profileImage == "" ? require('../../assets/profile-placeholder.png') : this.state.profileImage} onError={() => { this.getProfileImage() }}>
