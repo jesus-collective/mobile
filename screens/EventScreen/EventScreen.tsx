@@ -265,7 +265,7 @@ export default class EventScreen extends React.Component<Props, State>{
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: 'Helvetica-Neue, sans-serif', color: '#333333', textTransform: "uppercase", flex: 0 }}>Event</Text>
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: 'Helvetica-Neue, sans-serif', color: '#979797', textTransform: "uppercase", flex: 0 }}>Sponsored</Text>
                   </Container>
-                  
+
                   <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Event Name" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
                   <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Event Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
                   <EditableDate type="datetime" onChange={(value: any) => { this.updateValue("time", value) }} placeholder="Enter Event Time" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableDate>
@@ -297,35 +297,35 @@ export default class EventScreen extends React.Component<Props, State>{
                       inputStyle={styles.groupNameInput} value={this.state.data.location}
                       isEditable={this.state.isEditable}></EditableLocation>
                   }
-                  <Text>Organizer</Text>
+                  <Text style={{ fontFamily: "Helvetica Neue, sans-serif", fontSize: 16, lineHeight: 23, color: "#333333", paddingBottom: 12 }}>Organizer</Text>
                   <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
-                  <Text>Attending ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
+                  <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", paddingTop: 48, paddingBottom: 12 }}>Attending ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
 
                   {
                     this.state.data.members == null ? <Text>No Members Yet</Text> :
                       this.state.data.members.items.length == 0 ?
-                        <Text>No Attendees Yet</Text> :
+                        <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", marginBottom: 30 }}>No Attendees Yet</Text> :
                         this.state.data.members.items.map((item: any) => {
                           return (<ProfileImage user={item} size="small" />)
                         })}
                   {this.state.canJoin ?
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.join() }} >Attend</JCButton> :
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Attend</JCButton> :
                     null
                   }
                   {this.state.canLeave ?
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.leave() }} >Don't Attend</JCButton> :
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Don't Attend</JCButton> :
                     null
                   }
                   {this.state.createNew ?
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.createNew() }} >Create Event</JCButton>
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.createNew() }} >Create Event</JCButton>
                     : null
                   }
                   {this.state.canSave ?
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.save() }} >Save Event</JCButton>
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.save() }} >Save Event</JCButton>
                     : null
                   }
                   {this.state.canDelete ?
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { if (window.confirm('Are you sure you wish to delete this event?')) this.delete() }}>Delete Event</JCButton>
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this event?')) this.delete() }}>Delete Event</JCButton>
                     : null
                   }
                   <Text>{this.state.validationError}</Text>
