@@ -21,6 +21,11 @@ import MyRequireNewPassword from './components/Auth/MyRequireNewPassword';
 import MyConfirmSignUp from './components/Auth/MyConfirmSignUp';
 import MyVerifyContact from './components/Auth/MyVerifyContact';
 import MyForgotPassword from './components/Auth/MyForgotPassword';
+import * as Sentry from '@sentry/react-native';
+
+Sentry.init({
+  dsn: 'https://8c8703a620444c97ba6e8bb4a60c17d0@o390245.ingest.sentry.io/5231908',
+});
 
 const SignUpSidebar = lazy(() => import('./components/SignUpSidebar/SignUpSidebar'));
 
