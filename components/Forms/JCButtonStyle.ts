@@ -164,7 +164,8 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff",
         borderWidth: 0,
         borderColor: "#ffffff",
-        boxShadow: "unset"
+        boxShadow: "unset",
+        alignSelf: "flex-start"
     },
     TransparentNoPaddingText: {
         color: "#F0493E",
