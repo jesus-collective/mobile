@@ -5,6 +5,7 @@ import { Text } from 'react-native'
 import styles from './JCButtonStyle'
 export enum ButtonTypes {
     Solid,
+    SolidRightMargin,
     SolidRightJustified,
     Outline,
     OutlineBold,
@@ -12,6 +13,7 @@ export enum ButtonTypes {
     OutlineSmall,
     PostOutline,
     Transparent,
+    TransparentNoPadding,
     TransparentBoldBlack,
     TransparentBoldOrange
     

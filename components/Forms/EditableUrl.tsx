@@ -51,7 +51,7 @@ class EditableUrl extends React.Component<Props, State> {
         if (this.state.isEditable)
             return <Input onChange={(value) => { this.onChanged(value) }} placeholder={this.state.placeholder} multiline={this.state.multiline} style={this.state.inputStyle} value={this.props.value}></Input>
         else
-            return <Button onPress={() => { this.navigate(this.props.value) }}><Text style={this.state.textStyle}>{this.props.title}</Text></Button>
+            return <Button style={{ paddingTop: 6, paddingBottom: 6, paddingLeft: 29, paddingRight: 29, marginBottom: 20, marginLeft: 0, marginRight: 0,backgroundColor: "#F0493E", borderWidth: 1, borderColor: "#F0493E", borderRadius: 4 }} onPress={() => { this.navigate(this.props.value) }}><Text style={this.state.textStyle}>{this.props.title}</Text></Button>
     }
 }
 

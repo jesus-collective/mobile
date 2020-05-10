@@ -18,6 +18,7 @@ export default EStyleSheet.create({
         marginTop: 8,
         borderRadius: 5,
         padding: 3,
+        paddingLeft: 0,
         flex: 0, 
         fontSize: 30,
         lineHeight: 36,
@@ -30,6 +31,7 @@ export default EStyleSheet.create({
         marginTop: 8,
         borderRadius: 5,
         padding: 3,
+        paddingLeft: 0,
         flex: 0,
         minHeight: 100,
         fontSize: 16,
@@ -79,19 +81,19 @@ export default EStyleSheet.create({
         fontFamily: 'Graphik-Regular-App', fontSize: 26, lineHeight: 33, color: "#F0493E"
     },
     fontFormName: {
-        fontFamily: 'Graphik-Regular-App', fontSize: 30, lineHeight: 36, textAlign: "center", color: "#333333"
+        fontFamily: 'Graphik-Regular-App', fontSize: 30, lineHeight: 36, textAlign: "center", color: "#333333", fontWeight: "bold"
     },
     fontFormText: {
-        fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 25, letterSpacing: -0.3, color: "#333333", opacity: 0.7
+        fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 25, letterSpacing: -0.3, color: "#333333", opacity: 0.7, marginTop: 40
     },
     fontFormRole: {
         fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, textAlign: "center", color: "#333333", opacity: 0.6
     },
     fontFormUserType: {
-        fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, textAlign: "center", textTransform: "uppercase", color: "#333333"
+        fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, textAlign: "center", textTransform: "uppercase", color: "#333333", marginTop: 18
     },
     fontFormAboutMe: {
-        fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28, color: "#333333", borderColor: "#dddddd", borderWidth: 1, height: 200, width: 250
+        fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28, color: "#333333", borderColor: "#dddddd", borderWidth: 1, height: 200, width: "100%"
     },
     fontFormSmallDarkGrey: {
         fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333"
@@ -100,7 +102,7 @@ export default EStyleSheet.create({
         fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 25, letterSpacing: -0.3, color: "#333333", width: 250, height: 18, borderWidth: 0, borderColor: "#dddddd"
     },
     fontFormSmallGrey: {
-        fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", opacity: 0.5
+        fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", opacity: 0.5, marginBottom: 19
     },
     fontFormSmallHeader: {
         fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 26, letterSpacing: -0.3, textTransform: "uppercase", color: "#333333"
@@ -118,7 +120,7 @@ export default EStyleSheet.create({
         fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24, lineHeight: 30, height: 90, color: '#333333', paddingTop: 29,
     },
     profileFontTitle: {
-        fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 20, height: 75
+        fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 20, height: 75, lineHeight: 65
     },
     fontDetailTop: {
         fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, color: '#333333', opacity: 0.4, paddingTop: 23
@@ -364,7 +366,7 @@ export default EStyleSheet.create({
     },
 
     fileInputWrapper:
-        { left: 20, width: 210, top: 150, overflow: "hidden", position: "absolute" },
+        { left: 0, width: 250, top: 310, overflow: "hidden", position: "absolute" },
 
     fileInputWrapperBtn: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { display: "inline-block", width: 200, height: 40 } :
