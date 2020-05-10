@@ -240,7 +240,7 @@ export default class MyProfile extends React.Component<Props, State> {
 
                 {/*<Text style={styles.fontFormProfileImageText}>Upload a picture of minimum 500px wide. Maximum size is 700kb.</Text>*/}
               </View>
-              <View style={{ marginBottom: 40, alignSelf: "center", width: "100%" }}>
+              <View style={{ marginBottom: 35, alignSelf: "center", width: "100%" }}>
                 <Text style={styles.fontFormName}>{this.state.UserDetails.given_name} {this.state.UserDetails.family_name}</Text>
                 <Text style={styles.fontFormRole}>{this.state.UserDetails.currentRole ? this.state.UserDetails.currentRole : 'My Current Role not defined'}</Text>
                 <Text style={styles.fontFormUserType}>Partner</Text>
@@ -256,7 +256,7 @@ export default class MyProfile extends React.Component<Props, State> {
                 <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px", top: 3 }} source={require('../../assets/svg/church.svg')}></Image>{this.state.UserDetails.orgName ? this.state.UserDetails.orgName : "Organization Name not defined"}</Text>
               </View>
               <Text style={styles.fontFormSmallHeader}>Private Information</Text>
-              <View style={{ backgroundColor: '#F3F5F9' }}>
+              <View style={{ backgroundColor: '#FFFFFF', width: "100%", marginBottom: 30 }}>
                 <Item stackedLabel>
                   <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Address</Label>
                   <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.address}
@@ -294,7 +294,7 @@ export default class MyProfile extends React.Component<Props, State> {
                 </Item>
               </View>
             </View>
-            <View style={{ marginLeft: 10, flex: 70 }}>
+            <View style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", minHeight: 1500, width: 446 }}>
               <Text style={styles.font}>Tell us more about you</Text>
               <Text style={styles.fontBold}>About me</Text>
               <Input style={{ borderWidth: 1, borderColor: "#dddddd" }} value={this.state.UserDetails.aboutMeLong}
