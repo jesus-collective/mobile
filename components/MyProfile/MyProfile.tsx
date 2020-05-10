@@ -249,11 +249,11 @@ export default class MyProfile extends React.Component<Props, State> {
                 <Input style={styles.fontFormAboutMe} value={this.state.UserDetails.aboutMeShort}
                   onChange={(e) => { this.handleInputChange(e, "aboutMeShort") }} multiline={true} placeholder="Short sentence about me" />
                 <View style={{ justifyContent: "space-between", flexDirection: "row", width: "100%", flexGrow: 0, marginTop: 30, alignSelf: "flex-start", height: "2.75rem"}}>
-                  <Text style={styles.fontFormSmallDarkGrey}><Image style={{ width: "22px", height: "22px", top: 6 }} source={require('../../assets/svg/pin 2.svg')}></Image>{this.state.UserDetails.location ? "Lat: " + this.state.UserDetails.location.latitude + " Long:" + this.state.UserDetails.location.longitude : "Location not defined"}</Text>
+                  <Text style={styles.fontFormSmallDarkGrey}><Image style={{ width: "22px", height: "22px", top: 6, marginRight: 5 }} source={require('../../assets/svg/pin 2.svg')}></Image>{this.state.UserDetails.location ? "Lat: " + this.state.UserDetails.location.latitude + " Long:" + this.state.UserDetails.location.longitude : "Location not defined"}</Text>
                   <Text>( <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={() => this.showMap()}>{this.state.UserDetails.location != null ? "Change" : "Set"}</JCButton>)</Text>
                 </View>
-                <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px", top: 3 }} source={require('../../assets/svg/calendar.svg')}></Image>{this.state.UserDetails.joined ? moment(this.state.UserDetails.joined).format('MMMM Do YYYY') : "Join date unknown"}</Text>
-                <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px", top: 3 }} source={require('../../assets/svg/church.svg')}></Image>{this.state.UserDetails.orgName ? this.state.UserDetails.orgName : "Organization Name not defined"}</Text>
+                <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px", top: 3, marginRight: 5 }} source={require('../../assets/svg/calendar.svg')}></Image>{this.state.UserDetails.joined ? moment(this.state.UserDetails.joined).format('MMMM Do YYYY') : "Join date unknown"}</Text>
+                <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px", top: 3, marginRight: 5 }} source={require('../../assets/svg/church.svg')}></Image>{this.state.UserDetails.orgName ? this.state.UserDetails.orgName : "Organization Name not defined"}</Text>
               </View>
               <Text style={styles.fontFormSmallHeader}>Private Information</Text>
               <View style={{ backgroundColor: '#FFFFFF', width: "100%", marginBottom: 30 }}>
@@ -294,7 +294,7 @@ export default class MyProfile extends React.Component<Props, State> {
                 </Item>
               </View>
             </View>
-            <View style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", minHeight: 1500, width: 446 }}>
+            <View style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 0, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", minHeight: 1500, width: 446 }}>
               <Text style={styles.font}>Tell us more about you</Text>
               <Text style={styles.fontBold}>About me</Text>
               <Input style={{ borderWidth: 1, borderColor: "#dddddd" }} value={this.state.UserDetails.aboutMeLong}
