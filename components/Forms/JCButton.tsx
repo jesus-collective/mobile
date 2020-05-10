@@ -13,6 +13,7 @@ export enum ButtonTypes {
     OutlineSmall,
     PostOutline,
     Transparent,
+    TransparentNoPadding,
     TransparentBoldBlack,
     TransparentBoldOrange
     

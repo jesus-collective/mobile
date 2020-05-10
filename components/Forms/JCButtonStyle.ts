@@ -155,6 +155,23 @@ export default EStyleSheet.create({
         padding: 5
 
     },
+    TransparentNoPaddingButton:{
+        marginBottom: 20,
+        paddingTop: 0,
+        paddingBottom: 0,
+        marginLeft: 10,
+        marginRight: 10,
+        backgroundColor: "#ffffff",
+        borderWidth: 0,
+        borderColor: "#ffffff",
+        boxShadow: "unset"
+    },
+    TransparentNoPaddingText: {
+        color: "#F0493E",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        padding: 5
+    },
     TransparentBoldBlackButton:
     {
         paddingTop: 10,
