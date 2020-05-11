@@ -1,4 +1,4 @@
-﻿import React from 'react';
+﻿import React, { lazy } from 'react';
 import { Accordion, StyleProvider, Card, Container, Content, Left, Right, CardItem, Body } from 'native-base';
 import { Text } from 'react-native'
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
@@ -16,9 +16,10 @@ import { CreateGroupInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
-import MessageBoard from '../../components/MessageBoard/MessageBoard'
 import CourseHeader from '../../components/CourseHeader/CourseHeader';
 import { TouchableOpacity } from 'react-native';
+const MessageBoard = lazy(() => import('../../components/MessageBoard/MessageBoard'));
+
 const data = require('../CourseOverviewScreen/course.json');
 
 interface Props {

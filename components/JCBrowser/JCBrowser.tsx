@@ -1,6 +1,6 @@
 import { Container } from 'native-base';
 import * as React from 'react';
-import { WebView, Linking } from 'react-native';
+//import { WebView, Linking } from 'react-native';
 import { NavigationEvents } from 'react-navigation';
 interface Props {
     url: string
@@ -41,8 +41,8 @@ export default class JCBrowser extends React.Component<Props, State> {
                     onNavigationStateChange={(event) => {
                         if (!this.isJesusCollectiveUrl(event.url)) {
                             this.webview.stopLoading();
-                            if (event.url != undefined)
-                                Linking.openURL(event.url);
+                            // if (event.url != undefined)
+                            // Linking.openURL(event.url);
                         }
                     }}
                     style={{ marginTop: 0 }}

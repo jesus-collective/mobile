@@ -82,46 +82,13 @@ export type CreateGroupMemberInput = {
   id?: string | null,
   groupID?: string | null,
   userID?: string | null,
-  user?: UserInput | null,
   _version?: number | null,
-};
-
-export type UserInput = {
-  id: string,
-  given_name: string,
-  family_name: string,
-  email?: string | null,
-  phone?: string | null,
-  owner?: string | null,
-  hasPaidState?: string | null,
-  address?: string | null,
-  city?: string | null,
-  province?: string | null,
-  postalCode?: string | null,
-  country?: string | null,
-  location?: LatLongInput | null,
-  profileImage?: ImageInput | null,
-  aboutMeShort?: string | null,
-  aboutMeLong?: string | null,
-  interests?: string | null,
-  currentRole?: string | null,
-  currentScope?: string | null,
-  personality?: string | null,
-  orgName?: string | null,
-  orgType?: string | null,
-  orgSize?: string | null,
-  orgDescription?: string | null,
-  joined?: string | null,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
 };
 
 export type UpdateGroupMemberInput = {
   id: string,
   groupID?: string | null,
   userID?: string | null,
-  user?: UserInput | null,
   _version?: number | null,
 };
 
@@ -133,12 +100,10 @@ export type DeleteGroupMemberInput = {
 export type CreateGroupInput = {
   id?: string | null,
   owner: string,
-  ownerUser?: UserInput | null,
   type: string,
   name: string,
   description: string,
   memberCount?: number | null,
-  members?: Array< GroupMemberInput | null > | null,
   image: string,
   time?: string | null,
   lastUpdated?: string | null,
@@ -151,25 +116,13 @@ export type CreateGroupInput = {
   _version?: number | null,
 };
 
-export type GroupMemberInput = {
-  id: string,
-  groupID?: string | null,
-  userID?: string | null,
-  user?: UserInput | null,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
-};
-
 export type UpdateGroupInput = {
   id: string,
   owner?: string | null,
-  ownerUser?: UserInput | null,
   type?: string | null,
   name?: string | null,
   description?: string | null,
   memberCount?: number | null,
-  members?: Array< GroupMemberInput | null > | null,
   image?: string | null,
   time?: string | null,
   lastUpdated?: string | null,
@@ -216,19 +169,7 @@ export type CreateCourseWeekInput = {
   date?: string | null,
   name?: string | null,
   leader?: string | null,
-  courseInfo?: CourseInfoInput | null,
   _version?: number | null,
-};
-
-export type CourseInfoInput = {
-  id: string,
-  designedBy?: string | null,
-  summary?: Array< string | null > | null,
-  subTitle?: string | null,
-  introduction?: Array< string | null > | null,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
 };
 
 export type UpdateCourseWeekInput = {
@@ -237,7 +178,6 @@ export type UpdateCourseWeekInput = {
   date?: string | null,
   name?: string | null,
   leader?: string | null,
-  courseInfo?: CourseInfoInput | null,
   _version?: number | null,
 };
 
@@ -251,20 +191,7 @@ export type CreateCourseLessonInput = {
   name?: string | null,
   time?: string | null,
   description?: Array< string | null > | null,
-  courseWeek?: CourseWeekInput | null,
   _version?: number | null,
-};
-
-export type CourseWeekInput = {
-  id: string,
-  week?: string | null,
-  date?: string | null,
-  name?: string | null,
-  leader?: string | null,
-  courseInfo?: CourseInfoInput | null,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
 };
 
 export type UpdateCourseLessonInput = {
@@ -272,7 +199,6 @@ export type UpdateCourseLessonInput = {
   name?: string | null,
   time?: string | null,
   description?: Array< string | null > | null,
-  courseWeek?: CourseWeekInput | null,
   _version?: number | null,
 };
 
@@ -285,26 +211,13 @@ export type CreateCourseAssignmentInput = {
   id?: string | null,
   due?: string | null,
   description?: string | null,
-  courseLesson?: CourseLessonInput | null,
   _version?: number | null,
-};
-
-export type CourseLessonInput = {
-  id: string,
-  name?: string | null,
-  time?: string | null,
-  description?: Array< string | null > | null,
-  courseWeek?: CourseWeekInput | null,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
 };
 
 export type UpdateCourseAssignmentInput = {
   id: string,
   due?: string | null,
   description?: string | null,
-  courseLesson?: CourseLessonInput | null,
   _version?: number | null,
 };
 
@@ -320,32 +233,7 @@ export type CreateMessageInput = {
   roomId?: string | null,
   userId?: string | null,
   owner?: string | null,
-  author?: UserInput | null,
-  room?: GroupInput | null,
   _version?: number | null,
-};
-
-export type GroupInput = {
-  id: string,
-  owner: string,
-  ownerUser?: UserInput | null,
-  type: string,
-  name: string,
-  description: string,
-  memberCount?: number | null,
-  members?: Array< GroupMemberInput | null > | null,
-  image: string,
-  time?: string | null,
-  lastUpdated?: string | null,
-  location?: string | null,
-  length?: string | null,
-  effort?: string | null,
-  cost?: string | null,
-  eventType?: string | null,
-  eventUrl?: string | null,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
 };
 
 export type UpdateMessageInput = {
@@ -355,8 +243,6 @@ export type UpdateMessageInput = {
   roomId?: string | null,
   userId?: string | null,
   owner?: string | null,
-  author?: UserInput | null,
-  room?: GroupInput | null,
   _version?: number | null,
 };
 
@@ -392,17 +278,7 @@ export type CreateResourceInput = {
   image?: ImageInput | null,
   description?: string | null,
   extendedDescription?: string | null,
-  root?: ResourceRootInput | null,
   _version?: number | null,
-};
-
-export type ResourceRootInput = {
-  id: string,
-  type?: string | null,
-  groupId?: string | null,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
 };
 
 export type UpdateResourceInput = {
@@ -413,7 +289,6 @@ export type UpdateResourceInput = {
   image?: ImageInput | null,
   description?: string | null,
   extendedDescription?: string | null,
-  root?: ResourceRootInput | null,
   _version?: number | null,
 };
 
@@ -433,22 +308,7 @@ export type CreateResourceSeriesInput = {
   allFiles?: string | null,
   playlist?: string | null,
   playlistImage?: string | null,
-  resource?: ResourceInput | null,
   _version?: number | null,
-};
-
-export type ResourceInput = {
-  id: string,
-  type?: string | null,
-  menuTitle?: string | null,
-  title?: string | null,
-  image?: ImageInput | null,
-  description?: string | null,
-  extendedDescription?: string | null,
-  root?: ResourceRootInput | null,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
 };
 
 export type UpdateResourceSeriesInput = {
@@ -462,7 +322,6 @@ export type UpdateResourceSeriesInput = {
   allFiles?: string | null,
   playlist?: string | null,
   playlistImage?: string | null,
-  resource?: ResourceInput | null,
   _version?: number | null,
 };
 
@@ -482,25 +341,7 @@ export type CreateResourceEpisodeInput = {
   videoHiRes?: string | null,
   lessonPlan?: string | null,
   activityPage?: string | null,
-  series?: ResourceSeriesInput | null,
   _version?: number | null,
-};
-
-export type ResourceSeriesInput = {
-  id: string,
-  type?: string | null,
-  title?: string | null,
-  description?: string | null,
-  image?: string | null,
-  category?: Array< string | null > | null,
-  status?: string | null,
-  allFiles?: string | null,
-  playlist?: string | null,
-  playlistImage?: string | null,
-  resource?: ResourceInput | null,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
 };
 
 export type UpdateResourceEpisodeInput = {
@@ -514,7 +355,6 @@ export type UpdateResourceEpisodeInput = {
   videoHiRes?: string | null,
   lessonPlan?: string | null,
   activityPage?: string | null,
-  series?: ResourceSeriesInput | null,
   _version?: number | null,
 };
 

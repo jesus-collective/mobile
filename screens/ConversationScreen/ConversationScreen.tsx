@@ -1,4 +1,4 @@
-﻿import React from 'react';
+﻿import React, { lazy } from 'react';
 import { Container, Content } from 'native-base';
 import { Text } from 'react-native'
 
@@ -10,9 +10,9 @@ import MyPeople from '../../components/MyPeople/MyPeople';
 import styles from '../../components/style.js'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
-import MessageBoard from '../../components/MessageBoard/MessageBoard'
 
 import { Image } from 'react-native'
+const MessageBoard = lazy(() => import('../../components/MessageBoard/MessageBoard'));
 
 interface Props {
   navigation: any

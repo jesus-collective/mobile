@@ -2,6 +2,12 @@ import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplif
 
 
 
+export declare class LatLong {
+  readonly latitude?: string;
+  readonly longitude?: string;
+  constructor(init: ModelInit<LatLong>);
+}
+
 export declare class Image {
   readonly userId?: string;
   readonly filenameSmall?: string;
@@ -37,6 +43,7 @@ export declare class User {
   readonly province?: string;
   readonly postalCode?: string;
   readonly country?: string;
+  readonly location?: LatLong;
   readonly profileImage?: Image;
   readonly aboutMeShort?: string;
   readonly aboutMeLong?: string;

@@ -4,7 +4,7 @@ import { schema } from './schema';
 
 
 
-const { Message, User, Group, GroupMember, CourseInfo, CourseWeek, CourseLesson, CourseAssignment, ResourceRoot, Resource, ResourceSeries, ResourceEpisode, Image } = initSchema(schema);
+const { Message, User, Group, GroupMember, CourseInfo, CourseWeek, CourseLesson, CourseAssignment, ResourceRoot, Resource, ResourceSeries, ResourceEpisode, LatLong, Image } = initSchema(schema);
 
 export {
   Message,
@@ -19,5 +19,6 @@ export {
   Resource,
   ResourceSeries,
   ResourceEpisode,
+  LatLong,
   Image
 };

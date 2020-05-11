@@ -55,11 +55,11 @@ export default class EventScreen extends React.Component<Props, State>{
       loadId: props.navigation.state.params.id,
       createNew: props.navigation.state.params.create,
       data: null,
-      canSave: true,
+      canSave: false,
       canLeave: false,
-      canJoin: true,
-      isEditable: true,
-      canDelete: true,
+      canJoin: false,
+      isEditable: false,
+      canDelete: false,
       validationError: "",
       currentUser: null,
       currentUserProfile: null
@@ -71,12 +71,28 @@ export default class EventScreen extends React.Component<Props, State>{
       const getUser: any = API.graphql(graphqlOperation(queries.getUser, { id: user['username'] }));
       getUser.then((json) => {
 
+        var isEditable = (json.data.getUser.owner == user['username'])
+
         this.setState({
-          currentUserProfile: json.data.getUser
+          currentUserProfile: json.data.getUser,
+          isEditable: isEditable,
+          canLeave: true && !isEditable,
+          canJoin: true && !isEditable,
+          canSave: (!this.state.createNew) && isEditable,
+          createNew: this.state.createNew && isEditable,
+          canDelete: (!this.state.createNew) && isEditable
+        }, () => {
+          this.setInitialData(props)
         })
+
+      }).catch((e) => {
+        console.log({
+          "Error Loading User": e
+        }
+        )
       })
     })
-    this.setInitialData(props)
+
   }
   getValueFromKey(myObject: any, string: any) {
     const key = Object.keys(myObject).filter(k => k.includes(string));
@@ -117,9 +133,9 @@ export default class EventScreen extends React.Component<Props, State>{
             groupMemberByUser.then((json: any) => {
               console.log({ "groupMemberByUser": json })
               if (json.data.groupMemberByUser.items.length > 0)
-                this.setState({ canJoin: false, canLeave: true })
+                this.setState({ canJoin: false, canLeave: true && !this.state.isEditable })
               else
-                this.setState({ canJoin: true, canLeave: false })
+                this.setState({ canJoin: true && !this.state.isEditable, canLeave: false })
             })
           }
         )
@@ -143,7 +159,15 @@ export default class EventScreen extends React.Component<Props, State>{
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       createGroup.then((json: any) => {
-        this.setState({ canDelete: true, canSave: true, createNew: false })
+        this.setState({
+          createNew: false
+        }, () => {
+          this.setState({
+            canSave: (!this.state.createNew) && this.state.isEditable,
+            createNew: this.state.createNew && this.state.isEditable,
+            canDelete: (!this.state.createNew) && this.state.isEditable
+          })
+        })
         console.log({ "Success mutations.createGroup": json });
       }).catch((err: any) => {
         console.log({ "Error mutations.createGroup": err });
@@ -169,7 +193,7 @@ export default class EventScreen extends React.Component<Props, State>{
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       updateGroup.then((json: any) => {
-        this.setState({ canDelete: true, canSave: true, createNew: false })
+
         console.log({ "Success mutations.updateGroup": json });
       }).catch((err: any) => {
         console.log({ "Error mutations.updateGroup": err });
@@ -261,7 +285,7 @@ export default class EventScreen extends React.Component<Props, State>{
             <Content>
               <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start', background: "#F9FAFC" }}>
                 <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", minHeight: 1000, width: 446 }}>
-                  <Container style={{ display: "flex", flexDirection: "row",     width: "100%", justifyContent: "space-between" }}>
+                  <Container style={{ display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between" }}>
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: 'Helvetica-Neue, sans-serif', color: '#333333', textTransform: "uppercase", flex: 0 }}>Event</Text>
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: 'Helvetica-Neue, sans-serif', color: '#979797', textTransform: "uppercase", flex: 0 }}>Sponsored</Text>
                   </Container>
@@ -290,7 +314,7 @@ export default class EventScreen extends React.Component<Props, State>{
                       onChange={(value: any) => { this.updateValue("eventUrl", value) }}
                       placeholder="Enter Event URL" multiline={false} textStyle={styles.fontRegular}
                       inputStyle={styles.groupNameInput} value={this.state.data.eventUrl}
-                      isEditable={false}></EditableUrl>
+                      isEditable={this.state.isEditable}></EditableUrl>
                     :
                     <EditableLocation onChange={(value: any) => { this.updateValue("location", value) }}
                       placeholder="Enter Event Location" multiline={false} textStyle={styles.fontRegular}
@@ -300,15 +324,15 @@ export default class EventScreen extends React.Component<Props, State>{
                   <Text style={{ fontFamily: "Helvetica Neue, sans-serif", fontSize: 16, lineHeight: 23, color: "#333333", paddingBottom: 12 }}>Organizer</Text>
                   <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
                   <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", paddingTop: 48, paddingBottom: 12 }}>Attending ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
-                  <Container style={{ display: "flex", flexDirection: "row", marginBottom: 9}}>
-                  {
-                    this.state.data.members == null ? <Text>No Members Yet</Text> :
-                      this.state.data.members.items.length == 0 ?
-                        <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", marginBottom: 30 }}>No Attendees Yet</Text> :
-                        this.state.data.members.items.map((item: any) => {
-                          return (<ProfileImage user={item} size="small" />)
-                        })}
-                    </Container>
+                  <Container style={{ display: "flex", flexDirection: "row", marginBottom: 9 }}>
+                    {
+                      this.state.data.members == null ? <Text>No Members Yet</Text> :
+                        this.state.data.members.items.length == 0 ?
+                          <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", marginBottom: 30 }}>No Attendees Yet</Text> :
+                          this.state.data.members.items.map((item: any, index: any) => {
+                            return (<ProfileImage key={index} user={item} size="small" />)
+                          })}
+                  </Container>
                   {this.state.canJoin ?
                     <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Attend</JCButton> :
                     null

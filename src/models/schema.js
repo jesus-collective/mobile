@@ -203,6 +203,15 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "location": {
+                    "name": "location",
+                    "isArray": false,
+                    "type": {
+                        "nonModel": "LatLong"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "profileImage": {
                     "name": "profileImage",
                     "isArray": false,
@@ -1275,6 +1284,25 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {
+        "LatLong": {
+            "name": "LatLong",
+            "fields": {
+                "latitude": {
+                    "name": "latitude",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "longitude": {
+                    "name": "longitude",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                }
+            }
+        },
         "Image": {
             "name": "Image",
             "fields": {
@@ -1316,5 +1344,5 @@ export const schema = {
             }
         }
     },
-    "version": "fc8b05f4ee19ba3a8b71bec0f42bc5da"
+    "version": "cf8fb3a2ec4d30de601fa1182b5b3c3d"
 };
