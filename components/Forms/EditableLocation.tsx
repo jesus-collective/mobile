@@ -100,6 +100,6 @@ export default class EditableLocation extends React.Component<Props, State> {
             </PlacesAutocomplete>
 
         else
-            return <Text style={this.state.textStyle}>{this.props.value}</Text>
+            return <Text style={this.state.textStyle}><a target="_blank" href={"https://www.google.com/maps/dir/?api=1&destination=" + escape(this.props.value)}>{this.props.value}</a></Text>
     }
 }

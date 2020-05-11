@@ -310,7 +310,7 @@ export default class EventScreen extends React.Component<Props, State>{
                   </Picker>
                     : null}
                   {this.state.data.eventType != "location" ?
-                    <EditableUrl title={this.state.data.eventType}
+                    <EditableUrl title={this.state.data.eventType == "zoom" ? "Open in Zoom" : "Open in Eventbrite"}
                       onChange={(value: any) => { this.updateValue("eventUrl", value) }}
                       placeholder="Enter Event URL" multiline={false} textStyle={styles.fontRegular}
                       inputStyle={styles.groupNameInput} value={this.state.data.eventUrl}
