@@ -15,7 +15,9 @@ interface State { }
 export default class MyLoading extends Loading<Props, State> {
     constructor(props: Props) {
         super(props);
+        this.props = props
     }
+    props: any
     render() {
         //   console.log(this.props.authState)
         return (

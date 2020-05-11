@@ -8,7 +8,6 @@ Amplify.configure(awsConfig);
 import { Container } from 'native-base';
 
 import Header from '../../components/Header/Header'
-import JCBrowser from '../../components/JCBrowser/JCBrowser';
 import { NavigationScreenProp } from 'react-navigation';
 
 interface Props {
@@ -24,7 +23,6 @@ export default class ContactScreen extends React.Component<Props, State> {
       <Container>
         <Header title="Contact" navigation={this.props.navigation} />
         <Text>Contact</Text>
-        <JCBrowser url="http://jesuscollective.com/contact"></JCBrowser>
       </Container>
 
     );

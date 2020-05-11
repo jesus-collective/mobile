@@ -74,8 +74,7 @@ EStyleSheet.build({ // always call EStyleSheet.build() even if you don't use glo
 });
 
 //export default App;
-
-export default class AwesomeApp extends React.Component<Props, State> {
+class AwesomeApp extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -169,3 +168,4 @@ export default class AwesomeApp extends React.Component<Props, State> {
     }
   }
 }
+export default AwesomeApp

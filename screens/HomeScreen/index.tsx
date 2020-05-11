@@ -148,7 +148,7 @@ const AppContainer = isWeb && Dimensions.get('window').width > 720 ? createBrows
 
 interface Props {
   authState?: any;
-  navigation: NavigationScreenProp<any, any>
+  navigation?: NavigationScreenProp<any, any>
 
 }
 interface State {

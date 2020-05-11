@@ -3,6 +3,7 @@ import { Container } from 'native-base';
 
 import { Platform } from 'react-native';
 import { Dimensions } from 'react-native'
+import { withNavigation } from 'react-navigation';
 
 const MyConversations = lazy(() => import('../../components/MyConversations/MyConversations'));
 const MyGroups = lazy(() => import('../../components/MyGroups/MyGroups'));
@@ -22,7 +23,7 @@ interface State {
 }
 
 
-export default class HomeScreen extends React.Component<Props, State>{
+class HomeScreen extends React.Component<Props, State>{
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -79,3 +80,4 @@ export default class HomeScreen extends React.Component<Props, State>{
     );
   }
 }
+export default withNavigation(HomeScreen)

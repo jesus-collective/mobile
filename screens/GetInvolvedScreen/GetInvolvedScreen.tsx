@@ -6,7 +6,6 @@ import { NavigationScreenProp } from 'react-navigation';
 
 import { Container } from 'native-base';
 import Header from '../../components/Header/Header'
-import JCBrowser from '../../components/JCBrowser/JCBrowser';
 
 interface Props {
   navigation: NavigationScreenProp<any, any>
@@ -23,7 +22,6 @@ export default class GetInvolvedScreen extends React.Component<Props, State> {
     return (
       <Container>
         <Header title="Get Involved" navigation={this.props.navigation} />
-        <JCBrowser url="http://jesuscollective.com/get-involved"></JCBrowser>
 
       </Container>
 
