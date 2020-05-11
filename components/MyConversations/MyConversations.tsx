@@ -56,7 +56,7 @@ export default class MyConversations extends React.Component<Props, State> {
             <Content>
               {items.map((item) => {
                 return (
-                  <Card key={item.id} style={{ minHeight: 50, width: "92.5%", boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none" }}>
+                  <Card key={item.id} style={{ minHeight: 50, width: "92.5%", boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)" }}>
                     <CardItem style={{ paddingTop: 28, }}>
                       <Left>
                         <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />

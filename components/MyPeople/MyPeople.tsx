@@ -88,7 +88,7 @@ export default class MyPeople extends React.Component<Props, State> {
               {this.state.data.map((item: any) => {
                 return (
                   <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.id) }}>
-                    <Card style={{ width: "92.5%", minHeight: 50, paddingTop: 28, paddingBottom: 28, border: "none" }}>
+                    <Card style={{ width: "92.5%", minHeight: 50, paddingTop: 28, paddingBottom: 28 }}>
                       <CardItem >
                         <Left>
                           <ProfileImage user={item} size='small'>
