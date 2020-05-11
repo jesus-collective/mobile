@@ -245,7 +245,7 @@ export default class MyProfile extends React.Component<Props, State> {
                 <Text style={styles.fontFormRole}>{this.state.UserDetails.currentRole ? this.state.UserDetails.currentRole : 'My Current Role not defined'}</Text>
                 <Text style={styles.fontFormUserType}>Partner</Text>
 
-                <Text style={styles.fontFormText}><Text style={styles.fontFormMandatory}>*</Text>One sentence about me</Text>
+                <Text style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>One sentence about me</Text>
                 <Input style={styles.fontFormAboutMe} value={this.state.UserDetails.aboutMeShort}
                   onChange={(e) => { this.handleInputChange(e, "aboutMeShort") }} multiline={true} placeholder="Short sentence about me" />
                 <View style={{ justifyContent: "space-between", flexDirection: "row", width: "100%", flexGrow: 0, marginTop: 30, alignSelf: "flex-start", height: "2.75rem"}}>
@@ -259,37 +259,37 @@ export default class MyProfile extends React.Component<Props, State> {
               <View style={{ backgroundColor: '#FFFFFF', width: "100%", marginBottom: 30 }}>
                 <Item stackedLabel>
                   <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Address</Label>
-                  <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.address}
+                  <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.address}
                     onChange={(e) => { this.handleInputChange(e, "address") }} />
                 </Item>
                 <Item stackedLabel>
                   <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>City</Label>
-                  <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.city}
+                  <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.city}
                     onChange={(e) => { this.handleInputChange(e, "city") }} />
                 </Item>
                 <Item stackedLabel>
                   <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Province/State</Label>
-                  <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.province}
+                  <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.province}
                     onChange={(e) => { this.handleInputChange(e, "province") }} />
                 </Item>
                 <Item stackedLabel>
                   <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Postal/Zip Code</Label>
-                  <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.postalCode}
+                  <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.postalCode}
                     onChange={(e) => { this.handleInputChange(e, "postalCode") }} />
                 </Item>
                 <Item stackedLabel>
                   <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Country</Label>
-                  <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.country}
+                  <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.country}
                     onChange={(e) => { this.handleInputChange(e, "country") }} />
                 </Item>
                 <Item stackedLabel>
                   <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Email Address</Label>
-                  <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.email}
+                  <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.email}
                     onChange={(e) => { this.handleInputChange(e, "email") }} />
                 </Item>
                 <Item stackedLabel>
                   <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Phone #</Label>
-                  <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.phone}
+                  <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.phone}
                     onChange={(e) => { this.handleInputChange(e, "phone") }} />
                 </Item>
               </View>
@@ -297,10 +297,10 @@ export default class MyProfile extends React.Component<Props, State> {
             <View style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 0, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", minHeight: 1500, width: 446, paddingTop: 30, paddingRight: 30, paddingBottom: 30, paddingLeft: 30 }}>
               <Text style={styles.fontMyProfileLeftTop}>Tell us more about you</Text>
               <Text style={styles.fontBold}>About me</Text>
-              <Input style={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10 }} value={this.state.UserDetails.aboutMeLong}
+              <Input style={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28 }} value={this.state.UserDetails.aboutMeLong}
                 onChange={(e) => { this.handleInputChange(e, "aboutMeLong") }} multiline={true} placeholder="type here" />
               <Text style={styles.fontBold}>My Interests</Text>
-              <Text style={styles.fontFormText}>You can select 7 key interests</Text>
+              <Text style={styles.fontFormText2}>You can select 7 key interests</Text>
 
               <TagInput
                 updateState={this.updateTagState}
@@ -315,7 +315,7 @@ export default class MyProfile extends React.Component<Props, State> {
                 onBlur={() => this.setState({ tagsColor: mainColor, tagsText: '#000000' })}
                 autoCorrect={false}
                 scrollViewProps={{ contentContainerStyle: { justifyContent: "center" } }}
-                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", color: this.state.tagsText, paddingLeft: 5 }}
+                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", color: this.state.tagsText, paddingLeft: 5, marginLeft: 0 }}
                 containerStyle={{ justifyContent: "center", width: "100%", paddingLeft: 0, marginBottom: 20 }}
                 inputContainerStyle={[styles.textInput, { backgroundColor: this.state.tagsColor, marginLeft: 0 }]}
                 labelStyle={{ color: '#000000' }}
@@ -324,40 +324,40 @@ export default class MyProfile extends React.Component<Props, State> {
                 leftElementContainerStyle={{ marginLeft: 0 }}
               //keysForTag={' '}
               />
-              <Item stackedLabel>
+              <Item stackedLabel style={{ marginBottom: 15, width: "100%" }}>
                 <Label style={styles.fontFormSmall}>Current Role</Label>
-                <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.currentRole}
+                <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.currentRole}
                   onChange={(e) => { this.handleInputChange(e, "currentRole") }} />
               </Item>
               <Text style={styles.fontFormSmall}>&nbsp;</Text>
               <Text style={styles.fontFormSmall}>Describe your current scope</Text>
-              <Input style={{ borderWidth: 1, borderColor: "#dddddd" }} placeholder="Type here." value={this.state.UserDetails.currentScope}
+              <Input style={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28 }} placeholder="Type here." value={this.state.UserDetails.currentScope}
                 onChange={(e) => { this.handleInputChange(e, "currentScope") }} multiline={true} />
               <Text style={styles.fontFormSmall}>&nbsp;</Text>
               <Text style={styles.fontFormSmall}>Identify your personality type indicator</Text>
-              <Input style={{ borderWidth: 1, borderColor: "#dddddd" }} placeholder="Type here. like (MBTI, DISC, APEST, Birkman, Enneagram + Wing, Kolbe Index, other, N/A" value={this.state.UserDetails.personality}
+              <Input style={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28 }} placeholder="Type here. like (MBTI, DISC, APEST, Birkman, Enneagram + Wing, Kolbe Index, other, N/A" value={this.state.UserDetails.personality}
                 onChange={(e) => { this.handleInputChange(e, "personality") }} multiline={true} />
 
               <Text style={styles.fontFormSmall}>&nbsp;</Text>
               <Text style={styles.fontBold}>Tell us more about your organization</Text>
-              <Item stackedLabel>
+              <Item stackedLabel style={{ marginBottom: 15, width: "100%" }}>
                 <Label style={styles.fontFormSmall}>Organization Name</Label>
-                <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.orgName}
+                <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.orgName}
                   onChange={(e) => { this.handleInputChange(e, "orgName") }} />
               </Item>
-              <Item stackedLabel>
+              <Item stackedLabel style={{ marginBottom: 15, width: "100%" }}>
                 <Label style={styles.fontFormSmall}>Type of organization</Label>
-                <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.orgType}
+                <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.orgType}
                   onChange={(e) => { this.handleInputChange(e, "orgType") }} />
               </Item>
-              <Item stackedLabel>
+              <Item stackedLabel style={{ marginBottom: 15, width: "100%" }}>
                 <Label style={styles.fontFormSmall}>How many employees are there in your organization?</Label>
-                <Input style={styles.fontFormSmallInput} value={this.state.UserDetails.orgSize}
+                <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.orgSize}
                   onChange={(e) => { this.handleInputChange(e, "orgSize") }} />
               </Item>
               <Text style={styles.fontFormSmall}>&nbsp;</Text>
-              <Text style={styles.font}>Description of church or ministry organization</Text>
-              <Input style={{ borderWidth: 1, borderColor: "#dddddd" }} placeholder="Type here." value={this.state.UserDetails.orgDescription}
+              <Text style={styles.fontFormSmall}>Description of church or ministry organization</Text>
+              <Input style={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28 }} placeholder="Type here." value={this.state.UserDetails.orgDescription}
                 onChange={(e) => { this.handleInputChange(e, "orgDescription") }} multiline={true} />
             </View>
           </Form>
