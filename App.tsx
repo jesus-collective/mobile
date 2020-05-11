@@ -21,9 +21,9 @@ import MyRequireNewPassword from './components/Auth/MyRequireNewPassword';
 import MyConfirmSignUp from './components/Auth/MyConfirmSignUp';
 import MyVerifyContact from './components/Auth/MyVerifyContact';
 import MyForgotPassword from './components/Auth/MyForgotPassword';
-//import Sentry from 'sentry-expo';
+import Sentry from './components/Sentry';
 
-//Sentry.config('https://38e8f0bc706a4d968e1ff3ebf638a090@o390245.ingest.sentry.io/5231570').install();
+Sentry.init({ dsn: 'https://8c8703a620444c97ba6e8bb4a60c17d0@o390245.ingest.sentry.io/5231908' })
 
 const SignUpSidebar = lazy(() => import('./components/SignUpSidebar/SignUpSidebar'));
 
