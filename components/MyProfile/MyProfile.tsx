@@ -294,13 +294,13 @@ export default class MyProfile extends React.Component<Props, State> {
                 </Item>
               </View>
             </View>
-            <View style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 0, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", minHeight: 1500, width: 446 }}>
-              <Text style={styles.font}>Tell us more about you</Text>
+            <View style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 0, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", border: "none", minHeight: 1500, width: 446, paddingTop: 30, paddingRight: 30, paddingBottom: 30, paddingLeft: 30 }}>
+              <Text style={styles.fontMyProfileLeftTop}>Tell us more about you</Text>
               <Text style={styles.fontBold}>About me</Text>
-              <Input style={{ borderWidth: 1, borderColor: "#dddddd" }} value={this.state.UserDetails.aboutMeLong}
+              <Input style={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10 }} value={this.state.UserDetails.aboutMeLong}
                 onChange={(e) => { this.handleInputChange(e, "aboutMeLong") }} multiline={true} placeholder="type here" />
               <Text style={styles.fontBold}>My Interests</Text>
-              <Text style={styles.font}>You can select 7 key interests</Text>
+              <Text style={styles.fontFormText}>You can select 7 key interests</Text>
 
               <TagInput
                 updateState={this.updateTagState}
@@ -315,9 +315,9 @@ export default class MyProfile extends React.Component<Props, State> {
                 onBlur={() => this.setState({ tagsColor: mainColor, tagsText: '#000000' })}
                 autoCorrect={false}
                 scrollViewProps={{ contentContainerStyle: { justifyContent: "center" } }}
-                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", color: this.state.tagsText }}
-                containerStyle={{ justifyContent: "center", width: (Dimensions.get('window').width - 40) }}
-                inputContainerStyle={[styles.textInput, { backgroundColor: this.state.tagsColor }]}
+                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", color: this.state.tagsText, paddingLeft: 5 }}
+                containerStyle={{ justifyContent: "center", width: "100%", paddingLeft: 0, marginBottom: 20 }}
+                inputContainerStyle={[styles.textInput, { backgroundColor: this.state.tagsColor, marginLeft: 0 }]}
                 labelStyle={{ color: '#000000' }}
                 tagStyle={styles.tag}
                 tagTextStyle={styles.tagText}

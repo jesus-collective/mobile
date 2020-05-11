@@ -59,8 +59,15 @@ export default EStyleSheet.create({
         fontFamily: "Graphik-Regular-App"
     },
     font: {
-        fontFamily: 'Graphik-Regular-App', fontSize: 16
+        fontFamily: 'Graphik-Regular-App', 
+        fontSize: 16
     },
+    fontMyProfileLeftTop: {
+        fontFamily: 'Graphik-Regular-App', 
+        fontSize: 30,
+        lineHeight: 36,
+        marginBottom: 18
+    },  
     fontGroupNameDetailPage: {
         fontSize: 30,
         lineHeight: 36,
