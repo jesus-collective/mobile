@@ -4,7 +4,6 @@ import awsConfig from '../../src/aws-exports';
 Amplify.configure(awsConfig);
 
 import { Container } from 'native-base';
-import { WebView } from 'react-native';
 import Header from '../../components/Header/Header'
 import { NavigationEvents } from 'react-navigation';
 import { NavigationScreenProp } from 'react-navigation';
@@ -27,14 +26,7 @@ export default class ExploreScreen extends React.Component<Props, State> {
     return (
       <Container>
         <Header title="Explore" navigation={this.props.navigation} />
-        <WebView
-          onLoadStart={(navState) => this.setState({ url: navState.nativeEvent.url })}
-          source={{
-            uri: this.state.url,
-            headers: { "jesuscollective-origin": "react-native-app" }
-          }}
-          style={{ marginTop: 0 }}
-        />
+
 
       </Container>
 
