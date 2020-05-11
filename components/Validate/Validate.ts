@@ -1,5 +1,5 @@
 
-
+import isAbsoluteUrl from 'is-absolute-url'
 type ValidationResult = {
     result: boolean,
     validationError: String
@@ -101,8 +101,15 @@ export default class Validate {
             return { result: false, validationError: "Event must have a description" }
         if (data.time == "" || data.time == null)
             return { result: false, validationError: "Event must have a time" }
+        if (data.eventType == "zoom" && !isAbsoluteUrl(data.eventUrl))
+            return { result: false, validationError: "Zoom Event must have a valid URL set" }
+        if (data.eventType == "eventbrite" && !isAbsoluteUrl(data.eventUrl))
+            return { result: false, validationError: "Eventbrite Event must have a valid URL set" }
+        if (data.eventType == "location" && data.location == "")
+            return { result: false, validationError: "Location Event must have a location" }
         if (data.location == "")
             return { result: false, validationError: "Event must have a location" }
+
         return { result: true, validationError: "" }
 
     }

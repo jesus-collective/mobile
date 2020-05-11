@@ -15,6 +15,7 @@ import { API, graphqlOperation, Auth, Analytics } from 'aws-amplify';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { constants } from '../../src/constants'
+import { Link } from '@react-navigation/web';
 var moment = require('moment');
 
 interface Props {
@@ -285,7 +286,15 @@ export default class MyGroups extends React.Component<Props, State> {
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailTop}>{moment(item.time).format('MMMM Do YYYY, h:mm a')}</Text></CardItem>
       <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
       <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetailMiddle}>{item.description}</Text></CardItem>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailBottom}>{item.location}</Text></CardItem>
+      <CardItem >
+        {item.eventType == "location" ?
+          <Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailBottom}>{item.location}</Text>
+          : item.eventType == "zoom" ?
+            <Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailBottom}><a target="_blank" href={item.eventUrl}>Zoom</a></Text>
+            :
+            <Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailBottom}><a target="_blank" href={item.eventUrl}>Eventbrite</a></Text>
+        }
+      </CardItem>
       {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id, item.name, "Event") }}>Attend</JCButton><Right></Right></CardItem> : null}
       {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id, item.name, "Event") }}>Don't Attend</JCButton><Right></Right></CardItem> : null}
     </Card>
