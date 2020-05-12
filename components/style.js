@@ -23,7 +23,8 @@ export default EStyleSheet.create({
         fontSize: 30,
         lineHeight: 36,
         fontWeight: "bold",
-        fontFamily: "Helvetica Neue, sans-serif"
+        fontFamily: "Helvetica Neue, sans-serif",
+        width: "100%"
     },
     groupDescriptionInput: {
         borderColor: 'white',
