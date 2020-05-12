@@ -15,6 +15,7 @@ import moment from 'moment';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 import MapSelector from './MapSelector'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import EditableText from '../Forms/EditableText';
 
 
 Amplify.configure(awsconfig);
@@ -36,7 +37,7 @@ interface State {
   validationText: any
   mapVisible: any
   mapCoord: any
-
+  isEditable: any
 }
 export default class MyProfile extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -53,17 +54,19 @@ export default class MyProfile extends React.Component<Props, State> {
       validationText: null,
       mapVisible: false,
       mapCoord: { latitude: 0, longitude: 0 },
-
+      isEditable: false
     }
     this.getUserDetails()
   }
   async getUserDetails() {
     console.log("getUserDetails")
+    var user = await Auth.currentAuthenticatedUser();
     if (this.props.loadId) {
       try {
         const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: this.props.loadId }));
         this.setState({
-          UserDetails: getUser.data.getUser
+          UserDetails: getUser.data.getUser,
+          isEditable: getUser.data.getUser.id == user['username']
         }, () => this.getProfileImage()
         )
 
@@ -78,11 +81,12 @@ export default class MyProfile extends React.Component<Props, State> {
       }
     }
     else {
-      var user = await Auth.currentAuthenticatedUser();
+
       try {
         const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: user['username'] }));
         this.setState({
-          UserDetails: getUser.data.getUser
+          UserDetails: getUser.data.getUser,
+          isEditable: true
         }, () => this.getProfileImage()
         )
 
@@ -208,12 +212,21 @@ export default class MyProfile extends React.Component<Props, State> {
       (this.state.UserDetails != null ?
         <Content>
           <View style={{ justifyContent: "space-between", flexDirection: "row", width: "100%", flexGrow: 0, marginTop: 30, paddingLeft: 32, minHeight: 45 }}>
-            <Text style={styles.profileFontTitle}>Create your profile</Text>
-            <View style={{ flex: 0, flexDirection: "row", alignSelf: "flex-end" }}>
-              <JCButton buttonType={ButtonTypes.SolidRightMargin} onPress={() => this.finalizeProfile()}>Save and Publish Your Profile</JCButton>
-              <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.logout()}>Logout</JCButton>
-            </View>
-            <Text>{this.state.validationText}</Text>
+            {this.state.isEditable ?
+              <Text style={styles.profileFontTitle}>Setup your profile</Text>
+              : <Text style={styles.profileFontTitle}>{this.state.UserDetails.given_name}'s profile</Text>
+            }
+            {this.state.isEditable ?
+              <View style={{ flex: 0, flexDirection: "row", alignSelf: "flex-end" }}>
+                <JCButton buttonType={ButtonTypes.SolidRightMargin} onPress={() => this.finalizeProfile()}>Save and Publish Your Profile</JCButton>
+                <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.logout()}>Logout</JCButton>
+              </View>
+              : null
+            }
+            {
+              this.state.isEditable ? <Text>{this.state.validationText}</Text>
+                : null
+            }
 
 
           </View>
@@ -232,10 +245,13 @@ export default class MyProfile extends React.Component<Props, State> {
                   source={this.state.profileImage == "" ? require('../../assets/profile-placeholder.png') : this.state.profileImage} onError={() => { this.getProfileImage() }}>
 
                 </Image>
-                <View style={styles.fileInputWrapper}>
-                  <JCButton buttonType={ButtonTypes.Solid} onPress={() => { }}>Upload Profile Picture</JCButton>
-                  <input style={{ fontSize: "200px", position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='image/*' onChange={(e) => this.onProfileImageChange(e)} />
-                </View>
+                {this.state.isEditable ?
+                  <View style={styles.fileInputWrapper}>
+                    <JCButton buttonType={ButtonTypes.Solid} onPress={() => { }}>Upload Profile Picture</JCButton>
+                    <input style={{ fontSize: "200px", position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='image/*' onChange={(e) => this.onProfileImageChange(e)} />
+                  </View>
+                  : null
+                }
 
 
                 {/*<Text style={styles.fontFormProfileImageText}>Upload a picture of minimum 500px wide. Maximum size is 700kb.</Text>*/}
@@ -245,68 +261,103 @@ export default class MyProfile extends React.Component<Props, State> {
                 <Text style={styles.fontFormRole}>{this.state.UserDetails.currentRole ? this.state.UserDetails.currentRole : 'My Current Role not defined'}</Text>
                 <Text style={styles.fontFormUserType}>Partner</Text>
 
-                <Text style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>One sentence about me</Text>
-                <Input style={styles.fontFormAboutMe} value={this.state.UserDetails.aboutMeShort}
-                  onChange={(e) => { this.handleInputChange(e, "aboutMeShort") }} multiline={true} placeholder="Short sentence about me" />
+                {this.state.isEditable ?
+                  <Text style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>One sentence about me</Text>
+                  : null
+                }
+                <EditableText onChange={(e) => { this.handleInputChange(e, "aboutMeShort") }}
+                  placeholder="Short sentence about me" multiline={true}
+                  textStyle={styles.fontFormSmallDarkGrey}
+                  inputStyle={styles.fontFormAboutMe}
+                  value={this.state.UserDetails.aboutMeShort} isEditable={this.state.isEditable}></EditableText>
+
+
                 <View style={{ justifyContent: "space-between", flexDirection: "row", width: "100%", flexGrow: 0, marginTop: 30, alignSelf: "flex-start", height: "2.75rem" }}>
                   <Text style={styles.fontFormSmallDarkGrey}><Image style={{ width: "22px", height: "22px", top: 6, marginRight: 5 }} source={require('../../assets/svg/pin 2.svg')}></Image>{this.state.UserDetails.location ? "Lat: " + this.state.UserDetails.location.latitude + " Long:" + this.state.UserDetails.location.longitude : "Location not defined"}</Text>
-                  <Text>( <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={() => this.showMap()}>{this.state.UserDetails.location != null ? "Change" : "Set"}</JCButton>)</Text>
+                  {this.state.isEditable ?
+                    <Text>( <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={() => this.showMap()}>{this.state.UserDetails.location != null ? "Change" : "Set"}</JCButton>)</Text>
+                    : null
+                  }
                 </View>
                 <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px", top: 3, marginRight: 5 }} source={require('../../assets/svg/calendar.svg')}></Image>{this.state.UserDetails.joined ? moment(this.state.UserDetails.joined).format('MMMM Do YYYY') : "Join date unknown"}</Text>
                 <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px", top: 3, marginRight: 5 }} source={require('../../assets/svg/church.svg')}></Image>{this.state.UserDetails.orgName ? this.state.UserDetails.orgName : "Organization Name not defined"}</Text>
               </View>
-              <Text style={styles.fontFormSmallHeader}>Private Information</Text>
-              <View style={{ backgroundColor: '#FFFFFF', width: "100%", marginBottom: 30 }}>
-                <Item stackedLabel>
-                  <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Address</Label>
-                  <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.address}
-                    onChange={(e) => { this.handleInputChange(e, "address") }} />
-                </Item>
-                <Item stackedLabel>
-                  <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>City</Label>
-                  <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.city}
-                    onChange={(e) => { this.handleInputChange(e, "city") }} />
-                </Item>
-                <Item stackedLabel>
-                  <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Province/State</Label>
-                  <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.province}
-                    onChange={(e) => { this.handleInputChange(e, "province") }} />
-                </Item>
-                <Item stackedLabel>
-                  <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Postal/Zip Code</Label>
-                  <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.postalCode}
-                    onChange={(e) => { this.handleInputChange(e, "postalCode") }} />
-                </Item>
-                <Item stackedLabel>
-                  <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Country</Label>
-                  <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.country}
-                    onChange={(e) => { this.handleInputChange(e, "country") }} />
-                </Item>
-                <Item stackedLabel>
-                  <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Email Address</Label>
-                  <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.email}
-                    onChange={(e) => { this.handleInputChange(e, "email") }} />
-                </Item>
-                <Item stackedLabel>
-                  <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Phone #</Label>
-                  <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.phone}
-                    onChange={(e) => { this.handleInputChange(e, "phone") }} />
-                </Item>
-              </View>
+              {this.state.isEditable ?
+                <Text style={styles.fontFormSmallHeader}>Private Information</Text>
+                : null
+              }
+              {this.state.isEditable ?
+                <View style={{ backgroundColor: '#FFFFFF', width: "100%", marginBottom: 30 }}>
+                  <Item stackedLabel>
+                    <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Address</Label>
+                    <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.address}
+                      onChange={(e) => { this.handleInputChange(e, "address") }} />
+                  </Item>
+                  <Item stackedLabel>
+                    <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>City</Label>
+                    <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.city}
+                      onChange={(e) => { this.handleInputChange(e, "city") }} />
+                  </Item>
+                  <Item stackedLabel>
+                    <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Province/State</Label>
+                    <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.province}
+                      onChange={(e) => { this.handleInputChange(e, "province") }} />
+                  </Item>
+                  <Item stackedLabel>
+                    <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Postal/Zip Code</Label>
+                    <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.postalCode}
+                      onChange={(e) => { this.handleInputChange(e, "postalCode") }} />
+                  </Item>
+                  <Item stackedLabel>
+                    <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Country</Label>
+                    <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.country}
+                      onChange={(e) => { this.handleInputChange(e, "country") }} />
+                  </Item>
+                  <Item stackedLabel>
+                    <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Email Address</Label>
+                    <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.email}
+                      onChange={(e) => { this.handleInputChange(e, "email") }} />
+                  </Item>
+                  <Item stackedLabel>
+                    <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Phone #</Label>
+                    <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.phone}
+                      onChange={(e) => { this.handleInputChange(e, "phone") }} />
+                  </Item>
+                </View>
+                : null
+              }
             </View>
             <View style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 0, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: 1500, width: 446, paddingTop: 30, paddingRight: 30, paddingBottom: 30, paddingLeft: 30 }}>
-              <Text style={styles.fontMyProfileLeftTop}>Tell us more about you</Text>
-              <Text style={styles.fontBold}>About me</Text>
-              <Input style={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28 }} value={this.state.UserDetails.aboutMeLong}
-                onChange={(e) => { this.handleInputChange(e, "aboutMeLong") }} multiline={true} placeholder="type here" />
-              <Text style={styles.fontBold}>My Interests</Text>
-              <Text style={styles.fontFormText2}>You can select 7 key interests</Text>
+              {this.state.isEditable ?
+                <Text style={styles.fontMyProfileLeftTop}>Tell us more about you</Text>
+                : null
+              }
+
+              {this.state.isEditable ?
+                <Text style={styles.fontBold}>About me</Text>
+                : null
+              }
+
+              <EditableText onChange={(e) => { this.handleInputChange(e, "aboutMeLong") }}
+                placeholder="type here" multiline={true}
+                textStyle={styles.fontFormSmallDarkGrey}
+                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28 }}
+                value={this.state.UserDetails.aboutMeLong} isEditable={this.state.isEditable}></EditableText>
+
+              {this.state.isEditable ?
+                <Text style={styles.fontBold}>My Interests</Text>
+                : <Text style={styles.fontBold}>Interests</Text>
+              }
+              {this.state.isEditable ?
+                <Text style={styles.fontFormText2}>You can select 7 key interests</Text>
+                : null
+              }
 
               <TagInput
                 updateState={this.updateTagState}
                 tags={this.state.tags}
                 placeholder="Tags..."
-                label='Press space to add a tag'
+                label={this.state.isEditable ? 'Press space to add a tag' : ""}
 
                 //leftElement={<Icon name={'tag-multiple'} type={'material-community'} color={this.state.tagsText} />}
 
@@ -326,39 +377,89 @@ export default class MyProfile extends React.Component<Props, State> {
               />
               <Item stackedLabel style={{ marginBottom: 15, width: "100%" }}>
                 <Label style={styles.fontFormSmall}>Current Role</Label>
-                <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.currentRole}
-                  onChange={(e) => { this.handleInputChange(e, "currentRole") }} />
+                <EditableText onChange={(e) => { this.handleInputChange(e, "currentRole") }}
+                  multiline={false}
+                  textStyle={styles.fontFormSmallDarkGrey}
+                  inputStyle={styles.fontFormMediumInput}
+                  value={this.state.UserDetails.currentRole} isEditable={this.state.isEditable}></EditableText>
+
+
               </Item>
               <Text style={styles.fontFormSmall}>&nbsp;</Text>
-              <Text style={styles.fontFormSmall}>Describe your current scope</Text>
-              <Input style={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28 }} placeholder="Type here." value={this.state.UserDetails.currentScope}
-                onChange={(e) => { this.handleInputChange(e, "currentScope") }} multiline={true} />
-              <Text style={styles.fontFormSmall}>&nbsp;</Text>
-              <Text style={styles.fontFormSmall}>Identify your personality type indicator</Text>
-              <Input style={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28 }} placeholder="Type here. like (MBTI, DISC, APEST, Birkman, Enneagram + Wing, Kolbe Index, other, N/A" value={this.state.UserDetails.personality}
-                onChange={(e) => { this.handleInputChange(e, "personality") }} multiline={true} />
+              {this.state.isEditable ?
+                <Text style={styles.fontFormSmall}>Describe your current scope</Text>
+                : <Text style={styles.fontFormSmall}>Current scope</Text>
+              }
+              <EditableText onChange={(e) => { this.handleInputChange(e, "currentScope") }}
+                multiline={true}
+                placeholder="Type here."
+                textStyle={styles.fontFormSmallDarkGrey}
+                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28 }}
+                value={this.state.UserDetails.currentScope} isEditable={this.state.isEditable}></EditableText>
+
 
               <Text style={styles.fontFormSmall}>&nbsp;</Text>
-              <Text style={styles.fontBold}>Tell us more about your organization</Text>
+              {this.state.isEditable ?
+                <Text style={styles.fontFormSmall}>Identify your personality type indicator</Text>
+                : <Text style={styles.fontFormSmall}>Personality type indicator</Text>
+              }
+              <EditableText onChange={(e) => { this.handleInputChange(e, "personality") }}
+                multiline={true}
+                placeholder="Type here. like (MBTI, DISC, APEST, Birkman, Enneagram + Wing, Kolbe Index, other, N/A"
+                textStyle={styles.fontFormSmallDarkGrey}
+                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28 }}
+                value={this.state.UserDetails.personality} isEditable={this.state.isEditable}></EditableText>
+
+
+
+
+              <Text style={styles.fontFormSmall}>&nbsp;</Text>
+              {this.state.isEditable ?
+                <Text style={styles.fontBold}>Tell us more about your organization</Text>
+                : <Text style={styles.fontBold}>Organization Info</Text>
+              }
               <Item stackedLabel style={{ marginBottom: 15, width: "100%" }}>
                 <Label style={styles.fontFormSmall}>Organization Name</Label>
-                <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.orgName}
-                  onChange={(e) => { this.handleInputChange(e, "orgName") }} />
+
+                <EditableText onChange={(e) => { this.handleInputChange(e, "orgName") }}
+                  multiline={false}
+                  textStyle={styles.fontFormSmallDarkGrey}
+                  inputStyle={styles.fontFormMediumInput}
+                  value={this.state.UserDetails.orgName} isEditable={this.state.isEditable}></EditableText>
+
+
+
               </Item>
               <Item stackedLabel style={{ marginBottom: 15, width: "100%" }}>
                 <Label style={styles.fontFormSmall}>Type of organization</Label>
-                <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.orgType}
-                  onChange={(e) => { this.handleInputChange(e, "orgType") }} />
+
+                <EditableText onChange={(e) => { this.handleInputChange(e, "orgType") }}
+                  multiline={false}
+                  textStyle={styles.fontFormSmallDarkGrey}
+                  inputStyle={styles.fontFormMediumInput}
+                  value={this.state.UserDetails.orgType} isEditable={this.state.isEditable}></EditableText>
+
               </Item>
               <Item stackedLabel style={{ marginBottom: 15, width: "100%" }}>
-                <Label style={styles.fontFormSmall}>How many employees are there in your organization?</Label>
-                <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.orgSize}
-                  onChange={(e) => { this.handleInputChange(e, "orgSize") }} />
+                <Label style={styles.fontFormSmall}>How many employees are there in the organization?</Label>
+
+                <EditableText onChange={(e) => { this.handleInputChange(e, "orgSize") }}
+                  multiline={false}
+                  textStyle={styles.fontFormSmallDarkGrey}
+                  inputStyle={styles.fontFormMediumInput}
+                  value={this.state.UserDetails.orgSize} isEditable={this.state.isEditable}></EditableText>
+
               </Item>
               <Text style={styles.fontFormSmall}>&nbsp;</Text>
               <Text style={styles.fontFormSmall}>Description of church or ministry organization</Text>
-              <Input style={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28 }} placeholder="Type here." value={this.state.UserDetails.orgDescription}
-                onChange={(e) => { this.handleInputChange(e, "orgDescription") }} multiline={true} />
+              <EditableText onChange={(e) => { this.handleInputChange(e, "orgDescription") }}
+                multiline={true}
+                textStyle={styles.fontFormSmallDarkGrey}
+                placeholder="Type here."
+                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28 }}
+                value={this.state.UserDetails.orgDescription} isEditable={this.state.isEditable}></EditableText>
+
+
             </View>
           </Form>
         </Content>
