@@ -25,7 +25,7 @@ class MyMap extends React.Component<Props, State> {
     if (this.props.visible)
       return (
         <Container style={{ height: 250 }}>
-          <Map google={this.props.google} zoom={6}
+          <Map google={window.google} zoom={6}
             initialCenter={{ lat: 44, lng: -78.0 }}
             mapTypeControl={false}
             style={{ position: "relative", width: "100%", height: "250px" }}
@@ -41,6 +41,4 @@ class MyMap extends React.Component<Props, State> {
 }
 
 
-export default GoogleApiWrapper({
-  apiKey: ('AIzaSyDXxLzyv5pYsIPl3XnVX5ONklXvs48zjn0')
-})(MyMap)
+export default MyMap

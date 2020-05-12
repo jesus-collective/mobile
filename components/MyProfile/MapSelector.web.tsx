@@ -198,7 +198,7 @@ class MapSelector extends React.Component<Props, State> {
                         <Text>Select a location (this will be public)</Text>
                         <JCButton buttonType={ButtonTypes.OutlineBold} onPress={() => this.props.onClose(this.state.mapCoord)}>Done</JCButton>
 
-                        <Map google={this.props.google} zoom={6}
+                        <Map google={window.google} zoom={6}
                             initialCenter={{ lat: 44, lng: -78.0 }}
                             mapTypeControl={false}
                             style={{ height: "300px" }}
@@ -227,6 +227,4 @@ class MapSelector extends React.Component<Props, State> {
 
 
 
-export default GoogleApiWrapper({
-    apiKey: ('AIzaSyDXxLzyv5pYsIPl3XnVX5ONklXvs48zjn0')
-})(MapSelector)
+export default MapSelector
