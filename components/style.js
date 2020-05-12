@@ -23,7 +23,7 @@ export default EStyleSheet.create({
         fontSize: 30,
         lineHeight: 36,
         fontWeight: "bold",
-        fontFamily: "Helvetica Neue, sans-serif",
+        fontFamily: "Graphik-Bold-App",
         width: "100%"
     },
     groupDescriptionInput: {
@@ -38,7 +38,7 @@ export default EStyleSheet.create({
         fontSize: 16,
         lineHeight: 23,
         fontWeight: "normal",
-        fontFamily: "Helvetica Neue, sans-serif"
+        fontFamily: "Graphik-Regular-App"
 
     },
     textInput: {
@@ -73,7 +73,7 @@ export default EStyleSheet.create({
         fontSize: 30,
         lineHeight: 36,
         color: "#333333",
-        fontFamily: "Helvetica Neue, sans-serif"
+        fontFamily: "Graphik-Regular-App"
     },
     saveProfileButton: {
         backgroundColor: "#F0493E", textTransform: "capitalize"
@@ -236,14 +236,14 @@ export default EStyleSheet.create({
         paddingBottom: 9, 
     },
     groupFormName: {
-        fontFamily: "Helvetica Neue, sans-serif",
+        fontFamily: "Graphik-Bold-App",
         fontWeight: "bold",
         fontSize: 16,
         lineHeight: 21,
         color: "#333333"
     },
     groupFormRole: {
-        fontFamily: "Helvetica Neue, sans-serif",
+        fontFamily: "Graphik-Regular-App",
         fontWeight: "normal",
         fontSize: 12,
         lineHeight: 16,
@@ -294,6 +294,25 @@ export default EStyleSheet.create({
     flexRow: { 
         flexDirection: 'row' 
     },
+    groupMiddleText: {
+        fontFamily: "Graphik-Bold-App", 
+        fontSize: 20, 
+        lineHeight: 25, 
+        letterSpacing: -0.3, 
+        color: "#333333", 
+        paddingTop: 48, 
+        paddingBottom: 12
+    },
+    groupMiddleTextNoPaddingTop: {
+        fontFamily: "Graphik-Bold-App", 
+        fontSize: 20, 
+        lineHeight: 25, 
+        letterSpacing: -0.3, 
+        color: "#333333", 
+        paddingTop: 0, 
+        paddingBottom: 12
+    },
+
 
     // Media Query Desktop Tablet
     '@media (min-width: 350) and (max-width: 768)': {
