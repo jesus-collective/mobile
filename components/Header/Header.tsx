@@ -71,7 +71,7 @@ export default class HeaderJC extends React.Component<Props, State> {
             transparent
             onPress={this.openHome}>
             <Image style={styles.logo}
-              source={require('./icon.png')}
+              source={require('../../assets/header/icon.png')}
             /></Button>
           {
             constants["SETTING_ISVISIBLE_event"] ?
