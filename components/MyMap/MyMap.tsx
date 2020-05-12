@@ -5,6 +5,7 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 interface Props {
   navigation: any
   visible: boolean
+  mapData: any
 }
 interface State { }
 

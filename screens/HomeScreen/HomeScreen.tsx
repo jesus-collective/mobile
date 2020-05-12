@@ -20,6 +20,7 @@ interface State {
   showMap: boolean
   width: any
   height: any
+  mapData: any
 }
 
 
@@ -27,6 +28,7 @@ class HomeScreen extends React.Component<Props, State>{
   constructor(props: Props) {
     super(props);
     this.state = {
+      mapData: [],
       showMap: false,
       width: Dimensions.get('window').width,
       height: Dimensions.get('window').height
@@ -39,26 +41,30 @@ class HomeScreen extends React.Component<Props, State>{
   mapChanged = () => {
     this.setState({ showMap: !this.state.showMap })
   }
-
+  mergeMapData(mapData) {
+    console.log(mapData)
+    var data = this.state.mapData.concat(mapData)
+    this.setState({ mapData: data })
+  }
   render() {
     console.log("Homepage")
     return (
       <Container >
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-        <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
+        <MyMap navigation={this.props.navigation} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
 
         <Container style={{ flexGrow: 1, overflow: "scroll" }}>
           <Container style={{ display: "block" }}>
             <Container style={{ height: 2300, flex: 1, display: "flex", flexDirection: "row" }}>
               <Container style={{ flex: 70, flexDirection: "column", backgroundColor: "#F9FAFC" }}>
-                <MyGroups showMore={false} type="event" wrap={false} navigation={this.props.navigation}></MyGroups>
-                <MyGroups showMore={false} type="group" wrap={false} navigation={this.props.navigation}></MyGroups>
-                <MyGroups showMore={false} type="resource" wrap={false} navigation={this.props.navigation}></MyGroups>
-                <MyGroups showMore={false} type="organization" wrap={false} navigation={this.props.navigation}></MyGroups>
-                <MyGroups showMore={false} type="course" wrap={false} navigation={this.props.navigation}></MyGroups>
+                <MyGroups showMore={false} type="event" wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
+                <MyGroups showMore={false} type="group" wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
+                <MyGroups showMore={false} type="resource" wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
+                <MyGroups showMore={false} type="organization" wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
+                <MyGroups showMore={false} type="course" wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
               </Container>
               <Container style={{ flex: 30, flexDirection: "column" }}>
-                <MyPeople wrap={false} navigation={this.props.navigation}></MyPeople>
+                <MyPeople wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyPeople>
                 <MyConversations navigation={this.props.navigation}></MyConversations>
                 <Container style={{ flex: 10 }}></Container>
               </Container>

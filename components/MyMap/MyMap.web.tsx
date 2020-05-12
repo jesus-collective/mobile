@@ -13,6 +13,7 @@ interface Props {
   navigation: any
   visible: boolean
   google: any
+  mapData: any
 }
 interface State { }
 
@@ -22,6 +23,7 @@ class MyMap extends React.Component<Props, State> {
   }
 
   render() {
+    console.log(this.props.mapData)
     if (this.props.visible)
       return (
         <Container style={{ height: 250 }}>
@@ -30,7 +32,12 @@ class MyMap extends React.Component<Props, State> {
             mapTypeControl={false}
             style={{ position: "relative", width: "100%", height: "250px" }}
           >
+            {this.props.mapData.map((mapItem, index) => {
+              return <Marker key={index} title={mapItem.name}
+                label={mapItem.name}
 
+                position={{ lat: mapItem.latitude, lng: mapItem.longitude }}></Marker>
+            })}
 
 
           </Map>

@@ -23,6 +23,7 @@ interface Props {
   wrap: Boolean
   type: String
   showMore: Boolean
+  onDataload(data: any): any
 }
 interface State {
   openSingle: string
@@ -159,6 +160,45 @@ export default class MyGroups extends React.Component<Props, State> {
     })
 
   }
+  convertProfileToMapData(data) {
+    return [{
+      latitude: 30.01,
+      longitude: 40.02,
+      name: "Bob",
+      link: "",
+      type: "profile"
+    }]
+  }
+  convertEventToMapData(data) {
+    return data.map((dataItem) => {
+      if (dataItem.locationLatLong && dataItem.locationLatLong.latitude && dataItem.locationLatLong.longitude)
+        return {
+          latitude: dataItem.locationLatLong.latitude,
+          longitude: dataItem.locationLatLong.longitude,
+          name: dataItem.name,
+          link: "",
+          type: "event"
+        }
+      else return null
+    }).filter(o => o)
+  }
+  convertToMapData(data) {
+    switch (this.state.type) {
+      case "group":
+        return []
+      case "event":
+        return this.convertEventToMapData(data)
+      case "resource":
+        return []
+      case "organization":
+        return []
+      case "course":
+        return []
+      case "profile":
+        return this.convertProfileToMapData(data)
+    }
+
+  }
   setInitialData(props) {
     if (props.type == "profile") {
       var listUsers: any = API.graphql({
@@ -171,7 +211,7 @@ export default class MyGroups extends React.Component<Props, State> {
         this.setState({
           data: temp,
           nextToken: json.data.listUsers.nextToken
-        })
+        }, () => { this.props.onDataload(this.convertToMapData(this.state.data)) })
       }
       listUsers.then(processList).catch(processList)
     }
@@ -188,7 +228,7 @@ export default class MyGroups extends React.Component<Props, State> {
         this.setState({
           data: temp,
           nextToken: json.data.groupByType.nextToken
-        })
+        }, () => { this.props.onDataload(this.convertToMapData(this.state.data)) })
       }
       listGroup.then(processList).catch(processList)
     }

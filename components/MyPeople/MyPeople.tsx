@@ -14,6 +14,7 @@ import { constants } from '../../src/constants'
 interface Props {
   navigation: any
   wrap: Boolean
+  onDataload(data: any): any
 }
 interface State {
   openSingle: string
@@ -42,6 +43,23 @@ export default class MyPeople extends React.Component<Props, State> {
     }
     this.setInitialData(props)
   }
+  convertProfileToMapData(data) {
+    return data.map((dataItem) => {
+      if (dataItem.location && dataItem.location.latitude && dataItem.location.longitude)
+        return {
+          latitude: dataItem.location.latitude,
+          longitude: dataItem.location.longitude,
+          name: dataItem.given_name + " " + dataItem.family_name,
+          link: "",
+          type: "profile"
+        }
+      else return null
+    }).filter(o => o)
+  }
+
+  convertToMapData(data) {
+    return this.convertProfileToMapData(data)
+  }
   setInitialData(props) {
     var listUsers: any = API.graphql({
       query: queries.listUsers,
@@ -51,12 +69,12 @@ export default class MyPeople extends React.Component<Props, State> {
 
     listUsers.then((json) => {
       // console.log(json)
-      this.setState({ data: json.data.listUsers.items })
+      this.setState({ data: json.data.listUsers.items }, () => { this.props.onDataload(this.convertToMapData(this.state.data)) })
 
     }).catch(
       (e: any) => {
         console.log(e)
-        this.setState({ data: e.data.listUsers.items })
+        this.setState({ data: e.data.listUsers.items }, () => { this.props.onDataload(this.convertToMapData(this.state.data)) })
 
       }
     )

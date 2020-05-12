@@ -91,6 +91,7 @@ type Group
   time: String
   lastUpdated: String
   location: String
+  locationLatLong: LatLong
   length: String
   effort: String
   cost: String
