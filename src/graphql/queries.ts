@@ -358,6 +358,10 @@ export const syncGroups = /* GraphQL */ `
         time
         lastUpdated
         location
+        locationLatLong {
+          latitude
+          longitude
+        }
         length
         effort
         cost
@@ -452,6 +456,10 @@ export const getGroup = /* GraphQL */ `
       time
       lastUpdated
       location
+      locationLatLong {
+        latitude
+        longitude
+      }
       length
       effort
       cost
@@ -528,6 +536,10 @@ export const listGroups = /* GraphQL */ `
         time
         lastUpdated
         location
+        locationLatLong {
+          latitude
+          longitude
+        }
         length
         effort
         cost
@@ -1159,6 +1171,10 @@ export const getMessage = /* GraphQL */ `
         time
         lastUpdated
         location
+        locationLatLong {
+          latitude
+          longitude
+        }
         length
         effort
         cost
@@ -1990,6 +2006,10 @@ export const groupByType = /* GraphQL */ `
         time
         lastUpdated
         location
+        locationLatLong {
+          latitude
+          longitude
+        }
         length
         effort
         cost
@@ -2145,6 +2165,10 @@ export const searchGroups = /* GraphQL */ `
         time
         lastUpdated
         location
+        locationLatLong {
+          latitude
+          longitude
+        }
         length
         effort
         cost

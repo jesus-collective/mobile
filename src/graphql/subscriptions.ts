@@ -105,6 +105,10 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
         time
         lastUpdated
         location
+        locationLatLong {
+          latitude
+          longitude
+        }
         length
         effort
         cost
@@ -455,6 +459,10 @@ export const onCreateGroupMember = /* GraphQL */ `
         time
         lastUpdated
         location
+        locationLatLong {
+          latitude
+          longitude
+        }
         length
         effort
         cost
@@ -574,6 +582,10 @@ export const onUpdateGroupMember = /* GraphQL */ `
         time
         lastUpdated
         location
+        locationLatLong {
+          latitude
+          longitude
+        }
         length
         effort
         cost
@@ -693,6 +705,10 @@ export const onDeleteGroupMember = /* GraphQL */ `
         time
         lastUpdated
         location
+        locationLatLong {
+          latitude
+          longitude
+        }
         length
         effort
         cost
@@ -839,6 +855,10 @@ export const onCreateGroup = /* GraphQL */ `
       time
       lastUpdated
       location
+      locationLatLong {
+        latitude
+        longitude
+      }
       length
       effort
       cost
@@ -941,6 +961,10 @@ export const onUpdateGroup = /* GraphQL */ `
       time
       lastUpdated
       location
+      locationLatLong {
+        latitude
+        longitude
+      }
       length
       effort
       cost
@@ -1043,6 +1067,10 @@ export const onDeleteGroup = /* GraphQL */ `
       time
       lastUpdated
       location
+      locationLatLong {
+        latitude
+        longitude
+      }
       length
       effort
       cost
@@ -1631,6 +1659,10 @@ export const onCreateMessage = /* GraphQL */ `
         time
         lastUpdated
         location
+        locationLatLong {
+          latitude
+          longitude
+        }
         length
         effort
         cost
@@ -1753,6 +1785,10 @@ export const onUpdateMessage = /* GraphQL */ `
         time
         lastUpdated
         location
+        locationLatLong {
+          latitude
+          longitude
+        }
         length
         effort
         cost
@@ -1875,6 +1911,10 @@ export const onDeleteMessage = /* GraphQL */ `
         time
         lastUpdated
         location
+        locationLatLong {
+          latitude
+          longitude
+        }
         length
         effort
         cost

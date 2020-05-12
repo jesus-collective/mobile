@@ -333,6 +333,10 @@ export const createGroupMember = /* GraphQL */ `
         time
         lastUpdated
         location
+        locationLatLong {
+          latitude
+          longitude
+        }
         length
         effort
         cost
@@ -452,6 +456,10 @@ export const updateGroupMember = /* GraphQL */ `
         time
         lastUpdated
         location
+        locationLatLong {
+          latitude
+          longitude
+        }
         length
         effort
         cost
@@ -571,6 +579,10 @@ export const deleteGroupMember = /* GraphQL */ `
         time
         lastUpdated
         location
+        locationLatLong {
+          latitude
+          longitude
+        }
         length
         effort
         cost
@@ -717,6 +729,10 @@ export const createGroup = /* GraphQL */ `
       time
       lastUpdated
       location
+      locationLatLong {
+        latitude
+        longitude
+      }
       length
       effort
       cost
@@ -819,6 +835,10 @@ export const updateGroup = /* GraphQL */ `
       time
       lastUpdated
       location
+      locationLatLong {
+        latitude
+        longitude
+      }
       length
       effort
       cost
@@ -921,6 +941,10 @@ export const deleteGroup = /* GraphQL */ `
       time
       lastUpdated
       location
+      locationLatLong {
+        latitude
+        longitude
+      }
       length
       effort
       cost
@@ -1509,6 +1533,10 @@ export const createMessage = /* GraphQL */ `
         time
         lastUpdated
         location
+        locationLatLong {
+          latitude
+          longitude
+        }
         length
         effort
         cost
@@ -1631,6 +1659,10 @@ export const updateMessage = /* GraphQL */ `
         time
         lastUpdated
         location
+        locationLatLong {
+          latitude
+          longitude
+        }
         length
         effort
         cost
@@ -1753,6 +1785,10 @@ export const deleteMessage = /* GraphQL */ `
         time
         lastUpdated
         location
+        locationLatLong {
+          latitude
+          longitude
+        }
         length
         effort
         cost
