@@ -48,7 +48,7 @@ class CourseSidebar extends React.Component<Props, State> {
                     transparent
                     onPress={this.openHome}>
                     <Image style={styles.logo}
-                        source={require('../../components/Header/icon.png')}
+                        source={require('../../assets/header/icon.png')}
                     /></Button>
                 <Button transparent onPress={this.openCourseHome}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/home.svg')} /><Text style={styles.courseSidebarFontRegular}>Home</Text></Button>
                 <Button transparent onPress={this.openCourseOverview}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/home.svg')} /><Text style={styles.courseSidebarFontRegular}>Overview</Text></Button>

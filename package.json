@@ -20,7 +20,10 @@
           "jest-expo/jest-preset.js",
           "@testing-library/react-native/jest-preset",
           "./node_modules/react-native-gesture-handler/jestSetup.js",
-          "<rootDir>/jest.setup.ts"
+          "<rootDir>/jest.setup.native.ts"
+        ],
+        "testMatch": [
+          "**/App.native.test.tsx"
         ],
         "transformIgnorePatterns": [
           "node_modules/(?!(jest-)?react-native|@sentry|sentry-expo|Linking|aws-amplify-react-native|@aws-sdk|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
@@ -36,7 +39,44 @@
           "!**/coverage/**",
           "!**/node_modules/**",
           "!**/babel.config.js",
-          "!**/jest.setup.js"
+          "!**/jest.setup.native.js"
+        ],
+        "coverageDirectory": "coverage",
+        "moduleFileExtensions": [
+          "ts",
+          "tsx",
+          "js",
+          "json",
+          "jsx",
+          "node",
+          "mjs"
+        ]
+      },
+      {
+        "displayName": "web",
+        "preset": "jest-expo/web",
+        "testMatch": [
+          "**/App.web.test.tsx"
+        ],
+        "setupFilesAfterEnv": [
+          "jest-expo/web/jest-preset.js",
+          "<rootDir>/jest.setup.web.ts"
+        ],
+        "transformIgnorePatterns": [
+          "node_modules/(?!(jest-)?react-native|@sentry|expo|sentry-expo|Linking|aws-amplify-react-native|@aws-sdk|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
+        ],
+        "moduleNameMapper": {
+          "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+          "\\.(css|less|scss|sass)$": "<rootDir>/__mocks__/styleMock.js"
+        },
+        "testEnvironment": "jsdom",
+        "collectCoverage": true,
+        "collectCoverageFrom": [
+          "**/*.{ts,tsx}",
+          "!**/coverage/**",
+          "!**/node_modules/**",
+          "!**/babel.config.js",
+          "!**/jest.setup.web.js"
         ],
         "coverageDirectory": "coverage",
         "moduleFileExtensions": [

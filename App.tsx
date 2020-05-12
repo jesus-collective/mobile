@@ -114,7 +114,7 @@ class AwesomeApp extends React.Component<Props, State> {
     }
 
     this.setState({ fontLoaded: true });
-    Asset.fromModule(require("./components/Header/icon.png")).downloadAsync()
+    Asset.fromModule(require("./assets/header/icon.png")).downloadAsync()
     Asset.fromModule(require("./assets/JC-Logo-RGB-KO2.png")).downloadAsync()
     Asset.fromModule(require("./assets/leftPanel.png")).downloadAsync()
     Asset.fromModule(require("./assets/profile-placeholder.png")).downloadAsync()
