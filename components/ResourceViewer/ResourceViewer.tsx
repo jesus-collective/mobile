@@ -21,6 +21,7 @@ import { ResourceRoot, Resource, ResourceEpisode, ResourceSeries } from "../../s
 import { DataStore, Predicates } from '@aws-amplify/datastore'
 import { ResourceContext } from './ResourceContext';
 import ImportKidsandYouth from '../../screens/ResourceScreen/ImportKidsandYouth'
+import ErrorBoundary from '../ErrorBoundry'
 Amplify.configure(awsconfig);
 
 const mainColor = '#ffffff';
@@ -210,30 +211,32 @@ class ResourceViewer extends React.Component<Props, State> {
     render() {
 
         return (this.state.data != null ?
-            <ResourceViewer.Provider value={{
-                state: {
-                    ...this.state
-                }, actions: {
-                    createResource: this.createResource,
-                    changeResource: this.changeResource,
-                    updateResource: this.updateResource,
-                    deleteResource: this.deleteResource,
-                    updateResourceImage: this.updateResourceImage
-                }
-            }}>
-                <Container style={{ padding: 0, margin: 0 }}>
-                    <ResourceMenu></ResourceMenu>
-                    <Content >
-                        <ResourceHeader></ResourceHeader>
-                        {this.state.currentResource == 0 ?
-                            <ResourceOverview></ResourceOverview>
-                            :
-                            <ResourceContent></ResourceContent>}
-                        {/*  <ImportKidsandYouth></ImportKidsandYouth>*/}
-                    </Content>
+            <ErrorBoundary>
+                <ResourceViewer.Provider value={{
+                    state: {
+                        ...this.state
+                    }, actions: {
+                        createResource: this.createResource,
+                        changeResource: this.changeResource,
+                        updateResource: this.updateResource,
+                        deleteResource: this.deleteResource,
+                        updateResourceImage: this.updateResourceImage
+                    }
+                }}>
+                    <Container style={{ padding: 0, margin: 0 }}>
+                        <ResourceMenu></ResourceMenu>
+                        <Content >
+                            <ResourceHeader></ResourceHeader>
+                            {this.state.currentResource == 0 ?
+                                <ResourceOverview></ResourceOverview>
+                                :
+                                <ResourceContent></ResourceContent>}
+                            {/*  <ImportKidsandYouth></ImportKidsandYouth>*/}
+                        </Content>
 
-                </Container>
-            </ResourceViewer.Provider>
+                    </Container>
+                </ResourceViewer.Provider>
+            </ErrorBoundary>
             : null)
 
     }
