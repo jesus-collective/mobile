@@ -114,7 +114,7 @@ export default EStyleSheet.create({
     },
     SolidMapButton:
     {
-        paddingTop: 6,
+        paddingTop: 6 ,
         paddingBottom: 6,
         paddingLeft: 29,
         paddingRight: 29,
