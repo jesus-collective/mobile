@@ -30,7 +30,7 @@ class MyMap extends React.Component<Props, State> {
           <Map google={window.google} zoom={6}
             initialCenter={{ lat: 44, lng: -78.0 }}
             mapTypeControl={false}
-            style={{ position: "relative", width: "100%", height: "250px" }}
+            style={{ position: "relative", width: "100%", height: "400px" }}
           >
             {this.props.mapData.map((mapItem, index) => {
               return <Marker key={index} title={mapItem.name}
