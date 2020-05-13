@@ -203,7 +203,7 @@ class MapSelector extends React.Component<Props, State> {
                         <Map google={window.google} zoom={6}
                             initialCenter={{ lat: 44, lng: -78.0 }}
                             mapTypeControl={false}
-                            style={{ height: "300px" }}
+                            style={{ height: "94.5%", width: "98%" }}
                         >
                             <Marker
                                 title="Location"
