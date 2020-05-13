@@ -268,7 +268,11 @@ export default EStyleSheet.create({
     },
     connectWithSliderButton: {
         padding: 0,
-        height: 25
+        height: 25,
+        borderColor: "#F0493E",
+        width: "75%",
+        alignItems: "center",
+        justifyContent: "center"
     },
     postButton:
     {
