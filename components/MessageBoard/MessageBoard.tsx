@@ -18,6 +18,7 @@ import './react-draft-wysiwyg.css';
 //TODO FIGURE OUT WHY THIS DOESN"T WORK
 import './MessageBoard.css';
 import { v1 as uuidv1 } from 'uuid';
+import ErrorBoundary from '../ErrorBoundry';
 
 
 interface Props {
@@ -135,95 +136,97 @@ export default class MessageBoard extends React.Component<Props, State> {
 
     return (
       (this.state.message != null && this.state.created) ?
-        <StyleProvider style={getTheme(material)}>
-          <Container style={{ display: "inline", overflow: "visible", width: "100%", paddingTop: 30, paddingLeft: 30, paddingRight: 30, marginBottom: 60 }} >
-            <Content style={{ marginBottom: 40 }}>
+        <ErrorBoundary>
+          <StyleProvider style={getTheme(material)}>
+            <Container style={{ display: "inline", overflow: "visible", width: "100%", paddingTop: 30, paddingLeft: 30, paddingRight: 30, marginBottom: 60 }} >
+              <Content style={{ marginBottom: 40 }}>
 
-              {
-                this.state.UserDetails != null ?
-                  <ProfileImage size="small" user={this.state.UserDetails}></ProfileImage>
-                  : null
-              }
-              <Editor
-                placeholder="Write a message..."
-                editorState={this.state.editorState}
-                toolbarClassName="customToolbar"
-                wrapperClassName="customWrapperSendmessage"
-                editorClassName="customEditorSendmessage"
-                onEditorStateChange={(z) => { this.updateEditorInput(z) }}
-                onContentStateChange={(z) => { this.updateInput(z) }}
-                toolbar={{
-                  image: {
-                    uploadCallback: async (z1) => {
-                      var id = uuidv1()
+                {
+                  this.state.UserDetails != null ?
+                    <ProfileImage size="small" user={this.state.UserDetails}></ProfileImage>
+                    : null
+                }
+                <Editor
+                  placeholder="Write a message..."
+                  editorState={this.state.editorState}
+                  toolbarClassName="customToolbar"
+                  wrapperClassName="customWrapperSendmessage"
+                  editorClassName="customEditorSendmessage"
+                  onEditorStateChange={(z) => { this.updateEditorInput(z) }}
+                  onContentStateChange={(z) => { this.updateInput(z) }}
+                  toolbar={{
+                    image: {
+                      uploadCallback: async (z1) => {
+                        var id = uuidv1()
 
-                      var upload = await Storage.put("messages/" + id + ".png", z1, {
-                        level: 'protected',
-                        contentType: z1.type,
-                      })
-                      var download = await Storage.get("messages/" + id + ".png", {
-                        level: 'protected',
-                        contentType: z1.type,
-                        identityId: this.state.UserDetails.profileImage ? this.state.UserDetails.profileImage : ""
-                      })
-                      return { data: { link: download } }
-                    },
-                    previewImage: true,
-                    alt: { present: true, mandatory: true },
-                    defaultSize: {
-                      height: 'auto',
-                      width: 'auto',
+                        var upload = await Storage.put("messages/" + id + ".png", z1, {
+                          level: 'protected',
+                          contentType: z1.type,
+                        })
+                        var download = await Storage.get("messages/" + id + ".png", {
+                          level: 'protected',
+                          contentType: z1.type,
+                          identityId: this.state.UserDetails.profileImage ? this.state.UserDetails.profileImage : ""
+                        })
+                        return { data: { link: download } }
+                      },
+                      previewImage: true,
+                      alt: { present: true, mandatory: true },
+                      defaultSize: {
+                        height: 'auto',
+                        width: 'auto',
+                      }
                     }
-                  }
-                }}
+                  }}
 
-              />
-              <JCButton buttonType={ButtonTypes.SolidRightJustified} onPress={() => { this.saveMessage() }} >Post</JCButton>
+                />
+                <JCButton buttonType={ButtonTypes.SolidRightJustified} onPress={() => { this.saveMessage() }} >Post</JCButton>
 
-            </Content>
-
+              </Content>
 
 
 
 
-            {this.state.data.items.map((item: any) => {
-              return (
-                <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
-                  <Card key={item.id} style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }}>
-                    <CardItem style={{ borderBottomLeftRadius: 0, borderBottomRightRadius: 0, borderTopLeftRadius: 10, borderTopRightRadius: 10, backgroundColor: "#F9FAFC" }}>
-                      <Left>
-                        <ProfileImage size="small" user={item.author}></ProfileImage>
-                        <Body>
-                          <Text style={styles.groupFormName}>
-                            {item.author != null ? item.author.given_name : null} {item.author != null ? item.author.family_name : null}
-                          </Text>
-                          <Text style={styles.groupFormRole}>
-                            {item.author != null ? item.author.currentRole : null}
-                          </Text>
-                        </Body>
-                      </Left>
-                      <Right>
-                        <Text style={styles.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
-                      </Right>
-                    </CardItem>
-                    <CardItem style={{ marginTop: 0, paddingTop: 0, paddingBottom: 0, borderTopLeftRadius: 0, borderTopRightRadius: 0, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, backgroundColor: "#ffffff" }}>
 
-                      <Editor
-                        readOnly
-                        toolbarHidden
-                        initialContentState={JSON.parse(item.content)}
-                        toolbarClassName="customToolbar"
-                        wrapperClassName="customWrapper"
-                        editorClassName="customEditor"
-                      />
-                    </CardItem>
-                  </Card>
-                </TouchableOpacity>)
-            })}
+              {this.state.data.items.map((item: any) => {
+                return (
+                  <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
+                    <Card key={item.id} style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }}>
+                      <CardItem style={{ borderBottomLeftRadius: 0, borderBottomRightRadius: 0, borderTopLeftRadius: 10, borderTopRightRadius: 10, backgroundColor: "#F9FAFC" }}>
+                        <Left>
+                          <ProfileImage size="small" user={item.author}></ProfileImage>
+                          <Body>
+                            <Text style={styles.groupFormName}>
+                              {item.author != null ? item.author.given_name : null} {item.author != null ? item.author.family_name : null}
+                            </Text>
+                            <Text style={styles.groupFormRole}>
+                              {item.author != null ? item.author.currentRole : null}
+                            </Text>
+                          </Body>
+                        </Left>
+                        <Right>
+                          <Text style={styles.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
+                        </Right>
+                      </CardItem>
+                      <CardItem style={{ marginTop: 0, paddingTop: 0, paddingBottom: 0, borderTopLeftRadius: 0, borderTopRightRadius: 0, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, backgroundColor: "#ffffff" }}>
+
+                        <Editor
+                          readOnly
+                          toolbarHidden
+                          initialContentState={JSON.parse(item.content)}
+                          toolbarClassName="customToolbar"
+                          wrapperClassName="customWrapper"
+                          editorClassName="customEditor"
+                        />
+                      </CardItem>
+                    </Card>
+                  </TouchableOpacity>)
+              })}
 
 
-          </Container>
-        </StyleProvider >
+            </Container>
+          </StyleProvider >
+        </ErrorBoundary>
         : null
 
     )

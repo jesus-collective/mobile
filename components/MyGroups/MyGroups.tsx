@@ -16,6 +16,7 @@ import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { constants } from '../../src/constants'
 import { Link } from '@react-navigation/web';
+import ErrorBoundry from '../../components/ErrorBoundry'
 var moment = require('moment');
 
 interface Props {
@@ -380,58 +381,62 @@ export default class MyGroups extends React.Component<Props, State> {
         return null
       else
         return (
-          <StyleProvider style={getTheme(material)}>
+          <ErrorBoundry>
+            <StyleProvider style={getTheme(material)}>
 
-            <Container style={{ padding: 10, minHeight: 525, width: "100%", flexDirection: 'column', justifyContent: 'flex-start' }}>
-              <Container style={{ minHeight: 45, flexGrow: 0, flexDirection: 'row', justifyContent: 'space-between', marginTop: 30, paddingRight: 12 }} >
-                <JCButton buttonType={ButtonTypes.TransparentBoldBlack} onPress={() => { this.openMultiple() }}>{this.state.titleString}</JCButton>
-                <Container style={{ maxHeight: 45, flexDirection: 'row', justifyContent: 'flex-end', alignItems: "flex-start" }}>
-                  <JCButton buttonType={ButtonTypes.TransparentBoldOrange} onPress={() => { this.openMultiple() }}>Show All</JCButton>
-                  {constants["SETTING_ISVISIBLE_SHOWRECOMMENDED"] ? <JCButton buttonType={ButtonTypes.TransparentBoldOrange} onPress={() => { this.openMultiple() }}>Show Recommended</JCButton> : null}
-                  {this.state.showCreateButton && constants["SETTING_ISVISIBLE_CREATE_" + this.state.type] ?
-                    <JCButton buttonType={ButtonTypes.OutlineBold} onPress={() => { this.createSingle() }}>{this.state.createString}</JCButton>
+              <Container style={{ padding: 10, minHeight: 525, width: "100%", flexDirection: 'column', justifyContent: 'flex-start' }}>
+                <Container style={{ minHeight: 45, flexGrow: 0, flexDirection: 'row', justifyContent: 'space-between', marginTop: 30, paddingRight: 12 }} >
+                  <JCButton buttonType={ButtonTypes.TransparentBoldBlack} onPress={() => { this.openMultiple() }}>{this.state.titleString}</JCButton>
+                  <Container style={{ maxHeight: 45, flexDirection: 'row', justifyContent: 'flex-end', alignItems: "flex-start" }}>
+                    <JCButton buttonType={ButtonTypes.TransparentBoldOrange} onPress={() => { this.openMultiple() }}>Show All</JCButton>
+                    {constants["SETTING_ISVISIBLE_SHOWRECOMMENDED"] ? <JCButton buttonType={ButtonTypes.TransparentBoldOrange} onPress={() => { this.openMultiple() }}>Show Recommended</JCButton> : null}
+                    {this.state.showCreateButton && constants["SETTING_ISVISIBLE_CREATE_" + this.state.type] ?
+                      <JCButton buttonType={ButtonTypes.OutlineBold} onPress={() => { this.createSingle() }}>{this.state.createString}</JCButton>
+                      : null
+                    }
+                  </Container>
+                </Container>
+                <Container style={{ overflow: "scroll", overflowY: "hidden", minHeight: 375, flexWrap: this.props.wrap ? "wrap" : "nowrap", flexGrow: 1, width: "100%", flexDirection: 'row', justifyContent: "flex-start", alignItems: "flex-start" }}>
+                  {this.state.data ?
+                    this.state.data.map((item) => {
+                      return (
+                        <ErrorBoundry>
+                          <ListItem noBorder key={item.id} style={{ alignSelf: "flex-start" }} button onPress={() => { this.openSingle(item.id) }}>
+                            {this.state.type == "group" ?
+                              this.renderGroup(item) :
+                              this.state.type == "event" ?
+                                this.renderEvent(item) :
+                                this.state.type == "resource" ?
+                                  this.renderResource(item) :
+                                  this.state.type == "organization" ?
+                                    this.renderOrganization(item) :
+                                    this.state.type == "course" ?
+                                      this.renderCourse(item) :
+                                      this.state.type == "profile" ?
+                                        this.renderProfile(item) :
+                                        null
+                            }
+
+
+                          </ListItem>
+                        </ErrorBoundry>
+                      )
+                    })
                     : null
                   }
+                  {this.state.nextToken ?
+                    this.props.showMore ?
+                      <TouchableOpacity onPress={() => { this.setInitialData(this.props) }} >
+                        <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: '0%', width: this.state.cardWidth }}>
+                          <CardItem   ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>Load more...</Text></CardItem>
+                        </Card>
+                      </TouchableOpacity>
+                      : null
+                    : null}
                 </Container>
               </Container>
-              <Container style={{ overflow: "scroll", overflowY: "hidden", minHeight: 375, flexWrap: this.props.wrap ? "wrap" : "nowrap", flexGrow: 1, width: "100%", flexDirection: 'row', justifyContent: "flex-start", alignItems: "flex-start" }}>
-                {this.state.data ?
-                  this.state.data.map((item) => {
-                    return (
-                      <ListItem noBorder key={item.id} style={{ alignSelf: "flex-start" }} button onPress={() => { this.openSingle(item.id) }}>
-                        {this.state.type == "group" ?
-                          this.renderGroup(item) :
-                          this.state.type == "event" ?
-                            this.renderEvent(item) :
-                            this.state.type == "resource" ?
-                              this.renderResource(item) :
-                              this.state.type == "organization" ?
-                                this.renderOrganization(item) :
-                                this.state.type == "course" ?
-                                  this.renderCourse(item) :
-                                  this.state.type == "profile" ?
-                                    this.renderProfile(item) :
-                                    null
-                        }
-
-
-                      </ListItem>
-                    )
-                  })
-                  : null
-                }
-                {this.state.nextToken ?
-                  this.props.showMore ?
-                    <TouchableOpacity onPress={() => { this.setInitialData(this.props) }} >
-                      <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: '0%', width: this.state.cardWidth }}>
-                        <CardItem   ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>Load more...</Text></CardItem>
-                      </Card>
-                    </TouchableOpacity>
-                    : null
-                  : null}
-              </Container>
-            </Container>
-          </StyleProvider>
+            </StyleProvider>
+          </ErrorBoundry>
         )
   }
 }

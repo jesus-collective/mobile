@@ -9,6 +9,7 @@ import { Map, InfoWindow } from 'google-maps-react';
 
 import { Text } from 'react-native'
 import { Container } from 'native-base';
+import ErrorBoundary from '../ErrorBoundry';
 interface Props {
   navigation: any
   visible: boolean
@@ -26,22 +27,24 @@ class MyMap extends React.Component<Props, State> {
     //console.log(this.props.mapData)
     if (this.props.visible)
       return (
-        <Container style={{ height: "50%" }}>
-          <Map google={window.google} zoom={6}
-            initialCenter={{ lat: 44, lng: -78.0 }}
-            mapTypeControl={false}
-            style={{ position: "relative", width: "100%", height: "100%" }}
-          >
-            {this.props.mapData.map((mapItem, index) => {
-              return <Marker key={index} title={mapItem.name}
-                label={mapItem.name}
+        <ErrorBoundary>
+          <Container style={{ height: "50%" }}>
+            <Map google={window.google} zoom={6}
+              initialCenter={{ lat: 44, lng: -78.0 }}
+              mapTypeControl={false}
+              style={{ position: "relative", width: "100%", height: "100%" }}
+            >
+              {this.props.mapData.map((mapItem, index) => {
+                return <Marker key={index} title={mapItem.name}
+                  label={mapItem.name}
 
-                position={{ lat: mapItem.latitude, lng: mapItem.longitude }}></Marker>
-            })}
+                  position={{ lat: mapItem.latitude, lng: mapItem.longitude }}></Marker>
+              })}
 
 
-          </Map>
-        </Container>
+            </Map>
+          </Container>
+        </ErrorBoundary>
       )
     else return null
   }

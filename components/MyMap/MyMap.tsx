@@ -1,6 +1,7 @@
 
 import * as React from 'react';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
+import ErrorBoundary from '../ErrorBoundry';
 
 interface Props {
   navigation: any
@@ -176,20 +177,21 @@ export default class MyMap extends React.Component<Props, State> {
   render() {
     if (this.props.visible)
       return (
-        <MapView
-          provider={PROVIDER_GOOGLE}
-          customMapStyle={this.mapstyle}
-          showsUserLocation={true}
-          style={{ height: 250 }}
-          initialRegion={{
-            latitude: 43.78825,
-            longitude: -78.4324,
-            latitudeDelta: 6,
-            longitudeDelta: 6,
-          }}
-        >
-        </MapView>
-
+        <ErrorBoundary>
+          <MapView
+            provider={PROVIDER_GOOGLE}
+            customMapStyle={this.mapstyle}
+            showsUserLocation={true}
+            style={{ height: 250 }}
+            initialRegion={{
+              latitude: 43.78825,
+              longitude: -78.4324,
+              latitudeDelta: 6,
+              longitudeDelta: 6,
+            }}
+          >
+          </MapView>
+        </ErrorBoundary>
 
       )
     else return null

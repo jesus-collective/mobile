@@ -1,6 +1,7 @@
 # OSX
 #
 .DS_Store
+src/version.js
 
 web-build
 # Xcode

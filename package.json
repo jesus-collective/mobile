@@ -2,8 +2,8 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "prebuild": "npx amplify push",
-    "build": "npx expo build:web",
-    "start": "npx expo start",
+    "build": "export SENTRY_ORG=the-meeting-house;VERSION=`sentry-cli releases propose-version`;sentry-cli releases new -p jesus-collective $VERSION;sentry-cli releases set-commits --auto $VERSION;echo export const version ={git:\\\"$VERSION\\\"}>src/version.js;npx expo build:web;sentry-cli releases finalize $VERSION;sentry-cli releases deploys $VERSION new -e beta;",
+    "start": "export SENTRY_ORG=the-meeting-house;VERSION=`sentry-cli releases propose-version`;echo export const version ={git:\\\"$VERSION\\\"}>src/version.js;npx expo start",
     "debug": "npx expo start",
     "android": "npx expo start --android",
     "ios": "npx expo start --ios",
@@ -153,6 +153,7 @@
   "devDependencies": {
     "@babel/core": "^7.9.6",
     "@expo/webpack-config": "^0.12.5",
+    "@sentry/cli": "^1.52.3",
     "@sheerun/mutationobserver-shim": "^0.3.3",
     "@testing-library/react": "^10.0.3",
     "@testing-library/react-native": "^5.0.3",

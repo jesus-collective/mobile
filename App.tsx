@@ -22,6 +22,8 @@ import MyConfirmSignUp from './components/Auth/MyConfirmSignUp';
 import MyVerifyContact from './components/Auth/MyVerifyContact';
 import MyForgotPassword from './components/Auth/MyForgotPassword';
 import Sentry from './components/Sentry';
+import { version } from './src/version'
+
 var env = "unknown"
 if (window.location.hostname === "localhost")
   env = "dev"
@@ -31,7 +33,8 @@ else
   env = "prod"
 Sentry.init({
   dsn: 'https://8c8703a620444c97ba6e8bb4a60c17d0@o390245.ingest.sentry.io/5231908',
-  environment: env
+  environment: env,
+  release: version.git
 })
 
 const SignUpSidebar = lazy(() => import('./components/SignUpSidebar/SignUpSidebar'));
