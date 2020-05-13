@@ -26,11 +26,11 @@ class MyMap extends React.Component<Props, State> {
     console.log(this.props.mapData)
     if (this.props.visible)
       return (
-        <Container style={{ height: 250 }}>
+        <Container style={{ height: "50%" }}>
           <Map google={window.google} zoom={6}
             initialCenter={{ lat: 44, lng: -78.0 }}
             mapTypeControl={false}
-            style={{ position: "relative", width: "100%", height: "250px" }}
+            style={{ position: "relative", width: "100%", height: "100%" }}
           >
             {this.props.mapData.map((mapItem, index) => {
               return <Marker key={index} title={mapItem.name}
