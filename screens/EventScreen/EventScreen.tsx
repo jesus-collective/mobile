@@ -316,7 +316,14 @@ export default class EventScreen extends React.Component<Props, State>{
                       inputStyle={styles.groupNameInput} value={this.state.data.eventUrl}
                       isEditable={this.state.isEditable}></EditableUrl>
                     :
-                    <EditableLocation onChange={(value: any) => { this.updateValue("location", value) }}
+                    <EditableLocation onChange={(value: any, location: any) => {
+                      this.updateValue("location", value)
+                      console.log(location)
+                      if (location != undefined && location != null)
+                        this.updateValue("locationLatLong", { latitude: location.lat, longitude: location.lng })
+                      else
+                        this.updateValue("locationLatLong", null)
+                    }}
                       placeholder="Enter Event Location" multiline={false} textStyle={styles.fontRegular}
                       inputStyle={styles.groupNameInput} value={this.state.data.location}
                       isEditable={this.state.isEditable}></EditableLocation>
