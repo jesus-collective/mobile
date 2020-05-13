@@ -36,7 +36,7 @@ interface State {
   profileImage: any
   validationText: any
   mapVisible: any
-  mapCoord: any
+  // mapCoord: any
   isEditable: any
 }
 export default class MyProfile extends React.Component<Props, State> {
@@ -53,7 +53,7 @@ export default class MyProfile extends React.Component<Props, State> {
       profileImage: "",
       validationText: null,
       mapVisible: false,
-      mapCoord: { latitude: 0, longitude: 0 },
+      //  mapCoord: { latitude: 0, longitude: 0 },
       isEditable: false
     }
     this.getUserDetails()
@@ -123,8 +123,9 @@ export default class MyProfile extends React.Component<Props, State> {
       try {
         var toSave = this.clean(this.state.UserDetails)
         const updateUser = await API.graphql(graphqlOperation(mutations.updateUser, { input: toSave }));
-        //  console.log(updateUser)
-        this.props.finalizeProfile()
+        console.log({ "updateUser:": updateUser })
+        if (this.props.finalizeProfile)
+          this.props.finalizeProfile()
       } catch (e) {
         console.log(e)
       }
@@ -199,9 +200,9 @@ export default class MyProfile extends React.Component<Props, State> {
     console.log("showMap")
     this.setState({ mapVisible: true })
   }
-  saveLocation() {
+  saveLocation(coord) {
     console.log("saveLocation")
-    this.handleInputChange({ target: { value: { latitude: this.state.mapCoord.latitude, longitude: this.state.mapCoord.longitude } } }, "location")
+    this.handleInputChange({ target: { value: { latitude: coord.latitude, longitude: coord.longitude } } }, "location")
     this.setState({ mapVisible: false })
   }
 
@@ -231,10 +232,11 @@ export default class MyProfile extends React.Component<Props, State> {
 
           </View>
 
-          <MapSelector mapVisible={this.state.mapVisible}
+          <MapSelector mapVisible={this.state.mapVisible} coord={this.state.UserDetails.location}
             onClose={(coord) => {
-              console.log("onCloseMap");
-              this.setState({ mapVisible: false, mapCoord: { latitude: coord.latitude, longitude: coord.longitude } })
+              console.log({ "onCloseMap": coord });
+              this.saveLocation(coord)
+              this.setState({ mapVisible: false })
             }}>
           </MapSelector>
 

@@ -23,7 +23,7 @@ class MyMap extends React.Component<Props, State> {
   }
 
   render() {
-    console.log(this.props.mapData)
+    //console.log(this.props.mapData)
     if (this.props.visible)
       return (
         <Container style={{ height: "50%" }}>

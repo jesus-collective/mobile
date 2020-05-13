@@ -174,6 +174,7 @@ interface Props {
     mapVisible: any,
     onClose(mapCoord: any): any
     google: any
+    coord: any
 }
 interface State {
     mapCoord: any
@@ -184,7 +185,7 @@ class MapSelector extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            mapCoord: { latitude: 0, longitude: 0 },
+            mapCoord: { latitude: this.props.coord.latitude, longitude: this.props.coord.longitude },
             mapVisible: false
         }
     }
@@ -194,10 +195,10 @@ class MapSelector extends React.Component<Props, State> {
 
             this.props.mapVisible ?
                 <View style={{ position: "fixed", left: 0, top: 0, width: "100%", height: "100%", zIndex: 100, backgroundColor: "#33333366" }}>
-                    <View style={{ backgroundColor: "#ffffff", borderRadius: 10, padding: 10, margin: 10, left: "10%", top: "10%", width: "80%", height: "80%"  }}>
+                    <View style={{ backgroundColor: "#ffffff", borderRadius: 10, padding: 10, margin: 10, left: "10%", top: "10%", width: "80%", height: "80%" }}>
                         <View style={{ flexDirection: "row", alignContent: "space-between", alignItems: "center", justifyContent: "center", zIndex: "1000", height: "20%", backgroundColor: "#FFFFFF", paddingLeft: 10, paddingRight: 10, width: "48%", borderBottomRightRadius: 4 }}>
-                        <Text style={{ fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 20, marginRight: 18 }}>Select a location (this will be public)</Text>
-                        <JCButton buttonType={ButtonTypes.SolidMap} onPress={() => this.props.onClose(this.state.mapCoord)}>Done</JCButton>
+                            <Text style={{ fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 20, marginRight: 18 }}>Select a location (this will be public)</Text>
+                            <JCButton buttonType={ButtonTypes.SolidMap} onPress={() => this.props.onClose(this.state.mapCoord)}>Done</JCButton>
                         </View>
 
                         <Map google={window.google} zoom={6}
@@ -208,12 +209,12 @@ class MapSelector extends React.Component<Props, State> {
                             <Marker
                                 title="Location"
                                 id={1}
-
+                                position={{ lat: this.state.mapCoord.latitude, lng: this.state.mapCoord.longitude }}
                                 draggable={true}
-                                onDragend={(e, e2) => {
+                                onDragend={(e, e2, coord) => {
                                     console.log(e)
-                                    console.log(e2)
-                                    this.setState({ mapCoord: { latitude: e2.position.lat(), longitude: e2.position.lng() } })
+                                    console.log(coord.latLng)
+                                    this.setState({ mapCoord: { latitude: coord.latLng.lat(), longitude: coord.latLng.lng() } })
                                 }}
                             ></Marker>
 
