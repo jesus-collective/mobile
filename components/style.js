@@ -318,12 +318,20 @@ export default EStyleSheet.create({
         paddingBottom: 12
     },
 
+    rightCardWidth: {
+        minWidth: "150%"
+    },
+
 
     // Media Query Desktop Tablet
     '@media (min-width: 350) and (max-width: 768)': {
         connectWithSliderButton: {
-          height: 45,
-          width: "50%",
+            height: 45,
+            paddingTop: 6,
+            paddingBottom: 6,
+            paddingLeft: 10,
+            paddingRight: 10,
+            width: "100%"
         },
 
         connectWithTopSectionButton: {
@@ -334,8 +342,10 @@ export default EStyleSheet.create({
         fontConnectWithName: {
             fontSize: 18,
             lineHeight: 23,
-            width: "55%"
-        }
+        },
+        rightCardWidth: {
+            minWidth: "100%"
+        },
     },
 
     // Media Query Desktop Large Tablet
@@ -349,6 +359,9 @@ export default EStyleSheet.create({
           paddingTop: 50,
           paddingBottom: 35,
           paddingRight: 15
+        },
+        rightCardWidth: {
+            minWidth: "100%"
         },
     },
         

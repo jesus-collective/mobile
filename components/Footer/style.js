@@ -1,7 +1,8 @@
 import { Platform, StyleSheet } from 'react-native';
-import { Dimensions } from 'react-native'
+import { Dimensions } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 
-export default StyleSheet.create({
+export default EStyleSheet.create({
 
     footerContainer: {
         backgroundColor: '#333333',
@@ -11,7 +12,20 @@ export default StyleSheet.create({
         width: '100%',
         height: 200
     },
-
+    footerBodyContainer: {
+        display: "flex",
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'stretch'
+    },
+    footerInnerBodyContainer: {
+        minWidth: 400, 
+        display: "flex", 
+        flexDirection: 'column', 
+        alignSelf: "stretch", 
+        alignItems: "flex-start", 
+        justifyContent: "space-evenly"
+    },
     icon: {
         color: '#aaaaaa'
     },
@@ -67,5 +81,25 @@ export default StyleSheet.create({
         fontFamily: "Graphik-Regular-App",
         color: '#ffffff',
         fontSize: 13
-    }
+    },
+
+    // Media Query Desktop Tablet
+    '@media (min-width: 350) and (max-width: 768)': {
+        footerBodyContainer: {
+            width: "100%"
+        },
+        footerInnerBodyContainer: {
+            minWidth: 250, 
+        }
+    },
+
+    // Media Query Desktop Large Tablet
+    '@media (min-width: 769) and (max-width: 1024)': {
+        footerBodyContainer: {
+            width: "100%"
+        },
+        footerInnerBodyContainer: {
+            minWidth: 250, 
+        }
+    },
 });
