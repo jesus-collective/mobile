@@ -1,6 +1,6 @@
 ﻿import React, { lazy } from 'react';
 import { Container } from 'native-base';
-
+import styles from '../../components/style.js'
 import { Platform } from 'react-native';
 import { Dimensions } from 'react-native'
 import { withNavigation } from 'react-navigation';

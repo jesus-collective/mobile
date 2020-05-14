@@ -323,6 +323,7 @@ export default EStyleSheet.create({
     '@media (min-width: 350) and (max-width: 768)': {
         connectWithSliderButton: {
           height: 45,
+          width: "60%",
         },
 
         connectWithTopSectionButton: {
@@ -334,6 +335,11 @@ export default EStyleSheet.create({
 
     // Media Query Desktop Large Tablet
     '@media (min-width: 769) and (max-width: 1024)': {
+        connectWithSliderButton: {
+            height: 45,
+            width: "60%",
+          },
+        
         connectWithTopSectionButton: {
           paddingTop: 50,
           paddingBottom: 35,
