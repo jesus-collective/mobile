@@ -38,7 +38,8 @@ export default EStyleSheet.create({
         fontSize: 16,
         lineHeight: 23,
         fontWeight: "normal",
-        fontFamily: "Graphik-Regular-App"
+        fontFamily: "Graphik-Regular-App",
+        width: "100%"
 
     },
     textInput: {
