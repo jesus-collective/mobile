@@ -322,6 +322,38 @@ export default EStyleSheet.create({
         minWidth: "150%"
     },
 
+    eventScreenLeftCard: {
+        flex: 30, 
+        flexDirection: "column", 
+        alignContent: 'flex-start', 
+        alignItems: 'flex-start', 
+        justifyContent: 'flex-start', 
+        paddingLeft: 30, 
+        paddingRight: 30, 
+        paddingTop: 40, 
+        marginLeft: 32, 
+        marginRight: 32, 
+        marginTop: 30, 
+        borderRadius: 4, 
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", 
+        minHeight: 1000, 
+        width: 446
+    },
+    eventScreenRightCard: {
+        flex: 70, 
+        flexDirection: "column", 
+        alignContent: 'flex-start', 
+        alignItems: 'flex-start', 
+        justifyContent: 'flex-start', 
+        marginLeft: 32, 
+        marginRight: 32, 
+        marginTop: 30, 
+        borderRadius: 4, 
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", 
+        minHeight: 1500, 
+        width: 446
+    },
+
 
     // Media Query Desktop Tablet
     '@media (min-width: 350) and (max-width: 768)': {
@@ -346,6 +378,17 @@ export default EStyleSheet.create({
         rightCardWidth: {
             minWidth: "100%"
         },
+        eventScreenLeftCard: {
+            marginRight: 10, 
+        },
+        eventScreenRightCard: {
+            marginLeft: 10,
+        },
+        groupNameInput: {
+            fontSize: 24,
+            lineHeight: 30,
+            widht: "100%",
+        },
     },
 
     // Media Query Desktop Large Tablet
@@ -362,6 +405,12 @@ export default EStyleSheet.create({
         },
         rightCardWidth: {
             minWidth: "100%"
+        },
+        eventScreenLeftCard: {
+            marginRight: 10, 
+        },
+        eventScreenRightCard: {
+            marginLeft: 10,
         },
     },
         
