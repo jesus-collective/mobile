@@ -289,14 +289,15 @@ export default EStyleSheet.create({
 
     '@media (min-width: 350) and (max-width: 768)': {
         SolidRightMarginButton: {
-            paddingLeft: 15,
-            paddingRight: 15,
+            paddingLeft: 0,
+            paddingRight: 0,
             marginLeft: 90,
             marginRight: 25,
         },
         SolidButton: {
             textAlign: "center",
-            
+            paddingLeft: 0,
+            paddingRight: 0
         }
     }
 

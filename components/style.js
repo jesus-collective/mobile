@@ -456,7 +456,7 @@ export default EStyleSheet.create({
             lineHeight: 30,
         },
         myProfileTopButtons: {
-            width: "30%",
+            width: "53%",
         },
         profileScreenLeftCard: {
             marginRight: 10, 
@@ -468,7 +468,7 @@ export default EStyleSheet.create({
             flex: 65
         },
         myProfileImageWrapper:{
-            marginBottom: 30
+            marginBottom: 0
         },
         myProfileImage: {
             width: "200px", 
