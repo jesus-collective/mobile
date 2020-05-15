@@ -21,6 +21,16 @@ Parameters:
   
   
   
+  functionjcmobilePreSignupArn: 
+    Type: String
+    Default: functionjcmobilePreSignupArn
+  
+  functionjcmobilePreSignupName: 
+    Type: String
+    Default: functionjcmobilePreSignupName
+  
+  
+  
 
     
   identityPoolName:
@@ -98,9 +108,6 @@ Parameters:
   thirdPartyAuth:
     Type: String
                     
-  authProviders:
-    Type: CommaDelimitedList
-              
   usernameAttributes:
     Type: CommaDelimitedList
       
@@ -117,6 +124,21 @@ Parameters:
     Type: CommaDelimitedList
               
   dependsOn:
+    Type: CommaDelimitedList
+        
+  userPoolGroups:
+    Type: String
+              
+  adminQueries:
+    Type: String
+                    
+  userPoolGroupList:
+    Type: CommaDelimitedList
+      
+  adminQueryGroup:
+    Type: String
+                      
+  authProviders:
     Type: CommaDelimitedList
       
   facebookAppId:
@@ -203,6 +225,8 @@ Resources:
         
         
         
+          PreSignUp: !Ref functionjcmobilePreSignupArn
+        
         
         
       
@@ -247,6 +271,15 @@ Resources:
       SourceArn: !GetAtt UserPool.Arn
     
   
+  
+  UserPoolPreSignupLambdaInvokePermission: 
+    Type: "AWS::Lambda::Permission"
+    DependsOn: UserPool
+    Properties: 
+      Action: "lambda:invokeFunction"
+      Principal: "cognito-idp.amazonaws.com"
+      FunctionName: !Ref functionjcmobilePreSignupName
+      SourceArn: !GetAtt UserPool.Arn
   
    
     

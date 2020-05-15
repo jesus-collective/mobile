@@ -72,14 +72,10 @@
     "authSelections": "identityPoolAndUserPool",
     "resourceName": "jcmobile",
     "thirdPartyAuth": true,
-    "authProviders": [
-        "graph.facebook.com",
-        "accounts.google.com"
-    ],
     "usernameAttributes": [
         "email"
     ],
-    "triggers": "{\"PostConfirmation\":[\"add-to-group\"]}",
+    "triggers": "{\"PostConfirmation\":[\"add-to-group\"],\"PreSignup\":[\"custom\"]}",
     "hostedUI": false,
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -108,6 +104,25 @@
                 "Arn",
                 "Name"
             ]
+        },
+        {
+            "category": "function",
+            "resourceName": "jcmobilePreSignup",
+            "triggerProvider": "Cognito",
+            "attributes": [
+                "Arn",
+                "Name"
+            ]
         }
+    ],
+    "userPoolGroups": true,
+    "adminQueries": true,
+    "userPoolGroupList": [
+        "userpool"
+    ],
+    "adminQueryGroup": "admin",
+    "authProviders": [
+        "graph.facebook.com",
+        "accounts.google.com"
     ]
 }

@@ -4,92 +4,15 @@
     "prebuild": "npx amplify push",
     "build": "export SENTRY_ORG=the-meeting-house;VERSION=`sentry-cli releases propose-version`;sentry-cli releases new -p jesus-collective $VERSION;sentry-cli releases set-commits --auto $VERSION;echo export const version ={git:\\\"$VERSION\\\"}>src/version.js;npx expo build:web;sentry-cli releases finalize $VERSION;sentry-cli releases deploys $VERSION new -e beta;",
     "start": "export SENTRY_ORG=the-meeting-house;VERSION=`sentry-cli releases propose-version`;echo export const version ={git:\\\"$VERSION\\\"}>src/version.js;npx expo start",
+    "start:web": "export SENTRY_ORG=the-meeting-house;VERSION=`sentry-cli releases propose-version`;echo export const version ={git:\\\"$VERSION\\\"}>src/version.js;npx expo start:web",
     "debug": "npx expo start",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
     "android": "npx expo start --android",
     "ios": "npx expo start --ios",
     "eject": "npx expo eject",
-    "test": "jest",
+    "test": "START_SERVER_AND_TEST_INSECURE=1 start-server-and-test start:web http://localhost:19006 cy:open",
     "backup": "export z=$(date +%Y%m%d%H%M%S); mkdir backup/$z; cd backup/$z; dynamodump export-all-data --region=us-east-1"
-  },
-  "jest": {
-    "projects": [
-      {
-        "displayName": "native",
-        "preset": "@testing-library/react-native",
-        "setupFilesAfterEnv": [
-          "jest-expo/jest-preset.js",
-          "@testing-library/react-native/jest-preset",
-          "./node_modules/react-native-gesture-handler/jestSetup.js",
-          "<rootDir>/jest.setup.native.ts"
-        ],
-        "testMatch": [
-          "**/App.native.test.tsx"
-        ],
-        "transformIgnorePatterns": [
-          "node_modules/(?!(jest-)?react-native|@sentry|sentry-expo|Linking|aws-amplify-react-native|@aws-sdk|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
-        ],
-        "moduleNameMapper": {
-          "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-          "\\.(css|less|scss|sass)$": "<rootDir>/__mocks__/styleMock.js"
-        },
-        "testEnvironment": "jsdom",
-        "collectCoverage": true,
-        "collectCoverageFrom": [
-          "**/*.{ts,tsx}",
-          "!**/coverage/**",
-          "!**/node_modules/**",
-          "!**/babel.config.js",
-          "!**/jest.setup.native.js"
-        ],
-        "coverageDirectory": "coverage",
-        "moduleFileExtensions": [
-          "ts",
-          "tsx",
-          "js",
-          "json",
-          "jsx",
-          "node",
-          "mjs"
-        ]
-      },
-      {
-        "displayName": "web",
-        "preset": "jest-expo/web",
-        "testMatch": [
-          "**/App.web.test.tsx"
-        ],
-        "setupFilesAfterEnv": [
-          "jest-expo/web/jest-preset.js",
-          "<rootDir>/jest.setup.web.ts"
-        ],
-        "transformIgnorePatterns": [
-          "node_modules/(?!(jest-)?react-native|@sentry|expo|sentry-expo|Linking|aws-amplify-react-native|@aws-sdk|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
-        ],
-        "moduleNameMapper": {
-          "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-          "\\.(css|less|scss|sass)$": "<rootDir>/__mocks__/styleMock.js"
-        },
-        "testEnvironment": "jsdom",
-        "collectCoverage": true,
-        "collectCoverageFrom": [
-          "**/*.{ts,tsx}",
-          "!**/coverage/**",
-          "!**/node_modules/**",
-          "!**/babel.config.js",
-          "!**/jest.setup.web.js"
-        ],
-        "coverageDirectory": "coverage",
-        "moduleFileExtensions": [
-          "ts",
-          "tsx",
-          "js",
-          "json",
-          "jsx",
-          "node",
-          "mjs"
-        ]
-      }
-    ]
   },
   "dependencies": {
     "@date-io/moment": "^1.3.13",
@@ -103,7 +26,6 @@
     "@sentry/react-native": "^1.3.7",
     "@testing-library/jest-dom": "^5.5.0",
     "@types/googlemaps": "^3.39.3",
-    "@types/jest": "^25.2.1",
     "@types/react-test-renderer": "^16.9.2",
     "@zoomus/websdk": "^1.7.2",
     "Dante2": "^0.5.0-rc25",
@@ -114,6 +36,7 @@
     "babel-preset-expo": "^8.1.0",
     "emotion-theming": "^10.0.27",
     "expo": "^37.0.0",
+    "file-api": "^0.10.4",
     "google-maps-react": "^2.0.6",
     "is-absolute-url": "^3.0.3",
     "jquery": "^3.4.1",
@@ -160,17 +83,15 @@
     "@testing-library/user-event": "^10.1.0",
     "@types/react": "^16.9.11",
     "@types/react-native": "^0.62.7",
-    "babel-jest": "^26.0.1",
     "babel-plugin-dynamic-import-node": "^2.3.3",
+    "cypress": "^4.5.0",
     "dynamic-cdn-webpack-plugin": "^5.0.0",
     "expo-cli": "^3.20.3",
-    "isomorphic-fetch": "^2.2.1",
-    "jest-expo": "^37.0.0",
-    "jest-fetch-mock": "^3.0.3",
     "module-to-cdn": "^3.1.5",
     "node-fetch": "^2.6.0",
     "react-test-renderer": "^16.13.1",
     "readline": "^1.3.0",
+    "start-server-and-test": "^1.11.0",
     "webpack-bundle-analyzer": "^3.6.1",
     "webpack-cli": "^3.3.11",
     "webpack-merge": "^4.2.2"

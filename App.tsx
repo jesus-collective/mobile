@@ -152,8 +152,10 @@ class AwesomeApp extends React.Component<Props, State> {
           < Authenticator hideDefault={true} theme={MyTheme}
             usernameAttributes='email' onStateChange={(authState) => this.setState({ authState: authState })} federated={federated}
             signUpConfig={{
-              signUpFields: [{ displayOrder: 6, key: "family_name", label: "Last Name", required: true },
-              { displayOrder: 5, key: "given_name", label: "First Name", required: true }]
+              signUpFields: [
+                { displayOrder: 6, key: "family_name", type: "text", label: "Last Name", placeHolder: "Last Name", required: true },
+                { displayOrder: 5, key: "given_name", type: "text", label: "First Name", placeHolder: "First Name", required: true }
+              ]
             }} style={{
               width: "100%", top: "0", left: "0", height: "100%"
             }}>

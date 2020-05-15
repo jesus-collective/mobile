@@ -185,7 +185,7 @@ class MapSelector extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            mapCoord: { latitude: this.props.coord.latitude, longitude: this.props.coord.longitude },
+            mapCoord: { latitude: this.props.coord != null ? this.props.coord.latitude : 0.0, longitude: this.props.coord != null ? this.props.coord.longitude : 0.0 },
             mapVisible: false
         }
     }

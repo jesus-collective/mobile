@@ -170,6 +170,9 @@ export default class App extends React.Component<Props, State>{
       user: null,
       authState: props.authState
     }
+
+  }
+  componentDidMount() {
     this.performStartup()
   }
   async performStartup() {
@@ -187,7 +190,7 @@ export default class App extends React.Component<Props, State>{
       catch((e) => { console.log('No currrent authenticated user') });
     if (this.user != null) {
       const { attributes } = this.user;
-      console.log(this.user)
+
 
       try {
         const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: this.user['username'] }));
@@ -201,15 +204,24 @@ export default class App extends React.Component<Props, State>{
             phone: attributes['phone_number'],
             joined: moment().format()
           }
+
           try {
-            var createUser = await API.graphql(graphqlOperation(mutations.createUser, {
-              input: inputData
-            }));
+
+            var createUser: any = await API.graphql({
+              query: mutations.createUser,
+              variables: {
+                input: inputData
+              },
+              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+            });
+
             userExists = true
+
+            console.log({ createUser: createUser })
           } catch (e) {
-            console.log(e)
+            console.log({ error: e })
           }
-          console.log(createUser)
+
         }
         else {
           userExists = true
@@ -219,7 +231,8 @@ export default class App extends React.Component<Props, State>{
       catch (e) {
         console.log(e)
       }
-      this.setState({ userExists: userExists })
+      console.log({ userExists: userExists })
+      this.setState({ userExists: userExists }, () => { this.checkIfCompletedProfile() })
     }
   }
   async checkIfPaid() {
@@ -257,9 +270,11 @@ export default class App extends React.Component<Props, State>{
 
   async checkIfCompletedProfile() {
     console.log("checkIfCompletedProfile")
+    console.log({ user: this.state.userExists, hasPaidState: this.state.hasPaidState })
     if (this.state.userExists && this.state.hasPaidState == "Complete") {
       const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: this.user['username'] }));
       var response = Validate.Profile(getUser.data.getUser)
+      console.log({ checkIfCompletedProfileResult: response.result })
       if (response.result)
         this.setState({ hasCompletedPersonalProfile: "Completed" })
       else

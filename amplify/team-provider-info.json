@@ -15,7 +15,8 @@
             "function": {
                 "jcmobilePostConfirmation": {
                     "GROUP": "verifiedUsers"
-                }
+                },
+                "jcmobilePreSignup": {}
             },
             "auth": {
                 "jcmobile": {
