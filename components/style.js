@@ -434,6 +434,9 @@ export default EStyleSheet.create({
             fontSize: 24,
             lineHeight: 30,
         },
+        myProfileTopButtons: {
+            width: "30%",
+        },
     },
 
     // Media Query Desktop Large Tablet

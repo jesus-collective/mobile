@@ -285,6 +285,15 @@ export default EStyleSheet.create({
         fontSize: 16,
         padding: 10,
         fontWeight: "600",
+    },
+
+    '@media (min-width: 350) and (max-width: 768)': {
+        SolidRightMarginButton: {
+            paddingLeft: 15,
+            paddingRight: 15,
+            marginLeft: 95,
+            marginRight: 20,
+        }
     }
 
 })
