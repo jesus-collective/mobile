@@ -322,7 +322,7 @@ export default EStyleSheet.create({
         minWidth: "150%"
     },
 
-    eventScreenLeftCard: {
+    detailScreenLeftCard: {
         flex: 30, 
         flexDirection: "column", 
         alignContent: 'flex-start', 
@@ -339,7 +339,7 @@ export default EStyleSheet.create({
         minHeight: 1000, 
         width: 446
     },
-    eventScreenRightCard: {
+    detailScreenRightCard: {
         flex: 70, 
         flexDirection: "column", 
         alignContent: 'flex-start', 
@@ -378,11 +378,13 @@ export default EStyleSheet.create({
         rightCardWidth: {
             minWidth: "100%"
         },
-        eventScreenLeftCard: {
+        detailScreenLeftCard: {
             marginRight: 10, 
+            flex: 35,
         },
-        eventScreenRightCard: {
+        detailScreenRightCard: {
             marginLeft: 10,
+            flex: 65,
         },
         groupNameInput: {
             fontSize: 24,
@@ -405,10 +407,11 @@ export default EStyleSheet.create({
         rightCardWidth: {
             minWidth: "100%"
         },
-        eventScreenLeftCard: {
+        detailScreenLeftCard: {
             marginRight: 10, 
+            flex: 40,
         },
-        eventScreenRightCard: {
+        detailScreenRightCard: {
             marginLeft: 10,
         },
     },

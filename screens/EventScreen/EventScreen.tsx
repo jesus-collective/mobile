@@ -284,15 +284,16 @@ export default class EventScreen extends React.Component<Props, State>{
             <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
             <Content>
               <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start', background: "#F9FAFC" }}>
-                <Container style={styles.eventScreenLeftCard}>
+                <Container style={styles.detailScreenLeftCard}>
                   <Container style={{ display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 20 }}>
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: 'Helvetica-Neue, sans-serif', color: '#333333', textTransform: "uppercase", flex: 0 }}>Event</Text>
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: 'Helvetica-Neue, sans-serif', color: '#979797', textTransform: "uppercase", flex: 0 }}>Sponsored</Text>
                   </Container>
-
+                  <Container>
                   <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Event Name" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
                   <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Event Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
                   <EditableDate type="datetime" onChange={(value: any) => { this.updateValue("time", value) }} placeholder="Enter Event Time" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableDate>
+                  </Container>
                   {this.state.isEditable ? <Picker
                     mode="dropdown"
                     iosIcon={<Icon name="arrow-down" />}
@@ -364,7 +365,7 @@ export default class EventScreen extends React.Component<Props, State>{
                   </Container>
                   <Text>{this.state.validationError}</Text>
                 </Container>
-                <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: 1500, width: 446 }}>
+                <Container style={styles.detailScreenRightCard}>
                   <MessageBoard navigation={this.props.navigation} groupId={this.state.data.id}></MessageBoard>
                   {/*  <Zoom></Zoom>*/}
                 </Container>
