@@ -387,7 +387,6 @@ export default EStyleSheet.create({
         groupNameInput: {
             fontSize: 24,
             lineHeight: 30,
-            widht: "100%",
         },
     },
 
