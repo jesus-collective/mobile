@@ -198,7 +198,7 @@ class MapSelector extends React.Component<Props, State> {
                     <View style={{ backgroundColor: "#ffffff", borderRadius: 10, padding: 10, margin: 10, left: "10%", top: "10%", width: "80%", height: "80%" }}>
                         <View style={{ flexDirection: "row", alignContent: "space-between", alignItems: "center", justifyContent: "center", zIndex: "1000", height: "20%", backgroundColor: "#FFFFFF", paddingLeft: 10, paddingRight: 10, width: "48%", borderBottomRightRadius: 4 }}>
                             <Text style={{ fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 20, marginRight: 18 }}>Select a location (this will be public)</Text>
-                            <JCButton buttonType={ButtonTypes.SolidMap} onPress={() => this.props.onClose(this.state.mapCoord)}>Done</JCButton>
+                            <JCButton data-testid="mapselector-save" buttonType={ButtonTypes.SolidMap} onPress={() => this.props.onClose(this.state.mapCoord)}>Done</JCButton>
                         </View>
 
                         <Map google={window.google} zoom={6}

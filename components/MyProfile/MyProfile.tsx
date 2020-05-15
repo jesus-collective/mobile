@@ -98,8 +98,9 @@ export default class MyProfile extends React.Component<Props, State> {
     }
   }
   handleInputChange(event: any, name: string) {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
+
+
+    const value = event.target === undefined ? event : event.target.type === 'checkbox' ? event.target.checked : event.target.value;
     // const name = target.name;
     var updateData = { ...this.state.UserDetails }
     updateData[name] = value
@@ -219,7 +220,7 @@ export default class MyProfile extends React.Component<Props, State> {
             }
             {this.state.isEditable ?
               <View style={{ flex: 0, flexDirection: "row", alignSelf: "flex-end" }}>
-                <JCButton buttonType={ButtonTypes.SolidRightMargin} onPress={() => this.finalizeProfile()}>Save and Publish Your Profile</JCButton>
+                <JCButton data-testid="profile-save" buttonType={ButtonTypes.SolidRightMargin} onPress={() => this.finalizeProfile()}>Save and Publish Your Profile</JCButton>
                 <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.logout()}>Logout</JCButton>
               </View>
               : null
@@ -250,7 +251,7 @@ export default class MyProfile extends React.Component<Props, State> {
                 {this.state.isEditable ?
                   <View style={styles.fileInputWrapper}>
                     <JCButton buttonType={ButtonTypes.Solid} onPress={() => { }}>Upload Profile Picture</JCButton>
-                    <input style={{ fontSize: "200px", position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='image/*' onChange={(e) => this.onProfileImageChange(e)} />
+                    <input data-testid="profile-image" style={{ fontSize: "200px", position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='image/*' onChange={(e) => this.onProfileImageChange(e)} />
                   </View>
                   : null
                 }
@@ -271,13 +272,14 @@ export default class MyProfile extends React.Component<Props, State> {
                   placeholder="Short sentence about me" multiline={true}
                   textStyle={styles.fontFormSmallDarkGrey}
                   inputStyle={styles.fontFormAboutMe}
+                  data-testid="profile-aboutMeShort"
                   value={this.state.UserDetails.aboutMeShort} isEditable={this.state.isEditable}></EditableText>
 
 
                 <View style={{ justifyContent: "space-between", flexDirection: "row", width: "100%", flexGrow: 0, marginTop: 30, alignSelf: "flex-start", height: "2.75rem" }}>
                   <Text style={styles.fontFormSmallDarkGrey}><Image style={{ width: "22px", height: "22px", top: 6, marginRight: 5 }} source={require('../../assets/svg/pin 2.svg')}></Image>{this.state.UserDetails.location ? "Lat: " + this.state.UserDetails.location.latitude + " Long:" + this.state.UserDetails.location.longitude : "Location not defined"}</Text>
                   {this.state.isEditable ?
-                    <Text>( <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={() => this.showMap()}>{this.state.UserDetails.location != null ? "Change" : "Set"}</JCButton>)</Text>
+                    <Text>( <JCButton data-testid="profile-setmap" buttonType={ButtonTypes.TransparentNoPadding} onPress={() => this.showMap()}>{this.state.UserDetails.location != null ? "Change" : "Set"}</JCButton>)</Text>
                     : null
                   }
                 </View>
@@ -292,37 +294,37 @@ export default class MyProfile extends React.Component<Props, State> {
                 <View style={{ backgroundColor: '#FFFFFF', width: "100%", marginBottom: 30 }}>
                   <Item stackedLabel>
                     <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Address</Label>
-                    <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.address}
+                    <Input data-testid="profile-Address" style={styles.fontFormMediumInput} value={this.state.UserDetails.address}
                       onChange={(e) => { this.handleInputChange(e, "address") }} />
                   </Item>
                   <Item stackedLabel>
                     <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>City</Label>
-                    <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.city}
+                    <Input data-testid="profile-City" style={styles.fontFormMediumInput} value={this.state.UserDetails.city}
                       onChange={(e) => { this.handleInputChange(e, "city") }} />
                   </Item>
                   <Item stackedLabel>
                     <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Province/State</Label>
-                    <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.province}
+                    <Input data-testid="profile-Province" style={styles.fontFormMediumInput} value={this.state.UserDetails.province}
                       onChange={(e) => { this.handleInputChange(e, "province") }} />
                   </Item>
                   <Item stackedLabel>
                     <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Postal/Zip Code</Label>
-                    <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.postalCode}
+                    <Input data-testid="profile-PostalCode" style={styles.fontFormMediumInput} value={this.state.UserDetails.postalCode}
                       onChange={(e) => { this.handleInputChange(e, "postalCode") }} />
                   </Item>
                   <Item stackedLabel>
                     <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Country</Label>
-                    <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.country}
+                    <Input data-testid="profile-Country" style={styles.fontFormMediumInput} value={this.state.UserDetails.country}
                       onChange={(e) => { this.handleInputChange(e, "country") }} />
                   </Item>
                   <Item stackedLabel>
                     <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Email Address</Label>
-                    <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.email}
+                    <Input data-testid="profile-Email" style={styles.fontFormMediumInput} value={this.state.UserDetails.email}
                       onChange={(e) => { this.handleInputChange(e, "email") }} />
                   </Item>
                   <Item stackedLabel>
                     <Label style={styles.fontFormSmall}><Text style={styles.fontFormMandatory}>*</Text>Phone #</Label>
-                    <Input style={styles.fontFormMediumInput} value={this.state.UserDetails.phone}
+                    <Input data-testid="profile-Phone" style={styles.fontFormMediumInput} value={this.state.UserDetails.phone}
                       onChange={(e) => { this.handleInputChange(e, "phone") }} />
                   </Item>
                 </View>
@@ -342,6 +344,7 @@ export default class MyProfile extends React.Component<Props, State> {
 
               <EditableText onChange={(e) => { this.handleInputChange(e, "aboutMeLong") }}
                 placeholder="type here" multiline={true}
+                data-testid="profile-aboutMeLong"
                 textStyle={styles.fontFormSmallDarkGrey}
                 inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28 }}
                 value={this.state.UserDetails.aboutMeLong} isEditable={this.state.isEditable}></EditableText>
@@ -381,6 +384,7 @@ export default class MyProfile extends React.Component<Props, State> {
                 <Label style={styles.fontFormSmall}>Current Role</Label>
                 <EditableText onChange={(e) => { this.handleInputChange(e, "currentRole") }}
                   multiline={false}
+                  data-testid="profile-currentRole"
                   textStyle={styles.fontFormSmallDarkGrey}
                   inputStyle={styles.fontFormMediumInput}
                   value={this.state.UserDetails.currentRole} isEditable={this.state.isEditable}></EditableText>
@@ -395,6 +399,7 @@ export default class MyProfile extends React.Component<Props, State> {
               <EditableText onChange={(e) => { this.handleInputChange(e, "currentScope") }}
                 multiline={true}
                 placeholder="Type here."
+                data-testid="profile-currentScope"
                 textStyle={styles.fontFormSmallDarkGrey}
                 inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28 }}
                 value={this.state.UserDetails.currentScope} isEditable={this.state.isEditable}></EditableText>
@@ -407,6 +412,7 @@ export default class MyProfile extends React.Component<Props, State> {
               }
               <EditableText onChange={(e) => { this.handleInputChange(e, "personality") }}
                 multiline={true}
+                data-testid="profile-personality"
                 placeholder="Type here. like (MBTI, DISC, APEST, Birkman, Enneagram + Wing, Kolbe Index, other, N/A"
                 textStyle={styles.fontFormSmallDarkGrey}
                 inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28 }}
@@ -425,6 +431,7 @@ export default class MyProfile extends React.Component<Props, State> {
 
                 <EditableText onChange={(e) => { this.handleInputChange(e, "orgName") }}
                   multiline={false}
+                  data-testid="profile-orgName"
                   textStyle={styles.fontFormSmallDarkGrey}
                   inputStyle={styles.fontFormMediumInput}
                   value={this.state.UserDetails.orgName} isEditable={this.state.isEditable}></EditableText>
@@ -437,6 +444,7 @@ export default class MyProfile extends React.Component<Props, State> {
 
                 <EditableText onChange={(e) => { this.handleInputChange(e, "orgType") }}
                   multiline={false}
+                  data-testid="profile-orgType"
                   textStyle={styles.fontFormSmallDarkGrey}
                   inputStyle={styles.fontFormMediumInput}
                   value={this.state.UserDetails.orgType} isEditable={this.state.isEditable}></EditableText>
@@ -447,6 +455,7 @@ export default class MyProfile extends React.Component<Props, State> {
 
                 <EditableText onChange={(e) => { this.handleInputChange(e, "orgSize") }}
                   multiline={false}
+                  data-testid="profile-orgSize"
                   textStyle={styles.fontFormSmallDarkGrey}
                   inputStyle={styles.fontFormMediumInput}
                   value={this.state.UserDetails.orgSize} isEditable={this.state.isEditable}></EditableText>
@@ -456,6 +465,7 @@ export default class MyProfile extends React.Component<Props, State> {
               <Text style={styles.fontFormSmall}>Description of church or ministry organization</Text>
               <EditableText onChange={(e) => { this.handleInputChange(e, "orgDescription") }}
                 multiline={true}
+                data-testid="profile-orgDescription"
                 textStyle={styles.fontFormSmallDarkGrey}
                 placeholder="Type here."
                 inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28 }}

@@ -5,7 +5,7 @@ import { Text } from 'react-native'
 import styles from './JCButtonStyle'
 export enum ButtonTypes {
     Solid,
-    SolidMap ,
+    SolidMap,
     SolidRightMargin,
     SolidRightJustified,
     Outline,
@@ -17,16 +17,17 @@ export enum ButtonTypes {
     TransparentNoPadding,
     TransparentBoldBlack,
     TransparentBoldOrange
-    
+
 }
 export interface Props {
     onPress()
     children: any
     buttonType: ButtonTypes
+    "data-testid"?: any
 }
 interface State {
 }
-class EditableUrl extends React.Component<Props, State> {
+class JCButton extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
 
@@ -35,10 +36,10 @@ class EditableUrl extends React.Component<Props, State> {
         this.props.onPress()
     }
     render() {
-        return <Button style={styles[ButtonTypes[this.props.buttonType]+"Button"]} onPress={() => { this.onPress() }}>
-            <Text style={styles[ButtonTypes[this.props.buttonType]+"Text"]}>{this.props.children}</Text>
+        return <Button data-testId={this.props["data-testid"]} style={styles[ButtonTypes[this.props.buttonType] + "Button"]} onPress={() => { this.onPress() }}>
+            <Text style={styles[ButtonTypes[this.props.buttonType] + "Text"]}>{this.props.children}</Text>
         </Button>
     }
 }
 
-export default EditableUrl
+export default JCButton

@@ -9,7 +9,8 @@ interface Props {
     inputStyle?: any,
     multiline: boolean,
     placeholder?: string,
-    onChange?(string)
+    onChange?(string),
+    "data-testid"?: any
 }
 interface State {
     // value: string,
@@ -29,6 +30,7 @@ export default class EditableText extends React.Component<Props, State> {
             inputStyle: props.inputStyle,
             multiline: props.multiline,
             placeholder: props.placeholder
+
         }
         // console.log(props)
     }
@@ -40,7 +42,7 @@ export default class EditableText extends React.Component<Props, State> {
 
 
         if (this.state.isEditable)
-            return <Input onChange={(value) => { this.onChanged(value) }} placeholder={this.state.placeholder} multiline={this.state.multiline} style={this.state.inputStyle} value={this.props.value}></Input>
+            return <Input data-testid={this.props["data-testid"]} onChange={(value) => { this.onChanged(value) }} placeholder={this.state.placeholder} multiline={this.state.multiline} style={this.state.inputStyle} value={this.props.value}></Input>
         else
             return <Text style={this.state.textStyle}>{this.props.value}</Text>
     }
