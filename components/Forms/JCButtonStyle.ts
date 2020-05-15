@@ -291,8 +291,8 @@ export default EStyleSheet.create({
         SolidRightMarginButton: {
             paddingLeft: 15,
             paddingRight: 15,
-            marginLeft: 95,
-            marginRight: 20,
+            marginLeft: 90,
+            marginRight: 25,
         }
     }
 

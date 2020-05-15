@@ -437,6 +437,15 @@ export default EStyleSheet.create({
         myProfileTopButtons: {
             width: "30%",
         },
+        profileScreenLeftCard: {
+            marginRight: 10, 
+            flex: 35,
+            minHeight: "50%", 
+        },
+        profileScreenRightCard: {
+            marginLeft: 10, 
+            flex: 65
+        },
     },
 
     // Media Query Desktop Large Tablet
@@ -468,6 +477,7 @@ export default EStyleSheet.create({
         },
         profileScreenRightCard: {
             marginLeft: 10, 
+            flex: 65
         },
         myProfileTopButtons: {
             width: "60%",
