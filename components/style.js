@@ -397,6 +397,27 @@ export default EStyleSheet.create({
         paddingLeft: 32, 
         minHeight: 45
     },
+    myProfileImageWrapper:{
+        alignSelf: "center", 
+        marginBottom: 90
+    },
+    myProfileImage: {
+        width: "250px", 
+        height: "290px", 
+        borderRadius: 120
+    },
+    fileInputWrapper: { 
+        left: 0, 
+        width: 250, 
+        top: 310, 
+        overflow: "hidden", 
+        position: "absolute" 
+    },
+    myProfilePersonalInfoWrapper: {
+        marginBottom: 35, 
+        alignSelf: "center", 
+        width: "100%"
+    },
 
     // Media Query Desktop Tablet
     '@media (min-width: 350) and (max-width: 768)': {
@@ -445,6 +466,17 @@ export default EStyleSheet.create({
         profileScreenRightCard: {
             marginLeft: 10, 
             flex: 65
+        },
+        myProfileImageWrapper:{
+            marginBottom: 30
+        },
+        myProfileImage: {
+            width: "200px", 
+            height: "240px", 
+            borderRadius: 120
+        },
+        fileInputWrapper: {
+            width: "100%"
         },
     },
 
@@ -546,8 +578,7 @@ export default EStyleSheet.create({
         fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 12, lineHeight: 12, letterSpacing: -0.3, color: "#FFFFFF"
     },
 
-    fileInputWrapper:
-        { left: 0, width: 250, top: 310, overflow: "hidden", position: "absolute" },
+    
 
     fileInputWrapperBtn: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { display: "inline-block", width: 200, height: 40 } :

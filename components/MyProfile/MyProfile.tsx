@@ -243,8 +243,8 @@ export default class MyProfile extends React.Component<Props, State> {
 
           <Form style={{ marginBottom: 20, display: "flex", flexDirection: "row" }}>
             <View style={styles.profileScreenLeftCard}>
-              <View style={{ alignSelf: "center", marginBottom: 90 }}>
-                <Image style={{ width: "250px", height: "290px", borderRadius: 120 }}
+              <View style={styles.myProfileImageWrapper}>
+                <Image style={styles.myProfileImage}
                   source={this.state.profileImage == "" ? require('../../assets/profile-placeholder.png') : this.state.profileImage} onError={() => { this.getProfileImage() }}>
 
                 </Image>
@@ -259,7 +259,7 @@ export default class MyProfile extends React.Component<Props, State> {
 
                 {/*<Text style={styles.fontFormProfileImageText}>Upload a picture of minimum 500px wide. Maximum size is 700kb.</Text>*/}
               </View>
-              <View style={{ marginBottom: 35, alignSelf: "center", width: "100%" }}>
+              <View style={styles.myProfilePersonalInfoWrapper}>
                 <Text style={styles.fontFormName}>{this.state.UserDetails.given_name} {this.state.UserDetails.family_name}</Text>
                 <Text style={styles.fontFormRole}>{this.state.UserDetails.currentRole ? this.state.UserDetails.currentRole : 'My Current Role not defined'}</Text>
                 <Text style={styles.fontFormUserType}>Partner</Text>
