@@ -38,7 +38,8 @@ export default EStyleSheet.create({
         fontSize: 16,
         lineHeight: 23,
         fontWeight: "normal",
-        fontFamily: "Graphik-Regular-App"
+        fontFamily: "Graphik-Regular-App",
+        width: "100%"
 
     },
     textInput: {
@@ -317,11 +318,52 @@ export default EStyleSheet.create({
         paddingBottom: 12
     },
 
+    rightCardWidth: {
+        minWidth: "150%"
+    },
+
+    eventScreenLeftCard: {
+        flex: 30, 
+        flexDirection: "column", 
+        alignContent: 'flex-start', 
+        alignItems: 'flex-start', 
+        justifyContent: 'flex-start', 
+        paddingLeft: 30, 
+        paddingRight: 30, 
+        paddingTop: 40, 
+        marginLeft: 32, 
+        marginRight: 32, 
+        marginTop: 30, 
+        borderRadius: 4, 
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", 
+        minHeight: 1000, 
+        width: 446
+    },
+    eventScreenRightCard: {
+        flex: 70, 
+        flexDirection: "column", 
+        alignContent: 'flex-start', 
+        alignItems: 'flex-start', 
+        justifyContent: 'flex-start', 
+        marginLeft: 32, 
+        marginRight: 32, 
+        marginTop: 30, 
+        borderRadius: 4, 
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", 
+        minHeight: 1500, 
+        width: 446
+    },
+
 
     // Media Query Desktop Tablet
     '@media (min-width: 350) and (max-width: 768)': {
         connectWithSliderButton: {
-          height: 45,
+            height: 45,
+            paddingTop: 6,
+            paddingBottom: 6,
+            paddingLeft: 10,
+            paddingRight: 10,
+            width: "100%"
         },
 
         connectWithTopSectionButton: {
@@ -329,14 +371,45 @@ export default EStyleSheet.create({
             paddingBottom: 35,
             paddingRight: 15
         },
+        fontConnectWithName: {
+            fontSize: 18,
+            lineHeight: 23,
+        },
+        rightCardWidth: {
+            minWidth: "100%"
+        },
+        eventScreenLeftCard: {
+            marginRight: 10, 
+        },
+        eventScreenRightCard: {
+            marginLeft: 10,
+        },
+        groupNameInput: {
+            fontSize: 24,
+            lineHeight: 30,
+        },
     },
 
     // Media Query Desktop Large Tablet
     '@media (min-width: 769) and (max-width: 1024)': {
+        connectWithSliderButton: {
+            height: 45,
+            width: "60%",
+          },
+        
         connectWithTopSectionButton: {
           paddingTop: 50,
           paddingBottom: 35,
           paddingRight: 15
+        },
+        rightCardWidth: {
+            minWidth: "100%"
+        },
+        eventScreenLeftCard: {
+            marginRight: 10, 
+        },
+        eventScreenRightCard: {
+            marginLeft: 10,
         },
     },
         

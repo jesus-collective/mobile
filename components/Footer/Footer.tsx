@@ -95,14 +95,8 @@ export default class FooterJC extends React.Component<Props, State> {
     return (
 
       <Container style={styles.footerContainer}>
-        <Body style={{
-          display: "flex",
-          flexDirection: 'row',
-          justifyContent: 'flex-start',
-          alignItems: 'stretch'
-
-        }}>
-          <Body style={{ minWidth: 400, display: "flex", flexDirection: 'column', alignSelf: "stretch", alignItems: "flex-start", justifyContent: "space-evenly" }}>
+        <Body style={styles.footerBodyContainer}>
+          <Body style={styles.footerInnerBodyContainer}>
             <Button
               transparent
               onPress={this.openHome}>
