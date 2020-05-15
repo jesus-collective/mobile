@@ -242,7 +242,7 @@ export default class MyProfile extends React.Component<Props, State> {
           </MapSelector>
 
           <Form style={{ marginBottom: 20, display: "flex", flexDirection: "row" }}>
-            <View style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 0, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: 700, width: 446 }}>
+            <View style={styles.profileScreenLeftCard}>
               <View style={{ alignSelf: "center", marginBottom: 90 }}>
                 <Image style={{ width: "250px", height: "290px", borderRadius: 120 }}
                   source={this.state.profileImage == "" ? require('../../assets/profile-placeholder.png') : this.state.profileImage} onError={() => { this.getProfileImage() }}>
@@ -331,7 +331,7 @@ export default class MyProfile extends React.Component<Props, State> {
                 : null
               }
             </View>
-            <View style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 0, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: 1500, width: 446, paddingTop: 30, paddingRight: 30, paddingBottom: 30, paddingLeft: 30 }}>
+            <View style={styles.profileScreenRightCard}>
               {this.state.isEditable ?
                 <Text style={styles.fontMyProfileLeftTop}>Tell us more about you</Text>
                 : null
