@@ -388,6 +388,15 @@ export default EStyleSheet.create({
         paddingBottom: 30, 
         paddingLeft: 30
     },
+    myProfileTopButtons: {
+        justifyContent: "space-between", 
+        flexDirection: "row", 
+        width: "100%", 
+        flexGrow: 0, 
+        marginTop: 30, 
+        paddingLeft: 32, 
+        minHeight: 45
+    },
 
     // Media Query Desktop Tablet
     '@media (min-width: 350) and (max-width: 768)': {
@@ -431,7 +440,7 @@ export default EStyleSheet.create({
     '@media (min-width: 769) and (max-width: 1024)': {
         connectWithSliderButton: {
             height: 45,
-            width: "60%",
+            width: "100%",
           },
         
         connectWithTopSectionButton: {
@@ -456,6 +465,9 @@ export default EStyleSheet.create({
         },
         profileScreenRightCard: {
             marginLeft: 10, 
+        },
+        myProfileTopButtons: {
+            width: "60%",
         },
     },
         

@@ -213,7 +213,7 @@ export default class MyProfile extends React.Component<Props, State> {
     return (
       (this.state.UserDetails != null ?
         <Content>
-          <View style={{ justifyContent: "space-between", flexDirection: "row", width: "100%", flexGrow: 0, marginTop: 30, paddingLeft: 32, minHeight: 45 }}>
+          <View style={styles.myProfileTopButtons}>
             {this.state.isEditable ?
               <Text style={styles.profileFontTitle}>Setup your profile</Text>
               : <Text style={styles.profileFontTitle}>{this.state.UserDetails.given_name}'s profile</Text>
