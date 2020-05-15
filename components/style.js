@@ -336,7 +336,7 @@ export default EStyleSheet.create({
         marginTop: 30, 
         borderRadius: 4, 
         boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", 
-        minHeight: 1000, 
+        minHeight: "50%", 
         width: 446
     },
     detailScreenRightCard: {
@@ -351,7 +351,7 @@ export default EStyleSheet.create({
         borderRadius: 4, 
         boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", 
         minHeight: 1500, 
-        width: 446
+        width: 446,
     },
 
 
@@ -381,6 +381,7 @@ export default EStyleSheet.create({
         detailScreenLeftCard: {
             marginRight: 10, 
             flex: 35,
+            minHeight: "50%", 
         },
         detailScreenRightCard: {
             marginLeft: 10,
