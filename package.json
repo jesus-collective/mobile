@@ -75,6 +75,7 @@
   "private": true,
   "devDependencies": {
     "@babel/core": "^7.9.6",
+    "@cypress/webpack-preprocessor": "^5.2.1",
     "@expo/webpack-config": "^0.12.5",
     "@sentry/cli": "^1.52.3",
     "@sheerun/mutationobserver-shim": "^0.3.3",
