@@ -175,6 +175,8 @@ export default class GroupScreen extends React.Component<Props, State>{
     delete item.ownerUser
     delete item._deleted
     delete item._lastChangedAt
+    delete item.createdAt
+    delete item.updatedAt
     return item
   }
   save() {

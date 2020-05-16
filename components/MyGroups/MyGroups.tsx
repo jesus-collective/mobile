@@ -204,7 +204,7 @@ export default class MyGroups extends React.Component<Props, State> {
     if (props.type == "profile") {
       var listUsers: any = API.graphql({
         query: queries.listUsers,
-        variables: { limit: 20, filter: null, nextToken: this.state.nextToken },
+        variables: { limit: 20, filter: { profileState: { eq: "Complete" } }, nextToken: this.state.nextToken },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       var processList = (json) => {

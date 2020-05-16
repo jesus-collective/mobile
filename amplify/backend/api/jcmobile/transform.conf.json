@@ -1,10 +1,5 @@
 {
     "Version": 4,
     "ElasticsearchWarning": true,
-    "ResolverConfig": {
-        "project": {
-            "ConflictHandler": "AUTOMERGE",
-            "ConflictDetection": "VERSION"
-        }
-    }
+    "ResolverConfig": {}
 }

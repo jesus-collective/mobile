@@ -168,6 +168,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "profileState": {
+                    "name": "profileState",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "address": {
                     "name": "address",
                     "isArray": false,
@@ -1463,5 +1470,5 @@ export const schema = {
             }
         }
     },
-    "version": "cc6a2f26d37be43bcfbdfe39880627ae"
+    "version": "dc1b5d08af00607c3fa0b286d3814a3a"
 };

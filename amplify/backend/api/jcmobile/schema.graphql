@@ -6,6 +6,7 @@ type User
       { allow: groups, groups: ["verifiedUsers"], operations: [read] }
     ]
   ) {
+
   id: ID!
   given_name: String!
   family_name: String!
@@ -14,6 +15,7 @@ type User
   owner: String
 
   hasPaidState: String
+  profileState: String
   address: String @auth(rules: [{ allow: owner, ownerField: "owner" }])
   city: String @auth(rules: [{ allow: owner, ownerField: "owner" }])
   province: String @auth(rules: [{ allow: owner, ownerField: "owner" }])
@@ -36,8 +38,7 @@ type User
 
   owns: [Group] @connection(name: "OwnerUser", keyField: "owner")
   groups: [GroupMember] @connection(name: "UserMembers", keyField: "userID")
-  messages: [Message]
-    @connection(name: "UserMessages", keyField: "userId", sortField: "when")
+  messages: [Message] @connection(name: "UserMessages", keyField: "userId", sortField: "when")
 }
 type LatLong {
   latitude: String
@@ -98,8 +99,7 @@ type Group
   #organizerGroup:[Group]
   #organizerUser:[User]
   #instructors:[User]
-  messages: [Message]
-    @connection(name: "RoomMessages", keyField: "roomId", sortField: "when")
+  messages: [Message] @connection(name: "RoomMessages", keyField: "roomId", sortField: "when")
   eventType: String
   eventUrl: String
 }
@@ -121,7 +121,9 @@ type CourseInfo
   introduction: [String]
 }
 
-type CourseWeek @model {
+type CourseWeek
+ @model 
+{
   id: ID!
   week: String
   date: String
@@ -130,7 +132,9 @@ type CourseWeek @model {
   courseInfo: CourseInfo @connection(name: "CourseInfoWeek", keyField: "id")
   lessons: [CourseLesson] @connection(name: "CourseWeekLesson", keyField: "id")
 }
-type CourseLesson @model {
+type CourseLesson 
+@model 
+{
   id: ID!
   name: String
   time: String
@@ -139,7 +143,9 @@ type CourseLesson @model {
   assignments: [CourseAssignment]
     @connection(name: "CourseLessonAssignment", keyField: "id")
 }
-type CourseAssignment @model {
+type CourseAssignment 
+@model 
+{
   id: ID!
   due: String
   description: String
@@ -174,7 +180,8 @@ type Subscription {
     @aws_subscribe(mutations: ["createMessage"])
 }
 
-type ResourceRoot @model 
+type ResourceRoot 
+@model 
  @auth(rules: [{ allow: groups, groups: ["verifiedUsers"] }])
  {
   id: ID!
@@ -182,7 +189,8 @@ type ResourceRoot @model
   groupId: String
   resources: [Resource] @connection(name:"r1",keyName: "byResource", fields: ["id"])
 }
-type Resource @model 
+type Resource 
+@model 
 @auth(rules: [{ allow: groups, groups: ["verifiedUsers"] }])
  @key(name: "byResource", fields: ["resourceID","title"])
 {
@@ -197,7 +205,8 @@ type Resource @model
   resourceID:ID!
   resourceRoot: ResourceRoot! @connection(name:"r1",fields:["resourceID"])
 }
-type ResourceSeries @model 
+type ResourceSeries 
+@model 
 @auth(rules: [{ allow: groups, groups: ["verifiedUsers"] }])
  @key(name: "byResourceSeries", fields: ["seriesID","title"])
 {
@@ -216,7 +225,8 @@ type ResourceSeries @model
   parentResource: Resource! @connection(name:"r2",fields: ["seriesID"])
 }
 
-type ResourceEpisode @model 
+type ResourceEpisode 
+@model 
 @auth(rules: [{ allow: groups, groups: ["verifiedUsers"] }])
  @key(name: "byResourceEpisode", fields: ["episodeID","title"])
  {

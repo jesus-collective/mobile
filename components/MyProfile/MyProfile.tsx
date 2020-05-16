@@ -115,6 +115,8 @@ export default class MyProfile extends React.Component<Props, State> {
     delete item.owns
     delete item._deleted
     delete item._lastChangedAt
+    delete item.createdAt
+    delete item.updatedAt
     return item
   }
   async finalizeProfile() {
@@ -123,6 +125,7 @@ export default class MyProfile extends React.Component<Props, State> {
     if (validation.result) {
       try {
         var toSave = this.clean(this.state.UserDetails)
+        toSave["profileState"] = "Complete"
         const updateUser = await API.graphql(graphqlOperation(mutations.updateUser, { input: toSave }));
         console.log({ "updateUser:": updateUser })
         if (this.props.finalizeProfile)

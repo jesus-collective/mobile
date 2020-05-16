@@ -38,6 +38,7 @@ export declare class User {
   readonly phone?: string;
   readonly owner?: string;
   readonly hasPaidState?: string;
+  readonly profileState?: string;
   readonly address?: string;
   readonly city?: string;
   readonly province?: string;

@@ -202,6 +202,7 @@ export default class App extends React.Component<Props, State>{
             family_name: attributes['family_name'],
             email: attributes['email'],
             phone: attributes['phone_number'],
+            profileState: "Incomplete",
             joined: moment().format()
           }
 

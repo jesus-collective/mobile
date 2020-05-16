@@ -2,77 +2,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const syncUsers = /* GraphQL */ `
-  query SyncUsers(
-    $filter: ModelUserFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncUsers(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        hasPaidState
-        address
-        city
-        province
-        postalCode
-        country
-        location {
-          latitude
-          longitude
-        }
-        profileImage {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        orgDescription
-        joined
-        owns {
-          nextToken
-          startedAt
-        }
-        groups {
-          nextToken
-          startedAt
-        }
-        messages {
-          nextToken
-          startedAt
-        }
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
 export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
@@ -83,6 +12,7 @@ export const getUser = /* GraphQL */ `
       phone
       owner
       hasPaidState
+      profileState
       address
       city
       province
@@ -127,28 +57,20 @@ export const getUser = /* GraphQL */ `
           cost
           eventType
           eventUrl
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       groups {
         items {
           id
           groupID
           userID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       messages {
         items {
@@ -158,18 +80,11 @@ export const getUser = /* GraphQL */ `
           roomId
           userId
           owner
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -190,6 +105,7 @@ export const listUsers = /* GraphQL */ `
         phone
         owner
         hasPaidState
+        profileState
         address
         city
         province
@@ -219,186 +135,17 @@ export const listUsers = /* GraphQL */ `
         joined
         owns {
           nextToken
-          startedAt
         }
         groups {
           nextToken
-          startedAt
         }
         messages {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncGroupMembers = /* GraphQL */ `
-  query SyncGroupMembers(
-    $filter: ModelGroupMemberFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncGroupMembers(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        groupID
-        userID
-        group {
-          id
-          owner
-          type
-          name
-          description
-          memberCount
-          image
-          time
-          lastUpdated
-          location
-          length
-          effort
-          cost
-          eventType
-          eventUrl
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-        }
-        user {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          hasPaidState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          orgDescription
-          joined
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-        }
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const syncGroups = /* GraphQL */ `
-  query SyncGroups(
-    $filter: ModelGroupFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncGroups(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        owner
-        ownerUser {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          hasPaidState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          orgDescription
-          joined
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-        }
-        type
-        name
-        description
-        memberCount
-        members {
-          nextToken
-          startedAt
-        }
-        image
-        time
-        lastUpdated
-        location
-        locationLatLong {
-          latitude
-          longitude
-        }
-        length
-        effort
-        cost
-        messages {
-          nextToken
-          startedAt
-        }
-        eventType
-        eventUrl
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      nextToken
-      startedAt
     }
   }
 `;
@@ -415,6 +162,7 @@ export const getGroup = /* GraphQL */ `
         phone
         owner
         hasPaidState
+        profileState
         address
         city
         province
@@ -444,19 +192,13 @@ export const getGroup = /* GraphQL */ `
         joined
         owns {
           nextToken
-          startedAt
         }
         groups {
           nextToken
-          startedAt
         }
         messages {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -469,14 +211,10 @@ export const getGroup = /* GraphQL */ `
           id
           groupID
           userID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       image
       time
@@ -497,20 +235,13 @@ export const getGroup = /* GraphQL */ `
           roomId
           userId
           owner
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       eventType
       eventUrl
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -534,6 +265,7 @@ export const listGroups = /* GraphQL */ `
           phone
           owner
           hasPaidState
+          profileState
           address
           city
           province
@@ -550,9 +282,6 @@ export const listGroups = /* GraphQL */ `
           orgSize
           orgDescription
           joined
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -562,7 +291,6 @@ export const listGroups = /* GraphQL */ `
         memberCount
         members {
           nextToken
-          startedAt
         }
         image
         time
@@ -577,52 +305,13 @@ export const listGroups = /* GraphQL */ `
         cost
         messages {
           nextToken
-          startedAt
         }
         eventType
         eventUrl
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncCourseInfos = /* GraphQL */ `
-  query SyncCourseInfos(
-    $filter: ModelCourseInfoFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncCourseInfos(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        designedBy
-        summary
-        courseWeeks {
-          nextToken
-          startedAt
-        }
-        subTitle
-        introduction
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      nextToken
-      startedAt
     }
   }
 `;
@@ -639,20 +328,13 @@ export const getCourseInfo = /* GraphQL */ `
           date
           name
           leader
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       subTitle
       introduction
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -671,64 +353,13 @@ export const listCourseInfos = /* GraphQL */ `
         summary
         courseWeeks {
           nextToken
-          startedAt
         }
         subTitle
         introduction
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncCourseWeeks = /* GraphQL */ `
-  query SyncCourseWeeks(
-    $filter: ModelCourseWeekFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncCourseWeeks(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        week
-        date
-        name
-        leader
-        courseInfo {
-          id
-          designedBy
-          summary
-          subTitle
-          introduction
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-        }
-        lessons {
-          nextToken
-          startedAt
-        }
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      nextToken
-      startedAt
     }
   }
 `;
@@ -746,13 +377,9 @@ export const getCourseWeek = /* GraphQL */ `
         summary
         courseWeeks {
           nextToken
-          startedAt
         }
         subTitle
         introduction
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -762,18 +389,11 @@ export const getCourseWeek = /* GraphQL */ `
           name
           time
           description
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -798,69 +418,16 @@ export const listCourseWeeks = /* GraphQL */ `
           summary
           subTitle
           introduction
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         lessons {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncCourseLessons = /* GraphQL */ `
-  query SyncCourseLessons(
-    $filter: ModelCourseLessonFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncCourseLessons(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        name
-        time
-        description
-        courseWeek {
-          id
-          week
-          date
-          name
-          leader
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-        }
-        assignments {
-          nextToken
-          startedAt
-        }
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      nextToken
-      startedAt
     }
   }
 `;
@@ -883,19 +450,12 @@ export const getCourseLesson = /* GraphQL */ `
           summary
           subTitle
           introduction
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         lessons {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -904,18 +464,11 @@ export const getCourseLesson = /* GraphQL */ `
           id
           due
           description
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -939,63 +492,16 @@ export const listCourseLessons = /* GraphQL */ `
           date
           name
           leader
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         assignments {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncCourseAssignments = /* GraphQL */ `
-  query SyncCourseAssignments(
-    $filter: ModelCourseAssignmentFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncCourseAssignments(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        due
-        description
-        courseLesson {
-          id
-          name
-          time
-          description
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-        }
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      nextToken
-      startedAt
     }
   }
 `;
@@ -1016,25 +522,15 @@ export const getCourseAssignment = /* GraphQL */ `
           date
           name
           leader
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         assignments {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1060,103 +556,13 @@ export const listCourseAssignments = /* GraphQL */ `
           name
           time
           description
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncMessages = /* GraphQL */ `
-  query SyncMessages(
-    $filter: ModelMessageFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncMessages(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        content
-        when
-        roomId
-        userId
-        owner
-        author {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          hasPaidState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          orgDescription
-          joined
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-        }
-        room {
-          id
-          owner
-          type
-          name
-          description
-          memberCount
-          image
-          time
-          lastUpdated
-          location
-          length
-          effort
-          cost
-          eventType
-          eventUrl
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-        }
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      nextToken
-      startedAt
     }
   }
 `;
@@ -1177,6 +583,7 @@ export const getMessage = /* GraphQL */ `
         phone
         owner
         hasPaidState
+        profileState
         address
         city
         province
@@ -1206,19 +613,13 @@ export const getMessage = /* GraphQL */ `
         joined
         owns {
           nextToken
-          startedAt
         }
         groups {
           nextToken
-          startedAt
         }
         messages {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -1233,6 +634,7 @@ export const getMessage = /* GraphQL */ `
           phone
           owner
           hasPaidState
+          profileState
           address
           city
           province
@@ -1249,9 +651,6 @@ export const getMessage = /* GraphQL */ `
           orgSize
           orgDescription
           joined
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -1261,7 +660,6 @@ export const getMessage = /* GraphQL */ `
         memberCount
         members {
           nextToken
-          startedAt
         }
         image
         time
@@ -1276,19 +674,12 @@ export const getMessage = /* GraphQL */ `
         cost
         messages {
           nextToken
-          startedAt
         }
         eventType
         eventUrl
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1316,6 +707,7 @@ export const listMessages = /* GraphQL */ `
           phone
           owner
           hasPaidState
+          profileState
           address
           city
           province
@@ -1332,9 +724,6 @@ export const listMessages = /* GraphQL */ `
           orgSize
           orgDescription
           joined
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -1354,52 +743,13 @@ export const listMessages = /* GraphQL */ `
           cost
           eventType
           eventUrl
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncResourceRoots = /* GraphQL */ `
-  query SyncResourceRoots(
-    $filter: ModelResourceRootFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncResourceRoots(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        type
-        groupId
-        resources {
-          nextToken
-          startedAt
-        }
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      nextToken
-      startedAt
     }
   }
 `;
@@ -1418,18 +768,11 @@ export const getResourceRoot = /* GraphQL */ `
           description
           extendedDescription
           resourceID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1448,69 +791,11 @@ export const listResourceRoots = /* GraphQL */ `
         groupId
         resources {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncResources = /* GraphQL */ `
-  query SyncResources(
-    $filter: ModelResourceFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncResources(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        type
-        menuTitle
-        title
-        image {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
-        description
-        extendedDescription
-        series {
-          nextToken
-          startedAt
-        }
-        resourceID
-        resourceRoot {
-          id
-          type
-          groupId
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-        }
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      nextToken
-      startedAt
     }
   }
 `;
@@ -1543,14 +828,10 @@ export const getResource = /* GraphQL */ `
           playlist
           playlistImage
           seriesID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       resourceID
       resourceRoot {
@@ -1559,17 +840,10 @@ export const getResource = /* GraphQL */ `
         groupId
         resources {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1598,81 +872,19 @@ export const listResources = /* GraphQL */ `
         extendedDescription
         series {
           nextToken
-          startedAt
         }
         resourceID
         resourceRoot {
           id
           type
           groupId
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncResourceSeries = /* GraphQL */ `
-  query SyncResourceSeries(
-    $filter: ModelResourceSeriesFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncResourceSeries(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        type
-        title
-        description
-        image
-        category
-        status
-        allFiles
-        playlist
-        playlistImage
-        episodes {
-          nextToken
-          startedAt
-        }
-        seriesID
-        parentResource {
-          id
-          type
-          menuTitle
-          title
-          description
-          extendedDescription
-          resourceID
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-        }
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      nextToken
-      startedAt
     }
   }
 `;
@@ -1702,14 +914,10 @@ export const getResourceSeries = /* GraphQL */ `
           lessonPlan
           activityPage
           episodeID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       seriesID
       parentResource {
@@ -1728,28 +936,18 @@ export const getResourceSeries = /* GraphQL */ `
         extendedDescription
         series {
           nextToken
-          startedAt
         }
         resourceID
         resourceRoot {
           id
           type
           groupId
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1775,7 +973,6 @@ export const listResourceSeriess = /* GraphQL */ `
         playlistImage
         episodes {
           nextToken
-          startedAt
         }
         seriesID
         parentResource {
@@ -1786,74 +983,13 @@ export const listResourceSeriess = /* GraphQL */ `
           description
           extendedDescription
           resourceID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
-    }
-  }
-`;
-export const syncResourceEpisodes = /* GraphQL */ `
-  query SyncResourceEpisodes(
-    $filter: ModelResourceEpisodeFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncResourceEpisodes(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        episodeNumber
-        type
-        title
-        description
-        videoPreview
-        videoLowRes
-        videoHiRes
-        lessonPlan
-        activityPage
-        episodeID
-        parentSeries {
-          id
-          type
-          title
-          description
-          image
-          category
-          status
-          allFiles
-          playlist
-          playlistImage
-          seriesID
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
-        }
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      nextToken
-      startedAt
     }
   }
 `;
@@ -1884,7 +1020,6 @@ export const getResourceEpisode = /* GraphQL */ `
         playlistImage
         episodes {
           nextToken
-          startedAt
         }
         seriesID
         parentResource {
@@ -1895,21 +1030,12 @@ export const getResourceEpisode = /* GraphQL */ `
           description
           extendedDescription
           resourceID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1950,20 +1076,13 @@ export const listResourceEpisodes = /* GraphQL */ `
           playlist
           playlistImage
           seriesID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
     }
   }
 `;
@@ -2004,9 +1123,6 @@ export const groupMemberByGroup = /* GraphQL */ `
           cost
           eventType
           eventUrl
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -2018,6 +1134,7 @@ export const groupMemberByGroup = /* GraphQL */ `
           phone
           owner
           hasPaidState
+          profileState
           address
           city
           province
@@ -2034,20 +1151,13 @@ export const groupMemberByGroup = /* GraphQL */ `
           orgSize
           orgDescription
           joined
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
     }
   }
 `;
@@ -2088,9 +1198,6 @@ export const groupMemberByUser = /* GraphQL */ `
           cost
           eventType
           eventUrl
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -2102,6 +1209,7 @@ export const groupMemberByUser = /* GraphQL */ `
           phone
           owner
           hasPaidState
+          profileState
           address
           city
           province
@@ -2118,20 +1226,13 @@ export const groupMemberByUser = /* GraphQL */ `
           orgSize
           orgDescription
           joined
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
     }
   }
 `;
@@ -2163,6 +1264,7 @@ export const groupByType = /* GraphQL */ `
           phone
           owner
           hasPaidState
+          profileState
           address
           city
           province
@@ -2179,9 +1281,6 @@ export const groupByType = /* GraphQL */ `
           orgSize
           orgDescription
           joined
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -2191,7 +1290,6 @@ export const groupByType = /* GraphQL */ `
         memberCount
         members {
           nextToken
-          startedAt
         }
         image
         time
@@ -2206,18 +1304,13 @@ export const groupByType = /* GraphQL */ `
         cost
         messages {
           nextToken
-          startedAt
         }
         eventType
         eventUrl
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
     }
   }
 `;
@@ -2253,6 +1346,7 @@ export const messagesByRoom = /* GraphQL */ `
           phone
           owner
           hasPaidState
+          profileState
           address
           city
           province
@@ -2269,9 +1363,6 @@ export const messagesByRoom = /* GraphQL */ `
           orgSize
           orgDescription
           joined
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -2291,20 +1382,13 @@ export const messagesByRoom = /* GraphQL */ `
           cost
           eventType
           eventUrl
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
       nextToken
-      startedAt
     }
   }
 `;
@@ -2332,6 +1416,7 @@ export const searchGroups = /* GraphQL */ `
           phone
           owner
           hasPaidState
+          profileState
           address
           city
           province
@@ -2348,9 +1433,6 @@ export const searchGroups = /* GraphQL */ `
           orgSize
           orgDescription
           joined
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -2360,7 +1442,6 @@ export const searchGroups = /* GraphQL */ `
         memberCount
         members {
           nextToken
-          startedAt
         }
         image
         time
@@ -2375,13 +1456,9 @@ export const searchGroups = /* GraphQL */ `
         cost
         messages {
           nextToken
-          startedAt
         }
         eventType
         eventUrl
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }

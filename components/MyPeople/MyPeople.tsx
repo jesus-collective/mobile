@@ -63,7 +63,7 @@ export default class MyPeople extends React.Component<Props, State> {
   setInitialData(props) {
     var listUsers: any = API.graphql({
       query: queries.listUsers,
-      variables: { filter: null },
+      variables: { filter: { profileState: { eq: "Complete" } } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
 

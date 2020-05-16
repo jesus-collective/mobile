@@ -12,6 +12,7 @@ export const createUser = /* GraphQL */ `
       phone
       owner
       hasPaidState
+      profileState
       address
       city
       province
@@ -56,28 +57,20 @@ export const createUser = /* GraphQL */ `
           cost
           eventType
           eventUrl
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       groups {
         items {
           id
           groupID
           userID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       messages {
         items {
@@ -87,18 +80,11 @@ export const createUser = /* GraphQL */ `
           roomId
           userId
           owner
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -114,6 +100,7 @@ export const updateUser = /* GraphQL */ `
       phone
       owner
       hasPaidState
+      profileState
       address
       city
       province
@@ -158,28 +145,20 @@ export const updateUser = /* GraphQL */ `
           cost
           eventType
           eventUrl
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       groups {
         items {
           id
           groupID
           userID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       messages {
         items {
@@ -189,18 +168,11 @@ export const updateUser = /* GraphQL */ `
           roomId
           userId
           owner
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -216,6 +188,7 @@ export const deleteUser = /* GraphQL */ `
       phone
       owner
       hasPaidState
+      profileState
       address
       city
       province
@@ -260,28 +233,20 @@ export const deleteUser = /* GraphQL */ `
           cost
           eventType
           eventUrl
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       groups {
         items {
           id
           groupID
           userID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       messages {
         items {
@@ -291,18 +256,11 @@ export const deleteUser = /* GraphQL */ `
           roomId
           userId
           owner
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -325,6 +283,7 @@ export const createGroupMember = /* GraphQL */ `
           phone
           owner
           hasPaidState
+          profileState
           address
           city
           province
@@ -341,9 +300,6 @@ export const createGroupMember = /* GraphQL */ `
           orgSize
           orgDescription
           joined
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -353,7 +309,6 @@ export const createGroupMember = /* GraphQL */ `
         memberCount
         members {
           nextToken
-          startedAt
         }
         image
         time
@@ -368,13 +323,9 @@ export const createGroupMember = /* GraphQL */ `
         cost
         messages {
           nextToken
-          startedAt
         }
         eventType
         eventUrl
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -386,6 +337,7 @@ export const createGroupMember = /* GraphQL */ `
         phone
         owner
         hasPaidState
+        profileState
         address
         city
         province
@@ -415,25 +367,16 @@ export const createGroupMember = /* GraphQL */ `
         joined
         owns {
           nextToken
-          startedAt
         }
         groups {
           nextToken
-          startedAt
         }
         messages {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -456,6 +399,7 @@ export const updateGroupMember = /* GraphQL */ `
           phone
           owner
           hasPaidState
+          profileState
           address
           city
           province
@@ -472,9 +416,6 @@ export const updateGroupMember = /* GraphQL */ `
           orgSize
           orgDescription
           joined
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -484,7 +425,6 @@ export const updateGroupMember = /* GraphQL */ `
         memberCount
         members {
           nextToken
-          startedAt
         }
         image
         time
@@ -499,13 +439,9 @@ export const updateGroupMember = /* GraphQL */ `
         cost
         messages {
           nextToken
-          startedAt
         }
         eventType
         eventUrl
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -517,6 +453,7 @@ export const updateGroupMember = /* GraphQL */ `
         phone
         owner
         hasPaidState
+        profileState
         address
         city
         province
@@ -546,25 +483,16 @@ export const updateGroupMember = /* GraphQL */ `
         joined
         owns {
           nextToken
-          startedAt
         }
         groups {
           nextToken
-          startedAt
         }
         messages {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -587,6 +515,7 @@ export const deleteGroupMember = /* GraphQL */ `
           phone
           owner
           hasPaidState
+          profileState
           address
           city
           province
@@ -603,9 +532,6 @@ export const deleteGroupMember = /* GraphQL */ `
           orgSize
           orgDescription
           joined
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -615,7 +541,6 @@ export const deleteGroupMember = /* GraphQL */ `
         memberCount
         members {
           nextToken
-          startedAt
         }
         image
         time
@@ -630,13 +555,9 @@ export const deleteGroupMember = /* GraphQL */ `
         cost
         messages {
           nextToken
-          startedAt
         }
         eventType
         eventUrl
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -648,6 +569,7 @@ export const deleteGroupMember = /* GraphQL */ `
         phone
         owner
         hasPaidState
+        profileState
         address
         city
         province
@@ -677,25 +599,16 @@ export const deleteGroupMember = /* GraphQL */ `
         joined
         owns {
           nextToken
-          startedAt
         }
         groups {
           nextToken
-          startedAt
         }
         messages {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -714,6 +627,7 @@ export const createGroup = /* GraphQL */ `
         phone
         owner
         hasPaidState
+        profileState
         address
         city
         province
@@ -743,19 +657,13 @@ export const createGroup = /* GraphQL */ `
         joined
         owns {
           nextToken
-          startedAt
         }
         groups {
           nextToken
-          startedAt
         }
         messages {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -768,14 +676,10 @@ export const createGroup = /* GraphQL */ `
           id
           groupID
           userID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       image
       time
@@ -796,20 +700,13 @@ export const createGroup = /* GraphQL */ `
           roomId
           userId
           owner
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       eventType
       eventUrl
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -828,6 +725,7 @@ export const updateGroup = /* GraphQL */ `
         phone
         owner
         hasPaidState
+        profileState
         address
         city
         province
@@ -857,19 +755,13 @@ export const updateGroup = /* GraphQL */ `
         joined
         owns {
           nextToken
-          startedAt
         }
         groups {
           nextToken
-          startedAt
         }
         messages {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -882,14 +774,10 @@ export const updateGroup = /* GraphQL */ `
           id
           groupID
           userID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       image
       time
@@ -910,20 +798,13 @@ export const updateGroup = /* GraphQL */ `
           roomId
           userId
           owner
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       eventType
       eventUrl
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -942,6 +823,7 @@ export const deleteGroup = /* GraphQL */ `
         phone
         owner
         hasPaidState
+        profileState
         address
         city
         province
@@ -971,19 +853,13 @@ export const deleteGroup = /* GraphQL */ `
         joined
         owns {
           nextToken
-          startedAt
         }
         groups {
           nextToken
-          startedAt
         }
         messages {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -996,14 +872,10 @@ export const deleteGroup = /* GraphQL */ `
           id
           groupID
           userID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       image
       time
@@ -1024,20 +896,13 @@ export const deleteGroup = /* GraphQL */ `
           roomId
           userId
           owner
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       eventType
       eventUrl
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1056,20 +921,13 @@ export const createCourseInfo = /* GraphQL */ `
           date
           name
           leader
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       subTitle
       introduction
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1088,20 +946,13 @@ export const updateCourseInfo = /* GraphQL */ `
           date
           name
           leader
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       subTitle
       introduction
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1120,20 +971,13 @@ export const deleteCourseInfo = /* GraphQL */ `
           date
           name
           leader
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       subTitle
       introduction
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1153,13 +997,9 @@ export const createCourseWeek = /* GraphQL */ `
         summary
         courseWeeks {
           nextToken
-          startedAt
         }
         subTitle
         introduction
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -1169,18 +1009,11 @@ export const createCourseWeek = /* GraphQL */ `
           name
           time
           description
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1200,13 +1033,9 @@ export const updateCourseWeek = /* GraphQL */ `
         summary
         courseWeeks {
           nextToken
-          startedAt
         }
         subTitle
         introduction
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -1216,18 +1045,11 @@ export const updateCourseWeek = /* GraphQL */ `
           name
           time
           description
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1247,13 +1069,9 @@ export const deleteCourseWeek = /* GraphQL */ `
         summary
         courseWeeks {
           nextToken
-          startedAt
         }
         subTitle
         introduction
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -1263,18 +1081,11 @@ export const deleteCourseWeek = /* GraphQL */ `
           name
           time
           description
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1299,19 +1110,12 @@ export const createCourseLesson = /* GraphQL */ `
           summary
           subTitle
           introduction
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         lessons {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -1320,18 +1124,11 @@ export const createCourseLesson = /* GraphQL */ `
           id
           due
           description
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1356,19 +1153,12 @@ export const updateCourseLesson = /* GraphQL */ `
           summary
           subTitle
           introduction
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         lessons {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -1377,18 +1167,11 @@ export const updateCourseLesson = /* GraphQL */ `
           id
           due
           description
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1413,19 +1196,12 @@ export const deleteCourseLesson = /* GraphQL */ `
           summary
           subTitle
           introduction
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         lessons {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -1434,18 +1210,11 @@ export const deleteCourseLesson = /* GraphQL */ `
           id
           due
           description
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1468,25 +1237,15 @@ export const createCourseAssignment = /* GraphQL */ `
           date
           name
           leader
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         assignments {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1509,25 +1268,15 @@ export const updateCourseAssignment = /* GraphQL */ `
           date
           name
           leader
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         assignments {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1550,25 +1299,15 @@ export const deleteCourseAssignment = /* GraphQL */ `
           date
           name
           leader
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         assignments {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1591,6 +1330,7 @@ export const createMessage = /* GraphQL */ `
         phone
         owner
         hasPaidState
+        profileState
         address
         city
         province
@@ -1620,19 +1360,13 @@ export const createMessage = /* GraphQL */ `
         joined
         owns {
           nextToken
-          startedAt
         }
         groups {
           nextToken
-          startedAt
         }
         messages {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -1647,6 +1381,7 @@ export const createMessage = /* GraphQL */ `
           phone
           owner
           hasPaidState
+          profileState
           address
           city
           province
@@ -1663,9 +1398,6 @@ export const createMessage = /* GraphQL */ `
           orgSize
           orgDescription
           joined
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -1675,7 +1407,6 @@ export const createMessage = /* GraphQL */ `
         memberCount
         members {
           nextToken
-          startedAt
         }
         image
         time
@@ -1690,19 +1421,12 @@ export const createMessage = /* GraphQL */ `
         cost
         messages {
           nextToken
-          startedAt
         }
         eventType
         eventUrl
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1725,6 +1449,7 @@ export const updateMessage = /* GraphQL */ `
         phone
         owner
         hasPaidState
+        profileState
         address
         city
         province
@@ -1754,19 +1479,13 @@ export const updateMessage = /* GraphQL */ `
         joined
         owns {
           nextToken
-          startedAt
         }
         groups {
           nextToken
-          startedAt
         }
         messages {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -1781,6 +1500,7 @@ export const updateMessage = /* GraphQL */ `
           phone
           owner
           hasPaidState
+          profileState
           address
           city
           province
@@ -1797,9 +1517,6 @@ export const updateMessage = /* GraphQL */ `
           orgSize
           orgDescription
           joined
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -1809,7 +1526,6 @@ export const updateMessage = /* GraphQL */ `
         memberCount
         members {
           nextToken
-          startedAt
         }
         image
         time
@@ -1824,19 +1540,12 @@ export const updateMessage = /* GraphQL */ `
         cost
         messages {
           nextToken
-          startedAt
         }
         eventType
         eventUrl
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1859,6 +1568,7 @@ export const deleteMessage = /* GraphQL */ `
         phone
         owner
         hasPaidState
+        profileState
         address
         city
         province
@@ -1888,19 +1598,13 @@ export const deleteMessage = /* GraphQL */ `
         joined
         owns {
           nextToken
-          startedAt
         }
         groups {
           nextToken
-          startedAt
         }
         messages {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -1915,6 +1619,7 @@ export const deleteMessage = /* GraphQL */ `
           phone
           owner
           hasPaidState
+          profileState
           address
           city
           province
@@ -1931,9 +1636,6 @@ export const deleteMessage = /* GraphQL */ `
           orgSize
           orgDescription
           joined
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -1943,7 +1645,6 @@ export const deleteMessage = /* GraphQL */ `
         memberCount
         members {
           nextToken
-          startedAt
         }
         image
         time
@@ -1958,19 +1659,12 @@ export const deleteMessage = /* GraphQL */ `
         cost
         messages {
           nextToken
-          startedAt
         }
         eventType
         eventUrl
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -1991,18 +1685,11 @@ export const createResourceRoot = /* GraphQL */ `
           description
           extendedDescription
           resourceID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -2023,18 +1710,11 @@ export const updateResourceRoot = /* GraphQL */ `
           description
           extendedDescription
           resourceID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -2055,18 +1735,11 @@ export const deleteResourceRoot = /* GraphQL */ `
           description
           extendedDescription
           resourceID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -2101,14 +1774,10 @@ export const createResource = /* GraphQL */ `
           playlist
           playlistImage
           seriesID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       resourceID
       resourceRoot {
@@ -2117,17 +1786,10 @@ export const createResource = /* GraphQL */ `
         groupId
         resources {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -2162,14 +1824,10 @@ export const updateResource = /* GraphQL */ `
           playlist
           playlistImage
           seriesID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       resourceID
       resourceRoot {
@@ -2178,17 +1836,10 @@ export const updateResource = /* GraphQL */ `
         groupId
         resources {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -2223,14 +1874,10 @@ export const deleteResource = /* GraphQL */ `
           playlist
           playlistImage
           seriesID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       resourceID
       resourceRoot {
@@ -2239,17 +1886,10 @@ export const deleteResource = /* GraphQL */ `
         groupId
         resources {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -2281,14 +1921,10 @@ export const createResourceSeries = /* GraphQL */ `
           lessonPlan
           activityPage
           episodeID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       seriesID
       parentResource {
@@ -2307,28 +1943,18 @@ export const createResourceSeries = /* GraphQL */ `
         extendedDescription
         series {
           nextToken
-          startedAt
         }
         resourceID
         resourceRoot {
           id
           type
           groupId
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -2360,14 +1986,10 @@ export const updateResourceSeries = /* GraphQL */ `
           lessonPlan
           activityPage
           episodeID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       seriesID
       parentResource {
@@ -2386,28 +2008,18 @@ export const updateResourceSeries = /* GraphQL */ `
         extendedDescription
         series {
           nextToken
-          startedAt
         }
         resourceID
         resourceRoot {
           id
           type
           groupId
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -2439,14 +2051,10 @@ export const deleteResourceSeries = /* GraphQL */ `
           lessonPlan
           activityPage
           episodeID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       seriesID
       parentResource {
@@ -2465,28 +2073,18 @@ export const deleteResourceSeries = /* GraphQL */ `
         extendedDescription
         series {
           nextToken
-          startedAt
         }
         resourceID
         resourceRoot {
           id
           type
           groupId
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -2519,7 +2117,6 @@ export const createResourceEpisode = /* GraphQL */ `
         playlistImage
         episodes {
           nextToken
-          startedAt
         }
         seriesID
         parentResource {
@@ -2530,21 +2127,12 @@ export const createResourceEpisode = /* GraphQL */ `
           description
           extendedDescription
           resourceID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -2577,7 +2165,6 @@ export const updateResourceEpisode = /* GraphQL */ `
         playlistImage
         episodes {
           nextToken
-          startedAt
         }
         seriesID
         parentResource {
@@ -2588,21 +2175,12 @@ export const updateResourceEpisode = /* GraphQL */ `
           description
           extendedDescription
           resourceID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -2635,7 +2213,6 @@ export const deleteResourceEpisode = /* GraphQL */ `
         playlistImage
         episodes {
           nextToken
-          startedAt
         }
         seriesID
         parentResource {
@@ -2646,21 +2223,12 @@ export const deleteResourceEpisode = /* GraphQL */ `
           description
           extendedDescription
           resourceID
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
