@@ -5,7 +5,7 @@ import { DrawerActions } from 'react-navigation-drawer';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Image, Text } from 'react-native';
-import styles from './style.js'
+import styles from './style'
 import AnimatedProgressWheel from 'react-native-progress-wheel';
 
 interface Props {

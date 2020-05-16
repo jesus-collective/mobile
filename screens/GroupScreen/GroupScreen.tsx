@@ -5,7 +5,7 @@ import { Text } from 'react-native'
 
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
-import styles from '../../components/style.js'
+import styles from '../../components/style'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import EditableText from '../../components/Forms/EditableText'

@@ -4,7 +4,7 @@ import { DrawerActions } from 'react-navigation-drawer';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useRef } from 'react';
 import { Image, Text } from 'react-native';
-import styles from '../Header/style.js'
+import styles from '../Header/style'
 import { Auth } from 'aws-amplify';
 import { constants } from '../../src/constants'
 import { withNavigation } from 'react-navigation';

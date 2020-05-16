@@ -1,7 +1,8 @@
-import { Platform, StyleSheet } from 'react-native';
+import { Platform } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
 import { Dimensions } from 'react-native'
 
-export default StyleSheet.create({
+export default EStyleSheet.create({
 
     container: {
         backgroundColor: '#333333',
@@ -19,7 +20,7 @@ export default StyleSheet.create({
         display: Platform.OS === 'web' && Dimensions.get('window').width > 720 ? 'none' : 'flex',
     },
     centerMenuButtons: {
-        display: Platform.OS === 'web' && Dimensions.get('window').width > 720 ? 'flex' : 'none',  
+        display: Platform.OS === 'web' && Dimensions.get('window').width > 720 ? 'flex' : 'none',
     },
     centerMenuButtons: {
         paddingBottom: 12,
@@ -28,7 +29,12 @@ export default StyleSheet.create({
         color: '#aaaaaa',
         fontSize: 15,
         fontWeight: 'bold',
-        marginRight: 30
+        marginRight: 30,
+        '@media only screen and (max-width: 600px)': {
+
+            display: 'none',
+
+        },
     },
     logo:
     {
@@ -37,17 +43,13 @@ export default StyleSheet.create({
         height: 33,
         marginRight: 70,
 
-        marginTop:5,
-        marginBottom:10,
+        marginTop: 5,
+        marginBottom: 10,
     },
-        centerMenuButtons: {
-        display: Platform.OS === 'web' && Dimensions.get('window').width > 720 ? 'flex' : 'none',  
+    centerMenuButtons: {
+        display: Platform.OS === 'web' && Dimensions.get('window').width > 720 ? 'flex' : 'none',
     },
     // Media Query Mobile
-    '@media only screen and (max-width: 600px)': {
-        centerMenuButtonsText: {
-            display: 'none',
-        },
-    },
+
 
 });

@@ -1,11 +1,12 @@
-import { Platform, StyleSheet } from 'react-native';
+import { Platform } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
+
 import { Dimensions } from 'react-native'
 
-export default StyleSheet.create({
+export default EStyleSheet.create({
 
     container: {
         backgroundColor: '#333333',
-
     },
     courseSidebarFontRegular: {
         fontFamily: "Graphik-Regular-App",

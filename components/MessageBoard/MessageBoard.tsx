@@ -2,7 +2,7 @@ import { Input, Content, Left, Right, Body, StyleProvider, Container, Card, Card
 import * as React from 'react';
 import { Text } from 'react-native'
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
-import styles from '../style.js'
+import styles from '../style'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import { Image, TextComponent, TouchableOpacity } from 'react-native'

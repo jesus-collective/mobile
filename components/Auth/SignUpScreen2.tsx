@@ -9,7 +9,7 @@ import { NavigationScreenProp } from 'react-navigation';
 import * as mutations from '../../src/graphql/mutations';
 import { API, graphqlOperation } from 'aws-amplify';
 import { Auth } from 'aws-amplify';
-import styles from '../../components/style.js'
+import styles from '../../components/style'
 
 interface Props {
   navigation?: NavigationScreenProp<any, any>,

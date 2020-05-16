@@ -6,7 +6,7 @@ Amplify.configure(awsConfig);
 import { View, Input, Item, Label, Form, Content } from 'native-base';
 import { Text, Button, Dimensions } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
-import styles from '../../components/style.js'
+import styles from '../../components/style'
 import Constants from 'expo-constants';
 import * as mutations from '../../src/graphql/mutations';
 import { API, graphqlOperation } from 'aws-amplify';

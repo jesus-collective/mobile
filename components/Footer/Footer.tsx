@@ -5,7 +5,7 @@ import { DrawerActions } from 'react-navigation-drawer';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Image, Text } from 'react-native';
-import styles from '../Footer/style.js';
+import styles from '../Footer/style';
 import { constants } from '../../src/constants'
 
 interface Props {

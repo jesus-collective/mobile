@@ -5,7 +5,7 @@ import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
 import CourseSidebar from '../../components/CourseSidebar/CourseSidebar'
 import MyMap from '../../components/MyMap/MyMap';
-import styles from '../../components/style.js'
+import styles from '../../components/style'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 

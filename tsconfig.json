@@ -1,11 +1,14 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
-    "noImplicitAny": true,
-    "module": "es6",
+    "baseUrl": ".",
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "outDir": "./output",
     "target": "es6",
     "jsx": "react",
     "allowJs": true,
     "types": ["cypress"]
-  }
+  },
+  "exclude": ["babel.config.js", "amplify", "node_modules"]
 }

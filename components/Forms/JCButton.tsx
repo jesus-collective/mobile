@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Button } from 'native-base';
 import { Text } from 'react-native'
 import styles from './JCButtonStyle'
@@ -20,7 +19,7 @@ export enum ButtonTypes {
 
 }
 export interface Props {
-    onPress()
+    onPress(): any
     children: any
     buttonType: ButtonTypes
     "data-testid"?: any
@@ -36,7 +35,7 @@ class JCButton extends React.Component<Props, State> {
         this.props.onPress()
     }
     render() {
-        return <Button data-testId={this.props["data-testid"]} style={styles[ButtonTypes[this.props.buttonType] + "Button"]} onPress={() => { this.onPress() }}>
+        return <Button data-testid={this.props["data-testid"]} style={styles[ButtonTypes[this.props.buttonType] + "Button"]} onPress={() => { this.onPress() }}>
             <Text style={styles[ButtonTypes[this.props.buttonType] + "Text"]}>{this.props.children}</Text>
         </Button>
     }

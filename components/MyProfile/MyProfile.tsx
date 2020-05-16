@@ -5,7 +5,7 @@ import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { Auth } from 'aws-amplify';
-import styles from '../../components/style.js'
+import styles from '../../components/style'
 import TagInput from 'react-native-tags-input';
 import { Dimensions } from 'react-native'
 import Amplify from 'aws-amplify'

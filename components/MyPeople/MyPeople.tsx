@@ -1,7 +1,7 @@
 import { StyleProvider, Content, Body, Right, Left, Card, CardItem, Container, Button } from 'native-base';
 import { Text } from 'react-native';
 import * as React from 'react';
-import styles from '../style.js'
+import styles from '../style'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import { Image, TouchableOpacity } from 'react-native'

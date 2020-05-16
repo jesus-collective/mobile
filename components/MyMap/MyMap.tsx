@@ -9,7 +9,6 @@ interface Props {
   mapData: any
 }
 interface State { }
-
 export default class MyMap extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);

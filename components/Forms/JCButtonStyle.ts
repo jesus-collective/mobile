@@ -1,4 +1,4 @@
-import { Platform, StyleSheet } from 'react-native';
+import { Platform } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Constants from 'expo-constants';
 import { Dimensions } from 'react-native'
@@ -114,7 +114,7 @@ export default EStyleSheet.create({
     },
     SolidMapButton:
     {
-        paddingTop: 6 ,
+        paddingTop: 6,
         paddingBottom: 6,
         paddingLeft: 29,
         paddingRight: 29,
@@ -178,7 +178,7 @@ export default EStyleSheet.create({
         padding: 5
 
     },
-    TransparentNoPaddingButton:{
+    TransparentNoPaddingButton: {
         marginBottom: 20,
         paddingTop: 0,
         paddingBottom: 0,

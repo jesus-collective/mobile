@@ -6,7 +6,7 @@ import SignUpSidebar from '../../components/SignUpSidebar/SignUpSidebar'
 Amplify.configure(awsConfig);
 import { View, Content } from 'native-base';
 import { NavigationScreenProp } from 'react-navigation';
-import styles from '../../components/style.js'
+import styles from '../../components/style'
 import Constants from 'expo-constants';
 import { Dimensions } from 'react-native'
 

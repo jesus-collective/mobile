@@ -1,6 +1,6 @@
 import { View } from 'native-base';
 import * as React from 'react';
-import styles from '../style.js'
+import styles from '../style'
 import { Image, Text } from 'react-native';
 
 interface Props {

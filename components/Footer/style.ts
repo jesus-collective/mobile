@@ -1,4 +1,4 @@
-import { Platform, StyleSheet } from 'react-native';
+import { Platform } from 'react-native';
 import { Dimensions } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 
@@ -19,11 +19,11 @@ export default EStyleSheet.create({
         alignItems: 'stretch'
     },
     footerInnerBodyContainer: {
-        minWidth: 400, 
-        display: "flex", 
-        flexDirection: 'column', 
-        alignSelf: "stretch", 
-        alignItems: "flex-start", 
+        minWidth: 400,
+        display: "flex",
+        flexDirection: 'column',
+        alignSelf: "stretch",
+        alignItems: "flex-start",
         justifyContent: "space-evenly"
     },
     icon: {
@@ -89,7 +89,7 @@ export default EStyleSheet.create({
             width: "100%"
         },
         footerInnerBodyContainer: {
-            minWidth: 250, 
+            minWidth: 250,
         }
     },
 
@@ -99,7 +99,7 @@ export default EStyleSheet.create({
             width: "100%"
         },
         footerInnerBodyContainer: {
-            minWidth: 250, 
+            minWidth: 250,
         }
     },
 });
