@@ -275,8 +275,8 @@ export default class GroupScreen extends React.Component<Props, State>{
             <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
             <Content>
               <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start', background: "#F9FAFC" }}>
-                <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: 700, width: 446 }}>
-                  <Container style={{ display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between" }}>
+                <Container style={styles.detailScreenLeftCard}>
+                  <Container style={{ display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 20 }}>
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: 'Helvetica-Neue, sans-serif', color: '#333333', textTransform: "uppercase", flex: 0 }}>Group</Text>
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: 'Helvetica-Neue, sans-serif', color: '#979797', textTransform: "uppercase", flex: 0 }}>Sponsored</Text>
                   </Container>
@@ -287,7 +287,7 @@ export default class GroupScreen extends React.Component<Props, State>{
                   <Text style={{ fontFamily: "Helvetica Neue, sans-serif", fontSize: 16, lineHeight: 23, color: "#333333", paddingBottom: 12 }}>Organizer</Text>
                   <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
                   <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", paddingTop: 48, paddingBottom: 12 }}>Members ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
-                  <Container style={{ display: "flex", flexDirection: "row", marginBottom: 9 }}>
+                  <Container style={{ display: "flex", flexDirection: "row", marginBottom: 9, flexGrow: 1, flexWrap: "wrap" }}>
                     {
                       this.state.data.members == null ? <Text>No Members Yet</Text> :
                         this.state.data.members.items.length == 0 ?
@@ -296,27 +296,29 @@ export default class GroupScreen extends React.Component<Props, State>{
                             return (<ProfileImage user={item} size="small" />)
                           })}
                   </Container>
-                  {this.state.canJoin ?
-                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Join Group</JCButton> :
-                    null
-                  }
-                  {this.state.canLeave ?
-                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Leave Group</JCButton> :
-                    null
-                  }
-                  {this.state.createNew ?
-                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.createNew() }} >Create Group</JCButton>
-                    : null
-                  }
-                  {this.state.canSave ?
-                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.save() }} >Save Group</JCButton>
-                    : null
-                  }
-                  {this.state.canDelete ?
-                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this group?')) this.delete() }}>Delete Group</JCButton>
-                    : null
-                  }
-                  <Text>{this.state.validationError}</Text>
+                  <Container>
+                    {this.state.canJoin ?
+                      <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Join Group</JCButton> :
+                      null
+                    }
+                    {this.state.canLeave ?
+                      <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Leave Group</JCButton> :
+                      null
+                    }
+                    {this.state.createNew ?
+                      <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.createNew() }} >Create Group</JCButton>
+                      : null
+                    }
+                    {this.state.canSave ?
+                      <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.save() }} >Save Group</JCButton>
+                      : null
+                    }
+                    {this.state.canDelete ?
+                      <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this group?')) this.delete() }}>Delete Group</JCButton>
+                      : null
+                    }
+                    <Text>{this.state.validationError}</Text>
+                  </Container>
                 </Container>
                 <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: 1500, width: 446 }}>
                   <MessageBoard navigation={this.props.navigation} groupId={this.state.data.id}></MessageBoard>

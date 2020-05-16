@@ -322,7 +322,7 @@ export default EStyleSheet.create({
         minWidth: "150%"
     },
 
-    eventScreenLeftCard: {
+    detailScreenLeftCard: {
         flex: 30, 
         flexDirection: "column", 
         alignContent: 'flex-start', 
@@ -336,10 +336,10 @@ export default EStyleSheet.create({
         marginTop: 30, 
         borderRadius: 4, 
         boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", 
-        minHeight: 1000, 
+        minHeight: "50%", 
         width: 446
     },
-    eventScreenRightCard: {
+    detailScreenRightCard: {
         flex: 70, 
         flexDirection: "column", 
         alignContent: 'flex-start', 
@@ -351,9 +351,73 @@ export default EStyleSheet.create({
         borderRadius: 4, 
         boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", 
         minHeight: 1500, 
+        width: 446,
+    },
+    profileScreenLeftCard: {
+        flex: 30, 
+        flexDirection: "column", 
+        alignContent: 'flex-start', 
+        alignItems: 'flex-start', 
+        justifyContent: 'flex-start', 
+        paddingLeft: 30, 
+        paddingRight: 30, 
+        paddingTop: 40, 
+        marginLeft: 32, 
+        marginRight: 32, 
+        marginTop: 0, 
+        borderRadius: 4, 
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", 
+        minHeight: 700, 
         width: 446
     },
-
+    profileScreenRightCard: {
+        flex: 70, 
+        flexDirection: "column", 
+        alignContent: 'flex-start', 
+        alignItems: 'flex-start', 
+        justifyContent: 'flex-start', 
+        marginLeft: 32, 
+        marginRight: 32, 
+        marginTop: 0, 
+        borderRadius: 4, 
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", 
+        minHeight: 1500, 
+        width: 446, 
+        paddingTop: 30, 
+        paddingRight: 30, 
+        paddingBottom: 30, 
+        paddingLeft: 30
+    },
+    myProfileTopButtons: {
+        justifyContent: "space-between", 
+        flexDirection: "row", 
+        width: "100%", 
+        flexGrow: 0, 
+        marginTop: 30, 
+        paddingLeft: 32, 
+        minHeight: 45
+    },
+    myProfileImageWrapper:{
+        alignSelf: "center", 
+        marginBottom: 90
+    },
+    myProfileImage: {
+        width: "250px", 
+        height: "290px", 
+        borderRadius: 120
+    },
+    fileInputWrapper: { 
+        left: 0, 
+        width: 250, 
+        top: 310, 
+        overflow: "hidden", 
+        position: "absolute" 
+    },
+    myProfilePersonalInfoWrapper: {
+        marginBottom: 35, 
+        alignSelf: "center", 
+        width: "100%"
+    },
 
     // Media Query Desktop Tablet
     '@media (min-width: 350) and (max-width: 768)': {
@@ -378,15 +442,41 @@ export default EStyleSheet.create({
         rightCardWidth: {
             minWidth: "100%"
         },
-        eventScreenLeftCard: {
+        detailScreenLeftCard: {
             marginRight: 10, 
+            flex: 35,
+            minHeight: "50%", 
         },
-        eventScreenRightCard: {
+        detailScreenRightCard: {
             marginLeft: 10,
+            flex: 65,
         },
         groupNameInput: {
             fontSize: 24,
             lineHeight: 30,
+        },
+        myProfileTopButtons: {
+            width: "53%",
+        },
+        profileScreenLeftCard: {
+            marginRight: 10, 
+            flex: 35,
+            minHeight: "50%", 
+        },
+        profileScreenRightCard: {
+            marginLeft: 10, 
+            flex: 65
+        },
+        myProfileImageWrapper:{
+            marginBottom: 0
+        },
+        myProfileImage: {
+            width: "200px", 
+            height: "240px", 
+            borderRadius: 120
+        },
+        fileInputWrapper: {
+            width: "100%"
         },
     },
 
@@ -394,7 +484,7 @@ export default EStyleSheet.create({
     '@media (min-width: 769) and (max-width: 1024)': {
         connectWithSliderButton: {
             height: 45,
-            width: "60%",
+            width: "100%",
           },
         
         connectWithTopSectionButton: {
@@ -405,11 +495,24 @@ export default EStyleSheet.create({
         rightCardWidth: {
             minWidth: "100%"
         },
-        eventScreenLeftCard: {
+        detailScreenLeftCard: {
             marginRight: 10, 
+            flex: 40,
         },
-        eventScreenRightCard: {
+        detailScreenRightCard: {
             marginLeft: 10,
+        },
+        profileScreenLeftCard: {
+            marginRight: 10, 
+            flex: 35,
+            minHeight: "50%", 
+        },
+        profileScreenRightCard: {
+            marginLeft: 10, 
+            flex: 65
+        },
+        myProfileTopButtons: {
+            width: "60%",
         },
     },
         
@@ -475,8 +578,7 @@ export default EStyleSheet.create({
         fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 12, lineHeight: 12, letterSpacing: -0.3, color: "#FFFFFF"
     },
 
-    fileInputWrapper:
-        { left: 0, width: 250, top: 310, overflow: "hidden", position: "absolute" },
+    
 
     fileInputWrapperBtn: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { display: "inline-block", width: 200, height: 40 } :

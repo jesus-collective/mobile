@@ -213,7 +213,7 @@ export default class MyProfile extends React.Component<Props, State> {
     return (
       (this.state.UserDetails != null ?
         <Content>
-          <View style={{ justifyContent: "space-between", flexDirection: "row", width: "100%", flexGrow: 0, marginTop: 30, paddingLeft: 32, minHeight: 45 }}>
+          <View style={styles.myProfileTopButtons}>
             {this.state.isEditable ?
               <Text style={styles.profileFontTitle}>Setup your profile</Text>
               : <Text style={styles.profileFontTitle}>{this.state.UserDetails.given_name}'s profile</Text>
@@ -242,9 +242,9 @@ export default class MyProfile extends React.Component<Props, State> {
           </MapSelector>
 
           <Form style={{ marginBottom: 20, display: "flex", flexDirection: "row" }}>
-            <View style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 0, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: 700, width: 446 }}>
-              <View style={{ alignSelf: "center", marginBottom: 90 }}>
-                <Image style={{ width: "250px", height: "290px", borderRadius: 120 }}
+            <View style={styles.profileScreenLeftCard}>
+              <View style={styles.myProfileImageWrapper}>
+                <Image style={styles.myProfileImage}
                   source={this.state.profileImage == "" ? require('../../assets/profile-placeholder.png') : this.state.profileImage} onError={() => { this.getProfileImage() }}>
 
                 </Image>
@@ -259,7 +259,7 @@ export default class MyProfile extends React.Component<Props, State> {
 
                 {/*<Text style={styles.fontFormProfileImageText}>Upload a picture of minimum 500px wide. Maximum size is 700kb.</Text>*/}
               </View>
-              <View style={{ marginBottom: 35, alignSelf: "center", width: "100%" }}>
+              <View style={styles.myProfilePersonalInfoWrapper}>
                 <Text style={styles.fontFormName}>{this.state.UserDetails.given_name} {this.state.UserDetails.family_name}</Text>
                 <Text style={styles.fontFormRole}>{this.state.UserDetails.currentRole ? this.state.UserDetails.currentRole : 'My Current Role not defined'}</Text>
                 <Text style={styles.fontFormUserType}>Partner</Text>
@@ -331,7 +331,7 @@ export default class MyProfile extends React.Component<Props, State> {
                 : null
               }
             </View>
-            <View style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 0, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: 1500, width: 446, paddingTop: 30, paddingRight: 30, paddingBottom: 30, paddingLeft: 30 }}>
+            <View style={styles.profileScreenRightCard}>
               {this.state.isEditable ?
                 <Text style={styles.fontMyProfileLeftTop}>Tell us more about you</Text>
                 : null
