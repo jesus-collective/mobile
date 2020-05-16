@@ -1,5 +1,10 @@
 import TestHelper from '../../components/TestHelpers/TestHelpers'
-const sizes = ['iphone-6', 'ipad-2', [1024, 768]]
+const sizes = [
+    'iphone-6',
+    'ipad-2',
+    [1024, 768]
+]
+
 describe('Login Page Test', () => {
     sizes.forEach((size) => {
         it('Visits the Login Page - ' + size, () => {
@@ -8,11 +13,11 @@ describe('Login Page Test', () => {
             } else {
                 cy.viewport(size)
             }
+
             cy.visit('/')
                 .then(() => {
                     TestHelper.DeleteUser("george.bell@jesuscollective.com", "TestTest#1")
                 })
-
                 .contains('SIGN IN').click()
             cy.contains('Username cannot be empty')
                 .get('input[placeholder="Enter your email"]').type('george.bell@jesuscollective.com')
@@ -27,7 +32,7 @@ describe('Login Page Test', () => {
             cy.get('input[data-testid="aws-amplify__auth--password-input"]').type("TestTest#1")
             cy.get('input[data-testid="aws-amplify__auth--phone-input"]').type("555-555-5555")
             cy.get('input[label="First Name"]').type("Test")
-            cy.get('input[label="Last Name"]').type("555-555-5555")
+            cy.get('input[label="Last Name"]').type("User 1")
             cy.get('[data-testid="aws-amplify__auth--sign-up-button"]').click({ force: true })
 
             cy.get('[data-testid=aws-amplify__auth--back-to-sign-in-button]').click()
@@ -39,6 +44,7 @@ describe('Login Page Test', () => {
             // cy.contains('SIGN IN').click()
             //        cy.contains('User does not exist')
             //        cy.contains('Create an Account').click()
+
 
             cy.get('input[data-testId="profile-Address"]').type('123 Sesame Street', { force: true })
                 .get('input[data-testId="profile-City"]').type('Toronto', { force: true })

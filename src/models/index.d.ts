@@ -76,6 +76,7 @@ export declare class Group {
   readonly time?: string;
   readonly lastUpdated?: string;
   readonly location?: string;
+  readonly locationLatLong?: LatLong;
   readonly length?: string;
   readonly effort?: string;
   readonly cost?: string;
@@ -157,7 +158,7 @@ export declare class Resource {
   readonly description?: string;
   readonly extendedDescription?: string;
   readonly series?: ResourceSeries[];
-  readonly root?: ResourceRoot;
+  readonly resourceRoot: ResourceRoot;
   constructor(init: ModelInit<Resource>);
   static copyOf(source: Resource, mutator: (draft: MutableModel<Resource>) => MutableModel<Resource> | void): Resource;
 }
@@ -174,7 +175,7 @@ export declare class ResourceSeries {
   readonly playlist?: string;
   readonly playlistImage?: string;
   readonly episodes?: ResourceEpisode[];
-  readonly resource?: Resource;
+  readonly parentResource: Resource;
   constructor(init: ModelInit<ResourceSeries>);
   static copyOf(source: ResourceSeries, mutator: (draft: MutableModel<ResourceSeries>) => MutableModel<ResourceSeries> | void): ResourceSeries;
 }
@@ -190,7 +191,7 @@ export declare class ResourceEpisode {
   readonly videoHiRes?: string;
   readonly lessonPlan?: string;
   readonly activityPage?: string;
-  readonly series?: ResourceSeries;
+  readonly parentSeries: ResourceSeries;
   constructor(init: ModelInit<ResourceEpisode>);
   static copyOf(source: ResourceEpisode, mutator: (draft: MutableModel<ResourceEpisode>) => MutableModel<ResourceEpisode> | void): ResourceEpisode;
 }

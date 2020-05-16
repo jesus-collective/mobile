@@ -6,7 +6,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const DynamicCdnWebpackPlugin = require('dynamic-cdn-webpack-plugin');
 
-module.exports = async function (env, argv) {
+module.exports = webpackConfig = async function (env, argv) {
   const config = await createExpoWebpackConfig(env, argv);
 
   /* config.plugins.push(

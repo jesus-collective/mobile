@@ -174,14 +174,18 @@ type Subscription {
     @aws_subscribe(mutations: ["createMessage"])
 }
 
-type ResourceRoot @model {
+type ResourceRoot @model 
+ @auth(rules: [{ allow: groups, groups: ["verifiedUsers"] }])
+ {
   id: ID!
   type: String
   groupId: String
-  resources: [Resource]
-    @connection(name: "ResourceRootResource", keyField: "id")
+  resources: [Resource] @connection(name:"r1",keyName: "byResource", fields: ["id"])
 }
-type Resource @model {
+type Resource @model 
+@auth(rules: [{ allow: groups, groups: ["verifiedUsers"] }])
+ @key(name: "byResource", fields: ["resourceID","title"])
+{
   id: ID!
   type: String
   menuTitle: String
@@ -189,11 +193,14 @@ type Resource @model {
   image: Image
   description: String
   extendedDescription: String
-  #currentSeries:ResourceSeries @connection
-  series: [ResourceSeries] @connection(name: "ResourceSeries", keyField: "id")
-  root: ResourceRoot @connection(name: "ResourceRootResource", keyField: "id")
+  series: [ResourceSeries] @connection(name:"r2",keyName: "byResourceSeries", fields: ["id"])
+  resourceID:ID!
+  resourceRoot: ResourceRoot! @connection(name:"r1",fields:["resourceID"])
 }
-type ResourceSeries @model {
+type ResourceSeries @model 
+@auth(rules: [{ allow: groups, groups: ["verifiedUsers"] }])
+ @key(name: "byResourceSeries", fields: ["seriesID","title"])
+{
   id: ID!
   type: String
   title: String
@@ -204,12 +211,15 @@ type ResourceSeries @model {
   allFiles: String
   playlist: String
   playlistImage: String
-  episodes: [ResourceEpisode]
-    @connection(name: "ResourceSeriesEpisode", keyField: "id")
-  resource: Resource @connection(name: "ResourceSeries", keyField: "id")
+  episodes: [ResourceEpisode] @connection(name:"r3",keyName: "byResourceEpisode", fields: ["id"])
+  seriesID: ID!
+  parentResource: Resource! @connection(name:"r2",fields: ["seriesID"])
 }
 
-type ResourceEpisode @model {
+type ResourceEpisode @model 
+@auth(rules: [{ allow: groups, groups: ["verifiedUsers"] }])
+ @key(name: "byResourceEpisode", fields: ["episodeID","title"])
+ {
   id: ID!
   episodeNumber: Int
   type: String
@@ -220,6 +230,6 @@ type ResourceEpisode @model {
   videoHiRes: String
   lessonPlan: String
   activityPage: String
-  series: ResourceSeries
-    @connection(name: "ResourceSeriesEpisode", keyField: "id")
+  episodeID:ID!
+  parentSeries: ResourceSeries! @connection(name:"r3",fields: ["episodeID"])
 }

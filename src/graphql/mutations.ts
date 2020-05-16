@@ -59,6 +59,8 @@ export const createUser = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -71,6 +73,8 @@ export const createUser = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -86,6 +90,8 @@ export const createUser = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -93,6 +99,8 @@ export const createUser = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -153,6 +161,8 @@ export const updateUser = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -165,6 +175,8 @@ export const updateUser = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -180,6 +192,8 @@ export const updateUser = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -187,6 +201,8 @@ export const updateUser = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -247,6 +263,8 @@ export const deleteUser = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -259,6 +277,8 @@ export const deleteUser = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -274,6 +294,8 @@ export const deleteUser = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -281,6 +303,8 @@ export const deleteUser = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -320,6 +344,8 @@ export const createGroupMember = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         type
         name
@@ -349,6 +375,8 @@ export const createGroupMember = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       user {
         id
@@ -400,10 +428,14 @@ export const createGroupMember = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -443,6 +475,8 @@ export const updateGroupMember = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         type
         name
@@ -472,6 +506,8 @@ export const updateGroupMember = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       user {
         id
@@ -523,10 +559,14 @@ export const updateGroupMember = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -566,6 +606,8 @@ export const deleteGroupMember = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         type
         name
@@ -595,6 +637,8 @@ export const deleteGroupMember = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       user {
         id
@@ -646,10 +690,14 @@ export const deleteGroupMember = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -708,6 +756,8 @@ export const createGroup = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       type
       name
@@ -721,6 +771,8 @@ export const createGroup = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -747,6 +799,8 @@ export const createGroup = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -756,6 +810,8 @@ export const createGroup = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -814,6 +870,8 @@ export const updateGroup = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       type
       name
@@ -827,6 +885,8 @@ export const updateGroup = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -853,6 +913,8 @@ export const updateGroup = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -862,6 +924,8 @@ export const updateGroup = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -920,6 +984,8 @@ export const deleteGroup = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       type
       name
@@ -933,6 +999,8 @@ export const deleteGroup = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -959,6 +1027,8 @@ export const deleteGroup = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -968,6 +1038,8 @@ export const deleteGroup = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -987,6 +1059,8 @@ export const createCourseInfo = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -996,6 +1070,8 @@ export const createCourseInfo = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -1015,6 +1091,8 @@ export const updateCourseInfo = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -1024,6 +1102,8 @@ export const updateCourseInfo = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -1043,6 +1123,8 @@ export const deleteCourseInfo = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -1052,6 +1134,8 @@ export const deleteCourseInfo = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -1076,6 +1160,8 @@ export const createCourseWeek = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       lessons {
         items {
@@ -1086,6 +1172,8 @@ export const createCourseWeek = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -1093,6 +1181,8 @@ export const createCourseWeek = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -1117,6 +1207,8 @@ export const updateCourseWeek = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       lessons {
         items {
@@ -1127,6 +1219,8 @@ export const updateCourseWeek = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -1134,6 +1228,8 @@ export const updateCourseWeek = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -1158,6 +1254,8 @@ export const deleteCourseWeek = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       lessons {
         items {
@@ -1168,6 +1266,8 @@ export const deleteCourseWeek = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -1175,6 +1275,8 @@ export const deleteCourseWeek = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -1200,6 +1302,8 @@ export const createCourseLesson = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         lessons {
           nextToken
@@ -1208,6 +1312,8 @@ export const createCourseLesson = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       assignments {
         items {
@@ -1217,6 +1323,8 @@ export const createCourseLesson = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -1224,6 +1332,8 @@ export const createCourseLesson = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -1249,6 +1359,8 @@ export const updateCourseLesson = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         lessons {
           nextToken
@@ -1257,6 +1369,8 @@ export const updateCourseLesson = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       assignments {
         items {
@@ -1266,6 +1380,8 @@ export const updateCourseLesson = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -1273,6 +1389,8 @@ export const updateCourseLesson = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -1298,6 +1416,8 @@ export const deleteCourseLesson = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         lessons {
           nextToken
@@ -1306,6 +1426,8 @@ export const deleteCourseLesson = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       assignments {
         items {
@@ -1315,6 +1437,8 @@ export const deleteCourseLesson = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -1322,6 +1446,8 @@ export const deleteCourseLesson = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -1345,6 +1471,8 @@ export const createCourseAssignment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         assignments {
           nextToken
@@ -1353,10 +1481,14 @@ export const createCourseAssignment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -1380,6 +1512,8 @@ export const updateCourseAssignment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         assignments {
           nextToken
@@ -1388,10 +1522,14 @@ export const updateCourseAssignment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -1415,6 +1553,8 @@ export const deleteCourseAssignment = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         assignments {
           nextToken
@@ -1423,10 +1563,14 @@ export const deleteCourseAssignment = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -1489,6 +1633,8 @@ export const createMessage = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       room {
         id
@@ -1520,6 +1666,8 @@ export const createMessage = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         type
         name
@@ -1549,10 +1697,14 @@ export const createMessage = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -1615,6 +1767,8 @@ export const updateMessage = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       room {
         id
@@ -1646,6 +1800,8 @@ export const updateMessage = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         type
         name
@@ -1675,10 +1831,14 @@ export const updateMessage = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -1741,6 +1901,8 @@ export const deleteMessage = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       room {
         id
@@ -1772,6 +1934,8 @@ export const deleteMessage = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         type
         name
@@ -1801,10 +1965,14 @@ export const deleteMessage = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -1822,9 +1990,12 @@ export const createResourceRoot = /* GraphQL */ `
           title
           description
           extendedDescription
+          resourceID
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -1832,6 +2003,8 @@ export const createResourceRoot = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -1849,9 +2022,12 @@ export const updateResourceRoot = /* GraphQL */ `
           title
           description
           extendedDescription
+          resourceID
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -1859,6 +2035,8 @@ export const updateResourceRoot = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -1876,9 +2054,12 @@ export const deleteResourceRoot = /* GraphQL */ `
           title
           description
           extendedDescription
+          resourceID
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
@@ -1886,6 +2067,8 @@ export const deleteResourceRoot = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -1917,14 +2100,18 @@ export const createResource = /* GraphQL */ `
           allFiles
           playlist
           playlistImage
+          seriesID
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
       }
-      root {
+      resourceID
+      resourceRoot {
         id
         type
         groupId
@@ -1935,10 +2122,14 @@ export const createResource = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -1970,14 +2161,18 @@ export const updateResource = /* GraphQL */ `
           allFiles
           playlist
           playlistImage
+          seriesID
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
       }
-      root {
+      resourceID
+      resourceRoot {
         id
         type
         groupId
@@ -1988,10 +2183,14 @@ export const updateResource = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -2023,14 +2222,18 @@ export const deleteResource = /* GraphQL */ `
           allFiles
           playlist
           playlistImage
+          seriesID
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
       }
-      root {
+      resourceID
+      resourceRoot {
         id
         type
         groupId
@@ -2041,10 +2244,14 @@ export const deleteResource = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -2073,14 +2280,18 @@ export const createResourceSeries = /* GraphQL */ `
           videoHiRes
           lessonPlan
           activityPage
+          episodeID
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
       }
-      resource {
+      seriesID
+      parentResource {
         id
         type
         menuTitle
@@ -2098,21 +2309,28 @@ export const createResourceSeries = /* GraphQL */ `
           nextToken
           startedAt
         }
-        root {
+        resourceID
+        resourceRoot {
           id
           type
           groupId
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -2141,14 +2359,18 @@ export const updateResourceSeries = /* GraphQL */ `
           videoHiRes
           lessonPlan
           activityPage
+          episodeID
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
       }
-      resource {
+      seriesID
+      parentResource {
         id
         type
         menuTitle
@@ -2166,21 +2388,28 @@ export const updateResourceSeries = /* GraphQL */ `
           nextToken
           startedAt
         }
-        root {
+        resourceID
+        resourceRoot {
           id
           type
           groupId
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -2209,14 +2438,18 @@ export const deleteResourceSeries = /* GraphQL */ `
           videoHiRes
           lessonPlan
           activityPage
+          episodeID
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         nextToken
         startedAt
       }
-      resource {
+      seriesID
+      parentResource {
         id
         type
         menuTitle
@@ -2234,21 +2467,28 @@ export const deleteResourceSeries = /* GraphQL */ `
           nextToken
           startedAt
         }
-        root {
+        resourceID
+        resourceRoot {
           id
           type
           groupId
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -2265,7 +2505,8 @@ export const createResourceEpisode = /* GraphQL */ `
       videoHiRes
       lessonPlan
       activityPage
-      series {
+      episodeID
+      parentSeries {
         id
         type
         title
@@ -2280,24 +2521,32 @@ export const createResourceEpisode = /* GraphQL */ `
           nextToken
           startedAt
         }
-        resource {
+        seriesID
+        parentResource {
           id
           type
           menuTitle
           title
           description
           extendedDescription
+          resourceID
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -2314,7 +2563,8 @@ export const updateResourceEpisode = /* GraphQL */ `
       videoHiRes
       lessonPlan
       activityPage
-      series {
+      episodeID
+      parentSeries {
         id
         type
         title
@@ -2329,24 +2579,32 @@ export const updateResourceEpisode = /* GraphQL */ `
           nextToken
           startedAt
         }
-        resource {
+        seriesID
+        parentResource {
           id
           type
           menuTitle
           title
           description
           extendedDescription
+          resourceID
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -2363,7 +2621,8 @@ export const deleteResourceEpisode = /* GraphQL */ `
       videoHiRes
       lessonPlan
       activityPage
-      series {
+      episodeID
+      parentSeries {
         id
         type
         title
@@ -2378,24 +2637,32 @@ export const deleteResourceEpisode = /* GraphQL */ `
           nextToken
           startedAt
         }
-        resource {
+        seriesID
+        parentResource {
           id
           type
           menuTitle
           title
           description
           extendedDescription
+          resourceID
           _version
           _deleted
           _lastChangedAt
+          createdAt
+          updatedAt
         }
         _version
         _deleted
         _lastChangedAt
+        createdAt
+        updatedAt
       }
       _version
       _deleted
       _lastChangedAt
+      createdAt
+      updatedAt
     }
   }
 `;

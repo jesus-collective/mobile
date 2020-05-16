@@ -49,20 +49,19 @@ class ResourceViewer extends React.Component<Props, State> {
 
 
 
-        const series = await DataStore.save(
-            new ResourceSeries({
-                type: "curriculum",
-                title: "Overview",
-                image: "123",
-                description: "...",
 
-                category: ["123"],
-                status: "123",
-                allFiles: "123",
-                playlist: "123",
-                playlistImage: "123"
+
+
+
+
+        const resourceRoot = await DataStore.save(
+            new ResourceRoot({
+                type: `curriculum`,
+                groupId: this.props.groupId
             })
         );
+        console.log({ resourceRoot: resourceRoot })
+
         const resource = await DataStore.save(
             new Resource({
                 type: "curriculum",
@@ -77,22 +76,30 @@ class ResourceViewer extends React.Component<Props, State> {
                 },
                 description: "...",
                 extendedDescription: "123",
-                //root: resourceRoot
-                series: [series]
+                resourceRoot: resourceRoot
             })
         );
-        const resourceRoot = await DataStore.save(
-            new ResourceRoot({
-                type: `curriculum`,
-                groupId: this.props.groupId,
-                resources: [resource]
+        console.log({ resource: resource })
+        const series = await DataStore.save(
+            new ResourceSeries({
+                type: "curriculum",
+                title: "Overview",
+                image: "123",
+                description: "...",
+                category: ["123"],
+                status: "123",
+                allFiles: "123",
+                playlist: "123",
+                playlistImage: "123",
+                parentResource: resource
             })
         );
+        console.log({ series: series })
 
 
 
-
-        console.log(resourceRoot)
+        const getResourceRoot = await DataStore.query(ResourceRoot);
+        console.log(getResourceRoot[0].resources)
         this.setState({ data: resourceRoot, currentResource: 0 })
 
 
@@ -106,10 +113,11 @@ class ResourceViewer extends React.Component<Props, State> {
         const getResourceRoot = await DataStore.query(ResourceRoot);
         //  const getResourceRoot2 = await DataStore.query(ResourceEpisode);
         if (getResourceRoot.length == 0) {
-
+            console.log("starting from scratch")
             this.createResourceRoot();
         }
         else {
+            console.log("existing data")
             console.log(getResourceRoot)
             //   console.log(getResourceRoot2)
             this.setState({ data: getResourceRoot[0], currentResource: 0 })

@@ -400,8 +400,8 @@ export default class MyGroups extends React.Component<Props, State> {
                   {this.state.data ?
                     this.state.data.map((item) => {
                       return (
-                        <ErrorBoundry>
-                          <ListItem noBorder key={item.id} style={{ alignSelf: "flex-start" }} button onPress={() => { this.openSingle(item.id) }}>
+                        <ErrorBoundry key={item.id}>
+                          <ListItem noBorder style={{ alignSelf: "flex-start" }} button onPress={() => { this.openSingle(item.id) }}>
                             {this.state.type == "group" ?
                               this.renderGroup(item) :
                               this.state.type == "event" ?

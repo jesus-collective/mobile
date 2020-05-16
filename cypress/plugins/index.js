@@ -16,17 +16,63 @@
  * @type {Cypress.PluginConfig}
  */
 const webpack = require('@cypress/webpack-preprocessor')
-
-module.exports = (on, config) => {
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
+const z = require('../../webpack.config')
+const path = require("path");
+module.exports = async (on) => {
+  //const b = await z({ projectRoot: "/Users/georgebell/Desktop/Code/jc-mobile", }, { allowedHost: "localhost" })
+  //console.log(b)
   const options = {
     // send in the options from your webpack.config.js, so it works the same
     // as your app's code
-    webpackOptions: require('../../webpack.config').config,
-    watchOptions: {}
-  }
+    webpackOptions: {
+      resolve: {
 
+        alias: {
+          "react-native/Libraries/Renderer/shims/ReactNativePropRegistry":
+            "react-native-web/dist/modules/ReactNativePropRegistry",
+          "react-native": "react-native-web",
+          'react-native-maps': 'react-native-web-maps'
+        }
+      },
+      module: {
+        rules: [
+          {
+            test: /\.[jt]sx?$/,
+
+            use: {
+              loader: 'babel-loader',
+              options: {
+                presets: ["babel-preset-expo"],
+                plugins: ["@babel/plugin-proposal-class-properties", "@babel/plugin-transform-modules-commonjs"],
+                cacheDirectory: true
+              }
+            }
+            ,
+            include: [
+              path.resolve("../src/graphql/mutations"),
+              path.resolve("node_modules/@aws-sdk"),
+              path.resolve("node_modules/native-base-shoutem-theme"),
+              path.resolve("node_modules/react-navigation"),
+              path.resolve("node_modules/react-native-easy-grid"),
+              path.resolve("node_modules/react-native-drawer"),
+              path.resolve("node_modules/react-native-elements"),
+              path.resolve("node_modules/react-native-safe-area-view"),
+              path.resolve("node_modules/react-native-vector-icons"),
+              path.resolve(
+                "node_modules/react-native-keyboard-aware-scroll-view"
+              ),
+              path.resolve("node_modules/react-native-web"),
+              path.resolve("node_modules/react-native-tab-view"),
+              path.resolve("node_modules/aws-amplify-react-native"),
+              path.resolve("node_modules/static-container"),
+              path.resolve("node_modules/@zoomus")
+            ]
+          },
+        ],
+      },
+    },
+    watchOptions: {},
+  }
   on('file:preprocessor', webpack(options))
 }
 

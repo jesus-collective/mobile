@@ -475,6 +475,15 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "locationLatLong": {
+                    "name": "locationLatLong",
+                    "isArray": false,
+                    "type": {
+                        "nonModel": "LatLong"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "length": {
                     "name": "length",
                     "isArray": false,
@@ -973,7 +982,7 @@ export const schema = {
                     "attributes": [],
                     "association": {
                         "connectionType": "HAS_MANY",
-                        "associatedWith": "root"
+                        "associatedWith": "resourceRoot"
                     }
                 }
             },
@@ -983,6 +992,26 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "verifiedUsers"
+                                ],
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete"
+                                ]
+                            }
+                        ]
+                    }
                 }
             ]
         },
@@ -1050,20 +1079,20 @@ export const schema = {
                     "attributes": [],
                     "association": {
                         "connectionType": "HAS_MANY",
-                        "associatedWith": "resource"
+                        "associatedWith": "parentResource"
                     }
                 },
-                "root": {
-                    "name": "root",
+                "resourceRoot": {
+                    "name": "resourceRoot",
                     "isArray": false,
                     "type": {
                         "model": "ResourceRoot"
                     },
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": [],
                     "association": {
                         "connectionType": "BELONGS_TO",
-                        "targetName": "resourceRootId"
+                        "targetName": "resourceID"
                     }
                 }
             },
@@ -1073,6 +1102,36 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byResource",
+                        "fields": [
+                            "resourceID",
+                            "title"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "verifiedUsers"
+                                ],
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete"
+                                ]
+                            }
+                        ]
+                    }
                 }
             ]
         },
@@ -1159,20 +1218,20 @@ export const schema = {
                     "attributes": [],
                     "association": {
                         "connectionType": "HAS_MANY",
-                        "associatedWith": "series"
+                        "associatedWith": "parentSeries"
                     }
                 },
-                "resource": {
-                    "name": "resource",
+                "parentResource": {
+                    "name": "parentResource",
                     "isArray": false,
                     "type": {
                         "model": "Resource"
                     },
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": [],
                     "association": {
                         "connectionType": "BELONGS_TO",
-                        "targetName": "resourceSeriesResourceId"
+                        "targetName": "seriesID"
                     }
                 }
             },
@@ -1182,6 +1241,36 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byResourceSeries",
+                        "fields": [
+                            "seriesID",
+                            "title"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "verifiedUsers"
+                                ],
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete"
+                                ]
+                            }
+                        ]
+                    }
                 }
             ]
         },
@@ -1258,17 +1347,17 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "series": {
-                    "name": "series",
+                "parentSeries": {
+                    "name": "parentSeries",
                     "isArray": false,
                     "type": {
                         "model": "ResourceSeries"
                     },
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": [],
                     "association": {
                         "connectionType": "BELONGS_TO",
-                        "targetName": "resourceEpisodeSeriesId"
+                        "targetName": "episodeID"
                     }
                 }
             },
@@ -1278,6 +1367,36 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byResourceEpisode",
+                        "fields": [
+                            "episodeID",
+                            "title"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "groupClaim": "cognito:groups",
+                                "provider": "userPools",
+                                "allow": "groups",
+                                "groups": [
+                                    "verifiedUsers"
+                                ],
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete"
+                                ]
+                            }
+                        ]
+                    }
                 }
             ]
         }
@@ -1344,5 +1463,5 @@ export const schema = {
             }
         }
     },
-    "version": "cf8fb3a2ec4d30de601fa1182b5b3c3d"
+    "version": "cc6a2f26d37be43bcfbdfe39880627ae"
 };
