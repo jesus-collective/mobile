@@ -3,7 +3,10 @@ module.exports = function (api) {
   return {
     presets: ['babel-preset-expo'],
     plugins: [
-      "babel-plugin-dynamic-import-node"
+      "babel-plugin-dynamic-import-node",
+      "transform-class-properties",
+      "istanbul"
+
     ]
   };
 };

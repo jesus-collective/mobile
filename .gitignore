@@ -2,7 +2,7 @@
 #
 .DS_Store
 src/version.js
-
+.nyc_output
 web-build
 # Xcode
 #

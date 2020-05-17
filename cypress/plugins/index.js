@@ -16,14 +16,15 @@
  * @type {Cypress.PluginConfig}
  */
 const webpack = require('@cypress/webpack-preprocessor')
-const z = require('../../webpack.config')
 const path = require("path");
-module.exports = async (on) => {
+module.exports = async (on, config) => {
   //const b = await z({ projectRoot: "/Users/georgebell/Desktop/Code/jc-mobile", }, { allowedHost: "localhost" })
   //console.log(b)
+
   const options = {
     // send in the options from your webpack.config.js, so it works the same
     // as your app's code
+
     webpackOptions: {
       resolve: {
 
@@ -73,6 +74,10 @@ module.exports = async (on) => {
     },
     watchOptions: {},
   }
-  on('file:preprocessor', webpack(options))
+
+  require('@cypress/code-coverage/task')(on, config)
+
+  on('file:preprocessor', webpack(options.webpackOptions, config))
+  return config
 }
 
