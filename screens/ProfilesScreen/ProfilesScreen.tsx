@@ -11,6 +11,7 @@ interface Props {
 }
 interface State {
   showMap: boolean
+  mapData: any
 }
 
 
@@ -18,24 +19,29 @@ export default class HomeScreen extends React.Component<Props, State>{
   constructor(props: Props) {
     super(props);
     this.state = {
+      mapData: [],
       showMap: false
     }
   }
   mapChanged = () => {
     this.setState({ showMap: !this.state.showMap })
   }
-
+  mergeMapData(mapData) {
+    //    console.log(mapData)
+    var data = this.state.mapData.concat(mapData)
+    this.setState({ mapData: data })
+  }
   render() {
     console.log("Profiles")
     return (
 
-      <Container >
+      <Container data-testid="profiles">
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-        <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
+        <MyMap navigation={this.props.navigation} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
         <Content>
           <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
             <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
-              <MyGroups showMore={true} type="profile" wrap={true} navigation={this.props.navigation}></MyGroups>
+              <MyGroups showMore={true} type="profile" wrap={true} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
             </Container>
             <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
               <MyConversations navigation={this.props.navigation}> </MyConversations>

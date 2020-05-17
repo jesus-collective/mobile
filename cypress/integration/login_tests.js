@@ -45,7 +45,10 @@ describe('Login Page Test', () => {
             //        cy.contains('User does not exist')
             //        cy.contains('Create an Account').click()
 
-
+            const fileName = 'test.jpeg';
+            cy.fixture(fileName).then(fileContent => {
+                cy.get('[data-testid="profile-image"]').upload({ fileContent, fileName, mimeType: 'image/jpeg' });
+            });
             cy.get('input[data-testId="profile-Address"]').type('123 Sesame Street', { force: true })
                 .get('input[data-testId="profile-City"]').type('Toronto', { force: true })
                 .get('input[data-testId="profile-Province"]').type('Ontario', { force: true })
@@ -60,9 +63,65 @@ describe('Login Page Test', () => {
                 .get('[data-testId="profile-orgType"]').type('Software', { force: true })
                 .get('[data-testId="profile-orgSize"]').type('123', { force: true })
                 .get('[data-testId="profile-orgDescription"]').type('We make things', { force: true })
-                .get('[data-testId="profile-setmap"]').click({ position: "topLeft", force: true })
-                .get('[data-testId="mapselector-save"]').click({ position: "topLeft", force: true })
-                .get('[data-testId="profile-save"]').click({ position: "topLeft", force: true })
+            cy.get('[data-testId="profile-setmap"]').click("topLeft", { force: true })
+                .get('[data-testId="mapselector-save"]').click("topLeft", { force: true })
+
+            cy.get('[data-testId="profile-save"]').click("topLeft", { force: true })
+
+            cy.get('[data-testid="homepage"]').should('be.visible')
+            cy.get('[data-testId="header-events"]').click()
+            cy.get('[data-testid="events"]').should('be.visible')
+            cy.get('[data-testId="header-logo"]').last().click()
+
+            cy.get('[data-testid="homepage"]').should('be.visible')
+            cy.get('[data-testId="header-groups"]').last().click()
+            cy.get('[data-testid="groups"]').should('be.visible')
+            cy.get('[data-testId="header-logo"]').last().click()
+
+            cy.get('[data-testid="homepage"]').should('be.visible')
+            cy.get('[data-testId="header-resources"]').last().click()
+            cy.get('[data-testid="resources"]').should('be.visible')
+            cy.get('[data-testId="header-logo"]').last().click()
+
+            // cy.get('[data-testid="homepage"]').should('be.visible')
+            // cy.get('[data-testId="header-search"]').last().click()
+            // cy.get('[data-testid="search"]').should('be.visible')
+            // cy.get('[data-testId="header-logo"]').last().click()
+
+            cy.get('[data-testid="homepage"]').should('be.visible')
+            cy.get('[data-testId="header-profile"]').last().click()
+            cy.get('[data-testid="profile"]').should('be.visible')
+            cy.get('[data-testId="header-logo"]').last().click()
+
+            //            cy.get('[data-testId="header-courses"]').click()
+            cy.get('[data-testid="homepage"]').should('be.visible')
+            cy.get('[data-testId="header-map"]').last().click()
+            cy.get('[data-testId="header-logo"]').last().click()
+
+            cy.get('[data-testid="homepage"]').should('be.visible')
+            cy.get('[data-testId="mygroup-showall-Events"]').last().click()
+            cy.get('[data-testId="header-logo"]').last().click()
+
+            cy.get('[data-testid="homepage"]').should('be.visible')
+            cy.get('[data-testId="mygroup-showall-Groups"]').last().click()
+            cy.get('[data-testId="header-logo"]').last().click()
+
+            cy.get('[data-testid="homepage"]').should('be.visible')
+            cy.get('[data-testId="mygroup-showall-Resources"]').last().click()
+            cy.get('[data-testId="header-logo"]').last().click()
+
+
+            cy.get('[data-testid="homepage"]').should('be.visible')
+            cy.get('[data-testId="mygroup-create-Events"]').last().click()
+            cy.get('[data-testId="header-logo"]').last().click()
+
+            cy.get('[data-testid="homepage"]').should('be.visible')
+            cy.get('[data-testId="mygroup-create-Groups"]').last().click()
+            cy.get('[data-testId="header-logo"]').last().click()
+
+            cy.get('[data-testid="homepage"]').should('be.visible')
+            cy.get('[data-testId="mygroup-create-Resources"]').last().click()
+            cy.get('[data-testId="header-logo"]').last().click()
 
 
         })

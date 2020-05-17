@@ -49,7 +49,7 @@ class HomeScreen extends React.Component<Props, State>{
   render() {
     console.log("Homepage")
     return (
-      <Container >
+      <Container data-testid="homepage">
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
         <MyMap navigation={this.props.navigation} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
 

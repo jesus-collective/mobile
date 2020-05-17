@@ -35,7 +35,7 @@ export default class ProfileScreen extends React.Component<Props, State>{
   render() {
     //    const { navigate } = this.props.navigation;
     return (
-      <Container>
+      <Container data-testid="profile">
         <Header title="Profile" navigation={this.props.navigation} />
         <MyProfile loadId={this.state.loadId} navigation={this.props.navigation} />
       </Container>

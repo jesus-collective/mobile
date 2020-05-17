@@ -69,6 +69,7 @@ export default class HeaderJC extends React.Component<Props, State> {
         }}>
           <Button
             transparent
+            data-testid="header-logo"
             onPress={this.openHome}>
             <Image style={styles.logo}
               source={require('../../assets/header/icon.png')}
@@ -77,6 +78,7 @@ export default class HeaderJC extends React.Component<Props, State> {
             constants["SETTING_ISVISIBLE_event"] ?
               <Button
                 transparent
+                data-testId="header-events"
                 onPress={this.openEvents}
                 style={styles.centerMenuButtons}>
                 <Text style={styles.centerMenuButtonsText}>Events</Text>
@@ -87,6 +89,7 @@ export default class HeaderJC extends React.Component<Props, State> {
             constants["SETTING_ISVISIBLE_group"] ?
               <Button
                 transparent
+                data-testid="header-groups"
                 onPress={this.openGroups}
                 style={styles.centerMenuButtons}>
                 <Text style={styles.centerMenuButtonsText}>Groups</Text>
@@ -96,6 +99,7 @@ export default class HeaderJC extends React.Component<Props, State> {
             constants["SETTING_ISVISIBLE_resource"] ?
               <Button
                 transparent
+                data-testid="header-resources"
                 onPress={this.openResources}
                 style={styles.centerMenuButtons}>
                 <Text style={styles.centerMenuButtonsText}>Resources</Text>
@@ -105,6 +109,7 @@ export default class HeaderJC extends React.Component<Props, State> {
             constants["SETTING_ISVISIBLE_course"] ?
               <Button
                 transparent
+                data-testid="header-courses"
                 onPress={this.openCourses}
                 style={styles.centerMenuButtons}>
                 <Text style={styles.centerMenuButtonsText}>Courses</Text>
@@ -118,6 +123,7 @@ export default class HeaderJC extends React.Component<Props, State> {
               this.props.onMapChange != null ?
                 <Button
                   transparent
+                  data-testid="header-map"
                   onPress={this.showMap}>
                   <Ionicons name="md-map" style={styles.icon} />
                 </Button> : null
@@ -127,6 +133,7 @@ export default class HeaderJC extends React.Component<Props, State> {
             constants["SETTING_ISVISIBLE_SEARCH"] ?
               <Button
                 transparent
+                data-testid="header-search"
                 onPress={this.openSearch}>
                 <Ionicons name="md-search" style={styles.icon} />
               </Button> : null
@@ -134,6 +141,7 @@ export default class HeaderJC extends React.Component<Props, State> {
 
           <Button
             transparent
+            data-testid="header-profile"
             onPress={this.openProfile}>
             <Ionicons name="md-person" style={styles.icon} />
           </Button>
