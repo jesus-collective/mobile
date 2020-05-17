@@ -7,7 +7,9 @@
     "outDir": "./output",
     "target": "es6",
     "jsx": "react",
+    "alwaysStrict": true,
     "allowJs": true,
+    "checkJs": true,
     "types": ["cypress"]
   },
   "exclude": ["babel.config.js", "amplify", "node_modules"]
