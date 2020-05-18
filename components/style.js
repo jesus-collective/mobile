@@ -353,6 +353,19 @@ export default EStyleSheet.create({
         minHeight: 1500, 
         width: 446
     },
+    mapSelectorButton: {
+        flexDirection: "row", 
+        alignContent: "space-between", 
+        alignItems: "center", 
+        justifyContent: "center", 
+        zIndex: "1000", 
+        height: "20%", 
+        backgroundColor: "#FFFFFF", 
+        paddingLeft: 10, 
+        paddingRight: 10, 
+        width: "48%", 
+        borderBottomRightRadius: 4
+    },
 
 
     // Media Query Desktop Tablet
