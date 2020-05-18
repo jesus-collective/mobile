@@ -287,19 +287,19 @@ export default class EventScreen extends React.Component<Props, State>{
             <Content>
               <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start', background: "#F9FAFC" }}>
                 <Container style={styles.detailScreenLeftCard}>
-                  <Container style={{ display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 20 }}>
+                  <Container style={{ flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 20 }}>
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: 'Helvetica-Neue, sans-serif', color: '#333333', textTransform: "uppercase", flex: 0 }}>Event</Text>
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: 'Helvetica-Neue, sans-serif', color: '#979797', textTransform: "uppercase", flex: 0 }}>Sponsored</Text>
                   </Container>
-                  <Container style={{ flexGrow: 1 }}>
+    
                     <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Event Name" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
                     <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Event Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
                     <EditableDate type="datetime" onChange={(value: any) => { this.updateValue("time", value) }} placeholder="Enter Event Time" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableDate>
-                  </Container>
+          
                   {this.state.isEditable ? <Picker
                     mode="dropdown"
                     iosIcon={<Icon name="arrow-down" />}
-                    style={{ width: "75%", marginBottom: 30, marginTop: 30, fontSize: 16, height: 30, flexGrow: 0 }}
+                    style={{ width: "75%", marginBottom: 30, marginTop: 30, fontSize: 16, height: 70, flexGrow: 0 }}
                     placeholder="Event type"
                     placeholderStyle={{ color: "#bfc6ea" }}
                     placeholderIconColor="#007aff"
@@ -331,10 +331,10 @@ export default class EventScreen extends React.Component<Props, State>{
                       inputStyle={styles.groupNameInput} value={this.state.data.location}
                       isEditable={this.state.isEditable}></EditableLocation>
                   }
-                  <Text style={{ fontFamily: "Helvetica Neue, sans-serif", fontSize: 16, lineHeight: 23, color: "#333333", paddingBottom: 12 }}>Organizer</Text>
+                  <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 16, lineHeight: 23, color: "#333333", paddingBottom: 12 }}>Organizer</Text>
                   <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
                   <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", paddingTop: 48, paddingBottom: 12 }}>Attending ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
-                  <Container style={{ display: "flex", flexDirection: "row", marginBottom: 9, flexGrow: 1, flexWrap: "wrap" }}>
+                  <Container style={{ flexDirection: "row", marginBottom: 20, flexGrow: 1, flexWrap: "wrap", flexBasis: "auto" }}>
                     {
                       this.state.data.members == null ? <Text>No Members Yet</Text> :
                         this.state.data.members.items.length == 0 ?
@@ -343,7 +343,7 @@ export default class EventScreen extends React.Component<Props, State>{
                             return (<ProfileImage key={index} user={item} size="small" />)
                           })}
                   </Container>
-                  <Container>
+                  <Container style={{ flexDirection: "column", flexGrow: 1 }}>
                     {this.state.canJoin ?
                       <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Attend</JCButton> :
                       null

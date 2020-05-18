@@ -373,6 +373,13 @@ export default EStyleSheet.create({
         overflow: "hidden", 
         position: "absolute" 
     },
+    eventAttendeesPictures: {
+        flexDirection: "row", 
+        marginBottom: 20, 
+        flexGrow: 1, 
+        flexWrap: "wrap", 
+        flexBasis: "auto"
+    },
 
 
     // Media Query Desktop Tablet
