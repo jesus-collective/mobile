@@ -508,8 +508,8 @@ export default EStyleSheet.create({
             width: "100%",
             top: 100
         },
-        fontFormName: {
-            
+        fontFormSmallHeader: {
+            marginTop: 100
         }
     },
 

@@ -430,6 +430,9 @@ export default EStyleSheet.create({
          myProfileCoordinates: {
             flexDirection: "column",  
         },
+        fontFormSmallHeader: {
+            marginTop: 100
+        }
     },
 
     // Media Query Desktop Large Tablet
