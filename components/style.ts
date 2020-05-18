@@ -418,6 +418,13 @@ export default EStyleSheet.create({
         alignSelf: "center",
         width: "100%"
     },
+    eventAttendeesPictures: {
+        flexDirection: "row", 
+        marginBottom: 20, 
+        flexGrow: 1, 
+        flexWrap: "wrap", 
+        flexBasis: "auto"
+    },
 
     // Media Query Desktop Tablet
     '@media (min-width: 350) and (max-width: 768)': {
@@ -427,7 +434,7 @@ export default EStyleSheet.create({
             paddingBottom: 6,
             paddingLeft: 10,
             paddingRight: 10,
-            width: "100%"
+            width: "90%"
         },
 
         connectWithTopSectionButton: {
@@ -478,6 +485,9 @@ export default EStyleSheet.create({
         fileInputWrapper: {
             width: "100%"
         },
+        eventAttendeesPictures: {
+            flexBasis: 0
+        },
     },
 
     // Media Query Desktop Large Tablet
@@ -513,6 +523,9 @@ export default EStyleSheet.create({
         },
         myProfileTopButtons: {
             width: "60%",
+        },
+        eventAttendeesPictures: {
+            flexBasis: 0
         },
     },
 
