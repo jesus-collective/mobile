@@ -380,6 +380,15 @@ export default EStyleSheet.create({
         flexWrap: "wrap", 
         flexBasis: "auto"
     },
+    myProfileCoordinates: {
+        justifyContent: "space-between", 
+        flexDirection: "row", 
+        width: "100%", 
+        flexGrow: 0, 
+        marginTop: 30, 
+        alignSelf: "flex-start", 
+        height: "2.75rem"
+    },
 
 
     // Media Query Desktop Tablet
@@ -418,6 +427,9 @@ export default EStyleSheet.create({
         fileInputWrapper: { 
             top: 265
          },
+         myProfileCoordinates: {
+            flexDirection: "column",  
+        },
     },
 
     // Media Query Desktop Large Tablet

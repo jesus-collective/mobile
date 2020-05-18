@@ -425,6 +425,15 @@ export default EStyleSheet.create({
         flexWrap: "wrap", 
         flexBasis: "auto"
     },
+    myProfileCoordinates: {
+        justifyContent: "space-between", 
+        flexDirection: "row", 
+        width: "100%", 
+        flexGrow: 0, 
+        marginTop: 30, 
+        alignSelf: "flex-start", 
+        height: "2.75rem"
+    },
 
     // Media Query Desktop Tablet
     '@media (min-width: 350) and (max-width: 768)': {
@@ -483,11 +492,25 @@ export default EStyleSheet.create({
             borderRadius: 120
         },
         fileInputWrapper: {
-            width: "100%"
+            width: "100%",
+            top: 265
         },
         eventAttendeesPictures: {
             flexBasis: 0
         },
+        myProfileCoordinates: {
+            flexDirection: "column",  
+            marginBottom: 30,
+        },
+        myProfilePersonalInfoWrapper: {
+            marginBottom: 35,
+            alignSelf: "center",
+            width: "100%",
+            top: 100
+        },
+        fontFormName: {
+            
+        }
     },
 
     // Media Query Desktop Large Tablet
