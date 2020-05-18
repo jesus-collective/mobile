@@ -366,6 +366,13 @@ export default EStyleSheet.create({
         width: "48%", 
         borderBottomRightRadius: 4
     },
+    fileInputWrapper: { 
+        left: 0, 
+        width: 250, 
+        top: 310, 
+        overflow: "hidden", 
+        position: "absolute" 
+    },
 
 
     // Media Query Desktop Tablet
@@ -401,6 +408,9 @@ export default EStyleSheet.create({
             fontSize: 24,
             lineHeight: 30,
         },
+        fileInputWrapper: { 
+            top: 265
+         },
     },
 
     // Media Query Desktop Large Tablet
