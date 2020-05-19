@@ -42,6 +42,20 @@ export default EStyleSheet.create({
         width: "100%"
 
     },
+    eventEditableURL:{
+        borderColor: 'rgba(155, 166, 175, 0.23)',
+        borderWidth: 1,
+        marginTop: 8,
+        borderRadius: 5,
+        padding: 6,
+        paddingLeft: 10,
+        flex: 0,
+        fontSize: 16,
+        lineHeight: 23,
+        fontWeight: "bold",
+        fontFamily: "Graphik-Bold-App",
+        width: "100%"
+    },
     textInput: {
         height: 40,
         borderColor: 'white',
