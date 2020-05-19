@@ -1,4 +1,4 @@
-import { Platform } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Constants from 'expo-constants';
 import { Dimensions } from 'react-native'
@@ -19,7 +19,7 @@ export default EStyleSheet.create({
         borderRadius: 5,
         padding: 3,
         paddingLeft: 0,
-        flex: 0,
+        flex: 0, 
         fontSize: 30,
         lineHeight: 36,
         fontWeight: "bold",
@@ -42,20 +42,6 @@ export default EStyleSheet.create({
         width: "100%"
 
     },
-    eventEditableURL:{
-        borderColor: 'rgba(155, 166, 175, 0.23)',
-        borderWidth: 1,
-        marginTop: 8,
-        borderRadius: 5,
-        padding: 6,
-        paddingLeft: 10,
-        flex: 0,
-        fontSize: 16,
-        lineHeight: 23,
-        fontWeight: "bold",
-        fontFamily: "Graphik-Bold-App",
-        width: "100%"
-    },
     textInput: {
         height: 40,
         borderColor: 'white',
@@ -75,15 +61,15 @@ export default EStyleSheet.create({
         fontFamily: "Graphik-Regular-App"
     },
     font: {
-        fontFamily: 'Graphik-Regular-App',
+        fontFamily: 'Graphik-Regular-App', 
         fontSize: 16
     },
     fontMyProfileLeftTop: {
-        fontFamily: 'Graphik-Regular-App',
+        fontFamily: 'Graphik-Regular-App', 
         fontSize: 30,
         lineHeight: 36,
         marginBottom: 18
-    },
+    },  
     fontGroupNameDetailPage: {
         fontSize: 30,
         lineHeight: 36,
@@ -248,7 +234,7 @@ export default EStyleSheet.create({
         color: "#000000",
         letterSpacing: -0.3,
         color: "#333333",
-        paddingBottom: 9,
+        paddingBottom: 9, 
     },
     groupFormName: {
         fontFamily: "Graphik-Bold-App",
@@ -273,12 +259,12 @@ export default EStyleSheet.create({
         opacity: 0.5
     },
     homePageContainers: {
-        flex: 70,
-        flexDirection: "column",
+        flex: 70, 
+        flexDirection: "column", 
         backgroundColor: "#F9FAFC"
     },
     connectWithTopSectionButton: {
-        paddingTop: 30,
+        paddingTop: 30, 
         paddingBottom: 25
     },
     connectWithSliderButton: {
@@ -310,127 +296,82 @@ export default EStyleSheet.create({
     {
         // color:'#F0493E'
     },
-    flexRow: {
-        flexDirection: 'row'
+    flexRow: { 
+        flexDirection: 'row' 
     },
     groupMiddleText: {
-        fontFamily: "Graphik-Bold-App",
-        fontSize: 20,
-        lineHeight: 25,
-        letterSpacing: -0.3,
-        color: "#333333",
-        paddingTop: 48,
+        fontFamily: "Graphik-Bold-App", 
+        fontSize: 20, 
+        lineHeight: 25, 
+        letterSpacing: -0.3, 
+        color: "#333333", 
+        paddingTop: 48, 
         paddingBottom: 12
     },
     groupMiddleTextNoPaddingTop: {
-        fontFamily: "Graphik-Bold-App",
-        fontSize: 20,
-        lineHeight: 25,
-        letterSpacing: -0.3,
-        color: "#333333",
-        paddingTop: 0,
+        fontFamily: "Graphik-Bold-App", 
+        fontSize: 20, 
+        lineHeight: 25, 
+        letterSpacing: -0.3, 
+        color: "#333333", 
+        paddingTop: 0, 
         paddingBottom: 12
     },
 
     rightCardWidth: {
-        minWidth: "150%"
+        width: "150%"
     },
 
-    detailScreenLeftCard: {
-        flex: 30,
-        flexDirection: "column",
-        alignContent: 'flex-start',
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
-        paddingLeft: 30,
-        paddingRight: 30,
-        paddingTop: 40,
-        marginLeft: 32,
-        marginRight: 32,
-        marginTop: 30,
-        borderRadius: 4,
-        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
-        minHeight: "50%",
+    eventScreenLeftCard: {
+        flex: 30, 
+        flexDirection: "column", 
+        alignContent: 'flex-start', 
+        alignItems: 'flex-start', 
+        justifyContent: 'flex-start', 
+        paddingLeft: 30, 
+        paddingRight: 30, 
+        paddingTop: 40, 
+        marginLeft: 32, 
+        marginRight: 32, 
+        marginTop: 30, 
+        borderRadius: 4, 
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", 
+        minHeight: 1000, 
         width: 446
     },
-    detailScreenRightCard: {
-        flex: 70,
-        flexDirection: "column",
-        alignContent: 'flex-start',
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
-        marginLeft: 32,
-        marginRight: 32,
-        marginTop: 30,
-        borderRadius: 4,
-        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
-        minHeight: 1500,
-        width: 446,
-    },
-    profileScreenLeftCard: {
-        flex: 30,
-        flexDirection: "column",
-        alignContent: 'flex-start',
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
-        paddingLeft: 30,
-        paddingRight: 30,
-        paddingTop: 40,
-        marginLeft: 32,
-        marginRight: 32,
-        marginTop: 0,
-        borderRadius: 4,
-        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
-        minHeight: 700,
+    eventScreenRightCard: {
+        flex: 70, 
+        flexDirection: "column", 
+        alignContent: 'flex-start', 
+        alignItems: 'flex-start', 
+        justifyContent: 'flex-start', 
+        marginLeft: 32, 
+        marginRight: 32, 
+        marginTop: 30, 
+        borderRadius: 4, 
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", 
+        minHeight: 1500, 
         width: 446
     },
-    profileScreenRightCard: {
-        flex: 70,
-        flexDirection: "column",
-        alignContent: 'flex-start',
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
-        marginLeft: 32,
-        marginRight: 32,
-        marginTop: 0,
-        borderRadius: 4,
-        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
-        minHeight: 1500,
-        width: 446,
-        paddingTop: 30,
-        paddingRight: 30,
-        paddingBottom: 30,
-        paddingLeft: 30
+    mapSelectorButton: {
+        flexDirection: "row", 
+        alignContent: "space-between", 
+        alignItems: "center", 
+        justifyContent: "center", 
+        zIndex: "1000", 
+        height: "20%", 
+        backgroundColor: "#FFFFFF", 
+        paddingLeft: 10, 
+        paddingRight: 10, 
+        width: "48%", 
+        borderBottomRightRadius: 4
     },
-    myProfileTopButtons: {
-        justifyContent: "space-between",
-        flexDirection: "row",
-        width: "100%",
-        flexGrow: 0,
-        marginTop: 30,
-        paddingLeft: 32,
-        minHeight: 45
-    },
-    myProfileImageWrapper: {
-        alignSelf: "center",
-        marginBottom: 90
-    },
-    myProfileImage: {
-        width: "250px",
-        height: "290px",
-        borderRadius: 120
-    },
-    fileInputWrapper: {
-        left: 0,
-        width: 250,
-        top: 310,
-        overflow: "hidden",
-        position: "absolute"
-    },
-    myProfilePersonalInfoWrapper: {
-        marginBottom: 35,
-        alignSelf: "center",
-        width: "100%"
+    fileInputWrapper: { 
+        left: 0, 
+        width: 250, 
+        top: 310, 
+        overflow: "hidden", 
+        position: "absolute" 
     },
     eventAttendeesPictures: {
         flexDirection: "row", 
@@ -448,6 +389,7 @@ export default EStyleSheet.create({
         alignSelf: "flex-start", 
         height: "2.75rem"
     },
+
 
     // Media Query Desktop Tablet
     '@media (min-width: 350) and (max-width: 768)': {
@@ -472,55 +414,21 @@ export default EStyleSheet.create({
         rightCardWidth: {
             minWidth: "100%"
         },
-        detailScreenLeftCard: {
-            marginRight: 10,
-            flex: 35,
-            minHeight: "50%",
+        eventScreenLeftCard: {
+            marginRight: 10, 
         },
-        detailScreenRightCard: {
+        eventScreenRightCard: {
             marginLeft: 10,
-            flex: 65,
         },
         groupNameInput: {
             fontSize: 24,
             lineHeight: 30,
         },
-        myProfileTopButtons: {
-            width: "53%",
-        },
-        profileScreenLeftCard: {
-            marginRight: 10,
-            flex: 35,
-            minHeight: "50%",
-        },
-        profileScreenRightCard: {
-            marginLeft: 10,
-            flex: 65
-        },
-        myProfileImageWrapper: {
-            marginBottom: 0
-        },
-        myProfileImage: {
-            width: "200px",
-            height: "240px",
-            borderRadius: 120
-        },
-        fileInputWrapper: {
-            width: "100%",
+        fileInputWrapper: { 
             top: 265
-        },
-        eventAttendeesPictures: {
-            flexBasis: 0
-        },
-        myProfileCoordinates: {
+         },
+         myProfileCoordinates: {
             flexDirection: "column",  
-            marginBottom: 30,
-        },
-        myProfilePersonalInfoWrapper: {
-            marginBottom: 35,
-            alignSelf: "center",
-            width: "100%",
-            top: 100
         },
         fontFormSmallHeader: {
             marginTop: 100
@@ -531,41 +439,25 @@ export default EStyleSheet.create({
     '@media (min-width: 769) and (max-width: 1024)': {
         connectWithSliderButton: {
             height: 45,
-            width: "100%",
-        },
-
+            width: "60%",
+          },
+        
         connectWithTopSectionButton: {
-            paddingTop: 50,
-            paddingBottom: 35,
-            paddingRight: 15
+          paddingTop: 50,
+          paddingBottom: 35,
+          paddingRight: 15
         },
         rightCardWidth: {
             minWidth: "100%"
         },
-        detailScreenLeftCard: {
-            marginRight: 10,
-            flex: 40,
+        eventScreenLeftCard: {
+            marginRight: 10, 
         },
-        detailScreenRightCard: {
+        eventScreenRightCard: {
             marginLeft: 10,
-        },
-        profileScreenLeftCard: {
-            marginRight: 10,
-            flex: 35,
-            minHeight: "50%",
-        },
-        profileScreenRightCard: {
-            marginLeft: 10,
-            flex: 65
-        },
-        myProfileTopButtons: {
-            width: "60%",
-        },
-        eventAttendeesPictures: {
-            flexBasis: 0
         },
     },
-
+        
     authView: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { left: "40%", width: "40%", top: 100, height: "auto" } :
         { left: "2%", width: "96%", top: "0%", height: "100%" },
@@ -628,7 +520,8 @@ export default EStyleSheet.create({
         fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 12, lineHeight: 12, letterSpacing: -0.3, color: "#FFFFFF"
     },
 
-
+    fileInputWrapper:
+        { left: 0, width: 250, top: 310, overflow: "hidden", position: "absolute" },
 
     fileInputWrapperBtn: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { display: "inline-block", width: 200, height: 40 } :

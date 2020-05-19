@@ -297,7 +297,10 @@ export default EStyleSheet.create({
         SolidButton: {
             textAlign: "center",
             paddingLeft: 0,
-            paddingRight: 0
+            paddingRight: 0,
+        },
+        SolidText: {
+            width: "100%"
         }
     }
 
