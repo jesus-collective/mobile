@@ -299,7 +299,7 @@ export default class EventScreen extends React.Component<Props, State>{
                   {this.state.isEditable ? <Picker
                     mode="dropdown"
                     iosIcon={<Icon name="arrow-down" />}
-                    style={{ width: "75%", marginBottom: 30, marginTop: 30, fontSize: 16, height: 70, flexGrow: 0 }}
+                    style={{ width: "75%", marginBottom: 30, marginTop: 30, fontSize: 16, height: 100, flexGrow: 0 }}
                     placeholder="Event type"
                     placeholderStyle={{ color: "#bfc6ea" }}
                     placeholderIconColor="#007aff"
