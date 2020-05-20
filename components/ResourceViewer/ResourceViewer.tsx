@@ -1,8 +1,10 @@
 import { Icon, Button, View, Input, Form, Item, Label, Content, Container } from 'native-base';
 import { Image } from 'react-native'
 import * as React from 'react';
-//import * as queries from '../../src/graphql/queries';
-//import * as mutations from '../../src/graphql/mutations';
+import GRAPHQL_AUTH_MODE, { Greetings } from 'aws-amplify-react-native'
+
+import * as queries from '../../src/graphql/queries';
+import * as mutations from '../../src/graphql/mutations';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { Auth } from 'aws-amplify';
 import styles from '../../components/style'
@@ -18,7 +20,7 @@ import ResourceOverview from './ResourceOverview'
 import ResourceContent from './ResourceContent'
 import { v1 as uuidv1 } from 'uuid';
 import { ResourceRoot, Resource, ResourceEpisode, ResourceSeries } from "../../src/models";
-import { DataStore, Predicates } from '@aws-amplify/datastore'
+//import { DataStore, Predicates } from '@aws-amplify/datastore'
 import { ResourceContext } from './ResourceContext';
 import ImportKidsandYouth from '../../screens/ResourceScreen/ImportKidsandYouth'
 import ErrorBoundary from '../ErrorBoundry'
@@ -46,107 +48,182 @@ class ResourceViewer extends React.Component<Props, State> {
     }
     async createResourceRoot() {
         console.log("test1")
+        const resourceRoot = new ResourceRoot({
+            type: `curriculum`,
+            groupId: this.props.groupId
+        })
+        var createResourceRoot: any = await API.graphql({
+            query: mutations.createResourceRoot,
+            variables: { input: resourceRoot },
+            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+        });
+        console.log(createResourceRoot)
+
+        const resource = new Resource({
+            type: "curriculum",
+            menuTitle: "Overview",
+            title: "Overview",
+            image: {
+                userId: "123",
+                filenameSmall: "123",
+                filenameMedium: "123",
+                filenameLarge: "123",
+                filenameUpload: "123"
+            },
+            description: "...",
+            extendedDescription: "123",
+            resourceID: createResourceRoot.data.createResourceRoot.id
+        })
+        try {
+            var createResource: any = await API.graphql({
+                query: mutations.createResource,
+                variables: { input: resource },
+                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+            });
+            console.log(createResource)
+        } catch (e) {
+            console.log(e)
+        }
+
+        const series = new ResourceSeries({
+            type: "curriculum",
+            title: "Overview",
+            image: "123",
+            description: "...",
+            category: ["123"],
+            status: "123",
+            allFiles: "123",
+            playlist: "123",
+            playlistImage: "123",
+            seriesID: createResource.data.createResource.id
+        })
+
+        var createResourceSeries: any = await API.graphql({
+            query: mutations.createResourceSeries,
+            variables: { input: series },
+            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+        });
+        console.log(createResourceSeries)
+
+        var getResourceRoot: any = API.graphql({
+            query: queries.getResourceRoot,
+            variables: { id: createResourceRoot.data.createResourceRoot.id },
+            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+        });
+
+        getResourceRoot.then((json) => {
+            console.log(json)
+            this.setState({ data: json.data.getResourceRoot, currentResource: 0 })
+        }).catch((e) => {
+            console.log(e)
+        })
 
 
 
-
-
-
-
-
-        const resourceRoot = await DataStore.save(
-            new ResourceRoot({
-                type: `curriculum`,
-                groupId: this.props.groupId
-            })
-        );
-        console.log({ resourceRoot: resourceRoot })
-
-        const resource = await DataStore.save(
-            new Resource({
-                type: "curriculum",
-                menuTitle: "Overview",
-                title: "Overview",
-                image: {
-                    userId: "123",
-                    filenameSmall: "123",
-                    filenameMedium: "123",
-                    filenameLarge: "123",
-                    filenameUpload: "123"
-                },
-                description: "...",
-                extendedDescription: "123",
-                resourceRoot: resourceRoot
-            })
-        );
-        console.log({ resource: resource })
-        const series = await DataStore.save(
-            new ResourceSeries({
-                type: "curriculum",
-                title: "Overview",
-                image: "123",
-                description: "...",
-                category: ["123"],
-                status: "123",
-                allFiles: "123",
-                playlist: "123",
-                playlistImage: "123",
-                parentResource: resource
-            })
-        );
-        console.log({ series: series })
-
-
-
-        const getResourceRoot = await DataStore.query(ResourceRoot);
-        console.log(getResourceRoot[0].resources)
-        this.setState({ data: resourceRoot, currentResource: 0 })
 
 
     }
-    async setInitialData(props) {
-        await DataStore.delete(ResourceSeries, Predicates.ALL)
-        await DataStore.delete(ResourceRoot, Predicates.ALL)
-        await DataStore.delete(Resource, Predicates.ALL)
-        await DataStore.delete(ResourceEpisode, Predicates.ALL)
+    async DeleteAll() {
+        try {
+            var listResourceRoots: any = API.graphql({
+                query: queries.listResourceRoots,
+                variables: { limit: 20, filter: { groupId: { eq: this.props.groupId } }, nextToken: null },
+                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+            });
+            var q = await listResourceRoots.then((json) => {
+                console.log(json)
+                var z = json.data.listResourceRoots.items.map(async (item) => {
+                    var listResourceRoots: any = await API.graphql({
+                        query: mutations.deleteResourceRoot,
+                        variables: { input: { id: item.id } },
+                        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+                    });
 
-        const getResourceRoot = await DataStore.query(ResourceRoot);
+                    // listResourceRoots.then((z) => { console.log(z) }).catch((e) => { console.log({ Error: e }) })
+                })
+                return z
+            })
+            // Promise.all(q)
+            return true
+        }
+        catch (e) {
+            console.log(e)
+        }
+    }
+    async setInitialData(props) {
+        // await DataStore.delete(ResourceSeries, Predicates.ALL)
+        //await DataStore.delete(ResourceRoot, Predicates.ALL)
+        // await DataStore.delete(Resource, Predicates.ALL)
+        // await DataStore.delete(ResourceEpisode, Predicates.ALL)
+        //  await this.DeleteAll()
+
+
+        var listResourceRoots: any = API.graphql({
+            query: queries.listResourceRoots,
+            variables: { limit: 20, filter: { groupId: { eq: this.props.groupId } }, nextToken: null },
+            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+        });
+
+        listResourceRoots.then((json) => {
+
+            console.log(json)
+            if (json.data.listResourceRoots.items.length == 0) {
+                console.log("starting from scratch")
+                this.createResourceRoot();
+
+            }
+            else {
+                console.log("existing data")
+                console.log({ json: json })
+                console.log({ id: json.data.listResourceRoots.items[0].id })
+                var getResourceRoot: any = API.graphql({
+                    query: queries.getResourceRoot,
+                    variables: { id: json.data.listResourceRoots.items[0].id },
+                    authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+                });
+
+                getResourceRoot.then((json) => {
+                    console.log(json)
+
+                    this.setState({ data: json.data.getResourceRoot, currentResource: 0 })
+                }).catch((e) => {
+                    console.log(e)
+                })
+
+
+                //   console.log(getResourceRoot2)
+
+            }
+        }).catch((e) => {
+            console.log(e)
+        })
+
         //  const getResourceRoot2 = await DataStore.query(ResourceEpisode);
-        if (getResourceRoot.length == 0) {
-            console.log("starting from scratch")
-            this.createResourceRoot();
-        }
-        else {
-            console.log("existing data")
-            console.log(getResourceRoot)
-            //   console.log(getResourceRoot2)
-            this.setState({ data: getResourceRoot[0], currentResource: 0 })
-        }
 
     }
     createResource = async () => {
-        const resource = await DataStore.save(
-            new Resource({
-                type: "curriculum",
-                menuTitle: "New Resource",
-                title: "New Resource",
-                image: {
-                    userId: "123",
-                    filenameSmall: "123",
-                    filenameMedium: "123",
-                    filenameLarge: "123",
-                    filenameUpload: "123"
-                },
-                description: "..."
-            })
-        );
-        const resourceRoute = await DataStore.save(
-            ResourceRoot.copyOf(this.state.data, updated => {
-                updated.resources = updated.resources.concat(resource)
-            })
-        );
-        console.log(resourceRoute)
-        this.setState({ data: resourceRoute })
+        /*   const resource = await DataStore.save(
+               new Resource({
+                   type: "curriculum",
+                   menuTitle: "New Resource",
+                   title: "New Resource",
+                   image: {
+                       userId: "123",
+                       filenameSmall: "123",
+                       filenameMedium: "123",
+                       filenameLarge: "123",
+                       filenameUpload: "123"
+                   },
+                   description: "..."
+               })
+           );
+           const resourceRoute = await DataStore.save(
+               ResourceRoot.copyOf(this.state.data, updated => {
+                   updated.resources = updated.resources.concat(resource)
+               })
+           );
+           console.log(resourceRoute)
+           this.setState({ data: resourceRoute })*/
     }
 
     changeResource = (index) => {
@@ -154,24 +231,24 @@ class ResourceViewer extends React.Component<Props, State> {
         this.setState({ currentResource: index })
     }
     updateResource = async (index, item, value) => {
-        const resourceRoute = await DataStore.save(
-            ResourceRoot.copyOf(this.state.data, updated => {
-                updated.resources[index][item] = value
-            })
-        );
-        console.log(resourceRoute)
-        this.setState({ data: resourceRoute })
+        /*   const resourceRoute = await DataStore.save(
+               ResourceRoot.copyOf(this.state.data, updated => {
+                   updated.resources[index][item] = value
+               })
+           );
+           console.log(resourceRoute)
+           this.setState({ data: resourceRoute })*/
     }
     deleteResource = async (index) => {
-        if (index > 0) {
-            const resourceRoute = await DataStore.save(
-                ResourceRoot.copyOf(this.state.data, updated => {
-                    updated.resources.splice(index, 1)
-                })
-            );
-            console.log(resourceRoute)
-            this.setState({ data: resourceRoute })
-        }
+        /*   if (index > 0) {
+               const resourceRoute = await DataStore.save(
+                   ResourceRoot.copyOf(this.state.data, updated => {
+                       updated.resources.splice(index, 1)
+                   })
+               );
+               console.log(resourceRoute)
+               this.setState({ data: resourceRoute })
+           }*/
     }
     getValueFromKey(myObject: any, string: any) {
         const key = Object.keys(myObject).filter(k => k.includes(string));
@@ -184,7 +261,7 @@ class ResourceViewer extends React.Component<Props, State> {
         const ext = file.name.substring(lastDot + 1);
         var user = await Auth.currentCredentials();
         var userId = user.identityId
-        const fn = 'resources/upload/group-' + this.state.data.resources[index1].id + '-' + new Date().getTime() + '-upload.' + ext
+        const fn = 'resources/upload/group-' + this.state.data.resources.items[index1].id + '-' + new Date().getTime() + '-upload.' + ext
         const fnSave = fn.replace("/upload", "").replace("-upload.", "-[size].").replace("." + ext, ".png")
 
 

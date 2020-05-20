@@ -41,7 +41,7 @@ class ResourceMenu extends React.Component<Props, State> {
                             justifyContent: 'flex-start',
                             alignItems: 'flex-start'
                         }}>
-                            {state.data.resources.map((item, index) => {
+                            {state.data.resources.items.map((item, index) => {
                                 if (item != null)
                                     return <EditableButton onDelete={() => actions.deleteResource(index)} onChange={(value) => actions.updateResource(index, "menuTitle", value)} key={index} placeholder="temp" isEditable={true} onPress={() => actions.changeResource(index)} inputStyle={styles.centerMenuButtonsText} textStyle={styles.centerMenuButtonsText} value={item.menuTitle}>
                                     </EditableButton>

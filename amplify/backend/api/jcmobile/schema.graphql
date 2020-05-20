@@ -187,12 +187,12 @@ type ResourceRoot
   id: ID!
   type: String
   groupId: String
-  resources: [Resource] @connection(name:"r1",keyName: "byResource", fields: ["id"])
+  resources: [Resource] @connection(name:"r1",keyField: "resourceID")
 }
 type Resource 
 @model 
 @auth(rules: [{ allow: groups, groups: ["verifiedUsers"] }])
- @key(name: "byResource", fields: ["resourceID","title"])
+ @key(name: "byResource", fields: ["resourceID"])
 {
   id: ID!
   type: String
@@ -201,9 +201,9 @@ type Resource
   image: Image
   description: String
   extendedDescription: String
-  series: [ResourceSeries] @connection(name:"r2",keyName: "byResourceSeries", fields: ["id"])
+  series: [ResourceSeries] @connection(name:"r2",keyField: "seriesID")
   resourceID:ID!
-  resourceRoot: ResourceRoot! @connection(name:"r1",fields:["resourceID"])
+  resourceRoot: ResourceRoot! @connection(name:"r1",keyField:"resourceID")
 }
 type ResourceSeries 
 @model 
@@ -220,9 +220,9 @@ type ResourceSeries
   allFiles: String
   playlist: String
   playlistImage: String
-  episodes: [ResourceEpisode] @connection(name:"r3",keyName: "byResourceEpisode", fields: ["id"])
+  episodes: [ResourceEpisode] @connection(name:"r3",keyField: "episodeID")
   seriesID: ID!
-  parentResource: Resource! @connection(name:"r2",fields: ["seriesID"])
+  parentResource: Resource! @connection(name:"r2",keyField: "seriesID")
 }
 
 type ResourceEpisode 
@@ -241,5 +241,5 @@ type ResourceEpisode
   lessonPlan: String
   activityPage: String
   episodeID:ID!
-  parentSeries: ResourceSeries! @connection(name:"r3",fields: ["episodeID"])
+  parentSeries: ResourceSeries! @connection(name:"r3",keyField: "episodeID")
 }
