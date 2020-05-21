@@ -6,10 +6,9 @@ import awsConfig from '../../src/aws-exports';
 Amplify.configure(awsConfig);
 
 import { Authenticator } from 'aws-amplify-react-native';
-import { NavigationScreenProp } from 'react-navigation';
 
 interface Props {
-  navigation: NavigationScreenProp<any, any>
+  navigation: any
 }
 interface State {
 

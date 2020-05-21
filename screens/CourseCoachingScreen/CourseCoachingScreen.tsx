@@ -23,6 +23,7 @@ const data = require('../CourseOverviewScreen/course.json');
 
 interface Props {
   navigation: any
+  route: any
 }
 interface State {
   showMap: boolean
@@ -40,7 +41,7 @@ export default class CourseScreen extends React.Component<Props, State>{
 
     this.state = {
       showMap: false,
-      loadId: props.navigation.state.params.id,
+      loadId: props.route.params.id,
       data: null,
       isEditable: true,
       validationError: ""
@@ -52,7 +53,7 @@ export default class CourseScreen extends React.Component<Props, State>{
 
     var getGroup: any = API.graphql({
       query: queries.getGroup,
-      variables: { id: props.navigation.state.params.id },
+      variables: { id: props.route.params.id },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
     var processResults = (json) => {

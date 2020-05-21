@@ -9,7 +9,6 @@ import { AmplifyTheme, Authenticator } from 'aws-amplify-react-native';
 import { View } from 'native-base';
 import { Dimensions } from 'react-native'
 import { Platform } from 'react-native';
-import { NavigationScreenProp } from 'react-navigation';
 import { I18n } from 'aws-amplify';
 import { Ionicons } from '@expo/vector-icons';
 import MyLoading from './components/Auth/MyLoading';
@@ -67,7 +66,7 @@ I18n.setLanguage('en');
 I18n.putVocabularies(authScreenLabels);
 
 interface Props {
-  navigation: NavigationScreenProp<any, any>,
+  navigation: any,
   onStateChange(state: string, data: any): any
 }
 interface State {

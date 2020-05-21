@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Container, Content, List, ListItem, Header } from "native-base";
 import { Text } from 'react-native'
-//import useNavigation from 'react-navigation';
-import { withNavigation } from 'react-navigation';
+import { useRoute, useNavigation } from '@react-navigation/native'
+
 const routes = [
   {
     name: "Home",
@@ -28,6 +28,7 @@ const routes = [
 
 ];
 interface Props {
+  route: any
   navigation: any
 }
 interface State {
@@ -62,4 +63,6 @@ class SideBar extends React.Component<Props, State> {
     )
   }
 }
-export default withNavigation(SideBar)
+
+
+export default SideBar

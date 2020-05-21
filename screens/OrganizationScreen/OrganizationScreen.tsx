@@ -23,6 +23,7 @@ const MessageBoard = lazy(() => import('../../components/MessageBoard/MessageBoa
 
 interface Props {
   navigation: any
+  route: any
 }
 interface State {
   showMap: boolean
@@ -47,8 +48,8 @@ export default class GroupScreen extends React.Component<Props, State>{
 
     this.state = {
       showMap: false,
-      loadId: props.navigation.state.params.id,
-      createNew: props.navigation.state.params.create,
+      loadId: props.route.params.id,
+      createNew: props.route.params.create,
       data: null,
       canSave: true,
       canLeave: false,
@@ -77,7 +78,7 @@ export default class GroupScreen extends React.Component<Props, State>{
     return key.length ? myObject[key[0]] : "";
   }
   setInitialData(props) {
-    if (props.navigation.state.params.create)
+    if (props.route.params.create)
       Auth.currentAuthenticatedUser().then((user: any) => {
         var z: CreateGroupInput = {
           id: "organization-" + Date.now(),
@@ -93,7 +94,7 @@ export default class GroupScreen extends React.Component<Props, State>{
     else {
       var getGroup: any = API.graphql({
         query: queries.getGroup,
-        variables: { id: props.navigation.state.params.id },
+        variables: { id: props.route.params.id },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       var processResults = (json) => {

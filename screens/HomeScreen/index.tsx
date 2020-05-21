@@ -9,17 +9,18 @@ import { Text } from 'react-native'
 import GRAPHQL_AUTH_MODE, { Greetings } from 'aws-amplify-react-native'
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
-import { createDrawerNavigator } from "react-navigation-drawer";
-import { createStackNavigator } from "react-navigation-stack";
-import { createAppContainer } from "react-navigation";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createStackNavigator } from "@react-navigation/stack";
 import awsconfig from '../../src/aws-exports';
-import { NavigationScreenProp } from 'react-navigation';
 import { Dimensions } from 'react-native'
 import Validate from '../../components/Validate/Validate'
 
-import { createBrowserApp } from '@react-navigation/web';
+
+//import { createBrowserApp } from '@react-navigation/web';
 import { Platform } from "react-native";
 import moment from "moment";
+import { NavigationContainer } from "@react-navigation/native"
+import { Linking } from "expo";
 
 const HomeScreen = lazy(() => import("./HomeScreen"));
 const SideBar = lazy(() => import("../../components/Sidebar/Sidebar"));
@@ -54,39 +55,164 @@ const SearchScreen = lazy(() => import('../SearchScreen/SearchScreen'));
 
 Amplify.configure(awsconfig);
 
+const prefix = Linking.makeUrl('/');
+
+const linking = {
+  prefixes: [prefix, 'https://localhost', 'exps://beta.jesuscollective.com', 'exps://localhost:19006', 'http://localhost:19006', 'https://beta.jesuscollective.com'],
+  config: {
+    HomeScreen: '/home',
+    GroupScreen: '/group/:id/:create',
+    GroupsScreen: '/groups',
+    EventScreen: '/event',
+    EventsScreen: '/events',
+    ResourceScreen: '/resource',
+    ResourcesScreen: '/resources',
+    OrganizationScreen: '/organization',
+    OrganizationsScreen: '/organizations',
+    CourseOverviewScreen: '/courseoverview',
+    CoursesScreen: '/courses',
+    CourseHomeScreen: '/course',
+    CourseDetailScreen: '/coursedetail',
+    CourseCoachingScreen: '/coursecoaching',
+    ConversationScreen: '/conversation',
+    SearchScreen: '/search',
+    ProfileScreen: '/profile',
+    ProfilesScreen: '/profiles',
+
+  }
+};
+const Stack = createStackNavigator();
+
+function MainAppRouter() {
+  return (
+    <Stack.Navigator
+
+      initialRouteName='HomeScreen'
+      headerMode='none'
+      mode='card'
+      screenOptions={{
+        animationEnabled: false,
+        gestureEnabled: false,
+        cardOverlayEnabled: false
+      }}
+    >
+      <Stack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{ title: 'Jesus Collective' }}
+      />
+      <Stack.Screen
+        name="GroupScreen"
+        component={GroupScreen}
+        options={{ title: 'Jesus Collective' }}
+      />
+      <Stack.Screen
+        name="GroupsScreen"
+        component={GroupsScreen}
+        options={{ title: 'Jesus Collective' }}
+      />
+      <Stack.Screen
+        name="EventScreen"
+        component={EventScreen}
+        options={{ title: 'Jesus Collective' }}
+      />
+      <Stack.Screen
+        name="EventsScreen"
+        component={EventsScreen}
+        options={{ title: 'Jesus Collective' }}
+      />
+      <Stack.Screen
+        name="ResourcesScreen"
+        component={ResourcesScreen}
+        options={{ title: 'Jesus Collective' }}
+      />
+      <Stack.Screen
+        name="ResourceScreen"
+        component={ResourceScreen}
+        options={{ title: 'Jesus Collective' }}
+      />
+      <Stack.Screen
+        name="OrganizationsScreen"
+        component={OrganizationsScreen}
+        options={{ title: 'Jesus Collective' }}
+      />
+      <Stack.Screen
+        name="OrganizationScreen"
+        component={OrganizationScreen}
+        options={{ title: 'Jesus Collective' }}
+      />
+      <Stack.Screen
+        name="CourseOverviewScreen"
+        component={CourseOverviewScreen}
+        options={{ title: 'Jesus Collective' }}
+      />
+      <Stack.Screen
+        name="CoursesScreen"
+        component={CoursesScreen}
+        options={{ title: 'Jesus Collective' }}
+      />
+
+      <Stack.Screen
+        name="CourseHomeScreen"
+        component={CourseHomeScreen}
+        options={{ title: 'Jesus Collective' }}
+      />
+
+      <Stack.Screen
+        name="CourseDetailScreen"
+        component={CourseDetailScreen}
+        options={{ title: 'Jesus Collective' }}
+      />
+
+      <Stack.Screen
+        name="CourseCoachingScreen"
+        component={CourseCoachingScreen}
+        options={{ title: 'Jesus Collective' }}
+      />
+
+      <Stack.Screen
+        name="ConversationScreen"
+        component={ConversationScreen}
+        options={{ title: 'Jesus Collective' }}
+      />
 
 
-const MainAppRouter = createStackNavigator({
-  HomeScreen: { screen: HomeScreen, path: "home" },
-  GroupScreen: { screen: GroupScreen, path: "group" },
-  GroupsScreen: { screen: GroupsScreen, path: "groups" },
-  EventScreen: { screen: EventScreen, path: "event" },
-  EventsScreen: { screen: EventsScreen, path: "events" },
-  ResourcesScreen: { screen: ResourcesScreen, path: "resources" },
-  ResourceScreen: { screen: ResourceScreen, path: "resource" },
-  OrganizationsScreen: { screen: OrganizationsScreen, path: "orgs" },
-  OrganizationScreen: { screen: OrganizationScreen, path: "org" },
-  CourseOverviewScreen: { screen: CourseOverviewScreen, path: "courseOverview" },
-  CoursesScreen: { screen: CoursesScreen, path: "courses" },
-  CourseHomeScreen: { screen: CourseHomeScreen, path: "courseHome" },
-  CourseDetailScreen: { screen: CourseDetailScreen, path: "courseDetail" },
-  CourseCoachingScreen: { screen: CourseCoachingScreen, path: "courseCoaching" },
-  ConversationScreen: { screen: ConversationScreen, path: "conversations" },
-  SearchScreen: { screen: SearchScreen, path: "search" },
-  ProfileScreen: { screen: ProfileScreen, path: "profile" },
-  ProfilesScreen: { screen: ProfilesScreen, path: "profiles" },
-},
-  {
-    initialRouteName: 'HomeScreen',
-    headerMode: 'none',
-    mode: 'card',
-    defaultNavigationOptions: {
-      animationEnabled: false,
-      gestureEnabled: false,
-      cardOverlayEnabled: false
-    }
-  })
+      <Stack.Screen
+        name="SearchScreen"
+        component={SearchScreen}
+        options={{ title: 'Jesus Collective' }}
+      />
 
+
+      <Stack.Screen
+        name="ProfileScreen"
+        component={ProfileScreen}
+        options={{ title: 'Jesus Collective' }}
+      />
+
+
+      <Stack.Screen
+        name="ProfilesScreen"
+        component={ProfilesScreen}
+        options={{ title: 'Jesus Collective' }}
+      />
+
+    </Stack.Navigator>
+  )
+}
+
+const Drawer = createDrawerNavigator();
+function HomeScreenRouter() {
+  return (
+    <Drawer.Navigator openByDefault={false} drawerContent={(props) => { return <SideBar {...props}></SideBar> }}
+    >
+      <Drawer.Screen name="app" component={MainAppRouter} />
+      <Drawer.Screen name="ProfileScreen" component={ProfileScreen} />
+      <Drawer.Screen name="LoginScreen" component={LoginScreen} />
+    </Drawer.Navigator>
+  )
+
+}
 const mapObj = f => obj =>
   Object.keys(obj).reduce((acc, key) => ({ ...acc, [key]: f(obj[key]) }), {});
 const toArrayOfStrings = value => [`${value}`];
@@ -107,48 +233,15 @@ async function trackUserId() {
   }
 }
 
-const HomeScreenRouter = createDrawerNavigator(
-  {
-    HomeScreen: {
-      screen: MainAppRouter,
-      path: 'app'
-    },
-    ExploreScreen: {
-      screen: ExploreScreen,
-      path: 'explore'
-    },
-    SupportScreen: {
-      screen: SupportScreen,
-      path: 'support'
-    },
-    GetInvolvedScreen: {
-      screen: GetInvolvedScreen,
-      path: 'getinvolved'
-    },
-    ContactScreen: {
-      screen: ContactScreen,
-      path: 'contact'
-    },
-    KidsAndYouthScreen: { screen: KidsAndYouthScreen },
-    NewsScreen: { screen: NewsScreen },
-    ProfileScreen: { screen: ProfileScreen },
-    LoginScreen: { screen: LoginScreen }
-  },
-  {
-    contentComponent: props => <SideBar {...props} />,
-    defaultNavigationOptions: { drawerLockMode: "locked-closed" }
-  }
-);
-//const prefix = Linking.makeUrl('https://192.168.0.12:19006');
 
 const isWeb = Platform.OS === 'web';
 
-const AppContainer = isWeb && Dimensions.get('window').width > 720 ? createBrowserApp(HomeScreenRouter) : createAppContainer(HomeScreenRouter);
+
 
 
 interface Props {
   authState?: any;
-  navigation?: NavigationScreenProp<any, any>
+  navigation?: any
 
 }
 interface State {
@@ -318,8 +411,11 @@ export default class App extends React.Component<Props, State>{
             <Suspense fallback={this.renderFallback()}>
               <View style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1 }}>
                 <MuiPickersUtilsProvider utils={MomentUtils}>
-                  <AppContainer></AppContainer>
+                  <NavigationContainer linking={linking} >
+                    <HomeScreenRouter></HomeScreenRouter>
+                  </NavigationContainer>
                 </MuiPickersUtilsProvider>
+
               </View>
             </Suspense>)
         }

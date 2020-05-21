@@ -5,7 +5,12 @@ import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import awsmobile from '../../src/aws-exports';
 import { Button, Text } from 'native-base';
 import { ResourceRoot, Resource, ResourceEpisode, ResourceSeries } from "../../src/models";
-import { DataStore, Predicates } from '@aws-amplify/datastore'
+import GRAPHQL_AUTH_MODE, { Greetings } from 'aws-amplify-react-native'
+
+import * as queries from '../../src/graphql/queries';
+import * as mutations from '../../src/graphql/mutations';
+
+//mport { DataStore, Predicates } from '@aws-amplify/datastore'
 
 Amplify.configure(awsmobile);
 
@@ -46,9 +51,6 @@ class IndexApp extends React.Component<Props, State>{
         }
         else if (typeof (obj) == "string")
             return obj
-    }
-    async save(obj: any): any {
-        return await DataStore.save(obj)
     }
     unserialize(data: any) {
 
@@ -204,55 +206,66 @@ class IndexApp extends React.Component<Props, State>{
 
         return _unserialize((data + ''), 0)[2];
     }
-    async query(): any {
-        const z = await DataStore.query(ResourceRoot)
-        return z
-    }
-    async write(json: any) {
 
-        var jr = await DataStore.save(new Resource({
+    async write(json: any) {
+        //var getResourceRoot = await DataStore.query(ResourceRoot);
+
+        try {
+            var getResourceRoot: any = await API.graphql({
+                query: queries.getResourceRoot,
+                variables: { id: "" },
+                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+            });
+        }
+        catch (e) {
+            console.log(e)
+        }
+
+
+        console.log(getResourceRoot)
+        var jr = new Resource({
             type: "curriculum",
             menuTitle: "Jr. High",
             title: "Jr. High",
             image: null,
             description: "...",
-            series: []
-        }))
-        var sr = await DataStore.save(new Resource({
+            resourceID: getResourceRoot.id
+            //  series: []
+        })
+        var sr = new Resource({
             type: "curriculum",
             menuTitle: "Sr. High",
             title: "Sr. High",
             image: null,
             description: "...",
-            series: []
-        }))
-        var youth = await DataStore.save(new Resource({
+            resourceID: getResourceRoot.id
+        })
+        var youth = new Resource({
             type: "curriculum",
             menuTitle: "Youth",
             title: "Youth",
             image: null,
             description: "...",
-            series: []
-        }))
-        var kids = await DataStore.save(new Resource({
+            resourceID: getResourceRoot.id
+        })
+        var kids = new Resource({
             type: "curriculum",
             menuTitle: "Kids",
             title: "Kids",
             image: null,
             description: "...",
-            series: []
-        }))
-        var pre = await DataStore.save(new Resource({
+            resourceID: getResourceRoot.id
+        })
+        var pre = new Resource({
             type: "curriculum",
             menuTitle: "Preschool",
             title: "Preschool",
             image: null,
             description: "...",
-            series: []
-        }))
-        var getResourceRoot = await DataStore.query(ResourceRoot);
+            resourceID: getResourceRoot.id
+        })
 
-        console.log(getResourceRoot)
+        //console.log(getResourceRoot)
         /* getResourceRoot=await DataStore.save(ResourceRoot.copyOf(getResourceRoot[0], updated => {
              updated.resources = updated.resources.concat(jr[0], sr[0], kids[0], youth[0], pre[0])
          })
@@ -289,637 +302,639 @@ class IndexApp extends React.Component<Props, State>{
             if (item.category != null && item.post_type != null && item.post_type != "nav_menu_item" && item.post_type != "post") {
                 if (item.post_type == "series" && item.status == "publish") {
                     var type = ""
-                    if (item.category.includes("Junior High"))
+                    var parentID = ""
+                    if (item.category.includes("Junior High")) {
                         type = "jrhigh"
-                    if (item.category.includes("Youth"))
-                        type = "youth"
-                    if (item.category.includes("Preschool"))
-                        type = "preschool"
-                    if (item.category.includes("Kids"))
-                        type = "kids"
-                    if (item.category.includes("Senior High"))
-                        type = "srhigh"
-
-                    var jsonValue = await DataStore.save(new ResourceSeries({
-
-                        type: "ky-" + type,
-                        title: item.title,
-                        description: item.encoded[0],
-                        image: item.image == undefined ? "test.jpg" : item.image,
-                        category: Array.isArray(item.category) ? item.category : [item.category],
-                        status: item.status,
-                        allFiles: ptb_all_files,
-                        playlist: ptb_series_playlist.substring(ptb_series_playlist.indexOf("?list=") + 6, ptb_series_playlist.indexOf("\"", ptb_series_playlist.indexOf("?list=") + 6)),
-                        playlistImage: "",
-                        episodes: []
-                    }))
-
-                    if (ptb_series_playlist.substring(0, 3) == "<im") {
-                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue, updated => {
-                            updated.playlist = "",
-                                updated.playlistImage = ptb_series_playlist.substring(ptb_series_playlist.indexOf("src=\"") + 5, ptb_series_playlist.indexOf("\"", ptb_series_playlist.indexOf("src=\"") + 5))
-
-                        }))
+                        parentID = jr.id
                     }
-                    if (jsonValue.playlist.substring(0, 3) == "me ") {
-                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue, updated => {
-                            updated.playlist = "",
-                                updated.playlistImage = ptb_series_playlist.substring(ptb_series_playlist.indexOf("embed/") + 6, ptb_series_playlist.indexOf("?", ptb_series_playlist.indexOf("embed/") + 6))
+                    if (item.category.includes("Youth")) { }
+                    type = "youth"
+                    parentID = youth.id
+                }
+                if (item.category.includes("Preschool")) {
+                    type = "preschool"
+                    parentID = pre.id
+                }
+                if (item.category.includes("Kids")) {
+                    type = "kids"
+                    parentID = kids.id
+                }
+                if (item.category.includes("Senior High")) {
+                    type = "srhigh"
+                    parentID = sr.id
+                }
+                var jsonValue = new ResourceSeries({
 
-                        }))
-                    }
-                    if (jsonValue.playlist.substring(0, 17) == "https://youtu.be/") {
-                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue, updated => {
-                            updated.playlist = "",
-                                updated.playlistImage = ptb_series_playlist.substring(ptb_series_playlist.indexOf("/"))
-                        }))
+                    type: "ky-" + type,
+                    title: item.title,
+                    description: item.encoded[0],
+                    image: item.image == undefined ? "test.jpg" : item.image,
+                    category: Array.isArray(item.category) ? item.category : [item.category],
+                    status: item.status,
+                    allFiles: ptb_all_files,
+                    playlist: ptb_series_playlist.substring(ptb_series_playlist.indexOf("?list=") + 6, ptb_series_playlist.indexOf("\"", ptb_series_playlist.indexOf("?list=") + 6)),
+                    playlistImage: "",
+                    seriesID: parentID
+                })
 
-                    }
-                    if (jsonValue.playlist.substring(0, 3) != "PLB") {
-                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue, updated => {
-                            updated.playlist = ""
-
-                        }))
-                        // console.log(ptb_series_playlist)
-
-                    }
-                    console.log("ep1")
-                    var ptb_episode_1_title
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_1_title")
-                            ptb_episode_1_title = item2.meta_value
-                    })
-
-                    var ptb_episode_1_lesson_plan
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_1_lesson_plan")
-                            ptb_episode_1_lesson_plan = item2.meta_value
-                    })
-
-                    var ptb_episode_1_activity_page
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_1_activity_page")
-                            ptb_episode_1_activity_page = item2.meta_value
-                    })
-
-                    var ptb_episode_1_video_message_file_high_res
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_1_video_message_file_high_res")
-                            ptb_episode_1_video_message_file_high_res = item2.meta_value
-                    })
-
-                    var ptb_episode_1_video_message_file_low_res
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_1_video_message_file_low_res")
-                            ptb_episode_1_video_message_file_low_res = item2.meta_value
-                    })
-
-                    var ptb_episode_1_video_preview
-
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_1_video_preview")
-                            ptb_episode_1_video_preview = item2.meta_value
-                    })
-                    ptb_episode_1_lesson_plan = this.unserialize(ptb_episode_1_lesson_plan)
-                    ptb_episode_1_activity_page = this.unserialize(ptb_episode_1_activity_page)
-                    ptb_episode_1_video_message_file_high_res = this.unserialize(ptb_episode_1_video_message_file_high_res)
-                    ptb_episode_1_video_message_file_low_res = this.unserialize(ptb_episode_1_video_message_file_low_res)
-                    ptb_episode_1_video_preview = this.unserialize(ptb_episode_1_video_preview)
-
-                    if (ptb_episode_1_lesson_plan != null)
-                        ptb_episode_1_lesson_plan = ptb_episode_1_lesson_plan.url[0]
-                    if (ptb_episode_1_activity_page != null)
-                        ptb_episode_1_activity_page = ptb_episode_1_activity_page.url[0]
-                    if (ptb_episode_1_video_message_file_high_res != null)
-                        ptb_episode_1_video_message_file_high_res = ptb_episode_1_video_message_file_high_res.url[0]
-                    if (ptb_episode_1_video_message_file_low_res != null)
-                        ptb_episode_1_video_message_file_low_res = ptb_episode_1_video_message_file_low_res.url[0]
-                    if (ptb_episode_1_video_preview != null)
-                        ptb_episode_1_video_preview = ptb_episode_1_video_preview.url[0]
-
-                    if (ptb_episode_1_title != "") {
-                        var episode1 = await DataStore.save(new ResourceEpisode({
-                            episodeNumber: 1,
-                            type: "ky-episode",
-                            title: ptb_episode_1_title,
-                            lessonPlan: ptb_episode_1_lesson_plan,
-                            activityPage: ptb_episode_1_activity_page,
-                            videoHiRes: ptb_episode_1_video_message_file_high_res,
-                            videoLowRes: ptb_episode_1_video_message_file_low_res,
-                            videoPreview: ptb_episode_1_video_preview
-                        }))
-                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue, updated => {
-                            updated.episodes = updated.episodes.concat(episode1)
-                        }))
-                    }
-                    console.log("ep2")
-                    var ptb_episode_2_title
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_2_title")
-                            ptb_episode_2_title = item2.meta_value
-                    })
-
-                    var ptb_episode_2_lesson_plan
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_2_lesson_plan")
-                            ptb_episode_2_lesson_plan = item2.meta_value
-                    })
-
-                    var ptb_episode_2_activity_page
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_2_activity_page")
-                            ptb_episode_2_activity_page = item2.meta_value
-                    })
-
-                    var ptb_episode_2_video_message_file_high_res
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_2_video_message_file_high_res")
-                            ptb_episode_2_video_message_file_high_res = item2.meta_value
-                    })
-
-                    var ptb_episode_2_video_message_file_low_res
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_2_video_message_file_low_res")
-                            ptb_episode_2_video_message_file_low_res = item2.meta_value
-                    })
-
-                    var ptb_episode_2_video_preview
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_2_video_preview")
-                            ptb_episode_2_video_preview = item2.meta_value
-                    })
-
-                    ptb_episode_2_lesson_plan = this.unserialize(ptb_episode_2_lesson_plan)
-                    ptb_episode_2_activity_page = this.unserialize(ptb_episode_2_activity_page)
-                    ptb_episode_2_video_message_file_high_res = this.unserialize(ptb_episode_2_video_message_file_high_res)
-                    ptb_episode_2_video_message_file_low_res = this.unserialize(ptb_episode_2_video_message_file_low_res)
-                    ptb_episode_2_video_preview = this.unserialize(ptb_episode_2_video_preview)
-
-                    if (ptb_episode_2_lesson_plan != null)
-                        ptb_episode_2_lesson_plan = ptb_episode_2_lesson_plan.url[0]
-                    if (ptb_episode_2_activity_page != null)
-                        ptb_episode_2_activity_page = ptb_episode_2_activity_page.url[0]
-                    if (ptb_episode_2_video_message_file_high_res != null)
-                        ptb_episode_2_video_message_file_high_res = ptb_episode_2_video_message_file_high_res.url[0]
-                    if (ptb_episode_2_video_message_file_low_res != null)
-                        ptb_episode_2_video_message_file_low_res = ptb_episode_2_video_message_file_low_res.url[0]
-                    if (ptb_episode_2_video_preview != null)
-                        ptb_episode_2_video_preview = ptb_episode_2_video_preview.url[0]
-
-                    if (ptb_episode_2_title != "") {
-                        var episode2 = await DataStore.save(new ResourceEpisode({
-                            episodeNumber: 2,
-                            type: "ky-episode",
-                            title: ptb_episode_2_title,
-                            lessonPlan: ptb_episode_2_lesson_plan,
-                            activityPage: ptb_episode_2_activity_page,
-                            videoHiRes: ptb_episode_2_video_message_file_high_res,
-                            videoLowRes: ptb_episode_2_video_message_file_low_res,
-                            videoPreview: ptb_episode_2_video_preview
-                        }))
-                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue, updated => {
-                            updated.episodes = updated.episodes.concat(episode2)
-                        }))
-                    }
-
-                    console.log("ep3")
-                    var ptb_episode_3_title
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_3_title")
-                            ptb_episode_3_title = item2.meta_value
-                    })
-
-                    var ptb_episode_3_lesson_plan
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_3_lesson_plan")
-                            ptb_episode_3_lesson_plan = item2.meta_value
-                    })
-
-                    var ptb_episode_3_activity_page
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_3_activity_page")
-                            ptb_episode_3_activity_page = item2.meta_value
-                    })
-
-                    var ptb_episode_3_video_message_file_high_res
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_3_video_message_file_high_res")
-                            ptb_episode_3_video_message_file_high_res = item2.meta_value
-                    })
-
-                    var ptb_episode_3_video_message_file_low_res
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_3_video_message_file_low_res")
-                            ptb_episode_3_video_message_file_low_res = item2.meta_value
-                    })
-
-                    var ptb_episode_3_video_preview
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_3_video_preview")
-                            ptb_episode_3_video_preview = item2.meta_value
-                    })
-
-                    ptb_episode_3_lesson_plan = this.unserialize(ptb_episode_3_lesson_plan)
-                    ptb_episode_3_activity_page = this.unserialize(ptb_episode_3_activity_page)
-                    ptb_episode_3_video_message_file_high_res = this.unserialize(ptb_episode_3_video_message_file_high_res)
-                    ptb_episode_3_video_message_file_low_res = this.unserialize(ptb_episode_3_video_message_file_low_res)
-                    ptb_episode_3_video_preview = this.unserialize(ptb_episode_3_video_preview)
-
-                    if (ptb_episode_3_lesson_plan != null)
-                        ptb_episode_3_lesson_plan = ptb_episode_3_lesson_plan.url[0]
-                    if (ptb_episode_3_activity_page != null)
-                        ptb_episode_3_activity_page = ptb_episode_3_activity_page.url[0]
-                    if (ptb_episode_3_video_message_file_high_res != null)
-                        ptb_episode_3_video_message_file_high_res = ptb_episode_3_video_message_file_high_res.url[0]
-                    if (ptb_episode_3_video_message_file_low_res != null)
-                        ptb_episode_3_video_message_file_low_res = ptb_episode_3_video_message_file_low_res.url[0]
-                    if (ptb_episode_3_video_preview != null)
-                        ptb_episode_3_video_preview = ptb_episode_3_video_preview.url[0]
-
-                    if (ptb_episode_3_title != "") {
-                        var episode3 = await DataStore.save(new ResourceEpisode({
-                            episodeNumber: 3,
-                            type: "ky-episode",
-                            title: ptb_episode_3_title,
-                            lessonPlan: ptb_episode_3_lesson_plan,
-                            activityPage: ptb_episode_3_activity_page,
-                            videoHiRes: ptb_episode_3_video_message_file_high_res,
-                            videoLowRes: ptb_episode_3_video_message_file_low_res,
-                            videoPreview: ptb_episode_3_video_preview
-                        }))
-                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue, updated => {
-                            updated.episodes = updated.episodes.concat(episode3)
-                        }))
-                    }
-
-
-                    console.log("ep4")
-                    var ptb_episode_4_title
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_4_title")
-                            ptb_episode_4_title = item2.meta_value
-                    })
-
-                    var ptb_episode_4_lesson_plan
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_4_lesson_plan")
-                            ptb_episode_4_lesson_plan = item2.meta_value
-                    })
-
-                    var ptb_episode_4_activity_page
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_4_activity_page")
-                            ptb_episode_4_activity_page = item2.meta_value
-                    })
-
-                    var ptb_episode_4_video_message_file_high_res
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_4_video_message_file_high_res")
-                            ptb_episode_4_video_message_file_high_res = item2.meta_value
-                    })
-
-                    var ptb_episode_4_video_message_file_low_res
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_4_video_message_file_low_res")
-                            ptb_episode_4_video_message_file_low_res = item2.meta_value
-                    })
-
-                    var ptb_episode_4_video_preview
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_4_video_preview")
-                            ptb_episode_4_video_preview = item2.meta_value
-                    })
-
-                    ptb_episode_4_lesson_plan = this.unserialize(ptb_episode_4_lesson_plan)
-                    ptb_episode_4_activity_page = this.unserialize(ptb_episode_4_activity_page)
-                    ptb_episode_4_video_message_file_high_res = this.unserialize(ptb_episode_4_video_message_file_high_res)
-                    ptb_episode_4_video_message_file_low_res = this.unserialize(ptb_episode_4_video_message_file_low_res)
-                    ptb_episode_4_video_preview = this.unserialize(ptb_episode_4_video_preview)
-
-                    if (ptb_episode_4_lesson_plan != null)
-                        ptb_episode_4_lesson_plan = ptb_episode_4_lesson_plan.url[0]
-                    if (ptb_episode_4_activity_page != null)
-                        ptb_episode_4_activity_page = ptb_episode_4_activity_page.url[0]
-                    if (ptb_episode_4_video_message_file_high_res != null)
-                        ptb_episode_4_video_message_file_high_res = ptb_episode_4_video_message_file_high_res.url[0]
-                    if (ptb_episode_4_video_message_file_low_res != null)
-                        ptb_episode_4_video_message_file_low_res = ptb_episode_4_video_message_file_low_res.url[0]
-                    if (ptb_episode_4_video_preview != null)
-                        ptb_episode_4_video_preview = ptb_episode_4_video_preview.url[0]
-
-                    if (ptb_episode_4_title != "") {
-                        var episode4 = await DataStore.save(new ResourceEpisode({
-                            episodeNumber: 4,
-                            type: "ky-episode",
-                            title: ptb_episode_4_title,
-                            lessonPlan: ptb_episode_4_lesson_plan,
-                            activityPage: ptb_episode_4_activity_page,
-                            videoHiRes: ptb_episode_4_video_message_file_high_res,
-                            videoLowRes: ptb_episode_4_video_message_file_low_res,
-                            videoPreview: ptb_episode_4_video_preview
-                        }))
-                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue, updated => {
-                            updated.episodes = updated.episodes.concat(episode4)
-                        }))
-                    }
-
-
-                    console.log("ep5")
-                    var ptb_episode_5_title
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_5_title")
-                            ptb_episode_5_title = item2.meta_value
-                    })
-
-                    var ptb_episode_5_lesson_plan
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_5_lesson_plan")
-                            ptb_episode_5_lesson_plan = item2.meta_value
-                    })
-
-                    var ptb_episode_5_activity_page
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_5_activity_page")
-                            ptb_episode_5_activity_page = item2.meta_value
-                    })
-
-                    var ptb_episode_5_video_message_file_high_res
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_5_video_message_file_high_res")
-                            ptb_episode_5_video_message_file_high_res = item2.meta_value
-                    })
-
-                    var ptb_episode_5_video_message_file_low_res
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_5_video_message_file_low_res")
-                            ptb_episode_5_video_message_file_low_res = item2.meta_value
-                    })
-
-                    var ptb_episode_5_video_preview
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_5_video_preview")
-                            ptb_episode_5_video_preview = item2.meta_value
-                    })
-
-                    ptb_episode_5_lesson_plan = this.unserialize(ptb_episode_5_lesson_plan)
-                    ptb_episode_5_activity_page = this.unserialize(ptb_episode_5_activity_page)
-                    ptb_episode_5_video_message_file_high_res = this.unserialize(ptb_episode_5_video_message_file_high_res)
-                    ptb_episode_5_video_message_file_low_res = this.unserialize(ptb_episode_5_video_message_file_low_res)
-                    ptb_episode_5_video_preview = this.unserialize(ptb_episode_5_video_preview)
-
-                    if (ptb_episode_5_lesson_plan != null)
-                        ptb_episode_5_lesson_plan = ptb_episode_5_lesson_plan.url[0]
-                    if (ptb_episode_5_activity_page != null)
-                        ptb_episode_5_activity_page = ptb_episode_5_activity_page.url[0]
-                    if (ptb_episode_5_video_message_file_high_res != null)
-                        ptb_episode_5_video_message_file_high_res = ptb_episode_5_video_message_file_high_res.url[0]
-                    if (ptb_episode_5_video_message_file_low_res != null)
-                        ptb_episode_5_video_message_file_low_res = ptb_episode_5_video_message_file_low_res.url[0]
-                    if (ptb_episode_5_video_preview != null)
-                        ptb_episode_5_video_preview = ptb_episode_5_video_preview.url[0]
-
-                    if (ptb_episode_5_title != "") {
-                        var episode5 = await DataStore.save(new ResourceEpisode({
-                            episodeNumber: 5,
-                            type: "ky-episode",
-                            title: ptb_episode_5_title,
-                            lessonPlan: ptb_episode_5_lesson_plan,
-                            activityPage: ptb_episode_5_activity_page,
-                            videoHiRes: ptb_episode_5_video_message_file_high_res,
-                            videoLowRes: ptb_episode_5_video_message_file_low_res,
-                            videoPreview: ptb_episode_5_video_preview
-                        }))
-                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue, updated => {
-                            updated.episodes = updated.episodes.concat(episode5)
-                        }))
-                    }
-
-
-                    console.log("ep6")
-                    var ptb_episode_6_title
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_6_title")
-                            ptb_episode_6_title = item2.meta_value
-                    })
-
-                    var ptb_episode_6_lesson_plan
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_6_lesson_plan")
-                            ptb_episode_6_lesson_plan = item2.meta_value
-                    })
-
-                    var ptb_episode_6_activity_page
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_6_activity_page")
-                            ptb_episode_6_activity_page = item2.meta_value
-                    })
-
-                    var ptb_episode_6_video_message_file_high_res
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_6_video_message_file_high_res")
-                            ptb_episode_6_video_message_file_high_res = item2.meta_value
-                    })
-
-                    var ptb_episode_6_video_message_file_low_res
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_6_video_message_file_low_res")
-                            ptb_episode_6_video_message_file_low_res = item2.meta_value
-                    })
-
-                    var ptb_episode_6_video_preview
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_6_video_preview")
-                            ptb_episode_6_video_preview = item2.meta_value
-                    })
-
-                    ptb_episode_6_lesson_plan = this.unserialize(ptb_episode_6_lesson_plan)
-                    ptb_episode_6_activity_page = this.unserialize(ptb_episode_6_activity_page)
-                    ptb_episode_6_video_message_file_high_res = this.unserialize(ptb_episode_6_video_message_file_high_res)
-                    ptb_episode_6_video_message_file_low_res = this.unserialize(ptb_episode_6_video_message_file_low_res)
-                    ptb_episode_6_video_preview = this.unserialize(ptb_episode_6_video_preview)
-
-                    if (ptb_episode_6_lesson_plan != null)
-                        ptb_episode_6_lesson_plan = ptb_episode_6_lesson_plan.url[0]
-                    if (ptb_episode_6_activity_page != null)
-                        ptb_episode_6_activity_page = ptb_episode_6_activity_page.url[0]
-                    if (ptb_episode_6_video_message_file_high_res != null)
-                        ptb_episode_6_video_message_file_high_res = ptb_episode_6_video_message_file_high_res.url[0]
-                    if (ptb_episode_6_video_message_file_low_res != null)
-                        ptb_episode_6_video_message_file_low_res = ptb_episode_6_video_message_file_low_res.url[0]
-                    if (ptb_episode_6_video_preview != null)
-                        ptb_episode_6_video_preview = ptb_episode_6_video_preview.url[0]
-
-                    if (ptb_episode_6_title != "") {
-                        var episode6 = await DataStore.save(new ResourceEpisode({
-                            episodeNumber: 6,
-                            type: "ky-episode",
-                            title: ptb_episode_6_title,
-                            lessonPlan: ptb_episode_6_lesson_plan,
-                            activityPage: ptb_episode_6_activity_page,
-                            videoHiRes: ptb_episode_6_video_message_file_high_res,
-                            videoLowRes: ptb_episode_6_video_message_file_low_res,
-                            videoPreview: ptb_episode_6_video_preview
-                        }))
-                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue, updated => {
-                            updated.episodes = updated.episodes.concat(episode6)
-                        }))
-                    }
-                    console.log("ep7")
-
-                    var ptb_episode_7_title
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_7_title")
-                            ptb_episode_7_title = item2.meta_value
+                if (ptb_series_playlist.substring(0, 3) == "<im") {
+                    jsonValue = ResourceSeries.copyOf(jsonValue, updated => {
+                        updated.playlist = "",
+                            updated.playlistImage = ptb_series_playlist.substring(ptb_series_playlist.indexOf("src=\"") + 5, ptb_series_playlist.indexOf("\"", ptb_series_playlist.indexOf("src=\"") + 5))
 
                     })
-                    if (ptb_episode_7_title == undefined)
-                        ptb_episode_7_title = ""
-                    var ptb_episode_7_lesson_plan
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_7_lesson_plan")
-                            ptb_episode_7_lesson_plan = item2.meta_value
+                }
+                if (jsonValue.playlist.substring(0, 3) == "me ") {
+                    jsonValue = ResourceSeries.copyOf(jsonValue, updated => {
+                        updated.playlist = "",
+                            updated.playlistImage = ptb_series_playlist.substring(ptb_series_playlist.indexOf("embed/") + 6, ptb_series_playlist.indexOf("?", ptb_series_playlist.indexOf("embed/") + 6))
+
                     })
-
-                    var ptb_episode_7_activity_page
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_7_activity_page")
-                            ptb_episode_7_activity_page = item2.meta_value
+                }
+                if (jsonValue.playlist.substring(0, 17) == "https://youtu.be/") {
+                    jsonValue = ResourceSeries.copyOf(jsonValue, updated => {
+                        updated.playlist = "",
+                            updated.playlistImage = ptb_series_playlist.substring(ptb_series_playlist.indexOf("/"))
                     })
-
-                    var ptb_episode_7_video_message_file_high_res
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_7_video_message_file_high_res")
-                            ptb_episode_7_video_message_file_high_res = item2.meta_value
-                    })
-
-                    var ptb_episode_7_video_message_file_low_res
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_7_video_message_file_low_res")
-                            ptb_episode_7_video_message_file_low_res = item2.meta_value
-                    })
-
-                    var ptb_episode_7_video_preview
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_7_video_preview")
-                            ptb_episode_7_video_preview = item2.meta_value
-                    })
-
-                    ptb_episode_7_lesson_plan = this.unserialize(ptb_episode_7_lesson_plan)
-                    ptb_episode_7_activity_page = this.unserialize(ptb_episode_7_activity_page)
-                    ptb_episode_7_video_message_file_high_res = this.unserialize(ptb_episode_7_video_message_file_high_res)
-                    ptb_episode_7_video_message_file_low_res = this.unserialize(ptb_episode_7_video_message_file_low_res)
-                    ptb_episode_7_video_preview = this.unserialize(ptb_episode_7_video_preview)
-
-                    if (ptb_episode_7_lesson_plan != null)
-                        ptb_episode_7_lesson_plan = ptb_episode_7_lesson_plan.url[0]
-                    if (ptb_episode_7_activity_page != null)
-                        ptb_episode_7_activity_page = ptb_episode_7_activity_page.url[0]
-                    if (ptb_episode_7_video_message_file_high_res != null)
-                        ptb_episode_7_video_message_file_high_res = ptb_episode_7_video_message_file_high_res.url[0]
-                    if (ptb_episode_7_video_message_file_low_res != null)
-                        ptb_episode_7_video_message_file_low_res = ptb_episode_7_video_message_file_low_res.url[0]
-                    if (ptb_episode_7_video_preview != null)
-                        ptb_episode_7_video_preview = ptb_episode_7_video_preview.url[0]
-
-                    if (ptb_episode_7_title != "") {
-                        var episode7 = await DataStore.save(new ResourceEpisode({
-                            episodeNumber: 7,
-                            type: "ky-episode",
-                            title: ptb_episode_7_title,
-                            lessonPlan: ptb_episode_7_lesson_plan,
-                            activityPage: ptb_episode_7_activity_page,
-                            videoHiRes: ptb_episode_7_video_message_file_high_res,
-                            videoLowRes: ptb_episode_7_video_message_file_low_res,
-                            videoPreview: ptb_episode_7_video_preview
-                        }))
-                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue, updated => {
-                            updated.episodes = updated.episodes.concat(episode7)
-                        }))
-                    }
-
-                    console.log("ep8")
-
-                    var ptb_episode_8_title
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_8_title")
-                            ptb_episode_8_title = item2.meta_value
-                    })
-                    if (ptb_episode_8_title == undefined)
-                        ptb_episode_8_title = ""
-                    var ptb_episode_8_lesson_plan
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_8_lesson_plan")
-                            ptb_episode_8_lesson_plan = item2.meta_value
-                    })
-
-                    var ptb_episode_8_activity_page
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_8_activity_page")
-                            ptb_episode_8_activity_page = item2.meta_value
-                    })
-
-                    var ptb_episode_8_video_message_file_high_res
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_8_video_message_file_high_res")
-                            ptb_episode_8_video_message_file_high_res = item2.meta_value
-                    })
-
-                    var ptb_episode_8_video_message_file_low_res
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_8_video_message_file_low_res")
-                            ptb_episode_8_video_message_file_low_res = item2.meta_value
-                    })
-
-                    var ptb_episode_8_video_preview
-                    item.postmeta.forEach((item2: any) => {
-                        if (item2.meta_key == "ptb_episode_8_video_preview")
-                            ptb_episode_8_video_preview = item2.meta_value
-                    })
-
-                    ptb_episode_8_lesson_plan = this.unserialize(ptb_episode_8_lesson_plan)
-                    ptb_episode_8_activity_page = this.unserialize(ptb_episode_8_activity_page)
-                    ptb_episode_8_video_message_file_high_res = this.unserialize(ptb_episode_8_video_message_file_high_res)
-                    ptb_episode_8_video_message_file_low_res = this.unserialize(ptb_episode_8_video_message_file_low_res)
-                    ptb_episode_8_video_preview = this.unserialize(ptb_episode_8_video_preview)
-
-                    if (ptb_episode_8_lesson_plan != null)
-                        ptb_episode_8_lesson_plan = ptb_episode_8_lesson_plan.url[0]
-                    if (ptb_episode_8_activity_page != null)
-                        ptb_episode_8_activity_page = ptb_episode_8_activity_page.url[0]
-                    if (ptb_episode_8_video_message_file_high_res != null)
-                        ptb_episode_8_video_message_file_high_res = ptb_episode_8_video_message_file_high_res.url[0]
-                    if (ptb_episode_8_video_message_file_low_res != null)
-                        ptb_episode_8_video_message_file_low_res = ptb_episode_8_video_message_file_low_res.url[0]
-                    if (ptb_episode_8_video_preview != null)
-                        ptb_episode_8_video_preview = ptb_episode_8_video_preview.url[0]
-
-                    if (ptb_episode_8_title != "") {
-                        var episode8 = await DataStore.save(new ResourceEpisode({
-                            episodeNumber: 8,
-                            type: "ky-episode",
-                            title: ptb_episode_8_title,
-                            lessonPlan: ptb_episode_8_lesson_plan,
-                            activityPage: ptb_episode_8_activity_page,
-                            videoHiRes: ptb_episode_8_video_message_file_high_res,
-                            videoLowRes: ptb_episode_8_video_message_file_low_res,
-                            videoPreview: ptb_episode_8_video_preview
-                        }))
-                        jsonValue = await DataStore.save(ResourceSeries.copyOf(jsonValue, updated => {
-                            updated.episodes = updated.episodes.concat(episode8)
-                        }))
-                    }
-
-
-
-
-                    return { jsonValue }
-
-
-
 
                 }
+                if (jsonValue.playlist.substring(0, 3) != "PLB") {
+                    jsonValue = ResourceSeries.copyOf(jsonValue, updated => {
+                        updated.playlist = ""
+
+                    })
+                    // console.log(ptb_series_playlist)
+
+                }
+                console.log("ep1")
+                var ptb_episode_1_title
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_1_title")
+                        ptb_episode_1_title = item2.meta_value
+                })
+
+                var ptb_episode_1_lesson_plan
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_1_lesson_plan")
+                        ptb_episode_1_lesson_plan = item2.meta_value
+                })
+
+                var ptb_episode_1_activity_page
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_1_activity_page")
+                        ptb_episode_1_activity_page = item2.meta_value
+                })
+
+                var ptb_episode_1_video_message_file_high_res
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_1_video_message_file_high_res")
+                        ptb_episode_1_video_message_file_high_res = item2.meta_value
+                })
+
+                var ptb_episode_1_video_message_file_low_res
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_1_video_message_file_low_res")
+                        ptb_episode_1_video_message_file_low_res = item2.meta_value
+                })
+
+                var ptb_episode_1_video_preview
+
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_1_video_preview")
+                        ptb_episode_1_video_preview = item2.meta_value
+                })
+                ptb_episode_1_lesson_plan = this.unserialize(ptb_episode_1_lesson_plan)
+                ptb_episode_1_activity_page = this.unserialize(ptb_episode_1_activity_page)
+                ptb_episode_1_video_message_file_high_res = this.unserialize(ptb_episode_1_video_message_file_high_res)
+                ptb_episode_1_video_message_file_low_res = this.unserialize(ptb_episode_1_video_message_file_low_res)
+                ptb_episode_1_video_preview = this.unserialize(ptb_episode_1_video_preview)
+
+                if (ptb_episode_1_lesson_plan != null)
+                    ptb_episode_1_lesson_plan = ptb_episode_1_lesson_plan.url[0]
+                if (ptb_episode_1_activity_page != null)
+                    ptb_episode_1_activity_page = ptb_episode_1_activity_page.url[0]
+                if (ptb_episode_1_video_message_file_high_res != null)
+                    ptb_episode_1_video_message_file_high_res = ptb_episode_1_video_message_file_high_res.url[0]
+                if (ptb_episode_1_video_message_file_low_res != null)
+                    ptb_episode_1_video_message_file_low_res = ptb_episode_1_video_message_file_low_res.url[0]
+                if (ptb_episode_1_video_preview != null)
+                    ptb_episode_1_video_preview = ptb_episode_1_video_preview.url[0]
+
+                if (ptb_episode_1_title != "") {
+                    var episode1 = new ResourceEpisode({
+                        episodeNumber: 1,
+                        type: "ky-episode",
+                        title: ptb_episode_1_title,
+                        lessonPlan: ptb_episode_1_lesson_plan,
+                        activityPage: ptb_episode_1_activity_page,
+                        videoHiRes: ptb_episode_1_video_message_file_high_res,
+                        videoLowRes: ptb_episode_1_video_message_file_low_res,
+                        videoPreview: ptb_episode_1_video_preview,
+                        episodeID: jsonValue.id
+                    })
+
+                }
+                console.log("ep2")
+                var ptb_episode_2_title
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_2_title")
+                        ptb_episode_2_title = item2.meta_value
+                })
+
+                var ptb_episode_2_lesson_plan
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_2_lesson_plan")
+                        ptb_episode_2_lesson_plan = item2.meta_value
+                })
+
+                var ptb_episode_2_activity_page
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_2_activity_page")
+                        ptb_episode_2_activity_page = item2.meta_value
+                })
+
+                var ptb_episode_2_video_message_file_high_res
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_2_video_message_file_high_res")
+                        ptb_episode_2_video_message_file_high_res = item2.meta_value
+                })
+
+                var ptb_episode_2_video_message_file_low_res
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_2_video_message_file_low_res")
+                        ptb_episode_2_video_message_file_low_res = item2.meta_value
+                })
+
+                var ptb_episode_2_video_preview
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_2_video_preview")
+                        ptb_episode_2_video_preview = item2.meta_value
+                })
+
+                ptb_episode_2_lesson_plan = this.unserialize(ptb_episode_2_lesson_plan)
+                ptb_episode_2_activity_page = this.unserialize(ptb_episode_2_activity_page)
+                ptb_episode_2_video_message_file_high_res = this.unserialize(ptb_episode_2_video_message_file_high_res)
+                ptb_episode_2_video_message_file_low_res = this.unserialize(ptb_episode_2_video_message_file_low_res)
+                ptb_episode_2_video_preview = this.unserialize(ptb_episode_2_video_preview)
+
+                if (ptb_episode_2_lesson_plan != null)
+                    ptb_episode_2_lesson_plan = ptb_episode_2_lesson_plan.url[0]
+                if (ptb_episode_2_activity_page != null)
+                    ptb_episode_2_activity_page = ptb_episode_2_activity_page.url[0]
+                if (ptb_episode_2_video_message_file_high_res != null)
+                    ptb_episode_2_video_message_file_high_res = ptb_episode_2_video_message_file_high_res.url[0]
+                if (ptb_episode_2_video_message_file_low_res != null)
+                    ptb_episode_2_video_message_file_low_res = ptb_episode_2_video_message_file_low_res.url[0]
+                if (ptb_episode_2_video_preview != null)
+                    ptb_episode_2_video_preview = ptb_episode_2_video_preview.url[0]
+
+                if (ptb_episode_2_title != "") {
+                    var episode2 = new ResourceEpisode({
+                        episodeNumber: 2,
+                        type: "ky-episode",
+                        title: ptb_episode_2_title,
+                        lessonPlan: ptb_episode_2_lesson_plan,
+                        activityPage: ptb_episode_2_activity_page,
+                        videoHiRes: ptb_episode_2_video_message_file_high_res,
+                        videoLowRes: ptb_episode_2_video_message_file_low_res,
+                        videoPreview: ptb_episode_2_video_preview,
+                        episodeID: jsonValue.id
+                    })
+
+                }
+
+                console.log("ep3")
+                var ptb_episode_3_title
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_3_title")
+                        ptb_episode_3_title = item2.meta_value
+                })
+
+                var ptb_episode_3_lesson_plan
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_3_lesson_plan")
+                        ptb_episode_3_lesson_plan = item2.meta_value
+                })
+
+                var ptb_episode_3_activity_page
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_3_activity_page")
+                        ptb_episode_3_activity_page = item2.meta_value
+                })
+
+                var ptb_episode_3_video_message_file_high_res
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_3_video_message_file_high_res")
+                        ptb_episode_3_video_message_file_high_res = item2.meta_value
+                })
+
+                var ptb_episode_3_video_message_file_low_res
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_3_video_message_file_low_res")
+                        ptb_episode_3_video_message_file_low_res = item2.meta_value
+                })
+
+                var ptb_episode_3_video_preview
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_3_video_preview")
+                        ptb_episode_3_video_preview = item2.meta_value
+                })
+
+                ptb_episode_3_lesson_plan = this.unserialize(ptb_episode_3_lesson_plan)
+                ptb_episode_3_activity_page = this.unserialize(ptb_episode_3_activity_page)
+                ptb_episode_3_video_message_file_high_res = this.unserialize(ptb_episode_3_video_message_file_high_res)
+                ptb_episode_3_video_message_file_low_res = this.unserialize(ptb_episode_3_video_message_file_low_res)
+                ptb_episode_3_video_preview = this.unserialize(ptb_episode_3_video_preview)
+
+                if (ptb_episode_3_lesson_plan != null)
+                    ptb_episode_3_lesson_plan = ptb_episode_3_lesson_plan.url[0]
+                if (ptb_episode_3_activity_page != null)
+                    ptb_episode_3_activity_page = ptb_episode_3_activity_page.url[0]
+                if (ptb_episode_3_video_message_file_high_res != null)
+                    ptb_episode_3_video_message_file_high_res = ptb_episode_3_video_message_file_high_res.url[0]
+                if (ptb_episode_3_video_message_file_low_res != null)
+                    ptb_episode_3_video_message_file_low_res = ptb_episode_3_video_message_file_low_res.url[0]
+                if (ptb_episode_3_video_preview != null)
+                    ptb_episode_3_video_preview = ptb_episode_3_video_preview.url[0]
+
+                if (ptb_episode_3_title != "") {
+                    var episode3 = new ResourceEpisode({
+                        episodeNumber: 3,
+                        type: "ky-episode",
+                        title: ptb_episode_3_title,
+                        lessonPlan: ptb_episode_3_lesson_plan,
+                        activityPage: ptb_episode_3_activity_page,
+                        videoHiRes: ptb_episode_3_video_message_file_high_res,
+                        videoLowRes: ptb_episode_3_video_message_file_low_res,
+                        videoPreview: ptb_episode_3_video_preview,
+                        episodeID: jsonValue.id
+                    })
+
+                }
+
+
+                console.log("ep4")
+                var ptb_episode_4_title
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_4_title")
+                        ptb_episode_4_title = item2.meta_value
+                })
+
+                var ptb_episode_4_lesson_plan
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_4_lesson_plan")
+                        ptb_episode_4_lesson_plan = item2.meta_value
+                })
+
+                var ptb_episode_4_activity_page
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_4_activity_page")
+                        ptb_episode_4_activity_page = item2.meta_value
+                })
+
+                var ptb_episode_4_video_message_file_high_res
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_4_video_message_file_high_res")
+                        ptb_episode_4_video_message_file_high_res = item2.meta_value
+                })
+
+                var ptb_episode_4_video_message_file_low_res
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_4_video_message_file_low_res")
+                        ptb_episode_4_video_message_file_low_res = item2.meta_value
+                })
+
+                var ptb_episode_4_video_preview
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_4_video_preview")
+                        ptb_episode_4_video_preview = item2.meta_value
+                })
+
+                ptb_episode_4_lesson_plan = this.unserialize(ptb_episode_4_lesson_plan)
+                ptb_episode_4_activity_page = this.unserialize(ptb_episode_4_activity_page)
+                ptb_episode_4_video_message_file_high_res = this.unserialize(ptb_episode_4_video_message_file_high_res)
+                ptb_episode_4_video_message_file_low_res = this.unserialize(ptb_episode_4_video_message_file_low_res)
+                ptb_episode_4_video_preview = this.unserialize(ptb_episode_4_video_preview)
+
+                if (ptb_episode_4_lesson_plan != null)
+                    ptb_episode_4_lesson_plan = ptb_episode_4_lesson_plan.url[0]
+                if (ptb_episode_4_activity_page != null)
+                    ptb_episode_4_activity_page = ptb_episode_4_activity_page.url[0]
+                if (ptb_episode_4_video_message_file_high_res != null)
+                    ptb_episode_4_video_message_file_high_res = ptb_episode_4_video_message_file_high_res.url[0]
+                if (ptb_episode_4_video_message_file_low_res != null)
+                    ptb_episode_4_video_message_file_low_res = ptb_episode_4_video_message_file_low_res.url[0]
+                if (ptb_episode_4_video_preview != null)
+                    ptb_episode_4_video_preview = ptb_episode_4_video_preview.url[0]
+
+                if (ptb_episode_4_title != "") {
+                    var episode4 = new ResourceEpisode({
+                        episodeNumber: 4,
+                        type: "ky-episode",
+                        title: ptb_episode_4_title,
+                        lessonPlan: ptb_episode_4_lesson_plan,
+                        activityPage: ptb_episode_4_activity_page,
+                        videoHiRes: ptb_episode_4_video_message_file_high_res,
+                        videoLowRes: ptb_episode_4_video_message_file_low_res,
+                        videoPreview: ptb_episode_4_video_preview,
+                        episodeID: jsonValue.id
+                    })
+
+                }
+
+
+                console.log("ep5")
+                var ptb_episode_5_title
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_5_title")
+                        ptb_episode_5_title = item2.meta_value
+                })
+
+                var ptb_episode_5_lesson_plan
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_5_lesson_plan")
+                        ptb_episode_5_lesson_plan = item2.meta_value
+                })
+
+                var ptb_episode_5_activity_page
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_5_activity_page")
+                        ptb_episode_5_activity_page = item2.meta_value
+                })
+
+                var ptb_episode_5_video_message_file_high_res
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_5_video_message_file_high_res")
+                        ptb_episode_5_video_message_file_high_res = item2.meta_value
+                })
+
+                var ptb_episode_5_video_message_file_low_res
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_5_video_message_file_low_res")
+                        ptb_episode_5_video_message_file_low_res = item2.meta_value
+                })
+
+                var ptb_episode_5_video_preview
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_5_video_preview")
+                        ptb_episode_5_video_preview = item2.meta_value
+                })
+
+                ptb_episode_5_lesson_plan = this.unserialize(ptb_episode_5_lesson_plan)
+                ptb_episode_5_activity_page = this.unserialize(ptb_episode_5_activity_page)
+                ptb_episode_5_video_message_file_high_res = this.unserialize(ptb_episode_5_video_message_file_high_res)
+                ptb_episode_5_video_message_file_low_res = this.unserialize(ptb_episode_5_video_message_file_low_res)
+                ptb_episode_5_video_preview = this.unserialize(ptb_episode_5_video_preview)
+
+                if (ptb_episode_5_lesson_plan != null)
+                    ptb_episode_5_lesson_plan = ptb_episode_5_lesson_plan.url[0]
+                if (ptb_episode_5_activity_page != null)
+                    ptb_episode_5_activity_page = ptb_episode_5_activity_page.url[0]
+                if (ptb_episode_5_video_message_file_high_res != null)
+                    ptb_episode_5_video_message_file_high_res = ptb_episode_5_video_message_file_high_res.url[0]
+                if (ptb_episode_5_video_message_file_low_res != null)
+                    ptb_episode_5_video_message_file_low_res = ptb_episode_5_video_message_file_low_res.url[0]
+                if (ptb_episode_5_video_preview != null)
+                    ptb_episode_5_video_preview = ptb_episode_5_video_preview.url[0]
+
+                if (ptb_episode_5_title != "") {
+                    var episode5 = new ResourceEpisode({
+                        episodeNumber: 5,
+                        type: "ky-episode",
+                        title: ptb_episode_5_title,
+                        lessonPlan: ptb_episode_5_lesson_plan,
+                        activityPage: ptb_episode_5_activity_page,
+                        videoHiRes: ptb_episode_5_video_message_file_high_res,
+                        videoLowRes: ptb_episode_5_video_message_file_low_res,
+                        videoPreview: ptb_episode_5_video_preview,
+                        episodeID: jsonValue.id
+                    })
+
+                }
+
+
+                console.log("ep6")
+                var ptb_episode_6_title
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_6_title")
+                        ptb_episode_6_title = item2.meta_value
+                })
+
+                var ptb_episode_6_lesson_plan
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_6_lesson_plan")
+                        ptb_episode_6_lesson_plan = item2.meta_value
+                })
+
+                var ptb_episode_6_activity_page
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_6_activity_page")
+                        ptb_episode_6_activity_page = item2.meta_value
+                })
+
+                var ptb_episode_6_video_message_file_high_res
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_6_video_message_file_high_res")
+                        ptb_episode_6_video_message_file_high_res = item2.meta_value
+                })
+
+                var ptb_episode_6_video_message_file_low_res
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_6_video_message_file_low_res")
+                        ptb_episode_6_video_message_file_low_res = item2.meta_value
+                })
+
+                var ptb_episode_6_video_preview
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_6_video_preview")
+                        ptb_episode_6_video_preview = item2.meta_value
+                })
+
+                ptb_episode_6_lesson_plan = this.unserialize(ptb_episode_6_lesson_plan)
+                ptb_episode_6_activity_page = this.unserialize(ptb_episode_6_activity_page)
+                ptb_episode_6_video_message_file_high_res = this.unserialize(ptb_episode_6_video_message_file_high_res)
+                ptb_episode_6_video_message_file_low_res = this.unserialize(ptb_episode_6_video_message_file_low_res)
+                ptb_episode_6_video_preview = this.unserialize(ptb_episode_6_video_preview)
+
+                if (ptb_episode_6_lesson_plan != null)
+                    ptb_episode_6_lesson_plan = ptb_episode_6_lesson_plan.url[0]
+                if (ptb_episode_6_activity_page != null)
+                    ptb_episode_6_activity_page = ptb_episode_6_activity_page.url[0]
+                if (ptb_episode_6_video_message_file_high_res != null)
+                    ptb_episode_6_video_message_file_high_res = ptb_episode_6_video_message_file_high_res.url[0]
+                if (ptb_episode_6_video_message_file_low_res != null)
+                    ptb_episode_6_video_message_file_low_res = ptb_episode_6_video_message_file_low_res.url[0]
+                if (ptb_episode_6_video_preview != null)
+                    ptb_episode_6_video_preview = ptb_episode_6_video_preview.url[0]
+
+                if (ptb_episode_6_title != "") {
+                    var episode6 = new ResourceEpisode({
+                        episodeNumber: 6,
+                        type: "ky-episode",
+                        title: ptb_episode_6_title,
+                        lessonPlan: ptb_episode_6_lesson_plan,
+                        activityPage: ptb_episode_6_activity_page,
+                        videoHiRes: ptb_episode_6_video_message_file_high_res,
+                        videoLowRes: ptb_episode_6_video_message_file_low_res,
+                        videoPreview: ptb_episode_6_video_preview,
+                        episodeID: jsonValue.id
+                    })
+
+                }
+                console.log("ep7")
+
+                var ptb_episode_7_title
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_7_title")
+                        ptb_episode_7_title = item2.meta_value
+
+                })
+                if (ptb_episode_7_title == undefined)
+                    ptb_episode_7_title = ""
+                var ptb_episode_7_lesson_plan
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_7_lesson_plan")
+                        ptb_episode_7_lesson_plan = item2.meta_value
+                })
+
+                var ptb_episode_7_activity_page
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_7_activity_page")
+                        ptb_episode_7_activity_page = item2.meta_value
+                })
+
+                var ptb_episode_7_video_message_file_high_res
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_7_video_message_file_high_res")
+                        ptb_episode_7_video_message_file_high_res = item2.meta_value
+                })
+
+                var ptb_episode_7_video_message_file_low_res
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_7_video_message_file_low_res")
+                        ptb_episode_7_video_message_file_low_res = item2.meta_value
+                })
+
+                var ptb_episode_7_video_preview
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_7_video_preview")
+                        ptb_episode_7_video_preview = item2.meta_value
+                })
+
+                ptb_episode_7_lesson_plan = this.unserialize(ptb_episode_7_lesson_plan)
+                ptb_episode_7_activity_page = this.unserialize(ptb_episode_7_activity_page)
+                ptb_episode_7_video_message_file_high_res = this.unserialize(ptb_episode_7_video_message_file_high_res)
+                ptb_episode_7_video_message_file_low_res = this.unserialize(ptb_episode_7_video_message_file_low_res)
+                ptb_episode_7_video_preview = this.unserialize(ptb_episode_7_video_preview)
+
+                if (ptb_episode_7_lesson_plan != null)
+                    ptb_episode_7_lesson_plan = ptb_episode_7_lesson_plan.url[0]
+                if (ptb_episode_7_activity_page != null)
+                    ptb_episode_7_activity_page = ptb_episode_7_activity_page.url[0]
+                if (ptb_episode_7_video_message_file_high_res != null)
+                    ptb_episode_7_video_message_file_high_res = ptb_episode_7_video_message_file_high_res.url[0]
+                if (ptb_episode_7_video_message_file_low_res != null)
+                    ptb_episode_7_video_message_file_low_res = ptb_episode_7_video_message_file_low_res.url[0]
+                if (ptb_episode_7_video_preview != null)
+                    ptb_episode_7_video_preview = ptb_episode_7_video_preview.url[0]
+
+                if (ptb_episode_7_title != "") {
+                    var episode7 = new ResourceEpisode({
+                        episodeNumber: 7,
+                        type: "ky-episode",
+                        title: ptb_episode_7_title,
+                        lessonPlan: ptb_episode_7_lesson_plan,
+                        activityPage: ptb_episode_7_activity_page,
+                        videoHiRes: ptb_episode_7_video_message_file_high_res,
+                        videoLowRes: ptb_episode_7_video_message_file_low_res,
+                        videoPreview: ptb_episode_7_video_preview,
+                        episodeID: jsonValue.id
+                    })
+
+                }
+
+                console.log("ep8")
+
+                var ptb_episode_8_title
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_8_title")
+                        ptb_episode_8_title = item2.meta_value
+                })
+                if (ptb_episode_8_title == undefined)
+                    ptb_episode_8_title = ""
+                var ptb_episode_8_lesson_plan
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_8_lesson_plan")
+                        ptb_episode_8_lesson_plan = item2.meta_value
+                })
+
+                var ptb_episode_8_activity_page
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_8_activity_page")
+                        ptb_episode_8_activity_page = item2.meta_value
+                })
+
+                var ptb_episode_8_video_message_file_high_res
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_8_video_message_file_high_res")
+                        ptb_episode_8_video_message_file_high_res = item2.meta_value
+                })
+
+                var ptb_episode_8_video_message_file_low_res
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_8_video_message_file_low_res")
+                        ptb_episode_8_video_message_file_low_res = item2.meta_value
+                })
+
+                var ptb_episode_8_video_preview
+                item.postmeta.forEach((item2: any) => {
+                    if (item2.meta_key == "ptb_episode_8_video_preview")
+                        ptb_episode_8_video_preview = item2.meta_value
+                })
+
+                ptb_episode_8_lesson_plan = this.unserialize(ptb_episode_8_lesson_plan)
+                ptb_episode_8_activity_page = this.unserialize(ptb_episode_8_activity_page)
+                ptb_episode_8_video_message_file_high_res = this.unserialize(ptb_episode_8_video_message_file_high_res)
+                ptb_episode_8_video_message_file_low_res = this.unserialize(ptb_episode_8_video_message_file_low_res)
+                ptb_episode_8_video_preview = this.unserialize(ptb_episode_8_video_preview)
+
+                if (ptb_episode_8_lesson_plan != null)
+                    ptb_episode_8_lesson_plan = ptb_episode_8_lesson_plan.url[0]
+                if (ptb_episode_8_activity_page != null)
+                    ptb_episode_8_activity_page = ptb_episode_8_activity_page.url[0]
+                if (ptb_episode_8_video_message_file_high_res != null)
+                    ptb_episode_8_video_message_file_high_res = ptb_episode_8_video_message_file_high_res.url[0]
+                if (ptb_episode_8_video_message_file_low_res != null)
+                    ptb_episode_8_video_message_file_low_res = ptb_episode_8_video_message_file_low_res.url[0]
+                if (ptb_episode_8_video_preview != null)
+                    ptb_episode_8_video_preview = ptb_episode_8_video_preview.url[0]
+
+                if (ptb_episode_8_title != "") {
+                    var episode8 = new ResourceEpisode({
+                        episodeNumber: 8,
+                        type: "ky-episode",
+                        title: ptb_episode_8_title,
+                        lessonPlan: ptb_episode_8_lesson_plan,
+                        activityPage: ptb_episode_8_activity_page,
+                        videoHiRes: ptb_episode_8_video_message_file_high_res,
+                        videoLowRes: ptb_episode_8_video_message_file_low_res,
+                        videoPreview: ptb_episode_8_video_preview,
+                        episodeID: jsonValue.id
+                    })
+
+                }
+
+
+
+
+                return { jsonValue }
+
+
+
+
             }
         })
+
         console.log("start end")
         async function asyncForEach(array, callback) {
             for (let index = 0; index < array.length; index++) {
@@ -931,64 +946,16 @@ class IndexApp extends React.Component<Props, State>{
             console.log("start end2")
 
 
-            var start1 = async () => {
-                await asyncForEach(res3.filter((z) => { if (z.jsonValue.type == "ky-srhigh") return z.jsonValue }), async (item) => {
-                    sr = await DataStore.save(Resource.copyOf(sr, updated => {
-                        updated.series = updated.series.concat(item.jsonValue)
 
-                    }))
-                    console.log(sr)
-                })
-            }
-
-            var start5 = async () => {
-                await asyncForEach(res3.filter((z) => { if (z.jsonValue.type == "ky-jrhigh") return z.jsonValue }), async (item) => {
-                    jr = await DataStore.save(Resource.copyOf(jr, updated => {
-                        updated.series = updated.series.concat(item.jsonValue)
-
-                    }))
-                    console.log(jr)
-                })
-            }
-            var start2 = async () => {
-                await asyncForEach(res3.filter((z) => { if (z.jsonValue.type == "ky-youth") return z.jsonValue }), async (item) => {
-                    youth = await DataStore.save(Resource.copyOf(youth, updated => {
-                        updated.series = updated.series.concat(item.jsonValue)
-
-                    }))
-                    console.log(youth)
-                })
-            }
-
-            var start3 = async () => {
-                await asyncForEach(res3.filter((z) => { if (z.jsonValue.type == "ky-kids") return z.jsonValue }), async (item) => {
-                    kids = await DataStore.save(Resource.copyOf(kids, updated => {
-                        updated.series = updated.series.concat(item.jsonValue)
-
-                    }))
-                    console.log(kids)
-                })
-            }
-
-
-            var start4 = async () => {
-                await asyncForEach(res3.filter((z) => { if (z.jsonValue.type == "ky-preschool") return z.jsonValue }), async (item) => {
-                    pre = await DataStore.save(Resource.copyOf(pre, updated => {
-                        updated.series = updated.series.concat(item.jsonValue)
-
-                    }))
-                    console.log(pre)
-                })
-            }
 
             Promise.all([start1(),
             start2(),
             start3(),
             start4(),
             start5()]).then(async () => {
-                getResourceRoot = await DataStore.save(ResourceRoot.copyOf(getResourceRoot[0], updated => {
+                getResourceRoot = await ResourceRoot.copyOf(getResourceRoot[0], updated => {
                     updated.resources = updated.resources.concat(jr, sr, kids, youth, pre)
-                }))
+                })
                 console.log("end")
                 console.log(getResourceRoot)
                 console.log("end")
@@ -1036,10 +1003,10 @@ class IndexApp extends React.Component<Props, State>{
     }
     else if (json.data.getVideoByYoutubeIdent.items.length === 1) {
      console.log(json)
-    
+     
      console.log("Do mutations.createVideo")
      delete vid1['id'];
-    
+     
      delete vid1['selected'];
      if (vid1.snippet.description === "")
        delete vid1.snippet['description']
@@ -1063,10 +1030,10 @@ class IndexApp extends React.Component<Props, State>{
          console.log(vid1)
        });
      }
-    
-    
-    
-    
+     
+     
+     
+     
     }).catch((err: any) => {
      console.log("Error queries.getVideoByYoutubeIdent: " + err);
      console.log(err)

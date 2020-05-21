@@ -11,7 +11,6 @@ import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import ResourceViewer from '../../components/ResourceViewer/ResourceViewer'
-import { withNavigation } from 'react-navigation';
 import { ResourceRoot, Resource, ResourceEpisode, ResourceSeries } from "../../src/models";
 interface Props { }
 interface State { }
@@ -74,4 +73,4 @@ class ResourceContent extends React.Component<Props, State>{
         )
     }
 }
-export default withNavigation(ResourceContent)
+export default ResourceContent

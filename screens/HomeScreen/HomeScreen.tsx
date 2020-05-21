@@ -3,7 +3,6 @@ import { Container } from 'native-base';
 import styles from '../../components/style'
 import { Platform } from 'react-native';
 import { Dimensions } from 'react-native'
-import { withNavigation } from 'react-navigation';
 
 const MyConversations = lazy(() => import('../../components/MyConversations/MyConversations'));
 const MyGroups = lazy(() => import('../../components/MyGroups/MyGroups'));
@@ -46,6 +45,8 @@ class HomeScreen extends React.Component<Props, State>{
     var data = this.state.mapData.concat(mapData)
     this.setState({ mapData: data })
   }
+
+
   render() {
     console.log("Homepage")
     return (
@@ -86,4 +87,4 @@ class HomeScreen extends React.Component<Props, State>{
     );
   }
 }
-export default withNavigation(HomeScreen)
+export default HomeScreen

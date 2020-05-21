@@ -113,14 +113,17 @@ describe('Login Page Test', () => {
 
             cy.get('[data-testid="homepage"]').should('be.visible')
             cy.get('[data-testId="mygroup-create-Events"]').last().click()
+            cy.contains("No Members Yet")
             cy.get('[data-testId="header-logo"]').last().click()
 
             cy.get('[data-testid="homepage"]').should('be.visible')
             cy.get('[data-testId="mygroup-create-Groups"]').last().click()
+            cy.contains("No Members Yet")
             cy.get('[data-testId="header-logo"]').last().click()
 
             cy.get('[data-testid="homepage"]').should('be.visible')
             cy.get('[data-testId="mygroup-create-Resources"]').last().click()
+            cy.contains("No Members Yet")
             cy.get('[data-testId="header-logo"]').last().click()
 
 

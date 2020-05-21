@@ -1,6 +1,6 @@
 import { Container, Content, Left, Body, Right, Button } from 'native-base';
 
-import { DrawerActions } from 'react-navigation-drawer';
+import { DrawerActions } from '@react-navigation/native';
 
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';

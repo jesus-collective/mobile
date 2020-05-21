@@ -18,13 +18,13 @@ import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import ResourceViewer from '../../components/ResourceViewer/ResourceViewer'
-import { withNavigation } from 'react-navigation';
 import { ResourceRoot, Resource, ResourceEpisode, ResourceSeries } from "../../src/models";
 import EditableRichText from '../Forms/EditableRichText'
 import { ResourceContext } from './ResourceContext';
 
 interface Props {
     navigation: any
+    route: any
 }
 interface State {
     showMap: boolean
@@ -48,8 +48,8 @@ class ResourceOverview extends React.Component<Props, State>{
 
         this.state = {
             showMap: false,
-            loadId: props.navigation.state.params.id,
-            createNew: props.navigation.state.params.create,
+            loadId: props.route.params.id,
+            createNew: props.route.params.create,
             data: null,
             canSave: true,
             canLeave: false,
@@ -78,7 +78,7 @@ class ResourceOverview extends React.Component<Props, State>{
         return key.length ? myObject[key[0]] : "";
     }
     setInitialData(props) {
-        if (props.navigation.state.params.create)
+        if (props.route.params.create)
             Auth.currentAuthenticatedUser().then((user: any) => {
                 var z: CreateGroupInput = {
                     id: "resource-" + Date.now(),
@@ -94,7 +94,7 @@ class ResourceOverview extends React.Component<Props, State>{
         else {
             var getGroup: any = API.graphql({
                 query: queries.getGroup,
-                variables: { id: props.navigation.state.params.id },
+                variables: { id: props.route.params.id },
                 authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
             });
             var processResults = (json) => {
@@ -275,4 +275,4 @@ class ResourceOverview extends React.Component<Props, State>{
         )
     }
 }
-export default withNavigation(ResourceOverview)
+export default ResourceOverview

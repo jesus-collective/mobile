@@ -1,6 +1,6 @@
 import { Container, Header, Left, Body, Right, Button } from 'native-base';
-import { withNavigation } from 'react-navigation';
-import { DrawerActions } from 'react-navigation-drawer';
+
+import { DrawerActions } from '@react-navigation/native';
 
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
@@ -80,4 +80,4 @@ class CourseSidebar extends React.Component<Props, State> {
         )
     }
 }
-export default withNavigation(CourseSidebar)
+export default CourseSidebar

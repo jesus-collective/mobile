@@ -5,7 +5,6 @@ import SignUpSidebar from '../../components/SignUpSidebar/SignUpSidebar'
 Amplify.configure(awsConfig);
 import { View, Input, Item, Label, Form, Content } from 'native-base';
 import { Text, Button, Dimensions } from 'react-native';
-import { NavigationScreenProp } from 'react-navigation';
 import styles from '../../components/style'
 import Constants from 'expo-constants';
 import * as mutations from '../../src/graphql/mutations';
@@ -14,7 +13,7 @@ import { Auth } from 'aws-amplify';
 
 import { Platform } from 'react-native';
 interface Props {
-  navigation?: NavigationScreenProp<any, any>,
+  navigation?: any
   authState?: any
   payStateChanged(): void
 }

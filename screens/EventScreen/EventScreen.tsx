@@ -28,6 +28,7 @@ const MessageBoard = lazy(() => import('../../components/MessageBoard/MessageBoa
 
 interface Props {
   navigation: any
+  route: any
 }
 interface State {
   showMap: boolean
@@ -52,8 +53,8 @@ export default class EventScreen extends React.Component<Props, State>{
 
     this.state = {
       showMap: false,
-      loadId: props.navigation.state.params.id,
-      createNew: props.navigation.state.params.create,
+      loadId: props.route.params.id,
+      createNew: props.route.params.create,
       data: null,
       canSave: false,
       canLeave: false,
@@ -99,7 +100,7 @@ export default class EventScreen extends React.Component<Props, State>{
     return key.length ? myObject[key[0]] : "";
   }
   setInitialData(props) {
-    if (props.navigation.state.params.create)
+    if (props.route.params.create)
       Auth.currentAuthenticatedUser().then((user: any) => {
         var z: CreateGroupInput = {
           id: "event-" + Date.now(),
@@ -117,7 +118,7 @@ export default class EventScreen extends React.Component<Props, State>{
     else {
       var getGroup: any = API.graphql({
         query: queries.getGroup,
-        variables: { id: props.navigation.state.params.id },
+        variables: { id: props.route.params.id },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       var processResults = (json) => {
@@ -291,11 +292,11 @@ export default class EventScreen extends React.Component<Props, State>{
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: 'Helvetica-Neue, sans-serif', color: '#333333', textTransform: "uppercase", flex: 0 }}>Event</Text>
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: 'Helvetica-Neue, sans-serif', color: '#979797', textTransform: "uppercase", flex: 0 }}>Sponsored</Text>
                   </Container>
-    
-                    <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Event Name" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
-                    <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Event Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
-                    <EditableDate type="datetime" onChange={(value: any) => { this.updateValue("time", value) }} placeholder="Enter Event Time" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableDate>
-          
+
+                  <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Event Name" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
+                  <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Event Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
+                  <EditableDate type="datetime" onChange={(value: any) => { this.updateValue("time", value) }} placeholder="Enter Event Time" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableDate>
+
                   {this.state.isEditable ? <Picker
                     mode="dropdown"
                     iosIcon={<Icon name="arrow-down" />}

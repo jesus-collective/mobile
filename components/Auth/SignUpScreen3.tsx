@@ -5,13 +5,12 @@ import MyProfile from '../../components/MyProfile/MyProfile'
 import SignUpSidebar from '../../components/SignUpSidebar/SignUpSidebar'
 Amplify.configure(awsConfig);
 import { View, Content } from 'native-base';
-import { NavigationScreenProp } from 'react-navigation';
 import styles from '../../components/style'
 import Constants from 'expo-constants';
 import { Dimensions } from 'react-native'
 
 interface Props {
-  navigation?: NavigationScreenProp<any, any>,
+  navigation?: any
   authState?: any
   profileComplete(): void
 

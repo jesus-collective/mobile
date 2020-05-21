@@ -8,10 +8,9 @@ Amplify.configure(awsConfig);
 import { Container } from 'native-base';
 
 import Header from '../../components/Header/Header'
-import { NavigationScreenProp } from 'react-navigation';
 
 interface Props {
-  navigation: NavigationScreenProp<any, any>
+  navigation: any
 }
 interface State {
 

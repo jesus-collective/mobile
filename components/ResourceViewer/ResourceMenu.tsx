@@ -1,5 +1,4 @@
 import { Header, Left, Body, Right, Button } from 'native-base';
-import { DrawerActions } from 'react-navigation-drawer';
 
 import { Ionicons } from '@expo/vector-icons';
 import React, { useRef } from 'react';
@@ -7,7 +6,6 @@ import { Image, Text } from 'react-native';
 import styles from '../Header/style'
 import { Auth } from 'aws-amplify';
 import { constants } from '../../src/constants'
-import { withNavigation } from 'react-navigation';
 import { ResourceContext } from './ResourceContext';
 import EditableButton from '../Forms/EditableButton'
 interface Props {
@@ -71,4 +69,4 @@ class ResourceMenu extends React.Component<Props, State> {
         )
     }
 }
-export default withNavigation(ResourceMenu)
+export default ResourceMenu

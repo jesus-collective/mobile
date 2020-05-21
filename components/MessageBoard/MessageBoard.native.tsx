@@ -19,12 +19,13 @@ import { Editor } from 'react-draft-wysiwyg';
 //import './MessageBoard.css';
 import { v1 as uuidv1 } from 'uuid';
 import ErrorBoundary from '../ErrorBoundry';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 
 interface Props {
   groupId: string
   navigation: any
-
+  route: any
 }
 interface State {
   data: any,
@@ -34,7 +35,7 @@ interface State {
   textHeight: any,
   editorState: any
 }
-export default class MessageBoard extends React.Component<Props, State> {
+class MessageBoard extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -77,7 +78,7 @@ export default class MessageBoard extends React.Component<Props, State> {
       console.log(e)
     }
 
-    if (props.navigation.state.params.create)
+    if (props.route.params.create)
       this.setState({ created: false })
     else {
 
@@ -231,4 +232,9 @@ export default class MessageBoard extends React.Component<Props, State> {
 
     )
   }
+}
+export default function (props) {
+  const route = useRoute();
+  const navigation = useNavigation()
+  return <MessageBoard {...props} navigation={navigation} route={route} />;
 }

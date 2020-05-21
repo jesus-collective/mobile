@@ -15,7 +15,6 @@ import { API, graphqlOperation, Auth, Analytics } from 'aws-amplify';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { constants } from '../../src/constants'
-import { Link } from '@react-navigation/web';
 import ErrorBoundry from '../../components/ErrorBoundry'
 var moment = require('moment');
 

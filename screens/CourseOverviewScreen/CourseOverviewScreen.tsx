@@ -24,6 +24,7 @@ const data = require('./course.json');
 
 interface Props {
   navigation: any
+  route: any
 }
 interface State {
   showMap: boolean
@@ -47,8 +48,8 @@ export default class CourseScreen extends React.Component<Props, State>{
 
     this.state = {
       showMap: false,
-      loadId: props.navigation.state.params.id,
-      createNew: props.navigation.state.params.create,
+      loadId: props.route.params.id,
+      createNew: props.route.params.create,
       data: null,
       canSave: true,
       canLeave: false,
@@ -62,7 +63,7 @@ export default class CourseScreen extends React.Component<Props, State>{
   }
 
   setInitialData(props) {
-    if (props.navigation.state.params.create)
+    if (props.route.params.create)
       Auth.currentAuthenticatedUser().then((user: any) => {
         var z: CreateGroupInput = {
           id: "course-" + Date.now(),
@@ -85,7 +86,7 @@ export default class CourseScreen extends React.Component<Props, State>{
     else {
       var getGroup: any = API.graphql({
         query: queries.getGroup,
-        variables: { id: props.navigation.state.params.id },
+        variables: { id: props.route.params.id },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
 

@@ -13,18 +13,20 @@ import * as subscriptions from '../../src/graphql/subscriptions';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import { API, graphqlOperation, Auth, Storage } from 'aws-amplify';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
-import { Editor } from 'react-draft-wysiwyg';
+import { Editor, convertToRaw, convertFromRaw } from 'react-draft-wysiwyg';
 import './react-draft-wysiwyg.css';
 //TODO FIGURE OUT WHY THIS DOESN"T WORK
 import './MessageBoard.css';
 import { v1 as uuidv1 } from 'uuid';
 import ErrorBoundary from '../ErrorBoundry';
+import { useNavigation } from '@react-navigation/native'
+import { useRoute } from '@react-navigation/native'
 
 
 interface Props {
   groupId: string
+  route: any
   navigation: any
-
 }
 interface State {
   data: any,
@@ -34,7 +36,8 @@ interface State {
   textHeight: any,
   editorState: any
 }
-export default class MessageBoard extends React.Component<Props, State> {
+
+class MessageBoard extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -45,6 +48,7 @@ export default class MessageBoard extends React.Component<Props, State> {
       textHeight: 10,
       editorState: null
     }
+
     this.setInitialData(props)
     const subscription: any = API.graphql(
       graphqlOperation(subscriptions.onCreateMessage, { roomId: this.props.groupId })
@@ -77,7 +81,7 @@ export default class MessageBoard extends React.Component<Props, State> {
       console.log(e)
     }
 
-    if (props.navigation.state.params.create)
+    if (props.route.params.create)
       this.setState({ created: false })
     else {
 
@@ -87,7 +91,7 @@ export default class MessageBoard extends React.Component<Props, State> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       var processMessages = (json) => {
-        //  console.log(json)
+        // console.log(json)
         this.setState({
           created: true,
           data: json.data.messagesByRoom,
@@ -189,8 +193,8 @@ export default class MessageBoard extends React.Component<Props, State> {
 
 
               {this.state.data.items.map((item: any) => {
-                return (
-                  <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
+                return (<ErrorBoundary key={item.id}>
+                  <TouchableOpacity onPress={() => { this.showProfile(item.author.id) }}>
                     <Card key={item.id} style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }}>
                       <CardItem style={{ borderBottomLeftRadius: 0, borderBottomRightRadius: 0, borderTopLeftRadius: 10, borderTopRightRadius: 10, backgroundColor: "#F9FAFC" }}>
                         <Left>
@@ -213,14 +217,21 @@ export default class MessageBoard extends React.Component<Props, State> {
                         <Editor
                           readOnly
                           toolbarHidden
-                          initialContentState={JSON.parse(item.content)}
+                          initialContentState={() => {
+                            try {
+                              return JSON.parse(item.content)
+                            }
+                            catch (e) { return null }
+                          }}
                           toolbarClassName="customToolbar"
                           wrapperClassName="customWrapper"
                           editorClassName="customEditor"
                         />
                       </CardItem>
                     </Card>
-                  </TouchableOpacity>)
+                  </TouchableOpacity>
+                </ErrorBoundary>
+                )
               })}
 
 
@@ -231,4 +242,9 @@ export default class MessageBoard extends React.Component<Props, State> {
 
     )
   }
+}
+export default function (props) {
+  const route = useRoute();
+  const navigation = useNavigation()
+  return <MessageBoard {...props} navigation={navigation} route={route} />;
 }
