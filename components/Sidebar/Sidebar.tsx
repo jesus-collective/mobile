@@ -69,19 +69,19 @@ export default class SideBar extends React.Component<Props, State> {
 
   render() {
     return (
-      <Container>
+      <Container style={{ width: "100%" }}>
         <Content>
         <Header style={{ backgroundColor: "#FFFFFF" }}></Header>
         <List
-          style={{ paddingRight: 20 }}
           dataArray={routes}
           keyExtractor={data => data.name}
           renderRow={data => {
             return (
               <ListItem
+                style={{ marginRight: 20 }}
                 button
                 onPress={() => this.props.navigation.push(data.route)}>
-                <Text>{data.name}</Text>
+                <Text style={{ fontFamily: "Graphik-Regular-App", fontSize: 18, lineHeight: 30, color: "#333333" }}>{data.name}</Text>
               </ListItem>
             );
           }}
