@@ -581,6 +581,19 @@ export default EStyleSheet.create({
         },
     },
 
+    '@media (min-width: 320px) and (max-width: 480px)': {
+        rightCardWidth: {
+            width: "100%"
+        }, 
+        dashboardLeftCard: {
+            flex: "auto", 
+        },
+        dashboardRightCard: {
+            flex: "auto", 
+            top: 800
+        },
+    },
+
     dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
     { height: 2300, flex: 1, display: "flex", flexDirection: "row" } :
     { flexDirection: "column", },
