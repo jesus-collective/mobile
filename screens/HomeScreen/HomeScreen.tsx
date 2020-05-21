@@ -55,15 +55,15 @@ class HomeScreen extends React.Component<Props, State>{
 
         <Container style={{ flexGrow: 1, overflow: "scroll" }}>
           <Container style={{ display: "block" }}>
-            <Container style={{ height: 2300, flex: 1, display: "flex", flexDirection: "row" }}>
-              <Container style={{ flex: 70, flexDirection: "column", backgroundColor: "#F9FAFC" }}>
+            <Container style={styles.dashboardMainContainer}>
+              <Container style={styles.dashboardLeftCard}>
                 <MyGroups showMore={false} type="event" wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
                 <MyGroups showMore={false} type="group" wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
                 <MyGroups showMore={false} type="resource" wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
                 <MyGroups showMore={false} type="organization" wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
                 <MyGroups showMore={false} type="course" wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
               </Container>
-              <Container style={{ flex: 30, flexDirection: "column" }}>
+              <Container style={styles.dashboardRightCard}>
                 <MyPeople wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyPeople>
                 <MyConversations navigation={this.props.navigation}></MyConversations>
                 <Container style={{ flex: 10 }}></Container>

@@ -448,6 +448,21 @@ export default EStyleSheet.create({
         alignSelf: "flex-start", 
         height: "2.75rem"
     },
+    // dashboardMainContainer: {
+    //     height: 2300, 
+    //     flex: 1, 
+    //     display: "flex", 
+    //     flexDirection: "row"
+    // },
+    dashboardLeftCard: {
+        flex: 70, 
+        flexDirection: "column", 
+        backgroundColor: "#F9FAFC"
+    },
+    dashboardRightCard: {
+        flex: 30, 
+        flexDirection: "column"
+    },
 
     // Media Query Desktop Tablet
     '@media (min-width: 350) and (max-width: 768)': {
@@ -566,6 +581,10 @@ export default EStyleSheet.create({
         },
     },
 
+    dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
+    { height: 2300, flex: 1, display: "flex", flexDirection: "row" } :
+    { flexDirection: "column", },
+    
     authView: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { left: "40%", width: "40%", top: 100, height: "auto" } :
         { left: "2%", width: "96%", top: "0%", height: "100%" },
