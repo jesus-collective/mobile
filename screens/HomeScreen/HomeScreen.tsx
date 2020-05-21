@@ -3,9 +3,9 @@ import { Container } from 'native-base';
 import styles from '../../components/style'
 import { Platform } from 'react-native';
 import { Dimensions } from 'react-native'
-
+import MyGroups from '../../components/MyGroups/MyGroups'
 const MyConversations = lazy(() => import('../../components/MyConversations/MyConversations'));
-const MyGroups = lazy(() => import('../../components/MyGroups/MyGroups'));
+//const MyGroups = lazy(() => import('../../components/MyGroups/MyGroups'));
 const MyPeople = lazy(() => import('../../components/MyPeople/MyPeople'));
 
 const Header = lazy(() => import('../../components/Header/Header'));

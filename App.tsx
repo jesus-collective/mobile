@@ -24,7 +24,9 @@ import Sentry from './components/Sentry';
 import { version } from './src/version'
 
 var env = "unknown"
-if (window.location.hostname === "localhost")
+if (window.location === undefined)
+  env = "mobile"
+else if (window.location.hostname === "localhost")
   env = "dev"
 else if (window.location.hostname.includes("beta"))
   env = "beta"
