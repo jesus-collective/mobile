@@ -69,9 +69,11 @@ export default class SideBar extends React.Component<Props, State> {
 
   render() {
     return (
-      <Container><Content>
-        <Header></Header>
+      <Container>
+        <Content>
+        <Header style={{ backgroundColor: "#FFFFFF" }}></Header>
         <List
+          style={{ paddingRight: 20 }}
           dataArray={routes}
           keyExtractor={data => data.name}
           renderRow={data => {
