@@ -583,7 +583,7 @@ export default EStyleSheet.create({
 
     dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
     { height: 2300, flex: 1, display: "flex", flexDirection: "row" } :
-    { flexDirection: "column" },
+    { flexDirection: "column", },
     
     authView: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { left: "40%", width: "40%", top: 100, height: "auto" } :
