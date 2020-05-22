@@ -222,7 +222,7 @@ export default class MyProfile extends React.Component<Props, State> {
               : <Text style={styles.profileFontTitle}>{this.state.UserDetails.given_name}'s profile</Text>
             }
             {this.state.isEditable ?
-              <View style={{ flex: 0, flexDirection: "row", alignSelf: "flex-end" }}>
+              <View style={styles.myProfileTopButtonsInternalContainer}>
                 <JCButton data-testid="profile-save" buttonType={ButtonTypes.SolidRightMargin} onPress={() => this.finalizeProfile()}>Save and Publish Your Profile</JCButton>
                 <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.logout()}>Logout</JCButton>
               </View>
@@ -244,7 +244,7 @@ export default class MyProfile extends React.Component<Props, State> {
             }}>
           </MapSelector>
 
-          <Form style={{ marginBottom: 20, display: "flex", flexDirection: "row" }}>
+          <Form style={styles.myProfileMainContainer}>
             <View style={styles.profileScreenLeftCard}>
               <View style={styles.myProfileImageWrapper}>
                 <Image style={styles.myProfileImage}

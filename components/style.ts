@@ -412,6 +412,16 @@ export default EStyleSheet.create({
         flex: 30,
         flexDirection: "column"
     },
+    myProfileMainContainer: {
+        marginBottom: 20, 
+        display: "flex", 
+        flexDirection: "row"
+    },
+    myProfileTopButtonsInternalContainer: {
+        flex: 0, 
+        flexDirection: "row", 
+        alignSelf: "flex-end"
+    },
 
     // Media Query Desktop Tablet
     '@media (min-width: 350) and (max-width: 768)': {
@@ -531,15 +541,38 @@ export default EStyleSheet.create({
     },
 
     '@media (min-width: 320px) and (max-width: 480px)': {
-        rightCardWidth: {
-            width: "100%"
-        },
+        // rightCardWidth: {
+        //     width: "100%"
+        // },
         dashboardLeftCard: {
             flexBasis: "auto",
         },
         dashboardRightCard: {
             flexBasis: "auto",
             top: 800
+        },
+        myProfileMainContainer: {
+            flexDirection: "column"
+        },
+        myProfileTopButtons: {
+            flexDirection: "column",
+            width: "100%",
+            paddingRight: 32
+        },
+        myProfileTopButtonsInternalContainer: {
+            flex: 0, 
+            flexDirection: "column", 
+            alignSelf: "auto",
+            minWidth: "100%"
+        },
+        profileFontTitle: {
+            minWidth: 300, 
+        },
+        profileScreenLeftCard: {
+            marginRight: 32,
+            flex: 0,
+            minHeight: "50%",
+            width: "auto"
         },
     },
 

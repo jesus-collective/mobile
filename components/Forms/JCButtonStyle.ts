@@ -287,12 +287,34 @@ export default EStyleSheet.create({
         fontWeight: "600",
     },
 
-    '@media (min-width: 350) and (max-width: 768)': {
+    '@media (min-width: 481) and (max-width: 768)': {
         SolidRightMarginButton: {
             paddingLeft: 0,
             paddingRight: 0,
             marginLeft: 90,
             marginRight: 25,
+        },
+        SolidButton: {
+            textAlign: "center",
+            paddingLeft: 0,
+            paddingRight: 0,
+            width: "100%"
+        },
+        SolidText: {
+            width: "100%"
+        }
+    },
+
+    '@media (min-width: 320px) and (max-width: 480px)': {
+        SolidRightMarginButton: {
+            paddingLeft: 0,
+            paddingRight: 0,
+            marginLeft: 0,
+            marginRight: 0,
+            textAlign: "center"
+        },
+        SolidRightMarginText: {
+            width: "100%"
         },
         SolidButton: {
             textAlign: "center",
