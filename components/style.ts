@@ -619,17 +619,13 @@ export default EStyleSheet.create({
             flexDirection: "row",
         },
         myProfileMapSelectorInnerContainer: {
-            top: "25%",
+            top: "5%",
             margin: 0
         },
         myProfileMapSelectorInnerCopyContainer: {
-            width: "108%",
-            bottom: "28%",
+            width: "107%",
             right: "3.5%", 
             borderRadius: 0
-        },
-        map: {
-            left: "-10%"
         },
     },
 

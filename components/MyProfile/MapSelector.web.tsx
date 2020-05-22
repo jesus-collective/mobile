@@ -202,27 +202,27 @@ class MapSelector extends React.Component<Props, State> {
                             <Text style={{ fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 20, marginBottom: 15, textAlign: "center" }}>Select a location (this will be public)</Text>
                             <JCButton data-testid="mapselector-save" buttonType={ButtonTypes.SolidMap} onPress={() => this.props.onClose(this.state.mapCoord)}>Done</JCButton>
                         </View>
+                        <Container style={styles.mapView}>
+                            <Map google={window.google} zoom={6}
+                                initialCenter={{ lat: 44, lng: -78.0 }}
+                                mapTypeControl={false}
+                                style={styles.map}
+                            >
+                                <Marker
+                                    title="Location"
+                                    id={1}
+                                    position={{ lat: this.state.mapCoord.latitude, lng: this.state.mapCoord.longitude }}
+                                    draggable={true}
+                                    onDragend={(e, e2, coord) => {
+                                        console.log(e)
+                                        console.log(coord.latLng)
+                                        this.setState({ mapCoord: { latitude: coord.latLng.lat(), longitude: coord.latLng.lng() } })
+                                    }}
+                                ></Marker>
 
-                        <Map google={window.google} zoom={6}
-                            initialCenter={{ lat: 44, lng: -78.0 }}
-                            mapTypeControl={false}
-                            style={styles.map}
-                        >
-                            <Marker
-                                title="Location"
-                                id={1}
-                                position={{ lat: this.state.mapCoord.latitude, lng: this.state.mapCoord.longitude }}
-                                draggable={true}
-                                onDragend={(e, e2, coord) => {
-                                    console.log(e)
-                                    console.log(coord.latLng)
-                                    this.setState({ mapCoord: { latitude: coord.latLng.lat(), longitude: coord.latLng.lng() } })
-                                }}
-                            ></Marker>
 
-
-                        </Map>
-
+                            </Map>
+                        </Container>
                     </View>
                 </View>
                 : null
