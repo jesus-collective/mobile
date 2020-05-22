@@ -657,6 +657,9 @@ export default EStyleSheet.create({
         detailScreenRightCard: {
            width: "auto"
         },
+        groupNameInput: {
+            width: "100%"
+        },
     },
 
     dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
