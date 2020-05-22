@@ -417,6 +417,11 @@ export default EStyleSheet.create({
         display: "flex", 
         flexDirection: "row"
     },
+    myProfileTopButtonsInternalContainer: {
+        flex: 0, 
+        flexDirection: "row", 
+        alignSelf: "flex-end"
+    },
 
     // Media Query Desktop Tablet
     '@media (min-width: 350) and (max-width: 768)': {
@@ -548,6 +553,17 @@ export default EStyleSheet.create({
         },
         myProfileMainContainer: {
             flexDirection: "column"
+        },
+        myProfileTopButtons: {
+            flexDirection: "column"
+        },
+        myProfileTopButtonsInternalContainer: {
+            flex: 0, 
+            flexDirection: "column", 
+            alignSelf: "stretch"
+        },
+        profileFontTitle: {
+            minWidth: 300, 
         },
     },
 

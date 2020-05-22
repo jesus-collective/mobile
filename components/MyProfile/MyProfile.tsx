@@ -222,7 +222,7 @@ export default class MyProfile extends React.Component<Props, State> {
               : <Text style={styles.profileFontTitle}>{this.state.UserDetails.given_name}'s profile</Text>
             }
             {this.state.isEditable ?
-              <View style={{ flex: 0, flexDirection: "row", alignSelf: "flex-end" }}>
+              <View style={styles.myProfileTopButtonsInternalContainer}>
                 <JCButton data-testid="profile-save" buttonType={ButtonTypes.SolidRightMargin} onPress={() => this.finalizeProfile()}>Save and Publish Your Profile</JCButton>
                 <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.logout()}>Logout</JCButton>
               </View>
