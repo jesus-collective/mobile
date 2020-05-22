@@ -122,7 +122,7 @@ export default EStyleSheet.create({
         fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28, color: "#333333", borderColor: "#dddddd", borderWidth: 1, height: 40, width: "100%"
     },
     fontFormSmallDarkGrey: {
-        fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333"
+        fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", paddingTop: 5
     },
     fontFormSmallInput: {
         fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 25, letterSpacing: -0.3, color: "#333333", width: 250, height: 18, borderWidth: 0, borderColor: "#dddddd"
@@ -577,6 +577,9 @@ export default EStyleSheet.create({
         profileScreenRightCard: {
             width: "auto",
             flex: 0
+        },
+        myProfileCoordinates: {
+            flexDirection: "row",
         },
     },
 
