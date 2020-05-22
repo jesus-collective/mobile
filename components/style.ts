@@ -620,7 +620,8 @@ export default EStyleSheet.create({
         },
         myProfileMapSelectorInnerContainer: {
             top: "5%",
-            margin: 0
+            margin: 0,
+            height: "90%"
         },
         myProfileMapSelectorInnerCopyContainer: {
             width: "107%",
