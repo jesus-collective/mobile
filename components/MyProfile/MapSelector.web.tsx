@@ -199,7 +199,7 @@ class MapSelector extends React.Component<Props, State> {
                 <View style={styles.myProfileMapSelectorContainer}>
                     <View style={styles.myProfileMapSelectorInnerContainer}>
                         <View style={styles.myProfileMapSelectorInnerCopyContainer}>
-                            <Text style={{ fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 20, marginBottom: 15, textAlign: "center" }}>Select a location (this will be public)</Text>
+                            <Text style={styles.mapSelectorText}>Select a location (this will be public)</Text>
                             <JCButton data-testid="mapselector-save" buttonType={ButtonTypes.SolidMap} onPress={() => this.props.onClose(this.state.mapCoord)}>Done</JCButton>
                         </View>
                         <Container style={styles.mapView}>

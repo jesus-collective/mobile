@@ -439,10 +439,10 @@ export default EStyleSheet.create({
         left: "10%", 
         top: "10%", 
         width: "80%", 
-        height: "80%"
+        height: "100%"
     },
     myProfileMapSelectorInnerCopyContainer: {
-        flexDirection: "column", 
+        flexDirection: "row", 
         alignContent: "space-between", 
         alignItems: "center", 
         justifyContent: "center", 
@@ -452,12 +452,20 @@ export default EStyleSheet.create({
         paddingRight: 20, 
         paddingTop: 20, 
         paddingBottom: 20, 
-        width: "20%", 
+        width: "100%", 
         borderBottomRightRadius: 4
     },
     map: {
         height: "94.5%", 
         width: "98%"
+    },
+    mapSelectorText: {
+        fontFamily: 'Graphik-Regular-App', 
+        fontWeight: 'bold', 
+        fontSize: 20, 
+        marginBottom: 0, 
+        marginRight: 20,
+        textAlign: "center"
     },
 
     // Media Query Desktop Tablet
@@ -626,7 +634,12 @@ export default EStyleSheet.create({
         myProfileMapSelectorInnerCopyContainer: {
             width: "107%",
             right: "3.5%", 
-            borderRadius: 0
+            borderRadius: 0,
+            flexDirection: "column",
+        },
+        mapSelectorText: {
+            marginBottom: 15,
+            marginRight: 0, 
         },
     },
 
