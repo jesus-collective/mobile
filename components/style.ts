@@ -655,7 +655,9 @@ export default EStyleSheet.create({
             marginRight: 32
         },
         detailScreenRightCard: {
-           width: "auto"
+           width: "auto",
+           marginLeft: 0,
+           marginRight: 0
         },
         groupNameInput: {
             width: "100%"
