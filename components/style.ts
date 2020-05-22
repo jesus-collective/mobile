@@ -422,6 +422,15 @@ export default EStyleSheet.create({
         flexDirection: "row", 
         alignSelf: "flex-end"
     },
+    myProfileMapSelectorContainer: {
+        position: "fixed", 
+        left: 0, 
+        top: 0, 
+        width: "100%", 
+        height: "100%", 
+        zIndex: 100, 
+        backgroundColor: "#33333366"
+    },
 
     // Media Query Desktop Tablet
     '@media (min-width: 350) and (max-width: 768)': {
