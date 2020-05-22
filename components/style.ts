@@ -574,6 +574,10 @@ export default EStyleSheet.create({
             minHeight: "50%",
             width: "auto"
         },
+        profileScreenRightCard: {
+            width: "auto",
+            flex: 0
+        },
     },
 
     dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
