@@ -555,13 +555,15 @@ export default EStyleSheet.create({
             flexDirection: "column"
         },
         myProfileTopButtons: {
-            flexDirection: "column"
+            flexDirection: "column",
+            width: "100%",
+            paddingRight: 32
         },
         myProfileTopButtonsInternalContainer: {
             flex: 0, 
             flexDirection: "column", 
             alignSelf: "auto",
-            minWidth: 315
+            minWidth: "100%"
         },
         profileFontTitle: {
             minWidth: 300, 
