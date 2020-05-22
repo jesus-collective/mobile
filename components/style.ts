@@ -431,6 +431,34 @@ export default EStyleSheet.create({
         zIndex: 100, 
         backgroundColor: "#33333366"
     },
+    myProfileMapSelectorInnerContainer: {
+        backgroundColor: "#ffffff", 
+        borderRadius: 10, 
+        padding: 10, 
+        margin: 10, 
+        left: "10%", 
+        top: "10%", 
+        width: "80%", 
+        height: "80%"
+    },
+    myProfileMapSelectorInnerCopyContainer: {
+        flexDirection: "column", 
+        alignContent: "space-between", 
+        alignItems: "center", 
+        justifyContent: "center", 
+        zIndex: "1000", 
+        backgroundColor: "#FFFFFF", 
+        paddingLeft: 20, 
+        paddingRight: 20, 
+        paddingTop: 20, 
+        paddingBottom: 20, 
+        width: "20%", 
+        borderBottomRightRadius: 4
+    },
+    map: {
+        height: "94.5%", 
+        width: "98%"
+    },
 
     // Media Query Desktop Tablet
     '@media (min-width: 350) and (max-width: 768)': {
@@ -589,6 +617,19 @@ export default EStyleSheet.create({
         },
         myProfileCoordinates: {
             flexDirection: "row",
+        },
+        myProfileMapSelectorInnerContainer: {
+            top: "25%",
+            margin: 0
+        },
+        myProfileMapSelectorInnerCopyContainer: {
+            width: "108%",
+            bottom: "28%",
+            right: "3.5%", 
+            borderRadius: 0
+        },
+        map: {
+            left: "-10%"
         },
     },
 
