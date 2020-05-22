@@ -107,7 +107,7 @@ export default class MyPeople extends React.Component<Props, State> {
                 return (
                   <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.id) }}>
                     <Card style={{ minHeight: 50, paddingTop: 28, paddingBottom: 28, borderStyle: "solid", borderColor: "#FFFFFF" }}>
-                      <CardItem >
+                      <CardItem>
                         <Left>
                           <ProfileImage user={item} size='small'>
                           </ProfileImage>

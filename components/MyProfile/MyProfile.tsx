@@ -244,7 +244,7 @@ export default class MyProfile extends React.Component<Props, State> {
             }}>
           </MapSelector>
 
-          <Form style={{ marginBottom: 20, display: "flex", flexDirection: "row" }}>
+          <Form style={styles.myProfileMainContainer}>
             <View style={styles.profileScreenLeftCard}>
               <View style={styles.myProfileImageWrapper}>
                 <Image style={styles.myProfileImage}

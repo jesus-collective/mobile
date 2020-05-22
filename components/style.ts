@@ -412,6 +412,11 @@ export default EStyleSheet.create({
         flex: 30,
         flexDirection: "column"
     },
+    myProfileMainContainer: {
+        marginBottom: 20, 
+        display: "flex", 
+        flexDirection: "row"
+    },
 
     // Media Query Desktop Tablet
     '@media (min-width: 350) and (max-width: 768)': {
@@ -531,15 +536,18 @@ export default EStyleSheet.create({
     },
 
     '@media (min-width: 320px) and (max-width: 480px)': {
-        rightCardWidth: {
-            width: "100%"
-        },
+        // rightCardWidth: {
+        //     width: "100%"
+        // },
         dashboardLeftCard: {
             flexBasis: "auto",
         },
         dashboardRightCard: {
             flexBasis: "auto",
             top: 800
+        },
+        myProfileMainContainer: {
+            flexDirection: "column"
         },
     },
 
