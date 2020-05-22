@@ -560,7 +560,8 @@ export default EStyleSheet.create({
         myProfileTopButtonsInternalContainer: {
             flex: 0, 
             flexDirection: "column", 
-            alignSelf: "stretch"
+            alignSelf: "auto",
+            minWidth: 315
         },
         profileFontTitle: {
             minWidth: 300, 
