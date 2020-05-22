@@ -78,7 +78,7 @@ class MessageBoard extends React.Component<Props, State> {
       console.log(e)
     }
 
-    if (props.route.params.create)
+    if (props.route.params.create === "true")
       this.setState({ created: false })
     else {
 

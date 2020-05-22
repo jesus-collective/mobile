@@ -54,7 +54,7 @@ export default class EventScreen extends React.Component<Props, State>{
     this.state = {
       showMap: false,
       loadId: props.route.params.id,
-      createNew: props.route.params.create,
+      createNew: props.route.params.create === "true" ? true : false,
       data: null,
       canSave: false,
       canLeave: false,
@@ -100,7 +100,7 @@ export default class EventScreen extends React.Component<Props, State>{
     return key.length ? myObject[key[0]] : "";
   }
   setInitialData(props) {
-    if (props.route.params.create)
+    if (props.route.params.create === "true")
       Auth.currentAuthenticatedUser().then((user: any) => {
         var z: CreateGroupInput = {
           id: "event-" + Date.now(),

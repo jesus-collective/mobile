@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input, Content, Left, Right, Body, StyleProvider, Container, Card, CardItem, Button } from 'native-base';
 import { Text } from 'react-native'
-import './EditableDate.ts';
+import './EditableDateStyle.ts';
 import { KeyboardDatePicker, DateTimePicker, KeyboardDateTimePicker } from "@material-ui/pickers";
 var moment = require('moment');
 
