@@ -568,6 +568,12 @@ export default EStyleSheet.create({
         profileFontTitle: {
             minWidth: 300, 
         },
+        profileScreenLeftCard: {
+            marginRight: 32,
+            flex: 0,
+            minHeight: "50%",
+            width: "auto"
+        },
     },
 
     dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
