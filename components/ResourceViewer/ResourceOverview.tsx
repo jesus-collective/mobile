@@ -21,6 +21,7 @@ import ResourceViewer from '../../components/ResourceViewer/ResourceViewer'
 import { ResourceRoot, Resource, ResourceEpisode, ResourceSeries } from "../../src/models";
 import EditableRichText from '../Forms/EditableRichText'
 import { ResourceContext } from './ResourceContext';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 interface Props {
     navigation: any
@@ -275,4 +276,9 @@ class ResourceOverview extends React.Component<Props, State>{
         )
     }
 }
-export default ResourceOverview
+export default function (props) {
+    const route = useRoute();
+    const navigation = useNavigation()
+    return <ResourceOverview {...props} navigation={navigation} route={route} />;
+}
+

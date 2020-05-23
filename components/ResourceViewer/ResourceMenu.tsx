@@ -2,8 +2,8 @@ import { Header, Left, Body, Right, Button } from 'native-base';
 
 import { Ionicons } from '@expo/vector-icons';
 import React, { useRef } from 'react';
-import { Image, Text } from 'react-native';
-import styles from '../Header/style'
+import { Image, Text, Dimensions } from 'react-native';
+import HeaderStyles from '../Header/style'
 import { Auth } from 'aws-amplify';
 import { constants } from '../../src/constants'
 import { ResourceContext } from './ResourceContext';
@@ -24,14 +24,25 @@ class ResourceMenu extends React.Component<Props, State> {
     navigateToResource(id) {
         console.log(id)
     }
-
+    updateStyles = () => {
+        this.styles.update()
+        this.forceUpdate();
+    };
+    componentDidMount() {
+        Dimensions.addEventListener('change', this.updateStyles)
+    }
+    componentWillUnmount() {
+        // Important to stop updating state after unmount
+        Dimensions.removeEventListener("change", this.updateStyles);
+    }
+    styles = new HeaderStyles()
     render() {
 
         //const { navigate } = this.props.navigation;
         return (
             <ResourceMenu.Consumer>
                 {({ state, actions }) => {
-                    return (<Header style={styles.resourceContainer}>
+                    return (<Header style={this.styles.style.resourceContainer}>
                         <Left></Left>
                         <Body style={{
                             flex: 1,
@@ -41,7 +52,8 @@ class ResourceMenu extends React.Component<Props, State> {
                         }}>
                             {state.data.resources.items.map((item, index) => {
                                 if (item != null)
-                                    return <EditableButton onDelete={() => actions.deleteResource(index)} onChange={(value) => actions.updateResource(index, "menuTitle", value)} key={index} placeholder="temp" isEditable={true} onPress={() => actions.changeResource(index)} inputStyle={styles.centerMenuButtonsText} textStyle={styles.centerMenuButtonsText} value={item.menuTitle}>
+                                    return <EditableButton onDelete={() => actions.deleteResource(index)} onChange={(value) => actions.updateResource(index, "menuTitle", value)} key={index} placeholder="temp" isEditable={true} onPress={() => actions.changeResource(index)}
+                                        inputStyle={this.styles.style.centerMenuButtonsText} textStyle={this.styles.style.centerMenuButtonsText} value={item.menuTitle}>
                                     </EditableButton>
                                 else
                                     return null
@@ -52,7 +64,7 @@ class ResourceMenu extends React.Component<Props, State> {
                             <Button
                                 transparent
                                 onPress={actions.createResource}>
-                                <Text style={styles.centerMenuButtonsText}>+</Text>
+                                <Text style={this.styles.style.centerMenuButtonsText}>+</Text>
                             </Button>
 
 

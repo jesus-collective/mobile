@@ -309,15 +309,16 @@ class ResourceViewer extends React.Component<Props, State> {
                 }}>
                     <Container style={{ padding: 0, margin: 0 }}>
                         <ResourceMenu></ResourceMenu>
-                        <Content >
-                            <ResourceHeader></ResourceHeader>
-                            {this.state.currentResource == 0 ?
-                                <ResourceOverview></ResourceOverview>
-                                :
-                                <ResourceContent></ResourceContent>}
-                            {/*  <ImportKidsandYouth></ImportKidsandYouth>*/}
-                        </Content>
-
+                        <ErrorBoundary>
+                            <Content >
+                                <ResourceHeader></ResourceHeader>
+                                {this.state.currentResource == 0 ?
+                                    <ResourceOverview></ResourceOverview>
+                                    :
+                                    <ResourceContent></ResourceContent>}
+                                {/*  <ImportKidsandYouth></ImportKidsandYouth>*/}
+                            </Content>
+                        </ErrorBoundary>
                     </Container>
                 </ResourceViewer.Provider>
             </ErrorBoundary>

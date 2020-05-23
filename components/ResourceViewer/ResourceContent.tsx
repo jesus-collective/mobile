@@ -20,9 +20,11 @@ class ResourceContent extends React.Component<Props, State>{
     }
     static Consumer = ResourceContext.Consumer;
     render() {
+
         return (
             <ResourceContent.Consumer>
                 {({ state, actions }) => {
+                    console.log(state.data)
                     return (
                         <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
                             <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
@@ -30,7 +32,7 @@ class ResourceContent extends React.Component<Props, State>{
                                 <Text>Schedule</Text>
                                 <Container style={{ overflow: "scroll", minHeight: 400, flexWrap: this.props.wrap ? "wrap" : "nowrap", flexGrow: 1, width: "100%", flexDirection: 'row', justifyContent: "flex-start", alignItems: "flex-start" }}>
 
-                                    {state.data.resources.items[state.currentResource].series[0].episodes.map((episode) => {
+                                    {state.data.resources.items[state.currentResource].series.items[0].episodes.map((episode) => {
                                         return (
                                             <Card style={{ padding: "0px", marginLeft: "10px", marginRight: "10px", width: "300px" }}>
                                                 <CardItem style={{ width: "300px", paddingLeft: "0px", paddingRight: "0px", margin: "0px" }}>
@@ -48,7 +50,7 @@ class ResourceContent extends React.Component<Props, State>{
                                 <Text>More Series</Text>
                                 <Container style={{ overflow: "scroll", minHeight: 400, flexWrap: this.props.wrap ? "wrap" : "nowrap", flexGrow: 1, width: "100%", flexDirection: 'row', justifyContent: "flex-start", alignItems: "flex-start" }}>
 
-                                    {state.data.resources.items[state.currentResource].series.map((series) => {
+                                    {state.data.resources.items[state.currentResource].series.items.map((series) => {
                                         return (
                                             <Card>
                                                 <CardItem style={{ width: "300px", paddingLeft: "0px", paddingRight: "0px", margin: "0px" }}>
