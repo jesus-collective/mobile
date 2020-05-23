@@ -8,6 +8,8 @@ import { GoogleApiWrapper } from 'google-maps-react';
 
 import { Marker } from 'google-maps-react';
 import { Map, InfoWindow } from 'google-maps-react';
+import style from '../style';
+import styles from '../../components/style'
 
 
 const mapstyle = [
@@ -194,33 +196,33 @@ class MapSelector extends React.Component<Props, State> {
         return (
 
             this.props.mapVisible ?
-                <View style={{ position: "fixed", left: 0, top: 0, width: "100%", height: "100%", zIndex: 100, backgroundColor: "#33333366" }}>
-                    <View style={{ backgroundColor: "#ffffff", borderRadius: 10, padding: 10, margin: 10, left: "10%", top: "10%", width: "80%", height: "80%" }}>
-                        <View style={{ flexDirection: "column", alignContent: "space-between", alignItems: "center", justifyContent: "center", zIndex: "1000", backgroundColor: "#FFFFFF", paddingLeft: 20, paddingRight: 20, paddingTop: 20, paddingBottom: 20, width: "20%", borderBottomRightRadius: 4 }}>
-                            <Text style={{ fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 20, marginBottom: 15, textAlign: "center" }}>Select a location (this will be public)</Text>
+                <View style={styles.myProfileMapSelectorContainer}>
+                    <View style={styles.myProfileMapSelectorInnerContainer}>
+                        <View style={styles.myProfileMapSelectorInnerCopyContainer}>
+                            <Text style={styles.mapSelectorText}>Select a location (this will be public)</Text>
                             <JCButton data-testid="mapselector-save" buttonType={ButtonTypes.SolidMap} onPress={() => this.props.onClose(this.state.mapCoord)}>Done</JCButton>
                         </View>
+                        <Container style={styles.mapView}>
+                            <Map google={window.google} zoom={6}
+                                initialCenter={{ lat: 44, lng: -78.0 }}
+                                mapTypeControl={false}
+                                style={styles.map}
+                            >
+                                <Marker
+                                    title="Location"
+                                    id={1}
+                                    position={{ lat: this.state.mapCoord.latitude, lng: this.state.mapCoord.longitude }}
+                                    draggable={true}
+                                    onDragend={(e, e2, coord) => {
+                                        console.log(e)
+                                        console.log(coord.latLng)
+                                        this.setState({ mapCoord: { latitude: coord.latLng.lat(), longitude: coord.latLng.lng() } })
+                                    }}
+                                ></Marker>
 
-                        <Map google={window.google} zoom={6}
-                            initialCenter={{ lat: 44, lng: -78.0 }}
-                            mapTypeControl={false}
-                            style={{ height: "94.5%", width: "98%" }}
-                        >
-                            <Marker
-                                title="Location"
-                                id={1}
-                                position={{ lat: this.state.mapCoord.latitude, lng: this.state.mapCoord.longitude }}
-                                draggable={true}
-                                onDragend={(e, e2, coord) => {
-                                    console.log(e)
-                                    console.log(coord.latLng)
-                                    this.setState({ mapCoord: { latitude: coord.latLng.lat(), longitude: coord.latLng.lng() } })
-                                }}
-                            ></Marker>
 
-
-                        </Map>
-
+                            </Map>
+                        </Container>
                     </View>
                 </View>
                 : null

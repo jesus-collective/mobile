@@ -122,7 +122,7 @@ export default EStyleSheet.create({
         fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28, color: "#333333", borderColor: "#dddddd", borderWidth: 1, height: 40, width: "100%"
     },
     fontFormSmallDarkGrey: {
-        fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333"
+        fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", paddingTop: 5
     },
     fontFormSmallInput: {
         fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 25, letterSpacing: -0.3, color: "#333333", width: 250, height: 18, borderWidth: 0, borderColor: "#dddddd"
@@ -422,6 +422,51 @@ export default EStyleSheet.create({
         flexDirection: "row", 
         alignSelf: "flex-end"
     },
+    myProfileMapSelectorContainer: {
+        position: "fixed", 
+        left: 0, 
+        top: 0, 
+        width: "100%", 
+        height: "100%", 
+        zIndex: 100, 
+        backgroundColor: "#33333366"
+    },
+    myProfileMapSelectorInnerContainer: {
+        backgroundColor: "#ffffff", 
+        borderRadius: 10, 
+        padding: 10, 
+        margin: 10, 
+        left: "10%", 
+        top: "10%", 
+        width: "80%", 
+        height: "100%"
+    },
+    myProfileMapSelectorInnerCopyContainer: {
+        flexDirection: "row", 
+        alignContent: "space-between", 
+        alignItems: "center", 
+        justifyContent: "center", 
+        zIndex: "1000", 
+        backgroundColor: "#FFFFFF", 
+        paddingLeft: 20, 
+        paddingRight: 20, 
+        paddingTop: 20, 
+        paddingBottom: 20, 
+        width: "100%", 
+        borderBottomRightRadius: 4
+    },
+    map: {
+        height: "94.5%", 
+        width: "98%"
+    },
+    mapSelectorText: {
+        fontFamily: 'Graphik-Regular-App', 
+        fontWeight: 'bold', 
+        fontSize: 20, 
+        marginBottom: 0, 
+        marginRight: 20,
+        textAlign: "center"
+    },
 
     // Media Query Desktop Tablet
     '@media (min-width: 350) and (max-width: 768)': {
@@ -573,6 +618,28 @@ export default EStyleSheet.create({
             flex: 0,
             minHeight: "50%",
             width: "auto"
+        },
+        profileScreenRightCard: {
+            width: "auto",
+            flex: 0
+        },
+        myProfileCoordinates: {
+            flexDirection: "row",
+        },
+        myProfileMapSelectorInnerContainer: {
+            top: "5%",
+            margin: 0,
+            height: "90%"
+        },
+        myProfileMapSelectorInnerCopyContainer: {
+            width: "107%",
+            right: "3.5%", 
+            borderRadius: 0,
+            flexDirection: "column",
+        },
+        mapSelectorText: {
+            marginBottom: 15,
+            marginRight: 0, 
         },
     },
 
