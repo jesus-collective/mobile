@@ -54,7 +54,15 @@
     background-color: #ffffff;
     border-radius: 0 0 10px 10px;
     max-height: 200px;
+}
 
+.MuiFormControl-root {
+    width: 100%;
+}
 
+@media (min-width: 320px) and (max-width: 480px) {
+    .MuiFormControl-root {
+        width: 100%;
+    }
 }
 

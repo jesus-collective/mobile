@@ -467,6 +467,12 @@ export default EStyleSheet.create({
         marginRight: 20,
         textAlign: "center"
     },
+    eventScreenMainContainer: {
+        display: "flex", 
+        flexDirection: "row", 
+        justifyContent: 'flex-start', 
+        background: "#F9FAFC"
+    },
 
     // Media Query Desktop Tablet
     '@media (min-width: 350) and (max-width: 768)': {
@@ -640,6 +646,21 @@ export default EStyleSheet.create({
         mapSelectorText: {
             marginBottom: 15,
             marginRight: 0, 
+        },
+        eventScreenMainContainer: {
+            flexDirection: "column", 
+        },
+        detailScreenLeftCard: {
+            width: "auto",
+            marginRight: 32
+        },
+        detailScreenRightCard: {
+           width: "auto",
+           marginLeft: 0,
+           marginRight: 0
+        },
+        groupNameInput: {
+            width: "100%"
         },
     },
 
