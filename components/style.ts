@@ -473,6 +473,13 @@ export default EStyleSheet.create({
         justifyContent: 'flex-start', 
         background: "#F9FAFC"
     },
+    eventPageMessageBoard: {
+        borderBottomLeftRadius: 0, 
+        borderBottomRightRadius: 0, 
+        borderTopLeftRadius: 10, 
+        borderTopRightRadius: 10, 
+        backgroundColor: "#F9FAFC"
+    },
 
     // Media Query Desktop Tablet
     '@media (min-width: 350) and (max-width: 768)': {
@@ -661,6 +668,13 @@ export default EStyleSheet.create({
         },
         groupNameInput: {
             width: "100%"
+        },
+        eventPageMessageBoard: {
+            borderBottomLeftRadius: 0, 
+            borderBottomRightRadius: 0, 
+            borderTopLeftRadius: 10, 
+            borderTopRightRadius: 10, 
+            backgroundColor: "#F9FAFC"
         },
     },
 
