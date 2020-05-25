@@ -220,7 +220,7 @@ class MessageBoard extends React.Component<Props, State> {
                         <Text style={styles.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
                       </Right>
                     </CardItem>
-                    <CardItem style={{ marginTop: 0, paddingTop: 0, paddingBottom: 0, borderTopLeftRadius: 0, borderTopRightRadius: 0, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, backgroundColor: "#ffffff" }}>
+                    <CardItem style={styles.eventPageMessageBoardInnerCard}>
 
                       <div id="comment-div">
                         <div dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(item.content) }}></div>

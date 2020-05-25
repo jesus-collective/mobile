@@ -480,6 +480,18 @@ export default EStyleSheet.create({
         borderTopRightRadius: 10, 
         backgroundColor: "#F9FAFC"
     },
+    eventPageMessageBoardInnerCard: {
+        wordBreak: "break-word",
+        marginTop: 0, 
+        paddingTop: 0, 
+        paddingBottom: 0, 
+        borderTopLeftRadius: 0, 
+        borderTopRightRadius: 0, 
+        borderBottomLeftRadius: 10, 
+        borderBottomRightRadius: 10, 
+        backgroundColor: "#ffffff",
+    },
+
 
     // Media Query Desktop Tablet
     '@media (min-width: 350) and (max-width: 768)': {
@@ -668,13 +680,6 @@ export default EStyleSheet.create({
         },
         groupNameInput: {
             width: "100%"
-        },
-        eventPageMessageBoard: {
-            borderBottomLeftRadius: 0, 
-            borderBottomRightRadius: 0, 
-            borderTopLeftRadius: 10, 
-            borderTopRightRadius: 10, 
-            backgroundColor: "#F9FAFC"
         },
     },
 
