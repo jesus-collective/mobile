@@ -490,6 +490,7 @@ export default EStyleSheet.create({
         borderBottomLeftRadius: 10, 
         borderBottomRightRadius: 10, 
         backgroundColor: "#ffffff",
+        fontFamily: "Graphik-Regular-App"
     },
     eventPageMessageBoardLeft: {
         alignSelf: "center"
@@ -687,6 +688,8 @@ export default EStyleSheet.create({
         eventPageMessageBoardInnerCard: {
             paddingTop: 5, 
             paddingBottom: 5, 
+            fontSize: 15, 
+            lineHeight: 20
         },
         eventPageMessageBoard: {
             flexDirection: "column"
