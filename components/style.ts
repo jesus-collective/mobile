@@ -692,7 +692,7 @@ export default EStyleSheet.create({
         },
         dashboardRightCard: {
             flexBasis: "auto",
-            top: 800
+            top: 1150
         },
         myProfileMainContainer: {
             flexDirection: "column"
