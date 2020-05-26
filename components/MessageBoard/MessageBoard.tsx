@@ -204,8 +204,8 @@ class MessageBoard extends React.Component<Props, State> {
               return (
                 <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
                   <Card key={item.id} style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }}>
-                    <CardItem style={{ borderBottomLeftRadius: 0, borderBottomRightRadius: 0, borderTopLeftRadius: 10, borderTopRightRadius: 10, backgroundColor: "#F9FAFC" }}>
-                      <Left>
+                    <CardItem style={styles.eventPageMessageBoard}>
+                      <Left style={styles.eventPageMessageBoardLeft}>
                         <ProfileImage size="small" user={item.author}></ProfileImage>
                         <Body>
                           <Text style={styles.groupFormName}>
@@ -220,7 +220,7 @@ class MessageBoard extends React.Component<Props, State> {
                         <Text style={styles.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
                       </Right>
                     </CardItem>
-                    <CardItem style={{ marginTop: 0, paddingTop: 0, paddingBottom: 0, borderTopLeftRadius: 0, borderTopRightRadius: 0, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, backgroundColor: "#ffffff" }}>
+                    <CardItem style={styles.eventPageMessageBoardInnerCard}>
 
                       <div id="comment-div">
                         <div dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(item.content) }}></div>

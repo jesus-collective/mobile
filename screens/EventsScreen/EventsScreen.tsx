@@ -5,6 +5,9 @@ import MyMap from '../../components/MyMap/MyMap';
 import MyConversations from '../../components/MyConversations/MyConversations';
 import MyGroups from '../../components/MyGroups/MyGroups';
 import MyPeople from '../../components/MyPeople/MyPeople';
+import { styles } from '@material-ui/pickers/views/Calendar/Calendar';
+import style from '../../components/style'
+
 
 interface Props {
   navigation: any
@@ -39,12 +42,12 @@ export default class HomeScreen extends React.Component<Props, State>{
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
         <MyMap navigation={this.props.navigation} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
         <Content>
-          <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
-            <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
+          <Container style={style.eventsScreenMainContainer}>
+            <Container style={style.eventsScreenLeftContainer}>
               <MyGroups showMore={true} type="event" wrap={true} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
 
             </Container>
-            <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+            <Container style={style.eventsScreenRightContainer}>
               <MyPeople wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyPeople>
               <MyConversations navigation={this.props.navigation}> </MyConversations>
               <Container ></Container>

@@ -395,7 +395,7 @@ export default class MyGroups extends React.Component<Props, State> {
                     }
                   </Container>
                 </Container>
-                <Container style={{ overflow: "scroll", overflowY: "hidden", minHeight: 375, flexWrap: this.props.wrap ? "wrap" : "nowrap", flexGrow: 1, width: "100%", flexDirection: 'row', justifyContent: "flex-start", alignItems: "flex-start" }}>
+                <Container style={styles.ResourcesMyGroups}>
                   {this.state.data ?
                     this.state.data.map((item) => {
                       return (

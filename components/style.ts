@@ -473,6 +473,98 @@ export default EStyleSheet.create({
         justifyContent: 'flex-start', 
         background: "#F9FAFC"
     },
+    groupScreenMainContainer: {
+        display: "flex", 
+        flexDirection: "row", 
+        justifyContent: 'flex-start', 
+        background: "#F9FAFC"
+    },
+    eventPageMessageBoard: {
+        borderBottomLeftRadius: 0, 
+        borderBottomRightRadius: 0, 
+        borderTopLeftRadius: 10, 
+        borderTopRightRadius: 10, 
+        backgroundColor: "#F9FAFC"
+    },
+    eventPageMessageBoardInnerCard: {
+        wordBreak: "break-word",
+        marginTop: 0, 
+        paddingTop: 0, 
+        paddingBottom: 0, 
+        borderTopLeftRadius: 0, 
+        borderTopRightRadius: 0, 
+        borderBottomLeftRadius: 10, 
+        borderBottomRightRadius: 10, 
+        backgroundColor: "#ffffff",
+        fontFamily: "Graphik-Regular-App"
+    },
+    eventPageMessageBoardLeft: {
+        alignSelf: "center"
+    },
+    eventsScreenLeftContainer: {
+        flex: 70, 
+        flexDirection: "column", 
+        justifyContent: 'flex-start'
+    },
+    eventsScreenRightContainer: {
+        flex: 30, 
+        flexDirection: "column", 
+        alignContent: 'flex-start', 
+        alignItems: 'flex-start', 
+        justifyContent: 'flex-start'
+    },
+    eventsScreenMainContainer: {
+        display: "flex", 
+        flexDirection: "row", 
+        justifyContent: 'flex-start'
+    },
+    groupsScreenMainContainer: {
+        display: "flex", 
+        flexDirection: "row", 
+        justifyContent: 'flex-start'
+    },
+    groupsScreenLeftContainer: {
+        flex: 70, 
+        flexDirection: "column", 
+        justifyContent: 'flex-start',
+    },
+    groupsScreenRightContainer: {
+        flex: 30, 
+        flexDirection: "column", 
+        alignContent: 'flex-start', 
+        alignItems: 'flex-start', 
+        justifyContent: 'flex-start',
+    },
+    resourcesScreenMainContainer: {
+        display: "flex", 
+        flexDirection: "row", 
+        justifyContent: 'flex-start'
+    },
+    resourcesScreenLeftContainer: {
+        flex: 70, 
+        flexDirection: "column", 
+        justifyContent: 'flex-start',
+    },
+    resourcesScreenRightContainer: {
+        flex: 30, 
+        flexDirection: "column", 
+        alignContent: 'flex-start', 
+        alignItems: 'flex-start', 
+        justifyContent: 'flex-start',
+    },
+    ResourcesMyGroups: {
+        overflow: "scroll", 
+        overflowY: "hidden", 
+        minHeight: 375, 
+        flexWrap: "wrap",
+        // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
+        flexGrow: 1, 
+        width: "100%", 
+        flexDirection: 'row', 
+        justifyContent: "flex-start", 
+        alignItems: "flex-start"
+    },
+
 
     // Media Query Desktop Tablet
     '@media (min-width: 350) and (max-width: 768)': {
@@ -600,7 +692,7 @@ export default EStyleSheet.create({
         },
         dashboardRightCard: {
             flexBasis: "auto",
-            top: 800
+            top: 1150
         },
         myProfileMainContainer: {
             flexDirection: "column"
@@ -650,6 +742,9 @@ export default EStyleSheet.create({
         eventScreenMainContainer: {
             flexDirection: "column", 
         },
+        groupScreenMainContainer: {
+            flexDirection: "column",
+        },
         detailScreenLeftCard: {
             width: "auto",
             marginRight: 32
@@ -661,6 +756,30 @@ export default EStyleSheet.create({
         },
         groupNameInput: {
             width: "100%"
+        },
+        eventPageMessageBoardInnerCard: {
+            paddingTop: 5, 
+            paddingBottom: 5, 
+            fontSize: 15, 
+            lineHeight: 20
+        },
+        eventPageMessageBoard: {
+            flexDirection: "column"
+        },
+        eventPageMessageBoardLeft: {
+            alignSelf: "flex-start"
+        },
+        eventsScreenMainContainer: {
+            flexDirection: "column", 
+        },
+        groupsScreenMainContainer: {
+            flexDirection: "column", 
+        },
+        resourcesScreenMainContainer: {
+            flexDirection: "column", 
+        },
+        ResourcesMyGroups: {
+            flexDirection: "column"
         },
     },
 

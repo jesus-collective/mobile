@@ -277,7 +277,7 @@ export default class GroupScreen extends React.Component<Props, State>{
             <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
             <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
             <Content>
-              <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start', background: "#F9FAFC" }}>
+              <Container style={styles.groupScreenMainContainer}>
                 <Container style={styles.detailScreenLeftCard}>
                   <Container style={{ display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 20 }}>
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: 'Helvetica-Neue, sans-serif', color: '#333333', textTransform: "uppercase", flex: 0 }}>Group</Text>
@@ -323,7 +323,7 @@ export default class GroupScreen extends React.Component<Props, State>{
                     <Text>{this.state.validationError}</Text>
                   </Container>
                 </Container>
-                <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: 1500, width: 446 }}>
+                <Container style={styles.detailScreenRightCard}>
                   <MessageBoard navigation={this.props.navigation} groupId={this.state.data.id}></MessageBoard>
                 </Container>
               </Container>
