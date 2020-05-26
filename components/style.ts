@@ -501,6 +501,16 @@ export default EStyleSheet.create({
     eventPageMessageBoardLeft: {
         alignSelf: "center"
     },
+    eventsScreenLeftContainer: {
+        flex: 70, 
+        flexDirection: "column", 
+        justifyContent: 'flex-start'
+    },
+    eventsScreenMainContainer: {
+        display: "flex", 
+        flexDirection: "row", 
+        justifyContent: 'flex-start'
+    },
 
 
     // Media Query Desktop Tablet
@@ -702,6 +712,9 @@ export default EStyleSheet.create({
         },
         eventPageMessageBoard: {
             flexDirection: "column"
+        },
+        eventsScreenMainContainer: {
+            flexDirection: "column", 
         },
         eventPageMessageBoardLeft: {
             alignSelf: "flex-start"
