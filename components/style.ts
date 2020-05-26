@@ -552,6 +552,18 @@ export default EStyleSheet.create({
         alignItems: 'flex-start', 
         justifyContent: 'flex-start',
     },
+    ResourcesMyGroups: {
+        overflow: "scroll", 
+        overflowY: "hidden", 
+        minHeight: 375, 
+        flexWrap: "wrap",
+        // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
+        flexGrow: 1, 
+        width: "100%", 
+        flexDirection: 'row', 
+        justifyContent: "flex-start", 
+        alignItems: "flex-start"
+    },
 
 
     // Media Query Desktop Tablet
@@ -765,6 +777,9 @@ export default EStyleSheet.create({
         },
         resourcesScreenMainContainer: {
             flexDirection: "column", 
+        },
+        ResourcesMyGroups: {
+            flexDirection: "column"
         },
     },
 
