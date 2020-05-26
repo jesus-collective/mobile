@@ -506,10 +506,34 @@ export default EStyleSheet.create({
         flexDirection: "column", 
         justifyContent: 'flex-start'
     },
+    eventsScreenRightContainer: {
+        flex: 30, 
+        flexDirection: "column", 
+        alignContent: 'flex-start', 
+        alignItems: 'flex-start', 
+        justifyContent: 'flex-start'
+    },
     eventsScreenMainContainer: {
         display: "flex", 
         flexDirection: "row", 
         justifyContent: 'flex-start'
+    },
+    groupsScreenMainContainer: {
+        display: "flex", 
+        flexDirection: "row", 
+        justifyContent: 'flex-start'
+    },
+    groupsScreenLeftContainer: {
+        flex: 70, 
+        flexDirection: "column", 
+        justifyContent: 'flex-start',
+    },
+    groupsScreenRightContainer: {
+        flex: 30, 
+        flexDirection: "column", 
+        alignContent: 'flex-start', 
+        alignItems: 'flex-start', 
+        justifyContent: 'flex-start',
     },
 
 
@@ -713,11 +737,11 @@ export default EStyleSheet.create({
         eventPageMessageBoard: {
             flexDirection: "column"
         },
-        eventsScreenMainContainer: {
-            flexDirection: "column", 
-        },
         eventPageMessageBoardLeft: {
             alignSelf: "flex-start"
+        },
+        eventsScreenMainContainer: {
+            flexDirection: "column", 
         },
     },
 
