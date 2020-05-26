@@ -743,6 +743,9 @@ export default EStyleSheet.create({
         eventsScreenMainContainer: {
             flexDirection: "column", 
         },
+        groupsScreenMainContainer: {
+            flexDirection: "column", 
+        },
     },
 
     dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
