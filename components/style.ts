@@ -535,6 +535,23 @@ export default EStyleSheet.create({
         alignItems: 'flex-start', 
         justifyContent: 'flex-start',
     },
+    resourcesScreenMainContainer: {
+        display: "flex", 
+        flexDirection: "row", 
+        justifyContent: 'flex-start'
+    },
+    resourcesScreenLeftContainer: {
+        flex: 70, 
+        flexDirection: "column", 
+        justifyContent: 'flex-start',
+    },
+    resourcesScreenRightContainer: {
+        flex: 30, 
+        flexDirection: "column", 
+        alignContent: 'flex-start', 
+        alignItems: 'flex-start', 
+        justifyContent: 'flex-start',
+    },
 
 
     // Media Query Desktop Tablet
@@ -744,6 +761,9 @@ export default EStyleSheet.create({
             flexDirection: "column", 
         },
         groupsScreenMainContainer: {
+            flexDirection: "column", 
+        },
+        resourcesScreenMainContainer: {
             flexDirection: "column", 
         },
     },
