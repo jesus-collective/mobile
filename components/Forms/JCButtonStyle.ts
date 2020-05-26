@@ -324,6 +324,14 @@ export default EStyleSheet.create({
         },
         SolidText: {
             width: "100%"
-        }
+        },
+        SolidRightJustifiedButton: {
+            alignSelf: "center",
+            width: "100%"
+        },
+        SolidRightJustifiedText: {
+            width: "100%",
+            textAlign: "center"
+        },
     },
 })
