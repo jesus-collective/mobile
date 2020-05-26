@@ -35,6 +35,7 @@ interface Props {
 interface State {
     data: any
     currentResource: any
+    currentSeries: any
 }
 class ResourceViewer extends React.Component<Props, State> {
     static Provider = ResourceContext.Provider;
@@ -42,7 +43,8 @@ class ResourceViewer extends React.Component<Props, State> {
         super(props);
         this.state = {
             data: null,
-            currentResource: null
+            currentResource: null,
+            currentSeries: null
         }
         this.setInitialData(props)
     }
@@ -225,10 +227,13 @@ class ResourceViewer extends React.Component<Props, State> {
            console.log(resourceRoute)
            this.setState({ data: resourceRoute })*/
     }
-
+    changeSeries = (index) => {
+        console.log({ "changeResource": index })
+        this.setState({ currentSeries: index })
+    }
     changeResource = (index) => {
         console.log({ "changeResource": index })
-        this.setState({ currentResource: index })
+        this.setState({ currentSeries: null, currentResource: index })
     }
     updateResource = async (index, item, value) => {
         /*   const resourceRoute = await DataStore.save(
@@ -305,7 +310,8 @@ class ResourceViewer extends React.Component<Props, State> {
                         changeResource: this.changeResource,
                         updateResource: this.updateResource,
                         deleteResource: this.deleteResource,
-                        updateResourceImage: this.updateResourceImage
+                        updateResourceImage: this.updateResourceImage,
+                        changeSeries: this.changeSeries
                     }
                 }}>
                     <Container style={{ padding: 0, margin: 0 }}>
