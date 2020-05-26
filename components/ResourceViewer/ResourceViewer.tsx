@@ -4,6 +4,7 @@ import * as React from 'react';
 import GRAPHQL_AUTH_MODE, { Greetings } from 'aws-amplify-react-native'
 
 import * as queries from '../../src/graphql/queries';
+import * as customQueries from '../../src/graphql-custom/queries';
 import * as mutations from '../../src/graphql/mutations';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { Auth } from 'aws-amplify';
@@ -105,7 +106,7 @@ class ResourceViewer extends React.Component<Props, State> {
         console.log(createResourceSeries)
 
         var getResourceRoot: any = API.graphql({
-            query: queries.getResourceRoot,
+            query: customQueries.getResourceRoot,
             variables: { id: createResourceRoot.data.createResourceRoot.id },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
         });
@@ -176,7 +177,7 @@ class ResourceViewer extends React.Component<Props, State> {
                 console.log({ json: json })
                 console.log({ id: json.data.listResourceRoots.items[0].id })
                 var getResourceRoot: any = API.graphql({
-                    query: queries.getResourceRoot,
+                    query: customQueries.getResourceRoot,
                     variables: { id: json.data.listResourceRoots.items[0].id },
                     authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
                 });

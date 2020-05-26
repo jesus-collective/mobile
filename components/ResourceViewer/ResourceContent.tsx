@@ -32,7 +32,7 @@ class ResourceContent extends React.Component<Props, State>{
                                 <Text>Schedule</Text>
                                 <Container style={{ overflow: "scroll", minHeight: 400, flexWrap: this.props.wrap ? "wrap" : "nowrap", flexGrow: 1, width: "100%", flexDirection: 'row', justifyContent: "flex-start", alignItems: "flex-start" }}>
 
-                                    {state.data.resources.items[state.currentResource].series.items[0].episodes.map((episode) => {
+                                    {state.data.resources.items[state.currentResource].series.items[0].episodes.items.map((episode) => {
                                         return (
                                             <Card style={{ padding: "0px", marginLeft: "10px", marginRight: "10px", width: "300px" }}>
                                                 <CardItem style={{ width: "300px", paddingLeft: "0px", paddingRight: "0px", margin: "0px" }}>

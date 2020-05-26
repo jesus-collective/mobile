@@ -47,7 +47,8 @@ class ResourceHeader extends React.Component<Props, State> {
         return (
             <ResourceHeader.Consumer>
                 {({ state, actions }) => {
-                    if (this.state.imageUrl == null || this.state.image != state.data.resources[state.currentResource].image)
+
+                    if (this.state.imageUrl == null || this.state.image != state.data.resources.items[state.currentResource].image)
                         this.getImage(state.data.resources.items[state.currentResource].image)
                     return (<Container style={{ backgroundColor: "#F0493E", height: "20vw" }}>
                         {this.state.imageUrl ?
