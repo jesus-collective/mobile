@@ -473,6 +473,12 @@ export default EStyleSheet.create({
         justifyContent: 'flex-start', 
         background: "#F9FAFC"
     },
+    groupScreenMainContainer: {
+        display: "flex", 
+        flexDirection: "row", 
+        justifyContent: 'flex-start', 
+        background: "#F9FAFC"
+    },
     eventPageMessageBoard: {
         borderBottomLeftRadius: 0, 
         borderBottomRightRadius: 0, 
@@ -672,6 +678,9 @@ export default EStyleSheet.create({
         },
         eventScreenMainContainer: {
             flexDirection: "column", 
+        },
+        groupScreenMainContainer: {
+            flexDirection: "column",
         },
         detailScreenLeftCard: {
             width: "auto",
