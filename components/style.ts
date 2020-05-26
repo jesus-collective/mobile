@@ -681,6 +681,10 @@ export default EStyleSheet.create({
         groupNameInput: {
             width: "100%"
         },
+        eventPageMessageBoardInnerCard: {
+            paddingTop: 5, 
+            paddingBottom: 5, 
+        },
     },
 
     dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
