@@ -491,6 +491,9 @@ export default EStyleSheet.create({
         borderBottomRightRadius: 10, 
         backgroundColor: "#ffffff",
     },
+    eventPageMessageBoardLeft: {
+        alignSelf: "center"
+    },
 
 
     // Media Query Desktop Tablet
@@ -684,6 +687,12 @@ export default EStyleSheet.create({
         eventPageMessageBoardInnerCard: {
             paddingTop: 5, 
             paddingBottom: 5, 
+        },
+        eventPageMessageBoard: {
+            flexDirection: "column"
+        },
+        eventPageMessageBoardLeft: {
+            alignSelf: "flex-start"
         },
     },
 

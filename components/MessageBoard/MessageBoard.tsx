@@ -205,7 +205,7 @@ class MessageBoard extends React.Component<Props, State> {
                 <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
                   <Card key={item.id} style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }}>
                     <CardItem style={styles.eventPageMessageBoard}>
-                      <Left>
+                      <Left style={styles.eventPageMessageBoardLeft}>
                         <ProfileImage size="small" user={item.author}></ProfileImage>
                         <Body>
                           <Text style={styles.groupFormName}>
