@@ -779,7 +779,8 @@ export default EStyleSheet.create({
             flexDirection: "column", 
         },
         ResourcesMyGroups: {
-            flexDirection: "column"
+            flexDirection: "column",
+            flexWrap: "wrap",
         },
     },
 
