@@ -309,7 +309,7 @@ export default class MyGroups extends React.Component<Props, State> {
   }
   renderProfile(item: any) {
     return <Card key={item.id} style={{ width: "100%", minHeight: 50, borderColor: "#ffffff" }}>
-      <CardItem style={{padding: '0%', paddingLeft: '0.25rem', paddingRight: '0.25rem', borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", borderStyle: "solid", borderColor: "#FFFFFF"}}>
+      <CardItem style={{padding: '0%', paddingLeft: '1.5rem', paddingRight: '1.5rem', borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", borderStyle: "solid", borderColor: "#FFFFFF"}}>
         <Left>
           <ProfileImage user={item} size="small"></ProfileImage>
           <Body>
