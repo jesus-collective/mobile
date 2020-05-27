@@ -564,6 +564,23 @@ export default EStyleSheet.create({
         justifyContent: "flex-start", 
         alignItems: "flex-start"
     },
+    profilesScreenMainContainer: {
+        display: "flex", 
+        flexDirection: "row", 
+        justifyContent: 'flex-start'
+    },
+    profilesScreenLeftContainer: {
+        flex: 70, 
+        flexDirection: "column", 
+        justifyContent: 'flex-start'
+    },
+    profilesScreensRightContainer: {
+        flex: 30, 
+        flexDirection: "column", 
+        alignContent: 'flex-start', 
+        alignItems: 'flex-start', 
+        justifyContent: 'flex-start'
+    },
 
 
     // Media Query Desktop Tablet
