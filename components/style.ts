@@ -556,11 +556,11 @@ export default EStyleSheet.create({
         overflow: "scroll", 
         overflowY: "hidden", 
         minHeight: 375, 
-        flexWrap: "wrap",
+        flexWrap: "nowrap",
         // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
         flexGrow: 1, 
         width: "100%", 
-        flexDirection: 'row', 
+        flexDirection: "row", 
         justifyContent: "flex-start", 
         alignItems: "flex-start"
     },
