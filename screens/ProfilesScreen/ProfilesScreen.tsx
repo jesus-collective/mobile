@@ -5,6 +5,7 @@ import MyMap from '../../components/MyMap/MyMap';
 import MyConversations from '../../components/MyConversations/MyConversations';
 import MyGroups from '../../components/MyGroups/MyGroups';
 import MyPeople from '../../components/MyPeople/MyPeople';
+import styles from '../../components/style';
 
 interface Props {
   navigation: any
@@ -39,11 +40,11 @@ export default class HomeScreen extends React.Component<Props, State>{
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
         <MyMap navigation={this.props.navigation} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
         <Content>
-          <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
-            <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
+          <Container style={styles.profilesScreenMainContainer}>
+            <Container style={styles.profilesScreenLeftContainer}>
               <MyGroups showMore={true} type="profile" wrap={true} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
             </Container>
-            <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+            <Container style={styles.profilesScreensRightContainer}>
               <MyConversations navigation={this.props.navigation}> </MyConversations>
               <Container ></Container>
             </Container>

@@ -556,13 +556,30 @@ export default EStyleSheet.create({
         overflow: "scroll", 
         overflowY: "hidden", 
         minHeight: 375, 
-        flexWrap: "wrap",
+        flexWrap: "nowrap",
         // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
         flexGrow: 1, 
         width: "100%", 
-        flexDirection: 'row', 
+        flexDirection: "row", 
         justifyContent: "flex-start", 
         alignItems: "flex-start"
+    },
+    profilesScreenMainContainer: {
+        display: "flex", 
+        flexDirection: "row", 
+        justifyContent: 'flex-start'
+    },
+    profilesScreenLeftContainer: {
+        flex: 70, 
+        flexDirection: "column", 
+        justifyContent: 'flex-start'
+    },
+    profilesScreensRightContainer: {
+        flex: 30, 
+        flexDirection: "column", 
+        alignContent: 'flex-start', 
+        alignItems: 'flex-start', 
+        justifyContent: 'flex-start'
     },
 
 
@@ -779,7 +796,11 @@ export default EStyleSheet.create({
             flexDirection: "column", 
         },
         ResourcesMyGroups: {
-            flexDirection: "column"
+            flexDirection: "column",
+            flexWrap: "wrap",
+        },
+        profilesScreenMainContainer: {
+            flexDirection: "column", 
         },
     },
 
