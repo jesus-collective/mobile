@@ -601,7 +601,7 @@ export default EStyleSheet.create({
         marginTop: 30,
         backgroundColor: "#ffffff",
         borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
-        height: 1000
+        height: 900
 
     },
     resourceContentRightContainer: {
@@ -615,19 +615,18 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff",
         borderRadius: 4, 
         boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
-        height: 1000
+        height: 900
     },
     resourceContentCurrentSeriesContainer: {
         overflow: "scroll", 
-        minHeight: 275, 
+        minHeight: 375, 
         flexWrap: "nowrap", 
         // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
-        flexGrow: 1, 
+        flexGrow: 0, 
         width: "100%", 
         flexDirection: 'row', 
         justifyContent: "flex-start", 
         alignItems: "flex-start",
-        marginBottom: 50
     },
     resourceContentCurrentSeriesCard: {
         padding: "0px", 
@@ -647,10 +646,10 @@ export default EStyleSheet.create({
     },
     resourceContentMoreSeriesContainer: {
         overflow: "scroll", 
-        minHeight: 275, 
+        minHeight: 375, 
         flexWrap: "nowrap", 
         // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
-        flexGrow: 1, 
+        flexGrow: 0, 
         width: "100%", 
         flexDirection: 'row', 
         justifyContent: "flex-start", 
