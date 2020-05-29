@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleProvider, Container, Content, Card, CardItem } from 'native-base';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
-
+import styles from '../../components/style'
 import { Text } from 'react-native'
 import { ResourceContext } from './ResourceContext';
 import Validate from '../../components/Validate/Validate'
@@ -22,10 +22,12 @@ class ResourceContent extends React.Component<Props, State>{
     static Consumer = ResourceContext.Consumer;
     renderSeries(state, actions) {
         return (
-            <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
-                <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
-                    <Text>Current Series</Text>
-                    <Text>Schedule</Text>
+            <Container style={styles.resourceContentMainContainer}>
+                <Container style={styles.resourceContentLeftContainer}>
+                    <Container style={{ display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 20 }}>
+                        <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#333333', textTransform: "uppercase", flex: 0 }}>Current Series</Text>
+                        <Text>Schedule</Text>
+                    </Container>
                     <Container style={{ overflow: "scroll", minHeight: 400, flexWrap: this.props.wrap ? "wrap" : "nowrap", flexGrow: 1, width: "100%", flexDirection: 'row', justifyContent: "flex-start", alignItems: "flex-start" }}>
 
                         {state.data.resources.items[state.currentResource].series.items[0].episodes.items.map((episode) => {
@@ -68,7 +70,7 @@ class ResourceContent extends React.Component<Props, State>{
                         })}
                     </Container>
                 </Container>
-                <Container style={{ flex: 30, flexDirection: "column", justifyContent: 'flex-start' }}>
+                <Container style={styles.resourceContentRightContainer}>
                 </Container>
             </Container>)
     }

@@ -586,8 +586,20 @@ export default EStyleSheet.create({
         flexDirection: "row", 
         justifyContent: 'flex-start'
     },
-    resourcesOverviewScreenLeftContainer: {
-
+    resourceContentMainContainer:{
+        display: "flex", 
+        flexDirection: "row", 
+        justifyContent: 'flex-start'
+    },
+    resourceContentLeftContainer: {
+        flex: 70, 
+        flexDirection: "column", 
+        justifyContent: 'flex-start'
+    },
+    resourceContentRightContainer: {
+        flex: 30, 
+        flexDirection: "column", 
+        justifyContent: 'flex-start'
     },
 
 
