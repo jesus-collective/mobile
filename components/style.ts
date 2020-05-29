@@ -994,6 +994,19 @@ export default EStyleSheet.create({
             marginTop: 0,
             top: 300
         },
+        resourceContentEpisodeMainContainer: {
+            flexDirection: "column", 
+            minHeight: 400,
+        },
+        resourceContentEpisodeLeftContainer: {
+            marginLeft: 0,
+            marginTop: 0,
+        },
+        resourceContentEpisodeRightContainer: {
+            marginRight: 0,
+            marginTop: 0,
+            top: 200
+        },
     },
 
     dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
