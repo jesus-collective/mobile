@@ -78,15 +78,15 @@ class ResourceContent extends React.Component<Props, State>{
     }
     renderEpisodes(state, actions) {
         return (
-            <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
-                <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
+            <Container style={styles.resourceContentEpisodeMainContainer}>
+                <Container style={styles.resourceContentEpisodeLeftContainer}>
 
-                    <Container style={{ overflow: "scroll", minHeight: 400, flexWrap: this.props.wrap ? "wrap" : "nowrap", flexGrow: 1, width: "100%", flexDirection: 'row', justifyContent: "flex-start", alignItems: "flex-start" }}>
+                    <Container style={styles.resourceContentEpisodesContainer}>
 
                         {state.data.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items.map((episode, index) => {
                             return (
-                                <Card style={{ padding: "0px", marginLeft: "10px", marginRight: "10px", width: "300px" }}>
-                                    <CardItem style={{ width: "300px", paddingLeft: "0px", paddingRight: "0px", margin: "0px" }}>
+                                <Card style={styles.resourceContentEpisodeCard}>
+                                    <CardItem style={styles.resourceContentEpisodesIframeContainer}>
                                         <iframe style={{ padding: 0, border: 0, width: 300, height: 168 }}
                                             src={"https://www.youtube.com/embed/" + episode.videoPreview.replace("https://youtu.be/", "")}
 
@@ -101,7 +101,7 @@ class ResourceContent extends React.Component<Props, State>{
                     </Container>
 
                 </Container>
-                <Container style={{ flex: 30, flexDirection: "column", justifyContent: 'flex-start' }}>
+                <Container style={styles.resourceContentEpisodeRightContainer}>
                 </Container>
             </Container>)
     }
