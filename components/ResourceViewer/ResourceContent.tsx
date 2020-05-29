@@ -28,13 +28,13 @@ class ResourceContent extends React.Component<Props, State>{
                         <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: "Graphik-Bold-App", color: '#333333' }}>Current Series</Text>
                         <Text style={{ fontSize: 16, lineHeight: 24, fontFamily: "Graphik-Bold-App", color: '#F0493E' }}>Schedule</Text>
                     </Container>
-                    <Container style={{ overflow: "scroll", minHeight: 400, flexWrap: this.props.wrap ? "wrap" : "nowrap", flexGrow: 1, width: "100%", flexDirection: 'row', justifyContent: "flex-start", alignItems: "flex-start" }}>
+                    <Container style={styles.resourceContentCurrentSeriesContainer}>
 
                         {state.data.resources.items[state.currentResource].series.items[0].episodes.items.map((episode) => {
                             return (
                                 <TouchableOpacity onPress={() => { actions.changeSeries(0) }}>
-                                    <Card style={{ padding: "0px", marginLeft: "10px", marginRight: "10px", width: "300px" }}>
-                                        <CardItem style={{ width: "300px", paddingLeft: "0px", paddingRight: "0px", margin: "0px" }}>
+                                    <Card style={styles.resourceContentCurrentSeriesCard}>
+                                        <CardItem style={styles.resourceContentCurrentSeriesIframeContainer}>
                                             <iframe style={{ padding: 0, border: 0, width: 300, height: 168 }}
                                                 src={"https://www.youtube.com/embed/" + episode.videoPreview.replace("https://youtu.be/", "")}
 
