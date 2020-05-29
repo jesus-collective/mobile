@@ -40,7 +40,7 @@ class ResourceContent extends React.Component<Props, State>{
 
                                             />
                                         </CardItem>
-                                        <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333" }}>{episode.title}</Text></CardItem>
+                                        <CardItem style={{ width: 300, padding: 0, margin: 0, paddingBottom: 0 }}><Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333" }}>{episode.title}</Text></CardItem>
                                         <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{episode.descripition}</Text></CardItem>
                                     </Card>
                                 </TouchableOpacity>
@@ -63,7 +63,7 @@ class ResourceContent extends React.Component<Props, State>{
 
                                             />
                                         </CardItem>
-                                        <CardItem><Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333" }}>{series.title}</Text></CardItem>
+                                        <CardItem><Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 }}>{series.title}</Text></CardItem>
                                         <CardItem><Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{series.category}</Text></CardItem>
 
                                     </Card>
