@@ -976,6 +976,12 @@ export default EStyleSheet.create({
         profilesScreenMainContainer: {
             flexDirection: "column", 
         },
+        resourcefileFieldWrapper: { 
+            top: "17vw" 
+        },
+        resourcesOverviewScreenMainContainer: {
+            flexDirection: "column"
+        },
     },
 
     dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
