@@ -589,17 +589,30 @@ export default EStyleSheet.create({
     resourceContentMainContainer:{
         display: "flex", 
         flexDirection: "row", 
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
     },
     resourceContentLeftContainer: {
         flex: 70, 
         flexDirection: "column", 
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
+        paddingLeft: 30,
+        paddingRight: 30,
+        marginLeft: 30,
+        marginTop: 30,
+        backgroundColor: "#ffffff",
+        borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)"
+
     },
     resourceContentRightContainer: {
         flex: 30, 
         flexDirection: "column", 
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
+        paddingLeft: 30,
+        paddingRight: 30,
+        marginRight: 30,
+        marginTop: 30,
+        backgroundColor: "#ffffff",
+        borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)"
     },
 
 
