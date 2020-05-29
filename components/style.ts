@@ -601,7 +601,7 @@ export default EStyleSheet.create({
         marginTop: 30,
         backgroundColor: "#ffffff",
         borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
-        height: 800
+        height: 1000
 
     },
     resourceContentRightContainer: {
@@ -614,11 +614,12 @@ export default EStyleSheet.create({
         marginTop: 30,
         backgroundColor: "#ffffff",
         borderRadius: 4, 
-        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)"
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+        height: 1000
     },
     resourceContentCurrentSeriesContainer: {
         overflow: "scroll", 
-        minHeight: 250, 
+        minHeight: 275, 
         flexWrap: "nowrap", 
         // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
         flexGrow: 1, 
@@ -626,7 +627,7 @@ export default EStyleSheet.create({
         flexDirection: 'row', 
         justifyContent: "flex-start", 
         alignItems: "flex-start",
-        marginBottom: 100
+        marginBottom: 50
     },
     resourceContentCurrentSeriesCard: {
         padding: "0px", 
@@ -638,6 +639,34 @@ export default EStyleSheet.create({
         borderColor: "#ffffff"
     },
     resourceContentCurrentSeriesIframeContainer: {
+        width: "300px", 
+        paddingLeft: "0px", 
+        paddingRight: "0px", 
+        margin: "0px",
+        paddingTop: 0
+    },
+    resourceContentMoreSeriesContainer: {
+        overflow: "scroll", 
+        minHeight: 275, 
+        flexWrap: "nowrap", 
+        // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
+        flexGrow: 1, 
+        width: "100%", 
+        flexDirection: 'row', 
+        justifyContent: "flex-start", 
+        alignItems: "flex-start",
+    },
+    resourceContentMoreSeriesCard: {
+        padding: "0px", 
+        marginLeft: "10px", 
+        marginRight: "10px", 
+        width: "300px", 
+        borderRadius: 4, 
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+        borderColor: "#ffffff",
+        flexWrap: "wrap",
+    },
+    resourceContentMoreSeriesIframeContainer: {
         width: "300px", 
         paddingLeft: "0px", 
         paddingRight: "0px", 

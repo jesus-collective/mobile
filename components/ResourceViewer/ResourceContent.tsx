@@ -24,7 +24,7 @@ class ResourceContent extends React.Component<Props, State>{
         return (
             <Container style={styles.resourceContentMainContainer}>
                 <Container style={styles.resourceContentLeftContainer}>
-                    <Container style={{ display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 40, marginTop: 30, paddingLeft: 20, paddingRight: 20 }}>
+                    <Container style={{ display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 40, marginTop: 30, paddingLeft: 10, paddingRight: 20 }}>
                         <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: "Graphik-Bold-App", color: '#333333' }}>Current Series</Text>
                         <Text style={{ fontSize: 16, lineHeight: 24, fontFamily: "Graphik-Bold-App", color: '#F0493E', paddingRight: 15 }}>Schedule</Text>
                     </Container>
@@ -40,29 +40,31 @@ class ResourceContent extends React.Component<Props, State>{
 
                                             />
                                         </CardItem>
-                                        <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text>{episode.title}</Text></CardItem>
-                                        <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text>{episode.descripition}</Text></CardItem>
+                                        <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333" }}>{episode.title}</Text></CardItem>
+                                        <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{episode.descripition}</Text></CardItem>
                                     </Card>
                                 </TouchableOpacity>
                             )
                         })}
                     </Container>
-                    <Text>More Series</Text>
-                    <Container style={{ overflow: "scroll", minHeight: 400, flexWrap: this.props.wrap ? "wrap" : "nowrap", flexGrow: 1, width: "100%", flexDirection: 'row', justifyContent: "flex-start", alignItems: "flex-start" }}>
+                    <Container style={{ display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 40, marginTop: 30, paddingLeft: 10, paddingRight: 20 }}>
+                        <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: "Graphik-Bold-App", color: '#333333' }}>More Series</Text>
+                    </Container>
+                    <Container style={styles.resourceContentMoreSeriesContainer}>
 
                         {state.data.resources.items[state.currentResource].series.items.map((series, index) => {
                             return (
                                 <TouchableOpacity onPress={() => { actions.changeSeries(index) }}>
 
-                                    <Card>
-                                        <CardItem style={{ width: "300px", paddingLeft: "0px", paddingRight: "0px", margin: "0px" }}>
+                                    <Card style={styles.resourceContentMoreSeriesCard}>
+                                        <CardItem style={styles.resourceContentMoreSeriesIframeContainer}>
                                             <iframe style={{ padding: 0, border: 0, width: 300, height: 168 }}
                                                 src={"https://www.youtube.com/embed/videoseries?list=" + series.playlist}
 
                                             />
                                         </CardItem>
-                                        <CardItem><Text>{series.title}</Text></CardItem>
-                                        <CardItem><Text>{series.category}</Text></CardItem>
+                                        <CardItem><Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333" }}>{series.title}</Text></CardItem>
+                                        <CardItem><Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{series.category}</Text></CardItem>
 
                                     </Card>
                                 </TouchableOpacity>
