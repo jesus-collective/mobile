@@ -581,6 +581,14 @@ export default EStyleSheet.create({
         alignItems: 'flex-start', 
         justifyContent: 'flex-start'
     },
+    resourcesOverviewScreenMainContainer: {
+        display: "flex", 
+        flexDirection: "row", 
+        justifyContent: 'flex-start'
+    },
+    resourcesOverviewScreenLeftContainer: {
+
+    },
 
 
     // Media Query Desktop Tablet
