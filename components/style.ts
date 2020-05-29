@@ -602,7 +602,6 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff",
         borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
         height: 900
-
     },
     resourceContentRightContainer: {
         flex: 30, 
@@ -984,6 +983,16 @@ export default EStyleSheet.create({
         },
         resourceContentMainContainer: {
             flexDirection: "column",
+            minHeight: 900,
+        },
+        resourceContentLeftContainer: {
+            marginLeft: 0,
+            marginTop: 0,
+        },
+        resourceContentRightContainer: {
+            marginRight: 0,
+            marginTop: 0,
+            top: 300
         },
     },
 
