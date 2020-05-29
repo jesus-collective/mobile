@@ -26,7 +26,7 @@ class ResourceContent extends React.Component<Props, State>{
                 <Container style={styles.resourceContentLeftContainer}>
                     <Container style={{ display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 40, marginTop: 30, paddingLeft: 20, paddingRight: 20 }}>
                         <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: "Graphik-Bold-App", color: '#333333' }}>Current Series</Text>
-                        <Text style={{ fontSize: 16, lineHeight: 24, fontFamily: "Graphik-Bold-App", color: '#F0493E' }}>Schedule</Text>
+                        <Text style={{ fontSize: 16, lineHeight: 24, fontFamily: "Graphik-Bold-App", color: '#F0493E', paddingRight: 15 }}>Schedule</Text>
                     </Container>
                     <Container style={styles.resourceContentCurrentSeriesContainer}>
 

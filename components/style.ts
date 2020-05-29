@@ -596,11 +596,12 @@ export default EStyleSheet.create({
         flexDirection: "column", 
         justifyContent: 'flex-start',
         paddingLeft: 30,
-        paddingRight: 30,
+        paddingRight: 0,
         marginLeft: 30,
         marginTop: 30,
         backgroundColor: "#ffffff",
-        borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)"
+        borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+        height: 800
 
     },
     resourceContentRightContainer: {
@@ -617,14 +618,15 @@ export default EStyleSheet.create({
     },
     resourceContentCurrentSeriesContainer: {
         overflow: "scroll", 
-        minHeight: 400, 
+        minHeight: 250, 
         flexWrap: "nowrap", 
         // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
         flexGrow: 1, 
         width: "100%", 
         flexDirection: 'row', 
         justifyContent: "flex-start", 
-        alignItems: "flex-start"
+        alignItems: "flex-start",
+        marginBottom: 100
     },
     resourceContentCurrentSeriesCard: {
         padding: "0px", 
