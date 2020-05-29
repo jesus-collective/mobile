@@ -635,7 +635,8 @@ export default EStyleSheet.create({
         width: "300px", 
         borderRadius: 4, 
         boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
-        borderColor: "#ffffff"
+        borderColor: "#ffffff",
+        minHeight: 275
     },
     resourceContentCurrentSeriesIframeContainer: {
         width: "300px", 
@@ -664,6 +665,7 @@ export default EStyleSheet.create({
         boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
         borderColor: "#ffffff",
         flexWrap: "wrap",
+        minHeight: 300
     },
     resourceContentMoreSeriesIframeContainer: {
         width: "300px", 
@@ -723,6 +725,7 @@ export default EStyleSheet.create({
         boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
         borderColor: "#ffffff",
         flexWrap: "wrap",
+        minHeight: 275
     },
     resourceContentEpisodesIframeContainer: {
         width: "300px", 
