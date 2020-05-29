@@ -748,6 +748,13 @@ export default EStyleSheet.create({
     resourceImageIcon: {
         color: "#aaaaaa"
     },
+    dashboardConversationCard: {
+        minHeight: 50, 
+        paddingTop: 28, 
+        paddingBottom: 28, 
+        borderStyle: "solid", 
+        borderColor: "#FFFFFF"
+    },
 
 
     // Media Query Desktop Tablet
@@ -1012,6 +1019,9 @@ export default EStyleSheet.create({
             marginLeft: 0,
             marginTop: 0,
             width: "100%"
+        },
+        dashboardConversationCard: {
+            marginLeft: 10,
         },
     },
 
