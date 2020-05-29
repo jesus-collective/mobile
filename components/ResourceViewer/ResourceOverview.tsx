@@ -241,27 +241,29 @@ class ResourceOverview extends React.Component<Props, State>{
                                         return (<ProfileImage key={index} user={item} size="small" />)
                                     })}
                         </Container>
-                        {this.state.canJoin ?
-                            <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.join() }} >Join Resource</JCButton> :
+                        <Container>
+                            {this.state.canJoin ?
+                            <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Join Resource</JCButton> :
                             null
-                        }
-                        {this.state.canLeave ?
-                            <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.leave() }} >Leave Resource</JCButton> :
+                            }
+                            {this.state.canLeave ?
+                            <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Leave Resource</JCButton> :
                             null
-                        }
-                        {this.state.createNew ?
-                            <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.createNew() }} >Create Resource</JCButton>
+                            }
+                            {this.state.createNew ?
+                            <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.createNew() }} >Create Resource</JCButton>
                             : null
-                        }
-                        {this.state.canSave ?
-                            <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.save() }} >Save Resource</JCButton>
+                            }
+                            {this.state.canSave ?
+                            <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.save() }} >Save Resource</JCButton>
                             : null
-                        }
-                        {this.state.canDelete ?
-                            <JCButton buttonType={ButtonTypes.Outline} onPress={() => { if (window.confirm('Are you sure you wish to delete this resource?')) this.delete() }} >Delete Resource</JCButton>
+                            }
+                            {this.state.canDelete ?
+                            <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this resource?')) this.delete() }} >Delete Resource</JCButton>
                             : null
-                        }
-                        <Text>{this.state.validationError}</Text>
+                            }
+                            <Text>{this.state.validationError}</Text>
+                        </Container>
                     </Container>
                     <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                         <ResourceOverview.Consumer>
