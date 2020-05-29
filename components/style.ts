@@ -982,6 +982,9 @@ export default EStyleSheet.create({
         resourcesOverviewScreenMainContainer: {
             flexDirection: "column"
         },
+        resourceContentMainContainer: {
+            flexDirection: "column",
+        },
     },
 
     dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
