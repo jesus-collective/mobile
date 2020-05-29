@@ -734,6 +734,21 @@ export default EStyleSheet.create({
         margin: "0px",
         paddingTop: 0
     },
+    resourcefileInputWrapper: { 
+        width: "100%", 
+        overflow: "hidden", 
+        position: "absolute" 
+    },
+    resourcefileFieldWrapper: { 
+        alignSelf: "center", 
+        top: "5vw", 
+        width: "50%", 
+        overflow: "hidden", 
+        position: "absolute" 
+    },
+    resourceImageIcon: {
+        color: "#aaaaaa"
+    },
 
 
     // Media Query Desktop Tablet
@@ -811,7 +826,10 @@ export default EStyleSheet.create({
         },
         fontFormSmallHeader: {
             marginTop: 100
-        }
+        },
+        resourcefileFieldWrapper: { 
+            top: "10vw" 
+        },
     },
 
     // Media Query Desktop Large Tablet
@@ -850,6 +868,9 @@ export default EStyleSheet.create({
         },
         eventAttendeesPictures: {
             flexBasis: 0
+        },
+        resourcefileFieldWrapper: { 
+            top: "7vw" 
         },
     },
 
@@ -1028,14 +1049,6 @@ export default EStyleSheet.create({
     fileInputWrapperBtn: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { display: "inline-block", width: 200, height: 40 } :
         {},
-    resourcefileInputWrapper:
-        { width: "100%", overflow: "hidden", position: "absolute" },
-    resourcefileFieldWrapper:
-        { alignSelf: "center", top: "5vw", width: "50%", overflow: "hidden", position: "absolute" },
-
-    resourceImageIcon: {
-        color: "#aaaaaa"
-    }
 
 
 
