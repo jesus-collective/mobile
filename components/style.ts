@@ -753,7 +753,8 @@ export default EStyleSheet.create({
         paddingTop: 28, 
         paddingBottom: 28, 
         borderStyle: "solid", 
-        borderColor: "#FFFFFF"
+        borderColor: "#FFFFFF",
+        width: "75%"
     },
 
 
@@ -836,6 +837,9 @@ export default EStyleSheet.create({
         resourcefileFieldWrapper: { 
             top: "10vw" 
         },
+        dashboardConversationCard:{
+            width: "100%"
+        }
     },
 
     // Media Query Desktop Large Tablet
@@ -878,6 +882,10 @@ export default EStyleSheet.create({
         resourcefileFieldWrapper: { 
             top: "7vw" 
         },
+        dashboardConversationCard:{
+            width: "100%",
+            paddingRight: 32
+        }
     },
 
     '@media (min-width: 320px) and (max-width: 480px)': {
