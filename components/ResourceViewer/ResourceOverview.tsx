@@ -221,8 +221,8 @@ class ResourceOverview extends React.Component<Props, State>{
 
                     <Container style={styles.detailScreenLeftCard}>
                         <Container style={{ flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 20 }}>
-                            <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: '"Graphik-Regular-App"', color: '#333333', textTransform: "uppercase", flex: 0 }}>Resource</Text>
-                            <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: '"Graphik-Regular-App"', color: '#979797', textTransform: "uppercase", flex: 0 }}>Sponsored</Text>
+                            <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#333333', textTransform: "uppercase", flex: 0 }}>Resource</Text>
+                            <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#979797', textTransform: "uppercase", flex: 0 }}>Sponsored</Text>
                         </Container>
                         <EditableText onChange={(value: any) => { this.updateValue("name", value); this.updateOverview("title", value) }} placeholder="Enter Resource Name" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
                         <EditableText onChange={(value: any) => { this.updateValue("description", value); this.updateOverview("description", value) }} placeholder="Enter Resource Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
