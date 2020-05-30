@@ -990,7 +990,7 @@ export default EStyleSheet.create({
         },
         ResourcesMyGroups: {
             flexDirection: "column",
-            flexWrap: "nowrap",
+            flexWrap: "wrap",
         },
         profilesScreenMainContainer: {
             flexDirection: "column", 
