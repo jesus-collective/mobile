@@ -756,6 +756,11 @@ export default EStyleSheet.create({
         borderColor: "#FFFFFF",
         width: "75%"
     },
+    profilesCard: {
+        width: "100%", 
+        minHeight: 50, 
+        borderColor: "#ffffff"
+    },
 
 
     // Media Query Desktop Tablet
@@ -985,7 +990,7 @@ export default EStyleSheet.create({
         },
         ResourcesMyGroups: {
             flexDirection: "column",
-            flexWrap: "wrap",
+            flexWrap: "nowrap",
         },
         profilesScreenMainContainer: {
             flexDirection: "column", 
@@ -1030,6 +1035,12 @@ export default EStyleSheet.create({
         },
         dashboardConversationCard: {
             marginLeft: 10,
+        },
+        profilesCard: {
+            minWidth: 340
+        },
+        profilesScreenLeftContainer: {
+            minHeight: 2000
         },
     },
 

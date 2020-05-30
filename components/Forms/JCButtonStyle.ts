@@ -333,5 +333,10 @@ export default EStyleSheet.create({
             width: "100%",
             textAlign: "center"
         },
+        OutlineSmallButton: {
+            marginLeft: 0,
+            marginBottom: 10,
+            justifyContent: "center",
+        },
     },
 })
