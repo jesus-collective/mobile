@@ -87,7 +87,7 @@ export default class GroupScreen extends React.Component<Props, State>{
     return key.length ? myObject[key[0]] : "";
   }
   setInitialData(props) {
-    if (props.route.params.create === "true")
+    if (props.route.params.create === true || props.route.params.create === "true")
       Auth.currentAuthenticatedUser().then((user: any) => {
         var z: CreateGroupInput = {
           id: "group-" + Date.now(),
