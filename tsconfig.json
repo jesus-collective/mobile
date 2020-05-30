@@ -12,5 +12,11 @@
     "checkJs": true,
     "types": ["cypress"]
   },
-  "exclude": ["babel.config.js", "amplify", "node_modules"]
+  "exclude": [
+    "babel.config.js",
+    "web-build",
+    "coverage",
+    "amplify",
+    "node_modules"
+  ]
 }

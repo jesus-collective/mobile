@@ -72,16 +72,11 @@ export default class EventScreen extends React.Component<Props, State>{
       const getUser: any = API.graphql(graphqlOperation(queries.getUser, { id: user['username'] }));
       getUser.then((json) => {
 
-        var isEditable = (json.data.getUser.owner == user['username'])
+
 
         this.setState({
           currentUserProfile: json.data.getUser,
-          isEditable: isEditable,
-          canLeave: true && !isEditable,
-          canJoin: true && !isEditable,
-          canSave: (!this.state.createNew) && isEditable,
-          createNew: this.state.createNew && isEditable,
-          canDelete: (!this.state.createNew) && isEditable
+
         }, () => {
           this.setInitialData(props)
         })
@@ -113,7 +108,16 @@ export default class EventScreen extends React.Component<Props, State>{
           time: null,
           location: ""
         }
-        this.setState({ data: z })
+        const isEditable = true
+        this.setState({
+          data: z,
+          isEditable: isEditable,
+          canLeave: true && !isEditable,
+          canJoin: true && !isEditable,
+          canSave: (!this.state.createNew) && isEditable,
+          createNew: this.state.createNew && isEditable,
+          canDelete: (!this.state.createNew) && isEditable
+        })
       })
     else {
       var getGroup: any = API.graphql({
@@ -122,8 +126,17 @@ export default class EventScreen extends React.Component<Props, State>{
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       var processResults = (json) => {
+        const isEditable = json.data.getGroup.owner == this.state.currentUser
 
-        this.setState({ data: json.data.getGroup },
+        this.setState({
+          data: json.data.getGroup,
+          isEditable: isEditable,
+          canLeave: true && !isEditable,
+          canJoin: true && !isEditable,
+          canSave: (!this.state.createNew) && isEditable,
+          createNew: this.state.createNew && isEditable,
+          canDelete: (!this.state.createNew) && isEditable
+        },
 
           () => {
             var groupMemberByUser: any = API.graphql({

@@ -33,6 +33,7 @@ export default class EditableButton extends React.Component<Props, State> {
     }
   }
   onChanged(val: any) {
+    console.log("onChanged")
     if (val.target.value == "")
       this.props.onDelete()
     else {
@@ -46,7 +47,11 @@ export default class EditableButton extends React.Component<Props, State> {
 
     if (this.state.isEditable)
       if (this.state.isEditMode)
-        return <Input onSubmitEditing={(value) => { this.onChanged(value) }} onChange={(val) => { this.setState({ value: val.target.value }) }} placeholder={this.state.placeholder} style={this.state.inputStyle} value={this.state.value}></Input>
+        return <Input
+          onBlur={(value) => { this.onChanged(value) }}
+          onSubmitEditing={(value) => { this.onChanged(value) }}
+          onChange={(val) => { this.setState({ value: val.target.value }) }}
+          placeholder={this.state.placeholder} style={this.state.inputStyle} value={this.state.value} ></Input >
       else
         return <Button onLongPress={() => { this.setState({ isEditMode: true }) }} transparent onPress={() => { this.props.onPress() }}><Text style={this.state.textStyle}>{this.props.value}</Text></Button>
     else
