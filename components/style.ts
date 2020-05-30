@@ -967,7 +967,11 @@ export default EStyleSheet.create({
         },
         detailScreenLeftCard: {
             width: "auto",
-            marginRight: 32
+            marginRight: 32,
+            minHeight: "125vh",
+            marginLeft: 0,
+            marginTop: 0,
+            // width: "100%"
         },
         detailScreenRightCard: {
            width: "auto",
@@ -1037,12 +1041,6 @@ export default EStyleSheet.create({
             marginTop: 0,
             top: 200
         },
-        detailScreenLeftCard: {
-            minHeight: "125vh",
-            marginLeft: 0,
-            marginTop: 0,
-            width: "100%"
-        },
         dashboardConversationCard: {
             marginLeft: 10,
         },
@@ -1051,6 +1049,15 @@ export default EStyleSheet.create({
         },
         profilesScreenLeftContainer: {
             minHeight: 2000
+        },
+        fontFormName: {
+            textAlign: "left",
+        },
+        fontFormRole: {
+            textAlign: "left",
+        },
+        fontFormUserType: {
+            textAlign: "left",
         },
     },
 
