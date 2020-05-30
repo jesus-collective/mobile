@@ -761,6 +761,14 @@ export default EStyleSheet.create({
         minHeight: 50, 
         borderColor: "#ffffff"
     },
+    sectionHeadingDashboard: {
+        minHeight: 45, 
+        flexGrow: 0, 
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
+        marginTop: 30, 
+        paddingRight: 12
+    },
 
 
     // Media Query Desktop Tablet
