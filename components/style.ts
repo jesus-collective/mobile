@@ -336,7 +336,7 @@ export default EStyleSheet.create({
     },
 
     detailScreenLeftCard: Platform.OS === 'web' ?
-        { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: "50%", width: 446 } :
+        { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: "100%", width: 446 } :
         { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, minHeight: "50%", width: 446 }
     ,
     detailScreenRightCard: Platform.OS === 'web' ?
@@ -580,6 +580,159 @@ export default EStyleSheet.create({
         alignContent: 'flex-start', 
         alignItems: 'flex-start', 
         justifyContent: 'flex-start'
+    },
+    resourcesOverviewScreenMainContainer: {
+        display: "flex", 
+        flexDirection: "row", 
+        justifyContent: 'flex-start'
+    },
+    resourceContentMainContainer:{
+        display: "flex", 
+        flexDirection: "row", 
+        justifyContent: 'flex-start',
+    },
+    resourceContentLeftContainer: {
+        flex: 70, 
+        flexDirection: "column", 
+        justifyContent: 'flex-start',
+        paddingLeft: 30,
+        paddingRight: 0,
+        marginLeft: 30,
+        marginTop: 30,
+        backgroundColor: "#ffffff",
+        borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+        height: 900
+
+    },
+    resourceContentRightContainer: {
+        flex: 30, 
+        flexDirection: "column", 
+        justifyContent: 'flex-start',
+        paddingLeft: 30,
+        paddingRight: 30,
+        marginRight: 30,
+        marginTop: 30,
+        backgroundColor: "#ffffff",
+        borderRadius: 4, 
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+        height: 900
+    },
+    resourceContentCurrentSeriesContainer: {
+        overflow: "scroll", 
+        minHeight: 375, 
+        flexWrap: "nowrap", 
+        // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
+        flexGrow: 0, 
+        width: "100%", 
+        flexDirection: 'row', 
+        justifyContent: "flex-start", 
+        alignItems: "flex-start",
+    },
+    resourceContentCurrentSeriesCard: {
+        padding: "0px", 
+        marginLeft: "10px", 
+        marginRight: "10px", 
+        width: "300px", 
+        borderRadius: 4, 
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+        borderColor: "#ffffff",
+        minHeight: 275
+    },
+    resourceContentCurrentSeriesIframeContainer: {
+        width: "300px", 
+        paddingLeft: "0px", 
+        paddingRight: "0px", 
+        margin: "0px",
+        paddingTop: 0
+    },
+    resourceContentMoreSeriesContainer: {
+        overflow: "scroll", 
+        minHeight: 375, 
+        flexWrap: "nowrap", 
+        // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
+        flexGrow: 0, 
+        width: "100%", 
+        flexDirection: 'row', 
+        justifyContent: "flex-start", 
+        alignItems: "flex-start",
+    },
+    resourceContentMoreSeriesCard: {
+        padding: "0px", 
+        marginLeft: "10px", 
+        marginRight: "10px", 
+        width: "300px", 
+        borderRadius: 4, 
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+        borderColor: "#ffffff",
+        flexWrap: "wrap",
+        minHeight: 300
+    },
+    resourceContentMoreSeriesIframeContainer: {
+        width: "300px", 
+        paddingLeft: "0px", 
+        paddingRight: "0px", 
+        margin: "0px",
+        paddingTop: 0
+    },
+    resourceContentEpisodeMainContainer: {
+        display: "flex", 
+        flexDirection: "row", 
+        justifyContent: 'flex-start'
+    },
+    resourceContentEpisodeLeftContainer: {
+        flex: 70, 
+        flexDirection: "column", 
+        justifyContent: 'flex-start',
+        paddingLeft: 30,
+        paddingRight: 0,
+        marginLeft: 30,
+        marginTop: 30,
+        backgroundColor: "#ffffff",
+        borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+        height: 900
+    },
+    resourceContentEpisodeRightContainer: {
+        flex: 30, 
+        flexDirection: "column", 
+        justifyContent: 'flex-start',
+        paddingLeft: 30,
+        paddingRight: 30,
+        marginRight: 30,
+        marginTop: 30,
+        backgroundColor: "#ffffff",
+        borderRadius: 4, 
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+        height: 900
+    },
+    resourceContentEpisodesContainer: {
+        overflow: "scroll", 
+        minHeight: 375, 
+        flexWrap: "nowrap", 
+        // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
+        flexGrow: 0, 
+        width: "100%", 
+        flexDirection: 'row', 
+        justifyContent: "flex-start", 
+        alignItems: "flex-start",
+        marginTop: 30
+    },
+    resourceContentEpisodeCard: {
+        padding: "0px", 
+        marginLeft: "10px", 
+        marginRight: "10px", 
+        width: "300px", 
+        borderRadius: 4, 
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+        borderColor: "#ffffff",
+        flexWrap: "wrap",
+        minHeight: 275
+    },
+    resourceContentEpisodesIframeContainer: {
+        width: "300px", 
+        paddingLeft: "0px", 
+        paddingRight: "0px", 
+        margin: "0px",
+        paddingTop: 0
     },
 
 

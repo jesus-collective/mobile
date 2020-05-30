@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleProvider, Container, Content, Card, CardItem } from 'native-base';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
-
+import styles from '../../components/style'
 import { Text } from 'react-native'
 import { ResourceContext } from './ResourceContext';
 import Validate from '../../components/Validate/Validate'
@@ -22,45 +22,49 @@ class ResourceContent extends React.Component<Props, State>{
     static Consumer = ResourceContext.Consumer;
     renderSeries(state, actions) {
         return (
-            <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
-                <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
-                    <Text>Current Series</Text>
-                    <Text>Schedule</Text>
-                    <Container style={{ overflow: "scroll", minHeight: 400, flexWrap: this.props.wrap ? "wrap" : "nowrap", flexGrow: 1, width: "100%", flexDirection: 'row', justifyContent: "flex-start", alignItems: "flex-start" }}>
+            <Container style={styles.resourceContentMainContainer}>
+                <Container style={styles.resourceContentLeftContainer}>
+                    <Container style={{ display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 40, marginTop: 30, paddingLeft: 10, paddingRight: 20 }}>
+                        <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: "Graphik-Bold-App", color: '#333333' }}>Current Series</Text>
+                        <Text style={{ fontSize: 16, lineHeight: 24, fontFamily: "Graphik-Bold-App", color: '#F0493E', paddingRight: 15 }}>Schedule</Text>
+                    </Container>
+                    <Container style={styles.resourceContentCurrentSeriesContainer}>
 
                         {state.data.resources.items[state.currentResource].series.items[0].episodes.items.map((episode) => {
                             return (
                                 <TouchableOpacity onPress={() => { actions.changeSeries(0) }}>
-                                    <Card style={{ padding: "0px", marginLeft: "10px", marginRight: "10px", width: "300px" }}>
-                                        <CardItem style={{ width: "300px", paddingLeft: "0px", paddingRight: "0px", margin: "0px" }}>
+                                    <Card style={styles.resourceContentCurrentSeriesCard}>
+                                        <CardItem style={styles.resourceContentCurrentSeriesIframeContainer}>
                                             <iframe style={{ padding: 0, border: 0, width: 300, height: 168 }}
                                                 src={"https://www.youtube.com/embed/" + episode.videoPreview.replace("https://youtu.be/", "")}
 
                                             />
                                         </CardItem>
-                                        <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text>{episode.title}</Text></CardItem>
-                                        <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text>{episode.descripition}</Text></CardItem>
+                                        <CardItem style={{ width: 300, padding: 0, margin: 0, paddingBottom: 0 }}><Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333" }}>{episode.title}</Text></CardItem>
+                                        <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{episode.descripition}</Text></CardItem>
                                     </Card>
                                 </TouchableOpacity>
                             )
                         })}
                     </Container>
-                    <Text>More Series</Text>
-                    <Container style={{ overflow: "scroll", minHeight: 400, flexWrap: this.props.wrap ? "wrap" : "nowrap", flexGrow: 1, width: "100%", flexDirection: 'row', justifyContent: "flex-start", alignItems: "flex-start" }}>
+                    <Container style={{ display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 40, marginTop: 30, paddingLeft: 10, paddingRight: 20 }}>
+                        <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: "Graphik-Bold-App", color: '#333333' }}>More Series</Text>
+                    </Container>
+                    <Container style={styles.resourceContentMoreSeriesContainer}>
 
                         {state.data.resources.items[state.currentResource].series.items.map((series, index) => {
                             return (
                                 <TouchableOpacity onPress={() => { actions.changeSeries(index) }}>
 
-                                    <Card>
-                                        <CardItem style={{ width: "300px", paddingLeft: "0px", paddingRight: "0px", margin: "0px" }}>
+                                    <Card style={styles.resourceContentMoreSeriesCard}>
+                                        <CardItem style={styles.resourceContentMoreSeriesIframeContainer}>
                                             <iframe style={{ padding: 0, border: 0, width: 300, height: 168 }}
                                                 src={"https://www.youtube.com/embed/videoseries?list=" + series.playlist}
 
                                             />
                                         </CardItem>
-                                        <CardItem><Text>{series.title}</Text></CardItem>
-                                        <CardItem><Text>{series.category}</Text></CardItem>
+                                        <CardItem><Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 }}>{series.title}</Text></CardItem>
+                                        <CardItem><Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{series.category}</Text></CardItem>
 
                                     </Card>
                                 </TouchableOpacity>
@@ -68,28 +72,28 @@ class ResourceContent extends React.Component<Props, State>{
                         })}
                     </Container>
                 </Container>
-                <Container style={{ flex: 30, flexDirection: "column", justifyContent: 'flex-start' }}>
+                <Container style={styles.resourceContentRightContainer}>
                 </Container>
             </Container>)
     }
     renderEpisodes(state, actions) {
         return (
-            <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
-                <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
+            <Container style={styles.resourceContentEpisodeMainContainer}>
+                <Container style={styles.resourceContentEpisodeLeftContainer}>
 
-                    <Container style={{ overflow: "scroll", minHeight: 400, flexWrap: this.props.wrap ? "wrap" : "nowrap", flexGrow: 1, width: "100%", flexDirection: 'row', justifyContent: "flex-start", alignItems: "flex-start" }}>
+                    <Container style={styles.resourceContentEpisodesContainer}>
 
                         {state.data.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items.map((episode, index) => {
                             return (
-                                <Card style={{ padding: "0px", marginLeft: "10px", marginRight: "10px", width: "300px" }}>
-                                    <CardItem style={{ width: "300px", paddingLeft: "0px", paddingRight: "0px", margin: "0px" }}>
+                                <Card style={styles.resourceContentEpisodeCard}>
+                                    <CardItem style={styles.resourceContentEpisodesIframeContainer}>
                                         <iframe style={{ padding: 0, border: 0, width: 300, height: 168 }}
                                             src={"https://www.youtube.com/embed/" + episode.videoPreview.replace("https://youtu.be/", "")}
 
                                         />
                                     </CardItem>
-                                    <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text>{episode.title}</Text></CardItem>
-                                    <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text>{episode.descripition}</Text></CardItem>
+                                    <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333" }}>{episode.title}</Text></CardItem>
+                                    <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{episode.descripition}</Text></CardItem>
                                 </Card>
 
                             )
@@ -97,7 +101,7 @@ class ResourceContent extends React.Component<Props, State>{
                     </Container>
 
                 </Container>
-                <Container style={{ flex: 30, flexDirection: "column", justifyContent: 'flex-start' }}>
+                <Container style={styles.resourceContentEpisodeRightContainer}>
                 </Container>
             </Container>)
     }
