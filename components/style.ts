@@ -933,12 +933,13 @@ export default EStyleSheet.create({
         profileScreenLeftCard: {
             marginRight: 32,
             flex: 0,
-            minHeight: "50%",
+            paddingBottom: 100,
             width: "auto"
         },
         profileScreenRightCard: {
             width: "auto",
-            flex: 0
+            flex: 0,
+            top: 50
         },
         myProfileCoordinates: {
             flexDirection: "row",
