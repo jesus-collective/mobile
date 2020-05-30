@@ -808,7 +808,7 @@ export default EStyleSheet.create({
             lineHeight: 30,
         },
         myProfileTopButtons: {
-            width: "53%",
+            width: "30%",
         },
         profileScreenLeftCard: {
             marginRight: 10,
