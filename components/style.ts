@@ -602,7 +602,6 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff",
         borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
         height: 900
-
     },
     resourceContentRightContainer: {
         flex: 30, 
@@ -734,6 +733,42 @@ export default EStyleSheet.create({
         margin: "0px",
         paddingTop: 0
     },
+    resourcefileInputWrapper: { 
+        width: "100%", 
+        overflow: "hidden", 
+        position: "absolute" 
+    },
+    resourcefileFieldWrapper: { 
+        alignSelf: "center", 
+        top: "5vw", 
+        width: "50%", 
+        overflow: "hidden", 
+        position: "absolute" 
+    },
+    resourceImageIcon: {
+        color: "#aaaaaa"
+    },
+    dashboardConversationCard: {
+        minHeight: 50, 
+        paddingTop: 28, 
+        paddingBottom: 28, 
+        borderStyle: "solid", 
+        borderColor: "#FFFFFF",
+        width: "75%"
+    },
+    profilesCard: {
+        width: "100%", 
+        minHeight: 50, 
+        borderColor: "#ffffff"
+    },
+    sectionHeadingDashboard: {
+        minHeight: 45, 
+        flexGrow: 0, 
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
+        marginTop: 30, 
+        paddingRight: 12
+    },
 
 
     // Media Query Desktop Tablet
@@ -811,6 +846,12 @@ export default EStyleSheet.create({
         },
         fontFormSmallHeader: {
             marginTop: 100
+        },
+        resourcefileFieldWrapper: { 
+            top: "10vw" 
+        },
+        dashboardConversationCard:{
+            width: "100%"
         }
     },
 
@@ -851,6 +892,13 @@ export default EStyleSheet.create({
         eventAttendeesPictures: {
             flexBasis: 0
         },
+        resourcefileFieldWrapper: { 
+            top: "7vw" 
+        },
+        dashboardConversationCard:{
+            width: "100%",
+            paddingRight: 32
+        }
     },
 
     '@media (min-width: 320px) and (max-width: 480px)': {
@@ -955,6 +1003,53 @@ export default EStyleSheet.create({
         profilesScreenMainContainer: {
             flexDirection: "column", 
         },
+        resourcefileFieldWrapper: { 
+            top: "17vw" 
+        },
+        resourcesOverviewScreenMainContainer: {
+            flexDirection: "column"
+        },
+        resourceContentMainContainer: {
+            flexDirection: "column",
+            minHeight: 900,
+        },
+        resourceContentLeftContainer: {
+            marginLeft: 0,
+            marginTop: 0,
+        },
+        resourceContentRightContainer: {
+            marginRight: 0,
+            marginTop: 0,
+            top: 300
+        },
+        resourceContentEpisodeMainContainer: {
+            flexDirection: "column", 
+            minHeight: 400,
+        },
+        resourceContentEpisodeLeftContainer: {
+            marginLeft: 0,
+            marginTop: 0,
+        },
+        resourceContentEpisodeRightContainer: {
+            marginRight: 0,
+            marginTop: 0,
+            top: 200
+        },
+        detailScreenLeftCard: {
+            minHeight: "125vh",
+            marginLeft: 0,
+            marginTop: 0,
+            width: "100%"
+        },
+        dashboardConversationCard: {
+            marginLeft: 10,
+        },
+        profilesCard: {
+            minWidth: 340
+        },
+        profilesScreenLeftContainer: {
+            minHeight: 2000
+        },
     },
 
     dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
@@ -1028,14 +1123,6 @@ export default EStyleSheet.create({
     fileInputWrapperBtn: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
         { display: "inline-block", width: 200, height: 40 } :
         {},
-    resourcefileInputWrapper:
-        { width: "100%", overflow: "hidden", position: "absolute" },
-    resourcefileFieldWrapper:
-        { alignSelf: "center", top: "5vw", width: "50%", overflow: "hidden", position: "absolute" },
-
-    resourceImageIcon: {
-        color: "#aaaaaa"
-    }
 
 
 

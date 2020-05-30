@@ -56,7 +56,11 @@ export default class HeaderStyles {
                 display: Platform.OS === 'web' && Dimensions.get('window').width > 720 ? 'flex' : 'none',
             },
             // Media Query Mobile
-
+            '@media (min-width: 320px) and (max-width: 480px)': {
+                resourceContainer: {
+                    overflowX: 'scroll'
+                },
+            },
 
         });
     }
