@@ -829,7 +829,8 @@ export default EStyleSheet.create({
         },
         fileInputWrapper: {
             width: "100%",
-            top: 265
+            top: 265,
+            left: "8%"
         },
         eventAttendeesPictures: {
             flexBasis: 0
