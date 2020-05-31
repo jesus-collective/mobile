@@ -296,7 +296,7 @@ export default class EventScreen extends React.Component<Props, State>{
     return (
       this.state.data ?
         <StyleProvider style={getTheme(material)}>
-          <Container >
+          <Container>
             <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
             <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
             <Content>

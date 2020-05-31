@@ -265,7 +265,7 @@ class ResourceOverview extends React.Component<Props, State>{
                             <Text>{this.state.validationError}</Text>
                         </Container>
                     </Container>
-                    <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                    <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', backgroundColor: "#F9FAFC", height: "100%" }}>
                         <ResourceOverview.Consumer>
                             {({ state, actions }) => {
 
