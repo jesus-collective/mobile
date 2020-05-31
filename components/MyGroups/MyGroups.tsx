@@ -16,6 +16,7 @@ import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { constants } from '../../src/constants'
 import ErrorBoundry from '../../components/ErrorBoundry'
+import Item from '../../native-base-theme/components/Item';
 var moment = require('moment');
 
 interface Props {
@@ -36,6 +37,7 @@ interface State {
   showCreateButton: Boolean
   currentUser: String
   nextToken: any
+  canLeave: any
 }
 
 export default class MyGroups extends React.Component<Props, State> {
@@ -52,7 +54,8 @@ export default class MyGroups extends React.Component<Props, State> {
         data: [],
         showCreateButton: false,
         currentUser: null,
-        nextToken: null
+        nextToken: null,
+        canLeave: []
       }
 
     }
@@ -68,9 +71,9 @@ export default class MyGroups extends React.Component<Props, State> {
         data: [],
         showCreateButton: false,
         currentUser: null,
-        nextToken: null
+        nextToken: null,
+        canLeave: []
       }
-
     }
     else if (props.type == "resource") {
       this.state =
@@ -84,7 +87,8 @@ export default class MyGroups extends React.Component<Props, State> {
         data: [],
         showCreateButton: false,
         currentUser: null,
-        nextToken: null
+        nextToken: null,
+        canLeave: []
       }
 
     }
@@ -100,7 +104,8 @@ export default class MyGroups extends React.Component<Props, State> {
         data: [],
         showCreateButton: false,
         currentUser: null,
-        nextToken: null
+        nextToken: null,
+        canLeave: []
       }
 
     }
@@ -116,7 +121,8 @@ export default class MyGroups extends React.Component<Props, State> {
         data: [],
         showCreateButton: false,
         currentUser: null,
-        nextToken: null
+        nextToken: null,
+        canLeave: []
       }
 
     }
@@ -132,7 +138,8 @@ export default class MyGroups extends React.Component<Props, State> {
         data: [],
         showCreateButton: false,
         currentUser: null,
-        nextToken: null
+        nextToken: null,
+        canLeave: []
       }
 
     }
@@ -148,7 +155,8 @@ export default class MyGroups extends React.Component<Props, State> {
         data: [],
         showCreateButton: false,
         currentUser: null,
-        nextToken: null
+        nextToken: null,
+        canLeave: []
       }
     }
     this.setInitialData(props)
@@ -225,6 +233,7 @@ export default class MyGroups extends React.Component<Props, State> {
 
       var processList = (json) => {
         console.log({ profile: json })
+        this.setCanLeave(json.data.groupByType.items)
         var temp = [...this.state.data, ...json.data.groupByType.items]
         this.setState({
           data: temp,
@@ -247,55 +256,117 @@ export default class MyGroups extends React.Component<Props, State> {
     console.log({ "Navigate to": this.state.openMultiple })
     this.props.navigation.push(this.state.openMultiple);
   }
-  canJoin(id: any): boolean {
-    return true
+  setCanLeave(data: any) {
+    data.forEach((item: any) => {
+      var groupMemberByUser: any = API.graphql({
+        query: queries.groupMemberByUser,
+        variables: { userID: this.state.currentUser, groupID: { eq: item.id } },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+      });
+      groupMemberByUser.then((json: any) => {
+        console.log({ "groupMemberByUser": json })
+        if (json.data.groupMemberByUser.items.length > 0) {
+          this.setState({ canLeave: this.state.canLeave.concat([item.id]) })
+        }
+      });
+    });
   }
   canLeave(id: any): boolean {
-    return false
+    var test = this.state.canLeave.filter((elem)=>elem===id)
+    if (test.length > 0)
+      return true
+    else 
+      return false
   }
-  join(id: any, name: any, groupType: any) {
+  canJoin(id: any): boolean {
+    var test = this.state.canLeave.filter((elem)=>elem===id)
+    if (test.length > 0) 
+      return false
+    else  
+      return true
+  }
+
+  join(group: any, groupType: any) {
     Analytics.record({
       name: 'joined' + groupType,
       // Attribute values must be strings
-      attributes: { id: id, name: name }
+      attributes: { id: group.id, name: group.name }
     });
 
     var createGroupMember: any = API.graphql({
       query: mutations.createGroupMember,
-      variables: { input: { groupID: id, userID: this.state.currentUser } },
+      variables: { input: { groupID: group.id, userID: this.state.currentUser } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
     createGroupMember.then((json: any) => {
-
-      // this.setState({ canJoin: false, canLeave: true })
       console.log({ "Success mutations.createGroupMember": json });
     }).catch((err: any) => {
       console.log({ "Error mutations.createGroupMember": err });
     });
+
+    this.setState({ canLeave: this.state.canLeave.concat([group.id]) })
+    this.renderByType(group, groupType)
   }
   openConversation() {
 
   }
-  leave(id: any, name: any, groupType: any) {
+  leave(group: any, groupType: any) {
     Analytics.record({
       name: 'left' + groupType,
       // Attribute values must be strings
-      attributes: { id: id, name: name }
+      attributes: { id: group.id, name: group.name }
     });
-    /* var user = await Auth.currentAuthenticatedUser();
-     try {
-       var createGroupMember: any = API.graphql({
-         query: mutations.deleteGroupMember,
-         variables: { input: { groupID: id, userID: user['username'] } },
-         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-       });
-       createGroupMember.then((json) => {
-        // this.setState({ data: json.data.listGroups.items })
-       })
-     } catch (e) {
-       console.log(e)
-     }*/
+    var groupMemberByUser: any = API.graphql({
+      query: queries.groupMemberByUser,
+      variables: { userID: this.state.currentUser, groupID: { eq: group.id } },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+    groupMemberByUser.then((json: any) => {
+      console.log({ "Success queries.groupMemberByUser": json });
+
+      json.data.groupMemberByUser.items.map((item) => {
+        var deleteGroupMember: any = API.graphql({
+          query: mutations.deleteGroupMember,
+          variables: { input: { id: item.id } },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+        });
+        deleteGroupMember.then((json: any) => {
+
+          console.log({ "Success mutations.deleteGroupMember": json });
+        }).catch((err: any) => {
+          console.log({ "Error mutations.deleteGroupMember": err });
+        });
+      })
+
+      const index = this.state.canLeave.indexOf(group.id)
+      var canLeave = this.state.canLeave
+      canLeave.splice(index, 1)
+      this.setState({ canLeave: canLeave })
+      this.renderByType(group, groupType)
+
+    }).catch((err: any) => {
+      console.log({ "Error queries.groupMemberByUser": err });
+    });
+
   }
+
+  renderByType(item:any, type: string) {
+    switch (type) {
+      case "group":
+        this.renderGroup(item)
+      case "event":
+        this.renderEvent(item)
+      case "resource":
+        this.renderResource(item)
+      case "organization":
+        this.renderOrganization(item)
+      case "course":
+        this.renderCourse(item)
+      case "profile":
+        this.renderProfile(item)
+    }
+  }
+
   renderGroup(item: any) {
     return <Card style={{ height: 365, alignSelf: "flex-start", padding: '0%', paddingLeft: '0.25rem', paddingRight: '0.25rem', borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", borderStyle: "solid", borderColor: "#FFFFFF", width: this.state.cardWidth }
     } >
@@ -304,8 +375,8 @@ export default class MyGroups extends React.Component<Props, State> {
       </CardItem>
       <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitleGroup}>{item.name}</Text></CardItem>
       <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetailMiddle}>{item.description}</Text></CardItem>
-      {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id, item.name, "Group") }}>Join</JCButton><Right></Right></CardItem> : null}
-      {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id, item.name, "Group") }}>Leave</JCButton><Right></Right></CardItem> : null}
+      {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Group") }}>Join</JCButton><Right></Right></CardItem> : null}
+      {this.canLeave(item.id)  ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Group") }}>Leave</JCButton><Right></Right></CardItem> : null}
     </Card >
   }
   renderProfile(item: any) {
@@ -336,8 +407,8 @@ export default class MyGroups extends React.Component<Props, State> {
             <Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailBottom}><a target="_blank" href={item.eventUrl}>Eventbrite</a></Text>
         }
       </CardItem>
-      {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id, item.name, "Event") }}>Attend</JCButton><Right></Right></CardItem> : null}
-      {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id, item.name, "Event") }}>Don't Attend</JCButton><Right></Right></CardItem> : null}
+      {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Event") }}>Attend</JCButton><Right></Right></CardItem> : null}
+      {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Event") }}>Don't Attend</JCButton><Right></Right></CardItem> : null}
     </Card>
   }
   renderResource(item: any) {
@@ -347,8 +418,8 @@ export default class MyGroups extends React.Component<Props, State> {
       </CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitleGroup}>{item.name}</Text></CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailMiddle}>Last Updated: {item.lastupdated}</Text></CardItem>
-      {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id, item.name, "Resource") }}>Join</JCButton><Right></Right></CardItem> : null}
-      {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id, item.name, "Resource") }}>Leave</JCButton><Right></Right></CardItem> : null}
+      {true ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Resource") }}>Join</JCButton><Right></Right></CardItem> : null}
+      {false ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Resource") }}>Leave</JCButton><Right></Right></CardItem> : null}
     </Card>
   }
   renderOrganization(item: any) {
@@ -358,8 +429,8 @@ export default class MyGroups extends React.Component<Props, State> {
       </CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetail}>{item.kind}</Text></CardItem>
-      {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id, item.name, "Organization") }}>Join</JCButton><Right></Right></CardItem> : null}
-      {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id, item.name, "Organization") }}>Leave</JCButton><Right></Right></CardItem> : null}
+      {true ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Organization") }}>Join</JCButton><Right></Right></CardItem> : null}
+      {false ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Organization") }}>Leave</JCButton><Right></Right></CardItem> : null}
     </Card>
   }
   renderCourse(item: any) {
@@ -369,8 +440,8 @@ export default class MyGroups extends React.Component<Props, State> {
       </CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetail}>Last Updated: {item.lastupdated}</Text></CardItem>
-      {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item.id, item.name, "Course") }}>Join</JCButton><Right></Right></CardItem> : null}
-      {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item.id, item.name, "Course") }}>Leave</JCButton><Right></Right></CardItem> : null}
+      {true ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Course") }}>Join</JCButton><Right></Right></CardItem> : null}
+      {false ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Course") }}>Leave</JCButton><Right></Right></CardItem> : null}
     </Card>
   }
   render() {
