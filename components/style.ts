@@ -478,7 +478,8 @@ export default EStyleSheet.create({
         display: "flex", 
         flexDirection: "row", 
         justifyContent: 'flex-start', 
-        background: "#F9FAFC"
+        backgroundColor: "#F9FAFC",
+        height: "100%"
     },
     eventPageMessageBoard: {
         borderBottomLeftRadius: 0, 
