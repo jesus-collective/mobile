@@ -335,7 +335,7 @@ export default class GroupScreen extends React.Component<Props, State>{
                   </Container>
                 </Container>
                 <Container style={styles.detailScreenRightCard}>
-                  <MessageBoard navigation={this.props.navigation} groupId={this.state.data.id}></MessageBoard>
+                  <MessageBoard groupId={this.state.data.id}></MessageBoard>
                 </Container>
               </Container>
             </Content>

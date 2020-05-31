@@ -79,7 +79,7 @@ export default class ConversationScreen extends React.Component<Props, State>{
 
             </Container>
             <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-              <MessageBoard ></MessageBoard>
+              <MessageBoard></MessageBoard>
             </Container>
           </Container>
         </Content>

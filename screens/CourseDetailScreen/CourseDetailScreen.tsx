@@ -181,7 +181,7 @@ export default class CourseScreen extends React.Component<Props, State>{
                       <JCButton buttonType={ButtonTypes.Outline} onPress={() => { }}>Instructor</JCButton>
                     </Container>
                     <Container style={{ flex: 95, flexDirection: "row" }}>
-                      <MessageBoard navigation={this.props.navigation} groupId={this.state.data.id}></MessageBoard>
+                      <MessageBoard groupId={this.state.data.id}></MessageBoard>
                     </Container>
                   </Container>
                 </Container>

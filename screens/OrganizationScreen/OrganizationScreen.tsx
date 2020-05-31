@@ -251,7 +251,7 @@ export default class GroupScreen extends React.Component<Props, State>{
                   <Text>{this.state.validationError}</Text>
                 </Container>
                 <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                  <MessageBoard navigation={this.props.navigation} groupId={this.state.data.id}></MessageBoard>
+                  <MessageBoard groupId={this.state.data.id}></MessageBoard>
                 </Container>
               </Container>
             </Content>

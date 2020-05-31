@@ -383,7 +383,7 @@ export default class EventScreen extends React.Component<Props, State>{
                   <Text>{this.state.validationError}</Text>
                 </Container>
                 <Container style={styles.detailScreenRightCard}>
-                  <MessageBoard navigation={this.props.navigation} groupId={this.state.data.id}></MessageBoard>
+                  <MessageBoard groupId={this.state.data.id}></MessageBoard>
                   {/*  <Zoom></Zoom>*/}
                 </Container>
               </Container>
