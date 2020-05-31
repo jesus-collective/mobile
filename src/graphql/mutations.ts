@@ -44,6 +44,7 @@ export const createUser = /* GraphQL */ `
         items {
           id
           owner
+          ownerOrgID
           type
           name
           description
@@ -67,6 +68,17 @@ export const createUser = /* GraphQL */ `
           id
           groupID
           userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      organizations {
+        items {
+          id
+          role
+          organizationId
+          userId
           createdAt
           updatedAt
         }
@@ -132,6 +144,7 @@ export const updateUser = /* GraphQL */ `
         items {
           id
           owner
+          ownerOrgID
           type
           name
           description
@@ -155,6 +168,17 @@ export const updateUser = /* GraphQL */ `
           id
           groupID
           userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      organizations {
+        items {
+          id
+          role
+          organizationId
+          userId
           createdAt
           updatedAt
         }
@@ -220,6 +244,7 @@ export const deleteUser = /* GraphQL */ `
         items {
           id
           owner
+          ownerOrgID
           type
           name
           description
@@ -243,6 +268,17 @@ export const deleteUser = /* GraphQL */ `
           id
           groupID
           userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      organizations {
+        items {
+          id
+          role
+          organizationId
+          userId
           createdAt
           updatedAt
         }
@@ -275,6 +311,7 @@ export const createGroupMember = /* GraphQL */ `
       group {
         id
         owner
+        ownerOrgID
         ownerUser {
           id
           given_name
@@ -296,6 +333,28 @@ export const createGroupMember = /* GraphQL */ `
           currentScope
           personality
           orgName
+          orgType
+          orgSize
+          orgDescription
+          joined
+          createdAt
+          updatedAt
+        }
+        ownerOrg {
+          id
+          orgName
+          adminEmail
+          phone
+          owner
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
           orgType
           orgSize
           orgDescription
@@ -369,6 +428,9 @@ export const createGroupMember = /* GraphQL */ `
           nextToken
         }
         groups {
+          nextToken
+        }
+        organizations {
           nextToken
         }
         messages {
@@ -391,6 +453,7 @@ export const updateGroupMember = /* GraphQL */ `
       group {
         id
         owner
+        ownerOrgID
         ownerUser {
           id
           given_name
@@ -412,6 +475,28 @@ export const updateGroupMember = /* GraphQL */ `
           currentScope
           personality
           orgName
+          orgType
+          orgSize
+          orgDescription
+          joined
+          createdAt
+          updatedAt
+        }
+        ownerOrg {
+          id
+          orgName
+          adminEmail
+          phone
+          owner
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
           orgType
           orgSize
           orgDescription
@@ -485,6 +570,9 @@ export const updateGroupMember = /* GraphQL */ `
           nextToken
         }
         groups {
+          nextToken
+        }
+        organizations {
           nextToken
         }
         messages {
@@ -507,6 +595,7 @@ export const deleteGroupMember = /* GraphQL */ `
       group {
         id
         owner
+        ownerOrgID
         ownerUser {
           id
           given_name
@@ -528,6 +617,28 @@ export const deleteGroupMember = /* GraphQL */ `
           currentScope
           personality
           orgName
+          orgType
+          orgSize
+          orgDescription
+          joined
+          createdAt
+          updatedAt
+        }
+        ownerOrg {
+          id
+          orgName
+          adminEmail
+          phone
+          owner
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
           orgType
           orgSize
           orgDescription
@@ -603,6 +714,9 @@ export const deleteGroupMember = /* GraphQL */ `
         groups {
           nextToken
         }
+        organizations {
+          nextToken
+        }
         messages {
           nextToken
         }
@@ -619,6 +733,7 @@ export const createGroup = /* GraphQL */ `
     createGroup(input: $input) {
       id
       owner
+      ownerOrgID
       ownerUser {
         id
         given_name
@@ -661,7 +776,49 @@ export const createGroup = /* GraphQL */ `
         groups {
           nextToken
         }
+        organizations {
+          nextToken
+        }
         messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      ownerOrg {
+        id
+        orgName
+        adminEmail
+        phone
+        owner
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        orgType
+        orgSize
+        orgDescription
+        joined
+        members {
+          nextToken
+        }
+        ownerOrg {
           nextToken
         }
         createdAt
@@ -717,6 +874,7 @@ export const updateGroup = /* GraphQL */ `
     updateGroup(input: $input) {
       id
       owner
+      ownerOrgID
       ownerUser {
         id
         given_name
@@ -759,7 +917,49 @@ export const updateGroup = /* GraphQL */ `
         groups {
           nextToken
         }
+        organizations {
+          nextToken
+        }
         messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      ownerOrg {
+        id
+        orgName
+        adminEmail
+        phone
+        owner
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        orgType
+        orgSize
+        orgDescription
+        joined
+        members {
+          nextToken
+        }
+        ownerOrg {
           nextToken
         }
         createdAt
@@ -815,6 +1015,7 @@ export const deleteGroup = /* GraphQL */ `
     deleteGroup(input: $input) {
       id
       owner
+      ownerOrgID
       ownerUser {
         id
         given_name
@@ -857,7 +1058,49 @@ export const deleteGroup = /* GraphQL */ `
         groups {
           nextToken
         }
+        organizations {
+          nextToken
+        }
         messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      ownerOrg {
+        id
+        orgName
+        adminEmail
+        phone
+        owner
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        orgType
+        orgSize
+        orgDescription
+        joined
+        members {
+          nextToken
+        }
+        ownerOrg {
           nextToken
         }
         createdAt
@@ -903,6 +1146,525 @@ export const deleteGroup = /* GraphQL */ `
       }
       eventType
       eventUrl
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createOrganizationMember = /* GraphQL */ `
+  mutation CreateOrganizationMember($input: CreateOrganizationMemberInput!) {
+    createOrganizationMember(input: $input) {
+      id
+      role
+      organizationId
+      userId
+      organization {
+        id
+        orgName
+        adminEmail
+        phone
+        owner
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        orgType
+        orgSize
+        orgDescription
+        joined
+        members {
+          nextToken
+        }
+        ownerOrg {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+        joined
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        organizations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateOrganizationMember = /* GraphQL */ `
+  mutation UpdateOrganizationMember($input: UpdateOrganizationMemberInput!) {
+    updateOrganizationMember(input: $input) {
+      id
+      role
+      organizationId
+      userId
+      organization {
+        id
+        orgName
+        adminEmail
+        phone
+        owner
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        orgType
+        orgSize
+        orgDescription
+        joined
+        members {
+          nextToken
+        }
+        ownerOrg {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+        joined
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        organizations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteOrganizationMember = /* GraphQL */ `
+  mutation DeleteOrganizationMember($input: DeleteOrganizationMemberInput!) {
+    deleteOrganizationMember(input: $input) {
+      id
+      role
+      organizationId
+      userId
+      organization {
+        id
+        orgName
+        adminEmail
+        phone
+        owner
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        orgType
+        orgSize
+        orgDescription
+        joined
+        members {
+          nextToken
+        }
+        ownerOrg {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+        joined
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        organizations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createOrganization = /* GraphQL */ `
+  mutation CreateOrganization($input: CreateOrganizationInput!) {
+    createOrganization(input: $input) {
+      id
+      orgName
+      adminEmail
+      phone
+      owner
+      hasPaidState
+      profileState
+      address
+      city
+      province
+      postalCode
+      country
+      location {
+        latitude
+        longitude
+      }
+      profileImage {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
+      aboutMeShort
+      aboutMeLong
+      orgType
+      orgSize
+      orgDescription
+      joined
+      members {
+        items {
+          id
+          role
+          organizationId
+          userId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      ownerOrg {
+        items {
+          id
+          owner
+          ownerOrgID
+          type
+          name
+          description
+          memberCount
+          image
+          time
+          lastUpdated
+          location
+          length
+          effort
+          cost
+          eventType
+          eventUrl
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateOrganization = /* GraphQL */ `
+  mutation UpdateOrganization($input: UpdateOrganizationInput!) {
+    updateOrganization(input: $input) {
+      id
+      orgName
+      adminEmail
+      phone
+      owner
+      hasPaidState
+      profileState
+      address
+      city
+      province
+      postalCode
+      country
+      location {
+        latitude
+        longitude
+      }
+      profileImage {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
+      aboutMeShort
+      aboutMeLong
+      orgType
+      orgSize
+      orgDescription
+      joined
+      members {
+        items {
+          id
+          role
+          organizationId
+          userId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      ownerOrg {
+        items {
+          id
+          owner
+          ownerOrgID
+          type
+          name
+          description
+          memberCount
+          image
+          time
+          lastUpdated
+          location
+          length
+          effort
+          cost
+          eventType
+          eventUrl
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteOrganization = /* GraphQL */ `
+  mutation DeleteOrganization($input: DeleteOrganizationInput!) {
+    deleteOrganization(input: $input) {
+      id
+      orgName
+      adminEmail
+      phone
+      owner
+      hasPaidState
+      profileState
+      address
+      city
+      province
+      postalCode
+      country
+      location {
+        latitude
+        longitude
+      }
+      profileImage {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
+      aboutMeShort
+      aboutMeLong
+      orgType
+      orgSize
+      orgDescription
+      joined
+      members {
+        items {
+          id
+          role
+          organizationId
+          userId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      ownerOrg {
+        items {
+          id
+          owner
+          ownerOrgID
+          type
+          name
+          description
+          memberCount
+          image
+          time
+          lastUpdated
+          location
+          length
+          effort
+          cost
+          eventType
+          eventUrl
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -1364,6 +2126,9 @@ export const createMessage = /* GraphQL */ `
         groups {
           nextToken
         }
+        organizations {
+          nextToken
+        }
         messages {
           nextToken
         }
@@ -1373,6 +2138,7 @@ export const createMessage = /* GraphQL */ `
       room {
         id
         owner
+        ownerOrgID
         ownerUser {
           id
           given_name
@@ -1394,6 +2160,28 @@ export const createMessage = /* GraphQL */ `
           currentScope
           personality
           orgName
+          orgType
+          orgSize
+          orgDescription
+          joined
+          createdAt
+          updatedAt
+        }
+        ownerOrg {
+          id
+          orgName
+          adminEmail
+          phone
+          owner
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
           orgType
           orgSize
           orgDescription
@@ -1483,6 +2271,9 @@ export const updateMessage = /* GraphQL */ `
         groups {
           nextToken
         }
+        organizations {
+          nextToken
+        }
         messages {
           nextToken
         }
@@ -1492,6 +2283,7 @@ export const updateMessage = /* GraphQL */ `
       room {
         id
         owner
+        ownerOrgID
         ownerUser {
           id
           given_name
@@ -1513,6 +2305,28 @@ export const updateMessage = /* GraphQL */ `
           currentScope
           personality
           orgName
+          orgType
+          orgSize
+          orgDescription
+          joined
+          createdAt
+          updatedAt
+        }
+        ownerOrg {
+          id
+          orgName
+          adminEmail
+          phone
+          owner
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
           orgType
           orgSize
           orgDescription
@@ -1602,6 +2416,9 @@ export const deleteMessage = /* GraphQL */ `
         groups {
           nextToken
         }
+        organizations {
+          nextToken
+        }
         messages {
           nextToken
         }
@@ -1611,6 +2428,7 @@ export const deleteMessage = /* GraphQL */ `
       room {
         id
         owner
+        ownerOrgID
         ownerUser {
           id
           given_name
@@ -1632,6 +2450,28 @@ export const deleteMessage = /* GraphQL */ `
           currentScope
           personality
           orgName
+          orgType
+          orgSize
+          orgDescription
+          joined
+          createdAt
+          updatedAt
+        }
+        ownerOrg {
+          id
+          orgName
+          adminEmail
+          phone
+          owner
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
           orgType
           orgSize
           orgDescription

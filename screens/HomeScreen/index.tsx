@@ -37,11 +37,6 @@ const CourseOverviewScreen = lazy(() => import('../CourseOverviewScreen/CourseOv
 const CourseHomeScreen = lazy(() => import('../CourseHomeScreen/CourseHomeScreen'));
 const CourseDetailScreen = lazy(() => import('../CourseDetailScreen/CourseDetailScreen'));
 const CourseCoachingScreen = lazy(() => import('../CourseCoachingScreen/CourseCoachingScreen'));
-const ExploreScreen = lazy(() => import('../ExploreScreen/ExploreScreen'));
-const SupportScreen = lazy(() => import('../SupportScreen/SupportScreen'));
-const KidsAndYouthScreen = lazy(() => import('../KidsAndYouthScreen/KidsAndYouthScreen'));
-const GetInvolvedScreen = lazy(() => import('../GetInvolvedScreen/GetInvolvedScreen'));
-const ContactScreen = lazy(() => import('../ContactScreen/ContactScreen'));
 const EventScreen = lazy(() => import('../EventScreen/EventScreen'));
 const GroupsScreen = lazy(() => import('../GroupsScreen/GroupsScreen'));
 const EventsScreen = lazy(() => import('../EventsScreen/EventsScreen'));
@@ -49,8 +44,6 @@ const ResourceScreen = lazy(() => import('../ResourceScreen/ResourceScreen'));
 const ResourcesScreen = lazy(() => import('../ResourcesScreen/ResourcesScreen'));
 const ProfileScreen = lazy(() => import('../ProfileScreen/ProfileScreen'));
 const ProfilesScreen = lazy(() => import('../ProfilesScreen/ProfilesScreen'));
-
-const NewsScreen = lazy(() => import('../NewsScreen/NewsScreen'));
 const SearchScreen = lazy(() => import('../SearchScreen/SearchScreen'));
 
 Amplify.configure(awsconfig);
@@ -283,10 +276,7 @@ export default class App extends React.Component<Props, State>{
       catch((e) => { console.log('No currrent authenticated user') });
     if (this.user != null) {
       const { attributes } = this.user;
-
-
-      try {
-        const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: this.user['username'] }));
+      const handleUser = async (getUser) => {
         if (getUser.data.getUser === null) {
           console.log("Trying to create")
           var inputData = {
@@ -322,9 +312,11 @@ export default class App extends React.Component<Props, State>{
           console.log("User exists")
         }
       }
-      catch (e) {
-        console.log(e)
-      }
+      var z: any = API.graphql(
+        graphqlOperation(queries.getUser, { id: this.user['username'] })
+      )
+      await z.then(handleUser).catch(handleUser)
+
       console.log({ userExists: userExists })
       this.setState({ userExists: userExists }, () => { this.checkIfCompletedProfile() })
     }
@@ -332,14 +324,17 @@ export default class App extends React.Component<Props, State>{
   async checkIfPaid() {
     console.log("checkIfPaid")
     if (this.state.userExists) {
-      const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: this.user['username'] }));
-      console.log(getUser)
-      if (getUser.data.getUser.hasPaidState == null)
-        this.setState({ hasPaidState: "Complete" })
-      else {
-        console.log(getUser.data.getUser.hasPaidState)
-        this.setState({ hasPaidState: getUser.data.getUser.hasPaidState })
+      const handleGetUser = (getUser) => {
+        console.log(getUser)
+        if (getUser.data.getUser.hasPaidState == null)
+          this.setState({ hasPaidState: "Complete" })
+        else {
+          console.log(getUser.data.getUser.hasPaidState)
+          this.setState({ hasPaidState: getUser.data.getUser.hasPaidState })
+        }
       }
+      const getUser: any = API.graphql(graphqlOperation(queries.getUser, { id: this.user['username'] }));
+      await getUser.then(handleGetUser).catch(handleGetUser)
     }
     //  console.log(attributes['username'])
   }
@@ -366,15 +361,19 @@ export default class App extends React.Component<Props, State>{
     console.log("checkIfCompletedProfile")
     console.log({ user: this.state.userExists, hasPaidState: this.state.hasPaidState })
     if (this.state.userExists && this.state.hasPaidState == "Complete") {
-      const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: this.user['username'] }));
-      var response = Validate.Profile(getUser.data.getUser)
-      console.log({ checkIfCompletedProfileResult: response.result })
-      if (response.result)
-        this.setState({ hasCompletedPersonalProfile: "Completed" })
-      else
-        this.setState({ hasCompletedPersonalProfile: "Incomplete" })
+      const handleUser = (getUser) => {
+
+        var response = Validate.Profile(getUser.data.getUser)
+        console.log({ checkIfCompletedProfileResult: response.result })
+        if (response.result)
+          this.setState({ hasCompletedPersonalProfile: "Completed" })
+        else
+          this.setState({ hasCompletedPersonalProfile: "Incomplete" })
 
 
+      }
+      const getUser: any = API.graphql(graphqlOperation(queries.getUser, { id: this.user['username'] }));
+      await getUser.then(handleUser).catch(handleUser)
     }
 
   }

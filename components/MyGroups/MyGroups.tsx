@@ -207,6 +207,7 @@ export default class MyGroups extends React.Component<Props, State> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       var processList = (json) => {
+        console.log({ profile: json })
         var temp = [...this.state.data, ...json.data.listUsers.items]
         this.setState({
           data: temp,
@@ -223,7 +224,7 @@ export default class MyGroups extends React.Component<Props, State> {
       });
 
       var processList = (json) => {
-        // console.log(json)
+        console.log({ profile: json })
         var temp = [...this.state.data, ...json.data.groupByType.items]
         this.setState({
           data: temp,
@@ -309,7 +310,7 @@ export default class MyGroups extends React.Component<Props, State> {
   }
   renderProfile(item: any) {
     return <Card key={item.id} style={styles.profilesCard}>
-      <CardItem style={{padding: '0%', paddingLeft: '1.5rem', paddingRight: '1.5rem', borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", borderStyle: "solid", borderColor: "#FFFFFF"}}>
+      <CardItem style={{ padding: '0%', paddingLeft: '1.5rem', paddingRight: '1.5rem', borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", borderStyle: "solid", borderColor: "#FFFFFF" }}>
         <Left>
           <ProfileImage user={item} size="small"></ProfileImage>
           <Body>
@@ -397,9 +398,10 @@ export default class MyGroups extends React.Component<Props, State> {
                 </Container>
                 <Container style={styles.ResourcesMyGroups}>
                   {this.state.data ?
-                    this.state.data.map((item) => {
+                    this.state.data.map((item, index) => {
+
                       return (
-                        <ErrorBoundry key={item.id}>
+                        <ErrorBoundry key={index}>
                           <ListItem noBorder style={{ alignSelf: "flex-start" }} button onPress={() => { this.openSingle(item.id) }}>
                             {this.state.type == "group" ?
                               this.renderGroup(item) :

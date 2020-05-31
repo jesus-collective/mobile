@@ -74,6 +74,7 @@ type Group
   @model
   @searchable
   @key(name: "byType", fields: ["type", "id"], queryField: "groupByType")
+  @key(name:"byOwnerOrg", fields:["ownerOrgID","name"])
   @auth(
     rules: [
       { allow: owner, ownerField: "owner" }
@@ -82,8 +83,9 @@ type Group
   ) {
   id: ID!
   owner: String!
+  ownerOrgID:ID!
   ownerUser: User @connection(name: "OwnerUser", keyField: "owner")
-  ownerOrg: Organization @connection(name: "OwnerOrg", keyField: "owner")
+  ownerOrg: Organization @connection(fields:["ownerOrgID"])
   type: String!
   name: String!
 
@@ -140,8 +142,8 @@ type Organization
   ) {
 
   id: ID!
-  org_name: String!
-  admin_email: String @auth(rules: [{ allow: owner, ownerField: "owner" }])
+  orgName: String!
+  adminEmail: String @auth(rules: [{ allow: owner, ownerField: "owner" }])
   phone: String @auth(rules: [{ allow: owner, ownerField: "owner" }])
   owner: String!
 
@@ -163,9 +165,9 @@ type Organization
   joined: String
 
   members: [OrganizationMember] @connection(name: "OrganizationUsers", keyField: "organizationId")
-  ownerOrg: [Group] @connection(name: "OwnerOrg", keyField: "owner")
-  messages: [Message] @connection(name: "OrgMessages", keyField: "organizationId")
-  resource: [resourceRoot] @connection(name: "OrgResources", keyField: "organizationId")
+  ownerOrg: [Group] @connection(keyName: "byOwnerOrg", fields: ["id"])
+ # messages: [Message] @connection(name: "OrgMessages", keyField: "organizationId")
+ # resource: [ResourceRoot] @connection(name: "OrgResources", keyField: "organizationId")
 }
 type CourseInfo
   @model
@@ -234,10 +236,10 @@ type Message
   when: String!
   roomId: ID
   userId: ID
-  organizationId: ID
+  #organizationId: String
   owner: String
   author: User @connection(name: "UserMessages", keyField: "userId")
-  orgAuthor: Organization @connection(name: "OrgMessages", keyField: "organizationId")
+  #orgAuthor: Organization @connection(name: "OrgMessages", keyField: "organizationId")
   room: Group @connection(name: "RoomMessages", keyField: "roomId")
 }
 type Subscription {
@@ -248,14 +250,14 @@ type Subscription {
 type ResourceRoot 
 @model 
  @auth(rules: [{ allow: groups, groups: ["verifiedUsers"] }])
- @key(name: "byOrganization", fields: ["organizationId"], queryField: "resourcesByOrganization")
+ #@key(name: "byOrganization", fields: ["organizationId"], queryField: "resourcesByOrganization")
  {
   id: ID!
   type: String
   groupId: String
-  organizationId: String
+ # organizationId: String
   resources: [Resource] @connection(name:"r1",keyField: "resourceID")
-  publisher: Organization @connection(name: "OrgResources", keyField: "organizationId")
+ # publisher: Organization @connection(name: "OrgResources", keyField: "organizationId")
 }
 type Resource 
 @model 
