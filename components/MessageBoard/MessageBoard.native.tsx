@@ -156,6 +156,13 @@ class MessageBoard extends React.Component<Props, State> {
                   onEditorStateChange={(z) => { this.updateEditorInput(z) }}
                   onContentStateChange={(z) => { this.updateInput(z) }}
                   toolbar={{
+                    options: ['inline', 'list', 'colorPicker', 'link', 'emoji', 'image', 'history'],
+                    inline: {
+                      options: ['bold', 'italic', 'underline', 'strikethrough']
+                    },
+                    list: {
+                      options: ['unordered', 'ordered']
+                    },
                     image: {
                       uploadCallback: async (z1) => {
                         var id = uuidv1()
