@@ -49,7 +49,7 @@ export default class CourseScreen extends React.Component<Props, State>{
     this.state = {
       showMap: false,
       loadId: props.route.params.id,
-      createNew: props.route.params.create === "true" ? true : false,
+      createNew: props.route.params.create === "true" || props.route.params.create === true ? true : false,
       data: null,
       canSave: true,
       canLeave: false,
@@ -63,7 +63,7 @@ export default class CourseScreen extends React.Component<Props, State>{
   }
 
   setInitialData(props) {
-    if (props.route.params.create === "true")
+    if (props.route.params.create === "true" || props.route.params.create === true)
       Auth.currentAuthenticatedUser().then((user: any) => {
         var z: CreateGroupInput = {
           id: "course-" + Date.now(),
@@ -77,6 +77,7 @@ export default class CourseScreen extends React.Component<Props, State>{
           time: "",
           effort: "",
           cost: "",
+          ownerOrgID: "00000000-0000-0000-0000-000000000000"
           //   organizerUser: { name: "" },
           //   instructors: [],
           //   course: []

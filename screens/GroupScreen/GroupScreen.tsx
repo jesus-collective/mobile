@@ -49,7 +49,7 @@ export default class GroupScreen extends React.Component<Props, State>{
     this.state = {
       showMap: false,
       loadId: props.route.params.id,
-      createNew: props.route.params.create === "true" ? true : false,
+      createNew: props.route.params.create === "true" || props.route.params.create === true ? true : false,
       data: null,
       canSave: false,
       canLeave: false,
@@ -96,7 +96,8 @@ export default class GroupScreen extends React.Component<Props, State>{
           name: "",
           description: "",
           memberCount: 1,
-          image: "temp"
+          image: "temp",
+          ownerOrgID: "00000000-0000-0000-0000-000000000000"
         }
         const isEditable = true
         this.setState({

@@ -49,7 +49,7 @@ export default class GroupScreen extends React.Component<Props, State>{
     this.state = {
       showMap: false,
       loadId: props.route.params.id,
-      createNew: props.route.params.create === "true" ? true : false,
+      createNew: props.route.params.create === "true" || props.route.params.create === true ? true : false,
       data: null,
       canSave: true,
       canLeave: false,
@@ -78,7 +78,7 @@ export default class GroupScreen extends React.Component<Props, State>{
     return key.length ? myObject[key[0]] : "";
   }
   setInitialData(props) {
-    if (props.route.params.create === "true")
+    if (props.route.params.create === "true" || props.route.params.create === true)
       Auth.currentAuthenticatedUser().then((user: any) => {
         var z: CreateGroupInput = {
           id: "organization-" + Date.now(),
@@ -87,7 +87,8 @@ export default class GroupScreen extends React.Component<Props, State>{
           name: "",
           description: "",
           memberCount: 1,
-          image: "temp"
+          image: "temp",
+          ownerOrgID: "00000000-0000-0000-0000-000000000000"
         }
         this.setState({ data: z })
       })

@@ -50,7 +50,7 @@ class ResourceOverview extends React.Component<Props, State>{
         this.state = {
             showMap: false,
             loadId: props.route.params.id,
-            createNew: props.route.params.create === "true" ? true : false,
+            createNew: props.route.params.create === "true" || props.route.params.create === true ? true : false,
             data: null,
             canSave: true,
             canLeave: false,
@@ -79,7 +79,7 @@ class ResourceOverview extends React.Component<Props, State>{
         return key.length ? myObject[key[0]] : "";
     }
     setInitialData(props) {
-        if (props.route.params.create === "true")
+        if (props.route.params.create === "true" || props.route.params.create === true)
             Auth.currentAuthenticatedUser().then((user: any) => {
                 var z: CreateGroupInput = {
                     id: "resource-" + Date.now(),
@@ -88,7 +88,8 @@ class ResourceOverview extends React.Component<Props, State>{
                     name: "",
                     description: "",
                     memberCount: 1,
-                    image: "temp"
+                    image: "temp",
+                    ownerOrgID: "00000000-0000-0000-0000-000000000000"
                 }
                 this.setState({ data: z })
             })
@@ -233,34 +234,34 @@ class ResourceOverview extends React.Component<Props, State>{
                         <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", paddingTop: 48, paddingBottom: 12 }}>Members ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
 
                         <Container style={{ display: "flex", flexDirection: "row", marginBottom: 9, flexGrow: 1, flexWrap: "wrap", minHeight: 300 }}>
-                        {
-                            this.state.data.members == null ? <Text>No Members Yet</Text> :
-                                this.state.data.members.items.length == 0 ?
-                                    <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", marginBottom: 30 }}>No Members Yet</Text> :
-                                    this.state.data.members.items.map((item: any, index: any) => {
-                                        return (<ProfileImage key={index} user={item} size="small" />)
-                                    })}
+                            {
+                                this.state.data.members == null ? <Text>No Members Yet</Text> :
+                                    this.state.data.members.items.length == 0 ?
+                                        <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", marginBottom: 30 }}>No Members Yet</Text> :
+                                        this.state.data.members.items.map((item: any, index: any) => {
+                                            return (<ProfileImage key={index} user={item} size="small" />)
+                                        })}
                         </Container>
                         <Container>
                             {this.state.canJoin ?
-                            <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Join Resource</JCButton> :
-                            null
+                                <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Join Resource</JCButton> :
+                                null
                             }
                             {this.state.canLeave ?
-                            <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Leave Resource</JCButton> :
-                            null
+                                <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Leave Resource</JCButton> :
+                                null
                             }
                             {this.state.createNew ?
-                            <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.createNew() }} >Create Resource</JCButton>
-                            : null
+                                <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.createNew() }} >Create Resource</JCButton>
+                                : null
                             }
                             {this.state.canSave ?
-                            <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.save() }} >Save Resource</JCButton>
-                            : null
+                                <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.save() }} >Save Resource</JCButton>
+                                : null
                             }
                             {this.state.canDelete ?
-                            <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this resource?')) this.delete() }} >Delete Resource</JCButton>
-                            : null
+                                <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this resource?')) this.delete() }} >Delete Resource</JCButton>
+                                : null
                             }
                             <Text>{this.state.validationError}</Text>
                         </Container>
