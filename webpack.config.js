@@ -1,4 +1,4 @@
-const createExpoWebpackConfig = require("@expo/webpack-config");
+const createExpoWebpackConfigAsync = require('@expo/webpack-config');
 const path = require("path");
 const merge = require("webpack-merge");
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
@@ -7,7 +7,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const DynamicCdnWebpackPlugin = require('dynamic-cdn-webpack-plugin');
 
 module.exports = webpackConfig = async function (env, argv) {
-  const config = await createExpoWebpackConfig(env, argv);
+  const config = await createExpoWebpackConfigAsync(env, argv);
 
   /* config.plugins.push(
      new BundleAnalyzerPlugin({
