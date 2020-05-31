@@ -2220,6 +2220,384 @@ export const onDeleteCourseAssignment = /* GraphQL */ `
     }
   }
 `;
+export const onCreateDirectMessageUser = /* GraphQL */ `
+  subscription OnCreateDirectMessageUser {
+    onCreateDirectMessageUser {
+      id
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+        joined
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        organizations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      roomID
+      room {
+        id
+        messageUsers {
+          nextToken
+        }
+        directMessage {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateDirectMessageUser = /* GraphQL */ `
+  subscription OnUpdateDirectMessageUser {
+    onUpdateDirectMessageUser {
+      id
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+        joined
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        organizations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      roomID
+      room {
+        id
+        messageUsers {
+          nextToken
+        }
+        directMessage {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteDirectMessageUser = /* GraphQL */ `
+  subscription OnDeleteDirectMessageUser {
+    onDeleteDirectMessageUser {
+      id
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+        joined
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        organizations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      roomID
+      room {
+        id
+        messageUsers {
+          nextToken
+        }
+        directMessage {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateDirectMessageRoom = /* GraphQL */ `
+  subscription OnCreateDirectMessageRoom {
+    onCreateDirectMessageRoom {
+      id
+      messageUsers {
+        items {
+          id
+          userID
+          roomID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      directMessage {
+        items {
+          id
+          content
+          when
+          messageRoomID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateDirectMessageRoom = /* GraphQL */ `
+  subscription OnUpdateDirectMessageRoom {
+    onUpdateDirectMessageRoom {
+      id
+      messageUsers {
+        items {
+          id
+          userID
+          roomID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      directMessage {
+        items {
+          id
+          content
+          when
+          messageRoomID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteDirectMessageRoom = /* GraphQL */ `
+  subscription OnDeleteDirectMessageRoom {
+    onDeleteDirectMessageRoom {
+      id
+      messageUsers {
+        items {
+          id
+          userID
+          roomID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      directMessage {
+        items {
+          id
+          content
+          when
+          messageRoomID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateDirectMessage = /* GraphQL */ `
+  subscription OnCreateDirectMessage {
+    onCreateDirectMessage {
+      id
+      content
+      when
+      messageRoomID
+      messageRoom {
+        id
+        messageUsers {
+          nextToken
+        }
+        directMessage {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateDirectMessage = /* GraphQL */ `
+  subscription OnUpdateDirectMessage {
+    onUpdateDirectMessage {
+      id
+      content
+      when
+      messageRoomID
+      messageRoom {
+        id
+        messageUsers {
+          nextToken
+        }
+        directMessage {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteDirectMessage = /* GraphQL */ `
+  subscription OnDeleteDirectMessage {
+    onDeleteDirectMessage {
+      id
+      content
+      when
+      messageRoomID
+      messageRoom {
+        id
+        messageUsers {
+          nextToken
+        }
+        directMessage {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateMessage = /* GraphQL */ `
   subscription OnCreateMessage($owner: String!) {
     onCreateMessage(owner: $owner) {

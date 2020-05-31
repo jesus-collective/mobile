@@ -2075,6 +2075,384 @@ export const deleteCourseAssignment = /* GraphQL */ `
     }
   }
 `;
+export const createDirectMessageUser = /* GraphQL */ `
+  mutation CreateDirectMessageUser($input: CreateDirectMessageUserInput!) {
+    createDirectMessageUser(input: $input) {
+      id
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+        joined
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        organizations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      roomID
+      room {
+        id
+        messageUsers {
+          nextToken
+        }
+        directMessage {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateDirectMessageUser = /* GraphQL */ `
+  mutation UpdateDirectMessageUser($input: UpdateDirectMessageUserInput!) {
+    updateDirectMessageUser(input: $input) {
+      id
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+        joined
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        organizations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      roomID
+      room {
+        id
+        messageUsers {
+          nextToken
+        }
+        directMessage {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteDirectMessageUser = /* GraphQL */ `
+  mutation DeleteDirectMessageUser($input: DeleteDirectMessageUserInput!) {
+    deleteDirectMessageUser(input: $input) {
+      id
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+        joined
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        organizations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      roomID
+      room {
+        id
+        messageUsers {
+          nextToken
+        }
+        directMessage {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createDirectMessageRoom = /* GraphQL */ `
+  mutation CreateDirectMessageRoom($input: CreateDirectMessageRoomInput!) {
+    createDirectMessageRoom(input: $input) {
+      id
+      messageUsers {
+        items {
+          id
+          userID
+          roomID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      directMessage {
+        items {
+          id
+          content
+          when
+          messageRoomID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateDirectMessageRoom = /* GraphQL */ `
+  mutation UpdateDirectMessageRoom($input: UpdateDirectMessageRoomInput!) {
+    updateDirectMessageRoom(input: $input) {
+      id
+      messageUsers {
+        items {
+          id
+          userID
+          roomID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      directMessage {
+        items {
+          id
+          content
+          when
+          messageRoomID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteDirectMessageRoom = /* GraphQL */ `
+  mutation DeleteDirectMessageRoom($input: DeleteDirectMessageRoomInput!) {
+    deleteDirectMessageRoom(input: $input) {
+      id
+      messageUsers {
+        items {
+          id
+          userID
+          roomID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      directMessage {
+        items {
+          id
+          content
+          when
+          messageRoomID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createDirectMessage = /* GraphQL */ `
+  mutation CreateDirectMessage($input: CreateDirectMessageInput!) {
+    createDirectMessage(input: $input) {
+      id
+      content
+      when
+      messageRoomID
+      messageRoom {
+        id
+        messageUsers {
+          nextToken
+        }
+        directMessage {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateDirectMessage = /* GraphQL */ `
+  mutation UpdateDirectMessage($input: UpdateDirectMessageInput!) {
+    updateDirectMessage(input: $input) {
+      id
+      content
+      when
+      messageRoomID
+      messageRoom {
+        id
+        messageUsers {
+          nextToken
+        }
+        directMessage {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteDirectMessage = /* GraphQL */ `
+  mutation DeleteDirectMessage($input: DeleteDirectMessageInput!) {
+    deleteDirectMessage(input: $input) {
+      id
+      content
+      when
+      messageRoomID
+      messageRoom {
+        id
+        messageUsers {
+          nextToken
+        }
+        directMessage {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createMessage = /* GraphQL */ `
   mutation CreateMessage($input: CreateMessageInput!) {
     createMessage(input: $input) {

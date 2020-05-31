@@ -217,6 +217,35 @@ type CourseAssignment
   courseLesson: CourseLesson
     @connection(name: "CourseLessonAssignment", keyField: "id")
 }
+type DirectMessageUser
+@model
+ @key(name: "byMessageRoom", fields: ["userID", "roomID"])
+ @key(name: "byUser", fields: ["roomID", "userID"])
+{
+  id:ID!
+  userID:ID!
+  user:User @connection(fields:["userID"])
+  roomID:ID!
+  room:DirectMessageRoom @connection(fields:["roomID"])
+}
+type DirectMessageRoom
+@model
+{
+  id:ID!
+  messageUsers:[DirectMessageUser] @connection(keyName: "byUser", fields: ["id"])
+  directMessage:[DirectMessage] @connection(keyName: "byMessageUser", fields: ["id"])
+
+}
+type DirectMessage
+@model
+@key(name: "byMessageUser", fields: ["messageRoomID", "when"], queryField: "directMessagesByRoom")
+{
+  id: ID!
+  content: String!
+  when: String!
+  messageRoomID:ID!
+  messageRoom:DirectMessageRoom @connection(fields:["messageRoomID"])
+}
 
 type Message
   @model

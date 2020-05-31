@@ -768,6 +768,237 @@ export const listCourseAssignments = /* GraphQL */ `
     }
   }
 `;
+export const getDirectMessageUser = /* GraphQL */ `
+  query GetDirectMessageUser($id: ID!) {
+    getDirectMessageUser(id: $id) {
+      id
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+        joined
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        organizations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      roomID
+      room {
+        id
+        messageUsers {
+          nextToken
+        }
+        directMessage {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listDirectMessageUsers = /* GraphQL */ `
+  query ListDirectMessageUsers(
+    $filter: ModelDirectMessageUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listDirectMessageUsers(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userID
+        user {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          orgDescription
+          joined
+          createdAt
+          updatedAt
+        }
+        roomID
+        room {
+          id
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getDirectMessageRoom = /* GraphQL */ `
+  query GetDirectMessageRoom($id: ID!) {
+    getDirectMessageRoom(id: $id) {
+      id
+      messageUsers {
+        items {
+          id
+          userID
+          roomID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      directMessage {
+        items {
+          id
+          content
+          when
+          messageRoomID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listDirectMessageRooms = /* GraphQL */ `
+  query ListDirectMessageRooms(
+    $filter: ModelDirectMessageRoomFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listDirectMessageRooms(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        messageUsers {
+          nextToken
+        }
+        directMessage {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getDirectMessage = /* GraphQL */ `
+  query GetDirectMessage($id: ID!) {
+    getDirectMessage(id: $id) {
+      id
+      content
+      when
+      messageRoomID
+      messageRoom {
+        id
+        messageUsers {
+          nextToken
+        }
+        directMessage {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listDirectMessages = /* GraphQL */ `
+  query ListDirectMessages(
+    $filter: ModelDirectMessageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listDirectMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        content
+        when
+        messageRoomID
+        messageRoom {
+          id
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getMessage = /* GraphQL */ `
   query GetMessage($id: ID!) {
     getMessage(id: $id) {
@@ -1795,6 +2026,40 @@ export const organizationMemberByRole = /* GraphQL */ `
           orgSize
           orgDescription
           joined
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const directMessagesByRoom = /* GraphQL */ `
+  query DirectMessagesByRoom(
+    $messageRoomID: ID
+    $when: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelDirectMessageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    directMessagesByRoom(
+      messageRoomID: $messageRoomID
+      when: $when
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        content
+        when
+        messageRoomID
+        messageRoom {
+          id
           createdAt
           updatedAt
         }

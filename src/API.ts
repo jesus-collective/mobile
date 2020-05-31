@@ -279,6 +279,52 @@ export type DeleteCourseAssignmentInput = {
   id?: string | null,
 };
 
+export type CreateDirectMessageUserInput = {
+  id?: string | null,
+  userID: string,
+  roomID: string,
+};
+
+export type UpdateDirectMessageUserInput = {
+  id: string,
+  userID?: string | null,
+  roomID?: string | null,
+};
+
+export type DeleteDirectMessageUserInput = {
+  id?: string | null,
+};
+
+export type CreateDirectMessageRoomInput = {
+  id?: string | null,
+};
+
+export type UpdateDirectMessageRoomInput = {
+  id: string,
+};
+
+export type DeleteDirectMessageRoomInput = {
+  id?: string | null,
+};
+
+export type CreateDirectMessageInput = {
+  id?: string | null,
+  content: string,
+  when: string,
+  messageRoomID: string,
+};
+
+export type UpdateDirectMessageInput = {
+  id: string,
+  content?: string | null,
+  when?: string | null,
+  messageRoomID?: string | null,
+};
+
+export type DeleteDirectMessageInput = {
+  id?: string | null,
+};
+
 export type CreateMessageInput = {
   id?: string | null,
   content: string,
@@ -558,6 +604,32 @@ export type ModelCourseAssignmentFilterInput = {
   and?: Array< ModelCourseAssignmentFilterInput | null > | null,
   or?: Array< ModelCourseAssignmentFilterInput | null > | null,
   not?: ModelCourseAssignmentFilterInput | null,
+};
+
+export type ModelDirectMessageUserFilterInput = {
+  id?: ModelIDFilterInput | null,
+  userID?: ModelIDFilterInput | null,
+  roomID?: ModelIDFilterInput | null,
+  and?: Array< ModelDirectMessageUserFilterInput | null > | null,
+  or?: Array< ModelDirectMessageUserFilterInput | null > | null,
+  not?: ModelDirectMessageUserFilterInput | null,
+};
+
+export type ModelDirectMessageRoomFilterInput = {
+  id?: ModelIDFilterInput | null,
+  and?: Array< ModelDirectMessageRoomFilterInput | null > | null,
+  or?: Array< ModelDirectMessageRoomFilterInput | null > | null,
+  not?: ModelDirectMessageRoomFilterInput | null,
+};
+
+export type ModelDirectMessageFilterInput = {
+  id?: ModelIDFilterInput | null,
+  content?: ModelStringFilterInput | null,
+  when?: ModelStringFilterInput | null,
+  messageRoomID?: ModelIDFilterInput | null,
+  and?: Array< ModelDirectMessageFilterInput | null > | null,
+  or?: Array< ModelDirectMessageFilterInput | null > | null,
+  not?: ModelDirectMessageFilterInput | null,
 };
 
 export type ModelMessageFilterInput = {
@@ -3165,6 +3237,471 @@ export type DeleteCourseAssignmentMutation = {
   } | null,
 };
 
+export type CreateDirectMessageUserMutationVariables = {
+  input: CreateDirectMessageUserInput,
+};
+
+export type CreateDirectMessageUserMutation = {
+  createDirectMessageUser:  {
+    __typename: "DirectMessageUser",
+    id: string,
+    userID: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: string | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    roomID: string,
+    room:  {
+      __typename: "DirectMessageRoom",
+      id: string,
+      messageUsers:  {
+        __typename: "ModelDirectMessageUserConnection",
+        nextToken: string | null,
+      } | null,
+      directMessage:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateDirectMessageUserMutationVariables = {
+  input: UpdateDirectMessageUserInput,
+};
+
+export type UpdateDirectMessageUserMutation = {
+  updateDirectMessageUser:  {
+    __typename: "DirectMessageUser",
+    id: string,
+    userID: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: string | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    roomID: string,
+    room:  {
+      __typename: "DirectMessageRoom",
+      id: string,
+      messageUsers:  {
+        __typename: "ModelDirectMessageUserConnection",
+        nextToken: string | null,
+      } | null,
+      directMessage:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteDirectMessageUserMutationVariables = {
+  input: DeleteDirectMessageUserInput,
+};
+
+export type DeleteDirectMessageUserMutation = {
+  deleteDirectMessageUser:  {
+    __typename: "DirectMessageUser",
+    id: string,
+    userID: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: string | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    roomID: string,
+    room:  {
+      __typename: "DirectMessageRoom",
+      id: string,
+      messageUsers:  {
+        __typename: "ModelDirectMessageUserConnection",
+        nextToken: string | null,
+      } | null,
+      directMessage:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateDirectMessageRoomMutationVariables = {
+  input: CreateDirectMessageRoomInput,
+};
+
+export type CreateDirectMessageRoomMutation = {
+  createDirectMessageRoom:  {
+    __typename: "DirectMessageRoom",
+    id: string,
+    messageUsers:  {
+      __typename: "ModelDirectMessageUserConnection",
+      items:  Array< {
+        __typename: "DirectMessageUser",
+        id: string,
+        userID: string,
+        roomID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    directMessage:  {
+      __typename: "ModelDirectMessageConnection",
+      items:  Array< {
+        __typename: "DirectMessage",
+        id: string,
+        content: string,
+        when: string,
+        messageRoomID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateDirectMessageRoomMutationVariables = {
+  input: UpdateDirectMessageRoomInput,
+};
+
+export type UpdateDirectMessageRoomMutation = {
+  updateDirectMessageRoom:  {
+    __typename: "DirectMessageRoom",
+    id: string,
+    messageUsers:  {
+      __typename: "ModelDirectMessageUserConnection",
+      items:  Array< {
+        __typename: "DirectMessageUser",
+        id: string,
+        userID: string,
+        roomID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    directMessage:  {
+      __typename: "ModelDirectMessageConnection",
+      items:  Array< {
+        __typename: "DirectMessage",
+        id: string,
+        content: string,
+        when: string,
+        messageRoomID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteDirectMessageRoomMutationVariables = {
+  input: DeleteDirectMessageRoomInput,
+};
+
+export type DeleteDirectMessageRoomMutation = {
+  deleteDirectMessageRoom:  {
+    __typename: "DirectMessageRoom",
+    id: string,
+    messageUsers:  {
+      __typename: "ModelDirectMessageUserConnection",
+      items:  Array< {
+        __typename: "DirectMessageUser",
+        id: string,
+        userID: string,
+        roomID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    directMessage:  {
+      __typename: "ModelDirectMessageConnection",
+      items:  Array< {
+        __typename: "DirectMessage",
+        id: string,
+        content: string,
+        when: string,
+        messageRoomID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateDirectMessageMutationVariables = {
+  input: CreateDirectMessageInput,
+};
+
+export type CreateDirectMessageMutation = {
+  createDirectMessage:  {
+    __typename: "DirectMessage",
+    id: string,
+    content: string,
+    when: string,
+    messageRoomID: string,
+    messageRoom:  {
+      __typename: "DirectMessageRoom",
+      id: string,
+      messageUsers:  {
+        __typename: "ModelDirectMessageUserConnection",
+        nextToken: string | null,
+      } | null,
+      directMessage:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateDirectMessageMutationVariables = {
+  input: UpdateDirectMessageInput,
+};
+
+export type UpdateDirectMessageMutation = {
+  updateDirectMessage:  {
+    __typename: "DirectMessage",
+    id: string,
+    content: string,
+    when: string,
+    messageRoomID: string,
+    messageRoom:  {
+      __typename: "DirectMessageRoom",
+      id: string,
+      messageUsers:  {
+        __typename: "ModelDirectMessageUserConnection",
+        nextToken: string | null,
+      } | null,
+      directMessage:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteDirectMessageMutationVariables = {
+  input: DeleteDirectMessageInput,
+};
+
+export type DeleteDirectMessageMutation = {
+  deleteDirectMessage:  {
+    __typename: "DirectMessage",
+    id: string,
+    content: string,
+    when: string,
+    messageRoomID: string,
+    messageRoom:  {
+      __typename: "DirectMessageRoom",
+      id: string,
+      messageUsers:  {
+        __typename: "ModelDirectMessageUserConnection",
+        nextToken: string | null,
+      } | null,
+      directMessage:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type CreateMessageMutationVariables = {
   input: CreateMessageInput,
 };
@@ -5190,6 +5727,272 @@ export type ListCourseAssignmentsQuery = {
   } | null,
 };
 
+export type GetDirectMessageUserQueryVariables = {
+  id: string,
+};
+
+export type GetDirectMessageUserQuery = {
+  getDirectMessageUser:  {
+    __typename: "DirectMessageUser",
+    id: string,
+    userID: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: string | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    roomID: string,
+    room:  {
+      __typename: "DirectMessageRoom",
+      id: string,
+      messageUsers:  {
+        __typename: "ModelDirectMessageUserConnection",
+        nextToken: string | null,
+      } | null,
+      directMessage:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListDirectMessageUsersQueryVariables = {
+  filter?: ModelDirectMessageUserFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListDirectMessageUsersQuery = {
+  listDirectMessageUsers:  {
+    __typename: "ModelDirectMessageUserConnection",
+    items:  Array< {
+      __typename: "DirectMessageUser",
+      id: string,
+      userID: string,
+      user:  {
+        __typename: "User",
+        id: string,
+        given_name: string,
+        family_name: string,
+        email: string | null,
+        phone: string | null,
+        owner: string | null,
+        hasPaidState: string | null,
+        profileState: string | null,
+        address: string | null,
+        city: string | null,
+        province: string | null,
+        postalCode: string | null,
+        country: string | null,
+        aboutMeShort: string | null,
+        aboutMeLong: string | null,
+        interests: string | null,
+        currentRole: string | null,
+        currentScope: string | null,
+        personality: string | null,
+        orgName: string | null,
+        orgType: string | null,
+        orgSize: string | null,
+        orgDescription: string | null,
+        joined: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      roomID: string,
+      room:  {
+        __typename: "DirectMessageRoom",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type GetDirectMessageRoomQueryVariables = {
+  id: string,
+};
+
+export type GetDirectMessageRoomQuery = {
+  getDirectMessageRoom:  {
+    __typename: "DirectMessageRoom",
+    id: string,
+    messageUsers:  {
+      __typename: "ModelDirectMessageUserConnection",
+      items:  Array< {
+        __typename: "DirectMessageUser",
+        id: string,
+        userID: string,
+        roomID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    directMessage:  {
+      __typename: "ModelDirectMessageConnection",
+      items:  Array< {
+        __typename: "DirectMessage",
+        id: string,
+        content: string,
+        when: string,
+        messageRoomID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListDirectMessageRoomsQueryVariables = {
+  filter?: ModelDirectMessageRoomFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListDirectMessageRoomsQuery = {
+  listDirectMessageRooms:  {
+    __typename: "ModelDirectMessageRoomConnection",
+    items:  Array< {
+      __typename: "DirectMessageRoom",
+      id: string,
+      messageUsers:  {
+        __typename: "ModelDirectMessageUserConnection",
+        nextToken: string | null,
+      } | null,
+      directMessage:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type GetDirectMessageQueryVariables = {
+  id: string,
+};
+
+export type GetDirectMessageQuery = {
+  getDirectMessage:  {
+    __typename: "DirectMessage",
+    id: string,
+    content: string,
+    when: string,
+    messageRoomID: string,
+    messageRoom:  {
+      __typename: "DirectMessageRoom",
+      id: string,
+      messageUsers:  {
+        __typename: "ModelDirectMessageUserConnection",
+        nextToken: string | null,
+      } | null,
+      directMessage:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListDirectMessagesQueryVariables = {
+  filter?: ModelDirectMessageFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListDirectMessagesQuery = {
+  listDirectMessages:  {
+    __typename: "ModelDirectMessageConnection",
+    items:  Array< {
+      __typename: "DirectMessage",
+      id: string,
+      content: string,
+      when: string,
+      messageRoomID: string,
+      messageRoom:  {
+        __typename: "DirectMessageRoom",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
 export type GetMessageQueryVariables = {
   id: string,
 };
@@ -6277,6 +7080,37 @@ export type OrganizationMemberByRoleQuery = {
         orgSize: string | null,
         orgDescription: string | null,
         joined: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type DirectMessagesByRoomQueryVariables = {
+  messageRoomID?: string | null,
+  when?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelDirectMessageFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type DirectMessagesByRoomQuery = {
+  directMessagesByRoom:  {
+    __typename: "ModelDirectMessageConnection",
+    items:  Array< {
+      __typename: "DirectMessage",
+      id: string,
+      content: string,
+      when: string,
+      messageRoomID: string,
+      messageRoom:  {
+        __typename: "DirectMessageRoom",
+        id: string,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -8954,6 +9788,435 @@ export type OnDeleteCourseAssignmentSubscription = {
       } | null,
       assignments:  {
         __typename: "ModelCourseAssignmentConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateDirectMessageUserSubscription = {
+  onCreateDirectMessageUser:  {
+    __typename: "DirectMessageUser",
+    id: string,
+    userID: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: string | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    roomID: string,
+    room:  {
+      __typename: "DirectMessageRoom",
+      id: string,
+      messageUsers:  {
+        __typename: "ModelDirectMessageUserConnection",
+        nextToken: string | null,
+      } | null,
+      directMessage:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateDirectMessageUserSubscription = {
+  onUpdateDirectMessageUser:  {
+    __typename: "DirectMessageUser",
+    id: string,
+    userID: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: string | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    roomID: string,
+    room:  {
+      __typename: "DirectMessageRoom",
+      id: string,
+      messageUsers:  {
+        __typename: "ModelDirectMessageUserConnection",
+        nextToken: string | null,
+      } | null,
+      directMessage:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteDirectMessageUserSubscription = {
+  onDeleteDirectMessageUser:  {
+    __typename: "DirectMessageUser",
+    id: string,
+    userID: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: string | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    roomID: string,
+    room:  {
+      __typename: "DirectMessageRoom",
+      id: string,
+      messageUsers:  {
+        __typename: "ModelDirectMessageUserConnection",
+        nextToken: string | null,
+      } | null,
+      directMessage:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateDirectMessageRoomSubscription = {
+  onCreateDirectMessageRoom:  {
+    __typename: "DirectMessageRoom",
+    id: string,
+    messageUsers:  {
+      __typename: "ModelDirectMessageUserConnection",
+      items:  Array< {
+        __typename: "DirectMessageUser",
+        id: string,
+        userID: string,
+        roomID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    directMessage:  {
+      __typename: "ModelDirectMessageConnection",
+      items:  Array< {
+        __typename: "DirectMessage",
+        id: string,
+        content: string,
+        when: string,
+        messageRoomID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateDirectMessageRoomSubscription = {
+  onUpdateDirectMessageRoom:  {
+    __typename: "DirectMessageRoom",
+    id: string,
+    messageUsers:  {
+      __typename: "ModelDirectMessageUserConnection",
+      items:  Array< {
+        __typename: "DirectMessageUser",
+        id: string,
+        userID: string,
+        roomID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    directMessage:  {
+      __typename: "ModelDirectMessageConnection",
+      items:  Array< {
+        __typename: "DirectMessage",
+        id: string,
+        content: string,
+        when: string,
+        messageRoomID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteDirectMessageRoomSubscription = {
+  onDeleteDirectMessageRoom:  {
+    __typename: "DirectMessageRoom",
+    id: string,
+    messageUsers:  {
+      __typename: "ModelDirectMessageUserConnection",
+      items:  Array< {
+        __typename: "DirectMessageUser",
+        id: string,
+        userID: string,
+        roomID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    directMessage:  {
+      __typename: "ModelDirectMessageConnection",
+      items:  Array< {
+        __typename: "DirectMessage",
+        id: string,
+        content: string,
+        when: string,
+        messageRoomID: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateDirectMessageSubscription = {
+  onCreateDirectMessage:  {
+    __typename: "DirectMessage",
+    id: string,
+    content: string,
+    when: string,
+    messageRoomID: string,
+    messageRoom:  {
+      __typename: "DirectMessageRoom",
+      id: string,
+      messageUsers:  {
+        __typename: "ModelDirectMessageUserConnection",
+        nextToken: string | null,
+      } | null,
+      directMessage:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateDirectMessageSubscription = {
+  onUpdateDirectMessage:  {
+    __typename: "DirectMessage",
+    id: string,
+    content: string,
+    when: string,
+    messageRoomID: string,
+    messageRoom:  {
+      __typename: "DirectMessageRoom",
+      id: string,
+      messageUsers:  {
+        __typename: "ModelDirectMessageUserConnection",
+        nextToken: string | null,
+      } | null,
+      directMessage:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteDirectMessageSubscription = {
+  onDeleteDirectMessage:  {
+    __typename: "DirectMessage",
+    id: string,
+    content: string,
+    when: string,
+    messageRoomID: string,
+    messageRoom:  {
+      __typename: "DirectMessageRoom",
+      id: string,
+      messageUsers:  {
+        __typename: "ModelDirectMessageUserConnection",
+        nextToken: string | null,
+      } | null,
+      directMessage:  {
+        __typename: "ModelDirectMessageConnection",
         nextToken: string | null,
       } | null,
       createdAt: string,
