@@ -594,6 +594,7 @@ export default EStyleSheet.create({
         display: "flex", 
         flexDirection: "row", 
         justifyContent: 'flex-start',
+        backgroundColor: "#F9FAFC"
     },
     resourceContentLeftContainer: {
         flex: 70, 
