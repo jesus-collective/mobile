@@ -166,8 +166,8 @@ type Organization
 
   members: [OrganizationMember] @connection(name: "OrganizationUsers", keyField: "organizationId")
   ownerOrg: [Group] @connection(keyName: "byOwnerOrg", fields: ["id"])
- # messages: [Message] @connection(name: "OrgMessages", keyField: "organizationId")
- # resource: [ResourceRoot] @connection(name: "OrgResources", keyField: "organizationId")
+  messages: [Message] @connection(keyName: "byAuthorOrg", fields: ["id"])
+  resource: [ResourceRoot] @connection(keyName: "byOrganization", fields: ["id"])
 }
 type CourseInfo
   @model
@@ -250,6 +250,7 @@ type DirectMessage
 type Message
   @model
   @key(name: "ByRoom", fields: ["roomId", "when"], queryField: "messagesByRoom")
+  @key(name: "byAuthorOrg", fields:["authorOrgId", "when"])
   @auth(
     rules: [
       {
@@ -265,10 +266,10 @@ type Message
   when: String!
   roomId: ID
   userId: ID
-  #organizationId: String
+  authorOrgId: ID
   owner: String
   author: User @connection(name: "UserMessages", keyField: "userId")
-  #orgAuthor: Organization @connection(name: "OrgMessages", keyField: "organizationId")
+  authorOrg: Organization @connection(fields: ["authorOrgId"])
   room: Group @connection(name: "RoomMessages", keyField: "roomId")
 }
 type Subscription {
@@ -279,14 +280,14 @@ type Subscription {
 type ResourceRoot 
 @model 
  @auth(rules: [{ allow: groups, groups: ["verifiedUsers"] }])
- #@key(name: "byOrganization", fields: ["organizationId"], queryField: "resourcesByOrganization")
+ @key(name: "byOrganization", fields: ["organizationId"])
  {
   id: ID!
   type: String
   groupId: String
- # organizationId: String
+  organizationId: ID
   resources: [Resource] @connection(name:"r1",keyField: "resourceID")
- # publisher: Organization @connection(name: "OrgResources", keyField: "organizationId")
+  organization: Organization @connection(fields: ["organizationId"])
 }
 type Resource 
 @model 
