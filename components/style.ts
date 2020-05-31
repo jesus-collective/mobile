@@ -586,7 +586,9 @@ export default EStyleSheet.create({
     resourcesOverviewScreenMainContainer: {
         display: "flex", 
         flexDirection: "row", 
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
+        height: "100%",
+        // backgroundColor: "#F9FAFC"
     },
     resourceContentMainContainer:{
         display: "flex", 
