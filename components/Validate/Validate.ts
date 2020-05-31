@@ -107,8 +107,7 @@ export default class Validate {
             return { result: false, validationError: "Eventbrite Event must have a valid URL set" }
         if (data.eventType == "location" && data.location == "")
             return { result: false, validationError: "Location Event must have a location" }
-        if (data.location == "")
-            return { result: false, validationError: "Event must have a location" }
+
 
         return { result: true, validationError: "" }
 
