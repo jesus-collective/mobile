@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleProvider, Container, Content } from 'native-base';
+import { StyleProvider, Container, Content, View } from 'native-base';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
 import { Text, TouchableOpacity } from 'react-native'
@@ -239,7 +239,7 @@ class ResourceOverview extends React.Component<Props, State>{
                         </TouchableOpacity>                                    
                         <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", paddingTop: 48, paddingBottom: 12 }}>Members ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
 
-                        <Container style={{ display: "flex", flexDirection: "row", marginBottom: 9, flexGrow: 1, flexWrap: "wrap", minHeight: 300 }}>
+                        <View style={{ flexDirection: "row", marginBottom: 20, flexGrow: 0, flexWrap: "wrap"}}>
                             {
                                 this.state.data.members == null ? <Text>No Members Yet</Text> :
                                     this.state.data.members.items.length == 0 ?
@@ -251,7 +251,7 @@ class ResourceOverview extends React.Component<Props, State>{
                                                 </TouchableOpacity>
                                               )
                                         })}
-                        </Container>
+                        </View>
                         <Container>
                             {this.state.canJoin ?
                                 <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Join Resource</JCButton> :
@@ -280,7 +280,7 @@ class ResourceOverview extends React.Component<Props, State>{
                         <ResourceOverview.Consumer>
                             {({ state, actions }) => {
 
-                                return (state.data.resources.items[state.currentResource] ? <Container style={{ display: "inline", marginTop: 10, overflow: "visible", width: "100%" }} >
+                                return (state.data.resources.items[state.currentResource] ? <Container style={styles.resourcesOverviewRightCard} >
 
                                     {/*   <EditableRichText onChange={(val) => { actions.updateResource(state.currentResource, "extendedDescription", val) }} value={state.data.resources.items[state.currentResource].extendedDescription} isEditable={true} textStyle=""></EditableRichText>
                                 */}

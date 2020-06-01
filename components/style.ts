@@ -376,12 +376,12 @@ export default EStyleSheet.create({
     },
 
     rightCardWidth: {
-        minWidth: "150%"
+        minWidth: "100%"
     },
 
     detailScreenLeftCard: Platform.OS === 'web' ?
-        { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: "100vw", width: 446, paddingBottom: 40 } :
-        { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, minHeight: "100vw", width: 446, paddingBottom: 40 }
+        { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: "175vh", width: 446, paddingBottom: 40 } :
+        { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, minHeight: "175vh", width: 446, paddingBottom: 40 }
     ,
     detailScreenRightCard: Platform.OS === 'web' ?
         { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", height: "100%", width: 446, } :
@@ -428,9 +428,14 @@ export default EStyleSheet.create({
     eventAttendeesPictures: {
         flexDirection: "row",
         marginBottom: 20,
-        flexGrow: 1,
+        flexGrow: 0,
         flexWrap: "wrap",
-        flexBasis: "auto"
+    },
+    groupAttendeesPictures: {
+        flexDirection: "row",
+        marginBottom: 20,
+        flexGrow: 0,
+        flexWrap: "wrap",
     },
     myProfileCoordinates: {
         justifyContent: "space-between",
@@ -803,7 +808,7 @@ export default EStyleSheet.create({
         paddingBottom: 28, 
         borderStyle: "solid", 
         borderColor: "#FFFFFF",
-        width: "75%"
+        width: "100%"
     },
     profilesCard: {
         width: "100%", 
@@ -817,6 +822,12 @@ export default EStyleSheet.create({
         justifyContent: 'space-between', 
         marginTop: 30, 
         paddingRight: 12
+    },
+    resourcesOverviewRightCard: {
+        display: "inline", 
+        marginTop: 10, 
+        overflow: "visible", 
+        width: "100%"
     },
 
 
@@ -885,9 +896,6 @@ export default EStyleSheet.create({
             top: 265,
             left: "8%"
         },
-        eventAttendeesPictures: {
-            flexBasis: 0
-        },
         myProfileCoordinates: {
             flexDirection: "column",
             marginBottom: 30,
@@ -942,9 +950,6 @@ export default EStyleSheet.create({
         },
         myProfileTopButtons: {
             width: "60%",
-        },
-        eventAttendeesPictures: {
-            flexBasis: 0
         },
         resourcefileFieldWrapper: { 
             top: "7vw" 
@@ -1020,11 +1025,11 @@ export default EStyleSheet.create({
         },
         detailScreenLeftCard: {
             width: "auto",
-            marginRight: 32,
-            minHeight: "125vh",
+            marginRight: 0,
+            minHeight: 800,
             marginLeft: 0,
             marginTop: 0,
-            // width: "100%"
+            flex: 10,
         },
         detailScreenRightCard: {
            width: "auto",

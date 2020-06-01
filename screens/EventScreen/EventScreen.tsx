@@ -1,5 +1,5 @@
 ﻿import React, { lazy } from 'react';
-import { Icon, Picker, StyleProvider, Container, Content } from 'native-base';
+import { Icon, Picker, StyleProvider, Container, Content, View } from 'native-base';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
 import { Text, TouchableOpacity } from 'react-native'
@@ -378,12 +378,14 @@ export default class EventScreen extends React.Component<Props, State>{
                       inputStyle={styles.groupNameInput} value={this.state.data.location}
                       isEditable={this.state.isEditable}></EditableLocation>
                   }
+
                   <Text style={{ fontFamily: "Graphik-Regular-App", fontSize: 16, lineHeight: 23, color: "#333333", paddingBottom: 12, marginTop: 52 }}>Organizer</Text>
                   <TouchableOpacity onPress={() => { this.showProfile(this.state.data.ownerUser ? this.state.data.ownerUser.id : this.state.currentUserProfile.id) }}>
                     <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
                   </TouchableOpacity>                  
+
                   <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", paddingTop: 48, paddingBottom: 12 }}>Attending ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
-                  <Container style={styles.eventAttendeesPictures}>
+                  <View style={styles.eventAttendeesPictures}>
                     {
                       this.state.data.members == null ? <Text>No Members Yet</Text> :
                         this.state.data.members.items.length == 0 ?
@@ -395,7 +397,7 @@ export default class EventScreen extends React.Component<Props, State>{
                               </TouchableOpacity>
                             )
                           })}
-                  </Container>
+                  </View>
                   {this.renderButtons()}
                   <Text>{this.state.validationError}</Text>
                 </Container>

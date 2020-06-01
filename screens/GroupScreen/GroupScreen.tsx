@@ -1,5 +1,5 @@
 ﻿import React, { lazy } from 'react';
-import { StyleProvider, Container, Content } from 'native-base';
+import { StyleProvider, Container, Content, View } from 'native-base';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 import { Text, TouchableOpacity} from 'react-native'
 
@@ -337,7 +337,7 @@ export default class GroupScreen extends React.Component<Props, State>{
                     <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
                   </TouchableOpacity>
                   <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", paddingTop: 48, paddingBottom: 12 }}>Members ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
-                  <Container style={{ display: "flex", flexDirection: "row", marginBottom: 9, flexGrow: 1, flexWrap: "wrap" }}>
+                  <View style={styles.groupAttendeesPictures}>
                     {
                       this.state.data.members == null ? <Text>No Members Yet</Text> :
                         this.state.data.members.items.length == 0 ?
@@ -349,7 +349,7 @@ export default class GroupScreen extends React.Component<Props, State>{
                               </TouchableOpacity>
                             )
                           })}
-                  </Container>
+                  </View>
 
                   {this.renderButtons()}
                 </Container>
