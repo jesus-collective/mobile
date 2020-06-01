@@ -192,6 +192,7 @@ export default class MyGroups extends React.Component<Props, State> {
           latitude: dataItem.locationLatLong.latitude,
           longitude: dataItem.locationLatLong.longitude,
           name: dataItem.name,
+          event: dataItem,
           link: "",
           type: "event"
         }
@@ -301,21 +302,21 @@ export default class MyGroups extends React.Component<Props, State> {
     });
   }
   canLeave(id: any): boolean {
-    var test = this.state.canLeave.filter((elem)=>elem===id)
+    var test = this.state.canLeave.filter((elem) => elem === id)
     if (test.length > 0)
       return true
-    else 
+    else
       return false
   }
   canJoin(id: any): boolean {
-    var test = this.state.canLeave.filter((elem)=>elem===id)
-    if (test.length > 0) 
+    var test = this.state.canLeave.filter((elem) => elem === id)
+    if (test.length > 0)
       return false
-    else  
+    else
       return true
   }
   isOwner(id: any): boolean {
-    var test = this.state.isOwner.filter((elem)=>elem===id)
+    var test = this.state.isOwner.filter((elem) => elem === id)
     if (test.length > 0)
       return true
     else
@@ -386,7 +387,7 @@ export default class MyGroups extends React.Component<Props, State> {
 
   }
 
-  renderByType(item:any, type: string) {
+  renderByType(item: any, type: string) {
     switch (type) {
       case "group":
         this.renderGroup(item)
@@ -413,7 +414,7 @@ export default class MyGroups extends React.Component<Props, State> {
       <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetailMiddle}>{item.description}</Text></CardItem>
       {this.canJoin(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Group") }}>Join</JCButton><Right></Right></CardItem> : null}
       {this.canLeave(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Group") }}>Leave</JCButton><Right></Right></CardItem> : null}
-      {this.isOwner(item.id)  ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={()=>null}>Owner</JCButton><Right></Right></CardItem> : null}
+      {this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>Owner</JCButton><Right></Right></CardItem> : null}
     </Card >
   }
   renderProfile(item: any) {
@@ -446,7 +447,7 @@ export default class MyGroups extends React.Component<Props, State> {
       </CardItem>
       {this.canJoin(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Event") }}>Attend</JCButton><Right></Right></CardItem> : null}
       {this.canLeave(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Event") }}>Don't Attend</JCButton><Right></Right></CardItem> : null}
-      {this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={()=>null}>Owner</JCButton><Right></Right></CardItem> : null}
+      {this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>Owner</JCButton><Right></Right></CardItem> : null}
     </Card>
   }
   renderResource(item: any) {

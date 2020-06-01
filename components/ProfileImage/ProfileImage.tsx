@@ -30,6 +30,7 @@ export default class MyProfile extends React.Component<Props, State> {
             profileImage: null,
             showEmpty: false
         }
+
         if (typeof props.user === "string" && props.user !== "") {
             this.getProfileImageFromUserID(props.user)
         } else {
@@ -38,7 +39,12 @@ export default class MyProfile extends React.Component<Props, State> {
     }
     componentDidUpdate(prevProps) {
         if (prevProps.user !== this.props.user)
-            this.getProfileImage(this.props.user ? this.props.user.profileImage : null)
+            if (typeof this.props.user === "string" && this.props.user !== "") {
+                this.getProfileImageFromUserID(this.props.user)
+            } else {
+                this.getProfileImage(this.props.user ? this.props.user.profileImage : null)
+            }
+        // this.getProfileImage(this.props.user ? this.props.user.profileImage : null)
     }
     getProfileImage(user) {
         if (user == "" || user == null) {
@@ -51,20 +57,21 @@ export default class MyProfile extends React.Component<Props, State> {
                 identityId: user.userId
             })
                 .then(result => {
-
-                    this.setState({ profileImage: result })
+                    this.setState({ profileImage: result }, () => { this.forceUpdate() })
                 })
                 .catch(err => {
                     console.log({ 'errr': err })
-                    this.setState({ profileImage: null, showEmpty: true })
+                    this.setState({ profileImage: null, showEmpty: true }, () => { this.forceUpdate() })
                 })
         }
     }
     getProfileImageFromUserID(user) {
         var getUser: any = API.graphql(graphqlOperation(queries.getUser, { id: user }));
         getUser.then((json) => {
+
             this.getProfileImage(json.data.getUser.profileImage)
         }).catch((e) => {
+
             if (e.data) {
                 this.getProfileImage(e.data.getUser.profileImage)
             }
@@ -72,7 +79,6 @@ export default class MyProfile extends React.Component<Props, State> {
     }
 
     render() {
-
         return (
             this.state.profileImage != null ?
                 <Image style={this.props.size == 'small' ?

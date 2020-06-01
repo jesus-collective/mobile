@@ -50,6 +50,7 @@ export default class MyPeople extends React.Component<Props, State> {
           latitude: dataItem.location.latitude,
           longitude: dataItem.location.longitude,
           name: dataItem.given_name + " " + dataItem.family_name,
+          user: dataItem,
           link: "",
           type: "profile"
         }

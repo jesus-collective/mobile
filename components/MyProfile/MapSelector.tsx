@@ -178,7 +178,7 @@ export default class MapSelector extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            mapCoord: { latitude: 0, longitude: 0 },
+            mapCoord: { latitude: 43.7, longitude: -79.4 },
             mapVisible: false
         }
     }
@@ -189,7 +189,7 @@ export default class MapSelector extends React.Component<Props, State> {
             this.props.mapVisible ?
                 <View style={{ position: "fixed", left: 0, top: 0, width: "100%", height: "100%", zIndex: 100, backgroundColor: "#33333366" }}>
                     <View style={{ backgroundColor: "#ffffff", borderRadius: 10, padding: 10, margin: 10, left: "10%", top: "10%", width: "80%", height: "80%" }}>
-                        <Text>Select a location (this will be public)</Text>
+                        <Text>Drag the marker to your location (this will be public)</Text>
                         <JCButton buttonType={ButtonTypes.OutlineBold} onPress={() => this.props.onClose(this.state.mapCoord)}>Done</JCButton>
                         <MapView
                             provider={PROVIDER_GOOGLE}
