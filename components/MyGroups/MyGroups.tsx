@@ -38,6 +38,7 @@ interface State {
   currentUser: String
   nextToken: any
   canLeave: any
+  isOwner: any
 }
 
 export default class MyGroups extends React.Component<Props, State> {
@@ -55,7 +56,8 @@ export default class MyGroups extends React.Component<Props, State> {
         showCreateButton: false,
         currentUser: null,
         nextToken: null,
-        canLeave: []
+        canLeave: [],
+        isOwner: []
       }
 
     }
@@ -72,7 +74,8 @@ export default class MyGroups extends React.Component<Props, State> {
         showCreateButton: false,
         currentUser: null,
         nextToken: null,
-        canLeave: []
+        canLeave: [],
+        isOwner: []
       }
     }
     else if (props.type == "resource") {
@@ -88,7 +91,8 @@ export default class MyGroups extends React.Component<Props, State> {
         showCreateButton: false,
         currentUser: null,
         nextToken: null,
-        canLeave: []
+        canLeave: [],
+        isOwner: []
       }
 
     }
@@ -105,7 +109,8 @@ export default class MyGroups extends React.Component<Props, State> {
         showCreateButton: false,
         currentUser: null,
         nextToken: null,
-        canLeave: []
+        canLeave: [],
+        isOwner: []
       }
 
     }
@@ -122,7 +127,8 @@ export default class MyGroups extends React.Component<Props, State> {
         showCreateButton: false,
         currentUser: null,
         nextToken: null,
-        canLeave: []
+        canLeave: [],
+        isOwner: []
       }
 
     }
@@ -139,7 +145,8 @@ export default class MyGroups extends React.Component<Props, State> {
         showCreateButton: false,
         currentUser: null,
         nextToken: null,
-        canLeave: []
+        canLeave: [],
+        isOwner: []
       }
 
     }
@@ -156,7 +163,8 @@ export default class MyGroups extends React.Component<Props, State> {
         showCreateButton: false,
         currentUser: null,
         nextToken: null,
-        canLeave: []
+        canLeave: [],
+        isOwner: []
       }
     }
     this.setInitialData(props)
@@ -234,6 +242,7 @@ export default class MyGroups extends React.Component<Props, State> {
       var processList = (json) => {
         console.log({ profile: json })
         this.setCanLeave(json.data.groupByType.items)
+        this.setIsOwner(json.data.groupByType.items)
         var temp = [...this.state.data, ...json.data.groupByType.items]
         this.setState({
           data: temp,
@@ -268,6 +277,26 @@ export default class MyGroups extends React.Component<Props, State> {
         if (json.data.groupMemberByUser.items.length > 0) {
           this.setState({ canLeave: this.state.canLeave.concat([item.id]) })
         }
+      }).catch((err: any) => {
+        console.log({ "Error query.groupMemberByUser": err });
+      });
+    });
+  }
+
+  setIsOwner(data: any) {
+    data.forEach((item: any) => {
+      var getGroup: any = API.graphql({
+        query: queries.getGroup,
+        variables: { id: item.id, owner: { eq: this.state.currentUser } },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+      });
+      getGroup.then((json: any) => {
+        console.log({ "getGroup": json })
+        if (json.data.getGroup) {
+          this.setState({ isOwner: this.state.isOwner.concat([item.id]) })
+        }
+      }).catch((err: any) => {
+        console.log({ "Error query.getGroup": err });
       });
     });
   }
@@ -284,6 +313,13 @@ export default class MyGroups extends React.Component<Props, State> {
       return false
     else  
       return true
+  }
+  isOwner(id: any): boolean {
+    var test = this.state.isOwner.filter((elem)=>elem===id)
+    if (test.length > 0)
+      return true
+    else
+      return false
   }
 
   join(group: any, groupType: any) {
@@ -375,8 +411,9 @@ export default class MyGroups extends React.Component<Props, State> {
       </CardItem>
       <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitleGroup}>{item.name}</Text></CardItem>
       <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetailMiddle}>{item.description}</Text></CardItem>
-      {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Group") }}>Join</JCButton><Right></Right></CardItem> : null}
-      {this.canLeave(item.id)  ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Group") }}>Leave</JCButton><Right></Right></CardItem> : null}
+      {this.canJoin(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Group") }}>Join</JCButton><Right></Right></CardItem> : null}
+      {this.canLeave(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Group") }}>Leave</JCButton><Right></Right></CardItem> : null}
+      {this.isOwner(item.id)  ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={()=>null}>Owner</JCButton><Right></Right></CardItem> : null}
     </Card >
   }
   renderProfile(item: any) {
@@ -407,8 +444,9 @@ export default class MyGroups extends React.Component<Props, State> {
             <Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailBottom}><a target="_blank" href={item.eventUrl}>Eventbrite</a></Text>
         }
       </CardItem>
-      {this.canJoin(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Event") }}>Attend</JCButton><Right></Right></CardItem> : null}
-      {this.canLeave(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Event") }}>Don't Attend</JCButton><Right></Right></CardItem> : null}
+      {this.canJoin(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Event") }}>Attend</JCButton><Right></Right></CardItem> : null}
+      {this.canLeave(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Event") }}>Don't Attend</JCButton><Right></Right></CardItem> : null}
+      {this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={()=>null}>Owner</JCButton><Right></Right></CardItem> : null}
     </Card>
   }
   renderResource(item: any) {
