@@ -2279,6 +2279,7 @@ export const onCreateDirectMessageUser = /* GraphQL */ `
       roomID
       room {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -2352,6 +2353,7 @@ export const onUpdateDirectMessageUser = /* GraphQL */ `
       roomID
       room {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -2425,6 +2427,7 @@ export const onDeleteDirectMessageUser = /* GraphQL */ `
       roomID
       room {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -2443,6 +2446,7 @@ export const onCreateDirectMessageRoom = /* GraphQL */ `
   subscription OnCreateDirectMessageRoom {
     onCreateDirectMessageRoom {
       id
+      name
       messageUsers {
         items {
           id
@@ -2473,6 +2477,7 @@ export const onUpdateDirectMessageRoom = /* GraphQL */ `
   subscription OnUpdateDirectMessageRoom {
     onUpdateDirectMessageRoom {
       id
+      name
       messageUsers {
         items {
           id
@@ -2503,6 +2508,7 @@ export const onDeleteDirectMessageRoom = /* GraphQL */ `
   subscription OnDeleteDirectMessageRoom {
     onDeleteDirectMessageRoom {
       id
+      name
       messageUsers {
         items {
           id
@@ -2538,6 +2544,7 @@ export const onCreateDirectMessage = /* GraphQL */ `
       messageRoomID
       messageRoom {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -2561,6 +2568,7 @@ export const onUpdateDirectMessage = /* GraphQL */ `
       messageRoomID
       messageRoom {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -2584,6 +2592,7 @@ export const onDeleteDirectMessage = /* GraphQL */ `
       messageRoomID
       messageRoom {
         id
+        name
         messageUsers {
           nextToken
         }

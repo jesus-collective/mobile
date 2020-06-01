@@ -827,6 +827,7 @@ export const getDirectMessageUser = /* GraphQL */ `
       roomID
       room {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -886,6 +887,7 @@ export const listDirectMessageUsers = /* GraphQL */ `
         roomID
         room {
           id
+          name
           createdAt
           updatedAt
         }
@@ -900,6 +902,7 @@ export const getDirectMessageRoom = /* GraphQL */ `
   query GetDirectMessageRoom($id: ID!) {
     getDirectMessageRoom(id: $id) {
       id
+      name
       messageUsers {
         items {
           id
@@ -939,6 +942,7 @@ export const listDirectMessageRooms = /* GraphQL */ `
     ) {
       items {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -961,6 +965,7 @@ export const getDirectMessage = /* GraphQL */ `
       messageRoomID
       messageRoom {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -989,6 +994,7 @@ export const listDirectMessages = /* GraphQL */ `
         messageRoomID
         messageRoom {
           id
+          name
           createdAt
           updatedAt
         }
@@ -2066,6 +2072,7 @@ export const directMessagesByRoom = /* GraphQL */ `
         messageRoomID
         messageRoom {
           id
+          name
           createdAt
           updatedAt
         }

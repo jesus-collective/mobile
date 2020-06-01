@@ -232,6 +232,7 @@ type DirectMessageRoom
 @model
 {
   id:ID!
+  name:String
   messageUsers:[DirectMessageUser] @connection(keyName: "byUser", fields: ["id"])
   directMessage:[DirectMessage] @connection(keyName: "byMessageUser", fields: ["id"])
 

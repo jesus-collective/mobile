@@ -2134,6 +2134,7 @@ export const createDirectMessageUser = /* GraphQL */ `
       roomID
       room {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -2207,6 +2208,7 @@ export const updateDirectMessageUser = /* GraphQL */ `
       roomID
       room {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -2280,6 +2282,7 @@ export const deleteDirectMessageUser = /* GraphQL */ `
       roomID
       room {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -2298,6 +2301,7 @@ export const createDirectMessageRoom = /* GraphQL */ `
   mutation CreateDirectMessageRoom($input: CreateDirectMessageRoomInput!) {
     createDirectMessageRoom(input: $input) {
       id
+      name
       messageUsers {
         items {
           id
@@ -2328,6 +2332,7 @@ export const updateDirectMessageRoom = /* GraphQL */ `
   mutation UpdateDirectMessageRoom($input: UpdateDirectMessageRoomInput!) {
     updateDirectMessageRoom(input: $input) {
       id
+      name
       messageUsers {
         items {
           id
@@ -2358,6 +2363,7 @@ export const deleteDirectMessageRoom = /* GraphQL */ `
   mutation DeleteDirectMessageRoom($input: DeleteDirectMessageRoomInput!) {
     deleteDirectMessageRoom(input: $input) {
       id
+      name
       messageUsers {
         items {
           id
@@ -2393,6 +2399,7 @@ export const createDirectMessage = /* GraphQL */ `
       messageRoomID
       messageRoom {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -2416,6 +2423,7 @@ export const updateDirectMessage = /* GraphQL */ `
       messageRoomID
       messageRoom {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -2439,6 +2447,7 @@ export const deleteDirectMessage = /* GraphQL */ `
       messageRoomID
       messageRoom {
         id
+        name
         messageUsers {
           nextToken
         }

@@ -297,10 +297,12 @@ export type DeleteDirectMessageUserInput = {
 
 export type CreateDirectMessageRoomInput = {
   id?: string | null,
+  name?: string | null,
 };
 
 export type UpdateDirectMessageRoomInput = {
   id: string,
+  name?: string | null,
 };
 
 export type DeleteDirectMessageRoomInput = {
@@ -619,6 +621,7 @@ export type ModelDirectMessageUserFilterInput = {
 
 export type ModelDirectMessageRoomFilterInput = {
   id?: ModelIDFilterInput | null,
+  name?: ModelStringFilterInput | null,
   and?: Array< ModelDirectMessageRoomFilterInput | null > | null,
   or?: Array< ModelDirectMessageRoomFilterInput | null > | null,
   not?: ModelDirectMessageRoomFilterInput | null,
@@ -3311,6 +3314,7 @@ export type CreateDirectMessageUserMutation = {
     room:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -3398,6 +3402,7 @@ export type UpdateDirectMessageUserMutation = {
     room:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -3485,6 +3490,7 @@ export type DeleteDirectMessageUserMutation = {
     room:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -3509,6 +3515,7 @@ export type CreateDirectMessageRoomMutation = {
   createDirectMessageRoom:  {
     __typename: "DirectMessageRoom",
     id: string,
+    name: string | null,
     messageUsers:  {
       __typename: "ModelDirectMessageUserConnection",
       items:  Array< {
@@ -3547,6 +3554,7 @@ export type UpdateDirectMessageRoomMutation = {
   updateDirectMessageRoom:  {
     __typename: "DirectMessageRoom",
     id: string,
+    name: string | null,
     messageUsers:  {
       __typename: "ModelDirectMessageUserConnection",
       items:  Array< {
@@ -3585,6 +3593,7 @@ export type DeleteDirectMessageRoomMutation = {
   deleteDirectMessageRoom:  {
     __typename: "DirectMessageRoom",
     id: string,
+    name: string | null,
     messageUsers:  {
       __typename: "ModelDirectMessageUserConnection",
       items:  Array< {
@@ -3629,6 +3638,7 @@ export type CreateDirectMessageMutation = {
     messageRoom:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -3659,6 +3669,7 @@ export type UpdateDirectMessageMutation = {
     messageRoom:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -3689,6 +3700,7 @@ export type DeleteDirectMessageMutation = {
     messageRoom:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -5813,6 +5825,7 @@ export type GetDirectMessageUserQuery = {
     room:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -5875,6 +5888,7 @@ export type ListDirectMessageUsersQuery = {
       room:  {
         __typename: "DirectMessageRoom",
         id: string,
+        name: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -5893,6 +5907,7 @@ export type GetDirectMessageRoomQuery = {
   getDirectMessageRoom:  {
     __typename: "DirectMessageRoom",
     id: string,
+    name: string | null,
     messageUsers:  {
       __typename: "ModelDirectMessageUserConnection",
       items:  Array< {
@@ -5935,6 +5950,7 @@ export type ListDirectMessageRoomsQuery = {
     items:  Array< {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -5964,6 +5980,7 @@ export type GetDirectMessageQuery = {
     messageRoom:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -5998,6 +6015,7 @@ export type ListDirectMessagesQuery = {
       messageRoom:  {
         __typename: "DirectMessageRoom",
         id: string,
+        name: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -7132,6 +7150,7 @@ export type DirectMessagesByRoomQuery = {
       messageRoom:  {
         __typename: "DirectMessageRoom",
         id: string,
+        name: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -9886,6 +9905,7 @@ export type OnCreateDirectMessageUserSubscription = {
     room:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -9969,6 +9989,7 @@ export type OnUpdateDirectMessageUserSubscription = {
     room:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -10052,6 +10073,7 @@ export type OnDeleteDirectMessageUserSubscription = {
     room:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -10072,6 +10094,7 @@ export type OnCreateDirectMessageRoomSubscription = {
   onCreateDirectMessageRoom:  {
     __typename: "DirectMessageRoom",
     id: string,
+    name: string | null,
     messageUsers:  {
       __typename: "ModelDirectMessageUserConnection",
       items:  Array< {
@@ -10106,6 +10129,7 @@ export type OnUpdateDirectMessageRoomSubscription = {
   onUpdateDirectMessageRoom:  {
     __typename: "DirectMessageRoom",
     id: string,
+    name: string | null,
     messageUsers:  {
       __typename: "ModelDirectMessageUserConnection",
       items:  Array< {
@@ -10140,6 +10164,7 @@ export type OnDeleteDirectMessageRoomSubscription = {
   onDeleteDirectMessageRoom:  {
     __typename: "DirectMessageRoom",
     id: string,
+    name: string | null,
     messageUsers:  {
       __typename: "ModelDirectMessageUserConnection",
       items:  Array< {
@@ -10180,6 +10205,7 @@ export type OnCreateDirectMessageSubscription = {
     messageRoom:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -10206,6 +10232,7 @@ export type OnUpdateDirectMessageSubscription = {
     messageRoom:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -10232,6 +10259,7 @@ export type OnDeleteDirectMessageSubscription = {
     messageRoom:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
