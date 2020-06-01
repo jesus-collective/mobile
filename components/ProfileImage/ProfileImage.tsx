@@ -65,7 +65,9 @@ export default class MyProfile extends React.Component<Props, State> {
         getUser.then((json) => {
             this.getProfileImage(json.data.getUser.profileImage)
         }).catch((e) => {
-            this.getProfileImage(e.data.getUser.profileImage)
+            if (e.data) {
+                this.getProfileImage(e.data.getUser.profileImage)
+            }
         })
     }
 

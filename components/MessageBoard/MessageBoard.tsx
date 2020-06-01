@@ -213,7 +213,7 @@ class MessageBoard extends React.Component<Props, State> {
                   <Card key={item.id} style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }}>
                     <CardItem style={styles.eventPageMessageBoard}>
                       <Left style={styles.eventPageMessageBoardLeft}>
-                        <ProfileImage size="small" user={item.author}></ProfileImage>
+                        <ProfileImage size="small" user={item.owner ? item.owner : null}></ProfileImage>
                         <Body>
                           <Text style={styles.groupFormName}>
                             {item.author != null ? item.author.given_name : null} {item.author != null ? item.author.family_name : null}
