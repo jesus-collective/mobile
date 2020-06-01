@@ -376,7 +376,7 @@ export default EStyleSheet.create({
     },
 
     rightCardWidth: {
-        minWidth: "150%"
+        minWidth: "100%"
     },
 
     detailScreenLeftCard: Platform.OS === 'web' ?
@@ -808,7 +808,7 @@ export default EStyleSheet.create({
         paddingBottom: 28, 
         borderStyle: "solid", 
         borderColor: "#FFFFFF",
-        width: "75%"
+        width: "100%"
     },
     profilesCard: {
         width: "100%", 
@@ -893,6 +893,9 @@ export default EStyleSheet.create({
         eventAttendeesPictures: {
             flexBasis: 0
         },
+        groupAttendeesPictures: {
+            flexBasis: 0
+        },
         myProfileCoordinates: {
             flexDirection: "column",
             marginBottom: 30,
@@ -949,6 +952,9 @@ export default EStyleSheet.create({
             width: "60%",
         },
         eventAttendeesPictures: {
+            flexBasis: 0
+        },
+        groupAttendeesPictures: {
             flexBasis: 0
         },
         resourcefileFieldWrapper: { 
