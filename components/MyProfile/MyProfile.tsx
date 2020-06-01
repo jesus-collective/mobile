@@ -211,7 +211,10 @@ export default class MyProfile extends React.Component<Props, State> {
     this.setState({ mapVisible: false })
   }
 
-
+  openConversation(initialUser, name) {
+    console.log("Navigate to conversationScreen")
+    this.props.navigation.push("ConversationScreen", { initialUserID: initialUser, initialUserName: name });
+  }
   render() {
 
     return (
@@ -289,6 +292,10 @@ export default class MyProfile extends React.Component<Props, State> {
                 </View>
                 <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px", top: 3, marginRight: 5 }} source={require('../../assets/svg/calendar.svg')}></Image>{this.state.UserDetails.joined ? moment(this.state.UserDetails.joined).format('MMMM Do YYYY') : "Join date unknown"}</Text>
                 <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px", top: 3, marginRight: 5 }} source={require('../../assets/svg/church.svg')}></Image>{this.state.UserDetails.orgName ? this.state.UserDetails.orgName : "Organization Name not defined"}</Text>
+                {!this.state.isEditable ?
+                  <Button bordered style={styles.connectWithSliderButton} onPress={() => { this.openConversation(this.state.UserDetails.id, this.state.UserDetails.given_name + " " + this.state.UserDetails.family_name) }}><Text style={styles.fontStartConversation}>Start Conversation</Text></Button>
+                  : null}
+
                 {this.state.isEditable && constants['SETTING_ISVISIBLE_PROFILE_MESSAGES'] ?
                   <Text><JCButton data-testid="profile-setmap" buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { }}>Messages</JCButton></Text>
                   : null
