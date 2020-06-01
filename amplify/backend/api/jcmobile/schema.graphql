@@ -285,7 +285,7 @@ type ResourceRoot
   type: String
   groupId: String
  # organizationId: String
-  resources: [Resource] @connection(name:"r1",keyField: "resourceID")
+  resources: [Resource] @connection(name:"r1",keyField: "resourceID",sortField:"order")
  # publisher: Organization @connection(name: "OrgResources", keyField: "organizationId")
 }
 type Resource 
@@ -296,6 +296,7 @@ type Resource
   id: ID!
   type: String
   menuTitle: String
+  order:String
   title: String
   image: Image
   description: String

@@ -203,29 +203,35 @@ class ResourceViewer extends React.Component<Props, State> {
         //  const getResourceRoot2 = await DataStore.query(ResourceEpisode);
 
     }
-    createResource = async () => {
-        /*   const resource = await DataStore.save(
-               new Resource({
-                   type: "curriculum",
-                   menuTitle: "New Resource",
-                   title: "New Resource",
-                   image: {
-                       userId: "123",
-                       filenameSmall: "123",
-                       filenameMedium: "123",
-                       filenameLarge: "123",
-                       filenameUpload: "123"
-                   },
-                   description: "..."
-               })
-           );
-           const resourceRoute = await DataStore.save(
-               ResourceRoot.copyOf(this.state.data, updated => {
-                   updated.resources = updated.resources.concat(resource)
-               })
-           );
-           console.log(resourceRoute)
-           this.setState({ data: resourceRoute })*/
+    createResource = async (size) => {
+        const resource =
+            new Resource({
+                type: "curriculum",
+                menuTitle: "New Menu Title",
+                title: "New Title",
+                image: null,
+                description: "Enter description",
+                extendedDescription: "Enter extended description",
+                resourceID: this.state.data.id,
+                order: this.state.data.resources.items.length + 1
+            })
+        try {
+            console.log("Creating Resource")
+
+            var createResource: any = await API.graphql({
+                query: mutations.createResource,
+                variables: { input: resource },
+                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+            });
+            console.log(createResource)
+            var temp = this.state.data
+            temp.resources.items.concat(resource)
+            this.setState({ data: temp })
+
+        } catch (e) {
+            console.log(e)
+        }
+
     }
     changeSeries = (index) => {
         console.log({ "changeResource": index })
@@ -236,24 +242,70 @@ class ResourceViewer extends React.Component<Props, State> {
         this.setState({ currentSeries: null, currentResource: index })
     }
     updateResource = async (index, item, value) => {
-        /*   const resourceRoute = await DataStore.save(
-               ResourceRoot.copyOf(this.state.data, updated => {
-                   updated.resources[index][item] = value
-               })
-           );
-           console.log(resourceRoute)
-           this.setState({ data: resourceRoute })*/
+        try {
+            console.log({ "Updating Resource": index })
+
+            var updateResource: any = await API.graphql({
+                query: mutations.updateResource,
+                variables: {
+                    input: {
+                        id: this.state.data.resources.items[index].id,
+                        [item]: value
+                    }
+                },
+                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+            });
+            console.log(updateResource)
+            var temp = this.state.data
+            temp.resources.items[index][item] = value
+            this.setState({ data: temp })
+
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    updateResourceOrder = () => {
+        try {
+            var z = this.state.data.resources.items.map((item, index) => {
+                var updateResource: any = API.graphql({
+                    query: mutations.updateResource,
+                    variables: { input: { id: item.id, order: index } },
+                    authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+                });
+
+            })
+            Promise.all(z)
+            var temp = this.state.data
+            temp.resources.items.forEach((item, index) => {
+                temp.resources.items[index].order = index
+            }
+            )
+            this.setState({ data: temp })
+
+
+
+        } catch (e) {
+            console.log(e)
+        }
     }
     deleteResource = async (index) => {
-        /*   if (index > 0) {
-               const resourceRoute = await DataStore.save(
-                   ResourceRoot.copyOf(this.state.data, updated => {
-                       updated.resources.splice(index, 1)
-                   })
-               );
-               console.log(resourceRoute)
-               this.setState({ data: resourceRoute })
-           }*/
+
+        try {
+            console.log({ "Deleting Resource": index })
+            var deleteResource: any = await API.graphql({
+                query: mutations.deleteResource,
+                variables: { input: { id: this.state.data.resources.items[index].id } },
+                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+            });
+            console.log(deleteResource)
+            var temp = this.state.data
+            temp.resources.items.splice(index, 1)
+            this.setState({ data: temp }, this.updateResourceOrder)
+
+        } catch (e) {
+            console.log(e)
+        }
+
     }
     getValueFromKey(myObject: any, string: any) {
         const key = Object.keys(myObject).filter(k => k.includes(string));
