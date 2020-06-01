@@ -113,7 +113,8 @@ class MessageBoard extends React.Component<Props, State> {
         when: Date.now().toString(),
         roomId: this.props.groupId,
         userId: user.username,
-        owner: user.username
+        owner: user.username,
+        authorOrgId: "0"
       }
       var createMessage: any = API.graphql({
         query: mutations.createMessage,
