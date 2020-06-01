@@ -76,7 +76,8 @@ export default class MyProfile extends React.Component<Props, State> {
         if (e.data.getUser != null)
           this.setState({
             UserDetails: e.data.getUser
-          })
+          }, () => this.getProfileImage()
+          )
         console.log(e)
       }
     }
@@ -188,7 +189,6 @@ export default class MyProfile extends React.Component<Props, State> {
       })
         .then(result => this.setState({ profileImage: result }))
         .catch(err => { console.log(err) });
-
   }
   getValueFromKey(myObject: any, string: any) {
     const key = Object.keys(myObject).filter(k => k.includes(string));
