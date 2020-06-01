@@ -337,7 +337,7 @@ export default class GroupScreen extends React.Component<Props, State>{
                         this.state.data.members.items.length == 0 ?
                           <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", marginBottom: 30 }}>No Members Yet</Text> :
                           this.state.data.members.items.map((item: any) => {
-                            return (<ProfileImage user={item} size="small" />)
+                            return (<ProfileImage user={item.userID} size="small" />)
                           })}
                   </Container>
 

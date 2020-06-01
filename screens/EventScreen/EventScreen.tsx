@@ -383,7 +383,7 @@ export default class EventScreen extends React.Component<Props, State>{
                         this.state.data.members.items.length == 0 ?
                           <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", marginBottom: 30 }}>No Attendees Yet</Text> :
                           this.state.data.members.items.map((item: any, index: any) => {
-                            return (<ProfileImage key={index} user={item} size="small" />)
+                            return (<ProfileImage user={item.userID} key={index} size="small" />)
                           })}
                   </Container>
                   {this.renderButtons()}
