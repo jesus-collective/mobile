@@ -17,6 +17,7 @@ import MapSelector from './MapSelector'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import EditableText from '../Forms/EditableText';
 
+import { constants } from '../../src/constants'
 
 Amplify.configure(awsconfig);
 
@@ -288,7 +289,18 @@ export default class MyProfile extends React.Component<Props, State> {
                 </View>
                 <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px", top: 3, marginRight: 5 }} source={require('../../assets/svg/calendar.svg')}></Image>{this.state.UserDetails.joined ? moment(this.state.UserDetails.joined).format('MMMM Do YYYY') : "Join date unknown"}</Text>
                 <Text style={styles.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px", top: 3, marginRight: 5 }} source={require('../../assets/svg/church.svg')}></Image>{this.state.UserDetails.orgName ? this.state.UserDetails.orgName : "Organization Name not defined"}</Text>
+                {this.state.isEditable && constants['SETTING_ISVISIBLE_PROFILE_MESSAGES'] ?
+                  <Text><JCButton data-testid="profile-setmap" buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { }}>Messages</JCButton></Text>
+                  : null
+                }
+                {this.state.isEditable && constants['SETTING_ISVISIBLE_PROFILE_ACCOUNTSETTINGS'] ?
+                  <Text><JCButton data-testid="profile-setmap" buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { }}>Account Settings</JCButton></Text>
+                  : null
+                }
+
               </View>
+
+
               {this.state.isEditable ?
                 <Text style={styles.fontFormSmallHeader}>Private Information</Text>
                 : null
