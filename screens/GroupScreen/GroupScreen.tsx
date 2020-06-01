@@ -1,7 +1,7 @@
 ﻿import React, { lazy } from 'react';
 import { StyleProvider, Container, Content } from 'native-base';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
-import { Text } from 'react-native'
+import { Text, TouchableOpacity} from 'react-native'
 
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
@@ -281,6 +281,10 @@ export default class GroupScreen extends React.Component<Props, State>{
     temp[field] = value
     this.setState({ data: temp })
   }
+  showProfile(id) {
+    console.log("Navigate to profileScreen")
+    this.props.navigation.push("ProfileScreen", { id: id, create: false });
+  }
   renderButtons() {
     return (
       <Container style={{ minHeight: 30 }}>
@@ -329,15 +333,21 @@ export default class GroupScreen extends React.Component<Props, State>{
                   <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Group Description" multiline={true} textStyle={styles.groupDescriptionInput} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
 
                   <Text style={{ fontFamily: "Graphik-Regular-App", fontSize: 16, lineHeight: 23, color: "#333333", paddingBottom: 12 }}>Organizer</Text>
-                  <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
+                  <TouchableOpacity onPress={() => { this.showProfile(this.state.data.ownerUser ? this.state.data.ownerUser.id : this.state.currentUserProfile.id) }}>
+                    <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
+                  </TouchableOpacity>
                   <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", paddingTop: 48, paddingBottom: 12 }}>Members ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
                   <Container style={{ display: "flex", flexDirection: "row", marginBottom: 9, flexGrow: 1, flexWrap: "wrap" }}>
                     {
                       this.state.data.members == null ? <Text>No Members Yet</Text> :
                         this.state.data.members.items.length == 0 ?
                           <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", marginBottom: 30 }}>No Members Yet</Text> :
-                          this.state.data.members.items.map((item: any) => {
-                            return (<ProfileImage user={item.userID} size="small" />)
+                          this.state.data.members.items.map((item: any, index: any) => {
+                            return (
+                              <TouchableOpacity key={index} onPress={() => { this.showProfile(item.userID) }}>
+                                <ProfileImage key={index} user={item.userID} size="small" />
+                              </TouchableOpacity>
+                            )
                           })}
                   </Container>
 
