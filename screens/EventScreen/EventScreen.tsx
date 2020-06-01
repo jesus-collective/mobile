@@ -1,8 +1,8 @@
 ﻿import React, { lazy } from 'react';
-import { Icon, Picker, StyleProvider, Container, Content } from 'native-base';
+import { Icon, Picker, StyleProvider, Container, Content, View } from 'native-base';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
-import { Text } from 'react-native'
+import { Text, TouchableOpacity } from 'react-native'
 
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
@@ -247,8 +247,8 @@ export default class EventScreen extends React.Component<Props, State>{
         });
       })
       this.setState({ canJoin: true, canLeave: false })
+      this.renderButtons()
 
-      // this.setState({ canJoin: true, canLeave: false })
     }).catch((err: any) => {
       console.log({ "Error queries.groupMemberByUser": err });
     });
@@ -266,12 +266,12 @@ export default class EventScreen extends React.Component<Props, State>{
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
     createGroupMember.then((json: any) => {
-
-      this.setState({ canJoin: false, canLeave: true })
       console.log({ "Success mutations.createGroupMember": json });
     }).catch((err: any) => {
       console.log({ "Error mutations.createGroupMember": err });
     });
+    this.setState({ canJoin: false, canLeave: true })
+    this.renderButtons()
   }
   delete() {
     var deleteGroup: any = API.graphql({
@@ -291,6 +291,37 @@ export default class EventScreen extends React.Component<Props, State>{
     temp[field] = value
     this.setState({ data: temp })
   }
+  showProfile(id) {
+    console.log("Navigate to profileScreen")
+    this.props.navigation.push("ProfileScreen", { id: id, create: false });
+  }
+  renderButtons() {
+    return (
+      <Container style={{ flexDirection: "column", flexGrow: 1 }}>
+      {this.state.canJoin ?
+        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Attend</JCButton> :
+        null
+      }
+      {this.state.canLeave ?
+        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Don't Attend</JCButton> :
+        null
+      }
+      {this.state.createNew ?
+        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.createNew() }} >Create Event</JCButton>
+        : null
+      }
+      {this.state.canSave ?
+        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.save() }} >Save Event</JCButton>
+        : null
+      }
+      {this.state.canDelete ?
+        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this event?')) this.delete() }}>Delete Event</JCButton>
+        : null
+      }
+    </Container>
+    )
+  }
+
   render() {
     //console.log(this.state.data)
     console.log("EventScreen")
@@ -308,9 +339,9 @@ export default class EventScreen extends React.Component<Props, State>{
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#979797', textTransform: "uppercase", flex: 0 }}>Sponsored</Text>
                   </Container>
 
-                  <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Event Name" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
-                  <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Event Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
-                  <EditableDate type="datetime" onChange={(value: any) => { this.updateValue("time", value) }} placeholder="Enter Event Time" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableDate>
+                  <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Event Name" multiline={false} textStyle={styles.eventNameInput} inputStyle={styles.eventNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
+                  <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Event Description" multiline={true} textStyle={styles.eventDescriptionInput} inputStyle={styles.eventDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
+                  <EditableDate type="datetime" onChange={(value: any) => { this.updateValue("time", value) }} placeholder="Enter Event Time" multiline={false} textStyle={styles.eventDateInput} inputStyle={styles.eventDateInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableDate>
 
                   {this.state.isEditable ? <Picker
                     mode="dropdown"
@@ -331,7 +362,7 @@ export default class EventScreen extends React.Component<Props, State>{
                   {this.state.data.eventType != "location" ?
                     <EditableUrl title={this.state.data.eventType == "zoom" ? "Open in Zoom" : "Open in Eventbrite"}
                       onChange={(value: any) => { this.updateValue("eventUrl", value) }}
-                      placeholder="Enter Event URL" multiline={false} textStyle={styles.fontRegular}
+                      placeholder="Enter Event URL" multiline={false} textStyle={styles.editableURLText}
                       inputStyle={styles.eventEditableURL} value={this.state.data.eventUrl}
                       isEditable={this.state.isEditable}></EditableUrl>
                     :
@@ -347,40 +378,27 @@ export default class EventScreen extends React.Component<Props, State>{
                       inputStyle={styles.groupNameInput} value={this.state.data.location}
                       isEditable={this.state.isEditable}></EditableLocation>
                   }
+
                   <Text style={{ fontFamily: "Graphik-Regular-App", fontSize: 16, lineHeight: 23, color: "#333333", paddingBottom: 12, marginTop: 52 }}>Organizer</Text>
-                  <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
+                  <TouchableOpacity onPress={() => { this.showProfile(this.state.data.ownerUser ? this.state.data.ownerUser.id : this.state.currentUserProfile.id) }}>
+                    <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
+                  </TouchableOpacity>                  
+
                   <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", paddingTop: 48, paddingBottom: 12 }}>Attending ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
-                  <Container style={styles.eventAttendeesPictures}>
+                  <View style={styles.eventAttendeesPictures}>
                     {
                       this.state.data.members == null ? <Text>No Members Yet</Text> :
                         this.state.data.members.items.length == 0 ?
                           <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", marginBottom: 30 }}>No Attendees Yet</Text> :
                           this.state.data.members.items.map((item: any, index: any) => {
-                            return (<ProfileImage key={index} user={item} size="small" />)
+                            return (
+                              <TouchableOpacity key={index} onPress={() => { this.showProfile(item.userID) }}>
+                                <ProfileImage user={item.userID} key={index} size="small" />
+                              </TouchableOpacity>
+                            )
                           })}
-                  </Container>
-                  <Container style={{ flexDirection: "column", flexGrow: 1 }}>
-                    {this.state.canJoin ?
-                      <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Attend</JCButton> :
-                      null
-                    }
-                    {this.state.canLeave ?
-                      <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Don't Attend</JCButton> :
-                      null
-                    }
-                    {this.state.createNew ?
-                      <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.createNew() }} >Create Event</JCButton>
-                      : null
-                    }
-                    {this.state.canSave ?
-                      <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.save() }} >Save Event</JCButton>
-                      : null
-                    }
-                    {this.state.canDelete ?
-                      <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this event?')) this.delete() }}>Delete Event</JCButton>
-                      : null
-                    }
-                  </Container>
+                  </View>
+                  {this.renderButtons()}
                   <Text>{this.state.validationError}</Text>
                 </Container>
                 <Container style={styles.detailScreenRightCard}>

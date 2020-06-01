@@ -827,6 +827,7 @@ export const getDirectMessageUser = /* GraphQL */ `
       roomID
       room {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -886,6 +887,7 @@ export const listDirectMessageUsers = /* GraphQL */ `
         roomID
         room {
           id
+          name
           createdAt
           updatedAt
         }
@@ -900,6 +902,7 @@ export const getDirectMessageRoom = /* GraphQL */ `
   query GetDirectMessageRoom($id: ID!) {
     getDirectMessageRoom(id: $id) {
       id
+      name
       messageUsers {
         items {
           id
@@ -939,6 +942,7 @@ export const listDirectMessageRooms = /* GraphQL */ `
     ) {
       items {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -961,6 +965,7 @@ export const getDirectMessage = /* GraphQL */ `
       messageRoomID
       messageRoom {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -989,6 +994,7 @@ export const listDirectMessages = /* GraphQL */ `
         messageRoomID
         messageRoom {
           id
+          name
           createdAt
           updatedAt
         }
@@ -1224,6 +1230,7 @@ export const getResourceRoot = /* GraphQL */ `
           id
           type
           menuTitle
+          order
           title
           description
           extendedDescription
@@ -1265,6 +1272,7 @@ export const getResource = /* GraphQL */ `
       id
       type
       menuTitle
+      order
       title
       image {
         userId
@@ -1320,6 +1328,7 @@ export const listResources = /* GraphQL */ `
         id
         type
         menuTitle
+        order
         title
         image {
           userId
@@ -1384,6 +1393,7 @@ export const getResourceSeries = /* GraphQL */ `
         id
         type
         menuTitle
+        order
         title
         image {
           userId
@@ -1439,6 +1449,7 @@ export const listResourceSeriess = /* GraphQL */ `
           id
           type
           menuTitle
+          order
           title
           description
           extendedDescription
@@ -1486,6 +1497,7 @@ export const getResourceEpisode = /* GraphQL */ `
           id
           type
           menuTitle
+          order
           title
           description
           extendedDescription
@@ -2060,6 +2072,7 @@ export const directMessagesByRoom = /* GraphQL */ `
         messageRoomID
         messageRoom {
           id
+          name
           createdAt
           updatedAt
         }

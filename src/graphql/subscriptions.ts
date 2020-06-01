@@ -2279,6 +2279,7 @@ export const onCreateDirectMessageUser = /* GraphQL */ `
       roomID
       room {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -2352,6 +2353,7 @@ export const onUpdateDirectMessageUser = /* GraphQL */ `
       roomID
       room {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -2425,6 +2427,7 @@ export const onDeleteDirectMessageUser = /* GraphQL */ `
       roomID
       room {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -2443,6 +2446,7 @@ export const onCreateDirectMessageRoom = /* GraphQL */ `
   subscription OnCreateDirectMessageRoom {
     onCreateDirectMessageRoom {
       id
+      name
       messageUsers {
         items {
           id
@@ -2473,6 +2477,7 @@ export const onUpdateDirectMessageRoom = /* GraphQL */ `
   subscription OnUpdateDirectMessageRoom {
     onUpdateDirectMessageRoom {
       id
+      name
       messageUsers {
         items {
           id
@@ -2503,6 +2508,7 @@ export const onDeleteDirectMessageRoom = /* GraphQL */ `
   subscription OnDeleteDirectMessageRoom {
     onDeleteDirectMessageRoom {
       id
+      name
       messageUsers {
         items {
           id
@@ -2538,6 +2544,7 @@ export const onCreateDirectMessage = /* GraphQL */ `
       messageRoomID
       messageRoom {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -2561,6 +2568,7 @@ export const onUpdateDirectMessage = /* GraphQL */ `
       messageRoomID
       messageRoom {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -2584,6 +2592,7 @@ export const onDeleteDirectMessage = /* GraphQL */ `
       messageRoomID
       messageRoom {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -3044,6 +3053,7 @@ export const onCreateResourceRoot = /* GraphQL */ `
           id
           type
           menuTitle
+          order
           title
           description
           extendedDescription
@@ -3069,6 +3079,7 @@ export const onUpdateResourceRoot = /* GraphQL */ `
           id
           type
           menuTitle
+          order
           title
           description
           extendedDescription
@@ -3094,6 +3105,7 @@ export const onDeleteResourceRoot = /* GraphQL */ `
           id
           type
           menuTitle
+          order
           title
           description
           extendedDescription
@@ -3114,6 +3126,7 @@ export const onCreateResource = /* GraphQL */ `
       id
       type
       menuTitle
+      order
       title
       image {
         userId
@@ -3164,6 +3177,7 @@ export const onUpdateResource = /* GraphQL */ `
       id
       type
       menuTitle
+      order
       title
       image {
         userId
@@ -3214,6 +3228,7 @@ export const onDeleteResource = /* GraphQL */ `
       id
       type
       menuTitle
+      order
       title
       image {
         userId
@@ -3294,6 +3309,7 @@ export const onCreateResourceSeries = /* GraphQL */ `
         id
         type
         menuTitle
+        order
         title
         image {
           userId
@@ -3359,6 +3375,7 @@ export const onUpdateResourceSeries = /* GraphQL */ `
         id
         type
         menuTitle
+        order
         title
         image {
           userId
@@ -3424,6 +3441,7 @@ export const onDeleteResourceSeries = /* GraphQL */ `
         id
         type
         menuTitle
+        order
         title
         image {
           userId
@@ -3486,6 +3504,7 @@ export const onCreateResourceEpisode = /* GraphQL */ `
           id
           type
           menuTitle
+          order
           title
           description
           extendedDescription
@@ -3534,6 +3553,7 @@ export const onUpdateResourceEpisode = /* GraphQL */ `
           id
           type
           menuTitle
+          order
           title
           description
           extendedDescription
@@ -3582,6 +3602,7 @@ export const onDeleteResourceEpisode = /* GraphQL */ `
           id
           type
           menuTitle
+          order
           title
           description
           extendedDescription

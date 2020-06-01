@@ -232,6 +232,7 @@ type DirectMessageRoom
 @model
 {
   id:ID!
+  name:String
   messageUsers:[DirectMessageUser] @connection(keyName: "byUser", fields: ["id"])
   directMessage:[DirectMessage] @connection(keyName: "byMessageUser", fields: ["id"])
 
@@ -286,8 +287,9 @@ type ResourceRoot
   type: String
   groupId: String
   organizationId: ID
-  resources: [Resource] @connection(name:"r1",keyField: "resourceID")
+  resources: [Resource] @connection(name:"r1",keyField: "resourceID",sortField:"order")
   organization: Organization @connection(fields: ["organizationId"])
+
 }
 type Resource 
 @model 
@@ -297,6 +299,7 @@ type Resource
   id: ID!
   type: String
   menuTitle: String
+  order:String
   title: String
   image: Image
   description: String

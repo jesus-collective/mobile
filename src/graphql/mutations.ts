@@ -2134,6 +2134,7 @@ export const createDirectMessageUser = /* GraphQL */ `
       roomID
       room {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -2207,6 +2208,7 @@ export const updateDirectMessageUser = /* GraphQL */ `
       roomID
       room {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -2280,6 +2282,7 @@ export const deleteDirectMessageUser = /* GraphQL */ `
       roomID
       room {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -2298,6 +2301,7 @@ export const createDirectMessageRoom = /* GraphQL */ `
   mutation CreateDirectMessageRoom($input: CreateDirectMessageRoomInput!) {
     createDirectMessageRoom(input: $input) {
       id
+      name
       messageUsers {
         items {
           id
@@ -2328,6 +2332,7 @@ export const updateDirectMessageRoom = /* GraphQL */ `
   mutation UpdateDirectMessageRoom($input: UpdateDirectMessageRoomInput!) {
     updateDirectMessageRoom(input: $input) {
       id
+      name
       messageUsers {
         items {
           id
@@ -2358,6 +2363,7 @@ export const deleteDirectMessageRoom = /* GraphQL */ `
   mutation DeleteDirectMessageRoom($input: DeleteDirectMessageRoomInput!) {
     deleteDirectMessageRoom(input: $input) {
       id
+      name
       messageUsers {
         items {
           id
@@ -2393,6 +2399,7 @@ export const createDirectMessage = /* GraphQL */ `
       messageRoomID
       messageRoom {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -2416,6 +2423,7 @@ export const updateDirectMessage = /* GraphQL */ `
       messageRoomID
       messageRoom {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -2439,6 +2447,7 @@ export const deleteDirectMessage = /* GraphQL */ `
       messageRoomID
       messageRoom {
         id
+        name
         messageUsers {
           nextToken
         }
@@ -2899,6 +2908,7 @@ export const createResourceRoot = /* GraphQL */ `
           id
           type
           menuTitle
+          order
           title
           description
           extendedDescription
@@ -2924,6 +2934,7 @@ export const updateResourceRoot = /* GraphQL */ `
           id
           type
           menuTitle
+          order
           title
           description
           extendedDescription
@@ -2949,6 +2960,7 @@ export const deleteResourceRoot = /* GraphQL */ `
           id
           type
           menuTitle
+          order
           title
           description
           extendedDescription
@@ -2969,6 +2981,7 @@ export const createResource = /* GraphQL */ `
       id
       type
       menuTitle
+      order
       title
       image {
         userId
@@ -3019,6 +3032,7 @@ export const updateResource = /* GraphQL */ `
       id
       type
       menuTitle
+      order
       title
       image {
         userId
@@ -3069,6 +3083,7 @@ export const deleteResource = /* GraphQL */ `
       id
       type
       menuTitle
+      order
       title
       image {
         userId
@@ -3149,6 +3164,7 @@ export const createResourceSeries = /* GraphQL */ `
         id
         type
         menuTitle
+        order
         title
         image {
           userId
@@ -3214,6 +3230,7 @@ export const updateResourceSeries = /* GraphQL */ `
         id
         type
         menuTitle
+        order
         title
         image {
           userId
@@ -3279,6 +3296,7 @@ export const deleteResourceSeries = /* GraphQL */ `
         id
         type
         menuTitle
+        order
         title
         image {
           userId
@@ -3341,6 +3359,7 @@ export const createResourceEpisode = /* GraphQL */ `
           id
           type
           menuTitle
+          order
           title
           description
           extendedDescription
@@ -3389,6 +3408,7 @@ export const updateResourceEpisode = /* GraphQL */ `
           id
           type
           menuTitle
+          order
           title
           description
           extendedDescription
@@ -3437,6 +3457,7 @@ export const deleteResourceEpisode = /* GraphQL */ `
           id
           type
           menuTitle
+          order
           title
           description
           extendedDescription

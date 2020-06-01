@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleProvider, Container, Content } from 'native-base';
+import { StyleProvider, Container, Content, View } from 'native-base';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
-import { Text } from 'react-native'
+import { Text, TouchableOpacity } from 'react-native'
 
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
@@ -207,6 +207,10 @@ class ResourceOverview extends React.Component<Props, State>{
             console.log({ "Error mutations.deleteGroup": err });
         });
     }
+    showProfile(id) {
+        console.log("Navigate to profileScreen")
+        this.props.navigation.push("ProfileScreen", { id: id, create: false });
+    }
     updateValue(field: any, value: any) {
         var temp = this.state.data
         temp[field] = value
@@ -230,18 +234,24 @@ class ResourceOverview extends React.Component<Props, State>{
                         <EditableText onChange={(value: any) => { this.updateValue("description", value); this.updateOverview("description", value) }} placeholder="Enter Resource Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
 
                         <Text style={{ fontFamily: "Helvetica Neue, sans-serif", fontSize: 16, lineHeight: 23, color: "#333333", paddingBottom: 12 }}>Organizer</Text>
-                        <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
+                        <TouchableOpacity onPress={() => { this.showProfile(this.state.data.ownerUser ? this.state.data.ownerUser.id : this.state.currentUserProfile.id) }}>
+                            <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
+                        </TouchableOpacity>                                    
                         <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", paddingTop: 48, paddingBottom: 12 }}>Members ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
 
-                        <Container style={{ display: "flex", flexDirection: "row", marginBottom: 9, flexGrow: 1, flexWrap: "wrap", minHeight: 300 }}>
+                        <View style={{ flexDirection: "row", marginBottom: 20, flexGrow: 0, flexWrap: "wrap"}}>
                             {
                                 this.state.data.members == null ? <Text>No Members Yet</Text> :
                                     this.state.data.members.items.length == 0 ?
                                         <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", marginBottom: 30 }}>No Members Yet</Text> :
                                         this.state.data.members.items.map((item: any, index: any) => {
-                                            return (<ProfileImage key={index} user={item} size="small" />)
+                                            return (
+                                                <TouchableOpacity key={index} onPress={() => { this.showProfile(item.userID) }}>
+                                                  <ProfileImage user={item.userID} key={index} size="small" />
+                                                </TouchableOpacity>
+                                              )
                                         })}
-                        </Container>
+                        </View>
                         <Container>
                             {this.state.canJoin ?
                                 <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Join Resource</JCButton> :
@@ -270,7 +280,7 @@ class ResourceOverview extends React.Component<Props, State>{
                         <ResourceOverview.Consumer>
                             {({ state, actions }) => {
 
-                                return (state.data.resources.items[state.currentResource] ? <Container style={{ display: "inline", marginTop: 10, overflow: "visible", width: "100%" }} >
+                                return (state.data.resources.items[state.currentResource] ? <Container style={styles.resourcesOverviewRightCard} >
 
                                     {/*   <EditableRichText onChange={(val) => { actions.updateResource(state.currentResource, "extendedDescription", val) }} value={state.data.resources.items[state.currentResource].extendedDescription} isEditable={true} textStyle=""></EditableRichText>
                                 */}

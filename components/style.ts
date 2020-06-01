@@ -26,6 +26,20 @@ export default EStyleSheet.create({
         fontFamily: "Graphik-Bold-App",
         width: "100%"
     },
+    eventNameInput: {
+        borderColor: 'white',
+        borderWidth: 1,
+        marginTop: 8,
+        borderRadius: 5,
+        padding: 3,
+        paddingLeft: 0,
+        flex: 0,
+        fontSize: 30,
+        lineHeight: 36,
+        fontWeight: "bold",
+        fontFamily: "Graphik-Bold-App",
+        width: "100%"
+    },
     groupDescriptionInput: {
         borderColor: 'white',
         borderWidth: 1,
@@ -40,7 +54,32 @@ export default EStyleSheet.create({
         fontWeight: "normal",
         fontFamily: "Graphik-Regular-App",
         width: "100%"
-
+    },
+    eventDescriptionInput: {
+        borderColor: 'white',
+        borderWidth: 1,
+        marginTop: 8,
+        borderRadius: 5,
+        padding: 3,
+        paddingLeft: 0,
+        flex: 0,
+        minHeight: 50,
+        fontSize: 16,
+        lineHeight: 23,
+        fontWeight: "normal",
+        fontFamily: "Graphik-Regular-App",
+        width: "100%",
+        marginBottom: 10
+    },
+    eventDateInput: {
+        padding: 3,
+        paddingLeft: 0,
+        flex: 0,
+        fontSize: 14,
+        lineHeight: 16,
+        fontFamily: "Graphik-bold-App",
+        width: "100%",
+        marginBottom: 20
     },
     eventEditableURL: {
         borderColor: 'rgba(155, 166, 175, 0.23)',
@@ -73,6 +112,11 @@ export default EStyleSheet.create({
 
     fontRegular: {
         fontFamily: "Graphik-Regular-App"
+    },
+    editableURLText: {
+        fontFamily: "Graphik-Bold-App",
+        fontSize: 16,
+        color: "#ffffff"
     },
     font: {
         fontFamily: 'Graphik-Regular-App',
@@ -332,12 +376,12 @@ export default EStyleSheet.create({
     },
 
     rightCardWidth: {
-        minWidth: "150%"
+        minWidth: "100%"
     },
 
     detailScreenLeftCard: Platform.OS === 'web' ?
-        { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: "100vw", width: 446, paddingBottom: 40 } :
-        { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, minHeight: "100vw", width: 446, paddingBottom: 40 }
+        { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: "175vh", width: 446, paddingBottom: 40 } :
+        { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, minHeight: "175vh", width: 446, paddingBottom: 40 }
     ,
     detailScreenRightCard: Platform.OS === 'web' ?
         { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", height: "100%", width: 446, } :
@@ -384,9 +428,14 @@ export default EStyleSheet.create({
     eventAttendeesPictures: {
         flexDirection: "row",
         marginBottom: 20,
-        flexGrow: 1,
+        flexGrow: 0,
         flexWrap: "wrap",
-        flexBasis: "auto"
+    },
+    groupAttendeesPictures: {
+        flexDirection: "row",
+        marginBottom: 20,
+        flexGrow: 0,
+        flexWrap: "wrap",
     },
     myProfileCoordinates: {
         justifyContent: "space-between",
@@ -759,7 +808,7 @@ export default EStyleSheet.create({
         paddingBottom: 28, 
         borderStyle: "solid", 
         borderColor: "#FFFFFF",
-        width: "75%"
+        width: "100%"
     },
     profilesCard: {
         width: "100%", 
@@ -773,6 +822,12 @@ export default EStyleSheet.create({
         justifyContent: 'space-between', 
         marginTop: 30, 
         paddingRight: 12
+    },
+    resourcesOverviewRightCard: {
+        display: "inline", 
+        marginTop: 10, 
+        overflow: "visible", 
+        width: "100%"
     },
 
 
@@ -812,6 +867,10 @@ export default EStyleSheet.create({
             fontSize: 24,
             lineHeight: 30,
         },
+        eventNameInput: {
+            fontSize: 24,
+            lineHeight: 30,
+        },
         myProfileTopButtons: {
             width: "30%",
         },
@@ -836,9 +895,6 @@ export default EStyleSheet.create({
             width: "100%",
             top: 265,
             left: "8%"
-        },
-        eventAttendeesPictures: {
-            flexBasis: 0
         },
         myProfileCoordinates: {
             flexDirection: "column",
@@ -894,9 +950,6 @@ export default EStyleSheet.create({
         },
         myProfileTopButtons: {
             width: "60%",
-        },
-        eventAttendeesPictures: {
-            flexBasis: 0
         },
         resourcefileFieldWrapper: { 
             top: "7vw" 
@@ -972,11 +1025,11 @@ export default EStyleSheet.create({
         },
         detailScreenLeftCard: {
             width: "auto",
-            marginRight: 32,
-            minHeight: "125vh",
+            marginRight: 0,
+            minHeight: 800,
             marginLeft: 0,
             marginTop: 0,
-            // width: "100%"
+            flex: 10,
         },
         detailScreenRightCard: {
            width: "auto",
@@ -984,6 +1037,9 @@ export default EStyleSheet.create({
            marginRight: 0
         },
         groupNameInput: {
+            width: "100%"
+        },
+        eventNameInput: {
             width: "100%"
         },
         eventPageMessageBoardInnerCard: {

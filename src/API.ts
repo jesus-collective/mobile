@@ -297,10 +297,12 @@ export type DeleteDirectMessageUserInput = {
 
 export type CreateDirectMessageRoomInput = {
   id?: string | null,
+  name?: string | null,
 };
 
 export type UpdateDirectMessageRoomInput = {
   id: string,
+  name?: string | null,
 };
 
 export type DeleteDirectMessageRoomInput = {
@@ -367,6 +369,7 @@ export type CreateResourceInput = {
   id?: string | null,
   type?: string | null,
   menuTitle?: string | null,
+  order?: string | null,
   title?: string | null,
   image?: ImageInput | null,
   description?: string | null,
@@ -378,6 +381,7 @@ export type UpdateResourceInput = {
   id: string,
   type?: string | null,
   menuTitle?: string | null,
+  order?: string | null,
   title?: string | null,
   image?: ImageInput | null,
   description?: string | null,
@@ -617,6 +621,7 @@ export type ModelDirectMessageUserFilterInput = {
 
 export type ModelDirectMessageRoomFilterInput = {
   id?: ModelIDFilterInput | null,
+  name?: ModelStringFilterInput | null,
   and?: Array< ModelDirectMessageRoomFilterInput | null > | null,
   or?: Array< ModelDirectMessageRoomFilterInput | null > | null,
   not?: ModelDirectMessageRoomFilterInput | null,
@@ -657,6 +662,7 @@ export type ModelResourceFilterInput = {
   id?: ModelIDFilterInput | null,
   type?: ModelStringFilterInput | null,
   menuTitle?: ModelStringFilterInput | null,
+  order?: ModelStringFilterInput | null,
   title?: ModelStringFilterInput | null,
   description?: ModelStringFilterInput | null,
   extendedDescription?: ModelStringFilterInput | null,
@@ -3308,6 +3314,7 @@ export type CreateDirectMessageUserMutation = {
     room:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -3395,6 +3402,7 @@ export type UpdateDirectMessageUserMutation = {
     room:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -3482,6 +3490,7 @@ export type DeleteDirectMessageUserMutation = {
     room:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -3506,6 +3515,7 @@ export type CreateDirectMessageRoomMutation = {
   createDirectMessageRoom:  {
     __typename: "DirectMessageRoom",
     id: string,
+    name: string | null,
     messageUsers:  {
       __typename: "ModelDirectMessageUserConnection",
       items:  Array< {
@@ -3544,6 +3554,7 @@ export type UpdateDirectMessageRoomMutation = {
   updateDirectMessageRoom:  {
     __typename: "DirectMessageRoom",
     id: string,
+    name: string | null,
     messageUsers:  {
       __typename: "ModelDirectMessageUserConnection",
       items:  Array< {
@@ -3582,6 +3593,7 @@ export type DeleteDirectMessageRoomMutation = {
   deleteDirectMessageRoom:  {
     __typename: "DirectMessageRoom",
     id: string,
+    name: string | null,
     messageUsers:  {
       __typename: "ModelDirectMessageUserConnection",
       items:  Array< {
@@ -3626,6 +3638,7 @@ export type CreateDirectMessageMutation = {
     messageRoom:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -3656,6 +3669,7 @@ export type UpdateDirectMessageMutation = {
     messageRoom:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -3686,6 +3700,7 @@ export type DeleteDirectMessageMutation = {
     messageRoom:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -4205,6 +4220,7 @@ export type CreateResourceRootMutation = {
         id: string,
         type: string | null,
         menuTitle: string | null,
+        order: string | null,
         title: string | null,
         description: string | null,
         extendedDescription: string | null,
@@ -4236,6 +4252,7 @@ export type UpdateResourceRootMutation = {
         id: string,
         type: string | null,
         menuTitle: string | null,
+        order: string | null,
         title: string | null,
         description: string | null,
         extendedDescription: string | null,
@@ -4267,6 +4284,7 @@ export type DeleteResourceRootMutation = {
         id: string,
         type: string | null,
         menuTitle: string | null,
+        order: string | null,
         title: string | null,
         description: string | null,
         extendedDescription: string | null,
@@ -4291,6 +4309,7 @@ export type CreateResourceMutation = {
     id: string,
     type: string | null,
     menuTitle: string | null,
+    order: string | null,
     title: string | null,
     image:  {
       __typename: "Image",
@@ -4350,6 +4369,7 @@ export type UpdateResourceMutation = {
     id: string,
     type: string | null,
     menuTitle: string | null,
+    order: string | null,
     title: string | null,
     image:  {
       __typename: "Image",
@@ -4409,6 +4429,7 @@ export type DeleteResourceMutation = {
     id: string,
     type: string | null,
     menuTitle: string | null,
+    order: string | null,
     title: string | null,
     image:  {
       __typename: "Image",
@@ -4501,6 +4522,7 @@ export type CreateResourceSeriesMutation = {
       id: string,
       type: string | null,
       menuTitle: string | null,
+      order: string | null,
       title: string | null,
       image:  {
         __typename: "Image",
@@ -4576,6 +4598,7 @@ export type UpdateResourceSeriesMutation = {
       id: string,
       type: string | null,
       menuTitle: string | null,
+      order: string | null,
       title: string | null,
       image:  {
         __typename: "Image",
@@ -4651,6 +4674,7 @@ export type DeleteResourceSeriesMutation = {
       id: string,
       type: string | null,
       menuTitle: string | null,
+      order: string | null,
       title: string | null,
       image:  {
         __typename: "Image",
@@ -4723,6 +4747,7 @@ export type CreateResourceEpisodeMutation = {
         id: string,
         type: string | null,
         menuTitle: string | null,
+        order: string | null,
         title: string | null,
         description: string | null,
         extendedDescription: string | null,
@@ -4778,6 +4803,7 @@ export type UpdateResourceEpisodeMutation = {
         id: string,
         type: string | null,
         menuTitle: string | null,
+        order: string | null,
         title: string | null,
         description: string | null,
         extendedDescription: string | null,
@@ -4833,6 +4859,7 @@ export type DeleteResourceEpisodeMutation = {
         id: string,
         type: string | null,
         menuTitle: string | null,
+        order: string | null,
         title: string | null,
         description: string | null,
         extendedDescription: string | null,
@@ -5798,6 +5825,7 @@ export type GetDirectMessageUserQuery = {
     room:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -5860,6 +5888,7 @@ export type ListDirectMessageUsersQuery = {
       room:  {
         __typename: "DirectMessageRoom",
         id: string,
+        name: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -5878,6 +5907,7 @@ export type GetDirectMessageRoomQuery = {
   getDirectMessageRoom:  {
     __typename: "DirectMessageRoom",
     id: string,
+    name: string | null,
     messageUsers:  {
       __typename: "ModelDirectMessageUserConnection",
       items:  Array< {
@@ -5920,6 +5950,7 @@ export type ListDirectMessageRoomsQuery = {
     items:  Array< {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -5949,6 +5980,7 @@ export type GetDirectMessageQuery = {
     messageRoom:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -5983,6 +6015,7 @@ export type ListDirectMessagesQuery = {
       messageRoom:  {
         __typename: "DirectMessageRoom",
         id: string,
+        name: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -6246,6 +6279,7 @@ export type GetResourceRootQuery = {
         id: string,
         type: string | null,
         menuTitle: string | null,
+        order: string | null,
         title: string | null,
         description: string | null,
         extendedDescription: string | null,
@@ -6295,6 +6329,7 @@ export type GetResourceQuery = {
     id: string,
     type: string | null,
     menuTitle: string | null,
+    order: string | null,
     title: string | null,
     image:  {
       __typename: "Image",
@@ -6358,6 +6393,7 @@ export type ListResourcesQuery = {
       id: string,
       type: string | null,
       menuTitle: string | null,
+      order: string | null,
       title: string | null,
       image:  {
         __typename: "Image",
@@ -6432,6 +6468,7 @@ export type GetResourceSeriesQuery = {
       id: string,
       type: string | null,
       menuTitle: string | null,
+      order: string | null,
       title: string | null,
       image:  {
         __typename: "Image",
@@ -6495,6 +6532,7 @@ export type ListResourceSeriessQuery = {
         id: string,
         type: string | null,
         menuTitle: string | null,
+        order: string | null,
         title: string | null,
         description: string | null,
         extendedDescription: string | null,
@@ -6549,6 +6587,7 @@ export type GetResourceEpisodeQuery = {
         id: string,
         type: string | null,
         menuTitle: string | null,
+        order: string | null,
         title: string | null,
         description: string | null,
         extendedDescription: string | null,
@@ -7111,6 +7150,7 @@ export type DirectMessagesByRoomQuery = {
       messageRoom:  {
         __typename: "DirectMessageRoom",
         id: string,
+        name: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -9865,6 +9905,7 @@ export type OnCreateDirectMessageUserSubscription = {
     room:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -9948,6 +9989,7 @@ export type OnUpdateDirectMessageUserSubscription = {
     room:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -10031,6 +10073,7 @@ export type OnDeleteDirectMessageUserSubscription = {
     room:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -10051,6 +10094,7 @@ export type OnCreateDirectMessageRoomSubscription = {
   onCreateDirectMessageRoom:  {
     __typename: "DirectMessageRoom",
     id: string,
+    name: string | null,
     messageUsers:  {
       __typename: "ModelDirectMessageUserConnection",
       items:  Array< {
@@ -10085,6 +10129,7 @@ export type OnUpdateDirectMessageRoomSubscription = {
   onUpdateDirectMessageRoom:  {
     __typename: "DirectMessageRoom",
     id: string,
+    name: string | null,
     messageUsers:  {
       __typename: "ModelDirectMessageUserConnection",
       items:  Array< {
@@ -10119,6 +10164,7 @@ export type OnDeleteDirectMessageRoomSubscription = {
   onDeleteDirectMessageRoom:  {
     __typename: "DirectMessageRoom",
     id: string,
+    name: string | null,
     messageUsers:  {
       __typename: "ModelDirectMessageUserConnection",
       items:  Array< {
@@ -10159,6 +10205,7 @@ export type OnCreateDirectMessageSubscription = {
     messageRoom:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -10185,6 +10232,7 @@ export type OnUpdateDirectMessageSubscription = {
     messageRoom:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -10211,6 +10259,7 @@ export type OnDeleteDirectMessageSubscription = {
     messageRoom:  {
       __typename: "DirectMessageRoom",
       id: string,
+      name: string | null,
       messageUsers:  {
         __typename: "ModelDirectMessageUserConnection",
         nextToken: string | null,
@@ -10726,6 +10775,7 @@ export type OnCreateResourceRootSubscription = {
         id: string,
         type: string | null,
         menuTitle: string | null,
+        order: string | null,
         title: string | null,
         description: string | null,
         extendedDescription: string | null,
@@ -10753,6 +10803,7 @@ export type OnUpdateResourceRootSubscription = {
         id: string,
         type: string | null,
         menuTitle: string | null,
+        order: string | null,
         title: string | null,
         description: string | null,
         extendedDescription: string | null,
@@ -10780,6 +10831,7 @@ export type OnDeleteResourceRootSubscription = {
         id: string,
         type: string | null,
         menuTitle: string | null,
+        order: string | null,
         title: string | null,
         description: string | null,
         extendedDescription: string | null,
@@ -10800,6 +10852,7 @@ export type OnCreateResourceSubscription = {
     id: string,
     type: string | null,
     menuTitle: string | null,
+    order: string | null,
     title: string | null,
     image:  {
       __typename: "Image",
@@ -10855,6 +10908,7 @@ export type OnUpdateResourceSubscription = {
     id: string,
     type: string | null,
     menuTitle: string | null,
+    order: string | null,
     title: string | null,
     image:  {
       __typename: "Image",
@@ -10910,6 +10964,7 @@ export type OnDeleteResourceSubscription = {
     id: string,
     type: string | null,
     menuTitle: string | null,
+    order: string | null,
     title: string | null,
     image:  {
       __typename: "Image",
@@ -10998,6 +11053,7 @@ export type OnCreateResourceSeriesSubscription = {
       id: string,
       type: string | null,
       menuTitle: string | null,
+      order: string | null,
       title: string | null,
       image:  {
         __typename: "Image",
@@ -11069,6 +11125,7 @@ export type OnUpdateResourceSeriesSubscription = {
       id: string,
       type: string | null,
       menuTitle: string | null,
+      order: string | null,
       title: string | null,
       image:  {
         __typename: "Image",
@@ -11140,6 +11197,7 @@ export type OnDeleteResourceSeriesSubscription = {
       id: string,
       type: string | null,
       menuTitle: string | null,
+      order: string | null,
       title: string | null,
       image:  {
         __typename: "Image",
@@ -11208,6 +11266,7 @@ export type OnCreateResourceEpisodeSubscription = {
         id: string,
         type: string | null,
         menuTitle: string | null,
+        order: string | null,
         title: string | null,
         description: string | null,
         extendedDescription: string | null,
@@ -11259,6 +11318,7 @@ export type OnUpdateResourceEpisodeSubscription = {
         id: string,
         type: string | null,
         menuTitle: string | null,
+        order: string | null,
         title: string | null,
         description: string | null,
         extendedDescription: string | null,
@@ -11310,6 +11370,7 @@ export type OnDeleteResourceEpisodeSubscription = {
         id: string,
         type: string | null,
         menuTitle: string | null,
+        order: string | null,
         title: string | null,
         description: string | null,
         extendedDescription: string | null,

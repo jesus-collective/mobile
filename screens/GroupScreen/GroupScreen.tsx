@@ -1,7 +1,7 @@
 ﻿import React, { lazy } from 'react';
-import { StyleProvider, Container, Content } from 'native-base';
+import { StyleProvider, Container, Content, View } from 'native-base';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
-import { Text } from 'react-native'
+import { Text, TouchableOpacity} from 'react-native'
 
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
@@ -235,8 +235,8 @@ export default class GroupScreen extends React.Component<Props, State>{
         });
       })
       this.setState({ canJoin: true, canLeave: false })
+      this.renderButtons()
 
-      // this.setState({ canJoin: true, canLeave: false })
     }).catch((err: any) => {
       console.log({ "Error queries.groupMemberByUser": err });
     });
@@ -255,11 +255,13 @@ export default class GroupScreen extends React.Component<Props, State>{
     });
     createGroupMember.then((json: any) => {
 
-      this.setState({ canJoin: false, canLeave: true })
       console.log({ "Success mutations.createGroupMember": json });
     }).catch((err: any) => {
       console.log({ "Error mutations.createGroupMember": err });
     });
+
+    this.setState({ canJoin: false, canLeave: true })
+    this.renderButtons()
   }
   delete() {
     var deleteGroup: any = API.graphql({
@@ -279,6 +281,37 @@ export default class GroupScreen extends React.Component<Props, State>{
     temp[field] = value
     this.setState({ data: temp })
   }
+  showProfile(id) {
+    console.log("Navigate to profileScreen")
+    this.props.navigation.push("ProfileScreen", { id: id, create: false });
+  }
+  renderButtons() {
+    return (
+      <Container style={{ minHeight: 30 }}>
+      {this.state.canJoin ?
+        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Join Group</JCButton> :
+        null
+      }
+      {this.state.canLeave ?
+        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Leave Group</JCButton> :
+        null
+      }
+      {this.state.createNew ?
+        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.createNew() }} >Create Group</JCButton>
+        : null
+      }
+      {this.state.canSave ?
+        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.save() }} >Save Group</JCButton>
+        : null
+      }
+      {this.state.canDelete ?
+        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this group?')) this.delete() }}>Delete Group</JCButton>
+        : null
+      }
+      <Text>{this.state.validationError}</Text>
+      </Container>
+    )
+  }
   render() {
     //console.log(this.state)
     console.log("GroupScreen")
@@ -296,44 +329,29 @@ export default class GroupScreen extends React.Component<Props, State>{
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#979797', textTransform: "uppercase", flex: 0 }}>Sponsored</Text>
                   </Container>
 
-                  <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Group Name" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
-                  <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Group Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
+                  <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Group Name" multiline={false} textStyle={styles.groupNameInput} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
+                  <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Group Description" multiline={true} textStyle={styles.groupDescriptionInput} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
 
                   <Text style={{ fontFamily: "Graphik-Regular-App", fontSize: 16, lineHeight: 23, color: "#333333", paddingBottom: 12 }}>Organizer</Text>
-                  <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
+                  <TouchableOpacity onPress={() => { this.showProfile(this.state.data.ownerUser ? this.state.data.ownerUser.id : this.state.currentUserProfile.id) }}>
+                    <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
+                  </TouchableOpacity>
                   <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", paddingTop: 48, paddingBottom: 12 }}>Members ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
-                  <Container style={{ display: "flex", flexDirection: "row", marginBottom: 9, flexGrow: 1, flexWrap: "wrap" }}>
+                  <View style={styles.groupAttendeesPictures}>
                     {
                       this.state.data.members == null ? <Text>No Members Yet</Text> :
                         this.state.data.members.items.length == 0 ?
                           <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", marginBottom: 30 }}>No Members Yet</Text> :
-                          this.state.data.members.items.map((item: any) => {
-                            return (<ProfileImage user={item} size="small" />)
+                          this.state.data.members.items.map((item: any, index: any) => {
+                            return (
+                              <TouchableOpacity key={index} onPress={() => { this.showProfile(item.userID) }}>
+                                <ProfileImage key={index} user={item.userID} size="small" />
+                              </TouchableOpacity>
+                            )
                           })}
-                  </Container>
-                  <Container>
-                    {this.state.canJoin ?
-                      <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Join Group</JCButton> :
-                      null
-                    }
-                    {this.state.canLeave ?
-                      <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Leave Group</JCButton> :
-                      null
-                    }
-                    {this.state.createNew ?
-                      <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.createNew() }} >Create Group</JCButton>
-                      : null
-                    }
-                    {this.state.canSave ?
-                      <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.save() }} >Save Group</JCButton>
-                      : null
-                    }
-                    {this.state.canDelete ?
-                      <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this group?')) this.delete() }}>Delete Group</JCButton>
-                      : null
-                    }
-                    <Text>{this.state.validationError}</Text>
-                  </Container>
+                  </View>
+
+                  {this.renderButtons()}
                 </Container>
                 <Container style={styles.detailScreenRightCard}>
                   <MessageBoard groupId={this.state.data.id}></MessageBoard>
