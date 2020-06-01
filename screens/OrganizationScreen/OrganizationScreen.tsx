@@ -19,8 +19,6 @@ import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 
-const MessageBoard = lazy(() => import('../../components/MessageBoard/MessageBoard'));
-
 interface Props {
   navigation: any
   route: any
@@ -77,6 +75,10 @@ export default class GroupScreen extends React.Component<Props, State>{
     const key = Object.keys(myObject).filter(k => k.includes(string));
     return key.length ? myObject[key[0]] : "";
   }
+
+
+  //switch graphQL operations from groups to org 
+
   setInitialData(props) {
     if (props.route.params.create === "true" || props.route.params.create === true)
       Auth.currentAuthenticatedUser().then((user: any) => {
@@ -156,6 +158,67 @@ export default class GroupScreen extends React.Component<Props, State>{
     }
 
   }
+
+  // -> Get organization details
+
+  /*
+  async getUserDetails() {
+    console.log("getUserDetails")
+    var user = await Auth.currentAuthenticatedUser();
+    if (this.props.loadId) {
+      try {
+        const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: this.props.loadId }));
+        this.setState({
+          UserDetails: getUser.data.getUser,
+          isEditable: getUser.data.getUser.id == user['username']
+        }, () => this.getProfileImage()
+        )
+
+        //console.log(this.state.UserDetails)
+      }
+      catch (e) {
+        if (e.data.getUser != null)
+          this.setState({
+            UserDetails: e.data.getUser
+          })
+        console.log(e)
+      }
+    }
+    else {
+
+      try {
+        const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: user['username'] }));
+        this.setState({
+          UserDetails: getUser.data.getUser,
+          isEditable: true
+        }, () => this.getProfileImage()
+        )
+
+        console.log(this.state.UserDetails)
+      }
+      catch (e) {
+        console.log(e)
+      }
+    }
+  }
+  */
+
+  /*
+  getProfileImage() {
+    console.log("get profile image")
+    //console.log(this.state.UserDetails.profileImage)
+    if (this.state.UserDetails.profileImage != null)
+      Storage.get(this.state.UserDetails.profileImage.filenameUpload, {
+        level: 'protected',
+        identityId: this.state.UserDetails.profileImage.userId
+      })
+        .then(result => this.setState({ profileImage: result }))
+        .catch(err => { console.log(err) });
+
+  }
+  */
+
+  // can't join/leave (i think)
   leave() {
     Analytics.record({
       name: 'leftOrganization',
@@ -182,19 +245,7 @@ export default class GroupScreen extends React.Component<Props, State>{
       console.log({ "Error mutations.createGroupMember": err });
     });
   }
-  delete() {
-    var deleteGroup: any = API.graphql({
-      query: mutations.deleteGroup,
-      variables: { input: { id: this.state.data.id } },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-    });
-    deleteGroup.then((json: any) => {
-      console.log({ "Success mutations.deleteGroup": json });
-      this.props.navigation.push("HomeScreen")
-    }).catch((err: any) => {
-      console.log({ "Error mutations.deleteGroup": err });
-    });
-  }
+  
   updateValue(field: any, value: any) {
     var temp = this.state.data
     temp[field] = value
@@ -245,14 +296,9 @@ export default class GroupScreen extends React.Component<Props, State>{
                     <JCButton onPress={() => { this.save() }} buttonType={ButtonTypes.Outline}>Save Organization</JCButton>
                     : null
                   }
-                  {this.state.canDelete ?
-                    <JCButton onPress={() => { if (window.confirm('Are you sure you wish to delete this organization?')) this.delete() }} buttonType={ButtonTypes.Outline}>Delete Organization</JCButton>
-                    : null
-                  }
                   <Text>{this.state.validationError}</Text>
                 </Container>
                 <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                  <MessageBoard groupId={this.state.data.id}></MessageBoard>
                 </Container>
               </Container>
             </Content>

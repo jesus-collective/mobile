@@ -1,7 +1,7 @@
 export const constants =
 {
     SETTING_ISVISIBLE_course: false,
-    SETTING_ISVISIBLE_organization: false,
+    SETTING_ISVISIBLE_organization: true,
     SETTING_ISVISIBLE_resource: true,
     SETTING_ISVISIBLE_group: true,
     SETTING_ISVISIBLE_event: true,
