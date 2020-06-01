@@ -91,6 +91,7 @@ export const getUser = /* GraphQL */ `
           when
           roomId
           userId
+          authorOrgId
           owner
           createdAt
           updatedAt
@@ -257,6 +258,12 @@ export const getGroup = /* GraphQL */ `
         ownerOrg {
           nextToken
         }
+        messages {
+          nextToken
+        }
+        resource {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -292,6 +299,7 @@ export const getGroup = /* GraphQL */ `
           when
           roomId
           userId
+          authorOrgId
           owner
           createdAt
           updatedAt
@@ -462,6 +470,31 @@ export const getOrganization = /* GraphQL */ `
         }
         nextToken
       }
+      messages {
+        items {
+          id
+          content
+          when
+          roomId
+          userId
+          authorOrgId
+          owner
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      resource {
+        items {
+          id
+          type
+          groupId
+          organizationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -508,6 +541,12 @@ export const listOrganizations = /* GraphQL */ `
           nextToken
         }
         ownerOrg {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        resource {
           nextToken
         }
         createdAt
@@ -1013,6 +1052,7 @@ export const getMessage = /* GraphQL */ `
       when
       roomId
       userId
+      authorOrgId
       owner
       author {
         id
@@ -1060,6 +1100,51 @@ export const getMessage = /* GraphQL */ `
           nextToken
         }
         messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      authorOrg {
+        id
+        orgName
+        adminEmail
+        phone
+        owner
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        orgType
+        orgSize
+        orgDescription
+        joined
+        members {
+          nextToken
+        }
+        ownerOrg {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        resource {
           nextToken
         }
         createdAt
@@ -1163,6 +1248,7 @@ export const listMessages = /* GraphQL */ `
         when
         roomId
         userId
+        authorOrgId
         owner
         author {
           id
@@ -1185,6 +1271,28 @@ export const listMessages = /* GraphQL */ `
           currentScope
           personality
           orgName
+          orgType
+          orgSize
+          orgDescription
+          joined
+          createdAt
+          updatedAt
+        }
+        authorOrg {
+          id
+          orgName
+          adminEmail
+          phone
+          owner
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
           orgType
           orgSize
           orgDescription
@@ -1225,6 +1333,7 @@ export const getResourceRoot = /* GraphQL */ `
       id
       type
       groupId
+      organizationId
       resources {
         items {
           id
@@ -1239,6 +1348,51 @@ export const getResourceRoot = /* GraphQL */ `
           updatedAt
         }
         nextToken
+      }
+      organization {
+        id
+        orgName
+        adminEmail
+        phone
+        owner
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        orgType
+        orgSize
+        orgDescription
+        joined
+        members {
+          nextToken
+        }
+        ownerOrg {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        resource {
+          nextToken
+        }
+        createdAt
+        updatedAt
       }
       createdAt
       updatedAt
@@ -1256,8 +1410,31 @@ export const listResourceRoots = /* GraphQL */ `
         id
         type
         groupId
+        organizationId
         resources {
           nextToken
+        }
+        organization {
+          id
+          orgName
+          adminEmail
+          phone
+          owner
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          orgType
+          orgSize
+          orgDescription
+          joined
+          createdAt
+          updatedAt
         }
         createdAt
         updatedAt
@@ -1306,8 +1483,31 @@ export const getResource = /* GraphQL */ `
         id
         type
         groupId
+        organizationId
         resources {
           nextToken
+        }
+        organization {
+          id
+          orgName
+          adminEmail
+          phone
+          owner
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          orgType
+          orgSize
+          orgDescription
+          joined
+          createdAt
+          updatedAt
         }
         createdAt
         updatedAt
@@ -1347,6 +1547,7 @@ export const listResources = /* GraphQL */ `
           id
           type
           groupId
+          organizationId
           createdAt
           updatedAt
         }
@@ -1412,6 +1613,7 @@ export const getResourceSeries = /* GraphQL */ `
           id
           type
           groupId
+          organizationId
           createdAt
           updatedAt
         }
@@ -2106,6 +2308,7 @@ export const messagesByRoom = /* GraphQL */ `
         when
         roomId
         userId
+        authorOrgId
         owner
         author {
           id
@@ -2128,6 +2331,28 @@ export const messagesByRoom = /* GraphQL */ `
           currentScope
           personality
           orgName
+          orgType
+          orgSize
+          orgDescription
+          joined
+          createdAt
+          updatedAt
+        }
+        authorOrg {
+          id
+          orgName
+          adminEmail
+          phone
+          owner
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
           orgType
           orgSize
           orgDescription

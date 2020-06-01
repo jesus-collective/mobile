@@ -267,7 +267,7 @@ type Message
   when: String!
   roomId: ID
   userId: ID
-  authorOrgId: ID
+  authorOrgId: ID!
   owner: String
   author: User @connection(name: "UserMessages", keyField: "userId")
   authorOrg: Organization @connection(fields: ["authorOrgId"])
@@ -286,7 +286,7 @@ type ResourceRoot
   id: ID!
   type: String
   groupId: String
-  organizationId: ID
+  organizationId: ID!
   resources: [Resource] @connection(name:"r1",keyField: "resourceID",sortField:"order")
   organization: Organization @connection(fields: ["organizationId"])
 

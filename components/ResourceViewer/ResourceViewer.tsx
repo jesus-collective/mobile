@@ -52,7 +52,8 @@ class ResourceViewer extends React.Component<Props, State> {
         console.log("test1")
         const resourceRoot = new ResourceRoot({
             type: `curriculum`,
-            groupId: this.props.groupId
+            groupId: this.props.groupId,
+            organizationId: "0"
         })
         var createResourceRoot: any = await API.graphql({
             query: mutations.createResourceRoot,
@@ -75,6 +76,7 @@ class ResourceViewer extends React.Component<Props, State> {
             description: "...",
             extendedDescription: "123",
             resourceID: createResourceRoot.data.createResourceRoot.id
+
         })
         try {
             var createResource: any = await API.graphql({

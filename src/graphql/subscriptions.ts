@@ -10,6 +10,7 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
       when
       roomId
       userId
+      authorOrgId
       owner
       author {
         id
@@ -57,6 +58,51 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
           nextToken
         }
         messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      authorOrg {
+        id
+        orgName
+        adminEmail
+        phone
+        owner
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        orgType
+        orgSize
+        orgDescription
+        joined
+        members {
+          nextToken
+        }
+        ownerOrg {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        resource {
           nextToken
         }
         createdAt
@@ -236,6 +282,7 @@ export const onCreateUser = /* GraphQL */ `
           when
           roomId
           userId
+          authorOrgId
           owner
           createdAt
           updatedAt
@@ -336,6 +383,7 @@ export const onUpdateUser = /* GraphQL */ `
           when
           roomId
           userId
+          authorOrgId
           owner
           createdAt
           updatedAt
@@ -436,6 +484,7 @@ export const onDeleteUser = /* GraphQL */ `
           when
           roomId
           userId
+          authorOrgId
           owner
           createdAt
           updatedAt
@@ -966,6 +1015,12 @@ export const onCreateGroup = /* GraphQL */ `
         ownerOrg {
           nextToken
         }
+        messages {
+          nextToken
+        }
+        resource {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -1001,6 +1056,7 @@ export const onCreateGroup = /* GraphQL */ `
           when
           roomId
           userId
+          authorOrgId
           owner
           createdAt
           updatedAt
@@ -1107,6 +1163,12 @@ export const onUpdateGroup = /* GraphQL */ `
         ownerOrg {
           nextToken
         }
+        messages {
+          nextToken
+        }
+        resource {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -1142,6 +1204,7 @@ export const onUpdateGroup = /* GraphQL */ `
           when
           roomId
           userId
+          authorOrgId
           owner
           createdAt
           updatedAt
@@ -1248,6 +1311,12 @@ export const onDeleteGroup = /* GraphQL */ `
         ownerOrg {
           nextToken
         }
+        messages {
+          nextToken
+        }
+        resource {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -1283,6 +1352,7 @@ export const onDeleteGroup = /* GraphQL */ `
           when
           roomId
           userId
+          authorOrgId
           owner
           createdAt
           updatedAt
@@ -1337,6 +1407,12 @@ export const onCreateOrganizationMember = /* GraphQL */ `
           nextToken
         }
         ownerOrg {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        resource {
           nextToken
         }
         createdAt
@@ -1441,6 +1517,12 @@ export const onUpdateOrganizationMember = /* GraphQL */ `
         ownerOrg {
           nextToken
         }
+        messages {
+          nextToken
+        }
+        resource {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -1541,6 +1623,12 @@ export const onDeleteOrganizationMember = /* GraphQL */ `
           nextToken
         }
         ownerOrg {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        resource {
           nextToken
         }
         createdAt
@@ -1668,6 +1756,31 @@ export const onCreateOrganization = /* GraphQL */ `
         }
         nextToken
       }
+      messages {
+        items {
+          id
+          content
+          when
+          roomId
+          userId
+          authorOrgId
+          owner
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      resource {
+        items {
+          id
+          type
+          groupId
+          organizationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -1739,6 +1852,31 @@ export const onUpdateOrganization = /* GraphQL */ `
         }
         nextToken
       }
+      messages {
+        items {
+          id
+          content
+          when
+          roomId
+          userId
+          authorOrgId
+          owner
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      resource {
+        items {
+          id
+          type
+          groupId
+          organizationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -1805,6 +1943,31 @@ export const onDeleteOrganization = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          content
+          when
+          roomId
+          userId
+          authorOrgId
+          owner
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      resource {
+        items {
+          id
+          type
+          groupId
+          organizationId
           createdAt
           updatedAt
         }
@@ -2615,6 +2778,7 @@ export const onCreateMessage = /* GraphQL */ `
       when
       roomId
       userId
+      authorOrgId
       owner
       author {
         id
@@ -2662,6 +2826,51 @@ export const onCreateMessage = /* GraphQL */ `
           nextToken
         }
         messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      authorOrg {
+        id
+        orgName
+        adminEmail
+        phone
+        owner
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        orgType
+        orgSize
+        orgDescription
+        joined
+        members {
+          nextToken
+        }
+        ownerOrg {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        resource {
           nextToken
         }
         createdAt
@@ -2760,6 +2969,7 @@ export const onUpdateMessage = /* GraphQL */ `
       when
       roomId
       userId
+      authorOrgId
       owner
       author {
         id
@@ -2807,6 +3017,51 @@ export const onUpdateMessage = /* GraphQL */ `
           nextToken
         }
         messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      authorOrg {
+        id
+        orgName
+        adminEmail
+        phone
+        owner
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        orgType
+        orgSize
+        orgDescription
+        joined
+        members {
+          nextToken
+        }
+        ownerOrg {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        resource {
           nextToken
         }
         createdAt
@@ -2905,6 +3160,7 @@ export const onDeleteMessage = /* GraphQL */ `
       when
       roomId
       userId
+      authorOrgId
       owner
       author {
         id
@@ -2952,6 +3208,51 @@ export const onDeleteMessage = /* GraphQL */ `
           nextToken
         }
         messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      authorOrg {
+        id
+        orgName
+        adminEmail
+        phone
+        owner
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        orgType
+        orgSize
+        orgDescription
+        joined
+        members {
+          nextToken
+        }
+        ownerOrg {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        resource {
           nextToken
         }
         createdAt
@@ -3048,6 +3349,7 @@ export const onCreateResourceRoot = /* GraphQL */ `
       id
       type
       groupId
+      organizationId
       resources {
         items {
           id
@@ -3062,6 +3364,51 @@ export const onCreateResourceRoot = /* GraphQL */ `
           updatedAt
         }
         nextToken
+      }
+      organization {
+        id
+        orgName
+        adminEmail
+        phone
+        owner
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        orgType
+        orgSize
+        orgDescription
+        joined
+        members {
+          nextToken
+        }
+        ownerOrg {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        resource {
+          nextToken
+        }
+        createdAt
+        updatedAt
       }
       createdAt
       updatedAt
@@ -3074,6 +3421,7 @@ export const onUpdateResourceRoot = /* GraphQL */ `
       id
       type
       groupId
+      organizationId
       resources {
         items {
           id
@@ -3089,6 +3437,51 @@ export const onUpdateResourceRoot = /* GraphQL */ `
         }
         nextToken
       }
+      organization {
+        id
+        orgName
+        adminEmail
+        phone
+        owner
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        orgType
+        orgSize
+        orgDescription
+        joined
+        members {
+          nextToken
+        }
+        ownerOrg {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        resource {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -3100,6 +3493,7 @@ export const onDeleteResourceRoot = /* GraphQL */ `
       id
       type
       groupId
+      organizationId
       resources {
         items {
           id
@@ -3114,6 +3508,51 @@ export const onDeleteResourceRoot = /* GraphQL */ `
           updatedAt
         }
         nextToken
+      }
+      organization {
+        id
+        orgName
+        adminEmail
+        phone
+        owner
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        orgType
+        orgSize
+        orgDescription
+        joined
+        members {
+          nextToken
+        }
+        ownerOrg {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        resource {
+          nextToken
+        }
+        createdAt
+        updatedAt
       }
       createdAt
       updatedAt
@@ -3160,8 +3599,31 @@ export const onCreateResource = /* GraphQL */ `
         id
         type
         groupId
+        organizationId
         resources {
           nextToken
+        }
+        organization {
+          id
+          orgName
+          adminEmail
+          phone
+          owner
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          orgType
+          orgSize
+          orgDescription
+          joined
+          createdAt
+          updatedAt
         }
         createdAt
         updatedAt
@@ -3211,8 +3673,31 @@ export const onUpdateResource = /* GraphQL */ `
         id
         type
         groupId
+        organizationId
         resources {
           nextToken
+        }
+        organization {
+          id
+          orgName
+          adminEmail
+          phone
+          owner
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          orgType
+          orgSize
+          orgDescription
+          joined
+          createdAt
+          updatedAt
         }
         createdAt
         updatedAt
@@ -3262,8 +3747,31 @@ export const onDeleteResource = /* GraphQL */ `
         id
         type
         groupId
+        organizationId
         resources {
           nextToken
+        }
+        organization {
+          id
+          orgName
+          adminEmail
+          phone
+          owner
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          orgType
+          orgSize
+          orgDescription
+          joined
+          createdAt
+          updatedAt
         }
         createdAt
         updatedAt
@@ -3328,6 +3836,7 @@ export const onCreateResourceSeries = /* GraphQL */ `
           id
           type
           groupId
+          organizationId
           createdAt
           updatedAt
         }
@@ -3394,6 +3903,7 @@ export const onUpdateResourceSeries = /* GraphQL */ `
           id
           type
           groupId
+          organizationId
           createdAt
           updatedAt
         }
@@ -3460,6 +3970,7 @@ export const onDeleteResourceSeries = /* GraphQL */ `
           id
           type
           groupId
+          organizationId
           createdAt
           updatedAt
         }
