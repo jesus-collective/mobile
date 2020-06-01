@@ -890,9 +890,6 @@ export default EStyleSheet.create({
             top: 265,
             left: "8%"
         },
-        eventAttendeesPictures: {
-            flexBasis: 0
-        },
         myProfileCoordinates: {
             flexDirection: "column",
             marginBottom: 30,
@@ -947,9 +944,6 @@ export default EStyleSheet.create({
         },
         myProfileTopButtons: {
             width: "60%",
-        },
-        eventAttendeesPictures: {
-            flexBasis: 0
         },
         resourcefileFieldWrapper: { 
             top: "7vw" 
