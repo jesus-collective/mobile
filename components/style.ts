@@ -26,6 +26,20 @@ export default EStyleSheet.create({
         fontFamily: "Graphik-Bold-App",
         width: "100%"
     },
+    eventNameInput: {
+        borderColor: 'white',
+        borderWidth: 1,
+        marginTop: 8,
+        borderRadius: 5,
+        padding: 3,
+        paddingLeft: 0,
+        flex: 0,
+        fontSize: 30,
+        lineHeight: 36,
+        fontWeight: "bold",
+        fontFamily: "Graphik-Bold-App",
+        width: "100%"
+    },
     groupDescriptionInput: {
         borderColor: 'white',
         borderWidth: 1,
@@ -40,7 +54,32 @@ export default EStyleSheet.create({
         fontWeight: "normal",
         fontFamily: "Graphik-Regular-App",
         width: "100%"
-
+    },
+    eventDescriptionInput: {
+        borderColor: 'white',
+        borderWidth: 1,
+        marginTop: 8,
+        borderRadius: 5,
+        padding: 3,
+        paddingLeft: 0,
+        flex: 0,
+        minHeight: 50,
+        fontSize: 16,
+        lineHeight: 23,
+        fontWeight: "normal",
+        fontFamily: "Graphik-Regular-App",
+        width: "100%",
+        marginBottom: 10
+    },
+    eventDateInput: {
+        padding: 3,
+        paddingLeft: 0,
+        flex: 0,
+        fontSize: 14,
+        lineHeight: 16,
+        fontFamily: "Graphik-bold-App",
+        width: "100%",
+        marginBottom: 10
     },
     eventEditableURL: {
         borderColor: 'rgba(155, 166, 175, 0.23)',
@@ -812,6 +851,10 @@ export default EStyleSheet.create({
             fontSize: 24,
             lineHeight: 30,
         },
+        eventNameInput: {
+            fontSize: 24,
+            lineHeight: 30,
+        },
         myProfileTopButtons: {
             width: "30%",
         },
@@ -984,6 +1027,9 @@ export default EStyleSheet.create({
            marginRight: 0
         },
         groupNameInput: {
+            width: "100%"
+        },
+        eventNameInput: {
             width: "100%"
         },
         eventPageMessageBoardInnerCard: {

@@ -311,7 +311,7 @@ export default class GroupScreen extends React.Component<Props, State>{
                             return (<ProfileImage user={item} size="small" />)
                           })}
                   </Container>
-                  <Container>
+                  <Container style={{ minHeight: 30 }}>
                     {this.state.canJoin ?
                       <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Join Group</JCButton> :
                       null
