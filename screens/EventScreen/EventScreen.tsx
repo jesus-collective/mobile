@@ -247,8 +247,8 @@ export default class EventScreen extends React.Component<Props, State>{
         });
       })
       this.setState({ canJoin: true, canLeave: false })
+      this.renderButtons()
 
-      // this.setState({ canJoin: true, canLeave: false })
     }).catch((err: any) => {
       console.log({ "Error queries.groupMemberByUser": err });
     });
@@ -266,12 +266,12 @@ export default class EventScreen extends React.Component<Props, State>{
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
     createGroupMember.then((json: any) => {
-
-      this.setState({ canJoin: false, canLeave: true })
       console.log({ "Success mutations.createGroupMember": json });
     }).catch((err: any) => {
       console.log({ "Error mutations.createGroupMember": err });
     });
+    this.setState({ canJoin: false, canLeave: true })
+    this.renderButtons()
   }
   delete() {
     var deleteGroup: any = API.graphql({
@@ -291,6 +291,33 @@ export default class EventScreen extends React.Component<Props, State>{
     temp[field] = value
     this.setState({ data: temp })
   }
+  renderButtons() {
+    return (
+      <Container style={{ flexDirection: "column", flexGrow: 1 }}>
+      {this.state.canJoin ?
+        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Attend</JCButton> :
+        null
+      }
+      {this.state.canLeave ?
+        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Don't Attend</JCButton> :
+        null
+      }
+      {this.state.createNew ?
+        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.createNew() }} >Create Event</JCButton>
+        : null
+      }
+      {this.state.canSave ?
+        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.save() }} >Save Event</JCButton>
+        : null
+      }
+      {this.state.canDelete ?
+        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this event?')) this.delete() }}>Delete Event</JCButton>
+        : null
+      }
+    </Container>
+    )
+  }
+
   render() {
     //console.log(this.state.data)
     console.log("EventScreen")
@@ -359,28 +386,7 @@ export default class EventScreen extends React.Component<Props, State>{
                             return (<ProfileImage key={index} user={item} size="small" />)
                           })}
                   </Container>
-                  <Container style={{ flexDirection: "column", flexGrow: 1 }}>
-                    {this.state.canJoin ?
-                      <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Attend</JCButton> :
-                      null
-                    }
-                    {this.state.canLeave ?
-                      <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Don't Attend</JCButton> :
-                      null
-                    }
-                    {this.state.createNew ?
-                      <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.createNew() }} >Create Event</JCButton>
-                      : null
-                    }
-                    {this.state.canSave ?
-                      <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.save() }} >Save Event</JCButton>
-                      : null
-                    }
-                    {this.state.canDelete ?
-                      <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this event?')) this.delete() }}>Delete Event</JCButton>
-                      : null
-                    }
-                  </Container>
+                  {this.renderButtons()}
                   <Text>{this.state.validationError}</Text>
                 </Container>
                 <Container style={styles.detailScreenRightCard}>
