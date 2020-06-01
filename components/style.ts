@@ -823,6 +823,12 @@ export default EStyleSheet.create({
         marginTop: 30, 
         paddingRight: 12
     },
+    resourcesOverviewRightCard: {
+        display: "inline", 
+        marginTop: 10, 
+        overflow: "visible", 
+        width: "100%"
+    },
 
 
     // Media Query Desktop Tablet
@@ -1019,11 +1025,11 @@ export default EStyleSheet.create({
         },
         detailScreenLeftCard: {
             width: "auto",
-            marginRight: 32,
-            minHeight: "125vh",
+            marginRight: 0,
+            minHeight: 800,
             marginLeft: 0,
             marginTop: 0,
-            // width: "100%"
+            flex: 10,
         },
         detailScreenRightCard: {
            width: "auto",

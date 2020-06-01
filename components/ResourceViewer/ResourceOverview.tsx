@@ -270,7 +270,7 @@ class ResourceOverview extends React.Component<Props, State>{
                         <ResourceOverview.Consumer>
                             {({ state, actions }) => {
 
-                                return (state.data.resources.items[state.currentResource] ? <Container style={{ display: "inline", marginTop: 10, overflow: "visible", width: "100%" }} >
+                                return (state.data.resources.items[state.currentResource] ? <Container style={styles.resourcesOverviewRightCard} >
 
                                     {/*   <EditableRichText onChange={(val) => { actions.updateResource(state.currentResource, "extendedDescription", val) }} value={state.data.resources.items[state.currentResource].extendedDescription} isEditable={true} textStyle=""></EditableRichText>
                                 */}
