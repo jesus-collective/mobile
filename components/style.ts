@@ -79,7 +79,7 @@ export default EStyleSheet.create({
         lineHeight: 16,
         fontFamily: "Graphik-bold-App",
         width: "100%",
-        marginBottom: 10
+        marginBottom: 20
     },
     eventEditableURL: {
         borderColor: 'rgba(155, 166, 175, 0.23)',
@@ -112,6 +112,11 @@ export default EStyleSheet.create({
 
     fontRegular: {
         fontFamily: "Graphik-Regular-App"
+    },
+    editableURLText: {
+        fontFamily: "Graphik-Bold-App",
+        fontSize: 16,
+        color: "#ffffff"
     },
     font: {
         fontFamily: 'Graphik-Regular-App',
