@@ -1,3 +1,80 @@
+export const listDirectMessageUsers = /* GraphQL */ `
+  query ListDirectMessageUsers(
+    $filter: ModelDirectMessageUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listDirectMessageUsers(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userID
+        user {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          orgDescription
+          joined
+          createdAt
+          updatedAt
+        }
+        roomID
+        room {
+          id
+          name
+          messageUsers {
+            items {
+              id
+              userID
+              roomID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          directMessage {
+            items {
+              id
+              content
+              when
+              messageRoomID
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getResourceRoot = /* GraphQL */ `
   query GetResourceRoot($id: ID!) {
     getResourceRoot(id: $id) {

@@ -80,9 +80,9 @@ export default class MyPeople extends React.Component<Props, State> {
     )
   }
 
-  openConversation() {
+  openConversation(initialUser, name) {
     console.log("Navigate to conversationScreen")
-    this.props.navigation.push("ConversationScreen");
+    this.props.navigation.push("ConversationScreen", { initialUserID: initialUser, initialUserName: name });
   }
   showProfiles() {
     console.log("Navigate to profilesScreen")
@@ -115,7 +115,7 @@ export default class MyPeople extends React.Component<Props, State> {
                           <Body>
                             <Text style={styles.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
                             <Text style={styles.fontConnectWithRole}>{item.currentRole}</Text>
-                            <Button bordered style={styles.connectWithSliderButton} onPress={() => { this.openConversation() }}><Text style={styles.fontStartConversation}>Start Conversation</Text></Button>
+                            <Button bordered style={styles.connectWithSliderButton} onPress={() => { this.openConversation(item.id, item.given_name + " " + item.family_name) }}><Text style={styles.fontStartConversation}>Start Conversation</Text></Button>
                           </Body>
                         </Left>
                       </CardItem>
