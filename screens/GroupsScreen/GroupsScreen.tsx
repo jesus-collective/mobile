@@ -45,12 +45,14 @@ export default class HomeScreen extends React.Component<Props, State>{
             <Container style={style.groupsScreenLeftContainer}>
               <MyGroups showMore={true} type="group" wrap={true} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
             </Container>
+            {/*
             <Container style={style.groupsScreenRightContainer}>
               <MyPeople wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyPeople>
               <MyConversations navigation={this.props.navigation}> </MyConversations>
               <Container ></Container>
-            </Container>
+            </Container>*/}
           </Container>
+
         </Content>
       </Container>
 

@@ -44,10 +44,12 @@ export default class HomeScreen extends React.Component<Props, State>{
             <Container style={styles.profilesScreenLeftContainer}>
               <MyGroups showMore={true} type="profile" wrap={true} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
             </Container>
+            {/*
             <Container style={styles.profilesScreensRightContainer}>
               <MyConversations navigation={this.props.navigation}> </MyConversations>
               <Container ></Container>
             </Container>
+            */}
           </Container>
         </Content>
       </Container>
