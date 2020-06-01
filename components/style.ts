@@ -893,9 +893,6 @@ export default EStyleSheet.create({
         eventAttendeesPictures: {
             flexBasis: 0
         },
-        groupAttendeesPictures: {
-            flexBasis: 0
-        },
         myProfileCoordinates: {
             flexDirection: "column",
             marginBottom: 30,
@@ -952,9 +949,6 @@ export default EStyleSheet.create({
             width: "60%",
         },
         eventAttendeesPictures: {
-            flexBasis: 0
-        },
-        groupAttendeesPictures: {
             flexBasis: 0
         },
         resourcefileFieldWrapper: { 
