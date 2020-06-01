@@ -235,8 +235,8 @@ export default class GroupScreen extends React.Component<Props, State>{
         });
       })
       this.setState({ canJoin: true, canLeave: false })
+      this.renderButtons()
 
-      // this.setState({ canJoin: true, canLeave: false })
     }).catch((err: any) => {
       console.log({ "Error queries.groupMemberByUser": err });
     });
@@ -255,11 +255,13 @@ export default class GroupScreen extends React.Component<Props, State>{
     });
     createGroupMember.then((json: any) => {
 
-      this.setState({ canJoin: false, canLeave: true })
       console.log({ "Success mutations.createGroupMember": json });
     }).catch((err: any) => {
       console.log({ "Error mutations.createGroupMember": err });
     });
+
+    this.setState({ canJoin: false, canLeave: true })
+    this.renderButtons()
   }
   delete() {
     var deleteGroup: any = API.graphql({
@@ -278,6 +280,33 @@ export default class GroupScreen extends React.Component<Props, State>{
     var temp = this.state.data
     temp[field] = value
     this.setState({ data: temp })
+  }
+  renderButtons() {
+    return (
+      <Container>
+      {this.state.canJoin ?
+        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Join Group</JCButton> :
+        null
+      }
+      {this.state.canLeave ?
+        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Leave Group</JCButton> :
+        null
+      }
+      {this.state.createNew ?
+        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.createNew() }} >Create Group</JCButton>
+        : null
+      }
+      {this.state.canSave ?
+        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.save() }} >Save Group</JCButton>
+        : null
+      }
+      {this.state.canDelete ?
+        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this group?')) this.delete() }}>Delete Group</JCButton>
+        : null
+      }
+      <Text>{this.state.validationError}</Text>
+      </Container>
+    )
   }
   render() {
     //console.log(this.state)
@@ -311,29 +340,7 @@ export default class GroupScreen extends React.Component<Props, State>{
                             return (<ProfileImage user={item} size="small" />)
                           })}
                   </Container>
-                  <Container>
-                    {this.state.canJoin ?
-                      <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Join Group</JCButton> :
-                      null
-                    }
-                    {this.state.canLeave ?
-                      <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Leave Group</JCButton> :
-                      null
-                    }
-                    {this.state.createNew ?
-                      <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.createNew() }} >Create Group</JCButton>
-                      : null
-                    }
-                    {this.state.canSave ?
-                      <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.save() }} >Save Group</JCButton>
-                      : null
-                    }
-                    {this.state.canDelete ?
-                      <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this group?')) this.delete() }}>Delete Group</JCButton>
-                      : null
-                    }
-                    <Text>{this.state.validationError}</Text>
-                  </Container>
+                  {this.renderButtons()}
                 </Container>
                 <Container style={styles.detailScreenRightCard}>
                   <MessageBoard groupId={this.state.data.id}></MessageBoard>
