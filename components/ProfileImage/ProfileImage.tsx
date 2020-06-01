@@ -30,10 +30,11 @@ export default class MyProfile extends React.Component<Props, State> {
             profileImage: null,
             showEmpty: false
         }
-
-
-        this.getProfileImage(props.user ? props.user.profileImage : null)
-
+        if (typeof props.user === "string" && props.user !== "") {
+            this.getProfileImageFromUserID(props.user)
+        } else {
+            this.getProfileImage(props.user ? props.user.profileImage : null)
+        }
     }
     componentDidUpdate(prevProps) {
         if (prevProps.user !== this.props.user)
@@ -41,7 +42,6 @@ export default class MyProfile extends React.Component<Props, State> {
     }
     getProfileImage(user) {
         if (user == "" || user == null) {
-
             this.state = { profileImage: null, showEmpty: true }
         }
         else {
@@ -59,6 +59,16 @@ export default class MyProfile extends React.Component<Props, State> {
                     this.setState({ profileImage: null, showEmpty: true })
                 })
         }
+    }
+    getProfileImageFromUserID(user) {
+        var getUser: any = API.graphql(graphqlOperation(queries.getUser, { id: user }));
+        getUser.then((json) => {
+            this.getProfileImage(json.data.getUser.profileImage)
+        }).catch((e) => {
+            if (e.data) {
+                this.getProfileImage(e.data.getUser.profileImage)
+            }
+        })
     }
 
     render() {
