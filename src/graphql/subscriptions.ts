@@ -69,6 +69,7 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -146,6 +147,7 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -540,6 +542,7 @@ export const onCreateGroupMember = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -682,6 +685,7 @@ export const onUpdateGroupMember = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -824,6 +828,7 @@ export const onDeleteGroupMember = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -985,6 +990,7 @@ export const onCreateGroup = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -1133,6 +1139,7 @@ export const onUpdateGroup = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -1281,6 +1288,7 @@ export const onDeleteGroup = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -1379,6 +1387,7 @@ export const onCreateOrganizationMember = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -1487,6 +1496,7 @@ export const onUpdateOrganizationMember = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -1595,6 +1605,7 @@ export const onDeleteOrganizationMember = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -1691,13 +1702,14 @@ export const onDeleteOrganizationMember = /* GraphQL */ `
   }
 `;
 export const onCreateOrganization = /* GraphQL */ `
-  subscription OnCreateOrganization($owner: String!) {
-    onCreateOrganization(owner: $owner) {
+  subscription OnCreateOrganization($owner: String!, $admins: String!) {
+    onCreateOrganization(owner: $owner, admins: $admins) {
       id
       orgName
       adminEmail
       phone
       owner
+      admins
       hasPaidState
       profileState
       address
@@ -1787,13 +1799,14 @@ export const onCreateOrganization = /* GraphQL */ `
   }
 `;
 export const onUpdateOrganization = /* GraphQL */ `
-  subscription OnUpdateOrganization($owner: String!) {
-    onUpdateOrganization(owner: $owner) {
+  subscription OnUpdateOrganization($owner: String!, $admins: String!) {
+    onUpdateOrganization(owner: $owner, admins: $admins) {
       id
       orgName
       adminEmail
       phone
       owner
+      admins
       hasPaidState
       profileState
       address
@@ -1883,13 +1896,14 @@ export const onUpdateOrganization = /* GraphQL */ `
   }
 `;
 export const onDeleteOrganization = /* GraphQL */ `
-  subscription OnDeleteOrganization($owner: String!) {
-    onDeleteOrganization(owner: $owner) {
+  subscription OnDeleteOrganization($owner: String!, $admins: String!) {
+    onDeleteOrganization(owner: $owner, admins: $admins) {
       id
       orgName
       adminEmail
       phone
       owner
+      admins
       hasPaidState
       profileState
       address
@@ -2837,6 +2851,7 @@ export const onCreateMessage = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -2914,6 +2929,7 @@ export const onCreateMessage = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -3028,6 +3044,7 @@ export const onUpdateMessage = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -3105,6 +3122,7 @@ export const onUpdateMessage = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -3219,6 +3237,7 @@ export const onDeleteMessage = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -3296,6 +3315,7 @@ export const onDeleteMessage = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -3371,6 +3391,7 @@ export const onCreateResourceRoot = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -3443,6 +3464,7 @@ export const onUpdateResourceRoot = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -3515,6 +3537,7 @@ export const onDeleteResourceRoot = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -3609,6 +3632,7 @@ export const onCreateResource = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -3683,6 +3707,7 @@ export const onUpdateResource = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -3757,6 +3782,7 @@ export const onDeleteResource = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address

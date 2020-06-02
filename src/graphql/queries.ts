@@ -228,6 +228,7 @@ export const getGroup = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -358,6 +359,7 @@ export const listGroups = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -412,6 +414,7 @@ export const getOrganization = /* GraphQL */ `
       adminEmail
       phone
       owner
+      admins
       hasPaidState
       profileState
       address
@@ -513,6 +516,7 @@ export const listOrganizations = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -1111,6 +1115,7 @@ export const getMessage = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -1188,6 +1193,7 @@ export const getMessage = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -1284,6 +1290,7 @@ export const listMessages = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -1355,6 +1362,7 @@ export const getResourceRoot = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -1420,6 +1428,7 @@ export const listResourceRoots = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -1493,6 +1502,7 @@ export const getResource = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -1967,6 +1977,7 @@ export const groupByType = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -2041,6 +2052,7 @@ export const organizationMemberByOrganization = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -2120,6 +2132,7 @@ export const organizationMemberByUser = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -2199,6 +2212,7 @@ export const organizationMemberByRole = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -2344,6 +2358,7 @@ export const messagesByRoom = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -2438,6 +2453,7 @@ export const searchGroups = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address

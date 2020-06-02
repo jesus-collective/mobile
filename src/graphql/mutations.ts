@@ -349,6 +349,7 @@ export const createGroupMember = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -491,6 +492,7 @@ export const updateGroupMember = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -633,6 +635,7 @@ export const deleteGroupMember = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -794,6 +797,7 @@ export const createGroup = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -942,6 +946,7 @@ export const updateGroup = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -1090,6 +1095,7 @@ export const deleteGroup = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -1188,6 +1194,7 @@ export const createOrganizationMember = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -1296,6 +1303,7 @@ export const updateOrganizationMember = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -1404,6 +1412,7 @@ export const deleteOrganizationMember = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -1507,6 +1516,7 @@ export const createOrganization = /* GraphQL */ `
       adminEmail
       phone
       owner
+      admins
       hasPaidState
       profileState
       address
@@ -1603,6 +1613,7 @@ export const updateOrganization = /* GraphQL */ `
       adminEmail
       phone
       owner
+      admins
       hasPaidState
       profileState
       address
@@ -1699,6 +1710,7 @@ export const deleteOrganization = /* GraphQL */ `
       adminEmail
       phone
       owner
+      admins
       hasPaidState
       profileState
       address
@@ -2646,6 +2658,7 @@ export const createMessage = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -2723,6 +2736,7 @@ export const createMessage = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -2837,6 +2851,7 @@ export const updateMessage = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -2914,6 +2929,7 @@ export const updateMessage = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -3028,6 +3044,7 @@ export const deleteMessage = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -3105,6 +3122,7 @@ export const deleteMessage = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -3180,6 +3198,7 @@ export const createResourceRoot = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -3252,6 +3271,7 @@ export const updateResourceRoot = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -3324,6 +3344,7 @@ export const deleteResourceRoot = /* GraphQL */ `
         adminEmail
         phone
         owner
+        admins
         hasPaidState
         profileState
         address
@@ -3418,6 +3439,7 @@ export const createResource = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -3492,6 +3514,7 @@ export const updateResource = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
@@ -3566,6 +3589,7 @@ export const deleteResource = /* GraphQL */ `
           adminEmail
           phone
           owner
+          admins
           hasPaidState
           profileState
           address
