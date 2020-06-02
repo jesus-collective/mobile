@@ -1,13 +1,13 @@
-import { StyleProvider, Content, Body, Right, Left, Card, CardItem, Container, Button } from 'native-base';
+import { StyleProvider, Content, Body, Left, Card, CardItem, Container, Button } from 'native-base';
 import { Text } from 'react-native';
 import * as React from 'react';
 import styles from '../style'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
-import { Image, TouchableOpacity } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
-import { API, graphqlOperation, Auth } from 'aws-amplify';
+import { API } from 'aws-amplify';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { constants } from '../../src/constants'
 
@@ -41,7 +41,7 @@ export default class MyPeople extends React.Component<Props, State> {
 
       // showCreateButton: false
     }
-    this.setInitialData(props)
+    this.setInitialData()
   }
   convertProfileToMapData(data) {
     return data.map((dataItem) => {
@@ -61,7 +61,7 @@ export default class MyPeople extends React.Component<Props, State> {
   convertToMapData(data) {
     return this.convertProfileToMapData(data)
   }
-  setInitialData(props) {
+  setInitialData() {
     var listUsers: any = API.graphql({
       query: queries.listUsers,
       variables: { filter: { profileState: { eq: "Complete" } } },
