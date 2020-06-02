@@ -112,6 +112,7 @@ export default class MyProfile extends React.Component<Props, State> {
     //console.log(this.state.UserDetails)
   }
   clean(item) {
+    delete item.organizations
     delete item.groups
     delete item.messages
     delete item.owns
