@@ -136,23 +136,25 @@ type Organization
   @model
   @auth(
     rules: [
-      { allow: owner, ownerField: "owner" }
+      { allow: owner }
+      { allow: owner, ownerField: "admins" }
       { allow: groups, groups: ["verifiedUsers"], operations: [read] }
     ]
   ) {
 
   id: ID!
   orgName: String!
-  adminEmail: String @auth(rules: [{ allow: owner, ownerField: "owner" }])
-  phone: String @auth(rules: [{ allow: owner, ownerField: "owner" }])
+  adminEmail: String @auth(rules: [{ allow: owner }])
+  phone: String @auth(rules: [{ allow: owner }])
   owner: String!
+  admins: [String]
 
   hasPaidState: String
   profileState: String
-  address: String @auth(rules: [{ allow: owner, ownerField: "owner" }])
-  city: String @auth(rules: [{ allow: owner, ownerField: "owner" }])
-  province: String @auth(rules: [{ allow: owner, ownerField: "owner" }])
-  postalCode: String @auth(rules: [{ allow: owner, ownerField: "owner" }])
+  address: String @auth(rules: [{ allow: owner }, { allow: owner, ownerField: "admins" }])
+  city: String @auth(rules: [{ allow: owner }, { allow: owner, ownerField: "admins" }])
+  province: String @auth(rules: [{ allow: owner }, { allow: owner, ownerField: "admins" }])
+  postalCode: String @auth(rules: [{ allow: owner }, { allow: owner, ownerField: "admins" }])
   country: String
 
   location: LatLong
