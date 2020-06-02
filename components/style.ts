@@ -836,7 +836,7 @@ export default EStyleSheet.create({
         fontWeight: "bold",
         flex: .75,
         paddingLeft: 20,
-        paddingTop: 5
+        paddingTop: 5,
     },
 
 
@@ -958,7 +958,7 @@ export default EStyleSheet.create({
             flex: 65
         },
         myProfileTopButtons: {
-            width: "60%",
+            width: "100%",
         },
         resourcefileFieldWrapper: { 
             top: "7vw" 
@@ -966,7 +966,10 @@ export default EStyleSheet.create({
         dashboardConversationCard:{
             width: "100%",
             paddingRight: 32
-        }
+        },
+        myProfileTopButtonsInternalContainer: {
+            flex: 2.5
+        },
     },
 
     '@media (min-width: 320px) and (max-width: 480px)': {
