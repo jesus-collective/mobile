@@ -233,11 +233,10 @@ export default class MyProfile extends React.Component<Props, State> {
               : null
             }
             {
-              this.state.isEditable ? <Text>{this.state.validationText}</Text>
-                : null
+              this.state.isEditable ? 
+              <Text style={styles.myProfileErrorValidation}>{this.state.validationText}</Text>
+              : null
             }
-
-
           </View>
 
           <MapSelector mapVisible={this.state.mapVisible} coord={this.state.UserDetails.location}
