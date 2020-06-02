@@ -1139,6 +1139,11 @@ export default EStyleSheet.create({
         fontFormUserType: {
             textAlign: "left",
         },
+        myProfileErrorValidation: {
+            textAlign: "center",
+            paddingLeft: 0,
+            paddingBottom: 20
+        },
     },
 
     dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
