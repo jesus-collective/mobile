@@ -298,7 +298,7 @@ export default EStyleSheet.create({
             textAlign: "center",
             paddingLeft: 0,
             paddingRight: 0,
-            width: 165
+            width: 100
         },
         SolidText: {
             width: "100%"

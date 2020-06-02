@@ -881,7 +881,7 @@ export default EStyleSheet.create({
             lineHeight: 30,
         },
         myProfileTopButtons: {
-            width: "30%",
+            width: "100%",
         },
         profileScreenLeftCard: {
             marginRight: 10,
@@ -923,7 +923,13 @@ export default EStyleSheet.create({
         },
         dashboardConversationCard:{
             width: "100%"
-        }
+        },
+        myProfileTopButtonsInternalContainer: {
+            flex: 3, 
+        },
+        myProfileErrorValidation: {
+            flex: 1,
+        },
     },
 
     // Media Query Desktop Large Tablet
