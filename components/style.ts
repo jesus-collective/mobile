@@ -193,7 +193,7 @@ export default EStyleSheet.create({
         fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24, lineHeight: 30, height: 90, color: '#333333', paddingTop: 29,
     },
     profileFontTitle: {
-        fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 20, height: 75, lineHeight: 65
+        fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 20, height: 75, lineHeight: 65, flex: 3
     },
     fontDetailTop: {
         fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, color: '#333333', opacity: 0.4, paddingTop: 23
@@ -402,6 +402,7 @@ export default EStyleSheet.create({
         flexGrow: 0,
         marginTop: 30,
         paddingLeft: 32,
+        paddingRight: 32,
         minHeight: 45
     },
     myProfileImageWrapper: {
@@ -467,9 +468,10 @@ export default EStyleSheet.create({
         flexDirection: "row"
     },
     myProfileTopButtonsInternalContainer: {
-        flex: 0, 
+        flex: 6, 
         flexDirection: "row", 
-        alignSelf: "flex-end"
+        alignSelf: "flex-end",
+        justifyContent: "flex-end"
     },
     myProfileMapSelectorContainer: {
         position: "fixed", 
@@ -829,6 +831,13 @@ export default EStyleSheet.create({
         overflow: "visible", 
         width: "100%"
     },
+    myProfileErrorValidation: {
+        color: "red",
+        fontWeight: "bold",
+        flex: .75,
+        paddingLeft: 20,
+        paddingTop: 5,
+    },
 
 
     // Media Query Desktop Tablet
@@ -872,7 +881,7 @@ export default EStyleSheet.create({
             lineHeight: 30,
         },
         myProfileTopButtons: {
-            width: "30%",
+            width: "100%",
         },
         profileScreenLeftCard: {
             marginRight: 10,
@@ -914,7 +923,13 @@ export default EStyleSheet.create({
         },
         dashboardConversationCard:{
             width: "100%"
-        }
+        },
+        myProfileTopButtonsInternalContainer: {
+            flex: 3, 
+        },
+        myProfileErrorValidation: {
+            flex: 1,
+        },
     },
 
     // Media Query Desktop Large Tablet
@@ -949,7 +964,7 @@ export default EStyleSheet.create({
             flex: 65
         },
         myProfileTopButtons: {
-            width: "60%",
+            width: "100%",
         },
         resourcefileFieldWrapper: { 
             top: "7vw" 
@@ -957,7 +972,10 @@ export default EStyleSheet.create({
         dashboardConversationCard:{
             width: "100%",
             paddingRight: 32
-        }
+        },
+        myProfileTopButtonsInternalContainer: {
+            flex: 2.5
+        },
     },
 
     '@media (min-width: 320px) and (max-width: 480px)': {
@@ -986,7 +1004,8 @@ export default EStyleSheet.create({
             minWidth: "100%"
         },
         profileFontTitle: {
-            minWidth: 300, 
+            minWidth: 300,
+            flex: 0 
         },
         profileScreenLeftCard: {
             marginRight: 32,
@@ -1119,6 +1138,11 @@ export default EStyleSheet.create({
         },
         fontFormUserType: {
             textAlign: "left",
+        },
+        myProfileErrorValidation: {
+            textAlign: "center",
+            paddingLeft: 0,
+            paddingBottom: 20
         },
     },
 
