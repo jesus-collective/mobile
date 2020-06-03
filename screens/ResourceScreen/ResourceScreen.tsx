@@ -76,7 +76,7 @@ export default class GroupScreen extends React.Component<Props, State>{
   setInitialData(props) {
     if (props.route.params.create === "true" || props.route.params.create === true)
       Auth.currentAuthenticatedUser().then((user: any) => {
-        var z: CreateGroupInput = {
+        const z: CreateGroupInput = {
           id: "resource-" + Date.now(),
           owner: user.username,
           type: "resource",
@@ -89,12 +89,12 @@ export default class GroupScreen extends React.Component<Props, State>{
         this.setState({ data: z })
       })
     else {
-      var getGroup: any = API.graphql({
+      const getGroup: any = API.graphql({
         query: queries.getGroup,
         variables: { id: props.route.params.id },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
-      var processResults = (json) => {
+      const processResults = (json) => {
         this.setState({ data: json.data.getGroup })
       }
       getGroup.then(processResults).catch(processResults)
@@ -104,13 +104,13 @@ export default class GroupScreen extends React.Component<Props, State>{
     this.setState({ showMap: !this.state.showMap })
   }
   validate(): boolean {
-    var validation: any = Validate.Resource(this.state.data)
+    const validation: any = Validate.Resource(this.state.data)
     this.setState({ validationError: validation.validationError })
     return validation.result
   }
   createNew() {
     if (this.validate()) {
-      var createGroup: any = API.graphql({
+      const createGroup: any = API.graphql({
         query: mutations.createGroup,
         variables: { input: this.state.data },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -138,7 +138,7 @@ export default class GroupScreen extends React.Component<Props, State>{
   }
   save() {
     if (this.validate()) {
-      var updateGroup: any = API.graphql({
+      const updateGroup: any = API.graphql({
         query: mutations.updateGroup,
         variables: { input: this.clean(this.state.data) },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -158,7 +158,7 @@ export default class GroupScreen extends React.Component<Props, State>{
       // Attribute values must be strings
       attributes: { id: this.state.data.id, name: this.state.data.name }
     });
-    var deleteGroupMember: any = API.graphql({
+    const deleteGroupMember: any = API.graphql({
       query: mutations.deleteGroupMember,
       variables: { input: { id: this.state.data.id } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -176,7 +176,7 @@ export default class GroupScreen extends React.Component<Props, State>{
       // Attribute values must be strings
       attributes: { id: this.state.data.id, name: this.state.data.name }
     });
-    var createGroupMember: any = API.graphql({
+    const createGroupMember: any = API.graphql({
       query: mutations.createGroupMember,
       variables: { input: { groupID: this.state.data.id, userID: this.state.currentUser } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -190,7 +190,7 @@ export default class GroupScreen extends React.Component<Props, State>{
     });
   }
   delete() {
-    var deleteGroup: any = API.graphql({
+    const deleteGroup: any = API.graphql({
       query: mutations.deleteGroup,
       variables: { input: { id: this.state.data.id } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -203,7 +203,7 @@ export default class GroupScreen extends React.Component<Props, State>{
     });
   }
   updateValue(field: any, value: any) {
-    var temp = this.state.data
+    const temp = this.state.data
     temp[field] = value
     this.setState({ data: temp })
   }
@@ -215,7 +215,7 @@ export default class GroupScreen extends React.Component<Props, State>{
       this.state.data ?
         <StyleProvider style={getTheme(material)}>
           <Container >
-            <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
+            <Header title="Jesus Collective" navigation={this.props.navigation} />
             <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
             <ResourceViewer navigation={this.props.navigation} groupId={this.state.data.id}></ResourceViewer>
             <ImportKidsAndYouth></ImportKidsAndYouth>

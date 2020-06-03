@@ -1,3 +1,4 @@
+/* eslint-disable */
 
 import React from 'react';
 //{ API, graphqlOperation } 
@@ -9,6 +10,7 @@ import GRAPHQL_AUTH_MODE, { Greetings } from 'aws-amplify-react-native'
 
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
+import { constants } from '../../src/constants'
 
 //mport { DataStore, Predicates } from '@aws-amplify/datastore'
 
@@ -1330,12 +1332,13 @@ class IndexApp extends React.Component<Props, State>{
 
     render() {
         return (
-            <div>
+            constants['SETTING_ISVISIBLE_RESOURCE_IMPORT'] ?
+                <div>
 
-                <Button onPress={() => { this.importKidsAndYouth() }}><Text>Import Kids and Youth</Text></Button>
+                    <Button onPress={() => { this.importKidsAndYouth() }}><Text>Import Kids and Youth</Text></Button>
 
 
-            </div >
+                </div > : null
         );
     }
 }

@@ -38,7 +38,7 @@ export default class HomeScreen extends React.Component<Props, State>{
     return (
 
       <Container data-testid="resources" >
-        <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
+        <Header title="Jesus Collective" navigation={this.props.navigation} />
         <MyMap navigation={this.props.navigation} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
         <Content>
           <Container style={styles.resourcesScreenMainContainer}>

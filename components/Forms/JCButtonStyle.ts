@@ -166,13 +166,13 @@ export default EStyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         //   color:"#ffffff",
-        backgroundColor: "#ffffff",
+        backgroundColor: "#ffffff00",
         borderWidth: 0,
-        borderColor: "#ffffff",
+        borderColor: "#ffffff00",
         boxShadow: "unset"
     },
     TransparentText: {
-        color: "#F0493E",
+        color: "#ffffff",
         fontFamily: 'Graphik-Regular-App',
         fontSize: 16,
         padding: 5
@@ -184,9 +184,9 @@ export default EStyleSheet.create({
         paddingBottom: 0,
         marginLeft: 10,
         marginRight: 10,
-        backgroundColor: "#ffffff",
+        backgroundColor: "#ffffff00",
         borderWidth: 0,
-        borderColor: "#ffffff",
+        borderColor: "#ffffff00",
         boxShadow: "unset",
         alignSelf: "flex-start"
     },

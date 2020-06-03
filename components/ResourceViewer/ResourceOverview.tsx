@@ -40,6 +40,7 @@ interface State {
     validationError: String
     currentUser: String
     currentUserProfile: any
+    memberIDs: String[]
 }
 
 class ResourceOverview extends React.Component<Props, State>{
@@ -59,7 +60,8 @@ class ResourceOverview extends React.Component<Props, State>{
             canDelete: true,
             validationError: "",
             currentUser: null,
-            currentUserProfile: null
+            currentUserProfile: null,
+            memberIDs: []
         }
         Auth.currentAuthenticatedUser().then((user: any) => {
             this.setState({
@@ -69,10 +71,18 @@ class ResourceOverview extends React.Component<Props, State>{
             getUser.then((json) => {
                 this.setState({
                     currentUserProfile: json.data.getUser
+                }, () => {
+                    this.setInitialData(props)
                 })
+
+            }).catch((e) => {
+                console.log({
+                    "Error Loading User": e
+                }
+                )
             })
         })
-        this.setInitialData(props)
+
     }
     getValueFromKey(myObject: any, string: any) {
         const key = Object.keys(myObject).filter(k => k.includes(string));
@@ -91,7 +101,16 @@ class ResourceOverview extends React.Component<Props, State>{
                     image: "temp",
                     ownerOrgID: "00000000-0000-0000-0000-000000000000"
                 }
-                this.setState({ data: z })
+                const isEditable = true
+                this.setState({
+                    data: z,
+                    isEditable: isEditable,
+                    canLeave: true && !isEditable,
+                    canJoin: true && !isEditable,
+                    canSave: (!this.state.createNew) && isEditable,
+                    createNew: this.state.createNew && isEditable,
+                    canDelete: (!this.state.createNew) && isEditable
+                })
             })
         else {
             var getGroup: any = API.graphql({
@@ -100,11 +119,38 @@ class ResourceOverview extends React.Component<Props, State>{
                 authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
             });
             var processResults = (json) => {
-                this.setState({ data: json.data.getGroup })
+                const isEditable = json.data.getGroup.owner == this.state.currentUser
+
+                this.setState({
+                    data: json.data.getGroup,
+                    memberIDs: json.data.getGroup.members.items.map(item => item.userID),
+                    isEditable: isEditable,
+                    canLeave: true && !isEditable,
+                    canJoin: true && !isEditable,
+                    canSave: (!this.state.createNew) && isEditable,
+                    createNew: this.state.createNew && isEditable,
+                    canDelete: (!this.state.createNew) && isEditable
+                },
+                    () => {
+                        var groupMemberByUser: any = API.graphql({
+                            query: queries.groupMemberByUser,
+                            variables: { userID: this.state.currentUser, groupID: { eq: this.state.data.id } },
+                            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+                        });
+                        groupMemberByUser.then((json: any) => {
+                            console.log({ "groupMemberByUser": json })
+                            if (json.data.groupMemberByUser.items.length > 0)
+                                this.setState({ canJoin: false, canLeave: true && !this.state.isEditable })
+                            else
+                                this.setState({ canJoin: true && !this.state.isEditable, canLeave: false })
+                        })
+                    }
+                )
             }
             getGroup.then(processResults).catch(processResults)
         }
     }
+
     mapChanged = () => {
         this.setState({ showMap: !this.state.showMap })
     }
@@ -121,7 +167,15 @@ class ResourceOverview extends React.Component<Props, State>{
                 authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
             });
             createGroup.then((json: any) => {
-                this.setState({ canDelete: true, canSave: true, createNew: false })
+                this.setState({
+                    createNew: false
+                }, () => {
+                    this.setState({
+                        canSave: (!this.state.createNew) && this.state.isEditable,
+                        createNew: this.state.createNew && this.state.isEditable,
+                        canDelete: (!this.state.createNew) && this.state.isEditable
+                    })
+                })
                 console.log({ "Success mutations.createGroup": json });
             }).catch((err: any) => {
                 console.log({ "Error mutations.createGroup": err });
@@ -149,7 +203,7 @@ class ResourceOverview extends React.Component<Props, State>{
                 authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
             });
             updateGroup.then((json: any) => {
-                this.setState({ canDelete: true, canSave: true, createNew: false })
+                // this.setState({ canDelete: true, canSave: true, createNew: false })
                 console.log({ "Success mutations.updateGroup": json });
             }).catch((err: any) => {
                 console.log({ "Error mutations.updateGroup": err });
@@ -163,16 +217,34 @@ class ResourceOverview extends React.Component<Props, State>{
             // Attribute values must be strings
             attributes: { id: this.state.data.id, name: this.state.data.name }
         });
-        var deleteGroupMember: any = API.graphql({
-            query: mutations.deleteGroupMember,
-            variables: { input: { id: this.state.data.id } },
+        var groupMemberByUser: any = API.graphql({
+            query: queries.groupMemberByUser,
+            variables: { userID: this.state.currentUser, groupID: { eq: this.state.data.id } },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
         });
-        deleteGroupMember.then((json: any) => {
-            this.setState({ canJoin: true, canLeave: false })
-            console.log({ "Success mutations.deleteGroupMember": json });
+        groupMemberByUser.then((json: any) => {
+            console.log({ "Success queries.groupMemberByUser": json });
+
+            json.data.groupMemberByUser.items.map((item) => {
+                var deleteGroupMember: any = API.graphql({
+                    query: mutations.deleteGroupMember,
+                    variables: { input: { id: item.id } },
+                    authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+                });
+                deleteGroupMember.then((json: any) => {
+
+                    console.log({ "Success mutations.deleteGroupMember": json });
+                }).catch((err: any) => {
+                    console.log({ "Error mutations.deleteGroupMember": err });
+                });
+            })
+
+            let remainingUsers = this.state.memberIDs.filter(user => user !== this.state.currentUser)
+            this.setState({ canJoin: true, canLeave: false, memberIDs: remainingUsers })
+            this.renderButtons()
+
         }).catch((err: any) => {
-            console.log({ "Error mutations.deleteGroupMember": err });
+            console.log({ "Error queries.groupMemberByUser": err });
         });
     }
     join() {
@@ -188,11 +260,14 @@ class ResourceOverview extends React.Component<Props, State>{
         });
         createGroupMember.then((json: any) => {
 
-            this.setState({ canJoin: false, canLeave: true })
             console.log({ "Success mutations.createGroupMember": json });
         }).catch((err: any) => {
             console.log({ "Error mutations.createGroupMember": err });
         });
+
+        this.setState({ canJoin: false, canLeave: true, memberIDs: this.state.memberIDs.concat(this.state.currentUser) })
+        this.renderButtons()
+        console.log(this.state.memberIDs)
     }
     delete() {
         var deleteGroup: any = API.graphql({
@@ -216,8 +291,35 @@ class ResourceOverview extends React.Component<Props, State>{
         temp[field] = value
         this.setState({ data: temp })
     }
-
+    renderButtons() {
+        return (
+            <Container style={{ minHeight: 30 }}>
+                {this.state.canJoin ?
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Join Group</JCButton> :
+                    null
+                }
+                {this.state.canLeave ?
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Leave Group</JCButton> :
+                    null
+                }
+                {this.state.createNew ?
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.createNew() }} >Create Group</JCButton>
+                    : null
+                }
+                {this.state.canSave ?
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.save() }} >Save Group</JCButton>
+                    : null
+                }
+                {this.state.canDelete ?
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this group?')) this.delete() }}>Delete Group</JCButton>
+                    : null
+                }
+                <Text>{this.state.validationError}</Text>
+            </Container>
+        )
+    }
     render() {
+        console.log("ResourceScreen")
         return (
             this.state.data != null ?
 
@@ -230,51 +332,28 @@ class ResourceOverview extends React.Component<Props, State>{
                             <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#979797', textTransform: "uppercase", flex: 0 }}>Sponsored</Text>
                         </Container>
 
-                        <EditableText onChange={(value: any) => { this.updateValue("name", value); this.updateOverview("title", value) }} placeholder="Enter Resource Name" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
-                        <EditableText onChange={(value: any) => { this.updateValue("description", value); this.updateOverview("description", value) }} placeholder="Enter Resource Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
+                        <EditableText onChange={(value: any) => { this.updateValue("name", value); this.updateOverview("title", value) }} placeholder="Enter Resource Name" multiline={false} textStyle={styles.groupNameInput} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
+                        <EditableText onChange={(value: any) => { this.updateValue("description", value); this.updateOverview("description", value) }} placeholder="Enter Resource Description" multiline={true} textStyle={styles.groupDescriptionInput} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
 
-                        <Text style={{ fontFamily: "Helvetica Neue, sans-serif", fontSize: 16, lineHeight: 23, color: "#333333", paddingBottom: 12 }}>Organizer</Text>
+                        <Text style={{ fontFamily: "Graphik-Regular-App", fontSize: 16, lineHeight: 23, color: "#333333", paddingBottom: 12 }}>Organizer</Text>
                         <TouchableOpacity onPress={() => { this.showProfile(this.state.data.ownerUser ? this.state.data.ownerUser.id : this.state.currentUserProfile.id) }}>
                             <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
-                        </TouchableOpacity>                                    
-                        <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", paddingTop: 48, paddingBottom: 12 }}>Members ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
+                        </TouchableOpacity>
+                        <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", paddingTop: 48, paddingBottom: 12 }}>Members ({this.state.memberIDs.length})</Text>
 
-                        <View style={{ flexDirection: "row", marginBottom: 20, flexGrow: 0, flexWrap: "wrap"}}>
-                            {
-                                this.state.data.members == null ? <Text>No Members Yet</Text> :
-                                    this.state.data.members.items.length == 0 ?
-                                        <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", marginBottom: 30 }}>No Members Yet</Text> :
-                                        this.state.data.members.items.map((item: any, index: any) => {
-                                            return (
-                                                <TouchableOpacity key={index} onPress={() => { this.showProfile(item.userID) }}>
-                                                  <ProfileImage user={item.userID} key={index} size="small" />
-                                                </TouchableOpacity>
-                                              )
-                                        })}
+                        <View style={styles.groupAttendeesPictures}>
+                            {this.state.memberIDs.length == 0 ?
+                                <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", marginBottom: 30 }}>No Members Yet</Text> :
+                                this.state.memberIDs.map((id: any, index: any) => {
+                                    return (
+                                        <TouchableOpacity key={index} onPress={() => { this.showProfile(id) }}>
+                                            <ProfileImage key={index} user={id} size="small" />
+                                        </TouchableOpacity>
+                                    )
+                                })}
                         </View>
-                        <Container>
-                            {this.state.canJoin ?
-                                <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Join Resource</JCButton> :
-                                null
-                            }
-                            {this.state.canLeave ?
-                                <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Leave Resource</JCButton> :
-                                null
-                            }
-                            {this.state.createNew ?
-                                <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.createNew() }} >Create Resource</JCButton>
-                                : null
-                            }
-                            {this.state.canSave ?
-                                <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.save() }} >Save Resource</JCButton>
-                                : null
-                            }
-                            {this.state.canDelete ?
-                                <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this resource?')) this.delete() }} >Delete Resource</JCButton>
-                                : null
-                            }
-                            <Text>{this.state.validationError}</Text>
-                        </Container>
+
+                        {this.renderButtons()}
                     </Container>
                     <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', backgroundColor: "#F9FAFC", height: "100%" }}>
                         <ResourceOverview.Consumer>

@@ -1,7 +1,7 @@
 ﻿import React, { lazy } from 'react';
 import { StyleProvider, Container, Content, View } from 'native-base';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
-import { Text, TouchableOpacity} from 'react-native'
+import { Text, TouchableOpacity } from 'react-native'
 
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
@@ -238,7 +238,7 @@ export default class GroupScreen extends React.Component<Props, State>{
         });
       })
 
-      let remainingUsers = this.state.memberIDs.filter(user=>user!==this.state.currentUser)
+      let remainingUsers = this.state.memberIDs.filter(user => user !== this.state.currentUser)
       this.setState({ canJoin: true, canLeave: false, memberIDs: remainingUsers })
       this.renderButtons()
 
@@ -294,27 +294,27 @@ export default class GroupScreen extends React.Component<Props, State>{
   renderButtons() {
     return (
       <Container style={{ minHeight: 30 }}>
-      {this.state.canJoin ?
-        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Join Group</JCButton> :
-        null
-      }
-      {this.state.canLeave ?
-        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Leave Group</JCButton> :
-        null
-      }
-      {this.state.createNew ?
-        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.createNew() }} >Create Group</JCButton>
-        : null
-      }
-      {this.state.canSave ?
-        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.save() }} >Save Group</JCButton>
-        : null
-      }
-      {this.state.canDelete ?
-        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this group?')) this.delete() }}>Delete Group</JCButton>
-        : null
-      }
-      <Text>{this.state.validationError}</Text>
+        {this.state.canJoin ?
+          <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Join Group</JCButton> :
+          null
+        }
+        {this.state.canLeave ?
+          <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Leave Group</JCButton> :
+          null
+        }
+        {this.state.createNew ?
+          <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.createNew() }} >Create Group</JCButton>
+          : null
+        }
+        {this.state.canSave ?
+          <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.save() }} >Save Group</JCButton>
+          : null
+        }
+        {this.state.canDelete ?
+          <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this group?')) this.delete() }}>Delete Group</JCButton>
+          : null
+        }
+        <Text>{this.state.validationError}</Text>
       </Container>
     )
   }
@@ -344,15 +344,15 @@ export default class GroupScreen extends React.Component<Props, State>{
                   </TouchableOpacity>
                   <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", paddingTop: 48, paddingBottom: 12 }}>Members ({this.state.memberIDs.length})</Text>
                   <View style={styles.groupAttendeesPictures}>
-                      {this.state.memberIDs.length == 0 ?
-                          <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", marginBottom: 30 }}>No Members Yet</Text> :
-                          this.state.memberIDs.map((id: any, index: any) => {
-                            return (
-                              <TouchableOpacity key={index} onPress={() => { this.showProfile(id) }}>
-                                <ProfileImage key={index} user={id} size="small" />
-                              </TouchableOpacity>
-                            )
-                          })}
+                    {this.state.memberIDs.length == 0 ?
+                      <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", marginBottom: 30 }}>No Members Yet</Text> :
+                      this.state.memberIDs.map((id: any, index: any) => {
+                        return (
+                          <TouchableOpacity key={index} onPress={() => { this.showProfile(id) }}>
+                            <ProfileImage key={index} user={id} size="small" />
+                          </TouchableOpacity>
+                        )
+                      })}
                   </View>
 
                   {this.renderButtons()}

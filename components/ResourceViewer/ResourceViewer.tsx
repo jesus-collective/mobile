@@ -1,16 +1,12 @@
-import { Icon, Button, View, Input, Form, Item, Label, Content, Container } from 'native-base';
-import { Image } from 'react-native'
+import { Content, Container } from 'native-base';
 import * as React from 'react';
-import GRAPHQL_AUTH_MODE, { Greetings } from 'aws-amplify-react-native'
+import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 
 import * as queries from '../../src/graphql/queries';
 import * as customQueries from '../../src/graphql-custom/queries';
 import * as mutations from '../../src/graphql/mutations';
-import { API, graphqlOperation, Storage } from 'aws-amplify';
+import { API, Storage } from 'aws-amplify';
 import { Auth } from 'aws-amplify';
-import styles from '../../components/style'
-import TagInput from 'react-native-tags-input';
-import { Dimensions } from 'react-native'
 import Amplify from 'aws-amplify'
 import awsconfig from '../../src/aws-exports';
 import { } from '@material-ui/core';
@@ -18,15 +14,12 @@ import ResourceMenu from './ResourceMenu'
 import ResourceHeader from './ResourceHeader'
 import ResourceOverview from './ResourceOverview'
 import ResourceContent from './ResourceContent'
-import { v1 as uuidv1 } from 'uuid';
-import { ResourceRoot, Resource, ResourceEpisode, ResourceSeries } from "../../src/models";
+import { ResourceRoot, Resource, ResourceSeries, ResourceEpisode } from "../../src/models";
 //import { DataStore, Predicates } from '@aws-amplify/datastore'
 import { ResourceContext } from './ResourceContext';
-import ImportKidsandYouth from '../../screens/ResourceScreen/ImportKidsandYouth'
 import ErrorBoundary from '../ErrorBoundry'
 Amplify.configure(awsconfig);
 
-const mainColor = '#ffffff';
 
 interface Props {
     navigation: any
@@ -36,6 +29,7 @@ interface State {
     data: any
     currentResource: any
     currentSeries: any
+    currentEpisode: any
 }
 class ResourceViewer extends React.Component<Props, State> {
     static Provider = ResourceContext.Provider;
@@ -44,9 +38,10 @@ class ResourceViewer extends React.Component<Props, State> {
         this.state = {
             data: null,
             currentResource: null,
-            currentSeries: null
+            currentSeries: null,
+            currentEpisode: null
         }
-        this.setInitialData(props)
+        this.setInitialData()
     }
     async createResourceRoot() {
         console.log("test1")
@@ -55,7 +50,7 @@ class ResourceViewer extends React.Component<Props, State> {
             groupId: this.props.groupId,
             organizationId: "0"
         })
-        var createResourceRoot: any = await API.graphql({
+        const createResourceRoot: any = await API.graphql({
             query: mutations.createResourceRoot,
             variables: { input: resourceRoot },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -79,7 +74,7 @@ class ResourceViewer extends React.Component<Props, State> {
 
         })
         try {
-            var createResource: any = await API.graphql({
+            const createResource: any = await API.graphql({
                 query: mutations.createResource,
                 variables: { input: resource },
                 authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -102,14 +97,14 @@ class ResourceViewer extends React.Component<Props, State> {
             seriesID: createResource.data.createResource.id
         })
 
-        var createResourceSeries: any = await API.graphql({
+        const createResourceSeries: any = await API.graphql({
             query: mutations.createResourceSeries,
             variables: { input: series },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
         });
         console.log(createResourceSeries)
 
-        var getResourceRoot: any = API.graphql({
+        const getResourceRoot: any = API.graphql({
             query: customQueries.getResourceRoot,
             variables: { id: createResourceRoot.data.createResourceRoot.id },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -129,24 +124,11 @@ class ResourceViewer extends React.Component<Props, State> {
     }
     async DeleteAll() {
         try {
-            var listResourceRoots: any = API.graphql({
+            const listResourceRoots: any = API.graphql({
                 query: queries.listResourceRoots,
                 variables: { limit: 20, filter: { groupId: { eq: this.props.groupId } }, nextToken: null },
                 authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
             });
-            var q = await listResourceRoots.then((json) => {
-                console.log(json)
-                var z = json.data.listResourceRoots.items.map(async (item) => {
-                    var listResourceRoots: any = await API.graphql({
-                        query: mutations.deleteResourceRoot,
-                        variables: { input: { id: item.id } },
-                        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-                    });
-
-                    // listResourceRoots.then((z) => { console.log(z) }).catch((e) => { console.log({ Error: e }) })
-                })
-                return z
-            })
             // Promise.all(q)
             return true
         }
@@ -154,7 +136,7 @@ class ResourceViewer extends React.Component<Props, State> {
             console.log(e)
         }
     }
-    async setInitialData(props) {
+    async setInitialData() {
         // await DataStore.delete(ResourceSeries, Predicates.ALL)
         //await DataStore.delete(ResourceRoot, Predicates.ALL)
         // await DataStore.delete(Resource, Predicates.ALL)
@@ -162,7 +144,7 @@ class ResourceViewer extends React.Component<Props, State> {
         //  await this.DeleteAll()
 
 
-        var listResourceRoots: any = API.graphql({
+        const listResourceRoots: any = API.graphql({
             query: queries.listResourceRoots,
             variables: { limit: 20, filter: { groupId: { eq: this.props.groupId } }, nextToken: null },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -180,7 +162,7 @@ class ResourceViewer extends React.Component<Props, State> {
                 console.log("existing data")
                 console.log({ json: json })
                 console.log({ id: json.data.listResourceRoots.items[0].id })
-                var getResourceRoot: any = API.graphql({
+                const getResourceRoot: any = API.graphql({
                     query: customQueries.getResourceRoot,
                     variables: { id: json.data.listResourceRoots.items[0].id },
                     authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -205,7 +187,7 @@ class ResourceViewer extends React.Component<Props, State> {
         //  const getResourceRoot2 = await DataStore.query(ResourceEpisode);
 
     }
-    createResource = async (size) => {
+    createResource = async () => {
         const resource =
             new Resource({
                 type: "curriculum",
@@ -220,14 +202,43 @@ class ResourceViewer extends React.Component<Props, State> {
         try {
             console.log("Creating Resource")
 
-            var createResource: any = await API.graphql({
+            const createResource: any = await API.graphql({
                 query: mutations.createResource,
                 variables: { input: resource },
                 authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
             });
             console.log(createResource)
             var temp = this.state.data
-            temp.resources.items.concat(resource)
+            temp.resources.items.push(resource)
+            console.log(temp)
+            this.setState({ data: temp }, () => this.forceUpdate())
+
+        } catch (e) {
+            console.log(e)
+        }
+
+    }
+    createSeries = async () => {
+        const series =
+            new ResourceSeries({
+                type: "curriculum",
+                title: "New Title",
+                image: null,
+                description: "Enter description",
+                seriesID: this.state.data.resources.items[this.state.currentResource].id,
+                //order: this.state.data.resources.items[this.state.currentResource].series.items.length + 1
+            })
+        try {
+            console.log("Creating Resource")
+
+            const createResource: any = await API.graphql({
+                query: mutations.createResourceSeries,
+                variables: { input: series },
+                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+            });
+            console.log(createResource)
+            var temp = this.state.data
+            temp.resources.items[this.state.currentResource].series.items.push(series)
             this.setState({ data: temp })
 
         } catch (e) {
@@ -235,19 +246,52 @@ class ResourceViewer extends React.Component<Props, State> {
         }
 
     }
+    createEpisode = async () => {
+        const episode =
+            new ResourceEpisode({
+                type: "curriculum",
+                title: "New Title",
+                //image: null,
+                description: "Enter description",
+                videoPreview: "Enter Url",
+                episodeID: this.state.data.resources.items[this.state.currentResource].series.items[this.state.currentSeries].id,
+                //order: this.state.data.resources.items[this.state.currentResource].series.items.length + 1
+            })
+        try {
+            console.log("Creating Resource")
+
+            const createResource: any = await API.graphql({
+                query: mutations.createResourceEpisode,
+                variables: { input: episode },
+                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+            });
+            console.log(createResource)
+            var temp = this.state.data
+            temp.resources.items[this.state.currentResource].series.items[this.state.currentSeries].episodes.items.push(episode)
+            this.setState({ data: temp })
+
+        } catch (e) {
+            console.log(e)
+        }
+
+    }
+    changeEpisode = (index) => {
+        console.log({ "changeEpisode": index })
+        this.setState({ currentEpisode: index })
+    }
     changeSeries = (index) => {
-        console.log({ "changeResource": index })
-        this.setState({ currentSeries: index })
+        console.log({ "changeSeries": index })
+        this.setState({ currentSeries: index, currentEpisode: null })
     }
     changeResource = (index) => {
         console.log({ "changeResource": index })
-        this.setState({ currentSeries: null, currentResource: index })
+        this.setState({ currentSeries: null, currentResource: index, currentEpisode: null })
     }
     updateResource = async (index, item, value) => {
         try {
             console.log({ "Updating Resource": index })
 
-            var updateResource: any = await API.graphql({
+            const updateResource: any = await API.graphql({
                 query: mutations.updateResource,
                 variables: {
                     input: {
@@ -268,23 +312,16 @@ class ResourceViewer extends React.Component<Props, State> {
     }
     updateResourceOrder = () => {
         try {
-            var z = this.state.data.resources.items.map((item, index) => {
-                var updateResource: any = API.graphql({
-                    query: mutations.updateResource,
-                    variables: { input: { id: item.id, order: index } },
-                    authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-                });
-
+            this.state.data.resources.items.forEach((item, index) => {
+                this.updateResource(index, "order", index)
             })
-            Promise.all(z)
-            var temp = this.state.data
-            temp.resources.items.forEach((item, index) => {
-                temp.resources.items[index].order = index
-            }
-            )
-            this.setState({ data: temp })
 
-
+            /* var temp = this.state.data
+             temp.resources.items.forEach((item, index) => {
+                 temp.resources.items[index].order = index
+             }
+             )
+             this.setState({ data: temp })*/
 
         } catch (e) {
             console.log(e)
@@ -294,7 +331,7 @@ class ResourceViewer extends React.Component<Props, State> {
 
         try {
             console.log({ "Deleting Resource": index })
-            var deleteResource: any = await API.graphql({
+            const deleteResource: any = await API.graphql({
                 query: mutations.deleteResource,
                 variables: { input: { id: this.state.data.resources.items[index].id } },
                 authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -303,6 +340,115 @@ class ResourceViewer extends React.Component<Props, State> {
             var temp = this.state.data
             temp.resources.items.splice(index, 1)
             this.setState({ data: temp }, this.updateResourceOrder)
+
+        } catch (e) {
+            console.log(e)
+        }
+
+    }
+    updateSeriesOrder = (resourceIndex) => {
+        try {
+            this.state.data.resources.items[resourceIndex].series.items.forEach((item, index) => {
+                this.updateSeries(resourceIndex, index, "order", index)
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    updateSeries = async (resourceIndex, seriesIndex, item, value) => {
+        try {
+            console.log({ "Updating Resource": { resource: resourceIndex, series: seriesIndex } })
+
+            const updateResource: any = await API.graphql({
+                query: mutations.updateResourceSeries,
+                variables: {
+                    input: {
+                        id: this.state.data.resources.items[resourceIndex].series.items[seriesIndex].id,
+                        [item]: value
+                    }
+                },
+                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+            });
+            console.log(updateResource)
+            var temp = this.state.data
+            temp.resources.items[resourceIndex].series.items[seriesIndex][item] = value
+            this.setState({ data: temp })
+
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    deleteSeries = async (resourceIndex, seriesIndex) => {
+
+        try {
+            console.log({ "Deleting Series": { resource: resourceIndex, series: seriesIndex } })
+            const deleteResource: any = await API.graphql({
+                query: mutations.deleteResourceSeries,
+                variables: { input: { id: this.state.data.resources.items[resourceIndex].series.items[seriesIndex].id } },
+                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+            });
+            console.log(deleteResource)
+            var temp = this.state.data
+            temp.resources.items[resourceIndex].series.items.splice(seriesIndex, 1)
+            console.log(temp.resources.items[resourceIndex])
+            this.setState({ data: temp }, () => { this.updateSeriesOrder(resourceIndex) })
+
+        } catch (e) {
+            console.log(e)
+        }
+
+    }
+    updateEpisodesOrder = (resourceIndex, seriesIndex) => {
+        try {
+            this.state.data.resources.items[resourceIndex].series.items[seriesIndex].episodes.items.forEach((item, index) => {
+                this.updateEpisode(resourceIndex, seriesIndex, index, "order", index)
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    updateEpisode = async (resourceIndex, seriesIndex, episodeIndex, item, value) => {
+        try {
+            console.log({ "Updating Resource": { resource: resourceIndex, series: seriesIndex, episode: episodeIndex } })
+
+            const updateResource: any = await API.graphql({
+                query: mutations.updateResourceSeries,
+                variables: {
+                    input: {
+                        id: this.state.data.resources.items[resourceIndex].series.items[seriesIndex].episodes.items[episodeIndex].id,
+                        [item]: value
+                    }
+                },
+                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+            });
+            console.log(updateResource)
+            var temp = this.state.data
+            temp.resources.items[resourceIndex].series.items[seriesIndex].episodes.items[episodeIndex][item] = value
+            this.setState({ data: temp })
+
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    clearEpisode = () => {
+        this.setState({ currentSeries: null })
+    }
+    clearSeries = () => {
+        this.setState({ currentSeries: null, currentEpisode: null })
+    }
+    deleteEpisode = async (resourceIndex, seriesIndex, episodeIndex) => {
+
+        try {
+            console.log({ "Deleting Episode": { resource: resourceIndex, series: seriesIndex, episode: episodeIndex } })
+            const deleteResource: any = await API.graphql({
+                query: mutations.deleteResourceSeries,
+                variables: { input: { id: this.state.data.resources.items[resourceIndex].series.items[seriesIndex].episodes.items[episodeIndex].id } },
+                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+            });
+            console.log(deleteResource)
+            var temp = this.state.data
+            temp.resources.items[resourceIndex].series.items[seriesIndex].episodes.items.splice(episodeIndex, 1)
+            this.setState({ data: temp }, () => { this.updateEpisodesOrder(resourceIndex, seriesIndex) })
 
         } catch (e) {
             console.log(e)
@@ -329,7 +475,7 @@ class ResourceViewer extends React.Component<Props, State> {
             contentType: file.type,
             identityId: userId
         })
-            .then(result => {
+            .then(() => {
 
                 Storage.get(fn, {
                     level: 'protected',
@@ -365,7 +511,16 @@ class ResourceViewer extends React.Component<Props, State> {
                         updateResource: this.updateResource,
                         deleteResource: this.deleteResource,
                         updateResourceImage: this.updateResourceImage,
-                        changeSeries: this.changeSeries
+                        changeSeries: this.changeSeries,
+                        createSeries: this.createSeries,
+                        deleteSeries: this.deleteSeries,
+                        updateSeries: this.updateSeries,
+                        createEpisode: this.createEpisode,
+                        deleteEpisode: this.deleteEpisode,
+                        updateEpisode: this.updateEpisode,
+                        clearEpisode: this.clearEpisode,
+                        clearSeries: this.clearSeries,
+                        changeEpisode: this.changeEpisode
                     }
                 }}>
                     <Container style={{ padding: 0, margin: 0 }}>

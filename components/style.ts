@@ -492,91 +492,91 @@ export default EStyleSheet.create({
         flexDirection: "column"
     },
     myProfileMainContainer: {
-        marginBottom: 20, 
-        display: "flex", 
+        marginBottom: 20,
+        display: "flex",
         flexDirection: "row"
     },
     myProfileTopButtonsInternalContainer: {
-        flex: 6, 
-        flexDirection: "row", 
+        flex: 6,
+        flexDirection: "row",
         alignSelf: "flex-end",
         justifyContent: "flex-end"
     },
     myProfileMapSelectorContainer: {
-        position: "fixed", 
-        left: 0, 
-        top: 0, 
-        width: "100%", 
-        height: "100%", 
-        zIndex: 100, 
+        position: "fixed",
+        left: 0,
+        top: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: 100,
         backgroundColor: "#33333366"
     },
     myProfileMapSelectorInnerContainer: {
-        backgroundColor: "#ffffff", 
-        borderRadius: 10, 
-        padding: 10, 
-        margin: 10, 
-        left: "10%", 
-        top: "10%", 
-        width: "80%", 
+        backgroundColor: "#ffffff",
+        borderRadius: 10,
+        padding: 10,
+        margin: 10,
+        left: "10%",
+        top: "10%",
+        width: "80%",
         height: "100%"
     },
     myProfileMapSelectorInnerCopyContainer: {
-        flexDirection: "row", 
-        alignContent: "space-between", 
-        alignItems: "center", 
-        justifyContent: "center", 
-        zIndex: "1000", 
-        backgroundColor: "#FFFFFF", 
-        paddingLeft: 20, 
-        paddingRight: 20, 
-        paddingTop: 20, 
-        paddingBottom: 20, 
-        width: "100%", 
+        flexDirection: "row",
+        alignContent: "space-between",
+        alignItems: "center",
+        justifyContent: "center",
+        zIndex: "1000",
+        backgroundColor: "#FFFFFF",
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 20,
+        paddingBottom: 20,
+        width: "100%",
         borderBottomRightRadius: 4
     },
     map: {
-        height: "94.5%", 
+        height: "94.5%",
         width: "98%"
     },
     mapSelectorText: {
-        fontFamily: 'Graphik-Regular-App', 
-        fontWeight: 'bold', 
-        fontSize: 20, 
-        marginBottom: 0, 
+        fontFamily: 'Graphik-Regular-App',
+        fontWeight: 'bold',
+        fontSize: 20,
+        marginBottom: 0,
         marginRight: 20,
         textAlign: "center"
     },
     eventScreenMainContainer: {
-        display: "flex", 
-        flexDirection: "row", 
-        justifyContent: 'flex-start', 
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: 'flex-start',
         backgroundColor: "#F9FAFC",
         height: "100%"
     },
     groupScreenMainContainer: {
-        display: "flex", 
-        flexDirection: "row", 
-        justifyContent: 'flex-start', 
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: 'flex-start',
         backgroundColor: "#F9FAFC",
         height: "100%"
     },
     eventPageMessageBoard: {
-        borderBottomLeftRadius: 0, 
-        borderBottomRightRadius: 0, 
-        borderTopLeftRadius: 10, 
-        borderTopRightRadius: 10, 
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
+        borderTopLeftRadius: 10,
+        borderTopRightRadius: 10,
         backgroundColor: "#F9FAFC"
     },
     eventPageMessageBoardInnerCard: {
         wordBreak: "break-word",
-        marginTop: 0, 
-        paddingTop: 0, 
-        paddingBottom: 0, 
-        borderTopLeftRadius: 0, 
-        borderTopRightRadius: 0, 
-        borderBottomLeftRadius: 10, 
-        borderBottomRightRadius: 10, 
+        marginTop: 0,
+        paddingTop: 0,
+        paddingBottom: 0,
+        borderTopLeftRadius: 0,
+        borderTopRightRadius: 0,
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10,
         backgroundColor: "#ffffff",
         fontFamily: "Graphik-Regular-App"
     },
@@ -584,101 +584,101 @@ export default EStyleSheet.create({
         alignSelf: "center"
     },
     eventsScreenLeftContainer: {
-        flex: 70, 
-        flexDirection: "column", 
+        flex: 70,
+        flexDirection: "column",
         justifyContent: 'flex-start'
     },
     eventsScreenRightContainer: {
-        flex: 30, 
-        flexDirection: "column", 
-        alignContent: 'flex-start', 
-        alignItems: 'flex-start', 
+        flex: 30,
+        flexDirection: "column",
+        alignContent: 'flex-start',
+        alignItems: 'flex-start',
         justifyContent: 'flex-start'
     },
     eventsScreenMainContainer: {
-        display: "flex", 
-        flexDirection: "row", 
+        display: "flex",
+        flexDirection: "row",
         justifyContent: 'flex-start'
     },
     groupsScreenMainContainer: {
-        display: "flex", 
-        flexDirection: "row", 
+        display: "flex",
+        flexDirection: "row",
         justifyContent: 'flex-start'
     },
     groupsScreenLeftContainer: {
-        flex: 70, 
-        flexDirection: "column", 
+        flex: 70,
+        flexDirection: "column",
         justifyContent: 'flex-start',
     },
     groupsScreenRightContainer: {
-        flex: 30, 
-        flexDirection: "column", 
-        alignContent: 'flex-start', 
-        alignItems: 'flex-start', 
+        flex: 30,
+        flexDirection: "column",
+        alignContent: 'flex-start',
+        alignItems: 'flex-start',
         justifyContent: 'flex-start',
     },
     resourcesScreenMainContainer: {
-        display: "flex", 
-        flexDirection: "row", 
+        display: "flex",
+        flexDirection: "row",
         justifyContent: 'flex-start'
     },
     resourcesScreenLeftContainer: {
-        flex: 70, 
-        flexDirection: "column", 
+        flex: 70,
+        flexDirection: "column",
         justifyContent: 'flex-start',
     },
     resourcesScreenRightContainer: {
-        flex: 30, 
-        flexDirection: "column", 
-        alignContent: 'flex-start', 
-        alignItems: 'flex-start', 
+        flex: 30,
+        flexDirection: "column",
+        alignContent: 'flex-start',
+        alignItems: 'flex-start',
         justifyContent: 'flex-start',
     },
     ResourcesMyGroups: {
-        overflow: "scroll", 
-        overflowY: "hidden", 
-        minHeight: 375, 
+        overflow: "scroll",
+        overflowY: "hidden",
+        minHeight: 375,
         flexWrap: "nowrap",
         // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
-        flexGrow: 1, 
-        width: "100%", 
-        flexDirection: "row", 
-        justifyContent: "flex-start", 
+        flexGrow: 1,
+        width: "100%",
+        flexDirection: "row",
+        justifyContent: "flex-start",
         alignItems: "flex-start"
     },
     profilesScreenMainContainer: {
-        display: "flex", 
-        flexDirection: "row", 
+        display: "flex",
+        flexDirection: "row",
         justifyContent: 'flex-start'
     },
     profilesScreenLeftContainer: {
-        flex: 70, 
-        flexDirection: "column", 
+        flex: 70,
+        flexDirection: "column",
         justifyContent: 'flex-start'
     },
     profilesScreensRightContainer: {
-        flex: 30, 
-        flexDirection: "column", 
-        alignContent: 'flex-start', 
-        alignItems: 'flex-start', 
+        flex: 30,
+        flexDirection: "column",
+        alignContent: 'flex-start',
+        alignItems: 'flex-start',
         justifyContent: 'flex-start'
     },
     resourcesOverviewScreenMainContainer: {
-        display: "flex", 
-        flexDirection: "row", 
+        display: "flex",
+        flexDirection: "row",
         justifyContent: 'flex-start',
         height: "100%",
         // backgroundColor: "#F9FAFC"
     },
-    resourceContentMainContainer:{
-        display: "flex", 
-        flexDirection: "row", 
+    resourceContentMainContainer: {
+        display: "flex",
+        flexDirection: "row",
         justifyContent: 'flex-start',
         backgroundColor: "#F9FAFC"
     },
     resourceContentLeftContainer: {
-        flex: 70, 
-        flexDirection: "column", 
+        flex: 70,
+        flexDirection: "column",
         justifyContent: 'flex-start',
         paddingLeft: 30,
         paddingRight: 0,
@@ -689,83 +689,83 @@ export default EStyleSheet.create({
         height: 900
     },
     resourceContentRightContainer: {
-        flex: 30, 
-        flexDirection: "column", 
+        flex: 30,
+        flexDirection: "column",
         justifyContent: 'flex-start',
         paddingLeft: 30,
         paddingRight: 30,
         marginRight: 30,
         marginTop: 30,
         backgroundColor: "#ffffff",
-        borderRadius: 4, 
+        borderRadius: 4,
         boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
         height: 900
     },
     resourceContentCurrentSeriesContainer: {
-        overflow: "scroll", 
-        minHeight: 375, 
-        flexWrap: "nowrap", 
+        overflow: "scroll",
+        minHeight: 375,
+        flexWrap: "nowrap",
         // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
-        flexGrow: 0, 
-        width: "100%", 
-        flexDirection: 'row', 
-        justifyContent: "flex-start", 
+        flexGrow: 0,
+        width: "100%",
+        flexDirection: 'row',
+        justifyContent: "flex-start",
         alignItems: "flex-start",
     },
     resourceContentCurrentSeriesCard: {
-        padding: "0px", 
-        marginLeft: "10px", 
-        marginRight: "10px", 
-        width: "300px", 
-        borderRadius: 4, 
+        padding: "0px",
+        marginLeft: "10px",
+        marginRight: "10px",
+        width: "300px",
+        borderRadius: 4,
         boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
         borderColor: "#ffffff",
         minHeight: 275
     },
     resourceContentCurrentSeriesIframeContainer: {
-        width: "300px", 
-        paddingLeft: "0px", 
-        paddingRight: "0px", 
+        width: "300px",
+        paddingLeft: "0px",
+        paddingRight: "0px",
         margin: "0px",
         paddingTop: 0
     },
     resourceContentMoreSeriesContainer: {
-        overflow: "scroll", 
-        minHeight: 375, 
-        flexWrap: "nowrap", 
+        overflow: "scroll",
+        minHeight: 375,
+        flexWrap: "nowrap",
         // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
-        flexGrow: 0, 
-        width: "100%", 
-        flexDirection: 'row', 
-        justifyContent: "flex-start", 
+        flexGrow: 0,
+        width: "100%",
+        flexDirection: 'row',
+        justifyContent: "flex-start",
         alignItems: "flex-start",
     },
     resourceContentMoreSeriesCard: {
-        padding: "0px", 
-        marginLeft: "10px", 
-        marginRight: "10px", 
-        width: "300px", 
-        borderRadius: 4, 
+        padding: "0px",
+        marginLeft: "10px",
+        marginRight: "10px",
+        width: "300px",
+        borderRadius: 4,
         boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
         borderColor: "#ffffff",
         flexWrap: "wrap",
         minHeight: 300
     },
     resourceContentMoreSeriesIframeContainer: {
-        width: "300px", 
-        paddingLeft: "0px", 
-        paddingRight: "0px", 
+        width: "300px",
+        paddingLeft: "0px",
+        paddingRight: "0px",
         margin: "0px",
         paddingTop: 0
     },
     resourceContentEpisodeMainContainer: {
-        display: "flex", 
-        flexDirection: "row", 
+        display: "flex",
+        flexDirection: "row",
         justifyContent: 'flex-start'
     },
     resourceContentEpisodeLeftContainer: {
-        flex: 70, 
-        flexDirection: "column", 
+        flex: 70,
+        flexDirection: "column",
         justifyContent: 'flex-start',
         paddingLeft: 30,
         paddingRight: 0,
@@ -776,96 +776,96 @@ export default EStyleSheet.create({
         height: 900
     },
     resourceContentEpisodeRightContainer: {
-        flex: 30, 
-        flexDirection: "column", 
+        flex: 30,
+        flexDirection: "column",
         justifyContent: 'flex-start',
         paddingLeft: 30,
         paddingRight: 30,
         marginRight: 30,
         marginTop: 30,
         backgroundColor: "#ffffff",
-        borderRadius: 4, 
+        borderRadius: 4,
         boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
         height: 900
     },
     resourceContentEpisodesContainer: {
-        overflow: "scroll", 
-        minHeight: 375, 
-        flexWrap: "nowrap", 
+        overflow: "scroll",
+        minHeight: 375,
+        flexWrap: "nowrap",
         // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
-        flexGrow: 0, 
-        width: "100%", 
-        flexDirection: 'row', 
-        justifyContent: "flex-start", 
+        flexGrow: 0,
+        width: "100%",
+        flexDirection: 'row',
+        justifyContent: "flex-start",
         alignItems: "flex-start",
         marginTop: 30
     },
     resourceContentEpisodeCard: {
-        padding: "0px", 
-        marginLeft: "10px", 
-        marginRight: "10px", 
-        width: "300px", 
-        borderRadius: 4, 
+        padding: "0px",
+        marginLeft: "10px",
+        marginRight: "10px",
+        width: "300px",
+        borderRadius: 4,
         boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
         borderColor: "#ffffff",
         flexWrap: "wrap",
         minHeight: 275
     },
     resourceContentEpisodesIframeContainer: {
-        width: "300px", 
-        paddingLeft: "0px", 
-        paddingRight: "0px", 
+        width: "300px",
+        paddingLeft: "0px",
+        paddingRight: "0px",
         margin: "0px",
         paddingTop: 0
     },
-    resourcefileInputWrapper: { 
-        width: "100%", 
-        overflow: "hidden", 
-        position: "absolute" 
+    resourcefileInputWrapper: {
+        width: "100%",
+        overflow: "hidden",
+        position: "absolute"
     },
-    resourcefileFieldWrapper: { 
-        alignSelf: "center", 
-        top: "5vw", 
-        width: "50%", 
-        overflow: "hidden", 
-        position: "absolute" 
+    resourcefileFieldWrapper: {
+        alignSelf: "center",
+        top: "5vw",
+        width: "50%",
+        overflow: "hidden",
+        position: "absolute"
     },
     resourceImageIcon: {
         color: "#aaaaaa"
     },
     dashboardConversationCard: {
-        minHeight: 50, 
-        paddingTop: 28, 
-        paddingBottom: 28, 
-        borderStyle: "solid", 
+        minHeight: 50,
+        paddingTop: 28,
+        paddingBottom: 28,
+        borderStyle: "solid",
         borderColor: "#FFFFFF",
         width: "100%"
     },
     myMapDashboardConversationCard: {
-        minHeight: 50, 
-        paddingTop: 28, 
-        paddingBottom: 28, 
-        borderStyle: "solid", 
+        minHeight: 50,
+        paddingTop: 28,
+        paddingBottom: 28,
+        borderStyle: "solid",
         borderColor: "#FFFFFF",
         width: "100%"
     },
     profilesCard: {
-        width: "100%", 
-        minHeight: 50, 
+        width: "100%",
+        minHeight: 50,
         borderColor: "#ffffff"
     },
     sectionHeadingDashboard: {
-        minHeight: 45, 
-        flexGrow: 0, 
-        flexDirection: 'row', 
-        justifyContent: 'space-between', 
-        marginTop: 30, 
+        minHeight: 45,
+        flexGrow: 0,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 30,
         paddingRight: 12
     },
     resourcesOverviewRightCard: {
-        display: "inline", 
-        marginTop: 10, 
-        overflow: "visible", 
+        display: "inline",
+        marginTop: 10,
+        overflow: "visible",
         width: "100%"
     },
     myProfileErrorValidation: {
@@ -876,15 +876,15 @@ export default EStyleSheet.create({
         paddingTop: 5,
     },
     myMapCalloutEventContainer: {
-        minHeight: 250, 
-        alignSelf: "flex-start", 
-        padding: '0%', 
-        paddingLeft: '0.25rem', 
-        paddingRight: '0.25rem', 
-        borderRadius: 4, 
-        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", 
-        borderStyle: "solid", 
-        borderColor: "#FFFFFF", 
+        minHeight: 250,
+        alignSelf: "flex-start",
+        padding: '0%',
+        paddingLeft: '0.25rem',
+        paddingRight: '0.25rem',
+        borderRadius: 4,
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+        borderStyle: "solid",
+        borderColor: "#FFFFFF",
         width: 400
     },
     myMapCalloutEventName: {
@@ -972,24 +972,24 @@ export default EStyleSheet.create({
         fontFormSmallHeader: {
             marginTop: 100
         },
-        resourcefileFieldWrapper: { 
-            top: "10vw" 
+        resourcefileFieldWrapper: {
+            top: "10vw"
         },
-        dashboardConversationCard:{
+        dashboardConversationCard: {
             width: "100%"
         },
         myProfileTopButtonsInternalContainer: {
-            flex: 3, 
+            flex: 3,
         },
         myProfileErrorValidation: {
             flex: 1,
         },
         myMapFontTitle: {
-            fontSize: 22, 
+            fontSize: 22,
             lineHeight: 28,
         },
         myMapFontDetailMiddle: {
-            fontSize: 14, 
+            fontSize: 14,
             lineHeight: 20,
         },
     },
@@ -1028,10 +1028,10 @@ export default EStyleSheet.create({
         myProfileTopButtons: {
             width: "100%",
         },
-        resourcefileFieldWrapper: { 
-            top: "7vw" 
+        resourcefileFieldWrapper: {
+            top: "7vw"
         },
-        dashboardConversationCard:{
+        dashboardConversationCard: {
             width: "100%",
             paddingRight: 32
         },
@@ -1039,11 +1039,11 @@ export default EStyleSheet.create({
             flex: 2.5
         },
         myMapFontTitle: {
-            fontSize: 22, 
+            fontSize: 22,
             lineHeight: 28,
         },
         myMapFontDetailMiddle: {
-            fontSize: 14, 
+            fontSize: 14,
             lineHeight: 20,
         },
     },
@@ -1068,14 +1068,14 @@ export default EStyleSheet.create({
             paddingRight: 32
         },
         myProfileTopButtonsInternalContainer: {
-            flex: 0, 
-            flexDirection: "column", 
+            flex: 0,
+            flexDirection: "column",
             alignSelf: "auto",
             minWidth: "100%"
         },
         profileFontTitle: {
             minWidth: 300,
-            flex: 0 
+            flex: 0
         },
         profileScreenLeftCard: {
             marginRight: 32,
@@ -1098,16 +1098,16 @@ export default EStyleSheet.create({
         },
         myProfileMapSelectorInnerCopyContainer: {
             width: "107%",
-            right: "3.5%", 
+            right: "3.5%",
             borderRadius: 0,
             flexDirection: "column",
         },
         mapSelectorText: {
             marginBottom: 15,
-            marginRight: 0, 
+            marginRight: 0,
         },
         eventScreenMainContainer: {
-            flexDirection: "column", 
+            flexDirection: "column",
         },
         groupScreenMainContainer: {
             flexDirection: "column",
@@ -1121,9 +1121,9 @@ export default EStyleSheet.create({
             flex: 10,
         },
         detailScreenRightCard: {
-           width: "auto",
-           marginLeft: 0,
-           marginRight: 0
+            width: "auto",
+            marginLeft: 0,
+            marginRight: 0
         },
         groupNameInput: {
             width: "100%"
@@ -1132,9 +1132,9 @@ export default EStyleSheet.create({
             width: "100%"
         },
         eventPageMessageBoardInnerCard: {
-            paddingTop: 5, 
-            paddingBottom: 5, 
-            fontSize: 15, 
+            paddingTop: 5,
+            paddingBottom: 5,
+            fontSize: 15,
             lineHeight: 20
         },
         eventPageMessageBoard: {
@@ -1144,23 +1144,23 @@ export default EStyleSheet.create({
             alignSelf: "flex-start"
         },
         eventsScreenMainContainer: {
-            flexDirection: "column", 
+            flexDirection: "column",
         },
         groupsScreenMainContainer: {
-            flexDirection: "column", 
+            flexDirection: "column",
         },
         resourcesScreenMainContainer: {
-            flexDirection: "column", 
+            flexDirection: "column",
         },
         ResourcesMyGroups: {
             flexDirection: "column",
             flexWrap: "wrap",
         },
         profilesScreenMainContainer: {
-            flexDirection: "column", 
+            flexDirection: "column",
         },
-        resourcefileFieldWrapper: { 
-            top: "17vw" 
+        resourcefileFieldWrapper: {
+            top: "17vw"
         },
         resourcesOverviewScreenMainContainer: {
             flexDirection: "column"
@@ -1179,7 +1179,7 @@ export default EStyleSheet.create({
             top: 300
         },
         resourceContentEpisodeMainContainer: {
-            flexDirection: "column", 
+            flexDirection: "column",
             minHeight: 400,
         },
         resourceContentEpisodeLeftContainer: {
