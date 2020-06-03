@@ -2,7 +2,7 @@
 import * as React from 'react';
 //import {ProviderProps} from 'google-maps-react';
 //import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { Body, Card, CardItem, Container, Button, View } from 'native-base';
+import { Body, Card, CardItem, Button, View } from 'native-base';
 import { TouchableOpacity, Switch } from 'react-native'
 import styles from '../style'
 
@@ -140,8 +140,8 @@ class MyMap extends React.Component<Props, State> {
     if (this.props.visible)
       return (
         <ErrorBoundary>
-          <Container style={{ display: 'flex' }}>
-            <Container style={{ flex: 1 }}>
+          <View style={{ display: 'flex', height: '60%' }}>
+            <View style={{ flex: 1 }}>
               <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: '5%'}}>
                 <View style={{flex: 0.1, flexDirection: 'row'}}>
                   <Text style={{ paddingRight: 10 }}>Show Organizations</Text>
@@ -172,14 +172,16 @@ class MyMap extends React.Component<Props, State> {
                   />                
                 </View>
               </View>
-            </Container>
-            <Container style={{ flex: 9 }}>
+            </View>
+            <View style={{ flex: 9 }}>
               <Map google={window.google} zoom={6}
                 initialCenter={{ lat: 44, lng: -78.0 }}
                 mapTypeControl={false}
                 onClick={this.onMapClicked}
                 onReady={(mapProps, map)=>this._mapLoaded(mapProps, map)}
                 style={{ position: "relative", width: "100%", height: "100%" }}
+                streetViewControl={false}
+                fullscreenControl={false}
               >
 
               {
@@ -231,8 +233,8 @@ class MyMap extends React.Component<Props, State> {
 
                 </InfoWindow>
               </Map>
-            </Container>
-          </Container>
+            </View>
+          </View>
         </ErrorBoundary>
       )
     else return null
