@@ -199,6 +199,9 @@ export default EStyleSheet.create({
     fontTitle: {
         fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24, lineHeight: 30, height: 60, color: '#333333'
     },
+    myMapFontTitle: {
+        fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24, lineHeight: 30, height: 60, color: '#333333'
+    },
     fontTitleGroup: {
         fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24, lineHeight: 30, height: 90, color: '#333333', paddingTop: 29,
     },
@@ -208,10 +211,19 @@ export default EStyleSheet.create({
     fontDetailTop: {
         fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, color: '#333333', opacity: 0.4, paddingTop: 23
     },
+    myMapFontDetailTop: {
+        fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, color: '#333333', opacity: 0.4, paddingTop: 23
+    },
     fontDetailMiddle: {
         fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 22, color: '#333333', opacity: 0.7
     },
+    myMapFontDetailMiddle: {
+        fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 22, color: '#333333', opacity: 0.7
+    },
     fontDetailBottom: {
+        fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, color: '#333333', opacity: 0.5
+    },
+    myMapFontDetailBottom: {
         fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, color: '#333333', opacity: 0.5
     },
     fontSliderHeader: {
@@ -341,6 +353,16 @@ export default EStyleSheet.create({
         width: "75%",
         alignItems: "center",
         justifyContent: "center"
+    },
+    myMapConnectWithSliderButton: {
+        padding: 0,
+        height: 25,
+        borderColor: "#F0493E",
+        width: "100%",
+        alignItems: "center",
+        justifyContent: "center",
+        paddingLeft: 10,
+        paddingRight: 10,
     },
     postButton:
     {
@@ -822,6 +844,14 @@ export default EStyleSheet.create({
         borderColor: "#FFFFFF",
         width: "100%"
     },
+    myMapDashboardConversationCard: {
+        minHeight: 50, 
+        paddingTop: 28, 
+        paddingBottom: 28, 
+        borderStyle: "solid", 
+        borderColor: "#FFFFFF",
+        width: "100%"
+    },
     profilesCard: {
         width: "100%", 
         minHeight: 50, 
@@ -848,6 +878,26 @@ export default EStyleSheet.create({
         paddingLeft: 20,
         paddingTop: 5,
     },
+    myMapCalloutEventContainer: {
+        minHeight: 250, 
+        alignSelf: "flex-start", 
+        padding: '0%', 
+        paddingLeft: '0.25rem', 
+        paddingRight: '0.25rem', 
+        borderRadius: 4, 
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", 
+        borderStyle: "solid", 
+        borderColor: "#FFFFFF", 
+        width: 400
+    },
+    myMapCalloutEventName: {
+        height: 100
+    },
+    myMapCalloutEventDescription: {
+        height: 100
+    },
+
+
 
 
     // Media Query Desktop Tablet
@@ -940,6 +990,14 @@ export default EStyleSheet.create({
         myProfileErrorValidation: {
             flex: 1,
         },
+        myMapFontTitle: {
+            fontSize: 22, 
+            lineHeight: 28,
+        },
+        myMapFontDetailMiddle: {
+            fontSize: 14, 
+            lineHeight: 20,
+        },
     },
 
     // Media Query Desktop Large Tablet
@@ -985,6 +1043,14 @@ export default EStyleSheet.create({
         },
         myProfileTopButtonsInternalContainer: {
             flex: 2.5
+        },
+        myMapFontTitle: {
+            fontSize: 22, 
+            lineHeight: 28,
+        },
+        myMapFontDetailMiddle: {
+            fontSize: 14, 
+            lineHeight: 20,
         },
     },
 
@@ -1153,6 +1219,9 @@ export default EStyleSheet.create({
             textAlign: "center",
             paddingLeft: 0,
             paddingBottom: 20
+        },
+        myMapCalloutEventContainer: {
+            width: 250
         },
     },
 

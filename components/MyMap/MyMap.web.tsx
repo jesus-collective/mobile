@@ -2,8 +2,10 @@
 import * as React from 'react';
 //import {ProviderProps} from 'google-maps-react';
 //import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { Body, Card, CardItem, Button, View } from 'native-base';
-import { TouchableOpacity, Animated, TouchableWithoutFeedback } from 'react-native'
+
+import { Body, Card, CardItem, Container, Button, View } from 'native-base';
+import { TouchableOpacity , Animated, TouchableWithoutFeedback } from 'react-native'
+
 import styles from '../style'
 
 import { Marker, } from 'google-maps-react';
@@ -164,7 +166,7 @@ class MyMap extends React.Component<Props, State> {
 
   renderProfile() {
     return <TouchableOpacity onPress={() => { this.showProfile(this.state.selectedPlace.mapItem.user.id) }}>
-      <Card style={styles.dashboardConversationCard}>
+      <Card style={styles.myMapDashboardConversationCard}>
         <CardItem>
 
           <Body>
@@ -172,7 +174,7 @@ class MyMap extends React.Component<Props, State> {
             </ProfileImage>
             <Text style={styles.fontConnectWithName}>{this.state.selectedPlace.mapItem.user.given_name} {this.state.selectedPlace.mapItem.user.family_name}</Text>
             <Text style={styles.fontConnectWithRole}>{this.state.selectedPlace.mapItem.user.currentRole}</Text>
-            <Button bordered style={styles.connectWithSliderButton} onPress={() => { this.openConversation(this.state.selectedPlace.mapItem.user.id, this.state.selectedPlace.mapItem.user.given_name + " " + this.state.selectedPlace.mapItem.user.family_name) }}><Text style={styles.fontStartConversation}>Start Conversation</Text></Button>
+            <Button bordered style={styles.myMapConnectWithSliderButton} onPress={() => { this.openConversation(this.state.selectedPlace.mapItem.user.id, this.state.selectedPlace.mapItem.user.given_name + " " + this.state.selectedPlace.mapItem.user.family_name) }}><Text style={styles.fontStartConversation}>Start Conversation</Text></Button>
           </Body>
 
         </CardItem>
@@ -180,17 +182,17 @@ class MyMap extends React.Component<Props, State> {
     </TouchableOpacity>
   }
   renderEvent() {
-    return <Card style={{ minHeight: 395, alignSelf: "flex-start", padding: '0%', paddingLeft: '0.25rem', paddingRight: '0.25rem', borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", borderStyle: "solid", borderColor: "#FFFFFF", width: 100 }}>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailTop}>{moment(this.state.selectedPlace.mapItem.event.time).format('MMMM Do YYYY, h:mm a')}</Text></CardItem>
-      <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{this.state.selectedPlace.mapItem.event.name}</Text></CardItem>
-      <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetailMiddle}>{this.state.selectedPlace.mapItem.event.description}</Text></CardItem>
-      <CardItem>
+    return <Card style={styles.myMapCalloutEventContainer}>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.myMapFontDetailTop}>{moment(this.state.selectedPlace.mapItem.event.time).format('MMMM Do YYYY, h:mm a')}</Text></CardItem>
+      <CardItem style={styles.myMapCalloutEventName}><Text ellipsizeMode='tail' numberOfLines={2} style={styles.myMapFontTitle}>{this.state.selectedPlace.mapItem.event.name}</Text></CardItem>
+      <CardItem style={styles.myMapCalloutEventDescription}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.myMapFontDetailMiddle}>{this.state.selectedPlace.mapItem.event.description}</Text></CardItem>
+      <CardItem style={{ paddingBottom: 40 }}>
         {this.state.selectedPlace.mapItem.event.eventType == "location" ?
-          <Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailBottom}><a target="_blank" rel="noreferrer" href={"https://www.google.com/maps/dir/?api=1&destination=" + escape(this.state.selectedPlace.mapItem.event.location)}>{this.state.selectedPlace.mapItem.event.location}</a></Text>
+          <Text ellipsizeMode='tail' numberOfLines={1} style={styles.myMapFontDetailBottom}><a target="_blank" rel="noreferrer" href={"https://www.google.com/maps/dir/?api=1&destination=" + escape(this.state.selectedPlace.mapItem.event.location)}>{this.state.selectedPlace.mapItem.event.location}</a></Text>
           : this.state.selectedPlace.mapItem.event.eventType == "zoom" ?
-            <Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailBottom}><a target="_blank" rel="noreferrer" href={this.state.selectedPlace.mapItem.event.eventUrl}>Zoom</a></Text>
+            <Text ellipsizeMode='tail' numberOfLines={1} style={styles.myMapFontDetailBottom}><a target="_blank" rel="noreferrer" href={this.state.selectedPlace.mapItem.event.eventUrl}>Zoom</a></Text>
             :
-            <Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailBottom}><a target="_blank" rel="noreferrer" href={this.state.selectedPlace.mapItem.event.eventUrl}>Eventbrite</a></Text>
+            <Text ellipsizeMode='tail' numberOfLines={1} style={styles.myMapFontDetailBottom}><a target="_blank" rel="noreferrer" href={this.state.selectedPlace.mapItem.event.eventUrl}>Eventbrite</a></Text>
         }
       </CardItem>
       {/*
@@ -206,7 +208,8 @@ class MyMap extends React.Component<Props, State> {
     if (this.props.visible)
       return (
         <ErrorBoundary>
-          <View style={{ display: 'flex', height: '60%' }}>
+
+          <View style={{ display: 'flex', height: '50%' }}>
             <View style={{ flex: 1, minHeight: 50 }}>
               <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: '5%'}}>
                 <View style={{width: 170, flexDirection: 'row'}}>
@@ -298,6 +301,7 @@ class MyMap extends React.Component<Props, State> {
               </View>
             </View>
             <View style={{ flex: 9 }}>
+         
               <Map google={window.google} zoom={6}
                 initialCenter={{ lat: 44, lng: -78.0 }}
                 mapTypeControl={false}
@@ -347,6 +351,7 @@ class MyMap extends React.Component<Props, State> {
 
                 })}
 
+
                 <InfoWindow
                   google={window.google}
                   visible={this.state.showingInfoWindow}
@@ -361,9 +366,11 @@ class MyMap extends React.Component<Props, State> {
                   }
 
                 </InfoWindow>
+
               </Map>
             </View>
           </View>
+
         </ErrorBoundary>
       )
     else return null
