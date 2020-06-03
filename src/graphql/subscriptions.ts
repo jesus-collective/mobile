@@ -187,6 +187,7 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
         }
         eventType
         eventUrl
+        isSponsored
         createdAt
         updatedAt
       }
@@ -251,6 +252,7 @@ export const onCreateUser = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          isSponsored
           createdAt
           updatedAt
         }
@@ -352,6 +354,7 @@ export const onUpdateUser = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          isSponsored
           createdAt
           updatedAt
         }
@@ -453,6 +456,7 @@ export const onDeleteUser = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          isSponsored
           createdAt
           updatedAt
         }
@@ -582,6 +586,7 @@ export const onCreateGroupMember = /* GraphQL */ `
         }
         eventType
         eventUrl
+        isSponsored
         createdAt
         updatedAt
       }
@@ -725,6 +730,7 @@ export const onUpdateGroupMember = /* GraphQL */ `
         }
         eventType
         eventUrl
+        isSponsored
         createdAt
         updatedAt
       }
@@ -868,6 +874,7 @@ export const onDeleteGroupMember = /* GraphQL */ `
         }
         eventType
         eventUrl
+        isSponsored
         createdAt
         updatedAt
       }
@@ -1071,6 +1078,7 @@ export const onCreateGroup = /* GraphQL */ `
       }
       eventType
       eventUrl
+      isSponsored
       createdAt
       updatedAt
     }
@@ -1220,6 +1228,7 @@ export const onUpdateGroup = /* GraphQL */ `
       }
       eventType
       eventUrl
+      isSponsored
       createdAt
       updatedAt
     }
@@ -1369,6 +1378,7 @@ export const onDeleteGroup = /* GraphQL */ `
       }
       eventType
       eventUrl
+      isSponsored
       createdAt
       updatedAt
     }
@@ -1763,6 +1773,7 @@ export const onCreateOrganization = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          isSponsored
           createdAt
           updatedAt
         }
@@ -1860,6 +1871,7 @@ export const onUpdateOrganization = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          isSponsored
           createdAt
           updatedAt
         }
@@ -1957,6 +1969,7 @@ export const onDeleteOrganization = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          isSponsored
           createdAt
           updatedAt
         }
@@ -2969,6 +2982,7 @@ export const onCreateMessage = /* GraphQL */ `
         }
         eventType
         eventUrl
+        isSponsored
         createdAt
         updatedAt
       }
@@ -3162,6 +3176,7 @@ export const onUpdateMessage = /* GraphQL */ `
         }
         eventType
         eventUrl
+        isSponsored
         createdAt
         updatedAt
       }
@@ -3355,6 +3370,7 @@ export const onDeleteMessage = /* GraphQL */ `
         }
         eventType
         eventUrl
+        isSponsored
         createdAt
         updatedAt
       }

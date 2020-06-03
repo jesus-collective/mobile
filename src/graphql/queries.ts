@@ -58,6 +58,7 @@ export const getUser = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          isSponsored
           createdAt
           updatedAt
         }
@@ -309,6 +310,7 @@ export const getGroup = /* GraphQL */ `
       }
       eventType
       eventUrl
+      isSponsored
       createdAt
       updatedAt
     }
@@ -399,6 +401,7 @@ export const listGroups = /* GraphQL */ `
         }
         eventType
         eventUrl
+        isSponsored
         createdAt
         updatedAt
       }
@@ -468,6 +471,7 @@ export const getOrganization = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          isSponsored
           createdAt
           updatedAt
         }
@@ -1233,6 +1237,7 @@ export const getMessage = /* GraphQL */ `
         }
         eventType
         eventUrl
+        isSponsored
         createdAt
         updatedAt
       }
@@ -1324,6 +1329,7 @@ export const listMessages = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          isSponsored
           createdAt
           updatedAt
         }
@@ -1808,6 +1814,7 @@ export const groupMemberByGroup = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          isSponsored
           createdAt
           updatedAt
         }
@@ -1884,6 +1891,7 @@ export const groupMemberByUser = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          isSponsored
           createdAt
           updatedAt
         }
@@ -2017,6 +2025,7 @@ export const groupByType = /* GraphQL */ `
         }
         eventType
         eventUrl
+        isSponsored
         createdAt
         updatedAt
       }
@@ -2392,6 +2401,7 @@ export const messagesByRoom = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          isSponsored
           createdAt
           updatedAt
         }
@@ -2493,6 +2503,7 @@ export const searchGroups = /* GraphQL */ `
         }
         eventType
         eventUrl
+        isSponsored
         createdAt
         updatedAt
       }

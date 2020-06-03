@@ -58,6 +58,7 @@ export const createUser = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          isSponsored
           createdAt
           updatedAt
         }
@@ -159,6 +160,7 @@ export const updateUser = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          isSponsored
           createdAt
           updatedAt
         }
@@ -260,6 +262,7 @@ export const deleteUser = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          isSponsored
           createdAt
           updatedAt
         }
@@ -389,6 +392,7 @@ export const createGroupMember = /* GraphQL */ `
         }
         eventType
         eventUrl
+        isSponsored
         createdAt
         updatedAt
       }
@@ -532,6 +536,7 @@ export const updateGroupMember = /* GraphQL */ `
         }
         eventType
         eventUrl
+        isSponsored
         createdAt
         updatedAt
       }
@@ -675,6 +680,7 @@ export const deleteGroupMember = /* GraphQL */ `
         }
         eventType
         eventUrl
+        isSponsored
         createdAt
         updatedAt
       }
@@ -878,6 +884,7 @@ export const createGroup = /* GraphQL */ `
       }
       eventType
       eventUrl
+      isSponsored
       createdAt
       updatedAt
     }
@@ -1027,6 +1034,7 @@ export const updateGroup = /* GraphQL */ `
       }
       eventType
       eventUrl
+      isSponsored
       createdAt
       updatedAt
     }
@@ -1176,6 +1184,7 @@ export const deleteGroup = /* GraphQL */ `
       }
       eventType
       eventUrl
+      isSponsored
       createdAt
       updatedAt
     }
@@ -1570,6 +1579,7 @@ export const createOrganization = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          isSponsored
           createdAt
           updatedAt
         }
@@ -1667,6 +1677,7 @@ export const updateOrganization = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          isSponsored
           createdAt
           updatedAt
         }
@@ -1764,6 +1775,7 @@ export const deleteOrganization = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          isSponsored
           createdAt
           updatedAt
         }
@@ -2776,6 +2788,7 @@ export const createMessage = /* GraphQL */ `
         }
         eventType
         eventUrl
+        isSponsored
         createdAt
         updatedAt
       }
@@ -2969,6 +2982,7 @@ export const updateMessage = /* GraphQL */ `
         }
         eventType
         eventUrl
+        isSponsored
         createdAt
         updatedAt
       }
@@ -3162,6 +3176,7 @@ export const deleteMessage = /* GraphQL */ `
         }
         eventType
         eventUrl
+        isSponsored
         createdAt
         updatedAt
       }
