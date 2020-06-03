@@ -344,6 +344,16 @@ export default EStyleSheet.create({
         alignItems: "center",
         justifyContent: "center"
     },
+    myMapConnectWithSliderButton: {
+        padding: 0,
+        height: 25,
+        borderColor: "#F0493E",
+        width: "100%",
+        alignItems: "center",
+        justifyContent: "center",
+        paddingLeft: 10,
+        paddingRight: 10,
+    },
     postButton:
     {
         paddingTop: 10,
@@ -817,6 +827,14 @@ export default EStyleSheet.create({
         color: "#aaaaaa"
     },
     dashboardConversationCard: {
+        minHeight: 50, 
+        paddingTop: 28, 
+        paddingBottom: 28, 
+        borderStyle: "solid", 
+        borderColor: "#FFFFFF",
+        width: "100%"
+    },
+    myMapDashboardConversationCard: {
         minHeight: 50, 
         paddingTop: 28, 
         paddingBottom: 28, 

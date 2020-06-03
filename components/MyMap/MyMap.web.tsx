@@ -62,7 +62,7 @@ class MyMap extends React.Component<Props, State> {
   }
   renderProfile() {
     return <TouchableOpacity onPress={() => { this.showProfile(this.state.selectedPlace.mapItem.user.id) }}>
-      <Card style={styles.dashboardConversationCard}>
+      <Card style={styles.myMapDashboardConversationCard}>
         <CardItem>
 
           <Body>
@@ -70,7 +70,7 @@ class MyMap extends React.Component<Props, State> {
             </ProfileImage>
             <Text style={styles.fontConnectWithName}>{this.state.selectedPlace.mapItem.user.given_name} {this.state.selectedPlace.mapItem.user.family_name}</Text>
             <Text style={styles.fontConnectWithRole}>{this.state.selectedPlace.mapItem.user.currentRole}</Text>
-            <Button bordered style={styles.connectWithSliderButton} onPress={() => { this.openConversation(this.state.selectedPlace.mapItem.user.id, this.state.selectedPlace.mapItem.user.given_name + " " + this.state.selectedPlace.mapItem.user.family_name) }}><Text style={styles.fontStartConversation}>Start Conversation</Text></Button>
+            <Button bordered style={styles.myMapConnectWithSliderButton} onPress={() => { this.openConversation(this.state.selectedPlace.mapItem.user.id, this.state.selectedPlace.mapItem.user.given_name + " " + this.state.selectedPlace.mapItem.user.family_name) }}><Text style={styles.fontStartConversation}>Start Conversation</Text></Button>
           </Body>
 
         </CardItem>
