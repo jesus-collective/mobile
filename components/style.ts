@@ -109,7 +109,6 @@ export default EStyleSheet.create({
     tagText: {
         color: "#000000"
     },
-
     fontRegular: {
         fontFamily: "Graphik-Regular-App"
     },
@@ -396,11 +395,9 @@ export default EStyleSheet.create({
         paddingTop: 0,
         paddingBottom: 12
     },
-
     rightCardWidth: {
         minWidth: "100%"
     },
-
     detailScreenLeftCard: Platform.OS === 'web' ?
         { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: "175vh", width: 446, paddingBottom: 40 } :
         { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, minHeight: "175vh", width: 446, paddingBottom: 40 }
@@ -886,9 +883,6 @@ export default EStyleSheet.create({
     myMapCalloutEventDescription: {
         height: 100
     },
-
-
-
 
     // Media Query Desktop Tablet
     '@media (min-width: 350) and (max-width: 768)': {
