@@ -1,9 +1,8 @@
 import React from 'react';
-import { Input, Content, Left, Right, Body, StyleProvider, Container, Card, CardItem, Button } from 'native-base';
 import { Text } from 'react-native'
 import './EditableDateStyle.ts';
-import { KeyboardDatePicker, DateTimePicker, KeyboardDateTimePicker } from "@material-ui/pickers";
-var moment = require('moment');
+import { KeyboardDatePicker, KeyboardDateTimePicker } from "@material-ui/pickers";
+import moment from 'moment';
 
 interface Props {
     value: string,
@@ -39,11 +38,11 @@ export default class EditableDate extends React.Component<Props, State> {
         }
         // console.log(props)
     }
-    onChanged(val: any) {
+    onChanged(val: any): void {
         this.props.onChange(val.format())
     }
 
-    render() {
+    render(): React.ReactNode {
 
 
         if (this.state.isEditable) {

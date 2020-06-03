@@ -1,16 +1,21 @@
 import * as React from 'react';
-import Sentry from '../../components/Sentry';
+import Sentry from '../Sentry';
+import { ErrorInfo } from 'react';
 
-interface Props { }
 interface State {
     error: Error
 }
+
+interface Props {
+    error: Error
+}
+
 export default class ErrorBoundary extends React.Component<Props, State>  {
-    constructor(props) {
-        super(props);
+    constructor(props: Props) {
+        super(props)
         this.state = { error: null };
     }
-    componentDidCatch(error, errorInfo) {
+    componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
         this.setState({ error });
         Sentry.captureException(error, { extra: errorInfo });
     }

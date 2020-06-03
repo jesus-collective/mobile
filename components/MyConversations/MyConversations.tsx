@@ -10,8 +10,8 @@ import { constants } from '../../src/constants'
 interface Props {
   navigation: any
 }
-interface State { }
-export default class MyConversations extends React.Component<Props, State> {
+
+export default class MyConversations extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
   }

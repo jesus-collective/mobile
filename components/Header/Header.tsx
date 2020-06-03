@@ -14,54 +14,54 @@ interface Props {
   title: string,
   onMapChange?(): any
 }
-interface State { }
-export default class HeaderJC extends React.Component<Props, State> {
+
+export default class HeaderJC extends React.Component<Props> {
 
   constructor(props: Props) {
     super(props);
   }
-  updateStyles = () => {
+  updateStyles = (): void => {
     this.styles.update()
     this.forceUpdate();
   };
-  componentDidMount() {
+  componentDidMount(): void {
     Dimensions.addEventListener('change', this.updateStyles)
   }
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     // Important to stop updating state after unmount
     Dimensions.removeEventListener("change", this.updateStyles);
   }
   styles = new HeaderStyles()
-  openDrawer = () => {
+  openDrawer = (): void => {
     this.props.navigation.dispatch(DrawerActions.openDrawer());
   }
-  openProfile = async () => {
-    var user = await Auth.currentAuthenticatedUser();
+  openProfile = async (): Promise<void> => {
+    const user = await Auth.currentAuthenticatedUser();
     this.props.navigation.push("ProfileScreen", { id: user['username'], create: false });
   }
-  openSearch = () => {
+  openSearch = (): void => {
     this.props.navigation.push("SearchScreen");
   }
-  openEvents = () => {
+  openEvents = (): void => {
     this.props.navigation.push("EventsScreen");
   }
-  openResources = () => {
+  openResources = (): void => {
     this.props.navigation.push("ResourcesScreen");
   }
-  openGroups = () => {
+  openGroups = (): void => {
     this.props.navigation.push("GroupsScreen");
   }
-  openHome = () => {
+  openHome = (): void => {
     this.props.navigation.push("HomeScreen");
   }
-  openCourses = () => {
+  openCourses = (): void => {
     this.props.navigation.push("CoursesScreen");
   }
-  showMap = () => {
+  showMap = (): void => {
     if (this.props.onMapChange != null)
       this.props.onMapChange()
   }
-  render() {
+  render(): React.ReactNode {
     //const { navigate } = this.props.navigation;
     return (
 

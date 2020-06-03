@@ -7,7 +7,7 @@ export default class HeaderStyles {
         this.update()
     }
     style = null
-    update() {
+    update(): void {
         this.style = EStyleSheet.create({
 
             container: {
@@ -27,10 +27,10 @@ export default class HeaderStyles {
             },
             centerMenuButtons: {
                 display: Platform.OS === 'web' && Dimensions.get('window').width > 720 ? 'flex' : 'none',
+                paddingBottom: 12
             },
-            centerMenuButtons: {
-                paddingBottom: 12,
-            },
+
+
             centerMenuButtonsText: {
                 color: '#aaaaaa',
                 fontSize: 15,
@@ -52,9 +52,7 @@ export default class HeaderStyles {
                 marginTop: 5,
                 marginBottom: 10,
             },
-            centerMenuButtons: {
-                display: Platform.OS === 'web' && Dimensions.get('window').width > 720 ? 'flex' : 'none',
-            },
+
             // Media Query Mobile
             '@media (min-width: 320px) and (max-width: 480px)': {
                 resourceContainer: {

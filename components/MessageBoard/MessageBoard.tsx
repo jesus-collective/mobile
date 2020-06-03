@@ -1,11 +1,11 @@
-import { Input, Content, Left, Right, Body, StyleProvider, Container, Card, CardItem } from 'native-base';
+import { Content, Left, Right, Body, StyleProvider, Container, Card, CardItem } from 'native-base';
 import * as React from 'react';
 import { Text } from 'react-native'
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 import styles from '../style'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
-import { Image, TextComponent, TouchableOpacity } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 import { CreateMessageInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
@@ -18,7 +18,6 @@ import './react-draft-wysiwyg.css';
 //TODO FIGURE OUT WHY THIS DOESN"T WORK
 import './MessageBoard.css';
 import { v1 as uuidv1 } from 'uuid';
-import ErrorBoundary from '../ErrorBoundry';
 import { useNavigation } from '@react-navigation/native'
 import { useRoute } from '@react-navigation/native'
 import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
@@ -55,7 +54,7 @@ class MessageBoard extends React.Component<Props, State> {
     subscription.subscribe(
       {
         next: (todoData) => {
-          var temp: any = this.state.data
+          let temp: any = this.state.data
           if (temp === null)
             temp = { items: [] }
           if (temp.items == null)
@@ -68,7 +67,7 @@ class MessageBoard extends React.Component<Props, State> {
   }
 
   async setInitialData(props) {
-    var user = await Auth.currentAuthenticatedUser();
+    const user = await Auth.currentAuthenticatedUser();
     try {
       const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: user['username'] }));
       this.setState({
@@ -84,12 +83,12 @@ class MessageBoard extends React.Component<Props, State> {
     }
     else {
 
-      var messagesByRoom: any = API.graphql({
+      const messagesByRoom: any = API.graphql({
         query: queries.messagesByRoom,
         variables: { roomId: this.props.groupId, sortDirection: "DESC" },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
-      var processMessages = (json) => {
+      const processMessages = (json) => {
         console.log({ process: json })
         this.setState({
           created: true,
@@ -113,9 +112,9 @@ class MessageBoard extends React.Component<Props, State> {
     }
   }
   saveMessage() {
-    var message = JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()))
+    const message = JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()))
     Auth.currentAuthenticatedUser().then((user: any) => {
-      var z: CreateMessageInput = {
+      const z: CreateMessageInput = {
         id: Date.now().toString(),
         content: message,
         when: Date.now().toString(),
@@ -124,7 +123,7 @@ class MessageBoard extends React.Component<Props, State> {
         owner: user.username,
         authorOrgId: "0"
       }
-      var createMessage: any = API.graphql({
+      const createMessage: any = API.graphql({
         query: mutations.createMessage,
         variables: { input: z },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -177,13 +176,9 @@ class MessageBoard extends React.Component<Props, State> {
                   },
                   image: {
                     uploadCallback: async (z1) => {
-                      var id = uuidv1()
+                      const id = uuidv1()
 
-                      var upload = await Storage.put("messages/" + id + ".png", z1, {
-                        level: 'protected',
-                        contentType: z1.type,
-                      })
-                      var download = await Storage.get("messages/" + id + ".png", {
+                      const download = await Storage.get("messages/" + id + ".png", {
                         level: 'protected',
                         contentType: z1.type,
                         identityId: this.state.UserDetails.profileImage ? this.state.UserDetails.profileImage : ""
@@ -250,7 +245,7 @@ class MessageBoard extends React.Component<Props, State> {
     )
   }
 }
-export default function (props) {
+export default function (props: Props) {
   const route = useRoute();
   const navigation = useNavigation()
   return <MessageBoard {...props} navigation={navigation} route={route} />;

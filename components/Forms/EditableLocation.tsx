@@ -1,17 +1,15 @@
 import React from 'react';
-import { Input, Content, Left, Right, Body, StyleProvider, Container, Card, CardItem, Button } from 'native-base';
 import { Text } from 'react-native'
 import PlacesAutocomplete, {
     geocodeByAddress,
     getLatLng,
 } from 'react-places-autocomplete';
-import styles from '../../components/style';
 
 interface Props {
     value: string,
     isEditable: boolean,
-    textStyle: any,
-    inputStyle?: any,
+    textStyle: string,
+    inputStyle?: string,
     multiline: boolean,
     placeholder?: string,
     onChange?(string, any)
@@ -38,12 +36,12 @@ export default class EditableLocation extends React.Component<Props, State> {
         // console.log(props)
     }
 
-    onChanged = address => {
+    onChanged = (address: string): void => {
         this.setState({ value: address })
         this.props.onChange(address)//this.setState({ value:address });
     };
 
-    handleSelect = address => {
+    handleSelect = (address: string): void => {
         geocodeByAddress(address)
             .then(results => getLatLng(results[0]))
             .then(latLng => console.log('Success', this.setState({ value: address }, () => {
@@ -54,7 +52,7 @@ export default class EditableLocation extends React.Component<Props, State> {
 
 
     };
-    render() {
+    render(): React.ReactNode {
         console.log(this.state.value)
 
         if (this.state.isEditable)
@@ -79,7 +77,7 @@ export default class EditableLocation extends React.Component<Props, State> {
                         />
                         <div className="autocomplete-dropdown-container" style={{ minWidth: 250, padding: "7px 25px 7px 10px", maxHeight: 80, overflowY: "scroll", width: 275 }}>
                             {loading && <div className="autocomplete-dropdown-container" style={{ borderWidth: 2, borderColor: "#333333" }} >Loading...</div>}
-                            {suggestions.map(suggestion => {
+                            {suggestions.map((suggestion, index) => {
                                 const className = suggestion.active
                                     ? 'suggestion-item--active'
                                     : 'suggestion-item';
@@ -88,7 +86,7 @@ export default class EditableLocation extends React.Component<Props, State> {
                                     ? { backgroundColor: '#FFEBE9', cursor: 'pointer', width: 275, borderWidth: 2, borderColor: "#333333" }
                                     : { backgroundColor: '#ffffff', cursor: 'pointer', width: 275, borderWidth: 2, borderColor: "#333333" };
                                 return (
-                                    <div
+                                    <div key={index}
                                         {...getSuggestionItemProps(suggestion, {
                                             className,
                                             style,
@@ -104,6 +102,6 @@ export default class EditableLocation extends React.Component<Props, State> {
             </PlacesAutocomplete>
 
         else
-            return <Text style={this.state.textStyle}><a target="_blank" href={"https://www.google.com/maps/dir/?api=1&destination=" + escape(this.props.value)}>{this.props.value}</a></Text>
+            return <Text style={this.state.textStyle}><a target="_blank" rel="noreferrer" href={"https://www.google.com/maps/dir/?api=1&destination=" + escape(this.props.value)}>{this.props.value}</a></Text>
     }
 }

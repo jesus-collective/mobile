@@ -13,7 +13,7 @@ import { constants } from '../../src/constants'
 
 interface Props {
   navigation: any
-  wrap: Boolean
+  wrap: boolean
   onDataload(data: any): any
 }
 interface State {
@@ -22,7 +22,7 @@ interface State {
   // type: String
   //cardWidth: any
   //createString: String
-  titleString: String
+  titleString: string
   data: any
 
   //showCreateButton: Boolean

@@ -8,8 +8,7 @@ interface Props {
   visible: boolean
   mapData: any
 }
-interface State { }
-export default class MyMap extends React.Component<Props, State> {
+export default class MyMap extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
   }
@@ -173,7 +172,7 @@ export default class MyMap extends React.Component<Props, State> {
       ]
     }
   ]
-  render() {
+  render(): React.ReactNode {
     if (this.props.visible)
       return (
         <ErrorBoundary>

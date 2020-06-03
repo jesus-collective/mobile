@@ -24,17 +24,15 @@ export interface Props {
     buttonType: ButtonTypes
     "data-testid"?: any
 }
-interface State {
-}
-class JCButton extends React.Component<Props, State> {
+class JCButton extends React.Component<Props> {
     constructor(props: Props) {
         super(props);
 
     }
-    onPress() {
+    onPress(): void {
         this.props.onPress()
     }
-    render() {
+    render(): React.ReactNode {
         return <Button data-testid={this.props["data-testid"]} style={styles[ButtonTypes[this.props.buttonType] + "Button"]} onPress={() => { this.onPress() }}>
             <Text style={styles[ButtonTypes[this.props.buttonType] + "Text"]}>{this.props.children}</Text>
         </Button>

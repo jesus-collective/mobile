@@ -1,4 +1,4 @@
-import { Left, Body, StyleProvider, Card, CardItem, List, ListItem, Right, Container } from 'native-base';
+import { Left, Body, StyleProvider, Card, CardItem, ListItem, Right, Container } from 'native-base';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
 import * as React from 'react';
@@ -6,39 +6,37 @@ import { Text } from 'react-native'
 import styles from '../style'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
-import { FontAwesome5 } from '@expo/vector-icons';
 import { Image } from 'react-native'
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
-import GRAPHQL_AUTH_MODE, { Greetings } from 'aws-amplify-react-native'
-import { API, graphqlOperation, Auth, Analytics } from 'aws-amplify';
+import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
+import { API, Auth, Analytics } from 'aws-amplify';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { constants } from '../../src/constants'
 import ErrorBoundry from '../../components/ErrorBoundry'
-import Item from '../../native-base-theme/components/Item';
-var moment = require('moment');
+import moment from 'moment';
 
 interface Props {
   navigation: any
-  wrap: Boolean
-  type: String
-  showMore: Boolean
+  wrap: boolean
+  type: string
+  showMore: boolean
   onDataload(data: any): any
 }
 interface State {
   openSingle: string
   openMultiple: string
-  type: String
+  type: string
   cardWidth: any
-  createString: String
-  titleString: String
+  createString: string
+  titleString: string
   data: any
-  showCreateButton: Boolean
-  currentUser: String
-  nextToken: any
-  canLeave: any
-  isOwner: any
+  showCreateButton: boolean
+  currentUser: string
+  nextToken: string
+  canLeave: []
+  isOwner: []
 }
 
 export default class MyGroups extends React.Component<Props, State> {
@@ -168,7 +166,7 @@ export default class MyGroups extends React.Component<Props, State> {
       }
     }
     this.setInitialData(props)
-    var user = Auth.currentAuthenticatedUser();
+    const user = Auth.currentAuthenticatedUser();
     user.then((user: any) => {
       this.setState({ currentUser: user.username })
       if (props.type != "profile")
@@ -176,7 +174,7 @@ export default class MyGroups extends React.Component<Props, State> {
     })
 
   }
-  convertProfileToMapData(data) {
+  convertProfileToMapData() {
     return [{
       latitude: 30.01,
       longitude: 40.02,
@@ -212,20 +210,20 @@ export default class MyGroups extends React.Component<Props, State> {
       case "course":
         return []
       case "profile":
-        return this.convertProfileToMapData(data)
+        return this.convertProfileToMapData()
     }
 
   }
-  setInitialData(props) {
+  setInitialData(props: Props): void {
     if (props.type == "profile") {
-      var listUsers: any = API.graphql({
+      const listUsers: any = API.graphql({
         query: queries.listUsers,
         variables: { limit: 20, filter: { profileState: { eq: "Complete" } }, nextToken: this.state.nextToken },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
-      var processList = (json) => {
+      const processList = (json) => {
         console.log({ profile: json })
-        var temp = [...this.state.data, ...json.data.listUsers.items]
+        const temp = [...this.state.data, ...json.data.listUsers.items]
         this.setState({
           data: temp,
           nextToken: json.data.listUsers.nextToken
@@ -234,7 +232,7 @@ export default class MyGroups extends React.Component<Props, State> {
       listUsers.then(processList).catch(processList)
     }
     else {
-      var listGroup: any = API.graphql({
+      const listGroup: any = API.graphql({
         query: queries.groupByType,
         variables: { limit: 20, type: props.type, nextToken: this.state.nextToken },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -244,7 +242,7 @@ export default class MyGroups extends React.Component<Props, State> {
         console.log({ profile: json })
         this.setCanLeave(json.data.groupByType.items)
         this.setIsOwner(json.data.groupByType.items)
-        var temp = [...this.state.data, ...json.data.groupByType.items]
+        const temp = [...this.state.data, ...json.data.groupByType.items]
         this.setState({
           data: temp,
           nextToken: json.data.groupByType.nextToken
@@ -268,7 +266,7 @@ export default class MyGroups extends React.Component<Props, State> {
   }
   setCanLeave(data: any) {
     data.forEach((item: any) => {
-      var groupMemberByUser: any = API.graphql({
+      const groupMemberByUser: any = API.graphql({
         query: queries.groupMemberByUser,
         variables: { userID: this.state.currentUser, groupID: { eq: item.id } },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -286,7 +284,7 @@ export default class MyGroups extends React.Component<Props, State> {
 
   setIsOwner(data: any) {
     data.forEach((item: any) => {
-      var getGroup: any = API.graphql({
+      const getGroup: any = API.graphql({
         query: queries.getGroup,
         variables: { id: item.id, owner: { eq: this.state.currentUser } },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -302,21 +300,21 @@ export default class MyGroups extends React.Component<Props, State> {
     });
   }
   canLeave(id: any): boolean {
-    var test = this.state.canLeave.filter((elem) => elem === id)
+    const test = this.state.canLeave.filter((elem) => elem === id)
     if (test.length > 0)
       return true
     else
       return false
   }
   canJoin(id: any): boolean {
-    var test = this.state.canLeave.filter((elem) => elem === id)
+    const test = this.state.canLeave.filter((elem) => elem === id)
     if (test.length > 0)
       return false
     else
       return true
   }
   isOwner(id: any): boolean {
-    var test = this.state.isOwner.filter((elem) => elem === id)
+    const test = this.state.isOwner.filter((elem) => elem === id)
     if (test.length > 0)
       return true
     else
@@ -330,7 +328,7 @@ export default class MyGroups extends React.Component<Props, State> {
       attributes: { id: group.id, name: group.name }
     });
 
-    var createGroupMember: any = API.graphql({
+    const createGroupMember: any = API.graphql({
       query: mutations.createGroupMember,
       variables: { input: { groupID: group.id, userID: this.state.currentUser } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -353,7 +351,7 @@ export default class MyGroups extends React.Component<Props, State> {
       // Attribute values must be strings
       attributes: { id: group.id, name: group.name }
     });
-    var groupMemberByUser: any = API.graphql({
+    const groupMemberByUser: any = API.graphql({
       query: queries.groupMemberByUser,
       variables: { userID: this.state.currentUser, groupID: { eq: group.id } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -362,7 +360,7 @@ export default class MyGroups extends React.Component<Props, State> {
       console.log({ "Success queries.groupMemberByUser": json });
 
       json.data.groupMemberByUser.items.map((item) => {
-        var deleteGroupMember: any = API.graphql({
+        const deleteGroupMember: any = API.graphql({
           query: mutations.deleteGroupMember,
           variables: { input: { id: item.id } },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -376,7 +374,7 @@ export default class MyGroups extends React.Component<Props, State> {
       })
 
       const index = this.state.canLeave.indexOf(group.id)
-      var canLeave = this.state.canLeave
+      const canLeave = this.state.canLeave
       canLeave.splice(index, 1)
       this.setState({ canLeave: canLeave })
       this.renderByType(group, groupType)

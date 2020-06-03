@@ -1,8 +1,7 @@
-import { Container, Header, Left, Body, Right, Button } from 'native-base';
+import { Container, Button } from 'native-base';
 
 import { DrawerActions } from '@react-navigation/native';
 
-import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Image, Text } from 'react-native';
 import styles from './style'
@@ -14,33 +13,32 @@ interface Props {
     //  title:string,
     //  onMapChange?():any
 }
-interface State { }
-class CourseSidebar extends React.Component<Props, State> {
+class CourseSidebar extends React.Component<Props> {
 
     constructor(props: Props) {
         super(props);
     }
 
-    openDrawer = () => {
+    openDrawer = (): void => {
         this.props.navigation.dispatch(DrawerActions.openDrawer());
     }
 
-    openHome = () => {
+    openHome = (): void => {
         this.props.navigation.push("HomeScreen");
     }
-    openCourseHome = () => {
+    openCourseHome = (): void => {
         this.props.navigation.push("CourseHomeScreen", { id: this.props.courseId, create: false });
     }
-    openCourseOverview = () => {
+    openCourseOverview = (): void => {
         this.props.navigation.push("CourseOverviewScreen", { id: this.props.courseId, create: false });
     }
-    openCourseDetails = () => {
+    openCourseDetails = (): void => {
         this.props.navigation.push("CourseDetailScreen", { id: this.props.courseId, create: false });
     }
-    openCourseCoaching = () => {
+    openCourseCoaching = (): void => {
         this.props.navigation.push("CourseCoachingScreen", { id: this.props.courseId, create: false });
     }
-    render() {
+    render(): React.ReactNode {
         //const { navigate } = this.props.navigation;
         return (
             <Container style={{ flex: 15, backgroundColor: "#000000" }}>

@@ -1,25 +1,21 @@
-import { Container, Header, Left, Body, Right, Button } from 'native-base';
-import { Ionicons } from '@expo/vector-icons';
+import { Container, Button } from 'native-base';
 import React from 'react';
-import { Image, Text } from 'react-native';
+import { Text } from 'react-native';
 import styles from '../style'
 import EditableText from '../Forms/EditableText'
-var moment = require('moment');
+import moment from 'moment';
 interface Props {
     groupData: any
     courseData: any
     navigation: any
     onChangeWeek?(week)
 }
-interface State {
-
-}
-class CourseHeader extends React.Component<Props, State> {
+class CourseHeader extends React.Component<Props> {
 
     constructor(props: Props) {
         super(props);
     }
-    render() {
+    render(): React.ReactNode {
         //const { navigate } = this.props.navigation;
         return (
             this.props.groupData ?
@@ -33,7 +29,7 @@ class CourseHeader extends React.Component<Props, State> {
                             <Container style={{ flexDirection: "row", width: "100%", justifyContent: "flex-start", backgroundColor: "F0493E" }}>
                                 {this.props.courseData.courseDetails.map((item: any, index1) => {
                                     return (
-                                        <Button onPress={() => { this.props.onChangeWeek(index1) }}><Text>{item.week}</Text></Button>
+                                        <Button key={index1} onPress={() => { this.props.onChangeWeek(index1) }}><Text>{item.week}</Text></Button>
                                     )
                                 }
                                 )}

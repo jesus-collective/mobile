@@ -1,8 +1,7 @@
-import { Container, Content, Left, Body, Right, Button } from 'native-base';
+import { Container, Body, Button } from 'native-base';
 
 import { DrawerActions } from '@react-navigation/native';
 
-import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Image, Text } from 'react-native';
 import styles from '../Footer/style';
@@ -13,11 +12,10 @@ interface Props {
   title: string,
   onMapChange?(): any
 }
-interface State { }
 
 
 
-export default class FooterJC extends React.Component<Props, State> {
+export default class FooterJC extends React.Component<Props> {
 
   constructor(props: Props) {
     super(props);
@@ -66,31 +64,31 @@ export default class FooterJC extends React.Component<Props, State> {
       ]
     },
   ]
-  openDrawer = () => {
+  openDrawer = (): void => {
     this.props.navigation.dispatch(DrawerActions.openDrawer());
   }
-  openProfile = () => {
+  openProfile = (): void => {
     this.props.navigation.push("ProfileScreen");
   }
-  openSearch = () => {
+  openSearch = (): void => {
     this.props.navigation.push("SearchScreen");
   }
-  openEvents = () => {
+  openEvents = (): void => {
     this.props.navigation.push("EventsScreen");
   }
-  openResources = () => {
+  openResources = (): void => {
     this.props.navigation.push("ResourcesScreen");
   }
-  openGroups = () => {
+  openGroups = (): void => {
     this.props.navigation.push("GroupsScreen");
   }
-  openHome = () => {
+  openHome = (): void => {
     this.props.navigation.push("HomeScreen");
   }
-  openCourses = () => {
+  openCourses = (): void => {
     this.props.navigation.push("CoursesScreen");
   }
-  render() {
+  render(): React.ReactNode {
     //const { navigate } = this.props.navigation;
     return (
 

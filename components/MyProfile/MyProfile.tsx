@@ -1,5 +1,5 @@
-import { Icon, Button, View, Input, Form, Item, Label, Content } from 'native-base';
-import { Text, Image, Modal } from 'react-native'
+import { Button, View, Input, Form, Item, Label, Content } from 'native-base';
+import { Text, Image } from 'react-native'
 import * as React from 'react';
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
@@ -7,14 +7,12 @@ import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { Auth } from 'aws-amplify';
 import styles from '../../components/style'
 import TagInput from 'react-native-tags-input';
-import { Dimensions } from 'react-native'
 import Amplify from 'aws-amplify'
 import awsconfig from '../../src/aws-exports';
 import Validate from '../Validate/Validate';
 import moment from 'moment';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 import MapSelector from './MapSelector'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import EditableText from '../Forms/EditableText';
 
 import { constants } from '../../src/constants'
@@ -61,7 +59,7 @@ export default class MyProfile extends React.Component<Props, State> {
   }
   async getUserDetails() {
     console.log("getUserDetails")
-    var user = await Auth.currentAuthenticatedUser();
+    const user = await Auth.currentAuthenticatedUser();
     if (this.props.loadId) {
       try {
         const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: this.props.loadId }));
@@ -104,7 +102,7 @@ export default class MyProfile extends React.Component<Props, State> {
 
     const value = event.target === undefined ? event : event.target.type === 'checkbox' ? event.target.checked : event.target.value;
     // const name = target.name;
-    var updateData = { ...this.state.UserDetails }
+    const updateData = { ...this.state.UserDetails }
     updateData[name] = value
     this.setState({
       UserDetails: updateData
@@ -124,10 +122,10 @@ export default class MyProfile extends React.Component<Props, State> {
   }
   async finalizeProfile() {
 
-    var validation = Validate.Profile(this.state.UserDetails)
+    const validation = Validate.Profile(this.state.UserDetails)
     if (validation.result) {
       try {
-        var toSave = this.clean(this.state.UserDetails)
+        const toSave = this.clean(this.state.UserDetails)
         toSave["profileState"] = "Complete"
         const updateUser = await API.graphql(graphqlOperation(mutations.updateUser, { input: toSave }));
         console.log({ "updateUser:": updateUser })
@@ -146,8 +144,8 @@ export default class MyProfile extends React.Component<Props, State> {
   };
   async onProfileImageChange(e: any) {
     const file = e.target.files[0];
-    var user = await Auth.currentCredentials();
-    var userId = user.identityId
+    const user = await Auth.currentCredentials();
+    const userId = user.identityId
     const lastDot = file.name.lastIndexOf('.');
     const ext = file.name.substring(lastDot + 1);
     const fn = 'profile/upload/profile-' + new Date().getTime() + '.' + ext
@@ -158,9 +156,9 @@ export default class MyProfile extends React.Component<Props, State> {
       contentType: file.type,
       identityId: userId
     })
-      .then(result => {
+      .then(() => {
 
-        var updateData = { ...this.state.UserDetails }
+        const updateData = { ...this.state.UserDetails }
         updateData['profileImage'] = {
           userId: userId,
           filenameUpload: fn,
@@ -227,16 +225,16 @@ export default class MyProfile extends React.Component<Props, State> {
               : <Text style={styles.profileFontTitle}>{this.state.UserDetails.given_name}'s profile</Text>
             }
             {this.state.isEditable ?
-              <View style={ styles.myProfileTopButtonsInternalContainer }>
+              <View style={styles.myProfileTopButtonsInternalContainer}>
                 <JCButton data-testid="profile-save" buttonType={ButtonTypes.SolidRightMargin} onPress={() => this.finalizeProfile()}>Save and Publish Your Profile</JCButton>
                 <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.logout()}>Logout</JCButton>
               </View>
               : null
             }
             {
-              this.state.isEditable ? 
-              <Text style={styles.myProfileErrorValidation}>{this.state.validationText}</Text>
-              : null
+              this.state.isEditable ?
+                <Text style={styles.myProfileErrorValidation}>{this.state.validationText}</Text>
+                : null
             }
           </View>
 
