@@ -93,7 +93,7 @@ export default class EventScreen extends React.Component<Props, State>{
     const key = Object.keys(myObject).filter(k => k.includes(string));
     return key.length ? myObject[key[0]] : "";
   }
-  setInitialData(props) {
+  setInitialData(props: Props): void {
     console.log(props.route.params.create)
     if (props.route.params.create === true || props.route.params.create == "true")
       Auth.currentAuthenticatedUser().then((user: any) => {
@@ -159,7 +159,7 @@ export default class EventScreen extends React.Component<Props, State>{
       getGroup.then(processResults).catch(processResults)
     }
   }
-  mapChanged = () => {
+  mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
   }
   validate(): boolean {
@@ -167,7 +167,7 @@ export default class EventScreen extends React.Component<Props, State>{
     this.setState({ validationError: validation.validationError })
     return validation.result
   }
-  createNew() {
+  createNew(): void {
     if (this.validate()) {
       const createGroup: any = API.graphql({
         query: mutations.createGroup,
@@ -190,7 +190,7 @@ export default class EventScreen extends React.Component<Props, State>{
       });
     }
   }
-  clean(item) {
+  clean(item): void {
     delete item.members
     delete item.messages
     delete item.organizerGroup
@@ -203,7 +203,7 @@ export default class EventScreen extends React.Component<Props, State>{
     delete item.updatedAt
     return item
   }
-  save() {
+  save(): void {
     if (this.validate()) {
       const updateGroup: any = API.graphql({
         query: mutations.updateGroup,
@@ -219,7 +219,7 @@ export default class EventScreen extends React.Component<Props, State>{
     }
 
   }
-  leave() {
+  leave(): void {
     Analytics.record({
       name: 'leftEvent',
       // Attribute values must be strings
@@ -256,7 +256,7 @@ export default class EventScreen extends React.Component<Props, State>{
     });
 
   }
-  join() {
+  join(): void {
     Analytics.record({
       name: 'joinedEvent',
       // Attribute values must be strings
@@ -275,7 +275,7 @@ export default class EventScreen extends React.Component<Props, State>{
     this.setState({ canJoin: false, canLeave: true, attendeeIDs: this.state.attendeeIDs.concat(this.state.currentUser) })
     this.renderButtons()
   }
-  delete() {
+  delete(): void {
     const deleteGroup: any = API.graphql({
       query: mutations.deleteGroup,
       variables: { input: { id: this.state.data.id } },
@@ -288,16 +288,16 @@ export default class EventScreen extends React.Component<Props, State>{
       console.log({ "Error mutations.deleteGroup": err });
     });
   }
-  updateValue(field: any, value: any) {
+  updateValue(field: any, value: any): void {
     const temp = this.state.data
     temp[field] = value
     this.setState({ data: temp })
   }
-  showProfile(id) {
+  showProfile(id): void {
     console.log("Navigate to profileScreen")
     this.props.navigation.push("ProfileScreen", { id: id, create: false });
   }
-  renderButtons() {
+  renderButtons(): React.ReactNode {
     return (
       <Container style={{ flexDirection: "column", flexGrow: 1 }}>
         {this.state.canJoin ?
@@ -324,7 +324,7 @@ export default class EventScreen extends React.Component<Props, State>{
     )
   }
 
-  render() {
+  render(): React.ReactNode {
     //console.log(this.state.data)
     console.log("EventScreen")
     return (

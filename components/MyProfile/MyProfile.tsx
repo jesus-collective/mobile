@@ -57,7 +57,7 @@ export default class MyProfile extends React.Component<Props, State> {
     }
     this.getUserDetails()
   }
-  async getUserDetails() {
+  async getUserDetails(): Promise<void> {
     console.log("getUserDetails")
     const user = await Auth.currentAuthenticatedUser();
     if (this.props.loadId) {
@@ -97,7 +97,7 @@ export default class MyProfile extends React.Component<Props, State> {
       }
     }
   }
-  handleInputChange(event: any, name: string) {
+  handleInputChange(event: any, name: string): void {
 
 
     const value = event.target === undefined ? event : event.target.type === 'checkbox' ? event.target.checked : event.target.value;
@@ -109,7 +109,7 @@ export default class MyProfile extends React.Component<Props, State> {
     });
     //console.log(this.state.UserDetails)
   }
-  clean(item) {
+  clean(item): void {
     delete item.organizations
     delete item.groups
     delete item.messages
@@ -120,7 +120,7 @@ export default class MyProfile extends React.Component<Props, State> {
     delete item.updatedAt
     return item
   }
-  async finalizeProfile() {
+  async finalizeProfile(): Promise<void> {
 
     const validation = Validate.Profile(this.state.UserDetails)
     if (validation.result) {
@@ -137,12 +137,12 @@ export default class MyProfile extends React.Component<Props, State> {
     }
     this.setState({ validationText: validation.validationError })
   }
-  updateTagState = (state) => {
+  updateTagState = (state): void => {
     this.setState({
       tags: state
     })
   };
-  async onProfileImageChange(e: any) {
+  async onProfileImageChange(e: any): Promise<void> {
     const file = e.target.files[0];
     const user = await Auth.currentCredentials();
     const userId = user.identityId
@@ -179,7 +179,7 @@ export default class MyProfile extends React.Component<Props, State> {
       .catch(err => console.log(err));
   }
 
-  getProfileImage() {
+  getProfileImage(): void {
     console.log("get profile image")
     //console.log(this.state.UserDetails.profileImage)
     if (this.state.UserDetails.profileImage != null)
@@ -194,27 +194,27 @@ export default class MyProfile extends React.Component<Props, State> {
     const key = Object.keys(myObject).filter(k => k.includes(string));
     return key.length ? myObject[key[0]] : "";
   }
-  logout() {
+  logout(): void {
     Auth.signOut()
       .then(data => console.log(data))
       .catch(err => console.log(err));
 
   }
-  showMap() {
+  showMap(): void {
     console.log("showMap")
     this.setState({ mapVisible: true })
   }
-  saveLocation(coord) {
+  saveLocation(coord): void {
     console.log("saveLocation")
     this.handleInputChange({ target: { value: { latitude: coord.latitude, longitude: coord.longitude } } }, "location")
     this.setState({ mapVisible: false })
   }
 
-  openConversation(initialUser, name) {
+  openConversation(initialUser, name): void {
     console.log("Navigate to conversationScreen")
     this.props.navigation.push("ConversationScreen", { initialUserID: initialUser, initialUserName: name });
   }
-  render() {
+  render(): React.ReactNode {
 
     return (
       (this.state.UserDetails != null ?

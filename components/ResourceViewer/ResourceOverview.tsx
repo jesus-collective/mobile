@@ -81,7 +81,7 @@ class ResourceOverview extends React.Component<Props, State>{
         const key = Object.keys(myObject).filter(k => k.includes(string));
         return key.length ? myObject[key[0]] : "";
     }
-    setInitialData(props) {
+    setInitialData(props): void {
         if (props.route.params.create === "true" || props.route.params.create === true)
             Auth.currentAuthenticatedUser().then((user: any) => {
                 const z: CreateGroupInput = {
@@ -144,7 +144,7 @@ class ResourceOverview extends React.Component<Props, State>{
         }
     }
 
-    mapChanged = () => {
+    mapChanged = (): void => {
         this.setState({ showMap: !this.state.showMap })
     }
     validate(): boolean {
@@ -152,7 +152,7 @@ class ResourceOverview extends React.Component<Props, State>{
         this.setState({ validationError: validation.validationError })
         return validation.result
     }
-    createNew() {
+    createNew(): void {
         if (this.validate()) {
             const createGroup: any = API.graphql({
                 query: mutations.createGroup,
@@ -175,7 +175,7 @@ class ResourceOverview extends React.Component<Props, State>{
             });
         }
     }
-    clean(item) {
+    clean(item): void {
         delete item.members
         delete item.messages
         delete item.organizerGroup
@@ -188,7 +188,7 @@ class ResourceOverview extends React.Component<Props, State>{
         delete item.updatedAt
         return item
     }
-    save() {
+    save(): void {
         if (this.validate()) {
             const updateGroup: any = API.graphql({
                 query: mutations.updateGroup,
@@ -204,7 +204,7 @@ class ResourceOverview extends React.Component<Props, State>{
         }
 
     }
-    leave() {
+    leave(): void {
         Analytics.record({
             name: 'leftResource',
             // Attribute values must be strings
@@ -240,7 +240,7 @@ class ResourceOverview extends React.Component<Props, State>{
             console.log({ "Error queries.groupMemberByUser": err });
         });
     }
-    join() {
+    join(): void {
         Analytics.record({
             name: 'joinedResource',
             // Attribute values must be strings
@@ -262,7 +262,7 @@ class ResourceOverview extends React.Component<Props, State>{
         this.renderButtons()
         console.log(this.state.memberIDs)
     }
-    delete() {
+    delete(): void {
         const deleteGroup: any = API.graphql({
             query: mutations.deleteGroup,
             variables: { input: { id: this.state.data.id } },
@@ -275,16 +275,16 @@ class ResourceOverview extends React.Component<Props, State>{
             console.log({ "Error mutations.deleteGroup": err });
         });
     }
-    showProfile(id) {
+    showProfile(id): void {
         console.log("Navigate to profileScreen")
         this.props.navigation.push("ProfileScreen", { id: id, create: false });
     }
-    updateValue(field: any, value: any) {
+    updateValue(field: any, value: any): void {
         const temp = this.state.data
         temp[field] = value
         this.setState({ data: temp })
     }
-    renderButtons() {
+    renderButtons(): React.ReactNode {
         return (
             <Container style={{ minHeight: 30 }}>
                 {this.state.canJoin ?
@@ -311,7 +311,7 @@ class ResourceOverview extends React.Component<Props, State>{
             </Container>
         )
     }
-    render() {
+    render(): React.ReactNode {
         console.log("ResourceScreen")
         return (
             this.state.data != null ?
@@ -365,7 +365,7 @@ class ResourceOverview extends React.Component<Props, State>{
         )
     }
 }
-export default function (props) {
+export default function (props: Props) {
     const route = useRoute();
     const navigation = useNavigation()
     return <ResourceOverview {...props} navigation={navigation} route={route} />;

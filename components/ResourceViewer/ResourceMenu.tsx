@@ -11,29 +11,26 @@ interface Props {
     //onAddResource(): any,
     // onChangeResource(id): any
 }
-interface State { }
-class ResourceMenu extends React.Component<Props, State> {
+class ResourceMenu extends React.Component<Props> {
     static Consumer = ResourceContext.Consumer;
     constructor(props: Props) {
         super(props);
         //console.log(props.items)
     }
-    navigateToResource(id) {
-        console.log(id)
-    }
-    updateStyles = () => {
+
+    updateStyles = (): void => {
         this.styles.update()
         this.forceUpdate();
     };
-    componentDidMount() {
+    componentDidMount(): void {
         Dimensions.addEventListener('change', this.updateStyles)
     }
-    componentWillUnmount() {
+    componentWillUnmount(): void {
         // Important to stop updating state after unmount
         Dimensions.removeEventListener("change", this.updateStyles);
     }
     styles = new HeaderStyles()
-    render() {
+    render(): React.ReactNode {
 
         //const { navigate } = this.props.navigation;
         return (

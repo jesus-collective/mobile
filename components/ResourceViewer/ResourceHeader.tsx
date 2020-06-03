@@ -29,9 +29,9 @@ class ResourceHeader extends React.Component<Props, State> {
             image: null
         }
     }
-    async getImage(img) {
+    async getImage(img): Promise<void> {
         if (img != null) {
-            var z = await Storage.get(img.filenameLarge, {
+            const z = await Storage.get(img.filenameLarge, {
                 level: 'protected',
                 contentType: 'image/png',
                 identityId: img.userId
@@ -39,7 +39,7 @@ class ResourceHeader extends React.Component<Props, State> {
             this.setState({ imageUrl: z, image: img })
         }
     }
-    render() {
+    render(): React.ReactNode {
         //const { navigate } = this.props.navigation;
         return (
             <ResourceHeader.Consumer>

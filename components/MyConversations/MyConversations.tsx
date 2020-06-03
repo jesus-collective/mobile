@@ -15,11 +15,11 @@ export default class MyConversations extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
   }
-  openConversation() {
+  openConversation(): void {
     console.log("Navigate to conversationScreen")
     this.props.navigation.navigate("ConversationScreen");
   }
-  render() {
+  render(): React.ReactNode {
 
     const items =
       [
