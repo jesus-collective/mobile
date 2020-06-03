@@ -38,6 +38,7 @@ interface State {
   validationError: String
   currentUser: String
   currentUserProfile: any
+  memberIDs: String[]
 }
 
 
@@ -58,7 +59,8 @@ export default class GroupScreen extends React.Component<Props, State>{
       canDelete: false,
       validationError: "",
       currentUser: null,
-      currentUserProfile: null
+      currentUserProfile: null,
+      memberIDs: []
     }
     Auth.currentAuthenticatedUser().then((user: any) => {
       this.setState({
@@ -121,6 +123,7 @@ export default class GroupScreen extends React.Component<Props, State>{
 
         this.setState({
           data: json.data.getGroup,
+          memberIDs: json.data.getGroup.members.items.map(item => item.userID),
           isEditable: isEditable,
           canLeave: true && !isEditable,
           canJoin: true && !isEditable,
@@ -234,7 +237,9 @@ export default class GroupScreen extends React.Component<Props, State>{
           console.log({ "Error mutations.deleteGroupMember": err });
         });
       })
-      this.setState({ canJoin: true, canLeave: false })
+
+      let remainingUsers = this.state.memberIDs.filter(user=>user!==this.state.currentUser)
+      this.setState({ canJoin: true, canLeave: false, memberIDs: remainingUsers })
       this.renderButtons()
 
     }).catch((err: any) => {
@@ -260,8 +265,9 @@ export default class GroupScreen extends React.Component<Props, State>{
       console.log({ "Error mutations.createGroupMember": err });
     });
 
-    this.setState({ canJoin: false, canLeave: true })
+    this.setState({ canJoin: false, canLeave: true, memberIDs: this.state.memberIDs.concat(this.state.currentUser) })
     this.renderButtons()
+    console.log(this.state.memberIDs)
   }
   delete() {
     var deleteGroup: any = API.graphql({
@@ -336,16 +342,14 @@ export default class GroupScreen extends React.Component<Props, State>{
                   <TouchableOpacity onPress={() => { this.showProfile(this.state.data.ownerUser ? this.state.data.ownerUser.id : this.state.currentUserProfile.id) }}>
                     <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
                   </TouchableOpacity>
-                  <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", paddingTop: 48, paddingBottom: 12 }}>Members ({this.state.data.members == null ? "0" : this.state.data.members.items.length})</Text>
+                  <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", paddingTop: 48, paddingBottom: 12 }}>Members ({this.state.memberIDs.length})</Text>
                   <View style={styles.groupAttendeesPictures}>
-                    {
-                      this.state.data.members == null ? <Text>No Members Yet</Text> :
-                        this.state.data.members.items.length == 0 ?
+                      {this.state.memberIDs.length == 0 ?
                           <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", marginBottom: 30 }}>No Members Yet</Text> :
-                          this.state.data.members.items.map((item: any, index: any) => {
+                          this.state.memberIDs.map((id: any, index: any) => {
                             return (
-                              <TouchableOpacity key={index} onPress={() => { this.showProfile(item.userID) }}>
-                                <ProfileImage key={index} user={item.userID} size="small" />
+                              <TouchableOpacity key={index} onPress={() => { this.showProfile(id) }}>
+                                <ProfileImage key={index} user={id} size="small" />
                               </TouchableOpacity>
                             )
                           })}
