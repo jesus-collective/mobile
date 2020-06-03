@@ -2,8 +2,8 @@
 import * as React from 'react';
 //import {ProviderProps} from 'google-maps-react';
 //import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { Body, Card, CardItem, Container, Button } from 'native-base';
-import { TouchableOpacity } from 'react-native'
+import { Body, Card, CardItem, Button, View } from 'native-base';
+import { TouchableOpacity, Animated, TouchableWithoutFeedback } from 'react-native'
 import styles from '../style'
 
 import { Marker, } from 'google-maps-react';
@@ -13,6 +13,9 @@ import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { Text } from 'react-native'
 import ErrorBoundary from '../ErrorBoundry';
 import moment from 'moment';
+
+const mapStyle = require('./mapstyle.json')
+
 interface Props {
   navigation: any
   visible: boolean
@@ -20,9 +23,17 @@ interface Props {
   mapData: any
 }
 interface State {
-  selectedPlace: any,
-  activeMarker: any,
+  selectedPlace: any
+  activeMarker: any
   showingInfoWindow: any
+  groupsEnabled: boolean
+  profilesEnabled: boolean
+  organizationsEnabled: boolean
+  eventsEnabled: boolean
+  groupsToggle: any
+  profilesToggle: any
+  organizationsToggle: any
+  eventsToggle: any
 }
 
 class MyMap extends React.Component<Props, State> {
@@ -31,7 +42,15 @@ class MyMap extends React.Component<Props, State> {
     this.state = {
       activeMarker: null,
       selectedPlace: {},
-      showingInfoWindow: false
+      showingInfoWindow: false,
+      groupsEnabled: true,
+      profilesEnabled: true,
+      organizationsEnabled: true,
+      eventsEnabled: true,
+      groupsToggle: new Animated.Value(1),
+      profilesToggle: new Animated.Value(1),
+      organizationsToggle: new Animated.Value(1),
+      eventsToggle: new Animated.Value(1)
     }
 
   }
@@ -60,6 +79,89 @@ class MyMap extends React.Component<Props, State> {
     console.log("Navigate to profileScreen")
     this.props.navigation.push("ProfileScreen", { id: id, create: false });
   }
+
+  _mapLoaded(mapProps, map) {
+    map.setOptions({
+       styles: mapStyle
+    })
+ }
+
+  toggleFilters(type: string): boolean {
+    switch(type) {
+      case "organization":
+
+        if (this.state.organizationsEnabled) {
+          Animated.timing(this.state.organizationsToggle, {
+            toValue: 0,
+            duration: 200,
+            useNativeDriver: true
+          }).start();
+        } else {
+          Animated.timing(this.state.organizationsToggle, {
+            toValue: 1,
+            duration: 200,
+            useNativeDriver: true
+          }).start();
+        }
+        this.setState({ organizationsEnabled: !this.state.organizationsEnabled })
+        return this.state.organizationsEnabled
+
+      case "group":
+
+        if (this.state.groupsEnabled) {
+          Animated.timing(this.state.groupsToggle, {
+            toValue: 0,
+            duration: 200,
+            useNativeDriver: true
+          }).start();
+        } else {
+          Animated.timing(this.state.groupsToggle, {
+            toValue: 1,
+            duration: 200,
+            useNativeDriver: true
+          }).start();
+        }
+        this.setState({ groupsEnabled: !this.state.groupsEnabled })
+        return this.state.groupsEnabled
+
+      case "event":
+
+        if (this.state.eventsEnabled) {
+          Animated.timing(this.state.eventsToggle, {
+            toValue: 0,
+            duration: 200,
+            useNativeDriver: true
+          }).start();
+        } else {
+          Animated.timing(this.state.eventsToggle, {
+            toValue: 1,
+            duration: 200,
+            useNativeDriver: true
+          }).start();
+        }
+        this.setState({ eventsEnabled: !this.state.eventsEnabled })
+        return this.state.eventsEnabled
+
+      case "profile":
+
+        if (this.state.profilesEnabled) {
+          Animated.timing(this.state.profilesToggle, {
+            toValue: 0,
+            duration: 200,
+            useNativeDriver: true
+          }).start();
+        } else {
+          Animated.timing(this.state.profilesToggle, {
+            toValue: 1,
+            duration: 200,
+            useNativeDriver: true
+          }).start();
+        }
+        this.setState({ profilesEnabled: !this.state.profilesEnabled })
+        return this.state.profilesEnabled
+    }
+  }
+
   renderProfile() {
     return <TouchableOpacity onPress={() => { this.showProfile(this.state.selectedPlace.mapItem.user.id) }}>
       <Card style={styles.dashboardConversationCard}>
@@ -98,49 +200,170 @@ class MyMap extends React.Component<Props, State> {
         */}
     </Card>
 
-
   }
   render() {
     //console.log(this.props.mapData)
     if (this.props.visible)
       return (
         <ErrorBoundary>
-          <Container style={{ height: "50%" }}>
-            <Map google={window.google} zoom={6}
-              initialCenter={{ lat: 44, lng: -78.0 }}
-              mapTypeControl={false}
-              onClick={this.onMapClicked}
+          <View style={{ display: 'flex', height: '60%' }}>
+            <View style={{ flex: 1, minHeight: 50 }}>
+              <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: '5%'}}>
+                <View style={{width: 170, flexDirection: 'row'}}>
+                  <Text style={styles.fontMyMapOptions}>Show Groups</Text>
+                  <TouchableWithoutFeedback onPress={()=>this.toggleFilters("group")}>
+                  <View style={{ 
+                      backgroundColor: this.state.groupsEnabled ? '#333333' : '#aaaaaa', 
+                      borderColor: this.state.groupsEnabled ? '#333333' : '#aaaaaa', 
+                      borderWidth: 2, borderRadius: 25, width: 50, height: 20 }}>
+                      <Animated.View 
+                      style={{ backgroundColor: '#ffffff', borderRadius: 25, width: 16, height: 16, 
+                        transform: [{
+                          translateX: this.state.groupsToggle.interpolate({
+                            inputRange: [0, 1],
+                            outputRange: [0, 30]
+                          })
+                        }] 
+                      }}/>
+                    </View>
+                  </TouchableWithoutFeedback>               
+                </View>
+                <View style={{width: 170, flexDirection: 'row'}}>
+                  <Text style={styles.fontMyMapOptions}>Show Events</Text>
+                  <TouchableWithoutFeedback onPress={()=>this.toggleFilters("event")}>
+                  <View style={{ 
+                      backgroundColor: this.state.eventsEnabled ? '#333333' : '#aaaaaa', 
+                      borderColor: this.state.eventsEnabled ? '#333333' : '#aaaaaa', 
+                      borderWidth: 2, borderRadius: 25, width: 50, height: 20 }}>
+                      <Animated.View 
+                      style={{ backgroundColor: '#ffffff', borderRadius: 25, width: 16, height: 16, 
+                        transform: [{
+                          translateX: this.state.eventsToggle.interpolate({
+                            inputRange: [0, 1],
+                            outputRange: [0, 30]
+                          })
+                        }] 
+                      }}/>
+                    </View>
+                  </TouchableWithoutFeedback>
+                </View>
+                <View style={{width: 170, flexDirection: 'row'}}>
+                  <Text style={styles.fontMyMapOptions}>Show Profiles</Text>
+                  <TouchableWithoutFeedback onPress={()=>this.toggleFilters("profile")}>
+                  <View style={{ 
+                      backgroundColor: this.state.profilesEnabled ? '#333333' : '#aaaaaa', 
+                      borderColor: this.state.profilesEnabled ? '#333333' : '#aaaaaa', 
+                      borderWidth: 2, borderRadius: 25, width: 50, height: 20 }}>
+                      <Animated.View 
+                      style={{ backgroundColor: '#ffffff', borderRadius: 25, width: 16, height: 16, 
+                        transform: [{
+                          translateX: this.state.profilesToggle.interpolate({
+                            inputRange: [0, 1],
+                            outputRange: [0, 30]
+                          })
+                        }] 
+                      }}/>
+                    </View>
+                  </TouchableWithoutFeedback>  
+                </View>
+                <View style={{width: 200, flexDirection: 'row'}}>
+                  <Text style={styles.fontMyMapOptions}>Show Organizations</Text>
+                  <TouchableWithoutFeedback onPress={()=>this.toggleFilters("organization")}>
+                    <View style={{ 
+                      backgroundColor: this.state.organizationsEnabled ? '#333333' : '#aaaaaa', 
+                      borderColor: this.state.organizationsEnabled ? '#333333' : '#aaaaaa', 
+                      borderWidth: 2, borderRadius: 25, width: 50, height: 20 }}>
+                      <Animated.View 
+                      style={{ backgroundColor: '#ffffff', borderRadius: 25, width: 16, height: 16, 
+                        transform: [{
+                          translateX: this.state.organizationsToggle.interpolate({
+                            inputRange: [0, 1],
+                            outputRange: [0, 30]
+                          })
+                        }] 
+                      }}/>
+                    </View>
+                  </TouchableWithoutFeedback>
+                </View>
+                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end', paddingRight:'2%'}}>
+                  <View style={{flexDirection: 'row', alignItems: 'center', paddingLeft: 20}}>
+                    <View style={{ backgroundColor: '#f0493e', borderRadius: 25, width: 25, height: 13, }}></View>
+                    <Text style={styles.fontMyMapLegend}>Partners</Text>
+                  </View>
+                  <View style={{flexDirection: 'row', alignItems: 'center', paddingLeft: 20}}>
+                    <View style={{ backgroundColor: '#ffb931', borderRadius: 25, width: 25, height: 13 }}></View>
+                    <Text style={styles.fontMyMapLegend}>Friends</Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+            <View style={{ flex: 9 }}>
+              <Map google={window.google} zoom={6}
+                initialCenter={{ lat: 44, lng: -78.0 }}
+                mapTypeControl={false}
+                onClick={this.onMapClicked}
+                onReady={(mapProps, map)=>this._mapLoaded(mapProps, map)}
+                style={{ position: "relative", width: "100%", height: "100%" }}
+                streetViewControl={false}
+                fullscreenControl={false}
+              >
 
-              style={{ position: "relative", width: "100%", height: "100%" }}
-            >
+              {
+              this.props.mapData.map((mapItem, index) => {
+                  
+                  let filters = []
+                  if (!this.state.groupsEnabled) {
+                    filters.push("group")
+                  }
+                  if (!this.state.organizationsEnabled) {
+                    filters.push("organization")
+                  }
+                  if (!this.state.eventsEnabled) {
+                    filters.push("event")
+                  }
+                  if (!this.state.profilesEnabled) {
+                    filters.push("profile")
+                  }
+                  
+                  console.log(mapItem)
 
-              {this.props.mapData.map((mapItem, index) => {
-                return <Marker key={index} title={mapItem.name}
-                  mapItemType={mapItem.type}
-                  mapItem={mapItem}
-                  onClick={this.onMarkerClick}
-                  position={{ lat: mapItem.latitude, lng: mapItem.longitude }}>
+                  let filtered = filters.filter(item => mapItem.type === item)
+                  if (filtered.length === 0) {
+                    return <Marker key={index} title={mapItem.name}
+                    mapItemType={mapItem.type}
+                    mapItem={mapItem}
+                    onClick={this.onMarkerClick}
+                    position={{ lat: mapItem.latitude, lng: mapItem.longitude }}
+                    icon={{
+                      url: require("../../assets/svg/map-icon-red.svg"),
+                      anchor: new google.maps.Point(32,32),
+                      scaledSize: new google.maps.Size(32,32)
+                    }}>
+                    </Marker>
+                  }
 
+                  //will need later for friends
+                  //url: require("../../assets/svg/map-icon-yellow.svg"),
 
-                </Marker>
-              })}
+                })}
 
-              <InfoWindow
-                google={window.google}
-                visible={this.state.showingInfoWindow}
-                marker={this.state.activeMarker}>
-                {this.state.selectedPlace != null ?
-                  this.state.selectedPlace.mapItemType == "profile" ?
-                    this.renderProfile() :
-                    this.state.selectedPlace.mapItemType == "event" ?
-                      this.renderEvent()
-                      : null
-                  : null
-                }
+                <InfoWindow
+                  google={window.google}
+                  visible={this.state.showingInfoWindow}
+                  marker={this.state.activeMarker}>
+                  {this.state.selectedPlace != null ?
+                    this.state.selectedPlace.mapItemType == "profile" ?
+                      this.renderProfile() :
+                      this.state.selectedPlace.mapItemType == "event" ?
+                        this.renderEvent()
+                        : null
+                    : null
+                  }
 
-              </InfoWindow>
-            </Map>
-          </Container>
+                </InfoWindow>
+              </Map>
+            </View>
+          </View>
         </ErrorBoundary>
       )
     else return null
