@@ -2,8 +2,8 @@
 import * as React from 'react';
 //import {ProviderProps} from 'google-maps-react';
 //import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { Body, Card, CardItem, Container, Button } from 'native-base';
-import { TouchableOpacity } from 'react-native'
+import { Body, Card, CardItem, Container, Button, View } from 'native-base';
+import { TouchableOpacity, Switch } from 'react-native'
 import styles from '../style'
 
 import { Marker, } from 'google-maps-react';
@@ -13,6 +13,9 @@ import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { Text } from 'react-native'
 import ErrorBoundary from '../ErrorBoundry';
 import moment from 'moment';
+
+const mapStyle = require('./mapstyle.json')
+
 interface Props {
   navigation: any
   visible: boolean
@@ -20,9 +23,13 @@ interface Props {
   mapData: any
 }
 interface State {
-  selectedPlace: any,
-  activeMarker: any,
+  selectedPlace: any
+  activeMarker: any
   showingInfoWindow: any
+  groupsEnabled: boolean
+  profilesEnabled: boolean
+  organizationsEnabled: boolean
+  eventsEnabled: boolean
 }
 
 class MyMap extends React.Component<Props, State> {
@@ -31,7 +38,11 @@ class MyMap extends React.Component<Props, State> {
     this.state = {
       activeMarker: null,
       selectedPlace: {},
-      showingInfoWindow: false
+      showingInfoWindow: false,
+      groupsEnabled: true,
+      profilesEnabled: true,
+      organizationsEnabled: true,
+      eventsEnabled: true,
     }
 
   }
@@ -60,6 +71,31 @@ class MyMap extends React.Component<Props, State> {
     console.log("Navigate to profileScreen")
     this.props.navigation.push("ProfileScreen", { id: id, create: false });
   }
+
+  _mapLoaded(mapProps, map) {
+    map.setOptions({
+       styles: mapStyle
+    })
+ }
+
+  toggleFilters(type: string): boolean {
+    switch(type) {
+      case "organization":
+        this.setState({ organizationsEnabled: !this.state.organizationsEnabled })
+        return this.state.organizationsEnabled
+      case "group":
+        this.setState({ groupsEnabled: !this.state.groupsEnabled })
+        return this.state.groupsEnabled
+      case "event":
+        this.setState({ eventsEnabled: !this.state.eventsEnabled })
+        return this.state.eventsEnabled
+      case "profile":
+        this.setState({ profilesEnabled: !this.state.profilesEnabled })
+        return this.state.profilesEnabled
+    }
+
+  }
+
   renderProfile() {
     return <TouchableOpacity onPress={() => { this.showProfile(this.state.selectedPlace.mapItem.user.id) }}>
       <Card style={styles.dashboardConversationCard}>
@@ -98,48 +134,104 @@ class MyMap extends React.Component<Props, State> {
         */}
     </Card>
 
-
   }
   render() {
     //console.log(this.props.mapData)
     if (this.props.visible)
       return (
         <ErrorBoundary>
-          <Container style={{ height: "50%" }}>
-            <Map google={window.google} zoom={6}
-              initialCenter={{ lat: 44, lng: -78.0 }}
-              mapTypeControl={false}
-              onClick={this.onMapClicked}
+          <Container style={{ display: 'flex' }}>
+            <Container style={{ flex: 1 }}>
+              <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: '5%'}}>
+                <View style={{flex: 0.1, flexDirection: 'row'}}>
+                  <Text style={{ paddingRight: 10 }}>Show Organizations</Text>
+                  <Switch
+                    onValueChange={()=>this.toggleFilters("organization")}
+                    value={this.state.organizationsEnabled}
+                  />
+                </View>
+                <View style={{flex: 0.08, flexDirection: 'row'}}>
+                  <Text style={{ paddingRight: 10 }}>Show Groups</Text>
+                  <Switch         
+                    onValueChange={()=>this.toggleFilters("group")}
+                    value={this.state.groupsEnabled}
+                  />                
+                </View>
+                <View style={{flex: 0.08, flexDirection: 'row'}}>
+                  <Text style={{ paddingRight: 10 }}>Show Events</Text>
+                  <Switch         
+                    onValueChange={()=>this.toggleFilters("event")}
+                    value={this.state.eventsEnabled}
+                  />                
+                </View>
+                <View style={{flex: 0.08, flexDirection: 'row'}}>
+                  <Text style={{ paddingRight: 10 }}>Show Profiles</Text>
+                  <Switch         
+                    onValueChange={()=>this.toggleFilters("profile")}
+                    value={this.state.profilesEnabled}
+                  />                
+                </View>
+              </View>
+            </Container>
+            <Container style={{ flex: 9 }}>
+              <Map google={window.google} zoom={6}
+                initialCenter={{ lat: 44, lng: -78.0 }}
+                mapTypeControl={false}
+                onClick={this.onMapClicked}
+                onReady={(mapProps, map)=>this._mapLoaded(mapProps, map)}
+                style={{ position: "relative", width: "100%", height: "100%" }}
+              >
 
-              style={{ position: "relative", width: "100%", height: "100%" }}
-            >
+              {
+              this.props.mapData.map((mapItem, index) => {
+                  
+                  let filters = []
+                  if (!this.state.groupsEnabled) {
+                    filters.push("group")
+                  }
+                  if (!this.state.organizationsEnabled) {
+                    filters.push("organization")
+                  }
+                  if (!this.state.eventsEnabled) {
+                    filters.push("event")
+                  }
+                  if (!this.state.profilesEnabled) {
+                    filters.push("profile")
+                  }
 
-              {this.props.mapData.map((mapItem, index) => {
-                return <Marker key={index} title={mapItem.name}
-                  mapItemType={mapItem.type}
-                  mapItem={mapItem}
-                  onClick={this.onMarkerClick}
-                  position={{ lat: mapItem.latitude, lng: mapItem.longitude }}>
+                  let filtered = filters.filter(item => mapItem.type === item)
+                  if (filtered.length === 0) {
+                    return <Marker key={index} title={mapItem.name}
+                    mapItemType={mapItem.type}
+                    mapItem={mapItem}
+                    onClick={this.onMarkerClick}
+                    position={{ lat: mapItem.latitude, lng: mapItem.longitude }}
+                    icon={{
+                      url: require("../../assets/svg/mapicon.svg"),
+                      anchor: new google.maps.Point(32,32),
+                      scaledSize: new google.maps.Size(32,32)
+                    }}>
+                    </Marker>
+                  }
+            
+                })}
 
+                <InfoWindow
+                  google={window.google}
+                  visible={this.state.showingInfoWindow}
+                  marker={this.state.activeMarker}>
+                  {this.state.selectedPlace != null ?
+                    this.state.selectedPlace.mapItemType == "profile" ?
+                      this.renderProfile() :
+                      this.state.selectedPlace.mapItemType == "event" ?
+                        this.renderEvent()
+                        : null
+                    : null
+                  }
 
-                </Marker>
-              })}
-
-              <InfoWindow
-                google={window.google}
-                visible={this.state.showingInfoWindow}
-                marker={this.state.activeMarker}>
-                {this.state.selectedPlace != null ?
-                  this.state.selectedPlace.mapItemType == "profile" ?
-                    this.renderProfile() :
-                    this.state.selectedPlace.mapItemType == "event" ?
-                      this.renderEvent()
-                      : null
-                  : null
-                }
-
-              </InfoWindow>
-            </Map>
+                </InfoWindow>
+              </Map>
+            </Container>
           </Container>
         </ErrorBoundary>
       )
