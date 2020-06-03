@@ -34,8 +34,10 @@ export default class EditableButton extends React.Component<Props, State> {
   }
   onChanged(val: any) {
     console.log("onChanged")
-    if (val.target.value == "")
+    if (val.target.value == "") {
+      this.setState({ isEditMode: false })
       this.props.onDelete()
+    }
     else {
       this.props.onChange(val.target.value)
       this.setState({ isEditMode: false })

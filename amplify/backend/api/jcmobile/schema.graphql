@@ -106,6 +106,7 @@ type Group
   messages: [Message] @connection(name: "RoomMessages", keyField: "roomId", sortField: "when")
   eventType: String
   eventUrl: String
+  isSponsored: String
 }
 type OrganizationMember
   @model(queries: null)
