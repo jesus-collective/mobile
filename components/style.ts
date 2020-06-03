@@ -12,6 +12,81 @@ export default EStyleSheet.create({
         alignItems: 'center',
         backgroundColor: mainColor,
     },
+    courseCard:
+    {
+        minHeight: 330,
+        alignSelf: "flex-start",
+        padding: '0%',
+        paddingLeft: '0.25rem',
+        paddingRight: '0.25rem',
+        borderRadius: 4,
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)"
+    },
+    orgCard: {
+        minHeight: 330,
+        alignSelf: "flex-start",
+        padding: '0%',
+        paddingLeft: '0.25rem',
+        paddingRight: '0.25rem',
+        borderRadius: 4,
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)"
+    },
+    resourceCard: {
+        minHeight: 330,
+        alignSelf: "flex-start",
+        padding: '0%',
+        paddingLeft: '0.25rem',
+        paddingRight: '0.25rem',
+        borderRadius: 4,
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+        borderStyle: "solid",
+        borderColor: "#FFFFFF",
+    },
+    profileCard: {
+        padding: '0%',
+        paddingLeft: '1.5rem',
+        paddingRight: '1.5rem',
+        borderRadius: 4,
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+        borderStyle: "solid",
+        borderColor: "#FFFFFF"
+    },
+    eventCard: {
+        minHeight: 300,
+        alignSelf: "flex-start",
+        padding: '0%',
+        paddingLeft: '0.25rem',
+        paddingRight: '0.25rem',
+        borderRadius: 4,
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+        borderStyle: "solid",
+        borderColor: "#FFFFFF"
+    },
+    groupCard: {
+        height: 365,
+        alignSelf: "flex-start",
+        padding: '0%',
+        paddingLeft: '0.25rem',
+        paddingRight: '0.25rem',
+        borderRadius: 4,
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+        borderStyle: "solid",
+        borderColor: "#FFFFFF"
+    },
+    conversationCard: {
+        minHeight: 50,
+        width: "92.5%",
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)"
+    },
+    messageBoardContainer: {
+        display: "inline",
+        overflow: "visible",
+        width: "100%",
+        paddingTop: 30,
+        paddingLeft: 30,
+        paddingRight: 30,
+        marginBottom: 60
+    },
     groupNameInput: {
         borderColor: 'white',
         borderWidth: 1,

@@ -149,7 +149,7 @@ class MessageBoard extends React.Component<Props, State> {
       (this.state.created) ?
 
         <StyleProvider style={getTheme(material)}>
-          <Container style={{ display: "inline", overflow: "visible", width: "100%", paddingTop: 30, paddingLeft: 30, paddingRight: 30, marginBottom: 60 }} >
+          <Container style={styles.messageBoardContainer} >
 
             <Content style={{ marginBottom: 40 }}>
 
