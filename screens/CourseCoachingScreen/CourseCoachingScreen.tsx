@@ -24,7 +24,7 @@ interface State {
   loadId: string
   data: any
   isEditable: boolean
-  validationError: String
+  validationError: string
 }
 
 
