@@ -5,6 +5,7 @@ import PlacesAutocomplete, {
     geocodeByAddress,
     getLatLng,
 } from 'react-places-autocomplete';
+import styles from '../../components/style';
 
 interface Props {
     value: string,
@@ -70,22 +71,22 @@ export default class EditableLocation extends React.Component<Props, State> {
                 {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
 
                     <div>
-                        <input
+                        <input style={{ minWidth: 250, paddingTop: 7, paddingBottom: 7, paddingLeft: 10, paddingRight: 25, fontSize: 16, color: "#333333" }}
                             {...getInputProps({
                                 placeholder: 'Search Places ...',
                                 className: 'location-search-input',
                             })}
                         />
-                        <div className="autocomplete-dropdown-container">
-                            {loading && <div>Loading...</div>}
+                        <div className="autocomplete-dropdown-container" style={{ minWidth: 250, padding: "7px 25px 7px 10px", maxHeight: 80, overflowY: "scroll", width: 275 }}>
+                            {loading && <div className="autocomplete-dropdown-container" style={{ borderWidth: 2, borderColor: "#333333" }} >Loading...</div>}
                             {suggestions.map(suggestion => {
                                 const className = suggestion.active
                                     ? 'suggestion-item--active'
                                     : 'suggestion-item';
                                 // inline style for demonstration purpose
                                 const style = suggestion.active
-                                    ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                                    : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                                    ? { backgroundColor: '#FFEBE9', cursor: 'pointer', width: 275, borderWidth: 2, borderColor: "#333333" }
+                                    : { backgroundColor: '#ffffff', cursor: 'pointer', width: 275, borderWidth: 2, borderColor: "#333333" };
                                 return (
                                     <div
                                         {...getSuggestionItemProps(suggestion, {
@@ -93,7 +94,7 @@ export default class EditableLocation extends React.Component<Props, State> {
                                             style,
                                         })}
                                     >
-                                        <span>{suggestion.description}</span>
+                                        <span style={{ lineHeight: 2, fontSize: 16, color: "rgb(51, 51, 51)", fontFamily: "Graphik-Regular-App" }}>{suggestion.description}</span>
                                     </div>
                                 );
                             })}
