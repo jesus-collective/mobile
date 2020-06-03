@@ -3,7 +3,7 @@ import * as React from 'react';
 //import {ProviderProps} from 'google-maps-react';
 //import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Body, Card, CardItem, Button, View } from 'native-base';
-import { TouchableOpacity, Switch } from 'react-native'
+import { TouchableOpacity, Animated, TouchableWithoutFeedback } from 'react-native'
 import styles from '../style'
 
 import { Marker, } from 'google-maps-react';
@@ -30,6 +30,10 @@ interface State {
   profilesEnabled: boolean
   organizationsEnabled: boolean
   eventsEnabled: boolean
+  groupsToggle: any
+  profilesToggle: any
+  organizationsToggle: any
+  eventsToggle: any
 }
 
 class MyMap extends React.Component<Props, State> {
@@ -43,6 +47,10 @@ class MyMap extends React.Component<Props, State> {
       profilesEnabled: true,
       organizationsEnabled: true,
       eventsEnabled: true,
+      groupsToggle: new Animated.Value(1),
+      profilesToggle: new Animated.Value(1),
+      organizationsToggle: new Animated.Value(1),
+      eventsToggle: new Animated.Value(1)
     }
 
   }
@@ -81,19 +89,77 @@ class MyMap extends React.Component<Props, State> {
   toggleFilters(type: string): boolean {
     switch(type) {
       case "organization":
+
+        if (this.state.organizationsEnabled) {
+          Animated.timing(this.state.organizationsToggle, {
+            toValue: 0,
+            duration: 200,
+            useNativeDriver: true
+          }).start();
+        } else {
+          Animated.timing(this.state.organizationsToggle, {
+            toValue: 1,
+            duration: 200,
+            useNativeDriver: true
+          }).start();
+        }
         this.setState({ organizationsEnabled: !this.state.organizationsEnabled })
         return this.state.organizationsEnabled
+
       case "group":
+
+        if (this.state.groupsEnabled) {
+          Animated.timing(this.state.groupsToggle, {
+            toValue: 0,
+            duration: 200,
+            useNativeDriver: true
+          }).start();
+        } else {
+          Animated.timing(this.state.groupsToggle, {
+            toValue: 1,
+            duration: 200,
+            useNativeDriver: true
+          }).start();
+        }
         this.setState({ groupsEnabled: !this.state.groupsEnabled })
         return this.state.groupsEnabled
+
       case "event":
+
+        if (this.state.eventsEnabled) {
+          Animated.timing(this.state.eventsToggle, {
+            toValue: 0,
+            duration: 200,
+            useNativeDriver: true
+          }).start();
+        } else {
+          Animated.timing(this.state.eventsToggle, {
+            toValue: 1,
+            duration: 200,
+            useNativeDriver: true
+          }).start();
+        }
         this.setState({ eventsEnabled: !this.state.eventsEnabled })
         return this.state.eventsEnabled
+
       case "profile":
+
+        if (this.state.profilesEnabled) {
+          Animated.timing(this.state.profilesToggle, {
+            toValue: 0,
+            duration: 200,
+            useNativeDriver: true
+          }).start();
+        } else {
+          Animated.timing(this.state.profilesToggle, {
+            toValue: 1,
+            duration: 200,
+            useNativeDriver: true
+          }).start();
+        }
         this.setState({ profilesEnabled: !this.state.profilesEnabled })
         return this.state.profilesEnabled
     }
-
   }
 
   renderProfile() {
@@ -143,33 +209,81 @@ class MyMap extends React.Component<Props, State> {
           <View style={{ display: 'flex', height: '60%' }}>
             <View style={{ flex: 1 }}>
               <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: '5%'}}>
-                <View style={{flex: 0.1, flexDirection: 'row'}}>
-                  <Text style={{ paddingRight: 10 }}>Show Organizations</Text>
-                  <Switch
-                    onValueChange={()=>this.toggleFilters("organization")}
-                    value={this.state.organizationsEnabled}
-                  />
-                </View>
-                <View style={{flex: 0.08, flexDirection: 'row'}}>
+                <View style={{width: 180, flexDirection: 'row'}}>
                   <Text style={{ paddingRight: 10 }}>Show Groups</Text>
-                  <Switch         
-                    onValueChange={()=>this.toggleFilters("group")}
-                    value={this.state.groupsEnabled}
-                  />                
+                  <TouchableWithoutFeedback onPress={()=>this.toggleFilters("group")}>
+                  <View style={{ 
+                      backgroundColor: this.state.groupsEnabled ? '#333333' : '#aaaaaa', 
+                      borderColor: this.state.groupsEnabled ? '#333333' : '#aaaaaa', 
+                      borderWidth: 2, borderRadius: 25, width: 50, height: 20 }}>
+                      <Animated.View 
+                      style={{ backgroundColor: '#ffffff', borderRadius: 25, width: 16, height: 16, 
+                        transform: [{
+                          translateX: this.state.groupsToggle.interpolate({
+                            inputRange: [0, 1],
+                            outputRange: [0, 30]
+                          })
+                        }] 
+                      }}/>
+                    </View>
+                  </TouchableWithoutFeedback>               
                 </View>
-                <View style={{flex: 0.08, flexDirection: 'row'}}>
+                <View style={{width: 180, flexDirection: 'row'}}>
                   <Text style={{ paddingRight: 10 }}>Show Events</Text>
-                  <Switch         
-                    onValueChange={()=>this.toggleFilters("event")}
-                    value={this.state.eventsEnabled}
-                  />                
+                  <TouchableWithoutFeedback onPress={()=>this.toggleFilters("event")}>
+                  <View style={{ 
+                      backgroundColor: this.state.eventsEnabled ? '#333333' : '#aaaaaa', 
+                      borderColor: this.state.eventsEnabled ? '#333333' : '#aaaaaa', 
+                      borderWidth: 2, borderRadius: 25, width: 50, height: 20 }}>
+                      <Animated.View 
+                      style={{ backgroundColor: '#ffffff', borderRadius: 25, width: 16, height: 16, 
+                        transform: [{
+                          translateX: this.state.eventsToggle.interpolate({
+                            inputRange: [0, 1],
+                            outputRange: [0, 30]
+                          })
+                        }] 
+                      }}/>
+                    </View>
+                  </TouchableWithoutFeedback>
                 </View>
-                <View style={{flex: 0.08, flexDirection: 'row'}}>
+                <View style={{width: 180, flexDirection: 'row'}}>
                   <Text style={{ paddingRight: 10 }}>Show Profiles</Text>
-                  <Switch         
-                    onValueChange={()=>this.toggleFilters("profile")}
-                    value={this.state.profilesEnabled}
-                  />                
+                  <TouchableWithoutFeedback onPress={()=>this.toggleFilters("profile")}>
+                  <View style={{ 
+                      backgroundColor: this.state.profilesEnabled ? '#333333' : '#aaaaaa', 
+                      borderColor: this.state.profilesEnabled ? '#333333' : '#aaaaaa', 
+                      borderWidth: 2, borderRadius: 25, width: 50, height: 20 }}>
+                      <Animated.View 
+                      style={{ backgroundColor: '#ffffff', borderRadius: 25, width: 16, height: 16, 
+                        transform: [{
+                          translateX: this.state.profilesToggle.interpolate({
+                            inputRange: [0, 1],
+                            outputRange: [0, 30]
+                          })
+                        }] 
+                      }}/>
+                    </View>
+                  </TouchableWithoutFeedback>  
+                </View>
+                <View style={{width: 200, flexDirection: 'row'}}>
+                  <Text style={{ paddingRight: 10 }}>Show Organizations</Text>
+                  <TouchableWithoutFeedback onPress={()=>this.toggleFilters("organization")}>
+                    <View style={{ 
+                      backgroundColor: this.state.organizationsEnabled ? '#333333' : '#aaaaaa', 
+                      borderColor: this.state.organizationsEnabled ? '#333333' : '#aaaaaa', 
+                      borderWidth: 2, borderRadius: 25, width: 50, height: 20 }}>
+                      <Animated.View 
+                      style={{ backgroundColor: '#ffffff', borderRadius: 25, width: 16, height: 16, 
+                        transform: [{
+                          translateX: this.state.organizationsToggle.interpolate({
+                            inputRange: [0, 1],
+                            outputRange: [0, 30]
+                          })
+                        }] 
+                      }}/>
+                    </View>
+                  </TouchableWithoutFeedback>
                 </View>
               </View>
             </View>
