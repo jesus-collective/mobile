@@ -36,7 +36,7 @@ interface State {
   textHeight: any,
   editorState: any
 }
-class MessageBoard extends React.Component<Props, State> {
+class MessageBoardImpl extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -245,8 +245,8 @@ class MessageBoard extends React.Component<Props, State> {
     )
   }
 }
-export default function (props: Props) {
+export default function MessageBoard(props: Props) {
   const route = useRoute();
   const navigation = useNavigation()
-  return <MessageBoard {...props} navigation={navigation} route={route} />;
+  return <MessageBoardImpl {...props} navigation={navigation} route={route} />;
 }

@@ -342,8 +342,9 @@ export default class MyGroups extends React.Component<Props, State> {
     this.setState({ canLeave: this.state.canLeave.concat([group.id]) })
     this.renderByType(group, groupType)
   }
-  openConversation(): void {
-
+  openConversation(initialUser, name) {
+    console.log("Navigate to conversationScreen")
+    this.props.navigation.push("ConversationScreen", { initialUserID: initialUser, initialUserName: name });
   }
   leave(group: any, groupType: any): void {
     Analytics.record({
@@ -422,7 +423,7 @@ export default class MyGroups extends React.Component<Props, State> {
           <Body>
             <Text style={styles.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
             <Text style={styles.fontConnectWithRole}>{item.currentRole}</Text>
-            <JCButton buttonType={ButtonTypes.OutlineSmall} onPress={() => { this.openConversation() }}>Start Conversation</JCButton>
+            <JCButton buttonType={ButtonTypes.OutlineSmall} onPress={() => { this.openConversation(item.id, item.user.given_name + " " + item.user.family_name) }}>Start Conversation</JCButton>
           </Body>
         </Left>
       </CardItem>
