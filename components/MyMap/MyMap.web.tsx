@@ -285,6 +285,16 @@ class MyMap extends React.Component<Props, State> {
                     </View>
                   </TouchableWithoutFeedback>
                 </View>
+                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end', paddingRight:'2%'}}>
+                  <View style={{flexDirection: 'row', alignItems: 'center', paddingLeft: 20}}>
+                    <View style={{ backgroundColor: '#f0493e', borderRadius: 25, width: 25, height: 13, }}></View>
+                    <Text style={styles.fontMyMapLegend}>Partners</Text>
+                  </View>
+                  <View style={{flexDirection: 'row', alignItems: 'center', paddingLeft: 20}}>
+                    <View style={{ backgroundColor: '#ffb931', borderRadius: 25, width: 25, height: 13 }}></View>
+                    <Text style={styles.fontMyMapLegend}>Friends</Text>
+                  </View>
+                </View>
               </View>
             </View>
             <View style={{ flex: 9 }}>
@@ -314,6 +324,8 @@ class MyMap extends React.Component<Props, State> {
                   if (!this.state.profilesEnabled) {
                     filters.push("profile")
                   }
+                  
+                  console.log(mapItem)
 
                   let filtered = filters.filter(item => mapItem.type === item)
                   if (filtered.length === 0) {
@@ -323,13 +335,16 @@ class MyMap extends React.Component<Props, State> {
                     onClick={this.onMarkerClick}
                     position={{ lat: mapItem.latitude, lng: mapItem.longitude }}
                     icon={{
-                      url: require("../../assets/svg/mapicon.svg"),
+                      url: require("../../assets/svg/map-icon-red.svg"),
                       anchor: new google.maps.Point(32,32),
                       scaledSize: new google.maps.Size(32,32)
                     }}>
                     </Marker>
                   }
-            
+
+                  //will need later for friends
+                  //url: require("../../assets/svg/map-icon-yellow.svg"),
+
                 })}
 
                 <InfoWindow
