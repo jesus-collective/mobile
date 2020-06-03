@@ -1,14 +1,10 @@
 import React from 'react';
-import { StyleProvider, Container, Content, View } from 'native-base';
+import { Container, View } from 'native-base';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
 import { Text, TouchableOpacity } from 'react-native'
 
-import Header from '../../components/Header/Header'
-import MyMap from '../../components/MyMap/MyMap';
 import styles from '../../components/style'
-import getTheme from '../../native-base-theme/components';
-import material from '../../native-base-theme/variables/material';
 import EditableText from '../../components/Forms/EditableText'
 import Validate from '../../components/Validate/Validate'
 import { API, graphqlOperation, Auth, Analytics } from 'aws-amplify';
@@ -17,9 +13,6 @@ import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
-import ResourceViewer from '../../components/ResourceViewer/ResourceViewer'
-import { ResourceRoot, Resource, ResourceEpisode, ResourceSeries } from "../../src/models";
-import EditableRichText from '../Forms/EditableRichText'
 import { ResourceContext } from './ResourceContext';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
@@ -37,10 +30,10 @@ interface State {
     canJoin: boolean
     isEditable: boolean
     canDelete: boolean
-    validationError: String
-    currentUser: String
+    validationError: string
+    currentUser: string
     currentUserProfile: any
-    memberIDs: String[]
+    memberIDs: string[]
 }
 
 class ResourceOverview extends React.Component<Props, State>{
@@ -91,7 +84,7 @@ class ResourceOverview extends React.Component<Props, State>{
     setInitialData(props) {
         if (props.route.params.create === "true" || props.route.params.create === true)
             Auth.currentAuthenticatedUser().then((user: any) => {
-                var z: CreateGroupInput = {
+                const z: CreateGroupInput = {
                     id: "resource-" + Date.now(),
                     owner: user.username,
                     type: "resource",
@@ -113,12 +106,12 @@ class ResourceOverview extends React.Component<Props, State>{
                 })
             })
         else {
-            var getGroup: any = API.graphql({
+            const getGroup: any = API.graphql({
                 query: queries.getGroup,
                 variables: { id: props.route.params.id },
                 authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
             });
-            var processResults = (json) => {
+            const processResults = (json) => {
                 const isEditable = json.data.getGroup.owner == this.state.currentUser
 
                 this.setState({
@@ -132,7 +125,7 @@ class ResourceOverview extends React.Component<Props, State>{
                     canDelete: (!this.state.createNew) && isEditable
                 },
                     () => {
-                        var groupMemberByUser: any = API.graphql({
+                        const groupMemberByUser: any = API.graphql({
                             query: queries.groupMemberByUser,
                             variables: { userID: this.state.currentUser, groupID: { eq: this.state.data.id } },
                             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -155,13 +148,13 @@ class ResourceOverview extends React.Component<Props, State>{
         this.setState({ showMap: !this.state.showMap })
     }
     validate(): boolean {
-        var validation: any = Validate.Resource(this.state.data)
+        const validation: any = Validate.Resource(this.state.data)
         this.setState({ validationError: validation.validationError })
         return validation.result
     }
     createNew() {
         if (this.validate()) {
-            var createGroup: any = API.graphql({
+            const createGroup: any = API.graphql({
                 query: mutations.createGroup,
                 variables: { input: this.state.data },
                 authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -197,7 +190,7 @@ class ResourceOverview extends React.Component<Props, State>{
     }
     save() {
         if (this.validate()) {
-            var updateGroup: any = API.graphql({
+            const updateGroup: any = API.graphql({
                 query: mutations.updateGroup,
                 variables: { input: this.clean(this.state.data) },
                 authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -217,7 +210,7 @@ class ResourceOverview extends React.Component<Props, State>{
             // Attribute values must be strings
             attributes: { id: this.state.data.id, name: this.state.data.name }
         });
-        var groupMemberByUser: any = API.graphql({
+        const groupMemberByUser: any = API.graphql({
             query: queries.groupMemberByUser,
             variables: { userID: this.state.currentUser, groupID: { eq: this.state.data.id } },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -226,7 +219,7 @@ class ResourceOverview extends React.Component<Props, State>{
             console.log({ "Success queries.groupMemberByUser": json });
 
             json.data.groupMemberByUser.items.map((item) => {
-                var deleteGroupMember: any = API.graphql({
+                const deleteGroupMember: any = API.graphql({
                     query: mutations.deleteGroupMember,
                     variables: { input: { id: item.id } },
                     authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -239,7 +232,7 @@ class ResourceOverview extends React.Component<Props, State>{
                 });
             })
 
-            let remainingUsers = this.state.memberIDs.filter(user => user !== this.state.currentUser)
+            const remainingUsers = this.state.memberIDs.filter(user => user !== this.state.currentUser)
             this.setState({ canJoin: true, canLeave: false, memberIDs: remainingUsers })
             this.renderButtons()
 
@@ -253,7 +246,7 @@ class ResourceOverview extends React.Component<Props, State>{
             // Attribute values must be strings
             attributes: { id: this.state.data.id, name: this.state.data.name }
         });
-        var createGroupMember: any = API.graphql({
+        const createGroupMember: any = API.graphql({
             query: mutations.createGroupMember,
             variables: { input: { groupID: this.state.data.id, userID: this.state.currentUser } },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -270,7 +263,7 @@ class ResourceOverview extends React.Component<Props, State>{
         console.log(this.state.memberIDs)
     }
     delete() {
-        var deleteGroup: any = API.graphql({
+        const deleteGroup: any = API.graphql({
             query: mutations.deleteGroup,
             variables: { input: { id: this.state.data.id } },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -287,7 +280,7 @@ class ResourceOverview extends React.Component<Props, State>{
         this.props.navigation.push("ProfileScreen", { id: id, create: false });
     }
     updateValue(field: any, value: any) {
-        var temp = this.state.data
+        const temp = this.state.data
         temp[field] = value
         this.setState({ data: temp })
     }
@@ -357,7 +350,7 @@ class ResourceOverview extends React.Component<Props, State>{
                     </Container>
                     <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', backgroundColor: "#F9FAFC", height: "100%" }}>
                         <ResourceOverview.Consumer>
-                            {({ state, actions }) => {
+                            {({ state }) => {
 
                                 return (state.data.resources.items[state.currentResource] ? <Container style={styles.resourcesOverviewRightCard} >
 

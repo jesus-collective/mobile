@@ -72,19 +72,19 @@ export default class EditableRichText extends React.Component<Props, State> {
                         options: ['inline', 'list', 'colorPicker', 'link', 'emoji', 'image', 'history'],
                         inline: {
                             options: ['bold', 'italic', 'underline', 'strikethrough']
-                          },
+                        },
                         list: {
                             options: ['unordered', 'ordered']
                         },
                         image: {
                             uploadCallback: async (z1) => {
-                                var id = uuidv1()
+                                const id = uuidv1()
 
-                                var upload = await Storage.put("messages/" + id + ".png", z1, {
+                                const upload = await Storage.put("messages/" + id + ".png", z1, {
                                     level: 'protected',
                                     contentType: z1.type,
                                 })
-                                var download = await Storage.get("messages/" + id + ".png", {
+                                const download = await Storage.get("messages/" + id + ".png", {
                                     level: 'protected',
                                     contentType: z1.type,
                                     identityId: ""
