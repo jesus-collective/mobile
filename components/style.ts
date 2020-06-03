@@ -122,6 +122,16 @@ export default EStyleSheet.create({
         fontFamily: 'Graphik-Regular-App',
         fontSize: 16
     },
+    fontMyMapOptions: {
+        //font family is Helvetica Neue on Figma
+        fontSize: 14,
+        paddingRight: 10
+    },
+    fontMyMapLegend: {
+        //font family is Helvetica Neue on Figma
+        fontSize: 14,
+        paddingLeft: 5
+    },
     fontMyProfileLeftTop: {
         fontFamily: 'Graphik-Regular-App',
         fontSize: 30,
