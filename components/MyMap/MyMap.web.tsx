@@ -2,7 +2,7 @@
 import * as React from 'react';
 //import {ProviderProps} from 'google-maps-react';
 //import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { Body, Card, CardItem, Container, Button } from 'native-base';
+import { Body, Card, CardItem, Container, Button, View } from 'native-base';
 import { TouchableOpacity } from 'react-native'
 import styles from '../style'
 
@@ -78,11 +78,11 @@ class MyMap extends React.Component<Props, State> {
     </TouchableOpacity>
   }
   renderEvent() {
-    return <Card style={{ minHeight: 395, alignSelf: "flex-start", padding: '0%', paddingLeft: '0.25rem', paddingRight: '0.25rem', borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", borderStyle: "solid", borderColor: "#FFFFFF", width: 100 }}>
+    return <Card style={styles.myMapCalloutEventContainer}>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailTop}>{moment(this.state.selectedPlace.mapItem.event.time).format('MMMM Do YYYY, h:mm a')}</Text></CardItem>
-      <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{this.state.selectedPlace.mapItem.event.name}</Text></CardItem>
-      <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetailMiddle}>{this.state.selectedPlace.mapItem.event.description}</Text></CardItem>
-      <CardItem>
+      <CardItem style={styles.myMapCalloutEventName}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{this.state.selectedPlace.mapItem.event.name}</Text></CardItem>
+      <CardItem style={styles.myMapCalloutEventDescription}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetailMiddle}>{this.state.selectedPlace.mapItem.event.description}</Text></CardItem>
+      <CardItem style={{ paddingBottom: 40 }}>
         {this.state.selectedPlace.mapItem.event.eventType == "location" ?
           <Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailBottom}><a target="_blank" rel="noreferrer" href={"https://www.google.com/maps/dir/?api=1&destination=" + escape(this.state.selectedPlace.mapItem.event.location)}>{this.state.selectedPlace.mapItem.event.location}</a></Text>
           : this.state.selectedPlace.mapItem.event.eventType == "zoom" ?
@@ -124,21 +124,20 @@ class MyMap extends React.Component<Props, State> {
 
                 </Marker>
               })}
+                <InfoWindow
+                  google={window.google}
+                  visible={this.state.showingInfoWindow}
+                  marker={this.state.activeMarker}>
+                  {this.state.selectedPlace != null ?
+                    this.state.selectedPlace.mapItemType == "profile" ?
+                      this.renderProfile() :
+                      this.state.selectedPlace.mapItemType == "event" ?
+                        this.renderEvent()
+                        : null
+                    : null
+                  }
 
-              <InfoWindow
-                google={window.google}
-                visible={this.state.showingInfoWindow}
-                marker={this.state.activeMarker}>
-                {this.state.selectedPlace != null ?
-                  this.state.selectedPlace.mapItemType == "profile" ?
-                    this.renderProfile() :
-                    this.state.selectedPlace.mapItemType == "event" ?
-                      this.renderEvent()
-                      : null
-                  : null
-                }
-
-              </InfoWindow>
+                </InfoWindow>
             </Map>
           </Container>
         </ErrorBoundary>

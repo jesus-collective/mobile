@@ -838,6 +838,26 @@ export default EStyleSheet.create({
         paddingLeft: 20,
         paddingTop: 5,
     },
+    myMapCalloutEventContainer: {
+        minHeight: 250, 
+        alignSelf: "flex-start", 
+        padding: '0%', 
+        paddingLeft: '0.25rem', 
+        paddingRight: '0.25rem', 
+        borderRadius: 4, 
+        boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", 
+        borderStyle: "solid", 
+        borderColor: "#FFFFFF", 
+        width: 400
+    },
+    myMapCalloutEventName: {
+        height: 100
+    },
+    myMapCalloutEventDescription: {
+        height: 100
+    },
+
+
 
 
     // Media Query Desktop Tablet
