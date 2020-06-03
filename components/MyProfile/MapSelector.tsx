@@ -1,170 +1,10 @@
-import { Icon, Button, View, Input, Form, Item, Label, Content } from 'native-base';
-import { Text, Image, Modal } from 'react-native'
+import { View } from 'native-base';
+import { Text } from 'react-native'
 import * as React from 'react';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 
-const mapstyle = [
-    {
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "color": "#f5f5f5"
-            }
-        ]
-    },
-    {
-        "elementType": "labels.icon",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "elementType": "labels.text.fill",
-        "stylers": [
-            {
-                "color": "#616161"
-            }
-        ]
-    },
-    {
-        "elementType": "labels.text.stroke",
-        "stylers": [
-            {
-                "color": "#f5f5f5"
-            }
-        ]
-    },
-    {
-        "featureType": "administrative.land_parcel",
-        "elementType": "labels.text.fill",
-        "stylers": [
-            {
-                "color": "#bdbdbd"
-            }
-        ]
-    },
-    {
-        "featureType": "poi",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "color": "#eeeeee"
-            }
-        ]
-    },
-    {
-        "featureType": "poi",
-        "elementType": "labels.text.fill",
-        "stylers": [
-            {
-                "color": "#757575"
-            }
-        ]
-    },
-    {
-        "featureType": "poi.park",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "color": "#e5e5e5"
-            }
-        ]
-    },
-    {
-        "featureType": "poi.park",
-        "elementType": "labels.text.fill",
-        "stylers": [
-            {
-                "color": "#9e9e9e"
-            }
-        ]
-    },
-    {
-        "featureType": "road",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "color": "#ffffff"
-            }
-        ]
-    },
-    {
-        "featureType": "road.arterial",
-        "elementType": "labels.text.fill",
-        "stylers": [
-            {
-                "color": "#757575"
-            }
-        ]
-    },
-    {
-        "featureType": "road.highway",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "color": "#dadada"
-            }
-        ]
-    },
-    {
-        "featureType": "road.highway",
-        "elementType": "labels.text.fill",
-        "stylers": [
-            {
-                "color": "#616161"
-            }
-        ]
-    },
-    {
-        "featureType": "road.local",
-        "elementType": "labels.text.fill",
-        "stylers": [
-            {
-                "color": "#9e9e9e"
-            }
-        ]
-    },
-    {
-        "featureType": "transit.line",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "color": "#e5e5e5"
-            }
-        ]
-    },
-    {
-        "featureType": "transit.station",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "color": "#eeeeee"
-            }
-        ]
-    },
-    {
-        "featureType": "water",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "color": "#c9c9c9"
-            }
-        ]
-    },
-    {
-        "featureType": "water",
-        "elementType": "labels.text.fill",
-        "stylers": [
-            {
-                "color": "#9e9e9e"
-            }
-        ]
-    }
-]
 interface Props {
     mapVisible: any,
     onClose(mapCoord: any): any
@@ -183,7 +23,7 @@ export default class MapSelector extends React.Component<Props, State> {
         }
     }
 
-    render() {
+    render(): React.ReactNode {
         return (
 
             this.props.mapVisible ?

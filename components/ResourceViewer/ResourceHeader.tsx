@@ -1,13 +1,11 @@
-import { Container, View, Header, Left, Body, Right, Button } from 'native-base';
+import { Container, View } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Image, Text } from 'react-native';
 import styles from '../style'
 import EditableText from '../Forms/EditableText'
-const Context = React.createContext("resource")
 import { ResourceContext } from './ResourceContext';
-import { API, graphqlOperation, Storage } from 'aws-amplify';
-import { Auth } from 'aws-amplify';
+import { Storage } from 'aws-amplify';
 import Amplify from 'aws-amplify'
 import awsconfig from '../../src/aws-exports';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
@@ -15,7 +13,6 @@ import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 Amplify.configure(awsconfig);
 
 
-var moment = require('moment');
 interface Props {
 
 }

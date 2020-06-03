@@ -1,24 +1,18 @@
 ﻿import React from 'react';
-import { Icon, Picker, Accordion, StyleProvider, Card, Container, Content } from 'native-base';
+import { Icon, Picker, StyleProvider, Container, Content } from 'native-base';
 import { Text } from 'react-native'
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
 import CourseSidebar from '../../components/CourseSidebar/CourseSidebar'
-import MyMap from '../../components/MyMap/MyMap';
-import styles from '../../components/style'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 
-import EditableText from '../../components/Forms/EditableText'
 import Validate from '../../components/Validate/Validate'
-import { Image, View } from 'react-native'
-import { API, graphqlOperation, Auth } from 'aws-amplify';
-import { CreateGroupInput } from '../../src/API'
-import * as mutations from '../../src/graphql/mutations';
+import { Image } from 'react-native'
+import { API } from 'aws-amplify';
 import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import CourseHeader from '../../components/CourseHeader/CourseHeader';
-import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 const data = require('../CourseOverviewScreen/course.json');
 
 interface Props {

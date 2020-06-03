@@ -2,7 +2,7 @@
 import isAbsoluteUrl from 'is-absolute-url'
 type ValidationResult = {
     result: boolean,
-    validationError: String
+    validationError: string
 }
 export default class Validate {
     static Profile(data: any): ValidationResult {

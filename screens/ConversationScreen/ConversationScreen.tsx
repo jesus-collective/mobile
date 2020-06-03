@@ -1,23 +1,15 @@
-﻿import React, { lazy } from 'react';
+﻿import React from 'react';
 import { Container, Content } from 'native-base';
 import { Text } from 'react-native'
-import * as queries from '../../src/graphql/queries';
 import * as customQueries from '../../src/graphql-custom/queries';
 import * as mutations from '../../src/graphql/mutations';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
-import { API, graphqlOperation, Auth } from 'aws-amplify';
+import { API, Auth } from 'aws-amplify';
 
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
-import MyConversations from '../../components/MyConversations/MyConversations';
-import MyGroups from '../../components/MyGroups/MyGroups';
-import MyPeople from '../../components/MyPeople/MyPeople';
-import styles from '../../components/style'
-import getTheme from '../../native-base-theme/components';
-import material from '../../native-base-theme/variables/material';
 
 import { Image } from 'react-native'
-const MessageBoard = lazy(() => import('../../components/MessageBoard/MessageBoard'));
 
 interface Props {
   navigation: any

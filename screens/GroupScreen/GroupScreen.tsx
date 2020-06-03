@@ -35,10 +35,10 @@ interface State {
   canJoin: boolean
   isEditable: boolean
   canDelete: boolean
-  validationError: String
-  currentUser: String
+  validationError: string
+  currentUser: string
   currentUserProfile: any
-  memberIDs: String[]
+  memberIDs: string[]
 }
 
 
@@ -88,10 +88,10 @@ export default class GroupScreen extends React.Component<Props, State>{
     const key = Object.keys(myObject).filter(k => k.includes(string));
     return key.length ? myObject[key[0]] : "";
   }
-  setInitialData(props) {
+  setInitialData(props: Props): void {
     if (props.route.params.create === true || props.route.params.create === "true")
       Auth.currentAuthenticatedUser().then((user: any) => {
-        var z: CreateGroupInput = {
+        const z: CreateGroupInput = {
           id: "group-" + Date.now(),
           owner: user.username,
           type: "group",
@@ -113,12 +113,12 @@ export default class GroupScreen extends React.Component<Props, State>{
         })
       })
     else {
-      var getGroup: any = API.graphql({
+      const getGroup: any = API.graphql({
         query: queries.getGroup,
         variables: { id: props.route.params.id, messages: { sortDirection: "ASC" } },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
-      var processResults = (json) => {
+      const processResults = (json) => {
         const isEditable = json.data.getGroup.owner == this.state.currentUser
 
         this.setState({
@@ -133,7 +133,7 @@ export default class GroupScreen extends React.Component<Props, State>{
         },
 
           () => {
-            var groupMemberByUser: any = API.graphql({
+            const groupMemberByUser: any = API.graphql({
               query: queries.groupMemberByUser,
               variables: { userID: this.state.currentUser, groupID: { eq: this.state.data.id } },
               authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -151,17 +151,17 @@ export default class GroupScreen extends React.Component<Props, State>{
       getGroup.then(processResults).catch(processResults)
     }
   }
-  mapChanged = () => {
+  mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
   }
   validate(): boolean {
-    var validation: any = Validate.Group(this.state.data)
+    const validation: any = Validate.Group(this.state.data)
     this.setState({ validationError: validation.validationError })
     return validation.result
   }
-  createNew() {
+  createNew(): void {
     if (this.validate()) {
-      var createGroup: any = API.graphql({
+      const createGroup: any = API.graphql({
         query: mutations.createGroup,
         variables: { input: this.state.data },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -182,7 +182,7 @@ export default class GroupScreen extends React.Component<Props, State>{
       });
     }
   }
-  clean(item) {
+  clean(item): void {
     delete item.members
     delete item.messages
     delete item.organizerGroup
@@ -195,9 +195,9 @@ export default class GroupScreen extends React.Component<Props, State>{
     delete item.updatedAt
     return item
   }
-  save() {
+  save(): void {
     if (this.validate()) {
-      var updateGroup: any = API.graphql({
+      const updateGroup: any = API.graphql({
         query: mutations.updateGroup,
         variables: { input: this.clean(this.state.data) },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -210,13 +210,13 @@ export default class GroupScreen extends React.Component<Props, State>{
     }
 
   }
-  leave() {
+  leave(): void {
     Analytics.record({
       name: 'leftGroup',
       // Attribute values must be strings
       attributes: { id: this.state.data.id, name: this.state.data.name }
     });
-    var groupMemberByUser: any = API.graphql({
+    const groupMemberByUser: any = API.graphql({
       query: queries.groupMemberByUser,
       variables: { userID: this.state.currentUser, groupID: { eq: this.state.data.id } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -225,7 +225,7 @@ export default class GroupScreen extends React.Component<Props, State>{
       console.log({ "Success queries.groupMemberByUser": json });
 
       json.data.groupMemberByUser.items.map((item) => {
-        var deleteGroupMember: any = API.graphql({
+        const deleteGroupMember: any = API.graphql({
           query: mutations.deleteGroupMember,
           variables: { input: { id: item.id } },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -238,7 +238,7 @@ export default class GroupScreen extends React.Component<Props, State>{
         });
       })
 
-      let remainingUsers = this.state.memberIDs.filter(user => user !== this.state.currentUser)
+      const remainingUsers = this.state.memberIDs.filter(user => user !== this.state.currentUser)
       this.setState({ canJoin: true, canLeave: false, memberIDs: remainingUsers })
       this.renderButtons()
 
@@ -247,13 +247,13 @@ export default class GroupScreen extends React.Component<Props, State>{
     });
 
   }
-  join() {
+  join(): void {
     Analytics.record({
       name: 'joinedGroup',
       // Attribute values must be strings
       attributes: { id: this.state.data.id, name: this.state.data.name }
     });
-    var createGroupMember: any = API.graphql({
+    const createGroupMember: any = API.graphql({
       query: mutations.createGroupMember,
       variables: { input: { groupID: this.state.data.id, userID: this.state.currentUser } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -269,8 +269,8 @@ export default class GroupScreen extends React.Component<Props, State>{
     this.renderButtons()
     console.log(this.state.memberIDs)
   }
-  delete() {
-    var deleteGroup: any = API.graphql({
+  delete(): void {
+    const deleteGroup: any = API.graphql({
       query: mutations.deleteGroup,
       variables: { input: { id: this.state.data.id } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -282,16 +282,16 @@ export default class GroupScreen extends React.Component<Props, State>{
       console.log({ "Error mutations.deleteGroup": err });
     });
   }
-  updateValue(field: any, value: any) {
-    var temp = this.state.data
+  updateValue(field: any, value: any): void {
+    const temp = this.state.data
     temp[field] = value
     this.setState({ data: temp })
   }
-  showProfile(id) {
+  showProfile(id): void {
     console.log("Navigate to profileScreen")
     this.props.navigation.push("ProfileScreen", { id: id, create: false });
   }
-  renderButtons() {
+  renderButtons(): React.ReactNode {
     return (
       <Container style={{ minHeight: 30 }}>
         {this.state.canJoin ?
@@ -318,7 +318,7 @@ export default class GroupScreen extends React.Component<Props, State>{
       </Container>
     )
   }
-  render() {
+  render(): React.ReactNode {
     //console.log(this.state)
     console.log("GroupScreen")
     return (

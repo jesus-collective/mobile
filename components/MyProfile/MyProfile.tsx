@@ -222,7 +222,7 @@ export default class MyProfile extends React.Component<Props, State> {
           <View style={styles.myProfileTopButtons}>
             {this.state.isEditable ?
               <Text style={styles.profileFontTitle}>Setup your profile</Text>
-              : <Text style={styles.profileFontTitle}>{this.state.UserDetails.given_name}'s profile</Text>
+              : <Text style={styles.profileFontTitle}>{this.state.UserDetails.given_name}&apos;s profile</Text>
             }
             {this.state.isEditable ?
               <View style={styles.myProfileTopButtonsInternalContainer}>

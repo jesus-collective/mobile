@@ -174,7 +174,7 @@ export default class MyGroups extends React.Component<Props, State> {
     })
 
   }
-  convertProfileToMapData() {
+  convertProfileToMapData(): [] {
     return [{
       latitude: 30.01,
       longitude: 40.02,
@@ -183,7 +183,7 @@ export default class MyGroups extends React.Component<Props, State> {
       type: "profile"
     }]
   }
-  convertEventToMapData(data) {
+  convertEventToMapData(data): [] {
     return data.map((dataItem) => {
       if (dataItem.locationLatLong && dataItem.locationLatLong.latitude && dataItem.locationLatLong.longitude)
         return {
@@ -197,7 +197,7 @@ export default class MyGroups extends React.Component<Props, State> {
       else return null
     }).filter(o => o)
   }
-  convertToMapData(data) {
+  convertToMapData(data): [] {
     switch (this.state.type) {
       case "group":
         return []
@@ -238,7 +238,7 @@ export default class MyGroups extends React.Component<Props, State> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
 
-      var processList = (json) => {
+      const processList = (json) => {
         console.log({ profile: json })
         this.setCanLeave(json.data.groupByType.items)
         this.setIsOwner(json.data.groupByType.items)
@@ -251,20 +251,20 @@ export default class MyGroups extends React.Component<Props, State> {
       listGroup.then(processList).catch(processList)
     }
   }
-  openSingle(id: any) {
+  openSingle(id: any): void {
     console.log({ "Navigate to": this.state.openSingle })
     // console.log(id)
     this.props.navigation.push(this.state.openSingle, { id: id, create: false })
   }
-  createSingle() {
+  createSingle(): void {
     console.log({ "Navigate to": this.state.openSingle })
     this.props.navigation.push(this.state.openSingle, { create: true })
   }
-  openMultiple() {
+  openMultiple(): void {
     console.log({ "Navigate to": this.state.openMultiple })
     this.props.navigation.push(this.state.openMultiple);
   }
-  setCanLeave(data: any) {
+  setCanLeave(data: any): void {
     data.forEach((item: any) => {
       const groupMemberByUser: any = API.graphql({
         query: queries.groupMemberByUser,
@@ -282,7 +282,7 @@ export default class MyGroups extends React.Component<Props, State> {
     });
   }
 
-  setIsOwner(data: any) {
+  setIsOwner(data: any): void {
     data.forEach((item: any) => {
       const getGroup: any = API.graphql({
         query: queries.getGroup,
@@ -321,7 +321,7 @@ export default class MyGroups extends React.Component<Props, State> {
       return false
   }
 
-  join(group: any, groupType: any) {
+  join(group: any, groupType: any): void {
     Analytics.record({
       name: 'joined' + groupType,
       // Attribute values must be strings
@@ -342,10 +342,10 @@ export default class MyGroups extends React.Component<Props, State> {
     this.setState({ canLeave: this.state.canLeave.concat([group.id]) })
     this.renderByType(group, groupType)
   }
-  openConversation() {
+  openConversation(): void {
 
   }
-  leave(group: any, groupType: any) {
+  leave(group: any, groupType: any): void {
     Analytics.record({
       name: 'left' + groupType,
       // Attribute values must be strings
@@ -368,7 +368,7 @@ export default class MyGroups extends React.Component<Props, State> {
         deleteGroupMember.then((json: any) => {
 
           console.log({ "Success mutations.deleteGroupMember": json });
-        }).catch((err: any) => {
+        }).catch((err: Error) => {
           console.log({ "Error mutations.deleteGroupMember": err });
         });
       })
@@ -379,30 +379,30 @@ export default class MyGroups extends React.Component<Props, State> {
       this.setState({ canLeave: canLeave })
       this.renderByType(group, groupType)
 
-    }).catch((err: any) => {
+    }).catch((err: Error) => {
       console.log({ "Error queries.groupMemberByUser": err });
     });
 
   }
 
-  renderByType(item: any, type: string) {
+  renderByType(item: any, type: string): React.ReactNode {
     switch (type) {
       case "group":
-        this.renderGroup(item)
+        return this.renderGroup(item)
       case "event":
-        this.renderEvent(item)
+        return this.renderEvent(item)
       case "resource":
-        this.renderResource(item)
+        return this.renderResource(item)
       case "organization":
-        this.renderOrganization(item)
+        return this.renderOrganization(item)
       case "course":
-        this.renderCourse(item)
+        return this.renderCourse(item)
       case "profile":
-        this.renderProfile(item)
+        return this.renderProfile(item)
     }
   }
 
-  renderGroup(item: any) {
+  renderGroup(item: any): React.ReactNode {
     return <Card style={{ height: 365, alignSelf: "flex-start", padding: '0%', paddingLeft: '0.25rem', paddingRight: '0.25rem', borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", borderStyle: "solid", borderColor: "#FFFFFF", width: this.state.cardWidth }
     } >
       <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0 }} >
@@ -415,7 +415,7 @@ export default class MyGroups extends React.Component<Props, State> {
       {this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>Owner</JCButton><Right></Right></CardItem> : null}
     </Card >
   }
-  renderProfile(item: any) {
+  renderProfile(item: any): React.ReactNode {
     return <Card key={item.id} style={styles.profilesCard}>
       <CardItem style={{ padding: '0%', paddingLeft: '1.5rem', paddingRight: '1.5rem', borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", borderStyle: "solid", borderColor: "#FFFFFF" }}>
         <Left>
@@ -429,7 +429,7 @@ export default class MyGroups extends React.Component<Props, State> {
       </CardItem>
     </Card>
   }
-  renderEvent(item: any) {
+  renderEvent(item: any): React.ReactNode {
     return <Card style={{ minHeight: 300, alignSelf: "flex-start", padding: '0%', paddingLeft: '0.25rem', paddingRight: '0.25rem', borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", borderStyle: "solid", borderColor: "#FFFFFF", width: this.state.cardWidth }}>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailTop}>{moment(item.time).format('MMMM Do YYYY, h:mm a')}</Text></CardItem>
       <CardItem style={{ height: 60, marginTop: 8 }}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
@@ -448,7 +448,7 @@ export default class MyGroups extends React.Component<Props, State> {
       {this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>Owner</JCButton><Right></Right></CardItem> : null}
     </Card>
   }
-  renderResource(item: any) {
+  renderResource(item: any): React.ReactNode {
     return <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: '0%', paddingLeft: '0.25rem', paddingRight: '0.25rem', borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", borderStyle: "solid", borderColor: "#FFFFFF", width: this.state.cardWidth }}>
       <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0 }}>
         <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 70 }} source={require('../../assets/svg/pattern.svg')}></Image>
@@ -459,7 +459,7 @@ export default class MyGroups extends React.Component<Props, State> {
       {false ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Resource") }}>Leave</JCButton><Right></Right></CardItem> : null}
     </Card>
   }
-  renderOrganization(item: any) {
+  renderOrganization(item: any): React.ReactNode {
     return <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: '0%', paddingLeft: '0.25rem', paddingRight: '0.25rem', borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", width: this.state.cardWidth }}>
       <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0 }}>
         <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 20 }} source={require('../../assets/svg/pattern.svg')}></Image>
@@ -470,7 +470,7 @@ export default class MyGroups extends React.Component<Props, State> {
       {false ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Organization") }}>Leave</JCButton><Right></Right></CardItem> : null}
     </Card>
   }
-  renderCourse(item: any) {
+  renderCourse(item: any): React.ReactNode {
     return <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: '0%', paddingLeft: '0.25rem', paddingRight: '0.25rem', borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", width: this.state.cardWidth }}>
       <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0 }}>
         <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 20 }} source={require('../../assets/svg/pattern.svg')}></Image>
@@ -481,7 +481,7 @@ export default class MyGroups extends React.Component<Props, State> {
       {false ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Course") }}>Leave</JCButton><Right></Right></CardItem> : null}
     </Card>
   }
-  render() {
+  render(): React.ReactNode {
     if (!constants["SETTING_ISVISIBLE_" + this.state.type])
       return null
     else
@@ -511,19 +511,7 @@ export default class MyGroups extends React.Component<Props, State> {
                       return (
                         <ErrorBoundry key={index}>
                           <ListItem noBorder style={{ alignSelf: "flex-start" }} button onPress={() => { this.openSingle(item.id) }}>
-                            {this.state.type == "group" ?
-                              this.renderGroup(item) :
-                              this.state.type == "event" ?
-                                this.renderEvent(item) :
-                                this.state.type == "resource" ?
-                                  this.renderResource(item) :
-                                  this.state.type == "organization" ?
-                                    this.renderOrganization(item) :
-                                    this.state.type == "course" ?
-                                      this.renderCourse(item) :
-                                      this.state.type == "profile" ?
-                                        this.renderProfile(item) :
-                                        null
+                            {this.renderByType(item, this.state.type)
                             }
 
 

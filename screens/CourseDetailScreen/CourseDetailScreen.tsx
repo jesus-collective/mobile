@@ -1,19 +1,15 @@
 ﻿import React, { lazy } from 'react';
-import { Accordion, StyleProvider, Card, Container, Content, Left, Right, CardItem, Body } from 'native-base';
+import { StyleProvider, Card, Container, Content } from 'native-base';
 import { Text } from 'react-native'
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
 import CourseSidebar from '../../components/CourseSidebar/CourseSidebar'
-import MyMap from '../../components/MyMap/MyMap';
-import styles from '../../components/style'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 
 import Validate from '../../components/Validate/Validate'
 import { Image } from 'react-native'
-import { API, graphqlOperation, Auth } from 'aws-amplify';
-import { CreateGroupInput } from '../../src/API'
-import * as mutations from '../../src/graphql/mutations';
+import { API } from 'aws-amplify';
 import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import CourseHeader from '../../components/CourseHeader/CourseHeader';

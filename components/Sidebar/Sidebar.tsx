@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Container, Content, List, ListItem, Header } from "native-base";
 import { Text } from 'react-native'
-import { useRoute, useNavigation } from '@react-navigation/native'
 
 const routes = [
   {

@@ -40,10 +40,10 @@ interface State {
   canJoin: boolean
   isEditable: boolean
   canDelete: boolean
-  validationError: String
-  currentUser: String
+  validationError: string
+  currentUser: string
   currentUserProfile: any
-  attendeeIDs: String[]
+  attendeeIDs: string[]
 }
 
 
@@ -100,7 +100,7 @@ export default class EventScreen extends React.Component<Props, State>{
     console.log(props.route.params.create)
     if (props.route.params.create === true || props.route.params.create == "true")
       Auth.currentAuthenticatedUser().then((user: any) => {
-        var z: CreateGroupInput = {
+        const z: CreateGroupInput = {
           id: "event-" + Date.now(),
           owner: user.username,
           type: "event",
@@ -124,12 +124,12 @@ export default class EventScreen extends React.Component<Props, State>{
         })
       })
     else {
-      var getGroup: any = API.graphql({
+      const getGroup: any = API.graphql({
         query: queries.getGroup,
         variables: { id: props.route.params.id },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
-      var processResults = (json) => {
+      const processResults = (json) => {
         const isEditable = json.data.getGroup.owner == this.state.currentUser
 
         this.setState({
@@ -144,7 +144,7 @@ export default class EventScreen extends React.Component<Props, State>{
         },
 
           () => {
-            var groupMemberByUser: any = API.graphql({
+            const groupMemberByUser: any = API.graphql({
               query: queries.groupMemberByUser,
               variables: { userID: this.state.currentUser, groupID: { eq: this.state.data.id } },
               authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -166,13 +166,13 @@ export default class EventScreen extends React.Component<Props, State>{
     this.setState({ showMap: !this.state.showMap })
   }
   validate(): boolean {
-    var validation: any = Validate.Event(this.state.data)
+    const validation: any = Validate.Event(this.state.data)
     this.setState({ validationError: validation.validationError })
     return validation.result
   }
   createNew() {
     if (this.validate()) {
-      var createGroup: any = API.graphql({
+      const createGroup: any = API.graphql({
         query: mutations.createGroup,
         variables: { input: this.state.data },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -208,7 +208,7 @@ export default class EventScreen extends React.Component<Props, State>{
   }
   save() {
     if (this.validate()) {
-      var updateGroup: any = API.graphql({
+      const updateGroup: any = API.graphql({
         query: mutations.updateGroup,
         variables: { input: this.clean(this.state.data) },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -228,7 +228,7 @@ export default class EventScreen extends React.Component<Props, State>{
       // Attribute values must be strings
       attributes: { id: this.state.data.id, name: this.state.data.name }
     });
-    var groupMemberByUser: any = API.graphql({
+    const groupMemberByUser: any = API.graphql({
       query: queries.groupMemberByUser,
       variables: { userID: this.state.currentUser, groupID: { eq: this.state.data.id } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -237,7 +237,7 @@ export default class EventScreen extends React.Component<Props, State>{
       console.log({ "Success queries.groupMemberByUser": json });
 
       json.data.groupMemberByUser.items.map((item) => {
-        var deleteGroupMember: any = API.graphql({
+        const deleteGroupMember: any = API.graphql({
           query: mutations.deleteGroupMember,
           variables: { input: { id: item.id } },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -250,7 +250,7 @@ export default class EventScreen extends React.Component<Props, State>{
         });
       })
 
-      let remainingUsers = this.state.attendeeIDs.filter(user=>user!==this.state.currentUser)
+      const remainingUsers = this.state.attendeeIDs.filter(user => user !== this.state.currentUser)
       this.setState({ canJoin: true, canLeave: false, attendeeIDs: remainingUsers })
       this.renderButtons()
 
@@ -265,7 +265,7 @@ export default class EventScreen extends React.Component<Props, State>{
       // Attribute values must be strings
       attributes: { id: this.state.data.id, name: this.state.data.name }
     });
-    var createGroupMember: any = API.graphql({
+    const createGroupMember: any = API.graphql({
       query: mutations.createGroupMember,
       variables: { input: { groupID: this.state.data.id, userID: this.state.currentUser } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -279,7 +279,7 @@ export default class EventScreen extends React.Component<Props, State>{
     this.renderButtons()
   }
   delete() {
-    var deleteGroup: any = API.graphql({
+    const deleteGroup: any = API.graphql({
       query: mutations.deleteGroup,
       variables: { input: { id: this.state.data.id } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -292,7 +292,7 @@ export default class EventScreen extends React.Component<Props, State>{
     });
   }
   updateValue(field: any, value: any) {
-    var temp = this.state.data
+    const temp = this.state.data
     temp[field] = value
     this.setState({ data: temp })
   }
@@ -303,27 +303,27 @@ export default class EventScreen extends React.Component<Props, State>{
   renderButtons() {
     return (
       <Container style={{ flexDirection: "column", flexGrow: 1 }}>
-      {this.state.canJoin ?
-        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Attend</JCButton> :
-        null
-      }
-      {this.state.canLeave ?
-        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Don't Attend</JCButton> :
-        null
-      }
-      {this.state.createNew ?
-        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.createNew() }} >Create Event</JCButton>
-        : null
-      }
-      {this.state.canSave ?
-        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.save() }} >Save Event</JCButton>
-        : null
-      }
-      {this.state.canDelete ?
-        <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this event?')) this.delete() }}>Delete Event</JCButton>
-        : null
-      }
-    </Container>
+        {this.state.canJoin ?
+          <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Attend</JCButton> :
+          null
+        }
+        {this.state.canLeave ?
+          <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Don&apos;t Attend</JCButton> :
+          null
+        }
+        {this.state.createNew ?
+          <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.createNew() }} >Create Event</JCButton>
+          : null
+        }
+        {this.state.canSave ?
+          <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.save() }} >Save Event</JCButton>
+          : null
+        }
+        {this.state.canDelete ?
+          <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this event?')) this.delete() }}>Delete Event</JCButton>
+          : null
+        }
+      </Container>
     )
   }
 
@@ -387,19 +387,19 @@ export default class EventScreen extends React.Component<Props, State>{
                   <Text style={{ fontFamily: "Graphik-Regular-App", fontSize: 16, lineHeight: 23, color: "#333333", paddingBottom: 12, marginTop: 52 }}>Organizer</Text>
                   <TouchableOpacity onPress={() => { this.showProfile(this.state.data.ownerUser ? this.state.data.ownerUser.id : this.state.currentUserProfile.id) }}>
                     <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
-                  </TouchableOpacity>                  
+                  </TouchableOpacity>
 
                   <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", paddingTop: 48, paddingBottom: 12 }}>Attending ({this.state.attendeeIDs.length})</Text>
                   <View style={styles.eventAttendeesPictures}>
-                      {this.state.attendeeIDs.length == 0 ?
-                          <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", marginBottom: 30 }}>No Attendees Yet</Text> :
-                          this.state.attendeeIDs.map((id: any, index: any) => {
-                            return (
-                              <TouchableOpacity key={index} onPress={() => { this.showProfile(id) }}>
-                                <ProfileImage user={id} key={index} size="small" />
-                              </TouchableOpacity>
-                            )
-                          })}
+                    {this.state.attendeeIDs.length == 0 ?
+                      <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", marginBottom: 30 }}>No Attendees Yet</Text> :
+                      this.state.attendeeIDs.map((id: any, index: any) => {
+                        return (
+                          <TouchableOpacity key={index} onPress={() => { this.showProfile(id) }}>
+                            <ProfileImage user={id} key={index} size="small" />
+                          </TouchableOpacity>
+                        )
+                      })}
                   </View>
                   {this.renderButtons()}
                   <Text>{this.state.validationError}</Text>

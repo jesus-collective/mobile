@@ -1,19 +1,12 @@
-import { Icon, Button, View, Input, Form, Item, Label, Content } from 'native-base';
 import { Image } from 'react-native'
 import * as React from 'react';
 import * as queries from '../../src/graphql/queries';
-import * as mutations from '../../src/graphql/mutations';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
-import { Auth } from 'aws-amplify';
-import styles from '../../components/style'
-import TagInput from 'react-native-tags-input';
-import { Dimensions } from 'react-native'
 import Amplify from 'aws-amplify'
 import awsconfig from '../../src/aws-exports';
 
 Amplify.configure(awsconfig);
 
-const mainColor = '#ffffff';
 
 interface Props {
     user: any

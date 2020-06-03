@@ -5,7 +5,6 @@ import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 import { Text } from 'react-native'
 
 import CourseSidebar from '../../components/CourseSidebar/CourseSidebar'
-import MyMap from '../../components/MyMap/MyMap';
 import styles from '../../components/style'
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
@@ -14,12 +13,12 @@ import EditableText from '../../components/Forms/EditableText'
 import EditableDollar from '../../components/Forms/EditableDollar'
 import Validate from '../../components/Validate/Validate'
 import { Image } from 'react-native'
-import { API, graphqlOperation, Auth, Analytics } from 'aws-amplify';
+import { API, Auth, Analytics } from 'aws-amplify';
 import { CreateGroupInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
-var moment = require('moment');
+const moment = require('moment');
 const data = require('./course.json');
 
 interface Props {
@@ -65,7 +64,7 @@ export default class CourseScreen extends React.Component<Props, State>{
   setInitialData(props) {
     if (props.route.params.create === "true" || props.route.params.create === true)
       Auth.currentAuthenticatedUser().then((user: any) => {
-        var z: CreateGroupInput = {
+        const z: CreateGroupInput = {
           id: "course-" + Date.now(),
           owner: user.username,
           type: "course",
@@ -85,13 +84,13 @@ export default class CourseScreen extends React.Component<Props, State>{
         this.setState({ data: z })
       })
     else {
-      var getGroup: any = API.graphql({
+      const getGroup: any = API.graphql({
         query: queries.getGroup,
         variables: { id: props.route.params.id },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
 
-      var processResults = (json) => {
+      const processResults = (json) => {
         this.setState({ data: json.data.getGroup })
       }
       getGroup.then(processResults).catch(processResults)
@@ -101,13 +100,13 @@ export default class CourseScreen extends React.Component<Props, State>{
     this.setState({ showMap: !this.state.showMap })
   }
   validate(): boolean {
-    var validation: any = Validate.Course(this.state.data)
+    const validation: any = Validate.Course(this.state.data)
     this.setState({ validationError: validation.validationError })
     return validation.result
   }
   createNew() {
     if (this.validate()) {
-      var createGroup: any = API.graphql({
+      const createGroup: any = API.graphql({
         query: mutations.createGroup,
         variables: { input: this.state.data },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -134,7 +133,7 @@ export default class CourseScreen extends React.Component<Props, State>{
   }
   save() {
     if (this.validate()) {
-      var updateGroup: any = API.graphql({
+      const updateGroup: any = API.graphql({
         query: mutations.updateGroup,
         variables: { input: this.clean(this.state.data) },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -167,7 +166,7 @@ export default class CourseScreen extends React.Component<Props, State>{
     this.props.navigation.push("CourseHomeScreen", { id: this.state.data.id, create: false })
   }
   delete() {
-    var deleteGroup: any = API.graphql({
+    const deleteGroup: any = API.graphql({
       query: mutations.deleteGroup,
       variables: { input: { id: this.state.data.id } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -180,7 +179,7 @@ export default class CourseScreen extends React.Component<Props, State>{
     });
   }
   updateValue(field: any, value: any) {
-    var temp = this.state.data
+    const temp = this.state.data
     temp[field] = value
     this.setState({ data: temp })
   }
