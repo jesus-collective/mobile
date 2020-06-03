@@ -1,8 +1,6 @@
 ﻿import React from 'react';
-import { StyleProvider, Container, Content } from 'native-base';
-import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
+import { StyleProvider, Container } from 'native-base';
 
-import { Text } from 'react-native'
 
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';

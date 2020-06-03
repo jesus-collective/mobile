@@ -15,15 +15,12 @@ import EditableText from '../../components/Forms/EditableText'
 import EditableLocation from '../../components/Forms/EditableLocation'
 import EditableUrl from '../../components/Forms/EditableUrl'
 import Validate from '../../components/Validate/Validate'
-import { Image } from 'react-native'
 import { API, graphqlOperation, Auth, Analytics } from 'aws-amplify';
 import { CreateGroupInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
-import Zoom from '../../components/Zoom/Zoom'
-import moment from 'moment'
 const MessageBoard = lazy(() => import('../../components/MessageBoard/MessageBoard'));
 
 interface Props {

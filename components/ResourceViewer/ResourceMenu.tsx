@@ -1,11 +1,8 @@
 import { Header, Left, Body, Right, Button } from 'native-base';
 
-import { Ionicons } from '@expo/vector-icons';
-import React, { useRef } from 'react';
-import { Image, Text, Dimensions } from 'react-native';
+import React from 'react';
+import { Text, Dimensions } from 'react-native';
 import HeaderStyles from '../Header/style'
-import { Auth } from 'aws-amplify';
-import { constants } from '../../src/constants'
 import { ResourceContext } from './ResourceContext';
 import EditableButton from '../Forms/EditableButton'
 interface Props {

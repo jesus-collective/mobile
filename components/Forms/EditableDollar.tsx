@@ -1,10 +1,8 @@
 import React from 'react';
-import { Content, Left, Right, Body, StyleProvider, Container, Card, CardItem, Button } from 'native-base';
 import { Text } from 'react-native'
 
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 interface Props {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Input, Content, Left, Right, Body, StyleProvider, Container, Card, CardItem, Button } from 'native-base';
+import { Input, Button } from 'native-base';
 import { Text } from 'react-native'
 
 interface Props {

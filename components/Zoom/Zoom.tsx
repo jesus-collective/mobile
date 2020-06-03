@@ -1,6 +1,5 @@
 import { ZoomMtg } from '@zoomus/websdk';
 import React from 'react';
-import { Container, View, Header, Left, Body, Right, Button } from 'native-base';
 import "./Zoom.css"
 //console.log('checkSystemRequirements');
 //console.log(JSON.stringify(ZoomMtg.checkSystemRequirements()));
