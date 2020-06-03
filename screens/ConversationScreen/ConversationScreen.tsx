@@ -37,7 +37,7 @@ export default class ConversationScreen extends React.Component<Props, State>{
   createRoom = (toUserID, toUserName) => {
     console.log("CreateRoom")
     Auth.currentAuthenticatedUser().then((user: any) => {
-      var createDirectMessageRoom: any = API.graphql({
+      const createDirectMessageRoom: any = API.graphql({
         query: mutations.createDirectMessageRoom,
         variables: { input: { name: toUserName } },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -47,14 +47,14 @@ export default class ConversationScreen extends React.Component<Props, State>{
         console.log("createDMUser")
         const addDM2 = (json2) => {
           console.log({ Dm2: json2 })
-          var createDirectMessageUser2: any = API.graphql({
+          const createDirectMessageUser2: any = API.graphql({
             query: mutations.createDirectMessageUser,
             variables: { input: { roomID: json.data.createDirectMessageRoom.id, userID: toUserID } },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
           });
           createDirectMessageUser2.then((json3) => { console.log(json3); this.getInitialData(); }).catch((e) => { console.log(e); this.getInitialData(); })
         }
-        var createDirectMessageUser1: any = API.graphql({
+        const createDirectMessageUser1: any = API.graphql({
           query: mutations.createDirectMessageUser,
           variables: { input: { roomID: json.data.createDirectMessageRoom.id, userID: user['username'] } },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -83,7 +83,7 @@ export default class ConversationScreen extends React.Component<Props, State>{
   }
   getInitialData() {
     Auth.currentAuthenticatedUser().then((user: any) => {
-      var listDirectMessageUsers: any = API.graphql({
+      const listDirectMessageUsers: any = API.graphql({
         query: customQueries.listDirectMessageUsers,
         variables: { limit: 20, filter: { userID: { eq: user['username'] } }, nextToken: null },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS

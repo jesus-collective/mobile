@@ -43,36 +43,36 @@ export default class CourseScreen extends React.Component<Props, State>{
     this.setInitialData(props)
   }
 
-  setInitialData(props) {
+  setInitialData(props: Props): void {
 
-    var getGroup: any = API.graphql({
+    const getGroup: any = API.graphql({
       query: queries.getGroup,
       variables: { id: props.route.params.id },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
-    var processResults = (json) => {
+    const processResults = (json) => {
       this.setState({ data: json.data.getGroup })
     }
     getGroup.then(processResults).catch(processResults)
   }
-  openHome = () => {
+  openHome = (): void => {
     this.props.navigation.push("HomeScreen");
   }
-  mapChanged = () => {
+  mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
   }
   validate(): boolean {
-    var validation: any = Validate.Course(this.state.data)
+    const validation: any = Validate.Course(this.state.data)
     this.setState({ validationError: validation.validationError })
     return validation.result
   }
 
-  updateValue(field: any, value: any) {
-    var temp = this.state.data
+  updateValue(field: any, value: any): void {
+    const temp = this.state.data
     temp[field] = value
     this.setState({ data: temp })
   }
-  render() {
+  render(): React.ReactNode {
 
     //console.log(acc)
     console.log("CourseScreen")

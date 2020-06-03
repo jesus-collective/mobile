@@ -4,8 +4,8 @@ import styles from '../style'
 import { Image, Text } from 'react-native';
 
 interface Props {
-  position?: String,
-  text?: String
+  position?: string,
+  text?: string
 
 
 }

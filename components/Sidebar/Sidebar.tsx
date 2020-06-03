@@ -30,10 +30,7 @@ interface Props {
   route: any
   navigation: any
 }
-interface State {
-
-}
-class SideBar extends React.Component<Props, State> {
+class SideBar extends React.Component<Props> {
   constructor(props: Props) {
     super(props)
   }

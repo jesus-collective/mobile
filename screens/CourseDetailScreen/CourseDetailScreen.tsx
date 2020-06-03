@@ -64,10 +64,10 @@ export default class CourseScreen extends React.Component<Props, State>{
     getGroup.then(processResults).catch(processResults)
   }
 
-  openHome = () => {
+  openHome = (): void => {
     this.props.navigation.push("HomeScreen");
   }
-  mapChanged = () => {
+  mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
   }
   validate(): boolean {
@@ -77,23 +77,23 @@ export default class CourseScreen extends React.Component<Props, State>{
   }
 
 
-  updateValue(field: any, value: any) {
+  updateValue(field: any, value: any): void {
     const temp = this.state.data
     temp[field] = value
     this.setState({ data: temp })
   }
-  setActiveWeek(index: any) {
+  setActiveWeek(index: any): void {
     this.setState({
       activeWeek: index,
       activeLesson: null
     })
   }
-  setActiveLesson(index: any) {
+  setActiveLesson(index: any): void {
     this.setState({
       activeLesson: index
     })
   }
-  renderWeekDetails(week) {
+  renderWeekDetails(week): React.ReactNode {
     //console.log(this.state.activeLesson)
     return (
       this.state.activeLesson == null ?
@@ -123,7 +123,7 @@ export default class CourseScreen extends React.Component<Props, State>{
         : null
     )
   }
-  renderLessonDetails(week: any) {
+  renderLessonDetails(week: any): React.ReactNode {
     // console.log(this.state.activeLesson)
     const lesson = week.lessons[this.state.activeLesson]
     return (
@@ -156,7 +156,7 @@ export default class CourseScreen extends React.Component<Props, State>{
         : null
     )
   }
-  render() {
+  render(): React.ReactNode {
     const week = data.courseDetails[this.state.activeWeek]
     console.log("CourseScreen")
     return (

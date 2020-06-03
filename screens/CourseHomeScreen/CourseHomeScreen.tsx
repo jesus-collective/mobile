@@ -44,7 +44,7 @@ export default class CourseScreen extends React.Component<Props, State>{
     this.setInitialData(props)
   }
 
-  setInitialData(props) {
+  setInitialData(props: Props): void {
 
     const getGroup: any = API.graphql({
       query: queries.getGroup,
@@ -58,10 +58,10 @@ export default class CourseScreen extends React.Component<Props, State>{
     getGroup.then(processResults).catch(processResults)
   }
 
-  openHome = () => {
+  openHome = (): void => {
     this.props.navigation.push("HomeScreen");
   }
-  mapChanged = () => {
+  mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
   }
   validate(): boolean {
@@ -71,12 +71,12 @@ export default class CourseScreen extends React.Component<Props, State>{
   }
 
 
-  updateValue(field: any, value: any) {
+  updateValue(field: any, value: any): void {
     const temp = this.state.data
     temp[field] = value
     this.setState({ data: temp })
   }
-  render() {
+  render(): React.ReactNode {
 
     //console.log(acc)
     console.log("CourseScreen")

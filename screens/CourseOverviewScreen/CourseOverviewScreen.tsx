@@ -35,7 +35,7 @@ interface State {
   canJoin: boolean
   isEditable: boolean
   canDelete: boolean
-  validationError: String
+  validationError: string
   canGotoActiveCourse: boolean
 }
 
@@ -61,7 +61,7 @@ export default class CourseScreen extends React.Component<Props, State>{
     this.setInitialData(props)
   }
 
-  setInitialData(props) {
+  setInitialData(props: Props): void {
     if (props.route.params.create === "true" || props.route.params.create === true)
       Auth.currentAuthenticatedUser().then((user: any) => {
         const z: CreateGroupInput = {
@@ -96,7 +96,7 @@ export default class CourseScreen extends React.Component<Props, State>{
       getGroup.then(processResults).catch(processResults)
     }
   }
-  mapChanged = () => {
+  mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
   }
   validate(): boolean {
@@ -104,7 +104,7 @@ export default class CourseScreen extends React.Component<Props, State>{
     this.setState({ validationError: validation.validationError })
     return validation.result
   }
-  createNew() {
+  createNew(): void {
     if (this.validate()) {
       const createGroup: any = API.graphql({
         query: mutations.createGroup,
@@ -119,7 +119,7 @@ export default class CourseScreen extends React.Component<Props, State>{
       });
     }
   }
-  clean(item) {
+  clean(item): void {
     delete item.members
     delete item.messages
     delete item.organizerGroup
@@ -131,7 +131,7 @@ export default class CourseScreen extends React.Component<Props, State>{
     delete item.updatedAt
     return item
   }
-  save() {
+  save(): void {
     if (this.validate()) {
       const updateGroup: any = API.graphql({
         query: mutations.updateGroup,
@@ -147,25 +147,25 @@ export default class CourseScreen extends React.Component<Props, State>{
     }
 
   }
-  leave() {
+  leave(): void {
     Analytics.record({
       name: 'leftCourse',
       // Attribute values must be strings
       attributes: { id: this.state.data.id, name: this.state.data.name }
     });
   }
-  join() {
+  join(): void {
     Analytics.record({
       name: 'joinedCourse',
       // Attribute values must be strings
       attributes: { id: this.state.data.id, name: this.state.data.name }
     });
   }
-  gotoActiveCourse() {
+  gotoActiveCourse(): void {
     //console.log(this.props.navigation)
     this.props.navigation.push("CourseHomeScreen", { id: this.state.data.id, create: false })
   }
-  delete() {
+  delete(): void {
     const deleteGroup: any = API.graphql({
       query: mutations.deleteGroup,
       variables: { input: { id: this.state.data.id } },
@@ -178,12 +178,12 @@ export default class CourseScreen extends React.Component<Props, State>{
       console.log({ "Error mutations.deleteGroup": err });
     });
   }
-  updateValue(field: any, value: any) {
+  updateValue(field: any, value: any): void {
     const temp = this.state.data
     temp[field] = value
     this.setState({ data: temp })
   }
-  render() {
+  render(): React.ReactNode {
     console.log("CourseScreen")
     return (
       this.state.data ?
