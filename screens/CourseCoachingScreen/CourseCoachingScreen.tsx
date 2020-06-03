@@ -89,8 +89,8 @@ export default class CourseScreen extends React.Component<Props, State>{
                 <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
                   <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
                     <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { }}>Book a Call</JCButton>
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { }}>Send Message</JCButton>
+                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Book a Call</JCButton>
+                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Send Message</JCButton>
                     <Text>Hi </Text>
                     <Text>For your journey in leadership formation, I’d like to invite you to our bi-weekly coaching sessions where we can connect and discuss issues in more details. Let’s schedule our Coaching Calls - talk soon!
 

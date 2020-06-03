@@ -92,8 +92,8 @@ export default class CourseScreen extends React.Component<Props, State>{
                 <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
                   <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
                     <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
-                    <JCButton onPress={() => { }} buttonType={ButtonTypes.Outline}>Book a Call</JCButton>
-                    <JCButton onPress={() => { }} buttonType={ButtonTypes.Outline}>Send Message</JCButton>
+                    <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Book a Call</JCButton>
+                    <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Send Message</JCButton>
                     <Text>Hi </Text>
                     <Text>I’m Jon Hand and welcome to our six-week leadership journey. I’ll be your instructor. You can go ahead and start viewing content. We will officially kick-off on Monday with our Zoom Video Call.
 
@@ -103,7 +103,7 @@ Jon </Text>
                     <Text>Syllabus</Text>
                     <Card>
                       <Text>Leadership Formation Course</Text>
-                      <JCButton onPress={() => { }} buttonType={ButtonTypes.Outline}>Download</JCButton>
+                      <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Download</JCButton>
 
                     </Card>
                     <Text>My Coach</Text>
@@ -111,21 +111,21 @@ Jon </Text>
                       <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
                       <Text>Jon Hand</Text>
                       <Text>Youth Leader in Calgary Area</Text>
-                      <JCButton onPress={() => { }} buttonType={ButtonTypes.Outline}>View profile</JCButton>
+                      <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>View profile</JCButton>
                     </Card>
                     <Text>My Triad</Text>
                     <Card>
                       <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
                       <Text>Jon Hand</Text>
                       <Text>Youth Leader in Calgary Area</Text>
-                      <JCButton onPress={() => { }} buttonType={ButtonTypes.Outline}>View profile</JCButton>
+                      <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>View profile</JCButton>
                     </Card>
                     <Text>My Cohort</Text>
                     <Card>
                       <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
                       <Text>Jon Hand</Text>
                       <Text>Youth Leader in Calgary Area</Text>
-                      <JCButton onPress={() => { }} buttonType={ButtonTypes.Outline}>View profile</JCButton>
+                      <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>View profile</JCButton>
                     </Card>
                   </Container>
                   <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
@@ -147,9 +147,9 @@ Jon </Text>
                       }}
                     />
                     <Text>Course Activity</Text>
-                    <JCButton onPress={() => { }} buttonType={ButtonTypes.Outline}>Today</JCButton>
-                    <JCButton onPress={() => { }} buttonType={ButtonTypes.Outline}>Yesterday</JCButton>
-                    <JCButton onPress={() => { }} buttonType={ButtonTypes.Outline}>This Week</JCButton>
+                    <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Today</JCButton>
+                    <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Yesterday</JCButton>
+                    <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>This Week</JCButton>
                     <Text>Adam posted assignement to review</Text>
                   </Container>
 

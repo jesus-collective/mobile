@@ -10,8 +10,7 @@ Amplify.configure(awsConfig);
 interface Props {
   navigation: any
 }
-interface State { }
-export default class LoginScreen extends React.Component<Props, State>{
+export default class LoginScreen extends React.Component<Props>{
   logout() {
     Auth.signOut()
       .then(data => {

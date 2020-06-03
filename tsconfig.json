@@ -17,6 +17,7 @@
     "web-build",
     "coverage",
     "amplify",
-    "node_modules"
+    "node_modules",
+    "native-base-theme/components/index.js"
   ]
 }

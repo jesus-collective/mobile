@@ -208,7 +208,7 @@ export default class CourseScreen extends React.Component<Props, State>{
                     }
                     </Text>
                     <Text>Publisher</Text>
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { }} >Contact Us</JCButton>
+                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }} >Contact Us</JCButton>
 
                     {/*this.state.data.instructors.map((item: any) => {
                     return (<Card><Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
@@ -244,7 +244,7 @@ export default class CourseScreen extends React.Component<Props, State>{
                     })}
                   </Container>
                   <Container style={{ flex: 15, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { }} >Join Course</JCButton>
+                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }} >Join Course</JCButton>
                     {this.state.canJoin ?
                       <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.join() }} >Join Course</JCButton> :
                       null

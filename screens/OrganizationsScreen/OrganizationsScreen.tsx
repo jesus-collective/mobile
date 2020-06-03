@@ -23,15 +23,15 @@ export default class HomeScreen extends React.Component<Props, State>{
       showMap: false
     }
   }
-  mapChanged = () => {
+  mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
   }
-  mergeMapData(mapData) {
+  mergeMapData(mapData): void {
     //    console.log(mapData)
-    var data = this.state.mapData.concat(mapData)
+    const data = this.state.mapData.concat(mapData)
     this.setState({ mapData: data })
   }
-  render() {
+  render(): React.ReactNode {
     console.log("Homepage")
     return (
 

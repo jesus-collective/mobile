@@ -9,8 +9,7 @@ interface Props {
 
 
 }
-interface State { }
-export default class MyResources extends React.Component<Props, State> {
+export default class MyResources extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
   }

@@ -28,7 +28,7 @@ export default class HomeScreen extends React.Component<Props, State>{
   }
   mergeMapData(mapData): void {
     //    console.log(mapData)
-    var data = this.state.mapData.concat(mapData)
+    const data = this.state.mapData.concat(mapData)
     this.setState({ mapData: data })
   }
   render(): React.ReactNode {

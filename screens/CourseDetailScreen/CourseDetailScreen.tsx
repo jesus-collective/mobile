@@ -172,9 +172,9 @@ export default class CourseScreen extends React.Component<Props, State>{
                   {this.renderLessonDetails(week)}
                   <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                     <Container style={{ flex: 5, flexDirection: "row" }}>
-                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { }}>Cohort</JCButton>
-                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { }}>Triad</JCButton>
-                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { }}>Instructor</JCButton>
+                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Cohort</JCButton>
+                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Triad</JCButton>
+                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Instructor</JCButton>
                     </Container>
                     <Container style={{ flex: 95, flexDirection: "row" }}>
                       <MessageBoard groupId={this.state.data.id}></MessageBoard>
