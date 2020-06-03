@@ -27,7 +27,7 @@ interface State {
   loadId: string
   data: any
   isEditable: boolean
-  validationError: String
+  validationError: string
   activeWeek: any
   activeLesson: any
 }
@@ -52,13 +52,13 @@ export default class CourseScreen extends React.Component<Props, State>{
 
   setInitialData(props) {
 
-    var getGroup: any = API.graphql({
+    const getGroup: any = API.graphql({
       query: queries.getGroup,
       variables: { id: props.route.params.id },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
 
-    var processResults = (json) => {
+    const processResults = (json) => {
       this.setState({ data: json.data.getGroup })
     }
     getGroup.then(processResults).catch(processResults)
@@ -71,14 +71,14 @@ export default class CourseScreen extends React.Component<Props, State>{
     this.setState({ showMap: !this.state.showMap })
   }
   validate(): boolean {
-    var validation: any = Validate.Course(this.state.data)
+    const validation: any = Validate.Course(this.state.data)
     this.setState({ validationError: validation.validationError })
     return validation.result
   }
 
 
   updateValue(field: any, value: any) {
-    var temp = this.state.data
+    const temp = this.state.data
     temp[field] = value
     this.setState({ data: temp })
   }
@@ -135,15 +135,15 @@ export default class CourseScreen extends React.Component<Props, State>{
           <Text>{week.leader}</Text>
           <Text>Lesson {this.state.activeLesson + 1} - {lesson.name}</Text>
           <Text>{lesson.time}</Text>
-          {lesson.description.map((item) => {
-            return <Text>{item}</Text>
+          {lesson.description.map((item, index) => {
+            return <Text key={index}>{item}</Text>
           })}
           {lesson.assignment ? (
             <Container>
               <Text>{lesson.assignment.due}</Text>
               {
-                lesson.assignment.description.map((item: any) => {
-                  return <Text>{item}</Text>
+                lesson.assignment.description.map((item: any, index) => {
+                  return <Text key={index}>{item}</Text>
                 })
 
               }

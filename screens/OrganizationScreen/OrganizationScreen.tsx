@@ -226,8 +226,8 @@ export default class GroupScreen extends React.Component<Props, State>{
                     this.state.data.members == null ? <Text>No Members Yet</Text> :
                       this.state.data.members.items.length == 0 ?
                         <Text>No Members Yet</Text> :
-                        this.state.data.members.items.map((item: any) => {
-                          return (<ProfileImage user={item} size="small" />)
+                        this.state.data.members.items.map((item: any, index) => {
+                          return (<ProfileImage key={index} user={item} size="small" />)
                         })}
                   {this.state.canJoin ?
                     <JCButton onPress={() => { this.join() }} buttonType={ButtonTypes.Outline} >Join Organization</JCButton> :
