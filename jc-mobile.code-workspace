@@ -7,6 +7,7 @@
   "settings": {
     "search.exclude": {
       "**/node_modules": false
-    }
+    },
+    "typescript.tsserver.experimental.enableProjectDiagnostics": true
   }
 }

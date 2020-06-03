@@ -3,7 +3,7 @@ import Sentry from '../../components/Sentry';
 
 interface Props { }
 interface State {
-    error: any
+    error: Error
 }
 export default class ErrorBoundary extends React.Component<Props, State>  {
     constructor(props) {
@@ -14,7 +14,7 @@ export default class ErrorBoundary extends React.Component<Props, State>  {
         this.setState({ error });
         Sentry.captureException(error, { extra: errorInfo });
     }
-    render() {
+    render(): React.ReactNode {
         if (this.state.error) {
             return (
                 <div
@@ -22,7 +22,7 @@ export default class ErrorBoundary extends React.Component<Props, State>  {
                     onClick={() => Sentry.lastEventId() && Sentry.showReportDialog()}
                 >
 
-                    <p>We're sorry — something's gone wrong.</p>
+                    <p>We&apos;re sorry — something&apos;s gone wrong.</p>
                     <p>Our team has been notified, but click here fill out a report.</p>
                 </div>
             );

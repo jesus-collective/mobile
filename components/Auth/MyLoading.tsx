@@ -1,24 +1,20 @@
 import React from 'react';
 import { Loading } from 'aws-amplify-react-native';
 import styles from '../../components/style'
-import SignUpSidebar from '../../components/SignUpSidebar/SignUpSidebar'
 import { View } from 'native-base';
-import { Text } from 'react-native'
 
-import { Platform } from 'react-native';
-import { Dimensions } from 'react-native'
 
 interface Props {
-    authState: any
+    authState: string
 }
-interface State { }
-export default class MyLoading extends Loading<Props, State> {
+
+export default class MyLoading extends Loading<Props> {
     constructor(props: Props) {
         super(props);
         this.props = props
     }
-    props: any
-    render() {
+    props: Props
+    render(): React.ReactNode {
         //   console.log(this.props.authState)
         return (
 

@@ -11,26 +11,22 @@ import { Auth } from 'aws-amplify';
 import styles from '../../components/style'
 
 interface Props {
-  navigation?: any,
-  authState?: any,
+  //navigation?: any,
+  authState?: string,
   payStateChanged(): void
 }
-interface State {
-
-}
-export default class SignUpScreen2 extends React.Component<Props, State>{
-  async makePayment() {
+export default class SignUpScreen2 extends React.Component<Props>{
+  async makePayment(): Promise<void> {
     console.log("Finish Payment")
-    var user = await Auth.currentAuthenticatedUser();
+    const user = await Auth.currentAuthenticatedUser();
     try {
       await API.graphql(graphqlOperation(mutations.updateUser, { input: { id: user['username'], hasPaidState: "Complete" } }));
       this.props.payStateChanged()
     } catch (e) {
       console.log(e)
     }
-
   }
-  render() {
+  render(): React.ReactNode {
     // const { navigate } = this.props.navigation;
 
     return (

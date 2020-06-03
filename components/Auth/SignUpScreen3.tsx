@@ -4,26 +4,22 @@ import awsConfig from '../../src/aws-exports';
 import MyProfile from '../../components/MyProfile/MyProfile'
 import SignUpSidebar from '../../components/SignUpSidebar/SignUpSidebar'
 Amplify.configure(awsConfig);
-import { View, Content } from 'native-base';
+import { View } from 'native-base';
 import styles from '../../components/style'
-import Constants from 'expo-constants';
-import { Dimensions } from 'react-native'
 
 interface Props {
   navigation?: any
-  authState?: any
+  authState?: string
   profileComplete(): void
 
 }
-interface State {
 
-}
-export default class SignUpScreen3 extends React.Component<Props, State>{
+export default class SignUpScreen3 extends React.Component<Props>{
 
-  onFinalizeProfile() {
+  onFinalizeProfile(): void {
     this.props.profileComplete()
   }
-  render() {
+  render(): React.ReactNode {
     // const { navigate } = this.props.navigation;
 
     return (

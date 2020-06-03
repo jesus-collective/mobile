@@ -1,8 +1,4 @@
-import { Platform } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import Constants from 'expo-constants';
-import { Dimensions } from 'react-native'
-const mainColor = '#ffffff';
 
 export default EStyleSheet.create({
     PostOutlineButton:
