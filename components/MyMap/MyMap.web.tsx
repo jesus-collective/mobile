@@ -207,10 +207,10 @@ class MyMap extends React.Component<Props, State> {
       return (
         <ErrorBoundary>
           <View style={{ display: 'flex', height: '60%' }}>
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, minHeight: 50 }}>
               <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: '5%'}}>
-                <View style={{width: 180, flexDirection: 'row'}}>
-                  <Text style={{ paddingRight: 10 }}>Show Groups</Text>
+                <View style={{width: 170, flexDirection: 'row'}}>
+                  <Text style={styles.fontMyMapOptions}>Show Groups</Text>
                   <TouchableWithoutFeedback onPress={()=>this.toggleFilters("group")}>
                   <View style={{ 
                       backgroundColor: this.state.groupsEnabled ? '#333333' : '#aaaaaa', 
@@ -228,8 +228,8 @@ class MyMap extends React.Component<Props, State> {
                     </View>
                   </TouchableWithoutFeedback>               
                 </View>
-                <View style={{width: 180, flexDirection: 'row'}}>
-                  <Text style={{ paddingRight: 10 }}>Show Events</Text>
+                <View style={{width: 170, flexDirection: 'row'}}>
+                  <Text style={styles.fontMyMapOptions}>Show Events</Text>
                   <TouchableWithoutFeedback onPress={()=>this.toggleFilters("event")}>
                   <View style={{ 
                       backgroundColor: this.state.eventsEnabled ? '#333333' : '#aaaaaa', 
@@ -247,8 +247,8 @@ class MyMap extends React.Component<Props, State> {
                     </View>
                   </TouchableWithoutFeedback>
                 </View>
-                <View style={{width: 180, flexDirection: 'row'}}>
-                  <Text style={{ paddingRight: 10 }}>Show Profiles</Text>
+                <View style={{width: 170, flexDirection: 'row'}}>
+                  <Text style={styles.fontMyMapOptions}>Show Profiles</Text>
                   <TouchableWithoutFeedback onPress={()=>this.toggleFilters("profile")}>
                   <View style={{ 
                       backgroundColor: this.state.profilesEnabled ? '#333333' : '#aaaaaa', 
@@ -267,7 +267,7 @@ class MyMap extends React.Component<Props, State> {
                   </TouchableWithoutFeedback>  
                 </View>
                 <View style={{width: 200, flexDirection: 'row'}}>
-                  <Text style={{ paddingRight: 10 }}>Show Organizations</Text>
+                  <Text style={styles.fontMyMapOptions}>Show Organizations</Text>
                   <TouchableWithoutFeedback onPress={()=>this.toggleFilters("organization")}>
                     <View style={{ 
                       backgroundColor: this.state.organizationsEnabled ? '#333333' : '#aaaaaa', 
