@@ -79,16 +79,16 @@ class MyMap extends React.Component<Props, State> {
   }
   renderEvent() {
     return <Card style={styles.myMapCalloutEventContainer}>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailTop}>{moment(this.state.selectedPlace.mapItem.event.time).format('MMMM Do YYYY, h:mm a')}</Text></CardItem>
-      <CardItem style={styles.myMapCalloutEventName}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{this.state.selectedPlace.mapItem.event.name}</Text></CardItem>
-      <CardItem style={styles.myMapCalloutEventDescription}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetailMiddle}>{this.state.selectedPlace.mapItem.event.description}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.myMapFontDetailTop}>{moment(this.state.selectedPlace.mapItem.event.time).format('MMMM Do YYYY, h:mm a')}</Text></CardItem>
+      <CardItem style={styles.myMapCalloutEventName}><Text ellipsizeMode='tail' numberOfLines={2} style={styles.myMapFontTitle}>{this.state.selectedPlace.mapItem.event.name}</Text></CardItem>
+      <CardItem style={styles.myMapCalloutEventDescription}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.myMapFontDetailMiddle}>{this.state.selectedPlace.mapItem.event.description}</Text></CardItem>
       <CardItem style={{ paddingBottom: 40 }}>
         {this.state.selectedPlace.mapItem.event.eventType == "location" ?
-          <Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailBottom}><a target="_blank" rel="noreferrer" href={"https://www.google.com/maps/dir/?api=1&destination=" + escape(this.state.selectedPlace.mapItem.event.location)}>{this.state.selectedPlace.mapItem.event.location}</a></Text>
+          <Text ellipsizeMode='tail' numberOfLines={1} style={styles.myMapFontDetailBottom}><a target="_blank" rel="noreferrer" href={"https://www.google.com/maps/dir/?api=1&destination=" + escape(this.state.selectedPlace.mapItem.event.location)}>{this.state.selectedPlace.mapItem.event.location}</a></Text>
           : this.state.selectedPlace.mapItem.event.eventType == "zoom" ?
-            <Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailBottom}><a target="_blank" rel="noreferrer" href={this.state.selectedPlace.mapItem.event.eventUrl}>Zoom</a></Text>
+            <Text ellipsizeMode='tail' numberOfLines={1} style={styles.myMapFontDetailBottom}><a target="_blank" rel="noreferrer" href={this.state.selectedPlace.mapItem.event.eventUrl}>Zoom</a></Text>
             :
-            <Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailBottom}><a target="_blank" rel="noreferrer" href={this.state.selectedPlace.mapItem.event.eventUrl}>Eventbrite</a></Text>
+            <Text ellipsizeMode='tail' numberOfLines={1} style={styles.myMapFontDetailBottom}><a target="_blank" rel="noreferrer" href={this.state.selectedPlace.mapItem.event.eventUrl}>Eventbrite</a></Text>
         }
       </CardItem>
       {/*

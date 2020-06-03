@@ -189,6 +189,9 @@ export default EStyleSheet.create({
     fontTitle: {
         fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24, lineHeight: 30, height: 60, color: '#333333'
     },
+    myMapFontTitle: {
+        fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24, lineHeight: 30, height: 60, color: '#333333'
+    },
     fontTitleGroup: {
         fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24, lineHeight: 30, height: 90, color: '#333333', paddingTop: 29,
     },
@@ -198,10 +201,19 @@ export default EStyleSheet.create({
     fontDetailTop: {
         fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, color: '#333333', opacity: 0.4, paddingTop: 23
     },
+    myMapFontDetailTop: {
+        fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, color: '#333333', opacity: 0.4, paddingTop: 23
+    },
     fontDetailMiddle: {
         fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 22, color: '#333333', opacity: 0.7
     },
+    myMapFontDetailMiddle: {
+        fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 22, color: '#333333', opacity: 0.7
+    },
     fontDetailBottom: {
+        fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, color: '#333333', opacity: 0.5
+    },
+    myMapFontDetailBottom: {
         fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, color: '#333333', opacity: 0.5
     },
     fontSliderHeader: {
@@ -950,6 +962,14 @@ export default EStyleSheet.create({
         myProfileErrorValidation: {
             flex: 1,
         },
+        myMapFontTitle: {
+            fontSize: 22, 
+            lineHeight: 28,
+        },
+        myMapFontDetailMiddle: {
+            fontSize: 14, 
+            lineHeight: 20,
+        },
     },
 
     // Media Query Desktop Large Tablet
@@ -995,6 +1015,14 @@ export default EStyleSheet.create({
         },
         myProfileTopButtonsInternalContainer: {
             flex: 2.5
+        },
+        myMapFontTitle: {
+            fontSize: 22, 
+            lineHeight: 28,
+        },
+        myMapFontDetailMiddle: {
+            fontSize: 14, 
+            lineHeight: 20,
         },
     },
 
@@ -1163,6 +1191,9 @@ export default EStyleSheet.create({
             textAlign: "center",
             paddingLeft: 0,
             paddingBottom: 20
+        },
+        myMapCalloutEventContainer: {
+            width: 250
         },
     },
 
