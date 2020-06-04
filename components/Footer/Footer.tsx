@@ -101,7 +101,7 @@ export default class FooterJC extends React.Component<Props> {
               <Image style={styles.logo}
                 source={require('./icon.png')}
               /></Button>
-            <Text style={styles.copywriteText}>© 2019 Jesus Collective. All Rights Reserved.</Text>
+            <Text style={styles.copywriteText}>&copy; {new Date().getFullYear()} Jesus Collective. All Rights Reserved.</Text>
           </Body>
           {this.menu.map((item) => {
             if (item != null)
