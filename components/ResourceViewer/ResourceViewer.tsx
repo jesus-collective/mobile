@@ -287,7 +287,7 @@ class ResourceViewer extends React.Component<Props, State> {
         console.log({ "changeResource": index })
         this.setState({ currentSeries: null, currentResource: index, currentEpisode: null })
     }
-    updateResource = async (index: number, item: string, value: string): Promise<void> => {
+    updateResource = async (index: number, item: string, value: any): Promise<void> => {
         try {
             console.log({ "Updating Resource": index })
 

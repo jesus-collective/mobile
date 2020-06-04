@@ -18,13 +18,14 @@ interface State {
     textStyle: any,
     inputStyle: any,
     multiline: boolean,
-    placeholder: string
+    placeholder: string,
+    value: string
 }
 export default class EditableText extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            // value: props.value,
+            value: props.value,
             isEditable: props.isEditable,
             textStyle: props.textStyle,
             inputStyle: props.inputStyle,
@@ -35,14 +36,23 @@ export default class EditableText extends React.Component<Props, State> {
         // console.log(props)
     }
     onChanged(val: any) {
-        this.props.onChange(val.target.value)
+        this.props.onChange(val)
     }
 
     render() {
 
 
         if (this.state.isEditable)
-            return <Input data-testid={this.props["data-testid"]} onChange={(value) => { this.onChanged(value) }} placeholder={this.state.placeholder} multiline={this.state.multiline} style={this.state.inputStyle} value={this.props.value}></Input>
+            return <Input data-testid={this.props["data-testid"]}
+
+                onBlur={(val) => { this.onChanged(val.target.value) }}
+                onSubmitEditing={(val) => { this.onChanged(val.target.value) }}
+                onChange={(val) => { this.setState({ value: val.target.value }) }}
+
+                //onChange={(value) => { this.onChanged(value) }}
+                placeholder={this.state.placeholder}
+                multiline={this.state.multiline}
+                style={this.state.inputStyle} value={this.state.value}></Input>
         else
             return <Text style={this.state.textStyle}>{this.props.value}</Text>
     }
