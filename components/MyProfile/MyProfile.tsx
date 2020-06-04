@@ -202,8 +202,17 @@ export default class MyProfile extends React.Component<Props, State> {
     this.setState({ mapVisible: false })
   }
   handleAddInterest(): void {
-    const notPicked = (this.state.interestsArray.filter(item => item === this.state.interest).length === 0)
-    if (this.state.interest && this.state.interestsArray.length < 7 && notPicked) {
+    if (this.state.interest && this.state.interestsArray === null) {
+      this.setState({interestsArray: [this.state.interest] }, 
+      () => {
+        const updateData = { ...this.state.UserDetails }
+        updateData['interests'] = this.state.interestsArray
+        this.setState({
+          UserDetails: updateData
+        });
+      })
+    }
+    else if (this.state.interest && (this.state.interestsArray.filter(item => item === this.state.interest).length === 0) && this.state.interestsArray.length < 7) {
       this.setState({interestsArray: this.state.interestsArray.concat(this.state.interest) }, 
       () => {
         const updateData = { ...this.state.UserDetails }
