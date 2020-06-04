@@ -582,7 +582,7 @@ export default EStyleSheet.create({
         left: 0,
         top: 0,
         width: "100%",
-        height: "100%",
+        height: 1650,
         zIndex: 100,
         backgroundColor: "#33333366"
     },
@@ -594,7 +594,7 @@ export default EStyleSheet.create({
         left: "10%",
         top: "10%",
         width: "80%",
-        height: "100%"
+        height: "40%"
     },
     myProfileMapSelectorInnerCopyContainer: {
         flexDirection: "row",
