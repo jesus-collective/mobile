@@ -1184,10 +1184,13 @@ export default EStyleSheet.create({
         myProfileCoordinates: {
             flexDirection: "row",
         },
+        myProfileMapSelectorContainer: {
+            height: 3210,
+        },
         myProfileMapSelectorInnerContainer: {
             top: "5%",
             margin: 0,
-            height: "90%"
+            height: "20%"
         },
         myProfileMapSelectorInnerCopyContainer: {
             width: "107%",
