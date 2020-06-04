@@ -1310,6 +1310,9 @@ export default EStyleSheet.create({
         myMapCalloutEventContainer: {
             width: 250
         },
+        fontFormMediumInput: {
+            maxWidth: 250
+        },
     },
 
     dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
