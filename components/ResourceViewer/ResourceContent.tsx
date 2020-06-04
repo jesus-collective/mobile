@@ -21,7 +21,7 @@ class ResourceContent extends React.Component {
                     </Container>
                     <Container style={styles.resourceContentCurrentSeriesContainer}>
 
-                        {state.data.resources.items[state.currentResource].series.items.length > 0 ? state.data.resources.items[state.currentResource].series.items[0].episodes.items.map((episode, index) => {
+                        {state.resourceData.resources.items[state.currentResource].series.items.length > 0 ? state.resourceData.resources.items[state.currentResource].series.items[0].episodes.items.map((episode, index) => {
                             return (
                                 <Card key={episode.id} style={styles.resourceContentCurrentSeriesCard}>
                                     {state.isEditable ?
@@ -74,7 +74,7 @@ class ResourceContent extends React.Component {
                     </Container>
                     <Container style={styles.resourceContentMoreSeriesContainer}>
 
-                        {state.data.resources.items[state.currentResource].series.items.map((series, index) => {
+                        {state.resourceData.resources.items[state.currentResource].series.items.map((series, index) => {
                             return (
 
 
@@ -124,16 +124,19 @@ class ResourceContent extends React.Component {
 
                             )
                         })}
-                        <TouchableOpacity onPress={actions.createSeries}>
-                            <Card style={styles.resourceContentCurrentSeriesCard}>
-                                <CardItem style={styles.resourceContentCurrentSeriesIframeContainer}>
-                                    <Text>Add Series</Text>
-                                </CardItem>
-                                <CardItem style={{ width: 300, padding: 0, margin: 0, paddingBottom: 0 }}><Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333" }}></Text></CardItem>
-                                <CardItem style={{ width: 300, padding: 0, margin: 0, paddingBottom: 0 }}><Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333" }}></Text></CardItem>
-                                <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}></Text></CardItem>
-                            </Card>
-                        </TouchableOpacity>
+                        {state.isEditable ?
+                            <TouchableOpacity onPress={actions.createSeries}>
+                                <Card style={styles.resourceContentCurrentSeriesCard}>
+                                    <CardItem style={styles.resourceContentCurrentSeriesIframeContainer}>
+                                        <Text>Add Series</Text>
+                                    </CardItem>
+                                    <CardItem style={{ width: 300, padding: 0, margin: 0, paddingBottom: 0 }}><Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333" }}></Text></CardItem>
+                                    <CardItem style={{ width: 300, padding: 0, margin: 0, paddingBottom: 0 }}><Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333" }}></Text></CardItem>
+                                    <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}></Text></CardItem>
+                                </Card>
+                            </TouchableOpacity>
+                            : null}
+
                     </Container>
                 </Container>
                 <Container style={styles.resourceContentRightContainer}>
@@ -149,13 +152,13 @@ class ResourceContent extends React.Component {
                         multiline={false}
                         inputStyle={styles.headerSeriesTitle}
                         textStyle={styles.headerSeriesTitle}
-                        value={state.data.resources.items[state.currentResource].series.items[state.currentSeries].title}
+                        value={state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].title}
                         isEditable={state.isEditable}></EditableText>
 
 
 
                     <iframe style={{ padding: 0, border: 0, width: 300, height: 168 }}
-                        src={"https://www.youtube.com/embed/videoseries?list=" + state.data.resources.items[state.currentResource].series.items[state.currentSeries].playlist}
+                        src={"https://www.youtube.com/embed/videoseries?list=" + state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].playlist}
 
                     />
 
@@ -164,14 +167,14 @@ class ResourceContent extends React.Component {
                         multiline={true}
                         inputStyle={styles.headerSeriesDescription}
                         textStyle={styles.headerSeriesDescription}
-                        value={state.data.resources.items[state.currentResource].series.items[state.currentSeries].description}
+                        value={state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].description}
                         isEditable={state.isEditable}></EditableText>
 
 
-                    {/*<Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{state.data.resources.items[state.currentResource].series.items[state.currentSeries].category}</Text>*/}
+                    {/*<Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].category}</Text>*/}
 
                     <Container style={styles.resourceContentEpisodesContainer}>
-                        {state.data.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items.map((episode, index) => {
+                        {state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items.map((episode, index) => {
                             return (
                                 <TouchableOpacity key={episode.id} onPress={() => { !state.isEditable ? actions.changeEpisode(index) : null }}>
 
@@ -219,15 +222,17 @@ class ResourceContent extends React.Component {
                             )
 
                         })}
-                        <TouchableOpacity onPress={actions.createEpisode}>
-                            <Card style={styles.resourceContentEpisodeCard}>
-                                <CardItem style={styles.resourceContentEpisodesIframeContainer}>
-                                    <Text>Add Episode</Text>
-                                </CardItem>
-                                <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333" }}></Text></CardItem>
-                                <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}></Text></CardItem>
-                            </Card>
-                        </TouchableOpacity>
+                        {state.isEditable ?
+                            <TouchableOpacity onPress={actions.createEpisode}>
+                                <Card style={styles.resourceContentEpisodeCard}>
+                                    <CardItem style={styles.resourceContentEpisodesIframeContainer}>
+                                        <Text>Add Episode</Text>
+                                    </CardItem>
+                                    <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333" }}></Text></CardItem>
+                                    <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}></Text></CardItem>
+                                </Card>
+                            </TouchableOpacity> : null
+                        }
 
                     </Container>
 
@@ -239,7 +244,7 @@ class ResourceContent extends React.Component {
             </Container >)
     }
     renderEpisode(state, actions) {
-        console.log(state.data.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].description)
+        console.log(state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].description)
         return (
             <Container style={styles.resourceContentEpisodeMainContainer}>
                 <Container style={styles.resourceContentEpisodeLeftContainer}>
@@ -248,12 +253,12 @@ class ResourceContent extends React.Component {
                         multiline={false}
                         inputStyle={styles.headerEpisodeTitle}
                         textStyle={styles.headerEpisodeTitle}
-                        value={state.data.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].title}
+                        value={state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].title}
                         isEditable={state.isEditable}></EditableText>
 
 
                     <iframe style={{ padding: 0, border: 0, width: 300, height: 168 }}
-                        src={"https://www.youtube.com/embed/videoseries?list=" + state.data.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].preview}
+                        src={"https://www.youtube.com/embed/videoseries?list=" + state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].preview}
 
                     />
 
@@ -262,10 +267,10 @@ class ResourceContent extends React.Component {
                         multiline={true}
                         inputStyle={styles.headerEpisodeDescription}
                         textStyle={styles.headerEpisodeDescription}
-                        value={state.data.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].description}
+                        value={state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].description}
                         isEditable={state.isEditable}></EditableText>
 
-                    {/*}  <Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{state.data.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].category}</Text>*/}
+                    {/*}  <Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].category}</Text>*/}
 
 
 

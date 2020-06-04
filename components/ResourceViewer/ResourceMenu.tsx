@@ -44,9 +44,9 @@ class ResourceMenu extends React.Component<Props> {
                             justifyContent: 'flex-start',
                             alignItems: 'flex-start'
                         }}>
-                            {state.data.resources.items.map((item, index) => {
+                            {state.resourceData.resources.items.map((item, index) => {
                                 if (item != null)
-                                    return <EditableButton onDelete={() => actions.deleteResource(index)} onChange={(value) => actions.updateResource(index, "menuTitle", value)} key={index} placeholder="temp" isEditable={true} onPress={() => actions.changeResource(index)}
+                                    return <EditableButton onDelete={() => actions.deleteResource(index)} onChange={(value) => actions.updateResource(index, "menuTitle", value)} key={index} placeholder="temp" isEditable={state.isEditable} onPress={() => actions.changeResource(index)}
                                         inputStyle={this.styles.style.centerMenuButtonsText} textStyle={this.styles.style.centerMenuButtonsText} value={item.menuTitle}>
                                     </EditableButton>
                                 else
@@ -54,14 +54,14 @@ class ResourceMenu extends React.Component<Props> {
                             }
                             )}
 
+                            {state.isEditable ?
+                                <Button
+                                    transparent
+                                    onPress={actions.createResource}>
+                                    <Text style={this.styles.style.centerMenuButtonsText}>+</Text>
+                                </Button>
 
-                            <Button
-                                transparent
-                                onPress={actions.createResource}>
-                                <Text style={this.styles.style.centerMenuButtonsText}>+</Text>
-                            </Button>
-
-
+                                : null}
 
 
                         </Body>

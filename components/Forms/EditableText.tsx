@@ -15,10 +15,10 @@ interface Props {
 interface State {
     // value: string,
     isEditable: boolean,
-    textStyle: any,
-    inputStyle: any,
-    multiline: boolean,
-    placeholder: string,
+    // textStyle: any,
+    //   inputStyle: any,
+    //   multiline: boolean,
+    //   placeholder: string,
     value: string
 }
 export default class EditableText extends React.Component<Props, State> {
@@ -27,10 +27,10 @@ export default class EditableText extends React.Component<Props, State> {
         this.state = {
             value: props.value,
             isEditable: props.isEditable,
-            textStyle: props.textStyle,
-            inputStyle: props.inputStyle,
-            multiline: props.multiline,
-            placeholder: props.placeholder
+            // textStyle: props.textStyle,
+            // inputStyle: props.inputStyle,
+            // multiline: props.multiline,
+            // placeholder: props.placeholder
 
         }
         // console.log(props)
@@ -56,10 +56,10 @@ export default class EditableText extends React.Component<Props, State> {
 
 
                 //onChange={(value) => { this.onChanged(value) }}
-                placeholder={this.state.placeholder}
-                multiline={this.state.multiline}
-                style={this.state.inputStyle} value={this.state.value}></Input>
+                placeholder={this.props.placeholder}
+                multiline={this.props.multiline}
+                style={this.props.inputStyle} value={this.state.value}></Input>
         else
-            return <Text style={this.state.textStyle}>{this.props.value}</Text>
+            return <Text style={this.props.textStyle}>{this.props.value}</Text>
     }
 }

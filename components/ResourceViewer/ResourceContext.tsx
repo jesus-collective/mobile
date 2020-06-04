@@ -16,6 +16,17 @@ export const ResourceContext = React.createContext({
         updateEpisode: null,
         clearSeries: null,
         clearEpisode: null,
-        changeEpisode: null
+        changeEpisode: null,
+        mapChanged: null,
+        validateGroup: null,
+        createGroup: null,
+        saveGroup: null,
+        leaveGroup: null,
+        joinGroup: null,
+        deleteGroup: null,
+        showProfile: null,
+        updateValueGroup: null
+
+
     }, state: null
 })
