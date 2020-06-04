@@ -222,7 +222,7 @@ export default class MyGroups extends React.Component<Props, State> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       const processList = (json) => {
-        console.log({ profile: json })
+        //console.log({ profile: json })
         const temp = [...this.state.data, ...json.data.listUsers.items]
         this.setState({
           data: temp,
@@ -239,7 +239,7 @@ export default class MyGroups extends React.Component<Props, State> {
       });
 
       const processList = (json) => {
-        console.log({ profile: json })
+        //console.log({ profile: json })
         this.setCanLeave(json.data.groupByType.items)
         this.setIsOwner(json.data.groupByType.items)
         const temp = [...this.state.data, ...json.data.groupByType.items]
@@ -272,7 +272,7 @@ export default class MyGroups extends React.Component<Props, State> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       groupMemberByUser.then((json: any) => {
-        console.log({ "groupMemberByUser": json })
+        // console.log({ "groupMemberByUser": json })
         if (json.data.groupMemberByUser.items.length > 0) {
           this.setState({ canLeave: this.state.canLeave.concat([item.id]) })
         }
@@ -290,7 +290,7 @@ export default class MyGroups extends React.Component<Props, State> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       getGroup.then((json: any) => {
-        console.log({ "getGroup": json })
+        //  console.log({ "getGroup": json })
         if (json.data.getGroup) {
           this.setState({ isOwner: this.state.isOwner.concat([item.id]) })
         }
@@ -505,7 +505,7 @@ export default class MyGroups extends React.Component<Props, State> {
                     }
                   </Container>
                 </Container>
-                <Container style={ this.state.wrap ? styles.ResourcesMyGroupsWrap : styles.ResourcesMyGroupsNoWrap }>
+                <Container style={this.state.wrap ? styles.ResourcesMyGroupsWrap : styles.ResourcesMyGroupsNoWrap}>
                   {this.state.data ?
                     this.state.data.map((item, index) => {
 

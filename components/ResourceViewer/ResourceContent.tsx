@@ -143,11 +143,15 @@ class ResourceContent extends React.Component {
                 </Container>
             </Container >)
     }
+    generateKey(state) {
+        return state.currentResource + "-" + state.currentSeries + "-" + state.currentEpisode
+    }
     renderEpisodes(state, actions) {
         return (
             <Container style={styles.resourceContentEpisodeMainContainer}>
                 <Container style={styles.resourceContentEpisodeLeftContainer}>
                     <EditableText
+                        key={this.generateKey(state)}
                         onChange={(val) => { actions.updateSeries(state.currentResource, state.currentSeries, "title", val) }}
                         multiline={false}
                         inputStyle={styles.headerSeriesTitle}
@@ -163,6 +167,7 @@ class ResourceContent extends React.Component {
                     />
 
                     <EditableText
+                        key={this.generateKey(state)}
                         onChange={(val) => { actions.updateSeries(state.currentResource, state.currentSeries, "description", val) }}
                         multiline={true}
                         inputStyle={styles.headerSeriesDescription}
@@ -249,6 +254,8 @@ class ResourceContent extends React.Component {
             <Container style={styles.resourceContentEpisodeMainContainer}>
                 <Container style={styles.resourceContentEpisodeLeftContainer}>
                     <EditableText
+                        key={this.generateKey(state)}
+
                         onChange={(val) => { actions.updateEpisode(state.currentResource, state.currentSeries, state.currentEpisode, "title", val) }}
                         multiline={false}
                         inputStyle={styles.headerEpisodeTitle}
@@ -263,6 +270,8 @@ class ResourceContent extends React.Component {
                     />
 
                     <EditableText
+                        key={this.generateKey(state)}
+
                         onChange={(val) => { actions.updateEpisode(state.currentResource, state.currentSeries, state.currentEpisode, "description", val) }}
                         multiline={true}
                         inputStyle={styles.headerEpisodeDescription}
