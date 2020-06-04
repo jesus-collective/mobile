@@ -1,12 +1,11 @@
-import { Button, View, Input, Form, Item, Label, Content } from 'native-base';
-import { Text, Image } from 'react-native'
+import { Button, View, Input, Form, Item, Label, Content, Picker, Badge, Container } from 'native-base';
+import { Text, Image, TouchableOpacity } from 'react-native'
 import * as React from 'react';
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { Auth } from 'aws-amplify';
 import styles from '../../components/style'
-import TagInput from 'react-native-tags-input';
 import Amplify from 'aws-amplify'
 import awsconfig from '../../src/aws-exports';
 import Validate from '../Validate/Validate';
@@ -14,12 +13,12 @@ import moment from 'moment';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 import MapSelector from './MapSelector'
 import EditableText from '../Forms/EditableText';
+import { AntDesign } from '@expo/vector-icons'; 
 
+import { interests } from './interests'
 import { constants } from '../../src/constants'
 
 Amplify.configure(awsconfig);
-
-const mainColor = '#ffffff';
 
 interface Props {
   finalizeProfile?(): void
@@ -29,9 +28,8 @@ interface Props {
 }
 interface State {
   UserDetails: any
-  tags: any
-  tagsColor: any
-  tagsText: any
+  interest: string
+  interestsArray: any
   profileImage: any
   validationText: any
   mapVisible: any
@@ -43,17 +41,13 @@ export default class MyProfile extends React.Component<Props, State> {
     super(props);
     this.state = {
       UserDetails: null,
-      tags: {
-        tag: '',
-        tagsArray: []
-      },
-      tagsColor: mainColor,
-      tagsText: '#fff',
+      interest: null,
+      interestsArray: [],
       profileImage: "",
       validationText: null,
       mapVisible: false,
       //  mapCoord: { latitude: 0, longitude: 0 },
-      isEditable: false
+      isEditable: false,
     }
     this.getUserDetails()
   }
@@ -65,7 +59,8 @@ export default class MyProfile extends React.Component<Props, State> {
         const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: this.props.loadId }));
         this.setState({
           UserDetails: getUser.data.getUser,
-          isEditable: getUser.data.getUser.id == user['username']
+          isEditable: getUser.data.getUser.id == user['username'],
+          interestsArray: getUser.data.getUser.interests
         }, () => this.getProfileImage()
         )
 
@@ -74,7 +69,8 @@ export default class MyProfile extends React.Component<Props, State> {
       catch (e) {
         if (e.data.getUser != null)
           this.setState({
-            UserDetails: e.data.getUser
+            UserDetails: e.data.getUser,
+            interestsArray: e.data.getUser.interests
           }, () => this.getProfileImage()
           )
         console.log(e)
@@ -86,7 +82,8 @@ export default class MyProfile extends React.Component<Props, State> {
         const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: user['username'] }));
         this.setState({
           UserDetails: getUser.data.getUser,
-          isEditable: true
+          isEditable: true,
+          interestsArray: getUser.data.getUser.interests
         }, () => this.getProfileImage()
         )
 
@@ -137,11 +134,6 @@ export default class MyProfile extends React.Component<Props, State> {
     }
     this.setState({ validationText: validation.validationError })
   }
-  updateTagState = (state): void => {
-    this.setState({
-      tags: state
-    })
-  };
   async onProfileImageChange(e: any): Promise<void> {
     const file = e.target.files[0];
     const user = await Auth.currentCredentials();
@@ -208,6 +200,30 @@ export default class MyProfile extends React.Component<Props, State> {
     console.log("saveLocation")
     this.handleInputChange({ target: { value: { latitude: coord.latitude, longitude: coord.longitude } } }, "location")
     this.setState({ mapVisible: false })
+  }
+  handleAddInterest(): void {
+    const notPicked = (this.state.interestsArray.filter(item => item === this.state.interest).length === 0)
+    if (this.state.interest && this.state.interestsArray.length < 7 && notPicked) {
+      this.setState({interestsArray: this.state.interestsArray.concat(this.state.interest) }, 
+      () => {
+        const updateData = { ...this.state.UserDetails }
+        updateData['interests'] = this.state.interestsArray
+        this.setState({
+          UserDetails: updateData
+        });
+      })
+    }
+  }
+  handleDeleteInterest(event): void {
+    const remainingInterests = this.state.interestsArray.filter(item => item !== event)
+    this.setState({interestsArray: remainingInterests }, 
+    () => {
+      const updateData = { ...this.state.UserDetails }
+      updateData['interests'] = this.state.interestsArray
+      this.setState({
+        UserDetails: updateData
+      });
+    })
   }
 
   openConversation(initialUser, name): void {
@@ -373,33 +389,55 @@ export default class MyProfile extends React.Component<Props, State> {
                 <Text style={styles.fontBold}>My Interests</Text>
                 : <Text style={styles.fontBold}>Interests</Text>
               }
+
               {this.state.isEditable ?
-                <Text style={styles.fontFormText2}>You can select 7 key interests</Text>
-                : null
+                <Container>
+                  <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+                  <Picker style={{height: 41, width: 308, marginRight: 10}}
+                    onValueChange={(itemValue) => this.setState({interest: itemValue})}
+                    selectedValue={this.state.interest}
+                  >
+                    <Picker.Item label={'None Selected'} value={null} />
+                    {interests.map((item, index) => {
+                      return (<Picker.Item key={index} label={item} value={item} />)
+                    })}
+                  </Picker>
+                  <JCButton buttonType={ButtonTypes.Solid} onPress={()=>this.handleAddInterest()}><Text>+ Add</Text></JCButton>
+                  
+                  {this.state.isEditable ?
+                    <Text>You can select {this.state.interestsArray ? 7-this.state.interestsArray.length : 7} more key interests</Text>
+                    : null
+                  }
+                  </View>
+                  <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap'}}>
+                    {this.state.interestsArray ?
+                    this.state.interestsArray.map((item, index) => {
+                      return (
+                        <Badge key={index} style={{backgroundColor: '#EFF1F5', marginRight: 10}}>
+                          <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+                            <Text style={{fontSize: 18, paddingLeft: 10, paddingRight: 10}}>{item}</Text>
+                            <TouchableOpacity onPress={() => this.handleDeleteInterest(item)}>
+                              <AntDesign name="close" size={20} color="#979797" />
+                            </TouchableOpacity>
+                          </View>
+                        </Badge>
+                      )
+                    }) : null}
+                  </View>
+                </Container>
+                : <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap', alignContent: 'flex-start', maxHeight: 100}}>
+                  {this.state.UserDetails.interests ?
+                  this.state.UserDetails.interests.map((item, index) => {
+                    return (
+                      <Badge key={index} style={{backgroundColor: '#EFF1F5', marginRight: 10, marginBottom: 10}}>
+                        <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+                          <Text style={{fontSize: 18, paddingLeft: 10, paddingRight: 10}}>{item}</Text>
+                        </View>
+                      </Badge>
+                    )
+                  }) : null}
+                </View>
               }
-
-              <TagInput
-                updateState={this.updateTagState}
-                tags={this.state.tags}
-                placeholder="Tags..."
-                label={this.state.isEditable ? 'Press space to add a tag' : ""}
-
-                //leftElement={<Icon name={'tag-multiple'} type={'material-community'} color={this.state.tagsText} />}
-
-
-                onFocus={() => this.setState({ tagsColor: '#fff', tagsText: "#000000" })}
-                onBlur={() => this.setState({ tagsColor: mainColor, tagsText: '#000000' })}
-                autoCorrect={false}
-                scrollViewProps={{ contentContainerStyle: { justifyContent: "center" } }}
-                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", color: this.state.tagsText, paddingLeft: 5, marginLeft: 0 }}
-                containerStyle={{ justifyContent: "center", width: "100%", paddingLeft: 0, marginBottom: 20 }}
-                inputContainerStyle={[styles.textInput, { backgroundColor: this.state.tagsColor, marginLeft: 0 }]}
-                labelStyle={{ color: '#000000' }}
-                tagStyle={styles.tag}
-                tagTextStyle={styles.tagText}
-                leftElementContainerStyle={{ marginLeft: 0 }}
-              //keysForTag={' '}
-              />
               <Item stackedLabel style={{ marginBottom: 15, width: "100%" }}>
                 <Label style={styles.fontFormSmall}>Current Role</Label>
                 <EditableText onChange={(e) => { this.handleInputChange(e, "currentRole") }}
