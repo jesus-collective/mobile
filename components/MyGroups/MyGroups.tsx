@@ -405,7 +405,7 @@ export default class MyGroups extends React.Component<Props, State> {
 
   renderGroup(item: any): React.ReactNode {
     return <Card style={[styles.groupCard, { width: this.state.cardWidth }]} >
-      <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0 }} >
+      <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0, width: this.state.cardWidth, right: 5 }} >
         <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 70 }} source={require('../../assets/svg/pattern.svg')}></Image>
       </CardItem>
       <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitleGroup}>{item.name}</Text></CardItem>
@@ -450,7 +450,7 @@ export default class MyGroups extends React.Component<Props, State> {
   }
   renderResource(item: any): React.ReactNode {
     return <Card style={[styles.resourceCard, { width: this.state.cardWidth }]}>
-      <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0 }}>
+      <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0, width: this.state.cardWidth, right: 5 }}>
         <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 70 }} source={require('../../assets/svg/pattern.svg')}></Image>
       </CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitleGroup}>{item.name}</Text></CardItem>
