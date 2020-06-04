@@ -162,7 +162,7 @@ export default class MyGroups extends React.Component<Props, State> {
         currentUser: null,
         nextToken: null,
         canLeave: [],
-        isOwner: []
+        isOwner: [],
       }
     }
     this.setInitialData(props)
@@ -504,7 +504,7 @@ export default class MyGroups extends React.Component<Props, State> {
                     }
                   </Container>
                 </Container>
-                <Container style={styles.ResourcesMyGroups}>
+                <Container style={ this.state.wrap ? styles.ResourcesMyGroupsWrap : styles.ResourcesMyGroupsNoWrap }>
                   {this.state.data ?
                     this.state.data.map((item, index) => {
 

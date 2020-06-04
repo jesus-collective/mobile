@@ -709,11 +709,23 @@ export default EStyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'flex-start',
     },
-    ResourcesMyGroups: {
+    ResourcesMyGroupsNoWrap: {
         overflow: "scroll",
         overflowY: "hidden",
         minHeight: 375,
         flexWrap: "nowrap",
+        // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
+        flexGrow: 1,
+        width: "100%",
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "flex-start"
+    },
+    ResourcesMyGroupsWrap: {
+        overflow: "scroll",
+        overflowY: "hidden",
+        minHeight: "100vw",
+        flexWrap: "wrap",
         // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
         flexGrow: 1,
         width: "100%",
