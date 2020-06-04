@@ -255,7 +255,7 @@ export default class MyProfile extends React.Component<Props, State> {
                 </Image>
                 {this.state.isEditable ?
                   <View style={styles.fileInputWrapper}>
-                    <JCButton buttonType={ButtonTypes.Solid} onPress={() => { }}>Upload Profile Picture</JCButton>
+                    <JCButton buttonType={ButtonTypes.SolidProfile} onPress={() => { }}>Upload Profile Picture</JCButton>
                     <input data-testid="profile-image" style={{ fontSize: "200px", position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='image/*' onChange={(e) => this.onProfileImageChange(e)} />
                   </View>
                   : null

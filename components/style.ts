@@ -253,10 +253,10 @@ export default EStyleSheet.create({
         fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", paddingTop: 5
     },
     fontFormSmallInput: {
-        fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 25, letterSpacing: -0.3, color: "#333333", width: 250, height: 18, borderWidth: 0, borderColor: "#dddddd"
+        fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 25, letterSpacing: -0.3, color: "#333333", maxWidth: 250, height: 18, borderWidth: 0, borderColor: "#dddddd"
     },
     fontFormMediumInput: {
-        fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28, letterSpacing: -0.3, color: "#333333", width: 250, height: 18, borderWidth: 0, borderColor: "#dddddd"
+        fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28, letterSpacing: -0.3, color: "#333333", maxWidth: 350, height: 18, borderWidth: 0, borderColor: "#dddddd", overflow: "hidden"
     },
     fontFormSmallGrey: {
         fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", opacity: 0.5, marginBottom: 19
@@ -1044,7 +1044,7 @@ export default EStyleSheet.create({
         fileInputWrapper: {
             width: "100%",
             top: 265,
-            left: "8%"
+            left: 0
         },
         myProfileCoordinates: {
             flexDirection: "column",
@@ -1078,6 +1078,9 @@ export default EStyleSheet.create({
         myMapFontDetailMiddle: {
             fontSize: 14,
             lineHeight: 20,
+        },
+        fontFormMediumInput: {
+            maxWidth: 175
         },
     },
 
@@ -1132,6 +1135,9 @@ export default EStyleSheet.create({
         myMapFontDetailMiddle: {
             fontSize: 14,
             lineHeight: 20,
+        },
+        fontFormMediumInput: {
+            maxWidth: 287
         },
     },
 
