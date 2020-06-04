@@ -23,8 +23,18 @@ class ResourceContent extends React.Component {
 
                         {state.data.resources.items[state.currentResource].series.items.length > 0 ? state.data.resources.items[state.currentResource].series.items[0].episodes.items.map((episode, index) => {
                             return (
-                                <TouchableOpacity key={episode.id} onPress={() => { !state.isEditable ? actions.changeSeries(0) : null }}>
-                                    <Card style={styles.resourceContentCurrentSeriesCard}>
+                                <Card key={episode.id} style={styles.resourceContentCurrentSeriesCard}>
+                                    {state.isEditable ?
+                                        <CardItem>
+                                            <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-arrow-back" style={styles.icon} /></JCButton>
+                                            <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-attach" style={styles.icon} /></JCButton>
+                                            <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { actions.changeSeries(0); actions.changeEpisode(index) }}> <Ionicons size={24} name="ios-open" style={styles.icon} /></JCButton>
+                                            <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { actions.deleteEpisode(state.currentResource, 0, index) }}><Ionicons size={24} name="ios-trash" style={styles.icon} /></JCButton>
+                                            <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-arrow-forward" style={styles.icon} /></JCButton>
+                                        </CardItem>
+                                        : null
+                                    }
+                                    <TouchableOpacity onPress={() => { if (!state.isEditable) { actions.changeSeries(0); actions.changeEpisode(index) } }}>
 
                                         <CardItem style={styles.resourceContentCurrentSeriesIframeContainer}>
                                             {episode.videoPreview ?
@@ -52,8 +62,9 @@ class ResourceContent extends React.Component {
                                                 isEditable={state.isEditable}></EditableText>
 
                                         </CardItem>
-                                    </Card>
-                                </TouchableOpacity>
+                                    </TouchableOpacity>
+                                </Card>
+
                             )
                         }) : null}
 
@@ -72,6 +83,7 @@ class ResourceContent extends React.Component {
                                         <CardItem>
                                             <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-arrow-back" style={styles.icon} /></JCButton>
                                             <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-attach" style={styles.icon} /></JCButton>
+                                            <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { actions.changeSeries(index) }}> <Ionicons size={24} name="ios-open" style={styles.icon} /></JCButton>
                                             <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { actions.deleteSeries(state.currentResource, index) }}><Ionicons size={24} name="ios-trash" style={styles.icon} /></JCButton>
                                             <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-arrow-forward" style={styles.icon} /></JCButton>
                                         </CardItem>
@@ -126,7 +138,7 @@ class ResourceContent extends React.Component {
                 </Container>
                 <Container style={styles.resourceContentRightContainer}>
                 </Container>
-            </Container>)
+            </Container >)
     }
     renderEpisodes(state, actions) {
         return (
@@ -168,6 +180,8 @@ class ResourceContent extends React.Component {
                                             <CardItem>
                                                 <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-arrow-back" style={styles.icon} /></JCButton>
                                                 <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-attach" style={styles.icon} /></JCButton>
+                                                <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { actions.changeEpisode(index) }}> <Ionicons size={24} name="ios-open" style={styles.icon} /></JCButton>
+
                                                 <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { actions.deleteEpisode(state.currentResource, state.currentSeries, index) }}><Ionicons size={24} name="ios-trash" style={styles.icon} /></JCButton>
                                                 <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-arrow-forward" style={styles.icon} /></JCButton>
                                             </CardItem> :
@@ -225,13 +239,14 @@ class ResourceContent extends React.Component {
             </Container >)
     }
     renderEpisode(state, actions) {
+        console.log(state.data.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].description)
         return (
             <Container style={styles.resourceContentEpisodeMainContainer}>
                 <Container style={styles.resourceContentEpisodeLeftContainer}>
                     <EditableText
                         onChange={(val) => { actions.updateEpisode(state.currentResource, state.currentSeries, state.currentEpisode, "title", val) }}
                         multiline={false}
-                        inputStyle={styles.fontResourceHeaderBold}
+                        inputStyle={styles.headerEpisodeTitle}
                         textStyle={styles.headerEpisodeTitle}
                         value={state.data.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].title}
                         isEditable={state.isEditable}></EditableText>
@@ -245,7 +260,7 @@ class ResourceContent extends React.Component {
                     <EditableText
                         onChange={(val) => { actions.updateEpisode(state.currentResource, state.currentSeries, state.currentEpisode, "description", val) }}
                         multiline={true}
-                        inputStyle={styles.fontResourceHeaderBold}
+                        inputStyle={styles.headerEpisodeDescription}
                         textStyle={styles.headerEpisodeDescription}
                         value={state.data.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].description}
                         isEditable={state.isEditable}></EditableText>

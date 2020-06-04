@@ -41,7 +41,7 @@ class ResourceViewer extends React.Component<Props, State> {
             currentResource: null,
             currentSeries: null,
             currentEpisode: null,
-            isEditable: false
+            isEditable: true
         }
         this.setInitialData()
     }
@@ -413,8 +413,8 @@ class ResourceViewer extends React.Component<Props, State> {
         try {
             console.log({ "Updating Resource": { resource: resourceIndex, series: seriesIndex, episode: episodeIndex } })
 
-            const updateResource: any = await API.graphql({
-                query: mutations.updateResourceSeries,
+            const updateResourceEpisode: any = await API.graphql({
+                query: mutations.updateResourceEpisode,
                 variables: {
                     input: {
                         id: this.state.data.resources.items[resourceIndex].series.items[seriesIndex].episodes.items[episodeIndex].id,
@@ -423,7 +423,7 @@ class ResourceViewer extends React.Component<Props, State> {
                 },
                 authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
             });
-            console.log(updateResource)
+            console.log(updateResourceEpisode)
             const temp = this.state.data
             temp.resources.items[resourceIndex].series.items[seriesIndex].episodes.items[episodeIndex][item] = value
             this.setState({ data: temp })
@@ -433,7 +433,7 @@ class ResourceViewer extends React.Component<Props, State> {
         }
     }
     clearEpisode = (): void => {
-        this.setState({ currentSeries: null })
+        this.setState({ currentEpisode: null })
     }
     clearSeries = (): void => {
         this.setState({ currentSeries: null, currentEpisode: null })
@@ -443,7 +443,7 @@ class ResourceViewer extends React.Component<Props, State> {
         try {
             console.log({ "Deleting Episode": { resource: resourceIndex, series: seriesIndex, episode: episodeIndex } })
             const deleteResource: any = await API.graphql({
-                query: mutations.deleteResourceSeries,
+                query: mutations.deleteResourceEpisode,
                 variables: { input: { id: this.state.data.resources.items[resourceIndex].series.items[seriesIndex].episodes.items[episodeIndex].id } },
                 authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
             });
