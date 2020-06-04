@@ -6,13 +6,10 @@ import { ResourceContext } from './ResourceContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
+import EditableText from '../Forms/EditableText'
 
-interface Props { }
-interface State { }
-class ResourceContent extends React.Component<Props, State>{
-    constructor(props: Props) {
-        super(props)
-    }
+class ResourceContent extends React.Component {
+
     static Consumer = ResourceContext.Consumer;
     renderSeries(state, actions) {
         return (
@@ -24,9 +21,9 @@ class ResourceContent extends React.Component<Props, State>{
                     </Container>
                     <Container style={styles.resourceContentCurrentSeriesContainer}>
 
-                        {state.data.resources.items[state.currentResource].series.items.length > 0 ? state.data.resources.items[state.currentResource].series.items[0].episodes.items.map((episode) => {
+                        {state.data.resources.items[state.currentResource].series.items.length > 0 ? state.data.resources.items[state.currentResource].series.items[0].episodes.items.map((episode, index) => {
                             return (
-                                <TouchableOpacity key={episode.id} onPress={() => { actions.changeSeries(0) }}>
+                                <TouchableOpacity key={episode.id} onPress={() => { !state.isEditable ? actions.changeSeries(0) : null }}>
                                     <Card style={styles.resourceContentCurrentSeriesCard}>
 
                                         <CardItem style={styles.resourceContentCurrentSeriesIframeContainer}>
@@ -36,8 +33,25 @@ class ResourceContent extends React.Component<Props, State>{
 
                                                 /> : null}
                                         </CardItem>
-                                        <CardItem style={{ width: 300, padding: 0, margin: 0, paddingBottom: 0 }}><Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333" }}>{episode.title}</Text></CardItem>
-                                        <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{episode.descripition}</Text></CardItem>
+
+                                        <CardItem style={{ width: 300, padding: 0, margin: 0, paddingBottom: 0 }}>
+                                            <EditableText onChange={(val) => { actions.updateEpisode(state.currentResource, 0, index, "title", val) }}
+                                                multiline={false}
+                                                inputStyle={styles.episodeTitle}
+                                                textStyle={styles.episodeTitle}
+                                                value={episode.title}
+                                                isEditable={state.isEditable}></EditableText>
+
+                                        </CardItem>
+                                        <CardItem style={{ width: 300, padding: 0, margin: 0 }}>
+                                            <EditableText onChange={(val) => { actions.updateEpisode(state.currentResource, 0, index, "description", val) }}
+                                                multiline={true}
+                                                inputStyle={styles.episodeDescription}
+                                                textStyle={styles.episodeDescription}
+                                                value={episode.description}
+                                                isEditable={state.isEditable}></EditableText>
+
+                                        </CardItem>
                                     </Card>
                                 </TouchableOpacity>
                             )
@@ -54,22 +68,45 @@ class ResourceContent extends React.Component<Props, State>{
 
 
                                 <Card key={index} style={styles.resourceContentMoreSeriesCard}>
-                                    <CardItem>
-                                        <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-arrow-back" style={styles.icon} /></JCButton>
-                                        <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-attach" style={styles.icon} /></JCButton>
-                                        <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { actions.deleteSeries(state.currentResource, index) }}><Ionicons size={24} name="ios-trash" style={styles.icon} /></JCButton>
-                                        <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-arrow-forward" style={styles.icon} /></JCButton>
-                                    </CardItem>
-                                    <TouchableOpacity onPress={() => { actions.changeSeries(index) }}>
+                                    {state.isEditable ?
+                                        <CardItem>
+                                            <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-arrow-back" style={styles.icon} /></JCButton>
+                                            <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-attach" style={styles.icon} /></JCButton>
+                                            <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { actions.deleteSeries(state.currentResource, index) }}><Ionicons size={24} name="ios-trash" style={styles.icon} /></JCButton>
+                                            <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-arrow-forward" style={styles.icon} /></JCButton>
+                                        </CardItem>
+                                        : null
+                                    }
+                                    <TouchableOpacity onPress={() => { !state.isEditable ? actions.changeSeries(index) : null }}>
                                         <CardItem style={styles.resourceContentMoreSeriesIframeContainer}>
                                             <iframe style={{ padding: 0, border: 0, width: 300, height: 168 }}
                                                 src={"https://www.youtube.com/embed/videoseries?list=" + series.playlist}
 
                                             />
                                         </CardItem>
-                                        <CardItem><Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 }}>{series.title}</Text></CardItem>
-                                        <CardItem><Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 }}>{series.description}</Text></CardItem>
-                                        <CardItem><Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{series.category}</Text></CardItem>
+                                        <CardItem>
+                                            <EditableText
+                                                onChange={(val) => { actions.updateSeries(state.currentResource, index, "title", val) }}
+                                                multiline={false}
+                                                inputStyle={styles.seriesTitle}
+                                                textStyle={styles.seriesTitle}
+                                                value={series.title}
+                                                isEditable={state.isEditable}></EditableText>
+
+                                        </CardItem>
+                                        <CardItem>
+                                            <EditableText
+                                                onChange={(val) => { actions.updateSeries(state.currentResource, index, "description", val) }}
+                                                multiline={true}
+                                                inputStyle={styles.seriesDescription}
+                                                textStyle={styles.seriesDescription}
+                                                value={series.description}
+                                                isEditable={state.isEditable}></EditableText>
+
+                                        </CardItem>
+                                        {/*<CardItem>
+                                            <Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{series.category}</Text>
+                                        </CardItem>*/}
                                     </TouchableOpacity>
                                 </Card>
 
@@ -95,30 +132,47 @@ class ResourceContent extends React.Component<Props, State>{
         return (
             <Container style={styles.resourceContentEpisodeMainContainer}>
                 <Container style={styles.resourceContentEpisodeLeftContainer}>
+                    <EditableText
+                        onChange={(val) => { actions.updateSeries(state.currentResource, state.currentSeries, "title", val) }}
+                        multiline={false}
+                        inputStyle={styles.headerSeriesTitle}
+                        textStyle={styles.headerSeriesTitle}
+                        value={state.data.resources.items[state.currentResource].series.items[state.currentSeries].title}
+                        isEditable={state.isEditable}></EditableText>
 
-                    <Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 }}>{state.data.resources.items[state.currentResource].series.items[state.currentSeries].title}</Text>
+
 
                     <iframe style={{ padding: 0, border: 0, width: 300, height: 168 }}
                         src={"https://www.youtube.com/embed/videoseries?list=" + state.data.resources.items[state.currentResource].series.items[state.currentSeries].playlist}
 
                     />
 
+                    <EditableText
+                        onChange={(val) => { actions.updateSeries(state.currentResource, state.currentSeries, "description", val) }}
+                        multiline={true}
+                        inputStyle={styles.headerSeriesDescription}
+                        textStyle={styles.headerSeriesDescription}
+                        value={state.data.resources.items[state.currentResource].series.items[state.currentSeries].description}
+                        isEditable={state.isEditable}></EditableText>
 
-                    <Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 }}>{state.data.resources.items[state.currentResource].series.items[state.currentSeries].description}</Text>
-                    <Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{state.data.resources.items[state.currentResource].series.items[state.currentSeries].category}</Text>
+
+                    {/*<Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{state.data.resources.items[state.currentResource].series.items[state.currentSeries].category}</Text>*/}
 
                     <Container style={styles.resourceContentEpisodesContainer}>
                         {state.data.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items.map((episode, index) => {
                             return (
-                                <TouchableOpacity key={episode.id} onPress={() => { actions.changeEpisode(index) }}>
+                                <TouchableOpacity key={episode.id} onPress={() => { !state.isEditable ? actions.changeEpisode(index) : null }}>
 
                                     <Card style={styles.resourceContentEpisodeCard}>
-                                        <CardItem>
-                                            <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-arrow-back" style={styles.icon} /></JCButton>
-                                            <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-attach" style={styles.icon} /></JCButton>
-                                            <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { actions.deleteEpisode(state.currentResource, state.currentSeries, index) }}><Ionicons size={24} name="ios-trash" style={styles.icon} /></JCButton>
-                                            <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-arrow-forward" style={styles.icon} /></JCButton>
-                                        </CardItem>
+                                        {state.isEditable ?
+                                            <CardItem>
+                                                <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-arrow-back" style={styles.icon} /></JCButton>
+                                                <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-attach" style={styles.icon} /></JCButton>
+                                                <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { actions.deleteEpisode(state.currentResource, state.currentSeries, index) }}><Ionicons size={24} name="ios-trash" style={styles.icon} /></JCButton>
+                                                <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-arrow-forward" style={styles.icon} /></JCButton>
+                                            </CardItem> :
+                                            null
+                                        }
                                         <CardItem style={styles.resourceContentEpisodesIframeContainer}>
                                             {episode.videoPreview ?
                                                 <iframe style={{ padding: 0, border: 0, width: 300, height: 168 }}
@@ -126,8 +180,26 @@ class ResourceContent extends React.Component<Props, State>{
 
                                                 /> : null}
                                         </CardItem>
-                                        <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333" }}>{episode.title}</Text></CardItem>
-                                        <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{episode.descripition}</Text></CardItem>
+                                        <CardItem style={{ width: 300, padding: 0, margin: 0 }}>
+                                            <EditableText
+                                                onChange={(val) => { actions.updateEpisode(state.currentResource, state.currentSeries, index, "title", val) }}
+                                                multiline={false}
+                                                inputStyle={styles.episodeTitle}
+                                                textStyle={styles.episodeTitle}
+                                                value={episode.title}
+                                                isEditable={state.isEditable}></EditableText>
+
+                                        </CardItem>
+                                        <CardItem style={{ width: 300, padding: 0, margin: 0 }}>
+                                            <EditableText
+                                                onChange={(val) => { actions.updateEpisode(state.currentResource, state.currentSeries, index, "description", val) }}
+                                                multiline={true}
+                                                inputStyle={styles.episodeDescription}
+                                                textStyle={styles.episodeDescription}
+                                                value={episode.description}
+                                                isEditable={state.isEditable}></EditableText>
+
+                                        </CardItem>
                                     </Card>
                                 </TouchableOpacity>
                             )
@@ -156,17 +228,29 @@ class ResourceContent extends React.Component<Props, State>{
         return (
             <Container style={styles.resourceContentEpisodeMainContainer}>
                 <Container style={styles.resourceContentEpisodeLeftContainer}>
+                    <EditableText
+                        onChange={(val) => { actions.updateEpisode(state.currentResource, state.currentSeries, state.currentEpisode, "title", val) }}
+                        multiline={false}
+                        inputStyle={styles.fontResourceHeaderBold}
+                        textStyle={styles.headerEpisodeTitle}
+                        value={state.data.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].title}
+                        isEditable={state.isEditable}></EditableText>
 
-                    <Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 }}>{state.data.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].title}</Text>
 
                     <iframe style={{ padding: 0, border: 0, width: 300, height: 168 }}
                         src={"https://www.youtube.com/embed/videoseries?list=" + state.data.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].preview}
 
                     />
 
+                    <EditableText
+                        onChange={(val) => { actions.updateEpisode(state.currentResource, state.currentSeries, state.currentEpisode, "description", val) }}
+                        multiline={true}
+                        inputStyle={styles.fontResourceHeaderBold}
+                        textStyle={styles.headerEpisodeDescription}
+                        value={state.data.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].description}
+                        isEditable={state.isEditable}></EditableText>
 
-                    <Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 }}>{state.data.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].description}</Text>
-                    <Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{state.data.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].category}</Text>
+                    {/*}  <Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{state.data.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].category}</Text>*/}
 
 
 

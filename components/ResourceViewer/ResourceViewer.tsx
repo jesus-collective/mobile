@@ -30,6 +30,7 @@ interface State {
     currentResource: number
     currentSeries: number
     currentEpisode: number
+    isEditable: boolean
 }
 class ResourceViewer extends React.Component<Props, State> {
     static Provider = ResourceContext.Provider;
@@ -39,7 +40,8 @@ class ResourceViewer extends React.Component<Props, State> {
             data: null,
             currentResource: null,
             currentSeries: null,
-            currentEpisode: null
+            currentEpisode: null,
+            isEditable: false
         }
         this.setInitialData()
     }

@@ -49,6 +49,8 @@ export default class EditableText extends React.Component<Props, State> {
                 onSubmitEditing={(val) => { this.onChanged(val.target.value) }}
                 onChange={(val) => { this.setState({ value: val.target.value }) }}
 
+
+
                 //onChange={(value) => { this.onChanged(value) }}
                 placeholder={this.state.placeholder}
                 multiline={this.state.multiline}
