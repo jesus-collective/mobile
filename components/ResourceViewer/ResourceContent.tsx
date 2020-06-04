@@ -249,7 +249,7 @@ class ResourceContent extends React.Component {
             </Container >)
     }
     renderEpisode(state, actions) {
-        console.log(state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].description)
+        const episode = state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode]
         return (
             <Container style={styles.resourceContentEpisodeMainContainer}>
                 <Container style={styles.resourceContentEpisodeLeftContainer}>
@@ -260,7 +260,7 @@ class ResourceContent extends React.Component {
                         multiline={false}
                         inputStyle={styles.headerEpisodeTitle}
                         textStyle={styles.headerEpisodeTitle}
-                        value={state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].title}
+                        value={episode.title}
                         isEditable={state.isEditable}></EditableText>
 
 
@@ -276,11 +276,38 @@ class ResourceContent extends React.Component {
                         multiline={true}
                         inputStyle={styles.headerEpisodeDescription}
                         textStyle={styles.headerEpisodeDescription}
-                        value={state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].description}
+                        value={episode.description}
                         isEditable={state.isEditable}></EditableText>
 
                     {/*}  <Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].category}</Text>*/}
-
+                    {episode.videoPreview ?
+                        <a href={episode.videoPreview}>
+                            <Text>View Preview</Text>
+                        </a> : null
+                    }
+                    {episode.videoLowRes ?
+                        <a href={episode.videoLowRes}>
+                            <Text>Lo Res Video</Text>
+                        </a>
+                        : null
+                    }
+                    {episode.videoHiRes ?
+                        <a href={episode.videoHiRes}>
+                            <Text>Hi Res Video</Text>
+                        </a>
+                        : null
+                    }
+                    {episode.lessonPlan ?
+                        <a href={episode.lessonPlan}>
+                            <Text>Lesson Plan</Text>
+                        </a>
+                        : null
+                    }
+                    {episode.activityPage ?
+                        <a href={episode.activityPage}>
+                            <Text>Activity Page</Text>
+                        </a> : null
+                    }
 
 
                 </Container >

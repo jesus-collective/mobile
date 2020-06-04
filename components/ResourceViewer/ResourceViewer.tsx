@@ -166,10 +166,11 @@ class ResourceViewer extends React.Component<Props, State> {
         // await DataStore.delete(ResourceEpisode, Predicates.ALL)
         //  await this.DeleteAll()
 
-
+        //        console.log(this.state.groupData.id)
+        console.log(this.state.groupData)
         const listResourceRoots: any = API.graphql({
             query: queries.listResourceRoots,
-            variables: { limit: 20, filter: { groupId: { eq: this.state.groupData.id } }, nextToken: null },
+            variables: { limit: 100, filter: { groupId: { eq: this.state.groupData.id } }, nextToken: null },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
         });
 
