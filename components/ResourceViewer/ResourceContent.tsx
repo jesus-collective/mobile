@@ -147,6 +147,7 @@ class ResourceContent extends React.Component {
         return state.currentResource + "-" + state.currentSeries + "-" + state.currentEpisode
     }
     renderEpisodes(state, actions) {
+        const series = state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries]
         return (
             <Container style={styles.resourceContentEpisodeMainContainer}>
                 <Container style={styles.resourceContentEpisodeLeftContainer}>
@@ -156,13 +157,13 @@ class ResourceContent extends React.Component {
                         multiline={false}
                         inputStyle={styles.headerSeriesTitle}
                         textStyle={styles.headerSeriesTitle}
-                        value={state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].title}
+                        value={series.title}
                         isEditable={state.isEditable}></EditableText>
 
 
 
                     <iframe style={{ padding: 0, border: 0, width: 300, height: 168 }}
-                        src={"https://www.youtube.com/embed/videoseries?list=" + state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].playlist}
+                        src={"https://www.youtube.com/embed/videoseries?list=" + series.playlist}
 
                     />
 
@@ -172,14 +173,24 @@ class ResourceContent extends React.Component {
                         multiline={true}
                         inputStyle={styles.headerSeriesDescription}
                         textStyle={styles.headerSeriesDescription}
-                        value={state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].description}
+                        value={series.description}
                         isEditable={state.isEditable}></EditableText>
 
 
                     {/*<Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].category}</Text>*/}
+                    {series.allFiles ?
+                        <a href={series.allFiles}>
+                            <Text>All series files</Text>
+                        </a> : null
+                    }
+                    {series.playlist ?
+                        <a href={series.playlist}>
+                            <Text>Series Playlist</Text>
+                        </a> : null
+                    }
 
                     <Container style={styles.resourceContentEpisodesContainer}>
-                        {state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items.map((episode, index) => {
+                        {series.episodes.items.map((episode, index) => {
                             return (
                                 <TouchableOpacity key={episode.id} onPress={() => { !state.isEditable ? actions.changeEpisode(index) : null }}>
 
@@ -222,6 +233,36 @@ class ResourceContent extends React.Component {
                                                 isEditable={state.isEditable}></EditableText>
 
                                         </CardItem>
+                                        <CardItem>
+                                            {episode.videoPreview ?
+                                                <a href={episode.videoPreview}>
+                                                    <Text>View Preview</Text>
+                                                </a> : null
+                                            }
+                                            {episode.videoLowRes ?
+                                                <a href={episode.videoLowRes}>
+                                                    <Text>Lo Res Video</Text>
+                                                </a>
+                                                : null
+                                            }
+                                            {episode.videoHiRes ?
+                                                <a href={episode.videoHiRes}>
+                                                    <Text>Hi Res Video</Text>
+                                                </a>
+                                                : null
+                                            }
+                                            {episode.lessonPlan ?
+                                                <a href={episode.lessonPlan}>
+                                                    <Text>Lesson Plan</Text>
+                                                </a>
+                                                : null
+                                            }
+                                            {episode.activityPage ?
+                                                <a href={episode.activityPage}>
+                                                    <Text>Activity Page</Text>
+                                                </a> : null
+                                            }
+                                        </CardItem>
                                     </Card>
                                 </TouchableOpacity>
                             )
@@ -249,6 +290,7 @@ class ResourceContent extends React.Component {
             </Container >)
     }
     renderEpisode(state, actions) {
+        const series = state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries]
         const episode = state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode]
         return (
             <Container style={styles.resourceContentEpisodeMainContainer}>
@@ -280,6 +322,17 @@ class ResourceContent extends React.Component {
                         isEditable={state.isEditable}></EditableText>
 
                     {/*}  <Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].category}</Text>*/}
+
+                    {series.allFiles ?
+                        <a href={series.allFiles}>
+                            <Text>All series files</Text>
+                        </a> : null
+                    }
+                    {series.playlist ?
+                        <a href={series.playlist}>
+                            <Text>Series Playlist</Text>
+                        </a> : null
+                    }
                     {episode.videoPreview ?
                         <a href={episode.videoPreview}>
                             <Text>View Preview</Text>
