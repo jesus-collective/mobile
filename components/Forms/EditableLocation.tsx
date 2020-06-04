@@ -76,7 +76,7 @@ export default class EditableLocation extends React.Component<Props, State> {
                             })}
                         />
                         <div className="autocomplete-dropdown-container" style={{ minWidth: 250, padding: "7px 25px 7px 10px", maxHeight: 80, overflowY: "scroll", width: 275 }}>
-                            {loading && <div className="autocomplete-dropdown-container" style={{ borderWidth: 2, borderColor: "#333333" }} >Loading...</div>}
+                            {loading && <div className="autocomplete-dropdown-container" style={{ borderWidth: 2, borderColor: "#333333", fontFamily: "Graphik-Regular-App", fontSize: 16 }} >Loading...</div>}
                             {suggestions.map((suggestion, index) => {
                                 const className = suggestion.active
                                     ? 'suggestion-item--active'

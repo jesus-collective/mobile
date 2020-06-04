@@ -108,8 +108,29 @@ export default EStyleSheet.create({
         padding: 10,
         fontWeight: "600",
     },
-    SolidMapButton:
-    {
+    SolidProfileButton: {
+        paddingTop: 6,
+        paddingBottom: 6,
+        paddingLeft: 29,
+        paddingRight: 29,
+        marginBottom: 20,
+        marginLeft: 0,
+        marginRight: 0,
+        //   color:"#F0493E",
+        backgroundColor: "#F0493E",
+        borderWidth: 1,
+        borderColor: "#F0493E",
+        boxShadow: "unset",
+        borderRadius: 4,
+    },
+    SolidProfileText: {
+        color: "#ffffff",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        padding: 10,
+        fontWeight: "600",
+    },
+    SolidMapButton: {
         paddingTop: 6,
         paddingBottom: 6,
         paddingLeft: 29,
@@ -298,7 +319,16 @@ export default EStyleSheet.create({
         },
         SolidText: {
             width: "100%"
-        }
+        },
+        SolidProfileButton: {
+            textAlign: "center",
+            paddingLeft: 0,
+            paddingRight: 0,
+            width: 200
+        },
+        SolidProfileText: {
+            width: "100%"
+        },
     },
 
     '@media (min-width: 320px) and (max-width: 480px)': {
@@ -319,6 +349,15 @@ export default EStyleSheet.create({
             width: "100%"
         },
         SolidText: {
+            width: "100%"
+        },
+        SolidProfileButton: {
+            textAlign: "center",
+            paddingLeft: 0,
+            paddingRight: 0,
+            width: "100%"
+        },
+        SolidProfileText: {
             width: "100%"
         },
         SolidRightJustifiedButton: {

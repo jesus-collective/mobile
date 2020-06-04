@@ -253,10 +253,10 @@ export default EStyleSheet.create({
         fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", paddingTop: 5
     },
     fontFormSmallInput: {
-        fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 25, letterSpacing: -0.3, color: "#333333", width: 250, height: 18, borderWidth: 0, borderColor: "#dddddd"
+        fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 25, letterSpacing: -0.3, color: "#333333", maxWidth: 250, height: 18, borderWidth: 0, borderColor: "#dddddd"
     },
     fontFormMediumInput: {
-        fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28, letterSpacing: -0.3, color: "#333333", width: 250, height: 18, borderWidth: 0, borderColor: "#dddddd"
+        fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28, letterSpacing: -0.3, color: "#333333", maxWidth: 350, height: 18, borderWidth: 0, borderColor: "#dddddd", overflow: "hidden"
     },
     fontFormSmallGrey: {
         fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", opacity: 0.5, marginBottom: 19
@@ -484,8 +484,8 @@ export default EStyleSheet.create({
         minWidth: "100%"
     },
     detailScreenLeftCard: Platform.OS === 'web' ?
-        { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: "175vh", width: 446, paddingBottom: 40 } :
-        { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, minHeight: "175vh", width: 446, paddingBottom: 40 }
+        { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: "200vh", width: 446, paddingBottom: 40 } :
+        { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, minHeight: "200vh", width: 446, paddingBottom: 40 }
     ,
     detailScreenRightCard: Platform.OS === 'web' ?
         { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", height: "100%", width: 446, } :
@@ -582,7 +582,7 @@ export default EStyleSheet.create({
         left: 0,
         top: 0,
         width: "100%",
-        height: "100%",
+        height: 1650,
         zIndex: 100,
         backgroundColor: "#33333366"
     },
@@ -594,7 +594,7 @@ export default EStyleSheet.create({
         left: "10%",
         top: "10%",
         width: "80%",
-        height: "100%"
+        height: "40%"
     },
     myProfileMapSelectorInnerCopyContainer: {
         flexDirection: "row",
@@ -709,11 +709,23 @@ export default EStyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'flex-start',
     },
-    ResourcesMyGroups: {
+    ResourcesMyGroupsNoWrap: {
         overflow: "scroll",
         overflowY: "hidden",
         minHeight: 375,
         flexWrap: "nowrap",
+        // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
+        flexGrow: 1,
+        width: "100%",
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "flex-start"
+    },
+    ResourcesMyGroupsWrap: {
+        overflow: "scroll",
+        overflowY: "hidden",
+        minHeight: "100vw",
+        flexWrap: "wrap",
         // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
         flexGrow: 1,
         width: "100%",
@@ -1032,7 +1044,7 @@ export default EStyleSheet.create({
         fileInputWrapper: {
             width: "100%",
             top: 265,
-            left: "8%"
+            left: 0
         },
         myProfileCoordinates: {
             flexDirection: "column",
@@ -1066,6 +1078,9 @@ export default EStyleSheet.create({
         myMapFontDetailMiddle: {
             fontSize: 14,
             lineHeight: 20,
+        },
+        fontFormMediumInput: {
+            maxWidth: 175
         },
     },
 
@@ -1121,6 +1136,9 @@ export default EStyleSheet.create({
             fontSize: 14,
             lineHeight: 20,
         },
+        fontFormMediumInput: {
+            maxWidth: 287
+        },
     },
 
     '@media (min-width: 320px) and (max-width: 480px)': {
@@ -1166,10 +1184,13 @@ export default EStyleSheet.create({
         myProfileCoordinates: {
             flexDirection: "row",
         },
+        myProfileMapSelectorContainer: {
+            height: 3210,
+        },
         myProfileMapSelectorInnerContainer: {
             top: "5%",
             margin: 0,
-            height: "90%"
+            height: "20%"
         },
         myProfileMapSelectorInnerCopyContainer: {
             width: "107%",
@@ -1291,6 +1312,9 @@ export default EStyleSheet.create({
         },
         myMapCalloutEventContainer: {
             width: 250
+        },
+        fontFormMediumInput: {
+            maxWidth: 250
         },
     },
 

@@ -4,6 +4,7 @@ import { Text } from 'react-native'
 import styles from './JCButtonStyle'
 export enum ButtonTypes {
     Solid,
+    SolidProfile,
     SolidMap,
     SolidRightMargin,
     SolidRightJustified,
