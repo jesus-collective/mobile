@@ -8,10 +8,12 @@ import style from '../../components/style'
 
 interface Props {
   navigation: any
+  route: any
 }
 interface State {
   showMap: boolean
   mapData: any
+  showMy: boolean
 }
 
 
@@ -20,7 +22,8 @@ export default class HomeScreen extends React.Component<Props, State>{
     super(props);
     this.state = {
       mapData: [],
-      showMap: false
+      showMap: false,
+      showMy: this.props.route.params ? this.props.route.params.mine : false 
     }
   }
   mapChanged = () => {
@@ -41,7 +44,7 @@ export default class HomeScreen extends React.Component<Props, State>{
         <Content>
           <Container style={style.eventsScreenMainContainer}>
             <Container style={style.eventsScreenLeftContainer}>
-              <MyGroups showMore={true} type="event" wrap={true} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
+              <MyGroups showMy={this.state.showMy} showMore={true} type="event" wrap={true} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
 
             </Container>
             { /*
