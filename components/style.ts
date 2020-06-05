@@ -656,7 +656,7 @@ export default EStyleSheet.create({
         borderBottomRightRadius: 0,
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
-        backgroundColor: "#F9FAFC"
+        backgroundColor: "#F9FAFC",
     },
     eventPageMessageBoardInnerCard: {
         wordBreak: "break-word",
