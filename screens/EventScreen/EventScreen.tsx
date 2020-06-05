@@ -201,6 +201,7 @@ export default class EventScreen extends React.Component<Props, State>{
     delete item._lastChangedAt
     delete item.createdAt
     delete item.updatedAt
+    delete item.ownerOrg
     return item
   }
   save(): void {

@@ -41,6 +41,7 @@
     "is-absolute-url": "^3.0.3",
     "jquery": "^3.4.1",
     "moment": "^2.15.2",
+    "moment-timezone": "^0.5.31",
     "native-base": "^2.13.12",
     "react": "^16.13.1",
     "react-datepicker": "^2.14.1",

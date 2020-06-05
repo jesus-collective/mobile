@@ -15,7 +15,7 @@ import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { constants } from '../../src/constants'
 import ErrorBoundry from '../../components/ErrorBoundry'
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 interface Props {
   navigation: any
