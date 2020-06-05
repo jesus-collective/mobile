@@ -124,9 +124,9 @@ export default class ConversationScreen extends JCComponent<Props, State>{
                 this.state.data.items.map((item, index) => {
 
                   return (
-                    <Text style={{ backgroundColor: this.state.selectedRoom == index ? "#eeeeee" : "unset" }} key={item.id}>
-                      <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }}
-                        source={require("../../assets/profile-placeholder.png")} />
+                    <Text style={{ backgroundColor: this.state.selectedRoom == index ? "#eeeeee" : "unset", borderRadius: 10, fontSize: 20, lineHeight: 25, fontWeight: "normal", fontFamily: "Graphik-Regular-App",width: "100%", paddingTop: 8, paddingBottom: 8, display: "flex", alignItems: "center" }} key={item.id}>
+                        <Image style={{ width: "55px", height: "55px", borderRadius: 50, marginRight: 20, marginLeft: 10 }}
+                          source={require("../../assets/profile-placeholder.png")} />
                       {item.room.name != null ? item.room.name : "unknown"}
                     </Text>)
 
