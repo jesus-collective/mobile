@@ -59,7 +59,7 @@ export default class EditableDate extends React.Component<Props, State> {
                         <KeyboardDateTimePicker
                             variant="inline"
                             ampm={true}
-                            label={this.state.placeholder}
+                            placeholder={this.state.placeholder}
                             value={moment(this.props.value).tz(this.state.timezone)}
                             format='MMMM Do YYYY, h:mm a '
                             onChange={(value) => { this.onChanged(value, this.state.timezone) }}
@@ -67,7 +67,6 @@ export default class EditableDate extends React.Component<Props, State> {
                             disablePast
                             minutesStep={15}
                             emptyLabel="Date not set"
-                            initialFocusedDate={moment().add(5, 'days').format()}
                         />
                         <Picker
                             mode="dropdown"
@@ -88,13 +87,12 @@ export default class EditableDate extends React.Component<Props, State> {
                         <KeyboardDatePicker
                             variant="inline"
                             format='MMMM Do YYYY, h:mm a'
-                            label={this.state.placeholder}
-                            value={moment(this.props.value)}
+                            placeholder={this.state.placeholder}
+                            value={moment(this.props.value).tz(this.state.timezone)}
                             onChange={(value) => { this.onChanged(value, this.state.timezone) }}
                             //onError={console.log}
                             disablePast
                             emptyLabel="Date not set"
-                            initialFocusedDate={moment().add(5, 'days').format()}
                         />
                         <Picker
                             mode="dropdown"
