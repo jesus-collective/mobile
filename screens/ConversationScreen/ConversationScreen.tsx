@@ -116,7 +116,7 @@ export default class ConversationScreen extends React.Component<Props, State>{
         <Content>
           <Container style={styles.conversationScreenMainContainer}>
             <Container style={styles.detailScreenLeftCard}>
-              <Text>Direct Messages</Text>
+              <Text style={styles.eventNameInput}>Direct Messages</Text>
 
               {this.state.data != null ?
                 this.state.data.items.map((item, index) => {
