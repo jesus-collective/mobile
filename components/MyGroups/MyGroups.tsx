@@ -512,10 +512,7 @@ export default class MyGroups extends React.Component<Props, State> {
                       return (
                         <ErrorBoundry key={index}>
                           <ListItem noBorder style={{ alignSelf: "flex-start" }} button onPress={() => { this.openSingle(item.id) }}>
-                            {this.renderByType(item, this.state.type)
-                            }
-
-
+                            {this.renderByType(item, this.state.type)}
                           </ListItem>
                         </ErrorBoundry>
                       )
