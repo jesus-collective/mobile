@@ -25,6 +25,8 @@ interface Props {
   onDataload(data: any): any
 }
 interface State {
+  myFilter: boolean
+  myTitleScreen: string
   openSingle: string
   openMultiple: string
   type: string
@@ -44,6 +46,8 @@ export default class MyGroups extends React.Component<Props, State> {
     super(props);
     if (props.type == "event") {
       this.state = {
+        myFilter: false,
+        myTitleScreen: "My Events",
         openSingle: "EventScreen",
         openMultiple: "EventsScreen",
         createString: "+ Create Event",
@@ -62,6 +66,8 @@ export default class MyGroups extends React.Component<Props, State> {
     else if (props.type == "group") {
       this.state =
       {
+        myFilter: false,
+        myTitleScreen: "My Groups",
         openSingle: "GroupScreen",
         openMultiple: "GroupsScreen",
         createString: "+ Create Group",
@@ -79,6 +85,8 @@ export default class MyGroups extends React.Component<Props, State> {
     else if (props.type == "resource") {
       this.state =
       {
+        myFilter: false,
+        myTitleScreen: "My Resources",
         openSingle: "ResourceScreen",
         openMultiple: "ResourcesScreen",
         createString: "+ Create Resource",
@@ -97,6 +105,8 @@ export default class MyGroups extends React.Component<Props, State> {
     else if (props.type == "organization") {
       this.state =
       {
+        myFilter: false,
+        myTitleScreen: "My Organizations",
         openSingle: "OrganizationScreen",
         openMultiple: "OrganizationsScreen",
         createString: "+ Create Organization",
@@ -115,6 +125,8 @@ export default class MyGroups extends React.Component<Props, State> {
     else if (props.type == "course") {
       this.state =
       {
+        myFilter: false,
+        myTitleScreen: "My Courses",
         openSingle: "CourseHomeScreen",
         openMultiple: "CoursesScreen",
         createString: "+ Create Course",
@@ -133,9 +145,11 @@ export default class MyGroups extends React.Component<Props, State> {
     else if (props.type == "profile") {
       this.state =
       {
+        myFilter: false,
+        myTitleScreen: "My Profiles",
         openSingle: "ProfileScreen",
         openMultiple: "ProfilesScreen",
-        createString: "+ Create Course",
+        createString: "+ Create Profile",
         titleString: "Profiles",
         type: props.type,
         cardWidth: 200,
@@ -151,6 +165,8 @@ export default class MyGroups extends React.Component<Props, State> {
     else {
       this.state =
       {
+        myTitleScreen: "",
+        myFilter: false,
         openSingle: "",
         openMultiple: "",
         type: props.type,
@@ -499,6 +515,7 @@ export default class MyGroups extends React.Component<Props, State> {
                   <Container style={{ maxHeight: 45, flexDirection: 'row', justifyContent: 'flex-end', alignItems: "flex-start" }}>
                     <JCButton buttonType={ButtonTypes.TransparentBoldOrange} data-testid={"mygroup-showall-" + this.state.titleString} onPress={() => { this.openMultiple() }}>Show All</JCButton>
                     {constants["SETTING_ISVISIBLE_SHOWRECOMMENDED"] ? <JCButton buttonType={ButtonTypes.TransparentBoldOrange} data-testid={"mygroup-recommmended-" + this.state.titleString} onPress={() => { this.openMultiple() }}>Show Recommended</JCButton> : null}
+                    {constants["SETTING_ISVISIBLE_SHOWMY"] ? <JCButton buttonType={ButtonTypes.TransparentBoldOrange} data-testid={"mygroup-showmy-" + this.state.titleString} onPress={() => { this.setState({ myFilter: !this.state.myFilter }) }}>{this.state.myTitleScreen}</JCButton> : null}
                     {this.state.showCreateButton && constants["SETTING_ISVISIBLE_CREATE_" + this.state.type] ?
                       <JCButton buttonType={ButtonTypes.OutlineBold} data-testid={"mygroup-create-" + this.state.titleString} onPress={() => { this.createSingle() }}>{this.state.createString}</JCButton>
                       : null
@@ -507,7 +524,7 @@ export default class MyGroups extends React.Component<Props, State> {
                 </Container>
                 <Container style={this.state.wrap ? styles.ResourcesMyGroupsWrap : styles.ResourcesMyGroupsNoWrap}>
                   {this.state.data ?
-                    this.state.data.map((item, index) => {
+                    this.state.data.filter((item) => { return !this.state.myFilter || this.canLeave(item.id) || this.isOwner(item.id) }).map((item, index) => {
 
                       return (
                         <ErrorBoundry key={index}>
