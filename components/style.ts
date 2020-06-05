@@ -637,6 +637,13 @@ export default EStyleSheet.create({
         backgroundColor: "#F9FAFC",
         height: "100%"
     },
+    conversationScreenMainContainer: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: 'flex-start',
+        backgroundColor: "#F9FAFC",
+        height: "100%"
+    },
     groupScreenMainContainer: {
         display: "flex",
         flexDirection: "row",
