@@ -92,10 +92,11 @@ class ResourceViewer extends React.Component<Props, State> {
                 )
             })
         })
-        this.setInitialResourceData()
+
     }
     setInitialData(props): void {
-        if (props.route.params.create === "true" || props.route.params.create === true)
+        if (props.route.params.create === "true" || props.route.params.create === true) {
+            console.log("creating Resource")
             Auth.currentAuthenticatedUser().then((user: any) => {
                 const z: CreateGroupInput = {
                     id: "resource-" + Date.now(),
@@ -116,8 +117,9 @@ class ResourceViewer extends React.Component<Props, State> {
                     canSave: (!this.state.createNew) && isEditable,
                     createNew: this.state.createNew && isEditable,
                     canDelete: (!this.state.createNew) && isEditable
-                })
+                }, () => { this.setInitialResourceData() })
             })
+        }
         else {
             const getGroup: any = API.graphql({
                 query: queries.getGroup,
@@ -138,6 +140,7 @@ class ResourceViewer extends React.Component<Props, State> {
                     canDelete: (!this.state.createNew) && isEditable
                 },
                     () => {
+                        this.setInitialResourceData()
                         const groupMemberByUser: any = API.graphql({
                             query: queries.groupMemberByUser,
                             variables: { userID: this.state.currentUser, groupID: { eq: this.state.groupData.id } },
@@ -163,10 +166,11 @@ class ResourceViewer extends React.Component<Props, State> {
         // await DataStore.delete(ResourceEpisode, Predicates.ALL)
         //  await this.DeleteAll()
 
-
+        //        console.log(this.state.groupData.id)
+        console.log(this.state.groupData)
         const listResourceRoots: any = API.graphql({
             query: queries.listResourceRoots,
-            variables: { limit: 20, filter: { groupId: { eq: this.props.groupId } }, nextToken: null },
+            variables: { limit: 100, filter: { groupId: { eq: this.state.groupData.id } }, nextToken: null },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
         });
 
@@ -207,81 +211,57 @@ class ResourceViewer extends React.Component<Props, State> {
         //  const getResourceRoot2 = await DataStore.query(ResourceEpisode);
 
     }
+    sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
 
     async createResourceRoot(): Promise<void> {
         console.log("test1")
-        const resourceRoot = new ResourceRoot({
-            type: `curriculum`,
-            groupId: this.props.groupId,
-            organizationId: "0"
-        })
-        const createResourceRoot: any = await API.graphql({
-            query: mutations.createResourceRoot,
-            variables: { input: resourceRoot },
-            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-        });
-        console.log(createResourceRoot)
-
-        const resource = new Resource({
-            type: "curriculum",
-            menuTitle: "Overview",
-            title: "Overview",
-            image: {
-                userId: "123",
-                filenameSmall: "123",
-                filenameMedium: "123",
-                filenameLarge: "123",
-                filenameUpload: "123"
-            },
-            description: "...",
-            extendedDescription: "123",
-            resourceID: createResourceRoot.data.createResourceRoot.id
-
-        })
         try {
+            const resourceRoot = new ResourceRoot({
+                type: `curriculum`,
+                groupId: this.state.groupData.id,
+                organizationId: "0"
+            })
+            const createResourceRoot: any = await API.graphql({
+                query: mutations.createResourceRoot,
+                variables: { input: resourceRoot },
+                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+            });
+            console.log(createResourceRoot)
+
+            const resource = new Resource({
+                type: "curriculum",
+                menuTitle: "Overview",
+                title: "Overview",
+                image: null,
+                description: "...",
+                extendedDescription: "123",
+                order: "0",
+                resourceID: createResourceRoot.data.createResourceRoot.id
+
+            })
+
             const createResource: any = await API.graphql({
                 query: mutations.createResource,
                 variables: { input: resource },
                 authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
             });
             console.log(createResource)
+
+
+            const getResourceRoot: any = await API.graphql({
+                query: customQueries.getResourceRoot,
+                variables: { id: createResourceRoot.data.createResourceRoot.id },
+                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+            });
+            console.log(createResourceRoot)
+            console.log({ resourceRoot: getResourceRoot })
+            this.setState({ resourceData: getResourceRoot.data.getResourceRoot, currentResource: 0, currentEpisode: null, currentSeries: null })
+
         } catch (e) {
             console.log(e)
         }
-
-        const series = new ResourceSeries({
-            type: "curriculum",
-            title: "Overview",
-            image: "123",
-            description: "...",
-            category: ["123"],
-            status: "123",
-            allFiles: "123",
-            playlist: "123",
-            playlistImage: "123",
-            seriesID: mutations.createResource.data.createResource.id
-        })
-
-        const createResourceSeries: any = await API.graphql({
-            query: mutations.createResourceSeries,
-            variables: { input: series },
-            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-        });
-        console.log(createResourceSeries)
-
-        const getResourceRoot: any = API.graphql({
-            query: customQueries.getResourceRoot,
-            variables: { id: createResourceRoot.data.createResourceRoot.id },
-            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-        });
-
-        getResourceRoot.then((json) => {
-            console.log(json)
-            this.setState({ resourceData: json.data.getResourceRoot, currentResource: 0 })
-        }).catch((e) => {
-            console.log(e)
-        })
-
 
 
 
@@ -477,7 +457,7 @@ class ResourceViewer extends React.Component<Props, State> {
             });
             console.log(createResource)
             const temp = this.state.resourceData
-            temp.resources.items.push(resource)
+            temp.resources.items.push(createResource.data.createResource)
             console.log(temp)
             this.setState({ resourceData: temp }, () => this.forceUpdate())
 
@@ -506,7 +486,7 @@ class ResourceViewer extends React.Component<Props, State> {
             });
             console.log(createResource)
             const temp = this.state.resourceData
-            temp.resources.items[this.state.currentResource].series.items.push(series)
+            temp.resources.items[this.state.currentResource].series.items.push(createResource.data.createResourceSeries)
             this.setState({ resourceData: temp })
 
         } catch (e) {
@@ -535,7 +515,7 @@ class ResourceViewer extends React.Component<Props, State> {
             });
             console.log(createResource)
             const temp = this.state.resourceData
-            temp.resources.items[this.state.currentResource].series.items[this.state.currentSeries].episodes.items.push(episode)
+            temp.resources.items[this.state.currentResource].series.items[this.state.currentSeries].episodes.items.push(createResource.data.createResourceEpisode)
             this.setState({ resourceData: temp })
 
         } catch (e) {

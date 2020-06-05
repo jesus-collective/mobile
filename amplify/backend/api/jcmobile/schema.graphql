@@ -26,7 +26,7 @@ type User
   profileImage: Image
   aboutMeShort: String
   aboutMeLong: String
-  interests: String
+  interests: [String]
   currentRole: String
   currentScope: String
   personality: String
