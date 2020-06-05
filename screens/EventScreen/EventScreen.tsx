@@ -21,6 +21,7 @@ import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
+import moment from 'moment-timezone'
 const MessageBoard = lazy(() => import('../../components/MessageBoard/MessageBoard'));
 
 interface Props {
@@ -344,7 +345,7 @@ export default class EventScreen extends React.Component<Props, State>{
 
                   <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Event Name" multiline={false} textStyle={styles.eventNameInput} inputStyle={styles.eventNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
                   <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Event Description" multiline={true} textStyle={styles.eventDescriptionInput} inputStyle={styles.eventDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
-                  <EditableDate type="datetime" onChange={(value: any) => { this.updateValue("time", value) }} placeholder="Enter Event Time" multiline={false} textStyle={styles.eventDateInput} inputStyle={styles.eventDateInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableDate>
+                  <EditableDate type="datetime" onChange={(time: any, timeZone: any) => { this.updateValue("time", time); this.updateValue("tz", timeZone) }} placeholder="Enter Event Time" multiline={false} textStyle={styles.eventDateInput} inputStyle={styles.eventDateInput} value={this.state.data.time} tz={this.state.data.tz ? this.state.data.tz : moment.tz.guess()} isEditable={this.state.isEditable}></EditableDate>
 
                   {this.state.isEditable ? <Picker
                     mode="dropdown"

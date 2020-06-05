@@ -12,8 +12,9 @@ interface Props {
     inputStyle?: any,
     multiline: boolean,
     placeholder?: string,
-    onChange?(string),
+    onChange?(arg1, arg2),
     type: string
+    tz: string
 }
 interface State {
     // value: string,
@@ -36,19 +37,16 @@ export default class EditableDate extends React.Component<Props, State> {
             inputStyle: props.inputStyle,
             multiline: props.multiline,
             placeholder: props.placeholder,
-            timezone: moment.tz.guess()
+            timezone: props.tz
 
         }
-        // console.log(props)
     }
-    onChanged(val: any): void {
-        this.props.onChange(val.tz(this.state.timezone).format())
-        console.log('jon')
-        console.log(val.tz(this.state.timezone).format())
+    onChanged(dateTime: any, tz: string): void {
+        this.props.onChange(dateTime.tz(this.state.timezone).format(), tz)
     }
 
-    onTzChanged(value) {
-        this.setState({ timezone: value }, () => this.onChanged(moment(this.props.value)))
+    onTzChanged(tz: string) {
+        this.setState({ timezone: tz }, () => this.onChanged(moment(this.props.value), tz))
     }
 
     render(): React.ReactNode {
@@ -64,7 +62,7 @@ export default class EditableDate extends React.Component<Props, State> {
                         label={this.state.placeholder}
                         value={moment(this.props.value).tz(this.state.timezone)}
                         format='MMMM Do YYYY, h:mm a '
-                        onChange={(value) => { this.onChanged(value) }}
+                        onChange={(value) => { this.onChanged(value, this.state.timezone) }}
                         onError={console.log}
                         disablePast
                         minutesStep={15}
@@ -77,7 +75,6 @@ export default class EditableDate extends React.Component<Props, State> {
                         selectedValue={this.state.timezone}
                         onValueChange={value => this.onTzChanged(value)}
                     >
-                        <Picker.Item label={moment.tz.guess()} value={moment.tz.guess()}></Picker.Item>
                         {moment.tz.names().map((item, index) => {
                             return <Picker.Item key={index} label={item} value={item}></Picker.Item>
                         })
