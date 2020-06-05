@@ -36,12 +36,8 @@ export default class EditableText extends React.Component<Props, State> {
         // console.log(props)
     }
     onChanged(val: any) {
+        console.log(val)
         this.props.onChange(val)
-    }
-    static getDerivedStateFromProps(nextProps, prevState) {
-        return {
-            value: nextProps.value,
-        };
     }
     render() {
 

@@ -1,0 +1,27 @@
+export const interests = 
+    [
+        "Children's Ministry",
+        "Discipleship",
+        "Evangelism",
+        "Kids and Youth Curriculum",
+        "Leadership Development",
+        "Music",
+        "Spiritual Disciplines",
+        "Teaching/Preaching",
+        "Theology",
+        "Training",
+        "Volunteering",
+        "Worship Experience",
+        "Youth Ministry",
+        "Young Adults Ministry",
+        "Nones/Dones",
+        "Small Groups Ministry",
+        "Jesus-Centred Theology",
+        "Post-Chrsitian Pastoring", 
+        "Leadership Formation",
+        "Equipping",
+        "Spiritual Practices", 
+        "Hermeneutics", 
+        "Inspiration of Scripture", 
+        "Share the Gospel" 
+    ]

@@ -7,7 +7,7 @@ import material from '../../native-base-theme/variables/material';
 import { TouchableOpacity } from 'react-native'
 import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
-import { API } from 'aws-amplify';
+import { API, Auth } from 'aws-amplify';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { constants } from '../../src/constants'
 
@@ -24,7 +24,7 @@ interface State {
   //createString: String
   titleString: string
   data: any
-
+  currentUser: string
   //showCreateButton: Boolean
 }
 export default class MyPeople extends React.Component<Props, State> {
@@ -37,11 +37,14 @@ export default class MyPeople extends React.Component<Props, State> {
       titleString: "People you may connect with",
       //type: props.type,
       //cardWidth: 250,
-      data: []
-
+      data: [],
+      currentUser: null
       // showCreateButton: false
-    }
-    this.setInitialData()
+    }    
+    const user = Auth.currentAuthenticatedUser();
+    user.then((user: any) => {
+      this.setState({ currentUser: user.username }, () => this.setInitialData())
+    })
   }
   convertProfileToMapData(data) {
     return data.map((dataItem) => {
@@ -64,7 +67,7 @@ export default class MyPeople extends React.Component<Props, State> {
   setInitialData() {
     const listUsers: any = API.graphql({
       query: queries.listUsers,
-      variables: { filter: { profileState: { eq: "Complete" } } },
+      variables: { filter: { profileState: { eq: "Complete" }, id: { ne: this.state.currentUser } } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
 

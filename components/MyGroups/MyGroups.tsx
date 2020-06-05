@@ -25,6 +25,9 @@ interface Props {
   onDataload(data: any): any
 }
 interface State {
+  myFilter: boolean
+  eventFilter: boolean
+  myTitleScreen: string
   openSingle: string
   openMultiple: string
   type: string
@@ -44,6 +47,9 @@ export default class MyGroups extends React.Component<Props, State> {
     super(props);
     if (props.type == "event") {
       this.state = {
+        myFilter: false,
+        eventFilter: false,
+        myTitleScreen: "My Events",
         openSingle: "EventScreen",
         openMultiple: "EventsScreen",
         createString: "+ Create Event",
@@ -62,6 +68,9 @@ export default class MyGroups extends React.Component<Props, State> {
     else if (props.type == "group") {
       this.state =
       {
+        myFilter: false,
+        eventFilter: false,
+        myTitleScreen: "My Groups",
         openSingle: "GroupScreen",
         openMultiple: "GroupsScreen",
         createString: "+ Create Group",
@@ -79,6 +88,9 @@ export default class MyGroups extends React.Component<Props, State> {
     else if (props.type == "resource") {
       this.state =
       {
+        myFilter: false,
+        eventFilter: false,
+        myTitleScreen: "My Resources",
         openSingle: "ResourceScreen",
         openMultiple: "ResourcesScreen",
         createString: "+ Create Resource",
@@ -97,6 +109,9 @@ export default class MyGroups extends React.Component<Props, State> {
     else if (props.type == "organization") {
       this.state =
       {
+        myFilter: false,
+        eventFilter: false,
+        myTitleScreen: "My Organizations",
         openSingle: "OrganizationScreen",
         openMultiple: "OrganizationsScreen",
         createString: "+ Create Organization",
@@ -115,6 +130,9 @@ export default class MyGroups extends React.Component<Props, State> {
     else if (props.type == "course") {
       this.state =
       {
+        myFilter: false,
+        eventFilter: false,
+        myTitleScreen: "My Courses",
         openSingle: "CourseHomeScreen",
         openMultiple: "CoursesScreen",
         createString: "+ Create Course",
@@ -133,9 +151,12 @@ export default class MyGroups extends React.Component<Props, State> {
     else if (props.type == "profile") {
       this.state =
       {
+        myFilter: false,
+        eventFilter: false,
+        myTitleScreen: "My Profiles",
         openSingle: "ProfileScreen",
         openMultiple: "ProfilesScreen",
-        createString: "+ Create Course",
+        createString: "+ Create Profile",
         titleString: "Profiles",
         type: props.type,
         cardWidth: 200,
@@ -151,6 +172,9 @@ export default class MyGroups extends React.Component<Props, State> {
     else {
       this.state =
       {
+        myTitleScreen: "",
+        myFilter: false,
+        eventFilter: false,
         openSingle: "",
         openMultiple: "",
         type: props.type,
@@ -222,7 +246,7 @@ export default class MyGroups extends React.Component<Props, State> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       const processList = (json) => {
-        console.log({ profile: json })
+        //console.log({ profile: json })
         const temp = [...this.state.data, ...json.data.listUsers.items]
         this.setState({
           data: temp,
@@ -239,7 +263,7 @@ export default class MyGroups extends React.Component<Props, State> {
       });
 
       const processList = (json) => {
-        console.log({ profile: json })
+        //console.log({ profile: json })
         this.setCanLeave(json.data.groupByType.items)
         this.setIsOwner(json.data.groupByType.items)
         const temp = [...this.state.data, ...json.data.groupByType.items]
@@ -272,7 +296,7 @@ export default class MyGroups extends React.Component<Props, State> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       groupMemberByUser.then((json: any) => {
-        console.log({ "groupMemberByUser": json })
+        // console.log({ "groupMemberByUser": json })
         if (json.data.groupMemberByUser.items.length > 0) {
           this.setState({ canLeave: this.state.canLeave.concat([item.id]) })
         }
@@ -290,7 +314,7 @@ export default class MyGroups extends React.Component<Props, State> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       getGroup.then((json: any) => {
-        console.log({ "getGroup": json })
+        //  console.log({ "getGroup": json })
         if (json.data.getGroup) {
           this.setState({ isOwner: this.state.isOwner.concat([item.id]) })
         }
@@ -482,6 +506,14 @@ export default class MyGroups extends React.Component<Props, State> {
       {false ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Course") }}>Leave</JCButton><Right></Right></CardItem> : null}
     </Card>
   }
+  filterMy = (item) => {
+    return !this.state.myFilter || this.canLeave(item.id) || this.isOwner(item.id)
+  }
+  filterEvent = (item) => {
+    return !(this.props.type === "event") ||
+      this.state.eventFilter && !moment(item.time).isSameOrAfter(moment.now()) ||
+      !this.state.eventFilter && moment(item.time).isSameOrAfter(moment.now())
+  }
   render(): React.ReactNode {
     if (!constants["SETTING_ISVISIBLE_" + this.state.type])
       return null
@@ -499,23 +531,23 @@ export default class MyGroups extends React.Component<Props, State> {
                   <Container style={{ maxHeight: 45, flexDirection: 'row', justifyContent: 'flex-end', alignItems: "flex-start" }}>
                     <JCButton buttonType={ButtonTypes.TransparentBoldOrange} data-testid={"mygroup-showall-" + this.state.titleString} onPress={() => { this.openMultiple() }}>Show All</JCButton>
                     {constants["SETTING_ISVISIBLE_SHOWRECOMMENDED"] ? <JCButton buttonType={ButtonTypes.TransparentBoldOrange} data-testid={"mygroup-recommmended-" + this.state.titleString} onPress={() => { this.openMultiple() }}>Show Recommended</JCButton> : null}
+                    {constants["SETTING_ISVISIBLE_SHOWMYFILTER"] ? <JCButton buttonType={ButtonTypes.TransparentBoldOrange} data-testid={"mygroup-showmyfilter-" + this.state.titleString} onPress={() => { this.setState({ myFilter: !this.state.myFilter }) }}>{this.state.myTitleScreen}</JCButton> : null}
+                    {constants["SETTING_ISVISIBLE_SHOWEVENTFILTER"] && this.props.type == "event" ? <JCButton buttonType={ButtonTypes.TransparentBoldOrange} data-testid={"mygroup-showeventfilter-" + this.state.titleString} onPress={() => { this.setState({ eventFilter: !this.state.eventFilter }) }}>{this.state.eventFilter ? "Upcoming Events" : "Previous Events"}</JCButton> : null}
                     {this.state.showCreateButton && constants["SETTING_ISVISIBLE_CREATE_" + this.state.type] ?
                       <JCButton buttonType={ButtonTypes.OutlineBold} data-testid={"mygroup-create-" + this.state.titleString} onPress={() => { this.createSingle() }}>{this.state.createString}</JCButton>
                       : null
                     }
                   </Container>
                 </Container>
+                
                 <Container style={ this.props.wrap ? styles.ResourcesMyGroupsWrap : styles.ResourcesMyGroupsNoWrap }>
                   {this.state.data ?
-                    this.state.data.map((item, index) => {
+                    this.state.data.filter(this.filterMy).filter(this.filterEvent).map((item, index) => {
 
                       return (
                         <ErrorBoundry key={index}>
                           <ListItem noBorder style={{ alignSelf: "flex-start" }} button onPress={() => { this.openSingle(item.id) }}>
-                            {this.renderByType(item, this.state.type)
-                            }
-
-
+                            {this.renderByType(item, this.state.type)}
                           </ListItem>
                         </ErrorBoundry>
                       )
