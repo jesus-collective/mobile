@@ -56,50 +56,64 @@ export default class EditableDate extends React.Component<Props, State> {
             if (this.props.type == 'datetime')
                 return (
                     <Container style={{maxHeight: 100}}>
-                    <KeyboardDateTimePicker
-                        variant="inline"
-                        ampm={true}
-                        label={this.state.placeholder}
-                        value={moment(this.props.value).tz(this.state.timezone)}
-                        format='MMMM Do YYYY, h:mm a '
-                        onChange={(value) => { this.onChanged(value, this.state.timezone) }}
-                        onError={console.log}
-                        disablePast
-                        minutesStep={15}
-                        emptyLabel="Date not set"
-                        initialFocusedDate={moment().add(5, 'days').format()}
-                    />
-                    <Picker
-                        mode="dropdown"
-                        style={{ width: "75%", marginBottom: 30, marginTop: 30, fontSize: 16, height: 30, flexGrow: 0 }}
-                        selectedValue={this.state.timezone}
-                        onValueChange={value => this.onTzChanged(value)}
-                    >
-                        {moment.tz.names().map((item, index) => {
-                            return <Picker.Item key={index} label={item} value={item}></Picker.Item>
-                        })
-                        }                   
-                    </Picker>
+                        <KeyboardDateTimePicker
+                            variant="inline"
+                            ampm={true}
+                            label={this.state.placeholder}
+                            value={moment(this.props.value).tz(this.state.timezone)}
+                            format='MMMM Do YYYY, h:mm a '
+                            onChange={(value) => { this.onChanged(value, this.state.timezone) }}
+                            onError={console.log}
+                            disablePast
+                            minutesStep={15}
+                            emptyLabel="Date not set"
+                            initialFocusedDate={moment().add(5, 'days').format()}
+                        />
+                        <Picker
+                            mode="dropdown"
+                            style={{ width: "75%", marginBottom: 30, marginTop: 30, fontSize: 16, height: 30, flexGrow: 0 }}
+                            selectedValue={this.state.timezone}
+                            onValueChange={value => this.onTzChanged(value)}
+                        >
+                            {moment.tz.names().map((item, index) => {
+                                return <Picker.Item key={index} label={item} value={item}></Picker.Item>
+                            })}                   
+                        </Picker>
                     </Container>
                     
                     )
             else
                 return (
-                    <KeyboardDatePicker
-                        variant="inline"
-                        format='MMMM Do YYYY, h:mm a'
-                        label={this.state.placeholder}
-                        value={moment(this.props.value)}
-                        onChange={(value) => { this.onChanged(value) }}
-                        //onError={console.log}
-                        disablePast
-                        emptyLabel="Date not set"
-                        initialFocusedDate={moment().add(5, 'days').format()}
-
-
-                    />)
+                    <Container style={{maxHeight: 100}}>
+                        <KeyboardDatePicker
+                            variant="inline"
+                            format='MMMM Do YYYY, h:mm a'
+                            label={this.state.placeholder}
+                            value={moment(this.props.value)}
+                            onChange={(value) => { this.onChanged(value, this.state.timezone) }}
+                            //onError={console.log}
+                            disablePast
+                            emptyLabel="Date not set"
+                            initialFocusedDate={moment().add(5, 'days').format()}
+                        />
+                        <Picker
+                            mode="dropdown"
+                            style={{ width: "75%", marginBottom: 30, marginTop: 30, fontSize: 16, height: 30, flexGrow: 0 }}
+                            selectedValue={this.state.timezone}
+                            onValueChange={value => this.onTzChanged(value)}
+                        >
+                            {moment.tz.names().map((item, index) => {
+                                return <Picker.Item key={index} label={item} value={item}></Picker.Item>
+                            })}                   
+                        </Picker>
+                    </Container>
+                    )
         }
         else
-            return <Text style={this.state.textStyle}> {moment(this.props.value).format('MMMM Do YYYY, h:mm a')} </Text >
+            return <Text style={this.state.textStyle}> 
+                {moment.tz(this.props.value, this.state.timezone).format('MMMM Do YYYY, h:mm a')} 
+                &nbsp;
+                {moment.tz.zone(this.state.timezone).abbr(+moment(this.props.value).format('x'))}
+            </Text >
     }
 }
