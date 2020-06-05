@@ -26,6 +26,7 @@ interface Props {
 }
 interface State {
   myFilter: boolean
+  eventFilter: boolean
   myTitleScreen: string
   openSingle: string
   openMultiple: string
@@ -47,6 +48,7 @@ export default class MyGroups extends React.Component<Props, State> {
     if (props.type == "event") {
       this.state = {
         myFilter: false,
+        eventFilter: false,
         myTitleScreen: "My Events",
         openSingle: "EventScreen",
         openMultiple: "EventsScreen",
@@ -67,6 +69,7 @@ export default class MyGroups extends React.Component<Props, State> {
       this.state =
       {
         myFilter: false,
+        eventFilter: false,
         myTitleScreen: "My Groups",
         openSingle: "GroupScreen",
         openMultiple: "GroupsScreen",
@@ -86,6 +89,7 @@ export default class MyGroups extends React.Component<Props, State> {
       this.state =
       {
         myFilter: false,
+        eventFilter: false,
         myTitleScreen: "My Resources",
         openSingle: "ResourceScreen",
         openMultiple: "ResourcesScreen",
@@ -106,6 +110,7 @@ export default class MyGroups extends React.Component<Props, State> {
       this.state =
       {
         myFilter: false,
+        eventFilter: false,
         myTitleScreen: "My Organizations",
         openSingle: "OrganizationScreen",
         openMultiple: "OrganizationsScreen",
@@ -126,6 +131,7 @@ export default class MyGroups extends React.Component<Props, State> {
       this.state =
       {
         myFilter: false,
+        eventFilter: false,
         myTitleScreen: "My Courses",
         openSingle: "CourseHomeScreen",
         openMultiple: "CoursesScreen",
@@ -146,6 +152,7 @@ export default class MyGroups extends React.Component<Props, State> {
       this.state =
       {
         myFilter: false,
+        eventFilter: false,
         myTitleScreen: "My Profiles",
         openSingle: "ProfileScreen",
         openMultiple: "ProfilesScreen",
@@ -167,6 +174,7 @@ export default class MyGroups extends React.Component<Props, State> {
       {
         myTitleScreen: "",
         myFilter: false,
+        eventFilter: false,
         openSingle: "",
         openMultiple: "",
         type: props.type,
@@ -498,6 +506,14 @@ export default class MyGroups extends React.Component<Props, State> {
       {false ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Course") }}>Leave</JCButton><Right></Right></CardItem> : null}
     </Card>
   }
+  filterMy = (item) => {
+    return !this.state.myFilter || this.canLeave(item.id) || this.isOwner(item.id)
+  }
+  filterEvent = (item) => {
+    return !(this.props.type === "event") ||
+      this.state.eventFilter && !moment(item.time).isSameOrAfter(moment.now()) ||
+      !this.state.eventFilter && moment(item.time).isSameOrAfter(moment.now())
+  }
   render(): React.ReactNode {
     if (!constants["SETTING_ISVISIBLE_" + this.state.type])
       return null
@@ -515,7 +531,8 @@ export default class MyGroups extends React.Component<Props, State> {
                   <Container style={{ maxHeight: 45, flexDirection: 'row', justifyContent: 'flex-end', alignItems: "flex-start" }}>
                     <JCButton buttonType={ButtonTypes.TransparentBoldOrange} data-testid={"mygroup-showall-" + this.state.titleString} onPress={() => { this.openMultiple() }}>Show All</JCButton>
                     {constants["SETTING_ISVISIBLE_SHOWRECOMMENDED"] ? <JCButton buttonType={ButtonTypes.TransparentBoldOrange} data-testid={"mygroup-recommmended-" + this.state.titleString} onPress={() => { this.openMultiple() }}>Show Recommended</JCButton> : null}
-                    {constants["SETTING_ISVISIBLE_SHOWMY"] ? <JCButton buttonType={ButtonTypes.TransparentBoldOrange} data-testid={"mygroup-showmy-" + this.state.titleString} onPress={() => { this.setState({ myFilter: !this.state.myFilter }) }}>{this.state.myTitleScreen}</JCButton> : null}
+                    {constants["SETTING_ISVISIBLE_SHOWMYFILTER"] ? <JCButton buttonType={ButtonTypes.TransparentBoldOrange} data-testid={"mygroup-showmyfilter-" + this.state.titleString} onPress={() => { this.setState({ myFilter: !this.state.myFilter }) }}>{this.state.myTitleScreen}</JCButton> : null}
+                    {constants["SETTING_ISVISIBLE_SHOWEVENTFILTER"] && this.props.type == "event" ? <JCButton buttonType={ButtonTypes.TransparentBoldOrange} data-testid={"mygroup-showeventfilter-" + this.state.titleString} onPress={() => { this.setState({ eventFilter: !this.state.eventFilter }) }}>{this.state.eventFilter ? "Upcoming Events" : "Previous Events"}</JCButton> : null}
                     {this.state.showCreateButton && constants["SETTING_ISVISIBLE_CREATE_" + this.state.type] ?
                       <JCButton buttonType={ButtonTypes.OutlineBold} data-testid={"mygroup-create-" + this.state.titleString} onPress={() => { this.createSingle() }}>{this.state.createString}</JCButton>
                       : null
@@ -524,7 +541,7 @@ export default class MyGroups extends React.Component<Props, State> {
                 </Container>
                 <Container style={this.state.wrap ? styles.ResourcesMyGroupsWrap : styles.ResourcesMyGroupsNoWrap}>
                   {this.state.data ?
-                    this.state.data.filter((item) => { return !this.state.myFilter || this.canLeave(item.id) || this.isOwner(item.id) }).map((item, index) => {
+                    this.state.data.filter(this.filterMy).filter(this.filterEvent).map((item, index) => {
 
                       return (
                         <ErrorBoundry key={index}>
