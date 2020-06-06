@@ -539,7 +539,8 @@ export default class MyGroups extends React.Component<Props, State> {
                     }
                   </Container>
                 </Container>
-                <Container style={this.state.wrap ? styles.ResourcesMyGroupsWrap : styles.ResourcesMyGroupsNoWrap}>
+                
+                <Container style={ this.props.wrap ? styles.ResourcesMyGroupsWrap : styles.ResourcesMyGroupsNoWrap }>
                   {this.state.data ?
                     this.state.data.filter(this.filterMy).filter(this.filterEvent).map((item, index) => {
 
