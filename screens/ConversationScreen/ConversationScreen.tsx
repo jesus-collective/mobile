@@ -5,7 +5,7 @@ import * as customQueries from '../../src/graphql-custom/queries';
 import * as mutations from '../../src/graphql/mutations';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import { API, Auth } from 'aws-amplify';
-
+import styles from '../../components/style'
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
 
@@ -114,9 +114,9 @@ export default class ConversationScreen extends React.Component<Props, State>{
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
         <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
         <Content>
-          <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
-            <Container style={{ flex: 30, flexDirection: "column", justifyContent: 'flex-start' }}>
-              <Text>Direct Messages</Text>
+          <Container style={styles.conversationScreenMainContainer}>
+            <Container style={styles.detailScreenLeftCard}>
+              <Text style={styles.eventNameInput}>Direct Messages</Text>
 
               {this.state.data != null ?
                 this.state.data.items.map((item, index) => {
