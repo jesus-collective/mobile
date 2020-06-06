@@ -11,6 +11,7 @@ import awsconfig from '../../src/aws-exports';
 import Validate from '../Validate/Validate';
 import moment from 'moment';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
+import MyMap from '../../components/MyMap/MyMap'
 import MapSelector from './MapSelector'
 import EditableText from '../Forms/EditableText';
 import { AntDesign } from '@expo/vector-icons'; 
@@ -35,6 +36,8 @@ interface State {
   mapVisible: any
   // mapCoord: any
   isEditable: any
+  mapData: any
+  initCenter: any
 }
 export default class MyProfile extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -48,8 +51,24 @@ export default class MyProfile extends React.Component<Props, State> {
       mapVisible: false,
       //  mapCoord: { latitude: 0, longitude: 0 },
       isEditable: false,
+      mapData: [],    
+      initCenter: { lat: 44, lng: -78.0 }
     }
     this.getUserDetails()
+  }
+  convertProfileToMapData() {
+      if (this.state.UserDetails.location && this.state.UserDetails.location.latitude && this.state.UserDetails.location.longitude)
+        this.setState({
+          mapData: [{
+              latitude: this.state.UserDetails.location.latitude,
+              longitude: this.state.UserDetails.location.latitude,
+              name: this.state.UserDetails.given_name + " " + this.state.UserDetails.family_name,
+              user: this.state.UserDetails,
+              link: "",
+              type: "profile"
+            }],
+          initCenter: { lat: this.state.UserDetails.location.latitude, lng: this.state.UserDetails.location.longitude }
+        })
   }
   async getUserDetails(): Promise<void> {
     console.log("getUserDetails")
@@ -61,7 +80,7 @@ export default class MyProfile extends React.Component<Props, State> {
           UserDetails: getUser.data.getUser,
           isEditable: getUser.data.getUser.id == user['username'],
           interestsArray: getUser.data.getUser.interests
-        }, () => this.getProfileImage()
+        }, () => {this.getProfileImage(); this.convertProfileToMapData() }
         )
 
         //console.log(this.state.UserDetails)
@@ -71,7 +90,7 @@ export default class MyProfile extends React.Component<Props, State> {
           this.setState({
             UserDetails: e.data.getUser,
             interestsArray: e.data.getUser.interests
-          }, () => this.getProfileImage()
+          }, () => {this.getProfileImage(); this.convertProfileToMapData() }
           )
         console.log(e)
       }
@@ -84,7 +103,7 @@ export default class MyProfile extends React.Component<Props, State> {
           UserDetails: getUser.data.getUser,
           isEditable: true,
           interestsArray: getUser.data.getUser.interests
-        }, () => this.getProfileImage()
+        }, () => {this.getProfileImage(); this.convertProfileToMapData() }
         )
 
         console.log(this.state.UserDetails)
@@ -240,7 +259,6 @@ export default class MyProfile extends React.Component<Props, State> {
     this.props.navigation.push("ConversationScreen", { initialUserID: initialUser, initialUserName: name });
   }
   render(): React.ReactNode {
-
     return (
       (this.state.UserDetails != null ?
         <Content>
@@ -376,16 +394,16 @@ export default class MyProfile extends React.Component<Props, State> {
                 : null
               }
             </View>
+
             <View style={styles.profileScreenRightCard}>
+              <View style={{ width: '100%' }}>
+                <MyMap initCenter={this.state.initCenter} navigation={this.props.navigation} visible={true} mapData={this.state.mapData} showFilters={false}></MyMap>
+              </View>
               {this.state.isEditable ?
                 <Text style={styles.fontMyProfileLeftTop}>Tell us more about you</Text>
                 : null
               }
-
-              {this.state.isEditable ?
-                <Text style={styles.fontBold}>About me</Text>
-                : null
-              }
+              <Text style={styles.fontBold}>About me</Text>
 
               <EditableText onChange={(e) => { this.handleInputChange(e, "aboutMeLong") }}
                 placeholder="type here" multiline={true}

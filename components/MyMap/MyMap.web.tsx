@@ -8,7 +8,7 @@ import { TouchableOpacity, Animated, TouchableWithoutFeedback } from 'react-nati
 
 import styles from '../style'
 
-import { Marker, } from 'google-maps-react';
+import { Marker, Circle} from 'google-maps-react';
 import { Map, InfoWindow } from 'google-maps-react';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 
@@ -23,6 +23,8 @@ interface Props {
   visible: boolean
   google: any
   mapData: any
+  showFilters: boolean
+  initCenter?: any
 }
 interface State {
   selectedPlace: any
@@ -36,6 +38,7 @@ interface State {
   profilesToggle: any
   organizationsToggle: any
   eventsToggle: any
+  initCenterProfile: any
 }
 
 class MyMap extends React.Component<Props, State> {
@@ -52,9 +55,9 @@ class MyMap extends React.Component<Props, State> {
       groupsToggle: new Animated.Value(1),
       profilesToggle: new Animated.Value(1),
       organizationsToggle: new Animated.Value(1),
-      eventsToggle: new Animated.Value(1)
+      eventsToggle: new Animated.Value(1),
+      initCenterProfile: null
     }
-
   }
   onMarkerClick = (props, marker) =>
     this.setState({
@@ -205,7 +208,7 @@ class MyMap extends React.Component<Props, State> {
   }
   render() {
     //console.log(this.props.mapData)
-    if (this.props.visible)
+    if (this.props.visible && this.props.showFilters)
       return (
         <ErrorBoundary>
 
@@ -323,7 +326,7 @@ class MyMap extends React.Component<Props, State> {
                 {
                   this.props.mapData.map((mapItem, index) => {
 
-                    let filters = []
+                    const filters = []
                     if (!this.state.groupsEnabled) {
                       filters.push("group")
                     }
@@ -337,9 +340,7 @@ class MyMap extends React.Component<Props, State> {
                       filters.push("profile")
                     }
 
-                    console.log(mapItem)
-
-                    let filtered = filters.filter(item => mapItem.type === item)
+                    const filtered = filters.filter(item => mapItem.type === item)
                     if (filtered.length === 0) {
                       return <Marker key={index} title={mapItem.name}
                         mapItemType={mapItem.type}
@@ -348,7 +349,6 @@ class MyMap extends React.Component<Props, State> {
                         position={{ lat: mapItem.latitude, lng: mapItem.longitude }}
                         icon={{
                           url: require("../../assets/svg/map-icon-red.svg"),
-                          anchor: new google.maps.Point(32, 32),
                           scaledSize: new google.maps.Size(32, 32)
                         }}>
                       </Marker>
@@ -381,6 +381,39 @@ class MyMap extends React.Component<Props, State> {
 
         </ErrorBoundary>
       )
+
+    else if (this.props.visible && !this.props.showFilters) {
+      return (
+        <ErrorBoundary>
+
+          <View style={{ height: 362, width: '100%' }}>
+
+              <Map google={window.google} zoom={6}
+                center={this.props.initCenter}
+                mapTypeControl={false}
+                onClick={this.onMapClicked}
+                onReady={(mapProps, map) => this._mapLoaded(map)}
+                style={{ position: "relative", width: "100%", height: "100%" }}
+                streetViewControl={false}
+                fullscreenControl={false}
+              >
+              {this.props.mapData.map((item, index) => {
+                return <Marker key={index} 
+                position={{ lat: item.latitude, lng: item.longitude }}
+                icon={{
+                  url: require("../../assets/svg/map-location.svg"),
+                  anchor: new google.maps.Point(50, 50),
+                  scaledSize: new google.maps.Size(100, 100)
+                }}/>
+              })}
+
+              </Map>
+          </View>
+
+        </ErrorBoundary>
+      )
+    }
+
     else return null
   }
 }
