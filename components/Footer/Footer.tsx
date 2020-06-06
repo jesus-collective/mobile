@@ -67,14 +67,19 @@ export default class FooterJC extends React.Component<Props> {
   openDrawer = (): void => {
     this.props.navigation.dispatch(DrawerActions.openDrawer());
   }
+  openMyScreen = (screen: string): void => {
+    this.props.navigation.push(screen, { mine: true });
+  }
   openScreen = (screen: string): void => {
     this.props.navigation.push(screen);
   }
-  open = (link: string): void => {
-    if (link.includes("Screen")) {
-      this.openScreen(link)
+  open = (obj): void => {
+    if (obj.linkto.includes("Screen") && obj.name.includes("My")) {
+      this.openMyScreen(obj.linkto)
+    } else if (obj.linkto.includes("Screen")) {
+      this.openScreen(obj.linkto)
     } else {
-      Linking.openURL(link)
+      Linking.openURL(obj.linkto)
     }
   }
   render(): React.ReactNode {
@@ -96,16 +101,12 @@ export default class FooterJC extends React.Component<Props> {
             if (item != null)
               return (
                 <Body key={item.name} style={{ display: "flex", flexDirection: 'column', alignSelf: "flex-start", alignItems: "flex-start", justifyContent: 'flex-start' }}>
-                  <Button
-                    transparent
-                    style={styles.footerCenterMenuButtonsWhite}>
-                    <Text style={styles.footerCenterMenuButtonsTextWhite}>{item.name}</Text>
-                  </Button>
+                  <Text style={styles.footerCenterMenuButtonsTextWhite}>{item.name}</Text>
                   {item.submenu.map((item2) => {
                     if (item2.linkto != null)
                       return (<Button key={item2.name}
                         transparent
-                        onPress={() => this.open(item2.linkto)}
+                        onPress={() => this.open(item2)}
                         style={styles.footerCenterMenuButtons}>
                         <Text style={styles.footerCenterMenuButtonsText}>{item2.name}</Text>
                       </Button>)

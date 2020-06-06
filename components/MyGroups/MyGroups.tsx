@@ -23,6 +23,7 @@ interface Props {
   type: string
   showMore: boolean
   onDataload(data: any): any
+  showMy?: boolean
 }
 interface State {
   myFilter: boolean
@@ -47,7 +48,7 @@ export default class MyGroups extends React.Component<Props, State> {
     super(props);
     if (props.type == "event") {
       this.state = {
-        myFilter: false,
+        myFilter: false || this.props.showMy,
         eventFilter: false,
         myTitleScreen: "My Events",
         openSingle: "EventScreen",
@@ -68,7 +69,7 @@ export default class MyGroups extends React.Component<Props, State> {
     else if (props.type == "group") {
       this.state =
       {
-        myFilter: false,
+        myFilter: false || this.props.showMy,
         eventFilter: false,
         myTitleScreen: "My Groups",
         openSingle: "GroupScreen",
@@ -196,7 +197,6 @@ export default class MyGroups extends React.Component<Props, State> {
       if (props.type != "profile")
         this.setState({ showCreateButton: user.signInUserSession.accessToken.payload["cognito:groups"].includes("verifiedUsers") })
     })
-
   }
   convertProfileToMapData(): [] {
     return [{
