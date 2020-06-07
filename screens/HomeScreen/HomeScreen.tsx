@@ -57,7 +57,7 @@ class HomeScreen extends JCComponent<Props, State>{
         <MyMap showFilters={true} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
 
         <Container style={{ flexGrow: 1, overflow: "scroll" }}>
-          <Container style={{ display: "block" }}>
+          <Container style={this.styles.style.dashboardPrimaryContainer}>
             <Container style={this.styles.style.dashboardMainContainer}>
               <Container style={this.styles.style.dashboardLeftCard}>
                 <MyGroups showMore={false} type="event" wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>

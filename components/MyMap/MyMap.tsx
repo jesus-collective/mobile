@@ -10,12 +10,15 @@ interface Props {
   route?: any
   visible: boolean
   mapData: any
-  showFilters: boolean
+  showFilters?: boolean
   initCenter?: any
 }
 class MyMapImpl extends JCComponent<Props> {
   constructor(props: Props) {
     super(props);
+    if (props.showFilters == undefined)
+      props.showFilters = true
+
   }
   mapstyle = [
     {

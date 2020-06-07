@@ -8,9 +8,9 @@ import AnimatedProgressWheel from 'react-native-progress-wheel';
 import JCComponent from '../JCComponent/JCComponent';
 
 interface Props {
-    navigation: any,
+    navigation?: any,
     courseId: any
-    route: any
+    route?: any
     //  title:string,
     //  onMapChange?():any
 }

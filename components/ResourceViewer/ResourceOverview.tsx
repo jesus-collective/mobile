@@ -13,12 +13,12 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import JCComponent from '../JCComponent/JCComponent';
 
 interface Props {
-    navigation: any
-
+    navigation?: any
+    route?: any
     isEditable: boolean
 }
 
-class ResourceOverview extends JCComponent<Props>{
+class ResourceOverviewImpl extends JCComponent<Props>{
     static Consumer = ResourceContext.Consumer;
     constructor(props: Props) {
         super(props);
@@ -60,7 +60,7 @@ class ResourceOverview extends JCComponent<Props>{
     render(): React.ReactNode {
         console.log("ResourceScreen")
 
-        return (<ResourceOverview.Consumer>
+        return (<ResourceOverviewImpl.Consumer>
             {({ state, actions }) => {
                 if (state.groupData != null)
                     return <Container style={this.styles.style.resourcesOverviewScreenMainContainer}>
@@ -113,13 +113,13 @@ class ResourceOverview extends JCComponent<Props>{
                     return null
             }}
 
-        </ResourceOverview.Consumer>
+        </ResourceOverviewImpl.Consumer>
         )
     }
 }
-export default function (props: Props) {
+export default function ResourceOverview(props: Props) {
     const route = useRoute();
     const navigation = useNavigation()
-    return <ResourceOverview {...props} navigation={navigation} route={route} />;
+    return <ResourceOverviewImpl {...props} navigation={navigation} route={route} />;
 }
 
