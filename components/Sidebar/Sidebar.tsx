@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Container, Content, List, ListItem, Header } from "native-base";
 import { Text } from 'react-native'
 import JCComponent from '../JCComponent/JCComponent';
-import { useRoute, useNavigation } from '@react-navigation/native';
 
 const routes = [
   {
@@ -29,10 +28,10 @@ const routes = [
 
 ];
 interface Props {
-  route?: any
-  navigation?: any
+  route: any
+  navigation: any
 }
-class SideBarImpl extends JCComponent<Props> {
+class SideBar extends JCComponent<Props> {
   constructor(props: Props) {
     super(props)
   }
@@ -63,8 +62,4 @@ class SideBarImpl extends JCComponent<Props> {
 }
 
 
-export default function SideBar(props: Props) {
-  const route = useRoute();
-  const navigation = useNavigation()
-  return <SideBarImpl {...props} navigation={navigation} route={route} />;
-}
+export default SideBar
