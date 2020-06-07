@@ -114,7 +114,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
 
       <Container >
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-        <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
+        <MyMap visible={this.state.showMap}></MyMap>
         <Content>
           <Container style={this.styles.style.conversationScreenMainContainer}>
             <Container style={this.styles.style.detailScreenLeftCard}>

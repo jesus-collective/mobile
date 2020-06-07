@@ -38,7 +38,7 @@ export default class HomeScreen extends JCComponent<Props, State>{
     return (
       <Container data-testid="groups" >
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-        <MyMap navigation={this.props.navigation} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
+        <MyMap mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
         <Content>
           <Container style={this.styles.style.groupsScreenMainContainer}>
             <Container style={this.styles.style.groupsScreenLeftContainer}>

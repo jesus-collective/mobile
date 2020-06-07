@@ -333,7 +333,7 @@ export default class EventScreen extends JCComponent<Props, State>{
         <StyleProvider style={getTheme(material)}>
           <Container>
             <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-            <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
+            <MyMap visible={this.state.showMap}></MyMap>
             <Content>
               <Container style={this.styles.style.eventScreenMainContainer}>
                 <Container style={this.styles.style.detailScreenLeftCard}>

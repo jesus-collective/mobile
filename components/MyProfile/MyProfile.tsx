@@ -401,7 +401,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
 
             <View style={this.styles.style.profileScreenRightCard}>
               <View style={{ width: '100%' }}>
-                <MyMap initCenter={this.state.initCenter} navigation={this.props.navigation} visible={true} mapData={this.state.mapData} showFilters={false}></MyMap>
+                <MyMap initCenter={this.state.initCenter} visible={true} mapData={this.state.mapData} showFilters={false}></MyMap>
               </View>
               {this.state.isEditable ?
                 <Text style={this.styles.style.fontMyProfileLeftTop}>Tell us more about you</Text>

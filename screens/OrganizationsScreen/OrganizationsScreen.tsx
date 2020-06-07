@@ -38,7 +38,7 @@ export default class HomeScreen extends JCComponent<Props, State>{
 
       <Container data-testid="organizations">
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-        <MyMap navigation={this.props.navigation} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
+        <MyMap mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
         <Content>
           <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
             <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
