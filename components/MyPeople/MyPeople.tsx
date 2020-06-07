@@ -68,7 +68,7 @@ export default class MyPeople extends JCComponent<Props, State> {
   setInitialData() {
     const listUsers: any = API.graphql({
       query: queries.listUsers,
-      variables: { filter: { profileState: { eq: "Complete" }, id: { ne: this.state.currentUser } } },
+      variables: { filter: { profileState: { eq: "Complete" } } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
 
@@ -109,24 +109,28 @@ export default class MyPeople extends JCComponent<Props, State> {
             <Button style={this.styles.style.connectWithTopSectionButton} onPress={() => { this.showProfiles() }} transparent><Text style={this.styles.style.fontConnectWith}>People you may connect with</Text></Button>
             <Content style={this.styles.style.rightCardWidth}>
               {this.state.data.map((item: any) => {
-                return (
-                  <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.id) }}>
-                    <Card style={this.styles.style.dashboardConversationCard}>
-                      <CardItem>
-                        <Left>
-                          <ProfileImage user={item} size='small'>
-                          </ProfileImage>
+                if (item.id !== this.state.currentUser) {
+                  return (
+                    <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.id) }}>
+                      <Card style={styles.dashboardConversationCard}>
+                        <CardItem>
+                          <Left>
+                            <ProfileImage user={item} size='small'>
+                            </ProfileImage>
 
-                          <Body>
-                            <Text style={this.styles.style.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
-                            <Text style={this.styles.style.fontConnectWithRole}>{item.currentRole}</Text>
-                            <Button bordered style={this.styles.style.connectWithSliderButton} onPress={() => { this.openConversation(item.id, item.given_name + " " + item.family_name) }}><Text style={this.styles.style.fontStartConversation}>Start Conversation</Text></Button>
-                          </Body>
-                        </Left>
-                      </CardItem>
-                    </Card>
-                  </TouchableOpacity>
-                )
+                            <Body>
+                              <Text style={styles.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
+                              <Text style={styles.fontConnectWithRole}>{item.currentRole}</Text>
+                              <Button bordered style={styles.connectWithSliderButton} onPress={() => { this.openConversation(item.id, item.given_name + " " + item.family_name) }}><Text style={styles.fontStartConversation}>Start Conversation</Text></Button>
+                            </Body>
+                          </Left>
+                        </CardItem>
+                      </Card>
+                    </TouchableOpacity>
+                  )
+                } else {
+                  return null
+                }
               })}
             </Content>
 

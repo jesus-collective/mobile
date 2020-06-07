@@ -40,7 +40,7 @@ class ResourceScreenImpl extends JCComponent<Props, State>{
       <StyleProvider style={getTheme(material)}>
         <Container >
           <Header title="Jesus Collective" navigation={this.props.navigation} />
-          <MyMap visible={this.state.showMap}></MyMap>
+          <MyMap type={'no-filters'} mapData={[]} visible={this.state.showMap}></MyMap>
           <ResourceViewer navigation={this.props.navigation} groupId={this.props.route.params.id}></ResourceViewer>
           <ImportKidsAndYouth></ImportKidsAndYouth>
         </Container>

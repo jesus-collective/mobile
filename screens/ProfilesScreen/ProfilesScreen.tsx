@@ -37,8 +37,8 @@ export default class HomeScreen extends JCComponent<Props, State>{
 
       <Container data-testid="profiles">
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-        <MyMap mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
         <Content>
+          <MyMap type={"no-filters"} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
           <Container style={this.styles.style.profilesScreenMainContainer}>
             <Container style={this.styles.style.profilesScreenLeftContainer}>
               <MyGroups showMore={true} type="profile" wrap={true} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>

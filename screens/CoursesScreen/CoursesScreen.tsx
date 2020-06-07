@@ -38,8 +38,8 @@ export default class HomeScreen extends JCComponent<Props, State>{
 
       <Container >
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-        <MyMap mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
         <Content>
+          <MyMap type={'no-filters'} size={'50%'} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
           <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
             <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
               <MyGroups showMore={true} type="course" wrap={true} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>

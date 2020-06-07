@@ -200,15 +200,21 @@ export default class MyGroups extends JCComponent<Props, State> {
     })
   }
 
-  convertProfileToMapData(): any {
-    return [{
-      latitude: 30.01,
-      longitude: 40.02,
-      name: "Bob",
-      link: "",
-      type: "profile"
-    }]
+  convertProfileToMapData(data): [] {
+    return data.map((dataItem) => {
+      if (dataItem.location && dataItem.location.latitude && dataItem.location.longitude)
+        return {
+          latitude: dataItem.location.latitude,
+          longitude: dataItem.location.longitude,
+          name: dataItem.given_name + " " + dataItem.family_name,
+          user: dataItem,
+          link: "",
+          type: "profile"
+        }
+      else return null
+    }).filter(o => o)
   }
+
   convertEventToMapData(data): [] {
     return data.map((dataItem) => {
       if (dataItem.locationLatLong && dataItem.locationLatLong.latitude && dataItem.locationLatLong.longitude)
@@ -236,7 +242,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       case "course":
         return []
       case "profile":
-        return this.convertProfileToMapData()
+        return this.convertProfileToMapData(data)
     }
 
   }

@@ -54,9 +54,9 @@ class HomeScreen extends JCComponent<Props, State>{
     return (
       <Container data-testid="homepage">
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-        <MyMap showFilters={true} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
 
         <Container style={{ flexGrow: 1, overflow: "scroll" }}>
+          <MyMap type={'filters'} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
           <Container style={this.styles.style.dashboardPrimaryContainer}>
             <Container style={this.styles.style.dashboardMainContainer}>
               <Container style={this.styles.style.dashboardLeftCard}>

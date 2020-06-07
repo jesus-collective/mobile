@@ -8,8 +8,8 @@ import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 import { Marker } from 'google-maps-react';
 import { Map } from 'google-maps-react';
 import JCComponent from '../JCComponent/JCComponent';
-
-
+import styles from '../../components/style'
+import mapStyle from './mapstyle.json';
 
 interface Props {
     mapVisible: any,
@@ -31,6 +31,12 @@ class MapSelector extends JCComponent<Props, State> {
         }
     }
 
+    _mapLoaded(map) {
+        map.setOptions({
+            styles: mapStyle
+        })
+    }
+
     render() {
         return (
 
@@ -41,11 +47,14 @@ class MapSelector extends JCComponent<Props, State> {
                             <Text style={this.styles.style.mapSelectorText}>Select a location (this will be public)</Text>
                             <JCButton data-testid="mapselector-save" buttonType={ButtonTypes.SolidMap} onPress={() => this.props.onClose(this.state.mapCoord)}>Done</JCButton>
                         </View>
-                        <Container style={this.styles.style.mapView}>
-                            <Map google={window.google} zoom={6}
-                                initialCenter={{ lat: 44, lng: -78.0 }}
+                        <Container style={styles.mapView}>
+                            <Map google={window.google} zoom={2}
+                                initialCenter={{ lat: 0, lng: 0 }}
                                 mapTypeControl={false}
-                                style={this.styles.style.map}
+                                onReady={(mapProps, map) => this._mapLoaded(map)}
+                                style={styles.map}
+                                streetViewControl={false}
+                                fullscreenControl={false}
                             >
                                 <Marker
                                     title="Location"
@@ -56,6 +65,10 @@ class MapSelector extends JCComponent<Props, State> {
                                         console.log(e)
                                         console.log(coord.latLng)
                                         this.setState({ mapCoord: { latitude: coord.latLng.lat(), longitude: coord.latLng.lng() } })
+                                    }}
+                                    icon={{
+                                        url: require("../../assets/svg/map-icon-red.svg"),
+                                        scaledSize: new google.maps.Size(32, 32)
                                     }}
                                 ></Marker>
 
