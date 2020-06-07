@@ -8,9 +8,8 @@ interface State {
 }
 
 interface Props {
-    //  error: Error
+    children: any
 }
-
 export default class ErrorBoundary extends JCComponent<Props, State>  {
     constructor(props: Props) {
         super(props)
