@@ -18,15 +18,15 @@ import moment from 'moment';
 import JCComponent from '../JCComponent/JCComponent';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
-const mapStyle = require('./mapstyle.json')
+import mapStyle from './mapstyle.json';
 
 interface Props {
   navigation?: any
   route?: any
   visible: boolean
   google: any
-  mapData: any
-  showFilters: boolean
+  mapData?: any
+  showFilters?: boolean
   initCenter?: any
 }
 interface State {

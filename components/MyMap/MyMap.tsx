@@ -9,7 +9,7 @@ interface Props {
   navigation?: any
   route?: any
   visible: boolean
-  mapData: any
+  mapData?: any
   showFilters?: boolean
   initCenter?: any
 }
