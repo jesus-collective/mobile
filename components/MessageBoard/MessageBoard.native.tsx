@@ -25,8 +25,8 @@ import JCComponent from '../JCComponent/JCComponent';
 
 interface Props {
   groupId: string
-  navigation: any
-  route: any
+  navigation?: any
+  route?: any
 }
 interface State {
   data: any,
@@ -36,7 +36,7 @@ interface State {
   textHeight: any,
   editorState: any
 }
-class MessageBoard extends JCComponent<Props, State> {
+class MessageBoardImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -141,7 +141,7 @@ class MessageBoard extends JCComponent<Props, State> {
       (this.state.message != null && this.state.created) ?
         <ErrorBoundary>
           <StyleProvider style={getTheme(material)}>
-            <Container style={{ display: "inline", overflow: "visible", width: "100%", paddingTop: 30, paddingLeft: 30, paddingRight: 30, marginBottom: 60 }} >
+            <Container style={this.styles.style.nativeMessageBoardContainer} >
               <Content style={{ marginBottom: 40 }}>
 
                 {
@@ -238,8 +238,8 @@ class MessageBoard extends JCComponent<Props, State> {
     )
   }
 }
-export default function (props) {
+export default function MessageBoard(props) {
   const route = useRoute();
   const navigation = useNavigation()
-  return <MessageBoard {...props} navigation={navigation} route={route} />;
+  return <MessageBoardImpl {...props} navigation={navigation} route={route} />;
 }

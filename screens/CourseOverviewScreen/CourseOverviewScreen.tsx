@@ -20,7 +20,7 @@ import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import JCComponent from '../../components/JCComponent/JCComponent';
 import moment from 'moment';
-const data = require('./course.json');
+import data from './course.json';
 
 interface Props {
   navigation: any

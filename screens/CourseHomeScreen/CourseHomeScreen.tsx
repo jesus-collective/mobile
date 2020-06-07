@@ -16,7 +16,7 @@ import CourseHeader from '../../components/CourseHeader/CourseHeader';
 import { Calendar } from 'react-native-calendars';
 import JCComponent from '../../components/JCComponent/JCComponent';
 
-const data = require('../CourseOverviewScreen/course.json');
+import data from '../CourseOverviewScreen/course.json';
 
 interface Props {
   navigation: any

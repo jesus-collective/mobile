@@ -14,8 +14,8 @@ interface Props {
     multiline: boolean,
     placeholder?: string,
     onChange?(string),
-    navigation: any
-    route: any
+    navigation?: any
+    route?: any
 }
 interface State {
     // value: string,

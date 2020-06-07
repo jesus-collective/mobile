@@ -14,7 +14,7 @@ import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import CourseHeader from '../../components/CourseHeader/CourseHeader';
 import JCComponent from '../../components/JCComponent/JCComponent';
-const data = require('../CourseOverviewScreen/course.json');
+import data from '../CourseOverviewScreen/course.json';
 
 interface Props {
   navigation: any
@@ -125,7 +125,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
                           <Text>you’re going to schedule coaching call with Jon Hand.</Text>
                           <Text>30 minutes</Text>
                           <Text>Monday, August 23  -  1:30 PM – 2:00 PM</Text>
-                          <JCButton buttonType={ButtonTypes.Outline} onPress={() => { }}>Yes, schedule call</JCButton>
+                          <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Yes, schedule call</JCButton>
                         </Container>
                       </Container>
                     </Container>

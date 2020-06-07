@@ -302,7 +302,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 </Image>
                 {this.state.isEditable ?
                   <View style={this.styles.style.fileInputWrapper}>
-                    <JCButton buttonType={ButtonTypes.SolidProfile} onPress={() => { }}>Upload Profile Picture</JCButton>
+                    <JCButton buttonType={ButtonTypes.SolidProfile} onPress={() => { null }}>Upload Profile Picture</JCButton>
                     <input data-testid="profile-image" style={{ fontSize: "200px", position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='image/*' onChange={(e) => this.onProfileImageChange(e)} />
                   </View>
                   : null
@@ -342,11 +342,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   : null}
 
                 {this.state.isEditable && constants['SETTING_ISVISIBLE_PROFILE_MESSAGES'] ?
-                  <Text><JCButton data-testid="profile-setmap" buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { }}>Messages</JCButton></Text>
+                  <Text><JCButton data-testid="profile-setmap" buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { null }}>Messages</JCButton></Text>
                   : null
                 }
                 {this.state.isEditable && constants['SETTING_ISVISIBLE_PROFILE_ACCOUNTSETTINGS'] ?
-                  <Text><JCButton data-testid="profile-setmap" buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { }}>Account Settings</JCButton></Text>
+                  <Text><JCButton data-testid="profile-setmap" buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { null }}>Account Settings</JCButton></Text>
                   : null
                 }
 

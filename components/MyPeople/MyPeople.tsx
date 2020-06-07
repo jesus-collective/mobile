@@ -105,7 +105,7 @@ export default class MyPeople extends JCComponent<Props, State> {
       return (
         <StyleProvider style={getTheme(material)}>
 
-          <Container style={{ width: "100%", flexDirection: 'column', alignItems: 'flex-start', minHeight: 675, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)" }} >
+          <Container style={this.styles.style.peopleContainer} >
             <Button style={this.styles.style.connectWithTopSectionButton} onPress={() => { this.showProfiles() }} transparent><Text style={this.styles.style.fontConnectWith}>People you may connect with</Text></Button>
             <Content style={this.styles.style.rightCardWidth}>
               {this.state.data.map((item: any) => {

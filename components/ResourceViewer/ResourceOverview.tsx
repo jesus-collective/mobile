@@ -15,7 +15,6 @@ import JCComponent from '../JCComponent/JCComponent';
 interface Props {
     navigation?: any
     route?: any
-    isEditable: boolean
 }
 
 class ResourceOverviewImpl extends JCComponent<Props>{

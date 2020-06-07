@@ -17,7 +17,7 @@ import { TouchableOpacity } from 'react-native';
 import JCComponent from '../../components/JCComponent/JCComponent';
 const MessageBoard = lazy(() => import('../../components/MessageBoard/MessageBoard'));
 
-const data = require('../CourseOverviewScreen/course.json');
+import data from '../CourseOverviewScreen/course.json';
 
 interface Props {
   navigation: any

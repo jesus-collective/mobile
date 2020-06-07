@@ -26,8 +26,8 @@ import JCComponent from '../JCComponent/JCComponent';
 
 interface Props {
   groupId: string
-  route: any
-  navigation: any
+  route?: any
+  navigation?: any
 }
 interface State {
   data: any,
