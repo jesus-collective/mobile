@@ -9,10 +9,11 @@ import material from '../../native-base-theme/variables/material';
 import ResourceViewer from '../../components/ResourceViewer/ResourceViewer'
 import ImportKidsAndYouth from './ImportKidsandYouth'
 import { useNavigation, useRoute } from '@react-navigation/native';
+import JCComponent from '../../components/JCComponent/JCComponent';
 
 interface Props {
-  navigation: any
-  route: any
+  navigation?: any
+  route?: any
 }
 interface State {
   showMap: boolean
@@ -21,7 +22,7 @@ interface State {
 
 
 
-class ResourceScreen extends React.Component<Props, State>{
+class ResourceScreenImpl extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
 
@@ -39,7 +40,7 @@ class ResourceScreen extends React.Component<Props, State>{
       <StyleProvider style={getTheme(material)}>
         <Container >
           <Header title="Jesus Collective" navigation={this.props.navigation} />
-          <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
+          <MyMap visible={this.state.showMap}></MyMap>
           <ResourceViewer navigation={this.props.navigation} groupId={this.props.route.params.id}></ResourceViewer>
           <ImportKidsAndYouth></ImportKidsAndYouth>
         </Container>
@@ -50,8 +51,8 @@ class ResourceScreen extends React.Component<Props, State>{
   }
 }
 
-export default function (props: Props) {
+export default function ResourceScreen(props: Props) {
   const route = useRoute();
   const navigation = useNavigation()
-  return <ResourceScreen {...props} navigation={navigation} route={route} />;
+  return <ResourceScreenImpl {...props} navigation={navigation} route={route} />;
 }

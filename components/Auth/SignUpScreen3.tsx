@@ -5,7 +5,7 @@ import MyProfile from '../../components/MyProfile/MyProfile'
 import SignUpSidebar from '../../components/SignUpSidebar/SignUpSidebar'
 Amplify.configure(awsConfig);
 import { View } from 'native-base';
-import styles from '../../components/style'
+import JCComponent from '../../components/JCComponent/JCComponent';
 
 interface Props {
   navigation?: any
@@ -14,7 +14,7 @@ interface Props {
 
 }
 
-export default class SignUpScreen3 extends React.Component<Props>{
+export default class SignUpScreen3 extends JCComponent<Props>{
 
   onFinalizeProfile(): void {
     this.props.profileComplete()
@@ -23,10 +23,10 @@ export default class SignUpScreen3 extends React.Component<Props>{
     // const { navigate } = this.props.navigation;
 
     return (
-      <View style={styles.signUpScreen1PaymentBody}>
+      <View style={this.styles.style.signUpScreen1PaymentBody}>
         <SignUpSidebar position="4"></SignUpSidebar>
-        <View style={styles.signUpProfile}>
-          <MyProfile navigation={this.props.navigation} finalizeProfile={() => { this.onFinalizeProfile() }} />
+        <View style={this.styles.style.signUpProfile}>
+          <MyProfile finalizeProfile={() => { this.onFinalizeProfile() }} />
         </View>
 
       </View>

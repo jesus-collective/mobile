@@ -3,24 +3,27 @@ import { Container, Content } from 'native-base';
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
 import MyGroups from '../../components/MyGroups/MyGroups';
-import style from '../../components/style'
+import JCComponent from '../../components/JCComponent/JCComponent';
 
 
 interface Props {
   navigation: any
+  route: any
 }
 interface State {
   showMap: boolean
   mapData: any
+  showMy: boolean
 }
 
 
-export default class HomeScreen extends React.Component<Props, State>{
+export default class HomeScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
     this.state = {
       mapData: [],
-      showMap: false
+      showMap: false,
+      showMy: this.props.route.params ? this.props.route.params.mine : false
     }
   }
   mapChanged = () => {
@@ -37,11 +40,11 @@ export default class HomeScreen extends React.Component<Props, State>{
 
       <Container data-testid="events">
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-        <MyMap navigation={this.props.navigation} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
+        <MyMap mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
         <Content>
-          <Container style={style.eventsScreenMainContainer}>
-            <Container style={style.eventsScreenLeftContainer}>
-              <MyGroups showMore={true} type="event" wrap={true} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
+          <Container style={this.styles.style.eventsScreenMainContainer}>
+            <Container style={this.styles.style.eventsScreenLeftContainer}>
+              <MyGroups showMy={this.state.showMy} showMore={true} type="event" wrap={true} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
 
             </Container>
             { /*

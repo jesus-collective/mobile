@@ -22,8 +22,9 @@ import MyVerifyContact from './components/Auth/MyVerifyContact';
 import MyForgotPassword from './components/Auth/MyForgotPassword';
 import Sentry from './components/Sentry';
 import { version } from './src/version'
+import JCComponent from './components/JCComponent/JCComponent';
 
-var env = "unknown"
+let env = "unknown"
 if (window.location === undefined)
   env = "mobile"
 else if (window.location.hostname === "localhost")
@@ -87,7 +88,7 @@ EStyleSheet.build({ // always call EStyleSheet.build() even if you don't use glo
 });
 
 //export default App;
-class AwesomeApp extends React.Component<Props, State> {
+class AwesomeApp extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -172,7 +173,7 @@ class AwesomeApp extends React.Component<Props, State> {
             <MyConfirmSignUp />
             <MyVerifyContact />
             <MyForgotPassword />
-            <MyLoading />
+            <MyLoading authState={this.state.authState} />
 
 
           </Authenticator>

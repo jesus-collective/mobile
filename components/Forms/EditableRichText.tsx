@@ -1,13 +1,12 @@
 import React from 'react';
-import { Input, Content, Left, Right, Body, StyleProvider, Container, Card, CardItem, Button } from 'native-base';
-import { Text } from 'react-native'
 import { Editor } from 'react-draft-wysiwyg';
-import { API, graphqlOperation, Auth, Storage } from 'aws-amplify';
+import { Storage } from 'aws-amplify';
 
 //import './react-draft-wysiwyg.css';
 //import './EditableRichText.css';
 import { v1 as uuidv1 } from 'uuid';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import JCComponent from '../JCComponent/JCComponent';
 
 interface Props {
     value: string,
@@ -26,7 +25,7 @@ interface State {
     placeholder: string,
     editorState
 }
-export default class EditableRichText extends React.Component<Props, State> {
+export default class EditableRichText extends JCComponent<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -80,10 +79,6 @@ export default class EditableRichText extends React.Component<Props, State> {
                             uploadCallback: async (z1) => {
                                 const id = uuidv1()
 
-                                const upload = await Storage.put("messages/" + id + ".png", z1, {
-                                    level: 'protected',
-                                    contentType: z1.type,
-                                })
                                 const download = await Storage.get("messages/" + id + ".png", {
                                     level: 'protected',
                                     contentType: z1.type,

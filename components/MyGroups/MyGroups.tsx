@@ -3,7 +3,7 @@ import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
 import * as React from 'react';
 import { Text } from 'react-native'
-import styles from '../style'
+
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import { Image } from 'react-native'
@@ -16,6 +16,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { constants } from '../../src/constants'
 import ErrorBoundry from '../../components/ErrorBoundry'
 import moment from 'moment-timezone';
+import JCComponent from '../JCComponent/JCComponent';
 
 interface Props {
   navigation: any
@@ -23,8 +24,12 @@ interface Props {
   type: string
   showMore: boolean
   onDataload(data: any): any
+  showMy?: boolean
 }
 interface State {
+  myFilter: boolean
+  eventFilter: boolean
+  myTitleScreen: string
   openSingle: string
   openMultiple: string
   type: string
@@ -35,15 +40,18 @@ interface State {
   showCreateButton: boolean
   currentUser: string
   nextToken: string
-  canLeave: []
-  isOwner: []
+  canLeave: any
+  isOwner: any
 }
 
-export default class MyGroups extends React.Component<Props, State> {
+export default class MyGroups extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     if (props.type == "event") {
       this.state = {
+        myFilter: false || this.props.showMy,
+        eventFilter: false,
+        myTitleScreen: "My Events",
         openSingle: "EventScreen",
         openMultiple: "EventsScreen",
         createString: "+ Create Event",
@@ -62,6 +70,9 @@ export default class MyGroups extends React.Component<Props, State> {
     else if (props.type == "group") {
       this.state =
       {
+        myFilter: false || this.props.showMy,
+        eventFilter: false,
+        myTitleScreen: "My Groups",
         openSingle: "GroupScreen",
         openMultiple: "GroupsScreen",
         createString: "+ Create Group",
@@ -79,6 +90,9 @@ export default class MyGroups extends React.Component<Props, State> {
     else if (props.type == "resource") {
       this.state =
       {
+        myFilter: false,
+        eventFilter: false,
+        myTitleScreen: "My Resources",
         openSingle: "ResourceScreen",
         openMultiple: "ResourcesScreen",
         createString: "+ Create Resource",
@@ -97,6 +111,9 @@ export default class MyGroups extends React.Component<Props, State> {
     else if (props.type == "organization") {
       this.state =
       {
+        myFilter: false,
+        eventFilter: false,
+        myTitleScreen: "My Organizations",
         openSingle: "OrganizationScreen",
         openMultiple: "OrganizationsScreen",
         createString: "+ Create Organization",
@@ -115,6 +132,9 @@ export default class MyGroups extends React.Component<Props, State> {
     else if (props.type == "course") {
       this.state =
       {
+        myFilter: false,
+        eventFilter: false,
+        myTitleScreen: "My Courses",
         openSingle: "CourseHomeScreen",
         openMultiple: "CoursesScreen",
         createString: "+ Create Course",
@@ -133,9 +153,12 @@ export default class MyGroups extends React.Component<Props, State> {
     else if (props.type == "profile") {
       this.state =
       {
+        myFilter: false,
+        eventFilter: false,
+        myTitleScreen: "My Profiles",
         openSingle: "ProfileScreen",
         openMultiple: "ProfilesScreen",
-        createString: "+ Create Course",
+        createString: "+ Create Profile",
         titleString: "Profiles",
         type: props.type,
         cardWidth: 200,
@@ -151,6 +174,9 @@ export default class MyGroups extends React.Component<Props, State> {
     else {
       this.state =
       {
+        myTitleScreen: "",
+        myFilter: false,
+        eventFilter: false,
         openSingle: "",
         openMultiple: "",
         type: props.type,
@@ -172,9 +198,9 @@ export default class MyGroups extends React.Component<Props, State> {
       if (props.type != "profile")
         this.setState({ showCreateButton: user.signInUserSession.accessToken.payload["cognito:groups"].includes("verifiedUsers") })
     })
-
   }
-  convertProfileToMapData(): [] {
+
+  convertProfileToMapData(): any {
     return [{
       latitude: 30.01,
       longitude: 40.02,
@@ -404,25 +430,25 @@ export default class MyGroups extends React.Component<Props, State> {
   }
 
   renderGroup(item: any): React.ReactNode {
-    return <Card style={[styles.groupCard, { width: this.state.cardWidth }]} >
+    return <Card style={[this.styles.style.groupCard, { width: this.state.cardWidth }]} >
       <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0, width: this.state.cardWidth, right: 5 }} >
         <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 70 }} source={require('../../assets/svg/pattern.svg')}></Image>
       </CardItem>
-      <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitleGroup}>{item.name}</Text></CardItem>
-      <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetailMiddle}>{item.description}</Text></CardItem>
+      <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitleGroup}>{item.name}</Text></CardItem>
+      <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontDetailMiddle}>{item.description}</Text></CardItem>
       {this.canJoin(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Group") }}>Join</JCButton><Right></Right></CardItem> : null}
       {this.canLeave(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Group") }}>Leave</JCButton><Right></Right></CardItem> : null}
       {this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>Owner</JCButton><Right></Right></CardItem> : null}
     </Card >
   }
   renderProfile(item: any): React.ReactNode {
-    return <Card key={item.id} style={styles.profilesCard}>
-      <CardItem style={styles.profileCard}>
+    return <Card key={item.id} style={this.styles.style.profilesCard}>
+      <CardItem style={this.styles.style.profileCard}>
         <Left>
           <ProfileImage user={item} size="small"></ProfileImage>
           <Body>
-            <Text style={styles.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
-            <Text style={styles.fontConnectWithRole}>{item.currentRole}</Text>
+            <Text style={this.styles.style.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
+            <Text style={this.styles.style.fontConnectWithRole}>{item.currentRole}</Text>
             <JCButton buttonType={ButtonTypes.OutlineSmall} onPress={() => { this.openConversation(item.id, item.user.given_name + " " + item.user.family_name) }}>Start Conversation</JCButton>
           </Body>
         </Left>
@@ -430,58 +456,68 @@ export default class MyGroups extends React.Component<Props, State> {
     </Card>
   }
   renderEvent(item: any): React.ReactNode {
+
     const zone = item.tz ? item.tz : moment.tz.guess()
-    return <Card style={[styles.eventCard, { width: this.state.cardWidth }]}>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailTop}>{moment.tz(item.time, zone).format('MMMM Do YYYY, h:mm a')} {moment.tz.zone(zone).abbr(+moment(item.time).format('x'))}</Text></CardItem>
-      <CardItem style={{ height: 60, marginTop: 8 }}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
-      <CardItem style={{ height: 80 }}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontDetailMiddle}>{item.description}</Text></CardItem>
+    return <Card style={[this.styles.style.eventCard, { width: this.state.cardWidth }]}>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetailTop}>{moment.tz(item.time, zone).format('MMMM Do YYYY, h:mm a')} {moment.tz.zone(zone).abbr(+moment(item.time).format('x'))}</Text></CardItem>
+      <CardItem style={{ height: 60, marginTop: 8 }}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitle}>{item.name}</Text></CardItem>
+      <CardItem style={{ height: 80 }}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontDetailMiddle}>{item.description}</Text></CardItem>
+
       <CardItem>
         {item.eventType == "location" ?
-          <Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailBottom}><a target="_blank" rel="noreferrer" href={"https://www.google.com/maps/dir/?api=1&destination=" + escape(item.location)}>{item.location}</a></Text>
+          <Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetailBottom}><a target="_blank" rel="noreferrer" href={"https://www.google.com/maps/dir/?api=1&destination=" + escape(item.location)}>{item.location}</a></Text>
           : item.eventType == "zoom" ?
-            <Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailBottom}><a target="_blank" rel="noreferrer" href={item.eventUrl}>Zoom</a></Text>
+            <Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetailBottom}><a target="_blank" rel="noreferrer" href={item.eventUrl}>Zoom</a></Text>
             :
-            <Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailBottom}><a target="_blank" rel="noreferrer" href={item.eventUrl}>Eventbrite</a></Text>
+            <Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetailBottom}><a target="_blank" rel="noreferrer" href={item.eventUrl}>Eventbrite</a></Text>
         }
       </CardItem>
       {this.canJoin(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Event") }}>Attend</JCButton><Right></Right></CardItem> : null}
-      {this.canLeave(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Event") }}>Don't Attend</JCButton><Right></Right></CardItem> : null}
+      {this.canLeave(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Event") }}>Don&apos;t Attend</JCButton><Right></Right></CardItem> : null}
       {this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>Owner</JCButton><Right></Right></CardItem> : null}
     </Card>
   }
   renderResource(item: any): React.ReactNode {
-    return <Card style={[styles.resourceCard, { width: this.state.cardWidth }]}>
+    return <Card style={[this.styles.style.resourceCard, { width: this.state.cardWidth }]}>
       <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0, width: this.state.cardWidth, right: 5 }}>
         <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 70 }} source={require('../../assets/svg/pattern.svg')}></Image>
       </CardItem>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitleGroup}>{item.name}</Text></CardItem>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetailMiddle}>Last Updated: {item.lastupdated}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitleGroup}>{item.name}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetailMiddle}>Last Updated: {item.lastupdated}</Text></CardItem>
       {this.canJoin(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Resource") }}>Join</JCButton><Right></Right></CardItem> : null}
       {this.canLeave(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Resource") }}>Leave</JCButton><Right></Right></CardItem> : null}
       {this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>Owner</JCButton><Right></Right></CardItem> : null}
     </Card>
   }
   renderOrganization(item: any): React.ReactNode {
-    return <Card style={[styles.orgCard, { width: this.state.cardWidth }]}>
+    return <Card style={[this.styles.style.orgCard, { width: this.state.cardWidth }]}>
       <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0 }}>
         <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 20 }} source={require('../../assets/svg/pattern.svg')}></Image>
       </CardItem>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetail}>{item.kind}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitle}>{item.name}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetail}>{item.kind}</Text></CardItem>
       {true ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Organization") }}>Join</JCButton><Right></Right></CardItem> : null}
       {false ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Organization") }}>Leave</JCButton><Right></Right></CardItem> : null}
     </Card>
   }
   renderCourse(item: any): React.ReactNode {
-    return <Card style={[styles.courseCard, { width: this.state.cardWidth }]}>
+    return <Card style={[this.styles.style.courseCard, { width: this.state.cardWidth }]}>
       <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0 }}>
         <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 20 }} source={require('../../assets/svg/pattern.svg')}></Image>
       </CardItem>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>{item.name}</Text></CardItem>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.fontDetail}>Last Updated: {item.lastupdated}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitle}>{item.name}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetail}>Last Updated: {item.lastupdated}</Text></CardItem>
       {true ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Course") }}>Join</JCButton><Right></Right></CardItem> : null}
       {false ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Course") }}>Leave</JCButton><Right></Right></CardItem> : null}
     </Card>
+  }
+  filterMy = (item) => {
+    return !this.state.myFilter || this.canLeave(item.id) || this.isOwner(item.id)
+  }
+  filterEvent = (item) => {
+    return !(this.props.type === "event") ||
+      this.state.eventFilter && !moment(item.time).isSameOrAfter(moment.now()) ||
+      !this.state.eventFilter && moment(item.time).isSameOrAfter(moment.now())
   }
   render(): React.ReactNode {
     if (!constants["SETTING_ISVISIBLE_" + this.state.type])
@@ -495,28 +531,28 @@ export default class MyGroups extends React.Component<Props, State> {
             <StyleProvider style={getTheme(material)}>
 
               <Container style={{ padding: 10, minHeight: 525, width: "100%", flexDirection: 'column', justifyContent: 'flex-start' }}>
-                <Container style={styles.sectionHeadingDashboard} >
+                <Container style={this.styles.style.sectionHeadingDashboard} >
                   <JCButton buttonType={ButtonTypes.TransparentBoldBlack} onPress={() => { this.openMultiple() }}>{this.state.titleString}</JCButton>
                   <Container style={{ maxHeight: 45, flexDirection: 'row', justifyContent: 'flex-end', alignItems: "flex-start" }}>
                     <JCButton buttonType={ButtonTypes.TransparentBoldOrange} data-testid={"mygroup-showall-" + this.state.titleString} onPress={() => { this.openMultiple() }}>Show All</JCButton>
                     {constants["SETTING_ISVISIBLE_SHOWRECOMMENDED"] ? <JCButton buttonType={ButtonTypes.TransparentBoldOrange} data-testid={"mygroup-recommmended-" + this.state.titleString} onPress={() => { this.openMultiple() }}>Show Recommended</JCButton> : null}
+                    {constants["SETTING_ISVISIBLE_SHOWMYFILTER"] ? <JCButton buttonType={ButtonTypes.TransparentBoldOrange} data-testid={"mygroup-showmyfilter-" + this.state.titleString} onPress={() => { this.setState({ myFilter: !this.state.myFilter }) }}>{this.state.myTitleScreen}</JCButton> : null}
+                    {constants["SETTING_ISVISIBLE_SHOWEVENTFILTER"] && this.props.type == "event" ? <JCButton buttonType={ButtonTypes.TransparentBoldOrange} data-testid={"mygroup-showeventfilter-" + this.state.titleString} onPress={() => { this.setState({ eventFilter: !this.state.eventFilter }) }}>{this.state.eventFilter ? "Upcoming Events" : "Previous Events"}</JCButton> : null}
                     {this.state.showCreateButton && constants["SETTING_ISVISIBLE_CREATE_" + this.state.type] ?
                       <JCButton buttonType={ButtonTypes.OutlineBold} data-testid={"mygroup-create-" + this.state.titleString} onPress={() => { this.createSingle() }}>{this.state.createString}</JCButton>
                       : null
                     }
                   </Container>
                 </Container>
-                <Container style={this.state.wrap ? styles.ResourcesMyGroupsWrap : styles.ResourcesMyGroupsNoWrap}>
+
+                <Container style={this.props.wrap ? this.styles.style.ResourcesMyGroupsWrap : this.styles.style.ResourcesMyGroupsNoWrap}>
                   {this.state.data ?
-                    this.state.data.map((item, index) => {
+                    this.state.data.filter(this.filterMy).filter(this.filterEvent).map((item, index) => {
 
                       return (
                         <ErrorBoundry key={index}>
                           <ListItem noBorder style={{ alignSelf: "flex-start" }} button onPress={() => { this.openSingle(item.id) }}>
-                            {this.renderByType(item, this.state.type)
-                            }
-
-
+                            {this.renderByType(item, this.state.type)}
                           </ListItem>
                         </ErrorBoundry>
                       )
@@ -527,7 +563,7 @@ export default class MyGroups extends React.Component<Props, State> {
                     this.props.showMore ?
                       <TouchableOpacity onPress={() => { this.setInitialData(this.props) }} >
                         <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: '0%', width: this.state.cardWidth }}>
-                          <CardItem   ><Text ellipsizeMode='tail' numberOfLines={3} style={styles.fontTitle}>Load more...</Text></CardItem>
+                          <CardItem   ><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitle}>Load more...</Text></CardItem>
                         </Card>
                       </TouchableOpacity>
                       : null

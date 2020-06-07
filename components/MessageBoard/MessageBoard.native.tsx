@@ -1,11 +1,11 @@
-import { Input, Content, Left, Right, Body, StyleProvider, Container, Card, CardItem } from 'native-base';
+import { Content, Left, Right, Body, StyleProvider, Container, Card, CardItem } from 'native-base';
 import * as React from 'react';
 import { Text } from 'react-native'
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
-import styles from '../style'
+
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
-import { Image, TextComponent, TouchableOpacity } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 import { CreateMessageInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
@@ -20,12 +20,13 @@ import { Editor } from 'react-draft-wysiwyg';
 import { v1 as uuidv1 } from 'uuid';
 import ErrorBoundary from '../ErrorBoundry';
 import { useRoute, useNavigation } from '@react-navigation/native';
+import JCComponent from '../JCComponent/JCComponent';
 
 
 interface Props {
   groupId: string
-  navigation: any
-  route: any
+  navigation?: any
+  route?: any
 }
 interface State {
   data: any,
@@ -35,7 +36,7 @@ interface State {
   textHeight: any,
   editorState: any
 }
-class MessageBoard extends React.Component<Props, State> {
+class MessageBoardImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -53,7 +54,7 @@ class MessageBoard extends React.Component<Props, State> {
     subscription.subscribe(
       {
         next: (todoData) => {
-          var temp: any = this.state.data
+          let temp: any = this.state.data
           if (temp === null)
             temp = { items: [] }
           if (temp.items == null)
@@ -66,7 +67,7 @@ class MessageBoard extends React.Component<Props, State> {
   }
 
   async setInitialData(props) {
-    var user = await Auth.currentAuthenticatedUser();
+    const user = await Auth.currentAuthenticatedUser();
     try {
       const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: user['username'] }));
       this.setState({
@@ -82,12 +83,12 @@ class MessageBoard extends React.Component<Props, State> {
       this.setState({ created: false })
     else {
 
-      var messagesByRoom: any = API.graphql({
+      const messagesByRoom: any = API.graphql({
         query: queries.messagesByRoom,
         variables: { roomId: this.props.groupId, sortDirection: "DESC" },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
-      var processMessages = (json) => {
+      const processMessages = (json) => {
         //  console.log(json)
         this.setState({
           created: true,
@@ -107,7 +108,7 @@ class MessageBoard extends React.Component<Props, State> {
   }
   saveMessage() {
     Auth.currentAuthenticatedUser().then((user: any) => {
-      var z: CreateMessageInput = {
+      const z: CreateMessageInput = {
         id: Date.now().toString(),
         content: this.state.message,
         when: Date.now().toString(),
@@ -116,7 +117,7 @@ class MessageBoard extends React.Component<Props, State> {
         owner: user.username,
         authorOrgId: "0"
       }
-      var createMessage: any = API.graphql({
+      const createMessage: any = API.graphql({
         query: mutations.createMessage,
         variables: { input: z },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -140,7 +141,7 @@ class MessageBoard extends React.Component<Props, State> {
       (this.state.message != null && this.state.created) ?
         <ErrorBoundary>
           <StyleProvider style={getTheme(material)}>
-            <Container style={{ display: "inline", overflow: "visible", width: "100%", paddingTop: 30, paddingLeft: 30, paddingRight: 30, marginBottom: 60 }} >
+            <Container style={this.styles.style.nativeMessageBoardContainer} >
               <Content style={{ marginBottom: 40 }}>
 
                 {
@@ -166,13 +167,9 @@ class MessageBoard extends React.Component<Props, State> {
                     },
                     image: {
                       uploadCallback: async (z1) => {
-                        var id = uuidv1()
+                        const id = uuidv1()
 
-                        var upload = await Storage.put("messages/" + id + ".png", z1, {
-                          level: 'protected',
-                          contentType: z1.type,
-                        })
-                        var download = await Storage.get("messages/" + id + ".png", {
+                        const download = await Storage.get("messages/" + id + ".png", {
                           level: 'protected',
                           contentType: z1.type,
                           identityId: this.state.UserDetails.profileImage ? this.state.UserDetails.profileImage : ""
@@ -205,16 +202,16 @@ class MessageBoard extends React.Component<Props, State> {
                         <Left>
                           <ProfileImage size="small" user={item.owner ? item.owner : null}></ProfileImage>
                           <Body>
-                            <Text style={styles.groupFormName}>
+                            <Text style={this.styles.style.groupFormName}>
                               {item.author != null ? item.author.given_name : null} {item.author != null ? item.author.family_name : null}
                             </Text>
-                            <Text style={styles.groupFormRole}>
+                            <Text style={this.styles.style.groupFormRole}>
                               {item.author != null ? item.author.currentRole : null}
                             </Text>
                           </Body>
                         </Left>
                         <Right>
-                          <Text style={styles.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
+                          <Text style={this.styles.style.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
                         </Right>
                       </CardItem>
                       <CardItem style={{ marginTop: 0, paddingTop: 0, paddingBottom: 0, borderTopLeftRadius: 0, borderTopRightRadius: 0, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, backgroundColor: "#ffffff" }}>
@@ -241,8 +238,8 @@ class MessageBoard extends React.Component<Props, State> {
     )
   }
 }
-export default function (props) {
+export default function MessageBoard(props) {
   const route = useRoute();
   const navigation = useNavigation()
-  return <MessageBoard {...props} navigation={navigation} route={route} />;
+  return <MessageBoardImpl {...props} navigation={navigation} route={route} />;
 }

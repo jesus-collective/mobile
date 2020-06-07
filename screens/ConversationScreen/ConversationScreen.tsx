@@ -10,10 +10,11 @@ import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
 
 import { Image } from 'react-native'
+import JCComponent from '../../components/JCComponent/JCComponent';
 
 interface Props {
-  navigation: any
-  route: any
+  navigation?: any
+  route?: any
 
 }
 interface State {
@@ -23,10 +24,11 @@ interface State {
 }
 
 
-export default class ConversationScreen extends React.Component<Props, State>{
+export default class ConversationScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
     this.state = {
+      selectedRoom: null,
       showMap: false,
       data: { items: [] }
     }
@@ -112,11 +114,11 @@ export default class ConversationScreen extends React.Component<Props, State>{
 
       <Container >
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-        <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
+        <MyMap visible={this.state.showMap}></MyMap>
         <Content>
-          <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
-            <Container style={{ flex: 30, flexDirection: "column", justifyContent: 'flex-start' }}>
-              <Text>Direct Messages</Text>
+          <Container style={this.styles.style.conversationScreenMainContainer}>
+            <Container style={this.styles.style.detailScreenLeftCard}>
+              <Text style={this.styles.style.eventNameInput}>Direct Messages</Text>
 
               {this.state.data != null ?
                 this.state.data.items.map((item, index) => {

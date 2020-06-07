@@ -1,16 +1,12 @@
 //import { Auth } from 'aws-amplify';
 import React from 'react';
 import { Button, View } from "react-native"
+import JCComponent from 'components/JCComponent/JCComponent';
 //import * as Facebook from 'expo-facebook';
 //import { Authenticator } from 'aws-amplify-react-native';
 // To federated sign in from Facebook
-interface Props { }
-interface State { }
-export default class FederatedSignin extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
+export default class FederatedSignin extends JCComponent {
 
-  }
 
   async login() {
     /*       try {

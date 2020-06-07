@@ -6,7 +6,7 @@ import { Text } from 'react-native'
 
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
-import styles from '../../components/style'
+
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import EditableText from '../../components/Forms/EditableText'
@@ -18,6 +18,7 @@ import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
+import JCComponent from '../../components/JCComponent/JCComponent';
 
 const MessageBoard = lazy(() => import('../../components/MessageBoard/MessageBoard'));
 
@@ -35,14 +36,14 @@ interface State {
   canJoin: boolean
   isEditable: boolean
   canDelete: boolean
-  validationError: String
-  currentUser: String
+  validationError: string
+  currentUser: string
   currentUserProfile: any
 }
 
 
 
-export default class GroupScreen extends React.Component<Props, State>{
+export default class GroupScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
 
@@ -80,7 +81,7 @@ export default class GroupScreen extends React.Component<Props, State>{
   setInitialData(props) {
     if (props.route.params.create === "true" || props.route.params.create === true)
       Auth.currentAuthenticatedUser().then((user: any) => {
-        var z: CreateGroupInput = {
+        const z: CreateGroupInput = {
           id: "organization-" + Date.now(),
           owner: user.username,
           type: "organization",
@@ -93,12 +94,12 @@ export default class GroupScreen extends React.Component<Props, State>{
         this.setState({ data: z })
       })
     else {
-      var getGroup: any = API.graphql({
+      const getGroup: any = API.graphql({
         query: queries.getGroup,
         variables: { id: props.route.params.id },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
-      var processResults = (json) => {
+      const processResults = (json) => {
         this.setState({ data: json.data.getGroup })
       }
       getGroup.then(processResults).catch(processResults)
@@ -108,13 +109,13 @@ export default class GroupScreen extends React.Component<Props, State>{
     this.setState({ showMap: !this.state.showMap })
   }
   validate(): boolean {
-    var validation: any = Validate.Organization(this.state.data)
+    const validation: any = Validate.Organization(this.state.data)
     this.setState({ validationError: validation.validationError })
     return validation.result
   }
   createNew() {
     if (this.validate()) {
-      var createGroup: any = API.graphql({
+      const createGroup: any = API.graphql({
         query: mutations.createGroup,
         variables: { input: this.state.data },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -142,7 +143,7 @@ export default class GroupScreen extends React.Component<Props, State>{
   }
   save() {
     if (this.validate()) {
-      var updateGroup: any = API.graphql({
+      const updateGroup: any = API.graphql({
         query: mutations.updateGroup,
         variables: { input: this.clean(this.state.data) },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -169,7 +170,7 @@ export default class GroupScreen extends React.Component<Props, State>{
       // Attribute values must be strings
       attributes: { id: this.state.data.id, name: this.state.data.name }
     });
-    var createGroupMember: any = API.graphql({
+    const createGroupMember: any = API.graphql({
       query: mutations.createGroupMember,
       variables: { input: { groupID: this.state.data.id, userID: this.state.currentUser } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -183,7 +184,7 @@ export default class GroupScreen extends React.Component<Props, State>{
     });
   }
   delete() {
-    var deleteGroup: any = API.graphql({
+    const deleteGroup: any = API.graphql({
       query: mutations.deleteGroup,
       variables: { input: { id: this.state.data.id } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -196,7 +197,7 @@ export default class GroupScreen extends React.Component<Props, State>{
     });
   }
   updateValue(field: any, value: any) {
-    var temp = this.state.data
+    const temp = this.state.data
     temp[field] = value
     this.setState({ data: temp })
   }
@@ -208,15 +209,15 @@ export default class GroupScreen extends React.Component<Props, State>{
         <StyleProvider style={getTheme(material)}>
           <Container >
             <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-            <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
+            <MyMap visible={this.state.showMap}></MyMap>
             <Content>
               <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
                 <Container style={{ flex: 30, flexDirection: "column", justifyContent: 'flex-start' }}>
                   <Text>Organization</Text>
                   <Text>Sponsored</Text>
 
-                  <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Organization Name" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
-                  <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Organization Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
+                  <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Organization Name" multiline={false} textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
+                  <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Organization Description" multiline={true} textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
 
                   <Text>Organizer</Text>
                   <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />

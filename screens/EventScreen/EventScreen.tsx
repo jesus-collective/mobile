@@ -6,7 +6,7 @@ import { Text, TouchableOpacity } from 'react-native'
 
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
-import styles from '../../components/style'
+
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 //import  from '../../components/MessageBoard/MessageBoard'
@@ -22,6 +22,7 @@ import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import moment from 'moment-timezone'
+import JCComponent from '../../components/JCComponent/JCComponent';
 const MessageBoard = lazy(() => import('../../components/MessageBoard/MessageBoard'));
 
 interface Props {
@@ -46,7 +47,7 @@ interface State {
 
 
 
-export default class EventScreen extends React.Component<Props, State>{
+export default class EventScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
 
@@ -334,18 +335,22 @@ export default class EventScreen extends React.Component<Props, State>{
         <StyleProvider style={getTheme(material)}>
           <Container>
             <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-            <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
+            <MyMap visible={this.state.showMap}></MyMap>
             <Content>
-              <Container style={styles.eventScreenMainContainer}>
-                <Container style={styles.detailScreenLeftCard}>
+              <Container style={this.styles.style.eventScreenMainContainer}>
+                <Container style={this.styles.style.detailScreenLeftCard}>
                   <Container style={{ flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 20 }}>
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#333333', textTransform: "uppercase", flex: 0 }}>Event</Text>
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#979797', textTransform: "uppercase", flex: 0 }}>Sponsored</Text>
                   </Container>
 
-                  <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Event Name" multiline={false} textStyle={styles.eventNameInput} inputStyle={styles.eventNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
-                  <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Event Description" multiline={true} textStyle={styles.eventDescriptionInput} inputStyle={styles.eventDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
-                  <EditableDate type="datetime" onChange={(time: any, timeZone: any) => { this.updateValue("time", time); this.updateValue("tz", timeZone) }} placeholder="Enter Event Time" multiline={false} textStyle={styles.eventDateInput} inputStyle={styles.eventDateInput} value={this.state.data.time} tz={this.state.data.tz ? this.state.data.tz : moment.tz.guess()} isEditable={this.state.isEditable}></EditableDate>
+        <View>
+                  <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Event Name" multiline={false} textStyle={this.styles.style.eventNameInput} inputStyle={this.styles.style.eventNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
+                  <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Event Description" multiline={true} textStyle={this.styles.style.eventDescriptionInput} inputStyle={this.styles.style.eventDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
+             </View>
+                  <View>
+                    <EditableDate type="datetime" onChange={(time: any, timeZone: any) => { this.updateValue("time", time); this.updateValue("tz", timeZone) }} placeholder="Enter Event Time" multiline={false} textStyle={this.styles.style.eventDateInput} inputStyle={this.styles.style.eventDateInput} value={this.state.data.time} tz={this.state.data.tz ? this.state.data.tz : moment.tz.guess()} isEditable={this.state.isEditable}></EditableDate>
+  </View>
 
                   {this.state.isEditable ? <Picker
                     mode="dropdown"
@@ -366,8 +371,8 @@ export default class EventScreen extends React.Component<Props, State>{
                   {this.state.data.eventType != "location" ?
                     <EditableUrl title={this.state.data.eventType == "zoom" ? "Open in Zoom" : "Open in Eventbrite"}
                       onChange={(value: any) => { this.updateValue("eventUrl", value) }}
-                      placeholder="Enter Event URL" multiline={false} textStyle={styles.editableURLText}
-                      inputStyle={styles.eventEditableURL} value={this.state.data.eventUrl}
+                      placeholder="Enter Event URL" multiline={false} textStyle={this.styles.style.editableURLText}
+                      inputStyle={this.styles.style.eventEditableURL} value={this.state.data.eventUrl}
                       isEditable={this.state.isEditable}></EditableUrl>
                     :
                     <EditableLocation onChange={(value: any, location: any) => {
@@ -378,8 +383,8 @@ export default class EventScreen extends React.Component<Props, State>{
                       else
                         this.updateValue("locationLatLong", null)
                     }}
-                      placeholder="Enter Event Location" multiline={false} textStyle={styles.fontRegular}
-                      inputStyle={styles.groupNameInput} value={this.state.data.location}
+                      placeholder="Enter Event Location" multiline={false} textStyle={this.styles.style.fontRegular}
+                      inputStyle={this.styles.style.groupNameInput} value={this.state.data.location}
                       isEditable={this.state.isEditable}></EditableLocation>
                   }
 
@@ -389,7 +394,7 @@ export default class EventScreen extends React.Component<Props, State>{
                   </TouchableOpacity>
 
                   <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", paddingTop: 48, paddingBottom: 12 }}>Attending ({this.state.attendeeIDs.length})</Text>
-                  <View style={styles.eventAttendeesPictures}>
+                  <View style={this.styles.style.eventAttendeesPictures}>
                     {this.state.attendeeIDs.length == 0 ?
                       <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", marginBottom: 30 }}>No Attendees Yet</Text> :
                       this.state.attendeeIDs.map((id: any, index: any) => {
@@ -403,7 +408,7 @@ export default class EventScreen extends React.Component<Props, State>{
                   {this.renderButtons()}
                   <Text>{this.state.validationError}</Text>
                 </Container>
-                <Container style={styles.detailScreenRightCard}>
+                <Container style={this.styles.style.detailScreenRightCard}>
                   <MessageBoard groupId={this.state.data.id}></MessageBoard>
                   {/*  <Zoom></Zoom>*/}
                 </Container>

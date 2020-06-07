@@ -11,6 +11,7 @@ import GRAPHQL_AUTH_MODE, { Greetings } from 'aws-amplify-react-native'
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
 import { constants } from '../../src/constants'
+import JCComponent from '../../components/JCComponent/JCComponent';
 
 //mport { DataStore, Predicates } from '@aws-amplify/datastore'
 
@@ -33,7 +34,7 @@ interface Props {
 }
 interface State { }
 
-class IndexApp extends React.Component<Props, State>{
+class IndexApp extends JCComponent<Props, State>{
     constructor(props: Props) {
         super(props);
     }

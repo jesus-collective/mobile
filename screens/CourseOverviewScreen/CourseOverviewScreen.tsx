@@ -5,7 +5,7 @@ import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 import { Text } from 'react-native'
 
 import CourseSidebar from '../../components/CourseSidebar/CourseSidebar'
-import styles from '../../components/style'
+
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import EditableDate from '../../components/Forms/EditableDate'
@@ -18,8 +18,9 @@ import { CreateGroupInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
-const moment = require('moment');
-const data = require('./course.json');
+import JCComponent from '../../components/JCComponent/JCComponent';
+import moment from 'moment';
+import data from './course.json';
 
 interface Props {
   navigation: any
@@ -41,7 +42,7 @@ interface State {
 
 
 
-export default class CourseScreen extends React.Component<Props, State>{
+export default class CourseScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
 
@@ -192,12 +193,12 @@ export default class CourseScreen extends React.Component<Props, State>{
             <CourseSidebar courseId={this.state.data.id}></CourseSidebar>
             <Container style={{ flex: 85 }}>
               <Content style={{ backgroundColor: "#F0493E", flex: 20 }}>
-                <Text style={styles.fontCourseHeaderTime}>{moment(this.state.data.time).format('MMMM Do YYYY')} - {this.state.data.length}</Text>
+                <Text style={this.styles.style.fontCourseHeaderTime}>{moment(this.state.data.time).format('MMMM Do YYYY')} - {this.state.data.length}</Text>
 
-                <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Course Name" multiline={false} textStyle={styles.fontCourseHeaderBold} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
+                <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Course Name" multiline={false} textStyle={this.styles.style.fontCourseHeaderBold} inputStyle={this.styles.style.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
 
-                <Text style={styles.fontCourseHeader}>Course</Text>
-                <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Course Description" multiline={true} textStyle={styles.fontCourseHeaderDescription} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
+                <Text style={this.styles.style.fontCourseHeader}>Course</Text>
+                <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Course Description" multiline={true} textStyle={this.styles.style.fontCourseHeaderDescription} inputStyle={this.styles.style.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
               </Content>
               <Content style={{ flex: 80 }}>
                 <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
@@ -214,7 +215,7 @@ export default class CourseScreen extends React.Component<Props, State>{
                     return (<Card><Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
                       <Text>{item.name}</Text>
                       <Text>Instructor</Text>
-                      <JCButton bordered style={styles.sliderButton}><Text>Ask Question</Text></Button>
+                      <JCButton bordered style={this.styles.style.sliderButton}><Text>Ask Question</Text></Button>
                     </Card>)
                   }
                 )*/}
@@ -269,10 +270,10 @@ export default class CourseScreen extends React.Component<Props, State>{
                       <JCButton buttonType={ButtonTypes.Outline} onPress={() => this.gotoActiveCourse()} >Go to Course</JCButton>
                       : null
                     }
-                    <EditableDate type="date" onChange={(value: any) => { this.updateValue("time", value) }} placeholder="Enter Course Start Date" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableDate>
-                    <EditableText onChange={(value: any) => { this.updateValue("length", value) }} placeholder="Enter Course Length" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.length} isEditable={this.state.isEditable}></EditableText>
-                    <EditableText onChange={(value: any) => { this.updateValue("effort", value) }} placeholder="Enter Course Effort" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.effort} isEditable={this.state.isEditable}></EditableText>
-                    <EditableDollar onChange={(value: any) => { this.updateValue("cost", value) }} placeholder="Enter Course Cost" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.cost} isEditable={this.state.isEditable}></EditableDollar>
+                    <EditableDate type="date" onChange={(value: any) => { this.updateValue("time", value) }} placeholder="Enter Course Start Date" multiline={false} textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupNameInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableDate>
+                    <EditableText onChange={(value: any) => { this.updateValue("length", value) }} placeholder="Enter Course Length" multiline={false} textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupNameInput} value={this.state.data.length} isEditable={this.state.isEditable}></EditableText>
+                    <EditableText onChange={(value: any) => { this.updateValue("effort", value) }} placeholder="Enter Course Effort" multiline={false} textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupNameInput} value={this.state.data.effort} isEditable={this.state.isEditable}></EditableText>
+                    <EditableDollar onChange={(value: any) => { this.updateValue("cost", value) }} placeholder="Enter Course Cost" multiline={false} textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupNameInput} value={this.state.data.cost} isEditable={this.state.isEditable}></EditableDollar>
                     <Text>{this.state.validationError}</Text>
 
                   </Container>

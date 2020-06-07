@@ -1,4 +1,3 @@
-import React from "react";
 import { Auth } from 'aws-amplify';
 import Amplify from 'aws-amplify';
 import awsconfig from '../../src/aws-exports';
@@ -9,9 +8,7 @@ import * as queries from '../../src/graphql/queries.ts';
 Amplify.configure(awsconfig);
 
 export default class TestHelper {
-    constructor() {
 
-    }
 
     static async DeleteUser(user, password) {
         console.log("hello2")

@@ -5,10 +5,11 @@ import SignUpSidebar from '../../components/SignUpSidebar/SignUpSidebar'
 Amplify.configure(awsConfig);
 import { View, Input, Item, Label, Form, Content } from 'native-base';
 import { Text, Button } from 'react-native';
-import styles from '../../components/style'
+
 import * as mutations from '../../src/graphql/mutations';
 import { API, graphqlOperation } from 'aws-amplify';
 import { Auth } from 'aws-amplify';
+import JCComponent from '../../components/JCComponent/JCComponent';
 
 interface Props {
   //navigation?: any
@@ -16,7 +17,7 @@ interface Props {
   payStateChanged(): void
 }
 
-export default class SignUpScreen1 extends React.Component<Props>{
+export default class SignUpScreen1 extends JCComponent<Props>{
   async makePayment(): Promise<void> {
     console.log("Make Payment")
     const user = await Auth.currentAuthenticatedUser();
@@ -28,15 +29,17 @@ export default class SignUpScreen1 extends React.Component<Props>{
     }
 
   }
+
+
   render(): React.ReactNode {
     // const { navigate } = this.props.navigation;
 
     return (
 
-      <View style={styles.signUpScreen1PaymentBody}>
+      <View style={this.styles.style.signUpScreen1PaymentBody}>
         <SignUpSidebar position="3"></SignUpSidebar>
-        <Content style={styles.signUpScreen1Content}>
-          <View style={styles.signUpScreen1PaymentColumn1}>
+        <Content style={this.styles.style.signUpScreen1Content}>
+          <View style={this.styles.style.signUpScreen1PaymentColumn1}>
             <Text>Credit Card Information</Text>
             <Form>
               <Item floatingLabel>
@@ -78,37 +81,37 @@ export default class SignUpScreen1 extends React.Component<Props>{
 
             </Form>
           </View>
-          <View style={styles.signUpScreen1PaymentColumn2}>
-            <Text style={styles.fontRegular}>Once we get through the pilot, this will be where the payment process occurs. But during the pilot, we&apos;re still building the platform, adding content and looking for feedback from our wonderful friends. {'\n'}{'\n'}Thank you for helping us develop and improve the best user experience.</Text>
+          <View style={this.styles.style.signUpScreen1PaymentColumn2}>
+            <Text style={this.styles.style.fontRegular}>Once we get through the pilot, this will be where the payment process occurs. But during the pilot, we&apos;re still building the platform, adding content and looking for feedback from our wonderful friends. {'\n'}{'\n'}Thank you for helping us develop and improve the best user experience.</Text>
             <Text style={{ fontFamily: "Graphik-Regular-App", color: "#F0493E", fontWeight: "bold" }}>{'\n'}Access to Jesus Collective is free during the pilot.{'\n'}{'\n'}</Text>
             <View style={{ borderWidth: 1, borderStyle: "solid", borderRadius: 4, borderColor: "rgba(51, 51, 51, 0.1)", shadowColor: "rgba(0, 0, 0, 0.05)", padding: 25, shadowOffset: { width: 5, height: 5 }, shadowRadius: 30 }}>
-              <View style={styles.flexRow}>
+              <View style={this.styles.style.flexRow}>
                 <Text style={{ fontFamily: "Graphik-Bold-App", paddingRight: 65, fontSize: 20 }}>Up to 25 Kids</Text>
                 <Text style={{ color: "#F0493E" }} >$0.00</Text>
               </View>
               <Text style={{ paddingBottom: 25, paddingLeft: 155, fontFamily: "Graphik-Regular-App" }}>Remove</Text>
-              <View style={styles.flexRow}>
-                <Text style={styles.fontRegular}>{'\u2022'}</Text>
+              <View style={this.styles.style.flexRow}>
+                <Text style={this.styles.style.fontRegular}>{'\u2022'}</Text>
                 <Text style={{ fontFamily: "Graphik-Regular-App", flex: 1, paddingLeft: 5 }}>Preschool to grade 8 curriculum access for up to 25 kids</Text>
               </View>
-              <View style={styles.flexRow}>
-                <Text style={styles.fontRegular}>{'\u2022'}</Text>
+              <View style={this.styles.style.flexRow}>
+                <Text style={this.styles.style.fontRegular}>{'\u2022'}</Text>
                 <Text style={{ fontFamily: "Graphik-Regular-App", flex: 1, paddingLeft: 5 }}>Training Guide</Text>
               </View>
-              <View style={styles.flexRow}>
-                <Text style={styles.fontRegular}>{'\u2022'}</Text>
+              <View style={this.styles.style.flexRow}>
+                <Text style={this.styles.style.fontRegular}>{'\u2022'}</Text>
                 <Text style={{ fontFamily: "Graphik-Regular-App", flex: 1, paddingLeft: 5 }}>Volunteer and Classroom Management Tips</Text>
               </View>
-              <View style={styles.flexRow}>
-                <Text style={styles.fontRegular}>{'\u2022'}</Text>
+              <View style={this.styles.style.flexRow}>
+                <Text style={this.styles.style.fontRegular}>{'\u2022'}</Text>
                 <Text style={{ fontFamily: "Graphik-Regular-App", flex: 1, paddingLeft: 5 }}>Classroom Schedule Tips</Text>
               </View>
-              <View style={styles.flexRow}>
-                <Text style={styles.fontRegular}>{'\u2022'}</Text>
+              <View style={this.styles.style.flexRow}>
+                <Text style={this.styles.style.fontRegular}>{'\u2022'}</Text>
                 <Text style={{ fontFamily: "Graphik-Regular-App", flex: 1, paddingLeft: 5 }}>Includes 3 accounts</Text>
               </View>
             </View>
-            <View style={styles.flexRow}>
+            <View style={this.styles.style.flexRow}>
               <Text style={{ fontFamily: "Graphik-Bold-App", paddingTop: 10, paddingBottom: 10, paddingLeft: 45, paddingRight: 145 }}>Total</Text>
               <Text style={{ fontFamily: "Graphik-Bold-App", paddingTop: 10, paddingBottom: 10, }}>$0.00</Text>
             </View>

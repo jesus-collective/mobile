@@ -10,7 +10,8 @@
     "alwaysStrict": true,
     "allowJs": true,
     "checkJs": true,
-    "types": ["cypress"]
+    "types": ["cypress"],
+    "resolveJsonModule": true
   },
   "exclude": [
     "babel.config.js",

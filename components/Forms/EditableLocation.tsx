@@ -4,6 +4,7 @@ import PlacesAutocomplete, {
     geocodeByAddress,
     getLatLng,
 } from 'react-places-autocomplete';
+import JCComponent from '../JCComponent/JCComponent';
 
 interface Props {
     value: string,
@@ -22,7 +23,7 @@ interface State {
     multiline: boolean,
     placeholder: string
 }
-export default class EditableLocation extends React.Component<Props, State> {
+export default class EditableLocation extends JCComponent<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {

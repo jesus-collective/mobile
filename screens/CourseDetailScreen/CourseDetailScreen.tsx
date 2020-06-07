@@ -14,9 +14,10 @@ import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import CourseHeader from '../../components/CourseHeader/CourseHeader';
 import { TouchableOpacity } from 'react-native';
+import JCComponent from '../../components/JCComponent/JCComponent';
 const MessageBoard = lazy(() => import('../../components/MessageBoard/MessageBoard'));
 
-const data = require('../CourseOverviewScreen/course.json');
+import data from '../CourseOverviewScreen/course.json';
 
 interface Props {
   navigation: any
@@ -34,7 +35,7 @@ interface State {
 
 
 
-export default class CourseScreen extends React.Component<Props, State>{
+export default class CourseScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
 

@@ -1,9 +1,11 @@
 ﻿import React, { lazy } from 'react';
 import { Container } from 'native-base';
-import styles from '../../components/style'
+
 import { Platform } from 'react-native';
 import { Dimensions } from 'react-native'
 import MyGroups from '../../components/MyGroups/MyGroups'
+import JCComponent from '../../components/JCComponent/JCComponent';
+
 const MyConversations = lazy(() => import('../../components/MyConversations/MyConversations'));
 //const MyGroups = lazy(() => import('../../components/MyGroups/MyGroups'));
 const MyPeople = lazy(() => import('../../components/MyPeople/MyPeople'));
@@ -23,7 +25,7 @@ interface State {
 }
 
 
-class HomeScreen extends React.Component<Props, State>{
+class HomeScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -52,19 +54,19 @@ class HomeScreen extends React.Component<Props, State>{
     return (
       <Container data-testid="homepage">
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-        <MyMap navigation={this.props.navigation} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
+        <MyMap showFilters={true} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
 
         <Container style={{ flexGrow: 1, overflow: "scroll" }}>
-          <Container style={{ display: "block" }}>
-            <Container style={styles.dashboardMainContainer}>
-              <Container style={styles.dashboardLeftCard}>
+          <Container style={this.styles.style.dashboardPrimaryContainer}>
+            <Container style={this.styles.style.dashboardMainContainer}>
+              <Container style={this.styles.style.dashboardLeftCard}>
                 <MyGroups showMore={false} type="event" wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
                 <MyGroups showMore={false} type="group" wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
                 <MyGroups showMore={false} type="resource" wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
                 <MyGroups showMore={false} type="organization" wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
                 <MyGroups showMore={false} type="course" wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
               </Container>
-              <Container style={styles.dashboardRightCard}>
+              <Container style={this.styles.style.dashboardRightCard}>
                 <MyPeople wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyPeople>
                 <MyConversations navigation={this.props.navigation}></MyConversations>
                 <Container style={{ flex: 10 }}></Container>
