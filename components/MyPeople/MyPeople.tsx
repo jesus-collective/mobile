@@ -112,16 +112,28 @@ export default class MyPeople extends JCComponent<Props, State> {
                 if (item.id !== this.state.currentUser) {
                   return (
                     <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.id) }}>
+<<<<<<< HEAD
                       <Card style={this.styles.dashboardConversationCard}>
+=======
+                      <Card style={styles.dashboardConversationCard}>
+>>>>>>> 5a3b6c3a1464ca2cbba7d5dbd2c10e9a942bc14b
                         <CardItem>
                           <Left>
                             <ProfileImage user={item} size='small'>
                             </ProfileImage>
+<<<<<<< HEAD
 
                             <Body>
                               <Text style={this.styles.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
                               <Text style={this.styles.fontConnectWithRole}>{item.currentRole}</Text>
                               <Button bordered style={this.styles.connectWithSliderButton} onPress={() => { this.openConversation(item.id, item.given_name + " " + item.family_name) }}><Text style={this.styles.fontStartConversation}>Start Conversation</Text></Button>
+=======
+  
+                            <Body>
+                              <Text style={styles.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
+                              <Text style={styles.fontConnectWithRole}>{item.currentRole}</Text>
+                              <Button bordered style={styles.connectWithSliderButton} onPress={() => { this.openConversation(item.id, item.given_name + " " + item.family_name) }}><Text style={styles.fontStartConversation}>Start Conversation</Text></Button>
+>>>>>>> 5a3b6c3a1464ca2cbba7d5dbd2c10e9a942bc14b
                             </Body>
                           </Left>
                         </CardItem>

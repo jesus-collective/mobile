@@ -8,6 +8,10 @@ import { TouchableOpacity, Animated, TouchableWithoutFeedback } from 'react-nati
 
 
 import { Marker } from 'google-maps-react';
+<<<<<<< HEAD
+=======
+
+>>>>>>> 5a3b6c3a1464ca2cbba7d5dbd2c10e9a942bc14b
 import { Map, InfoWindow } from 'google-maps-react';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 
@@ -385,7 +389,11 @@ class MyMapImpl extends JCComponent<Props, State> {
         </ErrorBoundary>
       )
     }
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 5a3b6c3a1464ca2cbba7d5dbd2c10e9a942bc14b
     else if (this.props.visible && this.props.type === "profile") {
       return (
         <ErrorBoundary>
@@ -423,6 +431,7 @@ class MyMapImpl extends JCComponent<Props, State> {
       return (
         <ErrorBoundary>
 
+<<<<<<< HEAD
           <View style={{ height: this.props.visible ? this.props.size ? this.props.size : 510 : 0 }}>
 
             <Map google={window.google} zoom={6}
@@ -467,6 +476,52 @@ class MyMapImpl extends JCComponent<Props, State> {
               </InfoWindow>
 
             </Map>
+=======
+          <View style={{ height: this.props.visible ? this.props.size ? this.props.size : 510 : 0}}>
+
+              <Map google={window.google} zoom={6}
+                center={this.props.initCenter ? this.props.initCenter : {lat: 44, lng: -78}}
+                mapTypeControl={false}
+                onClick={this.onMapClicked}
+                onReady={(mapProps, map) => this._mapLoaded(map)}
+                style={{ position: "relative", width: "100%", height: "100%" }}
+                streetViewControl={false}
+                fullscreenControl={false}
+              >
+
+                {this.props.mapData.map((mapItem, index) => {
+
+                    return <Marker key={index} title={mapItem.name}
+                      mapItemType={mapItem.type}
+                      mapItem={mapItem}
+                      onClick={this.onMarkerClick}
+                      position={{ lat: mapItem.latitude, lng: mapItem.longitude }}
+                      icon={{
+                        url: require("../../assets/svg/map-icon-red.svg"),
+                        scaledSize: new google.maps.Size(32, 32)
+                      }}>
+                    </Marker>
+
+                  })}
+
+
+                <InfoWindow
+                  google={window.google}
+                  visible={this.state.showingInfoWindow}
+                  marker={this.state.activeMarker}>
+                  {this.state.selectedPlace != null ?
+                    this.state.selectedPlace.mapItemType == "profile" ?
+                      this.renderProfile() :
+                      this.state.selectedPlace.mapItemType == "event" ?
+                        this.renderEvent()
+                        : null
+                    : null
+                  }
+
+                </InfoWindow>
+
+              </Map>
+>>>>>>> 5a3b6c3a1464ca2cbba7d5dbd2c10e9a942bc14b
           </View>
 
         </ErrorBoundary>

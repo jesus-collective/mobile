@@ -6,10 +6,10 @@ import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 //import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Marker } from 'google-maps-react';
-import { Map } from 'google-maps-react';
-import JCComponent from '../JCComponent/JCComponent';
 import styles from '../../components/style'
 import mapStyle from './mapstyle.json';
+import { Map } from 'google-maps-react';
+import JCComponent from '../JCComponent/JCComponent';
 
 interface Props {
     mapVisible: any,
