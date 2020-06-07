@@ -21,7 +21,7 @@ import ErrorBoundary from '../ErrorBoundry'
 import { CreateGroupInput } from 'src/API';
 import Validate from '../Validate/Validate';
 import { useRoute, useNavigation } from '@react-navigation/native';
-import JCComponent from 'components/JCComponent/JCComponent';
+import JCComponent from '../JCComponent/JCComponent';
 Amplify.configure(awsconfig);
 
 
@@ -795,7 +795,7 @@ class ResourceViewerImpl extends JCComponent<Props, State> {
                             </Content>
                         </ErrorBoundary>
                     </Container>
-                </ResourceViewer.Provider>
+                </ResourceViewerImpl.Provider>
             </ErrorBoundary>
             : null)
 
