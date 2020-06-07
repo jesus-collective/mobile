@@ -114,11 +114,11 @@ export default class ConversationScreen extends JCComponent<Props, State>{
 
       <Container >
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-        <MyMap visible={this.state.showMap}></MyMap>
         <Content>
-          <Container style={this.styles.style.conversationScreenMainContainer}>
-            <Container style={this.styles.style.detailScreenLeftCard}>
-              <Text style={this.styles.style.eventNameInput}>Direct Messages</Text>
+          <MyMap type={'no-filters'} visible={this.state.showMap} mapData={[]}></MyMap>
+          <Container style={styles.conversationScreenMainContainer}>
+            <Container style={styles.detailScreenLeftCard}>
+              <Text style={styles.eventNameInput}>Direct Messages</Text>
 
               {this.state.data != null ?
                 this.state.data.items.map((item, index) => {

@@ -38,8 +38,8 @@ export default class HomeScreen extends JCComponent<Props, State>{
 
       <Container data-testid="resources" >
         <Header title="Jesus Collective" navigation={this.props.navigation} />
-        <MyMap mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
         <Content>
+          <MyMap type={"no-filters"} size={'50%'} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
           <Container style={this.styles.style.resourcesScreenMainContainer}>
             <Container style={this.styles.style.resourcesScreenLeftContainer}>
 

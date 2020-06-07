@@ -42,6 +42,8 @@ interface State {
   currentUser: string
   currentUserProfile: any
   attendeeIDs: string[]
+  mapData: any
+  initCenter: any
 }
 
 
@@ -63,7 +65,9 @@ export default class EventScreen extends JCComponent<Props, State>{
       validationError: "",
       currentUser: null,
       currentUserProfile: null,
-      attendeeIDs: []
+      attendeeIDs: [],
+      mapData: [],
+      initCenter: { lat: 44, lng: -78 }
     }
     Auth.currentAuthenticatedUser().then((user: any) => {
       this.setState({
@@ -142,6 +146,8 @@ export default class EventScreen extends JCComponent<Props, State>{
         },
 
           () => {
+            this.convertEventToMapData();
+
             const groupMemberByUser: any = API.graphql({
               query: queries.groupMemberByUser,
               variables: { userID: this.state.currentUser, groupID: { eq: this.state.data.id } },
@@ -160,6 +166,22 @@ export default class EventScreen extends JCComponent<Props, State>{
       getGroup.then(processResults).catch(processResults)
     }
   }
+  convertEventToMapData() {
+    const data = this.state.data
+    if (data.locationLatLong && data.locationLatLong.latitude && data.locationLatLong.longitude)
+      this.setState({
+        mapData: [{
+          latitude: data.locationLatLong.latitude,
+          longitude: data.locationLatLong.longitude,
+          name: data.name,
+          event: data,
+          link: "",
+          type: "event"
+        }],
+        initCenter: { lat: data.locationLatLong.latitude, lng: data.locationLatLong.longitude }
+      })
+  }
+
   mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
   }
@@ -332,9 +354,9 @@ export default class EventScreen extends JCComponent<Props, State>{
       this.state.data ?
         <StyleProvider style={getTheme(material)}>
           <Container>
-            <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-            <MyMap visible={this.state.showMap}></MyMap>
+            <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={!this.state.createNew && this.state.data.eventType === "location" ? this.mapChanged : null} />
             <Content>
+              <MyMap initCenter={this.state.initCenter} type={"no-filters"} size={'25%'} visible={this.state.showMap} mapData={this.state.mapData}></MyMap>
               <Container style={this.styles.style.eventScreenMainContainer}>
                 <Container style={this.styles.style.detailScreenLeftCard}>
                   <Container style={{ flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 20 }}>

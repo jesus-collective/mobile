@@ -40,8 +40,8 @@ export default class HomeScreen extends JCComponent<Props, State>{
 
       <Container data-testid="events">
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-        <MyMap mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
         <Content>
+          <MyMap type={"no-filters"} size={'50%'} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
           <Container style={this.styles.style.eventsScreenMainContainer}>
             <Container style={this.styles.style.eventsScreenLeftContainer}>
               <MyGroups showMy={this.state.showMy} showMore={true} type="event" wrap={true} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>

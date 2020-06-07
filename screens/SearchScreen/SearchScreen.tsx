@@ -54,8 +54,8 @@ export default class GroupScreen extends JCComponent<Props, State>{
     return <StyleProvider style={getTheme(material)}>
       <Container >
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-        <MyMap visible={this.state.showMap}></MyMap>
         <Content>
+          <MyMap type={"no-filters"} visible={this.state.showMap} mapData={[]}></MyMap>
           <Container>
             <input onChange={(item: any) => { this.search(item) }} placeholder="Search..."></input>
             <Text>Results:</Text>

@@ -37,9 +37,10 @@ export default class HomeScreen extends JCComponent<Props, State>{
     console.log("Homepage")
     return (
       <Container data-testid="groups" >
-        <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-        <MyMap mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
+        <Header title="Jesus Collective" navigation={this.props.navigation} />
         <Content>
+          {/*Map not displayed since Groups currently don't have location data need to re-add onMapChange to <Header/>
+          <MyMap size={'50%'} type={"no-filters"}  mapData={this.state.mapData} visible={this.state.showMap}></MyMap>*/}
           <Container style={this.styles.style.groupsScreenMainContainer}>
             <Container style={this.styles.style.groupsScreenLeftContainer}>
               <MyGroups showMy={this.state.showMy} showMore={true} type="group" wrap={true} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>

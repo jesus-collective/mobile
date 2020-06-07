@@ -209,8 +209,8 @@ export default class GroupScreen extends JCComponent<Props, State>{
         <StyleProvider style={getTheme(material)}>
           <Container >
             <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-            <MyMap visible={this.state.showMap}></MyMap>
             <Content>
+              <MyMap type={'no-filters'} size={'25%'} visible={this.state.showMap} mapData={[]}></MyMap>
               <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
                 <Container style={{ flex: 30, flexDirection: "column", justifyContent: 'flex-start' }}>
                   <Text>Organization</Text>
