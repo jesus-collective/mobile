@@ -354,9 +354,10 @@ export default class EventScreen extends JCComponent<Props, State>{
       this.state.data ?
         <StyleProvider style={getTheme(material)}>
           <Container>
-            <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
+            <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={!this.state.createNew && this.state.data.eventType === "location" ? this.mapChanged : null} />
             <Content>
-              <MyMap initCenter={this.state.initCenter} type={"no-filters"} size={'25%'} visible={this.state.showMap} mapData={this.state.mapData}></MyMap>              <Container style={this.styles.style.eventScreenMainContainer}>
+              <MyMap initCenter={this.state.initCenter} type={"no-filters"} size={'25%'} visible={this.state.showMap} mapData={this.state.mapData}></MyMap>
+              <Container style={this.styles.style.eventScreenMainContainer}>
                 <Container style={this.styles.style.detailScreenLeftCard}>
                   <Container style={{ flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 20 }}>
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#333333', textTransform: "uppercase", flex: 0 }}>Event</Text>

@@ -377,7 +377,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
       this.state.data ?
         <StyleProvider style={getTheme(material)}>
           <Container >
-            <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
+            <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.state.createNew ? null : this.mapChanged} />
             <Content>
               <MyMap type={"no-filters"} size={'25%'} visible={this.state.showMap} mapData={this.state.mapData}></MyMap>
               <Container style={this.styles.style.groupScreenMainContainer}>
