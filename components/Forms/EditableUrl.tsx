@@ -3,6 +3,7 @@ import React from 'react';
 import { Input, Button } from 'native-base';
 import { Text } from 'react-native'
 import JCComponent from '../JCComponent/JCComponent';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 interface Props {
     value: string,
@@ -14,6 +15,7 @@ interface Props {
     placeholder?: string,
     onChange?(string),
     navigation: any
+    route: any
 }
 interface State {
     // value: string,
@@ -23,7 +25,7 @@ interface State {
     multiline: boolean,
     placeholder: string
 }
-class EditableUrl extends JCComponent<Props, State> {
+class EditableUrlImpl extends JCComponent<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -55,4 +57,10 @@ class EditableUrl extends JCComponent<Props, State> {
     }
 }
 
-export default EditableUrl
+export default function EditableUrl(props: Props) {
+    const route = useRoute();
+    const navigation = useNavigation()
+    return <EditableUrlImpl {...props} navigation={navigation} route={route} />;
+}
+
+

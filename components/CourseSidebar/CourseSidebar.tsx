@@ -1,6 +1,6 @@
 import { Container, Button } from 'native-base';
 
-import { DrawerActions } from '@react-navigation/native';
+import { DrawerActions, useNavigation, useRoute } from '@react-navigation/native';
 
 import React from 'react';
 import { Image, Text } from 'react-native';
@@ -10,10 +10,11 @@ import JCComponent from '../JCComponent/JCComponent';
 interface Props {
     navigation: any,
     courseId: any
+    route: any
     //  title:string,
     //  onMapChange?():any
 }
-class CourseSidebar extends JCComponent<Props> {
+class CourseSidebarImpl extends JCComponent<Props> {
 
     constructor(props: Props) {
         super(props);
@@ -78,4 +79,9 @@ class CourseSidebar extends JCComponent<Props> {
         )
     }
 }
-export default CourseSidebar
+export default function CourseSidebar(props: Props) {
+    const route = useRoute();
+    const navigation = useNavigation()
+    return <CourseSidebarImpl {...props} navigation={navigation} route={route} />;
+}
+

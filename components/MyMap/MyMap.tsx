@@ -3,15 +3,17 @@ import * as React from 'react';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import ErrorBoundary from '../ErrorBoundry';
 import JCComponent from '../JCComponent/JCComponent';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 interface Props {
-  navigation: any
+  navigation?: any
+  route?: any
   visible: boolean
   mapData: any
   showFilters: boolean
   initCenter?: any
 }
-export default class MyMap extends JCComponent<Props> {
+class MyMapImpl extends JCComponent<Props> {
   constructor(props: Props) {
     super(props);
   }
@@ -197,4 +199,10 @@ export default class MyMap extends JCComponent<Props> {
       )
     else return null
   }
+}
+
+export default function MyMap(props: Props) {
+  const route = useRoute();
+  const navigation = useNavigation()
+  return <MyMapImpl {...props} navigation={navigation} route={route} />;
 }

@@ -13,8 +13,8 @@ import { Image } from 'react-native'
 import JCComponent from '../../components/JCComponent/JCComponent';
 
 interface Props {
-  navigation: any
-  route: any
+  navigation?: any
+  route?: any
 
 }
 interface State {

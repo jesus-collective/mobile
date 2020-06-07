@@ -16,11 +16,13 @@ import { Text } from 'react-native'
 import ErrorBoundary from '../ErrorBoundry';
 import moment from 'moment';
 import JCComponent from '../JCComponent/JCComponent';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 const mapStyle = require('./mapstyle.json')
 
 interface Props {
-  navigation: any
+  navigation?: any
+  route?: any
   visible: boolean
   google: any
   mapData: any
@@ -42,7 +44,7 @@ interface State {
   initCenterProfile: any
 }
 
-class MyMap extends JCComponent<Props, State> {
+class MyMapImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -420,4 +422,8 @@ class MyMap extends JCComponent<Props, State> {
 }
 
 
-export default MyMap
+export default function MyMap(props: Props) {
+  const route = useRoute();
+  const navigation = useNavigation()
+  return <MyMapImpl {...props} navigation={navigation} route={route} />;
+}

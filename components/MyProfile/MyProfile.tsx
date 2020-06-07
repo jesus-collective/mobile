@@ -19,12 +19,14 @@ import { AntDesign } from '@expo/vector-icons';
 import { interests } from './interests'
 import { constants } from '../../src/constants'
 import JCComponent from '../JCComponent/JCComponent';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 Amplify.configure(awsconfig);
 
 interface Props {
   finalizeProfile?(): void
-  navigation: any
+  navigation?: any
+  route?: any
   loadId?: any
 
 }
@@ -40,7 +42,7 @@ interface State {
   mapData: any
   initCenter: any
 }
-export default class MyProfile extends JCComponent<Props, State> {
+class MyProfileImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -566,4 +568,10 @@ export default class MyProfile extends JCComponent<Props, State> {
 
     )
   }
+}
+
+export default function MyProfile(props: Props) {
+  const route = useRoute();
+  const navigation = useNavigation()
+  return <MyProfileImpl {...props} navigation={navigation} route={route} />;
 }

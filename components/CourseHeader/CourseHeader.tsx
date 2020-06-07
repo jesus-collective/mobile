@@ -5,13 +5,15 @@ import { Text } from 'react-native';
 import EditableText from '../Forms/EditableText'
 import moment from 'moment';
 import JCComponent from '../JCComponent/JCComponent';
+import { useRoute, useNavigation } from '@react-navigation/native';
 interface Props {
     groupData: any
     courseData: any
-    navigation: any
+    navigation?: any
+    route?: any
     onChangeWeek?(week)
 }
-class CourseHeader extends JCComponent<Props> {
+class CourseHeaderImpl extends JCComponent<Props> {
 
     constructor(props: Props) {
         super(props);
@@ -44,4 +46,10 @@ class CourseHeader extends JCComponent<Props> {
         )
     }
 }
-export default CourseHeader
+
+export default function CourseHeader(props: Props) {
+    const route = useRoute();
+    const navigation = useNavigation()
+    return <CourseHeaderImpl {...props} navigation={navigation} route={route} />;
+}
+

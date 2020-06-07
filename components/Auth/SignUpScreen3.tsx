@@ -26,7 +26,7 @@ export default class SignUpScreen3 extends JCComponent<Props>{
       <View style={this.styles.style.signUpScreen1PaymentBody}>
         <SignUpSidebar position="4"></SignUpSidebar>
         <View style={this.styles.style.signUpProfile}>
-          <MyProfile navigation={this.props.navigation} finalizeProfile={() => { this.onFinalizeProfile() }} />
+          <MyProfile finalizeProfile={() => { this.onFinalizeProfile() }} />
         </View>
 
       </View>
