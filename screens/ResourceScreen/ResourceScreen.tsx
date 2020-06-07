@@ -12,8 +12,8 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import JCComponent from '../../components/JCComponent/JCComponent';
 
 interface Props {
-  navigation: any
-  route: any
+  navigation?: any
+  route?: any
 }
 interface State {
   showMap: boolean
@@ -22,7 +22,7 @@ interface State {
 
 
 
-class ResourceScreen extends JCComponent<Props, State>{
+class ResourceScreenImpl extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
 
@@ -51,8 +51,8 @@ class ResourceScreen extends JCComponent<Props, State>{
   }
 }
 
-export default function (props: Props) {
+export default function ResourceScreen(props: Props) {
   const route = useRoute();
   const navigation = useNavigation()
-  return <ResourceScreen {...props} navigation={navigation} route={route} />;
+  return <ResourceScreenImpl {...props} navigation={navigation} route={route} />;
 }

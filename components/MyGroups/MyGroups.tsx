@@ -40,8 +40,8 @@ interface State {
   showCreateButton: boolean
   currentUser: string
   nextToken: string
-  canLeave: []
-  isOwner: []
+  canLeave: any
+  isOwner: any
 }
 
 export default class MyGroups extends JCComponent<Props, State> {

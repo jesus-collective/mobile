@@ -8,7 +8,7 @@ interface State {
 }
 
 interface Props {
-    error: Error
+    //  error: Error
 }
 
 export default class ErrorBoundary extends JCComponent<Props, State>  {

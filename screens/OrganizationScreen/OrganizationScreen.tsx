@@ -81,7 +81,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
   setInitialData(props) {
     if (props.route.params.create === "true" || props.route.params.create === true)
       Auth.currentAuthenticatedUser().then((user: any) => {
-        var z: CreateGroupInput = {
+        const z: CreateGroupInput = {
           id: "organization-" + Date.now(),
           owner: user.username,
           type: "organization",
@@ -94,12 +94,12 @@ export default class GroupScreen extends JCComponent<Props, State>{
         this.setState({ data: z })
       })
     else {
-      var getGroup: any = API.graphql({
+      const getGroup: any = API.graphql({
         query: queries.getGroup,
         variables: { id: props.route.params.id },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
-      var processResults = (json) => {
+      const processResults = (json) => {
         this.setState({ data: json.data.getGroup })
       }
       getGroup.then(processResults).catch(processResults)
@@ -109,13 +109,13 @@ export default class GroupScreen extends JCComponent<Props, State>{
     this.setState({ showMap: !this.state.showMap })
   }
   validate(): boolean {
-    var validation: any = Validate.Organization(this.state.data)
+    const validation: any = Validate.Organization(this.state.data)
     this.setState({ validationError: validation.validationError })
     return validation.result
   }
   createNew() {
     if (this.validate()) {
-      var createGroup: any = API.graphql({
+      const createGroup: any = API.graphql({
         query: mutations.createGroup,
         variables: { input: this.state.data },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -143,7 +143,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
   }
   save() {
     if (this.validate()) {
-      var updateGroup: any = API.graphql({
+      const updateGroup: any = API.graphql({
         query: mutations.updateGroup,
         variables: { input: this.clean(this.state.data) },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -170,7 +170,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
       // Attribute values must be strings
       attributes: { id: this.state.data.id, name: this.state.data.name }
     });
-    var createGroupMember: any = API.graphql({
+    const createGroupMember: any = API.graphql({
       query: mutations.createGroupMember,
       variables: { input: { groupID: this.state.data.id, userID: this.state.currentUser } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -184,7 +184,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
     });
   }
   delete() {
-    var deleteGroup: any = API.graphql({
+    const deleteGroup: any = API.graphql({
       query: mutations.deleteGroup,
       variables: { input: { id: this.state.data.id } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -197,7 +197,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
     });
   }
   updateValue(field: any, value: any) {
-    var temp = this.state.data
+    const temp = this.state.data
     temp[field] = value
     this.setState({ data: temp })
   }

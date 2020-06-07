@@ -271,7 +271,7 @@ export default class App extends JCComponent<Props, State>{
   private user: any
 
   async ensureUserExists() {
-    var userExists: boolean = false
+    let userExists = false
     this.user = await Auth.currentAuthenticatedUser().
       catch(() => { console.log('No currrent authenticated user') });
     if (this.user != null) {
@@ -279,7 +279,7 @@ export default class App extends JCComponent<Props, State>{
       const handleUser = async (getUser) => {
         if (getUser.data.getUser === null) {
           console.log("Trying to create")
-          var inputData = {
+          const inputData = {
             id: this.user['username'],
             given_name: attributes['given_name'],
             family_name: attributes['family_name'],
@@ -291,7 +291,7 @@ export default class App extends JCComponent<Props, State>{
 
           try {
 
-            var createUser: any = await API.graphql({
+            const createUser: any = await API.graphql({
               query: mutations.createUser,
               variables: {
                 input: inputData
@@ -312,7 +312,7 @@ export default class App extends JCComponent<Props, State>{
           console.log("User exists")
         }
       }
-      var z: any = API.graphql(
+      const z: any = API.graphql(
         graphqlOperation(queries.getUser, { id: this.user['username'] })
       )
       await z.then(handleUser).catch(handleUser)
@@ -363,7 +363,7 @@ export default class App extends JCComponent<Props, State>{
     if (this.state.userExists && this.state.hasPaidState == "Complete") {
       const handleUser = (getUser) => {
 
-        var response = Validate.Profile(getUser.data.getUser)
+        const response = Validate.Profile(getUser.data.getUser)
         console.log({ checkIfCompletedProfileResult: response.result })
         if (response.result)
           this.setState({ hasCompletedPersonalProfile: "Completed" })
