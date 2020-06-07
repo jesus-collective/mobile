@@ -46,9 +46,9 @@ export default class EditableText extends JCComponent<Props, State> {
         if (this.state.isEditable)
             return <Input data-testid={this.props["data-testid"]}
 
-                onBlur={(val) => { this.onChanged(val.target.value) }}
-                onSubmitEditing={(val) => { this.onChanged(val.target.value) }}
-                onChange={(val) => { this.setState({ value: val.target.value }) }}
+                onBlur={(val: any) => { this.onChanged(val.target.value) }}
+                onSubmitEditing={(val: any) => { this.onChanged(val.target.value) }}
+                onChange={(val: any) => { this.setState({ value: val.target.value }) }}
 
 
 
