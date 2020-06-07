@@ -16,8 +16,6 @@ import Validate from '../../components/Validate/Validate'
 import JCComponent from '../../components/JCComponent/JCComponent';
 
 
-//import { createBrowserApp } from '@react-navigation/web';
-import { Platform } from "react-native";
 import moment from "moment";
 import { NavigationContainer } from "@react-navigation/native"
 import { Linking } from "expo";

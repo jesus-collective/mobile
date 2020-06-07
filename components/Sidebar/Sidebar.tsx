@@ -28,7 +28,7 @@ const routes = [
 
 ];
 interface Props {
-  route: any
+  route?: any
   navigation: any
 }
 class SideBar extends JCComponent<Props> {
