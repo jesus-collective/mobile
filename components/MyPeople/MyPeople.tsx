@@ -112,16 +112,16 @@ export default class MyPeople extends JCComponent<Props, State> {
                 if (item.id !== this.state.currentUser) {
                   return (
                     <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.id) }}>
-                      <Card style={this.styles.dashboardConversationCard}>
+                      <Card style={this.styles.style.dashboardConversationCard}>
                         <CardItem>
                           <Left>
                             <ProfileImage user={item} size='small'>
                             </ProfileImage>
 
                             <Body>
-                              <Text style={this.styles.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
-                              <Text style={this.styles.fontConnectWithRole}>{item.currentRole}</Text>
-                              <Button bordered style={this.styles.connectWithSliderButton} onPress={() => { this.openConversation(item.id, item.given_name + " " + item.family_name) }}><Text style={this.styles.fontStartConversation}>Start Conversation</Text></Button>
+                              <Text style={this.styles.style.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
+                              <Text style={this.styles.style.fontConnectWithRole}>{item.currentRole}</Text>
+                              <Button bordered style={this.styles.style.connectWithSliderButton} onPress={() => { this.openConversation(item.id, item.given_name + " " + item.family_name) }}><Text style={this.styles.style.fontStartConversation}>Start Conversation</Text></Button>
                             </Body>
                           </Left>
                         </CardItem>
