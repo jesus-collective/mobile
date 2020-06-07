@@ -200,7 +200,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     })
   }
 
-  convertProfileToMapData(): [] {
+  convertProfileToMapData(): any {
     return [{
       latitude: 30.01,
       longitude: 40.02,
