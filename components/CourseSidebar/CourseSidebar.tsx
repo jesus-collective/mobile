@@ -1,19 +1,20 @@
 import { Container, Button } from 'native-base';
 
-import { DrawerActions } from '@react-navigation/native';
+import { DrawerActions, useNavigation, useRoute } from '@react-navigation/native';
 
 import React from 'react';
 import { Image, Text } from 'react-native';
-import styles from './style'
 import AnimatedProgressWheel from 'react-native-progress-wheel';
+import JCComponent from '../JCComponent/JCComponent';
 
 interface Props {
-    navigation: any,
+    navigation?: any,
     courseId: any
+    route?: any
     //  title:string,
     //  onMapChange?():any
 }
-class CourseSidebar extends React.Component<Props> {
+class CourseSidebarImpl extends JCComponent<Props> {
 
     constructor(props: Props) {
         super(props);
@@ -45,13 +46,13 @@ class CourseSidebar extends React.Component<Props> {
                 <Button style={{ marginBottom: 40 }}
                     transparent
                     onPress={this.openHome}>
-                    <Image style={styles.logo}
+                    <Image style={this.styles.style.logo}
                         source={require('../../assets/header/icon.png')}
                     /></Button>
-                <Button transparent onPress={this.openCourseHome}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/home.svg')} /><Text style={styles.courseSidebarFontRegular}>Home</Text></Button>
-                <Button transparent onPress={this.openCourseOverview}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/home.svg')} /><Text style={styles.courseSidebarFontRegular}>Overview</Text></Button>
-                <Button transparent onPress={this.openCourseDetails}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/education.svg')} /><Text style={styles.courseSidebarFontRegular}>Course</Text></Button>
-                <Button transparent onPress={this.openCourseCoaching}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/calendar.svg')} /><Text style={styles.courseSidebarFontRegular}>Coaching</Text></Button>
+                <Button transparent onPress={this.openCourseHome}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/home.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Home</Text></Button>
+                <Button transparent onPress={this.openCourseOverview}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/home.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Overview</Text></Button>
+                <Button transparent onPress={this.openCourseDetails}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/education.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Course</Text></Button>
+                <Button transparent onPress={this.openCourseCoaching}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/calendar.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Coaching</Text></Button>
                 <Container style={{ backgroundColor: "#00000000" }}>
                     <AnimatedProgressWheel
                         size={120}
@@ -78,4 +79,9 @@ class CourseSidebar extends React.Component<Props> {
         )
     }
 }
-export default CourseSidebar
+export default function CourseSidebar(props: Props) {
+    const route = useRoute();
+    const navigation = useNavigation()
+    return <CourseSidebarImpl {...props} navigation={navigation} route={route} />;
+}
+

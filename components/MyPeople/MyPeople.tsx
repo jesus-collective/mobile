@@ -1,7 +1,7 @@
 import { StyleProvider, Content, Body, Left, Card, CardItem, Container, Button } from 'native-base';
 import { Text } from 'react-native';
 import * as React from 'react';
-import styles from '../style'
+
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import { TouchableOpacity } from 'react-native'
@@ -10,6 +10,7 @@ import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import { API, Auth } from 'aws-amplify';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { constants } from '../../src/constants'
+import JCComponent from '../JCComponent/JCComponent';
 
 interface Props {
   navigation: any
@@ -27,7 +28,7 @@ interface State {
   currentUser: string
   //showCreateButton: Boolean
 }
-export default class MyPeople extends React.Component<Props, State> {
+export default class MyPeople extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -40,7 +41,7 @@ export default class MyPeople extends React.Component<Props, State> {
       data: [],
       currentUser: null
       // showCreateButton: false
-    }    
+    }
     const user = Auth.currentAuthenticatedUser();
     user.then((user: any) => {
       this.setState({ currentUser: user.username }, () => this.setInitialData())
@@ -104,9 +105,9 @@ export default class MyPeople extends React.Component<Props, State> {
       return (
         <StyleProvider style={getTheme(material)}>
 
-          <Container style={{ width: "100%", flexDirection: 'column', alignItems: 'flex-start', minHeight: 675, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)" }} >
-            <Button style={styles.connectWithTopSectionButton} onPress={() => { this.showProfiles() }} transparent><Text style={styles.fontConnectWith}>People you may connect with</Text></Button>
-            <Content style={styles.rightCardWidth}>
+          <Container style={this.styles.style.peopleContainer} >
+            <Button style={this.styles.style.connectWithTopSectionButton} onPress={() => { this.showProfiles() }} transparent><Text style={this.styles.style.fontConnectWith}>People you may connect with</Text></Button>
+            <Content style={this.styles.style.rightCardWidth}>
               {this.state.data.map((item: any) => {
                 if (item.id !== this.state.currentUser) {
                   return (

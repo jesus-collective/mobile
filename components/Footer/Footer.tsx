@@ -4,8 +4,9 @@ import { DrawerActions } from '@react-navigation/native';
 
 import React from 'react';
 import { Image, Text, Linking } from 'react-native';
-import styles from '../Footer/style';
+import footerStyles from '../Footer/style';
 import { constants } from '../../src/constants'
+import JCComponent from '../JCComponent/JCComponent';
 
 interface Props {
   navigation: any
@@ -15,7 +16,7 @@ interface Props {
 
 
 
-export default class FooterJC extends React.Component<Props> {
+export default class FooterJC extends JCComponent<Props> {
 
   constructor(props: Props) {
     super(props);
@@ -24,7 +25,7 @@ export default class FooterJC extends React.Component<Props> {
     {
       name: "About Us",
       submenu: [
-        { name: "Who We Are", linkto: "https://jesuscollective.com"},
+        { name: "Who We Are", linkto: "https://jesuscollective.com" },
         { name: "Our Mission", linkto: "https://jesuscollective.com/discover" },
         { name: "Team", linkto: "https://jesuscollective.com/team" }
       ]
@@ -32,7 +33,7 @@ export default class FooterJC extends React.Component<Props> {
     constants["SETTING_ISVISIBLE_event"] ? {
       name: "Events",
       submenu: [
-        { name: "My Events", linkto: "EventsScreen"},
+        { name: "My Events", linkto: "EventsScreen" },
         { name: "Recommended", linkto: null }
 
       ]
@@ -59,7 +60,7 @@ export default class FooterJC extends React.Component<Props> {
       name: "Contact Us",
       submenu: [
         { name: "Get Involved", linkto: null },
-        { name: "Connect With Us", linkto: "mailto:connect@jesuscollective.com"}
+        { name: "Connect With Us", linkto: "mailto:connect@jesuscollective.com" }
 
       ]
     },
@@ -86,29 +87,29 @@ export default class FooterJC extends React.Component<Props> {
     //const { navigate } = this.props.navigation;
     return (
 
-      <Container style={styles.footerContainer}>
-        <Body style={styles.footerBodyContainer}>
-          <Body style={styles.footerInnerBodyContainer}>
+      <Container style={footerStyles.footerContainer}>
+        <Body style={footerStyles.footerBodyContainer}>
+          <Body style={footerStyles.footerInnerBodyContainer}>
             <Button
               transparent
               onPress={this.openHome}>
-              <Image style={styles.logo}
+              <Image style={footerStyles.logo}
                 source={require('./icon.png')}
               /></Button>
-            <Text style={styles.copywriteText}>&copy; {new Date().getFullYear()} Jesus Collective. All Rights Reserved.</Text>
+            <Text style={footerStyles.copywriteText}>&copy; {new Date().getFullYear()} Jesus Collective. All Rights Reserved.</Text>
           </Body>
           {this.menu.map((item) => {
             if (item != null)
               return (
                 <Body key={item.name} style={{ display: "flex", flexDirection: 'column', alignSelf: "flex-start", alignItems: "flex-start", justifyContent: 'flex-start' }}>
-                  <Text style={styles.footerCenterMenuButtonsTextWhite}>{item.name}</Text>
+                  <Text style={footerStyles.footerCenterMenuButtonsTextWhite}>{item.name}</Text>
                   {item.submenu.map((item2) => {
                     if (item2.linkto != null)
                       return (<Button key={item2.name}
                         transparent
                         onPress={() => this.open(item2)}
-                        style={styles.footerCenterMenuButtons}>
-                        <Text style={styles.footerCenterMenuButtonsText}>{item2.name}</Text>
+                        style={footerStyles.footerCenterMenuButtons}>
+                        <Text style={footerStyles.footerCenterMenuButtonsText}>{item2.name}</Text>
                       </Button>)
                   })}
                 </Body>

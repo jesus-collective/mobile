@@ -2,10 +2,9 @@
 import { Container, Content } from 'native-base';
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
-import MyConversations from '../../components/MyConversations/MyConversations';
 import MyGroups from '../../components/MyGroups/MyGroups';
-import MyPeople from '../../components/MyPeople/MyPeople';
-import styles from '../../components/style'
+
+import JCComponent from '../../components/JCComponent/JCComponent';
 
 interface Props {
   navigation: any
@@ -16,7 +15,7 @@ interface State {
 }
 
 
-export default class HomeScreen extends React.Component<Props, State>{
+export default class HomeScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -43,12 +42,11 @@ export default class HomeScreen extends React.Component<Props, State>{
           <MyMap type={"no-filters"} size={'50%'} navigation={this.props.navigation} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
           <Container style={styles.resourcesScreenMainContainer}>
             <Container style={styles.resourcesScreenLeftContainer}>
-
               <MyGroups showMore={true} type="resource" wrap={true} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
 
             </Container>
             {/*
-            <Container style={styles.resourcesScreenRightContainer}>
+            <Container style={this.styles.style.resourcesScreenRightContainer}>
               <MyPeople wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyPeople>
               <MyConversations navigation={this.props.navigation}> </MyConversations>
               <Container ></Container>

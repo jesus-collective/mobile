@@ -4,6 +4,7 @@ import * as React from 'react';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import JCComponent from '../JCComponent/JCComponent';
 
 interface Props {
     mapVisible: any,
@@ -14,7 +15,7 @@ interface State {
     mapVisible: any
 }
 
-export default class MapSelector extends React.Component<Props, State> {
+export default class MapSelector extends JCComponent<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -27,7 +28,7 @@ export default class MapSelector extends React.Component<Props, State> {
         return (
 
             this.props.mapVisible ?
-                <View style={{ position: "fixed", left: 0, top: 0, width: "100%", height: "100%", zIndex: 100, backgroundColor: "#33333366" }}>
+                <View style={this.styles.style.mapSelectorView}>
                     <View style={{ backgroundColor: "#ffffff", borderRadius: 10, padding: 10, margin: 10, left: "10%", top: "10%", width: "80%", height: "80%" }}>
                         <Text>Drag the marker to your location (this will be public)</Text>
                         <JCButton buttonType={ButtonTypes.OutlineBold} onPress={() => this.props.onClose(this.state.mapCoord)}>Done</JCButton>

@@ -2,6 +2,7 @@
 import { Button } from 'react-native';
 import Amplify from 'aws-amplify';
 import awsConfig from '../../src/aws-exports';
+import JCComponent from '../../components/JCComponent/JCComponent';
 
 Amplify.configure(awsConfig);
 
@@ -10,10 +11,7 @@ import { Authenticator } from 'aws-amplify-react-native';
 interface Props {
   navigation: any
 }
-interface State {
-
-}
-export default class TeachingScreen extends React.Component<Props, State>{
+export default class TeachingScreen extends JCComponent<Props>{
   static navigationOptions = {
     title: 'Teaching',
   };

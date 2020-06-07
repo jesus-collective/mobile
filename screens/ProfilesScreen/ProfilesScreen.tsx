@@ -3,7 +3,8 @@ import { Container, Content } from 'native-base';
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
 import MyGroups from '../../components/MyGroups/MyGroups';
-import styles from '../../components/style';
+;
+import JCComponent from '../../components/JCComponent/JCComponent';
 
 interface Props {
   navigation: any
@@ -14,7 +15,7 @@ interface State {
 }
 
 
-export default class HomeScreen extends React.Component<Props, State>{
+export default class HomeScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -43,7 +44,7 @@ export default class HomeScreen extends React.Component<Props, State>{
               <MyGroups showMore={true} type="profile" wrap={true} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
             </Container>
             {/*
-            <Container style={styles.profilesScreensRightContainer}>
+            <Container style={this.styles.style.profilesScreensRightContainer}>
               <MyConversations navigation={this.props.navigation}> </MyConversations>
               <Container ></Container>
             </Container>

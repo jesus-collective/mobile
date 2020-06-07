@@ -5,13 +5,12 @@ Amplify.configure(awsConfig);
 
 import { Container } from 'native-base';
 import Header from '../../components/Header/Header'
+import JCComponent from '../../components/JCComponent/JCComponent';
+
 interface Props {
   navigation: any
 }
-interface State {
-
-}
-export default class SupportScreen extends React.Component<Props, State>{
+export default class SupportScreen extends JCComponent<Props>{
   render() {
     //const { navigate } = this.props.navigation;
     return (

@@ -2,6 +2,8 @@ import React from 'react';
 import { Button } from 'native-base';
 import { Text } from 'react-native'
 import styles from './JCButtonStyle'
+import JCComponent from '../JCComponent/JCComponent';
+
 export enum ButtonTypes {
     Solid,
     SolidProfile,
@@ -25,7 +27,7 @@ export interface Props {
     buttonType: ButtonTypes
     "data-testid"?: any
 }
-class JCButton extends React.Component<Props> {
+class JCButton extends JCComponent<Props> {
     constructor(props: Props) {
         super(props);
 

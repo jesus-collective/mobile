@@ -1,6 +1,8 @@
 import { ZoomMtg } from '@zoomus/websdk';
 import React from 'react';
 import "./Zoom.css"
+import JCComponent from '../JCComponent/JCComponent';
+
 //console.log('checkSystemRequirements');
 //console.log(JSON.stringify(ZoomMtg.checkSystemRequirements()));
 
@@ -18,7 +20,7 @@ interface State {
 
 }
 
-export default class GroupScreen extends React.Component<Props, State>{
+export default class GroupScreen extends JCComponent<Props, State>{
     API_KEY = 'C8Z1xof_SaC2MX5HyuWeLA';
     API_SECRET = 'GKi0Z2aYgF5Alo7gOUrnp2rlnxuSUpLPowIE';
     meetConfig = {

@@ -21,13 +21,14 @@ import ErrorBoundary from '../ErrorBoundry'
 import { CreateGroupInput } from 'src/API';
 import Validate from '../Validate/Validate';
 import { useRoute, useNavigation } from '@react-navigation/native';
+import JCComponent from '../JCComponent/JCComponent';
 Amplify.configure(awsconfig);
 
 
 interface Props {
-    navigation: any
+    navigation?: any
     groupId: any
-    route: any
+    route?: any
     // isEditable: boolean
 }
 interface State {
@@ -49,7 +50,7 @@ interface State {
     currentUserProfile: any
     memberIDs: string[]
 }
-class ResourceViewer extends React.Component<Props, State> {
+class ResourceViewerImpl extends JCComponent<Props, State> {
     static Provider = ResourceContext.Provider;
     constructor(props: Props) {
         super(props);
@@ -751,7 +752,7 @@ class ResourceViewer extends React.Component<Props, State> {
 
         return (this.state.resourceData != null ?
             <ErrorBoundary>
-                <ResourceViewer.Provider value={{
+                <ResourceViewerImpl.Provider value={{
                     state: {
                         ...this.state
                     }, actions: {
@@ -794,15 +795,15 @@ class ResourceViewer extends React.Component<Props, State> {
                             </Content>
                         </ErrorBoundary>
                     </Container>
-                </ResourceViewer.Provider>
+                </ResourceViewerImpl.Provider>
             </ErrorBoundary>
             : null)
 
     }
 }
 
-export default function (props: Props) {
+export default function ResourceViewer(props: Props) {
     const route = useRoute();
     const navigation = useNavigation()
-    return <ResourceViewer {...props} navigation={navigation} route={route} />;
+    return <ResourceViewerImpl {...props} navigation={navigation} route={route} />;
 }

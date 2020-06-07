@@ -6,8 +6,9 @@ import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
-import { API, graphqlOperation, Auth } from 'aws-amplify';
+import { API } from 'aws-amplify';
 import * as queries from '../../src/graphql/queries';
+import JCComponent from '../../components/JCComponent/JCComponent';
 
 
 interface Props {
@@ -20,7 +21,7 @@ interface State {
 
 
 
-export default class GroupScreen extends React.Component<Props, State>{
+export default class GroupScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
     this.state = {

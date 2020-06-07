@@ -5,7 +5,7 @@ import { Text, TouchableOpacity } from 'react-native'
 
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
-import styles from '../../components/style'
+
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import EditableText from '../../components/Forms/EditableText'
@@ -17,6 +17,7 @@ import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
+import JCComponent from '../../components/JCComponent/JCComponent';
 
 const MessageBoard = lazy(() => import('../../components/MessageBoard/MessageBoard'));
 
@@ -45,7 +46,7 @@ interface State {
 
 
 
-export default class GroupScreen extends React.Component<Props, State>{
+export default class GroupScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
 
@@ -387,8 +388,8 @@ export default class GroupScreen extends React.Component<Props, State>{
                   </Container>
 
                   <View>
-                    <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Group Name" multiline={false} textStyle={styles.groupNameInput} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
-                    <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Group Description" multiline={true} textStyle={styles.groupDescriptionInput} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
+                    <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Group Name" multiline={false} textStyle={this.styles.style.groupNameInput} inputStyle={this.styles.style.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
+                    <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Group Description" multiline={true} textStyle={this.styles.style.groupDescriptionInput} inputStyle={this.styles.style.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
                   </View>
 
                   <Text style={{ fontFamily: "Graphik-Regular-App", fontSize: 16, lineHeight: 23, color: "#333333", paddingBottom: 12 }}>Organizer</Text>
@@ -396,7 +397,7 @@ export default class GroupScreen extends React.Component<Props, State>{
                     <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
                   </TouchableOpacity>
                   <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", paddingTop: 48, paddingBottom: 12 }}>Members ({this.state.memberIDs.length})</Text>
-                  <View style={styles.groupAttendeesPictures}>
+                  <View style={this.styles.style.groupAttendeesPictures}>
                     {this.state.memberIDs.length == 0 ?
                       <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", marginBottom: 30 }}>No Members Yet</Text> :
                       this.state.memberIDs.map((id: any, index: any) => {
@@ -410,7 +411,7 @@ export default class GroupScreen extends React.Component<Props, State>{
 
                   {this.renderButtons()}
                 </Container>
-                <Container style={styles.detailScreenRightCard}>
+                <Container style={this.styles.style.detailScreenRightCard}>
                   <MessageBoard groupId={this.state.data.id}></MessageBoard>
                 </Container>
               </Container>

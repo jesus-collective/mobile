@@ -1,15 +1,15 @@
-import { Icon, Button, View, Input, Form, Item, Label, Content, Container } from 'native-base';
-import { Text, Image, Modal } from 'react-native'
+import { View, Container } from 'native-base';
+import { Text } from 'react-native'
 import * as React from 'react';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
-import { GoogleApiWrapper } from 'google-maps-react';
 //import {ProviderProps} from 'google-maps-react';
 //import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Marker } from 'google-maps-react';
-import { Map, InfoWindow } from 'google-maps-react';
 import styles from '../../components/style'
 import mapStyle from './mapstyle.json';
+import { Map } from 'google-maps-react';
+import JCComponent from '../JCComponent/JCComponent';
 
 interface Props {
     mapVisible: any,
@@ -22,7 +22,7 @@ interface State {
     mapVisible: any
 }
 
-class MapSelector extends React.Component<Props, State> {
+class MapSelector extends JCComponent<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -41,10 +41,10 @@ class MapSelector extends React.Component<Props, State> {
         return (
 
             this.props.mapVisible ?
-                <View style={styles.myProfileMapSelectorContainer}>
-                    <View style={styles.myProfileMapSelectorInnerContainer}>
-                        <View style={styles.myProfileMapSelectorInnerCopyContainer}>
-                            <Text style={styles.mapSelectorText}>Select a location (this will be public)</Text>
+                <View style={this.styles.style.myProfileMapSelectorContainer}>
+                    <View style={this.styles.style.myProfileMapSelectorInnerContainer}>
+                        <View style={this.styles.style.myProfileMapSelectorInnerCopyContainer}>
+                            <Text style={this.styles.style.mapSelectorText}>Select a location (this will be public)</Text>
                             <JCButton data-testid="mapselector-save" buttonType={ButtonTypes.SolidMap} onPress={() => this.props.onClose(this.state.mapCoord)}>Done</JCButton>
                         </View>
                         <Container style={styles.mapView}>
@@ -55,7 +55,7 @@ class MapSelector extends React.Component<Props, State> {
                                 style={styles.map}
                                 streetViewControl={false}
                                 fullscreenControl={false}
-                            >
+
                                 <Marker
                                     title="Location"
                                     id={1}

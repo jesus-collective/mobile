@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect } from "react";
+import React, { Suspense, lazy } from "react";
 import Amplify, { Analytics } from 'aws-amplify'
 import { API, graphqlOperation } from 'aws-amplify';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -6,18 +6,16 @@ import MomentUtils from '@date-io/moment';
 import { View } from 'react-native'
 import { Auth } from 'aws-amplify';
 import { Text } from 'react-native'
-import GRAPHQL_AUTH_MODE, { Greetings } from 'aws-amplify-react-native'
+import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import awsconfig from '../../src/aws-exports';
-import { Dimensions } from 'react-native'
 import Validate from '../../components/Validate/Validate'
+import JCComponent from '../../components/JCComponent/JCComponent';
 
 
-//import { createBrowserApp } from '@react-navigation/web';
-import { Platform } from "react-native";
 import moment from "moment";
 import { NavigationContainer } from "@react-navigation/native"
 import { Linking } from "expo";
@@ -227,7 +225,6 @@ async function trackUserId() {
 }
 
 
-const isWeb = Platform.OS === 'web';
 
 
 
@@ -246,7 +243,7 @@ interface State {
 }
 
 
-export default class App extends React.Component<Props, State>{
+export default class App extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -260,6 +257,7 @@ export default class App extends React.Component<Props, State>{
   }
   componentDidMount() {
     this.performStartup()
+
   }
   async performStartup() {
     if (this.state.authState == 'signedIn') {
@@ -271,15 +269,15 @@ export default class App extends React.Component<Props, State>{
   private user: any
 
   async ensureUserExists() {
-    var userExists: boolean = false
+    let userExists = false
     this.user = await Auth.currentAuthenticatedUser().
-      catch((e) => { console.log('No currrent authenticated user') });
+      catch(() => { console.log('No currrent authenticated user') });
     if (this.user != null) {
       const { attributes } = this.user;
       const handleUser = async (getUser) => {
         if (getUser.data.getUser === null) {
           console.log("Trying to create")
-          var inputData = {
+          const inputData = {
             id: this.user['username'],
             given_name: attributes['given_name'],
             family_name: attributes['family_name'],
@@ -291,7 +289,7 @@ export default class App extends React.Component<Props, State>{
 
           try {
 
-            var createUser: any = await API.graphql({
+            const createUser: any = await API.graphql({
               query: mutations.createUser,
               variables: {
                 input: inputData
@@ -312,7 +310,7 @@ export default class App extends React.Component<Props, State>{
           console.log("User exists")
         }
       }
-      var z: any = API.graphql(
+      const z: any = API.graphql(
         graphqlOperation(queries.getUser, { id: this.user['username'] })
       )
       await z.then(handleUser).catch(handleUser)
@@ -363,7 +361,7 @@ export default class App extends React.Component<Props, State>{
     if (this.state.userExists && this.state.hasPaidState == "Complete") {
       const handleUser = (getUser) => {
 
-        var response = Validate.Profile(getUser.data.getUser)
+        const response = Validate.Profile(getUser.data.getUser)
         console.log({ checkIfCompletedProfileResult: response.result })
         if (response.result)
           this.setState({ hasCompletedPersonalProfile: "Completed" })
@@ -380,6 +378,7 @@ export default class App extends React.Component<Props, State>{
   renderFallback() {
     return <Text>loading...</Text>
   }
+
   render() {
     if (this.state.authState == 'signedIn') {
       console.log("User has signed in")

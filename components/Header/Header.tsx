@@ -8,6 +8,7 @@ import { Image, Text, Dimensions } from 'react-native';
 import { Auth } from 'aws-amplify';
 import { constants } from '../../src/constants'
 import HeaderStyles from '../Header/style';
+import JCComponent from '../JCComponent/JCComponent';
 
 interface Props {
   navigation: any
@@ -15,13 +16,15 @@ interface Props {
   onMapChange?(): any
 }
 
-export default class HeaderJC extends React.Component<Props> {
+export default class HeaderJC extends JCComponent<Props> {
 
   constructor(props: Props) {
     super(props);
   }
+  headerStyles = HeaderStyles.getInstance();
+
   updateStyles = (): void => {
-    this.styles.update()
+    this.headerStyles.update()
     this.forceUpdate();
   };
   componentDidMount(): void {
@@ -31,7 +34,7 @@ export default class HeaderJC extends React.Component<Props> {
     // Important to stop updating state after unmount
     Dimensions.removeEventListener("change", this.updateStyles);
   }
-  styles = new HeaderStyles()
+
   openDrawer = (): void => {
     this.props.navigation.dispatch(DrawerActions.openDrawer());
   }
@@ -65,12 +68,12 @@ export default class HeaderJC extends React.Component<Props> {
     //const { navigate } = this.props.navigation;
     return (
 
-      <Header style={this.styles.style.container}>
+      <Header style={this.headerStyles.style.container}>
         <Left>
-          <Button style={this.styles.style.leftButtons}
+          <Button style={this.headerStyles.style.leftButtons}
             transparent
             onPress={this.openDrawer}>
-            <Ionicons name="md-menu" style={this.styles.style.icon} />
+            <Ionicons name="md-menu" style={this.headerStyles.style.icon} />
           </Button>
         </Left>
         <Body style={{
@@ -83,7 +86,7 @@ export default class HeaderJC extends React.Component<Props> {
             transparent
             data-testid="header-logo"
             onPress={this.openHome}>
-            <Image style={this.styles.style.logo}
+            <Image style={this.headerStyles.style.logo}
               source={require('../../assets/header/icon.png')}
             /></Button>
           {
@@ -92,8 +95,8 @@ export default class HeaderJC extends React.Component<Props> {
                 transparent
                 data-testId="header-events"
                 onPress={this.openEvents}
-                style={this.styles.style.centerMenuButtons}>
-                <Text style={this.styles.style.centerMenuButtonsText}>Events</Text>
+                style={this.headerStyles.style.centerMenuButtons}>
+                <Text style={this.headerStyles.style.centerMenuButtonsText}>Events</Text>
               </Button>
               : null
           }
@@ -103,8 +106,8 @@ export default class HeaderJC extends React.Component<Props> {
                 transparent
                 data-testid="header-groups"
                 onPress={this.openGroups}
-                style={this.styles.style.centerMenuButtons}>
-                <Text style={this.styles.style.centerMenuButtonsText}>Groups</Text>
+                style={this.headerStyles.style.centerMenuButtons}>
+                <Text style={this.headerStyles.style.centerMenuButtonsText}>Groups</Text>
               </Button> : null
           }
           {
@@ -113,8 +116,8 @@ export default class HeaderJC extends React.Component<Props> {
                 transparent
                 data-testid="header-resources"
                 onPress={this.openResources}
-                style={this.styles.style.centerMenuButtons}>
-                <Text style={this.styles.style.centerMenuButtonsText}>Resources</Text>
+                style={this.headerStyles.style.centerMenuButtons}>
+                <Text style={this.headerStyles.style.centerMenuButtonsText}>Resources</Text>
               </Button> : null
           }
           {
@@ -123,8 +126,8 @@ export default class HeaderJC extends React.Component<Props> {
                 transparent
                 data-testid="header-courses"
                 onPress={this.openCourses}
-                style={this.styles.style.centerMenuButtons}>
-                <Text style={this.styles.style.centerMenuButtonsText}>Courses</Text>
+                style={this.headerStyles.style.centerMenuButtons}>
+                <Text style={this.headerStyles.style.centerMenuButtonsText}>Courses</Text>
               </Button> : null
           }
 
@@ -137,7 +140,7 @@ export default class HeaderJC extends React.Component<Props> {
                   transparent
                   data-testid="header-map"
                   onPress={this.showMap}>
-                  <Ionicons name="md-map" style={this.styles.style.icon} />
+                  <Ionicons name="md-map" style={this.headerStyles.style.icon} />
                 </Button> : null
               : null
           }
@@ -147,7 +150,7 @@ export default class HeaderJC extends React.Component<Props> {
                 transparent
                 data-testid="header-search"
                 onPress={this.openSearch}>
-                <Ionicons name="md-search" style={this.styles.style.icon} />
+                <Ionicons name="md-search" style={this.headerStyles.style.icon} />
               </Button> : null
           }
 
@@ -155,7 +158,7 @@ export default class HeaderJC extends React.Component<Props> {
             transparent
             data-testid="header-profile"
             onPress={this.openProfile}>
-            <Ionicons name="md-person" style={this.styles.style.icon} />
+            <Ionicons name="md-person" style={this.headerStyles.style.icon} />
           </Button>
 
         </Right>
