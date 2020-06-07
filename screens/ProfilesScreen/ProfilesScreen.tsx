@@ -27,7 +27,7 @@ export default class HomeScreen extends React.Component<Props, State>{
   }
   mergeMapData(mapData) {
     //    console.log(mapData)
-    var data = this.state.mapData.concat(mapData)
+    const data = this.state.mapData.concat(mapData)
     this.setState({ mapData: data })
   }
   render() {
@@ -36,8 +36,8 @@ export default class HomeScreen extends React.Component<Props, State>{
 
       <Container data-testid="profiles">
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-        <MyMap navigation={this.props.navigation} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
         <Content>
+          <MyMap type={"no-filters"} navigation={this.props.navigation} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
           <Container style={styles.profilesScreenMainContainer}>
             <Container style={styles.profilesScreenLeftContainer}>
               <MyGroups showMore={true} type="profile" wrap={true} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>

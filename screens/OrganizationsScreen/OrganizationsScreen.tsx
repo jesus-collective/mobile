@@ -37,8 +37,9 @@ export default class HomeScreen extends React.Component<Props, State>{
 
       <Container data-testid="organizations">
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-        <MyMap navigation={this.props.navigation} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
         <Content>
+          <MyMap type={'no-filter'} size={'50%'} navigation={this.props.navigation} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
+
           <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
             <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
               <MyGroups showMore={true} type="organization" wrap={true} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>

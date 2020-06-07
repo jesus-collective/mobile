@@ -112,8 +112,8 @@ export default class ConversationScreen extends React.Component<Props, State>{
 
       <Container >
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-        <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
         <Content>
+          <MyMap type={'no-filters'} navigation={this.props.navigation} visible={this.state.showMap} mapData={[]}></MyMap>
           <Container style={styles.conversationScreenMainContainer}>
             <Container style={styles.detailScreenLeftCard}>
               <Text style={styles.eventNameInput}>Direct Messages</Text>

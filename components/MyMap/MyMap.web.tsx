@@ -8,7 +8,7 @@ import { TouchableOpacity, Animated, TouchableWithoutFeedback } from 'react-nati
 
 import styles from '../style'
 
-import { Marker, Circle} from 'google-maps-react';
+import { Marker } from 'google-maps-react';
 import { Map, InfoWindow } from 'google-maps-react';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 
@@ -16,15 +16,16 @@ import { Text } from 'react-native'
 import ErrorBoundary from '../ErrorBoundry';
 import moment from 'moment';
 
-const mapStyle = require('./mapstyle.json')
+import mapStyle from './mapstyle.json';
 
 interface Props {
   navigation: any
   visible: boolean
   google: any
   mapData: any
-  showFilters: boolean
+  type: string
   initCenter?: any
+  size?: string
 }
 interface State {
   selectedPlace: any
@@ -208,7 +209,7 @@ class MyMap extends React.Component<Props, State> {
   }
   render() {
     //console.log(this.props.mapData)
-    if (this.props.visible && this.props.showFilters)
+    if (this.props.visible && this.props.type === "filters") {
       return (
         <ErrorBoundary>
 
@@ -381,8 +382,9 @@ class MyMap extends React.Component<Props, State> {
 
         </ErrorBoundary>
       )
-
-    else if (this.props.visible && !this.props.showFilters) {
+    }
+    
+    else if (this.props.visible && this.props.type === "profile") {
       return (
         <ErrorBoundary>
 
@@ -414,6 +416,60 @@ class MyMap extends React.Component<Props, State> {
       )
     }
 
+    else if (this.props.type === "no-filters") {
+      //the visible prop controls height because the map must render to set the correct center position 
+      return (
+        <ErrorBoundary>
+
+          <View style={{ height: this.props.visible ? this.props.size ? this.props.size : 510 : 0}}>
+
+              <Map google={window.google} zoom={6}
+                center={this.props.initCenter ? this.props.initCenter : {lat: 44, lng: -78}}
+                mapTypeControl={false}
+                onClick={this.onMapClicked}
+                onReady={(mapProps, map) => this._mapLoaded(map)}
+                style={{ position: "relative", width: "100%", height: "100%" }}
+                streetViewControl={false}
+                fullscreenControl={false}
+              >
+
+                {this.props.mapData.map((mapItem, index) => {
+
+                    return <Marker key={index} title={mapItem.name}
+                      mapItemType={mapItem.type}
+                      mapItem={mapItem}
+                      onClick={this.onMarkerClick}
+                      position={{ lat: mapItem.latitude, lng: mapItem.longitude }}
+                      icon={{
+                        url: require("../../assets/svg/map-icon-red.svg"),
+                        scaledSize: new google.maps.Size(32, 32)
+                      }}>
+                    </Marker>
+
+                  })}
+
+
+                <InfoWindow
+                  google={window.google}
+                  visible={this.state.showingInfoWindow}
+                  marker={this.state.activeMarker}>
+                  {this.state.selectedPlace != null ?
+                    this.state.selectedPlace.mapItemType == "profile" ?
+                      this.renderProfile() :
+                      this.state.selectedPlace.mapItemType == "event" ?
+                        this.renderEvent()
+                        : null
+                    : null
+                  }
+
+                </InfoWindow>
+
+              </Map>
+          </View>
+
+        </ErrorBoundary>
+      )
+    }
     else return null
   }
 }

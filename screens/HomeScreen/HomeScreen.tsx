@@ -54,7 +54,7 @@ class HomeScreen extends React.Component<Props, State>{
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
 
         <Container style={{ flexGrow: 1, overflow: "scroll" }}>
-        <MyMap showFilters={true} navigation={this.props.navigation} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
+        <MyMap type={"filters"} navigation={this.props.navigation} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
           <Container style={{ display: "block" }}>
             <Container style={styles.dashboardMainContainer}>
               <Container style={styles.dashboardLeftCard}>

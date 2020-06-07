@@ -67,7 +67,7 @@ export default class MyPeople extends React.Component<Props, State> {
   setInitialData() {
     const listUsers: any = API.graphql({
       query: queries.listUsers,
-      variables: { filter: { profileState: { eq: "Complete" }, id: { ne: this.state.currentUser } } },
+      variables: { filter: { profileState: { eq: "Complete" } } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
 
@@ -108,24 +108,28 @@ export default class MyPeople extends React.Component<Props, State> {
             <Button style={styles.connectWithTopSectionButton} onPress={() => { this.showProfiles() }} transparent><Text style={styles.fontConnectWith}>People you may connect with</Text></Button>
             <Content style={styles.rightCardWidth}>
               {this.state.data.map((item: any) => {
-                return (
-                  <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.id) }}>
-                    <Card style={styles.dashboardConversationCard}>
-                      <CardItem>
-                        <Left>
-                          <ProfileImage user={item} size='small'>
-                          </ProfileImage>
-
-                          <Body>
-                            <Text style={styles.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
-                            <Text style={styles.fontConnectWithRole}>{item.currentRole}</Text>
-                            <Button bordered style={styles.connectWithSliderButton} onPress={() => { this.openConversation(item.id, item.given_name + " " + item.family_name) }}><Text style={styles.fontStartConversation}>Start Conversation</Text></Button>
-                          </Body>
-                        </Left>
-                      </CardItem>
-                    </Card>
-                  </TouchableOpacity>
-                )
+                if (item.id !== this.state.currentUser) {
+                  return (
+                    <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.id) }}>
+                      <Card style={styles.dashboardConversationCard}>
+                        <CardItem>
+                          <Left>
+                            <ProfileImage user={item} size='small'>
+                            </ProfileImage>
+  
+                            <Body>
+                              <Text style={styles.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
+                              <Text style={styles.fontConnectWithRole}>{item.currentRole}</Text>
+                              <Button bordered style={styles.connectWithSliderButton} onPress={() => { this.openConversation(item.id, item.given_name + " " + item.family_name) }}><Text style={styles.fontStartConversation}>Start Conversation</Text></Button>
+                            </Body>
+                          </Left>
+                        </CardItem>
+                      </Card>
+                    </TouchableOpacity>
+                  )
+                } else {
+                  return null
+                }
               })}
             </Content>
 

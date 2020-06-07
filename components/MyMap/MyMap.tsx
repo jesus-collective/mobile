@@ -7,8 +7,9 @@ interface Props {
   navigation: any
   visible: boolean
   mapData: any
-  showFilters: boolean
+  type: string
   initCenter?: any
+  size?: string
 }
 export default class MyMap extends React.Component<Props> {
   constructor(props: Props) {

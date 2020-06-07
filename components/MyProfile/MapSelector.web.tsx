@@ -8,170 +8,9 @@ import { GoogleApiWrapper } from 'google-maps-react';
 
 import { Marker } from 'google-maps-react';
 import { Map, InfoWindow } from 'google-maps-react';
-import style from '../style';
 import styles from '../../components/style'
+import mapStyle from './mapstyle.json';
 
-
-const mapstyle = [
-    {
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "color": "#f5f5f5"
-            }
-        ]
-    },
-    {
-        "elementType": "labels.icon",
-        "stylers": [
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "elementType": "labels.text.fill",
-        "stylers": [
-            {
-                "color": "#616161"
-            }
-        ]
-    },
-    {
-        "elementType": "labels.text.stroke",
-        "stylers": [
-            {
-                "color": "#f5f5f5"
-            }
-        ]
-    },
-    {
-        "featureType": "administrative.land_parcel",
-        "elementType": "labels.text.fill",
-        "stylers": [
-            {
-                "color": "#bdbdbd"
-            }
-        ]
-    },
-    {
-        "featureType": "poi",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "color": "#eeeeee"
-            }
-        ]
-    },
-    {
-        "featureType": "poi",
-        "elementType": "labels.text.fill",
-        "stylers": [
-            {
-                "color": "#757575"
-            }
-        ]
-    },
-    {
-        "featureType": "poi.park",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "color": "#e5e5e5"
-            }
-        ]
-    },
-    {
-        "featureType": "poi.park",
-        "elementType": "labels.text.fill",
-        "stylers": [
-            {
-                "color": "#9e9e9e"
-            }
-        ]
-    },
-    {
-        "featureType": "road",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "color": "#ffffff"
-            }
-        ]
-    },
-    {
-        "featureType": "road.arterial",
-        "elementType": "labels.text.fill",
-        "stylers": [
-            {
-                "color": "#757575"
-            }
-        ]
-    },
-    {
-        "featureType": "road.highway",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "color": "#dadada"
-            }
-        ]
-    },
-    {
-        "featureType": "road.highway",
-        "elementType": "labels.text.fill",
-        "stylers": [
-            {
-                "color": "#616161"
-            }
-        ]
-    },
-    {
-        "featureType": "road.local",
-        "elementType": "labels.text.fill",
-        "stylers": [
-            {
-                "color": "#9e9e9e"
-            }
-        ]
-    },
-    {
-        "featureType": "transit.line",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "color": "#e5e5e5"
-            }
-        ]
-    },
-    {
-        "featureType": "transit.station",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "color": "#eeeeee"
-            }
-        ]
-    },
-    {
-        "featureType": "water",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "color": "#c9c9c9"
-            }
-        ]
-    },
-    {
-        "featureType": "water",
-        "elementType": "labels.text.fill",
-        "stylers": [
-            {
-                "color": "#9e9e9e"
-            }
-        ]
-    }
-]
 interface Props {
     mapVisible: any,
     onClose(mapCoord: any): any
@@ -192,6 +31,12 @@ class MapSelector extends React.Component<Props, State> {
         }
     }
 
+    _mapLoaded(map) {
+        map.setOptions({
+          styles: mapStyle
+        })
+      }
+
     render() {
         return (
 
@@ -203,10 +48,13 @@ class MapSelector extends React.Component<Props, State> {
                             <JCButton data-testid="mapselector-save" buttonType={ButtonTypes.SolidMap} onPress={() => this.props.onClose(this.state.mapCoord)}>Done</JCButton>
                         </View>
                         <Container style={styles.mapView}>
-                            <Map google={window.google} zoom={6}
-                                initialCenter={{ lat: 44, lng: -78.0 }}
+                            <Map google={window.google} zoom={2}
+                                initialCenter={{ lat: 0, lng: 0 }}
                                 mapTypeControl={false}
+                                onReady={(mapProps, map) => this._mapLoaded(map)}
                                 style={styles.map}
+                                streetViewControl={false}
+                                fullscreenControl={false}
                             >
                                 <Marker
                                     title="Location"
@@ -217,6 +65,10 @@ class MapSelector extends React.Component<Props, State> {
                                         console.log(e)
                                         console.log(coord.latLng)
                                         this.setState({ mapCoord: { latitude: coord.latLng.lat(), longitude: coord.latLng.lng() } })
+                                    }}
+                                    icon={{
+                                        url: require("../../assets/svg/map-icon-red.svg"),
+                                        scaledSize: new google.maps.Size(32, 32)
                                     }}
                                 ></Marker>
 

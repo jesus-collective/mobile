@@ -61,7 +61,7 @@ export default class MyProfile extends React.Component<Props, State> {
         this.setState({
           mapData: [{
               latitude: this.state.UserDetails.location.latitude,
-              longitude: this.state.UserDetails.location.latitude,
+              longitude: this.state.UserDetails.location.longitude,
               name: this.state.UserDetails.given_name + " " + this.state.UserDetails.family_name,
               user: this.state.UserDetails,
               link: "",
@@ -397,7 +397,7 @@ export default class MyProfile extends React.Component<Props, State> {
 
             <View style={styles.profileScreenRightCard}>
               <View style={{ width: '100%' }}>
-                <MyMap initCenter={this.state.initCenter} navigation={this.props.navigation} visible={true} mapData={this.state.mapData} showFilters={false}></MyMap>
+                <MyMap initCenter={this.state.initCenter} navigation={this.props.navigation} visible={true} mapData={this.state.mapData} type={"profile"}></MyMap>
               </View>
               {this.state.isEditable ?
                 <Text style={styles.fontMyProfileLeftTop}>Tell us more about you</Text>

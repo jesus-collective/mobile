@@ -33,7 +33,7 @@ export default class GroupScreen extends React.Component<Props, State>{
   }
   search(item) {
     console.log(item.target.value)
-    var searchGroups: any = API.graphql({
+    const searchGroups: any = API.graphql({
       query: queries.searchGroups,
       variables: { filter: { name: { match: item.target.value } } }
     });
@@ -53,8 +53,8 @@ export default class GroupScreen extends React.Component<Props, State>{
     return <StyleProvider style={getTheme(material)}>
       <Container >
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-        <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
         <Content>
+          <MyMap type={"no-filters"} navigation={this.props.navigation} visible={this.state.showMap} mapData={[]}></MyMap>
           <Container>
             <input onChange={(item: any) => { this.search(item) }} placeholder="Search..."></input>
             <Text>Results:</Text>

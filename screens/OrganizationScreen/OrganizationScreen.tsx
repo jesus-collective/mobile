@@ -142,7 +142,7 @@ export default class GroupScreen extends React.Component<Props, State>{
   }
   save() {
     if (this.validate()) {
-      var updateGroup: any = API.graphql({
+      const updateGroup: any = API.graphql({
         query: mutations.updateGroup,
         variables: { input: this.clean(this.state.data) },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -169,7 +169,7 @@ export default class GroupScreen extends React.Component<Props, State>{
       // Attribute values must be strings
       attributes: { id: this.state.data.id, name: this.state.data.name }
     });
-    var createGroupMember: any = API.graphql({
+    const createGroupMember: any = API.graphql({
       query: mutations.createGroupMember,
       variables: { input: { groupID: this.state.data.id, userID: this.state.currentUser } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -183,7 +183,7 @@ export default class GroupScreen extends React.Component<Props, State>{
     });
   }
   delete() {
-    var deleteGroup: any = API.graphql({
+    const deleteGroup: any = API.graphql({
       query: mutations.deleteGroup,
       variables: { input: { id: this.state.data.id } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -196,7 +196,7 @@ export default class GroupScreen extends React.Component<Props, State>{
     });
   }
   updateValue(field: any, value: any) {
-    var temp = this.state.data
+    const temp = this.state.data
     temp[field] = value
     this.setState({ data: temp })
   }
@@ -208,8 +208,8 @@ export default class GroupScreen extends React.Component<Props, State>{
         <StyleProvider style={getTheme(material)}>
           <Container >
             <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-            <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
             <Content>
+              <MyMap type={'no-filters'} size={'25%'} navigation={this.props.navigation} visible={this.state.showMap} mapData={[]}></MyMap>
               <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
                 <Container style={{ flex: 30, flexDirection: "column", justifyContent: 'flex-start' }}>
                   <Text>Organization</Text>

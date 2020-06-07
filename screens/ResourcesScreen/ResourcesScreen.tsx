@@ -30,7 +30,7 @@ export default class HomeScreen extends React.Component<Props, State>{
 
   mergeMapData(mapData) {
     //    console.log(mapData)
-    var data = this.state.mapData.concat(mapData)
+    const data = this.state.mapData.concat(mapData)
     this.setState({ mapData: data })
   }
   render() {
@@ -39,8 +39,8 @@ export default class HomeScreen extends React.Component<Props, State>{
 
       <Container data-testid="resources" >
         <Header title="Jesus Collective" navigation={this.props.navigation} />
-        <MyMap navigation={this.props.navigation} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
         <Content>
+          <MyMap type={"no-filters"} size={'50%'} navigation={this.props.navigation} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
           <Container style={styles.resourcesScreenMainContainer}>
             <Container style={styles.resourcesScreenLeftContainer}>
 

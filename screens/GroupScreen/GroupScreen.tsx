@@ -38,7 +38,9 @@ interface State {
   validationError: string
   currentUser: string
   currentUserProfile: any
-  memberIDs: string[]
+  memberIDs: string[],
+  members: any
+  mapData: any
 }
 
 
@@ -60,7 +62,9 @@ export default class GroupScreen extends React.Component<Props, State>{
       validationError: "",
       currentUser: null,
       currentUserProfile: null,
-      memberIDs: []
+      memberIDs: [],
+      members: [],
+      mapData: []
     }
     Auth.currentAuthenticatedUser().then((user: any) => {
       this.setState({
@@ -144,12 +148,59 @@ export default class GroupScreen extends React.Component<Props, State>{
                 this.setState({ canJoin: false, canLeave: true && !this.state.isEditable })
               else
                 this.setState({ canJoin: true && !this.state.isEditable, canLeave: false })
-            })
+            });
+
+            this.state.memberIDs.map(id => {
+              const getUser: any = API.graphql({
+                query: queries.getUser,
+                variables: { id: id },
+                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+              });
+              getUser.then((json: any) => {
+                this.setState({ members: this.state.members.concat(json.data.getUser)}, () => {
+                  this.setState({ mapData: this.state.mapData.concat(this.convertProfileToMapData(this.state.members)) })
+                })
+              }).catch((e: any) => {
+                if (e.data) {
+                  this.setState({ members: this.state.members.concat(e.data.getUser)}, () => {
+                    this.setState({ mapData: this.state.mapData.concat(this.convertProfileToMapData(this.state.members)) })
+                  })
+                }
+              })          
+            });
+
+            const getUser: any = API.graphql({
+              query: queries.getUser,
+              variables: { id: this.state.data.owner },
+              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+            });
+            getUser.then((json: any) => {
+              this.setState({ mapData: this.state.mapData.concat(this.convertProfileToMapData([json.data.getUser])) })       
+            }).catch((e: any) => {
+              if (e.data) {
+                this.setState({ mapData: this.state.mapData.concat(this.convertProfileToMapData([e.data.getUser])) })       
+              }
+            });  
           }
         )
       }
       getGroup.then(processResults).catch(processResults)
     }
+  }
+  convertProfileToMapData(data): [] {
+    return data.map((dataItem) => {
+      if (dataItem.location && dataItem.location.latitude && dataItem.location.longitude) {
+        return {
+          latitude: dataItem.location.latitude,
+          longitude: dataItem.location.longitude,
+          name: dataItem.given_name + " " + dataItem.family_name,
+          user: dataItem,
+          link: "",
+          type: "profile"
+        }
+      }
+      else return null
+    }).filter(o => o)
   }
   mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
@@ -325,9 +376,9 @@ export default class GroupScreen extends React.Component<Props, State>{
       this.state.data ?
         <StyleProvider style={getTheme(material)}>
           <Container >
-            <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-            <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
+            <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged}/>
             <Content>
+              <MyMap type={"no-filters"} size={'25%'} navigation={this.props.navigation} visible={this.state.showMap} mapData={this.state.mapData}></MyMap>
               <Container style={styles.groupScreenMainContainer}>
                 <Container style={styles.detailScreenLeftCard}>
                   <Container style={{ display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 20 }}>

@@ -37,9 +37,11 @@ export default class HomeScreen extends React.Component<Props, State>{
     console.log("Homepage")
     return (
       <Container data-testid="groups" >
-        <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
-        <MyMap navigation={this.props.navigation} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
+        <Header title="Jesus Collective" navigation={this.props.navigation} />
         <Content>
+          {/*Map not displayed since Groups currently don't have location data
+          need to re-add onMapChange to <Header/>
+          <MyMap size={'50%'} type={"no-filters"} navigation={this.props.navigation} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>*/}
           <Container style={style.groupsScreenMainContainer}>
             <Container style={style.groupsScreenLeftContainer}>
               <MyGroups showMy={this.state.showMy} showMore={true} type="group" wrap={true} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>

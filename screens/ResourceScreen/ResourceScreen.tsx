@@ -39,7 +39,7 @@ class ResourceScreen extends React.Component<Props, State>{
       <StyleProvider style={getTheme(material)}>
         <Container >
           <Header title="Jesus Collective" navigation={this.props.navigation} />
-          <MyMap navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
+          <MyMap type={'no-filters'} mapData={[]} navigation={this.props.navigation} visible={this.state.showMap}></MyMap>
           <ResourceViewer navigation={this.props.navigation} groupId={this.props.route.params.id}></ResourceViewer>
           <ImportKidsAndYouth></ImportKidsAndYouth>
         </Container>
