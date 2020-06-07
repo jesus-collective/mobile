@@ -49,7 +49,7 @@ interface State {
     currentUserProfile: any
     memberIDs: string[]
 }
-class ResourceViewer extends React.Component<Props, State> {
+class ResourceViewer extends JCComponent<Props, State> {
     static Provider = ResourceContext.Provider;
     constructor(props: Props) {
         super(props);

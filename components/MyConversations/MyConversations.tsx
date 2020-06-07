@@ -1,17 +1,18 @@
 import { Content, Left, Right, Body, StyleProvider, Container, Card, CardItem, Button } from 'native-base';
 import { Text } from 'react-native'
 import * as React from 'react';
-import styles from '../style'
+
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import { Image } from 'react-native'
 import { constants } from '../../src/constants'
+import JCComponent from '../JCComponent/JCComponent';
 
 interface Props {
   navigation: any
 }
 
-export default class MyConversations extends React.Component<Props> {
+export default class MyConversations extends JCComponent<Props> {
   constructor(props: Props) {
     super(props);
   }
@@ -19,6 +20,7 @@ export default class MyConversations extends React.Component<Props> {
     console.log("Navigate to conversationScreen")
     this.props.navigation.navigate("ConversationScreen");
   }
+
   render(): React.ReactNode {
 
     const items =
@@ -52,25 +54,25 @@ export default class MyConversations extends React.Component<Props> {
         <StyleProvider style={getTheme(material)}>
 
           <Container style={{ width: "100%", flexDirection: 'column', alignItems: 'flex-start', minHeight: 725, marginTop: 50 }} >
-            <Button transparent onPress={() => { this.openConversation() }}><Text style={styles.fontConnectWith}>Latest Conversations</Text></Button>
+            <Button transparent onPress={() => { this.openConversation() }}><Text style={this.styles.style.fontConnectWith}>Latest Conversations</Text></Button>
             <Content>
               {items.map((item) => {
                 return (
-                  <Card key={item.id} style={styles.conversationCard}>
+                  <Card key={item.id} style={this.styles.style.conversationCard}>
                     <CardItem style={{ paddingTop: 28, }}>
                       <Left>
                         <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
                         <Body>
-                          <Text style={styles.fontConnectWithName}>{item.name}</Text>
-                          <Text style={styles.fontConnectWithRole}>{item.role}</Text>
+                          <Text style={this.styles.style.fontConnectWithName}>{item.name}</Text>
+                          <Text style={this.styles.style.fontConnectWithRole}>{item.role}</Text>
                         </Body>
                       </Left>
                       <Right>
-                        <Button bordered style={styles.connectWithSliderButton} onPress={() => { this.openConversation() }}><Text style={styles.fontStartConversation}>Open</Text></Button>
+                        <Button bordered style={this.styles.style.connectWithSliderButton} onPress={() => { this.openConversation() }}><Text style={this.styles.style.fontStartConversation}>Open</Text></Button>
                       </Right>
                     </CardItem>
                     <CardItem>
-                      <Text style={styles.fontConnectWithRole}>{item.message}</Text>
+                      <Text style={this.styles.style.fontConnectWithRole}>{item.message}</Text>
                     </CardItem>
                   </Card>)
               })}

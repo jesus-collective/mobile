@@ -6,15 +6,16 @@ import * as React from 'react';
 import { Body, Card, CardItem, Button, View } from 'native-base';
 import { TouchableOpacity, Animated, TouchableWithoutFeedback } from 'react-native'
 
-import styles from '../style'
 
-import { Marker, Circle} from 'google-maps-react';
+
+import { Marker, Circle } from 'google-maps-react';
 import { Map, InfoWindow } from 'google-maps-react';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 
 import { Text } from 'react-native'
 import ErrorBoundary from '../ErrorBoundry';
 import moment from 'moment';
+import JCComponent from '../JCComponent/JCComponent';
 
 const mapStyle = require('./mapstyle.json')
 
@@ -41,7 +42,7 @@ interface State {
   initCenterProfile: any
 }
 
-class MyMap extends React.Component<Props, State> {
+class MyMap extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -169,15 +170,15 @@ class MyMap extends React.Component<Props, State> {
 
   renderProfile() {
     return <TouchableOpacity onPress={() => { this.showProfile(this.state.selectedPlace.mapItem.user.id) }}>
-      <Card style={styles.myMapDashboardConversationCard}>
+      <Card style={this.styles.style.myMapDashboardConversationCard}>
         <CardItem>
 
           <Body>
             <ProfileImage user={this.state.selectedPlace.mapItem.user.id} size='small'>
             </ProfileImage>
-            <Text style={styles.fontConnectWithName}>{this.state.selectedPlace.mapItem.user.given_name} {this.state.selectedPlace.mapItem.user.family_name}</Text>
-            <Text style={styles.fontConnectWithRole}>{this.state.selectedPlace.mapItem.user.currentRole}</Text>
-            <Button bordered style={styles.myMapConnectWithSliderButton} onPress={() => { this.openConversation(this.state.selectedPlace.mapItem.user.id, this.state.selectedPlace.mapItem.user.given_name + " " + this.state.selectedPlace.mapItem.user.family_name) }}><Text style={styles.fontStartConversation}>Start Conversation</Text></Button>
+            <Text style={this.styles.style.fontConnectWithName}>{this.state.selectedPlace.mapItem.user.given_name} {this.state.selectedPlace.mapItem.user.family_name}</Text>
+            <Text style={this.styles.style.fontConnectWithRole}>{this.state.selectedPlace.mapItem.user.currentRole}</Text>
+            <Button bordered style={this.styles.style.myMapConnectWithSliderButton} onPress={() => { this.openConversation(this.state.selectedPlace.mapItem.user.id, this.state.selectedPlace.mapItem.user.given_name + " " + this.state.selectedPlace.mapItem.user.family_name) }}><Text style={this.styles.style.fontStartConversation}>Start Conversation</Text></Button>
           </Body>
 
         </CardItem>
@@ -185,17 +186,17 @@ class MyMap extends React.Component<Props, State> {
     </TouchableOpacity>
   }
   renderEvent() {
-    return <Card style={styles.myMapCalloutEventContainer}>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={styles.myMapFontDetailTop}>{moment(this.state.selectedPlace.mapItem.event.time).format('MMMM Do YYYY, h:mm a')}</Text></CardItem>
-      <CardItem style={styles.myMapCalloutEventName}><Text ellipsizeMode='tail' numberOfLines={2} style={styles.myMapFontTitle}>{this.state.selectedPlace.mapItem.event.name}</Text></CardItem>
-      <CardItem style={styles.myMapCalloutEventDescription}><Text ellipsizeMode='tail' numberOfLines={3} style={styles.myMapFontDetailMiddle}>{this.state.selectedPlace.mapItem.event.description}</Text></CardItem>
+    return <Card style={this.styles.style.myMapCalloutEventContainer}>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.myMapFontDetailTop}>{moment(this.state.selectedPlace.mapItem.event.time).format('MMMM Do YYYY, h:mm a')}</Text></CardItem>
+      <CardItem style={this.styles.style.myMapCalloutEventName}><Text ellipsizeMode='tail' numberOfLines={2} style={this.styles.style.myMapFontTitle}>{this.state.selectedPlace.mapItem.event.name}</Text></CardItem>
+      <CardItem style={this.styles.style.myMapCalloutEventDescription}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.myMapFontDetailMiddle}>{this.state.selectedPlace.mapItem.event.description}</Text></CardItem>
       <CardItem style={{ paddingBottom: 40 }}>
         {this.state.selectedPlace.mapItem.event.eventType == "location" ?
-          <Text ellipsizeMode='tail' numberOfLines={1} style={styles.myMapFontDetailBottom}><a target="_blank" rel="noreferrer" href={"https://www.google.com/maps/dir/?api=1&destination=" + escape(this.state.selectedPlace.mapItem.event.location)}>{this.state.selectedPlace.mapItem.event.location}</a></Text>
+          <Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.myMapFontDetailBottom}><a target="_blank" rel="noreferrer" href={"https://www.google.com/maps/dir/?api=1&destination=" + escape(this.state.selectedPlace.mapItem.event.location)}>{this.state.selectedPlace.mapItem.event.location}</a></Text>
           : this.state.selectedPlace.mapItem.event.eventType == "zoom" ?
-            <Text ellipsizeMode='tail' numberOfLines={1} style={styles.myMapFontDetailBottom}><a target="_blank" rel="noreferrer" href={this.state.selectedPlace.mapItem.event.eventUrl}>Zoom</a></Text>
+            <Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.myMapFontDetailBottom}><a target="_blank" rel="noreferrer" href={this.state.selectedPlace.mapItem.event.eventUrl}>Zoom</a></Text>
             :
-            <Text ellipsizeMode='tail' numberOfLines={1} style={styles.myMapFontDetailBottom}><a target="_blank" rel="noreferrer" href={this.state.selectedPlace.mapItem.event.eventUrl}>Eventbrite</a></Text>
+            <Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.myMapFontDetailBottom}><a target="_blank" rel="noreferrer" href={this.state.selectedPlace.mapItem.event.eventUrl}>Eventbrite</a></Text>
         }
       </CardItem>
       {/*
@@ -216,7 +217,7 @@ class MyMap extends React.Component<Props, State> {
             <View style={{ flex: 1, minHeight: 50 }}>
               <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: '5%' }}>
                 <View style={{ width: 170, flexDirection: 'row' }}>
-                  <Text style={styles.fontMyMapOptions}>Show Groups</Text>
+                  <Text style={this.styles.style.fontMyMapOptions}>Show Groups</Text>
                   <TouchableWithoutFeedback onPress={() => this.toggleFilters("group")}>
                     <View style={{
                       backgroundColor: this.state.groupsEnabled ? '#333333' : '#aaaaaa',
@@ -237,7 +238,7 @@ class MyMap extends React.Component<Props, State> {
                   </TouchableWithoutFeedback>
                 </View>
                 <View style={{ width: 170, flexDirection: 'row' }}>
-                  <Text style={styles.fontMyMapOptions}>Show Events</Text>
+                  <Text style={this.styles.style.fontMyMapOptions}>Show Events</Text>
                   <TouchableWithoutFeedback onPress={() => this.toggleFilters("event")}>
                     <View style={{
                       backgroundColor: this.state.eventsEnabled ? '#333333' : '#aaaaaa',
@@ -258,7 +259,7 @@ class MyMap extends React.Component<Props, State> {
                   </TouchableWithoutFeedback>
                 </View>
                 <View style={{ width: 170, flexDirection: 'row' }}>
-                  <Text style={styles.fontMyMapOptions}>Show Profiles</Text>
+                  <Text style={this.styles.style.fontMyMapOptions}>Show Profiles</Text>
                   <TouchableWithoutFeedback onPress={() => this.toggleFilters("profile")}>
                     <View style={{
                       backgroundColor: this.state.profilesEnabled ? '#333333' : '#aaaaaa',
@@ -279,7 +280,7 @@ class MyMap extends React.Component<Props, State> {
                   </TouchableWithoutFeedback>
                 </View>
                 <View style={{ width: 200, flexDirection: 'row' }}>
-                  <Text style={styles.fontMyMapOptions}>Show Organizations</Text>
+                  <Text style={this.styles.style.fontMyMapOptions}>Show Organizations</Text>
                   <TouchableWithoutFeedback onPress={() => this.toggleFilters("organization")}>
                     <View style={{
                       backgroundColor: this.state.organizationsEnabled ? '#333333' : '#aaaaaa',
@@ -302,11 +303,11 @@ class MyMap extends React.Component<Props, State> {
                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', paddingRight: '2%' }}>
                   <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 20 }}>
                     <View style={{ backgroundColor: '#f0493e', borderRadius: 25, width: 25, height: 13, }}></View>
-                    <Text style={styles.fontMyMapLegend}>Partners</Text>
+                    <Text style={this.styles.style.fontMyMapLegend}>Partners</Text>
                   </View>
                   <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 20 }}>
                     <View style={{ backgroundColor: '#ffb931', borderRadius: 25, width: 25, height: 13 }}></View>
-                    <Text style={styles.fontMyMapLegend}>Friends</Text>
+                    <Text style={this.styles.style.fontMyMapLegend}>Friends</Text>
                   </View>
                 </View>
               </View>
@@ -388,26 +389,26 @@ class MyMap extends React.Component<Props, State> {
 
           <View style={{ height: 362, width: '100%' }}>
 
-              <Map google={window.google} zoom={6}
-                center={this.props.initCenter}
-                mapTypeControl={false}
-                onClick={this.onMapClicked}
-                onReady={(mapProps, map) => this._mapLoaded(map)}
-                style={{ position: "relative", width: "100%", height: "100%" }}
-                streetViewControl={false}
-                fullscreenControl={false}
-              >
+            <Map google={window.google} zoom={6}
+              center={this.props.initCenter}
+              mapTypeControl={false}
+              onClick={this.onMapClicked}
+              onReady={(mapProps, map) => this._mapLoaded(map)}
+              style={{ position: "relative", width: "100%", height: "100%" }}
+              streetViewControl={false}
+              fullscreenControl={false}
+            >
               {this.props.mapData.map((item, index) => {
-                return <Marker key={index} 
-                position={{ lat: item.latitude, lng: item.longitude }}
-                icon={{
-                  url: require("../../assets/svg/map-location.svg"),
-                  anchor: new google.maps.Point(50, 50),
-                  scaledSize: new google.maps.Size(100, 100)
-                }}/>
+                return <Marker key={index}
+                  position={{ lat: item.latitude, lng: item.longitude }}
+                  icon={{
+                    url: require("../../assets/svg/map-location.svg"),
+                    anchor: new google.maps.Point(50, 50),
+                    scaledSize: new google.maps.Size(100, 100)
+                  }} />
               })}
 
-              </Map>
+            </Map>
           </View>
 
         </ErrorBoundary>

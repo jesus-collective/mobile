@@ -4,6 +4,7 @@ import * as React from 'react';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import JCComponent from '../JCComponent/JCComponent';
 
 interface Props {
     mapVisible: any,
@@ -14,7 +15,7 @@ interface State {
     mapVisible: any
 }
 
-export default class MapSelector extends React.Component<Props, State> {
+export default class MapSelector extends JCComponent<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {

@@ -9,6 +9,7 @@ import material from '../../native-base-theme/variables/material';
 import ResourceViewer from '../../components/ResourceViewer/ResourceViewer'
 import ImportKidsAndYouth from './ImportKidsandYouth'
 import { useNavigation, useRoute } from '@react-navigation/native';
+import JCComponent from '../../components/JCComponent/JCComponent';
 
 interface Props {
   navigation: any
@@ -21,7 +22,7 @@ interface State {
 
 
 
-class ResourceScreen extends React.Component<Props, State>{
+class ResourceScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
 

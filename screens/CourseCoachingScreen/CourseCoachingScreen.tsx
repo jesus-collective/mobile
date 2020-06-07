@@ -13,6 +13,7 @@ import { API } from 'aws-amplify';
 import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import CourseHeader from '../../components/CourseHeader/CourseHeader';
+import JCComponent from '../../components/JCComponent/JCComponent';
 const data = require('../CourseOverviewScreen/course.json');
 
 interface Props {
@@ -29,7 +30,7 @@ interface State {
 
 
 
-export default class CourseScreen extends React.Component<Props, State>{
+export default class CourseScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
 

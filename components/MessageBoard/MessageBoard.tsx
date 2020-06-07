@@ -2,7 +2,7 @@ import { Content, Left, Right, Body, StyleProvider, Container, Card, CardItem } 
 import * as React from 'react';
 import { Text } from 'react-native'
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
-import styles from '../style'
+
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import { TouchableOpacity } from 'react-native'
@@ -22,6 +22,7 @@ import { useNavigation } from '@react-navigation/native'
 import { useRoute } from '@react-navigation/native'
 import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
+import JCComponent from '../JCComponent/JCComponent';
 
 interface Props {
   groupId: string
@@ -36,7 +37,7 @@ interface State {
   textHeight: any,
   editorState: any
 }
-class MessageBoardImpl extends React.Component<Props, State> {
+class MessageBoardImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -65,6 +66,7 @@ class MessageBoardImpl extends React.Component<Props, State> {
         }
       });
   }
+
 
   async setInitialData(props) {
     const user = await Auth.currentAuthenticatedUser();
@@ -149,7 +151,7 @@ class MessageBoardImpl extends React.Component<Props, State> {
       (this.state.created) ?
 
         <StyleProvider style={getTheme(material)}>
-          <Container style={styles.messageBoardContainer} >
+          <Container style={this.styles.style.messageBoardContainer} >
 
             <Content style={{ marginBottom: 40 }}>
 
@@ -207,23 +209,23 @@ class MessageBoardImpl extends React.Component<Props, State> {
               return (
                 <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
                   <Card key={item.id} style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }}>
-                    <CardItem style={styles.eventPageMessageBoard}>
-                      <Left style={styles.eventPageMessageBoardLeft}>
+                    <CardItem style={this.styles.style.eventPageMessageBoard}>
+                      <Left style={this.styles.style.eventPageMessageBoardLeft}>
                         <ProfileImage size="small" user={item.owner ? item.owner : null}></ProfileImage>
                         <Body>
-                          <Text style={styles.groupFormName}>
+                          <Text style={this.styles.style.groupFormName}>
                             {item.author != null ? item.author.given_name : null} {item.author != null ? item.author.family_name : null}
                           </Text>
-                          <Text style={styles.groupFormRole}>
+                          <Text style={this.styles.style.groupFormRole}>
                             {item.author != null ? item.author.currentRole : null}
                           </Text>
                         </Body>
                       </Left>
                       <Right>
-                        <Text style={styles.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
+                        <Text style={this.styles.style.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
                       </Right>
                     </CardItem>
-                    <CardItem style={styles.eventPageMessageBoardInnerCard}>
+                    <CardItem style={this.styles.style.eventPageMessageBoardInnerCard}>
 
                       <div id="comment-div">
                         <div dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(item.content) }}></div>

@@ -4,13 +4,14 @@ import awsConfig from '../../src/aws-exports';
 import { Button, View } from 'react-native'
 import MyProfile from '../../components/MyProfile/MyProfile'
 import Header from '../../components/Header/Header'
+import JCComponent from '../../components/JCComponent/JCComponent';
 
 Amplify.configure(awsConfig);
 
 interface Props {
   navigation: any
 }
-export default class LoginScreen extends React.Component<Props>{
+export default class LoginScreen extends JCComponent<Props>{
   logout() {
     Auth.signOut()
       .then(data => {

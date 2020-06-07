@@ -4,6 +4,7 @@ import awsConfig from '../../src/aws-exports';
 import Header from '../../components/Header/Header'
 import MyProfile from '../../components/MyProfile/MyProfile'
 import { Container } from 'native-base';
+import JCComponent from '../../components/JCComponent/JCComponent';
 
 Amplify.configure(awsConfig);
 
@@ -20,7 +21,7 @@ interface State {
 
 
 }
-export default class ProfileScreen extends React.Component<Props, State>{
+export default class ProfileScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
 

@@ -8,14 +8,14 @@ import { Text, Button } from 'react-native';
 import * as mutations from '../../src/graphql/mutations';
 import { API, graphqlOperation } from 'aws-amplify';
 import { Auth } from 'aws-amplify';
-import styles from '../../components/style'
+import JCComponent from '../../components/JCComponent/JCComponent';
 
 interface Props {
   //navigation?: any,
   authState?: string,
   payStateChanged(): void
 }
-export default class SignUpScreen2 extends React.Component<Props>{
+export default class SignUpScreen2 extends JCComponent<Props>{
   async makePayment(): Promise<void> {
     console.log("Finish Payment")
     const user = await Auth.currentAuthenticatedUser();
@@ -26,11 +26,12 @@ export default class SignUpScreen2 extends React.Component<Props>{
       console.log(e)
     }
   }
+
   render(): React.ReactNode {
     // const { navigate } = this.props.navigation;
 
     return (
-      <View style={styles.signUpScreen1PaymentBody}>
+      <View style={this.styles.style.signUpScreen1PaymentBody}>
         <SignUpSidebar position="3"></SignUpSidebar>
         <View style={{ position: "absolute", left: "35%", width: "25%", top: 100, height: "100%" }}>
           <Text>Payment Succesful</Text>

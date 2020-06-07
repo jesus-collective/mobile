@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Input, Button } from 'native-base';
 import { Text } from 'react-native'
+import JCComponent from '../JCComponent/JCComponent';
 
 interface Props {
     value: string,
@@ -22,7 +23,7 @@ interface State {
     multiline: boolean,
     placeholder: string
 }
-class EditableUrl extends React.Component<Props, State> {
+class EditableUrl extends JCComponent<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {

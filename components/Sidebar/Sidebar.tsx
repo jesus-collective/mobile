@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Container, Content, List, ListItem, Header } from "native-base";
 import { Text } from 'react-native'
+import JCComponent from '../JCComponent/JCComponent';
 
 const routes = [
   {
@@ -30,7 +31,7 @@ interface Props {
   route: any
   navigation: any
 }
-class SideBar extends React.Component<Props> {
+class SideBar extends JCComponent<Props> {
   constructor(props: Props) {
     super(props)
   }

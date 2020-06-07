@@ -6,7 +6,7 @@ import { Text } from 'react-native'
 
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
-import styles from '../../components/style'
+
 import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import EditableText from '../../components/Forms/EditableText'
@@ -18,6 +18,7 @@ import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
+import JCComponent from '../../components/JCComponent/JCComponent';
 
 const MessageBoard = lazy(() => import('../../components/MessageBoard/MessageBoard'));
 
@@ -35,14 +36,14 @@ interface State {
   canJoin: boolean
   isEditable: boolean
   canDelete: boolean
-  validationError: String
-  currentUser: String
+  validationError: string
+  currentUser: string
   currentUserProfile: any
 }
 
 
 
-export default class GroupScreen extends React.Component<Props, State>{
+export default class GroupScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
 
@@ -215,8 +216,8 @@ export default class GroupScreen extends React.Component<Props, State>{
                   <Text>Organization</Text>
                   <Text>Sponsored</Text>
 
-                  <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Organization Name" multiline={false} textStyle={styles.fontRegular} inputStyle={styles.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
-                  <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Organization Description" multiline={true} textStyle={styles.fontRegular} inputStyle={styles.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
+                  <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Organization Name" multiline={false} textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
+                  <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Organization Description" multiline={true} textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
 
                   <Text>Organizer</Text>
                   <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />

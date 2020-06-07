@@ -3,7 +3,8 @@ import { Container, Content } from 'native-base';
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
 import MyGroups from '../../components/MyGroups/MyGroups';
-import styles from '../../components/style';
+;
+import JCComponent from '../../components/JCComponent/JCComponent';
 
 interface Props {
   navigation: any
@@ -14,7 +15,7 @@ interface State {
 }
 
 
-export default class HomeScreen extends React.Component<Props, State>{
+export default class HomeScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -27,7 +28,7 @@ export default class HomeScreen extends React.Component<Props, State>{
   }
   mergeMapData(mapData) {
     //    console.log(mapData)
-    var data = this.state.mapData.concat(mapData)
+    const data = this.state.mapData.concat(mapData)
     this.setState({ mapData: data })
   }
   render() {
@@ -38,12 +39,12 @@ export default class HomeScreen extends React.Component<Props, State>{
         <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
         <MyMap navigation={this.props.navigation} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
         <Content>
-          <Container style={styles.profilesScreenMainContainer}>
-            <Container style={styles.profilesScreenLeftContainer}>
+          <Container style={this.styles.style.profilesScreenMainContainer}>
+            <Container style={this.styles.style.profilesScreenLeftContainer}>
               <MyGroups showMore={true} type="profile" wrap={true} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
             </Container>
             {/*
-            <Container style={styles.profilesScreensRightContainer}>
+            <Container style={this.styles.style.profilesScreensRightContainer}>
               <MyConversations navigation={this.props.navigation}> </MyConversations>
               <Container ></Container>
             </Container>

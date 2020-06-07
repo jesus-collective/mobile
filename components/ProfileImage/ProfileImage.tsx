@@ -4,6 +4,7 @@ import * as queries from '../../src/graphql/queries';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import Amplify from 'aws-amplify'
 import awsconfig from '../../src/aws-exports';
+import JCComponent from '../JCComponent/JCComponent';
 
 Amplify.configure(awsconfig);
 
@@ -16,7 +17,7 @@ interface State {
     profileImage: any
     showEmpty: boolean
 }
-export default class MyProfile extends React.Component<Props, State> {
+export default class MyProfile extends JCComponent<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {

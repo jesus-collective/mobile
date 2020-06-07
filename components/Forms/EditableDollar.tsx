@@ -5,6 +5,8 @@ import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
+import JCComponent from '../JCComponent/JCComponent';
+
 interface Props {
     value: string,
     isEditable: boolean,
@@ -22,7 +24,7 @@ interface State {
     multiline: boolean,
     placeholder: string
 }
-export default class EditableDollar extends React.Component<Props, State> {
+export default class EditableDollar extends JCComponent<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {

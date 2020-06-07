@@ -1,6 +1,7 @@
 import React from 'react';
 import { Input } from 'native-base';
 import { Text } from 'react-native'
+import JCComponent from '../JCComponent/JCComponent';
 
 interface Props {
     value: string,
@@ -21,7 +22,7 @@ interface State {
     //   placeholder: string,
     value: string
 }
-export default class EditableText extends React.Component<Props, State> {
+export default class EditableText extends JCComponent<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {

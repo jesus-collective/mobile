@@ -3,6 +3,7 @@ import { Text } from 'react-native'
 import './EditableDateStyle.ts';
 import { KeyboardDatePicker, KeyboardDateTimePicker } from "@material-ui/pickers";
 import moment from 'moment';
+import JCComponent from '../JCComponent/JCComponent';
 
 interface Props {
     value: string,
@@ -23,7 +24,7 @@ interface State {
     placeholder: string
 
 }
-export default class EditableDate extends React.Component<Props, State> {
+export default class EditableDate extends JCComponent<Props, State> {
     constructor(props: Props) {
 
         super(props);

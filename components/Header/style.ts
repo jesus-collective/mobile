@@ -3,10 +3,20 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import { Dimensions } from 'react-native'
 
 export default class HeaderStyles {
+
     constructor() {
         this.update()
     }
+    static instance = null
+    public static getInstance() {
+        if (HeaderStyles.instance == null) {
+            HeaderStyles.instance = new HeaderStyles();
+        }
+
+        return this.instance;
+    }
     style = null
+
     update(): void {
         this.style = EStyleSheet.create({
 
@@ -16,6 +26,7 @@ export default class HeaderStyles {
             },
             resourceContainer: {
                 backgroundColor: '#292929'
+
             },
             icon: {
                 color: '#aaaaaa',
