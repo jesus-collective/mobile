@@ -9,6 +9,7 @@ import JCComponent from '../JCComponent/JCComponent';
 interface Props {
     mapVisible: any,
     onClose(mapCoord: any): any
+    coord: any
 }
 interface State {
     mapCoord: any

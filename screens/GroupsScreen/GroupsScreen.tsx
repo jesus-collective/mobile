@@ -1,7 +1,6 @@
 ﻿import React from 'react';
 import { Container, Content } from 'native-base';
 import Header from '../../components/Header/Header'
-import MyMap from '../../components/MyMap/MyMap';
 import MyGroups from '../../components/MyGroups/MyGroups';
 import JCComponent from '../../components/JCComponent/JCComponent';
 
