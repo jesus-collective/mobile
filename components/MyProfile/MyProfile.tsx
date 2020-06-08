@@ -570,7 +570,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
   }
 }
 
-export default function MyProfile(props: Props) {
+export default function MyProfile(props: Props): JSX.Element {
   const route = useRoute();
   const navigation = useNavigation()
   return <MyProfileImpl {...props} navigation={navigation} route={route} />;

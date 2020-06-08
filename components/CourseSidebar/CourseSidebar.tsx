@@ -79,7 +79,7 @@ class CourseSidebarImpl extends JCComponent<Props> {
         )
     }
 }
-export default function CourseSidebar(props: Props) {
+export default function CourseSidebar(props: Props): JSX.Element {
     const route = useRoute();
     const navigation = useNavigation()
     return <CourseSidebarImpl {...props} navigation={navigation} route={route} />;

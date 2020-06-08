@@ -49,7 +49,7 @@ class HomeScreen extends JCComponent<Props, State>{
   }
 
 
-  render() {
+  render(): React.ReactNode {
     console.log("Homepage")
     return (
       <Container data-testid="homepage">

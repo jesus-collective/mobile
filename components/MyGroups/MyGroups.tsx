@@ -373,7 +373,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     this.setState({ canLeave: this.state.canLeave.concat([group.id]) })
     this.renderByType(group, groupType)
   }
-  openConversation(initialUser, name) {
+  openConversation(initialUser, name): void {
     console.log("Navigate to conversationScreen")
     this.props.navigation.push("ConversationScreen", { initialUserID: initialUser, initialUserName: name });
   }

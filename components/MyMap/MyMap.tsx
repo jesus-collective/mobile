@@ -203,7 +203,7 @@ class MyMapImpl extends JCComponent<Props> {
   }
 }
 
-export default function MyMap(props: Props) {
+export default function MyMap(props: Props): JSX.Element {
   const route = useRoute();
   const navigation = useNavigation()
   return <MyMapImpl {...props} navigation={navigation} route={route} />;

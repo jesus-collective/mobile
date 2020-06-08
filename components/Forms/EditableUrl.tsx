@@ -57,7 +57,7 @@ class EditableUrlImpl extends JCComponent<Props, State> {
     }
 }
 
-export default function EditableUrl(props: Props) {
+export default function EditableUrl(props: Props): JSX.Element {
     const route = useRoute();
     const navigation = useNavigation()
     return <EditableUrlImpl {...props} navigation={navigation} route={route} />;

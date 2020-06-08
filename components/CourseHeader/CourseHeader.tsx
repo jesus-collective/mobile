@@ -47,7 +47,7 @@ class CourseHeaderImpl extends JCComponent<Props> {
     }
 }
 
-export default function CourseHeader(props: Props) {
+export default function CourseHeader(props: Props): JSX.Element {
     const route = useRoute();
     const navigation = useNavigation()
     return <CourseHeaderImpl {...props} navigation={navigation} route={route} />;

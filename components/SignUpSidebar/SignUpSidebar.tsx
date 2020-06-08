@@ -13,7 +13,7 @@ export default class SignUpSidebar extends JCComponent<Props> {
   constructor(props: Props) {
     super(props);
   }
-  render() {
+  render(): React.ReactNode {
     return (
 
 

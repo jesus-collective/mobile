@@ -8,7 +8,7 @@ export default class HeaderStyles {
         this.update()
     }
     static instance = null
-    public static getInstance() {
+    public static getInstance(): HeaderStyles {
         if (HeaderStyles.instance == null) {
             HeaderStyles.instance = new HeaderStyles();
         }

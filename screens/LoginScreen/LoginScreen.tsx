@@ -12,7 +12,7 @@ interface Props {
   navigation: any
 }
 export default class LoginScreen extends JCComponent<Props>{
-  logout() {
+  logout(): void {
     Auth.signOut()
       .then(data => {
         console.log(data); console.log("Logged Out")
@@ -24,7 +24,7 @@ export default class LoginScreen extends JCComponent<Props>{
       });
 
   }
-  render() {
+  render(): React.ReactNode {
     // const { navigate } = this.props.navigation;
     return (
       <View>

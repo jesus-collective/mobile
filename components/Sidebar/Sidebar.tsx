@@ -36,7 +36,7 @@ class SideBar extends JCComponent<Props> {
     super(props)
   }
 
-  render() {
+  render(): React.ReactNode {
     return (
       <Container style={{ width: "100%" }}>
         <Content>

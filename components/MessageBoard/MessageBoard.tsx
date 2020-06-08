@@ -246,7 +246,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     )
   }
 }
-export default function MessageBoard(props: Props) {
+export default function MessageBoard(props: Props): JSX.Element {
   const route = useRoute();
   const navigation = useNavigation()
   return <MessageBoardImpl {...props} navigation={navigation} route={route} />;

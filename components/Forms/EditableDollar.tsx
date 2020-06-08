@@ -37,11 +37,11 @@ export default class EditableDollar extends JCComponent<Props, State> {
         }
         // console.log(props)
     }
-    onChanged(val: any) {
+    onChanged(val: any): void {
         this.props.onChange(val.target.value)
     }
 
-    render() {
+    render(): React.ReactNode {
 
 
         if (this.state.isEditable)

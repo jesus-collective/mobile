@@ -34,7 +34,7 @@ export default class GroupScreen extends JCComponent {
         this.startUp()
 
     }
-    async startUp() {
+    async startUp(): Promise<void> {
         ZoomMtg.setZoomJSLib('https://dmogdx0jrul3u.cloudfront.net/1.4.2/lib', '/av')
         ZoomMtg.preLoadWasm();
         ZoomMtg.prepareJssdk();
@@ -81,7 +81,7 @@ export default class GroupScreen extends JCComponent {
 
 
     }
-    render() {
+    render(): React.ReactNode {
         return (
             <div >
 

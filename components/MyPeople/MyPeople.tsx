@@ -64,7 +64,7 @@ export default class MyPeople extends JCComponent<Props, State> {
   convertToMapData(data) {
     return this.convertProfileToMapData(data)
   }
-  setInitialData() {
+  setInitialData(): void {
     const listUsers: any = API.graphql({
       query: queries.listUsers,
       variables: { filter: { profileState: { eq: "Complete" } } },
@@ -84,20 +84,20 @@ export default class MyPeople extends JCComponent<Props, State> {
     )
   }
 
-  openConversation(initialUser, name) {
+  openConversation(initialUser, name): void {
     console.log("Navigate to conversationScreen")
     this.props.navigation.push("ConversationScreen", { initialUserID: initialUser, initialUserName: name });
   }
-  showProfiles() {
+  showProfiles(): void {
     console.log("Navigate to profilesScreen")
     this.props.navigation.push("ProfilesScreen");
   }
-  showProfile(id) {
+  showProfile(id): void {
     console.log("Navigate to profileScreen")
     this.props.navigation.push("ProfileScreen", { id: id, create: false });
   }
 
-  render() {
+  render(): React.ReactNode {
     if (!constants["SETTING_ISVISIBLE_profile"])
       return null
     else
