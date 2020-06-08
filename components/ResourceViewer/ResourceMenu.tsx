@@ -7,16 +7,11 @@ import HeaderStyles from '../Header/style'
 import { ResourceContext } from './ResourceContext';
 import EditableButton from '../Forms/EditableButton'
 import JCComponent from '../JCComponent/JCComponent';
-interface Props {
-    navigation: any
-    //items: any,
-    //onAddResource(): any,
-    // onChangeResource(id): any
-}
-class ResourceMenu extends JCComponent<Props> {
+
+class ResourceMenu extends JCComponent {
     static Consumer = ResourceContext.Consumer;
-    constructor(props: Props) {
-        super(props);
+    constructor() {
+        super(null);
         //console.log(props.items)
     }
 

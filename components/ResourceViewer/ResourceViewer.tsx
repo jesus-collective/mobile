@@ -1,7 +1,7 @@
 import { Content, Container } from 'native-base';
 import * as React from 'react';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
-
+import { CreateResourceRootInput, CreateResourceInput, CreateResourceSeriesInput, CreateResourceEpisodeInput } from '../../src/API'
 import * as queries from '../../src/graphql/queries';
 import * as customQueries from '../../src/graphql-custom/queries';
 import * as mutations from '../../src/graphql/mutations';
@@ -218,11 +218,11 @@ class ResourceViewerImpl extends JCComponent<Props, State> {
     async createResourceRoot(): Promise<void> {
         console.log("test1")
         try {
-            const resourceRoot = new ResourceRoot({
+            const resourceRoot: CreateResourceRootInput = {
                 type: `curriculum`,
                 groupId: this.state.groupData.id,
                 organizationId: "0"
-            })
+            }
             const createResourceRoot: any = await API.graphql({
                 query: mutations.createResourceRoot,
                 variables: { input: resourceRoot },
@@ -230,7 +230,7 @@ class ResourceViewerImpl extends JCComponent<Props, State> {
             });
             console.log(createResourceRoot)
 
-            const resource = new Resource({
+            const resource: CreateResourceInput = {
                 type: "curriculum",
                 menuTitle: "Overview",
                 title: "Overview",
@@ -240,7 +240,7 @@ class ResourceViewerImpl extends JCComponent<Props, State> {
                 order: "0",
                 resourceID: createResourceRoot.data.createResourceRoot.id
 
-            })
+            }
 
             const createResource: any = await API.graphql({
                 query: mutations.createResource,
@@ -436,17 +436,17 @@ class ResourceViewerImpl extends JCComponent<Props, State> {
         this.setState({ isEditable: val })
     }
     createResource = async (): Promise<void> => {
-        const resource =
-            new Resource({
-                type: "curriculum",
-                menuTitle: "New Menu Title",
-                title: "New Title",
-                image: null,
-                description: "Enter description",
-                extendedDescription: "Enter extended description",
-                resourceID: this.state.resourceData.id,
-                order: this.state.resourceData.resources.items.length + 1
-            })
+        const resource: CreateResourceInput =
+        {
+            type: "curriculum",
+            menuTitle: "New Menu Title",
+            title: "New Title",
+            image: null,
+            description: "Enter description",
+            extendedDescription: "Enter extended description",
+            resourceID: this.state.resourceData.id,
+            order: this.state.resourceData.resources.items.length + 1
+        }
         try {
             console.log("Creating Resource")
 
@@ -467,15 +467,15 @@ class ResourceViewerImpl extends JCComponent<Props, State> {
 
     }
     createSeries = async (): Promise<void> => {
-        const series =
-            new ResourceSeries({
-                type: "curriculum",
-                title: "New Title",
-                image: null,
-                description: "Enter description",
-                seriesID: this.state.resourceData.resources.items[this.state.currentResource].id,
-                //order: this.state.resourceData.resources.items[this.state.currentResource].series.items.length + 1
-            })
+        const series: CreateResourceSeriesInput =
+        {
+            type: "curriculum",
+            title: "New Title",
+            image: null,
+            description: "Enter description",
+            seriesID: this.state.resourceData.resources.items[this.state.currentResource].id,
+            //order: this.state.resourceData.resources.items[this.state.currentResource].series.items.length + 1
+        }
         try {
             console.log("Creating Resource")
 
@@ -495,16 +495,16 @@ class ResourceViewerImpl extends JCComponent<Props, State> {
 
     }
     createEpisode = async (): Promise<void> => {
-        const episode =
-            new ResourceEpisode({
-                type: "curriculum",
-                title: "New Title",
-                //image: null,
-                description: "Enter description",
-                videoPreview: "Enter Url",
-                episodeID: this.state.resourceData.resources.items[this.state.currentResource].series.items[this.state.currentSeries].id,
-                //order: this.state.resourceData.resources.items[this.state.currentResource].series.items.length + 1
-            })
+        const episode: CreateResourceEpisodeInput =
+        {
+            type: "curriculum",
+            title: "New Title",
+            //image: null,
+            description: "Enter description",
+            videoPreview: "Enter Url",
+            episodeID: this.state.resourceData.resources.items[this.state.currentResource].series.items[this.state.currentSeries].id,
+            //order: this.state.resourceData.resources.items[this.state.currentResource].series.items.length + 1
+        }
         try {
             console.log("Creating Resource")
 
@@ -801,7 +801,7 @@ class ResourceViewerImpl extends JCComponent<Props, State> {
     }
 }
 
-export default function ResourceViewer(props: Props) {
+export default function ResourceViewer(props: Props): JSX.Element {
     const route = useRoute();
     const navigation = useNavigation()
     return <ResourceViewerImpl {...props} navigation={navigation} route={route} />;

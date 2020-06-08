@@ -13,12 +13,14 @@ import JCComponent from '../JCComponent/JCComponent';
 
 Amplify.configure(awsconfig);
 
+interface Props {
 
+}
 interface State {
     imageUrl: any
     image: any
 }
-class ResourceHeader extends JCComponent<null, State> {
+class ResourceHeader extends JCComponent<Props, State> {
     static Consumer = ResourceContext.Consumer;
     constructor() {
         super(null)
