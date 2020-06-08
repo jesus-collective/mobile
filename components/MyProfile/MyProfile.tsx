@@ -257,7 +257,20 @@ class MyProfileImpl extends JCComponent<Props, State> {
         });
       })
   }
-
+  renderMainUserGroup(group) {
+    switch (group) {
+      case 'verifiedUser':
+        return <Text style={this.styles.style.fontFormUserType}>Verified</Text>
+      case 'friend':
+        return <Text style={this.styles.style.fontFormUserType}>Friend</Text >
+      case 'partner':
+        return <Text style={this.styles.style.fontFormUserType}>Partner</Text>
+      case 'admin':
+        return <Text style={this.styles.style.fontFormUserType}>Admin</Text>
+      default:
+        return <Text style={this.styles.style.fontFormUserType}>Un-Verified</Text >
+    }
+  }
   openConversation(initialUser, name): void {
     console.log("Navigate to conversationScreen")
     this.props.navigation.push("ConversationScreen", { initialUserID: initialUser, initialUserName: name });
@@ -314,7 +327,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
               <View style={this.styles.style.myProfilePersonalInfoWrapper}>
                 <Text style={this.styles.style.fontFormName}>{this.state.UserDetails.given_name} {this.state.UserDetails.family_name}</Text>
                 <Text style={this.styles.style.fontFormRole}>{this.state.UserDetails.currentRole ? this.state.UserDetails.currentRole : 'My Current Role not defined'}</Text>
-                <Text style={this.styles.style.fontFormUserType}>Partner</Text>
+                {
+                  this.renderMainUserGroup(this.state.UserDetails.mainUserGroup)
+                }
 
                 {this.state.isEditable ?
                   <Text style={this.styles.style.fontFormSmall}><Text style={this.styles.style.fontFormMandatory}>*</Text>One sentence about me</Text>

@@ -19,6 +19,7 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -120,6 +121,7 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
           email
           phone
           owner
+          mainUserGroup
           hasPaidState
           profileState
           address
@@ -197,7 +199,7 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
   }
 `;
 export const onCreateUser = /* GraphQL */ `
-  subscription OnCreateUser($owner: String!) {
+  subscription OnCreateUser($owner: String) {
     onCreateUser(owner: $owner) {
       id
       given_name
@@ -205,6 +207,7 @@ export const onCreateUser = /* GraphQL */ `
       email
       phone
       owner
+      mainUserGroup
       hasPaidState
       profileState
       address
@@ -299,7 +302,7 @@ export const onCreateUser = /* GraphQL */ `
   }
 `;
 export const onUpdateUser = /* GraphQL */ `
-  subscription OnUpdateUser($owner: String!) {
+  subscription OnUpdateUser($owner: String) {
     onUpdateUser(owner: $owner) {
       id
       given_name
@@ -307,6 +310,7 @@ export const onUpdateUser = /* GraphQL */ `
       email
       phone
       owner
+      mainUserGroup
       hasPaidState
       profileState
       address
@@ -401,7 +405,7 @@ export const onUpdateUser = /* GraphQL */ `
   }
 `;
 export const onDeleteUser = /* GraphQL */ `
-  subscription OnDeleteUser($owner: String!) {
+  subscription OnDeleteUser($owner: String) {
     onDeleteUser(owner: $owner) {
       id
       given_name
@@ -409,6 +413,7 @@ export const onDeleteUser = /* GraphQL */ `
       email
       phone
       owner
+      mainUserGroup
       hasPaidState
       profileState
       address
@@ -519,6 +524,7 @@ export const onCreateGroupMember = /* GraphQL */ `
           email
           phone
           owner
+          mainUserGroup
           hasPaidState
           profileState
           address
@@ -597,6 +603,7 @@ export const onCreateGroupMember = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -663,6 +670,7 @@ export const onUpdateGroupMember = /* GraphQL */ `
           email
           phone
           owner
+          mainUserGroup
           hasPaidState
           profileState
           address
@@ -741,6 +749,7 @@ export const onUpdateGroupMember = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -807,6 +816,7 @@ export const onDeleteGroupMember = /* GraphQL */ `
           email
           phone
           owner
+          mainUserGroup
           hasPaidState
           profileState
           address
@@ -885,6 +895,7 @@ export const onDeleteGroupMember = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -935,7 +946,7 @@ export const onDeleteGroupMember = /* GraphQL */ `
   }
 `;
 export const onCreateGroup = /* GraphQL */ `
-  subscription OnCreateGroup($owner: String!) {
+  subscription OnCreateGroup($owner: String) {
     onCreateGroup(owner: $owner) {
       id
       owner
@@ -947,6 +958,7 @@ export const onCreateGroup = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -1085,7 +1097,7 @@ export const onCreateGroup = /* GraphQL */ `
   }
 `;
 export const onUpdateGroup = /* GraphQL */ `
-  subscription OnUpdateGroup($owner: String!) {
+  subscription OnUpdateGroup($owner: String) {
     onUpdateGroup(owner: $owner) {
       id
       owner
@@ -1097,6 +1109,7 @@ export const onUpdateGroup = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -1235,7 +1248,7 @@ export const onUpdateGroup = /* GraphQL */ `
   }
 `;
 export const onDeleteGroup = /* GraphQL */ `
-  subscription OnDeleteGroup($owner: String!) {
+  subscription OnDeleteGroup($owner: String) {
     onDeleteGroup(owner: $owner) {
       id
       owner
@@ -1247,6 +1260,7 @@ export const onDeleteGroup = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -1444,6 +1458,7 @@ export const onCreateOrganizationMember = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -1553,6 +1568,7 @@ export const onUpdateOrganizationMember = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -1662,6 +1678,7 @@ export const onDeleteOrganizationMember = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -1712,7 +1729,7 @@ export const onDeleteOrganizationMember = /* GraphQL */ `
   }
 `;
 export const onCreateOrganization = /* GraphQL */ `
-  subscription OnCreateOrganization($owner: String!, $admins: String!) {
+  subscription OnCreateOrganization($owner: String, $admins: String) {
     onCreateOrganization(owner: $owner, admins: $admins) {
       id
       orgName
@@ -1810,7 +1827,7 @@ export const onCreateOrganization = /* GraphQL */ `
   }
 `;
 export const onUpdateOrganization = /* GraphQL */ `
-  subscription OnUpdateOrganization($owner: String!, $admins: String!) {
+  subscription OnUpdateOrganization($owner: String, $admins: String) {
     onUpdateOrganization(owner: $owner, admins: $admins) {
       id
       orgName
@@ -1908,7 +1925,7 @@ export const onUpdateOrganization = /* GraphQL */ `
   }
 `;
 export const onDeleteOrganization = /* GraphQL */ `
-  subscription OnDeleteOrganization($owner: String!, $admins: String!) {
+  subscription OnDeleteOrganization($owner: String, $admins: String) {
     onDeleteOrganization(owner: $owner, admins: $admins) {
       id
       orgName
@@ -2006,7 +2023,7 @@ export const onDeleteOrganization = /* GraphQL */ `
   }
 `;
 export const onCreateCourseInfo = /* GraphQL */ `
-  subscription OnCreateCourseInfo($owner: String!) {
+  subscription OnCreateCourseInfo($owner: String) {
     onCreateCourseInfo(owner: $owner) {
       id
       designedBy
@@ -2031,7 +2048,7 @@ export const onCreateCourseInfo = /* GraphQL */ `
   }
 `;
 export const onUpdateCourseInfo = /* GraphQL */ `
-  subscription OnUpdateCourseInfo($owner: String!) {
+  subscription OnUpdateCourseInfo($owner: String) {
     onUpdateCourseInfo(owner: $owner) {
       id
       designedBy
@@ -2056,7 +2073,7 @@ export const onUpdateCourseInfo = /* GraphQL */ `
   }
 `;
 export const onDeleteCourseInfo = /* GraphQL */ `
-  subscription OnDeleteCourseInfo($owner: String!) {
+  subscription OnDeleteCourseInfo($owner: String) {
     onDeleteCourseInfo(owner: $owner) {
       id
       designedBy
@@ -2422,6 +2439,7 @@ export const onCreateDirectMessageUser = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -2496,6 +2514,7 @@ export const onUpdateDirectMessageUser = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -2570,6 +2589,7 @@ export const onDeleteDirectMessageUser = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -2798,8 +2818,8 @@ export const onDeleteDirectMessage = /* GraphQL */ `
   }
 `;
 export const onCreateMessage = /* GraphQL */ `
-  subscription OnCreateMessage($owner: String!) {
-    onCreateMessage(owner: $owner) {
+  subscription OnCreateMessage {
+    onCreateMessage {
       id
       content
       when
@@ -2814,6 +2834,7 @@ export const onCreateMessage = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -2915,6 +2936,7 @@ export const onCreateMessage = /* GraphQL */ `
           email
           phone
           owner
+          mainUserGroup
           hasPaidState
           profileState
           address
@@ -2992,8 +3014,8 @@ export const onCreateMessage = /* GraphQL */ `
   }
 `;
 export const onUpdateMessage = /* GraphQL */ `
-  subscription OnUpdateMessage($owner: String!) {
-    onUpdateMessage(owner: $owner) {
+  subscription OnUpdateMessage {
+    onUpdateMessage {
       id
       content
       when
@@ -3008,6 +3030,7 @@ export const onUpdateMessage = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -3109,6 +3132,7 @@ export const onUpdateMessage = /* GraphQL */ `
           email
           phone
           owner
+          mainUserGroup
           hasPaidState
           profileState
           address
@@ -3186,8 +3210,8 @@ export const onUpdateMessage = /* GraphQL */ `
   }
 `;
 export const onDeleteMessage = /* GraphQL */ `
-  subscription OnDeleteMessage($owner: String!) {
-    onDeleteMessage(owner: $owner) {
+  subscription OnDeleteMessage {
+    onDeleteMessage {
       id
       content
       when
@@ -3202,6 +3226,7 @@ export const onDeleteMessage = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -3303,6 +3328,7 @@ export const onDeleteMessage = /* GraphQL */ `
           email
           phone
           owner
+          mainUserGroup
           hasPaidState
           profileState
           address

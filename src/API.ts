@@ -9,6 +9,7 @@ export type CreateUserInput = {
   email?: string | null,
   phone?: string | null,
   owner?: string | null,
+  mainUserGroup?: string | null,
   hasPaidState?: string | null,
   profileState?: string | null,
   address?: string | null,
@@ -51,6 +52,7 @@ export type UpdateUserInput = {
   email?: string | null,
   phone?: string | null,
   owner?: string | null,
+  mainUserGroup?: string | null,
   hasPaidState?: string | null,
   profileState?: string | null,
   address?: string | null,
@@ -472,6 +474,7 @@ export type ModelUserFilterInput = {
   email?: ModelStringFilterInput | null,
   phone?: ModelStringFilterInput | null,
   owner?: ModelStringFilterInput | null,
+  mainUserGroup?: ModelStringFilterInput | null,
   hasPaidState?: ModelStringFilterInput | null,
   profileState?: ModelStringFilterInput | null,
   address?: ModelStringFilterInput | null,
@@ -873,6 +876,7 @@ export type CreateUserMutation = {
     email: string | null,
     phone: string | null,
     owner: string | null,
+    mainUserGroup: string | null,
     hasPaidState: string | null,
     profileState: string | null,
     address: string | null,
@@ -989,6 +993,7 @@ export type UpdateUserMutation = {
     email: string | null,
     phone: string | null,
     owner: string | null,
+    mainUserGroup: string | null,
     hasPaidState: string | null,
     profileState: string | null,
     address: string | null,
@@ -1105,6 +1110,7 @@ export type DeleteUserMutation = {
     email: string | null,
     phone: string | null,
     owner: string | null,
+    mainUserGroup: string | null,
     hasPaidState: string | null,
     profileState: string | null,
     address: string | null,
@@ -1231,6 +1237,7 @@ export type CreateGroupMemberMutation = {
         email: string | null,
         phone: string | null,
         owner: string | null,
+        mainUserGroup: string | null,
         hasPaidState: string | null,
         profileState: string | null,
         address: string | null,
@@ -1314,6 +1321,7 @@ export type CreateGroupMemberMutation = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -1392,6 +1400,7 @@ export type UpdateGroupMemberMutation = {
         email: string | null,
         phone: string | null,
         owner: string | null,
+        mainUserGroup: string | null,
         hasPaidState: string | null,
         profileState: string | null,
         address: string | null,
@@ -1475,6 +1484,7 @@ export type UpdateGroupMemberMutation = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -1553,6 +1563,7 @@ export type DeleteGroupMemberMutation = {
         email: string | null,
         phone: string | null,
         owner: string | null,
+        mainUserGroup: string | null,
         hasPaidState: string | null,
         profileState: string | null,
         address: string | null,
@@ -1636,6 +1647,7 @@ export type DeleteGroupMemberMutation = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -1709,6 +1721,7 @@ export type CreateGroupMutation = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -1882,6 +1895,7 @@ export type UpdateGroupMutation = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -2055,6 +2069,7 @@ export type DeleteGroupMutation = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -2282,6 +2297,7 @@ export type CreateOrganizationMemberMutation = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -2409,6 +2425,7 @@ export type UpdateOrganizationMemberMutation = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -2536,6 +2553,7 @@ export type DeleteOrganizationMemberMutation = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -3439,6 +3457,7 @@ export type CreateDirectMessageUserMutation = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -3527,6 +3546,7 @@ export type UpdateDirectMessageUserMutation = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -3615,6 +3635,7 @@ export type DeleteDirectMessageUserMutation = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -3918,6 +3939,7 @@ export type CreateMessageMutation = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -4034,6 +4056,7 @@ export type CreateMessageMutation = {
         email: string | null,
         phone: string | null,
         owner: string | null,
+        mainUserGroup: string | null,
         hasPaidState: string | null,
         profileState: string | null,
         address: string | null,
@@ -4136,6 +4159,7 @@ export type UpdateMessageMutation = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -4252,6 +4276,7 @@ export type UpdateMessageMutation = {
         email: string | null,
         phone: string | null,
         owner: string | null,
+        mainUserGroup: string | null,
         hasPaidState: string | null,
         profileState: string | null,
         address: string | null,
@@ -4354,6 +4379,7 @@ export type DeleteMessageMutation = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -4470,6 +4496,7 @@ export type DeleteMessageMutation = {
         email: string | null,
         phone: string | null,
         owner: string | null,
+        mainUserGroup: string | null,
         hasPaidState: string | null,
         profileState: string | null,
         address: string | null,
@@ -5475,6 +5502,7 @@ export type GetUserQuery = {
     email: string | null,
     phone: string | null,
     owner: string | null,
+    mainUserGroup: string | null,
     hasPaidState: string | null,
     profileState: string | null,
     address: string | null,
@@ -5595,6 +5623,7 @@ export type ListUsersQuery = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -5667,6 +5696,7 @@ export type GetGroupQuery = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -5844,6 +5874,7 @@ export type ListGroupsQuery = {
         email: string | null,
         phone: string | null,
         owner: string | null,
+        mainUserGroup: string | null,
         hasPaidState: string | null,
         profileState: string | null,
         address: string | null,
@@ -6413,6 +6444,7 @@ export type GetDirectMessageUserQuery = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -6505,6 +6537,7 @@ export type ListDirectMessageUsersQuery = {
         email: string | null,
         phone: string | null,
         owner: string | null,
+        mainUserGroup: string | null,
         hasPaidState: string | null,
         profileState: string | null,
         address: string | null,
@@ -6690,6 +6723,7 @@ export type GetMessageQuery = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -6806,6 +6840,7 @@ export type GetMessageQuery = {
         email: string | null,
         phone: string | null,
         owner: string | null,
+        mainUserGroup: string | null,
         hasPaidState: string | null,
         profileState: string | null,
         address: string | null,
@@ -6912,6 +6947,7 @@ export type ListMessagesQuery = {
         email: string | null,
         phone: string | null,
         owner: string | null,
+        mainUserGroup: string | null,
         hasPaidState: string | null,
         profileState: string | null,
         address: string | null,
@@ -7525,6 +7561,7 @@ export type GroupMemberByGroupQuery = {
         email: string | null,
         phone: string | null,
         owner: string | null,
+        mainUserGroup: string | null,
         hasPaidState: string | null,
         profileState: string | null,
         address: string | null,
@@ -7600,6 +7637,7 @@ export type GroupMemberByUserQuery = {
         email: string | null,
         phone: string | null,
         owner: string | null,
+        mainUserGroup: string | null,
         hasPaidState: string | null,
         profileState: string | null,
         address: string | null,
@@ -7653,6 +7691,7 @@ export type GroupByTypeQuery = {
         email: string | null,
         phone: string | null,
         owner: string | null,
+        mainUserGroup: string | null,
         hasPaidState: string | null,
         profileState: string | null,
         address: string | null,
@@ -7782,6 +7821,7 @@ export type OrganizationMemberByOrganizationQuery = {
         email: string | null,
         phone: string | null,
         owner: string | null,
+        mainUserGroup: string | null,
         hasPaidState: string | null,
         profileState: string | null,
         address: string | null,
@@ -7860,6 +7900,7 @@ export type OrganizationMemberByUserQuery = {
         email: string | null,
         phone: string | null,
         owner: string | null,
+        mainUserGroup: string | null,
         hasPaidState: string | null,
         profileState: string | null,
         address: string | null,
@@ -7938,6 +7979,7 @@ export type OrganizationMemberByRoleQuery = {
         email: string | null,
         phone: string | null,
         owner: string | null,
+        mainUserGroup: string | null,
         hasPaidState: string | null,
         profileState: string | null,
         address: string | null,
@@ -8027,6 +8069,7 @@ export type MessagesByRoomQuery = {
         email: string | null,
         phone: string | null,
         owner: string | null,
+        mainUserGroup: string | null,
         hasPaidState: string | null,
         profileState: string | null,
         address: string | null,
@@ -8124,6 +8167,7 @@ export type SearchGroupsQuery = {
         email: string | null,
         phone: string | null,
         owner: string | null,
+        mainUserGroup: string | null,
         hasPaidState: string | null,
         profileState: string | null,
         address: string | null,
@@ -8226,6 +8270,7 @@ export type OnCreateMessageByRoomIdSubscription = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -8342,6 +8387,7 @@ export type OnCreateMessageByRoomIdSubscription = {
         email: string | null,
         phone: string | null,
         owner: string | null,
+        mainUserGroup: string | null,
         hasPaidState: string | null,
         profileState: string | null,
         address: string | null,
@@ -8423,7 +8469,7 @@ export type OnCreateMessageByRoomIdSubscription = {
 };
 
 export type OnCreateUserSubscriptionVariables = {
-  owner: string,
+  owner?: string | null,
 };
 
 export type OnCreateUserSubscription = {
@@ -8435,6 +8481,7 @@ export type OnCreateUserSubscription = {
     email: string | null,
     phone: string | null,
     owner: string | null,
+    mainUserGroup: string | null,
     hasPaidState: string | null,
     profileState: string | null,
     address: string | null,
@@ -8539,7 +8586,7 @@ export type OnCreateUserSubscription = {
 };
 
 export type OnUpdateUserSubscriptionVariables = {
-  owner: string,
+  owner?: string | null,
 };
 
 export type OnUpdateUserSubscription = {
@@ -8551,6 +8598,7 @@ export type OnUpdateUserSubscription = {
     email: string | null,
     phone: string | null,
     owner: string | null,
+    mainUserGroup: string | null,
     hasPaidState: string | null,
     profileState: string | null,
     address: string | null,
@@ -8655,7 +8703,7 @@ export type OnUpdateUserSubscription = {
 };
 
 export type OnDeleteUserSubscriptionVariables = {
-  owner: string,
+  owner?: string | null,
 };
 
 export type OnDeleteUserSubscription = {
@@ -8667,6 +8715,7 @@ export type OnDeleteUserSubscription = {
     email: string | null,
     phone: string | null,
     owner: string | null,
+    mainUserGroup: string | null,
     hasPaidState: string | null,
     profileState: string | null,
     address: string | null,
@@ -8789,6 +8838,7 @@ export type OnCreateGroupMemberSubscription = {
         email: string | null,
         phone: string | null,
         owner: string | null,
+        mainUserGroup: string | null,
         hasPaidState: string | null,
         profileState: string | null,
         address: string | null,
@@ -8872,6 +8922,7 @@ export type OnCreateGroupMemberSubscription = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -8946,6 +8997,7 @@ export type OnUpdateGroupMemberSubscription = {
         email: string | null,
         phone: string | null,
         owner: string | null,
+        mainUserGroup: string | null,
         hasPaidState: string | null,
         profileState: string | null,
         address: string | null,
@@ -9029,6 +9081,7 @@ export type OnUpdateGroupMemberSubscription = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -9103,6 +9156,7 @@ export type OnDeleteGroupMemberSubscription = {
         email: string | null,
         phone: string | null,
         owner: string | null,
+        mainUserGroup: string | null,
         hasPaidState: string | null,
         profileState: string | null,
         address: string | null,
@@ -9186,6 +9240,7 @@ export type OnDeleteGroupMemberSubscription = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -9242,7 +9297,7 @@ export type OnDeleteGroupMemberSubscription = {
 };
 
 export type OnCreateGroupSubscriptionVariables = {
-  owner: string,
+  owner?: string | null,
 };
 
 export type OnCreateGroupSubscription = {
@@ -9259,6 +9314,7 @@ export type OnCreateGroupSubscription = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -9415,7 +9471,7 @@ export type OnCreateGroupSubscription = {
 };
 
 export type OnUpdateGroupSubscriptionVariables = {
-  owner: string,
+  owner?: string | null,
 };
 
 export type OnUpdateGroupSubscription = {
@@ -9432,6 +9488,7 @@ export type OnUpdateGroupSubscription = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -9588,7 +9645,7 @@ export type OnUpdateGroupSubscription = {
 };
 
 export type OnDeleteGroupSubscriptionVariables = {
-  owner: string,
+  owner?: string | null,
 };
 
 export type OnDeleteGroupSubscription = {
@@ -9605,6 +9662,7 @@ export type OnDeleteGroupSubscription = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -9828,6 +9886,7 @@ export type OnCreateOrganizationMemberSubscription = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -9951,6 +10010,7 @@ export type OnUpdateOrganizationMemberSubscription = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -10074,6 +10134,7 @@ export type OnDeleteOrganizationMemberSubscription = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -10130,8 +10191,8 @@ export type OnDeleteOrganizationMemberSubscription = {
 };
 
 export type OnCreateOrganizationSubscriptionVariables = {
-  owner: string,
-  admins: string,
+  owner?: string | null,
+  admins?: string | null,
 };
 
 export type OnCreateOrganizationSubscription = {
@@ -10243,8 +10304,8 @@ export type OnCreateOrganizationSubscription = {
 };
 
 export type OnUpdateOrganizationSubscriptionVariables = {
-  owner: string,
-  admins: string,
+  owner?: string | null,
+  admins?: string | null,
 };
 
 export type OnUpdateOrganizationSubscription = {
@@ -10356,8 +10417,8 @@ export type OnUpdateOrganizationSubscription = {
 };
 
 export type OnDeleteOrganizationSubscriptionVariables = {
-  owner: string,
-  admins: string,
+  owner?: string | null,
+  admins?: string | null,
 };
 
 export type OnDeleteOrganizationSubscription = {
@@ -10469,7 +10530,7 @@ export type OnDeleteOrganizationSubscription = {
 };
 
 export type OnCreateCourseInfoSubscriptionVariables = {
-  owner: string,
+  owner?: string | null,
 };
 
 export type OnCreateCourseInfoSubscription = {
@@ -10500,7 +10561,7 @@ export type OnCreateCourseInfoSubscription = {
 };
 
 export type OnUpdateCourseInfoSubscriptionVariables = {
-  owner: string,
+  owner?: string | null,
 };
 
 export type OnUpdateCourseInfoSubscription = {
@@ -10531,7 +10592,7 @@ export type OnUpdateCourseInfoSubscription = {
 };
 
 export type OnDeleteCourseInfoSubscriptionVariables = {
-  owner: string,
+  owner?: string | null,
 };
 
 export type OnDeleteCourseInfoSubscription = {
@@ -10940,6 +11001,7 @@ export type OnCreateDirectMessageUserSubscription = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -11024,6 +11086,7 @@ export type OnUpdateDirectMessageUserSubscription = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -11108,6 +11171,7 @@ export type OnDeleteDirectMessageUserSubscription = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -11365,10 +11429,6 @@ export type OnDeleteDirectMessageSubscription = {
   } | null,
 };
 
-export type OnCreateMessageSubscriptionVariables = {
-  owner: string,
-};
-
 export type OnCreateMessageSubscription = {
   onCreateMessage:  {
     __typename: "Message",
@@ -11387,6 +11447,7 @@ export type OnCreateMessageSubscription = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -11503,6 +11564,7 @@ export type OnCreateMessageSubscription = {
         email: string | null,
         phone: string | null,
         owner: string | null,
+        mainUserGroup: string | null,
         hasPaidState: string | null,
         profileState: string | null,
         address: string | null,
@@ -11581,10 +11643,6 @@ export type OnCreateMessageSubscription = {
     createdAt: string,
     updatedAt: string,
   } | null,
-};
-
-export type OnUpdateMessageSubscriptionVariables = {
-  owner: string,
 };
 
 export type OnUpdateMessageSubscription = {
@@ -11605,6 +11663,7 @@ export type OnUpdateMessageSubscription = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -11721,6 +11780,7 @@ export type OnUpdateMessageSubscription = {
         email: string | null,
         phone: string | null,
         owner: string | null,
+        mainUserGroup: string | null,
         hasPaidState: string | null,
         profileState: string | null,
         address: string | null,
@@ -11801,10 +11861,6 @@ export type OnUpdateMessageSubscription = {
   } | null,
 };
 
-export type OnDeleteMessageSubscriptionVariables = {
-  owner: string,
-};
-
 export type OnDeleteMessageSubscription = {
   onDeleteMessage:  {
     __typename: "Message",
@@ -11823,6 +11879,7 @@ export type OnDeleteMessageSubscription = {
       email: string | null,
       phone: string | null,
       owner: string | null,
+      mainUserGroup: string | null,
       hasPaidState: string | null,
       profileState: string | null,
       address: string | null,
@@ -11939,6 +11996,7 @@ export type OnDeleteMessageSubscription = {
         email: string | null,
         phone: string | null,
         owner: string | null,
+        mainUserGroup: string | null,
         hasPaidState: string | null,
         profileState: string | null,
         address: string | null,

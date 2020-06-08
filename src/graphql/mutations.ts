@@ -11,6 +11,7 @@ export const createUser = /* GraphQL */ `
       email
       phone
       owner
+      mainUserGroup
       hasPaidState
       profileState
       address
@@ -113,6 +114,7 @@ export const updateUser = /* GraphQL */ `
       email
       phone
       owner
+      mainUserGroup
       hasPaidState
       profileState
       address
@@ -215,6 +217,7 @@ export const deleteUser = /* GraphQL */ `
       email
       phone
       owner
+      mainUserGroup
       hasPaidState
       profileState
       address
@@ -325,6 +328,7 @@ export const createGroupMember = /* GraphQL */ `
           email
           phone
           owner
+          mainUserGroup
           hasPaidState
           profileState
           address
@@ -403,6 +407,7 @@ export const createGroupMember = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -469,6 +474,7 @@ export const updateGroupMember = /* GraphQL */ `
           email
           phone
           owner
+          mainUserGroup
           hasPaidState
           profileState
           address
@@ -547,6 +553,7 @@ export const updateGroupMember = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -613,6 +620,7 @@ export const deleteGroupMember = /* GraphQL */ `
           email
           phone
           owner
+          mainUserGroup
           hasPaidState
           profileState
           address
@@ -691,6 +699,7 @@ export const deleteGroupMember = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -753,6 +762,7 @@ export const createGroup = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -903,6 +913,7 @@ export const updateGroup = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -1053,6 +1064,7 @@ export const deleteGroup = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -1250,6 +1262,7 @@ export const createOrganizationMember = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -1359,6 +1372,7 @@ export const updateOrganizationMember = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -1468,6 +1482,7 @@ export const deleteOrganizationMember = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -2228,6 +2243,7 @@ export const createDirectMessageUser = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -2302,6 +2318,7 @@ export const updateDirectMessageUser = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -2376,6 +2393,7 @@ export const deleteDirectMessageUser = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -2620,6 +2638,7 @@ export const createMessage = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -2721,6 +2740,7 @@ export const createMessage = /* GraphQL */ `
           email
           phone
           owner
+          mainUserGroup
           hasPaidState
           profileState
           address
@@ -2814,6 +2834,7 @@ export const updateMessage = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -2915,6 +2936,7 @@ export const updateMessage = /* GraphQL */ `
           email
           phone
           owner
+          mainUserGroup
           hasPaidState
           profileState
           address
@@ -3008,6 +3030,7 @@ export const deleteMessage = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -3109,6 +3132,7 @@ export const deleteMessage = /* GraphQL */ `
           email
           phone
           owner
+          mainUserGroup
           hasPaidState
           profileState
           address

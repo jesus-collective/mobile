@@ -11,6 +11,7 @@ export const getUser = /* GraphQL */ `
       email
       phone
       owner
+      mainUserGroup
       hasPaidState
       profileState
       address
@@ -118,6 +119,7 @@ export const listUsers = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -179,6 +181,7 @@ export const getGroup = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -334,6 +337,7 @@ export const listGroups = /* GraphQL */ `
           email
           phone
           owner
+          mainUserGroup
           hasPaidState
           profileState
           address
@@ -827,6 +831,7 @@ export const getDirectMessageUser = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -910,6 +915,7 @@ export const listDirectMessageUsers = /* GraphQL */ `
           email
           phone
           owner
+          mainUserGroup
           hasPaidState
           profileState
           address
@@ -1069,6 +1075,7 @@ export const getMessage = /* GraphQL */ `
         email
         phone
         owner
+        mainUserGroup
         hasPaidState
         profileState
         address
@@ -1170,6 +1177,7 @@ export const getMessage = /* GraphQL */ `
           email
           phone
           owner
+          mainUserGroup
           hasPaidState
           profileState
           address
@@ -1268,6 +1276,7 @@ export const listMessages = /* GraphQL */ `
           email
           phone
           owner
+          mainUserGroup
           hasPaidState
           profileState
           address
@@ -1825,6 +1834,7 @@ export const groupMemberByGroup = /* GraphQL */ `
           email
           phone
           owner
+          mainUserGroup
           hasPaidState
           profileState
           address
@@ -1902,6 +1912,7 @@ export const groupMemberByUser = /* GraphQL */ `
           email
           phone
           owner
+          mainUserGroup
           hasPaidState
           profileState
           address
@@ -1958,6 +1969,7 @@ export const groupByType = /* GraphQL */ `
           email
           phone
           owner
+          mainUserGroup
           hasPaidState
           profileState
           address
@@ -2085,6 +2097,7 @@ export const organizationMemberByOrganization = /* GraphQL */ `
           email
           phone
           owner
+          mainUserGroup
           hasPaidState
           profileState
           address
@@ -2165,6 +2178,7 @@ export const organizationMemberByUser = /* GraphQL */ `
           email
           phone
           owner
+          mainUserGroup
           hasPaidState
           profileState
           address
@@ -2245,6 +2259,7 @@ export const organizationMemberByRole = /* GraphQL */ `
           email
           phone
           owner
+          mainUserGroup
           hasPaidState
           profileState
           address
@@ -2340,6 +2355,7 @@ export const messagesByRoom = /* GraphQL */ `
           email
           phone
           owner
+          mainUserGroup
           hasPaidState
           profileState
           address
@@ -2436,6 +2452,7 @@ export const searchGroups = /* GraphQL */ `
           email
           phone
           owner
+          mainUserGroup
           hasPaidState
           profileState
           address

@@ -13,6 +13,7 @@ type User
   email: String @auth(rules: [{ allow: owner, ownerField: "owner" }])
   phone: String @auth(rules: [{ allow: owner, ownerField: "owner" }])
   owner: String
+  mainUserGroup:String
 
   hasPaidState: String
   profileState: String
