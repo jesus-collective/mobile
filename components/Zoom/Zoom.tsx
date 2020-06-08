@@ -13,14 +13,9 @@ import JCComponent from '../JCComponent/JCComponent';
 //ZoomMtg.preLoadWasm();
 //ZoomMtg.prepareJssdk();
 
-interface Props {
 
-}
-interface State {
 
-}
-
-export default class GroupScreen extends JCComponent<Props, State>{
+export default class GroupScreen extends JCComponent {
     API_KEY = 'C8Z1xof_SaC2MX5HyuWeLA';
     API_SECRET = 'GKi0Z2aYgF5Alo7gOUrnp2rlnxuSUpLPowIE';
     meetConfig = {
@@ -33,8 +28,8 @@ export default class GroupScreen extends JCComponent<Props, State>{
         leaveUrl: 'https://zoom.us',
         role: 0
     };
-    constructor(props: Props) {
-        super(props);
+    constructor() {
+        super(null);
         console.log(this.meetConfig.meetingNumber)
         this.startUp()
 
@@ -43,7 +38,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
         ZoomMtg.setZoomJSLib('https://dmogdx0jrul3u.cloudfront.net/1.4.2/lib', '/av')
         ZoomMtg.preLoadWasm();
         ZoomMtg.prepareJssdk();
-        var res = ZoomMtg.generateSignature({
+        const res = ZoomMtg.generateSignature({
             meetingNumber: this.meetConfig.meetingNumber,
             apiKey: this.meetConfig.apiKey,
             apiSecret: this.meetConfig.apiSecret,
