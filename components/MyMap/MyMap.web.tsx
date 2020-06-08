@@ -33,11 +33,9 @@ interface State {
   selectedPlace: any
   activeMarker: any
   showingInfoWindow: any
-  groupsEnabled: boolean
   profilesEnabled: boolean
   organizationsEnabled: boolean
   eventsEnabled: boolean
-  groupsToggle: any
   profilesToggle: any
   organizationsToggle: any
   eventsToggle: any
@@ -51,11 +49,9 @@ class MyMapImpl extends JCComponent<Props, State> {
       activeMarker: null,
       selectedPlace: {},
       showingInfoWindow: false,
-      groupsEnabled: false,
       profilesEnabled: true,
       organizationsEnabled: true,
       eventsEnabled: false,
-      groupsToggle: new Animated.Value(1),
       profilesToggle: new Animated.Value(1),
       organizationsToggle: new Animated.Value(1),
       eventsToggle: new Animated.Value(1),
@@ -113,24 +109,6 @@ class MyMapImpl extends JCComponent<Props, State> {
         }
         this.setState({ organizationsEnabled: !this.state.organizationsEnabled })
         return this.state.organizationsEnabled
-
-      case "group":
-
-        if (this.state.groupsEnabled) {
-          Animated.timing(this.state.groupsToggle, {
-            toValue: 0,
-            duration: 200,
-            useNativeDriver: true
-          }).start();
-        } else {
-          Animated.timing(this.state.groupsToggle, {
-            toValue: 1,
-            duration: 200,
-            useNativeDriver: true
-          }).start();
-        }
-        this.setState({ groupsEnabled: !this.state.groupsEnabled })
-        return this.state.groupsEnabled
 
       case "event":
 
@@ -218,27 +196,6 @@ class MyMapImpl extends JCComponent<Props, State> {
           <View style={{ display: 'flex', height: '50%' }}>
             <View style={{ flex: 1, minHeight: 50 }}>
               <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: '5%' }}>
-                <View style={{ width: 170, flexDirection: 'row' }}>
-                  <Text style={this.styles.style.fontMyMapOptions}>Show Groups</Text>
-                  <TouchableWithoutFeedback onPress={() => this.toggleFilters("group")}>
-                    <View style={{
-                      backgroundColor: this.state.groupsEnabled ? '#333333' : '#aaaaaa',
-                      borderColor: this.state.groupsEnabled ? '#333333' : '#aaaaaa',
-                      borderWidth: 2, borderRadius: 25, width: 50, height: 20
-                    }}>
-                      <Animated.View
-                        style={{
-                          backgroundColor: '#ffffff', borderRadius: 25, width: 16, height: 16,
-                          transform: [{
-                            translateX: this.state.groupsToggle.interpolate({
-                              inputRange: [0, 1],
-                              outputRange: [0, 30]
-                            })
-                          }]
-                        }} />
-                    </View>
-                  </TouchableWithoutFeedback>
-                </View>
                 <View style={{ width: 170, flexDirection: 'row' }}>
                   <Text style={this.styles.style.fontMyMapOptions}>Show Events</Text>
                   <TouchableWithoutFeedback onPress={() => this.toggleFilters("event")}>
@@ -330,9 +287,6 @@ class MyMapImpl extends JCComponent<Props, State> {
                   this.props.mapData.map((mapItem, index) => {
 
                     const filters = []
-                    if (!this.state.groupsEnabled) {
-                      filters.push("group")
-                    }
                     if (!this.state.organizationsEnabled) {
                       filters.push("organization")
                     }
