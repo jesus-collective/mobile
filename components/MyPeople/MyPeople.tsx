@@ -3,7 +3,6 @@ import { Text } from 'react-native';
 import * as React from 'react';
 
 import getTheme from '../../native-base-theme/components';
-import material from '../../native-base-theme/variables/material';
 import { TouchableOpacity } from 'react-native'
 import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
@@ -103,7 +102,7 @@ export default class MyPeople extends JCComponent<Props, State> {
       return null
     else
       return (
-        <StyleProvider style={getTheme(material)}>
+        <StyleProvider style={getTheme()}>
 
           <Container style={this.styles.style.peopleContainer} >
             <Button style={this.styles.style.connectWithTopSectionButton} onPress={() => { this.showProfiles() }} transparent><Text style={this.styles.style.fontConnectWith}>People you may connect with</Text></Button>

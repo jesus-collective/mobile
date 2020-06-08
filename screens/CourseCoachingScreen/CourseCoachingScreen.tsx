@@ -5,7 +5,6 @@ import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
 import CourseSidebar from '../../components/CourseSidebar/CourseSidebar'
 import getTheme from '../../native-base-theme/components';
-import material from '../../native-base-theme/variables/material';
 
 import Validate from '../../components/Validate/Validate'
 import { Image } from 'react-native'
@@ -79,7 +78,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
     console.log("CourseScreen")
     return (
       this.state.data ?
-        <StyleProvider style={getTheme(material)}>
+        <StyleProvider style={getTheme()}>
           <Container style={{ flexDirection: "row" }}>
             <CourseSidebar courseId={this.state.data.id}></CourseSidebar>
             <Container style={{ flex: 85 }}>

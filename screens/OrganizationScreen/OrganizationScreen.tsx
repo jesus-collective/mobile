@@ -8,7 +8,6 @@ import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
 
 import getTheme from '../../native-base-theme/components';
-import material from '../../native-base-theme/variables/material';
 import EditableText from '../../components/Forms/EditableText'
 import Validate from '../../components/Validate/Validate'
 
@@ -206,7 +205,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
     console.log("OrganizationScreen")
     return (
       this.state.data ?
-        <StyleProvider style={getTheme(material)}>
+        <StyleProvider style={getTheme()}>
           <Container >
             <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
             <Content>

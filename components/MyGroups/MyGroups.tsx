@@ -5,7 +5,6 @@ import * as React from 'react';
 import { Text } from 'react-native'
 
 import getTheme from '../../native-base-theme/components';
-import material from '../../native-base-theme/variables/material';
 import { Image } from 'react-native'
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
@@ -531,7 +530,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       else
         return (
           <ErrorBoundry>
-            <StyleProvider style={getTheme(material)}>
+            <StyleProvider style={getTheme()}>
 
               <Container style={{ padding: 10, minHeight: 525, width: "100%", flexDirection: 'column', justifyContent: 'flex-start' }}>
                 <Container style={this.styles.style.sectionHeadingDashboard} >

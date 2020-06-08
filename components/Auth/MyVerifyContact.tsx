@@ -5,6 +5,7 @@ import SignUpSidebar from '../../components/SignUpSidebar/SignUpSidebar'
 import { View } from 'native-base';
 import { Platform } from 'react-native';
 import { Dimensions } from 'react-native'
+import MainStyles from '../../components/style';
 
 interface Props {
     authState: any
@@ -12,6 +13,14 @@ interface Props {
 class MyVerifyContact extends VerifyContact<Props> {
     constructor(props: Props) {
         super(props);
+    }
+
+    styles = MainStyles.getInstance();
+    componentDidMount(): void {
+        Dimensions.addEventListener('change', this.styles.updateStyles(this))
+    }
+    componentWillUnmount(): void {
+        Dimensions.removeEventListener("change", this.styles.updateStyles(this));
     }
     render() {
         //  console.log(this.props.authState)
@@ -30,4 +39,4 @@ class MyVerifyContact extends VerifyContact<Props> {
         );
     }
 }
-export default MyVerifyContact as React.ComponentType<any>
+export default MyVerifyContact

@@ -7,7 +7,6 @@ import { Text } from 'react-native'
 import CourseSidebar from '../../components/CourseSidebar/CourseSidebar'
 
 import getTheme from '../../native-base-theme/components';
-import material from '../../native-base-theme/variables/material';
 import EditableDate from '../../components/Forms/EditableDate'
 import EditableText from '../../components/Forms/EditableText'
 import EditableDollar from '../../components/Forms/EditableDollar'
@@ -188,7 +187,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
     console.log("CourseScreen")
     return (
       this.state.data ?
-        <StyleProvider style={getTheme(material)}>
+        <StyleProvider style={getTheme()}>
           <Container style={{ flexDirection: "row" }}>
             <CourseSidebar courseId={this.state.data.id}></CourseSidebar>
             <Container style={{ flex: 85 }}>

@@ -8,7 +8,6 @@ import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
 
 import getTheme from '../../native-base-theme/components';
-import material from '../../native-base-theme/variables/material';
 //import  from '../../components/MessageBoard/MessageBoard'
 import EditableDate from '../../components/Forms/EditableDate'
 import EditableText from '../../components/Forms/EditableText'
@@ -352,7 +351,7 @@ export default class EventScreen extends JCComponent<Props, State>{
     console.log("EventScreen")
     return (
       this.state.data ?
-        <StyleProvider style={getTheme(material)}>
+        <StyleProvider style={getTheme()}>
           <Container>
             <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={!this.state.createNew && this.state.data.eventType === "location" ? this.mapChanged : null} />
             <Content>

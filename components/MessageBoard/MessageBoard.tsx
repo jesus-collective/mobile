@@ -4,7 +4,6 @@ import { Text } from 'react-native'
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
 import getTheme from '../../native-base-theme/components';
-import material from '../../native-base-theme/variables/material';
 import { TouchableOpacity } from 'react-native'
 import { CreateMessageInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
@@ -150,7 +149,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     return (
       (this.state.created) ?
 
-        <StyleProvider style={getTheme(material)}>
+        <StyleProvider style={getTheme()}>
           <Container style={this.styles.style.messageBoardContainer} >
 
             <Content style={{ marginBottom: 40 }}>

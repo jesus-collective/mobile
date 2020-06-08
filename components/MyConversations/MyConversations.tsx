@@ -3,7 +3,6 @@ import { Text } from 'react-native'
 import * as React from 'react';
 
 import getTheme from '../../native-base-theme/components';
-import material from '../../native-base-theme/variables/material';
 import { Image } from 'react-native'
 import { constants } from '../../src/constants'
 import JCComponent from '../JCComponent/JCComponent';
@@ -51,7 +50,7 @@ export default class MyConversations extends JCComponent<Props> {
       return null
     else
       return (
-        <StyleProvider style={getTheme(material)}>
+        <StyleProvider style={getTheme()}>
 
           <Container style={{ width: "100%", flexDirection: 'column', alignItems: 'flex-start', minHeight: 725, marginTop: 50 }} >
             <Button transparent onPress={() => { this.openConversation() }}><Text style={this.styles.style.fontConnectWith}>Latest Conversations</Text></Button>
