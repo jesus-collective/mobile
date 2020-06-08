@@ -5,7 +5,6 @@ import React from 'react';
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import awsmobile from '../../src/aws-exports';
 import { Button, Text } from 'native-base';
-import { ResourceRoot, Resource, ResourceEpisode, ResourceSeries } from "../../src/models";
 import GRAPHQL_AUTH_MODE, { Greetings } from 'aws-amplify-react-native'
 
 import * as queries from '../../src/graphql/queries';
