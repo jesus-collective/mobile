@@ -28,6 +28,10 @@ export default class HeaderStyles {
                 backgroundColor: '#292929'
 
             },
+            adminContainer: {
+                backgroundColor: '#292929'
+
+            },
             icon: {
                 color: '#aaaaaa',
                 fontSize: 22,

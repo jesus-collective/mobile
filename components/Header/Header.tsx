@@ -42,6 +42,10 @@ export default class HeaderJC extends JCComponent<Props> {
     const user = await Auth.currentAuthenticatedUser();
     this.props.navigation.push("ProfileScreen", { id: user['username'], create: false });
   }
+  openAdmin = async (): Promise<void> => {
+    const user = await Auth.currentAuthenticatedUser();
+    this.props.navigation.push("AdminScreen", { id: user['username'], create: false });
+  }
   openSearch = (): void => {
     this.props.navigation.push("SearchScreen");
   }
@@ -133,6 +137,17 @@ export default class HeaderJC extends JCComponent<Props> {
 
         </Body>
         <Right>
+          {
+            constants["SETTING_ISVISIBLE_ADMIN"] && this.isMemberOf("admin") ?
+
+              <Button
+                transparent
+                data-testid="header-map"
+                onPress={this.openAdmin}>
+                <Ionicons name="ios-rocket" style={this.headerStyles.style.icon} />
+              </Button> : null
+
+          }
           {
             constants["SETTING_ISVISIBLE_MAP"] ?
               this.props.onMapChange != null ?

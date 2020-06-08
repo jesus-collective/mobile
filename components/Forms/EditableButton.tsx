@@ -33,7 +33,7 @@ export default class EditableButton extends JCComponent<Props, State> {
       placeholder: props.placeholder
     }
   }
-  onChanged(val: any) {
+  onChanged(val: any): void {
     console.log("onChanged")
     if (val.target.value == "") {
       this.setState({ isEditMode: false })

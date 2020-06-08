@@ -43,6 +43,7 @@ const ResourcesScreen = lazy(() => import('../ResourcesScreen/ResourcesScreen'))
 const ProfileScreen = lazy(() => import('../ProfileScreen/ProfileScreen'));
 const ProfilesScreen = lazy(() => import('../ProfilesScreen/ProfilesScreen'));
 const SearchScreen = lazy(() => import('../SearchScreen/SearchScreen'));
+const AdminScreen = lazy(() => import('../AdminScreen/AdminScreen'));
 
 Amplify.configure(awsconfig);
 
@@ -69,6 +70,7 @@ const linking = {
     SearchScreen: '/search',
     ProfileScreen: '/profile',
     ProfilesScreen: '/profiles',
+    AdminScreen: '/admin',
 
   }
 };
@@ -187,7 +189,11 @@ function MainAppRouter() {
         component={ProfilesScreen}
         options={{ title: 'Jesus Collective' }}
       />
-
+      <Stack.Screen
+        name="AdminScreen"
+        component={AdminScreen}
+        options={{ title: 'Jesus Collective' }}
+      />
     </Stack.Navigator>
   )
 }
