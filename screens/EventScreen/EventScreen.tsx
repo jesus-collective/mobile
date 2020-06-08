@@ -344,13 +344,33 @@ export default class EventScreen extends JCComponent<Props, State>{
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#979797', textTransform: "uppercase", flex: 0 }}>Sponsored</Text>
                   </Container>
 
-        <View>
+                <View>
                   <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Event Name" multiline={false} textStyle={this.styles.style.eventNameInput} inputStyle={this.styles.style.eventNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
                   <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Event Description" multiline={true} textStyle={this.styles.style.eventDescriptionInput} inputStyle={this.styles.style.eventDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
-             </View>
-                  <View>
-                    <EditableDate type="datetime" onChange={(time: any, timeZone: any) => { this.updateValue("time", time); this.updateValue("tz", timeZone) }} placeholder="Enter Event Time" multiline={false} textStyle={this.styles.style.eventDateInput} inputStyle={this.styles.style.eventDateInput} value={this.state.data.time} tz={this.state.data.tz ? this.state.data.tz : moment.tz.guess()} isEditable={this.state.isEditable}></EditableDate>
-  </View>
+                </View>
+                <View>
+                  {this.state.isEditable ?
+                  <EditableDate 
+                    type="datetime" 
+                    onChange={(time: any, timeZone: any) => { this.updateValue("time", time); this.updateValue("tz", timeZone) }} 
+                    placeholder="Enter Event Time" 
+                    multiline={false} 
+                    textStyle={this.styles.style.eventDateInput} 
+                    inputStyle={this.styles.style.eventDateInput} 
+                    value={this.state.data.time} 
+                    tz={this.state.data.tz ? this.state.data.tz : moment.tz.guess()} 
+                    isEditable={this.state.isEditable}></EditableDate>
+                  : <EditableDate 
+                    type="datetime" 
+                    onChange={(time: any, timeZone: any) => { this.updateValue("time", time); this.updateValue("tz", timeZone) }} 
+                    placeholder="Enter Event Time" 
+                    multiline={false} 
+                    textStyle={this.styles.style.eventDateInput} 
+                    inputStyle={this.styles.style.eventDateInput} 
+                    value={this.state.data.time} 
+                    tz={moment.tz.guess()}
+                    isEditable={this.state.isEditable}></EditableDate>}
+                </View>
 
                   {this.state.isEditable ? <Picker
                     mode="dropdown"

@@ -457,7 +457,7 @@ export default class MyGroups extends JCComponent<Props, State> {
   }
   renderEvent(item: any): React.ReactNode {
 
-    const zone = item.tz ? item.tz : moment.tz.guess()
+    const zone = moment.tz.guess()
     return <Card style={[this.styles.style.eventCard, { width: this.state.cardWidth }]}>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetailTop}>{moment.tz(item.time, zone).format('MMMM Do YYYY, h:mm a')} {moment.tz.zone(zone).abbr(+moment(item.time).format('x'))}</Text></CardItem>
       <CardItem style={{ height: 60, marginTop: 8 }}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitle}>{item.name}</Text></CardItem>
