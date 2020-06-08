@@ -965,6 +965,9 @@ export default class MainStyles {
                 borderColor: "#FFFFFF",
                 width: "100%"
             },
+            dashboardConversationCardLeft: {
+                flexDirection: "row"
+            },
             myMapDashboardConversationCard: {
                 minHeight: 50,
                 paddingTop: 28,
@@ -1102,6 +1105,10 @@ export default class MainStyles {
                 dashboardConversationCard: {
                     width: "100%"
                 },
+                dashboardConversationCardLeft: {
+                    flexDirection: "column",
+                    justifyContent: "center"
+                },
                 myProfileTopButtonsInternalContainer: {
                     flex: 3,
                 },
@@ -1161,6 +1168,9 @@ export default class MainStyles {
                 dashboardConversationCard: {
                     width: "100%",
                     paddingRight: 32
+                },
+                dashboardConversationCardLeft: {
+                    flexDirection: "row"
                 },
                 myProfileTopButtonsInternalContainer: {
                     flex: 2.5

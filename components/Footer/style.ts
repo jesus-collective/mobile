@@ -48,7 +48,7 @@ export default EStyleSheet.create({
         paddingTop: 0,
         marginBottom: 0,
         paddingBottom: 0,
-        height: 35,
+        height: 25,
         width: null
     },
     footerCenterMenuButtonsTextWhite: {
@@ -56,18 +56,20 @@ export default EStyleSheet.create({
         color: '#ffffff',
         fontSize: 15,
         fontWeight: 'bold',
-        marginRight: 30
+        marginRight: 30,
+        marginBottom: 34,
     },
     footerCenterMenuButtonsText: {
         fontFamily: "Graphik-Bold-App",
         color: '#aaaaaa',
         fontSize: 13,
         fontWeight: 'bold',
-        marginRight: 30,
+        marginRight: 15,
         marginTop: 0,
         paddingTop: 0,
         marginBottom: 0,
-        paddingBottom: 0
+        paddingBottom: 0,
+        width: 110,
     },
     logo: {
         resizeMode: "stretch",
@@ -90,7 +92,12 @@ export default EStyleSheet.create({
         },
         footerInnerBodyContainer: {
             minWidth: 250,
-        }
+        },
+        footerCenterMenuButtonsTextWhite: {
+            marginTop: 15,
+            marginBottom: 15,
+            width: 100,
+        },
     },
 
     // Media Query Desktop Large Tablet
@@ -100,6 +107,10 @@ export default EStyleSheet.create({
         },
         footerInnerBodyContainer: {
             minWidth: 250,
-        }
+        },
+        footerCenterMenuButtonsTextWhite: {
+            marginTop: 15,
+            marginBottom: 15,
+        },
     },
 });
