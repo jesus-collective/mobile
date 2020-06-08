@@ -92,7 +92,12 @@ export default EStyleSheet.create({
         },
         footerInnerBodyContainer: {
             minWidth: 250,
-        }
+        },
+        footerCenterMenuButtonsTextWhite: {
+            marginTop: 15,
+            marginBottom: 15,
+            width: 100,
+        },
     },
 
     // Media Query Desktop Large Tablet
@@ -106,7 +111,6 @@ export default EStyleSheet.create({
         footerCenterMenuButtonsTextWhite: {
             marginTop: 15,
             marginBottom: 15,
-
         },
     },
 });
