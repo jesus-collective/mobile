@@ -92,7 +92,7 @@ export default class FooterJC extends JCComponent<Props> {
           <Body style={footerStyles.footerInnerBodyContainer}>
             <Button
               transparent
-              onPress={this.openHome}>
+              onPress={() => { this.open({ name: "Home", linkto: "HomeScreen" }) }}>
               <Image style={footerStyles.logo}
                 source={require('./icon.png')}
               /></Button>
