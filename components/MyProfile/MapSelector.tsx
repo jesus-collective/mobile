@@ -3,7 +3,7 @@ import { Text } from 'react-native'
 import * as React from 'react';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker, MapEvent } from 'react-native-maps';
 import JCComponent from '../JCComponent/JCComponent';
 
 interface Props {
@@ -44,11 +44,11 @@ export default class MapSelector extends JCComponent<Props, State> {
                                 longitudeDelta: 6,
                             }}
                         >
-                            <MapView.Marker draggable
+                            <Marker draggable
                                 coordinate={this.state.mapCoord}
-                                onDragEnd={(e) => {
+                                onDragEnd={(e: MapEvent) => {
                                     console.log(e)
-                                    this.setState({ mapCoord: { latitude: e.latLng.lat(), longitude: e.latLng.lng() } })
+                                    this.setState({ mapCoord: { latitude: e.nativeEvent.coordinate.latitude, longitude: e.nativeEvent.coordinate.longitude, } })
                                 }}
                             />
                         </MapView>

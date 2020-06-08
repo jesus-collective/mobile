@@ -39,7 +39,7 @@ export default class EditableLocation extends JCComponent<Props, State> {
 
     onChanged = (address: string): void => {
         this.setState({ value: address })
-        this.props.onChange(address)//this.setState({ value:address });
+        this.props.onChange(address, null)//this.setState({ value:address });
     };
 
     handleSelect = (address: string): void => {
