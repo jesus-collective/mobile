@@ -14,7 +14,6 @@ import ResourceMenu from './ResourceMenu'
 import ResourceHeader from './ResourceHeader'
 import ResourceOverview from './ResourceOverview'
 import ResourceContent from './ResourceContent'
-import { ResourceRoot, Resource, ResourceSeries, ResourceEpisode } from "../../src/models";
 //import { DataStore, Predicates } from '@aws-amplify/datastore'
 import { ResourceContext } from './ResourceContext';
 import ErrorBoundary from '../ErrorBoundry'
