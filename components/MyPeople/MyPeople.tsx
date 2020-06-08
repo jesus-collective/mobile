@@ -114,7 +114,7 @@ export default class MyPeople extends JCComponent<Props, State> {
                     <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.id) }}>
                       <Card style={this.styles.style.dashboardConversationCard}>
                         <CardItem>
-                          <Left>
+                          <Left style={this.styles.style.dashboardConversationCardLeft}>
                             <ProfileImage user={item} size='small'>
                             </ProfileImage>
 
