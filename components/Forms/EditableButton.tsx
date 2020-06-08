@@ -45,7 +45,7 @@ export default class EditableButton extends JCComponent<Props, State> {
     }
   }
 
-  render() {
+  render(): React.ReactNode {
 
 
     if (this.state.isEditable)

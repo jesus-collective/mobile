@@ -92,7 +92,7 @@ export default class MyPeople extends JCComponent<Props, State> {
     console.log("Navigate to profilesScreen")
     this.props.navigation.push("ProfilesScreen");
   }
-  showProfile(id): void {
+  showProfile(id: string): void {
     console.log("Navigate to profileScreen")
     this.props.navigation.push("ProfileScreen", { id: id, create: false });
   }

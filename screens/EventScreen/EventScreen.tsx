@@ -165,7 +165,7 @@ export default class EventScreen extends JCComponent<Props, State>{
       getGroup.then(processResults).catch(processResults)
     }
   }
-  convertEventToMapData() {
+  convertEventToMapData(): void {
     const data = this.state.data
     if (data.locationLatLong && data.locationLatLong.latitude && data.locationLatLong.longitude)
       this.setState({

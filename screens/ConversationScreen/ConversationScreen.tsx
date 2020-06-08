@@ -36,7 +36,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
 
     this.getInitialData()
   }
-  createRoom = (toUserID, toUserName) => {
+  createRoom = (toUserID, toUserName): void => {
     console.log("CreateRoom")
     Auth.currentAuthenticatedUser().then((user: any) => {
       const createDirectMessageRoom: any = API.graphql({
@@ -83,7 +83,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
     }
 
   }
-  getInitialData() {
+  getInitialData(): void {
     Auth.currentAuthenticatedUser().then((user: any) => {
       const listDirectMessageUsers: any = API.graphql({
         query: customQueries.listDirectMessageUsers,

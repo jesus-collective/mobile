@@ -199,7 +199,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     })
   }
 
-  convertProfileToMapData(data): [] {
+  convertProfileToMapData(data: any): [] {
     return data.map((dataItem) => {
       if (dataItem.location && dataItem.location.latitude && dataItem.location.longitude)
         return {
@@ -214,7 +214,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     }).filter(o => o)
   }
 
-  convertEventToMapData(data): [] {
+  convertEventToMapData(data: any): [] {
     return data.map((dataItem) => {
       if (dataItem.locationLatLong && dataItem.locationLatLong.latitude && dataItem.locationLatLong.longitude)
         return {
@@ -228,7 +228,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       else return null
     }).filter(o => o)
   }
-  convertToMapData(data): [] {
+  convertToMapData(data: any): [] {
     switch (this.state.type) {
       case "group":
         return []
@@ -513,10 +513,10 @@ export default class MyGroups extends JCComponent<Props, State> {
       {false ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Course") }}>Leave</JCButton><Right></Right></CardItem> : null}
     </Card>
   }
-  filterMy = (item) => {
+  filterMy = (item: any): boolean => {
     return !this.state.myFilter || this.canLeave(item.id) || this.isOwner(item.id)
   }
-  filterEvent = (item) => {
+  filterEvent = (item: any): boolean => {
     return !(this.props.type === "event") ||
       this.state.eventFilter && !moment(item.time).isSameOrAfter(moment.now()) ||
       !this.state.eventFilter && moment(item.time).isSameOrAfter(moment.now())

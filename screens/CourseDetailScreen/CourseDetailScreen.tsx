@@ -50,7 +50,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
     this.setInitialData(props)
   }
 
-  setInitialData(props) {
+  setInitialData(props: Props): void {
 
     const getGroup: any = API.graphql({
       query: queries.getGroup,

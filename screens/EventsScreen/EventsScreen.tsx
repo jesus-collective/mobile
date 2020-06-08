@@ -26,15 +26,15 @@ export default class HomeScreen extends JCComponent<Props, State>{
       showMy: this.props.route.params ? this.props.route.params.mine : false
     }
   }
-  mapChanged = () => {
+  mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
   }
-  mergeMapData(mapData) {
+  mergeMapData(mapData): void {
     //    console.log(mapData)
     const data = this.state.mapData.concat(mapData)
     this.setState({ mapData: data })
   }
-  render() {
+  render(): React.ReactNode {
     console.log("Homepage")
     return (
 

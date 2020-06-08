@@ -59,7 +59,7 @@ export default class MyProfile extends JCComponent<Props, State> {
                 })
         }
     }
-    getProfileImageFromUserID(user): void {
+    getProfileImageFromUserID(user: string): void {
         const getUser: any = API.graphql(graphqlOperation(queries.getUser, { id: user }));
         getUser.then((json) => {
 
