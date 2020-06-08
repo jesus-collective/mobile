@@ -135,7 +135,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
                 }) : null}
 
             </Container>
-            <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+            <Container style={this.styles.style.detailScreenRightCard}>
 
             </Container>
           </Container>
