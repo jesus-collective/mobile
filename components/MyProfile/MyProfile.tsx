@@ -448,7 +448,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                         return (<Picker.Item key={index} label={item} value={item} />)
                       })}
                     </Picker>
-                    <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.handleAddInterest()}><Text>+ Add</Text></JCButton>
+                    <JCButton buttonType={ButtonTypes.SolidAboutMe} onPress={() => this.handleAddInterest()}><Text>+ Add</Text></JCButton>
 
                     {this.state.isEditable ?
                       <Text>You can select {this.state.interestsArray ? 7 - this.state.interestsArray.length : 7} more key interests</Text>
