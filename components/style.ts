@@ -281,7 +281,7 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28, color: "#333333", borderColor: "#dddddd", borderWidth: 1, height: 40, width: "100%"
             },
             fontFormSmallDarkGrey: {
-                fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", paddingTop: 5
+                fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", paddingTop: 5, width: "100%"
             },
             fontFormSmallInput: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 25, letterSpacing: -0.3, color: "#333333", maxWidth: 250, height: 18, borderWidth: 0, borderColor: "#dddddd"
@@ -300,6 +300,12 @@ export default class MainStyles {
             },
             fontBold: {
                 fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24
+            },
+            myprofileAboutMe:{
+                fontFamily: 'Graphik-Bold-App', 
+                fontWeight: 'bold', 
+                fontSize: 24,
+                marginTop: 18,
             },
             fontTitle: {
                 fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24, lineHeight: 30, height: 60, color: '#333333'

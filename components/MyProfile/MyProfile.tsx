@@ -422,7 +422,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 <Text style={this.styles.style.fontMyProfileLeftTop}>Tell us more about you</Text>
                 : null
               }
-              <Text style={this.styles.style.fontBold}>About me</Text>
+              <Text style={this.styles.style.myprofileAboutMe}>About me</Text>
 
               <EditableText onChange={(e) => { this.handleInputChange(e, "aboutMeLong") }}
                 placeholder="type here" multiline={true}
@@ -433,7 +433,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
 
               {this.state.isEditable ?
                 <Text style={this.styles.style.fontBold}>My Interests</Text>
-                : <Text style={this.styles.style.fontBold}>Interests</Text>
+                : <Text style={this.styles.style.myprofileAboutMe}>Interests</Text>
               }
 
               {this.state.isEditable ?
