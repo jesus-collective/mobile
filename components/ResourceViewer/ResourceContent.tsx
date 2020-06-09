@@ -12,7 +12,7 @@ import JCComponent from '../JCComponent/JCComponent';
 class ResourceContent extends JCComponent {
 
     static Consumer = ResourceContext.Consumer;
-    renderSeries(state, actions) {
+    renderSeries(state, actions): React.ReactNode {
         return (
             <Container style={this.styles.style.resourceContentMainContainer}>
                 <Container style={this.styles.style.resourceContentLeftContainer}>
@@ -39,8 +39,8 @@ class ResourceContent extends JCComponent {
 
                                         <CardItem style={this.styles.style.resourceContentCurrentSeriesIframeContainer}>
                                             {episode.videoPreview ?
-                                                <iframe style={{ padding: 0, border: 0, width: 300, height: 168 }}
-                                                    src={"https://www.youtube.com/embed/" + episode.videoPreview.replace("https://youtu.be/", "")}
+                                                <img style={{ padding: 0, border: 0, width: 300, height: 168 }}
+                                                    src={"https://img.youtube.com/vi/" + episode.videoPreview.replace("https://youtu.be/", "") + "/mqdefault.jpg"}
 
                                                 /> : null}
                                         </CardItem>
@@ -92,8 +92,8 @@ class ResourceContent extends JCComponent {
                                     }
                                     <TouchableOpacity onPress={() => { !state.isEditable ? actions.changeSeries(index) : null }}>
                                         <CardItem style={this.styles.style.resourceContentMoreSeriesIframeContainer}>
-                                            <iframe style={{ padding: 0, border: 0, width: 300, height: 168 }}
-                                                src={"https://www.youtube.com/embed/videoseries?list=" + series.playlist}
+                                            <img style={{ padding: 0, border: 0, width: 300, height: 168 }}
+                                                src={"https://img.youtube.com/vi/" + series.episodes.items[0].videoPreview.replace("https://youtu.be/", "") + "/mqdefault.jpg"}
 
                                             />
                                         </CardItem>
@@ -144,10 +144,10 @@ class ResourceContent extends JCComponent {
                 </Container>
             </Container >)
     }
-    generateKey(state) {
+    generateKey(state): string {
         return state.currentResource + "-" + state.currentSeries + "-" + state.currentEpisode
     }
-    renderEpisodes(state, actions) {
+    renderEpisodes(state, actions): React.ReactNode {
         const series = state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries]
         return (
             <Container style={this.styles.style.resourceContentEpisodeMainContainer}>
@@ -209,8 +209,8 @@ class ResourceContent extends JCComponent {
                                         }
                                         <CardItem style={this.styles.style.resourceContentEpisodesIframeContainer}>
                                             {episode.videoPreview ?
-                                                <iframe style={{ padding: 0, border: 0, width: 300, height: 168 }}
-                                                    src={"https://www.youtube.com/embed/" + episode.videoPreview.replace("https://youtu.be/", "")}
+                                                <img style={{ padding: 0, border: 0, width: 300, height: 168 }}
+                                                    src={"https://img.youtube.com/vi/" + episode.videoPreview.replace("https://youtu.be/", "") + "/mqdefault.jpg"}
 
                                                 /> : null}
                                         </CardItem>
@@ -290,7 +290,7 @@ class ResourceContent extends JCComponent {
 
             </Container >)
     }
-    renderEpisode(state, actions) {
+    renderEpisode(state, actions): React.ReactNode {
         const series = state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries]
         const episode = state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode]
         return (
@@ -307,8 +307,8 @@ class ResourceContent extends JCComponent {
                         isEditable={state.isEditable}></EditableText>
 
 
-                    <iframe style={{ padding: 0, border: 0, width: 300, height: 168 }}
-                        src={"https://www.youtube.com/embed/videoseries?list=" + state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].preview}
+                    <iframe style={{ padding: 0, border: 0, width: 600, height: 336 }}
+                        src={"https://www.youtube.com/embed/" + episode.videoPreview.replace("https://youtu.be/", "")}
 
                     />
 
@@ -371,7 +371,7 @@ class ResourceContent extends JCComponent {
 
             </Container >)
     }
-    render() {
+    render(): React.ReactNode {
 
         return (
             <ResourceContent.Consumer>
