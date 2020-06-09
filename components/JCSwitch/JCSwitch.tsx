@@ -7,9 +7,28 @@ interface Props {
   switchLabel: string
   initState: boolean
   onPress(): any
-  containerWidth?: number
-  onColor?: string
+  /** 
+   * Set a larger value if switchLabel does not fit on a single line. 
+   * @default 170
+  */
+  containerWidth?: number 
+  /**
+   * Sets color of the pill when the switch is on.
+   * @default "#333333"
+   * @example <JCSwitch onColor="#F0493E"/>
+  */
+  onColor?: string 
+  /**
+   * Sets color of the pill when the switch is off.
+   * @default "#aaaaaa"
+   * @example <JCSwitch offColor="#F0493E"/>
+  */
   offColor?: string
+  /**
+   * Statically sets color of the circle.
+   * @default "#ffffff"
+   * @example <JCSwitch offColor="#F0493E"/>
+  */
   thumbColor?: string
 }
 interface State {
