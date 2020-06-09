@@ -7,6 +7,7 @@ import JCComponent from '../JCComponent/JCComponent';
 export enum ButtonTypes {
     Solid,
     SolidProfile,
+    SolidAboutMe,
     SolidMap,
     SolidRightMargin,
     SolidRightJustified,
