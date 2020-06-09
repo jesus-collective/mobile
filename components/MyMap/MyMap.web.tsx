@@ -4,17 +4,14 @@ import * as React from 'react';
 //import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Body, Card, CardItem, Button, View } from 'native-base';
-import { TouchableOpacity, Animated, TouchableWithoutFeedback } from 'react-native'
-
-
+import { Text, TouchableOpacity } from 'react-native'
 import { Marker } from 'google-maps-react';
 import { Map, InfoWindow } from 'google-maps-react';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
-
-import { Text } from 'react-native'
 import ErrorBoundary from '../ErrorBoundry';
 import moment from 'moment';
 import JCComponent from '../JCComponent/JCComponent';
+import JCSwitch from '../JCSwitch/JCSwitch';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
 import mapStyle from './mapstyle.json';
@@ -33,14 +30,9 @@ interface State {
   selectedPlace: any
   activeMarker: any
   showingInfoWindow: any
-  groupsEnabled: boolean
   profilesEnabled: boolean
   organizationsEnabled: boolean
   eventsEnabled: boolean
-  groupsToggle: any
-  profilesToggle: any
-  organizationsToggle: any
-  eventsToggle: any
   initCenterProfile: any
 }
 
@@ -51,14 +43,9 @@ class MyMapImpl extends JCComponent<Props, State> {
       activeMarker: null,
       selectedPlace: {},
       showingInfoWindow: false,
-      groupsEnabled: false,
       profilesEnabled: true,
       organizationsEnabled: true,
       eventsEnabled: false,
-      groupsToggle: new Animated.Value(1),
-      profilesToggle: new Animated.Value(1),
-      organizationsToggle: new Animated.Value(1),
-      eventsToggle: new Animated.Value(1),
       initCenterProfile: null
     }
   }
@@ -92,82 +79,6 @@ class MyMapImpl extends JCComponent<Props, State> {
     map.setOptions({
       styles: mapStyle
     })
-  }
-
-  toggleFilters(type: string): boolean {
-    switch (type) {
-      case "organization":
-
-        if (this.state.organizationsEnabled) {
-          Animated.timing(this.state.organizationsToggle, {
-            toValue: 0,
-            duration: 200,
-            useNativeDriver: true
-          }).start();
-        } else {
-          Animated.timing(this.state.organizationsToggle, {
-            toValue: 1,
-            duration: 200,
-            useNativeDriver: true
-          }).start();
-        }
-        this.setState({ organizationsEnabled: !this.state.organizationsEnabled })
-        return this.state.organizationsEnabled
-
-      case "group":
-
-        if (this.state.groupsEnabled) {
-          Animated.timing(this.state.groupsToggle, {
-            toValue: 0,
-            duration: 200,
-            useNativeDriver: true
-          }).start();
-        } else {
-          Animated.timing(this.state.groupsToggle, {
-            toValue: 1,
-            duration: 200,
-            useNativeDriver: true
-          }).start();
-        }
-        this.setState({ groupsEnabled: !this.state.groupsEnabled })
-        return this.state.groupsEnabled
-
-      case "event":
-
-        if (this.state.eventsEnabled) {
-          Animated.timing(this.state.eventsToggle, {
-            toValue: 0,
-            duration: 200,
-            useNativeDriver: true
-          }).start();
-        } else {
-          Animated.timing(this.state.eventsToggle, {
-            toValue: 1,
-            duration: 200,
-            useNativeDriver: true
-          }).start();
-        }
-        this.setState({ eventsEnabled: !this.state.eventsEnabled })
-        return this.state.eventsEnabled
-
-      case "profile":
-
-        if (this.state.profilesEnabled) {
-          Animated.timing(this.state.profilesToggle, {
-            toValue: 0,
-            duration: 200,
-            useNativeDriver: true
-          }).start();
-        } else {
-          Animated.timing(this.state.profilesToggle, {
-            toValue: 1,
-            duration: 200,
-            useNativeDriver: true
-          }).start();
-        }
-        this.setState({ profilesEnabled: !this.state.profilesEnabled })
-        return this.state.profilesEnabled
-    }
   }
 
   renderProfile() {
@@ -218,90 +129,9 @@ class MyMapImpl extends JCComponent<Props, State> {
           <View style={{ display: 'flex', height: '50%' }}>
             <View style={{ flex: 1, minHeight: 50 }}>
               <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: '5%' }}>
-                <View style={{ width: 170, flexDirection: 'row' }}>
-                  <Text style={this.styles.style.fontMyMapOptions}>Show Groups</Text>
-                  <TouchableWithoutFeedback onPress={() => this.toggleFilters("group")}>
-                    <View style={{
-                      backgroundColor: this.state.groupsEnabled ? '#333333' : '#aaaaaa',
-                      borderColor: this.state.groupsEnabled ? '#333333' : '#aaaaaa',
-                      borderWidth: 2, borderRadius: 25, width: 50, height: 20
-                    }}>
-                      <Animated.View
-                        style={{
-                          backgroundColor: '#ffffff', borderRadius: 25, width: 16, height: 16,
-                          transform: [{
-                            translateX: this.state.groupsToggle.interpolate({
-                              inputRange: [0, 1],
-                              outputRange: [0, 30]
-                            })
-                          }]
-                        }} />
-                    </View>
-                  </TouchableWithoutFeedback>
-                </View>
-                <View style={{ width: 170, flexDirection: 'row' }}>
-                  <Text style={this.styles.style.fontMyMapOptions}>Show Events</Text>
-                  <TouchableWithoutFeedback onPress={() => this.toggleFilters("event")}>
-                    <View style={{
-                      backgroundColor: this.state.eventsEnabled ? '#333333' : '#aaaaaa',
-                      borderColor: this.state.eventsEnabled ? '#333333' : '#aaaaaa',
-                      borderWidth: 2, borderRadius: 25, width: 50, height: 20
-                    }}>
-                      <Animated.View
-                        style={{
-                          backgroundColor: '#ffffff', borderRadius: 25, width: 16, height: 16,
-                          transform: [{
-                            translateX: this.state.eventsToggle.interpolate({
-                              inputRange: [0, 1],
-                              outputRange: [0, 30]
-                            })
-                          }]
-                        }} />
-                    </View>
-                  </TouchableWithoutFeedback>
-                </View>
-                <View style={{ width: 170, flexDirection: 'row' }}>
-                  <Text style={this.styles.style.fontMyMapOptions}>Show Profiles</Text>
-                  <TouchableWithoutFeedback onPress={() => this.toggleFilters("profile")}>
-                    <View style={{
-                      backgroundColor: this.state.profilesEnabled ? '#333333' : '#aaaaaa',
-                      borderColor: this.state.profilesEnabled ? '#333333' : '#aaaaaa',
-                      borderWidth: 2, borderRadius: 25, width: 50, height: 20
-                    }}>
-                      <Animated.View
-                        style={{
-                          backgroundColor: '#ffffff', borderRadius: 25, width: 16, height: 16,
-                          transform: [{
-                            translateX: this.state.profilesToggle.interpolate({
-                              inputRange: [0, 1],
-                              outputRange: [0, 30]
-                            })
-                          }]
-                        }} />
-                    </View>
-                  </TouchableWithoutFeedback>
-                </View>
-                <View style={{ width: 200, flexDirection: 'row' }}>
-                  <Text style={this.styles.style.fontMyMapOptions}>Show Organizations</Text>
-                  <TouchableWithoutFeedback onPress={() => this.toggleFilters("organization")}>
-                    <View style={{
-                      backgroundColor: this.state.organizationsEnabled ? '#333333' : '#aaaaaa',
-                      borderColor: this.state.organizationsEnabled ? '#333333' : '#aaaaaa',
-                      borderWidth: 2, borderRadius: 25, width: 50, height: 20
-                    }}>
-                      <Animated.View
-                        style={{
-                          backgroundColor: '#ffffff', borderRadius: 25, width: 16, height: 16,
-                          transform: [{
-                            translateX: this.state.organizationsToggle.interpolate({
-                              inputRange: [0, 1],
-                              outputRange: [0, 30]
-                            })
-                          }]
-                        }} />
-                    </View>
-                  </TouchableWithoutFeedback>
-                </View>
+                <JCSwitch switchLabel="Show Events" initState={false} onPress={() => this.setState({ eventsEnabled: !this.state.eventsEnabled })}></JCSwitch>
+                <JCSwitch switchLabel="Show Profiles" initState={true} onPress={() => this.setState({ profilesEnabled: !this.state.profilesEnabled })}></JCSwitch>
+                <JCSwitch switchLabel="Show Organizations" initState={true} containerWidth={200} onPress={() => this.setState({ organizationsEnabled: !this.state.organizationsEnabled })}></JCSwitch>
                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', paddingRight: '2%' }}>
                   <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 20 }}>
                     <View style={{ backgroundColor: '#f0493e', borderRadius: 25, width: 25, height: 13, }}></View>
@@ -330,9 +160,6 @@ class MyMapImpl extends JCComponent<Props, State> {
                   this.props.mapData.map((mapItem, index) => {
 
                     const filters = []
-                    if (!this.state.groupsEnabled) {
-                      filters.push("group")
-                    }
                     if (!this.state.organizationsEnabled) {
                       filters.push("organization")
                     }
