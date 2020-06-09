@@ -163,7 +163,7 @@ class ResourceContent extends JCComponent {
 
 
 
-                    <iframe style={{ padding: 0, border: 0, width: 300, height: 168 }}
+                    <iframe style={{ padding: 0, border: 0, width: 600, height: 336 }}
                         src={"https://www.youtube.com/embed/videoseries?list=" + series.playlist}
 
                     />
