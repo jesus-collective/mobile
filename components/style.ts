@@ -240,7 +240,8 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Regular-App',
                 fontSize: 30,
                 lineHeight: 36,
-                marginBottom: 18
+                marginBottom: 18, 
+                marginTop: 18,
             },
             fontGroupNameDetailPage: {
                 fontSize: 30,
