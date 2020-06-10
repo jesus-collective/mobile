@@ -1,28 +1,30 @@
 ﻿import React, { lazy } from 'react';
 import { Icon, Picker, StyleProvider, Container, Content, View } from 'native-base';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
-
 import { Text, TouchableOpacity } from 'react-native'
 
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
 
 import getTheme from '../../native-base-theme/components';
-//import  from '../../components/MessageBoard/MessageBoard'
-import EditableDate from '../../components/Forms/EditableDate'
 import EditableText from '../../components/Forms/EditableText'
-import EditableLocation from '../../components/Forms/EditableLocation'
-import EditableUrl from '../../components/Forms/EditableUrl'
 import Validate from '../../components/Validate/Validate'
+import JCSwitch from '../../components/JCSwitch/JCSwitch';
+
 import { API, graphqlOperation, Auth, Analytics } from 'aws-amplify';
 import { CreateGroupInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
-import moment from 'moment-timezone'
 import JCComponent from '../../components/JCComponent/JCComponent';
+import EditableDate from '../../components/Forms/EditableDate'
+import EditableLocation from '../../components/Forms/EditableLocation'
+import EditableUrl from '../../components/Forms/EditableUrl'
+import moment from 'moment-timezone'
+
 const MessageBoard = lazy(() => import('../../components/MessageBoard/MessageBoard'));
+
 
 interface Props {
   navigation: any
@@ -75,9 +77,6 @@ export default class EventScreen extends JCComponent<Props, State>{
       })
       const getUser: any = API.graphql(graphqlOperation(queries.getUser, { id: user['username'] }));
       getUser.then((json) => {
-
-
-
         this.setState({
           currentUserProfile: json.data.getUser,
 
@@ -99,8 +98,7 @@ export default class EventScreen extends JCComponent<Props, State>{
     return key.length ? myObject[key[0]] : "";
   }
   setInitialData(props: Props): void {
-    console.log(props.route.params.create)
-    if (props.route.params.create === true || props.route.params.create == "true")
+    if (props.route.params.create === true || props.route.params.create === "true")
       Auth.currentAuthenticatedUser().then((user: any) => {
         const z: CreateGroupInput = {
           id: "event-" + Date.now(),
@@ -110,6 +108,7 @@ export default class EventScreen extends JCComponent<Props, State>{
           description: "",
           memberCount: 1,
           image: "temp",
+          isSponsored: "false",
           time: null,
           location: "",
           ownerOrgID: "00000000-0000-0000-0000-000000000000"
@@ -128,7 +127,7 @@ export default class EventScreen extends JCComponent<Props, State>{
     else {
       const getGroup: any = API.graphql({
         query: queries.getGroup,
-        variables: { id: props.route.params.id },
+        variables: { id: props.route.params.id, messages: { sortDirection: "ASC" } },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       const processResults = (json) => {
@@ -147,7 +146,6 @@ export default class EventScreen extends JCComponent<Props, State>{
 
           () => {
             this.convertEventToMapData();
-
             const groupMemberByUser: any = API.graphql({
               query: queries.groupMemberByUser,
               variables: { userID: this.state.currentUser, groupID: { eq: this.state.data.id } },
@@ -235,7 +233,6 @@ export default class EventScreen extends JCComponent<Props, State>{
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       updateGroup.then((json: any) => {
-
         console.log({ "Success mutations.updateGroup": json });
       }).catch((err: any) => {
         console.log({ "Error mutations.updateGroup": err });
@@ -292,10 +289,12 @@ export default class EventScreen extends JCComponent<Props, State>{
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
     createGroupMember.then((json: any) => {
+
       console.log({ "Success mutations.createGroupMember": json });
     }).catch((err: any) => {
       console.log({ "Error mutations.createGroupMember": err });
     });
+
     this.setState({ canJoin: false, canLeave: true, attendeeIDs: this.state.attendeeIDs.concat(this.state.currentUser) })
     this.renderButtons()
   }
@@ -362,36 +361,42 @@ export default class EventScreen extends JCComponent<Props, State>{
                 <Container style={this.styles.style.detailScreenLeftCard}>
                   <Container style={{ flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 20 }}>
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#333333', textTransform: "uppercase", flex: 0 }}>Event</Text>
-                    <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#979797', textTransform: "uppercase", flex: 0 }}>Sponsored</Text>
+                    {this.state.isEditable ?
+                      <JCSwitch switchLabel="Sponsored" initState={this.state.data.isSponsored ? this.state.data.isSponsored === "true" : false} onPress={(status) => { this.updateValue("isSponsored", status ? "true" : "false") }}></JCSwitch>
+                      :
+                      this.state.data.isSponsored == "true" ?
+                        <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#979797', textTransform: "uppercase", flex: 0 }}>Sponsored</Text>
+                        : null
+                    }
                   </Container>
 
-                <View>
-                  <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Event Name" multiline={false} textStyle={this.styles.style.eventNameInput} inputStyle={this.styles.style.eventNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
-                  <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Event Description" multiline={true} textStyle={this.styles.style.eventDescriptionInput} inputStyle={this.styles.style.eventDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
-                </View>
-                <View>
-                  {this.state.isEditable ?
-                  <EditableDate 
-                    type="datetime" 
-                    onChange={(time: any, timeZone: any) => { this.updateValue("time", time); this.updateValue("tz", timeZone) }} 
-                    placeholder="Enter Event Time" 
-                    multiline={false} 
-                    textStyle={this.styles.style.eventDateInput} 
-                    inputStyle={this.styles.style.eventDateInput} 
-                    value={this.state.data.time} 
-                    tz={this.state.data.tz ? this.state.data.tz : moment.tz.guess()} 
-                    isEditable={this.state.isEditable}></EditableDate>
-                  : <EditableDate 
-                    type="datetime" 
-                    onChange={(time: any, timeZone: any) => { this.updateValue("time", time); this.updateValue("tz", timeZone) }} 
-                    placeholder="Enter Event Time" 
-                    multiline={false} 
-                    textStyle={this.styles.style.eventDateInput} 
-                    inputStyle={this.styles.style.eventDateInput} 
-                    value={this.state.data.time} 
-                    tz={moment.tz.guess()}
-                    isEditable={this.state.isEditable}></EditableDate>}
-                </View>
+                  <View>
+                    <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Event Name" multiline={false} textStyle={this.styles.style.eventNameInput} inputStyle={this.styles.style.eventNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
+                    <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Event Description" multiline={true} textStyle={this.styles.style.eventDescriptionInput} inputStyle={this.styles.style.eventDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
+                  </View>
+                  <View>
+                    {this.state.isEditable ?
+                      <EditableDate
+                        type="datetime"
+                        onChange={(time: any, timeZone: any) => { this.updateValue("time", time); this.updateValue("tz", timeZone) }}
+                        placeholder="Enter Event Time"
+                        multiline={false}
+                        textStyle={this.styles.style.eventDateInput}
+                        inputStyle={this.styles.style.eventDateInput}
+                        value={this.state.data.time}
+                        tz={this.state.data.tz ? this.state.data.tz : moment.tz.guess()}
+                        isEditable={this.state.isEditable}></EditableDate>
+                      : <EditableDate
+                        type="datetime"
+                        onChange={(time: any, timeZone: any) => { this.updateValue("time", time); this.updateValue("tz", timeZone) }}
+                        placeholder="Enter Event Time"
+                        multiline={false}
+                        textStyle={this.styles.style.eventDateInput}
+                        inputStyle={this.styles.style.eventDateInput}
+                        value={this.state.data.time}
+                        tz={moment.tz.guess()}
+                        isEditable={this.state.isEditable}></EditableDate>}
+                  </View>
 
                   {this.state.isEditable ? <Picker
                     mode="dropdown"

@@ -9,6 +9,7 @@ import MyMap from '../../components/MyMap/MyMap';
 import getTheme from '../../native-base-theme/components';
 import EditableText from '../../components/Forms/EditableText'
 import Validate from '../../components/Validate/Validate'
+import JCSwitch from '../../components/JCSwitch/JCSwitch';
 
 import { API, graphqlOperation, Auth, Analytics } from 'aws-amplify';
 import { CreateGroupInput } from '../../src/API'
@@ -103,6 +104,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
           description: "",
           memberCount: 1,
           image: "temp",
+          isSponsored: "false",
           ownerOrgID: "00000000-0000-0000-0000-000000000000"
         }
         const isEditable = true
@@ -244,6 +246,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
     delete item._lastChangedAt
     delete item.createdAt
     delete item.updatedAt
+    delete item.ownerOrg
     return item
   }
   save(): void {
@@ -318,7 +321,6 @@ export default class GroupScreen extends JCComponent<Props, State>{
 
     this.setState({ canJoin: false, canLeave: true, memberIDs: this.state.memberIDs.concat(this.state.currentUser) })
     this.renderButtons()
-    console.log(this.state.memberIDs)
   }
   delete(): void {
     const deleteGroup: any = API.graphql({
@@ -383,7 +385,13 @@ export default class GroupScreen extends JCComponent<Props, State>{
                 <Container style={this.styles.style.detailScreenLeftCard}>
                   <Container style={{ display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 20 }}>
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#333333', textTransform: "uppercase", flex: 0 }}>Group</Text>
-                    <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#979797', textTransform: "uppercase", flex: 0 }}>Sponsored</Text>
+                    {this.state.isEditable ?
+                      <JCSwitch switchLabel="Sponsored" initState={this.state.data.isSponsored ? this.state.data.isSponsored === "true" : false} onPress={(status) => { this.updateValue("isSponsored", status ? "true" : "false") }}></JCSwitch>
+                      :
+                      this.state.data.isSponsored == "true" ?
+                        <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#979797', textTransform: "uppercase", flex: 0 }}>Sponsored</Text>
+                        : null
+                    }
                   </Container>
 
                   <View>

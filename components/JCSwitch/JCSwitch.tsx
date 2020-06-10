@@ -6,18 +6,18 @@ import JCComponent from '../JCComponent/JCComponent';
 interface Props {
   switchLabel: string
   initState: boolean
-  onPress(): any
+  onPress(status): any
   /** 
    * Set a larger value if switchLabel does not fit on a single line. 
    * @default 170
   */
-  containerWidth?: number 
+  containerWidth?: number
   /**
    * Sets color of the pill when the switch is on.
    * @default "#333333"
    * @example <JCSwitch onColor="#F0493E"/>
   */
-  onColor?: string 
+  onColor?: string
   /**
    * Sets color of the pill when the switch is off.
    * @default "#aaaaaa"
@@ -41,28 +41,28 @@ interface State {
 
 export default class JCSwitch extends JCComponent<Props, State> {
   constructor(props: Props) {
-      super(props);
-      this.state = {
-        enabled: this.props.initState,
-        animationState: new Animated.Value(this.props.initState ? 1 : 0),
-        onColor: this.props.onColor ? this.props.onColor : '#333333',
-        offColor: this.props.offColor ? this.props.offColor : '#aaaaaa',
-        thumbColor: this.props.thumbColor ? this.props.thumbColor : '#ffffff'
-      }
+    super(props);
+    this.state = {
+      enabled: this.props.initState,
+      animationState: new Animated.Value(this.props.initState ? 1 : 0),
+      onColor: this.props.onColor ? this.props.onColor : '#333333',
+      offColor: this.props.offColor ? this.props.offColor : '#aaaaaa',
+      thumbColor: this.props.thumbColor ? this.props.thumbColor : '#ffffff'
+    }
   }
 
   onPress(): void {
-    this.props.onPress()
     Animated.timing(this.state.animationState, {
       toValue: this.state.enabled ? 0 : 1,
       duration: 200,
       useNativeDriver: true
     }).start();
-    this.setState({enabled: !this.state.enabled})
+    this.setState({ enabled: !this.state.enabled }, () => { this.props.onPress(this.state.enabled) }
+    )
   }
 
   render(): React.ReactNode {
-      return <View style={{ width: this.props.containerWidth ? this.props.containerWidth : 170, flexDirection: 'row' }}>
+    return <View style={{ width: this.props.containerWidth ? this.props.containerWidth : 170, flexDirection: 'row' }}>
       <Text style={this.styles.style.fontMyMapOptions}>{this.props.switchLabel}</Text>
       <TouchableWithoutFeedback onPress={() => this.onPress()}>
         <View style={{

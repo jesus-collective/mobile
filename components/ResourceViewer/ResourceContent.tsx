@@ -131,9 +131,9 @@ class ResourceContent extends JCComponent {
                                     <CardItem style={this.styles.style.resourceContentCurrentSeriesIframeContainer}>
                                         <Text>Add Series</Text>
                                     </CardItem>
-                                    <CardItem style={{ width: 300, padding: 0, margin: 0, paddingBottom: 0 }}><Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333" }}></Text></CardItem>
-                                    <CardItem style={{ width: 300, padding: 0, margin: 0, paddingBottom: 0 }}><Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333" }}></Text></CardItem>
-                                    <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}></Text></CardItem>
+                                    <CardItem style={{ width: 300, padding: 0, margin: 0, paddingBottom: 0 }}><Text style={this.styles.style.episodeTitle}></Text></CardItem>
+                                    <CardItem style={{ width: 300, padding: 0, margin: 0, paddingBottom: 0 }}><Text style={this.styles.style.episodeDescription}></Text></CardItem>
+                                    <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text style={this.styles.style.episodeDescription}></Text></CardItem>
                                 </Card>
                             </TouchableOpacity>
                             : null}
@@ -275,8 +275,8 @@ class ResourceContent extends JCComponent {
                                     <CardItem style={this.styles.style.resourceContentEpisodesIframeContainer}>
                                         <Text>Add Episode</Text>
                                     </CardItem>
-                                    <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text style={{ wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333" }}></Text></CardItem>
-                                    <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}></Text></CardItem>
+                                    <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text style={this.styles.style.episodeTitle}></Text></CardItem>
+                                    <CardItem style={{ width: 300, padding: 0, margin: 0 }}><Text style={this.styles.style.episodeDescription}></Text></CardItem>
                                 </Card>
                             </TouchableOpacity> : null
                         }
