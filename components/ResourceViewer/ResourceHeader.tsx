@@ -48,9 +48,9 @@ class ResourceHeader extends JCComponent<Props, State> {
                     if (this.state.imageUrl == null || this.state.image != state.resourceData.resources.items[state.currentResource].image)
                         this.getImage(state.resourceData.resources.items[state.currentResource].image)
                     return (
-                        <Container style={{ backgroundColor: "#F0493E", height: "20vw" }}>
+                        <Container style={this.styles.style.resourceHeaderImgContainer}>
                             {this.state.imageUrl ?
-                                <Image style={{ position: "relative", width: "100%", height: "20vw" }}
+                                <Image style={this.styles.style.resourceHeaderImg}
                                     source={this.state.imageUrl} onError={() => { this.getImage(state.resourceData.resources.items[state.currentResource].image) }}>
                                 </ Image>
                                 : null

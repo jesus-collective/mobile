@@ -406,7 +406,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
                   <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", paddingTop: 48, paddingBottom: 12 }}>Members ({this.state.memberIDs.length})</Text>
                   <View style={this.styles.style.groupAttendeesPictures}>
                     {this.state.memberIDs.length == 0 ?
-                      <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", marginBottom: 30 }}>No Members Yet</Text> :
+                      <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 16, lineHeight: 24, letterSpacing: -0.3, color: "#333333", marginBottom: 30 }}>No Members Yet</Text> :
                       this.state.memberIDs.map((id: any, index: any) => {
                         return (
                           <TouchableOpacity key={index} onPress={() => { this.showProfile(id) }}>
