@@ -58,6 +58,7 @@ export default EStyleSheet.create({
         fontWeight: 'bold',
         marginRight: 30,
         marginBottom: 34,
+        marginTop: 7
     },
     footerCenterMenuButtonsText: {
         fontFamily: "Graphik-Bold-App",

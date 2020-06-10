@@ -799,7 +799,7 @@ export default class MainStyles {
                 flexDirection: "row",
                 justifyContent: 'flex-start',
                 height: "100%",
-                // backgroundColor: "#F9FAFC"
+                backgroundColor: "#F9FAFC"
             },
             resourceContentMainContainer: {
                 display: "flex",
@@ -1026,6 +1026,15 @@ export default class MainStyles {
             },
             myMapCalloutEventDescription: {
                 height: 100
+            },
+            resourceHeaderImgContainer: {
+                backgroundColor: "#F0493E", 
+                maxHeight: "285px"
+            },
+            resourceHeaderImg: {
+                position: "relative", 
+                width: "100%", 
+                height: "100%"
             },
 
             // Media Query Desktop Tablet
