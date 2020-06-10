@@ -6,6 +6,8 @@ import { Text, TouchableOpacity } from 'react-native'
 
 
 import EditableText from '../../components/Forms/EditableText'
+import JCSwitch from '../../components/JCSwitch/JCSwitch';
+
 
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { ResourceContext } from './ResourceContext';
@@ -45,7 +47,7 @@ class ResourceOverviewImpl extends JCComponent<Props>{
                     : null
                 }
                 {state.canSave ?
-                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { actions.savGroup() }} >Save Group</JCButton>
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { actions.saveGroup() }} >Save Group</JCButton>
                     : null
                 }
                 {state.canDelete ?
@@ -67,7 +69,13 @@ class ResourceOverviewImpl extends JCComponent<Props>{
                         <Container style={this.styles.style.detailScreenLeftCard}>
                             <Container style={{ flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 20 }}>
                                 <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#333333', textTransform: "uppercase", flex: 0 }}>Resource</Text>
-                                <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#979797', textTransform: "uppercase", flex: 0 }}>Sponsored</Text>
+                                {state.isEditable ?
+                                    <JCSwitch switchLabel="Sponsored" initState={state.groupData.isSponsored ? state.groupData.isSponsored === "true" : false} onPress={(status) => { actions.updateValueGroup("isSponsored", status ? "true" : "false") }}></JCSwitch>
+                                    :
+                                    this.state.groupData.isSponsored == "true" ?
+                                        <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#979797', textTransform: "uppercase", flex: 0 }}>Sponsored</Text> : null
+                                }
+
                             </Container>
 
                             <EditableText onChange={(value: any) => {

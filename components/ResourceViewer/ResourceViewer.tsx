@@ -105,6 +105,7 @@ class ResourceViewerImpl extends JCComponent<Props, State> {
                     name: "",
                     description: "",
                     memberCount: 1,
+                    isSponsored: "false",
                     image: "temp",
                     ownerOrgID: "00000000-0000-0000-0000-000000000000"
                 }
@@ -327,6 +328,7 @@ class ResourceViewerImpl extends JCComponent<Props, State> {
         delete item._lastChangedAt
         delete item.createdAt
         delete item.updatedAt
+        delete item.ownerOrg
         return item
     }
     saveGroup = (): void => {
