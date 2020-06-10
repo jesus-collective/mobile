@@ -13,6 +13,8 @@ import moment from 'moment';
 import JCComponent from '../JCComponent/JCComponent';
 import JCSwitch from '../JCSwitch/JCSwitch';
 import { useRoute, useNavigation } from '@react-navigation/native';
+import { API, graphqlOperation, Auth } from 'aws-amplify';
+import * as queries from '../../src/graphql/queries';
 
 import mapStyle from './mapstyle.json';
 
@@ -33,7 +35,8 @@ interface State {
   profilesEnabled: boolean
   organizationsEnabled: boolean
   eventsEnabled: boolean
-  initCenterProfile: any
+  currentUserLocation: any
+  currentUser: string
 }
 
 class MyMapImpl extends JCComponent<Props, State> {
@@ -46,8 +49,25 @@ class MyMapImpl extends JCComponent<Props, State> {
       profilesEnabled: true,
       organizationsEnabled: true,
       eventsEnabled: false,
-      initCenterProfile: null
+      currentUserLocation: null,
+      currentUser: null,
     }
+    Auth.currentAuthenticatedUser().then((user: any) => {
+      this.setState({
+        currentUser: user.username
+      })
+      const getUser: any = API.graphql(graphqlOperation(queries.getUser, { id: user['username'] }));
+      getUser.then((json) => {
+        this.setState({
+          currentUserLocation: {lat: json.data.getUser.location.latitude, lng: json.data.getUser.location.longitude}
+        })
+      }).catch((e) => {
+        console.error({
+          "Error Loading User": e
+        }
+        )
+      })
+    })
   }
   onMarkerClick = (props, marker) =>
     this.setState({
@@ -122,11 +142,11 @@ class MyMapImpl extends JCComponent<Props, State> {
   }
   render() {
     //console.log(this.props.mapData)
-    if (this.props.visible && this.props.type === "filters") {
+    if (this.props.type === "filters") {
       return (
         <ErrorBoundary>
 
-          <View style={{ display: 'flex', height: '50%' }}>
+          <View style={{ display: 'flex', height: this.props.visible ? '50%' : 0 }}>
             <View style={{ flex: 1, minHeight: 50 }}>
               <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: '5%' }}>
                 <JCSwitch switchLabel="Show Events" initState={false} onPress={() => this.setState({ eventsEnabled: !this.state.eventsEnabled })}></JCSwitch>
@@ -147,7 +167,7 @@ class MyMapImpl extends JCComponent<Props, State> {
             <View style={{ flex: 9 }}>
 
               <Map google={window.google} zoom={6}
-                initialCenter={{ lat: 44, lng: -78.0 }}
+                center={this.state.currentUserLocation ? this.state.currentUserLocation : { lat: 44, lng: -78 }}
                 mapTypeControl={false}
                 onClick={this.onMapClicked}
                 onReady={(mapProps, map) => this._mapLoaded(map)}
@@ -251,8 +271,8 @@ class MyMapImpl extends JCComponent<Props, State> {
 
           <View style={{ height: this.props.visible ? this.props.size ? this.props.size : 510 : 0 }}>
 
-            <Map google={window.google} zoom={6}
-              center={this.props.initCenter ? this.props.initCenter : { lat: 44, lng: -78 }}
+            <Map google={window.google} zoom={5}
+              center={this.props.initCenter ? this.props.initCenter : this.state.currentUserLocation ? this.state.currentUserLocation : { lat: 44, lng: -78 }}
               mapTypeControl={false}
               onClick={this.onMapClicked}
               onReady={(mapProps, map) => this._mapLoaded(map)}
