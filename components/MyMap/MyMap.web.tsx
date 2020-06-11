@@ -126,7 +126,7 @@ class MyMapImpl extends JCComponent<Props, State> {
       return (
         <ErrorBoundary>
 
-          <View style={{ display: 'flex', height: '70%' }}>
+          <View style={{ display: 'flex', height: '75%' }}>
             <View style={{ flex: 1, minHeight: 50 }}>
               <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: '5%' }}>
                 <JCSwitch switchLabel="Show Events" initState={false} onPress={() => this.setState({ eventsEnabled: !this.state.eventsEnabled })}></JCSwitch>

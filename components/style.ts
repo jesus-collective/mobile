@@ -1010,22 +1010,22 @@ export default class MainStyles {
                 paddingTop: 5,
             },
             myMapCalloutEventContainer: {
-                minHeight: 250,
-                alignSelf: "flex-start",
-                padding: '0%',
-                paddingLeft: '0.25rem',
-                paddingRight: '0.25rem',
-                borderRadius: 4,
-                boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
-                borderStyle: "solid",
-                borderColor: "#FFFFFF",
-                width: 400
+                // height: 250,
+                // alignSelf: "flex-start",
+                // padding: '0%',
+                // paddingLeft: '0.25rem',
+                // paddingRight: '0.25rem',
+                // borderRadius: 4,
+                // boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+                // borderStyle: "solid",
+                // borderColor: "#FFFFFF",
+                maxWidth: 350,
             },
             myMapCalloutEventName: {
-                height: 100
+                height: 50
             },
             myMapCalloutEventDescription: {
-                height: 100
+                height: 50
             },
             resourceHeaderImgContainer: {
                 backgroundColor: "#F0493E", 
