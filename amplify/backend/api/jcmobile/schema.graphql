@@ -45,6 +45,9 @@ type User
 type LatLong {
   latitude: String
   longitude: String
+  geocodeFull: String
+  geocodeCity: String
+  geocodeRegion: String
 }
 type Image {
   userId: String
