@@ -6,7 +6,7 @@ import JCComponent from '../JCComponent/JCComponent';
 interface Props {
   switchLabel: string
   initState: boolean
-  onPress(): any
+  onPress(status): any
   /** 
    * Set a larger value if switchLabel does not fit on a single line. 
    * @default 170
@@ -57,7 +57,7 @@ export default class JCSwitch extends JCComponent<Props, State> {
       duration: 200,
       useNativeDriver: true
     }).start();
-    this.setState({ enabled: !this.state.enabled }, () => { this.props.onPress() }
+    this.setState({ enabled: !this.state.enabled }, () => { this.props.onPress(this.state.enabled) }
     )
   }
 
