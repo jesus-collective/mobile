@@ -976,12 +976,12 @@ export default class MainStyles {
                 flexDirection: "row"
             },
             myMapDashboardConversationCard: {
-                minHeight: 50,
-                paddingTop: 28,
+                height: 150,
+                paddingTop: 20,
                 paddingBottom: 28,
                 borderStyle: "solid",
                 borderColor: "#FFFFFF",
-                width: "100%"
+                width: 220
             },
             profilesCard: {
                 width: "100%",
