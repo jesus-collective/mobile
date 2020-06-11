@@ -22,6 +22,9 @@ export const getUser = /* GraphQL */ `
       location {
         latitude
         longitude
+        geocodeFull
+        geocodeCity
+        geocodeRegion
       }
       profileImage {
         userId
@@ -59,6 +62,7 @@ export const getUser = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          tz
           isSponsored
           createdAt
           updatedAt
@@ -130,6 +134,9 @@ export const listUsers = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -192,6 +199,9 @@ export const getGroup = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -243,6 +253,9 @@ export const getGroup = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -293,6 +306,9 @@ export const getGroup = /* GraphQL */ `
       locationLatLong {
         latitude
         longitude
+        geocodeFull
+        geocodeCity
+        geocodeRegion
       }
       length
       effort
@@ -313,6 +329,7 @@ export const getGroup = /* GraphQL */ `
       }
       eventType
       eventUrl
+      tz
       isSponsored
       createdAt
       updatedAt
@@ -396,6 +413,9 @@ export const listGroups = /* GraphQL */ `
         locationLatLong {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         length
         effort
@@ -405,6 +425,7 @@ export const listGroups = /* GraphQL */ `
         }
         eventType
         eventUrl
+        tz
         isSponsored
         createdAt
         updatedAt
@@ -432,6 +453,9 @@ export const getOrganization = /* GraphQL */ `
       location {
         latitude
         longitude
+        geocodeFull
+        geocodeCity
+        geocodeRegion
       }
       profileImage {
         userId
@@ -475,6 +499,7 @@ export const getOrganization = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          tz
           isSponsored
           createdAt
           updatedAt
@@ -535,6 +560,9 @@ export const listOrganizations = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -842,6 +870,9 @@ export const getDirectMessageUser = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -1086,6 +1117,9 @@ export const getMessage = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -1137,6 +1171,9 @@ export const getMessage = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -1236,6 +1273,9 @@ export const getMessage = /* GraphQL */ `
         locationLatLong {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         length
         effort
@@ -1245,6 +1285,7 @@ export const getMessage = /* GraphQL */ `
         }
         eventType
         eventUrl
+        tz
         isSponsored
         createdAt
         updatedAt
@@ -1338,6 +1379,7 @@ export const listMessages = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          tz
           isSponsored
           createdAt
           updatedAt
@@ -1388,6 +1430,9 @@ export const getResourceRoot = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -1823,6 +1868,7 @@ export const groupMemberByGroup = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          tz
           isSponsored
           createdAt
           updatedAt
@@ -1901,6 +1947,7 @@ export const groupMemberByUser = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          tz
           isSponsored
           createdAt
           updatedAt
@@ -2028,6 +2075,9 @@ export const groupByType = /* GraphQL */ `
         locationLatLong {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         length
         effort
@@ -2037,6 +2087,7 @@ export const groupByType = /* GraphQL */ `
         }
         eventType
         eventUrl
+        tz
         isSponsored
         createdAt
         updatedAt
@@ -2417,6 +2468,7 @@ export const messagesByRoom = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          tz
           isSponsored
           createdAt
           updatedAt
@@ -2511,6 +2563,9 @@ export const searchGroups = /* GraphQL */ `
         locationLatLong {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         length
         effort
@@ -2520,6 +2575,7 @@ export const searchGroups = /* GraphQL */ `
         }
         eventType
         eventUrl
+        tz
         isSponsored
         createdAt
         updatedAt

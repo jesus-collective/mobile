@@ -30,6 +30,9 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -81,6 +84,9 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -180,6 +186,9 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
         locationLatLong {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         length
         effort
@@ -189,6 +198,7 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
         }
         eventType
         eventUrl
+        tz
         isSponsored
         createdAt
         updatedAt
@@ -218,6 +228,9 @@ export const onCreateUser = /* GraphQL */ `
       location {
         latitude
         longitude
+        geocodeFull
+        geocodeCity
+        geocodeRegion
       }
       profileImage {
         userId
@@ -255,6 +268,7 @@ export const onCreateUser = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          tz
           isSponsored
           createdAt
           updatedAt
@@ -321,6 +335,9 @@ export const onUpdateUser = /* GraphQL */ `
       location {
         latitude
         longitude
+        geocodeFull
+        geocodeCity
+        geocodeRegion
       }
       profileImage {
         userId
@@ -358,6 +375,7 @@ export const onUpdateUser = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          tz
           isSponsored
           createdAt
           updatedAt
@@ -424,6 +442,9 @@ export const onDeleteUser = /* GraphQL */ `
       location {
         latitude
         longitude
+        geocodeFull
+        geocodeCity
+        geocodeRegion
       }
       profileImage {
         userId
@@ -461,6 +482,7 @@ export const onDeleteUser = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          tz
           isSponsored
           createdAt
           updatedAt
@@ -583,6 +605,9 @@ export const onCreateGroupMember = /* GraphQL */ `
         locationLatLong {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         length
         effort
@@ -592,6 +617,7 @@ export const onCreateGroupMember = /* GraphQL */ `
         }
         eventType
         eventUrl
+        tz
         isSponsored
         createdAt
         updatedAt
@@ -614,6 +640,9 @@ export const onCreateGroupMember = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -729,6 +758,9 @@ export const onUpdateGroupMember = /* GraphQL */ `
         locationLatLong {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         length
         effort
@@ -738,6 +770,7 @@ export const onUpdateGroupMember = /* GraphQL */ `
         }
         eventType
         eventUrl
+        tz
         isSponsored
         createdAt
         updatedAt
@@ -760,6 +793,9 @@ export const onUpdateGroupMember = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -875,6 +911,9 @@ export const onDeleteGroupMember = /* GraphQL */ `
         locationLatLong {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         length
         effort
@@ -884,6 +923,7 @@ export const onDeleteGroupMember = /* GraphQL */ `
         }
         eventType
         eventUrl
+        tz
         isSponsored
         createdAt
         updatedAt
@@ -906,6 +946,9 @@ export const onDeleteGroupMember = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -969,6 +1012,9 @@ export const onCreateGroup = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -1020,6 +1066,9 @@ export const onCreateGroup = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -1070,6 +1119,9 @@ export const onCreateGroup = /* GraphQL */ `
       locationLatLong {
         latitude
         longitude
+        geocodeFull
+        geocodeCity
+        geocodeRegion
       }
       length
       effort
@@ -1090,6 +1142,7 @@ export const onCreateGroup = /* GraphQL */ `
       }
       eventType
       eventUrl
+      tz
       isSponsored
       createdAt
       updatedAt
@@ -1120,6 +1173,9 @@ export const onUpdateGroup = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -1171,6 +1227,9 @@ export const onUpdateGroup = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -1221,6 +1280,9 @@ export const onUpdateGroup = /* GraphQL */ `
       locationLatLong {
         latitude
         longitude
+        geocodeFull
+        geocodeCity
+        geocodeRegion
       }
       length
       effort
@@ -1241,6 +1303,7 @@ export const onUpdateGroup = /* GraphQL */ `
       }
       eventType
       eventUrl
+      tz
       isSponsored
       createdAt
       updatedAt
@@ -1271,6 +1334,9 @@ export const onDeleteGroup = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -1322,6 +1388,9 @@ export const onDeleteGroup = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -1372,6 +1441,9 @@ export const onDeleteGroup = /* GraphQL */ `
       locationLatLong {
         latitude
         longitude
+        geocodeFull
+        geocodeCity
+        geocodeRegion
       }
       length
       effort
@@ -1392,6 +1464,7 @@ export const onDeleteGroup = /* GraphQL */ `
       }
       eventType
       eventUrl
+      tz
       isSponsored
       createdAt
       updatedAt
@@ -1422,6 +1495,9 @@ export const onCreateOrganizationMember = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -1469,6 +1545,9 @@ export const onCreateOrganizationMember = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -1532,6 +1611,9 @@ export const onUpdateOrganizationMember = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -1579,6 +1661,9 @@ export const onUpdateOrganizationMember = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -1642,6 +1727,9 @@ export const onDeleteOrganizationMember = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -1689,6 +1777,9 @@ export const onDeleteOrganizationMember = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -1747,6 +1838,9 @@ export const onCreateOrganization = /* GraphQL */ `
       location {
         latitude
         longitude
+        geocodeFull
+        geocodeCity
+        geocodeRegion
       }
       profileImage {
         userId
@@ -1790,6 +1884,7 @@ export const onCreateOrganization = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          tz
           isSponsored
           createdAt
           updatedAt
@@ -1845,6 +1940,9 @@ export const onUpdateOrganization = /* GraphQL */ `
       location {
         latitude
         longitude
+        geocodeFull
+        geocodeCity
+        geocodeRegion
       }
       profileImage {
         userId
@@ -1888,6 +1986,7 @@ export const onUpdateOrganization = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          tz
           isSponsored
           createdAt
           updatedAt
@@ -1943,6 +2042,9 @@ export const onDeleteOrganization = /* GraphQL */ `
       location {
         latitude
         longitude
+        geocodeFull
+        geocodeCity
+        geocodeRegion
       }
       profileImage {
         userId
@@ -1986,6 +2088,7 @@ export const onDeleteOrganization = /* GraphQL */ `
           cost
           eventType
           eventUrl
+          tz
           isSponsored
           createdAt
           updatedAt
@@ -2450,6 +2553,9 @@ export const onCreateDirectMessageUser = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -2525,6 +2631,9 @@ export const onUpdateDirectMessageUser = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -2600,6 +2709,9 @@ export const onDeleteDirectMessageUser = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -2845,6 +2957,9 @@ export const onCreateMessage = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -2896,6 +3011,9 @@ export const onCreateMessage = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -2995,6 +3113,9 @@ export const onCreateMessage = /* GraphQL */ `
         locationLatLong {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         length
         effort
@@ -3004,6 +3125,7 @@ export const onCreateMessage = /* GraphQL */ `
         }
         eventType
         eventUrl
+        tz
         isSponsored
         createdAt
         updatedAt
@@ -3041,6 +3163,9 @@ export const onUpdateMessage = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -3092,6 +3217,9 @@ export const onUpdateMessage = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -3191,6 +3319,9 @@ export const onUpdateMessage = /* GraphQL */ `
         locationLatLong {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         length
         effort
@@ -3200,6 +3331,7 @@ export const onUpdateMessage = /* GraphQL */ `
         }
         eventType
         eventUrl
+        tz
         isSponsored
         createdAt
         updatedAt
@@ -3237,6 +3369,9 @@ export const onDeleteMessage = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -3288,6 +3423,9 @@ export const onDeleteMessage = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -3387,6 +3525,9 @@ export const onDeleteMessage = /* GraphQL */ `
         locationLatLong {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         length
         effort
@@ -3396,6 +3537,7 @@ export const onDeleteMessage = /* GraphQL */ `
         }
         eventType
         eventUrl
+        tz
         isSponsored
         createdAt
         updatedAt
@@ -3444,6 +3586,9 @@ export const onCreateResourceRoot = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -3517,6 +3662,9 @@ export const onUpdateResourceRoot = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
@@ -3590,6 +3738,9 @@ export const onDeleteResourceRoot = /* GraphQL */ `
         location {
           latitude
           longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
         }
         profileImage {
           userId
