@@ -439,7 +439,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               {this.state.isEditable ?
                 <Container>
                   <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-                    <Picker style={{ height: 41, width: 308, marginRight: 10 }}
+                    <Picker style={{ height: 45, width: 308, marginRight: 10 }}
                       onValueChange={(itemValue) => this.setState({ interest: itemValue })}
                       selectedValue={this.state.interest}
                     >
