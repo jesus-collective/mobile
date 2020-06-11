@@ -283,6 +283,9 @@ export default class MainStyles {
             fontFormSmallDarkGrey: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", paddingTop: 5, width: "100%"
             },
+            fontFormSmallDarkGreyCoordinates: {
+                fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", paddingTop: 5, width: "50%"
+            },
             fontFormSmallInput: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 25, letterSpacing: -0.3, color: "#333333", maxWidth: 250, height: 18, borderWidth: 0, borderColor: "#dddddd"
             },
@@ -1141,6 +1144,9 @@ export default class MainStyles {
                 },
                 fontFormMediumInput: {
                     maxWidth: 175
+                },
+                fontFormSmallDarkGreyCoordinates: {
+                    width: "100%"
                 },
             },
 
