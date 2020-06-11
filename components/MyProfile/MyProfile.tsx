@@ -344,7 +344,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
 
 
                 <View style={this.styles.style.myProfileCoordinates}>
-                  <Text style={this.styles.style.fontFormSmallDarkGrey}><Image style={{ width: "22px", height: "22px", top: 6, marginRight: 5 }} source={require('../../assets/svg/pin 2.svg')}></Image>{this.state.UserDetails.location ? "Lat: " + this.state.UserDetails.location.latitude.toString().substring(0, 5) + " Long:" + this.state.UserDetails.location.longitude.toString().substring(0, 5) : "Location not defined"}</Text>
+                  <Text style={this.styles.style.fontFormSmallDarkGreyCoordinates}><Image style={{ width: "22px", height: "22px", top: 6, marginRight: 5 }} source={require('../../assets/svg/pin 2.svg')}></Image>{this.state.UserDetails.location ? "Lat: " + this.state.UserDetails.location.latitude.toString().substring(0, 5) + " Long:" + this.state.UserDetails.location.longitude.toString().substring(0, 5) : "Location not defined"}</Text>
                   {this.state.isEditable ?
                     <Text>( <JCButton data-testid="profile-setmap" buttonType={ButtonTypes.TransparentNoPadding} onPress={() => this.showMap()}>{this.state.UserDetails.location != null ? "Change" : "Set"}</JCButton>)</Text>
                     : null
@@ -439,7 +439,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               {this.state.isEditable ?
                 <Container>
                   <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-                    <Picker style={{ height: 41, width: 308, marginRight: 10 }}
+                    <Picker style={{ height: 45, width: 308, marginRight: 10 }}
                       onValueChange={(itemValue) => this.setState({ interest: itemValue })}
                       selectedValue={this.state.interest}
                     >

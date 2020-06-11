@@ -283,6 +283,9 @@ export default class MainStyles {
             fontFormSmallDarkGrey: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", paddingTop: 5, width: "100%"
             },
+            fontFormSmallDarkGreyCoordinates: {
+                fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", paddingTop: 5, width: "50%"
+            },
             fontFormSmallInput: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 25, letterSpacing: -0.3, color: "#333333", maxWidth: 250, height: 18, borderWidth: 0, borderColor: "#dddddd"
             },
@@ -619,7 +622,7 @@ export default class MainStyles {
                 left: 0,
                 top: 0,
                 width: "100%",
-                height: 1650,
+                height: 1955,
                 zIndex: 100,
                 backgroundColor: "#33333366"
             },
@@ -976,12 +979,12 @@ export default class MainStyles {
                 flexDirection: "row"
             },
             myMapDashboardConversationCard: {
-                minHeight: 50,
-                paddingTop: 28,
+                height: 150,
+                paddingTop: 20,
                 paddingBottom: 28,
                 borderStyle: "solid",
                 borderColor: "#FFFFFF",
-                width: "100%"
+                width: 220
             },
             profilesCard: {
                 width: "100%",
@@ -1010,22 +1013,22 @@ export default class MainStyles {
                 paddingTop: 5,
             },
             myMapCalloutEventContainer: {
-                minHeight: 250,
-                alignSelf: "flex-start",
-                padding: '0%',
-                paddingLeft: '0.25rem',
-                paddingRight: '0.25rem',
-                borderRadius: 4,
-                boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
-                borderStyle: "solid",
-                borderColor: "#FFFFFF",
-                width: 400
+                // height: 250,
+                // alignSelf: "flex-start",
+                // padding: '0%',
+                // paddingLeft: '0.25rem',
+                // paddingRight: '0.25rem',
+                // borderRadius: 4,
+                // boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+                // borderStyle: "solid",
+                // borderColor: "#FFFFFF",
+                maxWidth: 350,
             },
             myMapCalloutEventName: {
-                height: 100
+                height: 50
             },
             myMapCalloutEventDescription: {
-                height: 100
+                height: 50
             },
             resourceHeaderImgContainer: {
                 backgroundColor: "#F0493E", 
@@ -1141,6 +1144,9 @@ export default class MainStyles {
                 },
                 fontFormMediumInput: {
                     maxWidth: 175
+                },
+                fontFormSmallDarkGreyCoordinates: {
+                    width: "100%"
                 },
             },
 
