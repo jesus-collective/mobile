@@ -136,7 +136,7 @@ export default class HeaderJC extends JCComponent<Props> {
           }
 
         </Body>
-        <Right>
+        <Right style={this.headerStyles.style.headerRightContainer}>
           {
             constants["SETTING_ISVISIBLE_ADMIN"] && this.isMemberOf("admin") ?
 
