@@ -612,10 +612,13 @@ export default class MainStyles {
                 flexDirection: "row"
             },
             myProfileTopButtonsInternalContainer: {
-                flex: 6,
+                flex: 1,
                 flexDirection: "row",
                 alignSelf: "flex-end",
                 justifyContent: "flex-end"
+            },
+            myProfileTopButtonsExternalContainer: {
+                flexDirection: "row-reverse"
             },
             myProfileMapSelectorContainer: {
                 position: "fixed",
@@ -1010,7 +1013,7 @@ export default class MainStyles {
                 fontWeight: "bold",
                 flex: .75,
                 paddingLeft: 20,
-                paddingTop: 5,
+                paddingTop: 24,
             },
             myMapCalloutEventContainer: {
                 // height: 250,
@@ -1195,7 +1198,7 @@ export default class MainStyles {
                     flexDirection: "row"
                 },
                 myProfileTopButtonsInternalContainer: {
-                    flex: 2.5
+                    flex: 1
                 },
                 myMapFontTitle: {
                     fontSize: 22,
