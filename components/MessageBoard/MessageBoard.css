@@ -38,7 +38,6 @@
     padding-top: 0px;
     padding-bottom: 0px;
     border-radius: 10px;
-
 }
 
 .customEditorSendmessage {
@@ -54,6 +53,11 @@
     background-color: #ffffff;
     border-radius: 0 0 10px 10px;
     max-height: 200px;
+}
+
+.customEmojiModal {
+    height: 130px;
+    left: -95px;
 }
 
 .MuiFormControl-root {

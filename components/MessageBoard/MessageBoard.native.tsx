@@ -158,30 +158,12 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                   onEditorStateChange={(z) => { this.updateEditorInput(z) }}
                   onContentStateChange={(z) => { this.updateInput(z) }}
                   toolbar={{
-                    options: ['inline', 'list', 'colorPicker', 'link', 'emoji', 'image', 'history'],
+                    options: ['inline', 'list'],
                     inline: {
-                      options: ['bold', 'italic', 'underline', 'strikethrough']
+                      options: ['bold', 'italic', 'underline']
                     },
                     list: {
                       options: ['unordered', 'ordered']
-                    },
-                    image: {
-                      uploadCallback: async (z1) => {
-                        const id = uuidv1()
-
-                        const download = await Storage.get("messages/" + id + ".png", {
-                          level: 'protected',
-                          contentType: z1.type,
-                          identityId: this.state.UserDetails.profileImage ? this.state.UserDetails.profileImage : ""
-                        })
-                        return { data: { link: download } }
-                      },
-                      previewImage: true,
-                      alt: { present: true, mandatory: true },
-                      defaultSize: {
-                        height: 'auto',
-                        width: 'auto',
-                      }
                     }
                   }}
 
