@@ -284,6 +284,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               <Text style={this.styles.style.profileFontTitle}>Setup your profile</Text>
               : <Text style={this.styles.style.profileFontTitle}>{this.state.UserDetails.given_name}&apos;s profile</Text>
             }
+            <View style={this.styles.style.myProfileTopButtonsExternalContainer}>
             {this.state.isEditable ?
               <View style={this.styles.style.myProfileTopButtonsInternalContainer}>
                 <JCButton data-testid="profile-save" buttonType={ButtonTypes.SolidRightMargin} onPress={() => this.finalizeProfile()}>Save and Publish Your Profile</JCButton>
@@ -296,6 +297,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 <Text style={this.styles.style.myProfileErrorValidation}>{this.state.validationText}</Text>
                 : null
             }
+            </View>
           </View>
 
           <MapSelector mapVisible={this.state.mapVisible} coord={this.state.UserDetails.location}

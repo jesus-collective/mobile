@@ -68,6 +68,10 @@ export default class HeaderStyles {
                 marginBottom: 10,
             },
 
+            headerRightContainer: {
+                marginRight: 12
+            },
+
             // Media Query Mobile
             '@media (min-width: 320px) and (max-width: 480px)': {
                 resourceContainer: {
