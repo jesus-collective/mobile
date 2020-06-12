@@ -267,7 +267,7 @@ export default EStyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         // color:"#ffffff",
-        backgroundColor: "#ffffff",
+        backgroundColor: "#ffffff00",
         borderWidth: 0,
         borderColor: "#ffffff",
         boxShadow: "unset"

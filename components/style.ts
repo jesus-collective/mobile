@@ -451,6 +451,26 @@ export default class MainStyles {
                 color: "#333333",
                 opacity: 0.5
             },
+            myMapConversationCardRole: {
+                fontFamily: "Graphik-Regular-App",
+                textTransform: "uppercase",
+                fontWeight: "650",
+                fontSize: 12,
+                lineHeight: 16,
+                color: "#333333",
+                opacity: 0.6,
+                marginTop: 5
+            },
+            myMapConversationCardAboutMe: {
+                fontFamily: "Graphik-Regular-App",
+                fontWeight: "650",
+                fontSize: 16,
+                lineHeight: 23,
+                color: "#333333",
+                marginTop: 10,
+                flexWrap: 'wrap',
+                width: 330
+            },
             homePageContainers: {
                 flex: 70,
                 flexDirection: "column",
@@ -982,12 +1002,12 @@ export default class MainStyles {
                 flexDirection: "row"
             },
             myMapDashboardConversationCard: {
-                height: 150,
+                height: 233,
                 paddingTop: 20,
-                paddingBottom: 28,
-                borderStyle: "solid",
-                borderColor: "#FFFFFF",
-                width: 220
+                paddingBottom: 20,
+                width: 500,
+                backgroundColor: '#FFFFFF',
+                opacity: 0.9
             },
             profilesCard: {
                 width: "100%",
@@ -1016,16 +1036,12 @@ export default class MainStyles {
                 paddingTop: 24,
             },
             myMapCalloutEventContainer: {
-                // height: 250,
-                // alignSelf: "flex-start",
-                // padding: '0%',
-                // paddingLeft: '0.25rem',
-                // paddingRight: '0.25rem',
-                // borderRadius: 4,
-                // boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
-                // borderStyle: "solid",
-                // borderColor: "#FFFFFF",
-                maxWidth: 350,
+                height: 233,
+                paddingTop: 20,
+                paddingBottom: 20,
+                width: 500,
+                backgroundColor: '#FFFFFF',
+                opacity: 0.9
             },
             myMapCalloutEventName: {
                 height: 50
