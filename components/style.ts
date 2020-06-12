@@ -1136,6 +1136,9 @@ export default class MainStyles {
                 },
                 myProfileErrorValidation: {
                     flex: 1,
+                    paddingLeft: 90,
+                    paddingBottom: 15,
+                    paddingTop: 0
                 },
                 myMapFontTitle: {
                     fontSize: 22,
@@ -1150,6 +1153,9 @@ export default class MainStyles {
                 },
                 fontFormSmallDarkGreyCoordinates: {
                     width: "100%"
+                },
+                myProfileTopButtonsExternalContainer: {
+                    flexDirection: "column"
                 },
             },
 
