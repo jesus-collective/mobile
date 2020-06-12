@@ -11,8 +11,8 @@ import awsconfig from '../../src/aws-exports';
 import Validate from '../Validate/Validate';
 import moment from 'moment';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
+import EditableLocation from '../../components/Forms/EditableLocation'
 import MyMap from '../../components/MyMap/MyMap'
-import MapSelector from './MapSelector'
 import EditableText from '../Forms/EditableText';
 import { AntDesign } from '@expo/vector-icons';
 
@@ -55,7 +55,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       //  mapCoord: { latitude: 0, longitude: 0 },
       isEditable: false,
       mapData: [],
-      initCenter: { lat: 44, lng: -78.0 }
+      initCenter: { lat: 44, lng: -78.0 },
     }
     this.getUserDetails()
   }
@@ -119,15 +119,16 @@ class MyProfileImpl extends JCComponent<Props, State> {
   }
   handleInputChange(event: any, name: string): void {
 
-
     const value = event.target === undefined ? event : event.target.type === 'checkbox' ? event.target.checked : event.target.value;
     // const name = target.name;
     const updateData = { ...this.state.UserDetails }
     updateData[name] = value
     this.setState({
       UserDetails: updateData
+    }, () => {
+      if (name==="location")
+        this.convertProfileToMapData()
     });
-    //console.log(this.state.UserDetails)
   }
   clean(item): void {
     delete item.organizations
@@ -219,6 +220,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
     console.log("showMap")
     this.setState({ mapVisible: true })
   }
+  renderMap() {
+    return (
+      this.state.UserDetails.location.geocodeFull ? <MyMap initCenter={this.state.initCenter} visible={true} mapData={this.state.mapData} type={"profile"}></MyMap> : null
+    )
+  }
   saveLocation(coord): void {
     console.log("saveLocation")
     this.handleInputChange({ target: { value: { latitude: coord.latitude, longitude: coord.longitude } } }, "location")
@@ -300,14 +306,6 @@ class MyProfileImpl extends JCComponent<Props, State> {
             </View>
           </View>
 
-          <MapSelector mapVisible={this.state.mapVisible} coord={this.state.UserDetails.location}
-            onClose={(coord) => {
-              console.log({ "onCloseMap": coord });
-              this.saveLocation(coord)
-              this.setState({ mapVisible: false })
-            }}>
-          </MapSelector>
-
           <Form style={this.styles.style.myProfileMainContainer}>
             <View style={this.styles.style.profileScreenLeftCard}>
               <View style={this.styles.style.myProfileImageWrapper}>
@@ -344,13 +342,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   data-testid="profile-aboutMeShort"
                   value={this.state.UserDetails.aboutMeShort} isEditable={this.state.isEditable}></EditableText>
 
-
                 <View style={this.styles.style.myProfileCoordinates}>
-                  <Text style={this.styles.style.fontFormSmallDarkGreyCoordinates}><Image style={{ width: "22px", height: "22px", top: 6, marginRight: 5 }} source={require('../../assets/svg/pin 2.svg')}></Image>{this.state.UserDetails.location ? "Lat: " + this.state.UserDetails.location.latitude.toString().substring(0, 5) + " Long:" + this.state.UserDetails.location.longitude.toString().substring(0, 5) : "Location not defined"}</Text>
-                  {this.state.isEditable ?
-                    <Text>( <JCButton data-testid="profile-setmap" buttonType={ButtonTypes.TransparentNoPadding} onPress={() => this.showMap()}>{this.state.UserDetails.location != null ? "Change" : "Set"}</JCButton>)</Text>
-                    : null
-                  }
+                  <Text style={this.styles.style.fontFormSmallDarkGreyCoordinates}><Image style={{ width: "22px", height: "22px", top: 6, marginRight: 5 }} source={require('../../assets/svg/pin 2.svg')}></Image>{this.state.UserDetails.location.geocodeFull ? this.state.UserDetails.location.geocodeFull : "Location not defined"}</Text>
                 </View>
                 <Text style={this.styles.style.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px", top: 3, marginRight: 5 }} source={require('../../assets/svg/calendar.svg')}></Image>{this.state.UserDetails.joined ? moment(this.state.UserDetails.joined).format('MMMM Do YYYY') : "Join date unknown"}</Text>
                 <Text style={this.styles.style.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px", top: 3, marginRight: 5 }} source={require('../../assets/svg/church.svg')}></Image>{this.state.UserDetails.orgName ? this.state.UserDetails.orgName : "Organization Name not defined"}</Text>
@@ -369,6 +362,23 @@ class MyProfileImpl extends JCComponent<Props, State> {
 
               </View>
 
+
+              {this.state.isEditable ?
+                <Text style={this.styles.style.fontFormSmallHeader}>Public Location</Text>
+                : null
+              }
+              {this.state.isEditable ? 
+              <EditableLocation onChange={(value: any, location: any) => {
+                if (location) {
+                  this.handleInputChange({ latitude: location.lat, longitude: location.lng, geocodeFull: value }, "location");
+                }
+              }}
+                multiline={false} textStyle={this.styles.style.fontRegular}
+                inputStyle={this.styles.style.groupNameInput} value={this.state.UserDetails.location.geocodeFull}
+                isEditable={this.state.isEditable} citiesOnly={true}>  
+              </EditableLocation>
+              : null
+              }
 
               {this.state.isEditable ?
                 <Text style={this.styles.style.fontFormSmallHeader}>Private Information</Text>
@@ -418,7 +428,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
 
             <View style={this.styles.style.profileScreenRightCard}>
               <View style={{ width: '100%' }}>
-                <MyMap initCenter={this.state.initCenter} visible={true} mapData={this.state.mapData} type={"profile"}></MyMap>
+                {this.renderMap()}
               </View>
               {this.state.isEditable ?
                 <Text style={this.styles.style.fontMyProfileLeftTop}>Tell us more about you</Text>
