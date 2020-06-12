@@ -62,7 +62,7 @@ export default class EditableLocation extends JCComponent<Props, State> {
                 value={this.state.value}
                 onChange={this.onChanged}
                 onSelect={this.handleSelect}
-                searchOptions={this.props.citiesOnly ? {types: ['(cities)']} : {types: ['address', 'establishment', '(regions)', '(cities)']}}
+                searchOptions={this.props.citiesOnly ? {types: ['(cities)']} : {}}
                 onError={(status, clearSuggestions) => {
                     console.log('Google Maps API returned error with status: ', status)
                     clearSuggestions()
