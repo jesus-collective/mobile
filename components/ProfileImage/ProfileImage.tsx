@@ -89,6 +89,7 @@ export default class MyProfile extends JCComponent<Props, State> {
                 this.state.showEmpty ?
                     <Image style={this.props.size == 'small' ?
                         { width: "55px", height: "55px", borderRadius: 50, marginRight: 10, marginBottom: 15 } :
+                        this.props.style === "map" ? { width: "80px", height: "96px", borderRadius: 120, marginRight: 10, marginBottom: 15 } :
                         { width: "250px", height: "290px", borderRadius: 120, marginRight: 10, marginBottom: 15 }
 
                     }
