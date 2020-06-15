@@ -43,6 +43,7 @@ interface State {
   initCenter: any
 }
 class MyProfileImpl extends JCComponent<Props, State> {
+  orgsWithEmployees = ["Church", "Church Plant", "Academic Institution", "Compassion/Mission"]
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -556,13 +557,14 @@ class MyProfileImpl extends JCComponent<Props, State> {
 
               </Item>
 
-              <View>
+              <View>                   
+                {!this.state.isEditable ? <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text> : null}
                 <Label style={this.styles.style.fontFormSmall}>Type of Organization</Label>
                 {this.state.isEditable ?
                   <View style={{ flex: 1, flexDirection: 'row' }}>
-                    <Picker style={{ height: 40, width: 308, marginRight: 10, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, borderBottomWidth: 1, borderColor: '#dddddd' }}
+                    <Picker style={{ height: 40, width: 350, marginRight: 10, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, borderBottomWidth: 1, borderColor: '#dddddd' }}
                     onValueChange={(itemValue) => { this.handleInputChange(itemValue, "orgType") }}
-                    selectedValue={this.state.UserDetails.orgType}
+                    selectedValue={!orgTypes.includes(this.state.UserDetails.orgType) ? "" : this.state.UserDetails.orgType}
                     >
                       <Picker.Item label={"None Selected"} value={"None Selected"} />
                       {orgTypes.map((item, index) => {
@@ -577,33 +579,46 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: 308, paddingTop: 8, paddingRight: 10, paddingBottom: 8, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}
                       value={this.state.UserDetails.orgType} isEditable={this.state.isEditable}></EditableText> : null}
                   </View>
-                      :<Text>{this.state.UserDetails.orgType}</Text>
+                    : 
+                      <EditableText
+                      multiline={true}
+                      textStyle={this.styles.style.fontFormSmallDarkGrey}
+                      value={this.state.UserDetails.orgType} isEditable={false}/>
                     }
               </View>
               <View>
-                <Label style={this.styles.style.fontFormSmall}>{this.state.UserDetails.orgSize === "Home School" ? "Number of kids in home school" : "Size of Organization"}</Label>
-                {this.state.isEditable ? this.state.UserDetails.orgType === "Home School" || this.state.UserDetails.orgType === "Home Group/Home Church" ?
-                    <Picker style={{ height: 40, width: 308, marginRight: 10, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, borderBottomWidth: 1, borderColor: '#dddddd' }}
-                    onValueChange={(itemValue) => { this.handleInputChange(itemValue, "orgSize") }}
-                    selectedValue={this.state.UserDetails.orgSize}
-                    >
-                      <Picker.Item label={"None Selected"} value={null} />
-                      
-                      {orgSizeSmall.map((item, index) => {
-                        return (<Picker.Item key={index} label={item} value={item} />)
-                      })}
-                    </Picker> 
-                    : <Picker style={{ height: 40, width: 308, marginRight: 10, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, borderBottomWidth: 1, borderColor: '#dddddd' }}
-                    onValueChange={(itemValue) => { this.handleInputChange(itemValue, "orgSize") }}
-                    selectedValue={this.state.UserDetails.orgSize}
-                    >
-                      <Picker.Item label={"None Selected"} value={null} />
-                      
-                      {orgSizeBig.map((item, index) => {
-                        return (<Picker.Item key={index} label={item} value={item} />)
-                      })}
-                    </Picker> 
-                    : <Text>{this.state.UserDetails.orgSize}</Text>
+                {!this.state.isEditable ? <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text> : null}
+                <Label style={this.styles.style.fontFormSmall}>{this.state.UserDetails.orgType === "Home School" ? "Number of kids in home school" : this.orgsWithEmployees.includes(this.state.UserDetails.orgType) ? "How many employees are there in the organization" : "Size of the organization"}</Label>
+                {this.state.isEditable ? this.state.UserDetails.orgType === "Home School" || this.state.UserDetails.orgType === "Home Group/Home Church" || this.state.UserDetails.orgType === "Church Plant"?
+                    <View>
+                      <Picker style={{ height: 40, width: 350, marginRight: 10, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, borderBottomWidth: 1, borderColor: '#dddddd' }}
+                      onValueChange={(itemValue) => { this.handleInputChange(itemValue, "orgSize") }}
+                      selectedValue={this.state.UserDetails.orgSize}
+                      >
+                        <Picker.Item label={"None Selected"} value={null} />
+                        
+                        {orgSizeSmall.map((item, index) => {
+                          return (<Picker.Item key={index} label={item} value={item} />)
+                        })}
+                      </Picker> 
+                    </View>
+                    : <View> 
+                      <Picker style={{ height: 40, width: 350, marginRight: 10, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, borderBottomWidth: 1, borderColor: '#dddddd' }}
+                      onValueChange={(itemValue) => { this.handleInputChange(itemValue, "orgSize") }}
+                      selectedValue={this.state.UserDetails.orgSize}
+                      >
+                        <Picker.Item label={"None Selected"} value={null} />
+                        
+                        {orgSizeBig.map((item, index) => {
+                          return (<Picker.Item key={index} label={item} value={item} />)
+                        })}
+                      </Picker> 
+                    </View>
+                    
+                    : <EditableText
+                      multiline={true}
+                      textStyle={this.styles.style.fontFormSmallDarkGrey}
+                      value={this.state.UserDetails.orgSize} isEditable={false}/>
                     }
               </View>
 
