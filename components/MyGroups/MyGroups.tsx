@@ -449,7 +449,7 @@ export default class MyGroups extends JCComponent<Props, State> {
   renderProfile(item: any): React.ReactNode {
     return <Card key={item.id} style={this.styles.style.profilesCard}>
       <CardItem style={this.styles.style.profileCard}>
-        <Left>
+        <Left style={{ paddingTop: 20 }}>
           <ProfileImage user={item} size="small"></ProfileImage>
           <Body>
             <Text style={this.styles.style.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
@@ -556,7 +556,7 @@ export default class MyGroups extends JCComponent<Props, State> {
 
                       return (
                         <ErrorBoundry key={index}>
-                          <ListItem noBorder style={{ alignSelf: "flex-start" }} button onPress={() => { this.openSingle(item.id) }}>
+                          <ListItem noBorder style={this.styles.style.conversationsCard} button onPress={() => { this.openSingle(item.id) }}>
                             {this.renderByType(item, this.state.type)}
                           </ListItem>
                         </ErrorBoundry>
@@ -566,9 +566,9 @@ export default class MyGroups extends JCComponent<Props, State> {
                   }
                   {this.state.nextToken ?
                     this.props.showMore ?
-                      <TouchableOpacity onPress={() => { this.setInitialData(this.props) }} >
-                        <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: '0%', width: this.state.cardWidth }}>
-                          <CardItem   ><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitle}>Load more...</Text></CardItem>
+                      <TouchableOpacity style={{ top: 15, height: 80 }} onPress={() => { this.setInitialData(this.props) }} >
+                        <Card style={{ minHeight: 43, alignSelf: "flex-start", alignItems: "center", borderRadius: 4, backgroundColor: "#F0493E", margintop: 100, padding: '0%', width: this.state.cardWidth }}>
+                          <CardItem style={{ backgroundColor: "none", alignItems: "center" }}  ><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.conversationsLoadMoreFont}>Load more...</Text></CardItem>
                         </Card>
                       </TouchableOpacity>
                       : null

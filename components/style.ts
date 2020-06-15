@@ -316,6 +316,9 @@ export default class MainStyles {
             myMapFontTitle: {
                 fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24, lineHeight: 30, height: 60, color: '#333333'
             },
+            conversationsLoadMoreFont: {
+                fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 16, lineHeight: 24, height: '100%', color: '#ffffff'
+            },
             fontTitleGroup: {
                 fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24, lineHeight: 30, height: 90, color: '#333333', paddingTop: 29,
             },
@@ -1058,6 +1061,9 @@ export default class MainStyles {
                 width: "100%", 
                 height: "100%"
             },
+            conversationsCard: {
+                alignSelf: "flex-start", 
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -1409,6 +1415,9 @@ export default class MainStyles {
                 },
                 fontFormMediumInput: {
                     maxWidth: 250
+                },
+                conversationsCard: {
+                    maxWidth: 300
                 },
             },
 
