@@ -566,7 +566,6 @@ class MyProfileImpl extends JCComponent<Props, State> {
                     onValueChange={(itemValue) => { this.handleInputChange(itemValue, "orgType") }}
                     selectedValue={!orgTypes.includes(this.state.UserDetails.orgType) ? "" : this.state.UserDetails.orgType}
                     >
-                      <Picker.Item label={"None Selected"} value={"None Selected"} />
                       {orgTypes.map((item, index) => {
                         return (<Picker.Item key={index} label={item} value={item} />)
                       })}
@@ -588,14 +587,13 @@ class MyProfileImpl extends JCComponent<Props, State> {
               </View>
               <View>
                 {!this.state.isEditable ? <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text> : null}
-                <Label style={this.styles.style.fontFormSmall}>{this.state.UserDetails.orgType === "Home School" ? "Number of kids in home school" : this.orgsWithEmployees.includes(this.state.UserDetails.orgType) ? "How many employees are there in the organization" : "Size of the organization"}</Label>
+                <Label style={this.styles.style.fontFormSmall}>{this.state.UserDetails.orgType === "Home School" ? "Number of kids in home school" : this.orgsWithEmployees.includes(this.state.UserDetails.orgType) ? "How many employees are there in the organization?" : "Size of the organization"}</Label>
                 {this.state.isEditable ? this.state.UserDetails.orgType === "Home School" || this.state.UserDetails.orgType === "Home Group/Home Church" || this.state.UserDetails.orgType === "Church Plant"?
                     <View>
                       <Picker style={{ height: 40, width: 350, marginRight: 10, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, borderBottomWidth: 1, borderColor: '#dddddd' }}
                       onValueChange={(itemValue) => { this.handleInputChange(itemValue, "orgSize") }}
                       selectedValue={this.state.UserDetails.orgSize}
                       >
-                        <Picker.Item label={"None Selected"} value={null} />
                         
                         {orgSizeSmall.map((item, index) => {
                           return (<Picker.Item key={index} label={item} value={item} />)
@@ -606,9 +604,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       <Picker style={{ height: 40, width: 350, marginRight: 10, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, borderBottomWidth: 1, borderColor: '#dddddd' }}
                       onValueChange={(itemValue) => { this.handleInputChange(itemValue, "orgSize") }}
                       selectedValue={this.state.UserDetails.orgSize}
-                      >
-                        <Picker.Item label={"None Selected"} value={null} />
-                        
+                      >                        
                         {orgSizeBig.map((item, index) => {
                           return (<Picker.Item key={index} label={item} value={item} />)
                         })}
