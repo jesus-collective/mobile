@@ -1061,6 +1061,9 @@ export default class MainStyles {
                 width: "100%", 
                 height: "100%"
             },
+            conversationsCard: {
+                alignSelf: "flex-start", 
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -1412,6 +1415,9 @@ export default class MainStyles {
                 },
                 fontFormMediumInput: {
                     maxWidth: 250
+                },
+                conversationsCard: {
+                    maxWidth: 300
                 },
             },
 

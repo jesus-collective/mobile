@@ -449,7 +449,7 @@ export default class MyGroups extends JCComponent<Props, State> {
   renderProfile(item: any): React.ReactNode {
     return <Card key={item.id} style={this.styles.style.profilesCard}>
       <CardItem style={this.styles.style.profileCard}>
-        <Left>
+        <Left style={{}}>
           <ProfileImage user={item} size="small"></ProfileImage>
           <Body>
             <Text style={this.styles.style.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
@@ -556,7 +556,7 @@ export default class MyGroups extends JCComponent<Props, State> {
 
                       return (
                         <ErrorBoundry key={index}>
-                          <ListItem noBorder style={{ alignSelf: "flex-start" }} button onPress={() => { this.openSingle(item.id) }}>
+                          <ListItem noBorder style={this.styles.style.conversationsCard} button onPress={() => { this.openSingle(item.id) }}>
                             {this.renderByType(item, this.state.type)}
                           </ListItem>
                         </ErrorBoundry>
