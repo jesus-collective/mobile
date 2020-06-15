@@ -566,9 +566,9 @@ export default class MyGroups extends JCComponent<Props, State> {
                   }
                   {this.state.nextToken ?
                     this.props.showMore ?
-                      <TouchableOpacity onPress={() => { this.setInitialData(this.props) }} >
-                        <Card style={{ minHeight: 330, alignSelf: "flex-start", padding: '0%', width: this.state.cardWidth }}>
-                          <CardItem   ><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitle}>Load more...</Text></CardItem>
+                      <TouchableOpacity style={{ top: 15, height: 80 }} onPress={() => { this.setInitialData(this.props) }} >
+                        <Card style={{ minHeight: 43, alignSelf: "flex-start", alignItems: "center", borderRadius: 4, backgroundColor: "#F0493E", margintop: 100, padding: '0%', width: this.state.cardWidth }}>
+                          <CardItem style={{ backgroundColor: "none", alignItems: "center" }}  ><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.conversationsLoadMoreFont}>Load more...</Text></CardItem>
                         </Card>
                       </TouchableOpacity>
                       : null
