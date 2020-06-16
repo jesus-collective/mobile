@@ -1263,6 +1263,9 @@ export default class MainStyles {
                 fontFormMediumInput: {
                     maxWidth: 287
                 },
+                myprofilePickerMainContainer: {
+                    maxHeight: 300
+                },
             },
 
             '@media (min-width: 320px) and (max-width: 480px)': {
