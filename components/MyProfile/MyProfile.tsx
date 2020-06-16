@@ -449,8 +449,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
               }
 
               {this.state.isEditable ?
-                <Container>
-                  <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+                <Container style={this.styles.style.myprofilePickerMainContainer}>
+                  <View style={this.styles.style.myprofilePickerContainer}>
+                    <View style={this.styles.style.myprofilePickerContainerView}>
                     <Picker style={{ height: 45, width: 308, marginRight: 10, borderWidth: 1, borderColor: '#dddddd' }}
                       onValueChange={(itemValue) => this.setState({ interest: itemValue })}
                       selectedValue={this.state.interest}
@@ -461,17 +462,17 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       })}
                     </Picker>
                     <JCButton buttonType={ButtonTypes.SolidAboutMe} onPress={() => this.handleAddInterest()}><Text>+ Add</Text></JCButton>
-
+                    </View>
                     {this.state.isEditable ?
-                      <Text>You can select {this.state.interestsArray ? 7 - this.state.interestsArray.length : 7} more key interests</Text>
+                      <Text style={{ width: "100%", marginTop: 8 }}>You can select {this.state.interestsArray ? 7 - this.state.interestsArray.length : 7} more key interests</Text>
                       : null
                     }
                   </View>
-                  <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
+                  <View style={this.styles.style.myprofileBadgeContainer}>
                     {this.state.interestsArray ?
                       this.state.interestsArray.map((item, index) => {
                         return (
-                          <Badge key={index} style={{ backgroundColor: '#EFF1F5', marginRight: 10 }}>
+                          <Badge key={index} style={{ backgroundColor: '#EFF1F5', marginRight: 10, marginTop: 5 }}>
                             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
                               <Text style={{ fontSize: 18, paddingLeft: 10, paddingRight: 10 }}>{item}</Text>
                               <TouchableOpacity onPress={() => this.handleDeleteInterest(item)}>
@@ -496,7 +497,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                     }) : null}
                 </View>
               }
-              <Item stackedLabel style={{ marginBottom: 15, width: "100%" }}>
+              <Item stackedLabel style={this.styles.style.myprofileMyRoleContainer}>
                 <Label style={this.styles.style.fontFormSmall}>Current Role</Label>
                 <EditableText onChange={(e) => { this.handleInputChange(e, "currentRole") }}
                   multiline={false}

@@ -1064,6 +1064,30 @@ export default class MainStyles {
             conversationsCard: {
                 alignSelf: "flex-start", 
             },
+            myprofilePickerContainer: {
+                flex: 1, 
+                flexDirection: 'column', 
+                alignItems: 'center',
+            },
+            myprofilePickerContainerView: {
+                flexDirection: 'row', 
+            },
+            myprofileBadgeContainer: {
+                flex: 1, 
+                flexDirection: 'row', 
+                flexWrap: 'wrap',
+                top: 20,
+            },
+            myprofileMyRoleContainer: {
+                marginBottom: 15, 
+                width: "100%",
+                // marginTop: 80
+            },
+            myprofilePickerMainContainer: {
+                width: "100%", 
+                alignItems: "flex-start", 
+                marginTop: 5,
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
