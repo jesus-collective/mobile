@@ -399,5 +399,8 @@ export default EStyleSheet.create({
             marginBottom: 10,
             justifyContent: "center",
         },
+        SolidAboutMeButton: {
+            justifyContent: "center"
+        },
     },
 })

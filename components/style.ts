@@ -1459,6 +1459,12 @@ export default class MainStyles {
                 conversationsCard: {
                     maxWidth: 300
                 },
+                myprofilePickerMainContainer: {
+                    maxHeight: 200
+                },
+                myprofileBadgeContainer: {
+                    top: 30
+                }
             },
 
             dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
