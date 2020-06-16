@@ -1088,6 +1088,13 @@ export default class MainStyles {
                 alignItems: "flex-start", 
                 marginTop: 5,
             },
+            myprofilePicker: {
+                height: 45, 
+                width: 308, 
+                marginRight: 10, 
+                borderWidth: 1, 
+                borderColor: '#dddddd'
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -1202,6 +1209,12 @@ export default class MainStyles {
                 },
                 myProfileTopButtonsExternalContainer: {
                     flexDirection: "column"
+                },
+                myprofilePickerContainerView: {
+                    flexDirection: 'column', 
+                },
+                myprofilePicker: {
+                    marginBottom: 10
                 },
             },
 

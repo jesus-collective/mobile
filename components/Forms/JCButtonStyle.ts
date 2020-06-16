@@ -352,6 +352,9 @@ export default EStyleSheet.create({
         SolidProfileText: {
             width: "100%"
         },
+        SolidAboutMeButton: {
+            width: 130
+        },
     },
 
     '@media (min-width: 320px) and (max-width: 480px)': {

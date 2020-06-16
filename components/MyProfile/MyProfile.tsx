@@ -452,7 +452,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 <Container style={this.styles.style.myprofilePickerMainContainer}>
                   <View style={this.styles.style.myprofilePickerContainer}>
                     <View style={this.styles.style.myprofilePickerContainerView}>
-                    <Picker style={{ height: 45, width: 308, marginRight: 10, borderWidth: 1, borderColor: '#dddddd' }}
+                    <Picker style={this.styles.style.myprofilePicker}
                       onValueChange={(itemValue) => this.setState({ interest: itemValue })}
                       selectedValue={this.state.interest}
                     >
