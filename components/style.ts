@@ -36,8 +36,9 @@ export default class MainStyles {
             dashboardPrimaryContainer: { display: "block" },
             episodeTitle: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333" },
             episodeDescription: { wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' },
-            seriesTitle: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
-            seriesDescription: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
+            seriesTitle: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 22, lineHeight: 30, color: "#333333", paddingBottom: 0 },
+            moreSeriesTitle: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 18, lineHeight: 24, color: "#333333", paddingBottom: 0 },
+            seriesDescription: { wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 14, lineHeight: 22, color: "#333333", opacity: 0.6, paddingBottom: 0 },
             headerSeriesTitle: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
             headerSeriesDescription: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
             headerEpisodeTitle: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
@@ -846,7 +847,7 @@ export default class MainStyles {
                 marginTop: 30,
                 backgroundColor: "#ffffff",
                 borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
-                height: 900
+                height: '100%'
             },
             resourceContentRightContainer: {
                 flex: 30,
@@ -862,61 +863,65 @@ export default class MainStyles {
                 height: 900
             },
             resourceContentCurrentSeriesContainer: {
-                overflow: "scroll",
-                minHeight: 375,
+                minHeight: 500,
                 flexWrap: "nowrap",
                 // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
                 flexGrow: 0,
                 width: "100%",
                 flexDirection: 'row',
-                justifyContent: "flex-start",
+                justifyContent: "space-between",
                 alignItems: "flex-start",
             },
             resourceContentCurrentSeriesCard: {
                 padding: "0px",
                 marginLeft: "10px",
                 marginRight: "10px",
-                width: "300px",
+                flex: 1,
                 borderRadius: 4,
                 boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
-                borderColor: "#ffffff",
-                minHeight: 275
+                borderColor: "#F9FAFC"
             },
             resourceContentCurrentSeriesIframeContainer: {
-                width: "300px",
+                width: '100%',
+                height: Dimensions.get('window').width*0.12,
                 paddingLeft: "0px",
                 paddingRight: "0px",
                 margin: "0px",
-                paddingTop: 0
+                paddingTop: 0,
+                backgroundColor: '#F9FAFC'
             },
             resourceContentMoreSeriesContainer: {
-                overflow: "scroll",
                 minHeight: 375,
-                flexWrap: "nowrap",
-                // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
-                flexGrow: 0,
                 width: "100%",
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
+            },
+            resourceContentMoreSeriesRowContainer: {
                 flexDirection: 'row',
                 justifyContent: "flex-start",
                 alignItems: "flex-start",
+                width: '100%'
             },
             resourceContentMoreSeriesCard: {
                 padding: "0px",
                 marginLeft: "10px",
                 marginRight: "10px",
-                width: "300px",
+                marginBottom: 53,
+                flex: 1,
                 borderRadius: 4,
                 boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
-                borderColor: "#ffffff",
-                flexWrap: "wrap",
-                minHeight: 300
+                borderColor: "#F9FAFC",
+                backgroundColor: "#F9FAFC",
+                minHeight: 250
             },
             resourceContentMoreSeriesIframeContainer: {
-                width: "300px",
+                width: '100%',
+                height: Dimensions.get('window').width*0.09,
                 paddingLeft: "0px",
                 paddingRight: "0px",
                 margin: "0px",
-                paddingTop: 0
+                paddingTop: 0,
+                backgroundColor: '#F9FAFC'
             },
             resourceContentEpisodeMainContainer: {
                 display: "flex",

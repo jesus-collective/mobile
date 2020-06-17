@@ -60,7 +60,6 @@ class ResourceOverviewImpl extends JCComponent<Props>{
     }
     render(): React.ReactNode {
         console.log("ResourceScreen")
-
         return (<ResourceOverviewImpl.Consumer>
             {({ state, actions }) => {
                 if (state.groupData != null)
@@ -72,7 +71,7 @@ class ResourceOverviewImpl extends JCComponent<Props>{
                                 {state.isEditable ?
                                     <JCSwitch switchLabel="Sponsored" initState={state.groupData.isSponsored ? state.groupData.isSponsored === "true" : false} onPress={(status) => { actions.updateValueGroup("isSponsored", status ? "true" : "false") }}></JCSwitch>
                                     :
-                                    this.state.groupData.isSponsored == "true" ?
+                                    state.groupData.isSponsored == "true" ?
                                         <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#979797', textTransform: "uppercase", flex: 0 }}>Sponsored</Text> : null
                                 }
 

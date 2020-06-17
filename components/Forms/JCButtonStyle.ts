@@ -303,6 +303,29 @@ export default EStyleSheet.create({
         fontWeight: "bold"
 
     },
+    MoreSeriesOutlineBoldButton:
+    {
+        paddingLeft: 15,
+        paddingRight: 15,
+        marginTop: 20,
+        marginBottom: 8,
+        marginLeft: 0,
+        marginRight: 0,
+        //   color:"#F0493E",
+        backgroundColor: "#ffffff00",
+        borderWidth: 1,
+        borderColor: "#F0493E",
+        boxShadow: "unset",
+        height: 25,
+        borderRadius: 4
+    },
+    MoreSeriesOutlineBoldText: {
+        color: "#F0493E",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 14,
+        lineHeight: 20,
+        fontWeight: '800'
+    },
     SolidRightJustifiedButton: {
         paddingTop: 6,
         paddingBottom: 6,

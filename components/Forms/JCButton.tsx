@@ -19,8 +19,8 @@ export enum ButtonTypes {
     Transparent,
     TransparentNoPadding,
     TransparentBoldBlack,
-    TransparentBoldOrange
-
+    TransparentBoldOrange,
+    MoreSeriesOutlineBold
 }
 export interface Props {
     onPress(): any

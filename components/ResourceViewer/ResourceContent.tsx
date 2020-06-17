@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Card, CardItem } from 'native-base';
 
-import { Text } from 'react-native'
+import { Text, Image } from 'react-native'
 import { ResourceContext } from './ResourceContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
@@ -13,8 +13,9 @@ class ResourceContent extends JCComponent {
 
     static Consumer = ResourceContext.Consumer;
     renderSeries(state, actions): React.ReactNode {
+        let temp = [];
         return (
-            <Container style={this.styles.style.resourceContentMainContainer}>
+            <Container style={{height: 480 + 350*Math.floor((state.resourceData.resources.items[state.currentResource].series.items.length-3)/4), display: "flex", flexDirection: "row", justifyContent: 'flex-start', backgroundColor: "#F9FAFC"}}>
                 <Container style={this.styles.style.resourceContentLeftContainer}>
                     <Container style={{ display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 40, marginTop: 30, paddingLeft: 10, paddingRight: 20 }}>
                         <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: "Graphik-Bold-App", color: '#333333' }}>Current Series</Text>
@@ -22,11 +23,12 @@ class ResourceContent extends JCComponent {
                     </Container>
                     <Container style={this.styles.style.resourceContentCurrentSeriesContainer}>
 
-                        {state.resourceData.resources.items[state.currentResource].series.items.length > 0 ? state.resourceData.resources.items[state.currentResource].series.items[0].episodes.items.map((episode, index) => {
+                        {state.resourceData.resources.items[state.currentResource].series.items.length > 3 ? state.resourceData.resources.items[state.currentResource].series.items.slice(0,3).map((series, index) => {                            
                             return (
-                                <Card key={episode.id} style={this.styles.style.resourceContentCurrentSeriesCard}>
+                                <Card key={series.id} style={this.styles.style.resourceContentCurrentSeriesCard}>
                                     {state.isEditable ?
                                         <CardItem>
+                                            {/*fix functions here*/}
                                             <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-arrow-back" style={this.styles.style.icon} /></JCButton>
                                             <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-attach" style={this.styles.style.icon} /></JCButton>
                                             <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { actions.changeSeries(0); actions.changeEpisode(index) }}> <Ionicons size={24} name="ios-open" style={this.styles.style.icon} /></JCButton>
@@ -35,37 +37,36 @@ class ResourceContent extends JCComponent {
                                         </CardItem>
                                         : null
                                     }
-                                    <TouchableOpacity onPress={() => { if (!state.isEditable) { actions.changeSeries(0); actions.changeEpisode(index) } }}>
-
+                                    <TouchableOpacity onPress={() => { !state.isEditable ? actions.changeSeries(index) : null }}>
                                         <CardItem style={this.styles.style.resourceContentCurrentSeriesIframeContainer}>
-                                            {episode.videoPreview ?
-                                                <img style={{ padding: 0, border: 0, width: 300, height: 168 }}
-                                                    src={"https://img.youtube.com/vi/" + episode.videoPreview.replace("https://youtu.be/", "") + "/mqdefault.jpg"}
-
-                                                /> : null}
+                                                <Image style={{ padding: 0, width: '100%', height: '100%', borderTopRightRadius: 4, borderTopLeftRadius: 4 }}
+                                                    resizeMode="contain"
+                                                    source={{uri: "https://img.youtube.com/vi/" + series.episodes.items[0].videoPreview.replace("https://youtu.be/", "") + "/maxresdefault.jpg"}}
+                                                    />
                                         </CardItem>
 
-                                        <CardItem style={{ width: 300, padding: 0, margin: 0, paddingBottom: 0 }}>
-                                            <EditableText onChange={(val) => { actions.updateEpisode(state.currentResource, 0, index, "title", val) }}
+                                        <CardItem style={{ width: '100%', padding: 0, margin: 0, paddingBottom: 0, backgroundColor: '#F9FAFC' }}>
+                                            <EditableText onChange={(val) => { actions.updateSeries(state.currentResource, index, "title", val) }}
                                                 multiline={false}
-                                                inputStyle={this.styles.style.episodeTitle}
-                                                textStyle={this.styles.style.episodeTitle}
-                                                value={episode.title}
+                                                inputStyle={this.styles.style.seriesTitle}
+                                                textStyle={this.styles.style.seriesTitle}
+                                                value={series.title}
                                                 isEditable={state.isEditable}></EditableText>
 
                                         </CardItem>
-                                        <CardItem style={{ width: 300, padding: 0, margin: 0 }}>
-                                            <EditableText onChange={(val) => { actions.updateEpisode(state.currentResource, 0, index, "description", val) }}
+                                        <CardItem style={{ width: '100%', padding: 0, margin: 0, backgroundColor: '#F9FAFC' }}>
+                                            <EditableText onChange={(val) => { actions.updateSeries(state.currentResource, index, "description", val) }}
                                                 multiline={true}
-                                                inputStyle={this.styles.style.episodeDescription}
-                                                textStyle={this.styles.style.episodeDescription}
-                                                value={episode.description}
+                                                inputStyle={this.styles.style.seriesDescription}
+                                                textStyle={this.styles.style.seriesDescription}
+                                                value={this.processDescription(series.description)}
                                                 isEditable={state.isEditable}></EditableText>
-
+                                        </CardItem>
+                                        <CardItem style={{ width: '100%', padding: 0, margin: 0, backgroundColor: '#F9FAFC', flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
+                                            <JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>Learn More</JCButton>
                                         </CardItem>
                                     </TouchableOpacity>
                                 </Card>
-
                             )
                         }) : null}
 
@@ -75,55 +76,55 @@ class ResourceContent extends JCComponent {
                     </Container>
                     <Container style={this.styles.style.resourceContentMoreSeriesContainer}>
 
-                        {state.resourceData.resources.items[state.currentResource].series.items.map((series, index) => {
-                            return (
+                        {state.resourceData.resources.items[state.currentResource].series.items.slice(3).map((series, index) => {
+                            temp.push(series)
+                            if ((index+1)%4===0) {
+                                const tempCopy = temp
+                                temp = []
+                                return <Container style={this.styles.style.resourceContentMoreSeriesRowContainer}>
+                                    {tempCopy.map((series2, index2) => {
+                                        return (
+                                            <Card key={index2} style={this.styles.style.resourceContentMoreSeriesCard}>
+                                                {state.isEditable ?
+                                                    <CardItem>
+                                                        {/* need to fix for relative indicies*/}
+                                                        <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-arrow-back" style={this.styles.style.icon} /></JCButton>
+                                                        <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-attach" style={this.styles.style.icon} /></JCButton>
+                                                        <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { actions.changeSeries(index) }}> <Ionicons size={24} name="ios-open" style={this.styles.style.icon} /></JCButton>
+                                                        <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { actions.deleteSeries(state.currentResource, index) }}><Ionicons size={24} name="ios-trash" style={this.styles.style.icon} /></JCButton>
+                                                        <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-arrow-forward" style={this.styles.style.icon} /></JCButton>
+                                                    </CardItem>
+                                                    : null
+                                                }
+                                                <TouchableOpacity onPress={() => { !state.isEditable ? actions.changeSeries(index+3-index2+1) : null }}>
+                                                    <CardItem style={this.styles.style.resourceContentMoreSeriesIframeContainer}>
+                                                        <Image style={{ padding: 0, width: '100%', height: '100%', borderTopRightRadius: 4, borderTopLeftRadius: 4 }}
+                                                            source={{uri: "https://img.youtube.com/vi/" + series2.episodes.items[0].videoPreview.replace("https://youtu.be/", "") + "/maxresdefault.jpg"}}
+                                                        />
+                                                    </CardItem>
+                                                    <CardItem style={{ backgroundColor: '#F9FAFC' }}>
+                                                        <EditableText
+                                                            onChange={(val) => { actions.updateSeries(state.currentResource, index, "title", val) }}
+                                                            multiline={false}
+                                                            inputStyle={this.styles.style.moreSeriesTitle}
+                                                            textStyle={this.styles.style.moreSeriesTitle}
+                                                            value={series2.title}
+                                                            isEditable={state.isEditable}></EditableText>
+            
+                                                    </CardItem>
+                                                    <CardItem style={{ width: '100%', padding: 0, margin: 0, backgroundColor: '#F9FAFC', flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
+                                                        <JCButton buttonType={ButtonTypes.MoreSeriesOutlineBold} onPress={() => null}>Learn More</JCButton>
+                                                    </CardItem>
+                                                    {/*<CardItem>
+                                                        <Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{series.category}</Text>
+                                                    </CardItem>*/}
+                                                </TouchableOpacity>
+                                            </Card>
+                                        )
+                                })}
+                            </Container>
+                        }
 
-
-                                <Card key={index} style={this.styles.style.resourceContentMoreSeriesCard}>
-                                    {state.isEditable ?
-                                        <CardItem>
-                                            <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-arrow-back" style={this.styles.style.icon} /></JCButton>
-                                            <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-attach" style={this.styles.style.icon} /></JCButton>
-                                            <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { actions.changeSeries(index) }}> <Ionicons size={24} name="ios-open" style={this.styles.style.icon} /></JCButton>
-                                            <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { actions.deleteSeries(state.currentResource, index) }}><Ionicons size={24} name="ios-trash" style={this.styles.style.icon} /></JCButton>
-                                            <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-arrow-forward" style={this.styles.style.icon} /></JCButton>
-                                        </CardItem>
-                                        : null
-                                    }
-                                    <TouchableOpacity onPress={() => { !state.isEditable ? actions.changeSeries(index) : null }}>
-                                        <CardItem style={this.styles.style.resourceContentMoreSeriesIframeContainer}>
-                                            <img style={{ padding: 0, border: 0, width: 300, height: 168 }}
-                                                src={"https://img.youtube.com/vi/" + series.episodes.items[0].videoPreview.replace("https://youtu.be/", "") + "/mqdefault.jpg"}
-
-                                            />
-                                        </CardItem>
-                                        <CardItem>
-                                            <EditableText
-                                                onChange={(val) => { actions.updateSeries(state.currentResource, index, "title", val) }}
-                                                multiline={false}
-                                                inputStyle={this.styles.style.seriesTitle}
-                                                textStyle={this.styles.style.seriesTitle}
-                                                value={series.title}
-                                                isEditable={state.isEditable}></EditableText>
-
-                                        </CardItem>
-                                        <CardItem>
-                                            <EditableText
-                                                onChange={(val) => { actions.updateSeries(state.currentResource, index, "description", val) }}
-                                                multiline={true}
-                                                inputStyle={this.styles.style.seriesDescription}
-                                                textStyle={this.styles.style.seriesDescription}
-                                                value={series.description}
-                                                isEditable={state.isEditable}></EditableText>
-
-                                        </CardItem>
-                                        {/*<CardItem>
-                                            <Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{series.category}</Text>
-                                        </CardItem>*/}
-                                    </TouchableOpacity>
-                                </Card>
-
-                            )
                         })}
                         {state.isEditable ?
                             <TouchableOpacity onPress={actions.createSeries}>
@@ -370,6 +371,30 @@ class ResourceContent extends JCComponent {
                 </Container>
 
             </Container >)
+    }
+
+    processDescription(data: string): string {
+        let start = 0;
+        const dataCopy = data.slice(0,200);
+        for (let i=200; i > 0; i--) {
+            if (dataCopy[i] === '>') {
+                start = i + 1
+                break;
+            }
+        }
+        let end = 105 + start
+        while (data[end] != " ") {
+            end++
+        }
+        let shortData = data.slice(start,end) + '...'
+
+        while (!"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".includes(shortData[0])) {
+            start++
+            shortData = data.slice(start,end) + '...'
+        }
+
+        return shortData  
+        
     }
     render(): React.ReactNode {
 
