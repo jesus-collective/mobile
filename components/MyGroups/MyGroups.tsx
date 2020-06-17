@@ -550,7 +550,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                   </Container>
                 </Container>
 
-                <Container style={this.props.wrap ? this.styles.style.ResourcesMyGroupsWrap : this.styles.style.ResourcesMyGroupsNoWrap}>
+                <Container style={(this.props.wrap && this.props.type != "profile" ) ? this.styles.style.ResourcesMyGroupsWrap : (this.props.wrap && this.props.type == "profile" ) ? this.styles.style.profileMyGroupsWrap : this.styles.style.ResourcesMyGroupsNoWrap}>
                   {this.state.data ?
                     this.state.data.filter(this.filterMy).filter(this.filterEvent).map((item, index) => {
 
