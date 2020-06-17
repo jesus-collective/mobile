@@ -91,13 +91,13 @@ class ResourceContent extends JCComponent {
                                                         {/* need to fix for relative indicies*/}
                                                         <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-arrow-back" style={this.styles.style.icon} /></JCButton>
                                                         <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-attach" style={this.styles.style.icon} /></JCButton>
-                                                        <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { actions.changeSeries(index) }}> <Ionicons size={24} name="ios-open" style={this.styles.style.icon} /></JCButton>
-                                                        <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { actions.deleteSeries(state.currentResource, index) }}><Ionicons size={24} name="ios-trash" style={this.styles.style.icon} /></JCButton>
+                                                        <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { actions.changeSeries(index+index2) }}> <Ionicons size={24} name="ios-open" style={this.styles.style.icon} /></JCButton>
+                                                        <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { actions.deleteSeries(state.currentResource, index+index2) }}><Ionicons size={24} name="ios-trash" style={this.styles.style.icon} /></JCButton>
                                                         <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-arrow-forward" style={this.styles.style.icon} /></JCButton>
                                                     </CardItem>
                                                     : null
                                                 }
-                                                <TouchableOpacity onPress={() => { !state.isEditable ? actions.changeSeries(index+3-index2+1) : null }}>
+                                                <TouchableOpacity onPress={() => { !state.isEditable ? actions.changeSeries(index+index2) : null }}>
                                                     <CardItem style={this.styles.style.resourceContentMoreSeriesIframeContainer}>
                                                         <Image style={{ padding: 0, width: '100%', height: '100%', borderTopRightRadius: 4, borderTopLeftRadius: 4 }}
                                                             source={{uri: "https://img.youtube.com/vi/" + series2.episodes.items[firstEpisodeIndex].videoPreview.replace("https://youtu.be/", "") + "/maxresdefault.jpg"}}
@@ -105,7 +105,7 @@ class ResourceContent extends JCComponent {
                                                     </CardItem>
                                                     <CardItem style={{ backgroundColor: '#F9FAFC' }}>
                                                         <EditableText
-                                                            onChange={(val) => { actions.updateSeries(state.currentResource, index, "title", val) }}
+                                                            onChange={(val) => { actions.updateSeries(state.currentResource, index+index2, "title", val) }}
                                                             multiline={false}
                                                             inputStyle={this.styles.style.moreSeriesTitle}
                                                             textStyle={this.styles.style.moreSeriesTitle}
