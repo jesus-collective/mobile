@@ -10,19 +10,30 @@ import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 import EditableText from '../Forms/EditableText'
 import JCComponent from '../JCComponent/JCComponent';
 
-interface State {
-    numberOfVideos: number
+interface Props {
+    currentResource: number
 }
 
-class ResourceContent extends JCComponent<State> {
+interface State {
+    numberOfVideos?: number
+}
+
+class ResourceContent extends JCComponent<Props,State> {
 
     static Consumer = ResourceContext.Consumer;
-    constructor() {
-        super(null)
+    constructor(props: Props) {
+        super(props);
         this.state = {
             numberOfVideos: 8,
         }
     }
+
+    componentDidUpdate(prevProps: Props): void {
+        if (prevProps.currentResource !== this.props.currentResource) {
+            this.setState({ numberOfVideos: 8 })
+        }
+      }
+
     renderSeries(state, actions): React.ReactNode {
         let temp = [];
         const moreVideosLength = state.resourceData.resources.items[state.currentResource].series.items.length - 3
@@ -100,12 +111,12 @@ class ResourceContent extends JCComponent<State> {
                                 {temp.map((series2, index2) => {
 
                                     if (series2 === 'dummy') {
-                                        return <Card key={index2} style={this.styles.style.resourceContentMoreSeriesCardDummy}></Card>
+                                        return <Card key={series2 + index2} style={this.styles.style.resourceContentMoreSeriesCardDummy}></Card>
                                     }
 
                                     const firstEpisodeIndex = this.findFirstEpisode(series2.episodes.items)
                                     return (
-                                        <Card key={index2} style={this.styles.style.resourceContentMoreSeriesCard}>
+                                        <Card key={series2.id} style={this.styles.style.resourceContentMoreSeriesCard}>
                                             {state.isEditable ?
                                                 <CardItem>
                                                     <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-arrow-back" style={this.styles.style.icon} /></JCButton>
@@ -149,7 +160,7 @@ class ResourceContent extends JCComponent<State> {
                                     {tempCopy.map((series2, index2) => {
                                         const firstEpisodeIndex = this.findFirstEpisode(series2.episodes.items)
                                         return (
-                                            <Card key={index2} style={this.styles.style.resourceContentMoreSeriesCard}>
+                                            <Card key={series2.id} style={this.styles.style.resourceContentMoreSeriesCard}>
                                                 {state.isEditable ?
                                                     <CardItem>
                                                         <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-arrow-back" style={this.styles.style.icon} /></JCButton>
@@ -224,18 +235,17 @@ class ResourceContent extends JCComponent<State> {
                 <Container style={this.styles.style.resourceContentEpisodeLeftContainer}>
                     
                     {state.isEditable ? <EditableText
-                        key={this.generateKey(state)}
+                        key={this.generateKey(state) + '1'}
                         onChange={(val) => { actions.updateSeries(state.currentResource, state.currentSeries, "title", val) }}
                         multiline={false}
                         inputStyle={this.styles.style.headerSeriesTitle}
                         textStyle={this.styles.style.headerSeriesTitle}
                         value={series.title}
                         isEditable={state.isEditable}></EditableText> 
-                        : null
-                    }
+                    : null}
 
                     <EditableText
-                        key={this.generateKey(state)}
+                        key={this.generateKey(state) + '2'}
                         onChange={(val) => { actions.updateSeries(state.currentResource, state.currentSeries, "description", val) }}
                         multiline={true}
                         inputStyle={this.styles.style.resourceContentEpisodesDescription}
@@ -247,12 +257,12 @@ class ResourceContent extends JCComponent<State> {
 
                     <Text style={this.styles.style.whoIsThisForText}>Who is this for?</Text>
                     <EditableText
-                        key={this.generateKey(state)}
-                        onChange={(val) => { actions.updateSeries(state.currentResource, state.currentSeries, "description", val) }}
+                        key={this.generateKey(state) + '3'}
+                        onChange={() => null }
                         multiline={true}
                         inputStyle={this.styles.style.resourceContentEpisodesText}
                         textStyle={this.styles.style.resourceContentEpisodesText}
-                        value={this.stripHTMLTags(series.description)}
+                        value={"Placeholder"}
                         isEditable={state.isEditable}></EditableText>
 
 
@@ -373,7 +383,7 @@ class ResourceContent extends JCComponent<State> {
             <Container style={this.styles.style.resourceContentEpisodeMainContainer}>
                 <Container style={this.styles.style.resourceContentEpisodeLeftContainer}>
                     <EditableText
-                        key={this.generateKey(state)}
+                        key={this.generateKey(state) + 'a'}
 
                         onChange={(val) => { actions.updateEpisode(state.currentResource, state.currentSeries, state.currentEpisode, "title", val) }}
                         multiline={false}
@@ -389,7 +399,7 @@ class ResourceContent extends JCComponent<State> {
                     />
 
                     <EditableText
-                        key={this.generateKey(state)}
+                        key={this.generateKey(state) + 'b'}
 
                         onChange={(val) => { actions.updateEpisode(state.currentResource, state.currentSeries, state.currentEpisode, "description", val) }}
                         multiline={true}
