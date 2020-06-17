@@ -311,6 +311,7 @@ type Resource
   title: String
   image: Image
   description: String
+  whoIsThisFor: String
   extendedDescription: String
   series: [ResourceSeries] @connection(name:"r2",keyField: "seriesID")
   resourceID:ID!
@@ -325,6 +326,7 @@ type ResourceSeries
   type: String
   title: String
   description: String
+  whoIsThisFor: String
   image: String
   category: [String]
   status: String
@@ -346,6 +348,7 @@ type ResourceEpisode
   type: String
   title: String
   description: String
+  whoIsThisFor: String
   videoPreview: String
   videoLowRes: String
   videoHiRes: String
