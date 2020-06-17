@@ -19,11 +19,11 @@ class ResourceContent extends JCComponent {
                 <Container style={this.styles.style.resourceContentLeftContainer}>
                     <Container style={{ display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 40, marginTop: 30, paddingLeft: 10, paddingRight: 20 }}>
                         <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: "Graphik-Bold-App", color: '#333333' }}>Current Series</Text>
-                        <Text style={{ fontSize: 16, lineHeight: 24, fontFamily: "Graphik-Bold-App", color: '#F0493E', paddingRight: 15 }}>Schedule</Text>
                     </Container>
                     <Container style={this.styles.style.resourceContentCurrentSeriesContainer}>
 
                         {state.resourceData.resources.items[state.currentResource].series.items.length > 3 ? state.resourceData.resources.items[state.currentResource].series.items.slice(0,3).map((series, index) => {                            
+                            const thumbnailIndex = this.findFirstEpisode(series.episodes.items)
                             return (
                                 <Card key={series.id} style={this.styles.style.resourceContentCurrentSeriesCard}>
                                     {state.isEditable ?
@@ -41,7 +41,7 @@ class ResourceContent extends JCComponent {
                                         <CardItem style={this.styles.style.resourceContentCurrentSeriesIframeContainer}>
                                                 <Image style={{ padding: 0, width: '100%', height: '100%', borderTopRightRadius: 4, borderTopLeftRadius: 4 }}
                                                     resizeMode="contain"
-                                                    source={{uri: "https://img.youtube.com/vi/" + series.episodes.items[0].videoPreview.replace("https://youtu.be/", "") + "/maxresdefault.jpg"}}
+                                                    source={{uri: "https://img.youtube.com/vi/" + series.episodes.items[thumbnailIndex].videoPreview.replace("https://youtu.be/", "") + "/maxresdefault.jpg"}}
                                                     />
                                         </CardItem>
 
@@ -83,6 +83,7 @@ class ResourceContent extends JCComponent {
                                 temp = []
                                 return <Container style={this.styles.style.resourceContentMoreSeriesRowContainer}>
                                     {tempCopy.map((series2, index2) => {
+                                        const firstEpisodeIndex = this.findFirstEpisode(series2.episodes.items)
                                         return (
                                             <Card key={index2} style={this.styles.style.resourceContentMoreSeriesCard}>
                                                 {state.isEditable ?
@@ -99,7 +100,7 @@ class ResourceContent extends JCComponent {
                                                 <TouchableOpacity onPress={() => { !state.isEditable ? actions.changeSeries(index+3-index2+1) : null }}>
                                                     <CardItem style={this.styles.style.resourceContentMoreSeriesIframeContainer}>
                                                         <Image style={{ padding: 0, width: '100%', height: '100%', borderTopRightRadius: 4, borderTopLeftRadius: 4 }}
-                                                            source={{uri: "https://img.youtube.com/vi/" + series2.episodes.items[0].videoPreview.replace("https://youtu.be/", "") + "/maxresdefault.jpg"}}
+                                                            source={{uri: "https://img.youtube.com/vi/" + series2.episodes.items[firstEpisodeIndex].videoPreview.replace("https://youtu.be/", "") + "/maxresdefault.jpg"}}
                                                         />
                                                     </CardItem>
                                                     <CardItem style={{ backgroundColor: '#F9FAFC' }}>
@@ -375,27 +376,32 @@ class ResourceContent extends JCComponent {
 
     processDescription(data: string): string {
         let start = 0;
-        const dataCopy = data.slice(0,200);
-        for (let i=200; i > 0; i--) {
-            if (dataCopy[i] === '>') {
-                start = i + 1
-                break;
-            }
-        }
-        let end = 105 + start
-        while (data[end] != " ") {
+        let end = 105;
+        const cleaned = data.replace(/<\/?[^>]+(>|$)/g, "");
+
+        while (cleaned[end] != " ") {
             end++
         }
-        let shortData = data.slice(start,end) + '...'
+
+        let shortData = cleaned.slice(start,end) + '...'
 
         while (!"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".includes(shortData[0])) {
             start++
-            shortData = data.slice(start,end) + '...'
+            shortData = cleaned.slice(start,end) + '...'
         }
 
         return shortData  
-        
     }
+
+    findFirstEpisode(series: any[]): number {
+        let firstEpisodeIndex = 0
+        series.forEach((episode, index) => {
+            if (episode.episodeNumber === 1)
+                firstEpisodeIndex = index;
+        })
+        return firstEpisodeIndex
+    }
+
     render(): React.ReactNode {
 
         return (
