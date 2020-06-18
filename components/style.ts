@@ -45,7 +45,10 @@ export default class MainStyles {
             headerEpisodeDescription: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
             resourceContentEpisodesDescription: { wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
             resourceContentEpisodesText: { wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 18, lineHeight: 28, color: "#333333", paddingBottom: 0 },
+            resourceContentEpisodesDownloadInfo: { wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 18, lineHeight: 28, color: "#333333", paddingBottom: 25 },
             whoIsThisForText: { wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 26, lineHeight: 33, color: "#333333", paddingBottom: 20 },
+            resourceContentEpisodesEpisodeTitle: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 28, lineHeight: 33, color: "#333333", paddingBottom: 0 },
+            resourceContentEpisodesVideoText: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
             courseCard:
             {
                 minHeight: 330,
@@ -978,32 +981,59 @@ export default class MainStyles {
             },
             resourceContentEpisodesContainer: {
                 minHeight: 375,
-                flexWrap: "wrap",
                 flexGrow: 0,
                 width: "100%",
-                flexDirection: 'row',
-                justifyContent: "flex-start",
-                alignItems: "flex-start",
                 marginTop: 30
             },
             resourceContentEpisodeCard: {
                 padding: "0px",
                 marginLeft: "10px",
                 marginRight: "10px",
-                width: "300px",
+                marginBottom: "25px",
                 borderRadius: 4,
+                width: '100%',
                 boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
                 borderColor: "#ffffff",
-                flexWrap: "wrap",
-                minHeight: 275
+                height: Dimensions.get('window').width*0.18
             },
-            resourceContentEpisodesIframeContainer: {
-                width: "300px",
+            resourceContentEpisodesIframe: {
+                width: Dimensions.get('window').width*0.26,
+                height: Dimensions.get('window').width*0.26*(9/16),
                 paddingLeft: "0px",
                 paddingRight: "0px",
                 margin: "0px",
-                paddingTop: 0
+                paddingTop: 0,
+                backgroundColor: '#F9FAFC'
             },
+            resourceContentEpisodesCardInnerContainer: {
+                display: 'flex',
+                flexDirection: 'row',
+            },
+            resourceContentEpisodesButtonsContainer: {
+                display: 'flex',
+                flexDirection: 'row',
+                flexGrow: 0,
+                borderBottomColor: 'rgba(0, 0, 0, 0.2)', 
+                borderBottomWidth: 1,
+                borderTopColor: 'rgba(0, 0, 0, 0.2)', 
+                borderTopWidth: 1,
+                paddingLeft: 0,
+                paddingRight: 0,
+                paddingTop: 0,
+                paddingBottom: 0,
+            },
+            resourceContentEpisodesButtonsContainer2: {
+                display: 'flex',
+                flexDirection: 'row',
+                flexGrow: 0,
+                borderBottomColor: 'rgba(0, 0, 0, 0.2)', 
+                borderBottomWidth: 1,
+                paddingLeft: 0,
+                paddingRight: 0,
+                paddingTop: 0,
+                paddingBottom: 0,
+            },
+
             resourcefileInputWrapper: {
                 width: "100%",
                 overflow: "hidden",
@@ -1407,6 +1437,7 @@ export default class MainStyles {
                 resourceContentEpisodeLeftContainer: {
                     marginLeft: 0,
                     marginTop: 0,
+                    flexGrow: 1
                 },
                 resourceContentEpisodeRightContainer: {
                     marginRight: 0,

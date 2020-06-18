@@ -9,6 +9,7 @@ export enum ButtonTypes {
     SolidProfile,
     SolidAboutMe,
     SolidMap,
+    SolidResources,
     SolidRightMargin,
     SolidRightJustified,
     Outline,
@@ -20,6 +21,7 @@ export enum ButtonTypes {
     TransparentNoPadding,
     TransparentBoldBlack,
     TransparentBoldOrange,
+    TransparentRegularOrange,
     MoreSeriesOutlineBold
 }
 export interface Props {

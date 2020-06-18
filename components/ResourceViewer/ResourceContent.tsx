@@ -253,7 +253,7 @@ class ResourceContent extends JCComponent<Props,State> {
                         value={this.stripHTMLTags(series.description)}
                         isEditable={state.isEditable}></EditableText>
 
-                    <Container style={{marginTop: 50, marginBottom: 40, borderBottomColor: 'rgba(0, 0, 0, 0.2)', borderBottomWidth: 1, width: 200, alignSelf: 'center'}}></Container>
+                    <Container style={{marginTop: 50, marginBottom: 40, flexGrow: 0, borderBottomColor: 'rgba(0, 0, 0, 0.2)', borderBottomWidth: 1, width: 200, alignSelf: 'center'}}></Container>
 
                     <Text style={this.styles.style.whoIsThisForText}>Who is this for?</Text>
                     <EditableText
@@ -262,18 +262,15 @@ class ResourceContent extends JCComponent<Props,State> {
                         multiline={true}
                         inputStyle={this.styles.style.resourceContentEpisodesText}
                         textStyle={this.styles.style.resourceContentEpisodesText}
-                        value={"Placeholder"}
+                        value={"Placeholder - pending schema changes"}
                         isEditable={state.isEditable}></EditableText>
-
 
                     {/*<Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].category}</Text>*/}
 
                     <Container style={this.styles.style.resourceContentEpisodesContainer}>
-                        {series.episodes.items.sort((a,b)=>a.episodeNumber-b.episodeNumber).map((episode, index) => {
+                        {series.episodes.items.sort((a,b) => state.isEditable ? 0 : a.episodeNumber-b.episodeNumber).map((episode, index) => {
                             return (
-                                <TouchableOpacity key={episode.id} onPress={() => { !state.isEditable ? actions.changeEpisode(index) : null }}>
-
-                                    <Card style={this.styles.style.resourceContentEpisodeCard}>
+                                    <Card key={episode.id} style={this.styles.style.resourceContentEpisodeCard}>
                                         {state.isEditable ?
                                             <CardItem>
                                                 <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}> <Ionicons size={24} name="ios-arrow-back" style={this.styles.style.icon} /></JCButton>
@@ -285,65 +282,59 @@ class ResourceContent extends JCComponent<Props,State> {
                                             </CardItem> :
                                             null
                                         }
-                                        <CardItem style={this.styles.style.resourceContentEpisodesIframeContainer}>
-                                            {episode.videoPreview ?
-                                                <img style={{ padding: 0, border: 0, width: 300, height: 168 }}
-                                                    src={"https://img.youtube.com/vi/" + episode.videoPreview.replace("https://youtu.be/", "") + "/maxresdefault.jpg"}
+                                        <CardItem style={{width: '100%'}}>
+                                            <Container style={this.styles.style.resourceContentEpisodesCardInnerContainer}>
+                                                <TouchableOpacity onPress={() => { !state.isEditable ? actions.changeEpisode(index) : null }}>
+                                                    <Image style={this.styles.style.resourceContentEpisodesIframe}
+                                                        source={{uri: "https://img.youtube.com/vi/" + episode.videoPreview.replace("https://youtu.be/", "") + "/maxresdefault.jpg"}}
+                                                    />
+                                                </TouchableOpacity>
 
-                                                /> : null}
-                                        </CardItem>
-                                        <CardItem style={{ width: 300, padding: 0, margin: 0 }}>
-                                            <EditableText
-                                                onChange={(val) => { actions.updateEpisode(state.currentResource, state.currentSeries, index, "title", val) }}
-                                                multiline={false}
-                                                inputStyle={this.styles.style.episodeTitle}
-                                                textStyle={this.styles.style.episodeTitle}
-                                                value={episode.title}
-                                                isEditable={state.isEditable}></EditableText>
+                                                <Container style={{ marginLeft: 40, height: '100%' }}>
+                                                    <CardItem style={{ paddingLeft: 0, paddingRight: 0 }}>
+                                                        <EditableText
+                                                            onChange={(val) => { actions.updateEpisode(state.currentResource, state.currentSeries, index, "title", val) }}
+                                                            multiline={false}
+                                                            inputStyle={this.styles.style.resourceContentEpisodesEpisodeTitle}
+                                                            textStyle={this.styles.style.resourceContentEpisodesEpisodeTitle}
+                                                            value={episode.title}
+                                                            isEditable={state.isEditable}></EditableText>
+                                                    </CardItem>
+                                                    {episode.videoLowRes || episode.videoHiRes ?
+                                                    <CardItem style={this.styles.style.resourceContentEpisodesButtonsContainer}>
+                                                        
+                                                        <Text style={this.styles.style.resourceContentEpisodesVideoText}>Video</Text>
+                                                        <CardItem style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end', paddingTop: 8, paddingBottom: 8}}>
+                                                            {episode.videoLowRes ?
+                                                                <JCButton buttonType={ButtonTypes.TransparentRegularOrange} onPress={() => window.location.href = episode.videoLowRes}><AntDesign name="download" size={24} color="F0493E" style={{marginRight: 12}}/>Low</JCButton>
+                                                            : null
+                                                            }                                                       
+                                                            {episode.videoHiRes ?
+                                                                <JCButton buttonType={ButtonTypes.SolidResources} onPress={() => window.location.href = episode.videoHiRes}><AntDesign name="download" size={24} color="white" style={{marginRight: 12}}/>High Quality</JCButton>
+                                                            : null
+                                                            }
+                                                        </CardItem>                  
+                                                    </CardItem>
+                                                    : null}
 
-                                        </CardItem>
-                                        <CardItem style={{ width: 300, padding: 0, margin: 0 }}>
-                                            <EditableText
-                                                onChange={(val) => { actions.updateEpisode(state.currentResource, state.currentSeries, index, "description", val) }}
-                                                multiline={true}
-                                                inputStyle={this.styles.style.episodeDescription}
-                                                textStyle={this.styles.style.episodeDescription}
-                                                value={episode.description}
-                                                isEditable={state.isEditable}></EditableText>
-
-                                        </CardItem>
-                                        <CardItem>
-                                            {episode.videoPreview ?
-                                                <a href={episode.videoPreview}>
-                                                    <Text>View Preview</Text>
-                                                </a> : null
-                                            }
-                                            {episode.videoLowRes ?
-                                                <a href={episode.videoLowRes}>
-                                                    <Text>Lo Res Video</Text>
-                                                </a>
-                                                : null
-                                            }
-                                            {episode.videoHiRes ?
-                                                <a href={episode.videoHiRes}>
-                                                    <Text>Hi Res Video</Text>
-                                                </a>
-                                                : null
-                                            }
-                                            {episode.lessonPlan ?
-                                                <a href={episode.lessonPlan}>
-                                                    <Text>Lesson Plan</Text>
-                                                </a>
-                                                : null
-                                            }
-                                            {episode.activityPage ?
-                                                <a href={episode.activityPage}>
-                                                    <Text>Activity Page</Text>
-                                                </a> : null
-                                            }
+                                                    {episode.lessonPlan || episode.activityPage ?
+                                                    <CardItem style={this.styles.style.resourceContentEpisodesButtonsContainer2}>
+                                                        <CardItem style={{flex: 1, flexDirection: 'row', justifyContent: 'flex-end', paddingTop: 8, paddingBottom: 8}}>
+                                                            {episode.lessonPlan ?
+                                                                <JCButton buttonType={ButtonTypes.TransparentRegularOrange} onPress={() => window.location.href = episode.lessonPlan}><AntDesign name="download" size={24} color="F0493E" style={{marginRight: 12}}/>Lesson Plan</JCButton>
+                                                            : null
+                                                            }                                                       
+                                                            {episode.activityPage ?
+                                                                <JCButton buttonType={ButtonTypes.SolidResources} onPress={() => window.location.href = episode.activityPage}><AntDesign name="download" size={24} color="white" style={{marginRight: 12}}/>Activity Page</JCButton>
+                                                            : null
+                                                            }
+                                                        </CardItem>
+                                                    </CardItem>
+                                                    : null}
+                                                </Container>
+                                            </Container>
                                         </CardItem>
                                     </Card>
-                                </TouchableOpacity>
                             )
 
                         })}
@@ -366,8 +357,7 @@ class ResourceContent extends JCComponent<Props,State> {
                 <Container style={this.styles.style.resourceContentEpisodeRightContainer}>
                     <JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>+ Add to my Favourites</JCButton>
                     <JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>Share with Others</JCButton>
-                    <Text style={this.styles.style.resourceContentEpisodesText}>Download all documantation that you’ll need for this package. Lessons overview and templates for whole cirruculum is available as well.</Text>
-                
+                    <Text style={this.styles.style.resourceContentEpisodesDownloadInfo}>Download all documantation that you’ll need for this package. Lessons overview and templates for whole cirruculum is available as well.</Text>
                     {series.allFiles ?
                         <JCButton buttonType={ButtonTypes.Solid} onPress={() => window.location.href = series.allFiles}><AntDesign name="download" size={24} color="white" style={{marginRight: 12}}/>Download Documents</JCButton>
                         : null
