@@ -806,6 +806,17 @@ export default class MainStyles {
                 justifyContent: "flex-start",
                 alignItems: "flex-start"
             },
+            profileMyGroupsWrap: {
+                overflow: "scroll",
+                overflowY: "hidden",
+                minHeight: "50vw",
+                flexWrap: "wrap",
+                flexGrow: 1,
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "flex-start"
+            },
             profilesScreenMainContainer: {
                 display: "flex",
                 flexDirection: "row",
