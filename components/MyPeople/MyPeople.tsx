@@ -27,6 +27,14 @@ interface State {
   currentUser: string
   //showCreateButton: Boolean
 }
+interface MapData {
+  latitude: string | number
+  longitude: string | number
+  name: string
+  user: string
+  link: string
+  type: string
+}
 export default class MyPeople extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props);
@@ -46,7 +54,7 @@ export default class MyPeople extends JCComponent<Props, State> {
       this.setState({ currentUser: user.username }, () => this.setInitialData())
     })
   }
-  convertProfileToMapData(data) {
+  convertProfileToMapData(data): MapData[] {
     return data.map((dataItem) => {
       if (dataItem.location && dataItem.location.latitude && dataItem.location.longitude)
         return {
@@ -61,9 +69,6 @@ export default class MyPeople extends JCComponent<Props, State> {
     }).filter(o => o)
   }
 
-  convertToMapData(data) {
-    return this.convertProfileToMapData(data)
-  }
   setInitialData(): void {
     const listUsers: any = API.graphql({
       query: queries.listUsers,
@@ -73,12 +78,12 @@ export default class MyPeople extends JCComponent<Props, State> {
 
     listUsers.then((json) => {
       // console.log(json)
-      this.setState({ data: json.data.listUsers.items }, () => { this.props.onDataload(this.convertToMapData(this.state.data)) })
+      this.setState({ data: json.data.listUsers.items }, () => { this.props.onDataload(this.convertProfileToMapData(this.state.data)) })
 
     }).catch(
       (e: any) => {
         console.log(e)
-        this.setState({ data: e.data.listUsers.items }, () => { this.props.onDataload(this.convertToMapData(this.state.data)) })
+        this.setState({ data: e.data.listUsers.items }, () => { this.props.onDataload(this.convertProfileToMapData(this.state.data)) })
 
       }
     )
@@ -114,7 +119,7 @@ export default class MyPeople extends JCComponent<Props, State> {
                       <Card style={this.styles.style.dashboardConversationCard}>
                         <CardItem>
                           <Left style={this.styles.style.dashboardConversationCardLeft}>
-                            <ProfileImage user={item} size='small'>
+                            <ProfileImage user={item} size='medium' style='my-people'>
                             </ProfileImage>
 
                             <Body>

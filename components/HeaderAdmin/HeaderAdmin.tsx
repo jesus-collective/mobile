@@ -6,7 +6,6 @@ import React from 'react';
 import { Text, Dimensions } from 'react-native';
 //import styles from '../Header/style'
 import { Auth } from 'aws-amplify';
-import { constants } from '../../src/constants'
 import HeaderStyles from '../Header/style';
 import JCComponent from '../JCComponent/JCComponent';
 
@@ -95,7 +94,7 @@ export default class HeaderJC extends JCComponent<Props> {
           </Button>
           <Button
             transparent
-            data-testId="header-events"
+            data-testid="header-events"
             onPress={this.openEvents}
             style={this.headerStyles.style.centerMenuButtons}>
             <Text style={this.headerStyles.style.centerMenuButtonsText}>CRM</Text>

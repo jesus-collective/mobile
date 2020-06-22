@@ -97,7 +97,7 @@ export default class HeaderJC extends JCComponent<Props> {
             constants["SETTING_ISVISIBLE_event"] ?
               <Button
                 transparent
-                data-testId="header-events"
+                data-testid="header-events"
                 onPress={this.openEvents}
                 style={this.headerStyles.style.centerMenuButtons}>
                 <Text style={this.headerStyles.style.centerMenuButtonsText}>Events</Text>

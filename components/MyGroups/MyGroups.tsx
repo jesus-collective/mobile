@@ -441,6 +441,12 @@ export default class MyGroups extends JCComponent<Props, State> {
       </CardItem>
       <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitleGroup}>{item.name}</Text></CardItem>
       <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontDetailMiddle}>{item.description}</Text></CardItem>
+      {constants.SETTING_ISVISIBLE_MEMBER_COUNT ? 
+        <CardItem>
+          <Image style={{ width: "22px", height: "22px", marginRight: 5 }} source={require('../../assets/svg/user.svg')}></Image>
+          <Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetailBottom}>Members: {item.memberCount}</Text>
+        </CardItem> 
+      : null}
       {this.canJoin(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Group") }}>Join</JCButton><Right></Right></CardItem> : null}
       {this.canLeave(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Group") }}>Leave</JCButton><Right></Right></CardItem> : null}
       {this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>Owner</JCButton><Right></Right></CardItem> : null}
@@ -469,6 +475,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       <CardItem style={{ height: 80 }}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontDetailMiddle}>{item.description}</Text></CardItem>
 
       <CardItem>
+        <Image style={{ width: "22px", height: "22px", marginRight: 5 }} source={require('../../assets/svg/pin 2.svg')}></Image>
         {item.eventType == "location" ?
           <Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetailBottom}><a target="_blank" rel="noreferrer" href={"https://www.google.com/maps/dir/?api=1&destination=" + escape(item.location)}>{item.location}</a></Text>
           : item.eventType == "zoom" ?
