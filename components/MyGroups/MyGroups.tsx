@@ -467,10 +467,9 @@ export default class MyGroups extends JCComponent<Props, State> {
     </Card>
   }
   renderEvent(item: any): React.ReactNode {
-
     const zone = moment.tz.guess()
     return <Card style={[this.styles.style.eventCard, { width: this.state.cardWidth }]}>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetailTop}>{moment.tz(item.time, zone).format('MMMM Do YYYY, h:mm a')} {moment.tz.zone(zone).abbr(+moment(item.time).format('x'))}</Text></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetailTop}>{moment.tz(item.time, zone).format('ddd, MMM D, h:mm a')} {moment.tz.zone(zone).abbr(+moment(item.time).format('x'))}</Text></CardItem>
       <CardItem style={{ height: 60, marginTop: 8 }}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitle}>{item.name}</Text></CardItem>
       <CardItem style={{ height: 80 }}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontDetailMiddle}>{item.description}</Text></CardItem>
 
