@@ -432,6 +432,14 @@ export default class MainStyles {
                 color: "#333333",
                 paddingBottom: 9,
             },
+            fontConnectConversation: {
+                fontFamily: 'Graphik-Regular-App',
+                fontSize: 14,
+                lineHeight: 22,
+                letterSpacing: -0.3,
+                color: "#333333",
+                paddingBottom: 9,
+            },
             groupFormName: {
                 fontFamily: "Graphik-Bold-App",
                 fontWeight: "bold",
@@ -1015,6 +1023,9 @@ export default class MainStyles {
             dashboardConversationCardLeft: {
                 flexDirection: "row"
             },
+            dashboardConversationBody: {
+                width: "100%"
+            },
             myMapDashboardConversationCard: {
                 height: 233,
                 paddingTop: 20,
@@ -1226,6 +1237,12 @@ export default class MainStyles {
                 },
                 myprofilePicker: {
                     marginBottom: 10
+                },
+                dashboardConversationBody: {
+                    alignItems: "center"
+                },
+                fontConnectConversation: {
+                    textAlign: "center"
                 },
             },
 
@@ -1439,7 +1456,11 @@ export default class MainStyles {
                     top: 200
                 },
                 dashboardConversationCard: {
-                    marginLeft: 10,
+                    marginLeft: 0,
+                    width: "100vw"
+                },
+                dashboardConversationBody: {
+                    alignItems: "center"
                 },
                 profilesCard: {
                     minWidth: 340
@@ -1475,7 +1496,10 @@ export default class MainStyles {
                 },
                 myprofileBadgeContainer: {
                     top: 30
-                }
+                },
+                fontConnectConversation: {
+                    textAlign: "center"
+                },
             },
 
             dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?

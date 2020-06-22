@@ -117,9 +117,9 @@ export default class MyPeople extends JCComponent<Props, State> {
                             <ProfileImage user={item} size='small'>
                             </ProfileImage>
 
-                            <Body>
+                            <Body style={this.styles.style.dashboardConversationBody}>
                               <Text style={this.styles.style.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
-                              <Text style={this.styles.style.fontConnectWithRole}>{item.currentRole}</Text>
+                              <Text style={this.styles.style.fontConnectConversation}>{item.currentRole}</Text>
                               <Button bordered style={this.styles.style.connectWithSliderButton} onPress={() => { this.openConversation(item.id, item.given_name + " " + item.family_name) }}><Text style={this.styles.style.fontStartConversation}>Start Conversation</Text></Button>
                             </Body>
                           </Left>
