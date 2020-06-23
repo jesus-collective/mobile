@@ -3562,6 +3562,7 @@ export const onCreateResourceRoot = /* GraphQL */ `
           order
           title
           description
+          whoIsThisFor
           extendedDescription
           resourceID
           createdAt
@@ -3638,6 +3639,7 @@ export const onUpdateResourceRoot = /* GraphQL */ `
           order
           title
           description
+          whoIsThisFor
           extendedDescription
           resourceID
           createdAt
@@ -3714,6 +3716,7 @@ export const onDeleteResourceRoot = /* GraphQL */ `
           order
           title
           description
+          whoIsThisFor
           extendedDescription
           resourceID
           createdAt
@@ -3791,6 +3794,7 @@ export const onCreateResource = /* GraphQL */ `
         filenameUpload
       }
       description
+      whoIsThisFor
       extendedDescription
       series {
         items {
@@ -3798,6 +3802,7 @@ export const onCreateResource = /* GraphQL */ `
           type
           title
           description
+          whoIsThisFor
           image
           category
           status
@@ -3866,6 +3871,7 @@ export const onUpdateResource = /* GraphQL */ `
         filenameUpload
       }
       description
+      whoIsThisFor
       extendedDescription
       series {
         items {
@@ -3873,6 +3879,7 @@ export const onUpdateResource = /* GraphQL */ `
           type
           title
           description
+          whoIsThisFor
           image
           category
           status
@@ -3941,6 +3948,7 @@ export const onDeleteResource = /* GraphQL */ `
         filenameUpload
       }
       description
+      whoIsThisFor
       extendedDescription
       series {
         items {
@@ -3948,6 +3956,7 @@ export const onDeleteResource = /* GraphQL */ `
           type
           title
           description
+          whoIsThisFor
           image
           category
           status
@@ -4007,6 +4016,7 @@ export const onCreateResourceSeries = /* GraphQL */ `
       type
       title
       description
+      whoIsThisFor
       image
       category
       status
@@ -4020,6 +4030,7 @@ export const onCreateResourceSeries = /* GraphQL */ `
           type
           title
           description
+          whoIsThisFor
           videoPreview
           videoLowRes
           videoHiRes
@@ -4046,6 +4057,7 @@ export const onCreateResourceSeries = /* GraphQL */ `
           filenameUpload
         }
         description
+        whoIsThisFor
         extendedDescription
         series {
           nextToken
@@ -4074,6 +4086,7 @@ export const onUpdateResourceSeries = /* GraphQL */ `
       type
       title
       description
+      whoIsThisFor
       image
       category
       status
@@ -4087,6 +4100,7 @@ export const onUpdateResourceSeries = /* GraphQL */ `
           type
           title
           description
+          whoIsThisFor
           videoPreview
           videoLowRes
           videoHiRes
@@ -4113,6 +4127,7 @@ export const onUpdateResourceSeries = /* GraphQL */ `
           filenameUpload
         }
         description
+        whoIsThisFor
         extendedDescription
         series {
           nextToken
@@ -4141,6 +4156,7 @@ export const onDeleteResourceSeries = /* GraphQL */ `
       type
       title
       description
+      whoIsThisFor
       image
       category
       status
@@ -4154,6 +4170,7 @@ export const onDeleteResourceSeries = /* GraphQL */ `
           type
           title
           description
+          whoIsThisFor
           videoPreview
           videoLowRes
           videoHiRes
@@ -4180,6 +4197,7 @@ export const onDeleteResourceSeries = /* GraphQL */ `
           filenameUpload
         }
         description
+        whoIsThisFor
         extendedDescription
         series {
           nextToken
@@ -4209,6 +4227,7 @@ export const onCreateResourceEpisode = /* GraphQL */ `
       type
       title
       description
+      whoIsThisFor
       videoPreview
       videoLowRes
       videoHiRes
@@ -4220,6 +4239,7 @@ export const onCreateResourceEpisode = /* GraphQL */ `
         type
         title
         description
+        whoIsThisFor
         image
         category
         status
@@ -4237,6 +4257,7 @@ export const onCreateResourceEpisode = /* GraphQL */ `
           order
           title
           description
+          whoIsThisFor
           extendedDescription
           resourceID
           createdAt
@@ -4258,6 +4279,7 @@ export const onUpdateResourceEpisode = /* GraphQL */ `
       type
       title
       description
+      whoIsThisFor
       videoPreview
       videoLowRes
       videoHiRes
@@ -4269,6 +4291,7 @@ export const onUpdateResourceEpisode = /* GraphQL */ `
         type
         title
         description
+        whoIsThisFor
         image
         category
         status
@@ -4286,6 +4309,7 @@ export const onUpdateResourceEpisode = /* GraphQL */ `
           order
           title
           description
+          whoIsThisFor
           extendedDescription
           resourceID
           createdAt
@@ -4307,6 +4331,7 @@ export const onDeleteResourceEpisode = /* GraphQL */ `
       type
       title
       description
+      whoIsThisFor
       videoPreview
       videoLowRes
       videoHiRes
@@ -4318,6 +4343,7 @@ export const onDeleteResourceEpisode = /* GraphQL */ `
         type
         title
         description
+        whoIsThisFor
         image
         category
         status
@@ -4335,6 +4361,7 @@ export const onDeleteResourceEpisode = /* GraphQL */ `
           order
           title
           description
+          whoIsThisFor
           extendedDescription
           resourceID
           createdAt
