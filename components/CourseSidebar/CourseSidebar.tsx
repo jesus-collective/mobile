@@ -66,7 +66,6 @@ class CourseSidebarImpl extends JCComponent<Props> {
                     /></Button>
 
                 <JCButton buttonType={ButtonTypes.Transparent} onPress={this.openCourseHome}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/home.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Home</Text></JCButton>
-                <JCButton buttonType={ButtonTypes.Transparent} onPress={this.openCourseOverview}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/home.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Overview</Text></JCButton>
                 <JCButton buttonType={ButtonTypes.Transparent} onPress={this.openCourseDetails}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/education.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Course</Text></JCButton>
                 <JCButton buttonType={ButtonTypes.Transparent} onPress={this.openCourseCoaching}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/calendar.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Coaching</Text></JCButton>
                 <Container style={{ backgroundColor: "#00000000" }}>

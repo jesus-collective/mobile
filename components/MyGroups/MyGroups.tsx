@@ -134,7 +134,7 @@ export default class MyGroups extends JCComponent<Props, State> {
         myFilter: false,
         eventFilter: false,
         myTitleScreen: "My Courses",
-        openSingle: "CourseHomeScreen",
+        openSingle: "CourseOverviewScreen",
         openMultiple: "CoursesScreen",
         createString: "+ Create Course",
         titleString: "Courses",
