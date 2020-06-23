@@ -791,7 +791,9 @@ class ResourceViewerImpl extends JCComponent<Props, State> {
                                 {this.state.currentResource == 0 ?
                                     <ResourceOverview></ResourceOverview>
                                     :
-                                    <ResourceContent></ResourceContent>}
+                                    <ResourceContent 
+                                        currentResource={this.state.currentResource} 
+                                    ></ResourceContent>}
                                 {/*  <ImportKidsandYouth></ImportKidsandYouth>*/}
                             </Content>
                         </ErrorBoundary>

@@ -175,6 +175,28 @@ export default EStyleSheet.create({
         padding: 10,
         fontWeight: "600",
     },
+    SolidResourcesButton: {
+        paddingTop: 6,
+        paddingBottom: 6,
+        paddingLeft: 12,
+        paddingRight: 12,
+        marginLeft: 0,
+        marginRight: 0,
+        //   color:"#F0493E",
+        backgroundColor: "#F0493E",
+        borderWidth: 1,
+        borderColor: "#F0493E",
+        boxShadow: "unset",
+        borderRadius: 4,
+        zIndex: 1000,
+    },
+    SolidResourcesText: {
+        color: "#ffffff",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        padding: 10,
+        fontWeight: "600",
+    },
     SolidRightMarginButton: {
         paddingTop: 6,
         paddingBottom: 6,
@@ -279,6 +301,26 @@ export default EStyleSheet.create({
         padding: 10,
         fontWeight: "bold"
     },
+
+    TransparentRegularOrangeButton:
+    {
+        paddingTop: 10,
+        paddingBottom: 10,
+        marginLeft: 10,
+        marginRight: 10,
+        // color:"#ffffff",
+        backgroundColor: "#ffffff00",
+        borderWidth: 0,
+        borderColor: "#ffffff",
+        boxShadow: "unset"
+    },
+    TransparentRegularOrangeText: {
+        color: "#F0493E",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        padding: 10,
+        fontWeight: '600'
+    },
     OutlineBoldNoMarginButton:
     {
         paddingTop: 10,
@@ -302,6 +344,29 @@ export default EStyleSheet.create({
         padding: 10,
         fontWeight: "bold"
 
+    },
+    MoreSeriesOutlineBoldButton:
+    {
+        paddingLeft: 15,
+        paddingRight: 15,
+        marginTop: 20,
+        marginBottom: 8,
+        marginLeft: 0,
+        marginRight: 0,
+        //   color:"#F0493E",
+        backgroundColor: "#ffffff00",
+        borderWidth: 1,
+        borderColor: "#F0493E",
+        boxShadow: "unset",
+        height: 25,
+        borderRadius: 4
+    },
+    MoreSeriesOutlineBoldText: {
+        color: "#F0493E",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 14,
+        lineHeight: 20,
+        fontWeight: '800'
     },
     SolidRightJustifiedButton: {
         paddingTop: 6,

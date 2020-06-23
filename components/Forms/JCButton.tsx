@@ -9,6 +9,7 @@ export enum ButtonTypes {
     SolidProfile,
     SolidAboutMe,
     SolidMap,
+    SolidResources,
     SolidRightMargin,
     SolidRightJustified,
     Outline,
@@ -19,8 +20,9 @@ export enum ButtonTypes {
     Transparent,
     TransparentNoPadding,
     TransparentBoldBlack,
-    TransparentBoldOrange
-
+    TransparentBoldOrange,
+    TransparentRegularOrange,
+    MoreSeriesOutlineBold
 }
 export interface Props {
     onPress(): any

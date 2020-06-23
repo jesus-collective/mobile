@@ -36,12 +36,19 @@ export default class MainStyles {
             dashboardPrimaryContainer: { display: "block" },
             episodeTitle: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333" },
             episodeDescription: { wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' },
-            seriesTitle: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
-            seriesDescription: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
+            seriesTitle: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 22, lineHeight: 30, color: "#333333", paddingBottom: 0 },
+            moreSeriesTitle: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 18, lineHeight: 24, color: "#333333", paddingBottom: 0 },
+            seriesDescription: { wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 14, lineHeight: 22, color: "#333333", opacity: 0.6, paddingBottom: 0 },
             headerSeriesTitle: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
             headerSeriesDescription: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
             headerEpisodeTitle: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
             headerEpisodeDescription: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
+            resourceContentEpisodesDescription: { wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
+            resourceContentEpisodesText: { wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 18, lineHeight: 28, color: "#333333", paddingBottom: 0 },
+            resourceContentEpisodesDownloadInfo: { wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 18, lineHeight: 28, color: "#333333", paddingBottom: 25 },
+            whoIsThisForText: { alignSelf: 'flex-start', wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 26, lineHeight: 33, color: "#333333", paddingBottom: 20 },
+            resourceContentEpisodesEpisodeTitle: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 28, lineHeight: 33, color: "#333333", paddingBottom: 0 },
+            resourceContentEpisodesVideoText: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
             courseCard:
             {
                 minHeight: 330,
@@ -865,7 +872,7 @@ export default class MainStyles {
                 marginTop: 30,
                 backgroundColor: "#ffffff",
                 borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
-                height: 900
+                height: '100%',
             },
             resourceContentRightContainer: {
                 flex: 30,
@@ -881,61 +888,82 @@ export default class MainStyles {
                 height: 900
             },
             resourceContentCurrentSeriesContainer: {
-                overflow: "scroll",
-                minHeight: 375,
+                minHeight: 500,
                 flexWrap: "nowrap",
                 // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
                 flexGrow: 0,
                 width: "100%",
                 flexDirection: 'row',
-                justifyContent: "flex-start",
+                justifyContent: "space-between",
                 alignItems: "flex-start",
             },
             resourceContentCurrentSeriesCard: {
                 padding: "0px",
                 marginLeft: "10px",
                 marginRight: "10px",
-                width: "300px",
+                flex: 1,
                 borderRadius: 4,
                 boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
-                borderColor: "#ffffff",
-                minHeight: 275
+                borderColor: "#F9FAFC"
             },
             resourceContentCurrentSeriesIframeContainer: {
-                width: "300px",
+                width: '100%',
+                height: Dimensions.get('window').width*0.12,
                 paddingLeft: "0px",
                 paddingRight: "0px",
                 margin: "0px",
-                paddingTop: 0
+                paddingTop: 0,
+                backgroundColor: '#F9FAFC'
             },
             resourceContentMoreSeriesContainer: {
-                overflow: "scroll",
                 minHeight: 375,
-                flexWrap: "nowrap",
-                // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
-                flexGrow: 0,
                 width: "100%",
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
+            },
+            resourceContentLoadMoreButtonContainer: {
+                flexGrow: 0.2,
+                width: "100%",
+                justifyContent: "flex-start",
+                alignItems: "flex-start",
+            },
+            resourceContentMoreSeriesRowContainer: {
                 flexDirection: 'row',
                 justifyContent: "flex-start",
                 alignItems: "flex-start",
+                width: '100%'
             },
             resourceContentMoreSeriesCard: {
                 padding: "0px",
                 marginLeft: "10px",
                 marginRight: "10px",
-                width: "300px",
+                marginBottom: 53,
+                flex: 1,
                 borderRadius: 4,
                 boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
-                borderColor: "#ffffff",
-                flexWrap: "wrap",
-                minHeight: 300
+                borderColor: "#F9FAFC",
+                backgroundColor: "#F9FAFC",
+                minHeight: 250
+            },
+            resourceContentMoreSeriesCardDummy: {
+                padding: "0px",
+                marginLeft: "10px",
+                marginRight: "10px",
+                marginBottom: 53,
+                flex: 1,
+                borderColor: "#ffffff00",
+                backgroundColor: "#ffffff00",
+                shadowColor: "#ffffff00",
+                minHeight: 250
             },
             resourceContentMoreSeriesIframeContainer: {
-                width: "300px",
+                width: '100%',
+                height: Dimensions.get('window').width*0.09,
                 paddingLeft: "0px",
                 paddingRight: "0px",
                 margin: "0px",
-                paddingTop: 0
+                paddingTop: 0,
+                backgroundColor: '#F9FAFC'
             },
             resourceContentEpisodeMainContainer: {
                 display: "flex",
@@ -947,11 +975,13 @@ export default class MainStyles {
                 flexDirection: "column",
                 justifyContent: 'flex-start',
                 paddingLeft: 30,
-                paddingRight: 0,
+                paddingRight: 30,                
+                paddingTop: 50,
                 marginLeft: 30,
                 marginTop: 30,
                 backgroundColor: "#ffffff",
-                borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+                borderRadius: 4, 
+                boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
                 height: 900
             },
             resourceContentEpisodeRightContainer: {
@@ -960,6 +990,7 @@ export default class MainStyles {
                 justifyContent: 'flex-start',
                 paddingLeft: 30,
                 paddingRight: 30,
+                paddingTop: 20,
                 marginRight: 30,
                 marginTop: 30,
                 backgroundColor: "#ffffff",
@@ -968,35 +999,60 @@ export default class MainStyles {
                 height: 900
             },
             resourceContentEpisodesContainer: {
-                overflow: "scroll",
                 minHeight: 375,
-                flexWrap: "nowrap",
-                // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
                 flexGrow: 0,
                 width: "100%",
-                flexDirection: 'row',
-                justifyContent: "flex-start",
-                alignItems: "flex-start",
                 marginTop: 30
             },
             resourceContentEpisodeCard: {
                 padding: "0px",
                 marginLeft: "10px",
                 marginRight: "10px",
-                width: "300px",
+                marginBottom: "25px",
                 borderRadius: 4,
+                width: '100%',
                 boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
                 borderColor: "#ffffff",
-                flexWrap: "wrap",
-                minHeight: 275
+                height: Dimensions.get('window').width*0.18
             },
-            resourceContentEpisodesIframeContainer: {
-                width: "300px",
+            resourceContentEpisodesIframe: {
+                width: Dimensions.get('window').width*0.26,
+                height: Dimensions.get('window').width*0.26*(9/16),
                 paddingLeft: "0px",
                 paddingRight: "0px",
                 margin: "0px",
-                paddingTop: 0
+                paddingTop: 0,
+                backgroundColor: '#F9FAFC'
             },
+            resourceContentEpisodesCardInnerContainer: {
+                display: 'flex',
+                flexDirection: 'row',
+            },
+            resourceContentEpisodesButtonsContainer: {
+                display: 'flex',
+                flexDirection: 'row',
+                flexGrow: 0,
+                borderBottomColor: 'rgba(0, 0, 0, 0.2)', 
+                borderBottomWidth: 1,
+                borderTopColor: 'rgba(0, 0, 0, 0.2)', 
+                borderTopWidth: 1,
+                paddingLeft: 0,
+                paddingRight: 0,
+                paddingTop: 0,
+                paddingBottom: 0,
+            },
+            resourceContentEpisodesButtonsContainer2: {
+                display: 'flex',
+                flexDirection: 'row',
+                flexGrow: 0,
+                borderBottomColor: 'rgba(0, 0, 0, 0.2)', 
+                borderBottomWidth: 1,
+                paddingLeft: 0,
+                paddingRight: 0,
+                paddingTop: 0,
+                paddingBottom: 0,
+            },
+
             resourcefileInputWrapper: {
                 width: "100%",
                 overflow: "hidden",
@@ -1232,6 +1288,112 @@ export default class MainStyles {
                 myProfileTopButtonsExternalContainer: {
                     flexDirection: "column"
                 },
+                resourceContentLeftContainer: {
+                    flexDirection: "column",
+                    justifyContent: 'flex-start',
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    marginLeft: 0,
+                    marginTop: 0,
+                    width: '100%',
+                    backgroundColor: "#ffffff",
+                    borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+                },
+                resourceContentRightContainer: {
+                    flexDirection: "column",
+                    justifyContent: 'flex-start',
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    marginRight: 0,
+                    marginTop: 0,
+                    backgroundColor: "#ffffff",
+                    borderRadius: 4,
+                    width: '100%',
+                    boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+                },
+                resourceContentMoreSeriesIframeContainer: {
+                    width: '100%',
+                    height: Dimensions.get('window').width*0.55,
+                    paddingLeft: "0px",
+                    paddingRight: "0px",
+                    margin: "0px",
+                    paddingTop: 0,
+                    backgroundColor: '#F9FAFC'
+                },
+                resourceContentCurrentSeriesIframeContainer: {
+                    width: '100%',
+                    height: Dimensions.get('window').width*0.55,
+                    paddingLeft: "0px",
+                    paddingRight: "0px",
+                    margin: "0px",
+                    paddingTop: 0,
+                    backgroundColor: '#F9FAFC'
+                },
+                resourceContentCurrentSeriesContainer: {
+                    width: "100%",
+                    minHeight: 3*(200+Dimensions.get('window').width*0.55),
+                    flexGrow: 0,
+                    flexDirection: 'column',
+                    justifyContent: "space-between",
+                    alignItems: "flex-start",
+                },
+                resourceContentCurrentSeriesCard: {
+                    padding: "0px",
+                    marginLeft: "10px",
+                    marginRight: "10px",
+                    marginBottom: 20,
+                    flex: 1,
+                    borderRadius: 4,
+                    boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+                    borderColor: "#F9FAFC",
+                    backgroundColor: "#F9FAFC"
+                },
+                resourceContentEpisodesCardInnerContainer: {
+                    display: 'flex',
+                    flexDirection: 'column',
+                },
+                resourceContentEpisodesIframe: {
+                    width: Dimensions.get('window').width,
+                    height: Dimensions.get('window').width*(9/16),
+                    paddingLeft: "0px",
+                    paddingRight: "0px",
+                    margin: "0px",
+                    paddingTop: 0,
+                    backgroundColor: '#F9FAFC'
+                },
+                resourceContentEpisodesEpisodeTitle: { 
+                    wordBreak: "break-word", 
+                    fontFamily: "Graphik-Bold-App", 
+                    fontSize: 18, 
+                    lineHeight: 25, 
+                    color: "#333333", 
+                    paddingBottom: 0 
+                },
+                resourceContentEpisodeMainContainer: {
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: 'flex-start'
+                },
+                resourceContentEpisodesButtonsContainer: {
+                    display: 'flex',
+                    flexDirection: 'row',
+                    flexGrow: 0,
+                    borderBottomColor: 'rgba(0, 0, 0, 0.2)', 
+                    borderBottomWidth: 1,
+                    borderTopColor: 'rgba(0, 0, 0, 0.2)', 
+                    borderTopWidth: 1,
+                    marginLeft: 15,
+                    marginRight: 15
+                },
+                resourceContentEpisodesButtonsContainer2: {
+                    display: 'flex',
+                    flexDirection: 'row',
+                    flexGrow: 0,
+                    borderBottomColor: 'rgba(0, 0, 0, 0.2)', 
+                    borderBottomWidth: 1,
+                    marginLeft: 15,
+                    marginRight: 15
+                },
                 myprofilePickerContainerView: {
                     flexDirection: 'column', 
                 },
@@ -1307,6 +1469,18 @@ export default class MainStyles {
                 myprofilePickerMainContainer: {
                     maxHeight: 300
                 },
+            },
+
+            '@media (min-width: 769px) and (max-width: 1279px)': {
+                resourceContentMoreSeriesIframeContainer: {
+                    width: '100%',
+                    height: Dimensions.get('window').width*0.12,
+                    paddingLeft: "0px",
+                    paddingRight: "0px",
+                    margin: "0px",
+                    paddingTop: 0,
+                    backgroundColor: '#F9FAFC'
+                }
             },
 
             '@media (min-width: 320px) and (max-width: 480px)': {
@@ -1449,6 +1623,7 @@ export default class MainStyles {
                 resourceContentEpisodeLeftContainer: {
                     marginLeft: 0,
                     marginTop: 0,
+                    flexGrow: 1
                 },
                 resourceContentEpisodeRightContainer: {
                     marginRight: 0,

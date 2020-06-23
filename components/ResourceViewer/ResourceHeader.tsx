@@ -66,7 +66,6 @@ class ResourceHeader extends JCComponent<Props, State> {
                                 <View style={this.styles.style.resourcefileFieldWrapper}>
                                     <JCButton buttonType={ButtonTypes.Transparent} onPress={() => { actions.clearEpisode() }}><Ionicons size={24} name="ios-arrow-back" style={this.styles.style.icon} /><Text>Back</Text></JCButton>
                                     <EditableText onChange={(val) => { actions.updateEpisode(state.currentResource, state.currentSeries, state.currentEpisode, "title", val) }} multiline={false} inputStyle={this.styles.style.fontResourceHeaderBold} textStyle={this.styles.style.fontCourseHeaderBold} value={state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].title} isEditable={state.isEditable}></EditableText>
-                                    <EditableText onChange={(val) => { actions.updateEpisode(state.currentResource, state.currentSeries, state.currentEpisode, "description", val) }} multiline={true} inputStyle={this.styles.style.fontResourceHeaderDescription} textStyle={this.styles.style.fontCourseHeaderDescription} value={state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].description} isEditable={state.isEditable}></EditableText>
                                 </View>
                                 :
                                 state.currentSeries != null ?
@@ -74,7 +73,6 @@ class ResourceHeader extends JCComponent<Props, State> {
                                         <View style={this.styles.style.resourcefileFieldWrapper}>
                                             <JCButton buttonType={ButtonTypes.Transparent} onPress={() => { actions.clearSeries() }}><Ionicons size={24} name="ios-arrow-back" style={this.styles.style.icon} /><Text>Back</Text></JCButton>
                                             <EditableText onChange={(val) => { actions.updateSeries(state.currentResource, state.currentSeries, "title", val) }} multiline={false} inputStyle={this.styles.style.fontResourceHeaderBold} textStyle={this.styles.style.fontCourseHeaderBold} value={state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].title} isEditable={state.isEditable}></EditableText>
-                                            <EditableText onChange={(val) => { actions.updateSeries(state.currentResource, state.currentSeries, "description", val) }} multiline={true} inputStyle={this.styles.style.fontResourceHeaderDescription} textStyle={this.styles.style.fontCourseHeaderDescription} value={state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].description} isEditable={state.isEditable}></EditableText>
                                         </View>
                                         : null
                                     :
