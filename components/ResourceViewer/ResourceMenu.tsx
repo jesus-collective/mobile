@@ -7,11 +7,12 @@ import HeaderStyles from '../Header/style'
 import { ResourceContext } from './ResourceContext';
 import EditableButton from '../Forms/EditableButton'
 import JCComponent from '../JCComponent/JCComponent';
+import { EmptyProps } from '../../src/types';
 
-class ResourceMenu extends JCComponent {
+class ResourceMenu extends JCComponent<EmptyProps> {
     static Consumer = ResourceContext.Consumer;
-    constructor() {
-        super(null);
+    constructor(props: EmptyProps) {
+        super(props);
         //console.log(props.items)
     }
 

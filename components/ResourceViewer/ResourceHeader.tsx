@@ -10,20 +10,18 @@ import Amplify from 'aws-amplify'
 import awsconfig from '../../src/aws-exports';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 import JCComponent from '../JCComponent/JCComponent';
+import { EmptyProps } from '../../src/types';
 
 Amplify.configure(awsconfig);
 
-interface Props {
-
-}
 interface State {
     imageUrl: any
     image: any
 }
-class ResourceHeader extends JCComponent<Props, State> {
+class ResourceHeader extends JCComponent<EmptyProps, State> {
     static Consumer = ResourceContext.Consumer;
-    constructor() {
-        super(null)
+    constructor(props: EmptyProps) {
+        super(props)
         this.state = {
             imageUrl: null,
             image: null
@@ -40,7 +38,6 @@ class ResourceHeader extends JCComponent<Props, State> {
         }
     }
     render(): React.ReactNode {
-        //const { navigate } = this.props.navigation;
         return (
             <ResourceHeader.Consumer>
                 {({ state, actions }) => {

@@ -110,7 +110,7 @@ export default class EditableDate extends JCComponent<Props, State> {
         }
         else
             return <Text style={this.state.textStyle}> 
-                {moment.tz(this.props.value, this.state.timezone).format('MMMM Do YYYY, h:mm a')} 
+                {moment.tz(this.props.value, this.state.timezone).format('dddd, MMMM D, YYYY @ h:mm a')} 
                 &nbsp;
                 {moment.tz.zone(this.state.timezone).abbr(+moment(this.props.value).format('x'))}
             </Text >
