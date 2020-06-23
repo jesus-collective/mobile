@@ -11,7 +11,9 @@ interface Props {
     multiline: boolean,
     placeholder?: string,
     onChange?(string),
-    "data-testid"?: any
+    "data-testid"?: any,
+    ellipsizeMode?: 'head' | 'middle' | 'tail' | 'clip',
+    numberOfLines?: number
 }
 interface State {
     // value: string,
@@ -57,6 +59,6 @@ export default class EditableText extends JCComponent<Props, State> {
                 multiline={this.props.multiline}
                 style={this.props.inputStyle} value={this.state.value}></Input>
         else
-            return <Text style={this.props.textStyle}>{this.props.value}</Text>
+            return <Text ellipsizeMode={this.props.ellipsizeMode} numberOfLines={this.props.numberOfLines} style={this.props.textStyle}>{this.props.value}</Text>
     }
 }
