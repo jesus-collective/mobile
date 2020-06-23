@@ -44,8 +44,6 @@ export default class HeaderStyles {
                 display: Platform.OS === 'web' && Dimensions.get('window').width > 720 ? 'flex' : 'none',
                 paddingBottom: 12
             },
-
-
             centerMenuButtonsText: {
                 color: '#aaaaaa',
                 fontSize: 15,
@@ -56,6 +54,23 @@ export default class HeaderStyles {
                     display: 'none',
 
                 },
+            },
+            centerMenuButtonsTextResources: {
+                color: '#aaaaaa',
+                fontSize: 15,
+                fontWeight: 'bold',
+                '@media only screen and (max-width: 600px)': {
+
+                    display: 'none',
+
+                },
+            },
+            dropdownText: {
+                fontFamily: 'Graphik-Regular-App',
+                fontSize: 16,
+                lineHeight: 21,
+                paddingLeft: 10,
+                paddingRight: 40
             },
             logo:
             {
