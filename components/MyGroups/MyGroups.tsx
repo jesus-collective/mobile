@@ -533,7 +533,7 @@ export default class MyGroups extends JCComponent<Props, State> {
   render(): React.ReactNode {
     if (!constants["SETTING_ISVISIBLE_" + this.state.type])
       return null
-    else if (this.state.type == "course" && !this.isMemberOf("course"))
+    else if (this.state.type == "course" && !this.isMemberOf("courseUser"))
       return null
     else
       if (this.state.titleString == null)

@@ -23,8 +23,8 @@ interface State {
 }
 
 const resourcesStyle1 = {
-  backgroundColor: 'transparent', 
-  borderWidth: 0,                 
+  backgroundColor: 'transparent',
+  borderWidth: 0,
   height: 45,
   paddingBottom: 12,
   paddingTop: 6,
@@ -32,8 +32,8 @@ const resourcesStyle1 = {
 }
 
 const resourcesStyle2 = {
-  backgroundColor: 'transparent', 
-  borderWidth: 0,                 
+  backgroundColor: 'transparent',
+  borderWidth: 0,
   height: 45,
   paddingBottom: 12,
   paddingTop: 6,
@@ -51,7 +51,7 @@ export default class HeaderJC extends JCComponent<Props, State> {
     }
   }
   headerStyles = HeaderStyles.getInstance();
-  
+
   updateStyles = (): void => {
     this.headerStyles.update()
     this.updateResourceStyles()
@@ -69,7 +69,7 @@ export default class HeaderJC extends JCComponent<Props, State> {
     const bigScreen = Dimensions.get('window').width > 720
     if (bigScreen)
       this.setState({ resourcesStyle: resourcesStyle1 })
-    else 
+    else
       this.setState({ resourcesStyle: { display: 'none' } })
   }
 
@@ -95,7 +95,7 @@ export default class HeaderJC extends JCComponent<Props, State> {
   }
   openKids = (): void => {
     this.handleResourcesDropdownClose()
-    this.props.navigation.push("ResourceScreen", {create: false, id: 'resource-1580889856205' });
+    this.props.navigation.push("ResourceScreen", { create: false, id: 'resource-1580889856205' });
   }
   openGroups = (): void => {
     this.props.navigation.push("GroupsScreen");
@@ -163,33 +163,33 @@ export default class HeaderJC extends JCComponent<Props, State> {
                 <Text style={this.headerStyles.style.centerMenuButtonsText}>Groups</Text>
               </Button> : null
           }
-          { 
-            constants["SETTING_ISVISIBLE_resource"] ? 
-              <button 
-                onClick={this.handleResourcesDropdownClick} 
-                onMouseEnter={()=>this.setState({ resourcesStyle: resourcesStyle2 })}
-                onMouseLeave={()=>this.setState({ resourcesStyle: resourcesStyle1 })}
+          {
+            constants["SETTING_ISVISIBLE_resource"] ?
+              <button
+                onClick={this.handleResourcesDropdownClick}
+                onMouseEnter={() => this.setState({ resourcesStyle: resourcesStyle2 })}
+                onMouseLeave={() => this.setState({ resourcesStyle: resourcesStyle1 })}
                 style={this.state.resourcesStyle}
               >
                 <Text style={this.headerStyles.style.centerMenuButtonsTextResources}>Resources</Text>
-                <img src={require('../../assets/svg/dropdown.svg')} style={{paddingLeft: 8, paddingBottom: 1}}></img>
+                <img src={require('../../assets/svg/dropdown.svg')} style={{ paddingLeft: 8, paddingBottom: 1 }}></img>
               </button> : null
           }
           {
             constants["SETTING_ISVISIBLE_resource"] ?
               <Menu
-              keepMounted
-              anchorEl={this.state.resourcesDropdown}
-              open={Boolean(this.state.resourcesDropdown)}
-              onClose={this.handleResourcesDropdownClose}
-              style={{ marginTop: 40 }}
+                keepMounted
+                anchorEl={this.state.resourcesDropdown}
+                open={Boolean(this.state.resourcesDropdown)}
+                onClose={this.handleResourcesDropdownClose}
+                style={{ marginTop: 40 }}
               >
                 <MenuItem onClick={this.openResources}><Text style={this.headerStyles.style.dropdownText}>Overview</Text></MenuItem>
                 <MenuItem onClick={this.openKids}><Text style={this.headerStyles.style.dropdownText}>Kids Curriculum</Text></MenuItem>
               </Menu> : null
           }
           {
-            constants["SETTING_ISVISIBLE_course"] && this.isMemberOf("course") ?
+            constants["SETTING_ISVISIBLE_course"] && this.isMemberOf("courseUser") ?
               <Button
                 transparent
                 data-testid="header-courses"
