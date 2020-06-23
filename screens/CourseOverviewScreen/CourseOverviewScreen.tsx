@@ -190,27 +190,28 @@ export default class CourseScreen extends JCComponent<Props, State>{
         <StyleProvider style={getTheme()}>
           <Container style={{ flexDirection: "row" }}>
             <CourseSidebar courseId={this.state.data.id}></CourseSidebar>
-            <Container style={{ flex: 85 }}>
-              <Content style={{ backgroundColor: "#F0493E", flex: 20 }}>
+            <Container style={{ flex: 80 }}>
+              <Container style={{ backgroundColor: "#F0493E", flex: 20 }}>
                 <Text style={this.styles.style.fontCourseHeaderTime}>{moment(this.state.data.time).format('MMMM Do YYYY')} - {this.state.data.length}</Text>
 
                 <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Course Name" multiline={false} textStyle={this.styles.style.fontCourseHeaderBold} inputStyle={this.styles.style.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
 
                 <Text style={this.styles.style.fontCourseHeader}>Course</Text>
                 <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Course Description" multiline={true} textStyle={this.styles.style.fontCourseHeaderDescription} inputStyle={this.styles.style.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
-              </Content>
-              <Content style={{ flex: 80 }}>
-                <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
-                  <Container style={{ flex: 15, flexDirection: "column", justifyContent: 'flex-start' }}>
+              </Container>
+              <Container style={{ flex: 80 }}>
+                <Content style={{ flex: 80 }}>
+                  <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
+                    <Container style={{ flex: 15, flexDirection: "column", justifyContent: 'flex-start' }}>
 
-                    <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
-                    <Text>{//this.state.data.organizerUser.name
-                    }
-                    </Text>
-                    <Text>Publisher</Text>
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }} >Contact Us</JCButton>
+                      <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
+                      <Text>{//this.state.data.organizerUser.name
+                      }
+                      </Text>
+                      <Text>Publisher</Text>
+                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }} >Contact Us</JCButton>
 
-                    {/*this.state.data.instructors.map((item: any) => {
+                      {/*this.state.data.instructors.map((item: any) => {
                     return (<Card><Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
                       <Text>{item.name}</Text>
                       <Text>Instructor</Text>
@@ -218,67 +219,68 @@ export default class CourseScreen extends JCComponent<Props, State>{
                     </Card>)
                   }
                 )*/}
+                    </Container>
+                    <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+
+                      {data.courseInfo.introduction.map((item: any, index) => {
+                        return <Text key={index}>{item}</Text>
+                      })}
+
+                      <Text>Course Details</Text>
+
+
+                      {data.courseDetails.map((item: any, index1) => {
+                        return (
+                          <Card key={index1}>
+                            <Text>{item.week}</Text>
+                            <Text>{item.date} - {item.leader}</Text>
+                            {item.lessons.map((item2, index2) => {
+                              return (
+                                <Text key={index2}>{index1 + 1}.{index2 + 1} - {item2.name}</Text>
+                              )
+                            })}
+
+                          </Card>
+                        )
+                      })}
+                    </Container>
+                    <Container style={{ flex: 15, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }} >Join Course</JCButton>
+                      {this.state.canJoin ?
+                        <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.join() }} >Join Course</JCButton> :
+                        null
+                      }
+                      {this.state.canLeave ?
+                        <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.leave() }} >Leave Course</JCButton> :
+                        null
+                      }
+                      {this.state.createNew ?
+                        <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.createNew() }}>Create Course</JCButton>
+                        : null
+                      }
+                      {this.state.canSave ?
+                        <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.save() }}>Save Course</JCButton>
+                        : null
+                      }
+                      {this.state.canDelete ?
+                        <JCButton buttonType={ButtonTypes.Outline} onPress={() => { if (window.confirm('Are you sure you wish to delete this course?')) this.delete() }} >Delete Course</JCButton>
+                        : null
+                      }
+                      {this.state.canGotoActiveCourse ?
+                        <JCButton buttonType={ButtonTypes.Outline} onPress={() => this.gotoActiveCourse()} >Go to Course</JCButton>
+                        : null
+                      }
+                      <EditableDate type="date" onChange={(value: any) => { this.updateValue("time", value) }} placeholder="Enter Course Start Date" multiline={false} textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupNameInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableDate>
+                      <EditableText onChange={(value: any) => { this.updateValue("length", value) }} placeholder="Enter Course Length" multiline={false} textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupNameInput} value={this.state.data.length} isEditable={this.state.isEditable}></EditableText>
+                      <EditableText onChange={(value: any) => { this.updateValue("effort", value) }} placeholder="Enter Course Effort" multiline={false} textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupNameInput} value={this.state.data.effort} isEditable={this.state.isEditable}></EditableText>
+                      <EditableDollar onChange={(value: any) => { this.updateValue("cost", value) }} placeholder="Enter Course Cost" multiline={false} textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupNameInput} value={this.state.data.cost} isEditable={this.state.isEditable}></EditableDollar>
+                      <Text>{this.state.validationError}</Text>
+
+                    </Container>
                   </Container>
-                  <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
 
-                    {data.courseInfo.introduction.map((item: any, index) => {
-                      return <Text key={index}>{item}</Text>
-                    })}
-
-                    <Text>Course Details</Text>
-
-
-                    {data.courseDetails.map((item: any, index1) => {
-                      return (
-                        <Card key={index1}>
-                          <Text>{item.week}</Text>
-                          <Text>{item.date} - {item.leader}</Text>
-                          {item.lessons.map((item2, index2) => {
-                            return (
-                              <Text key={index2}>{index1 + 1}.{index2 + 1} - {item2.name}</Text>
-                            )
-                          })}
-
-                        </Card>
-                      )
-                    })}
-                  </Container>
-                  <Container style={{ flex: 15, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }} >Join Course</JCButton>
-                    {this.state.canJoin ?
-                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.join() }} >Join Course</JCButton> :
-                      null
-                    }
-                    {this.state.canLeave ?
-                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.leave() }} >Leave Course</JCButton> :
-                      null
-                    }
-                    {this.state.createNew ?
-                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.createNew() }}>Create Course</JCButton>
-                      : null
-                    }
-                    {this.state.canSave ?
-                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.save() }}>Save Course</JCButton>
-                      : null
-                    }
-                    {this.state.canDelete ?
-                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { if (window.confirm('Are you sure you wish to delete this course?')) this.delete() }} >Delete Course</JCButton>
-                      : null
-                    }
-                    {this.state.canGotoActiveCourse ?
-                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => this.gotoActiveCourse()} >Go to Course</JCButton>
-                      : null
-                    }
-                    <EditableDate type="date" onChange={(value: any) => { this.updateValue("time", value) }} placeholder="Enter Course Start Date" multiline={false} textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupNameInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableDate>
-                    <EditableText onChange={(value: any) => { this.updateValue("length", value) }} placeholder="Enter Course Length" multiline={false} textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupNameInput} value={this.state.data.length} isEditable={this.state.isEditable}></EditableText>
-                    <EditableText onChange={(value: any) => { this.updateValue("effort", value) }} placeholder="Enter Course Effort" multiline={false} textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupNameInput} value={this.state.data.effort} isEditable={this.state.isEditable}></EditableText>
-                    <EditableDollar onChange={(value: any) => { this.updateValue("cost", value) }} placeholder="Enter Course Cost" multiline={false} textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupNameInput} value={this.state.data.cost} isEditable={this.state.isEditable}></EditableDollar>
-                    <Text>{this.state.validationError}</Text>
-
-                  </Container>
-                </Container>
-
-              </Content>
+                </Content>
+              </Container>
             </Container>
           </Container>
 

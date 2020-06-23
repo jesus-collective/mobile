@@ -88,74 +88,75 @@ export default class CourseScreen extends JCComponent<Props, State>{
             <CourseSidebar courseId={this.state.data.id}></CourseSidebar>
             <Container style={{ flex: 85 }}>
               <CourseHeader courseData={data} groupData={this.state.data}></CourseHeader>
+              <Container style={{ flex: 80 }}>
+                <Content contentContainerStyle={{ flex: 80 }} style={{ flex: 80 }}>
+                  <Container style={{ flex: 80, display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
+                    <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
+                      <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
+                      <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Book a Call</JCButton>
+                      <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Send Message</JCButton>
+                      <Text>Hi </Text>
+                      <Text>I’m Jon Hand and welcome to our six-week leadership journey. I’ll be your instructor. You can go ahead and start viewing content. We will officially kick-off on Monday with our Zoom Video Call.
 
-              <Content style={{ flex: 80 }}>
-                <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
-                  <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
-                    <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
-                    <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Book a Call</JCButton>
-                    <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Send Message</JCButton>
-                    <Text>Hi </Text>
-                    <Text>I’m Jon Hand and welcome to our six-week leadership journey. I’ll be your instructor. You can go ahead and start viewing content. We will officially kick-off on Monday with our Zoom Video Call.
-
-                    If there is anything that I can help you with, feel free to ask anytime. Talk soon!
+                      If there is anything that I can help you with, feel free to ask anytime. Talk soon!
 
 Jon </Text>
-                    <Text>Syllabus</Text>
-                    <Card>
-                      <Text>Leadership Formation Course</Text>
-                      <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Download</JCButton>
+                      <Text>Syllabus</Text>
+                      <Card>
+                        <Text>Leadership Formation Course</Text>
+                        <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Download</JCButton>
 
-                    </Card>
-                    <Text>My Coach</Text>
-                    <Card>
-                      <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
-                      <Text>Jon Hand</Text>
-                      <Text>Youth Leader in Calgary Area</Text>
-                      <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>View profile</JCButton>
-                    </Card>
-                    <Text>My Triad</Text>
-                    <Card>
-                      <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
-                      <Text>Jon Hand</Text>
-                      <Text>Youth Leader in Calgary Area</Text>
-                      <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>View profile</JCButton>
-                    </Card>
-                    <Text>My Cohort</Text>
-                    <Card>
-                      <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
-                      <Text>Jon Hand</Text>
-                      <Text>Youth Leader in Calgary Area</Text>
-                      <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>View profile</JCButton>
-                    </Card>
+                      </Card>
+                      <Text>My Coach</Text>
+                      <Card>
+                        <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
+                        <Text>Jon Hand</Text>
+                        <Text>Youth Leader in Calgary Area</Text>
+                        <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>View profile</JCButton>
+                      </Card>
+                      <Text>My Triad</Text>
+                      <Card>
+                        <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
+                        <Text>Jon Hand</Text>
+                        <Text>Youth Leader in Calgary Area</Text>
+                        <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>View profile</JCButton>
+                      </Card>
+                      <Text>My Cohort</Text>
+                      <Card>
+                        <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
+                        <Text>Jon Hand</Text>
+                        <Text>Youth Leader in Calgary Area</Text>
+                        <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>View profile</JCButton>
+                      </Card>
+                    </Container>
+                    <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+
+                      <Text>To-Do</Text>
+                      <Card>
+                        <Text> Coaching call with Jon Hand</Text>
+                      </Card>
+
+                      <Text>My Calendar</Text>
+                      <Calendar
+                        // Collection of dates that have to be marked. Default = {}
+                        current={'2020-05-01'}
+                        markedDates={{
+                          '2020-05-16': { selected: true, marked: true, selectedColor: 'blue' },
+                          '2020-05-17': { marked: true },
+                          '2020-05-18': { marked: true, dotColor: 'red', activeOpacity: 0 },
+                          '2020-05-19': { disabled: true, disableTouchEvent: true }
+                        }}
+                      />
+                      <Text>Course Activity</Text>
+                      <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Today</JCButton>
+                      <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Yesterday</JCButton>
+                      <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>This Week</JCButton>
+                      <Text>Adam posted assignement to review</Text>
+                    </Container>
+
                   </Container>
-                  <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-
-                    <Text>To-Do</Text>
-                    <Card>
-                      <Text> Coaching call with Jon Hand</Text>
-                    </Card>
-
-                    <Text>My Calendar</Text>
-                    <Calendar
-                      // Collection of dates that have to be marked. Default = {}
-                      current={'2020-05-01'}
-                      markedDates={{
-                        '2020-05-16': { selected: true, marked: true, selectedColor: 'blue' },
-                        '2020-05-17': { marked: true },
-                        '2020-05-18': { marked: true, dotColor: 'red', activeOpacity: 0 },
-                        '2020-05-19': { disabled: true, disableTouchEvent: true }
-                      }}
-                    />
-                    <Text>Course Activity</Text>
-                    <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Today</JCButton>
-                    <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Yesterday</JCButton>
-                    <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>This Week</JCButton>
-                    <Text>Adam posted assignement to review</Text>
-                  </Container>
-
-                </Container>
-              </Content>
+                </Content>
+              </Container>
             </Container>
           </Container>
         </StyleProvider >

@@ -125,7 +125,7 @@ export default class HeaderJC extends JCComponent<Props> {
               </Button> : null
           }
           {
-            constants["SETTING_ISVISIBLE_course"] ?
+            constants["SETTING_ISVISIBLE_course"] && this.isMemberOf("course") ?
               <Button
                 transparent
                 data-testid="header-courses"

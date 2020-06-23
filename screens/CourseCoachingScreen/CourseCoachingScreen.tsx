@@ -84,57 +84,58 @@ export default class CourseScreen extends JCComponent<Props, State>{
             <Container style={{ flex: 85 }}>
               <CourseHeader courseData={data} groupData={this.state.data}></CourseHeader>
 
+              <Container style={{ flex: 80 }}>
+                <Content style={{ flex: 80 }}>
+                  <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
+                    <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
+                      <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
+                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Book a Call</JCButton>
+                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Send Message</JCButton>
+                      <Text>Hi </Text>
+                      <Text>For your journey in leadership formation, I’d like to invite you to our bi-weekly coaching sessions where we can connect and discuss issues in more details. Let’s schedule our Coaching Calls - talk soon!
 
-              <Content style={{ flex: 80 }}>
-                <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
-                  <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
-                    <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Book a Call</JCButton>
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Send Message</JCButton>
-                    <Text>Hi </Text>
-                    <Text>For your journey in leadership formation, I’d like to invite you to our bi-weekly coaching sessions where we can connect and discuss issues in more details. Let’s schedule our Coaching Calls - talk soon!
-
-                    Thanks!
+                      Thanks!
 - Jon</Text>
-                    <Container>
-                      <Text>Schedule your</Text>
-                      <Text>30 Minute Coaching Call</Text>
+                      <Container>
+                        <Text>Schedule your</Text>
+                        <Text>30 Minute Coaching Call</Text>
 
-                      <Container style={{ flexDirection: "row" }}>
-                        <Container style={{ flex: 50 }}>
-                          <Picker
-                            mode="dropdown"
-                            iosIcon={<Icon name="arrow-down" />}
-                            style={{ width: undefined }}
-                            placeholder="Select your Coach"
-                            placeholderStyle={{ color: "#bfc6ea" }}
-                            placeholderIconColor="#007aff"
+                        <Container style={{ flexDirection: "row" }}>
+                          <Container style={{ flex: 50 }}>
+                            <Picker
+                              mode="dropdown"
+                              iosIcon={<Icon name="arrow-down" />}
+                              style={{ width: undefined }}
+                              placeholder="Select your Coach"
+                              placeholderStyle={{ color: "#bfc6ea" }}
+                              placeholderIconColor="#007aff"
 
-                          >
-                            {//   selectedValue={this.state.selected2}
-                              // onValueChange={this.onValueChange2.bind(this)}
-                            }
-                            <Picker.Item label="Jon Hand" value="key0" />
+                            >
+                              {//   selectedValue={this.state.selected2}
+                                // onValueChange={this.onValueChange2.bind(this)}
+                              }
+                              <Picker.Item label="Jon Hand" value="key0" />
 
-                          </Picker>
+                            </Picker>
 
-                        </Container>
-                        <Container style={{ flex: 50 }}>
-                          <Text>Please confirm</Text>
-                          <Text>you’re going to schedule coaching call with Jon Hand.</Text>
-                          <Text>30 minutes</Text>
-                          <Text>Monday, August 23  -  1:30 PM – 2:00 PM</Text>
-                          <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Yes, schedule call</JCButton>
+                          </Container>
+                          <Container style={{ flex: 50 }}>
+                            <Text>Please confirm</Text>
+                            <Text>you’re going to schedule coaching call with Jon Hand.</Text>
+                            <Text>30 minutes</Text>
+                            <Text>Monday, August 23  -  1:30 PM – 2:00 PM</Text>
+                            <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Yes, schedule call</JCButton>
+                          </Container>
                         </Container>
                       </Container>
                     </Container>
-                  </Container>
-                  <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                    <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
 
 
+                    </Container>
                   </Container>
-                </Container>
-              </Content>
+                </Content>
+              </Container>
             </Container>
           </Container>
         </StyleProvider>

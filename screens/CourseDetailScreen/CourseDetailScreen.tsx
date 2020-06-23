@@ -166,22 +166,24 @@ export default class CourseScreen extends JCComponent<Props, State>{
             <CourseSidebar courseId={this.state.data.id}></CourseSidebar>
             <Container style={{ flex: 85 }}>
               <CourseHeader onChangeWeek={(week) => { this.setActiveWeek(week) }} courseData={data} groupData={this.state.data}></CourseHeader>
-              <Content style={{ flex: 85 }}>
-                <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
-                  {this.renderWeekDetails(week)}
-                  {this.renderLessonDetails(week)}
-                  <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                    <Container style={{ flex: 5, flexDirection: "row" }}>
-                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Cohort</JCButton>
-                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Triad</JCButton>
-                      <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Instructor</JCButton>
-                    </Container>
-                    <Container style={{ flex: 95, flexDirection: "row" }}>
-                      <MessageBoard groupId={this.state.data.id}></MessageBoard>
+              <Container style={{ flex: 80 }}>
+                <Content style={{ flex: 85 }}>
+                  <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
+                    {this.renderWeekDetails(week)}
+                    {this.renderLessonDetails(week)}
+                    <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                      <Container style={{ flex: 5, flexDirection: "row" }}>
+                        <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Cohort</JCButton>
+                        <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Triad</JCButton>
+                        <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Instructor</JCButton>
+                      </Container>
+                      <Container style={{ flex: 95, flexDirection: "row" }}>
+                        <MessageBoard groupId={this.state.data.id}></MessageBoard>
+                      </Container>
                     </Container>
                   </Container>
-                </Container>
-              </Content>
+                </Content>
+              </Container>
             </Container>
           </Container>
         </StyleProvider>

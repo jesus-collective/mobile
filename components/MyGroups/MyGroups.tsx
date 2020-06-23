@@ -441,12 +441,12 @@ export default class MyGroups extends JCComponent<Props, State> {
       </CardItem>
       <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitleGroup}>{item.name}</Text></CardItem>
       <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontDetailMiddle}>{item.description}</Text></CardItem>
-      {constants.SETTING_ISVISIBLE_MEMBER_COUNT ? 
+      {constants.SETTING_ISVISIBLE_MEMBER_COUNT ?
         <CardItem>
           <Image style={{ width: "22px", height: "22px", marginRight: 5 }} source={require('../../assets/svg/user.svg')}></Image>
           <Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetailBottom}>Members: {item.memberCount}</Text>
-        </CardItem> 
-      : null}
+        </CardItem>
+        : null}
       {this.canJoin(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Group") }}>Join</JCButton><Right></Right></CardItem> : null}
       {this.canLeave(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Group") }}>Leave</JCButton><Right></Right></CardItem> : null}
       {this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>Owner</JCButton><Right></Right></CardItem> : null}
@@ -533,6 +533,8 @@ export default class MyGroups extends JCComponent<Props, State> {
   render(): React.ReactNode {
     if (!constants["SETTING_ISVISIBLE_" + this.state.type])
       return null
+    else if (this.state.type == "course" && !this.isMemberOf("course"))
+      return null
     else
       if (this.state.titleString == null)
         return null
@@ -556,7 +558,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                   </Container>
                 </Container>
 
-                <Container style={(this.props.wrap && this.props.type != "profile" ) ? this.styles.style.ResourcesMyGroupsWrap : (this.props.wrap && this.props.type == "profile" ) ? this.styles.style.profileMyGroupsWrap : this.styles.style.ResourcesMyGroupsNoWrap}>
+                <Container style={(this.props.wrap && this.props.type != "profile") ? this.styles.style.ResourcesMyGroupsWrap : (this.props.wrap && this.props.type == "profile") ? this.styles.style.profileMyGroupsWrap : this.styles.style.ResourcesMyGroupsNoWrap}>
                   {this.state.data ?
                     this.state.data.filter(this.filterMy).filter(this.filterEvent).map((item, index) => {
 

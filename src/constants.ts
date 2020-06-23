@@ -1,13 +1,13 @@
 export const constants =
 {
-    SETTING_ISVISIBLE_course: false,
+    SETTING_ISVISIBLE_course: true,
     SETTING_ISVISIBLE_organization: false,
     SETTING_ISVISIBLE_resource: true,
     SETTING_ISVISIBLE_group: true,
     SETTING_ISVISIBLE_event: true,
     SETTING_ISVISIBLE_profile: true,
     SETTING_ISVISIBLE_conversation: false,
-    SETTING_ISVISIBLE_CREATE_course: false,
+    SETTING_ISVISIBLE_CREATE_course: true,
     SETTING_ISVISIBLE_CREATE_organization: false,
     SETTING_ISVISIBLE_CREATE_resource: true,
     SETTING_ISVISIBLE_CREATE_group: true,
