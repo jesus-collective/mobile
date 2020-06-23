@@ -813,6 +813,17 @@ export default class MainStyles {
                 justifyContent: "flex-start",
                 alignItems: "flex-start"
             },
+            profileMyGroupsWrap: {
+                overflow: "scroll",
+                overflowY: "hidden",
+                minHeight: "50vw",
+                flexWrap: "wrap",
+                flexGrow: 1,
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "flex-start",
+                alignItems: "flex-start"
+            },
             profilesScreenMainContainer: {
                 display: "flex",
                 flexDirection: "row",
@@ -1120,6 +1131,37 @@ export default class MainStyles {
             conversationsCard: {
                 alignSelf: "flex-start", 
             },
+            myprofilePickerContainer: {
+                flex: 1, 
+                flexDirection: 'column', 
+                alignItems: 'center',
+            },
+            myprofilePickerContainerView: {
+                flexDirection: 'row', 
+            },
+            myprofileBadgeContainer: {
+                flex: 1, 
+                flexDirection: 'row', 
+                flexWrap: 'wrap',
+                top: 20,
+            },
+            myprofileMyRoleContainer: {
+                marginBottom: 15, 
+                width: "100%",
+                // marginTop: 80
+            },
+            myprofilePickerMainContainer: {
+                width: "100%", 
+                alignItems: "flex-start", 
+                marginTop: 5,
+            },
+            myprofilePicker: {
+                height: 45, 
+                width: 308, 
+                marginRight: 10, 
+                borderWidth: 1, 
+                borderColor: '#dddddd'
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -1341,6 +1383,12 @@ export default class MainStyles {
                     marginLeft: 15,
                     marginRight: 15
                 },
+                myprofilePickerContainerView: {
+                    flexDirection: 'column', 
+                },
+                myprofilePicker: {
+                    marginBottom: 10
+                },
             },
 
             // Media Query Desktop Large Tablet
@@ -1400,6 +1448,9 @@ export default class MainStyles {
                 },
                 fontFormMediumInput: {
                     maxWidth: 287
+                },
+                myprofilePickerMainContainer: {
+                    maxHeight: 300
                 },
             },
 
@@ -1594,6 +1645,12 @@ export default class MainStyles {
                 conversationsCard: {
                     maxWidth: 300
                 },
+                myprofilePickerMainContainer: {
+                    maxHeight: 200
+                },
+                myprofileBadgeContainer: {
+                    top: 30
+                }
             },
 
             dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
