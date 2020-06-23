@@ -46,7 +46,7 @@ export default class MainStyles {
             resourceContentEpisodesDescription: { wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
             resourceContentEpisodesText: { wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 18, lineHeight: 28, color: "#333333", paddingBottom: 0 },
             resourceContentEpisodesDownloadInfo: { wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 18, lineHeight: 28, color: "#333333", paddingBottom: 25 },
-            whoIsThisForText: { wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 26, lineHeight: 33, color: "#333333", paddingBottom: 20 },
+            whoIsThisForText: { alignSelf: 'flex-start', wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 26, lineHeight: 33, color: "#333333", paddingBottom: 20 },
             resourceContentEpisodesEpisodeTitle: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 28, lineHeight: 33, color: "#333333", paddingBottom: 0 },
             resourceContentEpisodesVideoText: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
             courseCard:
@@ -853,7 +853,7 @@ export default class MainStyles {
                 marginTop: 30,
                 backgroundColor: "#ffffff",
                 borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
-                height: '100%'
+                height: '100%',
             },
             resourceContentRightContainer: {
                 flex: 30,
@@ -1235,6 +1235,112 @@ export default class MainStyles {
                 myProfileTopButtonsExternalContainer: {
                     flexDirection: "column"
                 },
+                resourceContentLeftContainer: {
+                    flexDirection: "column",
+                    justifyContent: 'flex-start',
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    marginLeft: 0,
+                    marginTop: 0,
+                    width: '100%',
+                    backgroundColor: "#ffffff",
+                    borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+                },
+                resourceContentRightContainer: {
+                    flexDirection: "column",
+                    justifyContent: 'flex-start',
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    marginRight: 0,
+                    marginTop: 0,
+                    backgroundColor: "#ffffff",
+                    borderRadius: 4,
+                    width: '100%',
+                    boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+                },
+                resourceContentMoreSeriesIframeContainer: {
+                    width: '100%',
+                    height: Dimensions.get('window').width*0.55,
+                    paddingLeft: "0px",
+                    paddingRight: "0px",
+                    margin: "0px",
+                    paddingTop: 0,
+                    backgroundColor: '#F9FAFC'
+                },
+                resourceContentCurrentSeriesIframeContainer: {
+                    width: '100%',
+                    height: Dimensions.get('window').width*0.55,
+                    paddingLeft: "0px",
+                    paddingRight: "0px",
+                    margin: "0px",
+                    paddingTop: 0,
+                    backgroundColor: '#F9FAFC'
+                },
+                resourceContentCurrentSeriesContainer: {
+                    width: "100%",
+                    minHeight: 3*(200+Dimensions.get('window').width*0.55),
+                    flexGrow: 0,
+                    flexDirection: 'column',
+                    justifyContent: "space-between",
+                    alignItems: "flex-start",
+                },
+                resourceContentCurrentSeriesCard: {
+                    padding: "0px",
+                    marginLeft: "10px",
+                    marginRight: "10px",
+                    marginBottom: 20,
+                    flex: 1,
+                    borderRadius: 4,
+                    boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+                    borderColor: "#F9FAFC",
+                    backgroundColor: "#F9FAFC"
+                },
+                resourceContentEpisodesCardInnerContainer: {
+                    display: 'flex',
+                    flexDirection: 'column',
+                },
+                resourceContentEpisodesIframe: {
+                    width: Dimensions.get('window').width,
+                    height: Dimensions.get('window').width*(9/16),
+                    paddingLeft: "0px",
+                    paddingRight: "0px",
+                    margin: "0px",
+                    paddingTop: 0,
+                    backgroundColor: '#F9FAFC'
+                },
+                resourceContentEpisodesEpisodeTitle: { 
+                    wordBreak: "break-word", 
+                    fontFamily: "Graphik-Bold-App", 
+                    fontSize: 18, 
+                    lineHeight: 25, 
+                    color: "#333333", 
+                    paddingBottom: 0 
+                },
+                resourceContentEpisodeMainContainer: {
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: 'flex-start'
+                },
+                resourceContentEpisodesButtonsContainer: {
+                    display: 'flex',
+                    flexDirection: 'row',
+                    flexGrow: 0,
+                    borderBottomColor: 'rgba(0, 0, 0, 0.2)', 
+                    borderBottomWidth: 1,
+                    borderTopColor: 'rgba(0, 0, 0, 0.2)', 
+                    borderTopWidth: 1,
+                    marginLeft: 15,
+                    marginRight: 15
+                },
+                resourceContentEpisodesButtonsContainer2: {
+                    display: 'flex',
+                    flexDirection: 'row',
+                    flexGrow: 0,
+                    borderBottomColor: 'rgba(0, 0, 0, 0.2)', 
+                    borderBottomWidth: 1,
+                    marginLeft: 15,
+                    marginRight: 15
+                },
             },
 
             // Media Query Desktop Large Tablet
@@ -1295,6 +1401,18 @@ export default class MainStyles {
                 fontFormMediumInput: {
                     maxWidth: 287
                 },
+            },
+
+            '@media (min-width: 769px) and (max-width: 1279px)': {
+                resourceContentMoreSeriesIframeContainer: {
+                    width: '100%',
+                    height: Dimensions.get('window').width*0.12,
+                    paddingLeft: "0px",
+                    paddingRight: "0px",
+                    margin: "0px",
+                    paddingTop: 0,
+                    backgroundColor: '#F9FAFC'
+                }
             },
 
             '@media (min-width: 320px) and (max-width: 480px)': {
