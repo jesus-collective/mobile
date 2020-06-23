@@ -29,10 +29,10 @@ export default class GroupScreen extends JCComponent<Props, State>{
       data: []
     }
   }
-  mapChanged = () => {
+  mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
   }
-  search(item) {
+  search(item): void {
     console.log(item.target.value)
     const searchGroups: any = API.graphql({
       query: queries.searchGroups,
@@ -49,7 +49,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
     );
 
   }
-  render() {
+  render(): React.ReactNode {
     console.log("SearchScreen")
     return <StyleProvider style={getTheme(material)}>
       <Container >
