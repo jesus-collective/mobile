@@ -1,6 +1,5 @@
 import { Header, Left, Body, Right, Button } from 'native-base';
 import { DrawerActions } from '@react-navigation/native';
-
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Image, Text, Dimensions } from 'react-native';
@@ -9,6 +8,8 @@ import { Auth } from 'aws-amplify';
 import { constants } from '../../src/constants'
 import HeaderStyles from '../Header/style';
 import JCComponent from '../JCComponent/JCComponent';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem'
 
 interface Props {
   navigation: any
@@ -16,15 +17,44 @@ interface Props {
   onMapChange?(): any
 }
 
-export default class HeaderJC extends JCComponent<Props> {
+interface State {
+  resourcesDropdown: HTMLElement
+  resourcesStyle: any
+}
+
+const resourcesStyle1 = {
+  backgroundColor: 'transparent', 
+  borderWidth: 0,                 
+  height: 45,
+  paddingBottom: 12,
+  paddingTop: 6,
+  marginRight: 30
+}
+
+const resourcesStyle2 = {
+  backgroundColor: 'transparent', 
+  borderWidth: 0,                 
+  height: 45,
+  paddingBottom: 12,
+  paddingTop: 6,
+  marginRight: 30,
+  cursor: 'pointer'
+}
+
+export default class HeaderJC extends JCComponent<Props, State> {
 
   constructor(props: Props) {
     super(props);
+    this.state = {
+      resourcesDropdown: null,
+      resourcesStyle: resourcesStyle1
+    }
   }
   headerStyles = HeaderStyles.getInstance();
-
+  
   updateStyles = (): void => {
     this.headerStyles.update()
+    this.updateResourceStyles()
     this.forceUpdate();
   };
   componentDidMount(): void {
@@ -33,6 +63,14 @@ export default class HeaderJC extends JCComponent<Props> {
   componentWillUnmount(): void {
     // Important to stop updating state after unmount
     Dimensions.removeEventListener("change", this.updateStyles);
+  }
+
+  updateResourceStyles = (): void => {
+    const bigScreen = Dimensions.get('window').width > 720
+    if (bigScreen)
+      this.setState({ resourcesStyle: resourcesStyle1 })
+    else 
+      this.setState({ resourcesStyle: { display: 'none' } })
   }
 
   openDrawer = (): void => {
@@ -55,6 +93,10 @@ export default class HeaderJC extends JCComponent<Props> {
   openResources = (): void => {
     this.props.navigation.push("ResourcesScreen");
   }
+  openKids = (): void => {
+    this.handleResourcesDropdownClose()
+    this.props.navigation.push("ResourceScreen", {create: false, id: 'resource-1580889856205' });
+  }
   openGroups = (): void => {
     this.props.navigation.push("GroupsScreen");
   }
@@ -68,6 +110,13 @@ export default class HeaderJC extends JCComponent<Props> {
     if (this.props.onMapChange != null)
       this.props.onMapChange()
   }
+  handleResourcesDropdownClick = (event: React.MouseEvent<HTMLElement>): void => {
+    this.setState({ resourcesDropdown: event.currentTarget })
+  }
+  handleResourcesDropdownClose = (): void => {
+    this.setState({ resourcesDropdown: null })
+  }
+
   render(): React.ReactNode {
     //const { navigate } = this.props.navigation;
     return (
@@ -114,15 +163,30 @@ export default class HeaderJC extends JCComponent<Props> {
                 <Text style={this.headerStyles.style.centerMenuButtonsText}>Groups</Text>
               </Button> : null
           }
+          { 
+            constants["SETTING_ISVISIBLE_resource"] ? 
+              <button 
+                onClick={this.handleResourcesDropdownClick} 
+                onMouseEnter={()=>this.setState({ resourcesStyle: resourcesStyle2 })}
+                onMouseLeave={()=>this.setState({ resourcesStyle: resourcesStyle1 })}
+                style={this.state.resourcesStyle}
+              >
+                <Text style={this.headerStyles.style.centerMenuButtonsTextResources}>Resources</Text>
+                <img src={require('../../assets/svg/dropdown.svg')} style={{paddingLeft: 8, paddingBottom: 1}}></img>
+              </button> : null
+          }
           {
             constants["SETTING_ISVISIBLE_resource"] ?
-              <Button
-                transparent
-                data-testid="header-resources"
-                onPress={this.openResources}
-                style={this.headerStyles.style.centerMenuButtons}>
-                <Text style={this.headerStyles.style.centerMenuButtonsText}>Resources</Text>
-              </Button> : null
+              <Menu
+              keepMounted
+              anchorEl={this.state.resourcesDropdown}
+              open={Boolean(this.state.resourcesDropdown)}
+              onClose={this.handleResourcesDropdownClose}
+              style={{ marginTop: 40 }}
+              >
+                <MenuItem onClick={this.openResources}><Text style={this.headerStyles.style.dropdownText}>Overview</Text></MenuItem>
+                <MenuItem onClick={this.openKids}><Text style={this.headerStyles.style.dropdownText}>Kids Curriculum</Text></MenuItem>
+              </Menu> : null
           }
           {
             constants["SETTING_ISVISIBLE_course"] ?
