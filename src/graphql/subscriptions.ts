@@ -2201,8 +2201,8 @@ export const onDeleteCourseInfo = /* GraphQL */ `
   }
 `;
 export const onCreateCourseWeek = /* GraphQL */ `
-  subscription OnCreateCourseWeek {
-    onCreateCourseWeek {
+  subscription OnCreateCourseWeek($owner: String) {
+    onCreateCourseWeek(owner: $owner) {
       id
       week
       date
@@ -2237,8 +2237,8 @@ export const onCreateCourseWeek = /* GraphQL */ `
   }
 `;
 export const onUpdateCourseWeek = /* GraphQL */ `
-  subscription OnUpdateCourseWeek {
-    onUpdateCourseWeek {
+  subscription OnUpdateCourseWeek($owner: String) {
+    onUpdateCourseWeek(owner: $owner) {
       id
       week
       date
@@ -2273,8 +2273,8 @@ export const onUpdateCourseWeek = /* GraphQL */ `
   }
 `;
 export const onDeleteCourseWeek = /* GraphQL */ `
-  subscription OnDeleteCourseWeek {
-    onDeleteCourseWeek {
+  subscription OnDeleteCourseWeek($owner: String) {
+    onDeleteCourseWeek(owner: $owner) {
       id
       week
       date
@@ -2309,8 +2309,8 @@ export const onDeleteCourseWeek = /* GraphQL */ `
   }
 `;
 export const onCreateCourseLesson = /* GraphQL */ `
-  subscription OnCreateCourseLesson {
-    onCreateCourseLesson {
+  subscription OnCreateCourseLesson($owner: String) {
+    onCreateCourseLesson(owner: $owner) {
       id
       name
       time
@@ -2352,8 +2352,8 @@ export const onCreateCourseLesson = /* GraphQL */ `
   }
 `;
 export const onUpdateCourseLesson = /* GraphQL */ `
-  subscription OnUpdateCourseLesson {
-    onUpdateCourseLesson {
+  subscription OnUpdateCourseLesson($owner: String) {
+    onUpdateCourseLesson(owner: $owner) {
       id
       name
       time
@@ -2395,8 +2395,8 @@ export const onUpdateCourseLesson = /* GraphQL */ `
   }
 `;
 export const onDeleteCourseLesson = /* GraphQL */ `
-  subscription OnDeleteCourseLesson {
-    onDeleteCourseLesson {
+  subscription OnDeleteCourseLesson($owner: String) {
+    onDeleteCourseLesson(owner: $owner) {
       id
       name
       time
@@ -2438,8 +2438,8 @@ export const onDeleteCourseLesson = /* GraphQL */ `
   }
 `;
 export const onCreateCourseAssignment = /* GraphQL */ `
-  subscription OnCreateCourseAssignment {
-    onCreateCourseAssignment {
+  subscription OnCreateCourseAssignment($owner: String) {
+    onCreateCourseAssignment(owner: $owner) {
       id
       due
       description
@@ -2469,8 +2469,8 @@ export const onCreateCourseAssignment = /* GraphQL */ `
   }
 `;
 export const onUpdateCourseAssignment = /* GraphQL */ `
-  subscription OnUpdateCourseAssignment {
-    onUpdateCourseAssignment {
+  subscription OnUpdateCourseAssignment($owner: String) {
+    onUpdateCourseAssignment(owner: $owner) {
       id
       due
       description
@@ -2500,8 +2500,8 @@ export const onUpdateCourseAssignment = /* GraphQL */ `
   }
 `;
 export const onDeleteCourseAssignment = /* GraphQL */ `
-  subscription OnDeleteCourseAssignment {
-    onDeleteCourseAssignment {
+  subscription OnDeleteCourseAssignment($owner: String) {
+    onDeleteCourseAssignment(owner: $owner) {
       id
       due
       description

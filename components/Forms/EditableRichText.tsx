@@ -4,9 +4,15 @@ import { Storage } from 'aws-amplify';
 
 //import './react-draft-wysiwyg.css';
 //import './EditableRichText.css';
+import './react-draft-wysiwyg.css';
+//TODO FIGURE OUT WHY THIS DOESN"T WORK
+//import '../MessageBoard.css';
+
 import { v1 as uuidv1 } from 'uuid';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import JCComponent from '../JCComponent/JCComponent';
+import { ContentState, EditorState, convertFromRaw, convertToRaw } from 'draft-js';
+import { stateToHTML } from 'draft-js-export-html';
 
 interface Props {
     value: string,
@@ -38,9 +44,14 @@ export default class EditableRichText extends JCComponent<Props, State> {
             editorState: null
         }
     }
+    componentDidUpdate(prevProps: Props): void {
+        if (prevProps.value !== this.props.value) {
+            this.setState({ value: this.props.value })
+        }
+    }
     onChanged(val: any) {
 
-        this.props.onChange(val.target.value)
+        this.props.onChange(val)
         this.setState({ isEditMode: false })
     }
     updateEditorInput(value: any) {
@@ -54,13 +65,21 @@ export default class EditableRichText extends JCComponent<Props, State> {
         )
 
     }
-    render() {
-
+    convertCommentFromJSONToHTML = (text) => {
+        try {
+            return stateToHTML(convertFromRaw(JSON.parse(text)))
+        } catch (e) {
+            console.log({ errorMessage: e })
+            return "<div>Message Can't Be Displayed</div>"
+        }
+    }
+    render(): React.ReactNode {
+        console.log(this.props.value)
         if (this.state.isEditable)
             if (this.state.isEditMode)
                 return <Editor
                     placeholder="Empty Content"
-                    initialContentState={JSON.parse(this.props.value)}
+                    initialContentState={ContentState.createFromText(this.state.value)}
                     editorState={this.state.editorState}
                     toolbarClassName="customToolbarRichText"
                     wrapperClassName="customWrapperRichTextEdit"
@@ -94,30 +113,20 @@ export default class EditableRichText extends JCComponent<Props, State> {
                             }
                         }
                     }}
-                    onBlur={() => { this.setState({ isEditMode: false }) }}
+                    onBlur={() => { this.onChanged(JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()))); }}
                 />
 
             else
                 return <TouchableOpacity onPress={() => { this.setState({ isEditMode: true }) }}>
-                    <Editor
-                        placeholder="Empty Content"
-                        readOnly
-                        toolbarHidden
-                        initialContentState={JSON.parse(this.props.value)}
-                        toolbarClassName="customToolbarRichText"
-                        wrapperClassName="customWrapperRichText"
-                        editorClassName="customEditorRichText"
-                    /></TouchableOpacity>
+                    <div id="comment-div">
+                        <div dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(this.state.value) }}></div>
+                        <div>Hold to Edit</div>
+                    </div>
+                </TouchableOpacity>
         else
-            return <Editor
-                placeholder="Empty Content"
-                readOnly
-                toolbarHidden
-                initialContentState={JSON.parse(this.props.value)}
-                toolbarClassName="customToolbarRichText"
-                wrapperClassName="customWrapperRichText"
-                editorClassName="customEditorRichText"
-            />
+            return <div id="comment-div">
+                <div dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(this.state.value) }}></div>
+            </div>
 
 
     }

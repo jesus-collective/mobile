@@ -10,9 +10,10 @@ import getTheme from '../../native-base-theme/components';
 import EditableText from '../../components/Forms/EditableText'
 import Validate from '../../components/Validate/Validate'
 import JCSwitch from '../../components/JCSwitch/JCSwitch';
+import { EditorState, convertToRaw } from 'draft-js';
 
 import { API, graphqlOperation, Auth, Analytics } from 'aws-amplify';
-import { CreateGroupInput } from '../../src/API'
+import { CreateGroupInput, CreateCourseInfoInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
@@ -21,7 +22,7 @@ import JCComponent from '../../components/JCComponent/JCComponent';
 import EditableDate from '../../components/Forms/EditableDate'
 import EditableDollar from '../../components/Forms/EditableDollar'
 import data from './course.json';
-
+import EditableRichText from '../../components/Forms/EditableRichText';
 interface Props {
   navigation: any
   route: any
@@ -30,6 +31,7 @@ interface State {
   showMap: boolean
   loadId: string
   data: any
+  courseData: any
   createNew: boolean
   canSave: boolean
   canLeave: boolean
@@ -50,12 +52,15 @@ interface State {
 export default class CourseScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
-
+    const z: CreateCourseInfoInput = {
+      introduction: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent()))
+    }
     this.state = {
       showMap: false,
       loadId: props.route.params.id,
       createNew: props.route.params.create === "true" || props.route.params.create === true ? true : false,
       data: null,
+      courseData: z,
       canSave: false,
       canLeave: false,
       canJoin: false,
@@ -69,6 +74,11 @@ export default class CourseScreen extends JCComponent<Props, State>{
       mapData: [],
       canGotoActiveCourse: true
     }
+
+
+
+
+
     Auth.currentAuthenticatedUser().then((user: any) => {
       this.setState({
         currentUser: user.username
@@ -274,6 +284,9 @@ export default class CourseScreen extends JCComponent<Props, State>{
     }
 
   }
+  updateCourse(a: string, b: string, c: string): void {
+    console.log(a + b + c)
+  }
   leave(): void {
     Analytics.record({
       name: 'leftCourse',
@@ -448,7 +461,14 @@ export default class CourseScreen extends JCComponent<Props, State>{
                 </Container>
                 <Container style={this.styles.style.detailScreenRightCard}>
                   <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                    {this.state.courseData ?
+                      <EditableRichText onChange={(val) => { this.updateCourse(this.state.courseData, "introduction", val) }}
+                        value={this.state.courseData.introduction}
+                        isEditable={true}
+                        textStyle=""></EditableRichText>
+                      : null}
 
+                    <Text>Blah</Text>
                     {data.courseInfo.introduction.map((item: any, index) => {
                       return <Text key={index}>{item}</Text>
                     })}

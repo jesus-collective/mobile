@@ -182,20 +182,28 @@ type CourseInfo
   @auth(
     rules: [
       { allow: owner, ownerField: "owner" }
-      { allow: groups, groups: ["verifiedUsers"], operations: [read] }
+      { allow: groups, groups: ["courseUsers"], operations: [read] }
+      { allow: groups, groups: ["courseAdmin"]}
     ]
   ) {
   id: ID!
   designedBy: String
-  summary: [String]
+  summary: String
   courseWeeks: [CourseWeek] @connection(name: "CourseInfoWeek", keyField: "id")
   subTitle: String
   #instructor: User
-  introduction: [String]
+  introduction: String
 }
 
 type CourseWeek
  @model 
+  @auth(
+    rules: [
+      { allow: owner, ownerField: "owner" }
+      { allow: groups, groups: ["courseUsers"], operations: [read] }
+      { allow: groups, groups: ["courseAdmin"]}
+    ]
+  )
 {
   id: ID!
   week: String
@@ -207,17 +215,31 @@ type CourseWeek
 }
 type CourseLesson 
 @model 
+ @auth(
+    rules: [
+      { allow: owner, ownerField: "owner" }
+      { allow: groups, groups: ["courseUsers"], operations: [read] }
+      { allow: groups, groups: ["courseAdmin"]}
+    ]
+  )
 {
   id: ID!
   name: String
   time: String
-  description: [String]
+  description: String
   courseWeek: CourseWeek @connection(name: "CourseWeekLesson", keyField: "id")
   assignments: [CourseAssignment]
     @connection(name: "CourseLessonAssignment", keyField: "id")
 }
 type CourseAssignment 
 @model 
+ @auth(
+    rules: [
+      { allow: owner, ownerField: "owner" }
+      { allow: groups, groups: ["courseUsers"], operations: [read] }
+      { allow: groups, groups: ["courseAdmin"]}
+    ]
+  )
 {
   id: ID!
   due: String
