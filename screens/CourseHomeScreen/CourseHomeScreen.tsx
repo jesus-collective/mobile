@@ -1,21 +1,20 @@
 ﻿import React from 'react';
-import { StyleProvider, Card, Container, Content } from 'native-base';
-import { Text } from 'react-native'
-import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
+import { StyleProvider, Container } from 'native-base';
 
 import CourseSidebar from '../../components/CourseSidebar/CourseSidebar'
 import getTheme from '../../native-base-theme/components';
 
 import Validate from '../../components/Validate/Validate'
-import { Image } from 'react-native'
 import { API } from 'aws-amplify';
 import * as queries from '../../src/graphql/queries';
+import * as mutations from '../../src/graphql/mutations';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
-import CourseHeader from '../../components/CourseHeader/CourseHeader';
-import { Calendar } from 'react-native-calendars';
 import JCComponent from '../../components/JCComponent/JCComponent';
-
-import data from '../CourseOverviewScreen/course.json';
+import CourseHome from '../../components/CourseViewer/CourseHome'
+import CourseDetail from '../../components/CourseViewer/CourseDetail'
+import CourseCoaching from '../../components/CourseViewer/CourseCoaching'
+import { CourseContext } from '../../components/CourseViewer/CourseContext';
+import { CreateCourseWeekInput, CreateCourseLessonInput } from 'src/API';
 
 interface Props {
   navigation: any
@@ -25,25 +24,34 @@ interface State {
   showMap: boolean
   loadId: string
   data: any
+  courseData: any
   isEditable: boolean
   validationError: string
+  currentScreen: string
+  activeWeek: number
+  activeLesson: number
 }
 
 
 
-export default class CourseScreen extends JCComponent<Props, State>{
+export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
 
     this.state = {
+      currentScreen: props.route.params.screen ? props.route.params.screen : "Home",
       showMap: false,
       loadId: props.route.params.id,
       data: null,
+      courseData: null,
       isEditable: true,
-      validationError: ""
+      validationError: "",
+      activeWeek: 0,
+      activeLesson: null
     }
     this.setInitialData(props)
   }
+  static Provider = CourseContext.Provider;
 
   setInitialData(props: Props): void {
 
@@ -52,8 +60,18 @@ export default class CourseScreen extends JCComponent<Props, State>{
       variables: { id: props.route.params.id },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
-
+    const getCourse: any = API.graphql({
+      query: queries.getCourseInfo,
+      variables: { id: props.route.params.id },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+    const processResults2 = (json) => {
+      console.log({ courseData: json })
+      this.setState({ courseData: json.data.getCourseInfo })
+    }
+    getCourse.then(processResults2).catch(processResults2)
     const processResults = (json) => {
+      console.log({ groupData: json })
       this.setState({ data: json.data.getGroup })
     }
     getGroup.then(processResults).catch(processResults)
@@ -72,10 +90,139 @@ export default class CourseScreen extends JCComponent<Props, State>{
   }
 
 
-  updateValue(field: any, value: any): void {
+  updateValue(field: string, value: any): void {
     const temp = this.state.data
     temp[field] = value
     this.setState({ data: temp })
+  }
+  setActiveScreen = (screen: string): void => {
+    this.setState({
+      currentScreen: screen
+    })
+  }
+
+  setActiveWeek = (index: number): void => {
+    this.setState({
+      activeWeek: index,
+      activeLesson: null
+    })
+  }
+  setActiveLesson = (index: number): void => {
+    this.setState({
+      activeLesson: index
+    })
+  }
+  createWeek = async (): Promise<void> => {
+    const resource: CreateCourseWeekInput =
+    {
+      week: this.state.courseData.courseWeeks.items.length + 1,
+      name: "New Menu Item",
+      leader: "Leader TBD"
+    }
+    try {
+      console.log("Creating Resource")
+
+      const createCourse: any = await API.graphql({
+        query: mutations.createCourseWeek,
+        variables: { input: resource },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+      });
+      console.log(createCourse)
+      const temp = this.state.courseData
+      temp.courseWeeks.items.push(createCourse.data.createCourseWeek)
+      console.log(temp)
+      this.setState({ courseData: temp }, () => this.forceUpdate())
+
+    } catch (e) {
+      console.log(e)
+    }
+
+  }
+  createLesson = async (): Promise<void> => {
+    const resource: CreateCourseLessonInput =
+    {
+      name: "New Menu Item",//this.state.courseData.courseWeeks.items.length + 1,
+      //time: "",
+      description: "...",
+
+    }
+    try {
+      console.log("Creating Resource")
+
+      const createCourse: any = await API.graphql({
+        query: mutations.createCourseLesson,
+        variables: { input: resource },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+      });
+      console.log(createCourse)
+      const temp = this.state.courseData
+      temp.courseWeeks.items[this.state.activeWeek].lessons.items.push(createCourse.data.createCourseLesson)
+      console.log(temp)
+      this.setState({ courseData: temp }, () => this.forceUpdate())
+
+    } catch (e) {
+      console.log(e)
+    }
+
+  }
+  updateWeekOrder = (): void => {
+    try {
+      this.state.courseData.courseWeeks.items.forEach((item, index) => {
+        this.updateWeek(index, "week", index)
+      })
+
+      /* var temp = this.state.data
+       temp.resources.items.forEach((item, index) => {
+           temp.resources.items[index].order = index
+       }
+       )
+       this.setState({ data: temp })*/
+
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  updateWeek = async (index: number, item: string, value: any): Promise<void> => {
+    try {
+      console.log({ "Updating Resource": index })
+
+      const updateWeek: any = await API.graphql({
+        query: mutations.updateCourseWeek,
+        variables: {
+          input: {
+            id: this.state.courseData.courseWeeks.items[index].id,
+            [item]: value
+          }
+        },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+      });
+      console.log(updateWeek)
+      const temp = this.state.courseData
+      temp.courseWeeks.items[index][item] = value
+      this.setState({ courseData: temp })
+
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  deleteWeek = async (index: number): Promise<void> => {
+
+    try {
+      console.log({ "Deleting Course Week": index })
+      const deleteResource: any = await API.graphql({
+        query: mutations.deleteCourseWeek,
+        variables: { input: { id: this.state.courseData.courseWeeks.items[index].id } },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+      });
+      console.log(deleteResource)
+      const temp = this.state.courseData
+      temp.courseWeeks.items.splice(index, 1)
+      this.setState({ courseData: temp }, this.updateWeekOrder)
+
+    } catch (e) {
+      console.log(e)
+    }
+
   }
   render(): React.ReactNode {
 
@@ -83,83 +230,33 @@ export default class CourseScreen extends JCComponent<Props, State>{
     console.log("CourseScreen")
     return (
       this.state.data ?
-        <StyleProvider style={getTheme()}>
-          <Container style={{ flexDirection: "row" }}>
-            <CourseSidebar courseId={this.state.data.id}></CourseSidebar>
-            <Container style={{ flex: 85 }}>
-              <CourseHeader courseData={data} groupData={this.state.data}></CourseHeader>
-              <Container style={{ flex: 80 }}>
-                <Content contentContainerStyle={{ flex: 80 }} style={{ flex: 80 }}>
-                  <Container style={{ flex: 80, display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
-                    <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
-                      <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
-                      <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Book a Call</JCButton>
-                      <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Send Message</JCButton>
-                      <Text>Hi </Text>
-                      <Text>I’m Jon Hand and welcome to our six-week leadership journey. I’ll be your instructor. You can go ahead and start viewing content. We will officially kick-off on Monday with our Zoom Video Call.
-
-                      If there is anything that I can help you with, feel free to ask anytime. Talk soon!
-
-Jon </Text>
-                      <Text>Syllabus</Text>
-                      <Card>
-                        <Text>Leadership Formation Course</Text>
-                        <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Download</JCButton>
-
-                      </Card>
-                      <Text>My Coach</Text>
-                      <Card>
-                        <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
-                        <Text>Jon Hand</Text>
-                        <Text>Youth Leader in Calgary Area</Text>
-                        <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>View profile</JCButton>
-                      </Card>
-                      <Text>My Triad</Text>
-                      <Card>
-                        <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
-                        <Text>Jon Hand</Text>
-                        <Text>Youth Leader in Calgary Area</Text>
-                        <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>View profile</JCButton>
-                      </Card>
-                      <Text>My Cohort</Text>
-                      <Card>
-                        <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
-                        <Text>Jon Hand</Text>
-                        <Text>Youth Leader in Calgary Area</Text>
-                        <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>View profile</JCButton>
-                      </Card>
-                    </Container>
-                    <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-
-                      <Text>To-Do</Text>
-                      <Card>
-                        <Text> Coaching call with Jon Hand</Text>
-                      </Card>
-
-                      <Text>My Calendar</Text>
-                      <Calendar
-                        // Collection of dates that have to be marked. Default = {}
-                        current={'2020-05-01'}
-                        markedDates={{
-                          '2020-05-16': { selected: true, marked: true, selectedColor: 'blue' },
-                          '2020-05-17': { marked: true },
-                          '2020-05-18': { marked: true, dotColor: 'red', activeOpacity: 0 },
-                          '2020-05-19': { disabled: true, disableTouchEvent: true }
-                        }}
-                      />
-                      <Text>Course Activity</Text>
-                      <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Today</JCButton>
-                      <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Yesterday</JCButton>
-                      <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>This Week</JCButton>
-                      <Text>Adam posted assignement to review</Text>
-                    </Container>
-
-                  </Container>
-                </Content>
-              </Container>
+        <CourseHomeScreenImpl.Provider value={{
+          state: {
+            ...this.state
+          }, actions: {
+            createCourse: null,
+            changeCourse: null,
+            updateCourse: null,
+            deleteCourse: null,
+            setActiveScreen: this.setActiveScreen,
+            setActiveWeek: this.setActiveWeek,
+            setActiveLesson: this.setActiveLesson,
+            createWeek: this.createWeek,
+            deleteWeek: this.deleteWeek,
+            updateWeek: this.updateWeek,
+            updateWeekOrder: this.updateWeekOrder,
+            createLesson: this.createLesson
+          }
+        }}>
+          <StyleProvider style={getTheme()}>
+            <Container style={{ flexDirection: "row" }}>
+              <CourseSidebar courseId={this.state.data.id}></CourseSidebar>
+              <CourseHome></CourseHome>
+              <CourseDetail></CourseDetail>
+              <CourseCoaching></CourseCoaching>
             </Container>
-          </Container>
-        </StyleProvider >
+          </StyleProvider >
+        </CourseHomeScreenImpl.Provider>
         :
         null
 

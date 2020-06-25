@@ -33,8 +33,6 @@ const SignUpScreen3 = lazy(() => import('../../components/Auth/SignUpScreen3'));
 const CoursesScreen = lazy(() => import('../CoursesScreen/CoursesScreen'));
 const CourseOverviewScreen = lazy(() => import('../CourseOverviewScreen/CourseOverviewScreen'));
 const CourseHomeScreen = lazy(() => import('../CourseHomeScreen/CourseHomeScreen'));
-const CourseDetailScreen = lazy(() => import('../CourseDetailScreen/CourseDetailScreen'));
-const CourseCoachingScreen = lazy(() => import('../CourseCoachingScreen/CourseCoachingScreen'));
 const EventScreen = lazy(() => import('../EventScreen/EventScreen'));
 const GroupsScreen = lazy(() => import('../GroupsScreen/GroupsScreen'));
 const EventsScreen = lazy(() => import('../EventsScreen/EventsScreen'));
@@ -151,17 +149,6 @@ function MainAppRouter() {
         options={{ title: 'Jesus Collective' }}
       />
 
-      <Stack.Screen
-        name="CourseDetailScreen"
-        component={CourseDetailScreen}
-        options={{ title: 'Jesus Collective' }}
-      />
-
-      <Stack.Screen
-        name="CourseCoachingScreen"
-        component={CourseCoachingScreen}
-        options={{ title: 'Jesus Collective' }}
-      />
 
       <Stack.Screen
         name="ConversationScreen"
@@ -261,11 +248,11 @@ export default class App extends JCComponent<Props, State>{
     }
 
   }
-  componentDidMount() {
+  componentDidMount(): void {
     this.performStartup()
 
   }
-  async performStartup() {
+  async performStartup(): Promise<void> {
     if (this.state.authState == 'signedIn') {
       await this.ensureUserExists()
       await this.checkIfPaid()
@@ -274,7 +261,7 @@ export default class App extends JCComponent<Props, State>{
   }
   private user: any
 
-  async ensureUserExists() {
+  async ensureUserExists(): Promise<void> {
     let userExists = false
     this.user = await Auth.currentAuthenticatedUser().
       catch(() => { console.log('No currrent authenticated user') });
@@ -325,7 +312,7 @@ export default class App extends JCComponent<Props, State>{
       this.setState({ userExists: userExists }, () => { this.checkIfCompletedProfile() })
     }
   }
-  async checkIfPaid() {
+  async checkIfPaid(): Promise<void> {
     console.log("checkIfPaid")
     if (this.state.userExists) {
       const handleGetUser = (getUser) => {
@@ -342,7 +329,7 @@ export default class App extends JCComponent<Props, State>{
     }
     //  console.log(attributes['username'])
   }
-  UNSAFE_componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: Props): void {
     // Any time props.email changes, update state.
     if (nextProps.authState !== this.props.authState) {
       this.setState({
@@ -351,17 +338,17 @@ export default class App extends JCComponent<Props, State>{
 
     }
   }
-  onPaidStateChanged() {
+  onPaidStateChanged(): void {
     console.log("onPaidStateChanged")
     this.ensureUserExists()
     this.checkIfPaid()
   }
-  onProfileComplete() {
+  onProfileComplete(): void {
     console.log("onProfileComplete")
     this.checkIfCompletedProfile()
   }
 
-  async checkIfCompletedProfile() {
+  async checkIfCompletedProfile(): Promise<void> {
     console.log("checkIfCompletedProfile")
     console.log({ user: this.state.userExists, hasPaidState: this.state.hasPaidState })
     if (this.state.userExists && this.state.hasPaidState == "Complete") {
@@ -381,11 +368,11 @@ export default class App extends JCComponent<Props, State>{
     }
 
   }
-  renderFallback() {
+  renderFallback(): React.ReactNode {
     return <Text>loading...</Text>
   }
 
-  render() {
+  render(): React.ReactNode {
     if (this.state.authState == 'signedIn') {
       console.log("User has signed in")
       console.log({ "Paid state": this.state.hasPaidState })

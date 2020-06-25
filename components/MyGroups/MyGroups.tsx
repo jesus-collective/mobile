@@ -373,7 +373,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     this.setState({ canLeave: this.state.canLeave.concat([group.id]) })
     this.renderByType(group, groupType)
   }
-  openConversation(initialUser, name): void {
+  openConversation(initialUser: any, name: string): void {
     console.log("Navigate to conversationScreen")
     this.props.navigation.push("ConversationScreen", { initialUserID: initialUser, initialUserName: name });
   }
@@ -575,7 +575,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                   {this.state.nextToken ?
                     this.props.showMore ?
                       <TouchableOpacity style={{ top: 15, height: 80 }} onPress={() => { this.setInitialData(this.props) }} >
-                        <Card style={{ minHeight: 43, alignSelf: "flex-start", alignItems: "center", borderRadius: 4, backgroundColor: "#F0493E", margintop: 100, padding: '0%', width: this.state.cardWidth }}>
+                        <Card style={[this.styles.style.groupMoreCard, { width: this.state.cardWidth }]}>
                           <CardItem style={{ backgroundColor: "none", alignItems: "center" }}  ><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.conversationsLoadMoreFont}>Load more...</Text></CardItem>
                         </Card>
                       </TouchableOpacity>

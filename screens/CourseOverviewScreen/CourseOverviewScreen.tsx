@@ -23,6 +23,7 @@ import EditableDate from '../../components/Forms/EditableDate'
 import EditableDollar from '../../components/Forms/EditableDollar'
 import data from './course.json';
 import EditableRichText from '../../components/Forms/EditableRichText';
+import moment from 'moment-timezone';
 interface Props {
   navigation: any
   route: any
@@ -52,15 +53,13 @@ interface State {
 export default class CourseScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
-    const z: CreateCourseInfoInput = {
-      introduction: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent()))
-    }
+
     this.state = {
       showMap: false,
       loadId: props.route.params.id,
       createNew: props.route.params.create === "true" || props.route.params.create === true ? true : false,
       data: null,
-      courseData: z,
+      courseData: null,
       canSave: false,
       canLeave: false,
       canJoin: false,
@@ -72,7 +71,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
       memberIDs: [],
       members: [],
       mapData: [],
-      canGotoActiveCourse: true
+      canGotoActiveCourse: false
     }
 
 
@@ -126,9 +125,14 @@ export default class CourseScreen extends JCComponent<Props, State>{
           //   instructors: [],
           //   course: []
         }
+        const course: CreateCourseInfoInput = {
+          id: z.id,
+          introduction: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent()))
+        }
         const isEditable = true
         this.setState({
           data: z,
+          courseData: course,
           isEditable: isEditable,
           canLeave: true && !isEditable,
           canJoin: true && !isEditable,
@@ -159,6 +163,16 @@ export default class CourseScreen extends JCComponent<Props, State>{
         },
 
           () => {
+            const getCourseInfo: any = API.graphql({
+              query: queries.getCourseInfo,
+              variables: { id: props.route.params.id },
+              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+            });
+            getCourseInfo.then((json: any) => {
+              this.setState({ canGotoActiveCourse: true, courseData: json.data.getCourseInfo })
+            }).catch((e: any) => {
+              this.setState({ canGotoActiveCourse: true, courseData: e.data.getCourseInfo })
+            })
             const groupMemberByUser: any = API.graphql({
               query: queries.groupMemberByUser,
               variables: { userID: this.state.currentUser, groupID: { eq: this.state.data.id } },
@@ -239,22 +253,33 @@ export default class CourseScreen extends JCComponent<Props, State>{
         variables: { input: this.state.data },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
-      createGroup.then((json: any) => {
-        this.setState({
-          createNew: false
-        }, () => {
+      const createCourseInfo: any = API.graphql({
+        query: mutations.createCourseInfo,
+        variables: { input: this.state.courseData },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+      });
+      createCourseInfo.then((json2: any) => {
+        console.log({ "Success mutations.createCourseInfo": json2 });
+        createGroup.then((json: any) => {
           this.setState({
-            canSave: (!this.state.createNew) && this.state.isEditable,
-            createNew: this.state.createNew && this.state.isEditable,
-            canDelete: (!this.state.createNew) && this.state.isEditable
+            createNew: false
+          }, () => {
+            this.setState({
+              canSave: (!this.state.createNew) && this.state.isEditable,
+              createNew: this.state.createNew && this.state.isEditable,
+              canDelete: (!this.state.createNew) && this.state.isEditable,
+              canGotoActiveCourse: true
+            })
           })
+          console.log({ "Success mutations.createGroup": json });
+        }).catch((err: any) => {
+          console.log({ "Error mutations.createGroup": err });
         })
-        console.log({ "Success mutations.createGroup": json });
-      }).catch((err: any) => {
-        console.log({ "Error mutations.createGroup": err });
       });
     }
+
   }
+
   clean(item): void {
     delete item.members
     delete item.messages
@@ -428,7 +453,14 @@ export default class CourseScreen extends JCComponent<Props, State>{
                     <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Course Description" multiline={true} textStyle={this.styles.style.groupDescriptionInput} inputStyle={this.styles.style.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
 
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#333333', textTransform: "uppercase", flex: 0 }}>Start Date</Text>
-                    <EditableDate type="date" onChange={(value: any) => { this.updateValue("time", value) }} placeholder="Enter Course Start Date" multiline={false} textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupNameInput} value={this.state.data.time} isEditable={this.state.isEditable}></EditableDate>
+                    <EditableDate type="date"
+                      onChange={(time: any, timeZone: any) => { this.updateValue("time", time); this.updateValue("tz", timeZone) }}
+                      placeholder="Enter Course Start Date"
+                      multiline={false}
+                      textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupNameInput}
+                      value={this.state.data.time}
+                      tz={this.state.data.tz ? this.state.data.tz : moment.tz.guess()}
+                      isEditable={this.state.isEditable}></EditableDate>
 
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#333333', textTransform: "uppercase", flex: 0 }}>Duration</Text>
                     <EditableText onChange={(value: any) => { this.updateValue("length", value) }} placeholder="Enter Course Length" multiline={false} textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupDescriptionInput} value={this.state.data.length} isEditable={this.state.isEditable}></EditableText>

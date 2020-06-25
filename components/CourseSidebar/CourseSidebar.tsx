@@ -42,16 +42,16 @@ class CourseSidebarImpl extends JCComponent<Props> {
         this.props.navigation.push("HomeScreen");
     }
     openCourseHome = (): void => {
-        this.props.navigation.push("CourseHomeScreen", { id: this.props.courseId, create: false });
+        this.props.navigation.push("CourseHomeScreen", { id: this.props.courseId, screen: "Home", create: false });
     }
     openCourseOverview = (): void => {
-        this.props.navigation.push("CourseOverviewScreen", { id: this.props.courseId, create: false });
+        this.props.navigation.push("CourseOverviewScreen", { id: this.props.courseId, screen: "Home", create: false });
     }
     openCourseDetails = (): void => {
-        this.props.navigation.push("CourseDetailScreen", { id: this.props.courseId, create: false });
+        this.props.navigation.push("CourseHomeScreen", { id: this.props.courseId, screen: "Details", create: false });
     }
     openCourseCoaching = (): void => {
-        this.props.navigation.push("CourseCoachingScreen", { id: this.props.courseId, create: false });
+        this.props.navigation.push("CourseHomeScreen", { id: this.props.courseId, screen: "Coaching", create: false });
     }
     render(): React.ReactNode {
         //const { navigate } = this.props.navigation;
