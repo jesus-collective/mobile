@@ -74,9 +74,16 @@ class ResourceContent extends JCComponent<Props,State> {
                                         </CardItem>
                                         : null
                                     }
-                                    <TouchableOpacity onPress={() => { !state.isEditable ? actions.changeSeries(index) : null }}>
+                                    <TouchableOpacity 
+                                        accessible={true} 
+                                        accessibilityLabel={series.title} 
+                                        accessibilityHint={"Navigate to series " + series.title}                                    
+                                        onPress={() => { !state.isEditable ? actions.changeSeries(index) : null }}>
                                         <CardItem style={this.styles.style.resourceContentCurrentSeriesIframeContainer}>
-                                                <Image style={{ padding: 0, width: '100%', height: '100%', borderTopRightRadius: 4, borderTopLeftRadius: 4 }}
+                                                <Image 
+                                                    accessible={true}
+                                                    accessibilityLabel={series.title + " thumbnail"}
+                                                    style={{ padding: 0, width: '100%', height: '100%', borderTopRightRadius: 4, borderTopLeftRadius: 4 }}
                                                     resizeMode="contain"
                                                     source={{uri: "https://img.youtube.com/vi/" + series.episodes.items[thumbnailIndex].videoPreview.replace("https://youtu.be/", "") + "/maxresdefault.jpg"}}
                                                     />
@@ -132,21 +139,19 @@ class ResourceContent extends JCComponent<Props,State> {
                                         </CardItem>
                                         : null
                                     }
-                                    <TouchableOpacity onPress={() => { !state.isEditable ? actions.changeSeries(index) : null }}>
+                                    <TouchableOpacity 
+                                        accessible={true} 
+                                        accessibilityLabel={series.title} 
+                                        accessibilityHint={"Navigate to series " + series.title}
+                                        onPress={() => { !state.isEditable ? actions.changeSeries(index) : null }}>
                                         <CardItem style={this.styles.style.resourceContentCurrentSeriesIframeContainer}>
-                                                <Image style={{ padding: 0, width: '100%', height: '100%', borderTopRightRadius: 4, borderTopLeftRadius: 4 }}
+                                                <Image 
+                                                    accessible={true}
+                                                    accessibilityLabel={series.title + " thumbnail"}
+                                                    style={{ padding: 0, width: '100%', height: '100%', borderTopRightRadius: 4, borderTopLeftRadius: 4 }}
                                                     resizeMode="contain"
                                                     source={{uri: "https://img.youtube.com/vi/" + series.episodes.items[thumbnailIndex].videoPreview.replace("https://youtu.be/", "") + "/maxresdefault.jpg"}}
                                                     />
-                                        </CardItem>
-
-                                        <CardItem style={{ width: '100%', padding: 0, margin: 0, paddingBottom: 0, backgroundColor: '#F9FAFC' }}>
-                                            <EditableText onChange={(val) => { actions.updateSeries(state.currentResource, index, "title", val) }}
-                                                multiline={false}
-                                                inputStyle={this.styles.style.seriesTitle}
-                                                textStyle={this.styles.style.seriesTitle}
-                                                value={series.title}
-                                                isEditable={state.isEditable}></EditableText>
                                         </CardItem>
                                         <CardItem style={{ width: '100%', padding: 0, margin: 0, backgroundColor: '#F9FAFC', flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
                                             <JCButton buttonType={ButtonTypes.MoreSeriesOutlineBold} onPress={() => actions.changeSeries(index)}>Learn More</JCButton>
@@ -206,14 +211,20 @@ class ResourceContent extends JCComponent<Props,State> {
                                         </CardItem>
                                         : null
                                     }
-                                    <TouchableOpacity onPress={() => { !state.isEditable ? actions.changeSeries(index) : null }}>
+                                    <TouchableOpacity 
+                                        accessible={true} 
+                                        accessibilityLabel={series.title} 
+                                        accessibilityHint={"Navigate to series " + series.title}
+                                        onPress={() => { !state.isEditable ? actions.changeSeries(index) : null }}>
                                         <CardItem style={this.styles.style.resourceContentCurrentSeriesIframeContainer}>
-                                                <Image style={{ padding: 0, width: '100%', height: '100%', borderTopRightRadius: 4, borderTopLeftRadius: 4 }}
+                                                <Image 
+                                                    accessible={true}
+                                                    accessibilityLabel={series.title + " thumbnail"}
+                                                    style={{ padding: 0, width: '100%', height: '100%', borderTopRightRadius: 4, borderTopLeftRadius: 4 }}
                                                     resizeMode="contain"
                                                     source={{uri: "https://img.youtube.com/vi/" + series.episodes.items[thumbnailIndex].videoPreview.replace("https://youtu.be/", "") + "/maxresdefault.jpg"}}
                                                     />
                                         </CardItem>
-
                                         <CardItem style={{ width: '100%', padding: 0, margin: 0, paddingBottom: 0, backgroundColor: '#F9FAFC' }}>
                                             <EditableText onChange={(val) => { actions.updateSeries(state.currentResource, index, "title", val) }}
                                                 multiline={false}
@@ -275,21 +286,18 @@ class ResourceContent extends JCComponent<Props,State> {
                                                 </CardItem>
                                                 : null
                                             }
-                                            <TouchableOpacity onPress={() => { !state.isEditable ? actions.changeSeries(index+index2+offset) : null }}>
+                                            <TouchableOpacity 
+                                                accessible={true} 
+                                                accessibilityLabel={series2.title} 
+                                                accessibilityHint={"Navigate to series " + series2.title}
+                                                onPress={() => { !state.isEditable ? actions.changeSeries(index+index2+offset) : null }}>
                                                 <CardItem style={this.styles.style.resourceContentMoreSeriesIframeContainer}>
-                                                    <Image style={{ padding: 0, width: '100%', height: '100%', borderTopRightRadius: 4, borderTopLeftRadius: 4 }}
+                                                    <Image
+                                                        accessible={true}
+                                                        accessibilityLabel={series2.title + " thumbnail"} 
+                                                        style={{ padding: 0, width: '100%', height: '100%', borderTopRightRadius: 4, borderTopLeftRadius: 4 }}
                                                         source={{uri: "https://img.youtube.com/vi/" + series2.episodes.items[firstEpisodeIndex].videoPreview.replace("https://youtu.be/", "") + "/maxresdefault.jpg"}}
                                                     />
-                                                </CardItem>
-                                                <CardItem style={{ backgroundColor: '#F9FAFC' }}>
-                                                    <EditableText
-                                                        onChange={(val) => { actions.updateSeries(state.currentResource, index+index2+offset, "title", val) }}
-                                                        multiline={false}
-                                                        inputStyle={this.styles.style.moreSeriesTitle}
-                                                        textStyle={this.styles.style.moreSeriesTitle}
-                                                        value={series2.title}
-                                                        isEditable={state.isEditable}></EditableText>
-        
                                                 </CardItem>
                                                 <CardItem style={{ width: '100%', padding: 0, margin: 0, backgroundColor: '#F9FAFC', flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
                                                     <JCButton buttonType={ButtonTypes.MoreSeriesOutlineBold} onPress={() => actions.changeSeries(index+index2+offset)}>Learn More</JCButton>
@@ -319,21 +327,18 @@ class ResourceContent extends JCComponent<Props,State> {
                                                     </CardItem>
                                                     : null
                                                 }
-                                                <TouchableOpacity onPress={() => { !state.isEditable ? actions.changeSeries(index+index2+4-this.state.rowLength) : null }}>
+                                                <TouchableOpacity 
+                                                    accessible={true} 
+                                                    accessibilityLabel={series2.title} 
+                                                    accessibilityHint={"Navigate to series " + series2.title}
+                                                    onPress={() => { !state.isEditable ? actions.changeSeries(index+index2+4-this.state.rowLength) : null }}>
                                                     <CardItem style={this.styles.style.resourceContentMoreSeriesIframeContainer}>
-                                                        <Image style={{ padding: 0, width: '100%', height: '100%', borderTopRightRadius: 4, borderTopLeftRadius: 4 }}
+                                                        <Image 
+                                                            accessible={true}
+                                                            accessibilityLabel={series2.title + " thumbnail"} 
+                                                            style={{ padding: 0, width: '100%', height: '100%', borderTopRightRadius: 4, borderTopLeftRadius: 4 }}
                                                             source={{uri: "https://img.youtube.com/vi/" + series2.episodes.items[firstEpisodeIndex].videoPreview.replace("https://youtu.be/", "") + "/maxresdefault.jpg"}}
                                                         />
-                                                    </CardItem>
-                                                    <CardItem style={{ backgroundColor: '#F9FAFC' }}>
-                                                        <EditableText
-                                                            onChange={(val) => { actions.updateSeries(state.currentResource, index+index2+4-this.state.rowLength, "title", val) }}
-                                                            multiline={false}
-                                                            inputStyle={this.styles.style.moreSeriesTitle}
-                                                            textStyle={this.styles.style.moreSeriesTitle}
-                                                            value={series2.title}
-                                                            isEditable={state.isEditable}></EditableText>
-            
                                                     </CardItem>
                                                     <CardItem style={{ width: '100%', padding: 0, margin: 0, backgroundColor: '#F9FAFC', flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
                                                         <JCButton buttonType={ButtonTypes.MoreSeriesOutlineBold} onPress={() => actions.changeSeries(index+index2+4-this.state.rowLength)}>Learn More</JCButton>
@@ -446,8 +451,15 @@ class ResourceContent extends JCComponent<Props,State> {
                                 }
                                 <CardItem style={{width: '100%', paddingRight: 0, paddingLeft: 0}}>
                                     <Container style={this.styles.style.resourceContentEpisodesCardInnerContainer}>
-                                        <TouchableOpacity onPress={() => { !state.isEditable ? actions.changeEpisode(index) : null }}>
-                                            <Image style={this.styles.style.resourceContentEpisodesIframe}
+                                        <TouchableOpacity 
+                                            accessible={true} 
+                                            accessibilityLabel={episode.title} 
+                                            accessibilityHint={"Navigate to episode " + episode.title}
+                                            onPress={() => { !state.isEditable ? actions.changeEpisode(index) : null }}>
+                                            <Image 
+                                                accessible={true}
+                                                accessibilityLabel={episode.title + " thumbnail"}
+                                                style={this.styles.style.resourceContentEpisodesIframe}
                                                 source={{uri: "https://img.youtube.com/vi/" + episode.videoPreview.replace("https://youtu.be/", "") + "/maxresdefault.jpg"}}
                                             />
                                         </TouchableOpacity>
@@ -577,8 +589,15 @@ class ResourceContent extends JCComponent<Props,State> {
                                         }
                                         <CardItem style={{width: '100%'}}>
                                             <Container style={this.styles.style.resourceContentEpisodesCardInnerContainer}>
-                                                <TouchableOpacity onPress={() => { !state.isEditable ? actions.changeEpisode(index) : null }}>
-                                                    <Image style={this.styles.style.resourceContentEpisodesIframe}
+                                                <TouchableOpacity
+                                                    accessible={true} 
+                                                    accessibilityLabel={episode.title} 
+                                                    accessibilityHint={"Navigate to episode " + episode.title}                                                                                                    
+                                                    onPress={() => { !state.isEditable ? actions.changeEpisode(index) : null }}>
+                                                    <Image 
+                                                        accessible={true}
+                                                        accessibilityLabel={episode.title + " thumbnail"}
+                                                        style={this.styles.style.resourceContentEpisodesIframe}
                                                         source={{uri: "https://img.youtube.com/vi/" + episode.videoPreview.replace("https://youtu.be/", "") + "/maxresdefault.jpg"}}
                                                     />
                                                 </TouchableOpacity>
