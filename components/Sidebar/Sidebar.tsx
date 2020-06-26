@@ -32,7 +32,8 @@ const routes = [
 const resourceRoutes = [
   {
     name: "Overview",
-    route: "ResourcesScreen"
+    route: "ResourcesScreen",
+    props: {}
   },
   {
     name: "Kids Curriculum",
@@ -64,7 +65,7 @@ class SideBar extends JCComponent<Props,State> {
       return <ListItem
         style={{ marginRight: 20, borderBottomWidth: 0, height: 40 }}
         button
-        onPress={() => { data.props ? this.props.navigation.navigate(data.route, data.props) : this.props.navigation.navigate(data.route) }}>
+        onPress={() => { this.props.navigation.navigate(data.route, data.props); this.setState({ showResourcesSubMenu: false }) }}>
         <Text style={{ fontFamily: "Graphik-Regular-App", fontSize: 16, lineHeight: 30, color: "#333333", marginLeft: 24 }}>{data.name}</Text>
       </ListItem>
       }}
@@ -101,7 +102,7 @@ class SideBar extends JCComponent<Props,State> {
                 <ListItem
                   style={{ marginRight: 20 }}
                   button
-                  onPress={() => { this.props.navigation.navigate(data.route) }}
+                  onPress={() => { this.props.navigation.navigate(data.route); this.setState({ showResourcesSubMenu: false }) }}
                 >
                   <Text style={{ fontFamily: "Graphik-Regular-App", fontSize: 18, lineHeight: 30, color: "#333333", fontWeight: '800' }}>{data.name}</Text>
                 </ListItem>
