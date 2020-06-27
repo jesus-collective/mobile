@@ -42,16 +42,16 @@ class CourseSidebarImpl extends JCComponent<Props> {
         this.props.navigation.push("HomeScreen");
     }
     openCourseHome = (): void => {
-        this.props.navigation.push("CourseHomeScreen", { id: this.props.courseId, create: false });
+        this.props.navigation.push("CourseHomeScreen", { id: this.props.courseId, screen: "Home", create: false });
     }
     openCourseOverview = (): void => {
-        this.props.navigation.push("CourseOverviewScreen", { id: this.props.courseId, create: false });
+        this.props.navigation.push("CourseOverviewScreen", { id: this.props.courseId, screen: "Home", create: false });
     }
     openCourseDetails = (): void => {
-        this.props.navigation.push("CourseDetailScreen", { id: this.props.courseId, create: false });
+        this.props.navigation.push("CourseHomeScreen", { id: this.props.courseId, screen: "Details", create: false });
     }
     openCourseCoaching = (): void => {
-        this.props.navigation.push("CourseCoachingScreen", { id: this.props.courseId, create: false });
+        this.props.navigation.push("CourseHomeScreen", { id: this.props.courseId, screen: "Coaching", create: false });
     }
     render(): React.ReactNode {
         //const { navigate } = this.props.navigation;
@@ -66,7 +66,6 @@ class CourseSidebarImpl extends JCComponent<Props> {
                     /></Button>
 
                 <JCButton buttonType={ButtonTypes.Transparent} onPress={this.openCourseHome}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/home.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Home</Text></JCButton>
-                <JCButton buttonType={ButtonTypes.Transparent} onPress={this.openCourseOverview}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/home.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Overview</Text></JCButton>
                 <JCButton buttonType={ButtonTypes.Transparent} onPress={this.openCourseDetails}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/education.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Course</Text></JCButton>
                 <JCButton buttonType={ButtonTypes.Transparent} onPress={this.openCourseCoaching}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/calendar.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Coaching</Text></JCButton>
                 <Container style={{ backgroundColor: "#00000000" }}>

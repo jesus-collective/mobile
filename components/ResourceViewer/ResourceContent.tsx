@@ -96,8 +96,10 @@ class ResourceContent extends JCComponent<Props,State> {
                                                 multiline={true}
                                                 inputStyle={this.styles.style.seriesDescription}
                                                 textStyle={this.styles.style.seriesDescription}
-                                                value={this.shortenDescription(series.description)}
-                                                isEditable={state.isEditable}></EditableText>
+                                                value={this.stripHTMLTags(series.description)}
+                                                isEditable={state.isEditable}
+                                                ellipsizeMode='tail'
+                                                numberOfLines={3}></EditableText>
                                         </CardItem>
                                         <CardItem style={{ width: '100%', padding: 0, margin: 0, backgroundColor: '#F9FAFC', flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
                                             <JCButton buttonType={ButtonTypes.Solid} onPress={() => actions.changeSeries(index)}>Learn More</JCButton>
@@ -144,15 +146,6 @@ class ResourceContent extends JCComponent<Props,State> {
                                                 inputStyle={this.styles.style.seriesTitle}
                                                 textStyle={this.styles.style.seriesTitle}
                                                 value={series.title}
-                                                isEditable={state.isEditable}></EditableText>
-
-                                        </CardItem>
-                                        <CardItem style={{ width: '100%', padding: 0, margin: 0, backgroundColor: '#F9FAFC' }}>
-                                            <EditableText onChange={(val) => { actions.updateSeries(state.currentResource, index, "description", val) }}
-                                                multiline={true}
-                                                inputStyle={this.styles.style.seriesDescription}
-                                                textStyle={this.styles.style.seriesDescription}
-                                                value={this.shortenDescription(series.description)}
                                                 isEditable={state.isEditable}></EditableText>
                                         </CardItem>
                                         <CardItem style={{ width: '100%', padding: 0, margin: 0, backgroundColor: '#F9FAFC', flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
@@ -235,8 +228,10 @@ class ResourceContent extends JCComponent<Props,State> {
                                                 multiline={true}
                                                 inputStyle={this.styles.style.seriesDescription}
                                                 textStyle={this.styles.style.seriesDescription}
-                                                value={this.shortenDescription(series.description)}
-                                                isEditable={state.isEditable}></EditableText>
+                                                value={this.stripHTMLTags(series.description)}
+                                                isEditable={state.isEditable}
+                                                ellipsizeMode='tail'
+                                                numberOfLines={3}></EditableText>
                                         </CardItem>
                                         <CardItem style={{ width: '100%', padding: 0, margin: 0, backgroundColor: '#F9FAFC', flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
                                             <JCButton buttonType={ButtonTypes.Solid} onPress={() => actions.changeSeries(index)}>Learn More</JCButton>
@@ -744,25 +739,6 @@ class ResourceContent extends JCComponent<Props,State> {
                 </Container>
 
             </Container >)
-    }
-
-    shortenDescription(data: string): string {
-        let start = 0;
-        let end = 105;
-        const cleaned = this.stripHTMLTags(data)
-
-        while (cleaned[end] != " ") {
-            end++
-        }
-
-        let shortData = cleaned.slice(start,end) + '...'
-
-        while (!"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".includes(shortData[0])) {
-            start++
-            shortData = cleaned.slice(start,end) + '...'
-        }
-
-        return shortData  
     }
 
     stripHTMLTags(data: string): string {

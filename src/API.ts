@@ -219,17 +219,17 @@ export type DeleteOrganizationInput = {
 export type CreateCourseInfoInput = {
   id?: string | null,
   designedBy?: string | null,
-  summary?: Array< string | null > | null,
+  summary?: string | null,
   subTitle?: string | null,
-  introduction?: Array< string | null > | null,
+  introduction?: string | null,
 };
 
 export type UpdateCourseInfoInput = {
   id: string,
   designedBy?: string | null,
-  summary?: Array< string | null > | null,
+  summary?: string | null,
   subTitle?: string | null,
-  introduction?: Array< string | null > | null,
+  introduction?: string | null,
 };
 
 export type DeleteCourseInfoInput = {
@@ -260,14 +260,14 @@ export type CreateCourseLessonInput = {
   id?: string | null,
   name?: string | null,
   time?: string | null,
-  description?: Array< string | null > | null,
+  description?: string | null,
 };
 
 export type UpdateCourseLessonInput = {
   id: string,
   name?: string | null,
   time?: string | null,
-  description?: Array< string | null > | null,
+  description?: string | null,
 };
 
 export type DeleteCourseLessonInput = {
@@ -3064,7 +3064,7 @@ export type CreateCourseInfoMutation = {
     __typename: "CourseInfo",
     id: string,
     designedBy: string | null,
-    summary: Array< string | null > | null,
+    summary: string | null,
     courseWeeks:  {
       __typename: "ModelCourseWeekConnection",
       items:  Array< {
@@ -3080,7 +3080,7 @@ export type CreateCourseInfoMutation = {
       nextToken: string | null,
     } | null,
     subTitle: string | null,
-    introduction: Array< string | null > | null,
+    introduction: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -3095,7 +3095,7 @@ export type UpdateCourseInfoMutation = {
     __typename: "CourseInfo",
     id: string,
     designedBy: string | null,
-    summary: Array< string | null > | null,
+    summary: string | null,
     courseWeeks:  {
       __typename: "ModelCourseWeekConnection",
       items:  Array< {
@@ -3111,7 +3111,7 @@ export type UpdateCourseInfoMutation = {
       nextToken: string | null,
     } | null,
     subTitle: string | null,
-    introduction: Array< string | null > | null,
+    introduction: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -3126,7 +3126,7 @@ export type DeleteCourseInfoMutation = {
     __typename: "CourseInfo",
     id: string,
     designedBy: string | null,
-    summary: Array< string | null > | null,
+    summary: string | null,
     courseWeeks:  {
       __typename: "ModelCourseWeekConnection",
       items:  Array< {
@@ -3142,7 +3142,7 @@ export type DeleteCourseInfoMutation = {
       nextToken: string | null,
     } | null,
     subTitle: string | null,
-    introduction: Array< string | null > | null,
+    introduction: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -3164,13 +3164,13 @@ export type CreateCourseWeekMutation = {
       __typename: "CourseInfo",
       id: string,
       designedBy: string | null,
-      summary: Array< string | null > | null,
+      summary: string | null,
       courseWeeks:  {
         __typename: "ModelCourseWeekConnection",
         nextToken: string | null,
       } | null,
       subTitle: string | null,
-      introduction: Array< string | null > | null,
+      introduction: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -3181,7 +3181,7 @@ export type CreateCourseWeekMutation = {
         id: string,
         name: string | null,
         time: string | null,
-        description: Array< string | null > | null,
+        description: string | null,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -3208,13 +3208,13 @@ export type UpdateCourseWeekMutation = {
       __typename: "CourseInfo",
       id: string,
       designedBy: string | null,
-      summary: Array< string | null > | null,
+      summary: string | null,
       courseWeeks:  {
         __typename: "ModelCourseWeekConnection",
         nextToken: string | null,
       } | null,
       subTitle: string | null,
-      introduction: Array< string | null > | null,
+      introduction: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -3225,7 +3225,7 @@ export type UpdateCourseWeekMutation = {
         id: string,
         name: string | null,
         time: string | null,
-        description: Array< string | null > | null,
+        description: string | null,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -3252,13 +3252,13 @@ export type DeleteCourseWeekMutation = {
       __typename: "CourseInfo",
       id: string,
       designedBy: string | null,
-      summary: Array< string | null > | null,
+      summary: string | null,
       courseWeeks:  {
         __typename: "ModelCourseWeekConnection",
         nextToken: string | null,
       } | null,
       subTitle: string | null,
-      introduction: Array< string | null > | null,
+      introduction: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -3269,7 +3269,7 @@ export type DeleteCourseWeekMutation = {
         id: string,
         name: string | null,
         time: string | null,
-        description: Array< string | null > | null,
+        description: string | null,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -3290,7 +3290,7 @@ export type CreateCourseLessonMutation = {
     id: string,
     name: string | null,
     time: string | null,
-    description: Array< string | null > | null,
+    description: string | null,
     courseWeek:  {
       __typename: "CourseWeek",
       id: string,
@@ -3302,9 +3302,9 @@ export type CreateCourseLessonMutation = {
         __typename: "CourseInfo",
         id: string,
         designedBy: string | null,
-        summary: Array< string | null > | null,
+        summary: string | null,
         subTitle: string | null,
-        introduction: Array< string | null > | null,
+        introduction: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -3342,7 +3342,7 @@ export type UpdateCourseLessonMutation = {
     id: string,
     name: string | null,
     time: string | null,
-    description: Array< string | null > | null,
+    description: string | null,
     courseWeek:  {
       __typename: "CourseWeek",
       id: string,
@@ -3354,9 +3354,9 @@ export type UpdateCourseLessonMutation = {
         __typename: "CourseInfo",
         id: string,
         designedBy: string | null,
-        summary: Array< string | null > | null,
+        summary: string | null,
         subTitle: string | null,
-        introduction: Array< string | null > | null,
+        introduction: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -3394,7 +3394,7 @@ export type DeleteCourseLessonMutation = {
     id: string,
     name: string | null,
     time: string | null,
-    description: Array< string | null > | null,
+    description: string | null,
     courseWeek:  {
       __typename: "CourseWeek",
       id: string,
@@ -3406,9 +3406,9 @@ export type DeleteCourseLessonMutation = {
         __typename: "CourseInfo",
         id: string,
         designedBy: string | null,
-        summary: Array< string | null > | null,
+        summary: string | null,
         subTitle: string | null,
-        introduction: Array< string | null > | null,
+        introduction: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -3451,7 +3451,7 @@ export type CreateCourseAssignmentMutation = {
       id: string,
       name: string | null,
       time: string | null,
-      description: Array< string | null > | null,
+      description: string | null,
       courseWeek:  {
         __typename: "CourseWeek",
         id: string,
@@ -3489,7 +3489,7 @@ export type UpdateCourseAssignmentMutation = {
       id: string,
       name: string | null,
       time: string | null,
-      description: Array< string | null > | null,
+      description: string | null,
       courseWeek:  {
         __typename: "CourseWeek",
         id: string,
@@ -3527,7 +3527,7 @@ export type DeleteCourseAssignmentMutation = {
       id: string,
       name: string | null,
       time: string | null,
-      description: Array< string | null > | null,
+      description: string | null,
       courseWeek:  {
         __typename: "CourseWeek",
         id: string,
@@ -6354,7 +6354,7 @@ export type GetCourseInfoQuery = {
     __typename: "CourseInfo",
     id: string,
     designedBy: string | null,
-    summary: Array< string | null > | null,
+    summary: string | null,
     courseWeeks:  {
       __typename: "ModelCourseWeekConnection",
       items:  Array< {
@@ -6370,7 +6370,7 @@ export type GetCourseInfoQuery = {
       nextToken: string | null,
     } | null,
     subTitle: string | null,
-    introduction: Array< string | null > | null,
+    introduction: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -6389,13 +6389,13 @@ export type ListCourseInfosQuery = {
       __typename: "CourseInfo",
       id: string,
       designedBy: string | null,
-      summary: Array< string | null > | null,
+      summary: string | null,
       courseWeeks:  {
         __typename: "ModelCourseWeekConnection",
         nextToken: string | null,
       } | null,
       subTitle: string | null,
-      introduction: Array< string | null > | null,
+      introduction: string | null,
       createdAt: string,
       updatedAt: string,
     } | null > | null,
@@ -6419,13 +6419,13 @@ export type GetCourseWeekQuery = {
       __typename: "CourseInfo",
       id: string,
       designedBy: string | null,
-      summary: Array< string | null > | null,
+      summary: string | null,
       courseWeeks:  {
         __typename: "ModelCourseWeekConnection",
         nextToken: string | null,
       } | null,
       subTitle: string | null,
-      introduction: Array< string | null > | null,
+      introduction: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -6436,7 +6436,7 @@ export type GetCourseWeekQuery = {
         id: string,
         name: string | null,
         time: string | null,
-        description: Array< string | null > | null,
+        description: string | null,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -6467,9 +6467,9 @@ export type ListCourseWeeksQuery = {
         __typename: "CourseInfo",
         id: string,
         designedBy: string | null,
-        summary: Array< string | null > | null,
+        summary: string | null,
         subTitle: string | null,
-        introduction: Array< string | null > | null,
+        introduction: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -6494,7 +6494,7 @@ export type GetCourseLessonQuery = {
     id: string,
     name: string | null,
     time: string | null,
-    description: Array< string | null > | null,
+    description: string | null,
     courseWeek:  {
       __typename: "CourseWeek",
       id: string,
@@ -6506,9 +6506,9 @@ export type GetCourseLessonQuery = {
         __typename: "CourseInfo",
         id: string,
         designedBy: string | null,
-        summary: Array< string | null > | null,
+        summary: string | null,
         subTitle: string | null,
-        introduction: Array< string | null > | null,
+        introduction: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -6550,7 +6550,7 @@ export type ListCourseLessonsQuery = {
       id: string,
       name: string | null,
       time: string | null,
-      description: Array< string | null > | null,
+      description: string | null,
       courseWeek:  {
         __typename: "CourseWeek",
         id: string,
@@ -6587,7 +6587,7 @@ export type GetCourseAssignmentQuery = {
       id: string,
       name: string | null,
       time: string | null,
-      description: Array< string | null > | null,
+      description: string | null,
       courseWeek:  {
         __typename: "CourseWeek",
         id: string,
@@ -6629,7 +6629,7 @@ export type ListCourseAssignmentsQuery = {
         id: string,
         name: string | null,
         time: string | null,
-        description: Array< string | null > | null,
+        description: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -10896,7 +10896,7 @@ export type OnCreateCourseInfoSubscription = {
     __typename: "CourseInfo",
     id: string,
     designedBy: string | null,
-    summary: Array< string | null > | null,
+    summary: string | null,
     courseWeeks:  {
       __typename: "ModelCourseWeekConnection",
       items:  Array< {
@@ -10912,7 +10912,7 @@ export type OnCreateCourseInfoSubscription = {
       nextToken: string | null,
     } | null,
     subTitle: string | null,
-    introduction: Array< string | null > | null,
+    introduction: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -10927,7 +10927,7 @@ export type OnUpdateCourseInfoSubscription = {
     __typename: "CourseInfo",
     id: string,
     designedBy: string | null,
-    summary: Array< string | null > | null,
+    summary: string | null,
     courseWeeks:  {
       __typename: "ModelCourseWeekConnection",
       items:  Array< {
@@ -10943,7 +10943,7 @@ export type OnUpdateCourseInfoSubscription = {
       nextToken: string | null,
     } | null,
     subTitle: string | null,
-    introduction: Array< string | null > | null,
+    introduction: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -10958,7 +10958,7 @@ export type OnDeleteCourseInfoSubscription = {
     __typename: "CourseInfo",
     id: string,
     designedBy: string | null,
-    summary: Array< string | null > | null,
+    summary: string | null,
     courseWeeks:  {
       __typename: "ModelCourseWeekConnection",
       items:  Array< {
@@ -10974,10 +10974,14 @@ export type OnDeleteCourseInfoSubscription = {
       nextToken: string | null,
     } | null,
     subTitle: string | null,
-    introduction: Array< string | null > | null,
+    introduction: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
+};
+
+export type OnCreateCourseWeekSubscriptionVariables = {
+  owner?: string | null,
 };
 
 export type OnCreateCourseWeekSubscription = {
@@ -10992,13 +10996,13 @@ export type OnCreateCourseWeekSubscription = {
       __typename: "CourseInfo",
       id: string,
       designedBy: string | null,
-      summary: Array< string | null > | null,
+      summary: string | null,
       courseWeeks:  {
         __typename: "ModelCourseWeekConnection",
         nextToken: string | null,
       } | null,
       subTitle: string | null,
-      introduction: Array< string | null > | null,
+      introduction: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -11009,7 +11013,7 @@ export type OnCreateCourseWeekSubscription = {
         id: string,
         name: string | null,
         time: string | null,
-        description: Array< string | null > | null,
+        description: string | null,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -11018,6 +11022,10 @@ export type OnCreateCourseWeekSubscription = {
     createdAt: string,
     updatedAt: string,
   } | null,
+};
+
+export type OnUpdateCourseWeekSubscriptionVariables = {
+  owner?: string | null,
 };
 
 export type OnUpdateCourseWeekSubscription = {
@@ -11032,13 +11040,13 @@ export type OnUpdateCourseWeekSubscription = {
       __typename: "CourseInfo",
       id: string,
       designedBy: string | null,
-      summary: Array< string | null > | null,
+      summary: string | null,
       courseWeeks:  {
         __typename: "ModelCourseWeekConnection",
         nextToken: string | null,
       } | null,
       subTitle: string | null,
-      introduction: Array< string | null > | null,
+      introduction: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -11049,7 +11057,7 @@ export type OnUpdateCourseWeekSubscription = {
         id: string,
         name: string | null,
         time: string | null,
-        description: Array< string | null > | null,
+        description: string | null,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -11058,6 +11066,10 @@ export type OnUpdateCourseWeekSubscription = {
     createdAt: string,
     updatedAt: string,
   } | null,
+};
+
+export type OnDeleteCourseWeekSubscriptionVariables = {
+  owner?: string | null,
 };
 
 export type OnDeleteCourseWeekSubscription = {
@@ -11072,13 +11084,13 @@ export type OnDeleteCourseWeekSubscription = {
       __typename: "CourseInfo",
       id: string,
       designedBy: string | null,
-      summary: Array< string | null > | null,
+      summary: string | null,
       courseWeeks:  {
         __typename: "ModelCourseWeekConnection",
         nextToken: string | null,
       } | null,
       subTitle: string | null,
-      introduction: Array< string | null > | null,
+      introduction: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -11089,7 +11101,7 @@ export type OnDeleteCourseWeekSubscription = {
         id: string,
         name: string | null,
         time: string | null,
-        description: Array< string | null > | null,
+        description: string | null,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -11098,6 +11110,10 @@ export type OnDeleteCourseWeekSubscription = {
     createdAt: string,
     updatedAt: string,
   } | null,
+};
+
+export type OnCreateCourseLessonSubscriptionVariables = {
+  owner?: string | null,
 };
 
 export type OnCreateCourseLessonSubscription = {
@@ -11106,7 +11122,7 @@ export type OnCreateCourseLessonSubscription = {
     id: string,
     name: string | null,
     time: string | null,
-    description: Array< string | null > | null,
+    description: string | null,
     courseWeek:  {
       __typename: "CourseWeek",
       id: string,
@@ -11118,9 +11134,9 @@ export type OnCreateCourseLessonSubscription = {
         __typename: "CourseInfo",
         id: string,
         designedBy: string | null,
-        summary: Array< string | null > | null,
+        summary: string | null,
         subTitle: string | null,
-        introduction: Array< string | null > | null,
+        introduction: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -11146,6 +11162,10 @@ export type OnCreateCourseLessonSubscription = {
     createdAt: string,
     updatedAt: string,
   } | null,
+};
+
+export type OnUpdateCourseLessonSubscriptionVariables = {
+  owner?: string | null,
 };
 
 export type OnUpdateCourseLessonSubscription = {
@@ -11154,7 +11174,7 @@ export type OnUpdateCourseLessonSubscription = {
     id: string,
     name: string | null,
     time: string | null,
-    description: Array< string | null > | null,
+    description: string | null,
     courseWeek:  {
       __typename: "CourseWeek",
       id: string,
@@ -11166,9 +11186,9 @@ export type OnUpdateCourseLessonSubscription = {
         __typename: "CourseInfo",
         id: string,
         designedBy: string | null,
-        summary: Array< string | null > | null,
+        summary: string | null,
         subTitle: string | null,
-        introduction: Array< string | null > | null,
+        introduction: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -11196,13 +11216,17 @@ export type OnUpdateCourseLessonSubscription = {
   } | null,
 };
 
+export type OnDeleteCourseLessonSubscriptionVariables = {
+  owner?: string | null,
+};
+
 export type OnDeleteCourseLessonSubscription = {
   onDeleteCourseLesson:  {
     __typename: "CourseLesson",
     id: string,
     name: string | null,
     time: string | null,
-    description: Array< string | null > | null,
+    description: string | null,
     courseWeek:  {
       __typename: "CourseWeek",
       id: string,
@@ -11214,9 +11238,9 @@ export type OnDeleteCourseLessonSubscription = {
         __typename: "CourseInfo",
         id: string,
         designedBy: string | null,
-        summary: Array< string | null > | null,
+        summary: string | null,
         subTitle: string | null,
-        introduction: Array< string | null > | null,
+        introduction: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -11242,6 +11266,10 @@ export type OnDeleteCourseLessonSubscription = {
     createdAt: string,
     updatedAt: string,
   } | null,
+};
+
+export type OnCreateCourseAssignmentSubscriptionVariables = {
+  owner?: string | null,
 };
 
 export type OnCreateCourseAssignmentSubscription = {
@@ -11255,7 +11283,7 @@ export type OnCreateCourseAssignmentSubscription = {
       id: string,
       name: string | null,
       time: string | null,
-      description: Array< string | null > | null,
+      description: string | null,
       courseWeek:  {
         __typename: "CourseWeek",
         id: string,
@@ -11276,6 +11304,10 @@ export type OnCreateCourseAssignmentSubscription = {
     createdAt: string,
     updatedAt: string,
   } | null,
+};
+
+export type OnUpdateCourseAssignmentSubscriptionVariables = {
+  owner?: string | null,
 };
 
 export type OnUpdateCourseAssignmentSubscription = {
@@ -11289,7 +11321,7 @@ export type OnUpdateCourseAssignmentSubscription = {
       id: string,
       name: string | null,
       time: string | null,
-      description: Array< string | null > | null,
+      description: string | null,
       courseWeek:  {
         __typename: "CourseWeek",
         id: string,
@@ -11312,6 +11344,10 @@ export type OnUpdateCourseAssignmentSubscription = {
   } | null,
 };
 
+export type OnDeleteCourseAssignmentSubscriptionVariables = {
+  owner?: string | null,
+};
+
 export type OnDeleteCourseAssignmentSubscription = {
   onDeleteCourseAssignment:  {
     __typename: "CourseAssignment",
@@ -11323,7 +11359,7 @@ export type OnDeleteCourseAssignmentSubscription = {
       id: string,
       name: string | null,
       time: string | null,
-      description: Array< string | null > | null,
+      description: string | null,
       courseWeek:  {
         __typename: "CourseWeek",
         id: string,
