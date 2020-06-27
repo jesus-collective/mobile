@@ -1,7 +1,7 @@
 import { Container, View } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { Image, Text } from 'react-native';
+import { Image, Text, Animated } from 'react-native';
 
 import EditableText from '../Forms/EditableText'
 import { ResourceContext } from './ResourceContext';
@@ -17,6 +17,7 @@ Amplify.configure(awsconfig);
 interface State {
     imageUrl: any
     image: any
+    fadeValue: any
 }
 class ResourceHeader extends JCComponent<EmptyProps, State> {
     static Consumer = ResourceContext.Consumer;
@@ -24,8 +25,16 @@ class ResourceHeader extends JCComponent<EmptyProps, State> {
         super(props)
         this.state = {
             imageUrl: null,
-            image: null
+            image: null,
+            fadeValue: new Animated.Value(0),
         }
+    }
+    fadeAnimation = () => {
+        Animated.timing(this.state.fadeValue, {
+            toValue: 1,
+            duration: 3250,
+            useNativeDriver: true
+        }).start();
     }
     async getImage(img): Promise<void> {
         if (img != null) {
@@ -47,9 +56,11 @@ class ResourceHeader extends JCComponent<EmptyProps, State> {
                     return (
                         <Container style={this.styles.style.resourceHeaderImgContainer}>
                             {this.state.imageUrl ?
-                                <Image style={this.styles.style.resourceHeaderImg}
-                                    source={this.state.imageUrl} onError={() => { this.getImage(state.resourceData.resources.items[state.currentResource].image) }}>
-                                </ Image>
+                                <Animated.View onLayout={this.fadeAnimation} style={[this.styles.style.resourceHeaderImgView, {opacity: this.state.fadeValue}]}>
+                                    <Image style={this.styles.style.resourceHeaderImg}
+                                        source={this.state.imageUrl} onError={() => { this.getImage(state.resourceData.resources.items[state.currentResource].image) }}>
+                                    </Image>
+                                </Animated.View>
                                 : null
                             }
                             {state.currentSeries == null ?

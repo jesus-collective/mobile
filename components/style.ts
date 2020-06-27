@@ -1132,13 +1132,19 @@ export default class MainStyles {
                 height: 50
             },
             resourceHeaderImgContainer: {
-                backgroundColor: "#F0493E",
                 maxHeight: "285px"
             },
             resourceHeaderImg: {
                 position: "relative",
                 width: "100%",
-                height: "100%"
+                height: "100%",
+                opacity: 0.3
+            },
+            resourceHeaderImgView: {
+                backgroundColor: "#000000", 
+                position: "relative", 
+                width: "100%", 
+                height: "100%",
             },
             conversationsCard: {
                 alignSelf: "flex-start",
