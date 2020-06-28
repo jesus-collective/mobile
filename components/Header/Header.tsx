@@ -20,7 +20,12 @@ interface Props {
 interface State {
   resourcesDropdown: HTMLElement
   resourcesStyle: any
+  chevronStyle: any
 }
+
+const chevronStyle1 = { paddingLeft: 8, paddingBottom: 1 }
+
+const chevronStyle2 = { paddingLeft: 8, paddingBottom: 1, display: 'none' }
 
 const resourcesStyle1 = {
   backgroundColor: 'transparent',
@@ -47,7 +52,8 @@ export default class HeaderJC extends JCComponent<Props, State> {
     super(props);
     this.state = {
       resourcesDropdown: null,
-      resourcesStyle: resourcesStyle1
+      resourcesStyle: Dimensions.get('window').width > 720 ? resourcesStyle1 : resourcesStyle2,
+      chevronStyle: Dimensions.get('window').width > 720 ? chevronStyle1: chevronStyle2
     }
   }
   headerStyles = HeaderStyles.getInstance();
@@ -68,9 +74,9 @@ export default class HeaderJC extends JCComponent<Props, State> {
   updateResourceStyles = (): void => {
     const bigScreen = Dimensions.get('window').width > 720
     if (bigScreen)
-      this.setState({ resourcesStyle: resourcesStyle1 })
+      this.setState({ resourcesStyle: resourcesStyle1, chevronStyle: chevronStyle1 })
     else
-      this.setState({ resourcesStyle: { display: 'none' } })
+      this.setState({ resourcesStyle: { display: 'none' }, chevronStyle: chevronStyle2 })
   }
 
   openDrawer = (): void => {
@@ -91,6 +97,7 @@ export default class HeaderJC extends JCComponent<Props, State> {
     this.props.navigation.push("EventsScreen");
   }
   openResources = (): void => {
+    this.handleResourcesDropdownClose()
     this.props.navigation.push("ResourcesScreen");
   }
   openKids = (): void => {
@@ -172,7 +179,7 @@ export default class HeaderJC extends JCComponent<Props, State> {
                 style={this.state.resourcesStyle}
               >
                 <Text style={this.headerStyles.style.centerMenuButtonsTextResources}>Resources</Text>
-                <img src={require('../../assets/svg/dropdown.svg')} style={{ paddingLeft: 8, paddingBottom: 1 }}></img>
+                <img src={require('../../assets/svg/dropdown.svg')} style={this.state.chevronStyle}></img>
               </button> : null
           }
           {

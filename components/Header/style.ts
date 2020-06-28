@@ -59,7 +59,7 @@ export default class HeaderStyles {
                 color: '#aaaaaa',
                 fontSize: 15,
                 fontWeight: 'bold',
-                '@media only screen and (max-width: 600px)': {
+                '@media (max-width: 600px)': {
 
                     display: 'none',
 
