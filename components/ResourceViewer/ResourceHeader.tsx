@@ -17,7 +17,7 @@ Amplify.configure(awsconfig);
 interface State {
     imageUrl: any
     image: any
-    // fadeValue: any
+    fadeValue: any
 }
 class ResourceHeader extends JCComponent<EmptyProps, State> {
     static Consumer = ResourceContext.Consumer;
@@ -26,16 +26,16 @@ class ResourceHeader extends JCComponent<EmptyProps, State> {
         this.state = {
             imageUrl: null,
             image: null,
-            // fadeValue: new Animated.Value(0),
+            fadeValue: new Animated.Value(0),
         }
     }
-    // fadeAnimation = () => {
-    //     Animated.timing(this.state.fadeValue, {
-    //         toValue: 1,
-    //         duration: 3000,
-    //         useNativeDriver: true
-    //     }).start();
-    // }
+    fadeAnimation = () => {
+        Animated.timing(this.state.fadeValue, {
+            toValue: 1,
+            duration: 3250,
+            useNativeDriver: true
+        }).start();
+    }
     async getImage(img): Promise<void> {
         if (img != null) {
             const z = await Storage.get(img.filenameLarge, {
@@ -56,9 +56,11 @@ class ResourceHeader extends JCComponent<EmptyProps, State> {
                     return (
                         <Container style={this.styles.style.resourceHeaderImgContainer}>
                             {this.state.imageUrl ?
-                                <Image style={this.styles.style.resourceHeaderImg}
-                                    source={this.state.imageUrl} onError={() => { this.getImage(state.resourceData.resources.items[state.currentResource].image) }}>
-                                </Image>
+                                <Animated.View onLayout={this.fadeAnimation} style={[this.styles.style.resourceHeaderImgView, {opacity: this.state.fadeValue}]}>
+                                    <Image style={this.styles.style.resourceHeaderImg}
+                                        source={this.state.imageUrl} onError={() => { this.getImage(state.resourceData.resources.items[state.currentResource].image) }}>
+                                    </Image>
+                                </Animated.View>
                                 : null
                             }
                             {state.currentSeries == null ?
