@@ -2017,6 +2017,7 @@ export const createCourseWeek = /* GraphQL */ `
       lessons {
         items {
           id
+          lesson
           name
           time
           description
@@ -2053,6 +2054,7 @@ export const updateCourseWeek = /* GraphQL */ `
       lessons {
         items {
           id
+          lesson
           name
           time
           description
@@ -2089,6 +2091,7 @@ export const deleteCourseWeek = /* GraphQL */ `
       lessons {
         items {
           id
+          lesson
           name
           time
           description
@@ -2106,6 +2109,7 @@ export const createCourseLesson = /* GraphQL */ `
   mutation CreateCourseLesson($input: CreateCourseLessonInput!) {
     createCourseLesson(input: $input) {
       id
+      lesson
       name
       time
       description
@@ -2133,6 +2137,7 @@ export const createCourseLesson = /* GraphQL */ `
       assignments {
         items {
           id
+          assignment
           due
           description
           createdAt
@@ -2149,6 +2154,7 @@ export const updateCourseLesson = /* GraphQL */ `
   mutation UpdateCourseLesson($input: UpdateCourseLessonInput!) {
     updateCourseLesson(input: $input) {
       id
+      lesson
       name
       time
       description
@@ -2176,6 +2182,7 @@ export const updateCourseLesson = /* GraphQL */ `
       assignments {
         items {
           id
+          assignment
           due
           description
           createdAt
@@ -2192,6 +2199,7 @@ export const deleteCourseLesson = /* GraphQL */ `
   mutation DeleteCourseLesson($input: DeleteCourseLessonInput!) {
     deleteCourseLesson(input: $input) {
       id
+      lesson
       name
       time
       description
@@ -2219,6 +2227,7 @@ export const deleteCourseLesson = /* GraphQL */ `
       assignments {
         items {
           id
+          assignment
           due
           description
           createdAt
@@ -2235,10 +2244,12 @@ export const createCourseAssignment = /* GraphQL */ `
   mutation CreateCourseAssignment($input: CreateCourseAssignmentInput!) {
     createCourseAssignment(input: $input) {
       id
+      assignment
       due
       description
       courseLesson {
         id
+        lesson
         name
         time
         description
@@ -2266,10 +2277,12 @@ export const updateCourseAssignment = /* GraphQL */ `
   mutation UpdateCourseAssignment($input: UpdateCourseAssignmentInput!) {
     updateCourseAssignment(input: $input) {
       id
+      assignment
       due
       description
       courseLesson {
         id
+        lesson
         name
         time
         description
@@ -2297,10 +2310,12 @@ export const deleteCourseAssignment = /* GraphQL */ `
   mutation DeleteCourseAssignment($input: DeleteCourseAssignmentInput!) {
     deleteCourseAssignment(input: $input) {
       id
+      assignment
       due
       description
       courseLesson {
         id
+        lesson
         name
         time
         description

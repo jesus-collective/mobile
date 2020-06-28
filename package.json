@@ -13,7 +13,7 @@
     "lint": "eslint '*/**/*.{js,ts,tsx}'",
     "eject": "npx expo eject",
     "test": "START_SERVER_AND_TEST_INSECURE=1 start-server-and-test start:web http://localhost:19006 cy:open",
-    "backup": "export z=$(date +%Y%m%d%H%M%S); mkdir backup/$z; cd backup/$z; dynamodump export-all-data --region=us-east-1"
+    "backup": "export z=$(date +%Y%m%d%H%M%S); mkdir backup/$z; cd backup/$z; dynamodump export-all-data --region=us-east-1 --profile=amplify"
   },
   "dependencies": {
     "@date-io/moment": "^1.3.13",

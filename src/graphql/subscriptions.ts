@@ -2223,6 +2223,7 @@ export const onCreateCourseWeek = /* GraphQL */ `
       lessons {
         items {
           id
+          lesson
           name
           time
           description
@@ -2259,6 +2260,7 @@ export const onUpdateCourseWeek = /* GraphQL */ `
       lessons {
         items {
           id
+          lesson
           name
           time
           description
@@ -2295,6 +2297,7 @@ export const onDeleteCourseWeek = /* GraphQL */ `
       lessons {
         items {
           id
+          lesson
           name
           time
           description
@@ -2312,6 +2315,7 @@ export const onCreateCourseLesson = /* GraphQL */ `
   subscription OnCreateCourseLesson($owner: String) {
     onCreateCourseLesson(owner: $owner) {
       id
+      lesson
       name
       time
       description
@@ -2339,6 +2343,7 @@ export const onCreateCourseLesson = /* GraphQL */ `
       assignments {
         items {
           id
+          assignment
           due
           description
           createdAt
@@ -2355,6 +2360,7 @@ export const onUpdateCourseLesson = /* GraphQL */ `
   subscription OnUpdateCourseLesson($owner: String) {
     onUpdateCourseLesson(owner: $owner) {
       id
+      lesson
       name
       time
       description
@@ -2382,6 +2388,7 @@ export const onUpdateCourseLesson = /* GraphQL */ `
       assignments {
         items {
           id
+          assignment
           due
           description
           createdAt
@@ -2398,6 +2405,7 @@ export const onDeleteCourseLesson = /* GraphQL */ `
   subscription OnDeleteCourseLesson($owner: String) {
     onDeleteCourseLesson(owner: $owner) {
       id
+      lesson
       name
       time
       description
@@ -2425,6 +2433,7 @@ export const onDeleteCourseLesson = /* GraphQL */ `
       assignments {
         items {
           id
+          assignment
           due
           description
           createdAt
@@ -2441,10 +2450,12 @@ export const onCreateCourseAssignment = /* GraphQL */ `
   subscription OnCreateCourseAssignment($owner: String) {
     onCreateCourseAssignment(owner: $owner) {
       id
+      assignment
       due
       description
       courseLesson {
         id
+        lesson
         name
         time
         description
@@ -2472,10 +2483,12 @@ export const onUpdateCourseAssignment = /* GraphQL */ `
   subscription OnUpdateCourseAssignment($owner: String) {
     onUpdateCourseAssignment(owner: $owner) {
       id
+      assignment
       due
       description
       courseLesson {
         id
+        lesson
         name
         time
         description
@@ -2503,10 +2516,12 @@ export const onDeleteCourseAssignment = /* GraphQL */ `
   subscription OnDeleteCourseAssignment($owner: String) {
     onDeleteCourseAssignment(owner: $owner) {
       id
+      assignment
       due
       description
       courseLesson {
         id
+        lesson
         name
         time
         description

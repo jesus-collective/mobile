@@ -667,6 +667,7 @@ export const getCourseWeek = /* GraphQL */ `
       lessons {
         items {
           id
+          lesson
           name
           time
           description
@@ -716,6 +717,7 @@ export const getCourseLesson = /* GraphQL */ `
   query GetCourseLesson($id: ID!) {
     getCourseLesson(id: $id) {
       id
+      lesson
       name
       time
       description
@@ -743,6 +745,7 @@ export const getCourseLesson = /* GraphQL */ `
       assignments {
         items {
           id
+          assignment
           due
           description
           createdAt
@@ -764,6 +767,7 @@ export const listCourseLessons = /* GraphQL */ `
     listCourseLessons(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        lesson
         name
         time
         description
@@ -790,10 +794,12 @@ export const getCourseAssignment = /* GraphQL */ `
   query GetCourseAssignment($id: ID!) {
     getCourseAssignment(id: $id) {
       id
+      assignment
       due
       description
       courseLesson {
         id
+        lesson
         name
         time
         description
@@ -830,10 +836,12 @@ export const listCourseAssignments = /* GraphQL */ `
     ) {
       items {
         id
+        assignment
         due
         description
         courseLesson {
           id
+          lesson
           name
           time
           description

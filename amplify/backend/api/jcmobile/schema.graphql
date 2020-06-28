@@ -189,7 +189,7 @@ type CourseInfo
   id: ID!
   designedBy: String
   summary: String
-  courseWeeks: [CourseWeek] @connection(name: "CourseInfoWeek", keyField: "id")
+  courseWeeks: [CourseWeek] @connection(name:"courseInfo",keyField: "id",sortField:"week")
   subTitle: String
   #instructor: User
   introduction: String
@@ -210,8 +210,8 @@ type CourseWeek
   date: String
   name: String
   leader: String
-  courseInfo: CourseInfo @connection(name: "CourseInfoWeek", keyField: "id")
-  lessons: [CourseLesson] @connection(name: "CourseWeekLesson", keyField: "id")
+  courseInfo: CourseInfo @connection(name:"courseInfo",keyField:"id")
+  lessons: [CourseLesson] @connection(name:"courseLesson",keyField: "id",sortField:"lesson")
 }
 type CourseLesson 
 @model 
@@ -224,12 +224,12 @@ type CourseLesson
   )
 {
   id: ID!
+  lesson:String
   name: String
   time: String
   description: String
-  courseWeek: CourseWeek @connection(name: "CourseWeekLesson", keyField: "id")
-  assignments: [CourseAssignment]
-    @connection(name: "CourseLessonAssignment", keyField: "id")
+  courseWeek: CourseWeek @connection(name: "courseLesson", keyField: "id")
+  assignments: [CourseAssignment] @connection(name: "courseAssignment", keyField: "id",sortField:"assignment")
 }
 type CourseAssignment 
 @model 
@@ -242,10 +242,10 @@ type CourseAssignment
   )
 {
   id: ID!
+  assignment:String
   due: String
   description: String
-  courseLesson: CourseLesson
-    @connection(name: "CourseLessonAssignment", keyField: "id")
+  courseLesson: CourseLesson @connection(name: "courseAssignment", keyField: "id")
 }
 type DirectMessageUser
 @model
