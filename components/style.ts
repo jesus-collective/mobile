@@ -30,7 +30,7 @@ export default class MainStyles {
                 alignItems: 'center',
                 backgroundColor: mainColor,
             },
-            groupMoreCard: { minHeight: 43, alignSelf: "flex-start", alignItems: "center", borderRadius: 4, backgroundColor: "#F0493E", margintop: 100, padding: '0%' },
+            groupMoreCard: { minHeight: 43, alignSelf: "flex-start", alignItems: "center", borderRadius: 4, backgroundColor: "#F0493E", marginTop: 100, padding: '0%' },
             nativeMessageBoardContainer: { display: "inline", overflow: "visible", width: "100%", paddingTop: 30, paddingLeft: 30, paddingRight: 30, marginBottom: 60 },
             mapSelectorView: { position: "fixed", left: 0, top: 0, width: "100%", height: "100%", zIndex: 100, backgroundColor: "#33333366" },
             peopleContainer: { width: "100%", flexDirection: 'column', alignItems: 'flex-start', minHeight: 675, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)" },
@@ -983,7 +983,6 @@ export default class MainStyles {
                 backgroundColor: "#ffffff",
                 borderRadius: 4,
                 boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
-                height: 900
             },
             resourceContentEpisodeRightContainer: {
                 flex: 30,

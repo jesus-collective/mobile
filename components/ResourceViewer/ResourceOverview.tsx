@@ -6,6 +6,7 @@ import { Text, TouchableOpacity } from 'react-native'
 
 
 import EditableText from '../../components/Forms/EditableText'
+import EditableRichText from '../../components/Forms/EditableRichText'
 import JCSwitch from '../../components/JCSwitch/JCSwitch';
 
 
@@ -105,14 +106,9 @@ class ResourceOverviewImpl extends JCComponent<Props>{
                             {this.renderButtons(state, actions)}
                         </Container>
                         <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', backgroundColor: "#F9FAFC", height: "100%" }}>
-
-                            {/*
-                            return (state.resourceData.resources.items[state.currentResource] ? <Container style={this.styles.style.resourcesOverviewRightCard} >
-
-                                *   <EditableRichText onChange={(val) => { actions.updateResource(state.currentResource, "extendedDescription", val) }} value={state.resourceData.resources.items[state.currentResource].extendedDescription} isEditable={true} textStyle=""></EditableRichText>
-                               
-                            </Container> : null)
- */}
+                            {state.resourceData.resources.items[state.currentResource] ? <Container style={this.styles.style.resourcesOverviewRightCard} >
+                                <EditableRichText onChange={(val) => { actions.updateResource(state.currentResource, "extendedDescription", val) }} value={state.resourceData.resources.items[state.currentResource].extendedDescription} isEditable={state.isEditable} textStyle=""></EditableRichText>
+                            </Container> : null}
                         </Container>
                     </Container>
                 else
