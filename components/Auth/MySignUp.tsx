@@ -11,18 +11,18 @@ interface Props {
     authState: any
 }
 class MySignUp extends SignUp<Props> {
-    constructor(props) {
+    constructor(props: Props) {
         super(props);
     }
 
     styles = MainStyles.getInstance();
     componentDidMount(): void {
-        Dimensions.addEventListener('change', this.styles.updateStyles(this))
+        Dimensions.addEventListener('change', () => { this.styles.updateStyles(this) })
     }
     componentWillUnmount(): void {
-        Dimensions.removeEventListener("change", this.styles.updateStyles(this));
+        Dimensions.removeEventListener("change", () => { this.styles.updateStyles(this) });
     }
-    render() {
+    render(): React.ReactNode {
         //    console.log(this.props.authState)
         return (
 
