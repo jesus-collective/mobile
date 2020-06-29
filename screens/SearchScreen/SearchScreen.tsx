@@ -8,13 +8,13 @@ import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import { API } from 'aws-amplify';
 import * as queries from '../../src/graphql/queries';
-import JCComponent from '../../components/JCComponent/JCComponent';
+import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
 
 
 interface Props {
   navigation: any
 }
-interface State {
+interface State extends JCState {
   showMap: boolean
   data: any
 }
@@ -25,6 +25,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
     this.state = {
+      ...this.getInitialState(),
       showMap: false,
       data: []
     }

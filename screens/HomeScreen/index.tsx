@@ -13,7 +13,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import awsconfig from '../../src/aws-exports';
 import Validate from '../../components/Validate/Validate'
-import JCComponent from '../../components/JCComponent/JCComponent';
+import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
 
 
 import moment from "moment";
@@ -227,7 +227,7 @@ interface Props {
   navigation?: any
 
 }
-interface State {
+interface State extends JCState {
   hasCompletedPersonalProfile: string;
   hasPaidState: string;
   userExists: boolean;
@@ -240,6 +240,7 @@ export default class App extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
     this.state = {
+      ...this.getInitialState(),
       hasCompletedPersonalProfile: "Unknown",
       hasPaidState: "Complete",
       userExists: false,
