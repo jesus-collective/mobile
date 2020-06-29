@@ -18,6 +18,7 @@ import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
+import { MapData } from 'components/MyGroups/MyGroups';
 
 const MessageBoard = lazy(() => import('../../components/MessageBoard/MessageBoard'));
 
@@ -39,9 +40,9 @@ interface State extends JCState {
   validationError: string
   currentUser: string
   currentUserProfile: any
-  memberIDs: string[],
+  memberIDs: string[]
   members: any
-  mapData: any
+  mapData: MapData[]
 }
 
 
@@ -190,7 +191,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
       getGroup.then(processResults).catch(processResults)
     }
   }
-  convertProfileToMapData(data): [] {
+  convertProfileToMapData(data): MapData[] {
     return data.map((dataItem) => {
       if (dataItem.location && dataItem.location.latitude && dataItem.location.longitude) {
         return {

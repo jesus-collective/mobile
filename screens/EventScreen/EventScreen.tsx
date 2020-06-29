@@ -22,6 +22,7 @@ import EditableDate from '../../components/Forms/EditableDate'
 import EditableLocation from '../../components/Forms/EditableLocation'
 import EditableUrl from '../../components/Forms/EditableUrl'
 import moment from 'moment-timezone'
+import { MapData } from 'components/MyGroups/MyGroups';
 
 const MessageBoard = lazy(() => import('../../components/MessageBoard/MessageBoard'));
 
@@ -44,7 +45,7 @@ interface State extends JCState {
   currentUser: string
   currentUserProfile: any
   attendeeIDs: string[]
-  mapData: any
+  mapData: MapData[]
   initCenter: any
 }
 

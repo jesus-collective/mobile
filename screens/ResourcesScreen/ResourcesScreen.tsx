@@ -11,7 +11,7 @@ interface Props {
 }
 interface State {
   showMap: boolean
-  mapData: any
+  mapData: MapData[]
 }
 
 

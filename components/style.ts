@@ -18,7 +18,7 @@ export default class MainStyles {
         return this.instance;
     }
     style = null
-    updateStyles = (obj) => {
+    updateStyles = (obj): void => {
         obj.styles.update()
         obj.forceUpdate();
     };

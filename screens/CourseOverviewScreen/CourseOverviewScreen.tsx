@@ -26,6 +26,7 @@ import EditableDollar from '../../components/Forms/EditableDollar'
 import data from './course.json';
 import EditableRichText from '../../components/Forms/EditableRichText';
 import moment from 'moment-timezone';
+import { MapData } from 'components/MyGroups/MyGroups';
 interface Props {
   navigation: any
   route: any
@@ -46,7 +47,7 @@ interface State extends JCState {
   currentUserProfile: any
   memberIDs: string[],
   members: any
-  mapData: any
+  mapData: MapData[]
   canGotoActiveCourse: boolean
 }
 

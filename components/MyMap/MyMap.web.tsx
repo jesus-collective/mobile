@@ -12,25 +12,26 @@ import { AntDesign } from '@expo/vector-icons';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import ErrorBoundary from '../ErrorBoundry';
 import moment from 'moment';
-import JCComponent from '../JCComponent/JCComponent';
+import JCComponent, { JCState } from '../JCComponent/JCComponent';
 import JCSwitch from '../JCSwitch/JCSwitch';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { API, graphqlOperation, Auth } from 'aws-amplify';
 import * as queries from '../../src/graphql/queries';
 
 import mapStyle from './mapstyle.json';
+import { MapData } from 'components/MyGroups/MyGroups';
 
 interface Props {
   navigation?: any
   route?: any
   visible: boolean
   google: any
-  mapData: any
+  mapData: MapData[]
   type: string
   initCenter?: any
   size?: string
 }
-interface State {
+interface State extends JCState {
   selectedPlace: any
   activeMarker: any
   showingInfoWindow: any
@@ -45,6 +46,7 @@ class MyMapImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      ...this.getInitialState(),
       activeMarker: null,
       selectedPlace: {},
       showingInfoWindow: false,
@@ -61,7 +63,7 @@ class MyMapImpl extends JCComponent<Props, State> {
       const getUser: any = API.graphql(graphqlOperation(queries.getUser, { id: user['username'] }));
       getUser.then((json) => {
         this.setState({
-          currentUserLocation: {lat: json.data.getUser.location.latitude, lng: json.data.getUser.location.longitude}
+          currentUserLocation: { lat: json.data.getUser.location.latitude, lng: json.data.getUser.location.longitude }
         })
       }).catch((e) => {
         console.error({
@@ -105,29 +107,29 @@ class MyMapImpl extends JCComponent<Props, State> {
 
   renderProfile() {
     return <Card style={this.styles.style.myMapDashboardConversationCard}>
-        <CardItem >
-          <Body style={{flex: 1, flexDirection: 'row'}}>
-            <View style={{marginRight: 10}}>
-              <ProfileImage user={this.state.selectedPlace.mapItem.user.id} size='medium' style='map'>
-              </ProfileImage>
-            </View>
-            <View>
-              <Text style={this.styles.style.fontConnectWithName}>{this.state.selectedPlace.mapItem.user.given_name} {this.state.selectedPlace.mapItem.user.family_name}</Text>          
-              <Text style={this.styles.style.myMapConversationCardRole}>{this.state.selectedPlace.mapItem.user.currentRole}</Text>
-              <Text style={this.styles.style.myMapConversationCardAboutMe}>{this.state.selectedPlace.mapItem.user.aboutMeShort}</Text>
-              <View style={{flex:1, flexDirection: 'row', paddingTop: 10}}>
-                <JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.openConversation(this.state.selectedPlace.mapItem.user.id, this.state.selectedPlace.mapItem.user.given_name + " " + this.state.selectedPlace.mapItem.user.family_name) }}>Start Conversation</JCButton>
-                <JCButton buttonType={ButtonTypes.TransparentBoldOrange} onPress={() => { this.showProfile(this.state.selectedPlace.mapItem.user.id) }}>View Profile</JCButton>
-              </View>
-            </View>
-          </Body>
-          <View style={{position: 'absolute', top: -10, right: 10}}>
-            <TouchableOpacity onPress={() => this.setState({ showingInfoWindow: false })}>
-              <AntDesign name="close" size={24} color="#979797"/>
-            </TouchableOpacity>
+      <CardItem >
+        <Body style={{ flex: 1, flexDirection: 'row' }}>
+          <View style={{ marginRight: 10 }}>
+            <ProfileImage user={this.state.selectedPlace.mapItem.user.id} size='medium' style='map'>
+            </ProfileImage>
           </View>
-        </CardItem>
-      </Card>
+          <View>
+            <Text style={this.styles.style.fontConnectWithName}>{this.state.selectedPlace.mapItem.user.given_name} {this.state.selectedPlace.mapItem.user.family_name}</Text>
+            <Text style={this.styles.style.myMapConversationCardRole}>{this.state.selectedPlace.mapItem.user.currentRole}</Text>
+            <Text style={this.styles.style.myMapConversationCardAboutMe}>{this.state.selectedPlace.mapItem.user.aboutMeShort}</Text>
+            <View style={{ flex: 1, flexDirection: 'row', paddingTop: 10 }}>
+              <JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.openConversation(this.state.selectedPlace.mapItem.user.id, this.state.selectedPlace.mapItem.user.given_name + " " + this.state.selectedPlace.mapItem.user.family_name) }}>Start Conversation</JCButton>
+              <JCButton buttonType={ButtonTypes.TransparentBoldOrange} onPress={() => { this.showProfile(this.state.selectedPlace.mapItem.user.id) }}>View Profile</JCButton>
+            </View>
+          </View>
+        </Body>
+        <View style={{ position: 'absolute', top: -10, right: 10 }}>
+          <TouchableOpacity onPress={() => this.setState({ showingInfoWindow: false })}>
+            <AntDesign name="close" size={24} color="#979797" />
+          </TouchableOpacity>
+        </View>
+      </CardItem>
+    </Card>
   }
   renderEvent() {
     return <Card style={this.styles.style.myMapCalloutEventContainer}>
@@ -148,9 +150,9 @@ class MyMapImpl extends JCComponent<Props, State> {
         {this.canLeave(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Event") }}>Don't Attend</JCButton><Right></Right></CardItem> : null}
         {this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>Owner</JCButton><Right></Right></CardItem> : null}
         */}
-      <View style={{position: 'absolute', top: 10, right: 10}}>
+      <View style={{ position: 'absolute', top: 10, right: 10 }}>
         <TouchableOpacity onPress={() => this.setState({ showingInfoWindow: false })}>
-          <AntDesign name="close" size={24} color="#979797"/>
+          <AntDesign name="close" size={24} color="#979797" />
         </TouchableOpacity>
       </View>
     </Card>
@@ -229,15 +231,15 @@ class MyMapImpl extends JCComponent<Props, State> {
 
             </View>
             {this.state.showingInfoWindow ?
-              <View style={{position: 'absolute', alignSelf: 'center', height: '100%', justifyContent: 'center'}}>
+              <View style={{ position: 'absolute', alignSelf: 'center', height: '100%', justifyContent: 'center' }}>
                 {this.state.selectedPlace != null ?
-                    this.state.selectedPlace.mapItemType == "profile" ?
-                      this.renderProfile() :
-                      this.state.selectedPlace.mapItemType == "event" ?
-                        this.renderEvent()
-                        : null
-                    : null
-                  }
+                  this.state.selectedPlace.mapItemType == "profile" ?
+                    this.renderProfile() :
+                    this.state.selectedPlace.mapItemType == "event" ?
+                      this.renderEvent()
+                      : null
+                  : null
+                }
               </View> : null}
           </View>
 
@@ -281,46 +283,46 @@ class MyMapImpl extends JCComponent<Props, State> {
       return (
         <ErrorBoundary>
 
-            <View style={{ height: this.props.visible ? this.props.size ? this.props.size : 510 : 0 }}>
+          <View style={{ height: this.props.visible ? this.props.size ? this.props.size : 510 : 0 }}>
 
-              <Map google={window.google} zoom={5}
-                center={this.props.initCenter ? this.props.initCenter : this.state.currentUserLocation ? this.state.currentUserLocation : { lat: 44, lng: -78 }}
-                mapTypeControl={false}
-                onClick={this.onMapClicked}
-                onReady={(mapProps, map) => this._mapLoaded(map)}
-                style={{ position: "relative", width: "100%", height: "100%" }}
-                streetViewControl={false}
-                fullscreenControl={false}
-              >
+            <Map google={window.google} zoom={5}
+              center={this.props.initCenter ? this.props.initCenter : this.state.currentUserLocation ? this.state.currentUserLocation : { lat: 44, lng: -78 }}
+              mapTypeControl={false}
+              onClick={this.onMapClicked}
+              onReady={(mapProps, map) => this._mapLoaded(map)}
+              style={{ position: "relative", width: "100%", height: "100%" }}
+              streetViewControl={false}
+              fullscreenControl={false}
+            >
 
-                {this.props.mapData.map((mapItem, index) => {
+              {this.props.mapData.map((mapItem, index) => {
 
-                  return <Marker key={index} title={mapItem.name}
-                    mapItemType={mapItem.type}
-                    mapItem={mapItem}
-                    onClick={this.onMarkerClick}
-                    position={{ lat: mapItem.latitude, lng: mapItem.longitude }}
-                    icon={{
-                      url: require("../../assets/svg/map-icon-red.svg"),
-                      scaledSize: new google.maps.Size(32, 32)
-                    }}>
-                  </Marker>
+                return <Marker key={index} title={mapItem.name}
+                  mapItemType={mapItem.type}
+                  mapItem={mapItem}
+                  onClick={this.onMarkerClick}
+                  position={{ lat: mapItem.latitude, lng: mapItem.longitude }}
+                  icon={{
+                    url: require("../../assets/svg/map-icon-red.svg"),
+                    scaledSize: new google.maps.Size(32, 32)
+                  }}>
+                </Marker>
 
-                })}
+              })}
 
-              </Map>
-              {this.state.showingInfoWindow ?
-                <View style={{position: 'absolute', alignSelf: 'center', height: '100%', justifyContent: 'center'}}>
-                  {this.state.selectedPlace != null ?
-                      this.state.selectedPlace.mapItemType == "profile" ?
-                        this.renderProfile() :
-                        this.state.selectedPlace.mapItemType == "event" ?
-                          this.renderEvent()
-                          : null
+            </Map>
+            {this.state.showingInfoWindow ?
+              <View style={{ position: 'absolute', alignSelf: 'center', height: '100%', justifyContent: 'center' }}>
+                {this.state.selectedPlace != null ?
+                  this.state.selectedPlace.mapItemType == "profile" ?
+                    this.renderProfile() :
+                    this.state.selectedPlace.mapItemType == "event" ?
+                      this.renderEvent()
                       : null
-                    }
-                </View> : null}
-            </View>
+                  : null
+                }
+              </View> : null}
+          </View>
         </ErrorBoundary>
       )
     }

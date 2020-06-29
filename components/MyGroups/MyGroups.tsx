@@ -43,13 +43,13 @@ interface State extends JCState {
   isOwner: any
 }
 export interface MapData {
-  latitude: string | number
-  longitude: string | number
+  latitude: any
+  longitude: any
   name: string
-  user: string
-  event?: any,
+  user?: any
+  event?: any
   link: string
-  type: string
+  type: any
 }
 
 

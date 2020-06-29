@@ -66,7 +66,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
         )
 
     }
-    convertCommentFromJSONToHTML = (text): string => {
+    convertCommentFromJSONToHTML = (text: string): string => {
         try {
             return stateToHTML(convertFromRaw(JSON.parse(text)))
         } catch (e) {

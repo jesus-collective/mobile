@@ -119,7 +119,7 @@ class ResourceOverviewImpl extends JCComponent<Props>{
         )
     }
 }
-export default function ResourceOverview(props: Props) {
+export default function ResourceOverview(props: Props): JSX.Element {
     const route = useRoute();
     const navigation = useNavigation()
     return <ResourceOverviewImpl {...props} navigation={navigation} route={route} />;

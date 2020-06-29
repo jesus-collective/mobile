@@ -4,12 +4,13 @@ import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import ErrorBoundary from '../ErrorBoundry';
 import JCComponent from '../JCComponent/JCComponent';
 import { useRoute, useNavigation } from '@react-navigation/native';
+import { MapData } from 'components/MyGroups/MyGroups';
 
 interface Props {
   navigation?: any
   route?: any
   visible: boolean
-  mapData: any
+  mapData: MapData[]
   type: string
   initCenter?: any
   size?: string

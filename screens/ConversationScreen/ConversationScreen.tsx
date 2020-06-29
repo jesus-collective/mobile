@@ -103,7 +103,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
     })
   }
 
-  mapChanged = () => {
+  mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
   }
 
