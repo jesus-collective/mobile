@@ -1261,7 +1261,8 @@ export default class MainStyles {
                     marginTop: 100
                 },
                 resourcefileFieldWrapper: {
-                    top: "10vw"
+                    top: "10vw",
+                    width: "100%"
                 },
                 dashboardConversationCard: {
                     width: "100%"
@@ -1413,6 +1414,12 @@ export default class MainStyles {
                 },
                 fontConnectConversation: {
                     textAlign: "center"
+                },
+                fontCourseHeaderBold: {
+                    fontSize: 80,
+                },
+                fontResourceHeaderBold: {
+                    fontSize: 80,
                 },
             },
 
