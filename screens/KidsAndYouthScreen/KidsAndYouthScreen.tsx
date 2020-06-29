@@ -13,7 +13,7 @@ interface Props {
 
 export default class KidsAndYouthScreen extends JCComponent<Props>{
 
-  render() {
+  render(): React.ReactNode {
     // const { navigate } = this.props.navigation;
     return (
       <Container>

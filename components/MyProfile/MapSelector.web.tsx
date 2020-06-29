@@ -9,7 +9,7 @@ import { Marker } from 'google-maps-react';
 import styles from '../../components/style'
 import mapStyle from './mapstyle.json';
 import { Map } from 'google-maps-react';
-import JCComponent from '../JCComponent/JCComponent';
+import JCComponent, { JCState } from '../JCComponent/JCComponent';
 
 interface Props {
     mapVisible: any,
@@ -17,7 +17,7 @@ interface Props {
     google: any
     coord: any
 }
-interface State {
+interface State extends JCState {
     mapCoord: any
     mapVisible: any
 }
@@ -26,18 +26,19 @@ class MapSelector extends JCComponent<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
+            ...super.getInitialState(),
             mapCoord: { latitude: this.props.coord != null ? this.props.coord.latitude : 0.0, longitude: this.props.coord != null ? this.props.coord.longitude : 0.0 },
             mapVisible: false
         }
     }
 
-    _mapLoaded(map) {
+    _mapLoaded(map): void {
         map.setOptions({
             styles: mapStyle
         })
     }
 
-    render() {
+    render(): React.ReactNode {
         return (
 
             this.props.mapVisible ?

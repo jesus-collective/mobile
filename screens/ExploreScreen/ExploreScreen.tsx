@@ -16,7 +16,7 @@ export default class ExploreScreen extends JCComponent<Props> {
     url: "http://jesuscollective.com/explore",
   };
 
-  render() {
+  render(): React.ReactNode {
     //const { navigate } = this.props.navigation;
     //  <NavigationEvents onWillFocus={payload => { this.setState({ url: "http://jesuscollective.com/explore" }); console.log('will focus', payload) }} />
 
