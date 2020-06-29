@@ -34,10 +34,10 @@ export default class JCComponent<Props = any, State extends JCState = any> exten
     groups = null
     styles = MainStyles.getInstance();
     componentDidMount(): void {
-        Dimensions.addEventListener('change', this.styles.updateStyles(this))
+        Dimensions.addEventListener('change', () => { this.styles.updateStyles(this) })
     }
     componentWillUnmount(): void {
-        Dimensions.removeEventListener("change", this.styles.updateStyles(this));
+        Dimensions.removeEventListener("change", () => { this.styles.updateStyles(this) });
     }
 
 }

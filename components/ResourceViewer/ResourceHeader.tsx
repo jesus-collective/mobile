@@ -30,7 +30,7 @@ class ResourceHeader extends JCComponent<EmptyProps, State> {
             fadeValue: new Animated.Value(0),
         }
     }
-    fadeAnimation = () => {
+    fadeAnimation = (): void => {
         Animated.timing(this.state.fadeValue, {
             toValue: 1,
             duration: 3250,

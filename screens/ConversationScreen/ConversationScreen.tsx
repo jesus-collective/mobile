@@ -68,7 +68,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
       }).catch((e) => { console.log(e) })
     }).catch((e) => { console.log(e) })
   }
-  shouldCreateRoom = () => {
+  shouldCreateRoom = (): void => {
     if (!(this.state.data.items.map((item, index) => {
       if ((item.room.messageUsers.items.length == 2) &&
         (item.room.messageUsers.items[0].userID == this.props.route.params.initialUserID || item.room.messageUsers.items[1].userID == this.props.route.params.initialUserID)) {

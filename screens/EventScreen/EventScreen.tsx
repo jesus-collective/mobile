@@ -94,7 +94,7 @@ export default class EventScreen extends JCComponent<Props, State>{
     })
 
   }
-  getValueFromKey(myObject: any, string: any) {
+  getValueFromKey(myObject: any, string: any): string {
     const key = Object.keys(myObject).filter(k => k.includes(string));
     return key.length ? myObject[key[0]] : "";
   }

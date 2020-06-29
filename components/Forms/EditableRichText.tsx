@@ -11,7 +11,7 @@ import './react-draft-wysiwyg.css';
 import { v1 as uuidv1 } from 'uuid';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import JCComponent, { JCState } from '../JCComponent/JCComponent';
-import { ContentState, EditorState, convertFromRaw, convertToRaw } from 'draft-js';
+import { ContentState, convertFromRaw, convertToRaw } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
 
 interface Props {
@@ -50,23 +50,23 @@ export default class EditableRichText extends JCComponent<Props, State> {
             this.setState({ value: this.props.value })
         }
     }
-    onChanged(val: any) {
+    onChanged(val: any): void {
 
         this.props.onChange(val)
         this.setState({ isEditMode: false })
     }
-    updateEditorInput(value: any) {
+    updateEditorInput(value: any): void {
 
         this.setState({ editorState: value })
     }
-    updateInput(value: any) {
+    updateInput(value: any): void {
 
         this.setState({ value: JSON.stringify(value) },
             this.props.onChange(this.state.value)
         )
 
     }
-    convertCommentFromJSONToHTML = (text) => {
+    convertCommentFromJSONToHTML = (text): string => {
         try {
             return stateToHTML(convertFromRaw(JSON.parse(text)))
         } catch (e) {
