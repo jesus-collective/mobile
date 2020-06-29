@@ -240,7 +240,7 @@ export default class App extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
     this.state = {
-      ...this.getInitialState(),
+      ...super.getInitialState(),
       hasCompletedPersonalProfile: "Unknown",
       hasPaidState: "Complete",
       userExists: false,

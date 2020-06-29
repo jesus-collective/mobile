@@ -6,7 +6,7 @@ import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 //import { withRouter, RouteComponentProps } from 'react-router-dom';
 
 import { Marker } from 'google-maps-react';
-import styles from '../../components/style'
+//import styles from '../../components/style'
 import mapStyle from './mapstyle.json';
 import { Map } from 'google-maps-react';
 import JCComponent, { JCState } from '../JCComponent/JCComponent';
@@ -32,7 +32,7 @@ class MapSelector extends JCComponent<Props, State> {
         }
     }
 
-    _mapLoaded(map): void {
+    _mapLoaded(map: any): void {
         map.setOptions({
             styles: mapStyle
         })
@@ -48,12 +48,12 @@ class MapSelector extends JCComponent<Props, State> {
                             <Text style={this.styles.style.mapSelectorText}>Select a location (this will be public)</Text>
                             <JCButton data-testid="mapselector-save" buttonType={ButtonTypes.SolidMap} onPress={() => this.props.onClose(this.state.mapCoord)}>Done</JCButton>
                         </View>
-                        <Container style={styles.mapView}>
+                        <Container style={this.styles.style.mapView}>
                             <Map google={window.google} zoom={2}
                                 initialCenter={{ lat: 0, lng: 0 }}
                                 mapTypeControl={false}
                                 onReady={(mapProps, map) => this._mapLoaded(map)}
-                                style={styles.map}
+                                style={this.styles.style.map}
                                 streetViewControl={false}
                                 fullscreenControl={false}
                             >

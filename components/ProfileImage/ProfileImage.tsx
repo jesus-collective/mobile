@@ -42,7 +42,7 @@ export default class MyProfile extends JCComponent<Props, State> {
             }
         // this.getProfileImage(this.props.user ? this.props.user.profileImage : null)
     }
-    getProfileImage(user): void {
+    getProfileImage(user: any): void {
         if (user == "" || user == null) {
             this.state = {
                 ...super.getInitialState(),

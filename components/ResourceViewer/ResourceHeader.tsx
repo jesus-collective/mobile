@@ -37,7 +37,7 @@ class ResourceHeader extends JCComponent<EmptyProps, State> {
             useNativeDriver: true
         }).start();
     }
-    async getImage(img): Promise<void> {
+    async getImage(img: any): Promise<void> {
         if (img != null) {
             const z = await Storage.get(img.filenameLarge, {
                 level: 'protected',

@@ -25,7 +25,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
     this.state = {
-      ...this.getInitialState(),
+      ...super.getInitialState(),
       showMap: false,
       data: []
     }
@@ -33,7 +33,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
   mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
   }
-  search(item): void {
+  search(item: any): void {
     console.log(item.target.value)
     const searchGroups: any = API.graphql({
       query: queries.searchGroups,

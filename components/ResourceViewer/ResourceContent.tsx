@@ -26,7 +26,7 @@ class ResourceContent extends JCComponent<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            ...this.getInitialState(),
+            ...super.getInitialState(),
             numberOfVideos: 0,
             rowLength: 4,
             cardHeight: 0

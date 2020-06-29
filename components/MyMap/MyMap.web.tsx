@@ -46,7 +46,7 @@ class MyMapImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      ...this.getInitialState(),
+      ...super.getInitialState(),
       activeMarker: null,
       selectedPlace: {},
       showingInfoWindow: false,
@@ -331,7 +331,7 @@ class MyMapImpl extends JCComponent<Props, State> {
 }
 
 
-export default function MyMap(props: Props) {
+export default function MyMap(props: Props): JSX.Element {
   const route = useRoute();
   const navigation = useNavigation()
   return <MyMapImpl {...props} navigation={navigation} route={route} />;

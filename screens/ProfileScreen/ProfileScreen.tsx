@@ -26,7 +26,7 @@ export default class ProfileScreen extends JCComponent<Props, State>{
     super(props);
 
     this.state = {
-      ...this.getInitialState(),
+      ...super.getInitialState(),
       loadId: props.route.params.id,
       createNew: false,
       canSave: true,

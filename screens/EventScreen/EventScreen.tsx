@@ -213,7 +213,7 @@ export default class EventScreen extends JCComponent<Props, State>{
       });
     }
   }
-  clean(item): void {
+  clean(item: any): void {
     delete item.members
     delete item.messages
     delete item.organizerGroup
@@ -318,7 +318,7 @@ export default class EventScreen extends JCComponent<Props, State>{
     temp[field] = value
     this.setState({ data: temp })
   }
-  showProfile(id): void {
+  showProfile(id: any): void {
     console.log("Navigate to profileScreen")
     this.props.navigation.push("ProfileScreen", { id: id, create: false });
   }

@@ -27,7 +27,7 @@ class ResourceScreenImpl extends JCComponent<Props, State>{
     super(props);
 
     this.state = {
-      ...this.getInitialState(),
+      ...super.getInitialState(),
       showMap: false
     }
 

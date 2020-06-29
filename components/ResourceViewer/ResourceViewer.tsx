@@ -54,7 +54,7 @@ class ResourceViewerImpl extends JCComponent<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            ...this.getInitialState(),
+            ...super.getInitialState(),
             resourceData: null,
             groupData: null,
             currentResource: null,

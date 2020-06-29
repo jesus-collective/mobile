@@ -128,7 +128,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
       });
     }
   }
-  clean(item): void {
+  clean(item: any): void {
     delete item.members
     delete item.messages
     delete item.organizerGroup
