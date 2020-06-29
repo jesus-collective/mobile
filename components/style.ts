@@ -364,17 +364,18 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Regular-App', fontSize: 12, color: '#ffffFF', padding: 10
             },
             fontCourseHeaderBold: {
-                fontFamily: 'Graphik-Bold-App',
-                fontWeight: "bold",
-                fontSize: 30,
+                fontFamily: 'Graphik-Regular-App',
+                fontWeight: 400,
+                fontSize: 100,
                 lineHeight: 35,
                 textAlign: "center",
-                color: "#FFFFFF"
+                color: "#FFFFFF",
+                marginBottom: "1.5rem"
             },
             fontResourceHeaderBold: {
-                fontFamily: 'Graphik-Bold-App',
-                fontWeight: "bold",
-                fontSize: 30,
+                fontFamily: 'Graphik-Regular-App',
+                fontWeight: 400,
+                fontSize: 100,
                 lineHeight: 35,
                 alignSelf: "center",
                 textAlign: "center",
@@ -1062,7 +1063,7 @@ export default class MainStyles {
                 alignSelf: "center",
                 top: "5vw",
                 width: "50%",
-                overflow: "hidden",
+                overflow: "none",
                 position: "absolute"
             },
             resourceImageIcon: {
