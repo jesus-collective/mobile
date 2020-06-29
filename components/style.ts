@@ -401,16 +401,16 @@ export default class MainStyles {
             fontCourseHeaderDescription: {
                 fontFamily: 'Graphik-Regular-App',
                 fontWeight: "normal",
-                fontSize: 14,
-                lineHeight: 35,
+                fontSize: 20,
+                lineHeight: 30,
                 textAlign: "center",
                 color: "#FFFFFF"
             },
             fontResourceHeaderDescription: {
                 fontFamily: 'Graphik-Regular-App',
                 fontWeight: "normal",
-                fontSize: 14,
-                lineHeight: 35,
+                fontSize: 20,
+                lineHeight: 30,
                 textAlign: "center",
                 color: "#FFFFFF",
                 width: "100%",
