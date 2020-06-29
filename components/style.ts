@@ -1690,6 +1690,12 @@ export default class MainStyles {
                 fontConnectConversation: {
                     textAlign: "center"
                 },
+                fontCourseHeaderBold: {
+                    fontSize: 50,
+                },
+                fontResourceHeaderBold: {
+                    fontSize: 50,
+                },
             },
 
             dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
