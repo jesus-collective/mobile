@@ -9,12 +9,12 @@ import { Storage } from 'aws-amplify';
 import Amplify from 'aws-amplify'
 import awsconfig from '../../src/aws-exports';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
-import JCComponent from '../JCComponent/JCComponent';
+import JCComponent, { JCState } from '../JCComponent/JCComponent';
 import { EmptyProps } from '../../src/types';
 
 Amplify.configure(awsconfig);
 
-interface State {
+interface State extends JCState {
     imageUrl: any
     image: any
     fadeValue: any
@@ -24,6 +24,7 @@ class ResourceHeader extends JCComponent<EmptyProps, State> {
     constructor(props: EmptyProps) {
         super(props)
         this.state = {
+            ...super.getInitialState(),
             imageUrl: null,
             image: null,
             fadeValue: new Animated.Value(0),
@@ -56,7 +57,7 @@ class ResourceHeader extends JCComponent<EmptyProps, State> {
                     return (
                         <Container style={this.styles.style.resourceHeaderImgContainer}>
                             {this.state.imageUrl ?
-                                <Animated.View onLayout={this.fadeAnimation} style={[this.styles.style.resourceHeaderImgView, {opacity: this.state.fadeValue}]}>
+                                <Animated.View onLayout={this.fadeAnimation} style={[this.styles.style.resourceHeaderImgView, { opacity: this.state.fadeValue }]}>
                                     <Image style={this.styles.style.resourceHeaderImg}
                                         source={this.state.imageUrl} onError={() => { this.getImage(state.resourceData.resources.items[state.currentResource].image) }}>
                                     </Image>

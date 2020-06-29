@@ -21,6 +21,7 @@ export default class HomeScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
     this.state = {
+      ...super.getInitialState(),
       mapData: [],
       showMap: false,
       showMy: this.props.route.params ? this.props.route.params.mine : false
