@@ -9,7 +9,7 @@ import { API } from 'aws-amplify';
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
-import JCComponent from '../../components/JCComponent/JCComponent';
+import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
 import CourseHome from '../../components/CourseViewer/CourseHome'
 import CourseDetail from '../../components/CourseViewer/CourseDetail'
 import CourseCoaching from '../../components/CourseViewer/CourseCoaching'
@@ -20,7 +20,7 @@ interface Props {
   navigation: any
   route: any
 }
-interface State {
+interface State extends JCState {
   showMap: boolean
   loadId: string
   data: any
@@ -39,6 +39,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
     super(props);
 
     this.state = {
+      ...super.getInitialState(),
       currentScreen: props.route.params.screen ? props.route.params.screen : "Home",
       showMap: false,
       loadId: props.route.params.id,

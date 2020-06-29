@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Input, Button } from 'native-base';
 import { Text } from 'react-native'
-import JCComponent from '../JCComponent/JCComponent';
+import JCComponent, { JCState } from '../JCComponent/JCComponent';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
 interface Props {
@@ -17,7 +17,7 @@ interface Props {
     navigation?: any
     route?: any
 }
-interface State {
+interface State extends JCState {
     // value: string,
     isEditable: boolean,
     textStyle: any,
@@ -29,7 +29,7 @@ class EditableUrlImpl extends JCComponent<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            // value: props.value,
+            ...super.getInitialState(),
             isEditable: props.isEditable,
             textStyle: props.textStyle,
             inputStyle: props.inputStyle,

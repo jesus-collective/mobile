@@ -4,7 +4,7 @@ import PlacesAutocomplete, {
     geocodeByAddress,
     getLatLng,
 } from 'react-places-autocomplete';
-import JCComponent from '../JCComponent/JCComponent';
+import JCComponent, { JCState } from '../JCComponent/JCComponent';
 
 interface Props {
     value: string,
@@ -16,7 +16,7 @@ interface Props {
     citiesOnly?: boolean
     onChange?(string, any)
 }
-interface State {
+interface State extends JCState {
     value: string,
     isEditable: boolean,
     textStyle: any,
@@ -27,7 +27,9 @@ interface State {
 export default class EditableLocation extends JCComponent<Props, State> {
     constructor(props: Props) {
         super(props);
+
         this.state = {
+            ...super.getInitialState(),
             value: props.value,
             isEditable: props.isEditable,
             textStyle: props.textStyle,
@@ -35,7 +37,6 @@ export default class EditableLocation extends JCComponent<Props, State> {
             multiline: props.multiline,
             placeholder: props.placeholder
         }
-        // console.log(props)
     }
 
     onChanged = (address: string): void => {
@@ -62,7 +63,7 @@ export default class EditableLocation extends JCComponent<Props, State> {
                 value={this.state.value}
                 onChange={this.onChanged}
                 onSelect={this.handleSelect}
-                searchOptions={this.props.citiesOnly ? {types: ['(cities)']} : {}}
+                searchOptions={this.props.citiesOnly ? { types: ['(cities)'] } : {}}
                 onError={(status, clearSuggestions) => {
                     console.log('Google Maps API returned error with status: ', status)
                     clearSuggestions()

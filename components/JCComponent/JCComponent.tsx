@@ -4,11 +4,14 @@ import MainStyles from '../../components/style';
 import { Dimensions } from 'react-native';
 import { Auth } from 'aws-amplify';
 
-export default class JCComponent<Props = any, State = any> extends React.Component<Props, State> {
+export interface JCState {
+    groups: any
+}
+export default class JCComponent<Props = any, State extends JCState = any> extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props)
         const user = Auth.currentAuthenticatedUser();
-        this.state = { groups: null }
+        this.state = this.getInitialState()
         user.then((user) => {
             this.setState({
                 groups: user.signInUserSession.accessToken.payload["cognito:groups"]
@@ -17,6 +20,10 @@ export default class JCComponent<Props = any, State = any> extends React.Compone
         })
 
     }
+    protected getInitialState(): State {
+        return { groups: null } as JCState as State;
+    }
+
     isMemberOf(group: string): boolean {
         console.log(this.state.groups)
         if (this.state.groups)

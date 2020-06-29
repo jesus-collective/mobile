@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'native-base';
 import { Text, Animated, TouchableWithoutFeedback } from 'react-native'
-import JCComponent from '../JCComponent/JCComponent';
+import JCComponent, { JCState } from '../JCComponent/JCComponent';
 
 interface Props {
   switchLabel: string
@@ -31,7 +31,7 @@ interface Props {
   */
   thumbColor?: string
 }
-interface State {
+interface State extends JCState {
   enabled: boolean
   animationState: any
   onColor: string
@@ -43,6 +43,7 @@ export default class JCSwitch extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      ...super.getInitialState(),
       enabled: this.props.initState,
       animationState: new Animated.Value(this.props.initState ? 1 : 0),
       onColor: this.props.onColor ? this.props.onColor : '#333333',

@@ -3,8 +3,8 @@ import { Container } from 'native-base';
 
 import { Platform } from 'react-native';
 import { Dimensions } from 'react-native'
-import MyGroups from '../../components/MyGroups/MyGroups'
-import JCComponent from '../../components/JCComponent/JCComponent';
+import MyGroups, { MapData } from '../../components/MyGroups/MyGroups'
+import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
 
 const MyConversations = lazy(() => import('../../components/MyConversations/MyConversations'));
 //const MyGroups = lazy(() => import('../../components/MyGroups/MyGroups'));
@@ -17,7 +17,7 @@ const MyMap = lazy(() => import('../../components/MyMap/MyMap'));
 interface Props {
   navigation: any
 }
-interface State {
+interface State extends JCState {
   showMap: boolean
   width: any
   height: any
@@ -29,6 +29,7 @@ class HomeScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
     this.state = {
+      ...super.getInitialState(),
       mapData: [],
       showMap: false,
       width: Dimensions.get('window').width,
@@ -42,7 +43,7 @@ class HomeScreen extends JCComponent<Props, State>{
   mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
   }
-  mergeMapData(mapData): void {
+  mergeMapData(mapData: MapData[]): void {
     //    console.log(mapData)
     const data = this.state.mapData.concat(mapData)
     this.setState({ mapData: data })
@@ -60,14 +61,14 @@ class HomeScreen extends JCComponent<Props, State>{
           <Container style={this.styles.style.dashboardPrimaryContainer}>
             <Container style={this.styles.style.dashboardMainContainer}>
               <Container style={this.styles.style.dashboardLeftCard}>
-                <MyGroups showMore={false} type="event" wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
-                <MyGroups showMore={false} type="group" wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
-                <MyGroups showMore={false} type="resource" wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
-                <MyGroups showMore={false} type="organization" wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
-                <MyGroups showMore={false} type="course" wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
+                <MyGroups showMore={false} type="event" wrap={false} navigation={this.props.navigation} onDataload={(mapData: MapData[]) => { this.mergeMapData(mapData) }}></MyGroups>
+                <MyGroups showMore={false} type="group" wrap={false} navigation={this.props.navigation} onDataload={(mapData: MapData[]) => { this.mergeMapData(mapData) }}></MyGroups>
+                <MyGroups showMore={false} type="resource" wrap={false} navigation={this.props.navigation} onDataload={(mapData: MapData[]) => { this.mergeMapData(mapData) }}></MyGroups>
+                <MyGroups showMore={false} type="organization" wrap={false} navigation={this.props.navigation} onDataload={(mapData: MapData[]) => { this.mergeMapData(mapData) }}></MyGroups>
+                <MyGroups showMore={false} type="course" wrap={false} navigation={this.props.navigation} onDataload={(mapData: MapData[]) => { this.mergeMapData(mapData) }}></MyGroups>
               </Container>
               <Container style={this.styles.style.dashboardRightCard}>
-                <MyPeople wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyPeople>
+                <MyPeople wrap={false} navigation={this.props.navigation} onDataload={(mapData: MapData[]) => { this.mergeMapData(mapData) }}></MyPeople>
                 <MyConversations navigation={this.props.navigation}></MyConversations>
                 <Container style={{ flex: 10 }}></Container>
               </Container>

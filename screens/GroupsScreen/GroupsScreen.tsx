@@ -1,14 +1,14 @@
 ﻿import React from 'react';
 import { Container, Content } from 'native-base';
 import Header from '../../components/Header/Header'
-import MyGroups from '../../components/MyGroups/MyGroups';
-import JCComponent from '../../components/JCComponent/JCComponent';
+import MyGroups, { MapData } from '../../components/MyGroups/MyGroups';
+import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
 
 interface Props {
   navigation: any
   route: any
 }
-interface State {
+interface State extends JCState {
   showMap: boolean
   mapData: any
   showMy: boolean
@@ -27,7 +27,7 @@ export default class HomeScreen extends JCComponent<Props, State>{
   mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
   }
-  mergeMapData(mapData): void {
+  mergeMapData(mapData: MapData[]): void {
     //    console.log(mapData)
     const data = this.state.mapData.concat(mapData)
     this.setState({ mapData: data })

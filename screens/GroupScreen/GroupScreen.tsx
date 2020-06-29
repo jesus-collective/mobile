@@ -17,7 +17,7 @@ import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
-import JCComponent from '../../components/JCComponent/JCComponent';
+import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
 
 const MessageBoard = lazy(() => import('../../components/MessageBoard/MessageBoard'));
 
@@ -26,7 +26,7 @@ interface Props {
   navigation: any
   route: any
 }
-interface State {
+interface State extends JCState {
   showMap: boolean
   loadId: string
   data: any
@@ -51,6 +51,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
     super(props);
 
     this.state = {
+      ...super.getInitialState(),
       showMap: false,
       loadId: props.route.params.id,
       createNew: props.route.params.create === "true" || props.route.params.create === true ? true : false,

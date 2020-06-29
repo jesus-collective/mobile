@@ -10,7 +10,7 @@ import './react-draft-wysiwyg.css';
 
 import { v1 as uuidv1 } from 'uuid';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import JCComponent from '../JCComponent/JCComponent';
+import JCComponent, { JCState } from '../JCComponent/JCComponent';
 import { ContentState, EditorState, convertFromRaw, convertToRaw } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
 
@@ -22,7 +22,7 @@ interface Props {
     placeholder?: string,
     onChange?(string)
 }
-interface State {
+interface State extends JCState {
     value: string,
     isEditable: boolean,
     isEditMode: boolean,
@@ -35,6 +35,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
+            ...super.getInitialState(),
             value: props.value,
             isEditMode: false,
             isEditable: props.isEditable,

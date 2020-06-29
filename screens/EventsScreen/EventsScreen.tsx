@@ -2,15 +2,15 @@
 import { Container, Content } from 'native-base';
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
-import MyGroups from '../../components/MyGroups/MyGroups';
-import JCComponent from '../../components/JCComponent/JCComponent';
+import MyGroups, { MapData } from '../../components/MyGroups/MyGroups';
+import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
 
 
 interface Props {
   navigation: any
   route: any
 }
-interface State {
+interface State extends JCState {
   showMap: boolean
   mapData: any
   showMy: boolean
@@ -29,7 +29,7 @@ export default class HomeScreen extends JCComponent<Props, State>{
   mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
   }
-  mergeMapData(mapData): void {
+  mergeMapData(mapData: MapData[]): void {
     //    console.log(mapData)
     const data = this.state.mapData.concat(mapData)
     this.setState({ mapData: data })
@@ -44,7 +44,7 @@ export default class HomeScreen extends JCComponent<Props, State>{
           <MyMap type={"no-filters"} size={'50%'} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
           <Container style={this.styles.style.eventsScreenMainContainer}>
             <Container style={this.styles.style.eventsScreenLeftContainer}>
-              <MyGroups showMy={this.state.showMy} showMore={true} type="event" wrap={true} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
+              <MyGroups showMy={this.state.showMy} showMore={true} type="event" wrap={true} navigation={this.props.navigation} onDataload={(mapData: MapData[]) => { this.mergeMapData(mapData) }}></MyGroups>
 
             </Container>
             { /*

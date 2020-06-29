@@ -10,14 +10,14 @@ import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
 
 import { Image } from 'react-native'
-import JCComponent from '../../components/JCComponent/JCComponent';
+import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
 
 interface Props {
   navigation?: any
   route?: any
 
 }
-interface State {
+interface State extends JCState {
   showMap: boolean
   data: any
   selectedRoom: any
@@ -28,6 +28,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
     this.state = {
+      ...super.getInitialState(),
       selectedRoom: null,
       showMap: false,
       data: { items: [] }

@@ -4,7 +4,7 @@ import './EditableDateStyle.ts';
 import { KeyboardDatePicker, KeyboardDateTimePicker } from "@material-ui/pickers";
 import { Picker, Container } from 'native-base';
 import moment from 'moment-timezone';
-import JCComponent from '../JCComponent/JCComponent';
+import JCComponent, { JCState } from '../JCComponent/JCComponent';
 
 interface Props {
     value: string,
@@ -17,7 +17,7 @@ interface Props {
     type: string
     tz: string
 }
-interface State {
+interface State extends JCState {
     // value: string,
     isEditable: boolean,
     textStyle: any,
@@ -32,7 +32,7 @@ export default class EditableDate extends JCComponent<Props, State> {
 
         super(props);
         this.state = {
-            // value: props.value,
+            ...super.getInitialState(),
             isEditable: props.isEditable,
             textStyle: props.textStyle,
             inputStyle: props.inputStyle,
@@ -42,11 +42,12 @@ export default class EditableDate extends JCComponent<Props, State> {
 
         }
     }
-    onChanged(dateTime: any, tz: string): void {
+
+    onChanged(dateTime: moment.Moment, tz: string): void {
         this.props.onChange(dateTime.tz(this.state.timezone).format(), tz)
     }
 
-    onTzChanged(tz: string) {
+    onTzChanged(tz: string): void {
         this.setState({ timezone: tz }, () => this.onChanged(moment(this.props.value), tz))
     }
 
@@ -56,7 +57,7 @@ export default class EditableDate extends JCComponent<Props, State> {
         if (this.state.isEditable) {
             if (this.props.type == 'datetime')
                 return (
-                    <Container style={{maxHeight: 100}}>
+                    <Container style={{ maxHeight: 100 }}>
                         <KeyboardDateTimePicker
                             variant="inline"
                             ampm={true}
@@ -77,14 +78,14 @@ export default class EditableDate extends JCComponent<Props, State> {
                         >
                             {moment.tz.names().map((item, index) => {
                                 return <Picker.Item key={index} label={item} value={item}></Picker.Item>
-                            })}                   
+                            })}
                         </Picker>
                     </Container>
-                    
-                    )
+
+                )
             else
                 return (
-                    <Container style={{maxHeight: 100}}>
+                    <Container style={{ maxHeight: 100 }}>
                         <KeyboardDatePicker
                             variant="inline"
                             format='MMMM Do YYYY, h:mm a'
@@ -103,14 +104,14 @@ export default class EditableDate extends JCComponent<Props, State> {
                         >
                             {moment.tz.names().map((item, index) => {
                                 return <Picker.Item key={index} label={item} value={item}></Picker.Item>
-                            })}                   
+                            })}
                         </Picker>
                     </Container>
-                    )
+                )
         }
         else
-            return <Text style={this.state.textStyle}> 
-                {moment.tz(this.props.value, this.state.timezone).format('dddd, MMMM D, YYYY @ h:mm a')} 
+            return <Text style={this.state.textStyle}>
+                {moment.tz(this.props.value, this.state.timezone).format('dddd, MMMM D, YYYY @ h:mm a')}
                 &nbsp;
                 {moment.tz.zone(this.state.timezone).abbr(+moment(this.props.value).format('x'))}
             </Text >

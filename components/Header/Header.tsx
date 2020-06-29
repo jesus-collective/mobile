@@ -7,7 +7,7 @@ import { Image, Text, Dimensions } from 'react-native';
 import { Auth } from 'aws-amplify';
 import { constants } from '../../src/constants'
 import HeaderStyles from '../Header/style';
-import JCComponent from '../JCComponent/JCComponent';
+import JCComponent, { JCState } from '../JCComponent/JCComponent';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem'
 
@@ -17,7 +17,7 @@ interface Props {
   onMapChange?(): any
 }
 
-interface State {
+interface State extends JCState {
   resourcesDropdown: HTMLElement
   resourcesStyle: any
   chevronStyle: any
@@ -51,9 +51,10 @@ export default class HeaderJC extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      ...super.getInitialState(),
       resourcesDropdown: null,
       resourcesStyle: Dimensions.get('window').width > 720 ? resourcesStyle1 : resourcesStyle2,
-      chevronStyle: Dimensions.get('window').width > 720 ? chevronStyle1: chevronStyle2
+      chevronStyle: Dimensions.get('window').width > 720 ? chevronStyle1 : chevronStyle2
     }
   }
   headerStyles = HeaderStyles.getInstance();

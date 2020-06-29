@@ -1,19 +1,23 @@
 import * as React from 'react';
 import Sentry from '../Sentry';
 import { ErrorInfo } from 'react';
-import JCComponent from '../JCComponent/JCComponent';
+import JCComponent, { JCState } from '../JCComponent/JCComponent';
 
-interface State {
+interface IState extends JCState {
     error: Error
 }
 
 interface Props {
     children: any
 }
-export default class ErrorBoundary extends JCComponent<Props, State>  {
+export default class ErrorBoundary extends JCComponent<Props, IState>  {
     constructor(props: Props) {
         super(props)
-        this.state = { error: null };
+        this.state = {
+            ...super.getInitialState(),
+            error: null
+        };
+
     }
     componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
         this.setState({ error });

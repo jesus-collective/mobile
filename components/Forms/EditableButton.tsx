@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input, Button } from 'native-base';
 import { Text } from 'react-native'
-import JCComponent from '../JCComponent/JCComponent';
+import JCComponent, { JCState } from '../JCComponent/JCComponent';
 
 interface Props {
   value: string,
@@ -13,7 +13,7 @@ interface Props {
   onPress(),
   onDelete()
 }
-interface State {
+interface State extends JCState {
   value: string,
   isEditable: boolean,
   isEditMode: boolean,
@@ -25,6 +25,7 @@ export default class EditableButton extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      ... super.getInitialState(),
       value: props.value,
       isEditMode: false,
       isEditable: props.isEditable,

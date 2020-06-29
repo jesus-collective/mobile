@@ -9,14 +9,14 @@ import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import { API, Auth } from 'aws-amplify';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { constants } from '../../src/constants'
-import JCComponent from '../JCComponent/JCComponent';
-
+import JCComponent, { JCState } from '../JCComponent/JCComponent';
+import { MapData } from '../MyGroups/MyGroups'
 interface Props {
   navigation: any
   wrap: boolean
-  onDataload(data: any): any
+  onDataload(mapData: MapData[]): void
 }
-interface State {
+interface State extends JCState {
   openSingle: string
   openMultiple: string
   // type: String
@@ -27,18 +27,12 @@ interface State {
   currentUser: string
   //showCreateButton: Boolean
 }
-interface MapData {
-  latitude: string | number
-  longitude: string | number
-  name: string
-  user: string
-  link: string
-  type: string
-}
+
 export default class MyPeople extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      ...super.getInitialState(),
       openSingle: "ProfileScreen",
       openMultiple: "ProfilesScreen",
       //createString: "+ Create Event",

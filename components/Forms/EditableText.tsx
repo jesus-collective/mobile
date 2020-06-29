@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input } from 'native-base';
 import { Text } from 'react-native'
-import JCComponent from '../JCComponent/JCComponent';
+import JCComponent, { JCState } from '../JCComponent/JCComponent';
 
 interface Props {
     value: string,
@@ -15,7 +15,7 @@ interface Props {
     ellipsizeMode?: 'head' | 'middle' | 'tail' | 'clip',
     numberOfLines?: number
 }
-interface State {
+interface State extends JCState {
     // value: string,
     isEditable: boolean,
     // textStyle: any,
@@ -27,16 +27,13 @@ interface State {
 export default class EditableText extends JCComponent<Props, State> {
     constructor(props: Props) {
         super(props);
+
         this.state = {
+            ... super.getInitialState(),
             value: props.value,
             isEditable: props.isEditable,
-            // textStyle: props.textStyle,
-            // inputStyle: props.inputStyle,
-            // multiline: props.multiline,
-            // placeholder: props.placeholder
-
         }
-        // console.log(props)
+
     }
     onChanged(val: any): void {
         console.log(val)

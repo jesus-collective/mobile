@@ -5,7 +5,7 @@ import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import { Auth } from 'aws-amplify';
-
+import { GetUserQuery } from '../../src/API'
 import Amplify from 'aws-amplify'
 import awsconfig from '../../src/aws-exports';
 import Validate from '../Validate/Validate';
@@ -18,7 +18,7 @@ import { AntDesign } from '@expo/vector-icons';
 
 import { interests, orgSizeBig, orgSizeSmall, orgTypes } from './dropdown'
 import { constants } from '../../src/constants'
-import JCComponent from '../JCComponent/JCComponent';
+import JCComponent, { JCState } from '../JCComponent/JCComponent';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
 Amplify.configure(awsconfig);
@@ -30,8 +30,10 @@ interface Props {
   loadId?: any
 
 }
-interface State {
-  UserDetails: any
+export type UserData = NonNullable<GetUserQuery['getUser']>;
+
+interface State extends JCState {
+  UserDetails: UserData
   interest: string
   interestsArray: any
   profileImage: any
@@ -47,6 +49,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      ...super.getInitialState(),
       UserDetails: null,
       interest: null,
       interestsArray: [],
@@ -127,7 +130,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
     this.setState({
       UserDetails: updateData
     }, () => {
-      if (name==="location")
+      if (name === "location")
         this.convertProfileToMapData()
     });
   }
@@ -177,6 +180,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
 
         const updateData = { ...this.state.UserDetails }
         updateData['profileImage'] = {
+          __typename: "Image",
           userId: userId,
           filenameUpload: fn,
           filenameLarge: fnSave.replace('[size]', 'large'),
@@ -292,18 +296,18 @@ class MyProfileImpl extends JCComponent<Props, State> {
               : <Text style={this.styles.style.profileFontTitle}>{this.state.UserDetails.given_name}&apos;s profile</Text>
             }
             <View style={this.styles.style.myProfileTopButtonsExternalContainer}>
-            {this.state.isEditable ?
-              <View style={this.styles.style.myProfileTopButtonsInternalContainer}>
-                <JCButton data-testid="profile-save" buttonType={ButtonTypes.SolidRightMargin} onPress={() => this.finalizeProfile()}>Save and Publish Your Profile</JCButton>
-                <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.logout()}>Logout</JCButton>
-              </View>
-              : null
-            }
-            {
-              this.state.isEditable ?
-                <Text style={this.styles.style.myProfileErrorValidation}>{this.state.validationText}</Text>
+              {this.state.isEditable ?
+                <View style={this.styles.style.myProfileTopButtonsInternalContainer}>
+                  <JCButton data-testid="profile-save" buttonType={ButtonTypes.SolidRightMargin} onPress={() => this.finalizeProfile()}>Save and Publish Your Profile</JCButton>
+                  <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.logout()}>Logout</JCButton>
+                </View>
                 : null
-            }
+              }
+              {
+                this.state.isEditable ?
+                  <Text style={this.styles.style.myProfileErrorValidation}>{this.state.validationText}</Text>
+                  : null
+              }
             </View>
           </View>
 
@@ -368,17 +372,17 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 <Text style={this.styles.style.fontFormSmallHeader}>Public Location</Text>
                 : null
               }
-              {this.state.isEditable ? 
-              <EditableLocation onChange={(value: any, location: any) => {
-                if (location) {
-                  this.handleInputChange({ latitude: location.lat, longitude: location.lng, geocodeFull: value }, "location");
-                }
-              }}
-                multiline={false} textStyle={this.styles.style.fontRegular}
-                inputStyle={this.styles.style.groupNameInput} value={this.state.UserDetails.location.geocodeFull}
-                isEditable={this.state.isEditable} citiesOnly={true}>  
-              </EditableLocation>
-              : null
+              {this.state.isEditable ?
+                <EditableLocation onChange={(value: any, location: any) => {
+                  if (location) {
+                    this.handleInputChange({ latitude: location.lat, longitude: location.lng, geocodeFull: value }, "location");
+                  }
+                }}
+                  multiline={false} textStyle={this.styles.style.fontRegular}
+                  inputStyle={this.styles.style.groupNameInput} value={this.state.UserDetails.location.geocodeFull}
+                  isEditable={this.state.isEditable} citiesOnly={true}>
+                </EditableLocation>
+                : null
               }
 
               {this.state.isEditable ?
@@ -453,16 +457,16 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 <Container style={this.styles.style.myprofilePickerMainContainer}>
                   <View style={this.styles.style.myprofilePickerContainer}>
                     <View style={this.styles.style.myprofilePickerContainerView}>
-                    <Picker style={this.styles.style.myprofilePicker}
-                      onValueChange={(itemValue) => this.setState({ interest: itemValue })}
-                      selectedValue={this.state.interest}
-                    >
-                      <Picker.Item label={'None Selected'} value={null} />
-                      {interests.map((item, index) => {
-                        return (<Picker.Item key={index} label={item} value={item} />)
-                      })}
-                    </Picker>
-                    <JCButton buttonType={ButtonTypes.SolidAboutMe} onPress={() => this.handleAddInterest()}><Text>+ Add</Text></JCButton>
+                      <Picker style={this.styles.style.myprofilePicker}
+                        onValueChange={(itemValue) => this.setState({ interest: itemValue })}
+                        selectedValue={this.state.interest}
+                      >
+                        <Picker.Item label={'None Selected'} value={null} />
+                        {interests.map((item, index) => {
+                          return (<Picker.Item key={index} label={item} value={item} />)
+                        })}
+                      </Picker>
+                      <JCButton buttonType={ButtonTypes.SolidAboutMe} onPress={() => this.handleAddInterest()}><Text>+ Add</Text></JCButton>
                     </View>
                     {this.state.isEditable ?
                       <Text style={{ width: "100%", marginTop: 8 }}>You can select {this.state.interestsArray ? 7 - this.state.interestsArray.length : 7} more key interests</Text>
@@ -558,14 +562,14 @@ class MyProfileImpl extends JCComponent<Props, State> {
 
               </Item>
 
-              <View>                   
+              <View>
                 {!this.state.isEditable ? <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text> : null}
                 <Label style={this.styles.style.fontFormSmall}>Type of Organization</Label>
                 {this.state.isEditable ?
                   <View style={{ flex: 1, flexDirection: 'row' }}>
                     <Picker style={{ height: 50, width: 350, marginRight: 10, borderTopWidth: 1, borderLeftWidth: 1, borderRightWidth: 1, borderBottomWidth: 1, borderColor: '#dddddd' }}
-                    onValueChange={(itemValue) => { this.handleInputChange(itemValue, "orgType") }}
-                    selectedValue={!orgTypes.includes(this.state.UserDetails.orgType) ? "" : this.state.UserDetails.orgType}
+                      onValueChange={(itemValue) => { this.handleInputChange(itemValue, "orgType") }}
+                      selectedValue={!orgTypes.includes(this.state.UserDetails.orgType) ? "" : this.state.UserDetails.orgType}
                     >
                       {orgTypes.map((item, index) => {
                         return (<Picker.Item key={index} label={item} value={item} />)
@@ -573,50 +577,50 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       <Picker.Item label={"Other"} value={""} />
                     </Picker>
                     {this.state.UserDetails.orgType === "" || (!orgTypes.includes(this.state.UserDetails.orgType) && this.state.UserDetails.orgType !== "None Selected") ?
-                    <EditableText onChange={(e) => { this.handleInputChange(e, "orgType") }}
-                      multiline={false}
-                      textStyle={this.styles.style.fontFormSmallDarkGrey}
-                      inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: 308, paddingTop: 8, paddingRight: 10, paddingBottom: 8, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}
-                      value={this.state.UserDetails.orgType} isEditable={this.state.isEditable}></EditableText> : null}
+                      <EditableText onChange={(e) => { this.handleInputChange(e, "orgType") }}
+                        multiline={false}
+                        textStyle={this.styles.style.fontFormSmallDarkGrey}
+                        inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: 308, paddingTop: 8, paddingRight: 10, paddingBottom: 8, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}
+                        value={this.state.UserDetails.orgType} isEditable={this.state.isEditable}></EditableText> : null}
                   </View>
-                    : 
-                      <EditableText
-                      multiline={true}
-                      textStyle={this.styles.style.fontFormSmallDarkGrey}
-                      value={this.state.UserDetails.orgType} isEditable={false}/>
-                    }
+                  :
+                  <EditableText
+                    multiline={true}
+                    textStyle={this.styles.style.fontFormSmallDarkGrey}
+                    value={this.state.UserDetails.orgType} isEditable={false} />
+                }
               </View>
               <View style={{ marginTop: 15 }}>
                 {!this.state.isEditable ? <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text> : null}
                 <Label style={this.styles.style.fontFormSmall}>{this.state.UserDetails.orgType === "Home School" ? "Number of kids in home school" : this.orgsWithEmployees.includes(this.state.UserDetails.orgType) ? "How many employees are there in the organization?" : "Size of the organization"}</Label>
-                {this.state.isEditable ? this.state.UserDetails.orgType === "Home School" || this.state.UserDetails.orgType === "Home Group/Home Church" || this.state.UserDetails.orgType === "Church Plant"?
-                    <View>
-                      <Picker style={{ height: 40, width: 350, marginRight: 10, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, borderBottomWidth: 1, borderColor: '#dddddd' }}
+                {this.state.isEditable ? this.state.UserDetails.orgType === "Home School" || this.state.UserDetails.orgType === "Home Group/Home Church" || this.state.UserDetails.orgType === "Church Plant" ?
+                  <View>
+                    <Picker style={{ height: 40, width: 350, marginRight: 10, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, borderBottomWidth: 1, borderColor: '#dddddd' }}
                       onValueChange={(itemValue) => { this.handleInputChange(itemValue, "orgSize") }}
                       selectedValue={this.state.UserDetails.orgSize}
-                      >
-                        
-                        {orgSizeSmall.map((item, index) => {
-                          return (<Picker.Item key={index} label={item} value={item} />)
-                        })}
-                      </Picker> 
-                    </View>
-                    : <View> 
-                      <Picker style={{ height: 50, width: 350, marginRight: 10, borderTopWidth: 1, borderLeftWidth: 1, borderRightWidth: 1, borderBottomWidth: 1, borderColor: '#dddddd' }}
+                    >
+
+                      {orgSizeSmall.map((item, index) => {
+                        return (<Picker.Item key={index} label={item} value={item} />)
+                      })}
+                    </Picker>
+                  </View>
+                  : <View>
+                    <Picker style={{ height: 50, width: 350, marginRight: 10, borderTopWidth: 1, borderLeftWidth: 1, borderRightWidth: 1, borderBottomWidth: 1, borderColor: '#dddddd' }}
                       onValueChange={(itemValue) => { this.handleInputChange(itemValue, "orgSize") }}
                       selectedValue={this.state.UserDetails.orgSize}
-                      >                        
-                        {orgSizeBig.map((item, index) => {
-                          return (<Picker.Item key={index} label={item} value={item} />)
-                        })}
-                      </Picker> 
-                    </View>
-                    
-                    : <EditableText
-                      multiline={true}
-                      textStyle={this.styles.style.fontFormSmallDarkGrey}
-                      value={this.state.UserDetails.orgSize} isEditable={false}/>
-                    }
+                    >
+                      {orgSizeBig.map((item, index) => {
+                        return (<Picker.Item key={index} label={item} value={item} />)
+                      })}
+                    </Picker>
+                  </View>
+
+                  : <EditableText
+                    multiline={true}
+                    textStyle={this.styles.style.fontFormSmallDarkGrey}
+                    value={this.state.UserDetails.orgSize} isEditable={false} />
+                }
               </View>
 
               <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text>

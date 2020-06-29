@@ -4,7 +4,7 @@ import * as queries from '../../src/graphql/queries';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import Amplify from 'aws-amplify'
 import awsconfig from '../../src/aws-exports';
-import JCComponent from '../JCComponent/JCComponent';
+import JCComponent, { JCState } from '../JCComponent/JCComponent';
 
 Amplify.configure(awsconfig);
 
@@ -14,7 +14,7 @@ interface Props {
     size: any
     style?: 'map' | 'my-people'
 }
-interface State {
+interface State extends JCState {
     profileImage: any
     showEmpty: boolean
 }
@@ -22,6 +22,7 @@ export default class MyProfile extends JCComponent<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
+            ...super.getInitialState(),
             profileImage: null,
             showEmpty: false
         }
@@ -43,7 +44,11 @@ export default class MyProfile extends JCComponent<Props, State> {
     }
     getProfileImage(user): void {
         if (user == "" || user == null) {
-            this.state = { profileImage: null, showEmpty: true }
+            this.state = {
+                ...super.getInitialState(),
+                profileImage: null,
+                showEmpty: true
+            }
         }
         else {
             Storage.get(this.props.size == "small" ? user.filenameSmall : this.props.size == "medium" ? user.filenameMedium : user.filenameLarge, {
@@ -76,10 +81,10 @@ export default class MyProfile extends JCComponent<Props, State> {
     render(): React.ReactNode {
         return (
             this.state.profileImage != null ?
-                <Image style={this.props.size == 'small' ? 
-                    { width: "55px", height: "55px", borderRadius: 50, marginRight: 10, marginBottom: 15 } : 
+                <Image style={this.props.size == 'small' ?
+                    { width: "55px", height: "55px", borderRadius: 50, marginRight: 10, marginBottom: 15 } :
                     this.props.style === "map" || this.props.style === "my-people" ? { width: "80px", height: "96px", borderRadius: 120, marginRight: 10, marginBottom: 15 } :
-                    { width: "250px", height: "290px", borderRadius: 120, marginRight: 10, marginBottom: 15 }
+                        { width: "250px", height: "290px", borderRadius: 120, marginRight: 10, marginBottom: 15 }
 
                 }
                     source={this.state.profileImage}>
@@ -90,7 +95,7 @@ export default class MyProfile extends JCComponent<Props, State> {
                     <Image style={this.props.size == 'small' ?
                         { width: "55px", height: "55px", borderRadius: 50, marginRight: 10, marginBottom: 15 } :
                         this.props.style === "map" || this.props.style === "my-people" ? { width: "80px", height: "96px", borderRadius: 120, marginRight: 10, marginBottom: 15 } :
-                        { width: "250px", height: "290px", borderRadius: 120, marginRight: 10, marginBottom: 15 }
+                            { width: "250px", height: "290px", borderRadius: 120, marginRight: 10, marginBottom: 15 }
 
                     }
                         source={require('../../assets/profile-placeholder.png')}>

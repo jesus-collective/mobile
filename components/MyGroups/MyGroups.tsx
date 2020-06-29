@@ -15,17 +15,17 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { constants } from '../../src/constants'
 import ErrorBoundry from '../../components/ErrorBoundry'
 import moment from 'moment-timezone';
-import JCComponent from '../JCComponent/JCComponent';
+import JCComponent, { JCState } from '../JCComponent/JCComponent';
 
 interface Props {
   navigation: any
   wrap: boolean
   type: string
   showMore: boolean
-  onDataload(data: any): any
+  onDataload(mapData: MapData[]): void
   showMy?: boolean
 }
-interface State {
+interface State extends JCState {
   myFilter: boolean
   eventFilter: boolean
   myTitleScreen: string
@@ -42,12 +42,23 @@ interface State {
   canLeave: any
   isOwner: any
 }
+export interface MapData {
+  latitude: string | number
+  longitude: string | number
+  name: string
+  user: string
+  event?: any,
+  link: string
+  type: string
+}
+
 
 export default class MyGroups extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     if (props.type == "event") {
       this.state = {
+        ...super.getInitialState(),
         myFilter: false || this.props.showMy,
         eventFilter: false,
         myTitleScreen: "My Events",
@@ -69,6 +80,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     else if (props.type == "group") {
       this.state =
       {
+        ...super.getInitialState(),
         myFilter: false || this.props.showMy,
         eventFilter: false,
         myTitleScreen: "My Groups",
@@ -89,6 +101,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     else if (props.type == "resource") {
       this.state =
       {
+        ...super.getInitialState(),
         myFilter: false,
         eventFilter: false,
         myTitleScreen: "My Resources",
@@ -110,6 +123,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     else if (props.type == "organization") {
       this.state =
       {
+        ...super.getInitialState(),
         myFilter: false,
         eventFilter: false,
         myTitleScreen: "My Organizations",
@@ -131,6 +145,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     else if (props.type == "course") {
       this.state =
       {
+        ...super.getInitialState(),
         myFilter: false,
         eventFilter: false,
         myTitleScreen: "My Courses",
@@ -152,6 +167,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     else if (props.type == "profile") {
       this.state =
       {
+        ...super.getInitialState(),
         myFilter: false,
         eventFilter: false,
         myTitleScreen: "My Profiles",
@@ -173,6 +189,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     else {
       this.state =
       {
+        ...super.getInitialState(),
         myTitleScreen: "",
         myFilter: false,
         eventFilter: false,
@@ -199,7 +216,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     })
   }
 
-  convertProfileToMapData(data: any): [] {
+  convertProfileToMapData(data: any): MapData[] {
     return data.map((dataItem) => {
       if (dataItem.location && dataItem.location.latitude && dataItem.location.longitude)
         return {
@@ -209,12 +226,12 @@ export default class MyGroups extends JCComponent<Props, State> {
           user: dataItem,
           link: "",
           type: "profile"
-        }
+        } as MapData
       else return null
     }).filter(o => o)
   }
 
-  convertEventToMapData(data: any): [] {
+  convertEventToMapData(data: any): MapData[] {
     return data.map((dataItem) => {
       if (dataItem.locationLatLong && dataItem.locationLatLong.latitude && dataItem.locationLatLong.longitude && moment(dataItem.time).isAfter(moment().subtract(3, 'day')))
         return {
@@ -224,11 +241,11 @@ export default class MyGroups extends JCComponent<Props, State> {
           event: dataItem,
           link: "",
           type: "event"
-        }
+        } as MapData
       else return null
     }).filter(o => o)
   }
-  convertToMapData(data: any): [] {
+  convertToMapData(data: any): MapData[] {
     switch (this.state.type) {
       case "group":
         return []

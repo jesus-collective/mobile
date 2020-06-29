@@ -1,4 +1,4 @@
-import { Container, Button } from 'native-base';
+import { Container } from 'native-base';
 import React from 'react';
 import { Text } from 'react-native';
 

@@ -18,7 +18,9 @@ import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
-import JCComponent from '../../components/JCComponent/JCComponent';
+import JCComponent, {
+  JCState
+} from '../../components/JCComponent/JCComponent';
 import EditableDate from '../../components/Forms/EditableDate'
 import EditableDollar from '../../components/Forms/EditableDollar'
 import data from './course.json';
@@ -28,7 +30,7 @@ interface Props {
   navigation: any
   route: any
 }
-interface State {
+interface State extends JCState {
   showMap: boolean
   loadId: string
   data: any
@@ -55,6 +57,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
     super(props);
 
     this.state = {
+      ...super.getInitialState(),
       showMap: false,
       loadId: props.route.params.id,
       createNew: props.route.params.create === "true" || props.route.params.create === true ? true : false,

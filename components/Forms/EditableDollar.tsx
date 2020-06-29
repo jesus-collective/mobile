@@ -5,7 +5,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
-import JCComponent from '../JCComponent/JCComponent';
+import JCComponent, { JCState } from '../JCComponent/JCComponent';
 
 interface Props {
     value: string,
@@ -16,7 +16,7 @@ interface Props {
     placeholder?: string,
     onChange?(string)
 }
-interface State {
+interface State extends JCState {
     // value: string,
     isEditable: boolean,
     textStyle: any,
@@ -27,16 +27,18 @@ interface State {
 export default class EditableDollar extends JCComponent<Props, State> {
     constructor(props: Props) {
         super(props);
+
         this.state = {
-            // value: props.value,
+            ...super.getInitialState(),
             isEditable: props.isEditable,
             textStyle: props.textStyle,
             inputStyle: props.inputStyle,
             multiline: props.multiline,
             placeholder: props.placeholder
         }
-        // console.log(props)
     }
+    // console.log(props)
+
     onChanged(val: any): void {
         this.props.onChange(val.target.value)
     }

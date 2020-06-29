@@ -14,14 +14,17 @@ interface Props {
   onMapChange?(): any
 }
 
-
-
+type MenuItem = {
+  name: string
+  linkto?: string
+  submenu?: MenuItem[]
+}
 export default class FooterJC extends JCComponent<Props> {
 
   constructor(props: Props) {
     super(props);
   }
-  menu = [
+  menu: MenuItem[] = [
     {
       name: "About Us",
       submenu: [
@@ -74,7 +77,7 @@ export default class FooterJC extends JCComponent<Props> {
   openScreen = (screen: string): void => {
     this.props.navigation.push(screen);
   }
-  open = (obj): void => {
+  open = (obj: MenuItem): void => {
     if (obj.linkto.includes("Screen") && obj.name.includes("My")) {
       this.openMyScreen(obj.linkto)
     } else if (obj.linkto.includes("Screen")) {

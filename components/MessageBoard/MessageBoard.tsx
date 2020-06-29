@@ -10,25 +10,24 @@ import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import * as subscriptions from '../../src/graphql/subscriptions';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
-import { API, graphqlOperation, Auth, Storage } from 'aws-amplify';
+import { API, graphqlOperation, Auth } from 'aws-amplify';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { Editor } from 'react-draft-wysiwyg';
 import './react-draft-wysiwyg.css';
 //TODO FIGURE OUT WHY THIS DOESN"T WORK
 import './MessageBoard.css';
-import { v1 as uuidv1 } from 'uuid';
 import { useNavigation } from '@react-navigation/native'
 import { useRoute } from '@react-navigation/native'
 import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
-import JCComponent from '../JCComponent/JCComponent';
+import JCComponent, { JCState } from '../JCComponent/JCComponent';
 
 interface Props {
   groupId: string
   route?: any
   navigation?: any
 }
-interface State {
+interface State extends JCState {
   data: any,
   created: boolean,
 
@@ -40,6 +39,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      ...super.getInitialState(),
       data: null,
       created: false,
       UserDetails: null,
