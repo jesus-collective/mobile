@@ -382,6 +382,26 @@ export default class MainStyles {
                 color: "#FFFFFF",
                 width: "100%"
             },
+            resourceHeaderAgeGroupBox: {
+                height: "58px", 
+                backgroundColor: '#ffffff', 
+                justifyContent: "center", 
+                alignItems: "center", 
+                paddingRight: 21, 
+                paddingLeft: 21, 
+                width: "30%", 
+                borderRadius: 4, 
+                alignSelf: "center", 
+                marginTop: 30, 
+                marginBottom: 30
+            },
+            resourceHeaderAgeGroupBoxText: {
+                color: '#000000', 
+                fontSize: 30, 
+                lineHeight: 35,
+                fontWeight: 'bold', 
+                fontFamily: 'Graphik-Regular-App'
+            },
             fontCourseHeader: {
                 fontFamily: 'Graphik-Regular-App',
                 fontWeight: "normal",
@@ -1133,7 +1153,7 @@ export default class MainStyles {
             },
             resourceHeaderImgContainer: {
                backgroundColor: "#000000", 
-                maxHeight: "285px"
+                maxHeight: "350px"
             },
             resourceHeaderImg: {
                 position: "relative",
