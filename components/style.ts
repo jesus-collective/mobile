@@ -9,8 +9,8 @@ export default class MainStyles {
     constructor() {
         this.update()
     }
-    static instance = null
-    public static getInstance() {
+    static instance: MainStyles = null
+    public static getInstance(): MainStyles {
         if (MainStyles.instance == null) {
             MainStyles.instance = new MainStyles();
         }
@@ -18,7 +18,7 @@ export default class MainStyles {
         return this.instance;
     }
     style = null
-    updateStyles = (obj): void => {
+    updateStyles = (obj: any): void => {
         obj.styles.update()
         obj.forceUpdate();
     };
@@ -1162,9 +1162,9 @@ export default class MainStyles {
                 opacity: 0.3
             },
             resourceHeaderImgView: {
-                backgroundColor: "#000000", 
-                position: "relative", 
-                width: "100%", 
+                backgroundColor: "#000000",
+                position: "relative",
+                width: "100%",
                 height: "100%",
             },
             conversationsCard: {

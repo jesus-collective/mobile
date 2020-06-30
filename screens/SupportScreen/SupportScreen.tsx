@@ -11,7 +11,7 @@ interface Props {
   navigation: any
 }
 export default class SupportScreen extends JCComponent<Props>{
-  render() {
+  render(): React.ReactNode {
     //const { navigate } = this.props.navigation;
     return (
       <Container>

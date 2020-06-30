@@ -21,7 +21,7 @@ interface State extends JCState {
   showMap: boolean
   width: any
   height: any
-  mapData: any
+  mapData: MapData[]
 }
 
 

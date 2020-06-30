@@ -8,13 +8,13 @@ import getTheme from '../../native-base-theme/components';
 import material from '../../native-base-theme/variables/material';
 import { API } from 'aws-amplify';
 import * as queries from '../../src/graphql/queries';
-import JCComponent from '../../components/JCComponent/JCComponent';
+import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
 
 
 interface Props {
   navigation: any
 }
-interface State {
+interface State extends JCState {
   showMap: boolean
   data: any
 }
@@ -25,6 +25,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
     this.state = {
+      ...super.getInitialState(),
       showMap: false,
       data: []
     }
@@ -32,7 +33,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
   mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
   }
-  search(item): void {
+  search(item: any): void {
     console.log(item.target.value)
     const searchGroups: any = API.graphql({
       query: queries.searchGroups,

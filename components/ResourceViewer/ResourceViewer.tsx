@@ -20,7 +20,7 @@ import ErrorBoundary from '../ErrorBoundry'
 import { CreateGroupInput } from 'src/API';
 import Validate from '../Validate/Validate';
 import { useRoute, useNavigation } from '@react-navigation/native';
-import JCComponent from '../JCComponent/JCComponent';
+import JCComponent, { JCState } from '../JCComponent/JCComponent';
 Amplify.configure(awsconfig);
 
 
@@ -30,7 +30,7 @@ interface Props {
     route?: any
     // isEditable: boolean
 }
-interface State {
+interface State extends JCState {
     groupData: any
     resourceData: any
     currentResource: number
@@ -54,6 +54,7 @@ class ResourceViewerImpl extends JCComponent<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
+            ...super.getInitialState(),
             resourceData: null,
             groupData: null,
             currentResource: null,
@@ -791,8 +792,8 @@ class ResourceViewerImpl extends JCComponent<Props, State> {
                                 {this.state.currentResource == 0 ?
                                     <ResourceOverview></ResourceOverview>
                                     :
-                                    <ResourceContent 
-                                        currentResource={this.state.currentResource} 
+                                    <ResourceContent
+                                        currentResource={this.state.currentResource}
                                     ></ResourceContent>}
                                 {/*  <ImportKidsandYouth></ImportKidsandYouth>*/}
                             </Content>

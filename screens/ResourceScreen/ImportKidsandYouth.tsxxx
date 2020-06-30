@@ -31,9 +31,9 @@ const federated = {
 interface Props {
     authState?: any
 }
-interface State { }
 
-class IndexApp extends JCComponent<Props, State>{
+
+class IndexApp extends JCComponent<Props>{
     constructor(props: Props) {
         super(props);
     }

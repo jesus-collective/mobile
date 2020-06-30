@@ -5,14 +5,9 @@ import JCButton, { ButtonTypes } from '../Forms/JCButton'
 
 import getTheme from '../../native-base-theme/components';
 
-import Validate from '../Validate/Validate'
 import { Image } from 'react-native'
-import { API } from 'aws-amplify';
-import * as queries from '../../src/graphql/queries';
-import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import CourseHeader from '../CourseHeader/CourseHeader';
 import JCComponent from '../JCComponent/JCComponent';
-import data from '../../screens/CourseOverviewScreen/course.json';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { CourseContext } from './CourseContext';
 

@@ -37,7 +37,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
 
     this.getInitialData()
   }
-  createRoom = (toUserID, toUserName): void => {
+  createRoom = (toUserID: any, toUserName: any): void => {
     console.log("CreateRoom")
     Auth.currentAuthenticatedUser().then((user: any) => {
       const createDirectMessageRoom: any = API.graphql({
@@ -68,7 +68,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
       }).catch((e) => { console.log(e) })
     }).catch((e) => { console.log(e) })
   }
-  shouldCreateRoom = () => {
+  shouldCreateRoom = (): void => {
     if (!(this.state.data.items.map((item, index) => {
       if ((item.room.messageUsers.items.length == 2) &&
         (item.room.messageUsers.items[0].userID == this.props.route.params.initialUserID || item.room.messageUsers.items[1].userID == this.props.route.params.initialUserID)) {
@@ -103,7 +103,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
     })
   }
 
-  mapChanged = () => {
+  mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
   }
 

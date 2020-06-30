@@ -48,7 +48,7 @@ export default class MyPeople extends JCComponent<Props, State> {
       this.setState({ currentUser: user.username }, () => this.setInitialData())
     })
   }
-  convertProfileToMapData(data): MapData[] {
+  convertProfileToMapData(data: any): MapData[] {
     return data.map((dataItem) => {
       if (dataItem.location && dataItem.location.latitude && dataItem.location.longitude)
         return {
@@ -83,7 +83,7 @@ export default class MyPeople extends JCComponent<Props, State> {
     )
   }
 
-  openConversation(initialUser, name): void {
+  openConversation(initialUser: any, name: any): void {
     console.log("Navigate to conversationScreen")
     this.props.navigation.push("ConversationScreen", { initialUserID: initialUser, initialUserName: name });
   }

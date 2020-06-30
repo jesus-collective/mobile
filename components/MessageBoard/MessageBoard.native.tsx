@@ -11,16 +11,15 @@ import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
 import * as subscriptions from '../../src/graphql/subscriptions';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
-import { API, graphqlOperation, Auth, Storage } from 'aws-amplify';
+import { API, graphqlOperation, Auth } from 'aws-amplify';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { Editor } from 'react-draft-wysiwyg';
 //import './react-draft-wysiwyg.css';
 //TODO FIGURE OUT WHY THIS DOESN"T WORK
 //import './MessageBoard.css';
-import { v1 as uuidv1 } from 'uuid';
 import ErrorBoundary from '../ErrorBoundry';
 import { useRoute, useNavigation } from '@react-navigation/native';
-import JCComponent from '../JCComponent/JCComponent';
+import JCComponent, { JCState } from '../JCComponent/JCComponent';
 
 
 interface Props {
@@ -28,7 +27,7 @@ interface Props {
   navigation?: any
   route?: any
 }
-interface State {
+interface State extends JCState {
   data: any,
   created: boolean,
   message: string,
@@ -40,6 +39,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      ...super.getInitialState(),
       data: null,
       created: false,
       message: "",
@@ -220,7 +220,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     )
   }
 }
-export default function MessageBoard(props) {
+export default function MessageBoard(props: Props): JSX.Element {
   const route = useRoute();
   const navigation = useNavigation()
   return <MessageBoardImpl {...props} navigation={navigation} route={route} />;

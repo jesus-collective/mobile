@@ -18,6 +18,7 @@ import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
+import { MapData } from 'components/MyGroups/MyGroups';
 
 const MessageBoard = lazy(() => import('../../components/MessageBoard/MessageBoard'));
 
@@ -39,9 +40,9 @@ interface State extends JCState {
   validationError: string
   currentUser: string
   currentUserProfile: any
-  memberIDs: string[],
+  memberIDs: string[]
   members: any
-  mapData: any
+  mapData: MapData[]
 }
 
 
@@ -90,7 +91,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
     })
 
   }
-  getValueFromKey(myObject: any, string: any) {
+  getValueFromKey(myObject: any, string: any): string {
     const key = Object.keys(myObject).filter(k => k.includes(string));
     return key.length ? myObject[key[0]] : "";
   }
@@ -190,7 +191,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
       getGroup.then(processResults).catch(processResults)
     }
   }
-  convertProfileToMapData(data): [] {
+  convertProfileToMapData(data: any): MapData[] {
     return data.map((dataItem) => {
       if (dataItem.location && dataItem.location.latitude && dataItem.location.longitude) {
         return {
@@ -236,7 +237,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
       });
     }
   }
-  clean(item): void {
+  clean(item: any): void {
     delete item.members
     delete item.messages
     delete item.organizerGroup
@@ -341,7 +342,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
     temp[field] = value
     this.setState({ data: temp })
   }
-  showProfile(id): void {
+  showProfile(id: any): void {
     console.log("Navigate to profileScreen")
     this.props.navigation.push("ProfileScreen", { id: id, create: false });
   }

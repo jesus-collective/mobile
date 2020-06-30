@@ -12,7 +12,7 @@ interface Props {
 }
 interface State extends JCState {
   showMap: boolean
-  mapData: any
+  mapData: MapData[]
   showMy: boolean
 }
 

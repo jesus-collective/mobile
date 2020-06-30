@@ -4,14 +4,14 @@ import * as React from 'react';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
 import MapView, { PROVIDER_GOOGLE, Marker, MapEvent } from 'react-native-maps';
-import JCComponent from '../JCComponent/JCComponent';
+import JCComponent, { JCState } from '../JCComponent/JCComponent';
 
 interface Props {
     mapVisible: any,
     onClose(mapCoord: any): any
     coord: any
 }
-interface State {
+interface State extends JCState {
     mapCoord: any
     mapVisible: any
 }
@@ -20,6 +20,7 @@ export default class MapSelector extends JCComponent<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
+            ...super.getInitialState(),
             mapCoord: { latitude: 43.7, longitude: -79.4 },
             mapVisible: false
         }

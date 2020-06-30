@@ -22,7 +22,7 @@ import MyVerifyContact from './components/Auth/MyVerifyContact';
 import MyForgotPassword from './components/Auth/MyForgotPassword';
 import Sentry from './components/Sentry';
 import { version } from './src/version'
-import JCComponent from './components/JCComponent/JCComponent';
+import JCComponent, { JCState } from './components/JCComponent/JCComponent';
 
 let env = "unknown"
 if (window.location === undefined)
@@ -72,7 +72,7 @@ interface Props {
   navigation: any,
   onStateChange(state: string, data: any): any
 }
-interface State {
+interface State extends JCState {
   isLoggedIn: boolean
   fontLoaded: boolean
   authState: any
@@ -92,6 +92,7 @@ class AwesomeApp extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
+      ...super.getInitialState(),
       fontLoaded: false,
       isLoggedIn: false,
       authState: ""
@@ -100,7 +101,7 @@ class AwesomeApp extends JCComponent<Props, State> {
     //  this.ionViewCanEnter();
   }
 
-  async UNSAFE_componentWillMount() {
+  async UNSAFE_componentWillMount(): Promise<void> {
     // console.log("test")
     try {
       await Font.loadAsync({
@@ -128,10 +129,10 @@ class AwesomeApp extends JCComponent<Props, State> {
     Asset.fromModule(require("./assets/SignUp/progress-3.png")).downloadAsync()
     Asset.fromModule(require("./assets/SignUp/progress-4.png")).downloadAsync()
   }
-  renderFallback() {
+  renderFallback(): React.ReactNode {
     return null
   }
-  render() {
+  render(): React.ReactNode {
     if (this.state.fontLoaded) {
 
       return (

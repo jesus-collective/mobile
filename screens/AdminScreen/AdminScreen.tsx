@@ -2,16 +2,17 @@
 import { Container, Content, Text } from 'native-base';
 import Header from '../../components/Header/Header'
 import HeaderAdmin from '../../components/HeaderAdmin/HeaderAdmin';
-import JCComponent from '../../components/JCComponent/JCComponent';
+import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
+import { MapData } from 'components/MyGroups/MyGroups';
 
 
 interface Props {
   navigation: any
   route: any
 }
-interface State {
+interface State extends JCState {
   showMap: boolean
-  mapData: any
+  mapData: MapData[]
   showMy: boolean
 }
 
@@ -20,6 +21,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
     this.state = {
+      ...super.getInitialState(),
       mapData: [],
       showMap: false,
       showMy: this.props.route.params ? this.props.route.params.mine : false

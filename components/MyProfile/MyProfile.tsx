@@ -20,6 +20,7 @@ import { interests, orgSizeBig, orgSizeSmall, orgTypes } from './dropdown'
 import { constants } from '../../src/constants'
 import JCComponent, { JCState } from '../JCComponent/JCComponent';
 import { useRoute, useNavigation } from '@react-navigation/native';
+import { MapData } from 'components/MyGroups/MyGroups';
 
 Amplify.configure(awsconfig);
 
@@ -41,7 +42,7 @@ interface State extends JCState {
   mapVisible: any
   // mapCoord: any
   isEditable: any
-  mapData: any
+  mapData: MapData[]
   initCenter: any
 }
 class MyProfileImpl extends JCComponent<Props, State> {

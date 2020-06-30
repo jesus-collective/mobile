@@ -15,7 +15,7 @@ interface Props {
 export default class GetInvolvedScreen extends JCComponent<Props> {
 
 
-  render() {
+  render(): React.ReactNode {
     //    const { navigate } = this.props.navigation;
     return (
       <Container>

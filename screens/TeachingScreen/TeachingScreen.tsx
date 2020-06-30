@@ -15,7 +15,7 @@ export default class TeachingScreen extends JCComponent<Props>{
   static navigationOptions = {
     title: 'Teaching',
   };
-  render() {
+  render(): React.ReactNode {
     const { navigate } = this.props.navigation;
     return (
       <Authenticator><Button

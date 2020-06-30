@@ -22,6 +22,7 @@ import EditableDate from '../../components/Forms/EditableDate'
 import EditableLocation from '../../components/Forms/EditableLocation'
 import EditableUrl from '../../components/Forms/EditableUrl'
 import moment from 'moment-timezone'
+import { MapData } from 'components/MyGroups/MyGroups';
 
 const MessageBoard = lazy(() => import('../../components/MessageBoard/MessageBoard'));
 
@@ -44,7 +45,7 @@ interface State extends JCState {
   currentUser: string
   currentUserProfile: any
   attendeeIDs: string[]
-  mapData: any
+  mapData: MapData[]
   initCenter: any
 }
 
@@ -94,7 +95,7 @@ export default class EventScreen extends JCComponent<Props, State>{
     })
 
   }
-  getValueFromKey(myObject: any, string: any) {
+  getValueFromKey(myObject: any, string: any): string {
     const key = Object.keys(myObject).filter(k => k.includes(string));
     return key.length ? myObject[key[0]] : "";
   }
@@ -212,7 +213,7 @@ export default class EventScreen extends JCComponent<Props, State>{
       });
     }
   }
-  clean(item): void {
+  clean(item: any): void {
     delete item.members
     delete item.messages
     delete item.organizerGroup
@@ -317,7 +318,7 @@ export default class EventScreen extends JCComponent<Props, State>{
     temp[field] = value
     this.setState({ data: temp })
   }
-  showProfile(id): void {
+  showProfile(id: any): void {
     console.log("Navigate to profileScreen")
     this.props.navigation.push("ProfileScreen", { id: id, create: false });
   }

@@ -30,14 +30,14 @@ class ResourceHeader extends JCComponent<EmptyProps, State> {
             fadeValue: new Animated.Value(0),
         }
     }
-    fadeAnimation = () => {
+    fadeAnimation = (): void => {
         Animated.timing(this.state.fadeValue, {
             toValue: 1,
             duration: 3250,
             useNativeDriver: true
         }).start();
     }
-    async getImage(img): Promise<void> {
+    async getImage(img: any): Promise<void> {
         if (img != null) {
             const z = await Storage.get(img.filenameLarge, {
                 level: 'protected',

@@ -74,11 +74,11 @@ export default class GroupScreen extends JCComponent<Props, State>{
     })
     this.setInitialData(props)
   }
-  getValueFromKey(myObject: any, string: any) {
+  getValueFromKey(myObject: any, string: any): string {
     const key = Object.keys(myObject).filter(k => k.includes(string));
     return key.length ? myObject[key[0]] : "";
   }
-  setInitialData(props) {
+  setInitialData(props: Props): void {
     if (props.route.params.create === "true" || props.route.params.create === true)
       Auth.currentAuthenticatedUser().then((user: any) => {
         const z: CreateGroupInput = {
@@ -105,7 +105,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
       getGroup.then(processResults).catch(processResults)
     }
   }
-  mapChanged = () => {
+  mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
   }
   validate(): boolean {
@@ -113,7 +113,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
     this.setState({ validationError: validation.validationError })
     return validation.result
   }
-  createNew() {
+  createNew(): void {
     if (this.validate()) {
       const createGroup: any = API.graphql({
         query: mutations.createGroup,
@@ -128,7 +128,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
       });
     }
   }
-  clean(item) {
+  clean(item: any): void {
     delete item.members
     delete item.messages
     delete item.organizerGroup
@@ -141,7 +141,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
     delete item.updatedAt
     return item
   }
-  save() {
+  save(): void {
     if (this.validate()) {
       const updateGroup: any = API.graphql({
         query: mutations.updateGroup,
@@ -157,14 +157,14 @@ export default class GroupScreen extends JCComponent<Props, State>{
     }
 
   }
-  leave() {
+  leave(): void {
     Analytics.record({
       name: 'leftOrganization',
       // Attribute values must be strings
       attributes: { id: this.state.data.id, name: this.state.data.name }
     });
   }
-  join() {
+  join(): void {
     Analytics.record({
       name: 'joinedOrganization',
       // Attribute values must be strings
@@ -183,7 +183,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
       console.log({ "Error mutations.createGroupMember": err });
     });
   }
-  delete() {
+  delete(): void {
     const deleteGroup: any = API.graphql({
       query: mutations.deleteGroup,
       variables: { input: { id: this.state.data.id } },
@@ -196,12 +196,12 @@ export default class GroupScreen extends JCComponent<Props, State>{
       console.log({ "Error mutations.deleteGroup": err });
     });
   }
-  updateValue(field: any, value: any) {
+  updateValue(field: any, value: any): void {
     const temp = this.state.data
     temp[field] = value
     this.setState({ data: temp })
   }
-  render() {
+  render(): React.ReactNode {
     //console.log(this.state.data)
     console.log("OrganizationScreen")
     return (

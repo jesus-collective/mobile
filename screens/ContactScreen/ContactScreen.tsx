@@ -14,7 +14,7 @@ interface Props {
   navigation: any
 }
 export default class ContactScreen extends JCComponent<Props> {
-  render() {
+  render(): React.ReactNode {
     //    const { navigate } = this.props.navigation;
     return (
       <Container>
