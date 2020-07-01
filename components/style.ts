@@ -1515,7 +1515,10 @@ export default class MainStyles {
                     margin: "0px",
                     paddingTop: 0,
                     backgroundColor: '#F9FAFC'
-                }
+                },
+                resourceHeaderAgeGroupBox: {
+                    width: "40%"
+                },
             },
 
             '@media (min-width: 320px) and (max-width: 480px)': {
