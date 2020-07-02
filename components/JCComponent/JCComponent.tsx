@@ -25,7 +25,7 @@ export default class JCComponent<Props = any, State extends JCState = any> exten
     }
 
     isMemberOf(group: string): boolean {
-        console.log(this.state.groups)
+        //        console.log(this.state.groups)
         if (this.state.groups)
             return this.state.groups.includes(group)
         else return false

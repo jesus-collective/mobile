@@ -4,6 +4,8 @@ import * as React from 'react';
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
+import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
+
 import { Auth } from 'aws-amplify';
 import { GetUserQuery } from '../../src/API'
 import Amplify from 'aws-amplify'
@@ -144,6 +146,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
     delete item._lastChangedAt
     delete item.createdAt
     delete item.updatedAt
+    delete item.profileImage["__typename"]
     return item
   }
   async finalizeProfile(): Promise<void> {
@@ -228,7 +231,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
   }
   renderMap() {
     return (
-      this.state.UserDetails.location.geocodeFull ? <MyMap initCenter={this.state.initCenter} visible={true} mapData={this.state.mapData} type={"profile"}></MyMap> : null
+      this.state.UserDetails.location?.geocodeFull ? <MyMap initCenter={this.state.initCenter} visible={true} mapData={this.state.mapData} type={"profile"}></MyMap> : null
     )
   }
   saveLocation(coord): void {
@@ -257,6 +260,30 @@ class MyProfileImpl extends JCComponent<Props, State> {
           });
         })
     }
+  }
+  deleteUser(): void {
+    Auth.currentAuthenticatedUser().then((user) => {
+      const deleteUser: any = API.graphql({
+        query: mutations.deleteUser,
+        variables: {
+          input: { id: user['username'] }
+        },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+      })
+      deleteUser.then((c: any) => {
+        console.log(c)
+        const delStat = user.deleteUser()
+        console.log(delStat)
+        this.props.navigation.navigate("app")
+        // return delStat
+      }).catch((e: any) => {
+        console.log(e)
+        const delStat = user.deleteUser()
+        console.log(delStat)
+        this.props.navigation.navigate("app")
+        // return delStat
+      })
+    })
   }
   handleDeleteInterest(event): void {
     const remainingInterests = this.state.interestsArray.filter(item => item !== event)
@@ -299,8 +326,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
             <View style={this.styles.style.myProfileTopButtonsExternalContainer}>
               {this.state.isEditable ?
                 <View style={this.styles.style.myProfileTopButtonsInternalContainer}>
-                  <JCButton data-testid="profile-save" buttonType={ButtonTypes.SolidRightMargin} onPress={() => this.finalizeProfile()}>Save and Publish Your Profile</JCButton>
+                  <JCButton data-testid="profile-save" buttonType={ButtonTypes.SolidRightMargin} onPress={() => { this.finalizeProfile() }}>Save and Publish Your Profile</JCButton>
                   <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.logout()}>Logout</JCButton>
+                  {this.props.loadId ? <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.deleteUser()}>Delete</JCButton> : null}
                 </View>
                 : null
               }
@@ -349,7 +377,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   value={this.state.UserDetails.aboutMeShort} isEditable={this.state.isEditable}></EditableText>
 
                 <View style={this.styles.style.myProfileCoordinates}>
-                  <Text style={this.styles.style.fontFormSmallDarkGreyCoordinates}><Image style={{ width: "22px", height: "22px", top: 6, marginRight: 5 }} source={require('../../assets/svg/pin 2.svg')}></Image>{this.state.UserDetails.location.geocodeFull ? this.state.UserDetails.location.geocodeFull : "Location not defined"}</Text>
+                  <Text style={this.styles.style.fontFormSmallDarkGreyCoordinates}><Image style={{ width: "22px", height: "22px", top: 6, marginRight: 5 }} source={require('../../assets/svg/pin 2.svg')}></Image>{this.state.UserDetails.location?.geocodeFull ? this.state.UserDetails.location.geocodeFull : "Location not defined"}</Text>
                 </View>
                 <Text style={this.styles.style.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px", top: 3, marginRight: 5 }} source={require('../../assets/svg/calendar.svg')}></Image>{this.state.UserDetails.joined ? moment(this.state.UserDetails.joined).format('MMMM Do YYYY') : "Join date unknown"}</Text>
                 <Text style={this.styles.style.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px", top: 3, marginRight: 5 }} source={require('../../assets/svg/church.svg')}></Image>{this.state.UserDetails.orgName ? this.state.UserDetails.orgName : "Organization Name not defined"}</Text>
@@ -380,7 +408,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   }
                 }}
                   multiline={false} textStyle={this.styles.style.fontRegular}
-                  inputStyle={this.styles.style.groupNameInput} value={this.state.UserDetails.location.geocodeFull}
+                  inputStyle={this.styles.style.groupNameInput} value={this.state.UserDetails.location?.geocodeFull}
                   isEditable={this.state.isEditable} citiesOnly={true}>
                 </EditableLocation>
                 : null

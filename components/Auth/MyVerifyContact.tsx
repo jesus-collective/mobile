@@ -17,12 +17,13 @@ class MyVerifyContact extends VerifyContact<Props> {
 
     styles = MainStyles.getInstance();
     componentDidMount(): void {
-        Dimensions.addEventListener('change', this.styles.updateStyles(this))
+        Dimensions.addEventListener('change', () => { this.styles.updateStyles(this) })
     }
     componentWillUnmount(): void {
-        Dimensions.removeEventListener("change", this.styles.updateStyles(this));
-    }
-    render() {
+        Dimensions.removeEventListener("change", () => { this.styles.updateStyles(this) })
+    };
+
+    render(): React.ReactNode {
         //  console.log(this.props.authState)
         return (
 
