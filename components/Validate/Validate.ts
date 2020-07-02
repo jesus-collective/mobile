@@ -38,7 +38,7 @@ export default class Validate {
             return { result: false, validationError: "Profile must have - personality" }
         if (data.orgName == null || data.orgName == "")
             return { result: false, validationError: "Profile must have - organization name" }
-        if (data.orgType == null || data.orgType == "")
+        if (data.orgType == null || data.orgType == "" || data.orgType == "None")
             return { result: false, validationError: "Profile must have - organization type" }
         if (data.orgSize == null || data.orgSize == "")
             return { result: false, validationError: "Profile must have - organization size" }

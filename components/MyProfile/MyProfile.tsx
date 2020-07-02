@@ -126,6 +126,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
 
     const value = event.target === undefined ? event : event.target.type === 'checkbox' ? event.target.checked : event.target.value;
     // const name = target.name;
+    console.log(value)
     const updateData = { ...this.state.UserDetails }
     updateData[name] = value
     this.setState({
@@ -570,14 +571,15 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   <View style={{ flex: 1, flexDirection: 'row' }}>
                     <Picker style={{ height: 50, width: 350, marginRight: 10, borderTopWidth: 1, borderLeftWidth: 1, borderRightWidth: 1, borderBottomWidth: 1, borderColor: '#dddddd' }}
                       onValueChange={(itemValue) => { this.handleInputChange(itemValue, "orgType") }}
-                      selectedValue={!orgTypes.includes(this.state.UserDetails.orgType) ? "" : this.state.UserDetails.orgType}
+                      selectedValue={orgTypes.includes(this.state.UserDetails.orgType) || this.state.UserDetails.orgType === 'None' ? this.state.UserDetails.orgType : ""}
                     >
+                      <Picker.Item label={'None Selected'} value={'None'} />
                       {orgTypes.map((item, index) => {
                         return (<Picker.Item key={index} label={item} value={item} />)
                       })}
                       <Picker.Item label={"Other"} value={""} />
                     </Picker>
-                    {this.state.UserDetails.orgType === "" || (!orgTypes.includes(this.state.UserDetails.orgType) && this.state.UserDetails.orgType !== "None Selected") ?
+                    {this.state.UserDetails.orgType === "" || (!orgTypes.includes(this.state.UserDetails.orgType) && this.state.UserDetails.orgType !== "None") ?
                       <EditableText onChange={(e) => { this.handleInputChange(e, "orgType") }}
                         multiline={false}
                         textStyle={this.styles.style.fontFormSmallDarkGrey}
@@ -600,7 +602,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       onValueChange={(itemValue) => { this.handleInputChange(itemValue, "orgSize") }}
                       selectedValue={this.state.UserDetails.orgSize}
                     >
-
+                      <Picker.Item label={'None Selected'} value={''} />
                       {orgSizeSmall.map((item, index) => {
                         return (<Picker.Item key={index} label={item} value={item} />)
                       })}
@@ -611,6 +613,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       onValueChange={(itemValue) => { this.handleInputChange(itemValue, "orgSize") }}
                       selectedValue={this.state.UserDetails.orgSize}
                     >
+                      <Picker.Item label={'None Selected'} value={''} />
                       {orgSizeBig.map((item, index) => {
                         return (<Picker.Item key={index} label={item} value={item} />)
                       })}
