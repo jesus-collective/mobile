@@ -88,6 +88,9 @@ class ResourceHeader extends JCComponent<EmptyProps, State> {
                                     state.resourceData.resources.items[state.currentResource] ?
                                         <View style={this.styles.style.resourcefileFieldWrapper}>
                                             <EditableText onChange={(val) => { actions.updateResource(state.currentResource, "title", val) }} multiline={false} inputStyle={this.styles.style.fontResourceHeaderBold} textStyle={this.styles.style.fontCourseHeaderBold} value={state.resourceData.resources.items[state.currentResource].title} isEditable={state.isEditable}></EditableText>
+                                            <View style={this.styles.style.resourceHeaderAgeGroupBox}>
+                                                <Text style={this.styles.style.resourceHeaderAgeGroupBoxText}></Text>
+                                            </View>
                                             <EditableText onChange={(val) => { actions.updateResource(state.currentResource, "description", val) }} multiline={true} inputStyle={this.styles.style.fontResourceHeaderDescription} textStyle={this.styles.style.fontCourseHeaderDescription} value={state.resourceData.resources.items[state.currentResource].description} isEditable={state.isEditable}></EditableText>
                                         </View>
                                         : null

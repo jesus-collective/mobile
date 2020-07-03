@@ -382,6 +382,26 @@ export default class MainStyles {
                 color: "#FFFFFF",
                 width: "100%"
             },
+            resourceHeaderAgeGroupBox: {
+                height: "58px", 
+                backgroundColor: '#ffffff', 
+                justifyContent: "center", 
+                alignItems: "center", 
+                paddingRight: 21, 
+                paddingLeft: 21, 
+                width: "30%", 
+                borderRadius: 4, 
+                alignSelf: "center", 
+                marginTop: 30, 
+                marginBottom: 30
+            },
+            resourceHeaderAgeGroupBoxText: {
+                color: '#000000', 
+                fontSize: 30, 
+                lineHeight: 35,
+                fontWeight: 'bold', 
+                fontFamily: 'Graphik-Regular-App'
+            },
             fontCourseHeader: {
                 fontFamily: 'Graphik-Regular-App',
                 fontWeight: "normal",
@@ -401,16 +421,16 @@ export default class MainStyles {
             fontCourseHeaderDescription: {
                 fontFamily: 'Graphik-Regular-App',
                 fontWeight: "normal",
-                fontSize: 14,
-                lineHeight: 35,
+                fontSize: 20,
+                lineHeight: 30,
                 textAlign: "center",
                 color: "#FFFFFF"
             },
             fontResourceHeaderDescription: {
                 fontFamily: 'Graphik-Regular-App',
                 fontWeight: "normal",
-                fontSize: 14,
-                lineHeight: 35,
+                fontSize: 20,
+                lineHeight: 30,
                 textAlign: "center",
                 color: "#FFFFFF",
                 width: "100%",
@@ -1132,8 +1152,8 @@ export default class MainStyles {
                 height: 50
             },
             resourceHeaderImgContainer: {
-                backgroundColor: "#000000",
-                maxHeight: "285px"
+               backgroundColor: "#000000", 
+                maxHeight: "350px"
             },
             resourceHeaderImg: {
                 position: "relative",
@@ -1261,7 +1281,8 @@ export default class MainStyles {
                     marginTop: 100
                 },
                 resourcefileFieldWrapper: {
-                    top: "10vw"
+                    top: "10vw",
+                    width: "100%"
                 },
                 dashboardConversationCard: {
                     width: "100%"
@@ -1413,6 +1434,12 @@ export default class MainStyles {
                 },
                 fontConnectConversation: {
                     textAlign: "center"
+                },
+                fontCourseHeaderBold: {
+                    fontSize: 80,
+                },
+                fontResourceHeaderBold: {
+                    fontSize: 80,
                 },
             },
 
@@ -1682,6 +1709,12 @@ export default class MainStyles {
                 },
                 fontConnectConversation: {
                     textAlign: "center"
+                },
+                fontCourseHeaderBold: {
+                    fontSize: 50,
+                },
+                fontResourceHeaderBold: {
+                    fontSize: 50,
                 },
             },
 
