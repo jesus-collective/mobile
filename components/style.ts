@@ -298,7 +298,7 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 25, letterSpacing: -0.3, color: "#333333", maxWidth: 250, height: 18, borderWidth: 0, borderColor: "#dddddd"
             },
             fontFormMediumInput: {
-                fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28, letterSpacing: -0.3, color: "#333333", maxWidth: 350, height: 18, borderWidth: 0, borderColor: "#dddddd", overflow: "hidden"
+                fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28, letterSpacing: -0.3, color: "#333333", maxWidth: 350, height: 18, borderWidth: 0, borderColor: "#dddddd", overflow: "hidden"
             },
             fontFormSmallGrey: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", opacity: 0.5, marginBottom: 19
