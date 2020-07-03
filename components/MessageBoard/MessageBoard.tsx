@@ -185,10 +185,6 @@ class MessageBoardImpl extends JCComponent<Props, State> {
 
             </Content>
 
-
-
-
-
             {this.state.data.items.map((item: any) => {
               return (
                 <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
@@ -221,13 +217,9 @@ class MessageBoardImpl extends JCComponent<Props, State> {
 
               )
             })}
-
-
           </Container>
         </StyleProvider >
-
         : null
-
     )
   }
 }

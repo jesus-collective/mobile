@@ -1,6 +1,6 @@
-﻿import React from 'react';
+﻿import React, { lazy } from 'react';
 import { Container, Content } from 'native-base';
-import { Text } from 'react-native'
+import { Text, TouchableOpacity } from 'react-native'
 import * as customQueries from '../../src/graphql-custom/queries';
 import * as mutations from '../../src/graphql/mutations';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
@@ -11,6 +11,8 @@ import MyMap from '../../components/MyMap/MyMap';
 
 import { Image } from 'react-native'
 import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
+
+const MessageBoard = lazy(() => import('../../components/MessageBoard/MessageBoard'));
 
 interface Props {
   navigation?: any
@@ -123,21 +125,20 @@ export default class ConversationScreen extends JCComponent<Props, State>{
 
               {this.state.data != null ?
                 this.state.data.items.map((item, index) => {
-
+                  console.log({ item })
                   return (
-                    <Text style={{ backgroundColor: this.state.selectedRoom == index ? "#eeeeee" : "unset", borderRadius: 10, fontSize: 20, lineHeight: 25, fontWeight: "normal", fontFamily: "Graphik-Regular-App", width: "100%", paddingTop: 8, paddingBottom: 8, display: "flex", alignItems: "center" }} key={item.id}>
-                      <Image style={{ width: "55px", height: "55px", borderRadius: 50, marginRight: 20, marginLeft: 10 }}
-                        source={require("../../assets/profile-placeholder.png")} />
-                      {item.room.name != null ? item.room.name : "unknown"}
-                    </Text>)
-
-
-
+                    <TouchableOpacity style={{ backgroundColor: this.state.selectedRoom == index ? "#eeeeee" : "unset", borderRadius: 10, width: "100%", paddingTop: 8, paddingBottom: 8, display: "flex", alignItems: "center" }} key={item.id} onPress={() => this.setState({ selectedRoom: index })}>
+                      <Text style={{ fontSize: 20, lineHeight: 25, fontWeight: "normal", fontFamily: "Graphik-Regular-App", width: "100%", display: "flex", alignItems: "center" }} >
+                        <Image style={{ width: "55px", height: "55px", borderRadius: 50, marginRight: 20, marginLeft: 10 }}
+                          source={require("../../assets/profile-placeholder.png")} />
+                        {item.room.name != null ? item.room.name : "unknown"}
+                      </Text>
+                    </TouchableOpacity>)
                 }) : null}
 
             </Container>
             <Container style={this.styles.style.detailScreenRightCard}>
-
+              {/*<MessageBoard groupId={this.state.data.id}></MessageBoard>*/}
             </Container>
           </Container>
         </Content>
