@@ -73,13 +73,13 @@ export default class EditableLocation extends JCComponent<Props, State> {
                 {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
 
                     <div>
-                        <input style={{ minWidth: 250, paddingTop: 7, paddingBottom: 7, paddingLeft: 10, paddingRight: 25, fontSize: 16, color: "#333333" }}
+                        <input style={{ minWidth: 200, paddingTop: 7, paddingBottom: 7, paddingLeft: 10, paddingRight: 25, fontSize: 16, color: "#333333" }}
                             {...getInputProps({
                                 placeholder: 'Search Places ...',
                                 className: 'location-search-input',
                             })}
                         />
-                        <div className="autocomplete-dropdown-container" style={{ minWidth: 250, padding: "7px 25px 7px 10px", maxHeight: 80, overflowY: "scroll", width: 275 }}>
+                        <div className="autocomplete-dropdown-container" style={{ minWidth: 200, padding: "7px 25px 7px 10px", maxHeight: 80, overflowY: "scroll", width: "70%" }}>
                             {loading && <div className="autocomplete-dropdown-container" style={{ borderWidth: 2, borderColor: "#333333", fontFamily: "Graphik-Regular-App", fontSize: 16 }} >Loading...</div>}
                             {suggestions.map((suggestion, index) => {
                                 const className = suggestion.active
@@ -87,8 +87,8 @@ export default class EditableLocation extends JCComponent<Props, State> {
                                     : 'suggestion-item';
                                 // inline style for demonstration purpose
                                 const style = suggestion.active
-                                    ? { backgroundColor: '#FFEBE9', cursor: 'pointer', width: 275, borderWidth: 2, borderColor: "#333333" }
-                                    : { backgroundColor: '#ffffff', cursor: 'pointer', width: 275, borderWidth: 2, borderColor: "#333333" };
+                                    ? { backgroundColor: '#FFEBE9', cursor: 'pointer', width: '70%', borderWidth: 2, borderColor: "#333333" }
+                                    : { backgroundColor: '#ffffff', cursor: 'pointer', width: '70%', borderWidth: 2, borderColor: "#333333" };
                                 return (
                                     <div key={index}
                                         {...getSuggestionItemProps(suggestion, {
