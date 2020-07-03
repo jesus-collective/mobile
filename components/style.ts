@@ -678,7 +678,7 @@ export default class MainStyles {
                 justifyContent: "flex-end"
             },
             myProfileTopButtonsExternalContainer: {
-                flexDirection: "row-reverse"
+                flexDirection: "column"
             },
             myProfileMapSelectorContainer: {
                 position: "fixed",
@@ -1136,6 +1136,7 @@ export default class MainStyles {
                 flex: .75,
                 paddingLeft: 20,
                 paddingTop: 24,
+                textAlign: "right"
             },
             myMapCalloutEventContainer: {
                 height: 233,
