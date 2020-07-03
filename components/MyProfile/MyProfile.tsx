@@ -381,7 +381,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   <Text style={this.styles.style.fontFormSmallDarkGreyCoordinates}><Image style={{ width: "22px", height: "22px", top: 6, marginRight: 5 }} source={require('../../assets/svg/pin 2.svg')}></Image>{this.state.UserDetails.location?.geocodeFull ? this.state.UserDetails.location.geocodeFull : "Location not defined"}</Text>
                 </View>
                 <Text style={this.styles.style.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px", top: 3, marginRight: 5 }} source={require('../../assets/svg/calendar.svg')}></Image>{this.state.UserDetails.joined ? moment(this.state.UserDetails.joined).format('MMMM Do YYYY') : "Join date unknown"}</Text>
-                <Text style={this.styles.style.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px", top: 3, marginRight: 5 }} source={require('../../assets/svg/church.svg')}></Image>{this.state.UserDetails.orgName ? this.state.UserDetails.orgName : "Organization Name not defined"}</Text>
+                <Text style={this.styles.style.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px", top: 3, marginRight: 5 }} source={require('../../assets/svg/church.svg')}></Image>{this.state.UserDetails.orgName ? this.state.UserDetails.orgName : "No Organization Name"}</Text>
                 {!this.state.isEditable ?
                   <Button bordered style={this.styles.style.connectWithSliderButton} onPress={() => { this.openConversation(this.state.UserDetails.id, this.state.UserDetails.given_name + " " + this.state.UserDetails.family_name) }}><Text style={this.styles.style.fontStartConversation}>Start Conversation</Text></Button>
                   : null}
@@ -475,7 +475,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 placeholder="type here" multiline={true}
                 data-testid="profile-aboutMeLong"
                 textStyle={this.styles.style.fontFormSmallDarkGrey}
-                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28 }}
+                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
                 value={this.state.UserDetails.aboutMeLong} isEditable={this.state.isEditable}></EditableText>
 
               {this.state.isEditable ?
@@ -553,7 +553,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 placeholder="Type here."
                 data-testid="profile-currentScope"
                 textStyle={this.styles.style.fontFormSmallDarkGrey}
-                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28 }}
+                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
                 value={this.state.UserDetails.currentScope} isEditable={this.state.isEditable}></EditableText>
 
 
@@ -567,7 +567,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 data-testid="profile-personality"
                 placeholder="Type here. like (MBTI, DISC, APEST, Birkman, Enneagram + Wing, Kolbe Index, other, N/A"
                 textStyle={this.styles.style.fontFormSmallDarkGrey}
-                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28 }}
+                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
                 value={this.state.UserDetails.personality} isEditable={this.state.isEditable}></EditableText>
 
 
@@ -611,7 +611,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       <EditableText onChange={(e) => { this.handleInputChange(e, "orgType") }}
                         multiline={false}
                         textStyle={this.styles.style.fontFormSmallDarkGrey}
-                        inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: 308, paddingTop: 8, paddingRight: 10, paddingBottom: 8, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}
+                        inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: 308, paddingTop: 8, paddingRight: 10, paddingBottom: 8, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 24 }}
                         value={this.state.UserDetails.orgType} isEditable={this.state.isEditable}></EditableText> : null}
                   </View>
                   :
@@ -662,7 +662,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 data-testid="profile-orgDescription"
                 textStyle={this.styles.style.fontFormSmallDarkGrey}
                 placeholder="Type here."
-                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28 }}
+                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
                 value={this.state.UserDetails.orgDescription} isEditable={this.state.isEditable}></EditableText>
 
 

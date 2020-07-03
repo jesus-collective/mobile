@@ -286,7 +286,7 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, textAlign: "center", textTransform: "uppercase", color: "#333333", marginTop: 18, marginBottom: 18
             },
             fontFormAboutMe: {
-                fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28, color: "#333333", borderColor: "#dddddd", borderWidth: 1, height: 40, width: "100%"
+                fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28, color: "#333333", borderColor: "#dddddd", borderWidth: 1, height: 40, width: "100%", paddingBottom: 30,
             },
             fontFormSmallDarkGrey: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", paddingTop: 5, width: "100%"
@@ -298,7 +298,7 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 25, letterSpacing: -0.3, color: "#333333", maxWidth: 250, height: 18, borderWidth: 0, borderColor: "#dddddd"
             },
             fontFormMediumInput: {
-                fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28, letterSpacing: -0.3, color: "#333333", maxWidth: 350, height: 18, borderWidth: 0, borderColor: "#dddddd", overflow: "hidden"
+                fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28, letterSpacing: -0.3, color: "#333333", maxWidth: 350, height: 18, borderWidth: 0, borderColor: "#dddddd", overflow: "hidden"
             },
             fontFormSmallGrey: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", opacity: 0.5, marginBottom: 19
@@ -331,7 +331,7 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24, lineHeight: 30, height: 90, color: '#333333', paddingTop: 29,
             },
             profileFontTitle: {
-                fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 20, height: 75, lineHeight: 65, flex: 3
+                fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 20, height: 75, lineHeight: 32, flex: 3
             },
             fontDetailTop: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, color: '#333333', opacity: 0.4, paddingTop: 23, textTransform: "uppercase"
@@ -678,7 +678,7 @@ export default class MainStyles {
                 justifyContent: "flex-end"
             },
             myProfileTopButtonsExternalContainer: {
-                flexDirection: "row-reverse"
+                flexDirection: "column"
             },
             myProfileMapSelectorContainer: {
                 position: "fixed",
@@ -1136,6 +1136,7 @@ export default class MainStyles {
                 flex: .75,
                 paddingLeft: 20,
                 paddingTop: 24,
+                textAlign: "right"
             },
             myMapCalloutEventContainer: {
                 height: 233,
@@ -1504,6 +1505,9 @@ export default class MainStyles {
                 myprofilePickerMainContainer: {
                     maxHeight: 300
                 },
+                myProfileTopButtonsExternalContainer: {
+                    flexDirection: "column"
+                },
             },
 
             '@media (min-width: 769px) and (max-width: 1279px)': {
@@ -1515,7 +1519,10 @@ export default class MainStyles {
                     margin: "0px",
                     paddingTop: 0,
                     backgroundColor: '#F9FAFC'
-                }
+                },
+                resourceHeaderAgeGroupBox: {
+                    width: "40%"
+                },
             },
 
             '@media (min-width: 320px) and (max-width: 480px)': {
