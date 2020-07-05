@@ -381,7 +381,7 @@ type ResourceEpisode
      {allow: owner, ownerField: "owner", operations: [create, read, update, delete]}
   { allow: groups, groups: ["verifiedUsers"], operations: [read] }
    { allow: groups, groups: ["admins"]}
-  ])
+  ]) 
  @key(name: "byResourceEpisode", fields: ["episodeID","title"])
  {
   id: ID!

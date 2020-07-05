@@ -33,6 +33,21 @@
 			"build": true,
 			"providerPlugin": "awscloudformation",
 			"service": "Lambda"
+		},
+		"jcUpdateMainUserGroup": {
+			"build": true,
+			"providerPlugin": "awscloudformation",
+			"service": "Lambda",
+			"dependsOn": [
+				{
+					"category": "api",
+					"resourceName": "jcmobile",
+					"attributes": [
+						"GraphQLAPIIdOutput",
+						"GraphQLAPIEndpointOutput"
+					]
+				}
+			]
 		}
 	},
 	"auth": {
