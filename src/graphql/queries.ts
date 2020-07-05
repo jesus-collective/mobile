@@ -45,22 +45,10 @@ export const getUser = /* GraphQL */ `
       orgDescription
       joined
       primaryOrganization
-      organizations {
-        items {
-          id
-          userRole
-          userId
-          organizationId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       owns {
         items {
           id
           owner
-          ownerOrgID
           type
           name
           description
@@ -98,7 +86,6 @@ export const getUser = /* GraphQL */ `
           when
           roomId
           userId
-          authorOrgId
           postingAs
           owner
           createdAt
@@ -171,9 +158,6 @@ export const listUsers = /* GraphQL */ `
         orgDescription
         joined
         primaryOrganization
-        organizations {
-          nextToken
-        }
         owns {
           nextToken
         }
@@ -198,7 +182,6 @@ export const getGroup = /* GraphQL */ `
     getGroup(id: $id) {
       id
       owner
-      ownerOrgID
       ownerUser {
         id
         given_name
@@ -240,9 +223,6 @@ export const getGroup = /* GraphQL */ `
         orgDescription
         joined
         primaryOrganization
-        organizations {
-          nextToken
-        }
         owns {
           nextToken
         }
@@ -253,71 +233,6 @@ export const getGroup = /* GraphQL */ `
           nextToken
         }
         directMessages {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      ownerOrg {
-        id
-        orgName
-        admins
-        superAdmin
-        hasPaidState
-        profileState
-        country
-        location {
-          latitude
-          longitude
-          geocodeFull
-          geocodeCity
-          geocodeRegion
-        }
-        profileImage {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
-        aboutMeShort
-        aboutMeLong
-        orgType
-        orgSize
-        orgDescription
-        joined
-        parentOrganizationId
-        parentOrganization {
-          id
-          orgName
-          admins
-          superAdmin
-          hasPaidState
-          profileState
-          country
-          aboutMeShort
-          aboutMeLong
-          orgType
-          orgSize
-          orgDescription
-          joined
-          parentOrganizationId
-          createdAt
-          updatedAt
-        }
-        subOrganizations {
-          nextToken
-        }
-        members {
-          nextToken
-        }
-        ownerOrg {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        resource {
           nextToken
         }
         createdAt
@@ -358,7 +273,6 @@ export const getGroup = /* GraphQL */ `
           when
           roomId
           userId
-          authorOrgId
           postingAs
           owner
           createdAt
@@ -385,7 +299,6 @@ export const listGroups = /* GraphQL */ `
       items {
         id
         owner
-        ownerOrgID
         ownerUser {
           id
           given_name
@@ -413,24 +326,6 @@ export const listGroups = /* GraphQL */ `
           orgDescription
           joined
           primaryOrganization
-          createdAt
-          updatedAt
-        }
-        ownerOrg {
-          id
-          orgName
-          admins
-          superAdmin
-          hasPaidState
-          profileState
-          country
-          aboutMeShort
-          aboutMeLong
-          orgType
-          orgSize
-          orgDescription
-          joined
-          parentOrganizationId
           createdAt
           updatedAt
         }
@@ -553,12 +448,6 @@ export const getOrganization = /* GraphQL */ `
         members {
           nextToken
         }
-        ownerOrg {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
         resource {
           nextToken
         }
@@ -592,46 +481,6 @@ export const getOrganization = /* GraphQL */ `
           userRole
           userId
           organizationId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      ownerOrg {
-        items {
-          id
-          owner
-          ownerOrgID
-          type
-          name
-          description
-          memberCount
-          image
-          time
-          lastUpdated
-          location
-          length
-          effort
-          cost
-          eventType
-          eventUrl
-          tz
-          isSponsored
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      messages {
-        items {
-          id
-          content
-          when
-          roomId
-          userId
-          authorOrgId
-          postingAs
-          owner
           createdAt
           updatedAt
         }
@@ -712,12 +561,6 @@ export const listOrganizations = /* GraphQL */ `
           nextToken
         }
         members {
-          nextToken
-        }
-        ownerOrg {
-          nextToken
-        }
-        messages {
           nextToken
         }
         resource {
@@ -1046,9 +889,6 @@ export const getDirectMessageUser = /* GraphQL */ `
         orgDescription
         joined
         primaryOrganization
-        organizations {
-          nextToken
-        }
         owns {
           nextToken
         }
@@ -1247,9 +1087,6 @@ export const getDirectMessage = /* GraphQL */ `
         orgDescription
         joined
         primaryOrganization
-        organizations {
-          nextToken
-        }
         owns {
           nextToken
         }
@@ -1347,7 +1184,6 @@ export const getMessage = /* GraphQL */ `
       when
       roomId
       userId
-      authorOrgId
       postingAs
       owner
       author {
@@ -1391,9 +1227,6 @@ export const getMessage = /* GraphQL */ `
         orgDescription
         joined
         primaryOrganization
-        organizations {
-          nextToken
-        }
         owns {
           nextToken
         }
@@ -1409,75 +1242,9 @@ export const getMessage = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      authorOrg {
-        id
-        orgName
-        admins
-        superAdmin
-        hasPaidState
-        profileState
-        country
-        location {
-          latitude
-          longitude
-          geocodeFull
-          geocodeCity
-          geocodeRegion
-        }
-        profileImage {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
-        aboutMeShort
-        aboutMeLong
-        orgType
-        orgSize
-        orgDescription
-        joined
-        parentOrganizationId
-        parentOrganization {
-          id
-          orgName
-          admins
-          superAdmin
-          hasPaidState
-          profileState
-          country
-          aboutMeShort
-          aboutMeLong
-          orgType
-          orgSize
-          orgDescription
-          joined
-          parentOrganizationId
-          createdAt
-          updatedAt
-        }
-        subOrganizations {
-          nextToken
-        }
-        members {
-          nextToken
-        }
-        ownerOrg {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        resource {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
       room {
         id
         owner
-        ownerOrgID
         ownerUser {
           id
           given_name
@@ -1505,24 +1272,6 @@ export const getMessage = /* GraphQL */ `
           orgDescription
           joined
           primaryOrganization
-          createdAt
-          updatedAt
-        }
-        ownerOrg {
-          id
-          orgName
-          admins
-          superAdmin
-          hasPaidState
-          profileState
-          country
-          aboutMeShort
-          aboutMeLong
-          orgType
-          orgSize
-          orgDescription
-          joined
-          parentOrganizationId
           createdAt
           updatedAt
         }
@@ -1575,7 +1324,6 @@ export const listMessages = /* GraphQL */ `
         when
         roomId
         userId
-        authorOrgId
         postingAs
         owner
         author {
@@ -1608,28 +1356,9 @@ export const listMessages = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        authorOrg {
-          id
-          orgName
-          admins
-          superAdmin
-          hasPaidState
-          profileState
-          country
-          aboutMeShort
-          aboutMeLong
-          orgType
-          orgSize
-          orgDescription
-          joined
-          parentOrganizationId
-          createdAt
-          updatedAt
-        }
         room {
           id
           owner
-          ownerOrgID
           type
           name
           description
@@ -1731,12 +1460,6 @@ export const getResourceRoot = /* GraphQL */ `
           nextToken
         }
         members {
-          nextToken
-        }
-        ownerOrg {
-          nextToken
-        }
-        messages {
           nextToken
         }
         resource {
@@ -2157,7 +1880,6 @@ export const groupMemberByGroup = /* GraphQL */ `
         group {
           id
           owner
-          ownerOrgID
           type
           name
           description
@@ -2237,7 +1959,6 @@ export const groupMemberByUser = /* GraphQL */ `
         group {
           id
           owner
-          ownerOrgID
           type
           name
           description
@@ -2313,7 +2034,6 @@ export const groupByType = /* GraphQL */ `
       items {
         id
         owner
-        ownerOrgID
         ownerUser {
           id
           given_name
@@ -2341,24 +2061,6 @@ export const groupByType = /* GraphQL */ `
           orgDescription
           joined
           primaryOrganization
-          createdAt
-          updatedAt
-        }
-        ownerOrg {
-          id
-          orgName
-          admins
-          superAdmin
-          hasPaidState
-          profileState
-          country
-          aboutMeShort
-          aboutMeLong
-          orgType
-          orgSize
-          orgDescription
-          joined
-          parentOrganizationId
           createdAt
           updatedAt
         }
@@ -2486,7 +2188,6 @@ export const messagesByRoom = /* GraphQL */ `
         when
         roomId
         userId
-        authorOrgId
         postingAs
         owner
         author {
@@ -2519,28 +2220,9 @@ export const messagesByRoom = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        authorOrg {
-          id
-          orgName
-          admins
-          superAdmin
-          hasPaidState
-          profileState
-          country
-          aboutMeShort
-          aboutMeLong
-          orgType
-          orgSize
-          orgDescription
-          joined
-          parentOrganizationId
-          createdAt
-          updatedAt
-        }
         room {
           id
           owner
-          ownerOrgID
           type
           name
           description
@@ -2582,7 +2264,6 @@ export const searchGroups = /* GraphQL */ `
       items {
         id
         owner
-        ownerOrgID
         ownerUser {
           id
           given_name
@@ -2610,24 +2291,6 @@ export const searchGroups = /* GraphQL */ `
           orgDescription
           joined
           primaryOrganization
-          createdAt
-          updatedAt
-        }
-        ownerOrg {
-          id
-          orgName
-          admins
-          superAdmin
-          hasPaidState
-          profileState
-          country
-          aboutMeShort
-          aboutMeLong
-          orgType
-          orgSize
-          orgDescription
-          joined
-          parentOrganizationId
           createdAt
           updatedAt
         }

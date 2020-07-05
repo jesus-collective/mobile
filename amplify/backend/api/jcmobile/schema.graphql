@@ -38,7 +38,7 @@ type User
   joined: String
 
   primaryOrganization: String
-  organizations: [OrganizationMember] @connection(keyName: "orgMemberByUser", fields: ["id"])
+  #organizations: [OrganizationMember] @connection(keyName: "orgMemberByUser", fields: ["id"])
 
   owns: [Group] @connection(name: "OwnerUser", keyField: "owner")
   groups: [GroupMember] @connection(name: "UserMembers", keyField: "userID")
@@ -81,7 +81,7 @@ type Group
   @model
   @searchable
   @key(name: "byType", fields: ["type", "id"], queryField: "groupByType")
-  @key(name:"byOwnerOrg", fields:["ownerOrgID","name"])
+  #@key(name:"byOwnerOrg", fields:["ownerOrgID","name"])
   @auth(
     rules: [
       { allow: owner, ownerField: "owner" }
@@ -92,9 +92,9 @@ type Group
   ) {
   id: ID!
   owner: String!
-  ownerOrgID:ID!
+#  ownerOrgID:ID!
   ownerUser: User @connection(name: "OwnerUser", keyField: "owner")
-  ownerOrg: Organization @connection(fields:["ownerOrgID"])
+#  ownerOrg: Organization @connection(fields:["ownerOrgID"])
   type: String!
   name: String!
 
@@ -168,8 +168,8 @@ type Organization
   subOrganizations: [Organization] @connection(keyName: "byParentOrg", fields: ["id"])
 
   members: [OrganizationMember] @connection(keyName: "orgMemberByOrg", fields: ["id"])
-  ownerOrg: [Group] @connection(keyName: "byOwnerOrg", fields: ["id"])
-  messages: [Message] @connection(keyName: "byAuthorOrg", fields: ["id"])
+  #ownerOrg: [Group] @connection(keyName: "byOwnerOrg", fields: ["id"])
+  #messages: [Message] @connection(keyName: "byAuthorOrg", fields: ["id"])
   resource: [ResourceRoot] @connection(keyName: "resourceByOrganization", fields: ["id"])
 }
 type CourseInfo
@@ -281,7 +281,7 @@ type DirectMessage
 type Message
   @model
   @key(name: "ByRoom", fields: ["roomId", "when"], queryField: "messagesByRoom")
-  @key(name: "byAuthorOrg", fields:["authorOrgId", "when"])
+  #@key(name: "byAuthorOrg", fields:["authorOrgId", "when"])
   @auth(
     rules: [
       {allow: owner, ownerField: "owner", operations: [create, update, delete]}
@@ -293,11 +293,11 @@ type Message
   when: String!
   roomId: ID
   userId: ID
-  authorOrgId: ID!
+#  authorOrgId: ID!
   postingAs: String
   owner: String
   author: User @connection(name: "UserMessages", keyField: "userId")
-  authorOrg: Organization @connection(fields: ["authorOrgId"])
+#  authorOrg: Organization @connection(fields: ["authorOrgId"])
   room: Group @connection(name: "RoomMessages", keyField: "roomId")
 }
 type Subscription {
