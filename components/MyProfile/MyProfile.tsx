@@ -388,7 +388,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   : null}
 
                 {this.state.isEditable && constants['SETTING_ISVISIBLE_PROFILE_MESSAGES'] ?
-                  <Text><JCButton data-testid="profile-setmap" buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { null }}>Messages</JCButton></Text>
+                  <Text><JCButton data-testid="profile-setmap" buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { this.props.navigation.push("ConversationScreen", { initialUserID: null, initialUserName: null }) }}>Messages</JCButton></Text>
                   : null
                 }
                 {this.state.isEditable && constants['SETTING_ISVISIBLE_PROFILE_ACCOUNTSETTINGS'] ?
