@@ -210,6 +210,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       else if (this.props.roomId) {
         const dm: CreateDirectMessageInput = {
           id: Date.now().toString(),
+          userId: user.username,
           content: message,
           when: Date.now().toString(),
           messageRoomID: this.props.roomId
