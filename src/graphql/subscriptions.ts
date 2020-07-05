@@ -64,6 +64,9 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
         messages {
           nextToken
         }
+        directMessages {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -310,6 +313,18 @@ export const onCreateUser = /* GraphQL */ `
         }
         nextToken
       }
+      directMessages {
+        items {
+          id
+          content
+          when
+          userId
+          messageRoomID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -417,6 +432,18 @@ export const onUpdateUser = /* GraphQL */ `
         }
         nextToken
       }
+      directMessages {
+        items {
+          id
+          content
+          when
+          userId
+          messageRoomID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -519,6 +546,18 @@ export const onDeleteUser = /* GraphQL */ `
           userId
           authorOrgId
           owner
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      directMessages {
+        items {
+          id
+          content
+          when
+          userId
+          messageRoomID
           createdAt
           updatedAt
         }
@@ -674,6 +713,9 @@ export const onCreateGroupMember = /* GraphQL */ `
         messages {
           nextToken
         }
+        directMessages {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -825,6 +867,9 @@ export const onUpdateGroupMember = /* GraphQL */ `
           nextToken
         }
         messages {
+          nextToken
+        }
+        directMessages {
           nextToken
         }
         createdAt
@@ -980,6 +1025,9 @@ export const onDeleteGroupMember = /* GraphQL */ `
         messages {
           nextToken
         }
+        directMessages {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -1044,6 +1092,9 @@ export const onCreateGroup = /* GraphQL */ `
           nextToken
         }
         messages {
+          nextToken
+        }
+        directMessages {
           nextToken
         }
         createdAt
@@ -1207,6 +1258,9 @@ export const onUpdateGroup = /* GraphQL */ `
         messages {
           nextToken
         }
+        directMessages {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -1366,6 +1420,9 @@ export const onDeleteGroup = /* GraphQL */ `
           nextToken
         }
         messages {
+          nextToken
+        }
+        directMessages {
           nextToken
         }
         createdAt
@@ -1579,6 +1636,9 @@ export const onCreateOrganizationMember = /* GraphQL */ `
         messages {
           nextToken
         }
+        directMessages {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -1695,6 +1755,9 @@ export const onUpdateOrganizationMember = /* GraphQL */ `
         messages {
           nextToken
         }
+        directMessages {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -1809,6 +1872,9 @@ export const onDeleteOrganizationMember = /* GraphQL */ `
           nextToken
         }
         messages {
+          nextToken
+        }
+        directMessages {
           nextToken
         }
         createdAt
@@ -2626,6 +2692,9 @@ export const onCreateDirectMessageUser = /* GraphQL */ `
         messages {
           nextToken
         }
+        directMessages {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -2702,6 +2771,9 @@ export const onUpdateDirectMessageUser = /* GraphQL */ `
           nextToken
         }
         messages {
+          nextToken
+        }
+        directMessages {
           nextToken
         }
         createdAt
@@ -2782,6 +2854,9 @@ export const onDeleteDirectMessageUser = /* GraphQL */ `
         messages {
           nextToken
         }
+        directMessages {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -2823,6 +2898,7 @@ export const onCreateDirectMessageRoom = /* GraphQL */ `
           id
           content
           when
+          userId
           messageRoomID
           createdAt
           updatedAt
@@ -2854,6 +2930,7 @@ export const onUpdateDirectMessageRoom = /* GraphQL */ `
           id
           content
           when
+          userId
           messageRoomID
           createdAt
           updatedAt
@@ -2885,6 +2962,7 @@ export const onDeleteDirectMessageRoom = /* GraphQL */ `
           id
           content
           when
+          userId
           messageRoomID
           createdAt
           updatedAt
@@ -2902,6 +2980,65 @@ export const onCreateDirectMessage = /* GraphQL */ `
       id
       content
       when
+      userId
+      author {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+        joined
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        organizations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       messageRoomID
       messageRoom {
         id
@@ -2926,6 +3063,65 @@ export const onUpdateDirectMessage = /* GraphQL */ `
       id
       content
       when
+      userId
+      author {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+        joined
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        organizations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       messageRoomID
       messageRoom {
         id
@@ -2950,6 +3146,65 @@ export const onDeleteDirectMessage = /* GraphQL */ `
       id
       content
       when
+      userId
+      author {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+        joined
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        organizations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       messageRoomID
       messageRoom {
         id
@@ -3028,6 +3283,9 @@ export const onCreateMessage = /* GraphQL */ `
           nextToken
         }
         messages {
+          nextToken
+        }
+        directMessages {
           nextToken
         }
         createdAt
@@ -3236,6 +3494,9 @@ export const onUpdateMessage = /* GraphQL */ `
         messages {
           nextToken
         }
+        directMessages {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -3440,6 +3701,9 @@ export const onDeleteMessage = /* GraphQL */ `
           nextToken
         }
         messages {
+          nextToken
+        }
+        directMessages {
           nextToken
         }
         createdAt

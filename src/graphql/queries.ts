@@ -104,6 +104,18 @@ export const getUser = /* GraphQL */ `
         }
         nextToken
       }
+      directMessages {
+        items {
+          id
+          content
+          when
+          userId
+          messageRoomID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -166,6 +178,9 @@ export const listUsers = /* GraphQL */ `
           nextToken
         }
         messages {
+          nextToken
+        }
+        directMessages {
           nextToken
         }
         createdAt
@@ -231,6 +246,9 @@ export const getGroup = /* GraphQL */ `
           nextToken
         }
         messages {
+          nextToken
+        }
+        directMessages {
           nextToken
         }
         createdAt
@@ -924,6 +942,9 @@ export const getDirectMessageUser = /* GraphQL */ `
         messages {
           nextToken
         }
+        directMessages {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -1022,6 +1043,7 @@ export const getDirectMessageRoom = /* GraphQL */ `
           id
           content
           when
+          userId
           messageRoomID
           createdAt
           updatedAt
@@ -1066,6 +1088,65 @@ export const getDirectMessage = /* GraphQL */ `
       id
       content
       when
+      userId
+      author {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+        joined
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        organizations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       messageRoomID
       messageRoom {
         id
@@ -1095,6 +1176,36 @@ export const listDirectMessages = /* GraphQL */ `
         id
         content
         when
+        userId
+        author {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          orgDescription
+          joined
+          createdAt
+          updatedAt
+        }
         messageRoomID
         messageRoom {
           id
@@ -1169,6 +1280,9 @@ export const getMessage = /* GraphQL */ `
           nextToken
         }
         messages {
+          nextToken
+        }
+        directMessages {
           nextToken
         }
         createdAt
@@ -2413,6 +2527,36 @@ export const directMessagesByRoom = /* GraphQL */ `
         id
         content
         when
+        userId
+        author {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          orgDescription
+          joined
+          createdAt
+          updatedAt
+        }
         messageRoomID
         messageRoom {
           id
