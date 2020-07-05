@@ -240,6 +240,7 @@ export type CreateCourseWeekInput = {
   id?: string | null,
   week?: string | null,
   date?: string | null,
+  tz?: string | null,
   name?: string | null,
   leader?: string | null,
 };
@@ -248,6 +249,7 @@ export type UpdateCourseWeekInput = {
   id: string,
   week?: string | null,
   date?: string | null,
+  tz?: string | null,
   name?: string | null,
   leader?: string | null,
 };
@@ -261,6 +263,7 @@ export type CreateCourseLessonInput = {
   lesson?: string | null,
   name?: string | null,
   time?: string | null,
+  tz?: string | null,
   description?: string | null,
 };
 
@@ -269,6 +272,7 @@ export type UpdateCourseLessonInput = {
   lesson?: string | null,
   name?: string | null,
   time?: string | null,
+  tz?: string | null,
   description?: string | null,
 };
 
@@ -371,6 +375,7 @@ export type CreateResourceRootInput = {
   type?: string | null,
   groupId?: string | null,
   organizationId: string,
+  owner?: string | null,
 };
 
 export type UpdateResourceRootInput = {
@@ -378,6 +383,7 @@ export type UpdateResourceRootInput = {
   type?: string | null,
   groupId?: string | null,
   organizationId?: string | null,
+  owner?: string | null,
 };
 
 export type DeleteResourceRootInput = {
@@ -386,6 +392,7 @@ export type DeleteResourceRootInput = {
 
 export type CreateResourceInput = {
   id?: string | null,
+  owner?: string | null,
   type?: string | null,
   menuTitle?: string | null,
   order?: string | null,
@@ -399,6 +406,7 @@ export type CreateResourceInput = {
 
 export type UpdateResourceInput = {
   id: string,
+  owner?: string | null,
   type?: string | null,
   menuTitle?: string | null,
   order?: string | null,
@@ -416,6 +424,7 @@ export type DeleteResourceInput = {
 
 export type CreateResourceSeriesInput = {
   id?: string | null,
+  owner?: string | null,
   type?: string | null,
   title?: string | null,
   description?: string | null,
@@ -431,6 +440,7 @@ export type CreateResourceSeriesInput = {
 
 export type UpdateResourceSeriesInput = {
   id: string,
+  owner?: string | null,
   type?: string | null,
   title?: string | null,
   description?: string | null,
@@ -450,6 +460,7 @@ export type DeleteResourceSeriesInput = {
 
 export type CreateResourceEpisodeInput = {
   id?: string | null,
+  owner?: string | null,
   episodeNumber?: number | null,
   type?: string | null,
   title?: string | null,
@@ -465,6 +476,7 @@ export type CreateResourceEpisodeInput = {
 
 export type UpdateResourceEpisodeInput = {
   id: string,
+  owner?: string | null,
   episodeNumber?: number | null,
   type?: string | null,
   title?: string | null,
@@ -613,6 +625,7 @@ export type ModelCourseWeekFilterInput = {
   id?: ModelIDFilterInput | null,
   week?: ModelStringFilterInput | null,
   date?: ModelStringFilterInput | null,
+  tz?: ModelStringFilterInput | null,
   name?: ModelStringFilterInput | null,
   leader?: ModelStringFilterInput | null,
   and?: Array< ModelCourseWeekFilterInput | null > | null,
@@ -625,6 +638,7 @@ export type ModelCourseLessonFilterInput = {
   lesson?: ModelStringFilterInput | null,
   name?: ModelStringFilterInput | null,
   time?: ModelStringFilterInput | null,
+  tz?: ModelStringFilterInput | null,
   description?: ModelStringFilterInput | null,
   and?: Array< ModelCourseLessonFilterInput | null > | null,
   or?: Array< ModelCourseLessonFilterInput | null > | null,
@@ -686,6 +700,7 @@ export type ModelResourceRootFilterInput = {
   type?: ModelStringFilterInput | null,
   groupId?: ModelStringFilterInput | null,
   organizationId?: ModelIDFilterInput | null,
+  owner?: ModelStringFilterInput | null,
   and?: Array< ModelResourceRootFilterInput | null > | null,
   or?: Array< ModelResourceRootFilterInput | null > | null,
   not?: ModelResourceRootFilterInput | null,
@@ -693,6 +708,7 @@ export type ModelResourceRootFilterInput = {
 
 export type ModelResourceFilterInput = {
   id?: ModelIDFilterInput | null,
+  owner?: ModelStringFilterInput | null,
   type?: ModelStringFilterInput | null,
   menuTitle?: ModelStringFilterInput | null,
   order?: ModelStringFilterInput | null,
@@ -708,6 +724,7 @@ export type ModelResourceFilterInput = {
 
 export type ModelResourceSeriesFilterInput = {
   id?: ModelIDFilterInput | null,
+  owner?: ModelStringFilterInput | null,
   type?: ModelStringFilterInput | null,
   title?: ModelStringFilterInput | null,
   description?: ModelStringFilterInput | null,
@@ -726,6 +743,7 @@ export type ModelResourceSeriesFilterInput = {
 
 export type ModelResourceEpisodeFilterInput = {
   id?: ModelIDFilterInput | null,
+  owner?: ModelStringFilterInput | null,
   episodeNumber?: ModelIntFilterInput | null,
   type?: ModelStringFilterInput | null,
   title?: ModelStringFilterInput | null,
@@ -2819,6 +2837,7 @@ export type CreateOrganizationMutation = {
         type: string | null,
         groupId: string | null,
         organizationId: string,
+        owner: string | null,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -2935,6 +2954,7 @@ export type UpdateOrganizationMutation = {
         type: string | null,
         groupId: string | null,
         organizationId: string,
+        owner: string | null,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -3051,6 +3071,7 @@ export type DeleteOrganizationMutation = {
         type: string | null,
         groupId: string | null,
         organizationId: string,
+        owner: string | null,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -3078,6 +3099,7 @@ export type CreateCourseInfoMutation = {
         id: string,
         week: string | null,
         date: string | null,
+        tz: string | null,
         name: string | null,
         leader: string | null,
         createdAt: string,
@@ -3109,6 +3131,7 @@ export type UpdateCourseInfoMutation = {
         id: string,
         week: string | null,
         date: string | null,
+        tz: string | null,
         name: string | null,
         leader: string | null,
         createdAt: string,
@@ -3140,6 +3163,7 @@ export type DeleteCourseInfoMutation = {
         id: string,
         week: string | null,
         date: string | null,
+        tz: string | null,
         name: string | null,
         leader: string | null,
         createdAt: string,
@@ -3164,6 +3188,7 @@ export type CreateCourseWeekMutation = {
     id: string,
     week: string | null,
     date: string | null,
+    tz: string | null,
     name: string | null,
     leader: string | null,
     courseInfo:  {
@@ -3188,6 +3213,7 @@ export type CreateCourseWeekMutation = {
         lesson: string | null,
         name: string | null,
         time: string | null,
+        tz: string | null,
         description: string | null,
         createdAt: string,
         updatedAt: string,
@@ -3209,6 +3235,7 @@ export type UpdateCourseWeekMutation = {
     id: string,
     week: string | null,
     date: string | null,
+    tz: string | null,
     name: string | null,
     leader: string | null,
     courseInfo:  {
@@ -3233,6 +3260,7 @@ export type UpdateCourseWeekMutation = {
         lesson: string | null,
         name: string | null,
         time: string | null,
+        tz: string | null,
         description: string | null,
         createdAt: string,
         updatedAt: string,
@@ -3254,6 +3282,7 @@ export type DeleteCourseWeekMutation = {
     id: string,
     week: string | null,
     date: string | null,
+    tz: string | null,
     name: string | null,
     leader: string | null,
     courseInfo:  {
@@ -3278,6 +3307,7 @@ export type DeleteCourseWeekMutation = {
         lesson: string | null,
         name: string | null,
         time: string | null,
+        tz: string | null,
         description: string | null,
         createdAt: string,
         updatedAt: string,
@@ -3300,12 +3330,14 @@ export type CreateCourseLessonMutation = {
     lesson: string | null,
     name: string | null,
     time: string | null,
+    tz: string | null,
     description: string | null,
     courseWeek:  {
       __typename: "CourseWeek",
       id: string,
       week: string | null,
       date: string | null,
+      tz: string | null,
       name: string | null,
       leader: string | null,
       courseInfo:  {
@@ -3354,12 +3386,14 @@ export type UpdateCourseLessonMutation = {
     lesson: string | null,
     name: string | null,
     time: string | null,
+    tz: string | null,
     description: string | null,
     courseWeek:  {
       __typename: "CourseWeek",
       id: string,
       week: string | null,
       date: string | null,
+      tz: string | null,
       name: string | null,
       leader: string | null,
       courseInfo:  {
@@ -3408,12 +3442,14 @@ export type DeleteCourseLessonMutation = {
     lesson: string | null,
     name: string | null,
     time: string | null,
+    tz: string | null,
     description: string | null,
     courseWeek:  {
       __typename: "CourseWeek",
       id: string,
       week: string | null,
       date: string | null,
+      tz: string | null,
       name: string | null,
       leader: string | null,
       courseInfo:  {
@@ -3468,12 +3504,14 @@ export type CreateCourseAssignmentMutation = {
       lesson: string | null,
       name: string | null,
       time: string | null,
+      tz: string | null,
       description: string | null,
       courseWeek:  {
         __typename: "CourseWeek",
         id: string,
         week: string | null,
         date: string | null,
+        tz: string | null,
         name: string | null,
         leader: string | null,
         createdAt: string,
@@ -3508,12 +3546,14 @@ export type UpdateCourseAssignmentMutation = {
       lesson: string | null,
       name: string | null,
       time: string | null,
+      tz: string | null,
       description: string | null,
       courseWeek:  {
         __typename: "CourseWeek",
         id: string,
         week: string | null,
         date: string | null,
+        tz: string | null,
         name: string | null,
         leader: string | null,
         createdAt: string,
@@ -3548,12 +3588,14 @@ export type DeleteCourseAssignmentMutation = {
       lesson: string | null,
       name: string | null,
       time: string | null,
+      tz: string | null,
       description: string | null,
       courseWeek:  {
         __typename: "CourseWeek",
         id: string,
         week: string | null,
         date: string | null,
+        tz: string | null,
         name: string | null,
         leader: string | null,
         createdAt: string,
@@ -4758,11 +4800,13 @@ export type CreateResourceRootMutation = {
     type: string | null,
     groupId: string | null,
     organizationId: string,
+    owner: string | null,
     resources:  {
       __typename: "ModelResourceConnection",
       items:  Array< {
         __typename: "Resource",
         id: string,
+        owner: string | null,
         type: string | null,
         menuTitle: string | null,
         order: string | null,
@@ -4848,11 +4892,13 @@ export type UpdateResourceRootMutation = {
     type: string | null,
     groupId: string | null,
     organizationId: string,
+    owner: string | null,
     resources:  {
       __typename: "ModelResourceConnection",
       items:  Array< {
         __typename: "Resource",
         id: string,
+        owner: string | null,
         type: string | null,
         menuTitle: string | null,
         order: string | null,
@@ -4938,11 +4984,13 @@ export type DeleteResourceRootMutation = {
     type: string | null,
     groupId: string | null,
     organizationId: string,
+    owner: string | null,
     resources:  {
       __typename: "ModelResourceConnection",
       items:  Array< {
         __typename: "Resource",
         id: string,
+        owner: string | null,
         type: string | null,
         menuTitle: string | null,
         order: string | null,
@@ -5025,6 +5073,7 @@ export type CreateResourceMutation = {
   createResource:  {
     __typename: "Resource",
     id: string,
+    owner: string | null,
     type: string | null,
     menuTitle: string | null,
     order: string | null,
@@ -5045,6 +5094,7 @@ export type CreateResourceMutation = {
       items:  Array< {
         __typename: "ResourceSeries",
         id: string,
+        owner: string | null,
         type: string | null,
         title: string | null,
         description: string | null,
@@ -5068,6 +5118,7 @@ export type CreateResourceMutation = {
       type: string | null,
       groupId: string | null,
       organizationId: string,
+      owner: string | null,
       resources:  {
         __typename: "ModelResourceConnection",
         nextToken: string | null,
@@ -5112,6 +5163,7 @@ export type UpdateResourceMutation = {
   updateResource:  {
     __typename: "Resource",
     id: string,
+    owner: string | null,
     type: string | null,
     menuTitle: string | null,
     order: string | null,
@@ -5132,6 +5184,7 @@ export type UpdateResourceMutation = {
       items:  Array< {
         __typename: "ResourceSeries",
         id: string,
+        owner: string | null,
         type: string | null,
         title: string | null,
         description: string | null,
@@ -5155,6 +5208,7 @@ export type UpdateResourceMutation = {
       type: string | null,
       groupId: string | null,
       organizationId: string,
+      owner: string | null,
       resources:  {
         __typename: "ModelResourceConnection",
         nextToken: string | null,
@@ -5199,6 +5253,7 @@ export type DeleteResourceMutation = {
   deleteResource:  {
     __typename: "Resource",
     id: string,
+    owner: string | null,
     type: string | null,
     menuTitle: string | null,
     order: string | null,
@@ -5219,6 +5274,7 @@ export type DeleteResourceMutation = {
       items:  Array< {
         __typename: "ResourceSeries",
         id: string,
+        owner: string | null,
         type: string | null,
         title: string | null,
         description: string | null,
@@ -5242,6 +5298,7 @@ export type DeleteResourceMutation = {
       type: string | null,
       groupId: string | null,
       organizationId: string,
+      owner: string | null,
       resources:  {
         __typename: "ModelResourceConnection",
         nextToken: string | null,
@@ -5286,6 +5343,7 @@ export type CreateResourceSeriesMutation = {
   createResourceSeries:  {
     __typename: "ResourceSeries",
     id: string,
+    owner: string | null,
     type: string | null,
     title: string | null,
     description: string | null,
@@ -5301,6 +5359,7 @@ export type CreateResourceSeriesMutation = {
       items:  Array< {
         __typename: "ResourceEpisode",
         id: string,
+        owner: string | null,
         episodeNumber: number | null,
         type: string | null,
         title: string | null,
@@ -5321,6 +5380,7 @@ export type CreateResourceSeriesMutation = {
     parentResource:  {
       __typename: "Resource",
       id: string,
+      owner: string | null,
       type: string | null,
       menuTitle: string | null,
       order: string | null,
@@ -5347,6 +5407,7 @@ export type CreateResourceSeriesMutation = {
         type: string | null,
         groupId: string | null,
         organizationId: string,
+        owner: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -5366,6 +5427,7 @@ export type UpdateResourceSeriesMutation = {
   updateResourceSeries:  {
     __typename: "ResourceSeries",
     id: string,
+    owner: string | null,
     type: string | null,
     title: string | null,
     description: string | null,
@@ -5381,6 +5443,7 @@ export type UpdateResourceSeriesMutation = {
       items:  Array< {
         __typename: "ResourceEpisode",
         id: string,
+        owner: string | null,
         episodeNumber: number | null,
         type: string | null,
         title: string | null,
@@ -5401,6 +5464,7 @@ export type UpdateResourceSeriesMutation = {
     parentResource:  {
       __typename: "Resource",
       id: string,
+      owner: string | null,
       type: string | null,
       menuTitle: string | null,
       order: string | null,
@@ -5427,6 +5491,7 @@ export type UpdateResourceSeriesMutation = {
         type: string | null,
         groupId: string | null,
         organizationId: string,
+        owner: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -5446,6 +5511,7 @@ export type DeleteResourceSeriesMutation = {
   deleteResourceSeries:  {
     __typename: "ResourceSeries",
     id: string,
+    owner: string | null,
     type: string | null,
     title: string | null,
     description: string | null,
@@ -5461,6 +5527,7 @@ export type DeleteResourceSeriesMutation = {
       items:  Array< {
         __typename: "ResourceEpisode",
         id: string,
+        owner: string | null,
         episodeNumber: number | null,
         type: string | null,
         title: string | null,
@@ -5481,6 +5548,7 @@ export type DeleteResourceSeriesMutation = {
     parentResource:  {
       __typename: "Resource",
       id: string,
+      owner: string | null,
       type: string | null,
       menuTitle: string | null,
       order: string | null,
@@ -5507,6 +5575,7 @@ export type DeleteResourceSeriesMutation = {
         type: string | null,
         groupId: string | null,
         organizationId: string,
+        owner: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -5526,6 +5595,7 @@ export type CreateResourceEpisodeMutation = {
   createResourceEpisode:  {
     __typename: "ResourceEpisode",
     id: string,
+    owner: string | null,
     episodeNumber: number | null,
     type: string | null,
     title: string | null,
@@ -5540,6 +5610,7 @@ export type CreateResourceEpisodeMutation = {
     parentSeries:  {
       __typename: "ResourceSeries",
       id: string,
+      owner: string | null,
       type: string | null,
       title: string | null,
       description: string | null,
@@ -5558,6 +5629,7 @@ export type CreateResourceEpisodeMutation = {
       parentResource:  {
         __typename: "Resource",
         id: string,
+        owner: string | null,
         type: string | null,
         menuTitle: string | null,
         order: string | null,
@@ -5585,6 +5657,7 @@ export type UpdateResourceEpisodeMutation = {
   updateResourceEpisode:  {
     __typename: "ResourceEpisode",
     id: string,
+    owner: string | null,
     episodeNumber: number | null,
     type: string | null,
     title: string | null,
@@ -5599,6 +5672,7 @@ export type UpdateResourceEpisodeMutation = {
     parentSeries:  {
       __typename: "ResourceSeries",
       id: string,
+      owner: string | null,
       type: string | null,
       title: string | null,
       description: string | null,
@@ -5617,6 +5691,7 @@ export type UpdateResourceEpisodeMutation = {
       parentResource:  {
         __typename: "Resource",
         id: string,
+        owner: string | null,
         type: string | null,
         menuTitle: string | null,
         order: string | null,
@@ -5644,6 +5719,7 @@ export type DeleteResourceEpisodeMutation = {
   deleteResourceEpisode:  {
     __typename: "ResourceEpisode",
     id: string,
+    owner: string | null,
     episodeNumber: number | null,
     type: string | null,
     title: string | null,
@@ -5658,6 +5734,7 @@ export type DeleteResourceEpisodeMutation = {
     parentSeries:  {
       __typename: "ResourceSeries",
       id: string,
+      owner: string | null,
       type: string | null,
       title: string | null,
       description: string | null,
@@ -5676,6 +5753,7 @@ export type DeleteResourceEpisodeMutation = {
       parentResource:  {
         __typename: "Resource",
         id: string,
+        owner: string | null,
         type: string | null,
         menuTitle: string | null,
         order: string | null,
@@ -6287,6 +6365,7 @@ export type GetOrganizationQuery = {
         type: string | null,
         groupId: string | null,
         organizationId: string,
+        owner: string | null,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -6383,6 +6462,7 @@ export type GetCourseInfoQuery = {
         id: string,
         week: string | null,
         date: string | null,
+        tz: string | null,
         name: string | null,
         leader: string | null,
         createdAt: string,
@@ -6434,6 +6514,7 @@ export type GetCourseWeekQuery = {
     id: string,
     week: string | null,
     date: string | null,
+    tz: string | null,
     name: string | null,
     leader: string | null,
     courseInfo:  {
@@ -6458,6 +6539,7 @@ export type GetCourseWeekQuery = {
         lesson: string | null,
         name: string | null,
         time: string | null,
+        tz: string | null,
         description: string | null,
         createdAt: string,
         updatedAt: string,
@@ -6483,6 +6565,7 @@ export type ListCourseWeeksQuery = {
       id: string,
       week: string | null,
       date: string | null,
+      tz: string | null,
       name: string | null,
       leader: string | null,
       courseInfo:  {
@@ -6517,12 +6600,14 @@ export type GetCourseLessonQuery = {
     lesson: string | null,
     name: string | null,
     time: string | null,
+    tz: string | null,
     description: string | null,
     courseWeek:  {
       __typename: "CourseWeek",
       id: string,
       week: string | null,
       date: string | null,
+      tz: string | null,
       name: string | null,
       leader: string | null,
       courseInfo:  {
@@ -6575,12 +6660,14 @@ export type ListCourseLessonsQuery = {
       lesson: string | null,
       name: string | null,
       time: string | null,
+      tz: string | null,
       description: string | null,
       courseWeek:  {
         __typename: "CourseWeek",
         id: string,
         week: string | null,
         date: string | null,
+        tz: string | null,
         name: string | null,
         leader: string | null,
         createdAt: string,
@@ -6614,12 +6701,14 @@ export type GetCourseAssignmentQuery = {
       lesson: string | null,
       name: string | null,
       time: string | null,
+      tz: string | null,
       description: string | null,
       courseWeek:  {
         __typename: "CourseWeek",
         id: string,
         week: string | null,
         date: string | null,
+        tz: string | null,
         name: string | null,
         leader: string | null,
         createdAt: string,
@@ -6658,6 +6747,7 @@ export type ListCourseAssignmentsQuery = {
         lesson: string | null,
         name: string | null,
         time: string | null,
+        tz: string | null,
         description: string | null,
         createdAt: string,
         updatedAt: string,
@@ -7289,11 +7379,13 @@ export type GetResourceRootQuery = {
     type: string | null,
     groupId: string | null,
     organizationId: string,
+    owner: string | null,
     resources:  {
       __typename: "ModelResourceConnection",
       items:  Array< {
         __typename: "Resource",
         id: string,
+        owner: string | null,
         type: string | null,
         menuTitle: string | null,
         order: string | null,
@@ -7383,6 +7475,7 @@ export type ListResourceRootsQuery = {
       type: string | null,
       groupId: string | null,
       organizationId: string,
+      owner: string | null,
       resources:  {
         __typename: "ModelResourceConnection",
         nextToken: string | null,
@@ -7426,6 +7519,7 @@ export type GetResourceQuery = {
   getResource:  {
     __typename: "Resource",
     id: string,
+    owner: string | null,
     type: string | null,
     menuTitle: string | null,
     order: string | null,
@@ -7446,6 +7540,7 @@ export type GetResourceQuery = {
       items:  Array< {
         __typename: "ResourceSeries",
         id: string,
+        owner: string | null,
         type: string | null,
         title: string | null,
         description: string | null,
@@ -7469,6 +7564,7 @@ export type GetResourceQuery = {
       type: string | null,
       groupId: string | null,
       organizationId: string,
+      owner: string | null,
       resources:  {
         __typename: "ModelResourceConnection",
         nextToken: string | null,
@@ -7517,6 +7613,7 @@ export type ListResourcesQuery = {
     items:  Array< {
       __typename: "Resource",
       id: string,
+      owner: string | null,
       type: string | null,
       menuTitle: string | null,
       order: string | null,
@@ -7543,6 +7640,7 @@ export type ListResourcesQuery = {
         type: string | null,
         groupId: string | null,
         organizationId: string,
+        owner: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -7561,6 +7659,7 @@ export type GetResourceSeriesQuery = {
   getResourceSeries:  {
     __typename: "ResourceSeries",
     id: string,
+    owner: string | null,
     type: string | null,
     title: string | null,
     description: string | null,
@@ -7576,6 +7675,7 @@ export type GetResourceSeriesQuery = {
       items:  Array< {
         __typename: "ResourceEpisode",
         id: string,
+        owner: string | null,
         episodeNumber: number | null,
         type: string | null,
         title: string | null,
@@ -7596,6 +7696,7 @@ export type GetResourceSeriesQuery = {
     parentResource:  {
       __typename: "Resource",
       id: string,
+      owner: string | null,
       type: string | null,
       menuTitle: string | null,
       order: string | null,
@@ -7622,6 +7723,7 @@ export type GetResourceSeriesQuery = {
         type: string | null,
         groupId: string | null,
         organizationId: string,
+        owner: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -7645,6 +7747,7 @@ export type ListResourceSeriessQuery = {
     items:  Array< {
       __typename: "ResourceSeries",
       id: string,
+      owner: string | null,
       type: string | null,
       title: string | null,
       description: string | null,
@@ -7663,6 +7766,7 @@ export type ListResourceSeriessQuery = {
       parentResource:  {
         __typename: "Resource",
         id: string,
+        owner: string | null,
         type: string | null,
         menuTitle: string | null,
         order: string | null,
@@ -7689,6 +7793,7 @@ export type GetResourceEpisodeQuery = {
   getResourceEpisode:  {
     __typename: "ResourceEpisode",
     id: string,
+    owner: string | null,
     episodeNumber: number | null,
     type: string | null,
     title: string | null,
@@ -7703,6 +7808,7 @@ export type GetResourceEpisodeQuery = {
     parentSeries:  {
       __typename: "ResourceSeries",
       id: string,
+      owner: string | null,
       type: string | null,
       title: string | null,
       description: string | null,
@@ -7721,6 +7827,7 @@ export type GetResourceEpisodeQuery = {
       parentResource:  {
         __typename: "Resource",
         id: string,
+        owner: string | null,
         type: string | null,
         menuTitle: string | null,
         order: string | null,
@@ -7752,6 +7859,7 @@ export type ListResourceEpisodesQuery = {
     items:  Array< {
       __typename: "ResourceEpisode",
       id: string,
+      owner: string | null,
       episodeNumber: number | null,
       type: string | null,
       title: string | null,
@@ -7766,6 +7874,7 @@ export type ListResourceEpisodesQuery = {
       parentSeries:  {
         __typename: "ResourceSeries",
         id: string,
+        owner: string | null,
         type: string | null,
         title: string | null,
         description: string | null,
@@ -10672,6 +10781,7 @@ export type OnCreateOrganizationSubscription = {
         type: string | null,
         groupId: string | null,
         organizationId: string,
+        owner: string | null,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -10789,6 +10899,7 @@ export type OnUpdateOrganizationSubscription = {
         type: string | null,
         groupId: string | null,
         organizationId: string,
+        owner: string | null,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -10906,6 +11017,7 @@ export type OnDeleteOrganizationSubscription = {
         type: string | null,
         groupId: string | null,
         organizationId: string,
+        owner: string | null,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -10933,6 +11045,7 @@ export type OnCreateCourseInfoSubscription = {
         id: string,
         week: string | null,
         date: string | null,
+        tz: string | null,
         name: string | null,
         leader: string | null,
         createdAt: string,
@@ -10964,6 +11077,7 @@ export type OnUpdateCourseInfoSubscription = {
         id: string,
         week: string | null,
         date: string | null,
+        tz: string | null,
         name: string | null,
         leader: string | null,
         createdAt: string,
@@ -10995,6 +11109,7 @@ export type OnDeleteCourseInfoSubscription = {
         id: string,
         week: string | null,
         date: string | null,
+        tz: string | null,
         name: string | null,
         leader: string | null,
         createdAt: string,
@@ -11019,6 +11134,7 @@ export type OnCreateCourseWeekSubscription = {
     id: string,
     week: string | null,
     date: string | null,
+    tz: string | null,
     name: string | null,
     leader: string | null,
     courseInfo:  {
@@ -11043,6 +11159,7 @@ export type OnCreateCourseWeekSubscription = {
         lesson: string | null,
         name: string | null,
         time: string | null,
+        tz: string | null,
         description: string | null,
         createdAt: string,
         updatedAt: string,
@@ -11064,6 +11181,7 @@ export type OnUpdateCourseWeekSubscription = {
     id: string,
     week: string | null,
     date: string | null,
+    tz: string | null,
     name: string | null,
     leader: string | null,
     courseInfo:  {
@@ -11088,6 +11206,7 @@ export type OnUpdateCourseWeekSubscription = {
         lesson: string | null,
         name: string | null,
         time: string | null,
+        tz: string | null,
         description: string | null,
         createdAt: string,
         updatedAt: string,
@@ -11109,6 +11228,7 @@ export type OnDeleteCourseWeekSubscription = {
     id: string,
     week: string | null,
     date: string | null,
+    tz: string | null,
     name: string | null,
     leader: string | null,
     courseInfo:  {
@@ -11133,6 +11253,7 @@ export type OnDeleteCourseWeekSubscription = {
         lesson: string | null,
         name: string | null,
         time: string | null,
+        tz: string | null,
         description: string | null,
         createdAt: string,
         updatedAt: string,
@@ -11155,12 +11276,14 @@ export type OnCreateCourseLessonSubscription = {
     lesson: string | null,
     name: string | null,
     time: string | null,
+    tz: string | null,
     description: string | null,
     courseWeek:  {
       __typename: "CourseWeek",
       id: string,
       week: string | null,
       date: string | null,
+      tz: string | null,
       name: string | null,
       leader: string | null,
       courseInfo:  {
@@ -11209,12 +11332,14 @@ export type OnUpdateCourseLessonSubscription = {
     lesson: string | null,
     name: string | null,
     time: string | null,
+    tz: string | null,
     description: string | null,
     courseWeek:  {
       __typename: "CourseWeek",
       id: string,
       week: string | null,
       date: string | null,
+      tz: string | null,
       name: string | null,
       leader: string | null,
       courseInfo:  {
@@ -11263,12 +11388,14 @@ export type OnDeleteCourseLessonSubscription = {
     lesson: string | null,
     name: string | null,
     time: string | null,
+    tz: string | null,
     description: string | null,
     courseWeek:  {
       __typename: "CourseWeek",
       id: string,
       week: string | null,
       date: string | null,
+      tz: string | null,
       name: string | null,
       leader: string | null,
       courseInfo:  {
@@ -11323,12 +11450,14 @@ export type OnCreateCourseAssignmentSubscription = {
       lesson: string | null,
       name: string | null,
       time: string | null,
+      tz: string | null,
       description: string | null,
       courseWeek:  {
         __typename: "CourseWeek",
         id: string,
         week: string | null,
         date: string | null,
+        tz: string | null,
         name: string | null,
         leader: string | null,
         createdAt: string,
@@ -11363,12 +11492,14 @@ export type OnUpdateCourseAssignmentSubscription = {
       lesson: string | null,
       name: string | null,
       time: string | null,
+      tz: string | null,
       description: string | null,
       courseWeek:  {
         __typename: "CourseWeek",
         id: string,
         week: string | null,
         date: string | null,
+        tz: string | null,
         name: string | null,
         leader: string | null,
         createdAt: string,
@@ -11403,12 +11534,14 @@ export type OnDeleteCourseAssignmentSubscription = {
       lesson: string | null,
       name: string | null,
       time: string | null,
+      tz: string | null,
       description: string | null,
       courseWeek:  {
         __typename: "CourseWeek",
         id: string,
         week: string | null,
         date: string | null,
+        tz: string | null,
         name: string | null,
         leader: string | null,
         createdAt: string,
@@ -12561,11 +12694,13 @@ export type OnCreateResourceRootSubscription = {
     type: string | null,
     groupId: string | null,
     organizationId: string,
+    owner: string | null,
     resources:  {
       __typename: "ModelResourceConnection",
       items:  Array< {
         __typename: "Resource",
         id: string,
+        owner: string | null,
         type: string | null,
         menuTitle: string | null,
         order: string | null,
@@ -12647,11 +12782,13 @@ export type OnUpdateResourceRootSubscription = {
     type: string | null,
     groupId: string | null,
     organizationId: string,
+    owner: string | null,
     resources:  {
       __typename: "ModelResourceConnection",
       items:  Array< {
         __typename: "Resource",
         id: string,
+        owner: string | null,
         type: string | null,
         menuTitle: string | null,
         order: string | null,
@@ -12733,11 +12870,13 @@ export type OnDeleteResourceRootSubscription = {
     type: string | null,
     groupId: string | null,
     organizationId: string,
+    owner: string | null,
     resources:  {
       __typename: "ModelResourceConnection",
       items:  Array< {
         __typename: "Resource",
         id: string,
+        owner: string | null,
         type: string | null,
         menuTitle: string | null,
         order: string | null,
@@ -12812,10 +12951,15 @@ export type OnDeleteResourceRootSubscription = {
   } | null,
 };
 
+export type OnCreateResourceSubscriptionVariables = {
+  owner?: string | null,
+};
+
 export type OnCreateResourceSubscription = {
   onCreateResource:  {
     __typename: "Resource",
     id: string,
+    owner: string | null,
     type: string | null,
     menuTitle: string | null,
     order: string | null,
@@ -12836,6 +12980,7 @@ export type OnCreateResourceSubscription = {
       items:  Array< {
         __typename: "ResourceSeries",
         id: string,
+        owner: string | null,
         type: string | null,
         title: string | null,
         description: string | null,
@@ -12859,6 +13004,7 @@ export type OnCreateResourceSubscription = {
       type: string | null,
       groupId: string | null,
       organizationId: string,
+      owner: string | null,
       resources:  {
         __typename: "ModelResourceConnection",
         nextToken: string | null,
@@ -12893,12 +13039,17 @@ export type OnCreateResourceSubscription = {
     createdAt: string,
     updatedAt: string,
   } | null,
+};
+
+export type OnUpdateResourceSubscriptionVariables = {
+  owner?: string | null,
 };
 
 export type OnUpdateResourceSubscription = {
   onUpdateResource:  {
     __typename: "Resource",
     id: string,
+    owner: string | null,
     type: string | null,
     menuTitle: string | null,
     order: string | null,
@@ -12919,6 +13070,7 @@ export type OnUpdateResourceSubscription = {
       items:  Array< {
         __typename: "ResourceSeries",
         id: string,
+        owner: string | null,
         type: string | null,
         title: string | null,
         description: string | null,
@@ -12942,6 +13094,7 @@ export type OnUpdateResourceSubscription = {
       type: string | null,
       groupId: string | null,
       organizationId: string,
+      owner: string | null,
       resources:  {
         __typename: "ModelResourceConnection",
         nextToken: string | null,
@@ -12976,12 +13129,17 @@ export type OnUpdateResourceSubscription = {
     createdAt: string,
     updatedAt: string,
   } | null,
+};
+
+export type OnDeleteResourceSubscriptionVariables = {
+  owner?: string | null,
 };
 
 export type OnDeleteResourceSubscription = {
   onDeleteResource:  {
     __typename: "Resource",
     id: string,
+    owner: string | null,
     type: string | null,
     menuTitle: string | null,
     order: string | null,
@@ -13002,6 +13160,7 @@ export type OnDeleteResourceSubscription = {
       items:  Array< {
         __typename: "ResourceSeries",
         id: string,
+        owner: string | null,
         type: string | null,
         title: string | null,
         description: string | null,
@@ -13025,6 +13184,7 @@ export type OnDeleteResourceSubscription = {
       type: string | null,
       groupId: string | null,
       organizationId: string,
+      owner: string | null,
       resources:  {
         __typename: "ModelResourceConnection",
         nextToken: string | null,
@@ -13061,10 +13221,15 @@ export type OnDeleteResourceSubscription = {
   } | null,
 };
 
+export type OnCreateResourceSeriesSubscriptionVariables = {
+  owner?: string | null,
+};
+
 export type OnCreateResourceSeriesSubscription = {
   onCreateResourceSeries:  {
     __typename: "ResourceSeries",
     id: string,
+    owner: string | null,
     type: string | null,
     title: string | null,
     description: string | null,
@@ -13080,6 +13245,7 @@ export type OnCreateResourceSeriesSubscription = {
       items:  Array< {
         __typename: "ResourceEpisode",
         id: string,
+        owner: string | null,
         episodeNumber: number | null,
         type: string | null,
         title: string | null,
@@ -13100,6 +13266,7 @@ export type OnCreateResourceSeriesSubscription = {
     parentResource:  {
       __typename: "Resource",
       id: string,
+      owner: string | null,
       type: string | null,
       menuTitle: string | null,
       order: string | null,
@@ -13126,6 +13293,7 @@ export type OnCreateResourceSeriesSubscription = {
         type: string | null,
         groupId: string | null,
         organizationId: string,
+        owner: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -13135,12 +13303,17 @@ export type OnCreateResourceSeriesSubscription = {
     createdAt: string,
     updatedAt: string,
   } | null,
+};
+
+export type OnUpdateResourceSeriesSubscriptionVariables = {
+  owner?: string | null,
 };
 
 export type OnUpdateResourceSeriesSubscription = {
   onUpdateResourceSeries:  {
     __typename: "ResourceSeries",
     id: string,
+    owner: string | null,
     type: string | null,
     title: string | null,
     description: string | null,
@@ -13156,6 +13329,7 @@ export type OnUpdateResourceSeriesSubscription = {
       items:  Array< {
         __typename: "ResourceEpisode",
         id: string,
+        owner: string | null,
         episodeNumber: number | null,
         type: string | null,
         title: string | null,
@@ -13176,6 +13350,7 @@ export type OnUpdateResourceSeriesSubscription = {
     parentResource:  {
       __typename: "Resource",
       id: string,
+      owner: string | null,
       type: string | null,
       menuTitle: string | null,
       order: string | null,
@@ -13202,6 +13377,7 @@ export type OnUpdateResourceSeriesSubscription = {
         type: string | null,
         groupId: string | null,
         organizationId: string,
+        owner: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -13211,12 +13387,17 @@ export type OnUpdateResourceSeriesSubscription = {
     createdAt: string,
     updatedAt: string,
   } | null,
+};
+
+export type OnDeleteResourceSeriesSubscriptionVariables = {
+  owner?: string | null,
 };
 
 export type OnDeleteResourceSeriesSubscription = {
   onDeleteResourceSeries:  {
     __typename: "ResourceSeries",
     id: string,
+    owner: string | null,
     type: string | null,
     title: string | null,
     description: string | null,
@@ -13232,6 +13413,7 @@ export type OnDeleteResourceSeriesSubscription = {
       items:  Array< {
         __typename: "ResourceEpisode",
         id: string,
+        owner: string | null,
         episodeNumber: number | null,
         type: string | null,
         title: string | null,
@@ -13252,6 +13434,7 @@ export type OnDeleteResourceSeriesSubscription = {
     parentResource:  {
       __typename: "Resource",
       id: string,
+      owner: string | null,
       type: string | null,
       menuTitle: string | null,
       order: string | null,
@@ -13278,6 +13461,7 @@ export type OnDeleteResourceSeriesSubscription = {
         type: string | null,
         groupId: string | null,
         organizationId: string,
+        owner: string | null,
         createdAt: string,
         updatedAt: string,
       },
@@ -13287,12 +13471,17 @@ export type OnDeleteResourceSeriesSubscription = {
     createdAt: string,
     updatedAt: string,
   } | null,
+};
+
+export type OnCreateResourceEpisodeSubscriptionVariables = {
+  owner?: string | null,
 };
 
 export type OnCreateResourceEpisodeSubscription = {
   onCreateResourceEpisode:  {
     __typename: "ResourceEpisode",
     id: string,
+    owner: string | null,
     episodeNumber: number | null,
     type: string | null,
     title: string | null,
@@ -13307,6 +13496,7 @@ export type OnCreateResourceEpisodeSubscription = {
     parentSeries:  {
       __typename: "ResourceSeries",
       id: string,
+      owner: string | null,
       type: string | null,
       title: string | null,
       description: string | null,
@@ -13325,6 +13515,7 @@ export type OnCreateResourceEpisodeSubscription = {
       parentResource:  {
         __typename: "Resource",
         id: string,
+        owner: string | null,
         type: string | null,
         menuTitle: string | null,
         order: string | null,
@@ -13342,12 +13533,17 @@ export type OnCreateResourceEpisodeSubscription = {
     createdAt: string,
     updatedAt: string,
   } | null,
+};
+
+export type OnUpdateResourceEpisodeSubscriptionVariables = {
+  owner?: string | null,
 };
 
 export type OnUpdateResourceEpisodeSubscription = {
   onUpdateResourceEpisode:  {
     __typename: "ResourceEpisode",
     id: string,
+    owner: string | null,
     episodeNumber: number | null,
     type: string | null,
     title: string | null,
@@ -13362,6 +13558,7 @@ export type OnUpdateResourceEpisodeSubscription = {
     parentSeries:  {
       __typename: "ResourceSeries",
       id: string,
+      owner: string | null,
       type: string | null,
       title: string | null,
       description: string | null,
@@ -13380,6 +13577,7 @@ export type OnUpdateResourceEpisodeSubscription = {
       parentResource:  {
         __typename: "Resource",
         id: string,
+        owner: string | null,
         type: string | null,
         menuTitle: string | null,
         order: string | null,
@@ -13399,10 +13597,15 @@ export type OnUpdateResourceEpisodeSubscription = {
   } | null,
 };
 
+export type OnDeleteResourceEpisodeSubscriptionVariables = {
+  owner?: string | null,
+};
+
 export type OnDeleteResourceEpisodeSubscription = {
   onDeleteResourceEpisode:  {
     __typename: "ResourceEpisode",
     id: string,
+    owner: string | null,
     episodeNumber: number | null,
     type: string | null,
     title: string | null,
@@ -13417,6 +13620,7 @@ export type OnDeleteResourceEpisodeSubscription = {
     parentSeries:  {
       __typename: "ResourceSeries",
       id: string,
+      owner: string | null,
       type: string | null,
       title: string | null,
       description: string | null,
@@ -13435,6 +13639,7 @@ export type OnDeleteResourceEpisodeSubscription = {
       parentResource:  {
         __typename: "Resource",
         id: string,
+        owner: string | null,
         type: string | null,
         menuTitle: string | null,
         order: string | null,

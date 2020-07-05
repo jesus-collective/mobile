@@ -1705,6 +1705,7 @@ export const createOrganization = /* GraphQL */ `
           type
           groupId
           organizationId
+          owner
           createdAt
           updatedAt
         }
@@ -1807,6 +1808,7 @@ export const updateOrganization = /* GraphQL */ `
           type
           groupId
           organizationId
+          owner
           createdAt
           updatedAt
         }
@@ -1909,6 +1911,7 @@ export const deleteOrganization = /* GraphQL */ `
           type
           groupId
           organizationId
+          owner
           createdAt
           updatedAt
         }
@@ -1930,6 +1933,7 @@ export const createCourseInfo = /* GraphQL */ `
           id
           week
           date
+          tz
           name
           leader
           createdAt
@@ -1955,6 +1959,7 @@ export const updateCourseInfo = /* GraphQL */ `
           id
           week
           date
+          tz
           name
           leader
           createdAt
@@ -1980,6 +1985,7 @@ export const deleteCourseInfo = /* GraphQL */ `
           id
           week
           date
+          tz
           name
           leader
           createdAt
@@ -2000,6 +2006,7 @@ export const createCourseWeek = /* GraphQL */ `
       id
       week
       date
+      tz
       name
       leader
       courseInfo {
@@ -2020,6 +2027,7 @@ export const createCourseWeek = /* GraphQL */ `
           lesson
           name
           time
+          tz
           description
           createdAt
           updatedAt
@@ -2037,6 +2045,7 @@ export const updateCourseWeek = /* GraphQL */ `
       id
       week
       date
+      tz
       name
       leader
       courseInfo {
@@ -2057,6 +2066,7 @@ export const updateCourseWeek = /* GraphQL */ `
           lesson
           name
           time
+          tz
           description
           createdAt
           updatedAt
@@ -2074,6 +2084,7 @@ export const deleteCourseWeek = /* GraphQL */ `
       id
       week
       date
+      tz
       name
       leader
       courseInfo {
@@ -2094,6 +2105,7 @@ export const deleteCourseWeek = /* GraphQL */ `
           lesson
           name
           time
+          tz
           description
           createdAt
           updatedAt
@@ -2112,11 +2124,13 @@ export const createCourseLesson = /* GraphQL */ `
       lesson
       name
       time
+      tz
       description
       courseWeek {
         id
         week
         date
+        tz
         name
         leader
         courseInfo {
@@ -2157,11 +2171,13 @@ export const updateCourseLesson = /* GraphQL */ `
       lesson
       name
       time
+      tz
       description
       courseWeek {
         id
         week
         date
+        tz
         name
         leader
         courseInfo {
@@ -2202,11 +2218,13 @@ export const deleteCourseLesson = /* GraphQL */ `
       lesson
       name
       time
+      tz
       description
       courseWeek {
         id
         week
         date
+        tz
         name
         leader
         courseInfo {
@@ -2252,11 +2270,13 @@ export const createCourseAssignment = /* GraphQL */ `
         lesson
         name
         time
+        tz
         description
         courseWeek {
           id
           week
           date
+          tz
           name
           leader
           createdAt
@@ -2285,11 +2305,13 @@ export const updateCourseAssignment = /* GraphQL */ `
         lesson
         name
         time
+        tz
         description
         courseWeek {
           id
           week
           date
+          tz
           name
           leader
           createdAt
@@ -2318,11 +2340,13 @@ export const deleteCourseAssignment = /* GraphQL */ `
         lesson
         name
         time
+        tz
         description
         courseWeek {
           id
           week
           date
+          tz
           name
           leader
           createdAt
@@ -3363,9 +3387,11 @@ export const createResourceRoot = /* GraphQL */ `
       type
       groupId
       organizationId
+      owner
       resources {
         items {
           id
+          owner
           type
           menuTitle
           order
@@ -3440,9 +3466,11 @@ export const updateResourceRoot = /* GraphQL */ `
       type
       groupId
       organizationId
+      owner
       resources {
         items {
           id
+          owner
           type
           menuTitle
           order
@@ -3517,9 +3545,11 @@ export const deleteResourceRoot = /* GraphQL */ `
       type
       groupId
       organizationId
+      owner
       resources {
         items {
           id
+          owner
           type
           menuTitle
           order
@@ -3591,6 +3621,7 @@ export const createResource = /* GraphQL */ `
   mutation CreateResource($input: CreateResourceInput!) {
     createResource(input: $input) {
       id
+      owner
       type
       menuTitle
       order
@@ -3608,6 +3639,7 @@ export const createResource = /* GraphQL */ `
       series {
         items {
           id
+          owner
           type
           title
           description
@@ -3630,6 +3662,7 @@ export const createResource = /* GraphQL */ `
         type
         groupId
         organizationId
+        owner
         resources {
           nextToken
         }
@@ -3668,6 +3701,7 @@ export const updateResource = /* GraphQL */ `
   mutation UpdateResource($input: UpdateResourceInput!) {
     updateResource(input: $input) {
       id
+      owner
       type
       menuTitle
       order
@@ -3685,6 +3719,7 @@ export const updateResource = /* GraphQL */ `
       series {
         items {
           id
+          owner
           type
           title
           description
@@ -3707,6 +3742,7 @@ export const updateResource = /* GraphQL */ `
         type
         groupId
         organizationId
+        owner
         resources {
           nextToken
         }
@@ -3745,6 +3781,7 @@ export const deleteResource = /* GraphQL */ `
   mutation DeleteResource($input: DeleteResourceInput!) {
     deleteResource(input: $input) {
       id
+      owner
       type
       menuTitle
       order
@@ -3762,6 +3799,7 @@ export const deleteResource = /* GraphQL */ `
       series {
         items {
           id
+          owner
           type
           title
           description
@@ -3784,6 +3822,7 @@ export const deleteResource = /* GraphQL */ `
         type
         groupId
         organizationId
+        owner
         resources {
           nextToken
         }
@@ -3822,6 +3861,7 @@ export const createResourceSeries = /* GraphQL */ `
   mutation CreateResourceSeries($input: CreateResourceSeriesInput!) {
     createResourceSeries(input: $input) {
       id
+      owner
       type
       title
       description
@@ -3835,6 +3875,7 @@ export const createResourceSeries = /* GraphQL */ `
       episodes {
         items {
           id
+          owner
           episodeNumber
           type
           title
@@ -3854,6 +3895,7 @@ export const createResourceSeries = /* GraphQL */ `
       seriesID
       parentResource {
         id
+        owner
         type
         menuTitle
         order
@@ -3877,6 +3919,7 @@ export const createResourceSeries = /* GraphQL */ `
           type
           groupId
           organizationId
+          owner
           createdAt
           updatedAt
         }
@@ -3892,6 +3935,7 @@ export const updateResourceSeries = /* GraphQL */ `
   mutation UpdateResourceSeries($input: UpdateResourceSeriesInput!) {
     updateResourceSeries(input: $input) {
       id
+      owner
       type
       title
       description
@@ -3905,6 +3949,7 @@ export const updateResourceSeries = /* GraphQL */ `
       episodes {
         items {
           id
+          owner
           episodeNumber
           type
           title
@@ -3924,6 +3969,7 @@ export const updateResourceSeries = /* GraphQL */ `
       seriesID
       parentResource {
         id
+        owner
         type
         menuTitle
         order
@@ -3947,6 +3993,7 @@ export const updateResourceSeries = /* GraphQL */ `
           type
           groupId
           organizationId
+          owner
           createdAt
           updatedAt
         }
@@ -3962,6 +4009,7 @@ export const deleteResourceSeries = /* GraphQL */ `
   mutation DeleteResourceSeries($input: DeleteResourceSeriesInput!) {
     deleteResourceSeries(input: $input) {
       id
+      owner
       type
       title
       description
@@ -3975,6 +4023,7 @@ export const deleteResourceSeries = /* GraphQL */ `
       episodes {
         items {
           id
+          owner
           episodeNumber
           type
           title
@@ -3994,6 +4043,7 @@ export const deleteResourceSeries = /* GraphQL */ `
       seriesID
       parentResource {
         id
+        owner
         type
         menuTitle
         order
@@ -4017,6 +4067,7 @@ export const deleteResourceSeries = /* GraphQL */ `
           type
           groupId
           organizationId
+          owner
           createdAt
           updatedAt
         }
@@ -4032,6 +4083,7 @@ export const createResourceEpisode = /* GraphQL */ `
   mutation CreateResourceEpisode($input: CreateResourceEpisodeInput!) {
     createResourceEpisode(input: $input) {
       id
+      owner
       episodeNumber
       type
       title
@@ -4045,6 +4097,7 @@ export const createResourceEpisode = /* GraphQL */ `
       episodeID
       parentSeries {
         id
+        owner
         type
         title
         description
@@ -4061,6 +4114,7 @@ export const createResourceEpisode = /* GraphQL */ `
         seriesID
         parentResource {
           id
+          owner
           type
           menuTitle
           order
@@ -4084,6 +4138,7 @@ export const updateResourceEpisode = /* GraphQL */ `
   mutation UpdateResourceEpisode($input: UpdateResourceEpisodeInput!) {
     updateResourceEpisode(input: $input) {
       id
+      owner
       episodeNumber
       type
       title
@@ -4097,6 +4152,7 @@ export const updateResourceEpisode = /* GraphQL */ `
       episodeID
       parentSeries {
         id
+        owner
         type
         title
         description
@@ -4113,6 +4169,7 @@ export const updateResourceEpisode = /* GraphQL */ `
         seriesID
         parentResource {
           id
+          owner
           type
           menuTitle
           order
@@ -4136,6 +4193,7 @@ export const deleteResourceEpisode = /* GraphQL */ `
   mutation DeleteResourceEpisode($input: DeleteResourceEpisodeInput!) {
     deleteResourceEpisode(input: $input) {
       id
+      owner
       episodeNumber
       type
       title
@@ -4149,6 +4207,7 @@ export const deleteResourceEpisode = /* GraphQL */ `
       episodeID
       parentSeries {
         id
+        owner
         type
         title
         description
@@ -4165,6 +4224,7 @@ export const deleteResourceEpisode = /* GraphQL */ `
         seriesID
         parentResource {
           id
+          owner
           type
           menuTitle
           order

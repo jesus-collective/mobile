@@ -83,6 +83,8 @@ type Group
     rules: [
       { allow: owner, ownerField: "owner" }
       { allow: groups, groups: ["verifiedUsers"], operations: [read] }
+      { allow: groups, groups: ["admins"]}
+
     ]
   ) {
   id: ID!
@@ -208,6 +210,7 @@ type CourseWeek
   id: ID!
   week: String
   date: String
+  tz:String
   name: String
   leader: String
   courseInfo: CourseInfo @connection(name:"courseInfo",keyField:"id")
@@ -227,6 +230,7 @@ type CourseLesson
   lesson:String
   name: String
   time: String
+  tz:String
   description: String
   courseWeek: CourseWeek @connection(name: "courseLesson", keyField: "id")
   assignments: [CourseAssignment] @connection(name: "courseAssignment", keyField: "id",sortField:"assignment")
@@ -284,12 +288,8 @@ type Message
   @key(name: "byAuthorOrg", fields:["authorOrgId", "when"])
   @auth(
     rules: [
-      {
-        allow: owner
-        ownerField: "owner"
-        operations: [create, update, delete]
-      }
-      { allow: private, operations: [read] }
+      {allow: owner, ownerField: "owner", operations: [create, update, delete]}
+      {allow: private, operations: [read] }
     ]
   ) {
   id: ID!
@@ -310,23 +310,32 @@ type Subscription {
 
 type ResourceRoot 
 @model 
- @auth(rules: [{ allow: groups, groups: ["verifiedUsers"] }])
+ @auth(rules: [
+   { allow: groups, groups: ["verifiedUsers"], operations: [read] }
+     { allow: groups, groups: ["admins"]}
+   ])
  @key(name: "byOrganization", fields: ["organizationId"])
  {
   id: ID!
   type: String
   groupId: String
   organizationId: ID!
+  owner:String
   resources: [Resource] @connection(name:"r1",keyField: "resourceID",sortField:"order")
   organization: Organization @connection(fields: ["organizationId"])
 
 }
 type Resource 
 @model 
-@auth(rules: [{ allow: groups, groups: ["verifiedUsers"] }])
+@auth(rules: [
+   {allow: owner, ownerField: "owner", operations: [create, read, update, delete]}
+  { allow: groups, groups: ["verifiedUsers"], operations: [read] }
+   { allow: groups, groups: ["admins"]}
+  ])
  @key(name: "byResource", fields: ["resourceID"])
 {
   id: ID!
+  owner:String
   type: String
   menuTitle: String
   order:String
@@ -341,10 +350,16 @@ type Resource
 }
 type ResourceSeries 
 @model 
-@auth(rules: [{ allow: groups, groups: ["verifiedUsers"] }])
+@auth(rules: [
+     {allow: owner, ownerField: "owner", operations: [create, read, update, delete]}
+
+  { allow: groups, groups: ["verifiedUsers"] , operations: [read]}
+   { allow: groups, groups: ["admins"]}
+  ])
  @key(name: "byResourceSeries", fields: ["seriesID","title"])
 {
   id: ID!
+  owner:String
   type: String
   title: String
   description: String
@@ -362,10 +377,15 @@ type ResourceSeries
 
 type ResourceEpisode 
 @model 
-@auth(rules: [{ allow: groups, groups: ["verifiedUsers"] }])
+@auth(rules: [
+     {allow: owner, ownerField: "owner", operations: [create, read, update, delete]}
+  { allow: groups, groups: ["verifiedUsers"], operations: [read] }
+   { allow: groups, groups: ["admins"]}
+  ])
  @key(name: "byResourceEpisode", fields: ["episodeID","title"])
  {
   id: ID!
+  owner:String
   episodeNumber: Int
   type: String
   title: String
