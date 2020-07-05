@@ -148,6 +148,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
     delete item.createdAt
     delete item.updatedAt
     delete item.profileImage["__typename"]
+    delete item.directMessages
     return item
   }
   async finalizeProfile(): Promise<void> {
@@ -372,7 +373,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 }
                 <EditableText onChange={(e) => { this.handleInputChange(e, "aboutMeShort") }}
                   placeholder="Short sentence about me" multiline={true}
-                  placeholderTextColor = "#757575"
+                  placeholderTextColor="#757575"
                   textStyle={this.styles.style.fontFormSmallDarkGrey}
                   inputStyle={this.styles.style.fontFormAboutMe}
                   data-testid="profile-aboutMeShort"
@@ -387,7 +388,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   <Button bordered style={this.styles.style.connectWithSliderButton} onPress={() => { this.openConversation(this.state.UserDetails.id, this.state.UserDetails.given_name + " " + this.state.UserDetails.family_name) }}><Text style={this.styles.style.fontStartConversation}>Start Conversation</Text></Button>
                   : null}
 
-                {this.state.isEditable && constants['SETTING_ISVISIBLE_PROFILE_MESSAGES'] ?
+                {this.state.isEditable && this.state.UserDetails.profileState !== "Incomplete" && constants['SETTING_ISVISIBLE_PROFILE_MESSAGES'] ?
                   <Text><JCButton data-testid="profile-setmap" buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { this.props.navigation.push("ConversationScreen", { initialUserID: null, initialUserName: null }) }}>Messages</JCButton></Text>
                   : null
                 }

@@ -137,7 +137,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       const processMessages = (json) => {
-        console.log({ json })
+        console.log(json)
         this.setState({
           created: true,
           data: json.data.directMessagesByRoom,
@@ -158,20 +158,6 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     }
   }
 
-
-  async getDM(id: string) {
-    try {
-      const json: any = await API.graphql({
-        query: queries.getDirectMessageRoom,
-        variables: { id: id },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-      });
-      console.log(json.data.getDirectMessageRoom)
-    } catch (e) {
-      console.error(e)
-    }
-  }
-
   saveMessage() {
     const message = JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()))
     Auth.currentAuthenticatedUser().then((user: any) => {
@@ -183,7 +169,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           roomId: this.props.groupId,
           userId: user.username,
           owner: user.username,
-          authorOrgId: "0"
+          //authorOrgId: "0"
         }
         const createMessage: any = API.graphql({
           query: mutations.createMessage,
@@ -320,13 +306,15 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             })}
 
             {this.props.roomId && this.state.data.items.map((item: any) => {
-              this.getDM(item.messageRoomID)
+              if (!item?.author) {
+                return null
+              }
               return (
                 <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
                   <Card key={item.id} style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }}>
                     <CardItem style={this.styles.style.eventPageMessageBoard}>
                       <Left style={this.styles.style.eventPageMessageBoardLeft}>
-                        <ProfileImage size="small" user={item.owner ? item.owner : null}></ProfileImage>
+                        <ProfileImage size="small" user={item.author?.id ?? null}></ProfileImage>
                         <Body>
                           <Text style={this.styles.style.groupFormName}>
                             {item.author != null ? item.author.given_name : null} {item.author != null ? item.author.family_name : null}
