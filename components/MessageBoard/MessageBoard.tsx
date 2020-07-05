@@ -23,7 +23,8 @@ import { stateToHTML } from 'draft-js-export-html';
 import JCComponent, { JCState } from '../JCComponent/JCComponent';
 
 interface Props {
-  groupId: string
+  groupId?: string
+  roomId?: string
   route?: any
   navigation?: any
 }
@@ -48,24 +49,26 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     }
 
     this.setInitialData(props)
-    const subscription: any = API.graphql(
-      graphqlOperation(subscriptions.onCreateMessage, { roomId: this.props.groupId })
-    )
-    subscription.subscribe(
-      {
-        next: (todoData) => {
-          let temp: any = this.state.data
-          if (temp === null)
-            temp = { items: [] }
-          if (temp.items == null)
-            temp.items = [todoData.value.data.onCreateMessage]
-          else
-            temp.items = [todoData.value.data.onCreateMessage, ...temp.items]
-          this.setState({ data: temp })
-        }
-      });
-  }
 
+    if (this.props.groupId) {
+      const subscription: any = API.graphql(
+        graphqlOperation(subscriptions.onCreateMessage, { roomId: this.props.groupId })
+      )
+      subscription.subscribe(
+        {
+          next: (todoData) => {
+            let temp: any = this.state.data
+            if (temp === null)
+              temp = { items: [] }
+            if (temp.items == null)
+              temp.items = [todoData.value.data.onCreateMessage]
+            else
+              temp.items = [todoData.value.data.onCreateMessage, ...temp.items]
+            this.setState({ data: temp })
+          }
+        });
+    }
+  }
 
   async setInitialData(props) {
     const user = await Auth.currentAuthenticatedUser();
@@ -82,7 +85,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     if (props.route.params.create === "true" || props.route.params.create === true) {
       this.setState({ created: false })
     }
-    else {
+    else if (this.props.groupId) {
 
       const messagesByRoom: any = API.graphql({
         query: queries.messagesByRoom,
@@ -99,6 +102,21 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       }
       messagesByRoom.then(processMessages).catch(processMessages)
 
+    } else if (this.props.roomId) {
+      /*const messagesByRoom: any = API.graphql({
+        query: queries.messagesByRoom,
+        variables: { roomId: this.props.groupId, sortDirection: "DESC" },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+      });
+      const processMessages = (json) => {
+        console.log({ process: json })
+        this.setState({
+          created: true,
+          data: json.data.messagesByRoom,
+
+        })
+      }
+      messagesByRoom.then(processMessages).catch(processMessages)*/
     }
   }
   updateEditorInput(value: any) {
@@ -124,21 +142,30 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         owner: user.username,
         authorOrgId: "0"
       }
-      const createMessage: any = API.graphql({
-        query: mutations.createMessage,
-        variables: { input: z },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-      });
 
-      createMessage.then((json: any) => {
-        console.log({ "Success mutations.createMessage": json });
-        this.setState({
+      if (this.props.groupId) {
+        const createMessage: any = API.graphql({
+          query: mutations.createMessage,
+          variables: { input: z },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+        });
 
-          editorState: EditorState.createEmpty()
+        createMessage.then((json: any) => {
+          console.log({ "Success mutations.createMessage": json });
+          this.setState({
+
+            editorState: EditorState.createEmpty()
+          })
+        }).catch((err: any) => {
+          console.log({ "Error mutations.createMessage": err });
+          if (err.data.createMessage) {
+            this.setState({
+              editorState: EditorState.createEmpty()
+            })
+          }
         })
-      }).catch((err: any) => {
-        console.log({ "Error mutations.createMessage": err });
-      })
+      }
+
     })
   }
   showProfile(id) {
@@ -146,6 +173,12 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     this.props.navigation.push("ProfileScreen", { id: id, create: false });
   }
   render() {
+
+    if (this.props.groupId && this.props.roomId) {
+      console.error('groupId and roomId cannot be used together')
+      return null
+    }
+
     return (
       (this.state.created) ?
 
