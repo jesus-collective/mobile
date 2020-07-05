@@ -41,6 +41,7 @@ type User
   groups: [GroupMember] @connection(name: "UserMembers", keyField: "userID")
   organizations: [OrganizationMember] @connection(name: "UserOrganizations", keyField: "userId")
   messages: [Message] @connection(name: "UserMessages", keyField: "userId", sortField: "when")
+  directMessages: [DirectMessage] @connection(keyName: "dmsByUser", fields: ["id"])
 }
 type LatLong {
   latitude: String
@@ -274,10 +275,13 @@ type DirectMessageRoom
 type DirectMessage
 @model
 @key(name: "byMessageUser", fields: ["messageRoomID", "when"], queryField: "directMessagesByRoom")
+@key(name: "dmsByUser", fields: ["userId", "when"])
 {
   id: ID!
   content: String!
   when: String!
+  userId: ID!
+  author: User @connection(fields: ["userId"])
   messageRoomID:ID!
   messageRoom:DirectMessageRoom @connection(fields:["messageRoomID"])
 }

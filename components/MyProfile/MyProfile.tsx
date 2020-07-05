@@ -350,7 +350,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 </Image>
                 {this.state.isEditable ?
                   <View style={this.styles.style.fileInputWrapper}>
-                    <JCButton buttonType={ButtonTypes.SolidProfile} onPress={() => { null }}>Upload Profile Picture</JCButton>
+                    <JCButton buttonType={ButtonTypes.SolidProfile} onPress={() => { null }}>Set Profile Picture</JCButton>
                     <input data-testid="profile-image" style={{ fontSize: "200px", position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='image/*' onChange={(e) => this.onProfileImageChange(e)} />
                   </View>
                   : null
@@ -372,6 +372,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 }
                 <EditableText onChange={(e) => { this.handleInputChange(e, "aboutMeShort") }}
                   placeholder="Short sentence about me" multiline={true}
+                  placeholderTextColor = "#757575"
                   textStyle={this.styles.style.fontFormSmallDarkGrey}
                   inputStyle={this.styles.style.fontFormAboutMe}
                   data-testid="profile-aboutMeShort"
@@ -387,7 +388,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   : null}
 
                 {this.state.isEditable && constants['SETTING_ISVISIBLE_PROFILE_MESSAGES'] ?
-                  <Text><JCButton data-testid="profile-setmap" buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { null }}>Messages</JCButton></Text>
+                  <Text><JCButton data-testid="profile-setmap" buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { this.props.navigation.push("ConversationScreen", { initialUserID: null, initialUserName: null }) }}>Messages</JCButton></Text>
                   : null
                 }
                 {this.state.isEditable && constants['SETTING_ISVISIBLE_PROFILE_ACCOUNTSETTINGS'] ?
@@ -538,7 +539,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   multiline={false}
                   data-testid="profile-currentRole"
                   textStyle={this.styles.style.fontFormSmallDarkGrey}
-                  inputStyle={this.styles.style.fontFormMediumInput}
+                  inputStyle={this.styles.style.fontFormLargeInput}
                   value={this.state.UserDetails.currentRole} isEditable={this.state.isEditable}></EditableText>
 
 
@@ -585,7 +586,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   multiline={false}
                   data-testid="profile-orgName"
                   textStyle={this.styles.style.fontFormSmallDarkGrey}
-                  inputStyle={this.styles.style.fontFormMediumInput}
+                  inputStyle={this.styles.style.fontFormLargeInput}
                   value={this.state.UserDetails.orgName} isEditable={this.state.isEditable}></EditableText>
 
 

@@ -1,6 +1,6 @@
-﻿import React from 'react';
+﻿import React, { lazy } from 'react';
 import { Container, Content } from 'native-base';
-import { Text } from 'react-native'
+import { Text, TouchableOpacity } from 'react-native'
 import * as customQueries from '../../src/graphql-custom/queries';
 import * as mutations from '../../src/graphql/mutations';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
@@ -9,8 +9,9 @@ import { API, Auth } from 'aws-amplify';
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
 
-import { Image } from 'react-native'
 import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
+import ProfileImage from '../../components/ProfileImage/ProfileImage';
+import MessageBoard from '../../components/MessageBoard/MessageBoard';
 
 interface Props {
   navigation?: any
@@ -21,8 +22,9 @@ interface State extends JCState {
   showMap: boolean
   data: any
   selectedRoom: any
+  currentUser: string
+  currentRoomId: string
 }
-
 
 export default class ConversationScreen extends JCComponent<Props, State>{
   constructor(props: Props) {
@@ -31,9 +33,13 @@ export default class ConversationScreen extends JCComponent<Props, State>{
       ...super.getInitialState(),
       selectedRoom: null,
       showMap: false,
-      data: { items: [] }
+      data: { items: [] },
+      currentUser: null,
+      currentRoomId: null
     }
     console.log(this.props.route.params.initialUser)
+
+    Auth.currentAuthenticatedUser().then((user: any) => { this.setState({ currentUser: user.username }) })
 
     this.getInitialData()
   }
@@ -73,7 +79,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
       if ((item.room.messageUsers.items.length == 2) &&
         (item.room.messageUsers.items[0].userID == this.props.route.params.initialUserID || item.room.messageUsers.items[1].userID == this.props.route.params.initialUserID)) {
         console.log("Found")
-        this.setState({ selectedRoom: index })
+        this.setState({ selectedRoom: index, currentRoomId: this.state.data.items[index].roomID })
         return true
 
       }
@@ -107,6 +113,23 @@ export default class ConversationScreen extends JCComponent<Props, State>{
     this.setState({ showMap: !this.state.showMap })
   }
 
+  getOtherUserID(data: any): string | null {
+
+    let out = null;
+
+    data.room.messageUsers.items.forEach(user => {
+      if (user.userID !== this.state.currentUser)
+        out = user.userID
+    });
+
+    return out
+  }
+
+  switchRoom(index: number) {
+    this.setState({ selectedRoom: index })
+    this.setState({ currentRoomId: this.state.data.items[index].roomID })
+  }
+
 
   render(): React.ReactNode {
     console.log("ConversationScreen")
@@ -123,21 +146,17 @@ export default class ConversationScreen extends JCComponent<Props, State>{
 
               {this.state.data != null ?
                 this.state.data.items.map((item, index) => {
-
                   return (
-                    <Text style={{ backgroundColor: this.state.selectedRoom == index ? "#eeeeee" : "unset", borderRadius: 10, fontSize: 20, lineHeight: 25, fontWeight: "normal", fontFamily: "Graphik-Regular-App", width: "100%", paddingTop: 8, paddingBottom: 8, display: "flex", alignItems: "center" }} key={item.id}>
-                      <Image style={{ width: "55px", height: "55px", borderRadius: 50, marginRight: 20, marginLeft: 10 }}
-                        source={require("../../assets/profile-placeholder.png")} />
-                      {item.room.name != null ? item.room.name : "unknown"}
-                    </Text>)
-
-
-
+                    <TouchableOpacity style={{ backgroundColor: this.state.selectedRoom == index ? "#eeeeee" : "unset", borderRadius: 10, width: "100%", paddingTop: 8, paddingBottom: 8, display: "flex", alignItems: "center" }} key={item.id} onPress={() => this.switchRoom(index)}>
+                      <Text style={{ fontSize: 20, lineHeight: 25, fontWeight: "normal", fontFamily: "Graphik-Regular-App", width: "100%", display: "flex", alignItems: "center" }} >
+                        <ProfileImage user={this.getOtherUserID(item)} size="small"></ProfileImage>
+                        {item.room.name != null ? item.room.name : "unknown"}
+                      </Text>
+                    </TouchableOpacity>)
                 }) : null}
-
             </Container>
             <Container style={this.styles.style.detailScreenRightCard}>
-
+              <MessageBoard roomId={this.state.currentRoomId}></MessageBoard>
             </Container>
           </Container>
         </Content>

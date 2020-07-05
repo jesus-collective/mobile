@@ -1,6 +1,6 @@
 import React from 'react';
 import { Input } from 'native-base';
-import { Text } from 'react-native'
+import { Text, TextInput } from 'react-native'
 import JCComponent, { JCState } from '../JCComponent/JCComponent';
 
 interface Props {
@@ -10,6 +10,7 @@ interface Props {
     inputStyle?: any,
     multiline: boolean,
     placeholder?: string,
+    placeholderTextColor?: string,
     onChange?(string),
     "data-testid"?: any,
     ellipsizeMode?: 'head' | 'middle' | 'tail' | 'clip',
@@ -43,7 +44,7 @@ export default class EditableText extends JCComponent<Props, State> {
 
 
         if (this.state.isEditable)
-            return <Input data-testid={this.props["data-testid"]}
+            return <TextInput data-testid={this.props["data-testid"]}
 
                 onBlur={(val: any) => { this.onChanged(val.target.value) }}
                 onSubmitEditing={(val: any) => { this.onChanged(val.target.value) }}
@@ -53,8 +54,9 @@ export default class EditableText extends JCComponent<Props, State> {
 
                 //onChange={(value) => { this.onChanged(value) }}
                 placeholder={this.props.placeholder}
+                placeholderTextColor={this.props.placeholderTextColor}
                 multiline={this.props.multiline}
-                style={this.props.inputStyle} value={this.state.value}></Input>
+                style={this.props.inputStyle} value={this.state.value}></TextInput>
         else
             return <Text ellipsizeMode={this.props.ellipsizeMode} numberOfLines={this.props.numberOfLines} style={this.props.textStyle}>{this.props.value}</Text>
     }
