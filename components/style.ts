@@ -286,7 +286,7 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, textAlign: "center", textTransform: "uppercase", color: "#333333", marginTop: 18, marginBottom: 18
             },
             fontFormAboutMe: {
-                fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28, color: "#333333", borderColor: "#dddddd", borderWidth: 1, height: 40, width: "100%", paddingBottom: 30,
+                fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28, color: "#333333", borderColor: "#dddddd", borderWidth: 1, height: 40, width: "100%", paddingBottom: 60, paddingLeft: 10
             },
             fontFormSmallDarkGrey: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", paddingTop: 5, width: "100%"
@@ -299,6 +299,9 @@ export default class MainStyles {
             },
             fontFormMediumInput: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28, letterSpacing: -0.3, color: "#333333", maxWidth: 350, height: 18, borderWidth: 0, borderColor: "#dddddd", overflow: "hidden"
+            },
+            fontFormLargeInput: {
+                fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28, letterSpacing: -0.3, color: "#333333", width: '100%', height: 18, borderWidth: 0, borderColor: "#dddddd", overflow: "hidden", marginTop: 7
             },
             fontFormSmallGrey: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", opacity: 0.5, marginBottom: 19

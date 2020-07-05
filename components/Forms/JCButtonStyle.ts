@@ -122,6 +122,7 @@ export default EStyleSheet.create({
         borderColor: "#F0493E",
         boxShadow: "unset",
         borderRadius: 4,
+        justifyContent: 'center',
     },
     SolidProfileText: {
         color: "#ffffff",
