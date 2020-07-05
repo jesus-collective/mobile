@@ -14,6 +14,10 @@ const MessageBoard = lazy(() => import('../MessageBoard/MessageBoard'));
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { CourseContext } from './CourseContext';
 import CourseDetailMenu from './CourseDetailMenu';
+import EditableText from '../Forms/EditableText';
+import EditableDate from '../Forms/EditableDate';
+import moment from 'moment-timezone';
+import EditableRichText from '../Forms/EditableRichText';
 
 interface Props {
   navigation?: any
@@ -35,9 +39,31 @@ class CourseDetailImpl extends JCComponent<Props>{
       state.activeLesson == null ?
         week ?
           <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-            <Text>{week.name}</Text>
+
+            <EditableText onChange={(e) => { actions.updateWeek(state.activeWeek, "name", e) }}
+              placeholder="Week Title" multiline={true}
+              data-testid="course-weekTitle"
+              textStyle={this.styles.style.fontFormSmallDarkGrey}
+              inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
+              value={week.name} isEditable={state.isEditable}></EditableText>
+
+            <EditableDate type="date"
+              onChange={(time: any, timeZone: any) => { actions.updateWeek(state.activeWeek, "date", time); actions.updateWeek(state.activeWeek, "tz", timeZone) }}
+              placeholder="Enter Week Start Date"
+              multiline={false}
+              textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupNameInput}
+              value={week.date}
+              tz={week.tz ? week.tz : moment.tz.guess()}
+              isEditable={this.state.isEditable}></EditableDate>
             <Text>{week.date}</Text>
-            <Text>{week.leader}</Text>
+
+            <EditableText onChange={(e) => { actions.updateWeek(state.activeWeek, "leader", e) }}
+              placeholder="Lesson Title" multiline={true}
+              data-testid="course-lessonTitle"
+              textStyle={this.styles.style.fontFormSmallDarkGrey}
+              inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
+              value={week.leader} isEditable={state.isEditable}></EditableText>
+
             {week.lessons.items.map((item: any, lesson: any) => {
               return (
                 <TouchableOpacity key={lesson} onPress={() => { actions.setActiveLesson(lesson) }}>
@@ -45,7 +71,14 @@ class CourseDetailImpl extends JCComponent<Props>{
                     <Container style={{ flexDirection: "row" }}>
                       <Text>MON</Text>
                       <Container style={{ flexDirection: "column", minHeight: "40px", maxHeight: "80px" }}>
-                        <Text>{item.name}</Text>
+
+                        <EditableText onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "name", e) }}
+                          placeholder="Title" multiline={true}
+                          data-testid="course-lessonTitle"
+                          textStyle={this.styles.style.fontFormSmallDarkGrey}
+                          inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
+                          value={item.name} isEditable={state.isEditable}></EditableText>
+
                         <Container style={{ flexDirection: "row", minHeight: "40px", maxHeight: "80px" }}>
                           <Text><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/time.svg')} />3 hours</Text>
                           <Text><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/document.svg')} />Assignment</Text>
@@ -92,9 +125,11 @@ class CourseDetailImpl extends JCComponent<Props>{
             <Text>{week.leader}</Text>
             <Text>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
             <Text>{lesson.time}</Text>
-            {lesson.description.map((item, index) => {
-              return <Text key={index}>{item}</Text>
-            })}
+            <EditableRichText onChange={(val) => { actions.updateLesson(state.activeWeek, state.activeLesson, "description", val) }}
+              value={lesson.description}
+              isEditable={true}
+              textStyle=""></EditableRichText>
+
             {lesson.assignment ? (
               <Container>
                 <Text>{lesson.assignment.due}</Text>

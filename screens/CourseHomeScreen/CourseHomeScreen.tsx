@@ -183,6 +183,29 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
       console.log(e)
     }
   }
+  updateLesson = async (week: number, lesson: number, item: string, value: any): Promise<void> => {
+    try {
+      console.log({ "Updating Resource": index })
+
+      const updateWeek: any = await API.graphql({
+        query: mutations.updateCourseLesson,
+        variables: {
+          input: {
+            id: this.state.courseData.courseWeeks.items[week].lessons.items[lesson].id,
+            [item]: value
+          }
+        },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+      });
+      console.log(updateWeek)
+      const temp = this.state.courseData
+      temp.courseWeeks.items[week].lessons.items[lesson][item] = value
+      this.setState({ courseData: temp })
+
+    } catch (e) {
+      console.log(e)
+    }
+  }
   updateWeek = async (index: number, item: string, value: any): Promise<void> => {
     try {
       console.log({ "Updating Resource": index })
@@ -246,7 +269,8 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
             deleteWeek: this.deleteWeek,
             updateWeek: this.updateWeek,
             updateWeekOrder: this.updateWeekOrder,
-            createLesson: this.createLesson
+            createLesson: this.createLesson,
+            updateLesson: this.updateLesson
           }
         }}>
           <StyleProvider style={getTheme()}>

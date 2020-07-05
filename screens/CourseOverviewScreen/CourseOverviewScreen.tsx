@@ -504,7 +504,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
                         textStyle=""></EditableRichText>
                       : null}
 
-                    <Text>Blah</Text>
+
                     {data.courseInfo.introduction.map((item: any, index) => {
                       return <Text key={index}>{item}</Text>
                     })}

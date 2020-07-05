@@ -59,10 +59,10 @@ class MapSelector extends JCComponent<Props, State> {
                             >
                                 <Marker
                                     title="Location"
-                                    id={1}
+
                                     position={{ lat: this.state.mapCoord.latitude, lng: this.state.mapCoord.longitude }}
                                     draggable={true}
-                                    onDragend={(e, e2, coord) => {
+                                    onDragend={(e: any, e2: any, coord: any) => {
                                         console.log(e)
                                         console.log(coord.latLng)
                                         this.setState({ mapCoord: { latitude: coord.latLng.lat(), longitude: coord.latLng.lng() } })
