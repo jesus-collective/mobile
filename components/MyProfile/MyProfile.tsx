@@ -539,7 +539,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   multiline={false}
                   data-testid="profile-currentRole"
                   textStyle={this.styles.style.fontFormSmallDarkGrey}
-                  inputStyle={this.styles.style.fontFormMediumInput}
+                  inputStyle={this.styles.style.fontFormLargeInput}
                   value={this.state.UserDetails.currentRole} isEditable={this.state.isEditable}></EditableText>
 
 
@@ -586,7 +586,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   multiline={false}
                   data-testid="profile-orgName"
                   textStyle={this.styles.style.fontFormSmallDarkGrey}
-                  inputStyle={this.styles.style.fontFormMediumInput}
+                  inputStyle={this.styles.style.fontFormLargeInput}
                   value={this.state.UserDetails.orgName} isEditable={this.state.isEditable}></EditableText>
 
 
