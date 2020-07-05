@@ -372,6 +372,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 }
                 <EditableText onChange={(e) => { this.handleInputChange(e, "aboutMeShort") }}
                   placeholder="Short sentence about me" multiline={true}
+                  placeholderTextColor = "#757575"
                   textStyle={this.styles.style.fontFormSmallDarkGrey}
                   inputStyle={this.styles.style.fontFormAboutMe}
                   data-testid="profile-aboutMeShort"

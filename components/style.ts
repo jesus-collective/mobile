@@ -286,7 +286,7 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, textAlign: "center", textTransform: "uppercase", color: "#333333", marginTop: 18, marginBottom: 18
             },
             fontFormAboutMe: {
-                fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 28, color: "#333333", borderColor: "#dddddd", borderWidth: 1, height: 40, width: "100%", paddingBottom: 30,
+                fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28, color: "#333333", borderColor: "#dddddd", borderWidth: 1, height: 40, width: "100%", paddingBottom: 60, paddingLeft: 10
             },
             fontFormSmallDarkGrey: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", paddingTop: 5, width: "100%"
