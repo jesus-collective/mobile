@@ -526,6 +526,7 @@ export const getOrganization = /* GraphQL */ `
           type
           groupId
           organizationId
+          owner
           createdAt
           updatedAt
         }
@@ -607,6 +608,7 @@ export const getCourseInfo = /* GraphQL */ `
           id
           week
           date
+          tz
           name
           leader
           createdAt
@@ -650,6 +652,7 @@ export const getCourseWeek = /* GraphQL */ `
       id
       week
       date
+      tz
       name
       leader
       courseInfo {
@@ -670,6 +673,7 @@ export const getCourseWeek = /* GraphQL */ `
           lesson
           name
           time
+          tz
           description
           createdAt
           updatedAt
@@ -692,6 +696,7 @@ export const listCourseWeeks = /* GraphQL */ `
         id
         week
         date
+        tz
         name
         leader
         courseInfo {
@@ -720,11 +725,13 @@ export const getCourseLesson = /* GraphQL */ `
       lesson
       name
       time
+      tz
       description
       courseWeek {
         id
         week
         date
+        tz
         name
         leader
         courseInfo {
@@ -770,11 +777,13 @@ export const listCourseLessons = /* GraphQL */ `
         lesson
         name
         time
+        tz
         description
         courseWeek {
           id
           week
           date
+          tz
           name
           leader
           createdAt
@@ -802,11 +811,13 @@ export const getCourseAssignment = /* GraphQL */ `
         lesson
         name
         time
+        tz
         description
         courseWeek {
           id
           week
           date
+          tz
           name
           leader
           createdAt
@@ -844,6 +855,7 @@ export const listCourseAssignments = /* GraphQL */ `
           lesson
           name
           time
+          tz
           description
           createdAt
           updatedAt
@@ -1406,9 +1418,11 @@ export const getResourceRoot = /* GraphQL */ `
       type
       groupId
       organizationId
+      owner
       resources {
         items {
           id
+          owner
           type
           menuTitle
           order
@@ -1488,6 +1502,7 @@ export const listResourceRoots = /* GraphQL */ `
         type
         groupId
         organizationId
+        owner
         resources {
           nextToken
         }
@@ -1525,6 +1540,7 @@ export const getResource = /* GraphQL */ `
   query GetResource($id: ID!) {
     getResource(id: $id) {
       id
+      owner
       type
       menuTitle
       order
@@ -1542,6 +1558,7 @@ export const getResource = /* GraphQL */ `
       series {
         items {
           id
+          owner
           type
           title
           description
@@ -1564,6 +1581,7 @@ export const getResource = /* GraphQL */ `
         type
         groupId
         organizationId
+        owner
         resources {
           nextToken
         }
@@ -1607,6 +1625,7 @@ export const listResources = /* GraphQL */ `
     listResources(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        owner
         type
         menuTitle
         order
@@ -1630,6 +1649,7 @@ export const listResources = /* GraphQL */ `
           type
           groupId
           organizationId
+          owner
           createdAt
           updatedAt
         }
@@ -1644,6 +1664,7 @@ export const getResourceSeries = /* GraphQL */ `
   query GetResourceSeries($id: ID!) {
     getResourceSeries(id: $id) {
       id
+      owner
       type
       title
       description
@@ -1657,6 +1678,7 @@ export const getResourceSeries = /* GraphQL */ `
       episodes {
         items {
           id
+          owner
           episodeNumber
           type
           title
@@ -1676,6 +1698,7 @@ export const getResourceSeries = /* GraphQL */ `
       seriesID
       parentResource {
         id
+        owner
         type
         menuTitle
         order
@@ -1699,6 +1722,7 @@ export const getResourceSeries = /* GraphQL */ `
           type
           groupId
           organizationId
+          owner
           createdAt
           updatedAt
         }
@@ -1719,6 +1743,7 @@ export const listResourceSeriess = /* GraphQL */ `
     listResourceSeriess(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        owner
         type
         title
         description
@@ -1735,6 +1760,7 @@ export const listResourceSeriess = /* GraphQL */ `
         seriesID
         parentResource {
           id
+          owner
           type
           menuTitle
           order
@@ -1757,6 +1783,7 @@ export const getResourceEpisode = /* GraphQL */ `
   query GetResourceEpisode($id: ID!) {
     getResourceEpisode(id: $id) {
       id
+      owner
       episodeNumber
       type
       title
@@ -1770,6 +1797,7 @@ export const getResourceEpisode = /* GraphQL */ `
       episodeID
       parentSeries {
         id
+        owner
         type
         title
         description
@@ -1786,6 +1814,7 @@ export const getResourceEpisode = /* GraphQL */ `
         seriesID
         parentResource {
           id
+          owner
           type
           menuTitle
           order
@@ -1818,6 +1847,7 @@ export const listResourceEpisodes = /* GraphQL */ `
     ) {
       items {
         id
+        owner
         episodeNumber
         type
         title
@@ -1831,6 +1861,7 @@ export const listResourceEpisodes = /* GraphQL */ `
         episodeID
         parentSeries {
           id
+          owner
           type
           title
           description
