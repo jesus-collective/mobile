@@ -9,10 +9,9 @@ import { API, Auth } from 'aws-amplify';
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
 
-import { Image } from 'react-native'
 import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
 import ProfileImage from '../../components/ProfileImage/ProfileImage';
-const MessageBoard = lazy(() => import('../../components/MessageBoard/MessageBoard'));
+import MessageBoard from '../../components/MessageBoard/MessageBoard';
 
 interface Props {
   navigation?: any
@@ -24,6 +23,7 @@ interface State extends JCState {
   data: any
   selectedRoom: any
   currentUser: string
+  currentRoomId: string
 }
 
 export default class ConversationScreen extends JCComponent<Props, State>{
@@ -34,7 +34,8 @@ export default class ConversationScreen extends JCComponent<Props, State>{
       selectedRoom: null,
       showMap: false,
       data: { items: [] },
-      currentUser: null
+      currentUser: null,
+      currentRoomId: null
     }
     console.log(this.props.route.params.initialUser)
 
@@ -78,7 +79,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
       if ((item.room.messageUsers.items.length == 2) &&
         (item.room.messageUsers.items[0].userID == this.props.route.params.initialUserID || item.room.messageUsers.items[1].userID == this.props.route.params.initialUserID)) {
         console.log("Found")
-        this.setState({ selectedRoom: index })
+        this.setState({ selectedRoom: index, currentRoomId: this.state.data.items[index].roomID })
         return true
 
       }
@@ -124,6 +125,11 @@ export default class ConversationScreen extends JCComponent<Props, State>{
     return out
   }
 
+  switchRoom(index: number) {
+    this.setState({ selectedRoom: index })
+    this.setState({ currentRoomId: this.state.data.items[index].roomID })
+  }
+
 
   render(): React.ReactNode {
     console.log("ConversationScreen")
@@ -141,17 +147,16 @@ export default class ConversationScreen extends JCComponent<Props, State>{
               {this.state.data != null ?
                 this.state.data.items.map((item, index) => {
                   return (
-                    <TouchableOpacity style={{ backgroundColor: this.state.selectedRoom == index ? "#eeeeee" : "unset", borderRadius: 10, width: "100%", paddingTop: 8, paddingBottom: 8, display: "flex", alignItems: "center" }} key={item.id} onPress={() => this.setState({ selectedRoom: index })}>
+                    <TouchableOpacity style={{ backgroundColor: this.state.selectedRoom == index ? "#eeeeee" : "unset", borderRadius: 10, width: "100%", paddingTop: 8, paddingBottom: 8, display: "flex", alignItems: "center" }} key={item.id} onPress={() => this.switchRoom(index)}>
                       <Text style={{ fontSize: 20, lineHeight: 25, fontWeight: "normal", fontFamily: "Graphik-Regular-App", width: "100%", display: "flex", alignItems: "center" }} >
                         <ProfileImage user={this.getOtherUserID(item)} size="small"></ProfileImage>
                         {item.room.name != null ? item.room.name : "unknown"}
                       </Text>
                     </TouchableOpacity>)
                 }) : null}
-
             </Container>
             <Container style={this.styles.style.detailScreenRightCard}>
-              {/*<MessageBoard groupId={this.state.data.id}></MessageBoard>*/}
+              <MessageBoard roomId={this.state.currentRoomId}></MessageBoard>
             </Container>
           </Container>
         </Content>
