@@ -108,8 +108,7 @@ export default EStyleSheet.create({
         padding: 10,
         fontWeight: "600",
     },
-    SolidProfileDeleteButton:
-    {
+    SolidProfileDeleteButton: {
         paddingTop: 6,
         paddingBottom: 6,
         paddingLeft: 29,
@@ -456,6 +455,14 @@ export default EStyleSheet.create({
         },
         SolidRightMarginText: {
             width: "100%"
+        },
+        SolidProfileDeleteButton: {
+            marginLeft: 0,
+            textAlign: 'center',
+            width: '100%',
+            paddingLeft: 0,
+            paddingRight: 0,
+            justifyContent: 'center'
         },
         SolidButton: {
             textAlign: "center",
