@@ -8358,10 +8358,6 @@ export type OnCreateMessageByRoomIdSubscription = {
   } | null,
 };
 
-export type OnCreateUserSubscriptionVariables = {
-  owner?: string | null,
-};
-
 export type OnCreateUserSubscription = {
   onCreateUser:  {
     __typename: "User",
@@ -8480,10 +8476,6 @@ export type OnCreateUserSubscription = {
   } | null,
 };
 
-export type OnUpdateUserSubscriptionVariables = {
-  owner?: string | null,
-};
-
 export type OnUpdateUserSubscription = {
   onUpdateUser:  {
     __typename: "User",
@@ -8600,10 +8592,6 @@ export type OnUpdateUserSubscription = {
     createdAt: string,
     updatedAt: string,
   } | null,
-};
-
-export type OnDeleteUserSubscriptionVariables = {
-  owner?: string | null,
 };
 
 export type OnDeleteUserSubscription = {

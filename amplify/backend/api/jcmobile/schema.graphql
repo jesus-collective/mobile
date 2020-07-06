@@ -2,11 +2,12 @@ type User
   @model
   @auth(
     rules: [
+      { allow: private, provider:userPools, operations:[read]}
       { allow: owner, ownerField: "owner" }
       { allow: groups, groups: ["verifiedUsers"], operations: [read] }
     ]
   ) {
-
+  
   id: ID!
   given_name: String!
   family_name: String!
@@ -36,7 +37,7 @@ type User
   orgSize: String
   orgDescription: String
   joined: String
-
+ 
   primaryOrganization: String
   #organizations: [OrganizationMember] @connection(keyName: "orgMemberByUser", fields: ["id"])
 
@@ -84,6 +85,7 @@ type Group
   #@key(name:"byOwnerOrg", fields:["ownerOrgID","name"])
   @auth(
     rules: [
+      { allow: private, provider:userPools, operations:[read]}
       { allow: owner, ownerField: "owner" }
       { allow: groups, groups: ["verifiedUsers"], operations: [read] }
       { allow: groups, groups: ["admins"]}
@@ -135,6 +137,7 @@ type Organization
   @key(name: "byParentOrg", fields: ["parentOrganizationId","id"])
   @auth(
     rules: [
+      { allow: private, provider:userPools, operations:[read]}
       { allow: owner, ownerField: "admins" }
       { allow: groups, groups: ["verifiedUsers"], operations: [read] }
     ]
