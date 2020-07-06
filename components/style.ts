@@ -1138,7 +1138,7 @@ export default class MainStyles {
                 fontWeight: "bold",
                 flex: .75,
                 paddingLeft: 20,
-                paddingTop: 24,
+                paddingTop: 14,
                 textAlign: "right"
             },
             myMapCalloutEventContainer: {
@@ -1197,6 +1197,7 @@ export default class MainStyles {
                 width: "100%",
                 alignItems: "flex-start",
                 marginTop: 5,
+                flexGrow: 0.4
             },
             myprofilePicker: {
                 height: 45,
@@ -1204,6 +1205,22 @@ export default class MainStyles {
                 marginRight: 10,
                 borderWidth: 1,
                 borderColor: '#dddddd'
+            },
+            myProfileOrgView: {
+                flex: 1, 
+                flexDirection: 'row'
+            },
+            myProfileOrgTypeInput: {
+                borderWidth: 1, 
+                borderColor: "#dddddd", 
+                width: 308, 
+                paddingTop: 8, 
+                paddingRight: 10, 
+                paddingBottom: 8, 
+                paddingLeft: 10, 
+                fontFamily: 'Graphik-Regular-App', 
+                fontSize: 16, 
+                lineHeight: 24
             },
 
             // Media Query Desktop Tablet
@@ -1445,6 +1462,12 @@ export default class MainStyles {
                 fontResourceHeaderBold: {
                     fontSize: 80,
                 },
+                myProfileOrgView: {
+                    flexDirection: 'column'
+                },
+                myprofilePickerMainContainer: {
+                    flexGrow: 0.2
+                },
             },
 
             // Media Query Desktop Large Tablet
@@ -1511,6 +1534,12 @@ export default class MainStyles {
                 myProfileTopButtonsExternalContainer: {
                     flexDirection: "column"
                 },
+                myProfileOrgView: {
+                    flexDirection: 'column'
+                },
+                myProfileOrgTypeInput: {
+                    marginTop: 10
+                },
             },
 
             '@media (min-width: 769px) and (max-width: 1279px)': {
@@ -1555,7 +1584,9 @@ export default class MainStyles {
                 },
                 profileFontTitle: {
                     minWidth: 300,
-                    flex: 0
+                    flex: 0,
+                    textAlign: 'center',
+                    marginBottom: 20
                 },
                 profileScreenLeftCard: {
                     marginRight: 32,
@@ -1566,7 +1597,8 @@ export default class MainStyles {
                 profileScreenRightCard: {
                     width: "auto",
                     flex: 0,
-                    top: 50
+                    top: 50,
+                    marginLeft: 32
                 },
                 myProfileCoordinates: {
                     flexDirection: "row",
@@ -1584,6 +1616,9 @@ export default class MainStyles {
                     right: "3.5%",
                     borderRadius: 0,
                     flexDirection: "column",
+                },
+                myprofilePicker: {
+                    width: 250
                 },
                 mapSelectorText: {
                     marginBottom: 15,
@@ -1725,6 +1760,9 @@ export default class MainStyles {
                 },
                 fontResourceHeaderBold: {
                     fontSize: 50,
+                },
+                myProfileOrgView: {
+                    flexDirection: 'column'
                 },
             },
 

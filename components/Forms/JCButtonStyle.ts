@@ -108,6 +108,28 @@ export default EStyleSheet.create({
         padding: 10,
         fontWeight: "600",
     },
+    SolidProfileDeleteButton: {
+        paddingTop: 6,
+        paddingBottom: 6,
+        paddingLeft: 29,
+        paddingRight: 29,
+        marginBottom: 20,
+        marginLeft: 30,
+        marginRight: 0,
+        //   color:"#F0493E",
+        backgroundColor: "#F0493E",
+        borderWidth: 1,
+        borderColor: "#F0493E",
+        boxShadow: "unset",
+        borderRadius: 4
+    },
+    SolidProfileDeleteText: {
+        color: "#ffffff",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        padding: 10,
+        fontWeight: "600",
+    },
     SolidProfileButton: {
         paddingTop: 6,
         paddingBottom: 6,
@@ -433,6 +455,14 @@ export default EStyleSheet.create({
         },
         SolidRightMarginText: {
             width: "100%"
+        },
+        SolidProfileDeleteButton: {
+            marginLeft: 0,
+            textAlign: 'center',
+            width: '100%',
+            paddingLeft: 0,
+            paddingRight: 0,
+            justifyContent: 'center'
         },
         SolidButton: {
             textAlign: "center",
