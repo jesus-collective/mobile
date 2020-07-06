@@ -1568,7 +1568,8 @@ export default class MainStyles {
                 profileScreenRightCard: {
                     width: "auto",
                     flex: 0,
-                    top: 50
+                    top: 50,
+                    marginLeft: 32
                 },
                 myProfileCoordinates: {
                     flexDirection: "row",
