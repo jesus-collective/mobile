@@ -598,7 +598,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 <Label style={this.styles.style.fontFormSmall}>Type of Organization</Label>
                 {this.state.isEditable ?
                   <View style={{ flex: 1, flexDirection: 'row' }}>
-                    <Picker style={{ height: 50, width: 350, marginRight: 10, borderTopWidth: 1, borderLeftWidth: 1, borderRightWidth: 1, borderBottomWidth: 1, borderColor: '#dddddd' }}
+                    <Picker style={this.styles.style.myprofilePicker}
                       onValueChange={(itemValue) => { this.handleInputChange(itemValue, "orgType") }}
                       selectedValue={orgTypes.includes(this.state.UserDetails.orgType) || this.state.UserDetails.orgType === 'None' ? this.state.UserDetails.orgType : ""}
                     >
@@ -638,7 +638,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                     </Picker>
                   </View>
                   : <View>
-                    <Picker style={{ height: 50, width: 350, marginRight: 10, borderTopWidth: 1, borderLeftWidth: 1, borderRightWidth: 1, borderBottomWidth: 1, borderColor: '#dddddd' }}
+                    <Picker style={this.styles.style.myprofilePicker}
                       onValueChange={(itemValue) => { this.handleInputChange(itemValue, "orgSize") }}
                       selectedValue={this.state.UserDetails.orgSize}
                     >

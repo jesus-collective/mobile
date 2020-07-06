@@ -1588,6 +1588,9 @@ export default class MainStyles {
                     borderRadius: 0,
                     flexDirection: "column",
                 },
+                myprofilePicker: {
+                    width: 250
+                },
                 mapSelectorText: {
                     marginBottom: 15,
                     marginRight: 0,
