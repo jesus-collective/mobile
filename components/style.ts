@@ -1197,6 +1197,7 @@ export default class MainStyles {
                 width: "100%",
                 alignItems: "flex-start",
                 marginTop: 5,
+                flexGrow: 0.4
             },
             myprofilePicker: {
                 height: 45,
@@ -1463,6 +1464,9 @@ export default class MainStyles {
                 },
                 myProfileOrgView: {
                     flexDirection: 'column'
+                },
+                myprofilePickerMainContainer: {
+                    flexGrow: 0.2
                 },
             },
 
