@@ -1555,7 +1555,9 @@ export default class MainStyles {
                 },
                 profileFontTitle: {
                     minWidth: 300,
-                    flex: 0
+                    flex: 0,
+                    textAlign: 'center',
+                    marginBottom: 20
                 },
                 profileScreenLeftCard: {
                     marginRight: 32,
