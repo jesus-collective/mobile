@@ -329,7 +329,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 <View style={this.styles.style.myProfileTopButtonsInternalContainer}>
                   <JCButton data-testid="profile-save" buttonType={ButtonTypes.SolidRightMargin} onPress={() => { this.finalizeProfile() }}>Save Profile</JCButton>
                   <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.logout()}>Logout</JCButton>
-                  {this.props.loadId ? <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.deleteUser()}>Delete</JCButton> : null}
+                  {this.props.loadId ? <JCButton buttonType={ButtonTypes.SolidProfileDelete} onPress={() => this.deleteUser()}>Delete</JCButton> : null}
                 </View>
                 : null
               }
