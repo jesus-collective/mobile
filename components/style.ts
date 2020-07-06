@@ -1205,6 +1205,22 @@ export default class MainStyles {
                 borderWidth: 1,
                 borderColor: '#dddddd'
             },
+            myProfileOrgView: {
+                flex: 1, 
+                flexDirection: 'row'
+            },
+            myProfileOrgTypeInput: {
+                borderWidth: 1, 
+                borderColor: "#dddddd", 
+                width: 308, 
+                paddingTop: 8, 
+                paddingRight: 10, 
+                paddingBottom: 8, 
+                paddingLeft: 10, 
+                fontFamily: 'Graphik-Regular-App', 
+                fontSize: 16, 
+                lineHeight: 24
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -1445,6 +1461,9 @@ export default class MainStyles {
                 fontResourceHeaderBold: {
                     fontSize: 80,
                 },
+                myProfileOrgView: {
+                    flexDirection: 'column'
+                },
             },
 
             // Media Query Desktop Large Tablet
@@ -1510,6 +1529,12 @@ export default class MainStyles {
                 },
                 myProfileTopButtonsExternalContainer: {
                     flexDirection: "column"
+                },
+                myProfileOrgView: {
+                    flexDirection: 'column'
+                },
+                myProfileOrgTypeInput: {
+                    marginTop: 10
                 },
             },
 
@@ -1731,6 +1756,9 @@ export default class MainStyles {
                 },
                 fontResourceHeaderBold: {
                     fontSize: 50,
+                },
+                myProfileOrgView: {
+                    flexDirection: 'column'
                 },
             },
 

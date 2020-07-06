@@ -597,7 +597,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 {!this.state.isEditable ? <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text> : null}
                 <Label style={this.styles.style.fontFormSmall}>Type of Organization</Label>
                 {this.state.isEditable ?
-                  <View style={{ flex: 1, flexDirection: 'row' }}>
+                  <View style={this.styles.style.myProfileOrgView}>
                     <Picker style={this.styles.style.myprofilePicker}
                       onValueChange={(itemValue) => { this.handleInputChange(itemValue, "orgType") }}
                       selectedValue={orgTypes.includes(this.state.UserDetails.orgType) || this.state.UserDetails.orgType === 'None' ? this.state.UserDetails.orgType : ""}
@@ -612,7 +612,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       <EditableText onChange={(e) => { this.handleInputChange(e, "orgType") }}
                         multiline={false}
                         textStyle={this.styles.style.fontFormSmallDarkGrey}
-                        inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: 308, paddingTop: 8, paddingRight: 10, paddingBottom: 8, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 24 }}
+                        inputStyle={this.styles.style.myProfileOrgTypeInput}
                         value={this.state.UserDetails.orgType} isEditable={this.state.isEditable}></EditableText> : null}
                   </View>
                   :
