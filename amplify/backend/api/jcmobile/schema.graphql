@@ -254,6 +254,7 @@ type DirectMessageUser
  @key(name: "byUser", fields: ["roomID", "userID"])
 {
   id:ID!
+  userName:String  
   userID:ID!
   user:User @connection(fields:["userID"])
   roomID:ID!
