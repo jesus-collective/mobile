@@ -1265,6 +1265,8 @@ export default class MainStyles {
                 },
                 myProfileTopButtons: {
                     width: "100%",
+                    flexDirection: "column",
+                    alignItems: "flex-start"
                 },
                 profileScreenLeftCard: {
                     marginRight: 10,
@@ -1317,9 +1319,10 @@ export default class MainStyles {
                 },
                 myProfileErrorValidation: {
                     flex: 1,
-                    paddingLeft: 90,
+                    paddingLeft: 0,
                     paddingBottom: 15,
-                    paddingTop: 0
+                    paddingTop: 0, 
+                    textAlign: 'left'
                 },
                 myMapFontTitle: {
                     fontSize: 22,
@@ -1468,6 +1471,9 @@ export default class MainStyles {
                 },
                 myprofilePickerMainContainer: {
                     flexGrow: 0.2
+                },
+                profileFontTitle: {
+                    marginBottom: 15
                 },
             },
 
