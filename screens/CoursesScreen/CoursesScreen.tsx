@@ -45,11 +45,11 @@ export default class HomeScreen extends JCComponent<Props, State>{
             <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
               <MyGroups showMore={true} type="course" wrap={true} navigation={this.props.navigation} onDataload={(mapData: MapData[]) => { this.mergeMapData(mapData) }}></MyGroups>
             </Container>
-            <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+            {/* <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
               <MyPeople wrap={false} navigation={this.props.navigation} onDataload={(mapData: MapData[]) => { this.mergeMapData(mapData) }}></MyPeople>
               <MyConversations navigation={this.props.navigation}> </MyConversations>
               <Container ></Container>
-            </Container>
+            </Container> */}
           </Container>
         </Content>
       </Container>
