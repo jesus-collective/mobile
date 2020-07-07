@@ -301,7 +301,7 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28, letterSpacing: -0.3, color: "#333333", maxWidth: 350, height: 18, borderWidth: 0, borderColor: "#dddddd", overflow: "hidden"
             },
             fontFormLargeInput: {
-                fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28, letterSpacing: -0.3, color: "#333333", width: '100%', height: 18, borderWidth: 0, borderColor: "#dddddd", overflow: "hidden", marginTop: 7
+                fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28, letterSpacing: -0.3, color: "#333333", width: '100%', height: 30, borderWidth: 0, borderColor: "#dddddd", overflow: "hidden", marginTop: 7
             },
             fontFormSmallGrey: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", opacity: 0.5, marginBottom: 19
@@ -1265,6 +1265,8 @@ export default class MainStyles {
                 },
                 myProfileTopButtons: {
                     width: "100%",
+                    flexDirection: "column",
+                    alignItems: "flex-start"
                 },
                 profileScreenLeftCard: {
                     marginRight: 10,
@@ -1317,9 +1319,10 @@ export default class MainStyles {
                 },
                 myProfileErrorValidation: {
                     flex: 1,
-                    paddingLeft: 90,
+                    paddingLeft: 0,
                     paddingBottom: 15,
-                    paddingTop: 0
+                    paddingTop: 0, 
+                    textAlign: 'left'
                 },
                 myMapFontTitle: {
                     fontSize: 22,
@@ -1448,7 +1451,8 @@ export default class MainStyles {
                     flexDirection: 'column',
                 },
                 myprofilePicker: {
-                    marginBottom: 10
+                    marginBottom: 10,
+                    width: '100%'
                 },
                 dashboardConversationBody: {
                     alignItems: "center"
@@ -1467,6 +1471,9 @@ export default class MainStyles {
                 },
                 myprofilePickerMainContainer: {
                     flexGrow: 0.2
+                },
+                profileFontTitle: {
+                    marginBottom: 15
                 },
             },
 
@@ -1574,13 +1581,14 @@ export default class MainStyles {
                 myProfileTopButtons: {
                     flexDirection: "column",
                     width: "100%",
-                    paddingRight: 32
+                    paddingRight: 32,
+                    alignItems: 'center'
                 },
                 myProfileTopButtonsInternalContainer: {
                     flex: 0,
                     flexDirection: "column",
                     alignSelf: "auto",
-                    minWidth: "100%"
+                    width: 200
                 },
                 profileFontTitle: {
                     minWidth: 300,
@@ -1763,6 +1771,9 @@ export default class MainStyles {
                 },
                 myProfileOrgView: {
                     flexDirection: 'column'
+                },
+                myProfileOrgTypeInput: {
+                    width: '100%'
                 },
             },
 

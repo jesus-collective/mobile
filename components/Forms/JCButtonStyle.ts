@@ -419,7 +419,7 @@ export default EStyleSheet.create({
         SolidRightMarginButton: {
             paddingLeft: 0,
             paddingRight: 0,
-            marginLeft: 90,
+            marginLeft: 0,
             marginRight: 25,
         },
         SolidButton: {
