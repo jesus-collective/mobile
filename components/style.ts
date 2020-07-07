@@ -58,7 +58,8 @@ export default class MainStyles {
                 paddingLeft: '0.25rem',
                 paddingRight: '0.25rem',
                 borderRadius: 4,
-                boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)"
+                boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+                borderColor: "#ffffff"
             },
             orgCard: {
                 minHeight: 330,
