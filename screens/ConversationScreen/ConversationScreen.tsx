@@ -46,12 +46,12 @@ export default class ConversationScreen extends JCComponent<Props, State>{
 
     this.getInitialData(null)
   }
-  createRoom = (toUserID: any, toUserName: any): void => {
+  createRoom = (toUserID: string, toUserName: string): void => {
     console.log("CreateRoom")
     Auth.currentAuthenticatedUser().then((user: any) => {
       const createDirectMessageRoom: any = API.graphql({
         query: mutations.createDirectMessageRoom,
-        variables: { input: { name: toUserName } },
+        variables: { input: { name: '' } },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       createDirectMessageRoom.then((json) => {
@@ -61,7 +61,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
           console.log({ Dm2: json2 })
           const createDirectMessageUser2: any = API.graphql({
             query: mutations.createDirectMessageUser,
-            variables: { input: { roomID: json.data.createDirectMessageRoom.id, userID: toUserID } },
+            variables: { input: { roomID: json.data.createDirectMessageRoom.id, userID: toUserID, userName: toUserName } },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
           });
           createDirectMessageUser2.then(() => 
@@ -76,9 +76,10 @@ export default class ConversationScreen extends JCComponent<Props, State>{
               }
             )
         }
+        const myUserName = user.attributes['given_name'] + ' ' + user.attributes['family_name']
         const createDirectMessageUser1: any = API.graphql({
           query: mutations.createDirectMessageUser,
-          variables: { input: { roomID: json.data.createDirectMessageRoom.id, userID: user['username'] } },
+          variables: { input: { roomID: json.data.createDirectMessageRoom.id, userID: user['username'], userName: myUserName } },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
         });
 
@@ -149,16 +150,17 @@ export default class ConversationScreen extends JCComponent<Props, State>{
     this.setState({ showMap: !this.state.showMap })
   }
 
-  getOtherUserID(data: any): string | null {
-
-    let out = null;
-
+  getOtherUsers(data: any): {ids: string[], names: string[] } {
+    const ids = [];
+    const names = [];
     data.room.messageUsers.items.forEach(user => {
-      if (user.userID !== this.state.currentUser)
-        out = user.userID
+      if (user.userID !== this.state.currentUser) {
+        ids.push(user.userID)
+        names.push(user.userName)
+      }
     });
 
-    return out
+    return { ids, names }
   }
 
   switchRoom(index: number) {
@@ -196,11 +198,22 @@ export default class ConversationScreen extends JCComponent<Props, State>{
 
               {this.state.data != null ?
                 this.state.data.map((item, index) => {
+                  const otherUsers = this.getOtherUsers(item)
+                  console.log(otherUsers)
+                  let stringOfNames = ''
+                  otherUsers.names.forEach((name,index)=> {
+                    if (otherUsers.names.length === index+1) {
+                      stringOfNames+=name
+                    } else {
+                      stringOfNames+=(name + ', ')
+                    }
+                  })
+
                   return (
                     <TouchableOpacity style={{ backgroundColor: this.state.selectedRoom == index ? "#eeeeee" : "unset", borderRadius: 10, width: "100%", paddingTop: 8, paddingBottom: 8, display: "flex", alignItems: "center" }} key={item.id} onPress={() => this.switchRoom(index)}>
                       <Text style={{ fontSize: 20, lineHeight: 25, fontWeight: "normal", fontFamily: "Graphik-Regular-App", width: "100%", display: "flex", alignItems: "center" }} >
-                        <ProfileImage user={this.getOtherUserID(item)} size="small"></ProfileImage>
-                        {item.room.name != null ? item.room.name : "unknown"}
+                        <ProfileImage user={otherUsers.ids.length === 1 ? otherUsers.ids[0] : null} size="small"></ProfileImage>
+                        {item.room.name ? item.room.name : stringOfNames}
                       </Text>
                     </TouchableOpacity>)
                 }) : null}
