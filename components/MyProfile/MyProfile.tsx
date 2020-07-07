@@ -628,7 +628,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 <Label style={this.styles.style.fontFormSmall}>{this.state.UserDetails.orgType === "Home School" ? "Number of kids in home school" : this.orgsWithEmployees.includes(this.state.UserDetails.orgType) ? "How many employees are there in the organization?" : "Size of the organization"}</Label>
                 {this.state.isEditable ? this.state.UserDetails.orgType === "Home School" || this.state.UserDetails.orgType === "Home Group/Home Church" || this.state.UserDetails.orgType === "Church Plant" ?
                   <View>
-                    <Picker style={{ height: 40, width: 350, marginRight: 10, borderTopWidth: 0, borderLeftWidth: 0, borderRightWidth: 0, borderBottomWidth: 1, borderColor: '#dddddd' }}
+                    <Picker style={this.styles.style.myprofilePicker}
                       onValueChange={(itemValue) => { this.handleInputChange(itemValue, "orgSize") }}
                       selectedValue={this.state.UserDetails.orgSize}
                     >

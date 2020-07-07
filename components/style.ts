@@ -1448,7 +1448,8 @@ export default class MainStyles {
                     flexDirection: 'column',
                 },
                 myprofilePicker: {
-                    marginBottom: 10
+                    marginBottom: 10,
+                    width: '100%'
                 },
                 dashboardConversationBody: {
                     alignItems: "center"
