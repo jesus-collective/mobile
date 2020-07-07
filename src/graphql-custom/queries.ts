@@ -1,3 +1,90 @@
+export const getGroupForOwner = /* GraphQL */ `
+  query GetGroup($id: ID!) {
+    getGroup(id: $id) {
+      id
+      owner
+    }
+  }
+`;
+export const groupByTypeForMyGroups = /* GraphQL */ `
+  query GroupByType(
+    $type: String
+    $id: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelGroupFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    groupByType(
+      type: $type
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        owner
+        ownerUser {
+          id
+          given_name
+          family_name
+        }
+        type
+        name
+        description
+        memberCount
+        image
+        time
+        lastUpdated
+        location
+        locationLatLong {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+        }
+        length
+        effort
+        cost
+        eventType
+        eventUrl
+        tz
+        isSponsored
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getUserForProfile = /* GraphQL */ `
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
+      id
+      given_name
+      family_name
+      owner
+      mainUserGroup
+      hasPaidState
+      profileState
+      profileImage {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
+      aboutMeShort
+      currentRole
+      orgName
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const listDirectMessageUsers = /* GraphQL */ `
   query ListDirectMessageUsers(
     $filter: ModelDirectMessageUserFilterInput

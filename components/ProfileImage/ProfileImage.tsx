@@ -1,6 +1,6 @@
 import { Image } from 'react-native'
 import * as React from 'react';
-import * as queries from '../../src/graphql/queries';
+import * as customQueries from '../../src/graphql-custom/queries';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import Amplify from 'aws-amplify'
 import awsconfig from '../../src/aws-exports';
@@ -66,7 +66,7 @@ export default class MyProfile extends JCComponent<Props, State> {
         }
     }
     getProfileImageFromUserID(user: string): void {
-        const getUser: any = API.graphql(graphqlOperation(queries.getUser, { id: user }));
+        const getUser: any = API.graphql(graphqlOperation(customQueries.getUserForProfile, { id: user }));
         getUser.then((json) => {
 
             this.getProfileImage(json.data.getUser.profileImage)
