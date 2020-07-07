@@ -290,12 +290,14 @@ export type DeleteCourseAssignmentInput = {
 
 export type CreateDirectMessageUserInput = {
   id?: string | null,
+  userName?: string | null,
   userID: string,
   roomID: string,
 };
 
 export type UpdateDirectMessageUserInput = {
   id: string,
+  userName?: string | null,
   userID?: string | null,
   roomID?: string | null,
 };
@@ -644,6 +646,7 @@ export type ModelCourseAssignmentFilterInput = {
 
 export type ModelDirectMessageUserFilterInput = {
   id?: ModelIDFilterInput | null,
+  userName?: ModelStringFilterInput | null,
   userID?: ModelIDFilterInput | null,
   roomID?: ModelIDFilterInput | null,
   and?: Array< ModelDirectMessageUserFilterInput | null > | null,
@@ -3586,6 +3589,7 @@ export type CreateDirectMessageUserMutation = {
   createDirectMessageUser:  {
     __typename: "DirectMessageUser",
     id: string,
+    userName: string | null,
     userID: string,
     user:  {
       __typename: "User",
@@ -3679,6 +3683,7 @@ export type UpdateDirectMessageUserMutation = {
   updateDirectMessageUser:  {
     __typename: "DirectMessageUser",
     id: string,
+    userName: string | null,
     userID: string,
     user:  {
       __typename: "User",
@@ -3772,6 +3777,7 @@ export type DeleteDirectMessageUserMutation = {
   deleteDirectMessageUser:  {
     __typename: "DirectMessageUser",
     id: string,
+    userName: string | null,
     userID: string,
     user:  {
       __typename: "User",
@@ -3871,6 +3877,7 @@ export type CreateDirectMessageRoomMutation = {
       items:  Array< {
         __typename: "DirectMessageUser",
         id: string,
+        userName: string | null,
         userID: string,
         roomID: string,
         createdAt: string,
@@ -3911,6 +3918,7 @@ export type UpdateDirectMessageRoomMutation = {
       items:  Array< {
         __typename: "DirectMessageUser",
         id: string,
+        userName: string | null,
         userID: string,
         roomID: string,
         createdAt: string,
@@ -3951,6 +3959,7 @@ export type DeleteDirectMessageRoomMutation = {
       items:  Array< {
         __typename: "DirectMessageUser",
         id: string,
+        userName: string | null,
         userID: string,
         roomID: string,
         createdAt: string,
@@ -6681,6 +6690,7 @@ export type GetDirectMessageUserQuery = {
   getDirectMessageUser:  {
     __typename: "DirectMessageUser",
     id: string,
+    userName: string | null,
     userID: string,
     user:  {
       __typename: "User",
@@ -6778,6 +6788,7 @@ export type ListDirectMessageUsersQuery = {
     items:  Array< {
       __typename: "DirectMessageUser",
       id: string,
+      userName: string | null,
       userID: string,
       user:  {
         __typename: "User",
@@ -6839,6 +6850,7 @@ export type GetDirectMessageRoomQuery = {
       items:  Array< {
         __typename: "DirectMessageUser",
         id: string,
+        userName: string | null,
         userID: string,
         roomID: string,
         createdAt: string,
@@ -11078,6 +11090,7 @@ export type OnCreateDirectMessageUserSubscription = {
   onCreateDirectMessageUser:  {
     __typename: "DirectMessageUser",
     id: string,
+    userName: string | null,
     userID: string,
     user:  {
       __typename: "User",
@@ -11167,6 +11180,7 @@ export type OnUpdateDirectMessageUserSubscription = {
   onUpdateDirectMessageUser:  {
     __typename: "DirectMessageUser",
     id: string,
+    userName: string | null,
     userID: string,
     user:  {
       __typename: "User",
@@ -11256,6 +11270,7 @@ export type OnDeleteDirectMessageUserSubscription = {
   onDeleteDirectMessageUser:  {
     __typename: "DirectMessageUser",
     id: string,
+    userName: string | null,
     userID: string,
     user:  {
       __typename: "User",
@@ -11351,6 +11366,7 @@ export type OnCreateDirectMessageRoomSubscription = {
       items:  Array< {
         __typename: "DirectMessageUser",
         id: string,
+        userName: string | null,
         userID: string,
         roomID: string,
         createdAt: string,
@@ -11387,6 +11403,7 @@ export type OnUpdateDirectMessageRoomSubscription = {
       items:  Array< {
         __typename: "DirectMessageUser",
         id: string,
+        userName: string | null,
         userID: string,
         roomID: string,
         createdAt: string,
@@ -11423,6 +11440,7 @@ export type OnDeleteDirectMessageRoomSubscription = {
       items:  Array< {
         __typename: "DirectMessageUser",
         id: string,
+        userName: string | null,
         userID: string,
         roomID: string,
         createdAt: string,

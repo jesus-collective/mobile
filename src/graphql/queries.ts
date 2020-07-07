@@ -847,6 +847,7 @@ export const getDirectMessageUser = /* GraphQL */ `
   query GetDirectMessageUser($id: ID!) {
     getDirectMessageUser(id: $id) {
       id
+      userName
       userID
       user {
         id
@@ -935,6 +936,7 @@ export const listDirectMessageUsers = /* GraphQL */ `
     ) {
       items {
         id
+        userName
         userID
         user {
           id
@@ -988,6 +990,7 @@ export const getDirectMessageRoom = /* GraphQL */ `
       messageUsers {
         items {
           id
+          userName
           userID
           roomID
           createdAt
