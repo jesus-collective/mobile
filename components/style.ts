@@ -1581,13 +1581,14 @@ export default class MainStyles {
                 myProfileTopButtons: {
                     flexDirection: "column",
                     width: "100%",
-                    paddingRight: 32
+                    paddingRight: 32,
+                    alignItems: 'center'
                 },
                 myProfileTopButtonsInternalContainer: {
                     flex: 0,
                     flexDirection: "column",
                     alignSelf: "auto",
-                    minWidth: "100%"
+                    width: 200
                 },
                 profileFontTitle: {
                     minWidth: 300,
