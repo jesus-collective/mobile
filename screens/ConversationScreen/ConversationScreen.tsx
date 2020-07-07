@@ -64,7 +64,17 @@ export default class ConversationScreen extends JCComponent<Props, State>{
             variables: { input: { roomID: json.data.createDirectMessageRoom.id, userID: toUserID } },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
           });
-          createDirectMessageUser2.then((json3) => { console.log(json3); this.getInitialData(null); }).catch((e) => { console.log(e); this.getInitialData(null); })
+          createDirectMessageUser2.then(() => 
+            { 
+              console.log(json2); 
+              this.getDMUser(json2.data.createDirectMessageUser.id)
+            }
+            ).catch(() => 
+              { 
+                console.log(json2); 
+                this.getDMUser(json2.data.createDirectMessageUser.id)
+              }
+            )
         }
         const createDirectMessageUser1: any = API.graphql({
           query: mutations.createDirectMessageUser,
@@ -92,20 +102,39 @@ export default class ConversationScreen extends JCComponent<Props, State>{
     }
 
   }
+
+  async getDMUser(id: string): Promise<void> {
+    try {
+      const json: any = await API.graphql({
+        query: customQueries.getDirectMessageUser,
+        variables: {id: id},
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+      });
+      if (json?.data?.getDirectMessageUser) {
+        console.log({'customQueries.getDirectMessageUser': json.data.getDirectMessageUser})
+        this.setState({ data: this.state.data.concat([json.data.getDirectMessageUser]) })
+      }
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
   async getInitialData(next: string): Promise<void> {
     try {
       const user = await Auth.currentAuthenticatedUser();
       try {
+        const query = { limit: 20, filter: { userID: { eq: user['username'] } }, nextToken: next }
         const json: any = await API.graphql({
           query: customQueries.listDirectMessageUsers,
-          variables: { limit: 20, filter: { userID: { eq: user['username'] } }, nextToken: next },
+          variables: query,
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
         });
         if (json?.data?.listDirectMessageUsers?.nextToken !== null) {
-          console.log(json.data.listDirectMessageUsers)
+          console.log({'customQueries.listDirectMessageUsers': json.data.listDirectMessageUsers})
           this.setState({ data: this.state.data.concat(json.data.listDirectMessageUsers.items) })
           this.getInitialData(json.data.listDirectMessageUsers.nextToken)
         } else if (json?.data?.listDirectMessageUsers) {
+          console.log({'customQueries.listDirectMessageUsers': json.data.listDirectMessageUsers})
           this.setState({ data: this.state.data.concat(json.data.listDirectMessageUsers.items) }, this.shouldCreateRoom)
         }
       } catch (err) {
