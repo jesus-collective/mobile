@@ -46,6 +46,7 @@ interface State extends JCState {
   isEditable: any
   mapData: MapData[]
   initCenter: any
+  dirty: boolean
 }
 class MyProfileImpl extends JCComponent<Props, State> {
   orgsWithEmployees = ["Church", "Church Plant", "Academic Institution", "Compassion/Mission"]
@@ -63,6 +64,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       isEditable: false,
       mapData: [],
       initCenter: { lat: 44, lng: -78.0 },
+      dirty: false
     }
     this.getUserDetails()
   }
@@ -132,7 +134,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
     const updateData = { ...this.state.UserDetails }
     updateData[name] = value
     this.setState({
-      UserDetails: updateData
+      UserDetails: updateData,
+      dirty: true
     }, () => {
       if (name === "location")
         this.convertProfileToMapData()
@@ -159,6 +162,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
         const toSave = this.clean(this.state.UserDetails)
         toSave["profileState"] = "Complete"
         const updateUser = await API.graphql(graphqlOperation(mutations.updateUser, { input: toSave }));
+        this.setState({ dirty: false })
         console.log({ "updateUser:": updateUser })
         if (this.props.finalizeProfile)
           this.props.finalizeProfile()
@@ -195,7 +199,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
         }
 
         this.setState({
-          UserDetails: updateData
+          UserDetails: updateData,
+          dirty: true
         }, () => {
           this.getProfileImage()
 
@@ -248,7 +253,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
           const updateData = { ...this.state.UserDetails }
           updateData['interests'] = this.state.interestsArray
           this.setState({
-            UserDetails: updateData
+            UserDetails: updateData,
+            dirty: true
           });
         })
     }
@@ -258,7 +264,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
           const updateData = { ...this.state.UserDetails }
           updateData['interests'] = this.state.interestsArray
           this.setState({
-            UserDetails: updateData
+            UserDetails: updateData,
+            dirty: true
           });
         })
     }
@@ -294,7 +301,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
         const updateData = { ...this.state.UserDetails }
         updateData['interests'] = this.state.interestsArray
         this.setState({
-          UserDetails: updateData
+          UserDetails: updateData,
+          dirty: true
         });
       })
   }
@@ -328,7 +336,10 @@ class MyProfileImpl extends JCComponent<Props, State> {
             <View style={this.styles.style.myProfileTopButtonsExternalContainer}>
               {this.state.isEditable ?
                 <View style={this.styles.style.myProfileTopButtonsInternalContainer}>
-                  <JCButton data-testid="profile-save" buttonType={ButtonTypes.SolidRightMargin} onPress={() => { this.finalizeProfile() }}>Save Profile</JCButton>
+                  <JCButton enabled={this.state.dirty}
+                    data-testid="profile-save"
+                    buttonType={ButtonTypes.SolidRightMargin}
+                    onPress={() => { this.finalizeProfile() }}>Save Profile</JCButton>
                   <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.logout()}>Logout</JCButton>
                   {this.props.loadId ? <JCButton buttonType={ButtonTypes.SolidProfileDelete} onPress={() => this.deleteUser()}>Delete</JCButton> : null}
                 </View>

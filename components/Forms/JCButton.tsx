@@ -26,12 +26,16 @@ export enum ButtonTypes {
     MoreSeriesOutlineBold
 }
 export interface Props {
+    enabled?: boolean
     onPress(): any
     children: any
     buttonType: ButtonTypes
     "data-testid"?: any
 }
 class JCButton extends JCComponent<Props> {
+    static defaultProps = {
+        enabled: true
+    }
     constructor(props: Props) {
         super(props);
 
@@ -40,9 +44,14 @@ class JCButton extends JCComponent<Props> {
         this.props.onPress()
     }
     render(): React.ReactNode {
-        return <Button data-testid={this.props["data-testid"]} style={styles[ButtonTypes[this.props.buttonType] + "Button"]} onPress={() => { this.onPress() }}>
-            <Text style={styles[ButtonTypes[this.props.buttonType] + "Text"]}>{this.props.children}</Text>
-        </Button>
+        return (
+            <Button disabled={!this.props.enabled}
+                data-testid={this.props["data-testid"]}
+                style={[styles[ButtonTypes[this.props.buttonType] + "Button"], !this.props.enabled ? styles[ButtonTypes[this.props.buttonType] + "ButtonDisabled"] : '']}
+                onPress={() => { this.onPress() }}>
+                <Text style={styles[ButtonTypes[this.props.buttonType] + "Text"]}>{this.props.children}</Text>
+            </Button>
+        )
     }
 }
 

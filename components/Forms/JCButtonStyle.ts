@@ -235,6 +235,10 @@ export default EStyleSheet.create({
         boxShadow: "unset",
         borderRadius: 4,
     },
+    SolidRightMarginButtonDisabled: {
+        backgroundColor: "#aaaaaa",
+        borderColor: "#aaaaaa",
+    },
     SolidRightMarginText: {
         color: "#ffffff",
         fontFamily: 'Graphik-Regular-App',
