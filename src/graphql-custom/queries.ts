@@ -1,3 +1,98 @@
+export const getDirectMessageUser = /* GraphQL */ `
+  query GetDirectMessageUser($id: ID!) {
+    getDirectMessageUser(id: $id) {
+      id
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+        joined
+        primaryOrganization
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      roomID
+      room {
+        id
+        name
+        messageUsers {
+          items {
+            id
+            userID
+            roomID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        directMessage {
+          items {
+            id
+            content
+            when
+            messageRoomID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+
 export const listDirectMessageUsers = /* GraphQL */ `
   query ListDirectMessageUsers(
     $filter: ModelDirectMessageUserFilterInput
