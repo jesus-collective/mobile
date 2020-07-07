@@ -1765,6 +1765,9 @@ export default class MainStyles {
                 myProfileOrgView: {
                     flexDirection: 'column'
                 },
+                myProfileOrgTypeInput: {
+                    width: '100%'
+                },
             },
 
             dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
