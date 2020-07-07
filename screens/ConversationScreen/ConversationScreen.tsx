@@ -12,6 +12,7 @@ import MyMap from '../../components/MyMap/MyMap';
 import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
 import ProfileImage from '../../components/ProfileImage/ProfileImage';
 import MessageBoard from '../../components/MessageBoard/MessageBoard';
+import EditableUsers from '../../components/Forms/EditableUsers'
 
 interface Props {
   navigation?: any
@@ -19,6 +20,7 @@ interface Props {
 
 }
 interface State extends JCState {
+  newToList: any[]
   showMap: boolean
   data: any
   selectedRoom: any
@@ -35,7 +37,8 @@ export default class ConversationScreen extends JCComponent<Props, State>{
       showMap: false,
       data: [],
       currentUser: null,
-      currentRoomId: null
+      currentRoomId: null,
+      newToList: []
     }
     console.log(this.props.route.params.initialUser)
 
@@ -146,6 +149,21 @@ export default class ConversationScreen extends JCComponent<Props, State>{
           <Container style={this.styles.style.conversationScreenMainContainer}>
             <Container style={this.styles.style.detailScreenLeftCard}>
               <Text style={this.styles.style.eventNameInput}>Direct Messages</Text>
+
+              {true ?
+                <div>
+                  <EditableUsers
+                    onChange={(value: any[]) => { this.setState({ newToList: value }) }}
+                    multiline={false}
+                    data-testid="profile-currentRole"
+                    showProfileImages={true}
+                    textStyle={this.styles.style.fontFormSmallDarkGrey}
+                    inputStyle={this.styles.style.fontFormLargeInput}
+                    value={this.state.newToList} isEditable={true}></EditableUsers>
+
+                </div>
+                : null
+              }
 
               {this.state.data != null ?
                 this.state.data.map((item, index) => {

@@ -51,7 +51,7 @@ export default class MyProfile extends JCComponent<Props, State> {
             }
         }
         else {
-            Storage.get(this.props.size == "small" ? user.filenameSmall : this.props.size == "medium" ? user.filenameMedium : user.filenameLarge, {
+            Storage.get(this.props.size == "small" || this.props.size == "xsmall" ? user.filenameSmall : this.props.size == "medium" ? user.filenameMedium : user.filenameLarge, {
                 level: 'protected',
                 contentType: 'image/png',
                 identityId: user.userId
@@ -81,23 +81,29 @@ export default class MyProfile extends JCComponent<Props, State> {
     render(): React.ReactNode {
         return (
             this.state.profileImage != null ?
-                <Image style={this.props.size == 'small' ?
-                    { width: "55px", height: "55px", borderRadius: 50, marginRight: 10, marginBottom: 15 } :
-                    this.props.style === "map" || this.props.style === "my-people" ? { width: "80px", height: "96px", borderRadius: 120, marginRight: 10, marginBottom: 15 } :
-                        { width: "250px", height: "290px", borderRadius: 120, marginRight: 10, marginBottom: 15 }
+                <Image style={this.props.size == 'xsmall' ?
+                    { width: "20px", height: "20px", borderRadius: 18, marginRight: 5, marginBottom: 5 }
+                    : this.props.size == 'small' ?
+                        { width: "55px", height: "55px", borderRadius: 50, marginRight: 10, marginBottom: 15 } :
+                        this.props.style === "map" || this.props.style === "my-people" ? { width: "80px", height: "96px", borderRadius: 120, marginRight: 10, marginBottom: 15 } :
+                            { width: "250px", height: "290px", borderRadius: 120, marginRight: 10, marginBottom: 15 }
 
                 }
+                    resizeMode={this.props.size == 'xsmall' ? "contain" : "cover"}
                     source={this.state.profileImage}>
 
                 </ Image>
                 :
                 this.state.showEmpty || !this.state.profileImage ?
-                    <Image style={this.props.size == 'small' ?
-                        { width: "55px", height: "55px", borderRadius: 50, marginRight: 10, marginBottom: 15 } :
-                        this.props.style === "map" || this.props.style === "my-people" ? { width: "80px", height: "96px", borderRadius: 120, marginRight: 10, marginBottom: 15 } :
-                            { width: "250px", height: "290px", borderRadius: 120, marginRight: 10, marginBottom: 15 }
+                    <Image style={this.props.size == 'xsmall' ?
+                        { width: "20px", height: "20px", borderRadius: 18, marginRight: 5, marginBottom: 5 }
+                        : this.props.size == 'small' ?
+                            { width: "55px", height: "55px", borderRadius: 50, marginRight: 10, marginBottom: 15 } :
+                            this.props.style === "map" || this.props.style === "my-people" ? { width: "80px", height: "96px", borderRadius: 120, marginRight: 10, marginBottom: 15 } :
+                                { width: "250px", height: "290px", borderRadius: 120, marginRight: 10, marginBottom: 15 }
 
                     }
+                        resizeMode={this.props.size == 'xsmall' ? "contain" : "cover"}
                         source={require('../../assets/profile-placeholder.png')}>
 
                     </ Image>

@@ -1,4 +1,5 @@
 type User
+  @searchable
   @model
   @auth(
     rules: [

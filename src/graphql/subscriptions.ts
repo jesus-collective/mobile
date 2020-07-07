@@ -855,8 +855,8 @@ export const onDeleteGroupMember = /* GraphQL */ `
   }
 `;
 export const onCreateGroup = /* GraphQL */ `
-  subscription OnCreateGroup($owner: String) {
-    onCreateGroup(owner: $owner) {
+  subscription OnCreateGroup {
+    onCreateGroup {
       id
       owner
       ownerUser {
@@ -967,8 +967,8 @@ export const onCreateGroup = /* GraphQL */ `
   }
 `;
 export const onUpdateGroup = /* GraphQL */ `
-  subscription OnUpdateGroup($owner: String) {
-    onUpdateGroup(owner: $owner) {
+  subscription OnUpdateGroup {
+    onUpdateGroup {
       id
       owner
       ownerUser {
@@ -1079,8 +1079,8 @@ export const onUpdateGroup = /* GraphQL */ `
   }
 `;
 export const onDeleteGroup = /* GraphQL */ `
-  subscription OnDeleteGroup($owner: String) {
-    onDeleteGroup(owner: $owner) {
+  subscription OnDeleteGroup {
+    onDeleteGroup {
       id
       owner
       ownerUser {
@@ -1572,8 +1572,8 @@ export const onDeleteOrganizationMember = /* GraphQL */ `
   }
 `;
 export const onCreateOrganization = /* GraphQL */ `
-  subscription OnCreateOrganization($admins: String) {
-    onCreateOrganization(admins: $admins) {
+  subscription OnCreateOrganization {
+    onCreateOrganization {
       id
       orgName
       admins
@@ -1711,8 +1711,8 @@ export const onCreateOrganization = /* GraphQL */ `
   }
 `;
 export const onUpdateOrganization = /* GraphQL */ `
-  subscription OnUpdateOrganization($admins: String) {
-    onUpdateOrganization(admins: $admins) {
+  subscription OnUpdateOrganization {
+    onUpdateOrganization {
       id
       orgName
       admins
@@ -1850,8 +1850,8 @@ export const onUpdateOrganization = /* GraphQL */ `
   }
 `;
 export const onDeleteOrganization = /* GraphQL */ `
-  subscription OnDeleteOrganization($admins: String) {
-    onDeleteOrganization(admins: $admins) {
+  subscription OnDeleteOrganization {
+    onDeleteOrganization {
       id
       orgName
       admins

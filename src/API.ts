@@ -783,27 +783,36 @@ export type ModelStringKeyConditionInput = {
   beginsWith?: string | null,
 };
 
-export type SearchableGroupFilterInput = {
+export type SearchableUserFilterInput = {
   id?: SearchableIDFilterInput | null,
+  given_name?: SearchableStringFilterInput | null,
+  family_name?: SearchableStringFilterInput | null,
+  email?: SearchableStringFilterInput | null,
+  phone?: SearchableStringFilterInput | null,
   owner?: SearchableStringFilterInput | null,
-  type?: SearchableStringFilterInput | null,
-  name?: SearchableStringFilterInput | null,
-  description?: SearchableStringFilterInput | null,
-  memberCount?: SearchableIntFilterInput | null,
-  image?: SearchableStringFilterInput | null,
-  time?: SearchableStringFilterInput | null,
-  lastUpdated?: SearchableStringFilterInput | null,
-  location?: SearchableStringFilterInput | null,
-  length?: SearchableStringFilterInput | null,
-  effort?: SearchableStringFilterInput | null,
-  cost?: SearchableStringFilterInput | null,
-  eventType?: SearchableStringFilterInput | null,
-  eventUrl?: SearchableStringFilterInput | null,
-  tz?: SearchableStringFilterInput | null,
-  isSponsored?: SearchableStringFilterInput | null,
-  and?: Array< SearchableGroupFilterInput | null > | null,
-  or?: Array< SearchableGroupFilterInput | null > | null,
-  not?: SearchableGroupFilterInput | null,
+  mainUserGroup?: SearchableStringFilterInput | null,
+  hasPaidState?: SearchableStringFilterInput | null,
+  profileState?: SearchableStringFilterInput | null,
+  address?: SearchableStringFilterInput | null,
+  city?: SearchableStringFilterInput | null,
+  province?: SearchableStringFilterInput | null,
+  postalCode?: SearchableStringFilterInput | null,
+  country?: SearchableStringFilterInput | null,
+  aboutMeShort?: SearchableStringFilterInput | null,
+  aboutMeLong?: SearchableStringFilterInput | null,
+  interests?: SearchableStringFilterInput | null,
+  currentRole?: SearchableStringFilterInput | null,
+  currentScope?: SearchableStringFilterInput | null,
+  personality?: SearchableStringFilterInput | null,
+  orgName?: SearchableStringFilterInput | null,
+  orgType?: SearchableStringFilterInput | null,
+  orgSize?: SearchableStringFilterInput | null,
+  orgDescription?: SearchableStringFilterInput | null,
+  joined?: SearchableStringFilterInput | null,
+  primaryOrganization?: SearchableStringFilterInput | null,
+  and?: Array< SearchableUserFilterInput | null > | null,
+  or?: Array< SearchableUserFilterInput | null > | null,
+  not?: SearchableUserFilterInput | null,
 };
 
 export type SearchableIDFilterInput = {
@@ -836,6 +845,70 @@ export type SearchableStringFilterInput = {
   exists?: boolean | null,
   wildcard?: string | null,
   regexp?: string | null,
+};
+
+export type SearchableUserSortInput = {
+  field?: SearchableUserSortableFields | null,
+  direction?: SearchableSortDirection | null,
+};
+
+export enum SearchableUserSortableFields {
+  id = "id",
+  given_name = "given_name",
+  family_name = "family_name",
+  email = "email",
+  phone = "phone",
+  owner = "owner",
+  mainUserGroup = "mainUserGroup",
+  hasPaidState = "hasPaidState",
+  profileState = "profileState",
+  address = "address",
+  city = "city",
+  province = "province",
+  postalCode = "postalCode",
+  country = "country",
+  aboutMeShort = "aboutMeShort",
+  aboutMeLong = "aboutMeLong",
+  interests = "interests",
+  currentRole = "currentRole",
+  currentScope = "currentScope",
+  personality = "personality",
+  orgName = "orgName",
+  orgType = "orgType",
+  orgSize = "orgSize",
+  orgDescription = "orgDescription",
+  joined = "joined",
+  primaryOrganization = "primaryOrganization",
+}
+
+
+export enum SearchableSortDirection {
+  asc = "asc",
+  desc = "desc",
+}
+
+
+export type SearchableGroupFilterInput = {
+  id?: SearchableIDFilterInput | null,
+  owner?: SearchableStringFilterInput | null,
+  type?: SearchableStringFilterInput | null,
+  name?: SearchableStringFilterInput | null,
+  description?: SearchableStringFilterInput | null,
+  memberCount?: SearchableIntFilterInput | null,
+  image?: SearchableStringFilterInput | null,
+  time?: SearchableStringFilterInput | null,
+  lastUpdated?: SearchableStringFilterInput | null,
+  location?: SearchableStringFilterInput | null,
+  length?: SearchableStringFilterInput | null,
+  effort?: SearchableStringFilterInput | null,
+  cost?: SearchableStringFilterInput | null,
+  eventType?: SearchableStringFilterInput | null,
+  eventUrl?: SearchableStringFilterInput | null,
+  tz?: SearchableStringFilterInput | null,
+  isSponsored?: SearchableStringFilterInput | null,
+  and?: Array< SearchableGroupFilterInput | null > | null,
+  or?: Array< SearchableGroupFilterInput | null > | null,
+  not?: SearchableGroupFilterInput | null,
 };
 
 export type SearchableIntFilterInput = {
@@ -871,12 +944,6 @@ export enum SearchableGroupSortableFields {
   eventUrl = "eventUrl",
   tz = "tz",
   isSponsored = "isSponsored",
-}
-
-
-export enum SearchableSortDirection {
-  asc = "asc",
-  desc = "desc",
 }
 
 
@@ -8123,6 +8190,84 @@ export type MessagesByRoomQuery = {
   } | null,
 };
 
+export type SearchUsersQueryVariables = {
+  filter?: SearchableUserFilterInput | null,
+  sort?: SearchableUserSortInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type SearchUsersQuery = {
+  searchUsers:  {
+    __typename: "SearchableUserConnection",
+    items:  Array< {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      mainUserGroup: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+        geocodeFull: string | null,
+        geocodeCity: string | null,
+        geocodeRegion: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: Array< string | null > | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      primaryOrganization: string | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      directMessages:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken: string | null,
+    total: number | null,
+  } | null,
+};
+
 export type SearchGroupsQueryVariables = {
   filter?: SearchableGroupFilterInput | null,
   sort?: SearchableGroupSortInput | null,
@@ -9141,10 +9286,6 @@ export type OnDeleteGroupMemberSubscription = {
   } | null,
 };
 
-export type OnCreateGroupSubscriptionVariables = {
-  owner?: string | null,
-};
-
 export type OnCreateGroupSubscription = {
   onCreateGroup:  {
     __typename: "Group",
@@ -9269,10 +9410,6 @@ export type OnCreateGroupSubscription = {
   } | null,
 };
 
-export type OnUpdateGroupSubscriptionVariables = {
-  owner?: string | null,
-};
-
 export type OnUpdateGroupSubscription = {
   onUpdateGroup:  {
     __typename: "Group",
@@ -9395,10 +9532,6 @@ export type OnUpdateGroupSubscription = {
     createdAt: string,
     updatedAt: string,
   } | null,
-};
-
-export type OnDeleteGroupSubscriptionVariables = {
-  owner?: string | null,
 };
 
 export type OnDeleteGroupSubscription = {
@@ -9948,10 +10081,6 @@ export type OnDeleteOrganizationMemberSubscription = {
   } | null,
 };
 
-export type OnCreateOrganizationSubscriptionVariables = {
-  admins?: string | null,
-};
-
 export type OnCreateOrganizationSubscription = {
   onCreateOrganization:  {
     __typename: "Organization",
@@ -10106,10 +10235,6 @@ export type OnCreateOrganizationSubscription = {
   } | null,
 };
 
-export type OnUpdateOrganizationSubscriptionVariables = {
-  admins?: string | null,
-};
-
 export type OnUpdateOrganizationSubscription = {
   onUpdateOrganization:  {
     __typename: "Organization",
@@ -10262,10 +10387,6 @@ export type OnUpdateOrganizationSubscription = {
     createdAt: string,
     updatedAt: string,
   } | null,
-};
-
-export type OnDeleteOrganizationSubscriptionVariables = {
-  admins?: string | null,
 };
 
 export type OnDeleteOrganizationSubscription = {
