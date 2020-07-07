@@ -176,7 +176,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
         <Content>
           <MyMap type={'no-filters'} visible={this.state.showMap} mapData={[]}></MyMap>
           <Container style={this.styles.style.conversationScreenMainContainer}>
-            <Container style={this.styles.style.detailScreenLeftCard}>
+            <Container style={this.styles.style.conversationScreenLeftCard}>
               <Text style={this.styles.style.eventNameInput}>Direct Messages</Text>
 
               {true ?

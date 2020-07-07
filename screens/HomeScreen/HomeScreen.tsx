@@ -31,7 +31,7 @@ class HomeScreen extends JCComponent<Props, State>{
     this.state = {
       ...super.getInitialState(),
       mapData: [],
-      showMap: false,
+      showMap: true,
       width: Dimensions.get('window').width,
       height: Dimensions.get('window').height
     }
