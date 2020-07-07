@@ -112,8 +112,8 @@ export default class EventScreen extends JCComponent<Props, State>{
           image: "temp",
           isSponsored: "false",
           time: null,
-          location: "",
-          ownerOrgID: "00000000-0000-0000-0000-000000000000"
+          location: ""
+          //ownerOrgID: "00000000-0000-0000-0000-000000000000"
         }
         const isEditable = true
         this.setState({

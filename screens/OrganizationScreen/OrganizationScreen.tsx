@@ -88,8 +88,8 @@ export default class GroupScreen extends JCComponent<Props, State>{
           name: "",
           description: "",
           memberCount: 1,
-          image: "temp",
-          ownerOrgID: "00000000-0000-0000-0000-000000000000"
+          image: "temp"
+          //  ownerOrgID: "00000000-0000-0000-0000-000000000000"
         }
         this.setState({ data: z })
       })

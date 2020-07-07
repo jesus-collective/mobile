@@ -65,7 +65,7 @@ export default class EditableDate extends JCComponent<Props, State> {
                             value={moment(this.props.value).tz(this.state.timezone)}
                             format='MMMM Do YYYY, h:mm a '
                             onChange={(value) => { this.onChanged(value, this.state.timezone) }}
-                            onError={console.log}
+                            onError={(e) => { console.log(e) }}
                             disablePast
                             minutesStep={15}
                             emptyLabel="Date not set"

@@ -6,6 +6,7 @@ import { Text } from 'react-native'
 
 import getTheme from '../../native-base-theme/components';
 import { Image } from 'react-native'
+import * as customQueries from '../../src/graphql-custom/queries';
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
@@ -281,7 +282,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     }
     else {
       const listGroup: any = API.graphql({
-        query: queries.groupByType,
+        query: customQueries.groupByTypeForMyGroups,
         variables: { limit: 20, type: props.type, nextToken: this.state.nextToken },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
@@ -333,7 +334,7 @@ export default class MyGroups extends JCComponent<Props, State> {
   setIsOwner(data: any): void {
     data.forEach((item: any) => {
       const getGroup: any = API.graphql({
-        query: queries.getGroup,
+        query: customQueries.getGroupForOwner,
         variables: { id: item.id, owner: { eq: this.state.currentUser } },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });

@@ -1,98 +1,184 @@
 export const getDirectMessageUser = /* GraphQL */ `
-  query GetDirectMessageUser($id: ID!) {
-    getDirectMessageUser(id: $id) {
+   query GetDirectMessageUser($id: ID!) {
+     getDirectMessageUser(id: $id) {
+       id
+       userID
+       user {
+         id
+         given_name
+         family_name
+         email
+         phone
+         owner
+         mainUserGroup
+         hasPaidState
+         profileState
+         address
+         city
+         province
+         postalCode
+         country
+         location {
+           latitude
+           longitude
+           geocodeFull
+           geocodeCity
+           geocodeRegion
+         }
+         profileImage {
+           userId
+           filenameSmall
+           filenameMedium
+           filenameLarge
+           filenameUpload
+         }
+         aboutMeShort
+         aboutMeLong
+         interests
+         currentRole
+         currentScope
+         personality
+         orgName
+         orgType
+         orgSize
+         orgDescription
+         joined
+         primaryOrganization
+         owns {
+           nextToken
+         }
+         groups {
+           nextToken
+         }
+         messages {
+           nextToken
+         }
+         directMessages {
+           nextToken
+         }
+         createdAt
+         updatedAt
+       }
+       roomID
+       room {
+         id
+         name
+         messageUsers {
+           items {
+             id
+             userID
+             roomID
+             createdAt
+             updatedAt
+           }
+           nextToken
+         }
+         directMessage {
+           items {
+             id
+             content
+             when
+             messageRoomID
+             createdAt
+             updatedAt
+           }
+           nextToken
+         }
+         createdAt
+         updatedAt
+       }
+       createdAt
+       updatedAt
+     }
+   }
+ `;
+export const getGroupForOwner = /* GraphQL */ `
+  query GetGroup($id: ID!) {
+    getGroup(id: $id) {
       id
-      userID
-      user {
+      owner
+    }
+  }
+`;
+export const groupByTypeForMyGroups = /* GraphQL */ `
+  query GroupByType(
+    $type: String
+    $id: ModelIDKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelGroupFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    groupByType(
+      type: $type
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
         id
-        given_name
-        family_name
-        email
-        phone
         owner
-        mainUserGroup
-        hasPaidState
-        profileState
-        address
-        city
-        province
-        postalCode
-        country
-        location {
+        ownerUser {
+          id
+          given_name
+          family_name
+        }
+        type
+        name
+        description
+        memberCount
+        image
+        time
+        lastUpdated
+        location
+        locationLatLong {
           latitude
           longitude
           geocodeFull
           geocodeCity
           geocodeRegion
         }
-        profileImage {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        orgDescription
-        joined
-        primaryOrganization
-        owns {
-          nextToken
-        }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        directMessages {
-          nextToken
-        }
+        length
+        effort
+        cost
+        eventType
+        eventUrl
+        tz
+        isSponsored
         createdAt
         updatedAt
       }
-      roomID
-      room {
-        id
-        name
-        messageUsers {
-          items {
-            id
-            userID
-            roomID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        directMessage {
-          items {
-            id
-            content
-            when
-            messageRoomID
-            createdAt
-            updatedAt
-          }
-          nextToken
-        }
-        createdAt
-        updatedAt
+      nextToken
+    }
+  }
+`;
+export const getUserForProfile = /* GraphQL */ `
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
+      id
+      given_name
+      family_name
+      owner
+      mainUserGroup
+      hasPaidState
+      profileState
+      profileImage {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
       }
+      aboutMeShort
+      currentRole
+      orgName
       createdAt
       updatedAt
     }
   }
 `;
-
 export const listDirectMessageUsers = /* GraphQL */ `
   query ListDirectMessageUsers(
     $filter: ModelDirectMessageUserFilterInput
@@ -170,6 +256,7 @@ export const listDirectMessageUsers = /* GraphQL */ `
     }
   }
 `;
+
 export const getResourceRoot = /* GraphQL */ `
   query GetResourceRoot($id: ID!) {
     getResourceRoot(id: $id) {

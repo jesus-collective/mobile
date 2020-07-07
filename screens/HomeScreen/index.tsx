@@ -382,7 +382,6 @@ class HomeScreenRouterImpl extends JCComponent<Props, State> {
             <Drawer.Screen name="mainApp" component={MainAppRouter} />
 
           </Drawer.Navigator >
-    )
         </HomeScreenRouterImpl.Provider>
       )
 

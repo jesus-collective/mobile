@@ -183,52 +183,52 @@ class MyMapImpl extends JCComponent<Props, State> {
               </View>
             </View>
             <View style={{ flex: 9 }}>
+              {window.google ?
+                <Map google={window.google} zoom={6}
+                  center={this.state.currentUserLocation ? this.state.currentUserLocation : { lat: 44, lng: -78 }}
+                  mapTypeControl={false}
+                  onClick={this.onMapClicked}
+                  onReady={(mapProps, map) => this._mapLoaded(map)}
+                  style={{ position: "relative", width: "100%", height: "100%" }}
+                  streetViewControl={false}
+                  fullscreenControl={false}
+                >
 
-              <Map google={window.google} zoom={6}
-                center={this.state.currentUserLocation ? this.state.currentUserLocation : { lat: 44, lng: -78 }}
-                mapTypeControl={false}
-                onClick={this.onMapClicked}
-                onReady={(mapProps, map) => this._mapLoaded(map)}
-                style={{ position: "relative", width: "100%", height: "100%" }}
-                streetViewControl={false}
-                fullscreenControl={false}
-              >
+                  {
+                    this.props.mapData.map((mapItem, index) => {
 
-                {
-                  this.props.mapData.map((mapItem, index) => {
+                      const filters = []
+                      if (!this.state.organizationsEnabled) {
+                        filters.push("organization")
+                      }
+                      if (!this.state.eventsEnabled) {
+                        filters.push("event")
+                      }
+                      if (!this.state.profilesEnabled) {
+                        filters.push("profile")
+                      }
 
-                    const filters = []
-                    if (!this.state.organizationsEnabled) {
-                      filters.push("organization")
-                    }
-                    if (!this.state.eventsEnabled) {
-                      filters.push("event")
-                    }
-                    if (!this.state.profilesEnabled) {
-                      filters.push("profile")
-                    }
+                      const filtered = filters.filter(item => mapItem.type === item)
+                      if (filtered.length === 0) {
+                        return <Marker key={index} title={mapItem.name}
+                          mapItemType={mapItem.type}
+                          mapItem={mapItem}
+                          onClick={this.onMarkerClick}
+                          position={{ lat: mapItem.latitude, lng: mapItem.longitude }}
+                          icon={{
+                            url: require("../../assets/svg/map-icon-red.svg"),
+                            scaledSize: new google.maps.Size(32, 32)
+                          }}>
+                        </Marker>
+                      }
 
-                    const filtered = filters.filter(item => mapItem.type === item)
-                    if (filtered.length === 0) {
-                      return <Marker key={index} title={mapItem.name}
-                        mapItemType={mapItem.type}
-                        mapItem={mapItem}
-                        onClick={this.onMarkerClick}
-                        position={{ lat: mapItem.latitude, lng: mapItem.longitude }}
-                        icon={{
-                          url: require("../../assets/svg/map-icon-red.svg"),
-                          scaledSize: new google.maps.Size(32, 32)
-                        }}>
-                      </Marker>
-                    }
+                      //will need later for friends
+                      //url: require("../../assets/svg/map-icon-yellow.svg"),
 
-                    //will need later for friends
-                    //url: require("../../assets/svg/map-icon-yellow.svg"),
+                    })}
 
-                  })}
-
-              </Map>
-
+                </Map>
+                : null}
             </View>
             {this.state.showingInfoWindow ?
               <View style={{ position: 'absolute', alignSelf: 'center', height: '100%', justifyContent: 'center' }}>
@@ -251,27 +251,29 @@ class MyMapImpl extends JCComponent<Props, State> {
         <ErrorBoundary>
 
           <View style={{ height: 362, width: '100%' }}>
+            {window.google ?
+              <Map google={window.google} zoom={6}
+                center={this.props.initCenter}
+                mapTypeControl={false}
+                onClick={this.onMapClicked}
+                onReady={(mapProps, map) => this._mapLoaded(map)}
+                style={{ position: "relative", width: "100%", height: "100%" }}
+                streetViewControl={false}
+                fullscreenControl={false}
+              >
+                {this.props.mapData.map((item, index) => {
+                  return <Marker key={index}
+                    position={{ lat: item.latitude, lng: item.longitude }}
+                    icon={{
+                      url: require("../../assets/svg/map-location.svg"),
+                      anchor: new google.maps.Point(50, 50),
+                      scaledSize: new google.maps.Size(100, 100)
+                    }} />
+                })}
 
-            <Map google={window.google} zoom={6}
-              center={this.props.initCenter}
-              mapTypeControl={false}
-              onClick={this.onMapClicked}
-              onReady={(mapProps, map) => this._mapLoaded(map)}
-              style={{ position: "relative", width: "100%", height: "100%" }}
-              streetViewControl={false}
-              fullscreenControl={false}
-            >
-              {this.props.mapData.map((item, index) => {
-                return <Marker key={index}
-                  position={{ lat: item.latitude, lng: item.longitude }}
-                  icon={{
-                    url: require("../../assets/svg/map-location.svg"),
-                    anchor: new google.maps.Point(50, 50),
-                    scaledSize: new google.maps.Size(100, 100)
-                  }} />
-              })}
-
-            </Map>
+              </Map>
+              : null
+            }
           </View>
 
         </ErrorBoundary>
@@ -284,33 +286,34 @@ class MyMapImpl extends JCComponent<Props, State> {
         <ErrorBoundary>
 
           <View style={{ height: this.props.visible ? this.props.size ? this.props.size : 510 : 0 }}>
+            {window.google ?
+              <Map google={window.google} zoom={5}
+                center={this.props.initCenter ? this.props.initCenter : this.state.currentUserLocation ? this.state.currentUserLocation : { lat: 44, lng: -78 }}
+                mapTypeControl={false}
+                onClick={this.onMapClicked}
+                onReady={(mapProps, map) => this._mapLoaded(map)}
+                style={{ position: "relative", width: "100%", height: "100%" }}
+                streetViewControl={false}
+                fullscreenControl={false}
+              >
 
-            <Map google={window.google} zoom={5}
-              center={this.props.initCenter ? this.props.initCenter : this.state.currentUserLocation ? this.state.currentUserLocation : { lat: 44, lng: -78 }}
-              mapTypeControl={false}
-              onClick={this.onMapClicked}
-              onReady={(mapProps, map) => this._mapLoaded(map)}
-              style={{ position: "relative", width: "100%", height: "100%" }}
-              streetViewControl={false}
-              fullscreenControl={false}
-            >
+                {this.props.mapData.map((mapItem, index) => {
 
-              {this.props.mapData.map((mapItem, index) => {
+                  return <Marker key={index} title={mapItem.name}
+                    mapItemType={mapItem.type}
+                    mapItem={mapItem}
+                    onClick={this.onMarkerClick}
+                    position={{ lat: mapItem.latitude, lng: mapItem.longitude }}
+                    icon={{
+                      url: require("../../assets/svg/map-icon-red.svg"),
+                      scaledSize: new google.maps.Size(32, 32)
+                    }}>
+                  </Marker>
 
-                return <Marker key={index} title={mapItem.name}
-                  mapItemType={mapItem.type}
-                  mapItem={mapItem}
-                  onClick={this.onMarkerClick}
-                  position={{ lat: mapItem.latitude, lng: mapItem.longitude }}
-                  icon={{
-                    url: require("../../assets/svg/map-icon-red.svg"),
-                    scaledSize: new google.maps.Size(32, 32)
-                  }}>
-                </Marker>
+                })}
 
-              })}
-
-            </Map>
+              </Map> : null
+            }
             {this.state.showingInfoWindow ?
               <View style={{ position: 'absolute', alignSelf: 'center', height: '100%', justifyContent: 'center' }}>
                 {this.state.selectedPlace != null ?
