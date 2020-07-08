@@ -69,7 +69,7 @@ export default class MyGroups extends JCComponent<Props, State> {
         titleString: "Events",
         type: props.type,
         cardWidth: 350,
-        data: [],
+        data: null,
         showCreateButton: false,
         currentUser: null,
         nextToken: null,
@@ -272,7 +272,12 @@ export default class MyGroups extends JCComponent<Props, State> {
       });
       const processList = (json) => {
         //console.log({ profile: json })
-        const temp = [...this.state.data, ...json.data.listUsers.items]
+
+        let temp: any[]
+        if (this.state.data)
+          temp = [...this.state.data, ...json.data.listUsers.items]
+        else
+          temp = [...json.data.listUsers.items]
         this.setState({
           data: temp,
           nextToken: json.data.listUsers.nextToken
@@ -291,7 +296,11 @@ export default class MyGroups extends JCComponent<Props, State> {
         //console.log({ profile: json })
         this.setCanLeave(json.data.groupByType.items)
         this.setIsOwner(json.data.groupByType.items)
-        const temp = [...this.state.data, ...json.data.groupByType.items]
+        let temp: any[]
+        if (this.state.data)
+          temp = [...this.state.data, ...json.data.groupByType.items]
+        else
+          temp = [...json.data.groupByType.items]
         this.setState({
           data: temp,
           nextToken: json.data.groupByType.nextToken
@@ -578,17 +587,19 @@ export default class MyGroups extends JCComponent<Props, State> {
 
                 <Container style={(this.props.wrap && this.props.type != "profile") ? this.styles.style.ResourcesMyGroupsWrap : (this.props.wrap && this.props.type == "profile") ? this.styles.style.profileMyGroupsWrap : this.styles.style.ResourcesMyGroupsNoWrap}>
                   {this.state.data ?
-                    this.state.data.filter(this.filterMy).filter(this.filterEvent).map((item, index) => {
+                    this.state.data.filter(this.filterMy).filter(this.filterEvent).length > 0 ?
+                      this.state.data.filter(this.filterMy).filter(this.filterEvent).map((item, index) => {
 
-                      return (
-                        <ErrorBoundry key={index}>
-                          <ListItem noBorder style={this.styles.style.conversationsCard} button onPress={() => { this.openSingle(item.id) }}>
-                            {this.renderByType(item, this.state.type)}
-                          </ListItem>
-                        </ErrorBoundry>
-                      )
-                    })
-                    : null
+                        return (
+                          <ErrorBoundry key={index}>
+                            <ListItem noBorder style={this.styles.style.conversationsCard} button onPress={() => { this.openSingle(item.id) }}>
+                              {this.renderByType(item, this.state.type)}
+                            </ListItem>
+                          </ErrorBoundry>
+                        )
+                      })
+                      : <Text>No {this.state.type}&apos;s</Text>
+                    : <Text>Loading {this.state.type}&apos;s</Text>
                   }
                   {this.state.nextToken ?
                     this.props.showMore ?
