@@ -131,19 +131,14 @@ export default class HeaderJC extends JCComponent<Props, State> {
     return (
 
       <Header style={this.headerStyles.style.container}>
-        <Left>
+        <Left style={this.styles.style.headerLeft}>
           <Button style={this.headerStyles.style.leftButtons}
             transparent
             onPress={this.openDrawer}>
             <Ionicons name="md-menu" style={this.headerStyles.style.icon} />
           </Button>
         </Left>
-        <Body style={{
-          flex: 1,
-          flexDirection: 'row',
-          justifyContent: 'flex-start',
-          alignItems: 'flex-start'
-        }}>
+        <Body style={this.styles.style.headerMiddleBody}>
           <Button
             transparent
             data-testid="header-logo"
