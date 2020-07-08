@@ -50,6 +50,9 @@ interface State extends JCState {
   mapData: MapData[]
   initCenter: any
   dirty: boolean
+  oldPass: string
+  newPass: string
+  passError: string
 }
 class MyProfileImpl extends JCComponent<Props, State> {
   orgsWithEmployees = ["Church", "Church Plant", "Academic Institution", "Compassion/Mission"]
@@ -69,7 +72,10 @@ class MyProfileImpl extends JCComponent<Props, State> {
       editMode: false,
       mapData: [],
       initCenter: { lat: 44, lng: -78.0 },
-      dirty: false
+      dirty: false,
+      oldPass: '',
+      newPass: '',
+      passError: '',
     }
     this.getUserDetails()
   }
@@ -314,6 +320,26 @@ class MyProfileImpl extends JCComponent<Props, State> {
         });
       })
   }
+
+  async handlePasswordChange(): Promise<void> {
+    if (!this.state.oldPass || !this.state.newPass) {
+      this.setState({ passError: 'Required: Current password, New password' })
+      return
+    }
+    try {
+      const user = await Auth.currentAuthenticatedUser()
+      const result = await Auth.changePassword(user, this.state.oldPass, this.state.newPass);
+      this.setState({ passError: result })
+    } catch (e) {
+      console.error(e)
+      if (e.message.includes('validation'))
+        this.setState({ passError: e.message.split(":")[0] })
+      else
+        this.setState({ passError: e.message })
+    }
+    this.setState({ oldPass: '', newPass: '' })
+  }
+
   renderMainUserGroup(group) {
     switch (group) {
       case 'verifiedUser':
@@ -337,7 +363,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       (this.state.UserDetails != null ?
         <Content>
           <View style={this.styles.style.myProfileTopButtons}>
-            {this.state.isEditable && this.state.editMode ?
+            {this.state.isEditable && (this.state.editMode || this.state.showAccountSettings) ?
               <Text style={this.styles.style.profileFontTitle}>Setup your profile</Text>
               : <Text style={this.styles.style.profileFontTitle}>{this.state.UserDetails.given_name}&apos;s profile</Text>
             }
@@ -354,7 +380,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 : null
               }
               {
-                this.state.isEditable && this.state.editMode ?
+                this.state.isEditable && (this.state.editMode || this.state.showAccountSettings) ?
                   <Text style={this.styles.style.myProfileErrorValidation}>{this.state.validationText}</Text>
                   : null
               }
@@ -407,11 +433,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   : null}
 
                 {this.state.isEditable && this.state.UserDetails.profileState !== "Incomplete" && constants['SETTING_ISVISIBLE_PROFILE_MESSAGES'] ?
-                  <View><JCButton data-testid="profile-setmap" buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { this.props.navigation.push("ConversationScreen", { initialUserID: null, initialUserName: null }) }}>Messages</JCButton></View>
+                  <View style={{ borderBottomWidth: 1, borderTopWidth: 1, borderColor: '#33333320', paddingVertical: 10 }}><JCButton data-testid="profile-setmap" buttonType={ButtonTypes.TransparentBoldBlackNoMargin} onPress={() => { this.props.navigation.push("ConversationScreen", { initialUserID: null, initialUserName: null }) }}>Messages</JCButton></View>
                   : null
                 }
                 {this.state.isEditable && this.state.UserDetails.profileState !== "Incomplete" && constants['SETTING_ISVISIBLE_PROFILE_ACCOUNTSETTINGS'] ?
-                  <View><JCButton data-testid="profile-setmap" buttonType={ButtonTypes.TransparentNoPadding} onPress={() => this.setState({ showAccountSettings: !this.state.showAccountSettings, editMode: false })}>Account Settings</JCButton></View>
+                  <View style={{ borderBottomWidth: 1, borderBottomColor: '#33333320', paddingVertical: 10, borderRightWidth: this.state.showAccountSettings ? 7 : 0, borderRightColor: '#F0493E' }}><JCButton data-testid="profile-setmap" buttonType={ButtonTypes.TransparentBoldBlackNoMargin} onPress={() => this.setState({ showAccountSettings: !this.state.showAccountSettings, editMode: false })}>Account Settings</JCButton></View>
                   : null
                 }
 
@@ -682,7 +708,14 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 value={this.state.UserDetails.orgDescription} isEditable={this.state.isEditable && this.state.editMode}></EditableText>
             </View>
               : <View style={this.styles.style.profileScreenRightCard}>
-
+                <Text style={this.styles.style.myprofileAboutMe}>Account Settings</Text>
+                <View style={{ marginTop: 40 }}>
+                  <Label style={{ ...this.styles.style.fontFormSmallDarkGrey, marginBottom: 15 }}>Change your password</Label>
+                  <TextInput placeholder="Current password" value={this.state.oldPass} onChange={e => this.setState({ oldPass: e.nativeEvent.text })} secureTextEntry={true} style={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}></TextInput>
+                  <TextInput placeholder="New password" value={this.state.newPass} onChange={e => this.setState({ newPass: e.nativeEvent.text })} secureTextEntry={true} style={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}></TextInput>
+                  <JCButton buttonType={ButtonTypes.SolidAboutMe} onPress={() => this.handlePasswordChange()}><Text> Change Password</Text></JCButton>
+                </View>
+                <Text style={{ ...this.styles.style.fontFormSmallDarkGrey, marginTop: 5 }}>{this.state.passError}</Text>
               </View>}
           </Form>
         </Content>
