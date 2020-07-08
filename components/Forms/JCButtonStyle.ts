@@ -285,6 +285,26 @@ export default EStyleSheet.create({
         fontSize: 16,
         padding: 5
     },
+    EditButtonButton: {
+        paddingTop: 0,
+        paddingBottom: 0,
+        marginLeft: 10,
+        marginRight: 10,
+        backgroundColor: "#ffffff00",
+        borderWidth: 1,
+        borderRadius: 5,
+        borderColor: "#C4CDD5",
+        boxShadow: "unset",
+        alignSelf: "flex-start",
+        height: 32,
+    },
+    EditButtonText: {
+        color: "#333333",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        paddingLeft: 16,
+        paddingRight: 16,
+    },
     TransparentBoldBlackButton:
     {
         paddingTop: 10,
