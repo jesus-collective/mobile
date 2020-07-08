@@ -2,7 +2,7 @@ import { Left, Body, StyleProvider, Card, CardItem, ListItem, Right, Container }
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 
 import * as React from 'react';
-import { Text } from 'react-native'
+import { Text, Dimensions } from 'react-native'
 
 import getTheme from '../../native-base-theme/components';
 import { Image } from 'react-native'
@@ -560,6 +560,8 @@ export default class MyGroups extends JCComponent<Props, State> {
       !this.state.eventFilter && moment(item.time).isSameOrAfter(moment.now())
   }
   render(): React.ReactNode {
+    const deviceWidth = Dimensions.get('window').width;
+
     //    console.log("Render MyGroups: " + this.state.type)
     if (!constants["SETTING_ISVISIBLE_" + this.state.type])
       return null
@@ -580,9 +582,9 @@ export default class MyGroups extends JCComponent<Props, State> {
                     <JCButton buttonType={ButtonTypes.TransparentBoldOrange} data-testid={"mygroup-showall-" + this.state.titleString} onPress={() => { this.openMultiple() }}>Show All</JCButton>
                     {constants["SETTING_ISVISIBLE_SHOWRECOMMENDED"] ? <JCButton buttonType={ButtonTypes.TransparentBoldOrange} data-testid={"mygroup-recommmended-" + this.state.titleString} onPress={() => { this.openMultiple() }}>Show Recommended</JCButton> : null}
                     {constants["SETTING_ISVISIBLE_SHOWMYFILTER"] ? <JCButton buttonType={ButtonTypes.TransparentBoldOrange} data-testid={"mygroup-showmyfilter-" + this.state.titleString} onPress={() => { this.setState({ myFilter: !this.state.myFilter }) }}>{this.state.myTitleScreen}</JCButton> : null}
-                    {constants["SETTING_ISVISIBLE_SHOWEVENTFILTER"] && this.props.type == "event" ? <JCButton buttonType={ButtonTypes.TransparentBoldOrange} data-testid={"mygroup-showeventfilter-" + this.state.titleString} onPress={() => { this.setState({ eventFilter: !this.state.eventFilter }) }}>{this.state.eventFilter ? "Upcoming Events" : "Previous Events"}</JCButton> : null}
+                    {constants["SETTING_ISVISIBLE_SHOWEVENTFILTER"] && this.props.type == "event" && deviceWidth >= 720 ? <JCButton buttonType={ButtonTypes.TransparentBoldOrange} data-testid={"mygroup-showeventfilter-" + this.state.titleString} onPress={() => { this.setState({ eventFilter: !this.state.eventFilter }) }}>{this.state.eventFilter ? "Upcoming Events" : "Previous Events"}</JCButton> : null}
                     {this.state.showCreateButton && constants["SETTING_ISVISIBLE_CREATE_" + this.state.type] ?
-                      <JCButton buttonType={ButtonTypes.OutlineBold} data-testid={"mygroup-create-" + this.state.titleString} onPress={() => { this.createSingle() }}>{this.state.createString}</JCButton>
+                      <JCButton buttonType={ButtonTypes.OutlineBold} data-testid={"mygroup-create-" + this.state.titleString} onPress={() => { this.createSingle() }}>{deviceWidth < 720 ? "+" : this.state.createString}</JCButton>
                       : null
                     }
                   </Container>
