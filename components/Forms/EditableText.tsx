@@ -36,6 +36,13 @@ export default class EditableText extends JCComponent<Props, State> {
         }
 
     }
+
+    componentDidUpdate(prevProps: Props): void {
+        if (this.props.isEditable !== prevProps.isEditable) {
+            this.setState({isEditable: this.props.isEditable})
+        }
+    }
+
     onChanged(val: any): void {
         console.log(val)
         this.props.onChange(val)
