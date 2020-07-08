@@ -557,10 +557,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   multiline={false}
                   data-testid="profile-currentRole"
                   textStyle={this.styles.style.fontFormSmallDarkGrey}
-                  inputStyle={this.styles.style.fontFormLargeInput}
+                  inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
                   value={this.state.UserDetails.currentRole} isEditable={this.state.isEditable && this.state.editMode}></EditableText>
-
-
               </View>
               <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text>
               {this.state.isEditable && this.state.editMode ?
@@ -600,11 +598,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   multiline={false}
                   data-testid="profile-orgName"
                   textStyle={this.styles.style.fontFormSmallDarkGrey}
-                  inputStyle={this.styles.style.fontFormLargeInput}
+                  inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
                   value={this.state.UserDetails.orgName} isEditable={this.state.isEditable && this.state.editMode}></EditableText>
               </View>
 
-              <View>
+              <View style={{ marginTop: 15 }}>
                 {!this.state.isEditable && this.state.editMode ? <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text> : null}
                 <Label style={this.styles.style.fontFormSmall}>Type of Organization</Label>
                 {this.state.isEditable && this.state.editMode ?
