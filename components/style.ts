@@ -841,7 +841,7 @@ export default class MainStyles {
             ResourcesMyGroupsWrap: {
                 overflow: "scroll",
                 overflowY: "hidden",
-                minHeight: "100vw",
+                minHeight: "calc(100vw + 100vh + 10rem)",
                 flexWrap: "wrap",
                 // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
                 flexGrow: 1,
