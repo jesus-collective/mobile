@@ -841,7 +841,7 @@ export default class MainStyles {
             ResourcesMyGroupsWrap: {
                 overflow: "scroll",
                 overflowY: "hidden",
-                minHeight: "100vw",
+                minHeight: "calc(100vw + 100vh + 10rem)",
                 flexWrap: "wrap",
                 // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
                 flexGrow: 1,
@@ -1225,6 +1225,16 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Regular-App', 
                 fontSize: 16, 
                 lineHeight: 24
+            },
+            headerLeft: {
+                flex: 0
+            },
+            headerMiddleBody: {
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start',
+                marginLeft: 25
             },
 
             // Media Query Desktop Tablet
@@ -1778,6 +1788,12 @@ export default class MainStyles {
                 },
                 myProfileOrgTypeInput: {
                     width: '100%'
+                },
+                headerLeft: {
+                    flex: 0.3
+                },
+                headerMiddleBody: {
+                    marginLeft: 0
                 },
             },
 

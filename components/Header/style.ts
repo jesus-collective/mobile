@@ -70,7 +70,7 @@ export default class HeaderStyles {
                 fontSize: 16,
                 lineHeight: 21,
                 paddingLeft: 10,
-                paddingRight: 40
+                paddingRight: 20
             },
             logo:
             {

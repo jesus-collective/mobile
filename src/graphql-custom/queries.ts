@@ -66,6 +66,7 @@ export const getDirectMessageUser = /* GraphQL */ `
          messageUsers {
            items {
              id
+             userName
              userID
              roomID
              createdAt

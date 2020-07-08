@@ -23,7 +23,8 @@ export enum ButtonTypes {
     TransparentBoldBlack,
     TransparentBoldOrange,
     TransparentRegularOrange,
-    MoreSeriesOutlineBold
+    MoreSeriesOutlineBold,
+    EditButton,
 }
 export interface Props {
     enabled?: boolean
