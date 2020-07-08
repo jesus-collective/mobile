@@ -193,7 +193,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
   }
   convertProfileToMapData(data: any): MapData[] {
     return data.map((dataItem) => {
-      if (dataItem.location && dataItem.location.latitude && dataItem.location.longitude) {
+      if (dataItem?.location && dataItem?.location?.latitude && dataItem?.location?.longitude) {
         return {
           latitude: dataItem.location.latitude,
           longitude: dataItem.location.longitude,
