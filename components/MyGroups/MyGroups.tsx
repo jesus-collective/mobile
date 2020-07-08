@@ -208,15 +208,17 @@ export default class MyGroups extends JCComponent<Props, State> {
         isOwner: [],
       }
     }
-    this.setInitialData(props)
+
+  }
+  componentDidMount(): void {
+    this.setInitialData(this.props)
     const user = Auth.currentAuthenticatedUser();
     user.then((user: any) => {
       this.setState({ currentUser: user.username })
-      if (props.type != "profile")
+      if (this.props.type != "profile")
         this.setState({ showCreateButton: user.signInUserSession.accessToken.payload["cognito:groups"].includes("verifiedUsers") })
     })
   }
-
   convertProfileToMapData(data: any): MapData[] {
     return data.map((dataItem) => {
       if (dataItem.location && dataItem.location.latitude && dataItem.location.longitude)
@@ -304,7 +306,7 @@ export default class MyGroups extends JCComponent<Props, State> {
         this.setState({
           data: temp,
           nextToken: json.data.groupByType.nextToken
-        }, () => { this.props.onDataload(this.convertToMapData(this.state.data)) })
+        }, async () => { this.props.onDataload(this.convertToMapData(this.state.data)) })
       }
       listGroup.then(processList).catch(processList)
     }
@@ -322,7 +324,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     console.log({ "Navigate to": this.state.openMultiple })
     this.props.navigation.push(this.state.openMultiple);
   }
-  setCanLeave(data: any): void {
+  async setCanLeave(data: any): Promise<void> {
     data.forEach((item: any) => {
       const groupMemberByUser: any = API.graphql({
         query: queries.groupMemberByUser,
@@ -340,7 +342,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     });
   }
 
-  setIsOwner(data: any): void {
+  async setIsOwner(data: any): Promise<void> {
     data.forEach((item: any) => {
       const getGroup: any = API.graphql({
         query: customQueries.getGroupForOwner,
@@ -558,6 +560,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       !this.state.eventFilter && moment(item.time).isSameOrAfter(moment.now())
   }
   render(): React.ReactNode {
+    console.log("Render MyGroups: " + this.state.type)
     if (!constants["SETTING_ISVISIBLE_" + this.state.type])
       return null
     else if (this.state.type == "course" && !this.isMemberOf("courseUser"))

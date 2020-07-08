@@ -34,7 +34,7 @@ export default class HomeScreen extends JCComponent<Props, State>{
     this.setState({ mapData: data })
   }
   render(): React.ReactNode {
-    console.log("Homepage")
+    console.log("ResourcesScreen")
     return (
 
       <Container data-testid="resources" >

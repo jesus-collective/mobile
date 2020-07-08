@@ -29,7 +29,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
   }
 
   render(): React.ReactNode {
-    console.log("Homepage")
+    console.log("AdminScreen")
     return (
 
       <Container data-testid="events">

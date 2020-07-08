@@ -10,15 +10,17 @@ export interface JCState {
 export default class JCComponent<Props = any, State extends JCState = any> extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props)
-        const user = Auth.currentAuthenticatedUser();
         this.state = this.getInitialState()
+
+    }
+    componentDidMount(): void {
+        const user = Auth.currentAuthenticatedUser();
         user.then((user) => {
             this.setState({
                 groups: user.signInUserSession.accessToken.payload["cognito:groups"]
             })
-
         })
-
+        Dimensions.addEventListener('change', () => { this.styles.updateStyles(this) })
     }
     protected getInitialState(): State {
         return { groups: null } as JCState as State;
@@ -33,9 +35,7 @@ export default class JCComponent<Props = any, State extends JCState = any> exten
     }
     groups = null
     styles = MainStyles.getInstance();
-    componentDidMount(): void {
-        Dimensions.addEventListener('change', () => { this.styles.updateStyles(this) })
-    }
+
     componentWillUnmount(): void {
         Dimensions.removeEventListener("change", () => { this.styles.updateStyles(this) });
     }
