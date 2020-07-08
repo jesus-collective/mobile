@@ -130,7 +130,7 @@ export default class HeaderJC extends JCComponent<Props, State> {
     return (
 
       <Header style={this.headerStyles.style.container}>
-        <Left>
+        <Left style={this.styles.style.headerLeft}>
           <Button style={this.headerStyles.style.leftButtons}
             transparent
             onPress={this.openDrawer}>

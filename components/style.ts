@@ -1226,6 +1226,9 @@ export default class MainStyles {
                 fontSize: 16, 
                 lineHeight: 24
             },
+            headerLeft: {
+                flex: 0
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -1778,6 +1781,9 @@ export default class MainStyles {
                 },
                 myProfileOrgTypeInput: {
                     width: '100%'
+                },
+                headerLeft: {
+                    flex: 0.3
                 },
             },
 
