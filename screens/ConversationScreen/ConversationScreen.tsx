@@ -67,12 +67,12 @@ export default class ConversationScreen extends JCComponent<Props, State>{
           createDirectMessageUser2.then(() => 
             { 
               console.log(json2); 
-              this.getDMUser(json2.data.createDirectMessageUser.id)
+              this.getNewUser(json2.data.createDirectMessageUser.id)
             }
             ).catch(() => 
               { 
                 console.log(json2); 
-                this.getDMUser(json2.data.createDirectMessageUser.id)
+                this.getNewUser(json2.data.createDirectMessageUser.id)
               }
             )
         }
@@ -104,7 +104,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
 
   }
 
-  async getDMUser(id: string): Promise<void> {
+  async getNewUser(id: string): Promise<void> {
     try {
       const json: any = await API.graphql({
         query: customQueries.getDirectMessageUser,
@@ -113,7 +113,10 @@ export default class ConversationScreen extends JCComponent<Props, State>{
       });
       if (json?.data?.getDirectMessageUser) {
         console.log({'customQueries.getDirectMessageUser': json.data.getDirectMessageUser})
-        this.setState({ data: this.state.data.concat([json.data.getDirectMessageUser]) })
+        this.setState({ data: this.state.data.concat([json.data.getDirectMessageUser]) }, ()=> {
+          const index = this.state.data.indexOf(json.data.getDirectMessageUser)
+          this.setState({ selectedRoom: index, currentRoomId: this.state.data[index].roomID })
+        })
       }
     } catch (err) {
       console.error(err)
@@ -199,7 +202,6 @@ export default class ConversationScreen extends JCComponent<Props, State>{
               {this.state.data != null ?
                 this.state.data.map((item, index) => {
                   const otherUsers = this.getOtherUsers(item)
-                  console.log(otherUsers)
                   let stringOfNames = ''
                   otherUsers.names.forEach((name,index)=> {
                     if (otherUsers.names.length === index+1) {
