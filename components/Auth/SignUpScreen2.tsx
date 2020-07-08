@@ -9,19 +9,22 @@ import * as mutations from '../../src/graphql/mutations';
 import { API, graphqlOperation } from 'aws-amplify';
 import { Auth } from 'aws-amplify';
 import JCComponent from '../../components/JCComponent/JCComponent';
+import { UserContext } from '../../screens/HomeScreen/UserContext';
 
 interface Props {
   //navigation?: any,
   authState?: string,
-  payStateChanged(): void
+  // payStateChanged(): void
 }
 export default class SignUpScreen2 extends JCComponent<Props>{
-  async makePayment(): Promise<void> {
+  static Consumer = UserContext.Consumer
+
+  async makePayment(actions): Promise<void> {
     console.log("Finish Payment")
     const user = await Auth.currentAuthenticatedUser();
     try {
       await API.graphql(graphqlOperation(mutations.updateUser, { input: { id: user['username'], hasPaidState: "Complete" } }));
-      this.props.payStateChanged()
+      actions.onPaidStateChanged()
     } catch (e) {
       console.log(e)
     }
@@ -31,15 +34,22 @@ export default class SignUpScreen2 extends JCComponent<Props>{
     // const { navigate } = this.props.navigation;
 
     return (
-      <View style={this.styles.style.signUpScreen1PaymentBody}>
-        <SignUpSidebar position="3"></SignUpSidebar>
-        <View style={{ position: "absolute", left: "35%", width: "25%", top: 100, height: "100%" }}>
-          <Text>Payment Succesful</Text>
+      <SignUpScreen2.Consumer>
+        {({ state, actions }) => {
+          return (
+            <View style={this.styles.style.signUpScreen1PaymentBody}>
+              <SignUpSidebar position="3"></SignUpSidebar>
+              <View style={{ position: "absolute", left: "35%", width: "25%", top: 100, height: "100%" }}>
+                <Text>Payment Successful</Text>
 
-          <Button color="#F0493E" title="Setup Profile" onPress={() => this.makePayment()} />
-        </View>
+                <Button color="#F0493E" title="Setup Profile" onPress={() => { this.makePayment(actions) }} />
+              </View>
 
-      </View>
+            </View>
+          )
+        }}
+
+      </SignUpScreen2.Consumer>
 
     );
 

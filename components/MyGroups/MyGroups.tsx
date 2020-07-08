@@ -560,7 +560,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       !this.state.eventFilter && moment(item.time).isSameOrAfter(moment.now())
   }
   render(): React.ReactNode {
-    console.log("Render MyGroups: " + this.state.type)
+    //    console.log("Render MyGroups: " + this.state.type)
     if (!constants["SETTING_ISVISIBLE_" + this.state.type])
       return null
     else if (this.state.type == "course" && !this.isMemberOf("courseUser"))

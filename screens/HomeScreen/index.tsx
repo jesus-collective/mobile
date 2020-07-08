@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, Component } from "react";
 import Amplify, { Analytics } from 'aws-amplify'
 import { API, graphqlOperation } from 'aws-amplify';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -47,35 +47,104 @@ const AdminScreen = lazy(() => import('../AdminScreen/AdminScreen'));
 Amplify.configure(awsconfig);
 
 const prefix = Linking.makeUrl('/');
-
+console.log({ prefix: prefix })
 const linking = {
-  prefixes: [prefix, 'https://localhost', 'exps://beta.jesuscollective.com', 'exps://localhost:19006', 'http://localhost:19006', 'https://beta.jesuscollective.com'],
+  prefixes: [prefix, 'https://localhost/', 'exps://beta.jesuscollective.com/', 'exps://localhost:19006/', 'https://localhost:19006/', 'http://localhost:19006/', 'https://beta.jesuscollective.com/'],
   config: {
     screens: {
-      HomeScreen: '/home',
-      GroupScreen: '/group/:id/:create',
-      GroupsScreen: '/groups',
-      EventScreen: '/event',
-      EventsScreen: '/events',
-      ResourceScreen: '/resource',
-      ResourcesScreen: '/resources',
-      OrganizationScreen: '/organization',
-      OrganizationsScreen: '/organizations',
-      CourseOverviewScreen: '/courseoverview',
-      CoursesScreen: '/courses',
-      CourseHomeScreen: '/course',
-      CourseDetailScreen: '/coursedetail',
-      CourseCoachingScreen: '/coursecoaching',
-      ConversationScreen: '/conversation',
-      SearchScreen: '/search',
-      ProfileScreen: '/profile',
-      ProfilesScreen: '/profiles',
-      AdminScreen: '/admin',
+      mainApp: {
+        path: "app",
+        screens: {
+          HomeScreen: 'home',
+          GroupScreen: 'group/:id/:create',
+          GroupsScreen: "groups",
+          EventScreen: 'event',
+          EventsScreen: 'events',
+          ResourceScreen: 'resource',
+          ResourcesScreen: 'resources',
+          OrganizationScreen: 'organization',
+          OrganizationsScreen: 'organizations',
+          CourseOverviewScreen: 'courseoverview',
+          CoursesScreen: 'courses',
+          CourseHomeScreen: 'course',
+          CourseDetailScreen: 'coursedetail',
+          CourseCoachingScreen: 'coursecoaching',
+          ConversationScreen: 'conversation',
+          SearchScreen: 'search',
+          ProfileScreen: 'profile',
+          ProfilesScreen: 'profiles',
+          AdminScreen: 'admin'
+        }
+      },
+      auth: {
+        path: "auth",
+        screens: {
+          Payment1: 'payment1',
+          Payment2: 'payment2',
+          Payment3: 'payment3'
+        }
+      }
+
     }
   }
 };
+const Drawer = createDrawerNavigator();
+const AuthStack = createStackNavigator();
 const Stack = createStackNavigator();
+const MainStack = createStackNavigator();
 
+
+
+class MainAuthRouter extends JCComponent {
+  static Consumer = UserContext.Consumer
+
+  render() {
+    console.log("MainAuthRouter")
+    return (
+      <MainAuthRouter.Consumer>
+        {({ state, actions }) => {
+          return (
+            <AuthStack.Navigator
+              initialRouteName='Payment3'
+              headerMode='none'
+              mode='card'
+              screenOptions={{
+                animationEnabled: false,
+                gestureEnabled: false,
+                cardOverlayEnabled: false
+              }}>
+              {/*
+   switch (state.hasPaidState) {
+                        case "Not Started":
+                          return  case "In Progress":
+                    return case "Complete":
+   return */}
+              <AuthStack.Screen
+                name="Payment1"
+                component={SignUpScreen1}
+                options={{ title: 'Jesus Collective' }} />
+              <AuthStack.Screen
+                name="Payment2"
+                component={SignUpScreen2}
+                options={{ title: 'Jesus Collective' }} />
+              <AuthStack.Screen
+                name="Payment3"
+                component={SignUpScreen3}
+                options={{ title: 'Jesus Collective' }} />
+
+            </AuthStack.Navigator>
+          )
+        }
+        }
+      </MainAuthRouter.Consumer>
+    )
+  }
+}
+class Nothing extends Component {
+  render() {
+    return null;
+  }
+}
 class MainAppRouter extends JCComponent {
   static Consumer = UserContext.Consumer
   render() {
@@ -83,116 +152,216 @@ class MainAppRouter extends JCComponent {
     return (
       <MainAppRouter.Consumer>
         {({ state, actions }) => {
-          if (state.hasCompletedPersonalProfile == "Completed")
-            return (
-              <Stack.Navigator
+          return (
+            <Stack.Navigator
 
-                initialRouteName='HomeScreen'
-                headerMode='none'
-                mode='card'
-                screenOptions={{
-                  animationEnabled: false,
-                  gestureEnabled: false,
-                  cardOverlayEnabled: false
-                }}
-              >
-                <Stack.Screen
-                  name="HomeScreen"
-                  component={HomeScreen}
-                  options={{ title: 'Jesus Collective' }}
-                />
-                <Stack.Screen
-                  name="GroupScreen"
-                  component={GroupScreen}
-                  options={{ title: 'Jesus Collective' }}
-                />
-                <Stack.Screen
-                  name="GroupsScreen"
-                  component={GroupsScreen}
-                  options={{ title: 'Jesus Collective' }}
-                />
-                <Stack.Screen
-                  name="EventScreen"
-                  component={EventScreen}
-                  options={{ title: 'Jesus Collective' }}
-                />
-                <Stack.Screen
-                  name="EventsScreen"
-                  component={EventsScreen}
-                  options={{ title: 'Jesus Collective' }}
-                />
-                <Stack.Screen
-                  name="ResourcesScreen"
-                  component={ResourcesScreen}
-                  options={{ title: 'Jesus Collective' }}
-                />
-                <Stack.Screen
-                  name="ResourceScreen"
-                  component={ResourceScreen}
-                  options={{ title: 'Jesus Collective' }}
-                />
-                <Stack.Screen
-                  name="OrganizationsScreen"
-                  component={OrganizationsScreen}
-                  options={{ title: 'Jesus Collective' }}
-                />
-                <Stack.Screen
-                  name="OrganizationScreen"
-                  component={OrganizationScreen}
-                  options={{ title: 'Jesus Collective' }}
-                />
-                <Stack.Screen
-                  name="CourseOverviewScreen"
-                  component={CourseOverviewScreen}
-                  options={{ title: 'Jesus Collective' }}
-                />
-                <Stack.Screen
-                  name="CoursesScreen"
-                  component={CoursesScreen}
-                  options={{ title: 'Jesus Collective' }}
-                />
+              initialRouteName="HomeScreen"
+              headerMode='none'
+              mode='card'
+              screenOptions={{
+                animationEnabled: false,
+                gestureEnabled: false,
+                cardOverlayEnabled: false
+              }}
+            >
+              {(state.hasPaidState == "Complete" && state.hasCompletedPersonalProfile == "Completed") ?
+                (<>
+                  <Stack.Screen
+                    name="HomeScreen"
+                    component={HomeScreen}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="GroupScreen"
+                    component={GroupScreen}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="GroupsScreen"
+                    component={GroupsScreen}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="EventScreen"
+                    component={EventScreen}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="EventsScreen"
+                    component={EventsScreen}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="ResourcesScreen"
+                    component={ResourcesScreen}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="ResourceScreen"
+                    component={ResourceScreen}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="OrganizationsScreen"
+                    component={OrganizationsScreen}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="OrganizationScreen"
+                    component={OrganizationScreen}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="CourseOverviewScreen"
+                    component={CourseOverviewScreen}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="CoursesScreen"
+                    component={CoursesScreen}
+                    options={{ title: 'Jesus Collective' }}
+                  />
 
-                <Stack.Screen
-                  name="CourseHomeScreen"
-                  component={CourseHomeScreen}
-                  options={{ title: 'Jesus Collective' }}
-                />
-
-
-                <Stack.Screen
-                  name="ConversationScreen"
-                  component={ConversationScreen}
-                  options={{ title: 'Jesus Collective' }}
-                />
+                  <Stack.Screen
+                    name="CourseHomeScreen"
+                    component={CourseHomeScreen}
+                    options={{ title: 'Jesus Collective' }}
+                  />
 
 
-                <Stack.Screen
-                  name="SearchScreen"
-                  component={SearchScreen}
-                  options={{ title: 'Jesus Collective' }}
-                />
+                  <Stack.Screen
+                    name="ConversationScreen"
+                    component={ConversationScreen}
+                    options={{ title: 'Jesus Collective' }}
+                  />
 
 
-                <Stack.Screen
-                  name="ProfileScreen"
-                  component={ProfileScreen}
-                  options={{ title: 'Jesus Collective' }}
-                />
+                  <Stack.Screen
+                    name="SearchScreen"
+                    component={SearchScreen}
+                    options={{ title: 'Jesus Collective' }}
+                  />
 
 
-                <Stack.Screen
-                  name="ProfilesScreen"
-                  component={ProfilesScreen}
-                  options={{ title: 'Jesus Collective' }}
-                />
-                <Stack.Screen
-                  name="AdminScreen"
-                  component={AdminScreen}
-                  options={{ title: 'Jesus Collective' }}
-                />
-              </Stack.Navigator>
-            );
-          else return null
+                  <Stack.Screen
+                    name="ProfileScreen"
+                    component={ProfileScreen}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+
+
+                  <Stack.Screen
+                    name="ProfilesScreen"
+                    component={ProfilesScreen}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="AdminScreen"
+                    component={AdminScreen}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                </>)
+                : (<>
+                  <Stack.Screen
+                    name="HomeScreen"
+                    component={Nothing}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="GroupScreen"
+                    component={Nothing}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="GroupsScreen"
+                    component={Nothing}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="EventScreen"
+                    component={Nothing}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="EventsScreen"
+                    component={Nothing}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="ResourcesScreen"
+                    component={Nothing}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="ResourceScreen"
+                    component={Nothing}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="OrganizationsScreen"
+                    component={Nothing}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="OrganizationScreen"
+                    component={Nothing}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="CourseOverviewScreen"
+                    component={Nothing}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="CoursesScreen"
+                    component={Nothing}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+
+                  <Stack.Screen
+                    name="CourseHomeScreen"
+                    component={Nothing}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+
+
+                  <Stack.Screen
+                    name="ConversationScreen"
+                    component={Nothing}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+
+
+                  <Stack.Screen
+                    name="SearchScreen"
+                    component={Nothing}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+
+
+                  <Stack.Screen
+                    name="ProfileScreen"
+                    component={Nothing}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+
+
+                  <Stack.Screen
+                    name="ProfilesScreen"
+                    component={Nothing}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="AdminScreen"
+                    component={Nothing}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                </>)
+              }
+            </Stack.Navigator>
+          );
+
+
         }}
       </MainAppRouter.Consumer>
     )
@@ -200,16 +369,7 @@ class MainAppRouter extends JCComponent {
 
 }
 
-function Nothing() {
-  return <Text></Text>
-}
-const Drawer = createDrawerNavigator();
-
-function HomeScreenRouter(props: Props): JSX.Element {
-
-  return <HomeScreenRouterImpl {...props} />;
-}
-class HomeScreenRouterImpl extends JCComponent<Props, State> {
+class HomeScreenRouter extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
@@ -289,11 +449,9 @@ class HomeScreenRouterImpl extends JCComponent<Props, State> {
     console.log("checkIfPaid")
     if (this.state.userExists) {
       const handleGetUser = (getUser) => {
-        console.log(getUser)
         if (getUser.data.getUser.hasPaidState == null)
           this.setState({ hasPaidState: "Complete" })
         else {
-          console.log(getUser.data.getUser.hasPaidState)
           this.setState({ hasPaidState: getUser.data.getUser.hasPaidState })
         }
       }
@@ -312,25 +470,31 @@ class HomeScreenRouterImpl extends JCComponent<Props, State> {
     }
   }
   onPaidStateChanged(): void {
-    console.log("onPaidStateChanged")
+    console.debug("onPaidStateChanged")
     this.ensureUserExists()
     this.checkIfPaid()
   }
-  onProfileComplete(): void {
-    console.log("onProfileComplete")
-    this.checkIfCompletedProfile()
-  }
-
+  //  onProfileComplete(): void {
+  //    console.debug("onProfileComplete")
+  //    this.checkIfCompletedProfile()
+  //  }
   async checkIfCompletedProfile(): Promise<void> {
-    console.log("checkIfCompletedProfile")
-    console.log({ user: this.state.userExists, hasPaidState: this.state.hasPaidState })
+    console.debug("checkIfCompletedProfile")
+    console.debug({ user: this.state.userExists, hasPaidState: this.state.hasPaidState })
     if (this.state.userExists && this.state.hasPaidState == "Complete") {
       const handleUser = (getUser) => {
         const response = Validate.Profile(getUser.data.getUser)
-        console.log({ checkIfCompletedProfileResult: response.result })
+        console.debug({ checkIfCompletedProfileResult: response.result })
         if (response.result && this.state.hasCompletedPersonalProfile != "Completed")
           this.setState({ hasCompletedPersonalProfile: "Completed" }, () => {
-            RootNavigation.navigate('mainApp', { screen: 'HomeScreen' });
+            //TODO THIS IS WRONG ONLY DO THIS FROM 
+            console.log(RootNavigation.navigationRef.current.getRootState())
+            if (RootNavigation.navigationRef.current.getCurrentRoute().name == "Payment3") {
+              console.log("Navigate to Homescreen")
+              RootNavigation.navigate('mainApp', { screen: 'HomeScreen' });
+            }
+
+
           })
         else if (!response.result && this.state.hasCompletedPersonalProfile != "Incomplete")
           this.setState({ hasCompletedPersonalProfile: "Incomplete" })
@@ -353,41 +517,39 @@ class HomeScreenRouterImpl extends JCComponent<Props, State> {
     console.log("User has signed in")
     console.log({ "Paid state": this.state.hasPaidState })
     console.log({ "Profile state": this.state.hasCompletedPersonalProfile })
-    if (this.state.hasPaidState === "Loading") {
-      return <Suspense fallback={this.renderFallback()}></Suspense>
-    }
-    else if (this.state.hasPaidState === "Not Started") {
-      return (<Suspense fallback={this.renderFallback()}><SignUpScreen1 payStateChanged={() => { this.onPaidStateChanged() }} /></Suspense>)
-      //  return <SignUpScreen2 />
-    }
-    else if (this.state.hasPaidState === "In Progress") {
-      return (<Suspense fallback={this.renderFallback()}><SignUpScreen2 payStateChanged={() => { this.onPaidStateChanged() }} /></Suspense>)
-      //  return <SignUpScreen2 />
-    }
-    else if (this.state.hasPaidState === "Complete") {
-      trackUserId();
-      console.log(this.state.hasCompletedPersonalProfile)
-      return (
-        <HomeScreenRouterImpl.Provider value={{
-          state: {
-            ...this.state
-          }, actions: {
-            setHasCompletedPersonalProfile: this.updateHasCompletedPersonalProfile
-          }
-        }}>
-          <Drawer.Navigator openByDefault={false} drawerContent={(props) => { return <SideBar {...props}></SideBar > }}
-          >
-            {this.state.hasCompletedPersonalProfile == "Unknown" ? <Drawer.Screen name="unknown" component={Nothing}></Drawer.Screen> : null}
-            < Drawer.Screen name="app" component={SignUpScreen3} ></Drawer.Screen >
-            <Drawer.Screen name="mainApp" component={MainAppRouter} />
+    trackUserId();
+    return (
+      <HomeScreenRouter.Provider value={{
+        state: {
+          ...this.state
+        }, actions: {
+          updateHasCompletedPersonalProfile: this.updateHasCompletedPersonalProfile,
+          onPaidStateChanged: this.onPaidStateChanged
+        }
+        //openByDefault={false} drawerContent={(props) => { return <SideBar {...props}></SideBar > }}
+      }}>
+        <MainStack.Navigator
+          initialRouteName='auth'
+          headerMode='none'
+          mode='card'
+          screenOptions={{
+            animationEnabled: false,
+            gestureEnabled: false,
+            cardOverlayEnabled: false
+          }} >
 
-          </Drawer.Navigator >
-        </HomeScreenRouterImpl.Provider>
-      )
+          <MainStack.Screen
+            name="auth"
+            component={MainAuthRouter}
+            options={{ title: 'Jesus Collective' }} />
+          <MainStack.Screen
+            name="mainApp"
+            component={MainAppRouter}
+            options={{ title: 'Jesus Collective' }} />
 
-    }
-    else
-      return (<Text>Payment Issue - Unknown State</Text>)
+        </MainStack.Navigator >
+      </HomeScreenRouter.Provider>
+    )
   }
 }
 
@@ -419,8 +581,6 @@ async function trackUserId() {
 
 interface Props {
   authState?: any;
-  navigation?: any
-  route?: any
 
 }
 interface State extends JCState {
@@ -478,7 +638,7 @@ function Main(props: any) {
     const restoreState = async () => {
       try {
         const initialUrl = await Linking.getInitialURL();
-
+        console.log({ initialUrl: initialUrl })
         if (Platform.OS !== 'web' && initialUrl == null) {
           // Only restore state if there's no deep link and we're not on web
           const savedStateString = await AsyncStorage.getItem(PERSISTENCE_KEY);
@@ -501,13 +661,16 @@ function Main(props: any) {
   if (!isReady) {
     return null;
   }
+  console.log({ initialState: initialState })
   return (
     <NavigationContainer
       ref={navigationRef}
       initialState={initialState}
       linking={linking}
-      onStateChange={(state) =>
+      onStateChange={(state) => {
+        console.log({ persistencestate: state })
         AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))
+      }
       }
     >
       <HomeScreenRouter authState={props.authState}></HomeScreenRouter>
