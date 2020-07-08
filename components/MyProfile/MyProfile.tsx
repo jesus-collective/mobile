@@ -23,6 +23,7 @@ import { constants } from '../../src/constants'
 import JCComponent, { JCState } from '../JCComponent/JCComponent';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { MapData } from 'components/MyGroups/MyGroups';
+import { TextInput } from 'react-native-gesture-handler';
 
 Amplify.configure(awsconfig);
 
@@ -43,7 +44,8 @@ interface State extends JCState {
   validationText: any
   mapVisible: any
   // mapCoord: any
-  isEditable: boolean, 
+  isEditable: boolean
+  showAccountSettings: boolean
   editMode: boolean
   mapData: MapData[]
   initCenter: any
@@ -60,6 +62,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       interestsArray: [],
       profileImage: "",
       validationText: null,
+      showAccountSettings: false,
       mapVisible: false,
       //  mapCoord: { latitude: 0, longitude: 0 },
       isEditable: false,
@@ -169,7 +172,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
         console.log({ "updateUser:": updateUser })
         if (this.props.finalizeProfile)
           this.props.finalizeProfile()
-        else 
+        else
           this.setState({ editMode: false })
       } catch (e) {
         console.log(e)
@@ -301,7 +304,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
   }
   handleDeleteInterest(event): void {
     const remainingInterests = this.state.interestsArray.filter(item => item !== event)
-    this.setState({ interestsArray: remainingInterests },
+    this.setState({ interestsArray: remainingInterests.length === 0 ? null : remainingInterests },
       () => {
         const updateData = { ...this.state.UserDetails }
         updateData['interests'] = this.state.interestsArray
@@ -346,7 +349,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                     buttonType={ButtonTypes.SolidRightMargin}
                     onPress={() => { this.finalizeProfile() }}>Save Profile</JCButton> : null}
                   <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.logout()}>Logout</JCButton>
-                  {this.props.loadId && this.state.editMode ? <JCButton buttonType={ButtonTypes.SolidProfileDelete} onPress={() => this.deleteUser()}>Delete</JCButton> : null}
+                  {this.props.loadId && this.state.showAccountSettings ? <JCButton buttonType={ButtonTypes.SolidProfileDelete} onPress={() => this.deleteUser()}>Delete</JCButton> : null}
                 </View>
                 : null
               }
@@ -372,8 +375,6 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   </View>
                   : null
                 }
-
-
                 {/*<Text style={this.styles.style.fontFormProfileImageText}>Upload a picture of minimum 500px wide. Maximum size is 700kb.</Text>*/}
               </View>
               <View style={this.styles.style.myProfilePersonalInfoWrapper}>
@@ -384,7 +385,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 }
 
                 {this.state.isEditable && this.state.editMode ?
-                  <Text style={this.styles.style.fontFormSmall}><Text style={this.styles.style.fontFormMandatory}>*</Text>One sentence about me</Text>
+                  <Text style={this.styles.style.fontFormSmall}>One sentence about me</Text>
                   : null
                 }
                 <EditableText onChange={(e) => { this.handleInputChange(e, "aboutMeShort") }}
@@ -397,20 +398,20 @@ class MyProfileImpl extends JCComponent<Props, State> {
 
                 <View style={this.styles.style.myProfileCoordinates}>
                   <Text style={this.styles.style.fontFormSmallDarkGreyCoordinates}><Image style={{ width: "22px", height: "22px", top: 6, marginRight: 5 }} source={require('../../assets/svg/pin 2.svg')}></Image>{this.state.UserDetails.location?.geocodeFull ? this.state.UserDetails.location.geocodeFull : "Location not defined"}</Text>
-                  {this.state.isEditable && !this.state.editMode ? <JCButton buttonType={ButtonTypes.EditButton} onPress={() => this.setState({ editMode: true })}>Edit Profile</JCButton> : null}
+                  {this.state.isEditable ? <JCButton buttonType={ButtonTypes.EditButton} onPress={() => this.setState({ editMode: !this.state.editMode, showAccountSettings: false })}>{this.state.editMode ? 'View Profile' : 'Edit Profile'}</JCButton> : null}
                 </View>
                 <Text style={this.styles.style.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px", top: 3, marginRight: 5 }} source={require('../../assets/svg/calendar.svg')}></Image>{this.state.UserDetails.joined ? moment(this.state.UserDetails.joined).format('MMMM Do YYYY') : "Join date unknown"}</Text>
                 <Text style={this.styles.style.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px", top: 3, marginRight: 5 }} source={require('../../assets/svg/church.svg')}></Image>{this.state.UserDetails.orgName ? this.state.UserDetails.orgName : "No Organization Name"}</Text>
-                {!this.state.isEditable && this.state.editMode ?
+                {!this.state.isEditable ?
                   <Button bordered style={this.styles.style.connectWithSliderButton} onPress={() => { this.openConversation(this.state.UserDetails.id, this.state.UserDetails.given_name + " " + this.state.UserDetails.family_name) }}><Text style={this.styles.style.fontStartConversation}>Start Conversation</Text></Button>
                   : null}
 
                 {this.state.isEditable && this.state.UserDetails.profileState !== "Incomplete" && constants['SETTING_ISVISIBLE_PROFILE_MESSAGES'] ?
-                  <Text><JCButton data-testid="profile-setmap" buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { this.props.navigation.push("ConversationScreen", { initialUserID: null, initialUserName: null }) }}>Messages</JCButton></Text>
+                  <View><JCButton data-testid="profile-setmap" buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { this.props.navigation.push("ConversationScreen", { initialUserID: null, initialUserName: null }) }}>Messages</JCButton></View>
                   : null
                 }
-                {this.state.isEditable && this.state.editMode && constants['SETTING_ISVISIBLE_PROFILE_ACCOUNTSETTINGS'] ?
-                  <Text><JCButton data-testid="profile-setmap" buttonType={ButtonTypes.TransparentNoPadding} onPress={() => { null }}>Account Settings</JCButton></Text>
+                {this.state.isEditable && this.state.UserDetails.profileState !== "Incomplete" && constants['SETTING_ISVISIBLE_PROFILE_ACCOUNTSETTINGS'] ?
+                  <View><JCButton data-testid="profile-setmap" buttonType={ButtonTypes.TransparentNoPadding} onPress={() => this.setState({ showAccountSettings: !this.state.showAccountSettings, editMode: false })}>Account Settings</JCButton></View>
                   : null
                 }
 
@@ -480,7 +481,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               }
             </View>
 
-            <View style={this.styles.style.profileScreenRightCard}>
+            {!this.state.showAccountSettings ? <View style={this.styles.style.profileScreenRightCard}>
               <View style={{ width: '100%' }}>
                 {this.renderMap()}
               </View>
@@ -488,7 +489,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 <Text style={this.styles.style.fontMyProfileLeftTop}>Tell us more about you</Text>
                 : null
               }
-              <Text style={this.styles.style.myprofileAboutMe}>About me</Text>
+
+              {this.state.isEditable && this.state.editMode ?
+                <Text style={this.styles.style.myprofileAboutMe}><Text style={this.styles.style.fontFormMandatory}>*</Text>About me</Text>
+                : <Text style={this.styles.style.myprofileAboutMe}>About me</Text>
+              }
 
               <EditableText onChange={(e) => { this.handleInputChange(e, "aboutMeLong") }}
                 placeholder="type here" multiline={true}
@@ -498,7 +503,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 value={this.state.UserDetails.aboutMeLong} isEditable={this.state.isEditable && this.state.editMode}></EditableText>
 
               {this.state.isEditable && this.state.editMode ?
-                <Text style={this.styles.style.fontBold}>My Interests</Text>
+                <Text style={this.styles.style.fontBold}><Text style={this.styles.style.fontFormMandatory}>*</Text>My Interests</Text>
                 : <Text style={this.styles.style.myprofileAboutMe}>Interests</Text>
               }
 
@@ -510,7 +515,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                         onValueChange={(itemValue) => this.setState({ interest: itemValue })}
                         selectedValue={this.state.interest}
                       >
-                        <Picker.Item label={'None Selected'} value={null} />
+                        <Picker.Item label={'None Selected'} value={''} />
                         {interests.map((item, index) => {
                           return (<Picker.Item key={index} label={item} value={item} />)
                         })}
@@ -552,7 +557,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 </View>
               }
               <View>
-                <Label style={this.styles.style.fontFormSmall}>Current Role</Label>
+                <Label style={this.styles.style.fontFormSmall}><Text style={this.styles.style.fontFormMandatory}>{this.state.isEditable && this.state.editMode ? '*' : ''}</Text>Current Role</Label>
                 <EditableText onChange={(e) => { this.handleInputChange(e, "currentRole") }}
                   multiline={false}
                   data-testid="profile-currentRole"
@@ -562,7 +567,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               </View>
               <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text>
               {this.state.isEditable && this.state.editMode ?
-                <Text style={this.styles.style.fontFormSmall}>Describe your current scope</Text>
+                <Text style={this.styles.style.fontFormSmall}><Text style={this.styles.style.fontFormMandatory}>*</Text>Describe your current scope</Text>
                 : <Text style={this.styles.style.fontFormSmall}>Current scope</Text>
               }
               <EditableText onChange={(e) => { this.handleInputChange(e, "currentScope") }}
@@ -577,7 +582,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text>
               {this.state.isEditable && this.state.editMode ?
                 <Text style={this.styles.style.fontFormSmall}>Identify your personality type indicator</Text>
-                : <Text style={this.styles.style.fontFormSmall}>Personality type indicator</Text>
+                : this.state.UserDetails.personality ? <Text style={this.styles.style.fontFormSmall}>Personality type indicator</Text> : null
               }
               <EditableText onChange={(e) => { this.handleInputChange(e, "personality") }}
                 multiline={true}
@@ -589,7 +594,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
 
               <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text>
               {this.state.isEditable && this.state.editMode ?
-                <Text style={this.styles.style.fontBold}>Tell us more about your organization</Text>
+                <Text style={this.styles.style.fontBold}><Text style={this.styles.style.fontFormMandatory}>*</Text>Tell us more about your organization</Text>
                 : <Text style={this.styles.style.fontBold}>Organization Info</Text>
               }
               <View>
@@ -632,7 +637,6 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 }
               </View>
               <View style={{ marginTop: 15 }}>
-                {!this.state.isEditable && this.state.editMode ? <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text> : null}
                 <Label style={this.styles.style.fontFormSmall}>{this.state.UserDetails.orgType === "Home School" ? "Number of kids in home school" : this.orgsWithEmployees.includes(this.state.UserDetails.orgType) ? "How many employees are there in the organization?" : "Size of the organization"}</Label>
                 {this.state.isEditable && this.state.editMode ? this.state.UserDetails.orgType === "Home School" || this.state.UserDetails.orgType === "Home Group/Home Church" || this.state.UserDetails.orgType === "Church Plant" ?
                   <View>
@@ -665,8 +669,10 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 }
               </View>
 
-              <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text>
-              <Text style={this.styles.style.fontFormSmall}>Description of church or ministry organization</Text>
+              {this.state.UserDetails.orgDescription || this.state.editMode ? <View>
+                <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text>
+                <Text style={this.styles.style.fontFormSmall}>Description of church or ministry organization</Text>
+              </View> : null}
               <EditableText onChange={(e) => { this.handleInputChange(e, "orgDescription") }}
                 multiline={true}
                 data-testid="profile-orgDescription"
@@ -674,13 +680,13 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 placeholder="Type here."
                 inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
                 value={this.state.UserDetails.orgDescription} isEditable={this.state.isEditable && this.state.editMode}></EditableText>
-
-
             </View>
+              : <View style={this.styles.style.profileScreenRightCard}>
+
+              </View>}
           </Form>
         </Content>
         : null)
-
     )
   }
 }

@@ -6,8 +6,8 @@ type ValidationResult = {
 }
 export default class Validate {
     static Profile(data: any): ValidationResult {
-        if (data.aboutMeShort == null || data.aboutMeShort == "")
-            return { result: false, validationError: "Profile must have - short about me" }
+        //if (data.aboutMeShort == null || data.aboutMeShort == "")
+        //    return { result: false, validationError: "Profile must have - short about me" }
         if (data.aboutMeLong == null || data.aboutMeLong == "")
             return { result: false, validationError: "Profile must have - long about me" }
         if (data.given_name == null || data.given_name == "")
@@ -28,14 +28,14 @@ export default class Validate {
             return { result: false, validationError: "Profile must have - postalcode" }
         if (data.country == null || data.country == "")
             return { result: false, validationError: "Profile must have - country" }
-        //   if (data.interests == null || data.interests == "")
-        //       return { result: false, validationError: "Profile must have - interests" }
+        if (data.interests == null)
+            return { result: false, validationError: "Profile must have - interests" }
         if (data.currentRole == null || data.currentRole == "")
             return { result: false, validationError: "Profile must have - current role" }
         if (data.currentScope == null || data.currentScope == "")
             return { result: false, validationError: "Profile must have - current scope" }
-        if (data.personality == null || data.personality == "")
-            return { result: false, validationError: "Profile must have - personality" }
+        //if (data.personality == null || data.personality == "")
+        //    return { result: false, validationError: "Profile must have - personality" }
         if (data.orgName == null || data.orgName == "")
             return { result: false, validationError: "Profile must have - organization name" }
         if (data.orgType == null || data.orgType == "" || data.orgType == "None")
@@ -44,8 +44,8 @@ export default class Validate {
             return { result: false, validationError: "Profile must have - organization size" }
         if (data.orgDescription == null || data.orgDescription == "")
             return { result: false, validationError: "Profile must have - organization description" }
-        if (data.profileImage == null || data.profileImage == "")
-            return { result: false, validationError: "Profile must have - profile image" }
+        //if (data.profileImage == null || data.profileImage == "")
+        //    return { result: false, validationError: "Profile must have - profile image" }
         if (data.location == null)
             return { result: false, validationError: "Profile must have - public location" }
 

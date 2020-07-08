@@ -1,44 +1,41 @@
-export const interests = 
+export const interests =
     [
         "Children's Ministry",
         "Discipleship",
+        "Equipping",
         "Evangelism",
+        "Hermeneutics",
+        "Inspiration of Scripture",
+        "Jesus-Centred Theology",
         "Kids and Youth Curriculum",
-        "Leadership Development",
+        "Leadership Formation",
         "Music",
+        "Nones/Dones",
+        "Post-Christian Pastoring",
+        "Small Groups Ministry",
         "Spiritual Disciplines",
         "Teaching/Preaching",
         "Theology",
         "Training",
         "Volunteering",
         "Worship Experience",
-        "Youth Ministry",
         "Young Adults Ministry",
-        "Nones/Dones",
-        "Small Groups Ministry",
-        "Jesus-Centred Theology",
-        "Post-Chrsitian Pastoring", 
-        "Leadership Formation",
-        "Equipping",
-        "Spiritual Practices", 
-        "Hermeneutics", 
-        "Inspiration of Scripture", 
-        "Share the Gospel" 
+        "Youth Ministry",
     ]
 
-    export const orgTypes = 
+export const orgTypes =
     [
-        "Church", 
+        "Church",
         "Church Plant",
         "Home School",
         "Youth Ministry",
-        "Kids Ministry", 
+        "Kids Ministry",
         "Home Group/Home Church",
-        "Academic Institution", 
+        "Academic Institution",
         "Compassion/Mission"
     ]
 
-    export const orgSizeBig = 
+export const orgSizeBig =
     [
         "1-50",
         "51-100",
@@ -48,7 +45,7 @@ export const interests =
         "250+"
     ]
 
-    export const orgSizeSmall = 
+export const orgSizeSmall =
     [
         "1-5",
         "6-10",

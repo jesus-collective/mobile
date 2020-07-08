@@ -116,7 +116,7 @@ class MyMapImpl extends JCComponent<Props, State> {
           <View>
             <Text style={this.styles.style.fontConnectWithName}>{this.state.selectedPlace.mapItem.user.given_name} {this.state.selectedPlace.mapItem.user.family_name}</Text>
             <Text style={this.styles.style.myMapConversationCardRole}>{this.state.selectedPlace.mapItem.user.currentRole}</Text>
-            <Text style={this.styles.style.myMapConversationCardAboutMe}>{this.state.selectedPlace.mapItem.user.aboutMeShort}</Text>
+            {this.state.selectedPlace.mapItem.user.aboutMeShort ? <Text style={this.styles.style.myMapConversationCardAboutMe}>{this.state.selectedPlace.mapItem.user.aboutMeShort}</Text> : null}
             <View style={{ flex: 1, flexDirection: 'row', paddingTop: 10 }}>
               <JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.openConversation(this.state.selectedPlace.mapItem.user.id, this.state.selectedPlace.mapItem.user.given_name + " " + this.state.selectedPlace.mapItem.user.family_name) }}>Start Conversation</JCButton>
               <JCButton buttonType={ButtonTypes.TransparentBoldOrange} onPress={() => { this.showProfile(this.state.selectedPlace.mapItem.user.id) }}>View Profile</JCButton>
