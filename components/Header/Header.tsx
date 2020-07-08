@@ -10,6 +10,7 @@ import HeaderStyles from '../Header/style';
 import JCComponent, { JCState } from '../JCComponent/JCComponent';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem'
+import Divider from '@material-ui/core/Divider';
 
 interface Props {
   navigation: any
@@ -23,9 +24,9 @@ interface State extends JCState {
   chevronStyle: any
 }
 
-const chevronStyle1 = { paddingLeft: 8, paddingBottom: 1 }
+const chevronStyle1 = { paddingLeft: 8, paddingTop: 2 }
 
-const chevronStyle2 = { paddingLeft: 8, paddingBottom: 1, display: 'none' }
+const chevronStyle2 = { paddingLeft: 8, paddingTop: 2, display: 'none' }
 
 const resourcesStyle1 = {
   backgroundColor: 'transparent',
@@ -53,7 +54,7 @@ export default class HeaderJC extends JCComponent<Props, State> {
     this.state = {
       ...super.getInitialState(),
       resourcesDropdown: null,
-      resourcesStyle: Dimensions.get('window').width > 720 ? resourcesStyle1 : resourcesStyle2,
+      resourcesStyle: resourcesStyle1,
       chevronStyle: Dimensions.get('window').width > 720 ? chevronStyle1 : chevronStyle2
     }
   }
@@ -179,8 +180,10 @@ export default class HeaderJC extends JCComponent<Props, State> {
                 onMouseLeave={() => this.setState({ resourcesStyle: resourcesStyle1 })}
                 style={this.state.resourcesStyle}
               >
-                <Text style={this.headerStyles.style.centerMenuButtonsTextResources}>Resources</Text>
-                <img src={require('../../assets/svg/dropdown.svg')} style={this.state.chevronStyle}></img>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
+                  <Text style={this.headerStyles.style.centerMenuButtonsTextResources}>Resources</Text>
+                  <img src={require('../../assets/svg/dropdown.svg')} style={this.state.chevronStyle}></img>
+                </div>
               </button> : null
           }
           {
@@ -192,8 +195,9 @@ export default class HeaderJC extends JCComponent<Props, State> {
                 onClose={this.handleResourcesDropdownClose}
                 style={{ marginTop: 40 }}
               >
-                <MenuItem onClick={this.openResources}><Text style={this.headerStyles.style.dropdownText}>Overview</Text></MenuItem>
-                <MenuItem onClick={this.openKids}><Text style={this.headerStyles.style.dropdownText}>Kids Curriculum</Text></MenuItem>
+                <MenuItem onClick={this.openResources}><Text style={this.headerStyles.style.dropdownText}>All Resources</Text></MenuItem>
+                <Divider style={{backgroundColor: 'black'}}/>
+                <MenuItem onClick={this.openKids}><Text style={this.headerStyles.style.dropdownText}>Kids &amp; Youth Curriculum</Text></MenuItem>
               </Menu> : null
           }
           {
