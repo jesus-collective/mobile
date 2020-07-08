@@ -543,7 +543,6 @@ class HomeScreenRouter extends JCComponent<Props, State> {
           updateHasCompletedPersonalProfile: this.updateHasCompletedPersonalProfile,
           onPaidStateChanged: this.onPaidStateChanged
         }
-
       }}>
         <MainStack.Navigator
           initialRouteName='auth'
