@@ -311,7 +311,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       listGroup.then(processList).catch(processList)
     }
   }
-  openSingle(id: any): void {
+  openSingle(id: string): void {
     console.log({ "Navigate to": this.state.openSingle })
     // console.log(id)
     this.props.navigation.push(this.state.openSingle, { id: id, create: false })
@@ -359,21 +359,21 @@ export default class MyGroups extends JCComponent<Props, State> {
       });
     });
   }
-  canLeave(id: any): boolean {
+  canLeave(id: string): boolean {
     const test = this.state.canLeave.filter((elem) => elem === id)
     if (test.length > 0)
       return true
     else
       return false
   }
-  canJoin(id: any): boolean {
+  canJoin(id: string): boolean {
     const test = this.state.canLeave.filter((elem) => elem === id)
     if (test.length > 0)
       return false
     else
       return true
   }
-  isOwner(id: any): boolean {
+  isOwner(id: string): boolean {
     const test = this.state.isOwner.filter((elem) => elem === id)
     if (test.length > 0)
       return true
@@ -402,7 +402,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     this.setState({ canLeave: this.state.canLeave.concat([group.id]) })
     this.renderByType(group, groupType)
   }
-  openConversation(initialUser: any, name: string): void {
+  openConversation(initialUser: string, name: string): void {
     console.log("Navigate to conversationScreen")
     this.props.navigation.push("ConversationScreen", { initialUserID: initialUser, initialUserName: name });
   }

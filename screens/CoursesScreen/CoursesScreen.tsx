@@ -2,9 +2,7 @@
 import { Container, Content } from 'native-base';
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
-import MyConversations from '../../components/MyConversations/MyConversations';
 import MyGroups, { MapData } from '../../components/MyGroups/MyGroups';
-import MyPeople from '../../components/MyPeople/MyPeople';
 import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
 
 interface Props {

@@ -395,7 +395,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
     temp[field] = value
     this.setState({ data: temp })
   }
-  showProfile(id: any): void {
+  showProfile(id: string): void {
     console.log("Navigate to profileScreen")
     this.props.navigation.push("ProfileScreen", { id: id, create: false });
   }

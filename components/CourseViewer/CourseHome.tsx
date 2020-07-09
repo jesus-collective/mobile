@@ -31,7 +31,7 @@ class CourseHomeImpl extends JCComponent<Props>{
     return (
 
       <CourseHomeImpl.Consumer>
-        {({ state, actions }) => {
+        {({ state }) => {
           return (
             state.data && state.currentScreen == "Home" ?
               <StyleProvider style={getTheme()}>

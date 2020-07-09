@@ -1,5 +1,4 @@
 import React from 'react';
-import { Input } from 'native-base';
 import { Text, TextInput } from 'react-native'
 import JCComponent, { JCState } from '../JCComponent/JCComponent';
 
@@ -39,7 +38,7 @@ export default class EditableText extends JCComponent<Props, State> {
 
     componentDidUpdate(prevProps: Props): void {
         if (this.props.isEditable !== prevProps.isEditable) {
-            this.setState({isEditable: this.props.isEditable})
+            this.setState({ isEditable: this.props.isEditable })
         }
     }
 
