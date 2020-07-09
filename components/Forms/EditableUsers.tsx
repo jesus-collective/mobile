@@ -4,7 +4,7 @@ import * as queries from '../../src/graphql/queries';
 import { API } from 'aws-amplify';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import { Text } from 'react-native'
-import JCComponent, { JCState } from '../JCComponent/JCComponent';
+import JCComponent from '../JCComponent/JCComponent';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 
 interface Props {
@@ -24,10 +24,7 @@ interface UserProps {
     children: any
     showProfileImages: boolean
 }
-interface UserState {
-
-}
-class UserChip extends Component<UserProps, UserState>{
+class UserChip extends Component<UserProps>{
     constructor(props: UserProps) {
         super(props);
     }
