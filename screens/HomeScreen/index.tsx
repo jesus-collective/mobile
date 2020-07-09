@@ -55,25 +55,30 @@ const linking = {
       mainApp: {
         path: "app",
         screens: {
-          HomeScreen: 'home',
-          GroupScreen: 'group/:id/:create',
-          GroupsScreen: "groups",
-          EventScreen: 'event',
-          EventsScreen: 'events',
-          ResourceScreen: 'resource',
-          ResourcesScreen: 'resources',
-          OrganizationScreen: 'organization',
-          OrganizationsScreen: 'organizations',
-          CourseOverviewScreen: 'courseoverview',
-          CoursesScreen: 'courses',
-          CourseHomeScreen: 'course',
-          CourseDetailScreen: 'coursedetail',
-          CourseCoachingScreen: 'coursecoaching',
-          ConversationScreen: 'conversation',
-          SearchScreen: 'search',
-          ProfileScreen: 'profile',
-          ProfilesScreen: 'profiles',
-          AdminScreen: 'admin'
+          mainDrawer: {
+            path: "",
+            screens: {
+              HomeScreen: 'home',
+              GroupScreen: 'group/:id/:create',
+              GroupsScreen: "groups",
+              EventScreen: 'event',
+              EventsScreen: 'events',
+              ResourceScreen: 'resource',
+              ResourcesScreen: 'resources',
+              OrganizationScreen: 'organization',
+              OrganizationsScreen: 'organizations',
+              CourseOverviewScreen: 'courseoverview',
+              CoursesScreen: 'courses',
+              CourseHomeScreen: 'course',
+              CourseDetailScreen: 'coursedetail',
+              CourseCoachingScreen: 'coursecoaching',
+              ConversationScreen: 'conversation',
+              SearchScreen: 'search',
+              ProfileScreen: 'profile',
+              ProfilesScreen: 'profiles',
+              AdminScreen: 'admin'
+            }
+          }
         }
       },
       auth: {
@@ -84,7 +89,6 @@ const linking = {
           Payment3: 'payment3'
         }
       }
-
     }
   }
 };
@@ -143,6 +147,19 @@ class MainAuthRouter extends JCComponent {
 class Nothing extends Component {
   render() {
     return null;
+  }
+}
+class MainDrawerRouter extends JCComponent {
+  render() {
+    return (
+      <Drawer.Navigator
+        openByDefault={false} drawerContent={(props) => { return <SideBar {...props}></SideBar > }}
+      >
+        <Drawer.Screen name="mainDrawer" component={MainAppRouter}
+          options={{ title: 'Jesus Collective' }}
+        ></Drawer.Screen>
+      </Drawer.Navigator>
+    )
   }
 }
 class MainAppRouter extends JCComponent {
@@ -491,7 +508,7 @@ class HomeScreenRouter extends JCComponent<Props, State> {
             console.log(RootNavigation.navigationRef.current.getRootState())
             if (RootNavigation.navigationRef.current.getCurrentRoute().name == "Payment3") {
               console.log("Navigate to Homescreen")
-              RootNavigation.navigate('mainApp', { screen: 'HomeScreen' });
+              RootNavigation.navigate('mainApp', { screen: 'mainDrawer', params: { screen: 'HomeScreen' } });
             }
 
 
@@ -526,7 +543,7 @@ class HomeScreenRouter extends JCComponent<Props, State> {
           updateHasCompletedPersonalProfile: this.updateHasCompletedPersonalProfile,
           onPaidStateChanged: this.onPaidStateChanged
         }
-        //openByDefault={false} drawerContent={(props) => { return <SideBar {...props}></SideBar > }}
+
       }}>
         <MainStack.Navigator
           initialRouteName='auth'
@@ -544,7 +561,7 @@ class HomeScreenRouter extends JCComponent<Props, State> {
             options={{ title: 'Jesus Collective' }} />
           <MainStack.Screen
             name="mainApp"
-            component={MainAppRouter}
+            component={MainDrawerRouter}
             options={{ title: 'Jesus Collective' }} />
 
         </MainStack.Navigator >
