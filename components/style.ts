@@ -1186,7 +1186,7 @@ export default class MainStyles {
                 alignSelf: "flex-start",
             },
             myprofilePickerContainer: {
-                flex: 1,
+                flexGrow: 0,
                 flexDirection: 'column',
                 alignItems: 'center',
             },
@@ -1197,6 +1197,7 @@ export default class MainStyles {
                 flex: 1,
                 flexDirection: 'row',
                 flexWrap: 'wrap',
+                alignContent: 'flex-start',
                 top: 20,
             },
             myprofileMyRoleContainer: {
@@ -1208,7 +1209,7 @@ export default class MainStyles {
                 width: "100%",
                 alignItems: "flex-start",
                 marginTop: 5,
-                flexGrow: 0.4
+                flexGrow: 0.5
             },
             myprofilePicker: {
                 height: 45,

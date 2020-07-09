@@ -641,7 +641,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   <View style={this.styles.style.myProfileOrgView}>
                     <Picker style={this.styles.style.myprofilePicker}
                       onValueChange={(itemValue) => { this.handleInputChange(itemValue, "orgType") }}
-                      selectedValue={orgTypes.includes(this.state.UserDetails.orgType) || this.state.UserDetails.orgType === 'None' ? this.state.UserDetails.orgType : this.state.UserDetails.orgType === null ? 'None' : ""}
+                      selectedValue={orgTypes.includes(this.state.UserDetails.orgType) ? this.state.UserDetails.orgType : this.state.UserDetails.orgType === null || this.state.UserDetails.orgType === 'None' ? 'None' : ""}
                     >
                       <Picker.Item label={'None Selected'} value={'None'} />
                       {orgTypes.map((item, index) => {
@@ -649,7 +649,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       })}
                       <Picker.Item label={"Other"} value={""} />
                     </Picker>
-                    {this.state.UserDetails.orgType === "" || (!orgTypes.includes(this.state.UserDetails.orgType) && this.state.UserDetails.orgType !== "None") ?
+                    {this.state.UserDetails.orgType === "" || (!orgTypes.includes(this.state.UserDetails.orgType) && this.state.UserDetails.orgType !== "None" && this.state.UserDetails.orgType !== null) ?
                       <EditableText onChange={(e) => { this.handleInputChange(e, "orgType") }}
                         multiline={false}
                         textStyle={this.styles.style.fontFormSmallDarkGrey}
