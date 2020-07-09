@@ -276,6 +276,8 @@ type DirectMessage
 {
   id: ID!
   content: String!
+  attachment: String
+  attachmentName: String
   when: String!
   userId: ID!
   author: User @connection(fields: ["userId"])
@@ -296,6 +298,8 @@ type Message
   id: ID!
   content: String!
   when: String!
+  attachment: String
+  attachmentName: String
   roomId: ID
   userId: ID
 #  authorOrgId: ID!
