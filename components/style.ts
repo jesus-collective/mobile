@@ -325,6 +325,12 @@ export default class MainStyles {
             fontTitle: {
                 fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 22, lineHeight: 30, height: 60, color: '#333333'
             },
+            noCardFontTitle: {
+                fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 26, lineHeight: 30, height: 60, color: '#333333', opacity: 0.6, marginLeft: 20
+            },
+            loadingFontTitle: {
+                fontFamily: 'Graphik-Regular-App', fontWeight: 'regular', fontSize: 16, lineHeight: 30, height: 60, color: '#333333', marginLeft: 20
+            },
             myMapFontTitle: {
                 fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24, lineHeight: 30, height: 60, color: '#333333'
             },
