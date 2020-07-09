@@ -332,7 +332,7 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 16, lineHeight: 24, height: '100%', color: '#ffffff'
             },
             fontTitleGroup: {
-                fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24, lineHeight: 30, height: 90, color: '#333333', paddingTop: 29,
+                fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 22, lineHeight: 30, height: 90, color: '#333333', paddingTop: 29,
             },
             profileFontTitle: {
                 fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 20, height: 75, lineHeight: 32, flex: 3
