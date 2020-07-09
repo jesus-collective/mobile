@@ -236,7 +236,7 @@ export default class MyGroups extends JCComponent<Props, State> {
 
   convertEventToMapData(data: any): MapData[] {
     return data.map((dataItem) => {
-      if (dataItem.locationLatLong && dataItem.locationLatLong.latitude && dataItem.locationLatLong.longitude && moment(dataItem.time).isAfter(moment().subtract(3, 'day')))
+      if (dataItem && dataItem.locationLatLong && dataItem.locationLatLong.latitude && dataItem.locationLatLong.longitude && moment(dataItem.time).isAfter(moment().subtract(3, 'day')))
         return {
           latitude: dataItem.locationLatLong.latitude,
           longitude: dataItem.locationLatLong.longitude,
