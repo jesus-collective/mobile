@@ -602,9 +602,9 @@ export default class MyGroups extends JCComponent<Props, State> {
                             </ListItem>
                           </ErrorBoundry>
                         )
-                      })
-                      : <Text style={this.styles.style.fontTitle}>No {this.state.type}&apos;s</Text>
-                    : <Text style={this.styles.style.fontTitle}>Loading {this.state.type}&apos;s</Text>
+                      }) 
+                    : <Text style={this.styles.style.noCardFontTitle}>No upcoming {this.state.type}s</Text>
+                    : <Text style={this.styles.style.loadingFontTitle}>Loading {this.state.type}s</Text>
                   }
                   {this.state.nextToken ?
                     this.props.showMore ?
