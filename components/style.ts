@@ -323,7 +323,7 @@ export default class MainStyles {
                 marginTop: 18,
             },
             fontTitle: {
-                fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24, lineHeight: 30, height: 60, color: '#333333'
+                fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 22, lineHeight: 30, height: 60, color: '#333333'
             },
             myMapFontTitle: {
                 fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24, lineHeight: 30, height: 60, color: '#333333'
@@ -344,7 +344,7 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, color: '#333333', opacity: 0.4, paddingTop: 23
             },
             fontDetailMiddle: {
-                fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 22, color: '#333333', opacity: 0.7
+                fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 22, color: '#333333', opacity: 0.7
             },
             myMapFontDetailMiddle: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 22, color: '#333333', opacity: 0.7
