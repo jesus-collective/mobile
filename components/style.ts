@@ -1578,7 +1578,7 @@ export default class MainStyles {
                 },
             },
 
-            '@media (min-width: 320px) and (max-width: 480px)': {
+            '@media (min-width: 320px) and (max-width: 720px)': {
                 // rightCardWidth: {
                 //     width: "100%"
                 // },
