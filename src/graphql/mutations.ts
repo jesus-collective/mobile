@@ -84,6 +84,8 @@ export const createUser = /* GraphQL */ `
           id
           content
           when
+          attachment
+          attachmentName
           roomId
           userId
           postingAs
@@ -97,6 +99,8 @@ export const createUser = /* GraphQL */ `
         items {
           id
           content
+          attachment
+          attachmentName
           when
           userId
           messageRoomID
@@ -192,6 +196,8 @@ export const updateUser = /* GraphQL */ `
           id
           content
           when
+          attachment
+          attachmentName
           roomId
           userId
           postingAs
@@ -205,6 +211,8 @@ export const updateUser = /* GraphQL */ `
         items {
           id
           content
+          attachment
+          attachmentName
           when
           userId
           messageRoomID
@@ -300,6 +308,8 @@ export const deleteUser = /* GraphQL */ `
           id
           content
           when
+          attachment
+          attachmentName
           roomId
           userId
           postingAs
@@ -313,6 +323,8 @@ export const deleteUser = /* GraphQL */ `
         items {
           id
           content
+          attachment
+          attachmentName
           when
           userId
           messageRoomID
@@ -813,6 +825,8 @@ export const createGroup = /* GraphQL */ `
           id
           content
           when
+          attachment
+          attachmentName
           roomId
           userId
           postingAs
@@ -925,6 +939,8 @@ export const updateGroup = /* GraphQL */ `
           id
           content
           when
+          attachment
+          attachmentName
           roomId
           userId
           postingAs
@@ -1037,6 +1053,8 @@ export const deleteGroup = /* GraphQL */ `
           id
           content
           when
+          attachment
+          attachmentName
           roomId
           userId
           postingAs
@@ -2554,6 +2572,8 @@ export const createDirectMessageRoom = /* GraphQL */ `
         items {
           id
           content
+          attachment
+          attachmentName
           when
           userId
           messageRoomID
@@ -2587,6 +2607,8 @@ export const updateDirectMessageRoom = /* GraphQL */ `
         items {
           id
           content
+          attachment
+          attachmentName
           when
           userId
           messageRoomID
@@ -2620,6 +2642,8 @@ export const deleteDirectMessageRoom = /* GraphQL */ `
         items {
           id
           content
+          attachment
+          attachmentName
           when
           userId
           messageRoomID
@@ -2638,6 +2662,8 @@ export const createDirectMessage = /* GraphQL */ `
     createDirectMessage(input: $input) {
       id
       content
+      attachment
+      attachmentName
       when
       userId
       author {
@@ -2719,6 +2745,8 @@ export const updateDirectMessage = /* GraphQL */ `
     updateDirectMessage(input: $input) {
       id
       content
+      attachment
+      attachmentName
       when
       userId
       author {
@@ -2800,6 +2828,8 @@ export const deleteDirectMessage = /* GraphQL */ `
     deleteDirectMessage(input: $input) {
       id
       content
+      attachment
+      attachmentName
       when
       userId
       author {
@@ -2882,6 +2912,8 @@ export const createMessage = /* GraphQL */ `
       id
       content
       when
+      attachment
+      attachmentName
       roomId
       userId
       postingAs
@@ -3017,6 +3049,8 @@ export const updateMessage = /* GraphQL */ `
       id
       content
       when
+      attachment
+      attachmentName
       roomId
       userId
       postingAs
@@ -3152,6 +3186,8 @@ export const deleteMessage = /* GraphQL */ `
       id
       content
       when
+      attachment
+      attachmentName
       roomId
       userId
       postingAs

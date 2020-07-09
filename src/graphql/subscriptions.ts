@@ -8,6 +8,8 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
       id
       content
       when
+      attachment
+      attachmentName
       roomId
       userId
       postingAs
@@ -219,6 +221,8 @@ export const onCreateUser = /* GraphQL */ `
           id
           content
           when
+          attachment
+          attachmentName
           roomId
           userId
           postingAs
@@ -232,6 +236,8 @@ export const onCreateUser = /* GraphQL */ `
         items {
           id
           content
+          attachment
+          attachmentName
           when
           userId
           messageRoomID
@@ -327,6 +333,8 @@ export const onUpdateUser = /* GraphQL */ `
           id
           content
           when
+          attachment
+          attachmentName
           roomId
           userId
           postingAs
@@ -340,6 +348,8 @@ export const onUpdateUser = /* GraphQL */ `
         items {
           id
           content
+          attachment
+          attachmentName
           when
           userId
           messageRoomID
@@ -435,6 +445,8 @@ export const onDeleteUser = /* GraphQL */ `
           id
           content
           when
+          attachment
+          attachmentName
           roomId
           userId
           postingAs
@@ -448,6 +460,8 @@ export const onDeleteUser = /* GraphQL */ `
         items {
           id
           content
+          attachment
+          attachmentName
           when
           userId
           messageRoomID
@@ -948,6 +962,8 @@ export const onCreateGroup = /* GraphQL */ `
           id
           content
           when
+          attachment
+          attachmentName
           roomId
           userId
           postingAs
@@ -1060,6 +1076,8 @@ export const onUpdateGroup = /* GraphQL */ `
           id
           content
           when
+          attachment
+          attachmentName
           roomId
           userId
           postingAs
@@ -1172,6 +1190,8 @@ export const onDeleteGroup = /* GraphQL */ `
           id
           content
           when
+          attachment
+          attachmentName
           roomId
           userId
           postingAs
@@ -2689,6 +2709,8 @@ export const onCreateDirectMessageRoom = /* GraphQL */ `
         items {
           id
           content
+          attachment
+          attachmentName
           when
           userId
           messageRoomID
@@ -2722,6 +2744,8 @@ export const onUpdateDirectMessageRoom = /* GraphQL */ `
         items {
           id
           content
+          attachment
+          attachmentName
           when
           userId
           messageRoomID
@@ -2755,6 +2779,8 @@ export const onDeleteDirectMessageRoom = /* GraphQL */ `
         items {
           id
           content
+          attachment
+          attachmentName
           when
           userId
           messageRoomID
@@ -2773,6 +2799,8 @@ export const onCreateDirectMessage = /* GraphQL */ `
     onCreateDirectMessage {
       id
       content
+      attachment
+      attachmentName
       when
       userId
       author {
@@ -2854,6 +2882,8 @@ export const onUpdateDirectMessage = /* GraphQL */ `
     onUpdateDirectMessage {
       id
       content
+      attachment
+      attachmentName
       when
       userId
       author {
@@ -2935,6 +2965,8 @@ export const onDeleteDirectMessage = /* GraphQL */ `
     onDeleteDirectMessage {
       id
       content
+      attachment
+      attachmentName
       when
       userId
       author {
@@ -3017,6 +3049,8 @@ export const onCreateMessage = /* GraphQL */ `
       id
       content
       when
+      attachment
+      attachmentName
       roomId
       userId
       postingAs
@@ -3152,6 +3186,8 @@ export const onUpdateMessage = /* GraphQL */ `
       id
       content
       when
+      attachment
+      attachmentName
       roomId
       userId
       postingAs
@@ -3287,6 +3323,8 @@ export const onDeleteMessage = /* GraphQL */ `
       id
       content
       when
+      attachment
+      attachmentName
       roomId
       userId
       postingAs

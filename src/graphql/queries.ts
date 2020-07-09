@@ -84,6 +84,8 @@ export const getUser = /* GraphQL */ `
           id
           content
           when
+          attachment
+          attachmentName
           roomId
           userId
           postingAs
@@ -97,6 +99,8 @@ export const getUser = /* GraphQL */ `
         items {
           id
           content
+          attachment
+          attachmentName
           when
           userId
           messageRoomID
@@ -271,6 +275,8 @@ export const getGroup = /* GraphQL */ `
           id
           content
           when
+          attachment
+          attachmentName
           roomId
           userId
           postingAs
@@ -1002,6 +1008,8 @@ export const getDirectMessageRoom = /* GraphQL */ `
         items {
           id
           content
+          attachment
+          attachmentName
           when
           userId
           messageRoomID
@@ -1047,6 +1055,8 @@ export const getDirectMessage = /* GraphQL */ `
     getDirectMessage(id: $id) {
       id
       content
+      attachment
+      attachmentName
       when
       userId
       author {
@@ -1133,6 +1143,8 @@ export const listDirectMessages = /* GraphQL */ `
       items {
         id
         content
+        attachment
+        attachmentName
         when
         userId
         author {
@@ -1185,6 +1197,8 @@ export const getMessage = /* GraphQL */ `
       id
       content
       when
+      attachment
+      attachmentName
       roomId
       userId
       postingAs
@@ -1325,6 +1339,8 @@ export const listMessages = /* GraphQL */ `
         id
         content
         when
+        attachment
+        attachmentName
         roomId
         userId
         postingAs
@@ -2122,6 +2138,8 @@ export const directMessagesByRoom = /* GraphQL */ `
       items {
         id
         content
+        attachment
+        attachmentName
         when
         userId
         author {
@@ -2189,6 +2207,8 @@ export const messagesByRoom = /* GraphQL */ `
         id
         content
         when
+        attachment
+        attachmentName
         roomId
         userId
         postingAs
