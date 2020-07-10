@@ -1166,14 +1166,14 @@ export default class MainStyles {
                 height: 50
             },
             resourceHeaderImgContainer: {
-               backgroundColor: "#000000", 
+            //    backgroundColor: "#000000", 
                 maxHeight: "350px"
             },
             resourceHeaderImg: {
                 position: "relative",
                 width: "100%",
                 height: "100%",
-                opacity: 0.3
+                opacity: 0.3,
             },
             resourceHeaderImgView: {
                 backgroundColor: "#000000",
