@@ -1173,7 +1173,8 @@ export default class MainStyles {
                 position: "relative",
                 width: "100%",
                 height: "100%",
-                opacity: 0.3,
+                opacity: 0.5,
+                filter: "grayscale(1)",
             },
             resourceHeaderImgView: {
                 backgroundColor: "#000000",

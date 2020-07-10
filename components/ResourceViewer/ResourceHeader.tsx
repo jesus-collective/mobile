@@ -2,7 +2,6 @@ import { Container, View } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Image, Text, Animated } from 'react-native';
-
 import EditableText from '../Forms/EditableText'
 import { ResourceContext } from './ResourceContext';
 import { Storage } from 'aws-amplify';
@@ -59,7 +58,7 @@ class ResourceHeader extends JCComponent<EmptyProps, State> {
                             {this.state.imageUrl ?
                                 <Animated.View onLayout={this.fadeAnimation} style={[this.styles.style.resourceHeaderImgView, { opacity: this.state.fadeValue }]}>
                                     <Image style={this.styles.style.resourceHeaderImg}
-                                        source={this.state.imageUrl} onError={() => { this.getImage(state.resourceData.resources.items[state.currentResource].image) }}>
+                                    source={this.state.imageUrl} onError={() => { this.getImage(state.resourceData.resources.items[state.currentResource].image) }}>
                                     </Image>
                                 </Animated.View>
                                 : null
