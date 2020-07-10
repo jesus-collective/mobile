@@ -64,17 +64,15 @@ export default class ConversationScreen extends JCComponent<Props, State>{
             variables: { input: { roomID: json.data.createDirectMessageRoom.id, userID: toUserID, userName: toUserName } },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
           });
-          createDirectMessageUser2.then(() => 
-            { 
-              console.log(json2); 
-              this.getNewUser(json2.data.createDirectMessageUser.id)
-            }
-            ).catch(() => 
-              { 
-                console.log(json2); 
-                this.getNewUser(json2.data.createDirectMessageUser.id)
-              }
-            )
+          createDirectMessageUser2.then(() => {
+            console.log(json2);
+            this.getNewUser(json2.data.createDirectMessageUser.id)
+          }
+          ).catch(() => {
+            console.log(json2);
+            this.getNewUser(json2.data.createDirectMessageUser.id)
+          }
+          )
         }
         const myUserName = user.attributes['given_name'] + ' ' + user.attributes['family_name']
         const createDirectMessageUser1: any = API.graphql({
@@ -98,7 +96,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
       }
     }).some((z) => { return z }))) {
       console.log("Creating Room")
-      if (this.props.route.params.initialUserID != null && this.props.route.params.initialUserName != null)
+      if (this.props.route.params.initialUserID != null && this.props.route.params.initialUserName != null && this.props.route.params.initialUserID != 'null' && this.props.route.params.initialUserName != 'null')
         this.createRoom(this.props.route.params.initialUserID, this.props.route.params.initialUserName)
     }
 
@@ -108,12 +106,12 @@ export default class ConversationScreen extends JCComponent<Props, State>{
     try {
       const json: any = await API.graphql({
         query: customQueries.getDirectMessageUser,
-        variables: {id: id},
+        variables: { id: id },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       if (json?.data?.getDirectMessageUser) {
-        console.log({'customQueries.getDirectMessageUser': json.data.getDirectMessageUser})
-        this.setState({ data: this.state.data.concat([json.data.getDirectMessageUser]) }, ()=> {
+        console.log({ 'customQueries.getDirectMessageUser': json.data.getDirectMessageUser })
+        this.setState({ data: this.state.data.concat([json.data.getDirectMessageUser]) }, () => {
           const index = this.state.data.indexOf(json.data.getDirectMessageUser)
           this.setState({ selectedRoom: index, currentRoomId: this.state.data[index].roomID })
         })
@@ -134,11 +132,11 @@ export default class ConversationScreen extends JCComponent<Props, State>{
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
         });
         if (json?.data?.listDirectMessageUsers?.nextToken !== null) {
-          console.log({'customQueries.listDirectMessageUsers': json.data.listDirectMessageUsers})
+          console.log({ 'customQueries.listDirectMessageUsers': json.data.listDirectMessageUsers })
           this.setState({ data: this.state.data.concat(json.data.listDirectMessageUsers.items) })
           this.getInitialData(json.data.listDirectMessageUsers.nextToken)
         } else if (json?.data?.listDirectMessageUsers) {
-          console.log({'customQueries.listDirectMessageUsers': json.data.listDirectMessageUsers})
+          console.log({ 'customQueries.listDirectMessageUsers': json.data.listDirectMessageUsers })
           this.setState({ data: this.state.data.concat(json.data.listDirectMessageUsers.items) }, this.shouldCreateRoom)
         }
       } catch (err) {
@@ -153,7 +151,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
     this.setState({ showMap: !this.state.showMap })
   }
 
-  getOtherUsers(data: any): {ids: string[], names: string[] } {
+  getOtherUsers(data: any): { ids: string[], names: string[] } {
     const ids = [];
     const names = [];
     data.room.messageUsers.items.forEach(user => {
@@ -203,11 +201,11 @@ export default class ConversationScreen extends JCComponent<Props, State>{
                 this.state.data.map((item, index) => {
                   const otherUsers = this.getOtherUsers(item)
                   let stringOfNames = ''
-                  otherUsers.names.forEach((name,index)=> {
-                    if (otherUsers.names.length === index+1) {
-                      stringOfNames+=name
+                  otherUsers.names.forEach((name, index) => {
+                    if (otherUsers.names.length === index + 1) {
+                      stringOfNames += name
                     } else {
-                      stringOfNames+=(name + ', ')
+                      stringOfNames += (name + ', ')
                     }
                   })
 
