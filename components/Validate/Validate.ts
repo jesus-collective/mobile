@@ -34,8 +34,8 @@ export default class Validate {
             return { result: false, validationError: "Profile must have - current role" }
         if (data.currentScope == null || data.currentScope == "")
             return { result: false, validationError: "Profile must have - current scope" }
-        //if (data.personality == null || data.personality == "")
-        //    return { result: false, validationError: "Profile must have - personality" }
+        /*if (data.personality == null || data.personality == "")
+            return { result: false, validationError: "Profile must have - personality" }
         if (data.orgName == null || data.orgName == "")
             return { result: false, validationError: "Profile must have - organization name" }
         if (data.orgType == null || data.orgType == "" || data.orgType == "None")
@@ -44,8 +44,8 @@ export default class Validate {
             return { result: false, validationError: "Profile must have - organization size" }
         if (data.orgDescription == null || data.orgDescription == "")
             return { result: false, validationError: "Profile must have - organization description" }
-        //if (data.profileImage == null || data.profileImage == "")
-        //    return { result: false, validationError: "Profile must have - profile image" }
+        if (data.profileImage == null || data.profileImage == "")
+            return { result: false, validationError: "Profile must have - profile image" }*/
         if (data.location == null)
             return { result: false, validationError: "Profile must have - public location" }
 
