@@ -1809,11 +1809,11 @@ export default class MainStyles {
                 { flexDirection: "column", },
 
             authView: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
-                { left: "40%", width: "40%", top: 100, height: "auto" } :
+                { left: "35%", width: "40%", top: 100, height: "auto" } :
                 { left: "2%", width: "96%", top: "0%", height: "100%" },
 
             signUpSidebarPanel: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
-                { zIndex: 1, position: "fixed", left: 0, minWidth: 196, width: "25%", height: "100%", top: 0 } :
+                { zIndex: 1, position: "fixed", left: 0, minWidth: 196, width: "15%", height: "100%", top: 0 } :
                 { zIndex: 1, position: "relative", left: 0, width: "100%", height: 100 + Constants.statusBarHeight, top: 0 },
             signUpSidebarLogo: { zIndex: 2, position: "absolute", left: 20, width: 156, height: 43, top: Platform.OS === 'web' && Dimensions.get('window').width > 720 ? 20 : 20 + Constants.statusBarHeight },
 
@@ -1839,7 +1839,7 @@ export default class MainStyles {
             signUpSidebarProgressTextView: { zIndex: 3, position: "absolute", width: "100%", height: "100%", left: "0%", top: "0%" },
 
             signUpSidebarView: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
-                { position: "fixed", width: "25%", height: "100%", left: "0%", top: "0%" } :
+                { position: "fixed", width: "15%", height: "100%", left: "0%", top: "0%" } :
                 { position: "relative", width: "100%", height: "20%", left: "0%", top: 0 },
 
             signUpSidebarText: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
