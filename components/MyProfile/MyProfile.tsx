@@ -18,12 +18,14 @@ import MyMap from '../../components/MyMap/MyMap'
 import EditableText from '../Forms/EditableText';
 import { AntDesign } from '@expo/vector-icons';
 
-import { interests, orgSizeBig, orgSizeSmall, orgTypes } from './dropdown'
+import { interests, numberOfEmployees, sundayAttendance, orgTypesChurches, orgTypesNonChurch } from './dropdown'
 import { constants } from '../../src/constants'
 import JCComponent, { JCState } from '../JCComponent/JCComponent';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { MapData } from 'components/MyGroups/MyGroups';
 import { TextInput } from 'react-native-gesture-handler';
+
+const orgTypes = orgTypesChurches.concat(orgTypesNonChurch)
 
 Amplify.configure(awsconfig);
 
@@ -55,7 +57,6 @@ interface State extends JCState {
   passError: string
 }
 class MyProfileImpl extends JCComponent<Props, State> {
-  orgsWithEmployees = ["Church", "Church Plant", "Academic Institution", "Compassion/Mission"]
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -320,6 +321,31 @@ class MyProfileImpl extends JCComponent<Props, State> {
           dirty: true
         });
       })
+  }
+
+
+  checkForValidOrgInfo(): boolean {
+
+    const user = this.state.UserDetails
+
+    if (user.orgName || user.orgDescription) {
+      return true
+    }
+
+    if (orgTypesChurches.includes(user.orgType)) {
+      if (user.orgSize || user.sundayAttendance || user.numberVolunteers || user.denomination) {
+        return true
+      }
+    }
+
+    if (orgTypesNonChurch.includes(user.orgType)) {
+      if (user.orgSize || user.numberVolunteers || user.pplServed) {
+        return true
+      }
+    }
+
+    return false
+
   }
 
   async handlePasswordChange(): Promise<void> {
@@ -620,93 +646,166 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 value={this.state.UserDetails.personality} isEditable={this.state.isEditable && this.state.editMode}></EditableText>
 
               <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text>
-              {this.state.isEditable && this.state.editMode ?
-                <Text style={this.styles.style.fontBold}><Text style={this.styles.style.fontFormMandatory}>*</Text>Tell us more about your organization</Text>
-                : <Text style={this.styles.style.fontBold}>Organization Info</Text>
-              }
-              <View>
-                <Label style={this.styles.style.fontFormSmall}>Organization Name</Label>
-                <EditableText onChange={(e) => { this.handleInputChange(e, "orgName") }}
-                  multiline={false}
-                  data-testid="profile-orgName"
-                  textStyle={this.styles.style.fontFormSmallDarkGrey}
-                  inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
-                  value={this.state.UserDetails.orgName} isEditable={this.state.isEditable && this.state.editMode}></EditableText>
-              </View>
-
-              <View style={{ marginTop: 15 }}>
-                {!this.state.isEditable && this.state.editMode ? <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text> : null}
-                <Label style={this.styles.style.fontFormSmall}>Type of Organization</Label>
+              {this.checkForValidOrgInfo() ? <View>
                 {this.state.isEditable && this.state.editMode ?
-                  <View style={this.styles.style.myProfileOrgView}>
-                    <Picker style={this.styles.style.myprofilePicker}
-                      onValueChange={(itemValue) => { this.handleInputChange(itemValue, "orgType") }}
-                      selectedValue={orgTypes.includes(this.state.UserDetails.orgType) ? this.state.UserDetails.orgType : this.state.UserDetails.orgType === null || this.state.UserDetails.orgType === 'None' ? 'None' : ""}
-                    >
-                      <Picker.Item label={'None Selected'} value={'None'} />
-                      {orgTypes.map((item, index) => {
-                        return (<Picker.Item key={index} label={item} value={item} />)
-                      })}
-                      <Picker.Item label={"Other"} value={""} />
-                    </Picker>
-                    {this.state.UserDetails.orgType === "" || (!orgTypes.includes(this.state.UserDetails.orgType) && this.state.UserDetails.orgType !== "None" && this.state.UserDetails.orgType !== null) ?
-                      <EditableText onChange={(e) => { this.handleInputChange(e, "orgType") }}
-                        multiline={false}
+                  <Text style={this.styles.style.fontBold}>Tell us about your organization</Text>
+                  : <Text style={this.styles.style.fontBold}>Organization Info</Text>
+                }
+
+                {this.state.isEditable && this.state.editMode || this.state.UserDetails.orgName ? <View>
+                  <Label style={this.styles.style.fontFormSmall}>Organization Name</Label>
+                  <EditableText onChange={(e) => { this.handleInputChange(e, "orgName") }}
+                    multiline={false}
+                    data-testid="profile-orgName"
+                    textStyle={this.styles.style.fontFormSmallDarkGrey}
+                    inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
+                    value={this.state.UserDetails.orgName} isEditable={this.state.isEditable && this.state.editMode}></EditableText>
+                </View> : null}
+
+                {this.state.isEditable && this.state.editMode || this.state.UserDetails.orgType ? <View style={{ marginTop: 15 }}>
+                  <Label style={this.styles.style.fontFormSmall}>Type of Organization</Label>
+                  {this.state.isEditable && this.state.editMode ?
+                    <View style={this.styles.style.myProfileOrgView}>
+                      <Picker style={this.styles.style.myprofilePicker}
+                        onValueChange={(itemValue) => { this.handleInputChange(itemValue, "orgType") }}
+                        selectedValue={orgTypes.includes(this.state.UserDetails.orgType) ? this.state.UserDetails.orgType : this.state.UserDetails.orgType === null || this.state.UserDetails.orgType === 'None' ? 'None' : ""}
+                      >
+                        <Picker.Item label={'None Selected'} value={'None'} />
+                        {orgTypes.map((item, index) => {
+                          return (<Picker.Item key={index} label={item} value={item} />)
+                        })}
+                        <Picker.Item label={"Other"} value={""} />
+                      </Picker>
+                      {this.state.UserDetails.orgType === "" || (!orgTypes.includes(this.state.UserDetails.orgType) && this.state.UserDetails.orgType !== "None" && this.state.UserDetails.orgType !== null) ?
+                        <EditableText onChange={(e) => { this.handleInputChange(e, "orgType") }}
+                          multiline={false}
+                          textStyle={this.styles.style.fontFormSmallDarkGrey}
+                          inputStyle={this.styles.style.myProfileOrgTypeInput}
+                          value={this.state.UserDetails.orgType} isEditable={this.state.isEditable && this.state.editMode}></EditableText> : null}
+                    </View>
+                    :
+                    <EditableText
+                      multiline={true}
+                      textStyle={this.styles.style.fontFormSmallDarkGrey}
+                      value={this.state.UserDetails.orgType} isEditable={false} />
+                  }
+                </View> : null}
+
+
+
+                {orgTypes.includes(this.state.UserDetails.orgType) ? <View style={{ marginTop: 15 }}>
+                  {this.state.isEditable && this.state.editMode ?
+                    <View>
+                      <Label style={this.styles.style.fontFormSmall}>How many employees are there in the organization?</Label>
+                      <Picker style={this.styles.style.myprofilePicker}
+                        onValueChange={(itemValue) => { this.handleInputChange(itemValue, "orgSize") }}
+                        selectedValue={this.state.UserDetails.orgSize}
+                      >
+                        <Picker.Item label={'None Selected'} value={''} />
+                        {numberOfEmployees.map((item, index) => {
+                          return (<Picker.Item key={index} label={item} value={item} />)
+                        })}
+                      </Picker>
+                    </View>
+                    : this.state.UserDetails.orgSize ?
+                      <View>
+                        <Label style={this.styles.style.fontFormSmall}>How many employees are there in the organization?</Label>
+
+                        <EditableText
+                          multiline={true}
+                          textStyle={this.styles.style.fontFormSmallDarkGrey}
+                          value={this.state.UserDetails.orgSize} isEditable={false} />
+                      </View> : null
+                  }
+                </View> : null}
+
+                {orgTypesChurches.includes(this.state.UserDetails.orgType) ? <View style={{ marginTop: 15 }}>
+                  {this.state.isEditable && this.state.editMode ?
+                    <View>
+                      <Label style={this.styles.style.fontFormSmall}>Average Sunday morning attendance</Label>
+                      <Picker style={this.styles.style.myprofilePicker}
+                        onValueChange={(itemValue) => { this.handleInputChange(itemValue, "sundayAttendance") }}
+                        selectedValue={this.state.UserDetails.sundayAttendance}
+                      >
+                        <Picker.Item label={'None Selected'} value={''} />
+                        {sundayAttendance.map((item, index) => {
+                          return (<Picker.Item key={index} label={item} value={item} />)
+                        })}
+                      </Picker>
+                    </View>
+                    :
+                    this.state.UserDetails.sundayAttendance ? <View>
+                      <Label style={this.styles.style.fontFormSmall}>Average Sunday morning attendance</Label>
+                      <EditableText
+                        multiline={true}
                         textStyle={this.styles.style.fontFormSmallDarkGrey}
-                        inputStyle={this.styles.style.myProfileOrgTypeInput}
-                        value={this.state.UserDetails.orgType} isEditable={this.state.isEditable && this.state.editMode}></EditableText> : null}
-                  </View>
-                  :
-                  <EditableText
-                    multiline={true}
-                    textStyle={this.styles.style.fontFormSmallDarkGrey}
-                    value={this.state.UserDetails.orgType} isEditable={false} />
-                }
-              </View>
-              <View style={{ marginTop: 15 }}>
-                <Label style={this.styles.style.fontFormSmall}>{this.state.UserDetails.orgType === "Home School" ? "Number of kids in home school" : this.orgsWithEmployees.includes(this.state.UserDetails.orgType) ? "How many employees are there in the organization?" : "Size of the organization"}</Label>
-                {this.state.isEditable && this.state.editMode ? this.state.UserDetails.orgType === "Home School" || this.state.UserDetails.orgType === "Home Group/Home Church" || this.state.UserDetails.orgType === "Church Plant" ?
-                  <View>
-                    <Picker style={this.styles.style.myprofilePicker}
-                      onValueChange={(itemValue) => { this.handleInputChange(itemValue, "orgSize") }}
-                      selectedValue={this.state.UserDetails.orgSize}
-                    >
-                      <Picker.Item label={'None Selected'} value={''} />
-                      {orgSizeSmall.map((item, index) => {
-                        return (<Picker.Item key={index} label={item} value={item} />)
-                      })}
-                    </Picker>
-                  </View>
-                  : <View>
-                    <Picker style={this.styles.style.myprofilePicker}
-                      onValueChange={(itemValue) => { this.handleInputChange(itemValue, "orgSize") }}
-                      selectedValue={this.state.UserDetails.orgSize}
-                    >
-                      <Picker.Item label={'None Selected'} value={''} />
-                      {orgSizeBig.map((item, index) => {
-                        return (<Picker.Item key={index} label={item} value={item} />)
-                      })}
-                    </Picker>
-                  </View>
+                        value={this.state.UserDetails.sundayAttendance} isEditable={false} />
+                    </View> : null
+                  }
+                </View> : null}
 
-                  : <EditableText
-                    multiline={true}
-                    textStyle={this.styles.style.fontFormSmallDarkGrey}
-                    value={this.state.UserDetails.orgSize} isEditable={false} />
-                }
-              </View>
+                {orgTypes.includes(this.state.UserDetails.orgType) ? <View style={{ marginTop: 15 }}>
+                  {this.state.isEditable && this.state.editMode ?
+                    <View>
+                      <Label style={this.styles.style.fontFormSmall}>Number of volunteers</Label>
+                      <Picker style={this.styles.style.myprofilePicker}
+                        onValueChange={(itemValue) => { this.handleInputChange(itemValue, "numberVolunteers") }}
+                        selectedValue={this.state.UserDetails.numberVolunteers}
+                      >
+                        <Picker.Item label={'None Selected'} value={''} />
+                        {numberOfEmployees.map((item, index) => {
+                          return (<Picker.Item key={index} label={item} value={item} />)
+                        })}
+                      </Picker>
+                    </View>
+                    : this.state.UserDetails.numberVolunteers ?
+                      <View>
+                        <Label style={this.styles.style.fontFormSmall}>Number of volunteers</Label>
+                        <EditableText
+                          multiline={true}
+                          textStyle={this.styles.style.fontFormSmallDarkGrey}
+                          value={this.state.UserDetails.numberVolunteers} isEditable={false} />
+                      </View> : null
+                  }
+                </View> : null}
 
-              {this.state.UserDetails.orgDescription || this.state.editMode ? <View>
-                <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text>
-                <Text style={this.styles.style.fontFormSmall}>Description of church or ministry organization</Text>
+
+                {orgTypesChurches.includes(this.state.UserDetails.orgType) && (this.state.UserDetails.denomination || this.state.editMode) ? <View>
+                  <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text>
+                  <Text style={this.styles.style.fontFormSmall}>Denomination</Text>
+                </View> : null}
+                <EditableText onChange={(e) => { this.handleInputChange(e, "denomination") }}
+                  multiline={true}
+                  data-testid="profile-denomination"
+                  textStyle={this.styles.style.fontFormSmallDarkGrey}
+                  placeholder="Type here."
+                  inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
+                  value={this.state.UserDetails.denomination} isEditable={this.state.isEditable && this.state.editMode}></EditableText>
+
+                {orgTypesChurches.includes(this.state.UserDetails.orgType) && (this.state.UserDetails.pplServed || this.state.editMode) ? <View>
+                  <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text>
+                  <Text style={this.styles.style.fontFormSmall}>How many people do you serve?</Text>
+                </View> : null}
+                <EditableText onChange={(e) => { this.handleInputChange(e, "orgDescription") }}
+                  multiline={true}
+                  data-testid="profile-orgDescription"
+                  textStyle={this.styles.style.fontFormSmallDarkGrey}
+                  placeholder="Type here."
+                  inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
+                  value={this.state.UserDetails.pplServed} isEditable={this.state.isEditable && this.state.editMode}></EditableText>
+
+                {this.state.UserDetails.orgDescription || this.state.editMode ? <View>
+                  <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text>
+                  <Text style={this.styles.style.fontFormSmall}>Description of church or ministry organization</Text>
+                </View> : null}
+                <EditableText onChange={(e) => { this.handleInputChange(e, "orgDescription") }}
+                  multiline={true}
+                  data-testid="profile-orgDescription"
+                  textStyle={this.styles.style.fontFormSmallDarkGrey}
+                  placeholder="Type here."
+                  inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
+                  value={this.state.UserDetails.orgDescription} isEditable={this.state.isEditable && this.state.editMode}></EditableText>
               </View> : null}
-              <EditableText onChange={(e) => { this.handleInputChange(e, "orgDescription") }}
-                multiline={true}
-                data-testid="profile-orgDescription"
-                textStyle={this.styles.style.fontFormSmallDarkGrey}
-                placeholder="Type here."
-                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
-                value={this.state.UserDetails.orgDescription} isEditable={this.state.isEditable && this.state.editMode}></EditableText>
             </View>
               : <View style={this.styles.style.profileScreenRightCard}>
                 <Text style={this.styles.style.myprofileAboutMe}>Account Settings</Text>
