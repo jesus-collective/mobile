@@ -533,7 +533,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0, width: this.state.cardWidth, right: 5 }}>
         <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 70 }} source={require('../../assets/svg/pattern.svg')}></Image>
       </CardItem>
-      { item.name.length > 54 || item.name.length == 54 ?
+      { item.name.length > 16 || item.name.length == 16 ?
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitleGroup}data-tip={item.name}>{item.name}</Text>
       <ReactTooltip place="top" type="dark" effect="solid" backgroundColor="#F0493E"/></CardItem> 
       : <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitleGroup}>{item.name}</Text></CardItem>}
