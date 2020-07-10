@@ -1,59 +1,68 @@
-export const interests = 
+export const interests =
     [
         "Children's Ministry",
         "Discipleship",
+        "Equipping",
         "Evangelism",
+        "Hermeneutics",
+        "Inspiration of Scripture",
+        "Jesus-Centred Theology",
         "Kids and Youth Curriculum",
-        "Leadership Development",
+        "Leadership Formation",
         "Music",
+        "Nones/Dones",
+        "Post-Christian Pastoring",
+        "Small Groups Ministry",
         "Spiritual Disciplines",
         "Teaching/Preaching",
         "Theology",
         "Training",
         "Volunteering",
         "Worship Experience",
-        "Youth Ministry",
         "Young Adults Ministry",
-        "Nones/Dones",
-        "Small Groups Ministry",
-        "Jesus-Centred Theology",
-        "Post-Chrsitian Pastoring", 
-        "Leadership Formation",
-        "Equipping",
-        "Spiritual Practices", 
-        "Hermeneutics", 
-        "Inspiration of Scripture", 
-        "Share the Gospel" 
-    ]
-
-    export const orgTypes = 
-    [
-        "Church", 
-        "Church Plant",
-        "Home School",
         "Youth Ministry",
-        "Kids Ministry", 
-        "Home Group/Home Church",
-        "Academic Institution", 
-        "Compassion/Mission"
     ]
 
-    export const orgSizeBig = 
+export const orgTypesChurches =
     [
-        "1-50",
-        "51-100",
-        "101-150",
-        "151-200",
-        "201-250",
+        "Church",
+        "Church Plant"
+    ]
+
+export const orgTypesNonChurch =
+    [
+        "Academic Institution",
+        "Camp",
+        "Compassion Agency",
+        "Parachurch"
+    ]
+
+export const numberOfEmployees =
+    [
+        "1-25",
+        "25-50",
+        "50-75",
+        "75-100",
+        "100-150",
+        "150-200",
+        "200-250",
         "250+"
     ]
 
-    export const orgSizeSmall = 
+export const sundayAttendance =
     [
-        "1-5",
-        "6-10",
-        "11-15",
-        "16-20",
-        "20-25",
-        "25+"
+        "1-50",
+        "50-100",
+        "100-150",
+        "150-200",
+        "200-250",
+        "250-500",
+        "500-1000",
+        "1000-2000",
+        "2000-3000",
+        "3000-4000",
+        "4000-5000",
+        "5000-7500",
+        "7500-10000",
+        "10000+"
     ]

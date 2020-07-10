@@ -393,23 +393,23 @@ export default class MainStyles {
                 width: "100%"
             },
             resourceHeaderAgeGroupBox: {
-                height: "58px", 
-                backgroundColor: '#ffffff', 
-                justifyContent: "center", 
-                alignItems: "center", 
-                paddingRight: 21, 
-                paddingLeft: 21, 
-                width: "30%", 
-                borderRadius: 4, 
-                alignSelf: "center", 
-                marginTop: 30, 
+                height: "58px",
+                backgroundColor: '#ffffff',
+                justifyContent: "center",
+                alignItems: "center",
+                paddingRight: 21,
+                paddingLeft: 21,
+                width: "30%",
+                borderRadius: 4,
+                alignSelf: "center",
+                marginTop: 30,
                 marginBottom: 30
             },
             resourceHeaderAgeGroupBoxText: {
-                color: '#000000', 
-                fontSize: 30, 
+                color: '#000000',
+                fontSize: 30,
                 lineHeight: 35,
-                fontWeight: 'bold', 
+                fontWeight: 'bold',
                 fontFamily: 'Graphik-Regular-App'
             },
             fontCourseHeader: {
@@ -1166,7 +1166,7 @@ export default class MainStyles {
                 height: 50
             },
             resourceHeaderImgContainer: {
-            //    backgroundColor: "#000000", 
+                //    backgroundColor: "#000000", 
                 maxHeight: "350px"
             },
             resourceHeaderImg: {
@@ -1186,7 +1186,7 @@ export default class MainStyles {
                 alignSelf: "flex-start",
             },
             myprofilePickerContainer: {
-                flex: 1,
+                flexGrow: 0,
                 flexDirection: 'column',
                 alignItems: 'center',
             },
@@ -1197,6 +1197,7 @@ export default class MainStyles {
                 flex: 1,
                 flexDirection: 'row',
                 flexWrap: 'wrap',
+                alignContent: 'flex-start',
                 top: 20,
             },
             myprofileMyRoleContainer: {
@@ -1208,7 +1209,7 @@ export default class MainStyles {
                 width: "100%",
                 alignItems: "flex-start",
                 marginTop: 5,
-                flexGrow: 0.4
+                flexGrow: 0.5
             },
             myprofilePicker: {
                 height: 45,
@@ -1218,19 +1219,19 @@ export default class MainStyles {
                 borderColor: '#dddddd'
             },
             myProfileOrgView: {
-                flex: 1, 
+                flex: 1,
                 flexDirection: 'row'
             },
             myProfileOrgTypeInput: {
-                borderWidth: 1, 
-                borderColor: "#dddddd", 
-                width: 308, 
-                paddingTop: 8, 
-                paddingRight: 10, 
-                paddingBottom: 8, 
-                paddingLeft: 10, 
-                fontFamily: 'Graphik-Regular-App', 
-                fontSize: 16, 
+                borderWidth: 1,
+                borderColor: "#dddddd",
+                width: 308,
+                paddingTop: 8,
+                paddingRight: 10,
+                paddingBottom: 8,
+                paddingLeft: 10,
+                fontFamily: 'Graphik-Regular-App',
+                fontSize: 16,
                 lineHeight: 24
             },
             headerLeft: {
@@ -1342,7 +1343,7 @@ export default class MainStyles {
                     flex: 1,
                     paddingLeft: 0,
                     paddingBottom: 15,
-                    paddingTop: 0, 
+                    paddingTop: 0,
                     textAlign: 'left'
                 },
                 myMapFontTitle: {
