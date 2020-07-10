@@ -42,6 +42,10 @@ export const createUser = /* GraphQL */ `
       orgName
       orgType
       orgSize
+      denomination
+      pplServed
+      sundayAttendance
+      numberVolunteers
       orgDescription
       joined
       primaryOrganization
@@ -154,6 +158,10 @@ export const updateUser = /* GraphQL */ `
       orgName
       orgType
       orgSize
+      denomination
+      pplServed
+      sundayAttendance
+      numberVolunteers
       orgDescription
       joined
       primaryOrganization
@@ -266,6 +274,10 @@ export const deleteUser = /* GraphQL */ `
       orgName
       orgType
       orgSize
+      denomination
+      pplServed
+      sundayAttendance
+      numberVolunteers
       orgDescription
       joined
       primaryOrganization
@@ -371,6 +383,10 @@ export const createGroupMember = /* GraphQL */ `
           orgName
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           primaryOrganization
@@ -446,6 +462,10 @@ export const createGroupMember = /* GraphQL */ `
         orgName
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         primaryOrganization
@@ -502,6 +522,10 @@ export const updateGroupMember = /* GraphQL */ `
           orgName
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           primaryOrganization
@@ -577,6 +601,10 @@ export const updateGroupMember = /* GraphQL */ `
         orgName
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         primaryOrganization
@@ -633,6 +661,10 @@ export const deleteGroupMember = /* GraphQL */ `
           orgName
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           primaryOrganization
@@ -708,6 +740,10 @@ export const deleteGroupMember = /* GraphQL */ `
         orgName
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         primaryOrganization
@@ -774,6 +810,10 @@ export const createGroup = /* GraphQL */ `
         orgName
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         primaryOrganization
@@ -888,6 +928,10 @@ export const updateGroup = /* GraphQL */ `
         orgName
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         primaryOrganization
@@ -1002,6 +1046,10 @@ export const deleteGroup = /* GraphQL */ `
         orgName
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         primaryOrganization
@@ -1118,6 +1166,10 @@ export const createOrganizationMember = /* GraphQL */ `
         orgName
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         primaryOrganization
@@ -1245,6 +1297,10 @@ export const updateOrganizationMember = /* GraphQL */ `
         orgName
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         primaryOrganization
@@ -1372,6 +1428,10 @@ export const deleteOrganizationMember = /* GraphQL */ `
         orgName
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         primaryOrganization
@@ -2356,6 +2416,10 @@ export const createDirectMessageUser = /* GraphQL */ `
         orgName
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         primaryOrganization
@@ -2436,6 +2500,10 @@ export const updateDirectMessageUser = /* GraphQL */ `
         orgName
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         primaryOrganization
@@ -2516,6 +2584,10 @@ export const deleteDirectMessageUser = /* GraphQL */ `
         orgName
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         primaryOrganization
@@ -2704,6 +2776,10 @@ export const createDirectMessage = /* GraphQL */ `
         orgName
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         primaryOrganization
@@ -2787,6 +2863,10 @@ export const updateDirectMessage = /* GraphQL */ `
         orgName
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         primaryOrganization
@@ -2870,6 +2950,10 @@ export const deleteDirectMessage = /* GraphQL */ `
         orgName
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         primaryOrganization
@@ -2956,6 +3040,10 @@ export const createMessage = /* GraphQL */ `
         orgName
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         primaryOrganization
@@ -3001,6 +3089,10 @@ export const createMessage = /* GraphQL */ `
           orgName
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           primaryOrganization
@@ -3093,6 +3185,10 @@ export const updateMessage = /* GraphQL */ `
         orgName
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         primaryOrganization
@@ -3138,6 +3234,10 @@ export const updateMessage = /* GraphQL */ `
           orgName
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           primaryOrganization
@@ -3230,6 +3330,10 @@ export const deleteMessage = /* GraphQL */ `
         orgName
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         primaryOrganization
@@ -3275,6 +3379,10 @@ export const deleteMessage = /* GraphQL */ `
           orgName
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           primaryOrganization

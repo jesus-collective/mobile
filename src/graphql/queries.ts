@@ -42,6 +42,10 @@ export const getUser = /* GraphQL */ `
       orgName
       orgType
       orgSize
+      denomination
+      pplServed
+      sundayAttendance
+      numberVolunteers
       orgDescription
       joined
       primaryOrganization
@@ -159,6 +163,10 @@ export const listUsers = /* GraphQL */ `
         orgName
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         primaryOrganization
@@ -224,6 +232,10 @@ export const getGroup = /* GraphQL */ `
         orgName
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         primaryOrganization
@@ -329,6 +341,10 @@ export const listGroups = /* GraphQL */ `
           orgName
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           primaryOrganization
@@ -893,6 +909,10 @@ export const getDirectMessageUser = /* GraphQL */ `
         orgName
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         primaryOrganization
@@ -968,6 +988,10 @@ export const listDirectMessageUsers = /* GraphQL */ `
           orgName
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           primaryOrganization
@@ -1097,6 +1121,10 @@ export const getDirectMessage = /* GraphQL */ `
         orgName
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         primaryOrganization
@@ -1171,6 +1199,10 @@ export const listDirectMessages = /* GraphQL */ `
           orgName
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           primaryOrganization
@@ -1241,6 +1273,10 @@ export const getMessage = /* GraphQL */ `
         orgName
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         primaryOrganization
@@ -1286,6 +1322,10 @@ export const getMessage = /* GraphQL */ `
           orgName
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           primaryOrganization
@@ -1369,6 +1409,10 @@ export const listMessages = /* GraphQL */ `
           orgName
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           primaryOrganization
@@ -1941,6 +1985,10 @@ export const groupMemberByGroup = /* GraphQL */ `
           orgName
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           primaryOrganization
@@ -2020,6 +2068,10 @@ export const groupMemberByUser = /* GraphQL */ `
           orgName
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           primaryOrganization
@@ -2077,6 +2129,10 @@ export const groupByType = /* GraphQL */ `
           orgName
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           primaryOrganization
@@ -2166,6 +2222,10 @@ export const directMessagesByRoom = /* GraphQL */ `
           orgName
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           primaryOrganization
@@ -2237,6 +2297,10 @@ export const messagesByRoom = /* GraphQL */ `
           orgName
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           primaryOrganization
@@ -2322,6 +2386,10 @@ export const searchUsers = /* GraphQL */ `
         orgName
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         primaryOrganization
@@ -2385,6 +2453,10 @@ export const searchGroups = /* GraphQL */ `
           orgName
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           primaryOrganization
