@@ -293,7 +293,7 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", paddingTop: 5, width: "100%"
             },
             fontFormSmallDarkGreyCoordinates: {
-                fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", paddingTop: 5, width: "100%"
+                fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 22, color: "#333333", paddingTop: 5, width: "100%"
             },
             fontFormSmallInput: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 25, letterSpacing: -0.3, color: "#333333", maxWidth: 250, height: 18, borderWidth: 0, borderColor: "#dddddd"
@@ -1280,6 +1280,7 @@ export default class MainStyles {
                 groupNameInput: {
                     fontSize: 24,
                     lineHeight: 30,
+                    width: '50%'
                 },
                 eventNameInput: {
                     fontSize: 24,
@@ -1314,7 +1315,7 @@ export default class MainStyles {
                 },
                 myProfileCoordinates: {
                     flexDirection: "column",
-                    marginBottom: 30,
+                    marginBottom: 80,
                 },
                 myProfilePersonalInfoWrapper: {
                     marginBottom: 35,
@@ -1358,7 +1359,8 @@ export default class MainStyles {
                     maxWidth: 175
                 },
                 fontFormSmallDarkGreyCoordinates: {
-                    width: "100%"
+                    width: "100%",
+                    marginBottom: 15
                 },
                 myProfileTopButtonsExternalContainer: {
                     flexDirection: "column"
@@ -1574,6 +1576,14 @@ export default class MainStyles {
                 },
                 myProfileOrgTypeInput: {
                     marginTop: 10,
+                },
+                myProfileCoordinates: {
+                    flexDirection: "column",
+                    marginBottom: 80,
+                },
+                fontFormSmallDarkGreyCoordinates: {
+                    width: "100%",
+                    marginBottom: 15
                 },
             },
 
