@@ -310,6 +310,9 @@ export default class MainStyles {
             fontFormSmallHeader: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 26, letterSpacing: -0.3, textTransform: "uppercase", color: "#333333"
             },
+            profilePrivateInformation: {
+                fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 26, letterSpacing: -0.3, textTransform: "uppercase", color: "#333333"
+            },
             fontFormSmall: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 12, lineHeight: 21, textTransform: "uppercase", color: "#333333", opacity: 0.5
             },
@@ -1316,7 +1319,7 @@ export default class MainStyles {
                 },
                 myProfileCoordinates: {
                     flexDirection: "column",
-                    marginBottom: 80,
+                    marginBottom: 130,
                 },
                 myProfilePersonalInfoWrapper: {
                     marginBottom: 35,
@@ -1326,6 +1329,9 @@ export default class MainStyles {
                 },
                 fontFormSmallHeader: {
                     marginTop: 100
+                },
+                profilePrivateInformation: {
+                    marginTop: 25
                 },
                 resourcefileFieldWrapper: {
                     top: "10vw",

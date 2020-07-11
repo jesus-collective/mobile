@@ -496,7 +496,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               }
 
               {this.state.isEditable && this.state.editMode ?
-                <Text style={this.styles.style.fontFormSmallHeader}>Private Information</Text>
+                <Text style={this.styles.style.profilePrivateInformation}>Private Information</Text>
                 : null
               }
               {this.state.isEditable && this.state.editMode ?
