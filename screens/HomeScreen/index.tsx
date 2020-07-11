@@ -18,7 +18,7 @@ import { UserContext } from './UserContext'
 import SignUpScreen3 from '../../components/Auth/SignUpScreen3'
 
 import moment from "moment";
-import { NavigationContainer } from "@react-navigation/native"
+import { NavigationContainer, DefaultTheme } from "@react-navigation/native"
 import { Linking } from "expo";
 import { navigationRef } from './NavigationRoot';
 import * as RootNavigation from './NavigationRoot';
@@ -683,6 +683,7 @@ function Main(props: any) {
       ref={navigationRef}
       initialState={initialState}
       linking={linking}
+      theme={{ ...DefaultTheme, colors: { ...DefaultTheme.colors, background: 'rgb(255, 255, 255)' } }}
       onStateChange={(state) => {
         console.log({ persistencestate: state })
         AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))
