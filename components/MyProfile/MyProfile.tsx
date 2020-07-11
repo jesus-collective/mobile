@@ -616,7 +616,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                     }) : null}
                 </View>
               }
-              <View>
+              <View style={{ width: '100%' }}>
                 <Label style={this.styles.style.fontFormSmall}><Text style={this.styles.style.fontFormMandatory}>{this.state.isEditable && this.state.editMode ? '*' : ''}</Text>Current Role</Label>
                 <EditableText onChange={(e) => { this.handleInputChange(e, "currentRole") }}
                   multiline={false}
