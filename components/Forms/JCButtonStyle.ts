@@ -311,8 +311,8 @@ export default EStyleSheet.create({
     EditButtonButton: {
         paddingTop: 0,
         paddingBottom: 0,
-        marginLeft: 10,
-        marginRight: 10,
+        marginLeft: 0,
+        marginRight: 0,
         backgroundColor: "#ffffff00",
         borderWidth: 1,
         borderRadius: 5,
