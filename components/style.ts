@@ -1303,8 +1303,8 @@ export default class MainStyles {
                     marginBottom: 0
                 },
                 myProfileImage: {
-                    width: "200px",
-                    height: "240px",
+                    width: "160px",
+                    height: "200px",
                     borderRadius: 120
                 },
                 fileInputWrapper: {
