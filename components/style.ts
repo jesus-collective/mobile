@@ -1497,6 +1497,9 @@ export default class MainStyles {
                 profileFontTitle: {
                     marginBottom: 15
                 },
+                fontFormName: {
+                    marginTop: 20,
+                },
             },
 
             // Media Query Desktop Large Tablet
