@@ -153,6 +153,29 @@ export default EStyleSheet.create({
         padding: 10,
         fontWeight: "600",
     },
+    SolidProfileNameButton: {
+        paddingTop: 6,
+        paddingBottom: 6,
+        paddingLeft: 29,
+        paddingRight: 29,
+        marginBottom: 20,
+        marginLeft: 0,
+        marginRight: 0,
+        //   color:"#F0493E",
+        backgroundColor: "#F0493E",
+        borderWidth: 1,
+        borderColor: "#F0493E",
+        boxShadow: "unset",
+        borderRadius: 4,
+        justifyContent: 'center',
+    },
+    SolidProfileNameText: {
+        color: "#ffffff",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        padding: 10,
+        fontWeight: "600",
+    },
     SolidAboutMeButton:
     {
         paddingTop: 6,
@@ -476,9 +499,18 @@ export default EStyleSheet.create({
             textAlign: "center",
             paddingLeft: 0,
             paddingRight: 0,
-            width: 200
+            width: '100%'
         },
         SolidProfileText: {
+            width: "100%"
+        },
+        SolidProfileNameButton: {
+            textAlign: "center",
+            paddingLeft: 0,
+            paddingRight: 0,
+            width: 200
+        },
+        SolidProfileNameText: {
             width: "100%"
         },
         SolidAboutMeButton: {
@@ -515,6 +547,12 @@ export default EStyleSheet.create({
             width: "100%"
         },
         SolidProfileButton: {
+            textAlign: "center",
+            paddingLeft: 0,
+            paddingRight: 0,
+            width: "100%"
+        },
+        SolidProfileNameButton: {
             textAlign: "center",
             paddingLeft: 0,
             paddingRight: 0,

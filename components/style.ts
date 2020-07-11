@@ -1498,7 +1498,7 @@ export default class MainStyles {
                     marginBottom: 15
                 },
                 fontFormName: {
-                    marginTop: 20,
+                    marginTop: 30,
                 },
             },
 
