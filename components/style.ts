@@ -1847,8 +1847,10 @@ export default class MainStyles {
                 { zIndex: 3, position: "absolute", width: "80%", height: "10%", left: "10%", top: "40%", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 30, color: "#FFFFFF" } :
                 { display: "none", zIndex: 3, position: "absolute", width: "80%", height: "10%", left: "10%", top: "40%", fontFamily: "Graphik-Bold-App", fontSize: 24, lineHeight: 48, color: "#FFFFFF" },
 
-            signUpProfile: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
-                { position: "absolute", left: "30%", width: "65%", top: 10 } :
+            signUpProfile: Platform.OS === 'web' && Dimensions.get('window').width > 1024 ?
+                { position: "absolute", left: "15%", width: "85%", top: 10 } : Platform.OS === 'web' && Dimensions.get('window').width > 768 ?
+                { position: "absolute", left: "18%", width: "82.5%", top: 10 } : Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
+                { position: "absolute", left: "24%", width: "78%", top: 10 } :
                 { position: "absolute", left: "2%", width: "96%", top: 100 + Constants.statusBarHeight, height: "100%" },
 
             signUpScreen1Content: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
