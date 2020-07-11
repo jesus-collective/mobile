@@ -1474,7 +1474,7 @@ export default class MainStyles {
                 },
                 myprofilePicker: {
                     marginBottom: 10,
-                    width: '100%'
+                    width: '75%'
                 },
                 dashboardConversationBody: {
                     alignItems: "center"
@@ -1499,6 +1499,9 @@ export default class MainStyles {
                 },
                 fontFormName: {
                     marginTop: 30,
+                },
+                myProfileOrgTypeInput: {
+                    width: '100%'
                 },
             },
 
@@ -1570,7 +1573,7 @@ export default class MainStyles {
                     flexDirection: 'column'
                 },
                 myProfileOrgTypeInput: {
-                    marginTop: 10
+                    marginTop: 10,
                 },
             },
 
