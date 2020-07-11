@@ -658,6 +658,7 @@ export default class MainStyles {
             myProfileCoordinates: {
                 justifyContent: "space-between",
                 flexDirection: "row",
+                marginBottom: 80,
                 width: "100%",
                 flexGrow: 0,
                 marginTop: 30,
