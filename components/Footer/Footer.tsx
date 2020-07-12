@@ -3,7 +3,7 @@ import { Container, Body, Button } from 'native-base';
 import { DrawerActions } from '@react-navigation/native';
 
 import React from 'react';
-import { Image, Text, Linking } from 'react-native';
+import { Image, Text, Linking, Platform } from 'react-native';
 import footerStyles from '../Footer/style';
 import { constants } from '../../src/constants'
 import JCComponent from '../JCComponent/JCComponent';
@@ -14,10 +14,16 @@ interface Props {
   onMapChange?(): any
 }
 
+type SubMenuItem = {
+  name: string
+  linkTo?: string
+  webLink?: string
+  navProps?: { mine?: boolean, create?: boolean, id?: string }
+}
+
 type MenuItem = {
   name: string
-  linkto?: string
-  submenu?: MenuItem[]
+  subMenu?: SubMenuItem[]
 }
 export default class FooterJC extends JCComponent<Props> {
 
@@ -27,63 +33,67 @@ export default class FooterJC extends JCComponent<Props> {
   menu: MenuItem[] = [
     {
       name: "About Us",
-      submenu: [
-        { name: "Who We Are", linkto: "https://jesuscollective.com" },
-        { name: "Our Mission", linkto: "https://jesuscollective.com/discover" },
-        { name: "Team", linkto: "https://jesuscollective.com/team" }
+      subMenu: [
+        { name: "Who We Are", webLink: "https://jesuscollective.com" },
+        { name: "Our Mission", webLink: "https://jesuscollective.com/discover" },
+        { name: "Team", webLink: "https://jesuscollective.com/team" }
       ]
     },
     constants["SETTING_ISVISIBLE_event"] ? {
       name: "Events",
-      submenu: [
-        { name: "My Events", linkto: "EventsScreen" },
-        { name: "Recommended", linkto: null }
-
+      subMenu: [
+        { name: "My Events", linkTo: "EventsScreen", navProps: { mine: true } },
+        { name: "Recommended", linkTo: null }
       ]
     } : null
     ,
     constants["SETTING_ISVISIBLE_group"] ? {
       name: "Groups",
-      submenu: [
-        { name: "My Groups", linkto: "GroupsScreen" },
-        { name: "Recommended", linkto: null }
+      subMenu: [
+        { name: "My Groups", linkTo: "GroupsScreen", navProps: { mine: true } },
+        { name: "Recommended", linkTo: null }
 
       ]
     } : null,
     constants["SETTING_ISVISIBLE_resource"] ? {
       name: "Resources",
-      submenu: [
-        { name: "Kids & Youth", linkto: "ResourcesScreen" },
-        { name: "Training", linkto: null },
-        { name: "Adult Teaching", linkto: null }
+      subMenu: [
+        { name: "Kids & Youth", linkTo: "ResourceScreen", navProps: { create: false, id: 'resource-1580889856205' } },
+        { name: "Training", linkTo: null },
+        { name: "Adult Teaching", linkTo: null }
 
       ]
     } : null,
     {
       name: "Contact Us",
-      submenu: [
-        { name: "Get Involved", linkto: null },
-        { name: "Connect With Us", linkto: "mailto:connect@jesuscollective.com" }
-
+      subMenu: [
+        { name: "Get Involved", linkTo: null },
+        { name: "Connect With Us", webLink: "mailto:connect@jesuscollective.com" },
+        { name: "Report bugs", webLink: "mailto:bug.report@jesuscollective.com" }
       ]
     },
   ]
   openDrawer = (): void => {
     this.props.navigation.dispatch(DrawerActions.openDrawer());
   }
-  openMyScreen = (screen: string): void => {
-    this.props.navigation.push(screen, { mine: true });
+  openScreen = (screen: string, props: SubMenuItem['navProps']): void => {
+    this.props.navigation.navigate(screen, props);
   }
-  openScreen = (screen: string): void => {
-    this.props.navigation.push(screen);
-  }
-  open = (obj: MenuItem): void => {
-    if (obj.linkto.includes("Screen") && obj.name.includes("My")) {
-      this.openMyScreen(obj.linkto)
-    } else if (obj.linkto.includes("Screen")) {
-      this.openScreen(obj.linkto)
+  open = async (obj: SubMenuItem): Promise<void> => {
+    if (Platform.OS === 'web' && obj.webLink) {
+      window.open(obj.webLink, '_blank', 'noopener noreferrer')
+    } else if (obj.linkTo && obj.navProps) {
+      this.openScreen(obj.linkTo, obj.navProps)
+    } else if (obj.webLink) {
+      try {
+        const supported = await Linking.canOpenURL(obj.webLink)
+        if (supported)
+          await Linking.openURL(obj.webLink)
+      } catch (e) {
+        console.error(e)
+      }
     } else {
-      Linking.openURL(obj.linkto)
+      console.error('Unable to navigate')
     }
   }
   render(): React.ReactNode {
@@ -95,7 +105,7 @@ export default class FooterJC extends JCComponent<Props> {
           <Body style={footerStyles.footerInnerBodyContainer}>
             <Button
               transparent
-              onPress={() => { this.open({ name: "Home", linkto: "HomeScreen" }) }}>
+              onPress={() => { this.open({ name: "Home", linkTo: "HomeScreen", navProps: {} }) }}>
               <Image style={footerStyles.logo}
                 source={require('./icon.png')}
               /></Button>
@@ -106,8 +116,8 @@ export default class FooterJC extends JCComponent<Props> {
               return (
                 <Body key={item.name} style={{ display: "flex", flexDirection: 'column', alignSelf: "flex-start", alignItems: "flex-start", justifyContent: 'flex-start' }}>
                   <Text style={footerStyles.footerCenterMenuButtonsTextWhite}>{item.name}</Text>
-                  {item.submenu.map((item2) => {
-                    if (item2.linkto != null)
+                  {item.subMenu.map((item2) => {
+                    if (item2.linkTo || item2.webLink)
                       return (<Button key={item2.name}
                         transparent
                         onPress={() => this.open(item2)}
