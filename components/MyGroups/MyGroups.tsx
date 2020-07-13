@@ -346,12 +346,11 @@ export default class MyGroups extends JCComponent<Props, State> {
     data.forEach((item: any) => {
       const getGroup: any = API.graphql({
         query: customQueries.getGroupForOwner,
-        variables: { id: item.id, owner: { eq: this.state.currentUser } },
+        variables: { id: item.id },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       getGroup.then((json: any) => {
-        //  console.log({ "getGroup": json })
-        if (json.data.getGroup) {
+        if (json.data.getGroup.owner === this.state.currentUser) {
           this.setState({ isOwner: this.state.isOwner.concat([item.id]) })
         }
       }).catch((err: any) => {
