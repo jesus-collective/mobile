@@ -25,5 +25,39 @@
                 }
             }
         }
+    },
+    "beta": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-jc-mobile-beta-155138-authRole",
+            "UnauthRoleArn": "arn:aws:iam::119330689042:role/amplify-jc-mobile-beta-155138-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::119330689042:role/amplify-jc-mobile-beta-155138-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "amplify-jc-mobile-beta-155138-deployment",
+            "UnauthRoleName": "amplify-jc-mobile-beta-155138-unauthRole",
+            "StackName": "amplify-jc-mobile-beta-155138",
+            "StackId": "arn:aws:cloudformation:us-east-1:119330689042:stack/amplify-jc-mobile-beta-155138/45fa33c0-c542-11ea-8577-0abf94ca9997",
+            "AmplifyAppId": "d30rbl645sjuc9"
+        },
+        "categories": {
+            "auth": {
+                "jcmobile": {
+                    "facebookAppId": "abc",
+                    "googleClientId": "def"
+                },
+                "userPoolGroups": {}
+            },
+            "function": {
+                "jcmobilePostConfirmation": {
+                    "GROUP": "verifiedUsers"
+                },
+                "S3Trigger14f1cefa": {},
+                "S3Trigger839efa13": {},
+                "AdminQueries7403b6cf": {},
+                "jcmobilePreSignup": {},
+                "jcUpdateMainUserGroup": {},
+                "jcProcessDMAlerts": {},
+                "jcmobile": {}
+            }
+        }
     }
 }

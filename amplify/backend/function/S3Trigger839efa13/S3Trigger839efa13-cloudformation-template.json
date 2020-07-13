@@ -59,7 +59,7 @@
 				"Runtime": "nodejs12.x",
 				"Timeout": "25",
 				"Code": {
-					"S3Bucket": "jc-mobile-dev-20190809190418-deployment",
+					"S3Bucket": "amplify-jc-mobile-beta-155138-deployment",
 					"S3Key": "amplify-builds/S3Trigger839efa13-4d2b5761656b37384d31-build.zip"
 				}
 			}
