@@ -14,7 +14,7 @@ import CourseHome from '../../components/CourseViewer/CourseHome'
 import CourseDetail from '../../components/CourseViewer/CourseDetail'
 import CourseCoaching from '../../components/CourseViewer/CourseCoaching'
 import { CourseContext } from '../../components/CourseViewer/CourseContext';
-import { CreateCourseWeekInput, CreateCourseLessonInput } from 'src/API';
+import { CreateCourseWeekInput, CreateCourseLessonInput, CreateCourseTriadsInput } from 'src/API';
 
 interface Props {
   navigation: any
@@ -113,6 +113,52 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
       activeLesson: index
     })
   }
+  updateTriad = async (index: number, item: string, value: any): Promise<void> => {
+    try {
+      console.log({ "Updating Triad": index })
+
+      const updateCourseTriads: any = await API.graphql({
+        query: mutations.updateCourseTriads,
+        variables: {
+          input: {
+            id: this.state.courseData.triads.items[index].id,
+            [item]: value
+          }
+        },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+      });
+      console.log(updateCourseTriads)
+      const temp = this.state.courseData
+      temp.triads.items[index][item] = value
+      this.setState({ courseData: temp })
+
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  createTriad = async (): Promise<void> => {
+    const triad: CreateCourseTriadsInput =
+    {
+    }
+    try {
+      console.log("Creating Triad")
+
+      const createTriad: any = await API.graphql({
+        query: mutations.createCourseTriads,
+        variables: { input: triad },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+      });
+      console.log(createTriad)
+      const temp = this.state.courseData
+      temp.triads.items.push(createTriad.data.createCourseTriads)
+      console.log(temp)
+      this.setState({ courseData: temp }, () => this.forceUpdate())
+
+    } catch (e) {
+      console.log(e)
+    }
+  }
   createWeek = async (): Promise<void> => {
     const resource: CreateCourseWeekInput =
     {
@@ -166,6 +212,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
     }
 
   }
+
   updateWeekOrder = (): void => {
     try {
       this.state.courseData.courseWeeks.items.forEach((item, index) => {
@@ -206,9 +253,32 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
       console.log(e)
     }
   }
+  updateCourse = async (item: string, value: any): Promise<void> => {
+    try {
+      console.log({ "Updating Week": index })
+
+      const updateCourseInfo: any = await API.graphql({
+        query: mutations.updateCourseInfo,
+        variables: {
+          input: {
+            id: this.state.courseData.id,
+            [item]: value
+          }
+        },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+      });
+      console.log(updateCourseInfo)
+      const temp = this.state.courseData
+      temp[item] = value
+      this.setState({ courseData: temp })
+
+    } catch (e) {
+      console.log(e)
+    }
+  }
   updateWeek = async (index: number, item: string, value: any): Promise<void> => {
     try {
-      console.log({ "Updating Resource": index })
+      console.log({ "Updating Week": index })
 
       const updateWeek: any = await API.graphql({
         query: mutations.updateCourseWeek,
@@ -260,7 +330,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
           }, actions: {
             createCourse: null,
             changeCourse: null,
-            updateCourse: null,
+            updateCourse: this.updateCourse,
             deleteCourse: null,
             setActiveScreen: this.setActiveScreen,
             setActiveWeek: this.setActiveWeek,
@@ -270,7 +340,9 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
             updateWeek: this.updateWeek,
             updateWeekOrder: this.updateWeekOrder,
             createLesson: this.createLesson,
-            updateLesson: this.updateLesson
+            updateLesson: this.updateLesson,
+            createTriad: this.createTriad,
+            updateTriad: this.updateTriad
           }
         }}>
           <StyleProvider style={getTheme()}>

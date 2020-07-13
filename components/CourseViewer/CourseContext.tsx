@@ -14,6 +14,8 @@ export const CourseContext = React.createContext({
         deleteWeek: null,
         updateWeekOrder: null,
         createLesson: null,
-        updateLesson: null
+        updateLesson: null,
+        updateTriad: null,
+        createTriad: null
     }, state: null
 })

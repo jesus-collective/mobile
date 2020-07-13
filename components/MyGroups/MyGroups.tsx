@@ -616,7 +616,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                           </ErrorBoundry>
                         )
                       })
-                      : <Text style={this.styles.style.noCardFontTitle}>No upcoming {this.state.type}s</Text>
+                      : <Text style={this.styles.style.noCardFontTitle}>No {this.state.type == "event" ? this.state.eventFilter ? "previous " : "upcoming " : ""}{this.state.type}s</Text>
                     : <Text style={this.styles.style.loadingFontTitle}>Loading {this.state.type}s</Text>
                   }
                   {this.state.nextToken ?

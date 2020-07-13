@@ -13,7 +13,8 @@ import EditableUsers from '../../components/Forms/EditableUsers'
 
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { CourseContext } from './CourseContext';
-import EditableText from '../../components/Forms/EditableText';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import EditableRichText from '../../components/Forms/EditableRichText';
 
 interface Props {
   navigation?: any
@@ -47,17 +48,14 @@ class CourseHomeImpl extends JCComponent<Props>{
                           <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
                           <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Book a Call</JCButton>
                           <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Send Message</JCButton>
-                          <EditableText multiline={false}
-                            textStyle={this.styles.style.fontCourseHeaderBold}
-                            value={state.data.introduction}
-                            isEditable={false}></EditableText>
+                          <Text>Welcome Message</Text>
+                          {state.courseData ?
+                            <EditableRichText onChange={(val) => { actions.updateCourse("introduction", val) }}
+                              value={state.courseData.introduction}
+                              isEditable={true}
+                              textStyle=""></EditableRichText> : null}
 
-                          <Text>Hi </Text>
-                          <Text>I’m Jon Hand and welcome to our six-week leadership journey. I’ll be your instructor. You can go ahead and start viewing content. We will officially kick-off on Monday with our Zoom Video Call.
-
-                          If there is anything that I can help you with, feel free to ask anytime. Talk soon!
-
-                          Jon </Text>
+                          <Text>Instructor:</Text>
                           <EditableUsers
                             limit={1}
                             onChange={(value: any[]) => { actions.updateCourse("instructor", value) }}
@@ -69,34 +67,67 @@ class CourseHomeImpl extends JCComponent<Props>{
                             value={state.instructor} isEditable={true}></EditableUsers>
                           <Text>Syllabus</Text>
                           <Card>
-                            <Text>Leadership Formation Course</Text>
-                            <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Download</JCButton>
+                            <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Upload</JCButton>
+                          </Card>
+                          {state.isEditable ?
+                            (<>
+                              {state.courseData?.triads?.items.map((item, index) => {
+                                <Card>
+                                  <Text>Coach</Text>
+                                  <EditableUsers
+                                    limit={1}
+                                    onChange={(value: any[]) => { actions.updateTriad(index, "coach", value) }}
+                                    multiline={false}
+                                    data-testid="profile-currentRole"
+                                    showProfileImages={true}
+                                    textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                    inputStyle={this.styles.style.fontFormLargeInput}
+                                    value={item.coach} isEditable={true}></EditableUsers>
 
-                          </Card>
-                          <Text>My Coach</Text>
-                          <Card>
-                            <EditableUsers
-                              limit={1}
-                              onChange={(value: any[]) => { actions.updateTriad({ coach: value }) }}
-                              multiline={false}
-                              data-testid="profile-currentRole"
-                              showProfileImages={true}
-                              textStyle={this.styles.style.fontFormSmallDarkGrey}
-                              inputStyle={this.styles.style.fontFormLargeInput}
-                              value={state.triad.coach} isEditable={true}></EditableUsers>
-                          </Card>
-                          <Text>My Triad</Text>
-                          <Card>
-                            <EditableUsers
-                              limit={3}
-                              onChange={(value: any[]) => { actions.updateTriad({ triad: value }) }}
-                              multiline={false}
-                              data-testid="profile-currentRole"
-                              showProfileImages={true}
-                              textStyle={this.styles.style.fontFormSmallDarkGrey}
-                              inputStyle={this.styles.style.fontFormLargeInput}
-                              value={state.triad.coach} isEditable={true}></EditableUsers>
-                          </Card>
+                                  <Text>Triad</Text>
+                                  <EditableUsers
+                                    limit={3}
+                                    onChange={(value: any[]) => { actions.updateTriad(index, "triad", value) }}
+                                    multiline={false}
+                                    data-testid="profile-currentRole"
+                                    showProfileImages={true}
+                                    textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                    inputStyle={this.styles.style.fontFormLargeInput}
+                                    value={item.triad} isEditable={true}></EditableUsers>
+                                </Card>
+                              })
+                              }
+                              <TouchableOpacity onPress={() => { actions.createTriad() }}>
+                                < Card ><Text>Add Triad</Text></Card>
+                              </TouchableOpacity>
+                            </>)
+                            : (<>
+                              <Text>My Coach</Text>
+                              <Card>
+                                <EditableUsers
+                                  limit={1}
+                                  onChange={(value: any[]) => { null }}
+                                  multiline={false}
+                                  data-testid="profile-currentRole"
+                                  showProfileImages={true}
+                                  textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                  inputStyle={this.styles.style.fontFormLargeInput}
+                                  value={state.myTriad.coach} isEditable={false}></EditableUsers>
+                              </Card>
+                              <Text>My Triad</Text>
+                              <Card>
+                                <EditableUsers
+                                  limit={3}
+                                  onChange={(value: any[]) => { null }}
+                                  multiline={false}
+                                  data-testid="profile-currentRole"
+                                  showProfileImages={true}
+                                  textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                  inputStyle={this.styles.style.fontFormLargeInput}
+                                  value={state.myTriad.coach} isEditable={false}></EditableUsers>
+                              </Card>
+                            </>)
+                          }
                           <Text>My Cohort</Text>
                           <Card>
                             <EditableUsers

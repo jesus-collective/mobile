@@ -45,10 +45,12 @@ interface State extends JCState {
   validationError: string
   currentUser: string
   currentUserProfile: any
-  memberIDs: string[],
+  memberIDs: string[]
   members: any
   mapData: MapData[]
   canGotoActiveCourse: boolean
+  myTriad: any
+
 }
 
 
