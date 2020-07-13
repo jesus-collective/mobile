@@ -11,15 +11,16 @@ export default class JCComponent<Props = any, State extends JCState = any> exten
     constructor(props: Props) {
         super(props)
         this.state = this.getInitialState()
-
-    }
-    componentDidMount(): void {
         const user = Auth.currentAuthenticatedUser();
         user.then((user) => {
+            console.log(user.signInUserSession.accessToken.payload["cognito:groups"])
             this.setState({
                 groups: user.signInUserSession.accessToken.payload["cognito:groups"]
             })
         })
+    }
+    componentDidMount(): void {
+
         Dimensions.addEventListener('change', () => { this.styles.updateStyles(this) })
     }
     protected getInitialState(): State {

@@ -14,6 +14,7 @@ interface Props {
     inputStyle?: any,
     multiline: boolean,
     placeholder?: string,
+    limit?: number,
     placeholderTextColor?: string,
     listOfSuggestedUsers?: string[],
     showProfileImages: boolean,
@@ -44,6 +45,9 @@ export default class EditableText extends JCComponent<Props> {
 
     }
     onChanged(val: any[]): void {
+        if (this.props.limit)
+            if (val.length > this.props.limit)
+                val.slice(0, this.props.limit)
         console.log(val)
         this.props.onChange(val)
     }
@@ -78,6 +82,7 @@ export default class EditableText extends JCComponent<Props> {
         if (this.props.isEditable)
             return (
                 <Chips
+
                     fromSuggestionsOnly={true}
                     uniqueChips={true}
                     value={this.props.value}

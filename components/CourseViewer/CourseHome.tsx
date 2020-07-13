@@ -9,9 +9,11 @@ import { Image } from 'react-native'
 import CourseHeader from '../CourseHeader/CourseHeader';
 import { Calendar } from 'react-native-calendars';
 import JCComponent from '../JCComponent/JCComponent';
+import EditableUsers from '../../components/Forms/EditableUsers'
 
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { CourseContext } from './CourseContext';
+import EditableText from '../../components/Forms/EditableText';
 
 interface Props {
   navigation?: any
@@ -31,7 +33,7 @@ class CourseHomeImpl extends JCComponent<Props>{
     return (
 
       <CourseHomeImpl.Consumer>
-        {({ state }) => {
+        {({ state, actions }) => {
           return (
             state.data && state.currentScreen == "Home" ?
               <StyleProvider style={getTheme()}>
@@ -45,12 +47,26 @@ class CourseHomeImpl extends JCComponent<Props>{
                           <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
                           <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Book a Call</JCButton>
                           <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Send Message</JCButton>
+                          <EditableText multiline={false}
+                            textStyle={this.styles.style.fontCourseHeaderBold}
+                            value={state.data.introduction}
+                            isEditable={false}></EditableText>
+
                           <Text>Hi </Text>
                           <Text>I’m Jon Hand and welcome to our six-week leadership journey. I’ll be your instructor. You can go ahead and start viewing content. We will officially kick-off on Monday with our Zoom Video Call.
 
                           If there is anything that I can help you with, feel free to ask anytime. Talk soon!
 
-Jon </Text>
+                          Jon </Text>
+                          <EditableUsers
+                            limit={1}
+                            onChange={(value: any[]) => { actions.updateCourse("instructor", value) }}
+                            multiline={false}
+                            data-testid="profile-currentRole"
+                            showProfileImages={true}
+                            textStyle={this.styles.style.fontFormSmallDarkGrey}
+                            inputStyle={this.styles.style.fontFormLargeInput}
+                            value={state.instructor} isEditable={true}></EditableUsers>
                           <Text>Syllabus</Text>
                           <Card>
                             <Text>Leadership Formation Course</Text>
@@ -59,31 +75,46 @@ Jon </Text>
                           </Card>
                           <Text>My Coach</Text>
                           <Card>
-                            <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
-                            <Text>Jon Hand</Text>
-                            <Text>Youth Leader in Calgary Area</Text>
-                            <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>View profile</JCButton>
+                            <EditableUsers
+                              limit={1}
+                              onChange={(value: any[]) => { actions.updateTriad({ coach: value }) }}
+                              multiline={false}
+                              data-testid="profile-currentRole"
+                              showProfileImages={true}
+                              textStyle={this.styles.style.fontFormSmallDarkGrey}
+                              inputStyle={this.styles.style.fontFormLargeInput}
+                              value={state.triad.coach} isEditable={true}></EditableUsers>
                           </Card>
                           <Text>My Triad</Text>
                           <Card>
-                            <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
-                            <Text>Jon Hand</Text>
-                            <Text>Youth Leader in Calgary Area</Text>
-                            <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>View profile</JCButton>
+                            <EditableUsers
+                              limit={3}
+                              onChange={(value: any[]) => { actions.updateTriad({ triad: value }) }}
+                              multiline={false}
+                              data-testid="profile-currentRole"
+                              showProfileImages={true}
+                              textStyle={this.styles.style.fontFormSmallDarkGrey}
+                              inputStyle={this.styles.style.fontFormLargeInput}
+                              value={state.triad.coach} isEditable={true}></EditableUsers>
                           </Card>
                           <Text>My Cohort</Text>
                           <Card>
-                            <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
-                            <Text>Jon Hand</Text>
-                            <Text>Youth Leader in Calgary Area</Text>
-                            <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>View profile</JCButton>
+                            <EditableUsers
+                              limit={15}
+                              //  onChange={(value: any[]) => { actions.updateTriad({ newToList: value }) }}
+                              multiline={false}
+                              data-testid="profile-currentRole"
+                              showProfileImages={true}
+                              textStyle={this.styles.style.fontFormSmallDarkGrey}
+                              inputStyle={this.styles.style.fontFormLargeInput}
+                              value={state.cohort} isEditable={true}></EditableUsers>
                           </Card>
                         </Container>
                         <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
 
                           <Text>To-Do</Text>
                           <Card>
-                            <Text> Coaching call with Jon Hand</Text>
+                            <Text>Coaching call with {state.coachName}</Text>
                           </Card>
 
                           <Text>My Calendar</Text>
@@ -112,8 +143,9 @@ Jon </Text>
               </StyleProvider > :
               null
           )
-        }}
-      </CourseHomeImpl.Consumer>
+        }
+        }
+      </CourseHomeImpl.Consumer >
 
 
     );
