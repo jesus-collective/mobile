@@ -3205,7 +3205,7 @@ export type CreateCourseInfoMutation = {
       nextToken: string | null,
     } | null,
     subTitle: string | null,
-    instructor:  {
+    instructor:  Array< {
       __typename: "User",
       id: string,
       given_name: string,
@@ -3271,7 +3271,7 @@ export type CreateCourseInfoMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null,
+    } | null > | null,
     triads:  {
       __typename: "ModelCourseTriadsConnection",
       items:  Array< {
@@ -3314,7 +3314,7 @@ export type UpdateCourseInfoMutation = {
       nextToken: string | null,
     } | null,
     subTitle: string | null,
-    instructor:  {
+    instructor:  Array< {
       __typename: "User",
       id: string,
       given_name: string,
@@ -3380,7 +3380,7 @@ export type UpdateCourseInfoMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null,
+    } | null > | null,
     triads:  {
       __typename: "ModelCourseTriadsConnection",
       items:  Array< {
@@ -3423,7 +3423,7 @@ export type DeleteCourseInfoMutation = {
       nextToken: string | null,
     } | null,
     subTitle: string | null,
-    instructor:  {
+    instructor:  Array< {
       __typename: "User",
       id: string,
       given_name: string,
@@ -3489,7 +3489,7 @@ export type DeleteCourseInfoMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null,
+    } | null > | null,
     triads:  {
       __typename: "ModelCourseTriadsConnection",
       items:  Array< {
@@ -3524,7 +3524,7 @@ export type CreateCourseTriadsMutation = {
         nextToken: string | null,
       } | null,
       subTitle: string | null,
-      instructor:  {
+      instructor:  Array< {
         __typename: "User",
         id: string,
         given_name: string,
@@ -3558,7 +3558,7 @@ export type CreateCourseTriadsMutation = {
         primaryOrganization: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null,
+      } | null > | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
@@ -3567,7 +3567,7 @@ export type CreateCourseTriadsMutation = {
       createdAt: string,
       updatedAt: string,
     } | null,
-    coach:  {
+    coach:  Array< {
       __typename: "User",
       id: string,
       given_name: string,
@@ -3633,7 +3633,7 @@ export type CreateCourseTriadsMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null,
+    } | null > | null,
     triad:  Array< {
       __typename: "User",
       id: string,
@@ -3724,7 +3724,7 @@ export type UpdateCourseTriadsMutation = {
         nextToken: string | null,
       } | null,
       subTitle: string | null,
-      instructor:  {
+      instructor:  Array< {
         __typename: "User",
         id: string,
         given_name: string,
@@ -3758,7 +3758,7 @@ export type UpdateCourseTriadsMutation = {
         primaryOrganization: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null,
+      } | null > | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
@@ -3767,7 +3767,7 @@ export type UpdateCourseTriadsMutation = {
       createdAt: string,
       updatedAt: string,
     } | null,
-    coach:  {
+    coach:  Array< {
       __typename: "User",
       id: string,
       given_name: string,
@@ -3833,7 +3833,7 @@ export type UpdateCourseTriadsMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null,
+    } | null > | null,
     triad:  Array< {
       __typename: "User",
       id: string,
@@ -3924,7 +3924,7 @@ export type DeleteCourseTriadsMutation = {
         nextToken: string | null,
       } | null,
       subTitle: string | null,
-      instructor:  {
+      instructor:  Array< {
         __typename: "User",
         id: string,
         given_name: string,
@@ -3958,7 +3958,7 @@ export type DeleteCourseTriadsMutation = {
         primaryOrganization: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null,
+      } | null > | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
@@ -3967,7 +3967,7 @@ export type DeleteCourseTriadsMutation = {
       createdAt: string,
       updatedAt: string,
     } | null,
-    coach:  {
+    coach:  Array< {
       __typename: "User",
       id: string,
       given_name: string,
@@ -4033,7 +4033,7 @@ export type DeleteCourseTriadsMutation = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null,
+    } | null > | null,
     triad:  Array< {
       __typename: "User",
       id: string,
@@ -4129,7 +4129,7 @@ export type CreateCourseWeekMutation = {
         nextToken: string | null,
       } | null,
       subTitle: string | null,
-      instructor:  {
+      instructor:  Array< {
         __typename: "User",
         id: string,
         given_name: string,
@@ -4163,7 +4163,7 @@ export type CreateCourseWeekMutation = {
         primaryOrganization: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null,
+      } | null > | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
@@ -4215,7 +4215,7 @@ export type UpdateCourseWeekMutation = {
         nextToken: string | null,
       } | null,
       subTitle: string | null,
-      instructor:  {
+      instructor:  Array< {
         __typename: "User",
         id: string,
         given_name: string,
@@ -4249,7 +4249,7 @@ export type UpdateCourseWeekMutation = {
         primaryOrganization: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null,
+      } | null > | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
@@ -4301,7 +4301,7 @@ export type DeleteCourseWeekMutation = {
         nextToken: string | null,
       } | null,
       subTitle: string | null,
-      instructor:  {
+      instructor:  Array< {
         __typename: "User",
         id: string,
         given_name: string,
@@ -4335,7 +4335,7 @@ export type DeleteCourseWeekMutation = {
         primaryOrganization: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null,
+      } | null > | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
@@ -7559,7 +7559,7 @@ export type GetCourseInfoQuery = {
       nextToken: string | null,
     } | null,
     subTitle: string | null,
-    instructor:  {
+    instructor:  Array< {
       __typename: "User",
       id: string,
       given_name: string,
@@ -7625,7 +7625,7 @@ export type GetCourseInfoQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null,
+    } | null > | null,
     triads:  {
       __typename: "ModelCourseTriadsConnection",
       items:  Array< {
@@ -7661,7 +7661,7 @@ export type ListCourseInfosQuery = {
         nextToken: string | null,
       } | null,
       subTitle: string | null,
-      instructor:  {
+      instructor:  Array< {
         __typename: "User",
         id: string,
         given_name: string,
@@ -7695,7 +7695,7 @@ export type ListCourseInfosQuery = {
         primaryOrganization: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null,
+      } | null > | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
@@ -7726,7 +7726,7 @@ export type GetCourseTriadsQuery = {
         nextToken: string | null,
       } | null,
       subTitle: string | null,
-      instructor:  {
+      instructor:  Array< {
         __typename: "User",
         id: string,
         given_name: string,
@@ -7760,7 +7760,7 @@ export type GetCourseTriadsQuery = {
         primaryOrganization: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null,
+      } | null > | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
@@ -7769,7 +7769,7 @@ export type GetCourseTriadsQuery = {
       createdAt: string,
       updatedAt: string,
     } | null,
-    coach:  {
+    coach:  Array< {
       __typename: "User",
       id: string,
       given_name: string,
@@ -7835,7 +7835,7 @@ export type GetCourseTriadsQuery = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null,
+    } | null > | null,
     triad:  Array< {
       __typename: "User",
       id: string,
@@ -7930,7 +7930,7 @@ export type ListCourseTriadssQuery = {
         createdAt: string,
         updatedAt: string,
       } | null,
-      coach:  {
+      coach:  Array< {
         __typename: "User",
         id: string,
         given_name: string,
@@ -7964,7 +7964,7 @@ export type ListCourseTriadssQuery = {
         primaryOrganization: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null,
+      } | null > | null,
       triad:  Array< {
         __typename: "User",
         id: string,
@@ -8030,7 +8030,7 @@ export type GetCourseWeekQuery = {
         nextToken: string | null,
       } | null,
       subTitle: string | null,
-      instructor:  {
+      instructor:  Array< {
         __typename: "User",
         id: string,
         given_name: string,
@@ -8064,7 +8064,7 @@ export type GetCourseWeekQuery = {
         primaryOrganization: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null,
+      } | null > | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
@@ -12358,7 +12358,7 @@ export type OnCreateCourseInfoSubscription = {
       nextToken: string | null,
     } | null,
     subTitle: string | null,
-    instructor:  {
+    instructor:  Array< {
       __typename: "User",
       id: string,
       given_name: string,
@@ -12424,7 +12424,7 @@ export type OnCreateCourseInfoSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null,
+    } | null > | null,
     triads:  {
       __typename: "ModelCourseTriadsConnection",
       items:  Array< {
@@ -12467,7 +12467,7 @@ export type OnUpdateCourseInfoSubscription = {
       nextToken: string | null,
     } | null,
     subTitle: string | null,
-    instructor:  {
+    instructor:  Array< {
       __typename: "User",
       id: string,
       given_name: string,
@@ -12533,7 +12533,7 @@ export type OnUpdateCourseInfoSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null,
+    } | null > | null,
     triads:  {
       __typename: "ModelCourseTriadsConnection",
       items:  Array< {
@@ -12576,7 +12576,7 @@ export type OnDeleteCourseInfoSubscription = {
       nextToken: string | null,
     } | null,
     subTitle: string | null,
-    instructor:  {
+    instructor:  Array< {
       __typename: "User",
       id: string,
       given_name: string,
@@ -12642,7 +12642,7 @@ export type OnDeleteCourseInfoSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null,
+    } | null > | null,
     triads:  {
       __typename: "ModelCourseTriadsConnection",
       items:  Array< {
@@ -12673,7 +12673,7 @@ export type OnCreateCourseTriadsSubscription = {
         nextToken: string | null,
       } | null,
       subTitle: string | null,
-      instructor:  {
+      instructor:  Array< {
         __typename: "User",
         id: string,
         given_name: string,
@@ -12707,7 +12707,7 @@ export type OnCreateCourseTriadsSubscription = {
         primaryOrganization: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null,
+      } | null > | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
@@ -12716,7 +12716,7 @@ export type OnCreateCourseTriadsSubscription = {
       createdAt: string,
       updatedAt: string,
     } | null,
-    coach:  {
+    coach:  Array< {
       __typename: "User",
       id: string,
       given_name: string,
@@ -12782,7 +12782,7 @@ export type OnCreateCourseTriadsSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null,
+    } | null > | null,
     triad:  Array< {
       __typename: "User",
       id: string,
@@ -12869,7 +12869,7 @@ export type OnUpdateCourseTriadsSubscription = {
         nextToken: string | null,
       } | null,
       subTitle: string | null,
-      instructor:  {
+      instructor:  Array< {
         __typename: "User",
         id: string,
         given_name: string,
@@ -12903,7 +12903,7 @@ export type OnUpdateCourseTriadsSubscription = {
         primaryOrganization: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null,
+      } | null > | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
@@ -12912,7 +12912,7 @@ export type OnUpdateCourseTriadsSubscription = {
       createdAt: string,
       updatedAt: string,
     } | null,
-    coach:  {
+    coach:  Array< {
       __typename: "User",
       id: string,
       given_name: string,
@@ -12978,7 +12978,7 @@ export type OnUpdateCourseTriadsSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null,
+    } | null > | null,
     triad:  Array< {
       __typename: "User",
       id: string,
@@ -13065,7 +13065,7 @@ export type OnDeleteCourseTriadsSubscription = {
         nextToken: string | null,
       } | null,
       subTitle: string | null,
-      instructor:  {
+      instructor:  Array< {
         __typename: "User",
         id: string,
         given_name: string,
@@ -13099,7 +13099,7 @@ export type OnDeleteCourseTriadsSubscription = {
         primaryOrganization: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null,
+      } | null > | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
@@ -13108,7 +13108,7 @@ export type OnDeleteCourseTriadsSubscription = {
       createdAt: string,
       updatedAt: string,
     } | null,
-    coach:  {
+    coach:  Array< {
       __typename: "User",
       id: string,
       given_name: string,
@@ -13174,7 +13174,7 @@ export type OnDeleteCourseTriadsSubscription = {
       } | null,
       createdAt: string,
       updatedAt: string,
-    } | null,
+    } | null > | null,
     triad:  Array< {
       __typename: "User",
       id: string,
@@ -13270,7 +13270,7 @@ export type OnCreateCourseWeekSubscription = {
         nextToken: string | null,
       } | null,
       subTitle: string | null,
-      instructor:  {
+      instructor:  Array< {
         __typename: "User",
         id: string,
         given_name: string,
@@ -13304,7 +13304,7 @@ export type OnCreateCourseWeekSubscription = {
         primaryOrganization: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null,
+      } | null > | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
@@ -13356,7 +13356,7 @@ export type OnUpdateCourseWeekSubscription = {
         nextToken: string | null,
       } | null,
       subTitle: string | null,
-      instructor:  {
+      instructor:  Array< {
         __typename: "User",
         id: string,
         given_name: string,
@@ -13390,7 +13390,7 @@ export type OnUpdateCourseWeekSubscription = {
         primaryOrganization: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null,
+      } | null > | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
@@ -13442,7 +13442,7 @@ export type OnDeleteCourseWeekSubscription = {
         nextToken: string | null,
       } | null,
       subTitle: string | null,
-      instructor:  {
+      instructor:  Array< {
         __typename: "User",
         id: string,
         given_name: string,
@@ -13476,7 +13476,7 @@ export type OnDeleteCourseWeekSubscription = {
         primaryOrganization: string | null,
         createdAt: string,
         updatedAt: string,
-      } | null,
+      } | null > | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
