@@ -182,7 +182,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
             <Container style={this.styles.style.conversationScreenLeftCard}>
               <Text style={this.styles.style.eventNameInput}>Direct Messages</Text>
 
-              {true ?
+              {false ?
                 <div>
                   <EditableUsers
                     onChange={(value: any[]) => { this.setState({ newToList: value }) }}
