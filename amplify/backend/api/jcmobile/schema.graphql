@@ -194,10 +194,18 @@ type CourseInfo
   summary: String
   courseWeeks: [CourseWeek] @connection(name:"courseInfo",keyField: "id",sortField:"week")
   subTitle: String
-  #instructor: User
+  instructor: [User]
+  triads:[CourseTriads]@connection(name:"courseTriads",keyField: "id")
   introduction: String
 }
-
+type CourseTriads
+@model
+{
+  id:ID!
+  courseInfo:CourseInfo @connection(name:"courseTriads",keyField:"id")
+  coach:[User]
+  triad:[User]
+}
 type CourseWeek
  @model 
   @auth(
