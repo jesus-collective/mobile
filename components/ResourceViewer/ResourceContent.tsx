@@ -106,7 +106,6 @@ class ResourceContent extends JCComponent<Props, State> {
                                                     textStyle={this.styles.style.seriesTitle}
                                                     value={series.title}
                                                     isEditable={state.isEditable}></EditableText>
-
                                             </CardItem>
                                             <CardItem style={{ width: '100%', padding: 0, margin: 0, backgroundColor: '#F9FAFC' }}>
                                                 <EditableText onChange={(val) => { actions.updateSeries(state.currentResource, index, "description", val) }}
@@ -171,6 +170,14 @@ class ResourceContent extends JCComponent<Props, State> {
                                                         source={{ uri: "https://img.youtube.com/vi/" + series.episodes.items[thumbnailIndex].videoPreview.replace("https://youtu.be/", "") + "/maxresdefault.jpg" }}
                                                     />
                                                 }
+                                            </CardItem>
+                                            <CardItem style={{ width: '100%', padding: 0, margin: 0, paddingBottom: 0, backgroundColor: '#F9FAFC' }}>
+                                                <EditableText onChange={(val) => { actions.updateSeries(state.currentResource, index, "title", val) }}
+                                                    multiline={false}
+                                                    inputStyle={this.styles.style.seriesTitle}
+                                                    textStyle={this.styles.style.seriesTitle}
+                                                    value={series.title}
+                                                    isEditable={state.isEditable}></EditableText>
                                             </CardItem>
                                             <CardItem style={{ width: '100%', padding: 0, margin: 0, backgroundColor: '#F9FAFC', flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
                                                 <JCButton buttonType={ButtonTypes.MoreSeriesOutlineBold} onPress={() => actions.changeSeries(index)}>Learn More</JCButton>
@@ -253,13 +260,16 @@ class ResourceContent extends JCComponent<Props, State> {
                                                 />
                                             }
                                         </CardItem>
-                                        <CardItem style={{ width: '100%', padding: 0, margin: 0, paddingBottom: 0, backgroundColor: '#F9FAFC' }}>
+                                        <CardItem style={{ width: '100%', height: 70, padding: 0, margin: 0, paddingBottom: 0, backgroundColor: '#F9FAFC', alignItems: 'flex-start' }}>
                                             <EditableText onChange={(val) => { actions.updateSeries(state.currentResource, index, "title", val) }}
                                                 multiline={false}
                                                 inputStyle={this.styles.style.seriesTitle}
                                                 textStyle={this.styles.style.seriesTitle}
                                                 value={series.title}
-                                                isEditable={state.isEditable}></EditableText>
+                                                isEditable={state.isEditable}
+                                                ellipsizeMode='tail'
+                                                numberOfLines={2}
+                                            ></EditableText>
 
                                         </CardItem>
                                         <CardItem style={{ width: '100%', padding: 0, margin: 0, backgroundColor: '#F9FAFC' }}>
@@ -337,6 +347,16 @@ class ResourceContent extends JCComponent<Props, State> {
                                                             />
                                                         }
                                                     </CardItem>
+                                                    <CardItem style={{ width: '100%', height: 70, padding: 0, margin: 0, paddingBottom: 0, backgroundColor: '#F9FAFC', alignItems: 'flex-start' }}>
+                                                        <EditableText onChange={(val) => { actions.updateSeries(state.currentResource, index, "title", val) }}
+                                                            multiline={false}
+                                                            inputStyle={this.styles.style.seriesTitle}
+                                                            textStyle={this.styles.style.seriesTitle}
+                                                            value={series2.title}
+                                                            isEditable={state.isEditable}
+                                                            ellipsizeMode='tail'
+                                                            numberOfLines={2}></EditableText>
+                                                    </CardItem>
                                                     <CardItem style={{ width: '100%', padding: 0, margin: 0, backgroundColor: '#F9FAFC', flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
                                                         <JCButton buttonType={ButtonTypes.MoreSeriesOutlineBold} onPress={() => actions.changeSeries(index + index2 + offset)}>Learn More</JCButton>
                                                     </CardItem>
@@ -387,6 +407,16 @@ class ResourceContent extends JCComponent<Props, State> {
                                                                 source={{ uri: "https://img.youtube.com/vi/" + series2.episodes.items[firstEpisodeIndex].videoPreview.replace("https://youtu.be/", "") + "/maxresdefault.jpg" }}
                                                             />
                                                         }
+                                                    </CardItem>
+                                                    <CardItem style={{ width: '100%', height: 70, padding: 0, margin: 0, paddingBottom: 0, backgroundColor: '#F9FAFC', alignItems: 'flex-start' }}>
+                                                        <EditableText onChange={(val) => { actions.updateSeries(state.currentResource, index, "title", val) }}
+                                                            multiline={false}
+                                                            inputStyle={this.styles.style.seriesTitle}
+                                                            textStyle={this.styles.style.seriesTitle}
+                                                            value={series2.title}
+                                                            isEditable={state.isEditable}
+                                                            ellipsizeMode='tail'
+                                                            numberOfLines={2}></EditableText>
                                                     </CardItem>
                                                     <CardItem style={{ width: '100%', padding: 0, margin: 0, backgroundColor: '#F9FAFC', flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
                                                         <JCButton buttonType={ButtonTypes.MoreSeriesOutlineBold} onPress={() => actions.changeSeries(index + index2 + 4 - this.state.rowLength)}>Learn More</JCButton>
