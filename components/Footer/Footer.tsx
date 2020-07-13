@@ -42,7 +42,7 @@ export default class FooterJC extends JCComponent<Props> {
     constants["SETTING_ISVISIBLE_event"] ? {
       name: "Events",
       subMenu: [
-        { name: "My Events", linkTo: "EventsScreen", navProps: { mine: true } },
+        { name: "My Events", linkTo: "EventsScreen", navProps: { mine: true }, webLink: `${window.location.origin}/app/events?mine=true` },
         { name: "Recommended", linkTo: null }
       ]
     } : null
@@ -50,7 +50,7 @@ export default class FooterJC extends JCComponent<Props> {
     constants["SETTING_ISVISIBLE_group"] ? {
       name: "Groups",
       subMenu: [
-        { name: "My Groups", linkTo: "GroupsScreen", navProps: { mine: true } },
+        { name: "My Groups", linkTo: "GroupsScreen", navProps: { mine: true }, webLink: `${window.location.origin}/app/groups?mine=true` },
         { name: "Recommended", linkTo: null }
 
       ]
@@ -58,7 +58,7 @@ export default class FooterJC extends JCComponent<Props> {
     constants["SETTING_ISVISIBLE_resource"] ? {
       name: "Resources",
       subMenu: [
-        { name: "Kids & Youth", linkTo: "ResourceScreen", navProps: { create: false, id: 'resource-1580889856205' } },
+        { name: "Kids & Youth", linkTo: "ResourceScreen", navProps: { create: false, id: 'resource-1580889856205' }, webLink: `${window.location.origin}/app/resource?create=false&id=resource-1580889856205` },
         { name: "Training", linkTo: null },
         { name: "Adult Teaching", linkTo: null }
 
