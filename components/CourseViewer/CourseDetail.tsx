@@ -40,12 +40,12 @@ class CourseDetailImpl extends JCComponent<Props>{
         week ?
           <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
 
-            <EditableText onChange={(e) => { actions.updateWeek(state.activeWeek, "name", e) }}
+            <EditableText onChange={(e) => { actions.updateWeek(state.activeWeek, "title", e) }}
               placeholder="Week Title" multiline={true}
               data-testid="course-weekTitle"
               textStyle={this.styles.style.fontFormSmallDarkGrey}
               inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
-              value={week.name} isEditable={state.isEditable}></EditableText>
+              value={week.title} isEditable={state.isEditable}></EditableText>
 
             <EditableDate type="date"
               onChange={(time: any, timeZone: any) => { actions.updateWeek(state.activeWeek, "date", time); actions.updateWeek(state.activeWeek, "tz", timeZone) }}
@@ -58,7 +58,7 @@ class CourseDetailImpl extends JCComponent<Props>{
             <Text>{week.date}</Text>
 
             <EditableText onChange={(e) => { actions.updateWeek(state.activeWeek, "leader", e) }}
-              placeholder="Lesson Title" multiline={true}
+              placeholder="Lesson Leader" multiline={true}
               data-testid="course-lessonTitle"
               textStyle={this.styles.style.fontFormSmallDarkGrey}
               inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}

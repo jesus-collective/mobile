@@ -608,6 +608,7 @@ export const getCourseInfo = /* GraphQL */ `
           date
           tz
           name
+          title
           leader
           createdAt
           updatedAt
@@ -1028,6 +1029,7 @@ export const getCourseWeek = /* GraphQL */ `
       date
       tz
       name
+      title
       leader
       courseInfo {
         id
@@ -1109,6 +1111,7 @@ export const listCourseWeeks = /* GraphQL */ `
         date
         tz
         name
+        title
         leader
         courseInfo {
           id
@@ -1144,6 +1147,7 @@ export const getCourseLesson = /* GraphQL */ `
         date
         tz
         name
+        title
         leader
         courseInfo {
           id
@@ -1196,6 +1200,7 @@ export const listCourseLessons = /* GraphQL */ `
           date
           tz
           name
+          title
           leader
           createdAt
           updatedAt
@@ -1230,6 +1235,7 @@ export const getCourseAssignment = /* GraphQL */ `
           date
           tz
           name
+          title
           leader
           createdAt
           updatedAt

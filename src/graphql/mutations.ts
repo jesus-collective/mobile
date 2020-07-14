@@ -1944,6 +1944,7 @@ export const createCourseInfo = /* GraphQL */ `
           date
           tz
           name
+          title
           leader
           createdAt
           updatedAt
@@ -2038,6 +2039,7 @@ export const updateCourseInfo = /* GraphQL */ `
           date
           tz
           name
+          title
           leader
           createdAt
           updatedAt
@@ -2132,6 +2134,7 @@ export const deleteCourseInfo = /* GraphQL */ `
           date
           tz
           name
+          title
           leader
           createdAt
           updatedAt
@@ -2755,6 +2758,7 @@ export const createCourseWeek = /* GraphQL */ `
       date
       tz
       name
+      title
       leader
       courseInfo {
         id
@@ -2831,6 +2835,7 @@ export const updateCourseWeek = /* GraphQL */ `
       date
       tz
       name
+      title
       leader
       courseInfo {
         id
@@ -2907,6 +2912,7 @@ export const deleteCourseWeek = /* GraphQL */ `
       date
       tz
       name
+      title
       leader
       courseInfo {
         id
@@ -2990,6 +2996,7 @@ export const createCourseLesson = /* GraphQL */ `
         date
         tz
         name
+        title
         leader
         courseInfo {
           id
@@ -3037,6 +3044,7 @@ export const updateCourseLesson = /* GraphQL */ `
         date
         tz
         name
+        title
         leader
         courseInfo {
           id
@@ -3084,6 +3092,7 @@ export const deleteCourseLesson = /* GraphQL */ `
         date
         tz
         name
+        title
         leader
         courseInfo {
           id
@@ -3136,6 +3145,7 @@ export const createCourseAssignment = /* GraphQL */ `
           date
           tz
           name
+          title
           leader
           createdAt
           updatedAt
@@ -3171,6 +3181,7 @@ export const updateCourseAssignment = /* GraphQL */ `
           date
           tz
           name
+          title
           leader
           createdAt
           updatedAt
@@ -3206,6 +3217,7 @@ export const deleteCourseAssignment = /* GraphQL */ `
           date
           tz
           name
+          title
           leader
           createdAt
           updatedAt

@@ -221,6 +221,7 @@ type CourseWeek
   date: String
   tz:String
   name: String
+  title:String
   leader: String
   courseInfo: CourseInfo @connection(name:"courseInfo",keyField:"id")
   lessons: [CourseLesson] @connection(name:"courseLesson",keyField: "id",sortField:"lesson")

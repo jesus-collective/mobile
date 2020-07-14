@@ -2089,6 +2089,7 @@ export const onCreateCourseInfo = /* GraphQL */ `
           date
           tz
           name
+          title
           leader
           createdAt
           updatedAt
@@ -2183,6 +2184,7 @@ export const onUpdateCourseInfo = /* GraphQL */ `
           date
           tz
           name
+          title
           leader
           createdAt
           updatedAt
@@ -2277,6 +2279,7 @@ export const onDeleteCourseInfo = /* GraphQL */ `
           date
           tz
           name
+          title
           leader
           createdAt
           updatedAt
@@ -2900,6 +2903,7 @@ export const onCreateCourseWeek = /* GraphQL */ `
       date
       tz
       name
+      title
       leader
       courseInfo {
         id
@@ -2976,6 +2980,7 @@ export const onUpdateCourseWeek = /* GraphQL */ `
       date
       tz
       name
+      title
       leader
       courseInfo {
         id
@@ -3052,6 +3057,7 @@ export const onDeleteCourseWeek = /* GraphQL */ `
       date
       tz
       name
+      title
       leader
       courseInfo {
         id
@@ -3135,6 +3141,7 @@ export const onCreateCourseLesson = /* GraphQL */ `
         date
         tz
         name
+        title
         leader
         courseInfo {
           id
@@ -3182,6 +3189,7 @@ export const onUpdateCourseLesson = /* GraphQL */ `
         date
         tz
         name
+        title
         leader
         courseInfo {
           id
@@ -3229,6 +3237,7 @@ export const onDeleteCourseLesson = /* GraphQL */ `
         date
         tz
         name
+        title
         leader
         courseInfo {
           id
@@ -3281,6 +3290,7 @@ export const onCreateCourseAssignment = /* GraphQL */ `
           date
           tz
           name
+          title
           leader
           createdAt
           updatedAt
@@ -3316,6 +3326,7 @@ export const onUpdateCourseAssignment = /* GraphQL */ `
           date
           tz
           name
+          title
           leader
           createdAt
           updatedAt
@@ -3351,6 +3362,7 @@ export const onDeleteCourseAssignment = /* GraphQL */ `
           date
           tz
           name
+          title
           leader
           createdAt
           updatedAt

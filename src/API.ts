@@ -252,6 +252,7 @@ export type CreateCourseWeekInput = {
   date?: string | null,
   tz?: string | null,
   name?: string | null,
+  title?: string | null,
   leader?: string | null,
 };
 
@@ -261,6 +262,7 @@ export type UpdateCourseWeekInput = {
   date?: string | null,
   tz?: string | null,
   name?: string | null,
+  title?: string | null,
   leader?: string | null,
 };
 
@@ -655,6 +657,7 @@ export type ModelCourseWeekFilterInput = {
   date?: ModelStringFilterInput | null,
   tz?: ModelStringFilterInput | null,
   name?: ModelStringFilterInput | null,
+  title?: ModelStringFilterInput | null,
   leader?: ModelStringFilterInput | null,
   and?: Array< ModelCourseWeekFilterInput | null > | null,
   or?: Array< ModelCourseWeekFilterInput | null > | null,
@@ -3198,6 +3201,7 @@ export type CreateCourseInfoMutation = {
         date: string | null,
         tz: string | null,
         name: string | null,
+        title: string | null,
         leader: string | null,
         createdAt: string,
         updatedAt: string,
@@ -3307,6 +3311,7 @@ export type UpdateCourseInfoMutation = {
         date: string | null,
         tz: string | null,
         name: string | null,
+        title: string | null,
         leader: string | null,
         createdAt: string,
         updatedAt: string,
@@ -3416,6 +3421,7 @@ export type DeleteCourseInfoMutation = {
         date: string | null,
         tz: string | null,
         name: string | null,
+        title: string | null,
         leader: string | null,
         createdAt: string,
         updatedAt: string,
@@ -4118,6 +4124,7 @@ export type CreateCourseWeekMutation = {
     date: string | null,
     tz: string | null,
     name: string | null,
+    title: string | null,
     leader: string | null,
     courseInfo:  {
       __typename: "CourseInfo",
@@ -4204,6 +4211,7 @@ export type UpdateCourseWeekMutation = {
     date: string | null,
     tz: string | null,
     name: string | null,
+    title: string | null,
     leader: string | null,
     courseInfo:  {
       __typename: "CourseInfo",
@@ -4290,6 +4298,7 @@ export type DeleteCourseWeekMutation = {
     date: string | null,
     tz: string | null,
     name: string | null,
+    title: string | null,
     leader: string | null,
     courseInfo:  {
       __typename: "CourseInfo",
@@ -4384,6 +4393,7 @@ export type CreateCourseLessonMutation = {
       date: string | null,
       tz: string | null,
       name: string | null,
+      title: string | null,
       leader: string | null,
       courseInfo:  {
         __typename: "CourseInfo",
@@ -4440,6 +4450,7 @@ export type UpdateCourseLessonMutation = {
       date: string | null,
       tz: string | null,
       name: string | null,
+      title: string | null,
       leader: string | null,
       courseInfo:  {
         __typename: "CourseInfo",
@@ -4496,6 +4507,7 @@ export type DeleteCourseLessonMutation = {
       date: string | null,
       tz: string | null,
       name: string | null,
+      title: string | null,
       leader: string | null,
       courseInfo:  {
         __typename: "CourseInfo",
@@ -4558,6 +4570,7 @@ export type CreateCourseAssignmentMutation = {
         date: string | null,
         tz: string | null,
         name: string | null,
+        title: string | null,
         leader: string | null,
         createdAt: string,
         updatedAt: string,
@@ -4600,6 +4613,7 @@ export type UpdateCourseAssignmentMutation = {
         date: string | null,
         tz: string | null,
         name: string | null,
+        title: string | null,
         leader: string | null,
         createdAt: string,
         updatedAt: string,
@@ -4642,6 +4656,7 @@ export type DeleteCourseAssignmentMutation = {
         date: string | null,
         tz: string | null,
         name: string | null,
+        title: string | null,
         leader: string | null,
         createdAt: string,
         updatedAt: string,
@@ -7552,6 +7567,7 @@ export type GetCourseInfoQuery = {
         date: string | null,
         tz: string | null,
         name: string | null,
+        title: string | null,
         leader: string | null,
         createdAt: string,
         updatedAt: string,
@@ -8019,6 +8035,7 @@ export type GetCourseWeekQuery = {
     date: string | null,
     tz: string | null,
     name: string | null,
+    title: string | null,
     leader: string | null,
     courseInfo:  {
       __typename: "CourseInfo",
@@ -8109,6 +8126,7 @@ export type ListCourseWeeksQuery = {
       date: string | null,
       tz: string | null,
       name: string | null,
+      title: string | null,
       leader: string | null,
       courseInfo:  {
         __typename: "CourseInfo",
@@ -8151,6 +8169,7 @@ export type GetCourseLessonQuery = {
       date: string | null,
       tz: string | null,
       name: string | null,
+      title: string | null,
       leader: string | null,
       courseInfo:  {
         __typename: "CourseInfo",
@@ -8211,6 +8230,7 @@ export type ListCourseLessonsQuery = {
         date: string | null,
         tz: string | null,
         name: string | null,
+        title: string | null,
         leader: string | null,
         createdAt: string,
         updatedAt: string,
@@ -8252,6 +8272,7 @@ export type GetCourseAssignmentQuery = {
         date: string | null,
         tz: string | null,
         name: string | null,
+        title: string | null,
         leader: string | null,
         createdAt: string,
         updatedAt: string,
@@ -12351,6 +12372,7 @@ export type OnCreateCourseInfoSubscription = {
         date: string | null,
         tz: string | null,
         name: string | null,
+        title: string | null,
         leader: string | null,
         createdAt: string,
         updatedAt: string,
@@ -12460,6 +12482,7 @@ export type OnUpdateCourseInfoSubscription = {
         date: string | null,
         tz: string | null,
         name: string | null,
+        title: string | null,
         leader: string | null,
         createdAt: string,
         updatedAt: string,
@@ -12569,6 +12592,7 @@ export type OnDeleteCourseInfoSubscription = {
         date: string | null,
         tz: string | null,
         name: string | null,
+        title: string | null,
         leader: string | null,
         createdAt: string,
         updatedAt: string,
@@ -13259,6 +13283,7 @@ export type OnCreateCourseWeekSubscription = {
     date: string | null,
     tz: string | null,
     name: string | null,
+    title: string | null,
     leader: string | null,
     courseInfo:  {
       __typename: "CourseInfo",
@@ -13345,6 +13370,7 @@ export type OnUpdateCourseWeekSubscription = {
     date: string | null,
     tz: string | null,
     name: string | null,
+    title: string | null,
     leader: string | null,
     courseInfo:  {
       __typename: "CourseInfo",
@@ -13431,6 +13457,7 @@ export type OnDeleteCourseWeekSubscription = {
     date: string | null,
     tz: string | null,
     name: string | null,
+    title: string | null,
     leader: string | null,
     courseInfo:  {
       __typename: "CourseInfo",
@@ -13525,6 +13552,7 @@ export type OnCreateCourseLessonSubscription = {
       date: string | null,
       tz: string | null,
       name: string | null,
+      title: string | null,
       leader: string | null,
       courseInfo:  {
         __typename: "CourseInfo",
@@ -13581,6 +13609,7 @@ export type OnUpdateCourseLessonSubscription = {
       date: string | null,
       tz: string | null,
       name: string | null,
+      title: string | null,
       leader: string | null,
       courseInfo:  {
         __typename: "CourseInfo",
@@ -13637,6 +13666,7 @@ export type OnDeleteCourseLessonSubscription = {
       date: string | null,
       tz: string | null,
       name: string | null,
+      title: string | null,
       leader: string | null,
       courseInfo:  {
         __typename: "CourseInfo",
@@ -13699,6 +13729,7 @@ export type OnCreateCourseAssignmentSubscription = {
         date: string | null,
         tz: string | null,
         name: string | null,
+        title: string | null,
         leader: string | null,
         createdAt: string,
         updatedAt: string,
@@ -13741,6 +13772,7 @@ export type OnUpdateCourseAssignmentSubscription = {
         date: string | null,
         tz: string | null,
         name: string | null,
+        title: string | null,
         leader: string | null,
         createdAt: string,
         updatedAt: string,
@@ -13783,6 +13815,7 @@ export type OnDeleteCourseAssignmentSubscription = {
         date: string | null,
         tz: string | null,
         name: string | null,
+        title: string | null,
         leader: string | null,
         createdAt: string,
         updatedAt: string,
