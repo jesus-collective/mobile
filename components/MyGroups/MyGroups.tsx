@@ -518,7 +518,7 @@ export default class MyGroups extends JCComponent<Props, State> {
             <Image style={{ margin: 0, padding: 0, width: 40, height: 40, borderRadius: 100, paddingRight: 20, paddingTop: 15 }} source={require('../../assets/icon.png')}></Image>
           </View> : null}
       </CardItem>
-      <CardItem style={{ paddingTop: 5 }}>
+      <CardItem style={{ paddingTop: 0 }}>
         <Text numberOfLines={1} style={[this.styles.style.fontDetailTop, { paddingTop: 0 }]}>{moment.tz(item.time, zone).format('ddd, MMM D, h:mm a')} {moment.tz.zone(zone).abbr(+moment(item.time).format('x'))}</Text>
       </CardItem>
       {
