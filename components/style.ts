@@ -454,6 +454,7 @@ export default class MainStyles {
                 color: "#000000",
                 letterSpacing: -0.3,
                 paddingLeft: 20,
+                marginTop: 15,
             },
             fontConnectWithName: {
                 fontFamily: 'Graphik-Bold-App',

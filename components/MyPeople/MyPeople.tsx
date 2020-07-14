@@ -1,7 +1,6 @@
 import { StyleProvider, Content, Body, Left, Card, CardItem, Container, Button } from 'native-base';
 import { Text } from 'react-native';
 import * as React from 'react';
-
 import getTheme from '../../native-base-theme/components';
 import { TouchableOpacity } from 'react-native'
 import * as queries from '../../src/graphql/queries';
@@ -22,7 +21,6 @@ interface State extends JCState {
   // type: String
   //cardWidth: any
   //createString: String
-  titleString: string
   data: any
   currentUser: string
   //showCreateButton: Boolean
@@ -36,7 +34,6 @@ export default class MyPeople extends JCComponent<Props, State> {
       openSingle: "ProfileScreen",
       openMultiple: "ProfilesScreen",
       //createString: "+ Create Event",
-      titleString: "People you may connect with",
       //type: props.type,
       //cardWidth: 250,
       data: [],
@@ -104,7 +101,16 @@ export default class MyPeople extends JCComponent<Props, State> {
         <StyleProvider style={getTheme()}>
 
           <Container style={this.styles.style.peopleContainer} >
-            <Button style={this.styles.style.connectWithTopSectionButton} onPress={() => { this.showProfiles() }} transparent><Text style={this.styles.style.fontConnectWith}>People you may connect with</Text></Button>
+            <Text style={this.styles.style.fontConnectWith}>Connect with Others</Text>
+            <Button bordered style={{
+              marginLeft: 20,
+              marginVertical: 10,
+              paddingHorizontal: 10,
+              height: 36,
+              borderColor: "#F0493E",
+              alignItems: "center",
+              justifyContent: "center"
+            }} onPress={() => { this.showProfiles() }}><Text style={{ fontFamily: 'Graphik-Regular-App', fontSize: 16, color: '#F0493E' }}>Jesus Collective Directory</Text></Button>
             <Content style={this.styles.style.rightCardWidth}>
               {this.state.data.map((item: any) => {
                 if (item.id !== this.state.currentUser) {
