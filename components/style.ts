@@ -346,6 +346,9 @@ export default class MainStyles {
             fontDetailTop: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, color: '#333333', opacity: 0.4, paddingTop: 23, textTransform: "uppercase"
             },
+            sponsoredTag: {
+                fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, color: '#333333', opacity: 0.4, textTransform: "uppercase", marginRight: 8, fontWeight: 600
+            },
             myMapFontDetailTop: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, color: '#333333', opacity: 0.4, paddingTop: 23
             },
