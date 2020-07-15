@@ -216,7 +216,14 @@ export default class MyGroups extends JCComponent<Props, State> {
     user.then((user: any) => {
       this.setState({ currentUser: user.username })
       if (this.props.type != "profile")
-        this.setState({ showCreateButton: user.signInUserSession.accessToken.payload["cognito:groups"].includes("verifiedUsers") })
+        this.setState({
+          showCreateButton: this.props.type == "resource" ?
+            user.signInUserSession.accessToken.payload["cognito:groups"].includes("admin")
+            : this.props.type == "course" ?
+              user.signInUserSession.accessToken.payload["cognito:groups"].includes("courseAdmin") || user.signInUserSession.accessToken.payload["cognito:groups"].includes("admins")
+              :
+              user.signInUserSession.accessToken.payload["cognito:groups"].includes("verifiedUsers")
+        })
     })
   }
   convertProfileToMapData(data: any): MapData[] {
