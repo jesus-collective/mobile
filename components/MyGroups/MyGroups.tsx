@@ -2,7 +2,7 @@ import { Left, Body, StyleProvider, Card, CardItem, ListItem, Right, Container }
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 import ReactTooltip from "react-tooltip";
 import * as React from 'react';
-import { Text, Dimensions } from 'react-native'
+import { Text, Dimensions, View } from 'react-native'
 
 import getTheme from '../../native-base-theme/components';
 import { Image } from 'react-native'
@@ -463,23 +463,32 @@ export default class MyGroups extends JCComponent<Props, State> {
   }
 
   renderGroup(item: any): React.ReactNode {
+    console.log(item)
     return <Card style={[this.styles.style.groupCard, { width: this.state.cardWidth }]} >
-      <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0, width: this.state.cardWidth, right: 5 }} >
-        <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 70 }} source={require('../../assets/svg/pattern.svg')}></Image>
+      <CardItem style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 10, height: 50, paddingBottom: 0 }} >
+        {item.isSponsored === 'true' || item.isSponsored === true ?
+          <View style={{ width: this.state.cardWidth, paddingRight: 20, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
+            <Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.sponsoredTag}>sponsored</Text>
+            <Image style={{ margin: 0, padding: 0, width: 40, height: 40, borderRadius: 100, paddingRight: 20, paddingTop: 15 }} source={require('../../assets/icon.png')}></Image>
+          </View> : null}
       </CardItem>
       {item.name.length > 54 || item.name.length == 54 ?
-        <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitleGroup} data-tip={item.name}>{item.name}</Text>
+        <CardItem style={{ height: 100, paddingTop: 0 }}><Text ellipsizeMode='tail' numberOfLines={3} style={[this.styles.style.fontTitleGroup, { paddingTop: 0 }]} data-tip={item.name}>{item.name}</Text>
+          <Image style={{ margin: 0, padding: 0, width: 40, height: 40, borderRadius: 100, alignSelf: 'flex-end' }} source={require('../../assets/icon.png')}></Image>
           <ReactTooltip place="top" type="dark" effect="solid" backgroundColor="#F0493E" />
         </CardItem>
-        : <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitleGroup}>{item.name}</Text>
-        </CardItem>}
-      <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontDetailMiddle}>{item.description}</Text></CardItem>
-      {constants.SETTING_ISVISIBLE_MEMBER_COUNT ?
-        <CardItem>
-          <Image style={{ width: "22px", height: "22px", marginRight: 5 }} source={require('../../assets/svg/user.svg')}></Image>
-          <Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetailBottom}>Members: {item.memberCount}</Text>
+        : <CardItem style={{ height: 100, paddingTop: 0 }}><Text ellipsizeMode='tail' numberOfLines={3} style={[this.styles.style.fontTitleGroup, { paddingTop: 0 }]}>{item.name}</Text>
         </CardItem>
-        : null}
+      }
+      <CardItem style={{ height: 100 }}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontDetailMiddle}>{item.description}</Text></CardItem>
+      {
+        constants.SETTING_ISVISIBLE_MEMBER_COUNT ?
+          <CardItem>
+            <Image style={{ width: "22px", height: "22px", marginRight: 5 }} source={require('../../assets/svg/user.svg')}></Image>
+            <Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetailBottom}>Members: {item.memberCount}</Text>
+          </CardItem>
+          : null
+      }
       {this.canJoin(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Group") }}>Join</JCButton><Right></Right></CardItem> : null}
       {this.canLeave(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Group") }}>Leave</JCButton><Right></Right></CardItem> : null}
       {this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>Owner</JCButton><Right></Right></CardItem> : null}
@@ -502,13 +511,23 @@ export default class MyGroups extends JCComponent<Props, State> {
   renderEvent(item: any): React.ReactNode {
     const zone = moment.tz.guess()
     return <Card style={[this.styles.style.eventCard, { width: this.state.cardWidth }]}>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetailTop}>{moment.tz(item.time, zone).format('ddd, MMM D, h:mm a')} {moment.tz.zone(zone).abbr(+moment(item.time).format('x'))}</Text></CardItem>
-      {item.name.length > 54 || item.name.length == 54 ?
-        <CardItem style={{ height: 60, marginTop: 8 }}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitle} data-tip={item.name}>{item.name}</Text>
-          <ReactTooltip place="top" type="dark" effect="solid" backgroundColor="#F0493E" />
-        </CardItem>
-        : <CardItem style={{ height: 60, marginTop: 8 }}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitle}>{item.name}</Text>
-        </CardItem>
+      <CardItem style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 10, height: 50, paddingBottom: 0 }} >
+        {item.isSponsored === 'true' || item.isSponsored === true ?
+          <View style={{ width: this.state.cardWidth, paddingRight: 20, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
+            <Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.sponsoredTag}>sponsored</Text>
+            <Image style={{ margin: 0, padding: 0, width: 40, height: 40, borderRadius: 100, paddingRight: 20, paddingTop: 15 }} source={require('../../assets/icon.png')}></Image>
+          </View> : null}
+      </CardItem>
+      <CardItem style={{ paddingTop: 0 }}>
+        <Text numberOfLines={1} style={[this.styles.style.fontDetailTop, { paddingTop: 0 }]}>{moment.tz(item.time, zone).format('ddd, MMM D, h:mm a')} {moment.tz.zone(zone).abbr(+moment(item.time).format('x'))}</Text>
+      </CardItem>
+      {
+        item.name.length > 54 || item.name.length == 54 ?
+          <CardItem style={{ height: 60, marginTop: 8 }}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitle} data-tip={item.name}>{item.name}</Text>
+            <ReactTooltip place="top" type="dark" effect="solid" backgroundColor="#F0493E" />
+          </CardItem>
+          : <CardItem style={{ height: 60, marginTop: 8 }}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitle}>{item.name}</Text>
+          </CardItem>
       }
       <CardItem style={{ height: 80 }}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontDetailMiddle}>{item.description}</Text></CardItem>
 
@@ -516,16 +535,15 @@ export default class MyGroups extends JCComponent<Props, State> {
         <Image style={{ width: "22px", height: "22px", marginRight: 5 }} source={require('../../assets/svg/pin 2.svg')}></Image>
         {item.eventType == "location" ?
           <Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetailBottom}><a target="_blank" rel="noreferrer" href={"https://www.google.com/maps/dir/?api=1&destination=" + escape(item.location)}>{item.location}</a></Text>
-          : item.eventType == "zoom" ?
-            <Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetailBottom}><a target="_blank" rel="noreferrer" href={item.eventUrl}>Zoom</a></Text>
-            :
+          : item.eventType == "eventbrite" ?
             <Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetailBottom}><a target="_blank" rel="noreferrer" href={item.eventUrl}>Eventbrite</a></Text>
+            : <Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetailBottom}><a target="_blank" rel="noreferrer" href={item.eventUrl}>Zoom</a></Text>
         }
       </CardItem>
       {this.canJoin(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Event") }}>Attend</JCButton><Right></Right></CardItem> : null}
       {this.canLeave(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Event") }}>Don&apos;t Attend</JCButton><Right></Right></CardItem> : null}
       {this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>Owner</JCButton><Right></Right></CardItem> : null}
-    </Card>
+    </Card >
   }
   renderResource(item: any): React.ReactNode {
     return <Card style={[this.styles.style.resourceCard, { width: this.state.cardWidth }]}>

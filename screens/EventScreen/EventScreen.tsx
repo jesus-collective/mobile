@@ -107,6 +107,7 @@ export default class EventScreen extends JCComponent<Props, State>{
           owner: user.username,
           type: "event",
           name: "",
+          eventType: "zoom",
           description: "",
           memberCount: 1,
           image: "temp",
@@ -417,7 +418,7 @@ export default class EventScreen extends JCComponent<Props, State>{
                   </Picker>
                     : null}
                   {this.state.data.eventType != "location" ?
-                    <EditableUrl title={this.state.data.eventType == "zoom" ? "Open in Zoom" : "Open in Eventbrite"}
+                    <EditableUrl title={this.state.data.eventType == "eventbrite" ? "Open in Eventbrite" : "Open in Zoom"}
                       onChange={(value: any) => { this.updateValue("eventUrl", value) }}
                       placeholder="Enter Event URL" multiline={false} textStyle={this.styles.style.editableURLText}
                       inputStyle={this.styles.style.eventEditableURL} value={this.state.data.eventUrl}
