@@ -1,4 +1,6 @@
 /* Amplify Params - DO NOT EDIT
+	ANALYTICS_JCMOBILE_ID
+	ANALYTICS_JCMOBILE_REGION
 	ENV
 	REGION
 Amplify Params - DO NOT EDIT */exports.handler = event => {

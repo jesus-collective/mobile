@@ -40,11 +40,10 @@
             "service": "Lambda",
             "dependsOn": [
                 {
-                    "category": "api",
+                    "category": "auth",
                     "resourceName": "jcmobile",
                     "attributes": [
-                        "GraphQLAPIIdOutput",
-                        "GraphQLAPIEndpointOutput"
+                        "UserPoolId"
                     ]
                 }
             ]
@@ -53,7 +52,16 @@
             "build": true,
             "providerPlugin": "awscloudformation",
             "service": "Lambda",
-            "dependsOn": []
+            "dependsOn": [
+                {
+                    "category": "analytics",
+                    "resourceName": "jcmobile",
+                    "attributes": [
+                        "Id",
+                        "Region"
+                    ]
+                }
+            ]
         }
     },
     "auth": {
