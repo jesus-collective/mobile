@@ -2,6 +2,18 @@
 	"AWSTemplateFormatVersion": "2010-09-09",
 	"Description": "Lambda resource stack creation using Amplify CLI",
 	"Parameters": {
+		"userPoolId": {
+			"Type": "String",
+			"Default": ""
+		},
+		"userPoolWebClientId": {
+			"Type": "String",
+			"Default": ""
+		},
+		"identityPoolId": {
+			"Type": "String",
+			"Default": ""
+		},
 		"CloudWatchRule": {
 			"Type": "String",
 			"Default": "NONE",
@@ -58,6 +70,15 @@
 				},
 				"Environment": {
 					"Variables": {
+						"userPoolId": {
+							"Ref": "userPoolId"
+						},
+						"userPoolWebClientId": {
+							"Ref": "userPoolWebClientId"
+						},
+						"identityPoolId": {
+							"Ref": "identityPoolId"
+						},
 						"ENV": {
 							"Ref": "env"
 						},
@@ -82,7 +103,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-jc-mobile-beta-155138-deployment",
-					"S3Key": "amplify-builds/jcUpdateMainUserGroup-3633504b4d47426d5466-build.zip"
+					"S3Key": "amplify-builds/jcUpdateMainUserGroup-785a5036436c4c527475-build.zip"
 				}
 			}
 		},

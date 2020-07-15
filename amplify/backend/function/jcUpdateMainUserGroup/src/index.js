@@ -13,13 +13,97 @@ const { print } = graphql;
 
 
 
-
-
-
-
 exports.handler = async function (event, context) {
 
-  const listTodos = gql`
+  const updateUser = gql`
+mutation UpdateUser($input: UpdateUserInput!) {
+  updateUser(input: $input) {
+    id
+    given_name
+    family_name
+    email
+    phone
+    owner
+    hasPaidState
+    profileState
+    address
+    city
+    province
+    postalCode
+    country
+    location {
+      latitude
+      longitude
+    }
+    profileImage {
+      userId
+      filenameSmall
+      filenameMedium
+      filenameLarge
+      filenameUpload
+    }
+    aboutMeShort
+    aboutMeLong
+    interests
+    currentRole
+    currentScope
+    personality
+    orgName
+    orgType
+    orgSize
+    orgDescription
+    joined
+    owns {
+      items {
+        id
+        owner
+        type
+        name
+        description
+        memberCount
+        image
+        time
+        lastUpdated
+        location
+        length
+        effort
+        cost
+        eventType
+        eventUrl
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    groups {
+      items {
+        id
+        groupID
+        userID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    messages {
+      items {
+        id
+        content
+        when
+        roomId
+        userId
+        owner
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+`
+  const listUsers = gql`
 query ListUsers(
  $filter: ModelUserFilterInput
  $limit: Int
@@ -91,34 +175,45 @@ query ListUsers(
       Auth: {
         mandatorySignIn: false,
         region: region,
-        userPoolId: "us-east-1_fe30GuOOt",
+        userPoolId: process.env.userPoolId,
         identityPoolRegion: region,
-        userPoolWebClientId: "68v5dgb5s96v9lf87cjfpeqmn9",
-        identityPoolId: "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca"
+        userPoolWebClientId: process.env.userPoolWebClientId,
+        identityPoolId: process.env.identityPoolId
       }
     })
     console.log("Done config")
     await Amplify.Auth.signIn("george.bell@themeetinghouse.com", "")
-    console.log("loggedin")
+    console.log("Done login")
     currentSession = await Amplify.Auth.currentSession()
-    console.log(currentSession)
+
     Amplify.default.configure({
       Authorization: currentSession.getIdToken().getJwtToken(),
     })
-    console.log("donecurr")
-    console.log(listTodos)
+    console.log("Done Auth")
     json = await Amplify.API.graphql({
-      query: listTodos,
+      query: listUsers,
       variables: { limit: 20, filter: { profileState: { eq: "Complete" } }, nextToken: null },
       authMode: "AMAZON_COGNITO_USER_POOLS"
-
     });
-    console.log("Doneawait");
-    console.log(json);
+    console.log("Done List Users")
+    await Promise.all(json.data.listUsers.items.map(async (item) => {
+      //TODO CHECK GROUPS FOR USER AND THEN UPDATE
+      //ADMIN->ADMIN
+      //Partner->Partner
+      //Friend->Friend
+      //Complete ProfileState->Verified
+      //Everyone else ->UnVerified
+      var json2 = await Amplify.API.graphql({
+        query: updateUser,
+        variables: { input: { id: item.id, mainUserGroup: "Verified" } },
+        authMode: "AMAZON_COGNITO_USER_POOLS"
+      });
+      console.log({ Updated: { id: item.id, mainUserGroup: "Verified" } })
+    }))
+    console.log("Done");
     return {
       statusCode: 200,
       body: JSON.stringify(json),
-
       headers: {
         "Access-Control-Allow-Origin": "*"
       }
