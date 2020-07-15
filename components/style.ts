@@ -293,7 +293,7 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", paddingTop: 5, width: "100%"
             },
             fontFormSmallDarkGreyCoordinates: {
-                fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", paddingTop: 5, width: "100%"
+                fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 22, color: "#333333", paddingTop: 5, width: "100%"
             },
             fontFormSmallInput: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 25, letterSpacing: -0.3, color: "#333333", maxWidth: 250, height: 18, borderWidth: 0, borderColor: "#dddddd"
@@ -308,6 +308,9 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 16, color: "#333333", opacity: 0.5, marginBottom: 19
             },
             fontFormSmallHeader: {
+                fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 26, letterSpacing: -0.3, textTransform: "uppercase", color: "#333333"
+            },
+            profilePrivateInformation: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 26, letterSpacing: -0.3, textTransform: "uppercase", color: "#333333"
             },
             fontFormSmall: {
@@ -662,6 +665,7 @@ export default class MainStyles {
             myProfileCoordinates: {
                 justifyContent: "space-between",
                 flexDirection: "row",
+                marginBottom: 80,
                 width: "100%",
                 flexGrow: 0,
                 marginTop: 30,
@@ -1284,6 +1288,7 @@ export default class MainStyles {
                 groupNameInput: {
                     fontSize: 24,
                     lineHeight: 30,
+                    width: '50%'
                 },
                 eventNameInput: {
                     fontSize: 24,
@@ -1307,8 +1312,8 @@ export default class MainStyles {
                     marginBottom: 0
                 },
                 myProfileImage: {
-                    width: "200px",
-                    height: "240px",
+                    width: "160px",
+                    height: "200px",
                     borderRadius: 120
                 },
                 fileInputWrapper: {
@@ -1318,7 +1323,7 @@ export default class MainStyles {
                 },
                 myProfileCoordinates: {
                     flexDirection: "column",
-                    marginBottom: 30,
+                    marginBottom: 130,
                 },
                 myProfilePersonalInfoWrapper: {
                     marginBottom: 35,
@@ -1328,6 +1333,9 @@ export default class MainStyles {
                 },
                 fontFormSmallHeader: {
                     marginTop: 100
+                },
+                profilePrivateInformation: {
+                    marginTop: 25
                 },
                 resourcefileFieldWrapper: {
                     top: "10vw",
@@ -1362,7 +1370,8 @@ export default class MainStyles {
                     maxWidth: 175
                 },
                 fontFormSmallDarkGreyCoordinates: {
-                    width: "100%"
+                    width: "100%",
+                    marginBottom: 15
                 },
                 myProfileTopButtonsExternalContainer: {
                     flexDirection: "column"
@@ -1478,7 +1487,7 @@ export default class MainStyles {
                 },
                 myprofilePicker: {
                     marginBottom: 10,
-                    width: '100%'
+                    width: '75%'
                 },
                 dashboardConversationBody: {
                     alignItems: "center"
@@ -1500,6 +1509,12 @@ export default class MainStyles {
                 },
                 profileFontTitle: {
                     marginBottom: 15
+                },
+                fontFormName: {
+                    marginTop: 30,
+                },
+                myProfileOrgTypeInput: {
+                    width: '100%'
                 },
             },
 
@@ -1571,7 +1586,15 @@ export default class MainStyles {
                     flexDirection: 'column'
                 },
                 myProfileOrgTypeInput: {
-                    marginTop: 10
+                    marginTop: 10,
+                },
+                myProfileCoordinates: {
+                    flexDirection: "column",
+                    marginBottom: 80,
+                },
+                fontFormSmallDarkGreyCoordinates: {
+                    width: "100%",
+                    marginBottom: 15
                 },
             },
 
@@ -1851,8 +1874,10 @@ export default class MainStyles {
                 { zIndex: 3, position: "absolute", width: "80%", height: "10%", left: "10%", top: "40%", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 30, color: "#FFFFFF" } :
                 { display: "none", zIndex: 3, position: "absolute", width: "80%", height: "10%", left: "10%", top: "40%", fontFamily: "Graphik-Bold-App", fontSize: 24, lineHeight: 48, color: "#FFFFFF" },
 
-            signUpProfile: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
-                { position: "absolute", left: "30%", width: "65%", top: 10 } :
+            signUpProfile: Platform.OS === 'web' && Dimensions.get('window').width > 1024 ?
+                { position: "absolute", left: "15%", width: "85%", top: 10 } : Platform.OS === 'web' && Dimensions.get('window').width > 768 ?
+                { position: "absolute", left: "18%", width: "82.5%", top: 10 } : Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
+                { position: "absolute", left: "24%", width: "78%", top: 10 } :
                 { position: "absolute", left: "2%", width: "96%", top: 100 + Constants.statusBarHeight, height: "100%" },
 
             signUpScreen1Content: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?

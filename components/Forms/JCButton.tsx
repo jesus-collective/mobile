@@ -8,6 +8,7 @@ export enum ButtonTypes {
     Solid,
     SolidProfileDelete,
     SolidProfile,
+    SolidProfileName,
     SolidAboutMe,
     SolidMap,
     SolidResources,

@@ -46,6 +46,7 @@ class ResourceHeader extends JCComponent<EmptyProps, State> {
             this.setState({ imageUrl: z, image: img })
         }
     }
+      
     render(): React.ReactNode {
         return (
             <ResourceHeader.Consumer>
@@ -87,13 +88,27 @@ class ResourceHeader extends JCComponent<EmptyProps, State> {
                                     state.resourceData.resources.items[state.currentResource] ?
                                         <View style={this.styles.style.resourcefileFieldWrapper}>
                                             <EditableText onChange={(val) => { actions.updateResource(state.currentResource, "title", val) }} multiline={false} inputStyle={this.styles.style.fontResourceHeaderBold} textStyle={this.styles.style.fontCourseHeaderBold} value={state.resourceData.resources.items[state.currentResource].title} isEditable={state.isEditable}></EditableText>
+                                            {state.resourceData.resources.items[state.currentResource].title == 'Youth' ? 
                                             <View style={this.styles.style.resourceHeaderAgeGroupBox}>
-                                                <Text style={this.styles.style.resourceHeaderAgeGroupBoxText}></Text>
-                                            </View>
-                                            <EditableText onChange={(val) => { actions.updateResource(state.currentResource, "description", val) }} multiline={true} inputStyle={this.styles.style.fontResourceHeaderDescription} textStyle={this.styles.style.fontCourseHeaderDescription} value={state.resourceData.resources.items[state.currentResource].description} isEditable={state.isEditable}></EditableText>
-                                        </View>
-                                        : null
+                                                <Text style={this.styles.style.resourceHeaderAgeGroupBoxText}>Ages 11–18</Text>
+                                            </View> : state.resourceData.resources.items[state.currentResource].title == 'Jr. High' ?  <View style={this.styles.style.resourceHeaderAgeGroupBox}>
+                                                <Text style={this.styles.style.resourceHeaderAgeGroupBoxText}>Ages 11-13</Text>
+                                            </View> : state.resourceData.resources.items[state.currentResource].title == 'Preschool' ?  <View style={this.styles.style.resourceHeaderPreSchoolBox}>
+                                                <Text style={this.styles.style.resourceHeaderAgeGroupBoxText}>Infants–5 Years Old</Text>
+                                            </View> : state.resourceData.resources.items[state.currentResource].title == 'Sr. High' ?  <View style={this.styles.style.resourceHeaderAgeGroupBox}>
+                                                <Text style={this.styles.style.resourceHeaderAgeGroupBoxText}>Ages 15-18</Text>
+                                            </View> : state.resourceData.resources.items[state.currentResource].title == 'Kids' ?  <View style={this.styles.style.resourceHeaderAgeGroupBox}>
+                                                <Text style={this.styles.style.resourceHeaderAgeGroupBoxText}>Ages 6-10</Text>
+                                            </View> : null
+                                            }
+                                            {state.resourceData.resources.items[state.currentResource].title != 'Overview' ? 
+                                            <EditableText onChange={(val) => { actions.updateResource(state.currentResource, "description", val) }} multiline={true} inputStyle={this.styles.style.fontResourceHeaderDescription} textStyle={this.styles.style.fontCourseHeaderDescription} value={state.resourceData.resources.items[state.currentResource].description} isEditable={state.isEditable}></EditableText> : 
+                                            <EditableText onChange={(val) => { actions.updateResource(state.currentResource, "description", val) }} multiline={true} inputStyle={this.styles.style.fontResourceHeaderDescription} textStyle={this.styles.style.fontCourseHeaderDescriptionOverview} value={state.resourceData.resources.items[state.currentResource].description} isEditable={state.isEditable}></EditableText>
+                                            
+                                            }
 
+                                        </View>
+                                        : null 
                             }
                         </Container>
                     )

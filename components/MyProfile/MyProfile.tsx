@@ -496,7 +496,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               }
 
               {this.state.isEditable && this.state.editMode ?
-                <Text style={this.styles.style.fontFormSmallHeader}>Private Information</Text>
+                <Text style={this.styles.style.profilePrivateInformation}>Private Information</Text>
                 : null
               }
               {this.state.isEditable && this.state.editMode ?
@@ -616,7 +616,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                     }) : null}
                 </View>
               }
-              <View>
+              <View style={{ width: '100%' }}>
                 <Label style={this.styles.style.fontFormSmall}><Text style={this.styles.style.fontFormMandatory}>{this.state.isEditable && this.state.editMode ? '*' : ''}</Text>Current Role</Label>
                 <EditableText onChange={(e) => { this.handleInputChange(e, "currentRole") }}
                   multiline={false}
@@ -665,7 +665,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                     multiline={false}
                     data-testid="profile-orgName"
                     textStyle={this.styles.style.fontFormSmallDarkGrey}
-                    inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
+                    inputStyle={this.styles.style.myProfileOrgTypeInput}
                     value={this.state.UserDetails.orgName} isEditable={this.state.isEditable && this.state.editMode}></EditableText>
                 </View> : null}
 
