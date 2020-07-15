@@ -164,7 +164,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
     return { ids, names }
   }
 
-  switchRoom(index: number) {
+  switchRoom(index: number): void {
     this.setState({ selectedRoom: index })
     this.setState({ currentRoomId: this.state.data[index].roomID })
   }
