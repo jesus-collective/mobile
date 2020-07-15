@@ -255,7 +255,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
   }
   updateCourse = async (item: string, value: any): Promise<void> => {
     try {
-      console.log({ "Updating Week": index })
+      console.log({ "Updating Course": item })
 
       const updateCourseInfo: any = await API.graphql({
         query: mutations.updateCourseInfo,

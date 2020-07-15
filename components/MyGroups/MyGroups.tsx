@@ -387,7 +387,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       return false
   }
 
-  join(group: any, groupType: any): void {
+  join(group: any, groupType: string): void {
     Analytics.record({
       name: 'joined' + groupType,
       // Attribute values must be strings
@@ -412,7 +412,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     console.log("Navigate to conversationScreen")
     this.props.navigation.push("ConversationScreen", { initialUserID: initialUser, initialUserName: name });
   }
-  leave(group: any, groupType: any): void {
+  leave(group: any, groupType: string): void {
     Analytics.record({
       name: 'left' + groupType,
       // Attribute values must be strings

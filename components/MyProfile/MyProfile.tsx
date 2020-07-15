@@ -238,7 +238,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
         .then(result => this.setState({ profileImage: result }))
         .catch(err => { console.log(err) });
   }
-  getValueFromKey(myObject: any, string: any) {
+  getValueFromKey(myObject: unknown, string: string) {
     const key = Object.keys(myObject).filter(k => k.includes(string));
     return key.length ? myObject[key[0]] : "";
   }

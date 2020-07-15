@@ -25,7 +25,7 @@ class ResourceOverviewImpl extends JCComponent<Props>{
     constructor(props: Props) {
         super(props);
     }
-    getValueFromKey(myObject: any, string: any) {
+    getValueFromKey(myObject: unknown, string: string) {
         const key = Object.keys(myObject).filter(k => k.includes(string));
         return key.length ? myObject[key[0]] : "";
     }

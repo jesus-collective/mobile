@@ -419,11 +419,11 @@ class ResourceViewerImpl extends JCComponent<Props, State> {
             console.log({ "Error mutations.deleteGroup": err });
         });
     }
-    showProfile = (id): void => {
+    showProfile = (id: string): void => {
         console.log("Navigate to profileScreen")
         this.props.navigation.push("ProfileScreen", { id: id, create: false });
     }
-    updateValueGroup = (field: any, value: any): void => {
+    updateValueGroup = (field: string, value: any): void => {
         const temp = this.state.groupData
         temp[field] = value
         this.setState({ groupData: temp })
@@ -706,7 +706,7 @@ class ResourceViewerImpl extends JCComponent<Props, State> {
         }
 
     }
-    getValueFromKey(myObject: any, string: any) {
+    getValueFromKey(myObject: unknown, string: string) {
         const key = Object.keys(myObject).filter(k => k.includes(string));
         return key.length ? myObject[key[0]] : "";
     }

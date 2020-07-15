@@ -106,7 +106,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
     })
 
   }
-  getValueFromKey(myObject: any, string: any): string {
+  getValueFromKey(myObject: unknown, string: string): string {
     const key = Object.keys(myObject).filter(k => k.includes(string));
     return key.length ? myObject[key[0]] : "";
   }
@@ -392,7 +392,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
       console.log({ "Error mutations.deleteGroup": err });
     });
   }
-  updateValue(field: any, value: any): void {
+  updateValue(field: string, value: any): void {
     const temp = this.state.data
     temp[field] = value
     this.setState({ data: temp })
