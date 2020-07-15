@@ -1882,6 +1882,7 @@ export const getResourceRoot = /* GraphQL */ `
           menuTitle
           order
           title
+          subtitle
           description
           whoIsThisFor
           extendedDescription
@@ -2005,6 +2006,7 @@ export const getResource = /* GraphQL */ `
       menuTitle
       order
       title
+      subtitle
       image {
         userId
         filenameSmall
@@ -2085,6 +2087,7 @@ export const listResources = /* GraphQL */ `
         menuTitle
         order
         title
+        subtitle
         image {
           userId
           filenameSmall
@@ -2158,6 +2161,7 @@ export const getResourceSeries = /* GraphQL */ `
         menuTitle
         order
         title
+        subtitle
         image {
           userId
           filenameSmall
@@ -2220,6 +2224,7 @@ export const listResourceSeriess = /* GraphQL */ `
           menuTitle
           order
           title
+          subtitle
           description
           whoIsThisFor
           extendedDescription
@@ -2274,6 +2279,7 @@ export const getResourceEpisode = /* GraphQL */ `
           menuTitle
           order
           title
+          subtitle
           description
           whoIsThisFor
           extendedDescription

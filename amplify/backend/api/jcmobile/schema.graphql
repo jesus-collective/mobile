@@ -93,7 +93,7 @@ type Group
       { allow: private, provider:userPools, operations:[read]}
       { allow: owner, ownerField: "owner" }
       { allow: groups, groups: ["verifiedUsers"], operations: [read] }
-      { allow: groups, groups: ["admins"]}
+      { allow: groups, groups: ["admin"]}
 
     ]
   ) {
@@ -143,7 +143,7 @@ type Organization
   @auth(
     rules: [
       { allow: private, provider:userPools, operations:[read]}
-      { allow: owner, ownerField: "admins" }
+      { allow: owner, ownerField: "admin" }
       { allow: groups, groups: ["verifiedUsers"], operations: [read] }
     ]
   ) {
@@ -331,7 +331,7 @@ type ResourceRoot
 @model 
  @auth(rules: [
    { allow: groups, groups: ["verifiedUsers"], operations: [read] }
-     { allow: groups, groups: ["admins"]}
+     { allow: groups, groups: ["admin"]}
    ])
  @key(name: "resourceByOrganization", fields: ["organizationId","groupId"])
  {
@@ -349,7 +349,7 @@ type Resource
 @auth(rules: [
    {allow: owner, ownerField: "owner", operations: [create, read, update, delete]}
   { allow: groups, groups: ["verifiedUsers"], operations: [read] }
-   { allow: groups, groups: ["admins"]}
+   { allow: groups, groups: ["admin"]}
   ])
  @key(name: "byResource", fields: ["resourceID"])
 {
@@ -359,6 +359,7 @@ type Resource
   menuTitle: String
   order:String
   title: String
+  subtitle:String
   image: Image
   description: String
   whoIsThisFor: String
@@ -373,7 +374,7 @@ type ResourceSeries
      {allow: owner, ownerField: "owner", operations: [create, read, update, delete]}
 
   { allow: groups, groups: ["verifiedUsers"] , operations: [read]}
-   { allow: groups, groups: ["admins"]}
+   { allow: groups, groups: ["admin"]}
   ])
  @key(name: "byResourceSeries", fields: ["seriesID","title"])
 {
@@ -399,7 +400,7 @@ type ResourceEpisode
 @auth(rules: [
      {allow: owner, ownerField: "owner", operations: [create, read, update, delete]}
   { allow: groups, groups: ["verifiedUsers"], operations: [read] }
-   { allow: groups, groups: ["admins"]}
+   { allow: groups, groups: ["admin"]}
   ]) 
  @key(name: "byResourceEpisode", fields: ["episodeID","title"])
  {

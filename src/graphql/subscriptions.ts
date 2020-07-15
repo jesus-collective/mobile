@@ -4447,6 +4447,7 @@ export const onCreateResourceRoot = /* GraphQL */ `
           menuTitle
           order
           title
+          subtitle
           description
           whoIsThisFor
           extendedDescription
@@ -4536,6 +4537,7 @@ export const onUpdateResourceRoot = /* GraphQL */ `
           menuTitle
           order
           title
+          subtitle
           description
           whoIsThisFor
           extendedDescription
@@ -4625,6 +4627,7 @@ export const onDeleteResourceRoot = /* GraphQL */ `
           menuTitle
           order
           title
+          subtitle
           description
           whoIsThisFor
           extendedDescription
@@ -4707,6 +4710,7 @@ export const onCreateResource = /* GraphQL */ `
       menuTitle
       order
       title
+      subtitle
       image {
         userId
         filenameSmall
@@ -4782,6 +4786,7 @@ export const onUpdateResource = /* GraphQL */ `
       menuTitle
       order
       title
+      subtitle
       image {
         userId
         filenameSmall
@@ -4857,6 +4862,7 @@ export const onDeleteResource = /* GraphQL */ `
       menuTitle
       order
       title
+      subtitle
       image {
         userId
         filenameSmall
@@ -4966,6 +4972,7 @@ export const onCreateResourceSeries = /* GraphQL */ `
         menuTitle
         order
         title
+        subtitle
         image {
           userId
           filenameSmall
@@ -5040,6 +5047,7 @@ export const onUpdateResourceSeries = /* GraphQL */ `
         menuTitle
         order
         title
+        subtitle
         image {
           userId
           filenameSmall
@@ -5114,6 +5122,7 @@ export const onDeleteResourceSeries = /* GraphQL */ `
         menuTitle
         order
         title
+        subtitle
         image {
           userId
           filenameSmall
@@ -5185,6 +5194,7 @@ export const onCreateResourceEpisode = /* GraphQL */ `
           menuTitle
           order
           title
+          subtitle
           description
           whoIsThisFor
           extendedDescription
@@ -5240,6 +5250,7 @@ export const onUpdateResourceEpisode = /* GraphQL */ `
           menuTitle
           order
           title
+          subtitle
           description
           whoIsThisFor
           extendedDescription
@@ -5295,6 +5306,7 @@ export const onDeleteResourceEpisode = /* GraphQL */ `
           menuTitle
           order
           title
+          subtitle
           description
           whoIsThisFor
           extendedDescription
