@@ -46,7 +46,7 @@ class ResourceHeader extends JCComponent<EmptyProps, State> {
             this.setState({ imageUrl: z, image: img })
         }
     }
-      
+
     render(): React.ReactNode {
         return (
             <ResourceHeader.Consumer>
@@ -59,12 +59,12 @@ class ResourceHeader extends JCComponent<EmptyProps, State> {
                             {this.state.imageUrl ?
                                 <Animated.View onLayout={this.fadeAnimation} style={[this.styles.style.resourceHeaderImgView, { opacity: this.state.fadeValue }]}>
                                     <Image style={this.styles.style.resourceHeaderImg}
-                                    source={this.state.imageUrl} onError={() => { this.getImage(state.resourceData.resources.items[state.currentResource].image) }}>
+                                        source={this.state.imageUrl} onError={() => { this.getImage(state.resourceData.resources.items[state.currentResource].image) }}>
                                     </Image>
                                 </Animated.View>
                                 : null
                             }
-                            {state.currentSeries == null ?
+                            {state.currentSeries == null && state.isEditable ?
                                 <View style={this.styles.style.resourcefileInputWrapper}>
                                     <JCButton buttonType={ButtonTypes.Transparent} onPress={() => { null }}><Ionicons size={32} name="ios-image" style={this.styles.style.resourceImageIcon} /></JCButton>
                                     <input style={{ fontSize: "200px", position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='image/*' onChange={(e) => actions.updateResourceImage(state.currentResource, e)} />
@@ -87,28 +87,29 @@ class ResourceHeader extends JCComponent<EmptyProps, State> {
                                     :
                                     state.resourceData.resources.items[state.currentResource] ?
                                         <View style={this.styles.style.resourcefileFieldWrapper}>
-                                            <EditableText onChange={(val) => { actions.updateResource(state.currentResource, "title", val) }} multiline={false} inputStyle={this.styles.style.fontResourceHeaderBold} textStyle={this.styles.style.fontCourseHeaderBold} value={state.resourceData.resources.items[state.currentResource].title} isEditable={state.isEditable}></EditableText>
-                                            {state.resourceData.resources.items[state.currentResource].title == 'Youth' ? 
+                                            <EditableText onChange={(val) => { actions.updateResource(state.currentResource, "title", val) }}
+                                                multiline={false}
+                                                inputStyle={this.styles.style.fontResourceHeaderBold}
+                                                textStyle={this.styles.style.fontCourseHeaderBold}
+                                                value={state.resourceData.resources.items[state.currentResource].title}
+                                                isEditable={state.isEditable}></EditableText>
                                             <View style={this.styles.style.resourceHeaderAgeGroupBox}>
-                                                <Text style={this.styles.style.resourceHeaderAgeGroupBoxText}>Ages 11–18</Text>
-                                            </View> : state.resourceData.resources.items[state.currentResource].title == 'Jr. High' ?  <View style={this.styles.style.resourceHeaderAgeGroupBox}>
-                                                <Text style={this.styles.style.resourceHeaderAgeGroupBoxText}>Ages 11-13</Text>
-                                            </View> : state.resourceData.resources.items[state.currentResource].title == 'Preschool' ?  <View style={this.styles.style.resourceHeaderPreSchoolBox}>
-                                                <Text style={this.styles.style.resourceHeaderAgeGroupBoxText}>Infants–5 Years Old</Text>
-                                            </View> : state.resourceData.resources.items[state.currentResource].title == 'Sr. High' ?  <View style={this.styles.style.resourceHeaderAgeGroupBox}>
-                                                <Text style={this.styles.style.resourceHeaderAgeGroupBoxText}>Ages 15-18</Text>
-                                            </View> : state.resourceData.resources.items[state.currentResource].title == 'Kids' ?  <View style={this.styles.style.resourceHeaderAgeGroupBox}>
-                                                <Text style={this.styles.style.resourceHeaderAgeGroupBoxText}>Ages 6-10</Text>
-                                            </View> : null
-                                            }
-                                            {state.resourceData.resources.items[state.currentResource].title != 'Overview' ? 
-                                            <EditableText onChange={(val) => { actions.updateResource(state.currentResource, "description", val) }} multiline={true} inputStyle={this.styles.style.fontResourceHeaderDescription} textStyle={this.styles.style.fontCourseHeaderDescription} value={state.resourceData.resources.items[state.currentResource].description} isEditable={state.isEditable}></EditableText> : 
-                                            <EditableText onChange={(val) => { actions.updateResource(state.currentResource, "description", val) }} multiline={true} inputStyle={this.styles.style.fontResourceHeaderDescription} textStyle={this.styles.style.fontCourseHeaderDescriptionOverview} value={state.resourceData.resources.items[state.currentResource].description} isEditable={state.isEditable}></EditableText>
-                                            
+                                                <EditableText onChange={(val) => { actions.updateResource(state.currentResource, "subtitle", val) }}
+                                                    multiline={false}
+                                                    inputStyle={this.styles.style.resourceHeaderAgeGroupBoxText}
+                                                    textStyle={this.styles.style.resourceHeaderAgeGroupBoxText}
+                                                    value={state.resourceData.resources.items[state.currentResource].subtitle}
+                                                    isEditable={state.isEditable}></EditableText>
+                                            </View>
+
+                                            {state.resourceData.resources.items[state.currentResource].title != 'Overview' ?
+                                                <EditableText onChange={(val) => { actions.updateResource(state.currentResource, "description", val) }} multiline={true} inputStyle={this.styles.style.fontResourceHeaderDescription} textStyle={this.styles.style.fontCourseHeaderDescription} value={state.resourceData.resources.items[state.currentResource].description} isEditable={state.isEditable}></EditableText> :
+                                                <EditableText onChange={(val) => { actions.updateResource(state.currentResource, "description", val) }} multiline={true} inputStyle={this.styles.style.fontResourceHeaderDescription} textStyle={this.styles.style.fontCourseHeaderDescriptionOverview} value={state.resourceData.resources.items[state.currentResource].description} isEditable={state.isEditable}></EditableText>
+
                                             }
 
                                         </View>
-                                        : null 
+                                        : null
                             }
                         </Container>
                     )

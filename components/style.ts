@@ -402,6 +402,7 @@ export default class MainStyles {
                 height: "58px",
                 backgroundColor: '#ffffff',
                 justifyContent: "center",
+                textAlign: "center",
                 alignItems: "center",
                 paddingRight: 21,
                 paddingLeft: 21,
@@ -412,6 +413,8 @@ export default class MainStyles {
                 marginBottom: 30
             },
             resourceHeaderAgeGroupBoxText: {
+                textAlign: "center",
+                alignSelf: "center",
                 color: '#000000',
                 fontSize: 30,
                 lineHeight: 35,
@@ -1876,9 +1879,9 @@ export default class MainStyles {
 
             signUpProfile: Platform.OS === 'web' && Dimensions.get('window').width > 1024 ?
                 { position: "absolute", left: "15%", width: "85%", top: 10 } : Platform.OS === 'web' && Dimensions.get('window').width > 768 ?
-                { position: "absolute", left: "18%", width: "82.5%", top: 10 } : Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
-                { position: "absolute", left: "24%", width: "78%", top: 10 } :
-                { position: "absolute", left: "2%", width: "96%", top: 100 + Constants.statusBarHeight, height: "100%" },
+                    { position: "absolute", left: "18%", width: "82.5%", top: 10 } : Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
+                        { position: "absolute", left: "24%", width: "78%", top: 10 } :
+                        { position: "absolute", left: "2%", width: "96%", top: 100 + Constants.statusBarHeight, height: "100%" },
 
             signUpScreen1Content: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
                 { position: "absolute", width: "100%" } :
