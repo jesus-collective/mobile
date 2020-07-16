@@ -103,7 +103,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-jc-mobile-beta-155138-deployment",
-					"S3Key": "amplify-builds/jcProcessDMAlerts-2b516a4e643466524345-build.zip"
+					"S3Key": "amplify-builds/jcProcessDMAlerts-636f7763726c4b332f74-build.zip"
 				},
 				"Layers": []
 			}
@@ -185,6 +185,28 @@
 									}
 								]
 							}
+						},
+						{
+							"Effect": "Allow",
+							"Action": [
+								"ses:SendEmail"
+							],
+							"Resource": {
+								"Fn::Sub": [
+									"arn:aws:ses:${region}:${account}:identity/donot-reply@jesuscollective.com",
+									{
+										"region": {
+											"Ref": "AWS::Region"
+										},
+										"account": {
+											"Ref": "AWS::AccountId"
+										},
+										"lambda": {
+											"Ref": "LambdaFunction"
+										}
+									}
+								]
+							}
 						}
 					]
 				}
@@ -215,7 +237,7 @@
 							],
 							"Resource": {
 								"Fn::ImportValue": {
-									"Fn::Sub": "2ht5eyf3rfct7f3slbiz6sme5u:GetAtt:DirectMessageTable:StreamArn"
+									"Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:DirectMessageTable:StreamArn"
 								}
 							}
 						}
@@ -234,7 +256,7 @@
 				"Enabled": true,
 				"EventSourceArn": {
 					"Fn::ImportValue": {
-						"Fn::Sub": "2ht5eyf3rfct7f3slbiz6sme5u:GetAtt:DirectMessageTable:StreamArn"
+						"Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:DirectMessageTable:StreamArn"
 					}
 				},
 				"FunctionName": {
