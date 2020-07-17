@@ -183,6 +183,10 @@ type Organization
   aboutMeLong: String
   orgType: String
   orgSize: String
+  denomination: String
+  pplServed: String
+  sundayAttendance: String
+  numberVolunteers: String
   orgDescription: String
   joined: String
 
