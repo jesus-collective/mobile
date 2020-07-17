@@ -25,6 +25,8 @@ export const getUser = /* GraphQL */ `
         geocodeFull
         geocodeCity
         geocodeRegion
+        randomLatitude
+        randomLongitude
       }
       profileImage {
         userId
@@ -155,6 +157,8 @@ export const listUsers = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -233,6 +237,8 @@ export const getGroup = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -305,6 +311,8 @@ export const getGroup = /* GraphQL */ `
         geocodeFull
         geocodeCity
         geocodeRegion
+        randomLatitude
+        randomLongitude
       }
       length
       effort
@@ -395,6 +403,8 @@ export const listGroups = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         length
         effort
@@ -429,6 +439,8 @@ export const getOrganization = /* GraphQL */ `
         geocodeFull
         geocodeCity
         geocodeRegion
+        randomLatitude
+        randomLongitude
       }
       profileImage {
         userId
@@ -458,6 +470,8 @@ export const getOrganization = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -573,6 +587,8 @@ export const listOrganizations = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -664,6 +680,8 @@ export const getCourseInfo = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -860,6 +878,8 @@ export const getCourseTriads = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -929,6 +949,8 @@ export const getCourseTriads = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -1365,6 +1387,8 @@ export const getDirectMessageUser = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -1586,6 +1610,8 @@ export const getDirectMessage = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -1747,6 +1773,8 @@ export const getMessage = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -1849,6 +1877,8 @@ export const getMessage = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         length
         effort
@@ -1987,6 +2017,8 @@ export const getResourceRoot = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -2662,6 +2694,8 @@ export const groupByType = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         length
         effort
@@ -2875,6 +2909,8 @@ export const searchUsers = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -2995,6 +3031,8 @@ export const searchGroups = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         length
         effort

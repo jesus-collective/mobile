@@ -195,8 +195,8 @@ export default class GroupScreen extends JCComponent<Props, State>{
     return data.map((dataItem) => {
       if (dataItem?.location && dataItem?.location?.latitude && dataItem?.location?.longitude) {
         return {
-          latitude: dataItem.location.latitude,
-          longitude: dataItem.location.longitude,
+          latitude: Number(dataItem.location.latitude) + Number(dataItem.location.randomLatitude),
+          longitude: Number(dataItem.location.longitude) + Number(dataItem.location.randomLongitude),
           name: dataItem.given_name + " " + dataItem.family_name,
           user: dataItem,
           link: "",

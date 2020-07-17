@@ -35,6 +35,8 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -137,6 +139,8 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         length
         effort
@@ -179,6 +183,8 @@ export const onCreateUser = /* GraphQL */ `
         geocodeFull
         geocodeCity
         geocodeRegion
+        randomLatitude
+        randomLongitude
       }
       profileImage {
         userId
@@ -304,6 +310,8 @@ export const onUpdateUser = /* GraphQL */ `
         geocodeFull
         geocodeCity
         geocodeRegion
+        randomLatitude
+        randomLongitude
       }
       profileImage {
         userId
@@ -429,6 +437,8 @@ export const onDeleteUser = /* GraphQL */ `
         geocodeFull
         geocodeCity
         geocodeRegion
+        randomLatitude
+        randomLongitude
       }
       profileImage {
         userId
@@ -591,6 +601,8 @@ export const onCreateGroupMember = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         length
         effort
@@ -626,6 +638,8 @@ export const onCreateGroupMember = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -739,6 +753,8 @@ export const onUpdateGroupMember = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         length
         effort
@@ -774,6 +790,8 @@ export const onUpdateGroupMember = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -887,6 +905,8 @@ export const onDeleteGroupMember = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         length
         effort
@@ -922,6 +942,8 @@ export const onDeleteGroupMember = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -1001,6 +1023,8 @@ export const onCreateGroup = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -1073,6 +1097,8 @@ export const onCreateGroup = /* GraphQL */ `
         geocodeFull
         geocodeCity
         geocodeRegion
+        randomLatitude
+        randomLongitude
       }
       length
       effort
@@ -1128,6 +1154,8 @@ export const onUpdateGroup = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -1200,6 +1228,8 @@ export const onUpdateGroup = /* GraphQL */ `
         geocodeFull
         geocodeCity
         geocodeRegion
+        randomLatitude
+        randomLongitude
       }
       length
       effort
@@ -1255,6 +1285,8 @@ export const onDeleteGroup = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -1327,6 +1359,8 @@ export const onDeleteGroup = /* GraphQL */ `
         geocodeFull
         geocodeCity
         geocodeRegion
+        randomLatitude
+        randomLongitude
       }
       length
       effort
@@ -1384,6 +1418,8 @@ export const onCreateOrganizationMember = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -1446,6 +1482,8 @@ export const onCreateOrganizationMember = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -1524,6 +1562,8 @@ export const onUpdateOrganizationMember = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -1586,6 +1626,8 @@ export const onUpdateOrganizationMember = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -1664,6 +1706,8 @@ export const onDeleteOrganizationMember = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -1726,6 +1770,8 @@ export const onDeleteOrganizationMember = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -1792,6 +1838,8 @@ export const onCreateOrganization = /* GraphQL */ `
         geocodeFull
         geocodeCity
         geocodeRegion
+        randomLatitude
+        randomLongitude
       }
       profileImage {
         userId
@@ -1821,6 +1869,8 @@ export const onCreateOrganization = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -1931,6 +1981,8 @@ export const onUpdateOrganization = /* GraphQL */ `
         geocodeFull
         geocodeCity
         geocodeRegion
+        randomLatitude
+        randomLongitude
       }
       profileImage {
         userId
@@ -1960,6 +2012,8 @@ export const onUpdateOrganization = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -2070,6 +2124,8 @@ export const onDeleteOrganization = /* GraphQL */ `
         geocodeFull
         geocodeCity
         geocodeRegion
+        randomLatitude
+        randomLongitude
       }
       profileImage {
         userId
@@ -2099,6 +2155,8 @@ export const onDeleteOrganization = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -2235,6 +2293,8 @@ export const onCreateCourseInfo = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -2339,6 +2399,8 @@ export const onUpdateCourseInfo = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -2443,6 +2505,8 @@ export const onDeleteCourseInfo = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -2579,6 +2643,8 @@ export const onCreateCourseTriads = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -2648,6 +2714,8 @@ export const onCreateCourseTriads = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -2775,6 +2843,8 @@ export const onUpdateCourseTriads = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -2844,6 +2914,8 @@ export const onUpdateCourseTriads = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -2971,6 +3043,8 @@ export const onDeleteCourseTriads = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -3040,6 +3114,8 @@ export const onDeleteCourseTriads = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -3603,6 +3679,8 @@ export const onCreateDirectMessageUser = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -3696,6 +3774,8 @@ export const onUpdateDirectMessageUser = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -3789,6 +3869,8 @@ export const onDeleteDirectMessageUser = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -3990,6 +4072,8 @@ export const onCreateDirectMessage = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -4086,6 +4170,8 @@ export const onUpdateDirectMessage = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -4182,6 +4268,8 @@ export const onDeleteDirectMessage = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -4281,6 +4369,8 @@ export const onCreateMessage = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -4383,6 +4473,8 @@ export const onCreateMessage = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         length
         effort
@@ -4435,6 +4527,8 @@ export const onUpdateMessage = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -4537,6 +4631,8 @@ export const onUpdateMessage = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         length
         effort
@@ -4589,6 +4685,8 @@ export const onDeleteMessage = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -4691,6 +4789,8 @@ export const onDeleteMessage = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         length
         effort
@@ -4750,6 +4850,8 @@ export const onCreateResourceRoot = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -4840,6 +4942,8 @@ export const onUpdateResourceRoot = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -4930,6 +5034,8 @@ export const onDeleteResourceRoot = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId

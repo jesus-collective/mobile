@@ -70,6 +70,8 @@ type LatLong {
   geocodeFull: String
   geocodeCity: String
   geocodeRegion: String
+  randomLatitude:String
+  randomLongitude:String
 }
 type Image {
   userId: String

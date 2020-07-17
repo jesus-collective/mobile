@@ -44,6 +44,7 @@ class HomeScreen extends JCComponent<Props, State>{
     this.setState({ showMap: !this.state.showMap })
   }
   mergeMapData(mapData: MapData[]): void {
+    console.log(mapData)
     //    console.log(mapData)
     const data = this.state.mapData.concat(mapData)
     this.setState({ mapData: data })

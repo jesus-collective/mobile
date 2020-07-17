@@ -44,6 +44,8 @@ export type LatLongInput = {
   geocodeFull?: string | null,
   geocodeCity?: string | null,
   geocodeRegion?: string | null,
+  randomLatitude?: string | null,
+  randomLongitude?: string | null,
 };
 
 export type ImageInput = {
@@ -1047,6 +1049,8 @@ export type CreateUserMutation = {
       geocodeFull: string | null,
       geocodeCity: string | null,
       geocodeRegion: string | null,
+      randomLatitude: string | null,
+      randomLongitude: string | null,
     } | null,
     profileImage:  {
       __typename: "Image",
@@ -1187,6 +1191,8 @@ export type UpdateUserMutation = {
       geocodeFull: string | null,
       geocodeCity: string | null,
       geocodeRegion: string | null,
+      randomLatitude: string | null,
+      randomLongitude: string | null,
     } | null,
     profileImage:  {
       __typename: "Image",
@@ -1327,6 +1333,8 @@ export type DeleteUserMutation = {
       geocodeFull: string | null,
       geocodeCity: string | null,
       geocodeRegion: string | null,
+      randomLatitude: string | null,
+      randomLongitude: string | null,
     } | null,
     profileImage:  {
       __typename: "Image",
@@ -1507,6 +1515,8 @@ export type CreateGroupMemberMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       length: string | null,
       effort: string | null,
@@ -1545,6 +1555,8 @@ export type CreateGroupMemberMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -1672,6 +1684,8 @@ export type UpdateGroupMemberMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       length: string | null,
       effort: string | null,
@@ -1710,6 +1724,8 @@ export type UpdateGroupMemberMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -1837,6 +1853,8 @@ export type DeleteGroupMemberMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       length: string | null,
       effort: string | null,
@@ -1875,6 +1893,8 @@ export type DeleteGroupMemberMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -1966,6 +1986,8 @@ export type CreateGroupMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -2047,6 +2069,8 @@ export type CreateGroupMutation = {
       geocodeFull: string | null,
       geocodeCity: string | null,
       geocodeRegion: string | null,
+      randomLatitude: string | null,
+      randomLongitude: string | null,
     } | null,
     length: string | null,
     effort: string | null,
@@ -2110,6 +2134,8 @@ export type UpdateGroupMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -2191,6 +2217,8 @@ export type UpdateGroupMutation = {
       geocodeFull: string | null,
       geocodeCity: string | null,
       geocodeRegion: string | null,
+      randomLatitude: string | null,
+      randomLongitude: string | null,
     } | null,
     length: string | null,
     effort: string | null,
@@ -2254,6 +2282,8 @@ export type DeleteGroupMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -2335,6 +2365,8 @@ export type DeleteGroupMutation = {
       geocodeFull: string | null,
       geocodeCity: string | null,
       geocodeRegion: string | null,
+      randomLatitude: string | null,
+      randomLongitude: string | null,
     } | null,
     length: string | null,
     effort: string | null,
@@ -2400,6 +2432,8 @@ export type CreateOrganizationMemberMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -2470,6 +2504,8 @@ export type CreateOrganizationMemberMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -2559,6 +2595,8 @@ export type UpdateOrganizationMemberMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -2629,6 +2667,8 @@ export type UpdateOrganizationMemberMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -2718,6 +2758,8 @@ export type DeleteOrganizationMemberMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -2788,6 +2830,8 @@ export type DeleteOrganizationMemberMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -2864,6 +2908,8 @@ export type CreateOrganizationMutation = {
       geocodeFull: string | null,
       geocodeCity: string | null,
       geocodeRegion: string | null,
+      randomLatitude: string | null,
+      randomLongitude: string | null,
     } | null,
     profileImage:  {
       __typename: "Image",
@@ -2896,6 +2942,8 @@ export type CreateOrganizationMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -3022,6 +3070,8 @@ export type UpdateOrganizationMutation = {
       geocodeFull: string | null,
       geocodeCity: string | null,
       geocodeRegion: string | null,
+      randomLatitude: string | null,
+      randomLongitude: string | null,
     } | null,
     profileImage:  {
       __typename: "Image",
@@ -3054,6 +3104,8 @@ export type UpdateOrganizationMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -3180,6 +3232,8 @@ export type DeleteOrganizationMutation = {
       geocodeFull: string | null,
       geocodeCity: string | null,
       geocodeRegion: string | null,
+      randomLatitude: string | null,
+      randomLongitude: string | null,
     } | null,
     profileImage:  {
       __typename: "Image",
@@ -3212,6 +3266,8 @@ export type DeleteOrganizationMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -3367,6 +3423,8 @@ export type CreateCourseInfoMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -3487,6 +3545,8 @@ export type UpdateCourseInfoMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -3607,6 +3667,8 @@ export type DeleteCourseInfoMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -3761,6 +3823,8 @@ export type CreateCourseTriadsMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -3838,6 +3902,8 @@ export type CreateCourseTriadsMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -3981,6 +4047,8 @@ export type UpdateCourseTriadsMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -4058,6 +4126,8 @@ export type UpdateCourseTriadsMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -4201,6 +4271,8 @@ export type DeleteCourseTriadsMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -4278,6 +4350,8 @@ export type DeleteCourseTriadsMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -4931,6 +5005,8 @@ export type CreateDirectMessageUserMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -5039,6 +5115,8 @@ export type UpdateDirectMessageUserMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -5147,6 +5225,8 @@ export type DeleteDirectMessageUserMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -5387,6 +5467,8 @@ export type CreateDirectMessageMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -5498,6 +5580,8 @@ export type UpdateDirectMessageMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -5609,6 +5693,8 @@ export type DeleteDirectMessageMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -5723,6 +5809,8 @@ export type CreateMessageMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -5835,6 +5923,8 @@ export type CreateMessageMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       length: string | null,
       effort: string | null,
@@ -5894,6 +5984,8 @@ export type UpdateMessageMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -6006,6 +6098,8 @@ export type UpdateMessageMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       length: string | null,
       effort: string | null,
@@ -6065,6 +6159,8 @@ export type DeleteMessageMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -6177,6 +6273,8 @@ export type DeleteMessageMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       length: string | null,
       effort: string | null,
@@ -6245,6 +6343,8 @@ export type CreateResourceRootMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -6348,6 +6448,8 @@ export type UpdateResourceRootMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -6451,6 +6553,8 @@ export type DeleteResourceRootMutation = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -7236,6 +7340,8 @@ export type GetUserQuery = {
       geocodeFull: string | null,
       geocodeCity: string | null,
       geocodeRegion: string | null,
+      randomLatitude: string | null,
+      randomLongitude: string | null,
     } | null,
     profileImage:  {
       __typename: "Image",
@@ -7380,6 +7486,8 @@ export type ListUsersQuery = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -7470,6 +7578,8 @@ export type GetGroupQuery = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -7551,6 +7661,8 @@ export type GetGroupQuery = {
       geocodeFull: string | null,
       geocodeCity: string | null,
       geocodeRegion: string | null,
+      randomLatitude: string | null,
+      randomLongitude: string | null,
     } | null,
     length: string | null,
     effort: string | null,
@@ -7649,6 +7761,8 @@ export type ListGroupsQuery = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       length: string | null,
       effort: string | null,
@@ -7689,6 +7803,8 @@ export type GetOrganizationQuery = {
       geocodeFull: string | null,
       geocodeCity: string | null,
       geocodeRegion: string | null,
+      randomLatitude: string | null,
+      randomLongitude: string | null,
     } | null,
     profileImage:  {
       __typename: "Image",
@@ -7721,6 +7837,8 @@ export type GetOrganizationQuery = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -7851,6 +7969,8 @@ export type ListOrganizationsQuery = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -7955,6 +8075,8 @@ export type GetCourseInfoQuery = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -8175,6 +8297,8 @@ export type GetCourseTriadsQuery = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -8252,6 +8376,8 @@ export type GetCourseTriadsQuery = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -8742,6 +8868,8 @@ export type GetDirectMessageUserQuery = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -8988,6 +9116,8 @@ export type GetDirectMessageQuery = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -9169,6 +9299,8 @@ export type GetMessageQuery = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -9281,6 +9413,8 @@ export type GetMessageQuery = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       length: string | null,
       effort: string | null,
@@ -9433,6 +9567,8 @@ export type GetResourceRootQuery = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -10151,6 +10287,8 @@ export type GroupByTypeQuery = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       length: string | null,
       effort: string | null,
@@ -10360,6 +10498,8 @@ export type SearchUsersQuery = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -10487,6 +10627,8 @@ export type SearchGroupsQuery = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       length: string | null,
       effort: string | null,
@@ -10546,6 +10688,8 @@ export type OnCreateMessageByRoomIdSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -10658,6 +10802,8 @@ export type OnCreateMessageByRoomIdSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       length: string | null,
       effort: string | null,
@@ -10702,6 +10848,8 @@ export type OnCreateUserSubscription = {
       geocodeFull: string | null,
       geocodeCity: string | null,
       geocodeRegion: string | null,
+      randomLatitude: string | null,
+      randomLongitude: string | null,
     } | null,
     profileImage:  {
       __typename: "Image",
@@ -10838,6 +10986,8 @@ export type OnUpdateUserSubscription = {
       geocodeFull: string | null,
       geocodeCity: string | null,
       geocodeRegion: string | null,
+      randomLatitude: string | null,
+      randomLongitude: string | null,
     } | null,
     profileImage:  {
       __typename: "Image",
@@ -10974,6 +11124,8 @@ export type OnDeleteUserSubscription = {
       geocodeFull: string | null,
       geocodeCity: string | null,
       geocodeRegion: string | null,
+      randomLatitude: string | null,
+      randomLongitude: string | null,
     } | null,
     profileImage:  {
       __typename: "Image",
@@ -11150,6 +11302,8 @@ export type OnCreateGroupMemberSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       length: string | null,
       effort: string | null,
@@ -11188,6 +11342,8 @@ export type OnCreateGroupMemberSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -11311,6 +11467,8 @@ export type OnUpdateGroupMemberSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       length: string | null,
       effort: string | null,
@@ -11349,6 +11507,8 @@ export type OnUpdateGroupMemberSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -11472,6 +11632,8 @@ export type OnDeleteGroupMemberSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       length: string | null,
       effort: string | null,
@@ -11510,6 +11672,8 @@ export type OnDeleteGroupMemberSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -11597,6 +11761,8 @@ export type OnCreateGroupSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -11678,6 +11844,8 @@ export type OnCreateGroupSubscription = {
       geocodeFull: string | null,
       geocodeCity: string | null,
       geocodeRegion: string | null,
+      randomLatitude: string | null,
+      randomLongitude: string | null,
     } | null,
     length: string | null,
     effort: string | null,
@@ -11737,6 +11905,8 @@ export type OnUpdateGroupSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -11818,6 +11988,8 @@ export type OnUpdateGroupSubscription = {
       geocodeFull: string | null,
       geocodeCity: string | null,
       geocodeRegion: string | null,
+      randomLatitude: string | null,
+      randomLongitude: string | null,
     } | null,
     length: string | null,
     effort: string | null,
@@ -11877,6 +12049,8 @@ export type OnDeleteGroupSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -11958,6 +12132,8 @@ export type OnDeleteGroupSubscription = {
       geocodeFull: string | null,
       geocodeCity: string | null,
       geocodeRegion: string | null,
+      randomLatitude: string | null,
+      randomLongitude: string | null,
     } | null,
     length: string | null,
     effort: string | null,
@@ -12019,6 +12195,8 @@ export type OnCreateOrganizationMemberSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -12089,6 +12267,8 @@ export type OnCreateOrganizationMemberSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -12174,6 +12354,8 @@ export type OnUpdateOrganizationMemberSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -12244,6 +12426,8 @@ export type OnUpdateOrganizationMemberSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -12329,6 +12513,8 @@ export type OnDeleteOrganizationMemberSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -12399,6 +12585,8 @@ export type OnDeleteOrganizationMemberSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -12471,6 +12659,8 @@ export type OnCreateOrganizationSubscription = {
       geocodeFull: string | null,
       geocodeCity: string | null,
       geocodeRegion: string | null,
+      randomLatitude: string | null,
+      randomLongitude: string | null,
     } | null,
     profileImage:  {
       __typename: "Image",
@@ -12503,6 +12693,8 @@ export type OnCreateOrganizationSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -12625,6 +12817,8 @@ export type OnUpdateOrganizationSubscription = {
       geocodeFull: string | null,
       geocodeCity: string | null,
       geocodeRegion: string | null,
+      randomLatitude: string | null,
+      randomLongitude: string | null,
     } | null,
     profileImage:  {
       __typename: "Image",
@@ -12657,6 +12851,8 @@ export type OnUpdateOrganizationSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -12779,6 +12975,8 @@ export type OnDeleteOrganizationSubscription = {
       geocodeFull: string | null,
       geocodeCity: string | null,
       geocodeRegion: string | null,
+      randomLatitude: string | null,
+      randomLongitude: string | null,
     } | null,
     profileImage:  {
       __typename: "Image",
@@ -12811,6 +13009,8 @@ export type OnDeleteOrganizationSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -12966,6 +13166,8 @@ export type OnCreateCourseInfoSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -13086,6 +13288,8 @@ export type OnUpdateCourseInfoSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -13206,6 +13410,8 @@ export type OnDeleteCourseInfoSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -13356,6 +13562,8 @@ export type OnCreateCourseTriadsSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -13433,6 +13641,8 @@ export type OnCreateCourseTriadsSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -13572,6 +13782,8 @@ export type OnUpdateCourseTriadsSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -13649,6 +13861,8 @@ export type OnUpdateCourseTriadsSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -13788,6 +14002,8 @@ export type OnDeleteCourseTriadsSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -13865,6 +14081,8 @@ export type OnDeleteCourseTriadsSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -14514,6 +14732,8 @@ export type OnCreateDirectMessageUserSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -14618,6 +14838,8 @@ export type OnUpdateDirectMessageUserSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -14722,6 +14944,8 @@ export type OnDeleteDirectMessageUserSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -14946,6 +15170,8 @@ export type OnCreateDirectMessageSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -15053,6 +15279,8 @@ export type OnUpdateDirectMessageSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -15160,6 +15388,8 @@ export type OnDeleteDirectMessageSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -15270,6 +15500,8 @@ export type OnCreateMessageSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -15382,6 +15614,8 @@ export type OnCreateMessageSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       length: string | null,
       effort: string | null,
@@ -15437,6 +15671,8 @@ export type OnUpdateMessageSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -15549,6 +15785,8 @@ export type OnUpdateMessageSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       length: string | null,
       effort: string | null,
@@ -15604,6 +15842,8 @@ export type OnDeleteMessageSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -15716,6 +15956,8 @@ export type OnDeleteMessageSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       length: string | null,
       effort: string | null,
@@ -15780,6 +16022,8 @@ export type OnCreateResourceRootSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -15879,6 +16123,8 @@ export type OnUpdateResourceRootSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -15978,6 +16224,8 @@ export type OnDeleteResourceRootSubscription = {
         geocodeFull: string | null,
         geocodeCity: string | null,
         geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
       } | null,
       profileImage:  {
         __typename: "Image",

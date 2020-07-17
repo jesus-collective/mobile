@@ -86,14 +86,14 @@ class MyProfileImpl extends JCComponent<Props, State> {
     if (this.state.UserDetails.location && this.state.UserDetails.location.latitude && this.state.UserDetails.location.longitude)
       this.setState({
         mapData: [{
-          latitude: this.state.UserDetails.location.latitude,
-          longitude: this.state.UserDetails.location.longitude,
+          latitude: Number(this.state.UserDetails.location.latitude) + Number(this.state.UserDetails.location.randomLatitude),
+          longitude: Number(this.state.UserDetails.location.longitude) + Number(this.state.UserDetails.location.randomLatitude),
           name: this.state.UserDetails.given_name + " " + this.state.UserDetails.family_name,
           user: this.state.UserDetails,
           link: "",
           type: "profile"
         }],
-        initCenter: { lat: this.state.UserDetails.location.latitude, lng: this.state.UserDetails.location.longitude }
+        initCenter: { lat: Number(this.state.UserDetails.location.latitude) + Number(this.state.UserDetails.location.randomLatitude), lng: Number(this.state.UserDetails.location.longitude) + Number(this.state.UserDetails.location.randomLatitude) }
       })
   }
   async getUserDetails(): Promise<void> {
@@ -300,11 +300,6 @@ class MyProfileImpl extends JCComponent<Props, State> {
     return (
       this.state.UserDetails.location?.geocodeFull ? <MyMap initCenter={this.state.initCenter} visible={true} mapData={this.state.mapData} type={"profile"}></MyMap> : null
     )
-  }
-  saveLocation(coord): void {
-    console.log("saveLocation")
-    this.handleInputChange({ target: { value: { latitude: coord.latitude, longitude: coord.longitude } } }, "location")
-    this.setState({ mapVisible: false })
   }
   handleAddInterest(): void {
     if (this.state.interest && this.state.interestsArray === null) {
@@ -529,7 +524,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               {this.state.isEditable && this.state.editMode ?
                 <EditableLocation onChange={(value: any, location: any) => {
                   if (location) {
-                    this.handleInputChange({ latitude: location.lat, longitude: location.lng, geocodeFull: value }, "location");
+                    this.handleInputChange({ latitude: location.lat, longitude: location.lng, geocodeFull: value, randomLatitude: this.state.UserDetails.location?.randomLatitude ? this.state.UserDetails.location.randomLatitude : (Math.random() * 0.04) - 0.02, randomLongitude: this.state.UserDetails.location?.randomLongitude ? this.state.UserDetails.location.randomLongitude : (Math.random() * 0.04) - 0.02 }, "location");
                   }
                 }}
                   multiline={false} textStyle={this.styles.style.fontRegular}
