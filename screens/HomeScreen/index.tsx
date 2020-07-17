@@ -427,6 +427,15 @@ class HomeScreenRouter extends JCComponent<Props, State> {
             email: attributes['email'],
             phone: attributes['phone_number'],
             profileState: "Incomplete",
+            alertConfig: {
+              emailDirectMessage: "true",
+              emailGroupMessage: "true",
+              emailEventMessage: "true",
+              emailOrgMessage: "true",
+              emailResourceMessage: "true",
+              emailCourseMessage: "true",
+              emailPromotions: "true"
+            },
             joined: moment().format()
           }
 

@@ -113,6 +113,15 @@ export const getUser = /* GraphQL */ `
         }
         nextToken
       }
+      alertConfig {
+        emailDirectMessage
+        emailGroupMessage
+        emailEventMessage
+        emailOrgMessage
+        emailResourceMessage
+        emailCourseMessage
+        emailPromotions
+      }
       createdAt
       updatedAt
     }
@@ -182,6 +191,15 @@ export const listUsers = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -250,6 +268,15 @@ export const getGroup = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -673,6 +700,15 @@ export const getCourseInfo = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -860,6 +896,15 @@ export const getCourseTriads = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -919,6 +964,15 @@ export const getCourseTriads = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -1347,6 +1401,15 @@ export const getDirectMessageUser = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -1559,6 +1622,15 @@ export const getDirectMessage = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -1710,6 +1782,15 @@ export const getMessage = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -2829,6 +2910,15 @@ export const searchUsers = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt

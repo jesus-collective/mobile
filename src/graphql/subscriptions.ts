@@ -71,6 +71,15 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -258,6 +267,15 @@ export const onCreateUser = /* GraphQL */ `
         }
         nextToken
       }
+      alertConfig {
+        emailDirectMessage
+        emailGroupMessage
+        emailEventMessage
+        emailOrgMessage
+        emailResourceMessage
+        emailCourseMessage
+        emailPromotions
+      }
       createdAt
       updatedAt
     }
@@ -374,6 +392,15 @@ export const onUpdateUser = /* GraphQL */ `
         }
         nextToken
       }
+      alertConfig {
+        emailDirectMessage
+        emailGroupMessage
+        emailEventMessage
+        emailOrgMessage
+        emailResourceMessage
+        emailCourseMessage
+        emailPromotions
+      }
       createdAt
       updatedAt
     }
@@ -489,6 +516,15 @@ export const onDeleteUser = /* GraphQL */ `
           updatedAt
         }
         nextToken
+      }
+      alertConfig {
+        emailDirectMessage
+        emailGroupMessage
+        emailEventMessage
+        emailOrgMessage
+        emailResourceMessage
+        emailCourseMessage
+        emailPromotions
       }
       createdAt
       updatedAt
@@ -625,6 +661,15 @@ export const onCreateGroupMember = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -765,6 +810,15 @@ export const onUpdateGroupMember = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -904,6 +958,15 @@ export const onDeleteGroupMember = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -973,6 +1036,15 @@ export const onCreateGroup = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -1092,6 +1164,15 @@ export const onUpdateGroup = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -1209,6 +1290,15 @@ export const onDeleteGroup = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -1329,6 +1419,15 @@ export const onCreateOrganizationMember = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -1461,6 +1560,15 @@ export const onUpdateOrganizationMember = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -1591,6 +1699,15 @@ export const onDeleteOrganizationMember = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -2154,6 +2271,15 @@ export const onCreateCourseInfo = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -2249,6 +2375,15 @@ export const onUpdateCourseInfo = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -2343,6 +2478,15 @@ export const onDeleteCourseInfo = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -2471,6 +2615,15 @@ export const onCreateCourseTriads = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -2530,6 +2683,15 @@ export const onCreateCourseTriads = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -2649,6 +2811,15 @@ export const onUpdateCourseTriads = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -2708,6 +2879,15 @@ export const onUpdateCourseTriads = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -2827,6 +3007,15 @@ export const onDeleteCourseTriads = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -2886,6 +3075,15 @@ export const onDeleteCourseTriads = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -3441,6 +3639,15 @@ export const onCreateDirectMessageUser = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -3525,6 +3732,15 @@ export const onUpdateDirectMessageUser = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -3608,6 +3824,15 @@ export const onDeleteDirectMessageUser = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -3801,6 +4026,15 @@ export const onCreateDirectMessage = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -3888,6 +4122,15 @@ export const onUpdateDirectMessage = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -3974,6 +4217,15 @@ export const onDeleteDirectMessage = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -4064,6 +4316,15 @@ export const onCreateMessage = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -4210,6 +4471,15 @@ export const onUpdateMessage = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -4354,6 +4624,15 @@ export const onDeleteMessage = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
