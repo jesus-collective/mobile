@@ -64,7 +64,7 @@ class CourseDetailImpl extends JCComponent<Props>{
               inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
               value={week.leader} isEditable={state.isEditable}></EditableText>
 
-            {week.lessons.items.map((item: any, lesson: any) => {
+            {week.lessons?.items?.map((item: any, lesson: any) => {
               return (
                 <TouchableOpacity key={lesson} onPress={() => { actions.setActiveLesson(lesson) }}>
                   <Card style={{ minHeight: "40px", maxHeight: "100px", width: "80% " }}>
@@ -114,7 +114,7 @@ class CourseDetailImpl extends JCComponent<Props>{
   }
   renderLessonDetails(state, actions, week: any): React.ReactNode {
     // console.log(this.state.activeLesson)
-    if (week) {
+    if (week?.lessons) {
       const lesson = week.lessons[state.activeLesson]
       return (
         state.activeLesson != null ?

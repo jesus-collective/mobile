@@ -677,6 +677,7 @@ export const getCourseInfo = /* GraphQL */ `
           name
           title
           leader
+          courseInfoID
           createdAt
           updatedAt
         }
@@ -1131,6 +1132,7 @@ export const getCourseWeek = /* GraphQL */ `
       name
       title
       leader
+      courseInfoID
       courseInfo {
         id
         designedBy
@@ -1188,6 +1190,7 @@ export const getCourseWeek = /* GraphQL */ `
           time
           tz
           description
+          courseWeekID
           createdAt
           updatedAt
         }
@@ -1213,6 +1216,7 @@ export const listCourseWeeks = /* GraphQL */ `
         name
         title
         leader
+        courseInfoID
         courseInfo {
           id
           designedBy
@@ -1241,6 +1245,7 @@ export const getCourseLesson = /* GraphQL */ `
       time
       tz
       description
+      courseWeekID
       courseWeek {
         id
         week
@@ -1249,6 +1254,7 @@ export const getCourseLesson = /* GraphQL */ `
         name
         title
         leader
+        courseInfoID
         courseInfo {
           id
           designedBy
@@ -1294,6 +1300,7 @@ export const listCourseLessons = /* GraphQL */ `
         time
         tz
         description
+        courseWeekID
         courseWeek {
           id
           week
@@ -1302,6 +1309,7 @@ export const listCourseLessons = /* GraphQL */ `
           name
           title
           leader
+          courseInfoID
           createdAt
           updatedAt
         }
@@ -1329,6 +1337,7 @@ export const getCourseAssignment = /* GraphQL */ `
         time
         tz
         description
+        courseWeekID
         courseWeek {
           id
           week
@@ -1337,6 +1346,7 @@ export const getCourseAssignment = /* GraphQL */ `
           name
           title
           leader
+          courseInfoID
           createdAt
           updatedAt
         }
@@ -1374,6 +1384,7 @@ export const listCourseAssignments = /* GraphQL */ `
           time
           tz
           description
+          courseWeekID
           createdAt
           updatedAt
         }

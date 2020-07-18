@@ -7,6 +7,7 @@ import getTheme from '../../native-base-theme/components';
 import Validate from '../../components/Validate/Validate'
 import { API } from 'aws-amplify';
 import * as queries from '../../src/graphql/queries';
+import * as customQueries from '../../src/graphql-custom/queries';
 import * as mutations from '../../src/graphql/mutations';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
@@ -62,7 +63,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
     const getCourse: any = API.graphql({
-      query: queries.getCourseInfo,
+      query: customQueries.getCourseInfo,
       variables: { id: props.route.params.id },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
@@ -164,7 +165,8 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
     {
       week: this.state.courseData.courseWeeks.items.length + 1,
       name: "New Menu Item",
-      leader: "Leader TBD"
+      leader: "Leader TBD",
+      courseInfoID: this.state.courseData.id
     }
     try {
       console.log("Creating Resource")
@@ -189,9 +191,10 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
     const resource: CreateCourseLessonInput =
     {
       name: "New Menu Item",//this.state.courseData.courseWeeks.items.length + 1,
+      lesson: this.state.courseData.courseWeeks.items[this.state.activeWeek].lessons.items.length + 1,
       //time: "",
       description: "...",
-
+      courseWeekID: this.state.courseData.courseWeeks.items[this.state.activeWeek].id
     }
     try {
       console.log("Creating Resource")

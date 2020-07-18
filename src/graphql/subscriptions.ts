@@ -2338,6 +2338,7 @@ export const onCreateCourseInfo = /* GraphQL */ `
           name
           title
           leader
+          courseInfoID
           createdAt
           updatedAt
         }
@@ -2444,6 +2445,7 @@ export const onUpdateCourseInfo = /* GraphQL */ `
           name
           title
           leader
+          courseInfoID
           createdAt
           updatedAt
         }
@@ -2550,6 +2552,7 @@ export const onDeleteCourseInfo = /* GraphQL */ `
           name
           title
           leader
+          courseInfoID
           createdAt
           updatedAt
         }
@@ -3251,6 +3254,7 @@ export const onCreateCourseWeek = /* GraphQL */ `
       name
       title
       leader
+      courseInfoID
       courseInfo {
         id
         designedBy
@@ -3308,6 +3312,7 @@ export const onCreateCourseWeek = /* GraphQL */ `
           time
           tz
           description
+          courseWeekID
           createdAt
           updatedAt
         }
@@ -3328,6 +3333,7 @@ export const onUpdateCourseWeek = /* GraphQL */ `
       name
       title
       leader
+      courseInfoID
       courseInfo {
         id
         designedBy
@@ -3385,6 +3391,7 @@ export const onUpdateCourseWeek = /* GraphQL */ `
           time
           tz
           description
+          courseWeekID
           createdAt
           updatedAt
         }
@@ -3405,6 +3412,7 @@ export const onDeleteCourseWeek = /* GraphQL */ `
       name
       title
       leader
+      courseInfoID
       courseInfo {
         id
         designedBy
@@ -3462,6 +3470,7 @@ export const onDeleteCourseWeek = /* GraphQL */ `
           time
           tz
           description
+          courseWeekID
           createdAt
           updatedAt
         }
@@ -3481,6 +3490,7 @@ export const onCreateCourseLesson = /* GraphQL */ `
       time
       tz
       description
+      courseWeekID
       courseWeek {
         id
         week
@@ -3489,6 +3499,7 @@ export const onCreateCourseLesson = /* GraphQL */ `
         name
         title
         leader
+        courseInfoID
         courseInfo {
           id
           designedBy
@@ -3529,6 +3540,7 @@ export const onUpdateCourseLesson = /* GraphQL */ `
       time
       tz
       description
+      courseWeekID
       courseWeek {
         id
         week
@@ -3537,6 +3549,7 @@ export const onUpdateCourseLesson = /* GraphQL */ `
         name
         title
         leader
+        courseInfoID
         courseInfo {
           id
           designedBy
@@ -3577,6 +3590,7 @@ export const onDeleteCourseLesson = /* GraphQL */ `
       time
       tz
       description
+      courseWeekID
       courseWeek {
         id
         week
@@ -3585,6 +3599,7 @@ export const onDeleteCourseLesson = /* GraphQL */ `
         name
         title
         leader
+        courseInfoID
         courseInfo {
           id
           designedBy
@@ -3630,6 +3645,7 @@ export const onCreateCourseAssignment = /* GraphQL */ `
         time
         tz
         description
+        courseWeekID
         courseWeek {
           id
           week
@@ -3638,6 +3654,7 @@ export const onCreateCourseAssignment = /* GraphQL */ `
           name
           title
           leader
+          courseInfoID
           createdAt
           updatedAt
         }
@@ -3666,6 +3683,7 @@ export const onUpdateCourseAssignment = /* GraphQL */ `
         time
         tz
         description
+        courseWeekID
         courseWeek {
           id
           week
@@ -3674,6 +3692,7 @@ export const onUpdateCourseAssignment = /* GraphQL */ `
           name
           title
           leader
+          courseInfoID
           createdAt
           updatedAt
         }
@@ -3702,6 +3721,7 @@ export const onDeleteCourseAssignment = /* GraphQL */ `
         time
         tz
         description
+        courseWeekID
         courseWeek {
           id
           week
@@ -3710,6 +3730,7 @@ export const onDeleteCourseAssignment = /* GraphQL */ `
           name
           title
           leader
+          courseInfoID
           createdAt
           updatedAt
         }

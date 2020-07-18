@@ -2180,6 +2180,7 @@ export const createCourseInfo = /* GraphQL */ `
           name
           title
           leader
+          courseInfoID
           createdAt
           updatedAt
         }
@@ -2286,6 +2287,7 @@ export const updateCourseInfo = /* GraphQL */ `
           name
           title
           leader
+          courseInfoID
           createdAt
           updatedAt
         }
@@ -2392,6 +2394,7 @@ export const deleteCourseInfo = /* GraphQL */ `
           name
           title
           leader
+          courseInfoID
           createdAt
           updatedAt
         }
@@ -3093,6 +3096,7 @@ export const createCourseWeek = /* GraphQL */ `
       name
       title
       leader
+      courseInfoID
       courseInfo {
         id
         designedBy
@@ -3150,6 +3154,7 @@ export const createCourseWeek = /* GraphQL */ `
           time
           tz
           description
+          courseWeekID
           createdAt
           updatedAt
         }
@@ -3170,6 +3175,7 @@ export const updateCourseWeek = /* GraphQL */ `
       name
       title
       leader
+      courseInfoID
       courseInfo {
         id
         designedBy
@@ -3227,6 +3233,7 @@ export const updateCourseWeek = /* GraphQL */ `
           time
           tz
           description
+          courseWeekID
           createdAt
           updatedAt
         }
@@ -3247,6 +3254,7 @@ export const deleteCourseWeek = /* GraphQL */ `
       name
       title
       leader
+      courseInfoID
       courseInfo {
         id
         designedBy
@@ -3304,6 +3312,7 @@ export const deleteCourseWeek = /* GraphQL */ `
           time
           tz
           description
+          courseWeekID
           createdAt
           updatedAt
         }
@@ -3323,6 +3332,7 @@ export const createCourseLesson = /* GraphQL */ `
       time
       tz
       description
+      courseWeekID
       courseWeek {
         id
         week
@@ -3331,6 +3341,7 @@ export const createCourseLesson = /* GraphQL */ `
         name
         title
         leader
+        courseInfoID
         courseInfo {
           id
           designedBy
@@ -3371,6 +3382,7 @@ export const updateCourseLesson = /* GraphQL */ `
       time
       tz
       description
+      courseWeekID
       courseWeek {
         id
         week
@@ -3379,6 +3391,7 @@ export const updateCourseLesson = /* GraphQL */ `
         name
         title
         leader
+        courseInfoID
         courseInfo {
           id
           designedBy
@@ -3419,6 +3432,7 @@ export const deleteCourseLesson = /* GraphQL */ `
       time
       tz
       description
+      courseWeekID
       courseWeek {
         id
         week
@@ -3427,6 +3441,7 @@ export const deleteCourseLesson = /* GraphQL */ `
         name
         title
         leader
+        courseInfoID
         courseInfo {
           id
           designedBy
@@ -3472,6 +3487,7 @@ export const createCourseAssignment = /* GraphQL */ `
         time
         tz
         description
+        courseWeekID
         courseWeek {
           id
           week
@@ -3480,6 +3496,7 @@ export const createCourseAssignment = /* GraphQL */ `
           name
           title
           leader
+          courseInfoID
           createdAt
           updatedAt
         }
@@ -3508,6 +3525,7 @@ export const updateCourseAssignment = /* GraphQL */ `
         time
         tz
         description
+        courseWeekID
         courseWeek {
           id
           week
@@ -3516,6 +3534,7 @@ export const updateCourseAssignment = /* GraphQL */ `
           name
           title
           leader
+          courseInfoID
           createdAt
           updatedAt
         }
@@ -3544,6 +3563,7 @@ export const deleteCourseAssignment = /* GraphQL */ `
         time
         tz
         description
+        courseWeekID
         courseWeek {
           id
           week
@@ -3552,6 +3572,7 @@ export const deleteCourseAssignment = /* GraphQL */ `
           name
           title
           leader
+          courseInfoID
           createdAt
           updatedAt
         }
