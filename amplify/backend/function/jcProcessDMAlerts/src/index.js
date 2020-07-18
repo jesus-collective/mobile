@@ -39,7 +39,7 @@ async function sendAlertEmail() {
 <body>
   <h1>Jesus Collective Message Alert</h1>
   <p>You have received a direct message on Jesus Collective
-    <a href='https://beta.jesuscollective.com/'>Login</a></p>
+    <a href='https://dev.jesuscollective.com/app/conversation?initialUserID=null&initialUserName=null'>Login</a></p>
 </body>
 </html>`;
 

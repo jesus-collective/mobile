@@ -1338,6 +1338,10 @@ export const createOrganizationMember = /* GraphQL */ `
         aboutMeLong
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         parentOrganizationId
@@ -1353,6 +1357,10 @@ export const createOrganizationMember = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -1482,6 +1490,10 @@ export const updateOrganizationMember = /* GraphQL */ `
         aboutMeLong
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         parentOrganizationId
@@ -1497,6 +1509,10 @@ export const updateOrganizationMember = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -1626,6 +1642,10 @@ export const deleteOrganizationMember = /* GraphQL */ `
         aboutMeLong
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         parentOrganizationId
@@ -1641,6 +1661,10 @@ export const deleteOrganizationMember = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -1694,6 +1718,10 @@ export const createOrganization = /* GraphQL */ `
       aboutMeLong
       orgType
       orgSize
+      denomination
+      pplServed
+      sundayAttendance
+      numberVolunteers
       orgDescription
       joined
       parentOrganizationId
@@ -1725,6 +1753,10 @@ export const createOrganization = /* GraphQL */ `
         aboutMeLong
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         parentOrganizationId
@@ -1740,6 +1772,10 @@ export const createOrganization = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -1771,6 +1807,10 @@ export const createOrganization = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -1837,6 +1877,10 @@ export const updateOrganization = /* GraphQL */ `
       aboutMeLong
       orgType
       orgSize
+      denomination
+      pplServed
+      sundayAttendance
+      numberVolunteers
       orgDescription
       joined
       parentOrganizationId
@@ -1868,6 +1912,10 @@ export const updateOrganization = /* GraphQL */ `
         aboutMeLong
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         parentOrganizationId
@@ -1883,6 +1931,10 @@ export const updateOrganization = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -1914,6 +1966,10 @@ export const updateOrganization = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -1980,6 +2036,10 @@ export const deleteOrganization = /* GraphQL */ `
       aboutMeLong
       orgType
       orgSize
+      denomination
+      pplServed
+      sundayAttendance
+      numberVolunteers
       orgDescription
       joined
       parentOrganizationId
@@ -2011,6 +2071,10 @@ export const deleteOrganization = /* GraphQL */ `
         aboutMeLong
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         parentOrganizationId
@@ -2026,6 +2090,10 @@ export const deleteOrganization = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -2057,6 +2125,10 @@ export const deleteOrganization = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -4706,6 +4778,10 @@ export const createResourceRoot = /* GraphQL */ `
         aboutMeLong
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         parentOrganizationId
@@ -4721,6 +4797,10 @@ export const createResourceRoot = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -4798,6 +4878,10 @@ export const updateResourceRoot = /* GraphQL */ `
         aboutMeLong
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         parentOrganizationId
@@ -4813,6 +4897,10 @@ export const updateResourceRoot = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -4890,6 +4978,10 @@ export const deleteResourceRoot = /* GraphQL */ `
         aboutMeLong
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         parentOrganizationId
@@ -4905,6 +4997,10 @@ export const deleteResourceRoot = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -4990,6 +5086,10 @@ export const createResource = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -5066,6 +5166,10 @@ export const updateResource = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -5142,6 +5246,10 @@ export const deleteResource = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId

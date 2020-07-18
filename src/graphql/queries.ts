@@ -453,6 +453,10 @@ export const getOrganization = /* GraphQL */ `
       aboutMeLong
       orgType
       orgSize
+      denomination
+      pplServed
+      sundayAttendance
+      numberVolunteers
       orgDescription
       joined
       parentOrganizationId
@@ -484,6 +488,10 @@ export const getOrganization = /* GraphQL */ `
         aboutMeLong
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         parentOrganizationId
@@ -499,6 +507,10 @@ export const getOrganization = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -530,6 +542,10 @@ export const getOrganization = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -601,6 +617,10 @@ export const listOrganizations = /* GraphQL */ `
         aboutMeLong
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         parentOrganizationId
@@ -616,6 +636,10 @@ export const listOrganizations = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -2031,6 +2055,10 @@ export const getResourceRoot = /* GraphQL */ `
         aboutMeLong
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         parentOrganizationId
@@ -2046,6 +2074,10 @@ export const getResourceRoot = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -2097,6 +2129,10 @@ export const listResourceRoots = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -2172,6 +2208,10 @@ export const getResource = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
