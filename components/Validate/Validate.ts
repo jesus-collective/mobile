@@ -1,5 +1,7 @@
-
 import isAbsoluteUrl from 'is-absolute-url'
+import { OrganizationData } from '../MyOrganization/MyOrganization';
+import { orgTypesChurches, orgTypesNonChurch } from '../MyProfile/dropdown';
+
 type ValidationResult = {
     result: boolean,
     validationError: string
@@ -86,13 +88,38 @@ export default class Validate {
 
     }
 
-    static Organization(data: any): ValidationResult {
-        if (data.name == "")
+    static Organization(data: OrganizationData): ValidationResult {
+        if (data.orgName == "" || data.orgName == null)
             return { result: false, validationError: "Organization must have a name" }
-        if (data.description == "")
+        if (data.orgDescription == "" || data.orgDescription == null)
             return { result: false, validationError: "Organization must have a description" }
-        return { result: true, validationError: "" }
+        if (data.orgType == "" || data.orgType == null || data.orgType == "None")
+            return { result: false, validationError: "Organization must have a type" }
+        if (data.location == null)
+            return { result: false, validationError: "Organization must have - public location" }
+        if (data.profileImage == null)
+            return { result: false, validationError: "Organization must have - profile image" }
 
+        if (orgTypesChurches.includes(data.orgType)) {
+            if (!data.orgSize)
+                return { result: false, validationError: "Organization must have number of employees" }
+            if (!data.numberVolunteers)
+                return { result: false, validationError: "Organization must have a number of volunteers" }
+            if (!data.sundayAttendance)
+                return { result: false, validationError: "Missing average Sunday morning attendance" }
+            if (!data.denomination)
+                return { result: false, validationError: "Organization must have a denomination" }
+        }
+
+        if (orgTypesNonChurch.includes(data.orgType)) {
+            if (!data.orgSize)
+                return { result: false, validationError: "Organization must have number of employees" }
+            if (!data.numberVolunteers)
+                return { result: false, validationError: "Organization must have a number of volunteers" }
+            if (!data.pplServed)
+                return { result: false, validationError: "Missing number of people served" }
+        }
+        return { result: true, validationError: "" }
     }
     static Event(data: any): ValidationResult {
         if (data.name == "")
