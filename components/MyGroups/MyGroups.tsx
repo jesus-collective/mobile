@@ -221,8 +221,9 @@ export default class MyGroups extends JCComponent<Props, State> {
             user.signInUserSession.accessToken.payload["cognito:groups"].includes("admin")
             : this.props.type == "course" ?
               user.signInUserSession.accessToken.payload["cognito:groups"].includes("courseAdmin") || user.signInUserSession.accessToken.payload["cognito:groups"].includes("admins")
-              :
-              user.signInUserSession.accessToken.payload["cognito:groups"].includes("verifiedUsers")
+              : this.props.type == "organization" ?
+                user.signInUserSession.accessToken.payload["cognito:groups"].includes("admins")
+                : user.signInUserSession.accessToken.payload["cognito:groups"].includes("verifiedUsers")
         })
     })
   }
