@@ -1,4 +1,4 @@
-import { Button, View, Input, Form, Item, Label, Content, Picker, Badge, Container } from 'native-base';
+import { View, Form, Label, Content, Picker } from 'native-base';
 import { Text, Image, TouchableOpacity } from 'react-native'
 import * as React from 'react';
 import * as queries from '../../src/graphql/queries';
@@ -8,14 +8,14 @@ import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native';
 import { GraphQLResult } from '@aws-amplify/api/lib/types';
 import ProfileImage from '../ProfileImage/ProfileImage';
 import { Auth } from 'aws-amplify';
-import { GetOrganizationQuery, CreateOrganizationInput, UpdateOrganizationInput, DeleteOrganizationInput } from '../../src/API'
+import { GetOrganizationQuery, CreateOrganizationInput } from '../../src/API'
 import Amplify from 'aws-amplify'
 import awsconfig from '../../src/aws-exports';
 import Validate from '../Validate/Validate';
 import moment from 'moment';
-import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
-import EditableLocation from '../../components/Forms/EditableLocation'
-import MyMap from '../../components/MyMap/MyMap'
+import JCButton, { ButtonTypes } from '../Forms/JCButton'
+import EditableLocation from '../Forms/EditableLocation'
+import MyMap from '../MyMap/MyMap'
 import EditableText from '../Forms/EditableText';
 //import { AlertConfigInput } from '../../src/API'
 import { numberOfEmployees, sundayAttendance, orgTypesChurches, orgTypesNonChurch } from '../MyProfile/dropdown'
@@ -23,8 +23,7 @@ import { constants } from '../../src/constants'
 import JCComponent, { JCState } from '../JCComponent/JCComponent';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { MapData } from '../MyGroups/MyGroups';
-import { TextInput } from 'react-native-gesture-handler';
-import EditableUsers from '../../components/Forms/EditableUsers'
+import EditableUsers from '../Forms/EditableUsers'
 //import JCSwitch from '../../components/JCSwitch/JCSwitch';
 
 const orgTypes = orgTypesChurches.concat(orgTypesNonChurch)
@@ -217,9 +216,10 @@ class OrganizationImpl extends JCComponent<Props, State> {
         this.convertProfileToMapData()
     });
   }
-  clean(item: OrganizationData): OrganizationData {
+  clean(item: OrganizationData | any): OrganizationData {
     delete item.parentOrganization
     delete item.subOrganizations
+    delete item.ownsGroups
     delete item.members
     delete item.resource
     delete item.createdAt

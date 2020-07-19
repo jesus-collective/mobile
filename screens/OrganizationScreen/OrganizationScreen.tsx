@@ -2,7 +2,7 @@
 import Amplify from 'aws-amplify';
 import awsConfig from '../../src/aws-exports';
 import Header from '../../components/Header/Header'
-import MyOrganization from '../../components/MyOrganization/MyOrganization'
+import OrganizationViewer from '../../components/OrganizationViewer/OrganizationViewer'
 import { Container } from 'native-base';
 import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
 
@@ -29,7 +29,7 @@ export default class OrganizationScreen extends JCComponent<Props, State>{
     return (
       <Container data-testid="organization">
         <Header title="Jesus Collective" navigation={this.props.navigation} />
-        <MyOrganization loadId={this.state.loadId} create={this.state.createNew} navigation={this.props.navigation} />
+        <OrganizationViewer loadId={this.state.loadId} create={this.state.createNew} navigation={this.props.navigation} />
       </Container>
     );
   }
