@@ -489,6 +489,9 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", paddingTop: 48, paddingBottom: 12 }}>Members ({this.state.OrganizationDetails.admins.length - 1})</Text>
                   <View style={this.styles.style.groupAttendeesPictures}>
                     {this.state.OrganizationDetails.admins.map((id: any, index: any) => {
+                      if (id === this.state.OrganizationDetails.superAdmin) {
+                        return null
+                      }
                       return (
                         <TouchableOpacity key={index} onPress={() => { this.showProfile(id) }}>
                           <ProfileImage key={index} user={id} size="small" />
@@ -572,7 +575,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
 
                 <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text>
                 {this.state.isEditable && this.state.editMode ? <View>
-                  <Text style={this.styles.style.fontBold}>Tell us about your organization</Text>
+                  <Text style={this.styles.style.fontBold}><Text style={this.styles.style.fontFormMandatory}>*</Text>Tell us about your organization</Text>
                   {this.state.isEditable && this.state.editMode || this.state.OrganizationDetails.orgName ? <View>
                     <Label style={this.styles.style.fontFormSmall}>Organization Name</Label>
                     <EditableText onChange={(e) => { this.handleInputChange(e, "orgName") }}
