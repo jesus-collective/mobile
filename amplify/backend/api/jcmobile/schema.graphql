@@ -312,9 +312,22 @@ type DirectMessage
 {
   id: ID!
   content: String!
-  attachment: String
+    @auth(rules: [
+      { allow: owner, ownerField: "userId", operations: [create, update, read] },
+      { allow: owner, ownerField: "recipients", operations: [create, update, read] },
+    ])
+  attachment: String 
+    @auth(rules: [
+      { allow: owner, ownerField: "userId", operations: [create, update, read] },
+      { allow: owner, ownerField: "recipients", operations: [create, update, read] },
+    ])
   attachmentName: String
+    @auth(rules: [
+      { allow: owner, ownerField: "userId", operations: [create, update, read] },
+      { allow: owner, ownerField: "recipients", operations: [create, update, read] },
+    ])
   when: String!
+  recipients: [String]!
   userId: ID!
   author: User @connection(fields: ["userId"])
   messageRoomID:ID!
