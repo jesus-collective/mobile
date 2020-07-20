@@ -559,7 +559,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 placeholder="type here" multiline={true}
                 data-testid="profile-aboutMeLong"
                 textStyle={this.styles.style.fontFormSmallDarkGrey}
-                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
+                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28, height: 150 }}
                 value={this.state.UserDetails.aboutMeLong} isEditable={this.state.isEditable && this.state.editMode}></EditableText>
 
               {this.state.isEditable && this.state.editMode ?
