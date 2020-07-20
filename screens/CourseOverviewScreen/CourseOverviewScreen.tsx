@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import { StyleProvider, Card, Container, Content, View } from 'native-base';
+import { StyleProvider, Container, Content, View, Accordion } from 'native-base';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 import { Text, TouchableOpacity } from 'react-native'
 
@@ -106,7 +106,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
     })
 
   }
-  getValueFromKey(myObject: any, string: any): string {
+  getValueFromKey(myObject: unknown, string: string): string {
     const key = Object.keys(myObject).filter(k => k.includes(string));
     return key.length ? myObject[key[0]] : "";
   }
@@ -392,7 +392,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
       console.log({ "Error mutations.deleteGroup": err });
     });
   }
-  updateValue(field: any, value: any): void {
+  updateValue(field: string, value: any): void {
     const temp = this.state.data
     temp[field] = value
     this.setState({ data: temp })
@@ -512,22 +512,18 @@ export default class CourseScreen extends JCComponent<Props, State>{
                     })}
 
                     <Text>Course Details</Text>
+                    <Accordion
+                      dataArray={data.courseDetails.map((item: any, index1) => {
+                        return (
+                          {
+                            title: "Week " + index1,
+                            content: item
+                          })
+                      })
+                      }
+                    />
 
 
-                    {data.courseDetails.map((item: any, index1) => {
-                      return (
-                        <Card key={index1}>
-                          <Text>{item.week}</Text>
-                          <Text>{item.date} - {item.leader}</Text>
-                          {item.lessons.map((item2, index2) => {
-                            return (
-                              <Text key={index2}>{index1 + 1}.{index2 + 1} - {item2.name}</Text>
-                            )
-                          })}
-
-                        </Card>
-                      )
-                    })}
                   </Container>
 
                 </Container>
@@ -536,7 +532,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
           </Container>
 
 
-        </StyleProvider>
+        </StyleProvider >
         :
         null
 

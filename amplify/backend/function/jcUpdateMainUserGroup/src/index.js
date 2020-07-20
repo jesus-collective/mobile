@@ -1,6 +1,7 @@
 /* Amplify Params - DO NOT EDIT
 	API_JCMOBILE_GRAPHQLAPIENDPOINTOUTPUT
 	API_JCMOBILE_GRAPHQLAPIIDOUTPUT
+	AUTH_JCMOBILE_USERPOOLID
 	ENV
 	REGION
 Amplify Params - DO NOT EDIT */
@@ -205,10 +206,10 @@ query ListUsers(
       //Everyone else ->UnVerified
       var json2 = await Amplify.API.graphql({
         query: updateUser,
-        variables: { input: { id: item.id, mainUserGroup: "Verified" } },
+        variables: { input: { id: item.id, mainUserGroup: "Partner" } },
         authMode: "AMAZON_COGNITO_USER_POOLS"
       });
-      console.log({ Updated: { id: item.id, mainUserGroup: "Verified" } })
+      console.log({ Updated: { id: item.id, mainUserGroup: "Partner" } })
     }))
     console.log("Done");
     return {

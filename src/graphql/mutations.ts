@@ -25,6 +25,8 @@ export const createUser = /* GraphQL */ `
         geocodeFull
         geocodeCity
         geocodeRegion
+        randomLatitude
+        randomLongitude
       }
       profileImage {
         userId
@@ -112,6 +114,15 @@ export const createUser = /* GraphQL */ `
           updatedAt
         }
         nextToken
+      }
+      alertConfig {
+        emailDirectMessage
+        emailGroupMessage
+        emailEventMessage
+        emailOrgMessage
+        emailResourceMessage
+        emailCourseMessage
+        emailPromotions
       }
       createdAt
       updatedAt
@@ -141,6 +152,8 @@ export const updateUser = /* GraphQL */ `
         geocodeFull
         geocodeCity
         geocodeRegion
+        randomLatitude
+        randomLongitude
       }
       profileImage {
         userId
@@ -228,6 +241,15 @@ export const updateUser = /* GraphQL */ `
           updatedAt
         }
         nextToken
+      }
+      alertConfig {
+        emailDirectMessage
+        emailGroupMessage
+        emailEventMessage
+        emailOrgMessage
+        emailResourceMessage
+        emailCourseMessage
+        emailPromotions
       }
       createdAt
       updatedAt
@@ -257,6 +279,8 @@ export const deleteUser = /* GraphQL */ `
         geocodeFull
         geocodeCity
         geocodeRegion
+        randomLatitude
+        randomLongitude
       }
       profileImage {
         userId
@@ -344,6 +368,15 @@ export const deleteUser = /* GraphQL */ `
           updatedAt
         }
         nextToken
+      }
+      alertConfig {
+        emailDirectMessage
+        emailGroupMessage
+        emailEventMessage
+        emailOrgMessage
+        emailResourceMessage
+        emailCourseMessage
+        emailPromotions
       }
       createdAt
       updatedAt
@@ -410,6 +443,8 @@ export const createGroupMember = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         length
         effort
@@ -445,6 +480,8 @@ export const createGroupMember = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -480,6 +517,15 @@ export const createGroupMember = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -549,6 +595,8 @@ export const updateGroupMember = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         length
         effort
@@ -584,6 +632,8 @@ export const updateGroupMember = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -619,6 +669,15 @@ export const updateGroupMember = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -688,6 +747,8 @@ export const deleteGroupMember = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         length
         effort
@@ -723,6 +784,8 @@ export const deleteGroupMember = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -758,6 +821,15 @@ export const deleteGroupMember = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -793,6 +865,8 @@ export const createGroup = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -829,6 +903,15 @@ export const createGroup = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -856,6 +939,8 @@ export const createGroup = /* GraphQL */ `
         geocodeFull
         geocodeCity
         geocodeRegion
+        randomLatitude
+        randomLongitude
       }
       length
       effort
@@ -911,6 +996,8 @@ export const updateGroup = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -947,6 +1034,15 @@ export const updateGroup = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -974,6 +1070,8 @@ export const updateGroup = /* GraphQL */ `
         geocodeFull
         geocodeCity
         geocodeRegion
+        randomLatitude
+        randomLongitude
       }
       length
       effort
@@ -1029,6 +1127,8 @@ export const deleteGroup = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -1065,6 +1165,15 @@ export const deleteGroup = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -1092,6 +1201,8 @@ export const deleteGroup = /* GraphQL */ `
         geocodeFull
         geocodeCity
         geocodeRegion
+        randomLatitude
+        randomLongitude
       }
       length
       effort
@@ -1149,6 +1260,8 @@ export const createOrganizationMember = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -1185,6 +1298,15 @@ export const createOrganizationMember = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -1202,6 +1324,8 @@ export const createOrganizationMember = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -1214,6 +1338,10 @@ export const createOrganizationMember = /* GraphQL */ `
         aboutMeLong
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         parentOrganizationId
@@ -1229,6 +1357,10 @@ export const createOrganizationMember = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -1280,6 +1412,8 @@ export const updateOrganizationMember = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -1316,6 +1450,15 @@ export const updateOrganizationMember = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -1333,6 +1476,8 @@ export const updateOrganizationMember = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -1345,6 +1490,10 @@ export const updateOrganizationMember = /* GraphQL */ `
         aboutMeLong
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         parentOrganizationId
@@ -1360,6 +1509,10 @@ export const updateOrganizationMember = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -1411,6 +1564,8 @@ export const deleteOrganizationMember = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -1447,6 +1602,15 @@ export const deleteOrganizationMember = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -1464,6 +1628,8 @@ export const deleteOrganizationMember = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -1476,6 +1642,10 @@ export const deleteOrganizationMember = /* GraphQL */ `
         aboutMeLong
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         parentOrganizationId
@@ -1491,6 +1661,10 @@ export const deleteOrganizationMember = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -1530,6 +1704,8 @@ export const createOrganization = /* GraphQL */ `
         geocodeFull
         geocodeCity
         geocodeRegion
+        randomLatitude
+        randomLongitude
       }
       profileImage {
         userId
@@ -1542,6 +1718,10 @@ export const createOrganization = /* GraphQL */ `
       aboutMeLong
       orgType
       orgSize
+      denomination
+      pplServed
+      sundayAttendance
+      numberVolunteers
       orgDescription
       joined
       parentOrganizationId
@@ -1559,6 +1739,8 @@ export const createOrganization = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -1571,6 +1753,10 @@ export const createOrganization = /* GraphQL */ `
         aboutMeLong
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         parentOrganizationId
@@ -1586,6 +1772,10 @@ export const createOrganization = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -1617,6 +1807,10 @@ export const createOrganization = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -1669,6 +1863,8 @@ export const updateOrganization = /* GraphQL */ `
         geocodeFull
         geocodeCity
         geocodeRegion
+        randomLatitude
+        randomLongitude
       }
       profileImage {
         userId
@@ -1681,6 +1877,10 @@ export const updateOrganization = /* GraphQL */ `
       aboutMeLong
       orgType
       orgSize
+      denomination
+      pplServed
+      sundayAttendance
+      numberVolunteers
       orgDescription
       joined
       parentOrganizationId
@@ -1698,6 +1898,8 @@ export const updateOrganization = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -1710,6 +1912,10 @@ export const updateOrganization = /* GraphQL */ `
         aboutMeLong
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         parentOrganizationId
@@ -1725,6 +1931,10 @@ export const updateOrganization = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -1756,6 +1966,10 @@ export const updateOrganization = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -1808,6 +2022,8 @@ export const deleteOrganization = /* GraphQL */ `
         geocodeFull
         geocodeCity
         geocodeRegion
+        randomLatitude
+        randomLongitude
       }
       profileImage {
         userId
@@ -1820,6 +2036,10 @@ export const deleteOrganization = /* GraphQL */ `
       aboutMeLong
       orgType
       orgSize
+      denomination
+      pplServed
+      sundayAttendance
+      numberVolunteers
       orgDescription
       joined
       parentOrganizationId
@@ -1837,6 +2057,8 @@ export const deleteOrganization = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -1849,6 +2071,10 @@ export const deleteOrganization = /* GraphQL */ `
         aboutMeLong
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         parentOrganizationId
@@ -1864,6 +2090,10 @@ export const deleteOrganization = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -1895,6 +2125,10 @@ export const deleteOrganization = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -1946,6 +2180,7 @@ export const createCourseInfo = /* GraphQL */ `
           name
           title
           leader
+          courseInfoID
           createdAt
           updatedAt
         }
@@ -1973,6 +2208,8 @@ export const createCourseInfo = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -2008,6 +2245,15 @@ export const createCourseInfo = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -2041,6 +2287,7 @@ export const updateCourseInfo = /* GraphQL */ `
           name
           title
           leader
+          courseInfoID
           createdAt
           updatedAt
         }
@@ -2068,6 +2315,8 @@ export const updateCourseInfo = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -2103,6 +2352,15 @@ export const updateCourseInfo = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -2136,6 +2394,7 @@ export const deleteCourseInfo = /* GraphQL */ `
           name
           title
           leader
+          courseInfoID
           createdAt
           updatedAt
         }
@@ -2163,6 +2422,8 @@ export const deleteCourseInfo = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -2198,6 +2459,15 @@ export const deleteCourseInfo = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -2290,6 +2560,8 @@ export const createCourseTriads = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -2325,6 +2597,15 @@ export const createCourseTriads = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -2350,6 +2631,8 @@ export const createCourseTriads = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -2385,6 +2668,15 @@ export const createCourseTriads = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -2468,6 +2760,8 @@ export const updateCourseTriads = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -2503,6 +2797,15 @@ export const updateCourseTriads = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -2528,6 +2831,8 @@ export const updateCourseTriads = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -2563,6 +2868,15 @@ export const updateCourseTriads = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -2646,6 +2960,8 @@ export const deleteCourseTriads = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -2681,6 +2997,15 @@ export const deleteCourseTriads = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -2706,6 +3031,8 @@ export const deleteCourseTriads = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -2742,6 +3069,15 @@ export const deleteCourseTriads = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
         createdAt
         updatedAt
       }
@@ -2760,6 +3096,7 @@ export const createCourseWeek = /* GraphQL */ `
       name
       title
       leader
+      courseInfoID
       courseInfo {
         id
         designedBy
@@ -2817,6 +3154,7 @@ export const createCourseWeek = /* GraphQL */ `
           time
           tz
           description
+          courseWeekID
           createdAt
           updatedAt
         }
@@ -2837,6 +3175,7 @@ export const updateCourseWeek = /* GraphQL */ `
       name
       title
       leader
+      courseInfoID
       courseInfo {
         id
         designedBy
@@ -2894,6 +3233,7 @@ export const updateCourseWeek = /* GraphQL */ `
           time
           tz
           description
+          courseWeekID
           createdAt
           updatedAt
         }
@@ -2914,6 +3254,7 @@ export const deleteCourseWeek = /* GraphQL */ `
       name
       title
       leader
+      courseInfoID
       courseInfo {
         id
         designedBy
@@ -2971,6 +3312,7 @@ export const deleteCourseWeek = /* GraphQL */ `
           time
           tz
           description
+          courseWeekID
           createdAt
           updatedAt
         }
@@ -2990,6 +3332,7 @@ export const createCourseLesson = /* GraphQL */ `
       time
       tz
       description
+      courseWeekID
       courseWeek {
         id
         week
@@ -2998,6 +3341,7 @@ export const createCourseLesson = /* GraphQL */ `
         name
         title
         leader
+        courseInfoID
         courseInfo {
           id
           designedBy
@@ -3038,6 +3382,7 @@ export const updateCourseLesson = /* GraphQL */ `
       time
       tz
       description
+      courseWeekID
       courseWeek {
         id
         week
@@ -3046,6 +3391,7 @@ export const updateCourseLesson = /* GraphQL */ `
         name
         title
         leader
+        courseInfoID
         courseInfo {
           id
           designedBy
@@ -3086,6 +3432,7 @@ export const deleteCourseLesson = /* GraphQL */ `
       time
       tz
       description
+      courseWeekID
       courseWeek {
         id
         week
@@ -3094,6 +3441,7 @@ export const deleteCourseLesson = /* GraphQL */ `
         name
         title
         leader
+        courseInfoID
         courseInfo {
           id
           designedBy
@@ -3139,6 +3487,7 @@ export const createCourseAssignment = /* GraphQL */ `
         time
         tz
         description
+        courseWeekID
         courseWeek {
           id
           week
@@ -3147,6 +3496,7 @@ export const createCourseAssignment = /* GraphQL */ `
           name
           title
           leader
+          courseInfoID
           createdAt
           updatedAt
         }
@@ -3175,6 +3525,7 @@ export const updateCourseAssignment = /* GraphQL */ `
         time
         tz
         description
+        courseWeekID
         courseWeek {
           id
           week
@@ -3183,6 +3534,7 @@ export const updateCourseAssignment = /* GraphQL */ `
           name
           title
           leader
+          courseInfoID
           createdAt
           updatedAt
         }
@@ -3211,6 +3563,7 @@ export const deleteCourseAssignment = /* GraphQL */ `
         time
         tz
         description
+        courseWeekID
         courseWeek {
           id
           week
@@ -3219,6 +3572,7 @@ export const deleteCourseAssignment = /* GraphQL */ `
           name
           title
           leader
+          courseInfoID
           createdAt
           updatedAt
         }
@@ -3260,6 +3614,8 @@ export const createDirectMessageUser = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -3295,6 +3651,15 @@ export const createDirectMessageUser = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -3344,6 +3709,8 @@ export const updateDirectMessageUser = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -3379,6 +3746,15 @@ export const updateDirectMessageUser = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -3428,6 +3804,8 @@ export const deleteDirectMessageUser = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -3463,6 +3841,15 @@ export const deleteDirectMessageUser = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -3620,6 +4007,8 @@ export const createDirectMessage = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -3655,6 +4044,15 @@ export const createDirectMessage = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -3707,6 +4105,8 @@ export const updateDirectMessage = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -3742,6 +4142,15 @@ export const updateDirectMessage = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -3794,6 +4203,8 @@ export const deleteDirectMessage = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -3829,6 +4240,15 @@ export const deleteDirectMessage = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -3884,6 +4304,8 @@ export const createMessage = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -3919,6 +4341,15 @@ export const createMessage = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -3977,6 +4408,8 @@ export const createMessage = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         length
         effort
@@ -4029,6 +4462,8 @@ export const updateMessage = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -4064,6 +4499,15 @@ export const updateMessage = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -4122,6 +4566,8 @@ export const updateMessage = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         length
         effort
@@ -4174,6 +4620,8 @@ export const deleteMessage = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -4209,6 +4657,15 @@ export const deleteMessage = /* GraphQL */ `
         }
         directMessages {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt
@@ -4267,6 +4724,8 @@ export const deleteMessage = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         length
         effort
@@ -4326,6 +4785,8 @@ export const createResourceRoot = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -4338,6 +4799,10 @@ export const createResourceRoot = /* GraphQL */ `
         aboutMeLong
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         parentOrganizationId
@@ -4353,6 +4818,10 @@ export const createResourceRoot = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -4416,6 +4885,8 @@ export const updateResourceRoot = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -4428,6 +4899,10 @@ export const updateResourceRoot = /* GraphQL */ `
         aboutMeLong
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         parentOrganizationId
@@ -4443,6 +4918,10 @@ export const updateResourceRoot = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -4506,6 +4985,8 @@ export const deleteResourceRoot = /* GraphQL */ `
           geocodeFull
           geocodeCity
           geocodeRegion
+          randomLatitude
+          randomLongitude
         }
         profileImage {
           userId
@@ -4518,6 +4999,10 @@ export const deleteResourceRoot = /* GraphQL */ `
         aboutMeLong
         orgType
         orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
         orgDescription
         joined
         parentOrganizationId
@@ -4533,6 +5018,10 @@ export const deleteResourceRoot = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -4618,6 +5107,10 @@ export const createResource = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -4694,6 +5187,10 @@ export const updateResource = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId
@@ -4770,6 +5267,10 @@ export const deleteResource = /* GraphQL */ `
           aboutMeLong
           orgType
           orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
           orgDescription
           joined
           parentOrganizationId

@@ -1,3 +1,39 @@
+export const getCourseInfo = /* GraphQL */ `
+query GetCourseInfo($id: ID!) {
+  getCourseInfo(id: $id) {
+    id
+    designedBy
+    summary
+    courseWeeks {
+      items {
+        id
+        week
+        date
+        name
+        leader
+         lessons {
+          items {
+            id
+            name
+            time
+            description
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    subTitle
+    introduction
+    createdAt
+    updatedAt
+  }
+}
+`
 export const getDirectMessageUser = /* GraphQL */ `
    query GetDirectMessageUser($id: ID!) {
      getDirectMessageUser(id: $id) {

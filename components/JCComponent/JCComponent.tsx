@@ -13,7 +13,7 @@ export default class JCComponent<Props = any, State extends JCState = any> exten
         this.state = this.getInitialState()
         const user = Auth.currentAuthenticatedUser();
         user.then((user) => {
-            console.log(user.signInUserSession.accessToken.payload["cognito:groups"])
+            // console.log(user.signInUserSession.accessToken.payload["cognito:groups"])
             this.setState({
                 groups: user.signInUserSession.accessToken.payload["cognito:groups"]
             })

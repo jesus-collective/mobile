@@ -6,27 +6,28 @@ class ResizerHandler {
     async process(bucket, key) {
 
         key = key.replace("%3A", ":")
-        var keyUp=key.substring(0, key.lastIndexOf(".")).concat(".png")
-        if (key.includes("profile/upload/")){
+        var keyUp = key.substring(0, key.lastIndexOf(".")).concat(".png")
+        if (key.includes("profile/upload/")) {
             console.log("procssing profileimage")
-            await this.resize(bucket, key,100,keyUp.replace("upload/","").replace(".","-small."))
-            await this.resize(bucket, key,250,keyUp.replace("upload/","").replace(".","-medium."))
-            return await this.resize(bucket, key,500,keyUp.replace("upload/","").replace(".","-large."))
+            await this.resize(bucket, key, 100, keyUp.replace("upload/", "").replace(".", "-small."))
+            await this.resize(bucket, key, 250, keyUp.replace("upload/", "").replace(".", "-medium."))
+            return await this.resize(bucket, key, 500, keyUp.replace("upload/", "").replace(".", "-large."))
         }
-        else if (key.includes("resources/upload/")){
+        else if (key.includes("resources/upload/")) {
             console.log("procssing resource")
-            await this.resize(bucket, key,600,keyUp.replace("upload/","").replace("-upload.","-small."))
-            await this.resize(bucket, key,1024,keyUp.replace("upload/","").replace("-upload.","-medium."))
-            return await this.resize(bucket, key,2048,keyUp.replace("upload/","").replace("-upload.","-large."))
+            await this.resize(bucket, key, 600, keyUp.replace("upload/", "").replace("-upload.", "-small."))
+            await this.resize(bucket, key, 1024, keyUp.replace("upload/", "").replace("-upload.", "-medium."))
+            return await this.resize(bucket, key, 2048, keyUp.replace("upload/", "").replace("-upload.", "-large."))
         }
         else {
             console.log("image does not need processing")
             return false
         }
     }
-    async resize(bucket, key,size,outKey) {
+    async resize(bucket, key, size, outKey) {
         try {
             const streamResize = sharp()
+                .rotate()
                 .resize(size)
                 .toFormat("png", { "options": { "progressive": true } })
             const readStream = s3Handler.readStream({ Bucket: bucket, Key: key })

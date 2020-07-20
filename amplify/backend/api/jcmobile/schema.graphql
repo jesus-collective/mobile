@@ -50,6 +50,19 @@ type User
   groups: [GroupMember] @connection(name: "UserMembers", keyField: "userID")
   messages: [Message] @connection(name: "UserMessages", keyField: "userId", sortField: "when")
   directMessages: [DirectMessage] @connection(keyName: "dmsByUser", fields: ["id"])
+
+  alertConfig:AlertConfig
+}
+type AlertConfig{
+ 
+  emailDirectMessage:String
+  emailGroupMessage:String
+  emailEventMessage:String
+  emailOrgMessage:String
+  emailResourceMessage:String
+  emailCourseMessage:String
+  emailPromotions:String
+  
 }
 type LatLong {
   latitude: String
@@ -57,6 +70,8 @@ type LatLong {
   geocodeFull: String
   geocodeCity: String
   geocodeRegion: String
+  randomLatitude:String
+  randomLongitude:String
 }
 type Image {
   userId: String
@@ -168,6 +183,10 @@ type Organization
   aboutMeLong: String
   orgType: String
   orgSize: String
+  denomination: String
+  pplServed: String
+  sundayAttendance: String
+  numberVolunteers: String
   orgDescription: String
   joined: String
 
@@ -192,7 +211,7 @@ type CourseInfo
   id: ID!
   designedBy: String
   summary: String
-  courseWeeks: [CourseWeek] @connection(name:"courseInfo",keyField: "id",sortField:"week")
+  courseWeeks: [CourseWeek] @connection(name:"courseInfo",keyField: "courseInfoID",sortField:"week")
   subTitle: String
   instructor: [User]
   triads:[CourseTriads]@connection(name:"courseTriads",keyField: "id")
@@ -223,8 +242,9 @@ type CourseWeek
   name: String
   title:String
   leader: String
-  courseInfo: CourseInfo @connection(name:"courseInfo",keyField:"id")
-  lessons: [CourseLesson] @connection(name:"courseLesson",keyField: "id",sortField:"lesson")
+  courseInfoID: String
+  courseInfo: CourseInfo @connection(name:"courseInfo",keyField:"courseInfoID")
+  lessons: [CourseLesson] @connection(name:"courseLesson",keyField: "courseWeekID",sortField:"lesson")
 }
 type CourseLesson 
 @model 
@@ -242,7 +262,8 @@ type CourseLesson
   time: String
   tz:String
   description: String
-  courseWeek: CourseWeek @connection(name: "courseLesson", keyField: "id")
+  courseWeekID:String
+  courseWeek: CourseWeek @connection(name: "courseLesson", keyField: "courseWeekID")
   assignments: [CourseAssignment] @connection(name: "courseAssignment", keyField: "id",sortField:"assignment")
 }
 type CourseAssignment 

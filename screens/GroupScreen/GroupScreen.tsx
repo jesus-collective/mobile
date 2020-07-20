@@ -91,7 +91,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
     })
 
   }
-  getValueFromKey(myObject: any, string: any): string {
+  getValueFromKey(myObject: unknown, string: string): string {
     const key = Object.keys(myObject).filter(k => k.includes(string));
     return key.length ? myObject[key[0]] : "";
   }
@@ -195,8 +195,8 @@ export default class GroupScreen extends JCComponent<Props, State>{
     return data.map((dataItem) => {
       if (dataItem?.location && dataItem?.location?.latitude && dataItem?.location?.longitude) {
         return {
-          latitude: dataItem.location.latitude,
-          longitude: dataItem.location.longitude,
+          latitude: Number(dataItem.location.latitude) + Number(dataItem.location.randomLatitude),
+          longitude: Number(dataItem.location.longitude) + Number(dataItem.location.randomLongitude),
           name: dataItem.given_name + " " + dataItem.family_name,
           user: dataItem,
           link: "",
@@ -337,7 +337,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
       console.log({ "Error mutations.deleteGroup": err });
     });
   }
-  updateValue(field: any, value: any): void {
+  updateValue(field: string, value: any): void {
     const temp = this.state.data
     temp[field] = value
     this.setState({ data: temp })

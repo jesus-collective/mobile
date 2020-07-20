@@ -316,6 +316,17 @@ query GetCourseInfo($id: ID!) {
         date
         name
         leader
+         lessons {
+      items {
+        id
+        name
+        time
+        description
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
         createdAt
         updatedAt
       }

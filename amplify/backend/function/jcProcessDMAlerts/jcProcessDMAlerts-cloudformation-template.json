@@ -9,6 +9,26 @@
 		},
 		"env": {
 			"Type": "String"
+		},
+		"authjcmobileUserPoolId": {
+			"Type": "String",
+			"Default": "authjcmobileUserPoolId"
+		},
+		"apijcmobileGraphQLAPIIdOutput": {
+			"Type": "String",
+			"Default": "apijcmobileGraphQLAPIIdOutput"
+		},
+		"apijcmobileGraphQLAPIEndpointOutput": {
+			"Type": "String",
+			"Default": "apijcmobileGraphQLAPIEndpointOutput"
+		},
+		"analyticsjcmobileId": {
+			"Type": "String",
+			"Default": "analyticsjcmobileId"
+		},
+		"analyticsjcmobileRegion": {
+			"Type": "String",
+			"Default": "analyticsjcmobileRegion"
 		}
 	},
 	"Conditions": {
@@ -55,6 +75,21 @@
 						},
 						"REGION": {
 							"Ref": "AWS::Region"
+						},
+						"AUTH_JCMOBILE_USERPOOLID": {
+							"Ref": "authjcmobileUserPoolId"
+						},
+						"API_JCMOBILE_GRAPHQLAPIIDOUTPUT": {
+							"Ref": "apijcmobileGraphQLAPIIdOutput"
+						},
+						"API_JCMOBILE_GRAPHQLAPIENDPOINTOUTPUT": {
+							"Ref": "apijcmobileGraphQLAPIEndpointOutput"
+						},
+						"ANALYTICS_JCMOBILE_ID": {
+							"Ref": "analyticsjcmobileId"
+						},
+						"ANALYTICS_JCMOBILE_REGION": {
+							"Ref": "analyticsjcmobileRegion"
 						}
 					}
 				},
@@ -68,8 +103,9 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-jc-mobile-beta-155138-deployment",
-					"S3Key": "amplify-builds/jcProcessDMAlerts-39784d70527746656f50-build.zip"
-				}
+					"S3Key": "amplify-builds/jcProcessDMAlerts-4177765636634730704b-build.zip"
+				},
+				"Layers": []
 			}
 		},
 		"LambdaExecutionRole": {
@@ -149,6 +185,28 @@
 									}
 								]
 							}
+						},
+						{
+							"Effect": "Allow",
+							"Action": [
+								"ses:SendEmail"
+							],
+							"Resource": {
+								"Fn::Sub": [
+									"arn:aws:ses:${region}:${account}:identity/donot-reply@jesuscollective.com",
+									{
+										"region": {
+											"Ref": "AWS::Region"
+										},
+										"account": {
+											"Ref": "AWS::AccountId"
+										},
+										"lambda": {
+											"Ref": "LambdaFunction"
+										}
+									}
+								]
+							}
 						}
 					]
 				}
@@ -179,7 +237,7 @@
 							],
 							"Resource": {
 								"Fn::ImportValue": {
-									"Fn::Sub": "2ht5eyf3rfct7f3slbiz6sme5u:GetAtt:DirectMessageTable:StreamArn"
+									"Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:DirectMessageTable:StreamArn"
 								}
 							}
 						}
@@ -198,7 +256,7 @@
 				"Enabled": true,
 				"EventSourceArn": {
 					"Fn::ImportValue": {
-						"Fn::Sub": "2ht5eyf3rfct7f3slbiz6sme5u:GetAtt:DirectMessageTable:StreamArn"
+						"Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:DirectMessageTable:StreamArn"
 					}
 				},
 				"FunctionName": {
@@ -208,6 +266,58 @@
 					]
 				},
 				"StartingPosition": "LATEST"
+			}
+		},
+		"AmplifyResourcesPolicy": {
+			"DependsOn": [
+				"LambdaExecutionRole"
+			],
+			"Type": "AWS::IAM::Policy",
+			"Properties": {
+				"PolicyName": "amplify-lambda-execution-policy",
+				"Roles": [
+					{
+						"Ref": "LambdaExecutionRole"
+					}
+				],
+				"PolicyDocument": {
+					"Version": "2012-10-17",
+					"Statement": [
+						{
+							"Effect": "Allow",
+							"Action": [
+								"mobiletargeting:Put*",
+								"mobiletargeting:Create*",
+								"mobiletargeting:Send*",
+								"mobiletargeting:Get*",
+								"mobiletargeting:List*",
+								"mobiletargeting:Update*",
+								"mobiletargeting:Delete*"
+							],
+							"Resource": [
+								{
+									"Fn::Join": [
+										"",
+										[
+											"arn:aws:mobiletargeting:",
+											{
+												"Ref": "analyticsjcmobileRegion"
+											},
+											":",
+											{
+												"Ref": "AWS::AccountId"
+											},
+											":apps/",
+											{
+												"Ref": "analyticsjcmobileId"
+											}
+										]
+									]
+								}
+							]
+						}
+					]
+				}
 			}
 		}
 	},
