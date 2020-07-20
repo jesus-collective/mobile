@@ -52,11 +52,8 @@ export default class HomeScreen extends JCComponent<Props, State>{
               <Container ></Container>
             </Container>*/}
           </Container>
-
         </Content>
       </Container>
-
-
     );
   }
 }
