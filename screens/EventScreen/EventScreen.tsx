@@ -146,7 +146,6 @@ export default class EventScreen extends JCComponent<Props, State>{
           createNew: this.state.createNew && isEditable,
           canDelete: (!this.state.createNew) && isEditable
         },
-
           () => {
             this.convertEventToMapData();
             const groupMemberByUser: any = API.graphql({

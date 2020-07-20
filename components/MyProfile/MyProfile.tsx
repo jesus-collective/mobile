@@ -22,7 +22,7 @@ import { interests, numberOfEmployees, sundayAttendance, orgTypesChurches, orgTy
 import { constants } from '../../src/constants'
 import JCComponent, { JCState } from '../JCComponent/JCComponent';
 import { useRoute, useNavigation } from '@react-navigation/native';
-import { MapData } from 'components/MyGroups/MyGroups';
+import { MapData } from '../MyGroups/MyGroups';
 import { TextInput } from 'react-native-gesture-handler';
 import JCSwitch from '../../components/JCSwitch/JCSwitch';
 
@@ -42,10 +42,10 @@ export type UserData = NonNullable<GetUserQuery['getUser']>;
 interface State extends JCState {
   UserDetails: UserData
   interest: string
-  interestsArray: any
-  profileImage: any
-  validationText: any
-  mapVisible: any
+  interestsArray: string[]
+  profileImage: string
+  validationText: string
+  mapVisible: boolean
   // mapCoord: any
   isEditable: boolean
   showAccountSettings: boolean
@@ -274,12 +274,12 @@ class MyProfileImpl extends JCComponent<Props, State> {
   getProfileImage(): void {
     console.log("get profile image")
     //console.log(this.state.UserDetails.profileImage)
-    if (this.state.UserDetails.profileImage != null)
+    if (this.state.UserDetails.profileImage)
       Storage.get(this.state.UserDetails.profileImage.filenameUpload, {
         level: 'protected',
         identityId: this.state.UserDetails.profileImage.userId
       })
-        .then(result => this.setState({ profileImage: result }))
+        .then(result => this.setState({ profileImage: result as string }))
         .catch(err => { console.log(err) });
   }
   getValueFromKey(myObject: unknown, string: string) {

@@ -870,7 +870,7 @@ export default class MainStyles {
             profileMyGroupsWrap: {
                 overflow: "scroll",
                 overflowY: "hidden",
-                minHeight: "50vw",
+                minHeight: "100vw",
                 flexWrap: "wrap",
                 flexGrow: 1,
                 width: "100%",

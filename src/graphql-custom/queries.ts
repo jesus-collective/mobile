@@ -191,6 +191,22 @@ export const groupByTypeForMyGroups = /* GraphQL */ `
     }
   }
 `;
+
+export const getOrgForImage = /* GraphQL */ `
+  query getOrganization($id: ID!) {
+    getOrganization(id: $id) {
+      id
+      profileImage {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
+    }
+  }
+`;
+
 export const getUserForProfile = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {

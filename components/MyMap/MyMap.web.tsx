@@ -17,7 +17,6 @@ import JCSwitch from '../JCSwitch/JCSwitch';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { API, graphqlOperation, Auth } from 'aws-amplify';
 import * as queries from '../../src/graphql/queries';
-
 import mapStyle from './mapstyle.json';
 import { MapData } from 'components/MyGroups/MyGroups';
 
@@ -34,11 +33,11 @@ interface Props {
 interface State extends JCState {
   selectedPlace: any
   activeMarker: any
-  showingInfoWindow: any
+  showingInfoWindow: boolean
   profilesEnabled: boolean
   organizationsEnabled: boolean
   eventsEnabled: boolean
-  currentUserLocation: any
+  currentUserLocation: { lat: string, lng: string }
   currentUser: string
 }
 
@@ -98,11 +97,41 @@ class MyMapImpl extends JCComponent<Props, State> {
     console.log("Navigate to profileScreen")
     this.props.navigation.push("ProfileScreen", { id: id, create: false });
   }
+  showOrg(id) {
+    this.props.navigation.push("OrganizationScreen", { id: id, create: false });
+  }
 
   _mapLoaded(map) {
     map.setOptions({
       styles: mapStyle
     })
+  }
+
+  renderOrg() {
+    return <Card style={this.styles.style.myMapDashboardConversationCard}>
+      <CardItem >
+        <Body style={{ flex: 1, flexDirection: 'row' }}>
+          <View style={{ marginRight: 10 }}>
+            <ProfileImage user={this.state.selectedPlace.mapItem.user.id} size='medium' style='map'>
+            </ProfileImage>
+          </View>
+          <View>
+            <Text style={this.styles.style.fontConnectWithName}>{this.state.selectedPlace.mapItem.user.orgName}</Text>
+            <Text style={this.styles.style.myMapConversationCardRole}>{this.state.selectedPlace.mapItem.user.orgType}</Text>
+            {this.state.selectedPlace.mapItem.user.aboutMeShort ? <Text style={this.styles.style.myMapConversationCardAboutMe}>{this.state.selectedPlace.mapItem.user.aboutMeShort}</Text> : null}
+            <View style={{ flex: 1, flexDirection: 'row', paddingTop: 10 }}>
+              {/*<JCButton buttonType={ButtonTypes.Solid} onPress={() => console.error('messaging not yet supported')}>Start Conversation</JCButton>*/}
+              <JCButton buttonType={ButtonTypes.TransparentBoldOrange} onPress={() => { this.showOrg(this.state.selectedPlace.mapItem.user.id) }}>View Profile</JCButton>
+            </View>
+          </View>
+        </Body>
+        <View style={{ position: 'absolute', top: -10, right: 10 }}>
+          <TouchableOpacity onPress={() => this.setState({ showingInfoWindow: false })}>
+            <AntDesign name="close" size={24} color="#979797" />
+          </TouchableOpacity>
+        </View>
+      </CardItem>
+    </Card>
   }
 
   renderProfile() {
@@ -236,8 +265,10 @@ class MyMapImpl extends JCComponent<Props, State> {
                   this.state.selectedPlace.mapItemType == "profile" ?
                     this.renderProfile() :
                     this.state.selectedPlace.mapItemType == "event" ?
-                      this.renderEvent()
-                      : null
+                      this.renderEvent() :
+                      this.state.selectedPlace.mapItemType == "organization" ?
+                        this.renderOrg()
+                        : null
                   : null
                 }
               </View> : null}
@@ -320,8 +351,10 @@ class MyMapImpl extends JCComponent<Props, State> {
                   this.state.selectedPlace.mapItemType == "profile" ?
                     this.renderProfile() :
                     this.state.selectedPlace.mapItemType == "event" ?
-                      this.renderEvent()
-                      : null
+                      this.renderEvent() :
+                      this.state.selectedPlace.mapItemType == "organization" ?
+                        this.renderOrg()
+                        : null
                   : null
                 }
               </View> : null}

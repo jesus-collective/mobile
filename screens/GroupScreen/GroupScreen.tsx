@@ -18,7 +18,7 @@ import * as queries from '../../src/graphql/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
-import { MapData } from 'components/MyGroups/MyGroups';
+import { MapData } from '../../components/MyGroups/MyGroups';
 
 const MessageBoard = lazy(() => import('../../components/MessageBoard/MessageBoard'));
 

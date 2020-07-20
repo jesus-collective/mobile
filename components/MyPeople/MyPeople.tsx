@@ -10,6 +10,8 @@ import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import { constants } from '../../src/constants'
 import JCComponent, { JCState } from '../JCComponent/JCComponent';
 import { MapData } from '../MyGroups/MyGroups'
+import { ListUsersQuery } from '../../src/API'
+import { GraphQLResult } from '@aws-amplify/api/lib/types'
 interface Props {
   navigation: any
   wrap: boolean
@@ -21,7 +23,7 @@ interface State extends JCState {
   // type: String
   //cardWidth: any
   //createString: String
-  data: any
+  data: ListUsersQuery['listUsers']['items']
   currentUser: string
   //showCreateButton: Boolean
 }
@@ -41,11 +43,11 @@ export default class MyPeople extends JCComponent<Props, State> {
       // showCreateButton: false
     }
     const user = Auth.currentAuthenticatedUser();
-    user.then((user: any) => {
+    user.then((user) => {
       this.setState({ currentUser: user.username }, () => this.setInitialData())
     })
   }
-  convertProfileToMapData(data: any): MapData[] {
+  convertProfileToMapData(data: ListUsersQuery['listUsers']['items']): MapData[] {
     return data.map((dataItem) => {
       if (dataItem?.location && dataItem?.location?.latitude && dataItem?.location?.longitude)
         return {
@@ -61,18 +63,18 @@ export default class MyPeople extends JCComponent<Props, State> {
   }
 
   setInitialData(): void {
-    const listUsers: any = API.graphql({
+    const listUsers = API.graphql({
       query: queries.listUsers,
       variables: { filter: { profileState: { eq: "Complete" } } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-    });
+    }) as Promise<GraphQLResult<ListUsersQuery>>
 
     listUsers.then((json) => {
       // console.log(json)
       this.setState({ data: json.data.listUsers.items }, () => { this.props.onDataload(this.convertProfileToMapData(this.state.data)) })
 
     }).catch(
-      (e: any) => {
+      (e) => {
         console.log(e)
         this.setState({ data: e.data.listUsers.items }, () => { this.props.onDataload(this.convertProfileToMapData(this.state.data)) })
 
@@ -80,7 +82,7 @@ export default class MyPeople extends JCComponent<Props, State> {
     )
   }
 
-  openConversation(initialUser: any, name: any): void {
+  openConversation(initialUser: string, name: string): void {
     console.log("Navigate to conversationScreen")
     this.props.navigation.push("ConversationScreen", { initialUserID: initialUser, initialUserName: name });
   }
@@ -112,7 +114,7 @@ export default class MyPeople extends JCComponent<Props, State> {
               justifyContent: "center"
             }} onPress={() => { this.showProfiles() }}><Text style={{ fontFamily: 'Graphik-Regular-App', fontSize: 16, color: '#F0493E' }}>Jesus Collective Directory</Text></Button>
             <Content style={this.styles.style.rightCardWidth}>
-              {this.state.data.map((item: any) => {
+              {this.state.data.map((item) => {
                 if (item.id !== this.state.currentUser) {
                   return (
                     <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.id) }}>
