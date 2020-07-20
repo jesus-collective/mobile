@@ -17,7 +17,6 @@ import JCSwitch from '../JCSwitch/JCSwitch';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { API, graphqlOperation, Auth } from 'aws-amplify';
 import * as queries from '../../src/graphql/queries';
-
 import mapStyle from './mapstyle.json';
 import { MapData } from 'components/MyGroups/MyGroups';
 
@@ -34,11 +33,11 @@ interface Props {
 interface State extends JCState {
   selectedPlace: any
   activeMarker: any
-  showingInfoWindow: any
+  showingInfoWindow: boolean
   profilesEnabled: boolean
   organizationsEnabled: boolean
   eventsEnabled: boolean
-  currentUserLocation: any
+  currentUserLocation: { lat: string, lng: string }
   currentUser: string
 }
 

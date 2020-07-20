@@ -33,7 +33,7 @@ interface Props {
 }
 interface State extends JCState {
   enabled: boolean
-  animationState: any
+  animationState: Animated.Value
   onColor: string
   offColor: string
   thumbColor: string

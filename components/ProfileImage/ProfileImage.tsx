@@ -11,7 +11,7 @@ Amplify.configure(awsconfig);
 
 interface Props {
     user: any
-    size: any
+    size: "small" | "xsmall" | "medium" | "large"
     style?: 'map' | 'my-people'
 }
 interface State extends JCState {
