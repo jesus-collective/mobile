@@ -1,7 +1,7 @@
 import { Header, Left, Body, Right, Button } from 'native-base';
 import { DrawerActions } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import { Image, Text, Dimensions } from 'react-native';
 //import styles from '../Header/style'
 import { Auth } from 'aws-amplify';
@@ -20,8 +20,8 @@ interface Props {
 
 interface State extends JCState {
   resourcesDropdown: HTMLElement
-  resourcesStyle: any
-  chevronStyle: any
+  resourcesStyle: HTMLAttributes<HTMLButtonElement>['style']
+  chevronStyle: HTMLAttributes<HTMLImageElement>['style']
 }
 
 const chevronStyle1 = { paddingLeft: 8, paddingTop: 2 }
@@ -191,7 +191,7 @@ export default class HeaderJC extends JCComponent<Props, State> {
                 style={{ marginTop: 40 }}
               >
                 <MenuItem onClick={this.openResources}><Text style={this.headerStyles.style.dropdownText}>All Resources</Text></MenuItem>
-                <Divider style={{backgroundColor: 'black'}}/>
+                <Divider style={{ backgroundColor: 'black' }} />
                 <MenuItem onClick={this.openKids}><Text style={this.headerStyles.style.dropdownText}>Kids &amp; Youth Curriculum</Text></MenuItem>
               </Menu> : null
           }
