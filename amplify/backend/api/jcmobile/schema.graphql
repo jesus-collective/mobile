@@ -44,7 +44,7 @@ type User
   joined: String
  
   primaryOrganization: String
-  #organizations: [OrganizationMember] @connection(keyName: "orgMemberByUser", fields: ["id"])
+  organizations: [OrganizationMember] @connection(keyName: "orgMemberByUser", fields: ["id"])
 
   owns: [Group] @connection(name: "OwnerUser", keyField: "owner")
   groups: [GroupMember] @connection(name: "UserMembers", keyField: "userID")
@@ -102,11 +102,12 @@ type Group
   @model
   @searchable
   @key(name: "byType", fields: ["type", "id"], queryField: "groupByType")
-  #@key(name:"byOwnerOrg", fields:["ownerOrgID","name"])
+  @key(name:"byOwnerOrg", fields:["ownerOrgID","name"])
   @auth(
     rules: [
       { allow: private, provider:userPools, operations:[read]}
       { allow: owner, ownerField: "owner" }
+      { allow: owner, ownerField: "ownerOrgID" }
       { allow: groups, groups: ["verifiedUsers"], operations: [read] }
       { allow: groups, groups: ["admin"]}
 
@@ -114,9 +115,9 @@ type Group
   ) {
   id: ID!
   owner: String!
-#  ownerOrgID:ID!
+  ownerOrgID: ID!
   ownerUser: User @connection(name: "OwnerUser", keyField: "owner")
-#  ownerOrg: Organization @connection(fields:["ownerOrgID"])
+  ownerOrg: Organization @connection(fields:["ownerOrgID"])
   type: String!
   name: String!
 
@@ -158,23 +159,24 @@ type Organization
   @auth(
     rules: [
       { allow: private, provider:userPools, operations:[read]}
-      { allow: owner, ownerField: "admin" }
+      { allow: owner, ownerField: "admins" }
+      { allow: owner, ownerField: "superAdmin" }
       { allow: groups, groups: ["verifiedUsers"], operations: [read] }
     ]
   ) {
   id: ID!
   orgName: String!
-  #adminEmail: String @auth(rules: [{ allow: owner, ownerField: "admins" }])
-  #phone: String @auth(rules: [{ allow: owner, ownerField: "admins" }])
+  adminEmail: String @auth(rules: [{ allow: owner, ownerField: "superAdmin" }])
+  phone: String @auth(rules: [{ allow: owner, ownerField: "superAdmin" }])
   admins: [String!]!
   superAdmin: String!
 
   hasPaidState: String
   profileState: String
-  #address: String @auth(rules: [{ allow: owner, ownerField: "admins" }])
-  #city: String @auth(rules: [{ allow: owner, ownerField: "admins" }])
-  #province: String @auth(rules: [{ allow: owner, ownerField: "admins" }])
-  #postalCode: String @auth(rules: [{ allow: owner, ownerField: "admins" }])
+  address: String @auth(rules: [{ allow: owner, ownerField: "superAdmin" }])
+  city: String @auth(rules: [{ allow: owner, ownerField: "superAdmin" }])
+  province: String @auth(rules: [{ allow: owner, ownerField: "superAdmin" }])
+  postalCode: String @auth(rules: [{ allow: owner, ownerField: "superAdmin" }])
   country: String
 
   location: LatLong
@@ -195,7 +197,7 @@ type Organization
   subOrganizations: [Organization] @connection(keyName: "byParentOrg", fields: ["id"])
 
   members: [OrganizationMember] @connection(keyName: "orgMemberByOrg", fields: ["id"])
-  #ownerOrg: [Group] @connection(keyName: "byOwnerOrg", fields: ["id"])
+  ownsGroups: [Group] @connection(keyName: "byOwnerOrg", fields: ["id"])
   #messages: [Message] @connection(keyName: "byAuthorOrg", fields: ["id"])
   resource: [ResourceRoot] @connection(keyName: "resourceByOrganization", fields: ["id"])
 }
