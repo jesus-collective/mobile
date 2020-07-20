@@ -30,6 +30,43 @@
 		"EmptyResource": {
 			"Type": "Custom::EmptyResource",
 			"Condition": "AlwaysFalse"
+		},
+		"BatchCreateDirectMessageUsersResolver": {
+			"Type": "AWS::AppSync::Resolver",
+			"Properties": {
+				"ApiId": {
+					"Ref": "AppSyncApiId"
+				},
+				"DataSourceName": "DirectMessageUserTable",
+				"TypeName": "Mutation",
+				"FieldName": "batchCreateDirectMessageUsers",
+				"RequestMappingTemplateS3Location": {
+					"Fn::Sub": [
+						"s3://${S3DeploymentBucket}/${S3DeploymentRootKey}/resolvers/Mutation.batchCreateDirectMessageUsers.req.vtl",
+						{
+							"S3DeploymentBucket": {
+								"Ref": "S3DeploymentBucket"
+							},
+							"S3DeploymentRootKey": {
+								"Ref": "S3DeploymentRootKey"
+							}
+						}
+					]
+				},
+				"ResponseMappingTemplateS3Location": {
+					"Fn::Sub": [
+						"s3://${S3DeploymentBucket}/${S3DeploymentRootKey}/resolvers/Mutation.batchCreateDirectMessageUsers.res.vtl",
+						{
+							"S3DeploymentBucket": {
+								"Ref": "S3DeploymentBucket"
+							},
+							"S3DeploymentRootKey": {
+								"Ref": "S3DeploymentRootKey"
+							}
+						}
+					]
+				}
+			}
 		}
 	},
 	"Conditions": {
@@ -50,12 +87,6 @@
 				"true",
 				"false"
 			]
-		}
-	},
-	"Outputs": {
-		"EmptyOutput": {
-			"Description": "An empty output. You may delete this if you have at least one resource above.",
-			"Value": ""
 		}
 	}
 }

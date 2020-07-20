@@ -1,0 +1,12 @@
+#set($writedata = [])
+#foreach($item in ${ctx.args.dmusers})
+    $util.qr($writedata.add($util.dynamodb.toMapValues($item)))
+#end
+
+{
+    "version" : "2018-05-29",
+    "operation" : "BatchPutItem",
+    "tables" : {
+        "DirectMessageUser": $utils.toJson($writedata)
+    }
+}
