@@ -1,3 +1,13 @@
+type Mutation {
+  batchCreateDirectMessageUsers(dmusers: [batchCreateDirectMessageUsersInput]): [DirectMessageUser]
+}
+
+input batchCreateDirectMessageUsersInput {
+  userId: ID!
+  userName: String!
+  roomId: ID!
+}
+
 type User
   @searchable
   @model
@@ -287,7 +297,7 @@ type CourseAssignment
 type DirectMessageUser
 @model
  @key(name: "byMessageRoom", fields: ["userID", "roomID"])
- @key(name: "byUser", fields: ["roomID", "userID"])
+ @key(name: "byUser", fields: ["roomID", "userID"], queryField: "dmUsersByUser")
 {
   id:ID!
   userName:String  
