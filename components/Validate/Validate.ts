@@ -89,6 +89,20 @@ export default class Validate {
     }
 
     static Organization(data: OrganizationData): ValidationResult {
+        if (data.adminEmail == null || data.adminEmail == "")
+            return { result: false, validationError: "Profile must have - email" }
+        if (data.phone == null || data.phone == "")
+            return { result: false, validationError: "Profile must have - phone" }
+        if (data.address == null || data.address == "")
+            return { result: false, validationError: "Profile must have - address" }
+        if (data.city == null || data.city == "")
+            return { result: false, validationError: "Profile must have - city" }
+        if (data.province == null || data.province == "")
+            return { result: false, validationError: "Profile must have - province" }
+        if (data.postalCode == null || data.postalCode == "")
+            return { result: false, validationError: "Profile must have - postalcode" }
+        if (data.country == null || data.country == "")
+            return { result: false, validationError: "Profile must have - country" }
         if (data.orgName == "" || data.orgName == null)
             return { result: false, validationError: "Organization must have a name" }
         if (data.orgDescription == "" || data.orgDescription == null)
