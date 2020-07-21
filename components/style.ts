@@ -544,7 +544,7 @@ export default class MainStyles {
                 padding: 0,
                 height: 25,
                 borderColor: "#F0493E",
-                width: "75%",
+                width: "100%",
                 alignItems: "center",
                 justifyContent: "center"
             },
@@ -1119,7 +1119,8 @@ export default class MainStyles {
                 paddingBottom: 28,
                 borderStyle: "solid",
                 borderColor: "#FFFFFF",
-                width: "100%"
+                width: "100%",
+                paddingRight: 70
             },
             dashboardConversationCardLeft: {
                 flexDirection: "row"
