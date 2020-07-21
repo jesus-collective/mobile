@@ -1256,6 +1256,15 @@ export default class MainStyles {
                 alignItems: 'flex-start',
                 marginLeft: 25
             },
+            jcDirectoryButton: {
+                marginLeft: 20,
+                marginVertical: 10,
+                paddingHorizontal: 10,
+                height: 36,
+                borderColor: "#F0493E",
+                alignItems: "center",
+                justifyContent: "center"
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -1519,6 +1528,12 @@ export default class MainStyles {
                 },
                 myProfileOrgTypeInput: {
                     width: '100%'
+                },
+                jcDirectoryButton: {
+                    height: 50,
+                    paddingTop: 10,
+                    paddingBottom: 10,
+                    width: '75%'
                 },
             },
 
