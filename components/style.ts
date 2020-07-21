@@ -542,9 +542,9 @@ export default class MainStyles {
             },
             connectWithSliderButton: {
                 padding: 0,
-                height: 25,
+                height: 36,
                 borderColor: "#F0493E",
-                width: "75%",
+                width: "100%",
                 alignItems: "center",
                 justifyContent: "center"
             },
@@ -1119,7 +1119,8 @@ export default class MainStyles {
                 paddingBottom: 28,
                 borderStyle: "solid",
                 borderColor: "#FFFFFF",
-                width: "100%"
+                width: "100%",
+                paddingRight: 70
             },
             dashboardConversationCardLeft: {
                 flexDirection: "row"
@@ -1255,6 +1256,15 @@ export default class MainStyles {
                 alignItems: 'flex-start',
                 marginLeft: 25
             },
+            jcDirectoryButton: {
+                marginLeft: 20,
+                marginVertical: 10,
+                paddingHorizontal: 10,
+                height: 36,
+                borderColor: "#F0493E",
+                alignItems: "center",
+                justifyContent: "center"
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -1264,7 +1274,7 @@ export default class MainStyles {
                     paddingBottom: 6,
                     paddingLeft: 10,
                     paddingRight: 10,
-                    width: "90%"
+                    width: "100%"
                 },
 
                 connectWithTopSectionButton: {
@@ -1518,6 +1528,12 @@ export default class MainStyles {
                 },
                 myProfileOrgTypeInput: {
                     width: '100%'
+                },
+                jcDirectoryButton: {
+                    height: 50,
+                    paddingTop: 10,
+                    paddingBottom: 10,
+                    width: '75%'
                 },
             },
 
@@ -1832,6 +1848,9 @@ export default class MainStyles {
                 },
                 headerMiddleBody: {
                     marginLeft: 0
+                },
+                jcDirectoryButton: {
+                    width: '90%'
                 },
             },
 

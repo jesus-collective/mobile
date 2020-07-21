@@ -104,15 +104,7 @@ export default class MyPeople extends JCComponent<Props, State> {
 
           <Container style={this.styles.style.peopleContainer} >
             <Text style={this.styles.style.fontConnectWith}>Connect with Others</Text>
-            <Button bordered style={{
-              marginLeft: 20,
-              marginVertical: 10,
-              paddingHorizontal: 10,
-              height: 36,
-              borderColor: "#F0493E",
-              alignItems: "center",
-              justifyContent: "center"
-            }} onPress={() => { this.showProfiles() }}><Text style={{ fontFamily: 'Graphik-Regular-App', fontSize: 16, color: '#F0493E' }}>Jesus Collective Directory</Text></Button>
+            <Button bordered style={this.styles.style.jcDirectoryButton} onPress={() => { this.showProfiles() }}><Text style={{ fontFamily: 'Graphik-Regular-App', fontSize: 16, color: '#F0493E' }}>Jesus Collective Directory</Text></Button>
             <Content style={this.styles.style.rightCardWidth}>
               {this.state.data.map((item) => {
                 if (item.id !== this.state.currentUser) {
