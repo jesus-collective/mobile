@@ -1849,6 +1849,9 @@ export default class MainStyles {
                 headerMiddleBody: {
                     marginLeft: 0
                 },
+                jcDirectoryButton: {
+                    width: '90%'
+                },
             },
 
             dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
