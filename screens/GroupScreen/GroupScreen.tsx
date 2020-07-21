@@ -106,8 +106,8 @@ export default class GroupScreen extends JCComponent<Props, State>{
           description: "",
           memberCount: 1,
           image: "temp",
-          isSponsored: "false"
-          // ownerOrgID: "00000000-0000-0000-0000-000000000000"
+          isSponsored: "false",
+          ownerOrgID: "0000000000000"
         }
         const isEditable = true
         this.setState({
