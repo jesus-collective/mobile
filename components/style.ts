@@ -1265,7 +1265,7 @@ export default class MainStyles {
                     paddingBottom: 6,
                     paddingLeft: 10,
                     paddingRight: 10,
-                    width: "90%"
+                    width: "100%"
                 },
 
                 connectWithTopSectionButton: {
