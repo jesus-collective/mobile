@@ -1,4 +1,4 @@
-import { View, Form, Label, Content, Picker } from 'native-base';
+import { View, Form, Label, Content, Picker, Item, Input } from 'native-base';
 import { Text, Image, TouchableOpacity } from 'react-native'
 import * as React from 'react';
 import * as queries from '../../src/graphql/queries';
@@ -98,7 +98,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
           name: 'test',
           user: this.state.OrganizationDetails,
           link: "",
-          type: "profile"
+          type: "organization"
         }],
         initCenter: { lat: Number(this.state.OrganizationDetails.location.latitude) + Number(this.state.OrganizationDetails.location.randomLatitude), lng: Number(this.state.OrganizationDetails.location.longitude) + Number(this.state.OrganizationDetails.location.randomLatitude) }
       })
@@ -216,7 +216,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
         this.convertProfileToMapData()
     });
   }
-  clean(item: OrganizationData | any): OrganizationData {
+  clean(item: OrganizationData): OrganizationData {
     delete item.parentOrganization
     delete item.subOrganizations
     delete item.ownsGroups
@@ -403,7 +403,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
               {this.state.isEditable ?
                 <View style={this.styles.style.myProfileTopButtonsInternalContainer}>
                   {this.state.editMode ? <JCButton enabled={this.state.dirty}
-                    data-testid="profile-save"
+                    data-testid="org-save"
                     buttonType={ButtonTypes.SolidRightMargin}
                     onPress={() => { this.finalizeProfile() }}>Save Profile</JCButton> : null}
                   {this.props.loadId && this.state.showAccountSettings ? <JCButton buttonType={ButtonTypes.SolidProfileDelete} onPress={() => this.deleteOrg()}>Delete</JCButton> : null}
@@ -427,7 +427,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                 {this.state.isEditable && this.state.editMode ?
                   <View style={this.styles.style.fileInputWrapper}>
                     <JCButton buttonType={ButtonTypes.SolidProfile} onPress={() => { null }}>Set Profile Picture</JCButton>
-                    <input data-testid="profile-image" style={{ cursor: 'pointer', fontSize: "200px", position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='image/*' onChange={(e) => this.onProfileImageChange(e)} />
+                    <input data-testid="org-image" style={{ cursor: 'pointer', fontSize: "200px", position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='image/*' onChange={(e) => this.onProfileImageChange(e)} />
                   </View>
                   : null
                 }
@@ -444,7 +444,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   placeholderTextColor="#757575"
                   textStyle={this.styles.style.fontFormSmallDarkGrey}
                   inputStyle={this.styles.style.fontFormAboutMe}
-                  data-testid="profile-aboutMeShort"
+                  data-testid="org-aboutMeShort"
                   value={this.state.OrganizationDetails.aboutMeShort} isEditable={this.state.isEditable && this.state.editMode}></EditableText>
 
                 <View style={this.styles.style.myProfileCoordinates}>
@@ -458,11 +458,11 @@ class OrganizationImpl extends JCComponent<Props, State> {
                 : null*/}
 
                 {this.state.isEditable && this.state.OrganizationDetails.profileState !== "Incomplete" && constants['SETTING_ISVISIBLE_PROFILE_MESSAGES'] ?
-                  <View style={{ borderBottomWidth: 1, borderTopWidth: 1, borderColor: '#33333320', paddingVertical: 10 }}><JCButton data-testid="profile-setmap" buttonType={ButtonTypes.TransparentBoldBlackNoMargin} onPress={() => console.error('messages not yet supported')}>Messages</JCButton></View>
+                  <View style={{ borderBottomWidth: 1, borderTopWidth: 1, borderColor: '#33333320', paddingVertical: 10 }}><JCButton data-testid="org-setmap" buttonType={ButtonTypes.TransparentBoldBlackNoMargin} onPress={() => console.error('messages not yet supported')}>Messages</JCButton></View>
                   : null
                 }
                 {this.state.isEditable && this.state.OrganizationDetails.profileState !== "Incomplete" && constants['SETTING_ISVISIBLE_PROFILE_ACCOUNTSETTINGS'] ?
-                  <View style={{ borderBottomWidth: 1, borderBottomColor: '#33333320', paddingVertical: 10, borderRightWidth: this.state.showAccountSettings ? 7 : 0, borderRightColor: '#F0493E' }}><JCButton data-testid="profile-setmap" buttonType={ButtonTypes.TransparentBoldBlackNoMargin} onPress={() => this.setState({ showAccountSettings: !this.state.showAccountSettings, editMode: false })}>Account Settings</JCButton></View>
+                  <View style={{ borderBottomWidth: 1, borderBottomColor: '#33333320', paddingVertical: 10, borderRightWidth: this.state.showAccountSettings ? 7 : 0, borderRightColor: '#F0493E' }}><JCButton data-testid="org-setmap" buttonType={ButtonTypes.TransparentBoldBlackNoMargin} onPress={() => this.setState({ showAccountSettings: !this.state.showAccountSettings, editMode: false })}>Account Settings</JCButton></View>
                   : null
                 }
               </View>
@@ -507,50 +507,49 @@ class OrganizationImpl extends JCComponent<Props, State> {
                 </View> : null}
 
 
-              {/*this.state.isEditable && this.state.editMode ?
+              {this.state.isEditable && this.state.editMode ?
                 <Text style={this.styles.style.profilePrivateInformation}>Private Information</Text>
                 : null
-              */}
-              {/*this.state.isEditable && this.state.editMode ?
+              }
+              {this.state.isEditable && this.state.editMode ?
                 <View style={{ backgroundColor: '#FFFFFF', width: "100%", marginBottom: 30 }}>
                   <Item stackedLabel>
                     <Label style={this.styles.style.fontFormSmall}><Text style={this.styles.style.fontFormMandatory}>*</Text>Address</Label>
-                    <Input data-testid="profile-Address" style={this.styles.style.fontFormMediumInput} value={this.state.OrganizationDetails.address}
+                    <Input data-testid="org-Address" style={this.styles.style.fontFormMediumInput} value={this.state.OrganizationDetails.address}
                       onChange={(e) => { this.handleInputChange(e, "address") }} />
                   </Item>
                   <Item stackedLabel>
                     <Label style={this.styles.style.fontFormSmall}><Text style={this.styles.style.fontFormMandatory}>*</Text>City</Label>
-                    <Input data-testid="profile-City" style={this.styles.style.fontFormMediumInput} value={this.state.OrganizationDetails.city}
+                    <Input data-testid="org-City" style={this.styles.style.fontFormMediumInput} value={this.state.OrganizationDetails.city}
                       onChange={(e) => { this.handleInputChange(e, "city") }} />
                   </Item>
                   <Item stackedLabel>
                     <Label style={this.styles.style.fontFormSmall}><Text style={this.styles.style.fontFormMandatory}>*</Text>Province/State</Label>
-                    <Input data-testid="profile-Province" style={this.styles.style.fontFormMediumInput} value={this.state.OrganizationDetails.province}
+                    <Input data-testid="org-Province" style={this.styles.style.fontFormMediumInput} value={this.state.OrganizationDetails.province}
                       onChange={(e) => { this.handleInputChange(e, "province") }} />
                   </Item>
                   <Item stackedLabel>
                     <Label style={this.styles.style.fontFormSmall}><Text style={this.styles.style.fontFormMandatory}>*</Text>Postal/Zip Code</Label>
-                    <Input data-testid="profile-PostalCode" style={this.styles.style.fontFormMediumInput} value={this.state.OrganizationDetails.postalCode}
+                    <Input data-testid="org-PostalCode" style={this.styles.style.fontFormMediumInput} value={this.state.OrganizationDetails.postalCode}
                       onChange={(e) => { this.handleInputChange(e, "postalCode") }} />
                   </Item>
                   <Item stackedLabel>
                     <Label style={this.styles.style.fontFormSmall}><Text style={this.styles.style.fontFormMandatory}>*</Text>Country</Label>
-                    <Input data-testid="profile-Country" style={this.styles.style.fontFormMediumInput} value={this.state.OrganizationDetails.country}
+                    <Input data-testid="org-Country" style={this.styles.style.fontFormMediumInput} value={this.state.OrganizationDetails.country}
                       onChange={(e) => { this.handleInputChange(e, "country") }} />
                   </Item>
                   <Item stackedLabel>
                     <Label style={this.styles.style.fontFormSmall}><Text style={this.styles.style.fontFormMandatory}>*</Text>Email Address</Label>
-                    <Input data-testid="profile-Email" style={this.styles.style.fontFormMediumInput} value={this.state.OrganizationDetails.email}
-                      onChange={(e) => { this.handleInputChange(e, "email") }} />
+                    <Input data-testid="org-Email" style={this.styles.style.fontFormMediumInput} value={this.state.OrganizationDetails.adminEmail}
+                      onChange={(e) => { this.handleInputChange(e, "adminEmail") }} />
                   </Item>
                   <Item stackedLabel>
                     <Label style={this.styles.style.fontFormSmall}><Text style={this.styles.style.fontFormMandatory}>*</Text>Phone #</Label>
-                    <Input data-testid="profile-Phone" style={this.styles.style.fontFormMediumInput} value={this.state.OrganizationDetails.phone}
+                    <Input data-testid="org-Phone" style={this.styles.style.fontFormMediumInput} value={this.state.OrganizationDetails.phone}
                       onChange={(e) => { this.handleInputChange(e, "phone") }} />
                   </Item>
                 </View>
-                : null
-              */}
+                : null}
             </View>
 
             {!this.state.showAccountSettings ?
@@ -568,7 +567,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                 }
                 <EditableText onChange={(e) => { this.handleInputChange(e, "aboutMeLong") }}
                   placeholder="type here" multiline={true}
-                  data-testid="profile-aboutMeLong"
+                  data-testid="org-aboutMeLong"
                   textStyle={this.styles.style.fontFormSmallDarkGrey}
                   inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
                   value={this.state.OrganizationDetails.aboutMeLong} isEditable={this.state.isEditable && this.state.editMode}></EditableText>
@@ -580,7 +579,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                     <Label style={this.styles.style.fontFormSmall}>Organization Name</Label>
                     <EditableText onChange={(e) => { this.handleInputChange(e, "orgName") }}
                       multiline={false}
-                      data-testid="profile-orgName"
+                      data-testid="org-orgName"
                       textStyle={this.styles.style.fontFormSmallDarkGrey}
                       inputStyle={this.styles.style.myProfileOrgTypeInput}
                       value={this.state.OrganizationDetails.orgName} isEditable={this.state.isEditable && this.state.editMode}></EditableText>
@@ -698,7 +697,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                     <Text style={this.styles.style.fontFormSmall}>Denomination</Text>
                     <EditableText onChange={(e) => { this.handleInputChange(e, "denomination") }}
                       multiline={true}
-                      data-testid="profile-denomination"
+                      data-testid="org-denomination"
                       textStyle={this.styles.style.fontFormSmallDarkGrey}
                       placeholder="Type here."
                       inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
@@ -709,7 +708,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                     <Text style={this.styles.style.fontFormSmall}>{this.state.editMode ? 'How many people do you serve?' : 'People impacted by our services'}</Text>
                     <EditableText onChange={(e) => { this.handleInputChange(e, "pplServed") }}
                       multiline={true}
-                      data-testid="profile-pplServed"
+                      data-testid="org-pplServed"
                       textStyle={this.styles.style.fontFormSmallDarkGrey}
                       placeholder="Type here."
                       inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
@@ -720,7 +719,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                     <Text style={this.styles.style.fontFormSmall}>Description of church or ministry organization</Text>
                     <EditableText onChange={(e) => { this.handleInputChange(e, "orgDescription") }}
                       multiline={true}
-                      data-testid="profile-orgDescription"
+                      data-testid="org-orgDescription"
                       textStyle={this.styles.style.fontFormSmallDarkGrey}
                       placeholder="Type here."
                       inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
