@@ -321,7 +321,7 @@ type DirectMessage
 @key(name: "dmsByUser", fields: ["userId", "when"])
 {
   id: ID!
-  content: String!
+  content: String
     @auth(rules: [
       { allow: owner, ownerField: "userId", operations: [create, update, read] },
       { allow: owner, ownerField: "recipients", operations: [create, update, read] },

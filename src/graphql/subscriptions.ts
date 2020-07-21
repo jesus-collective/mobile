@@ -310,6 +310,7 @@ export const onCreateUser = /* GraphQL */ `
           attachment
           attachmentName
           when
+          recipients
           userId
           messageRoomID
           createdAt
@@ -449,6 +450,7 @@ export const onUpdateUser = /* GraphQL */ `
           attachment
           attachmentName
           when
+          recipients
           userId
           messageRoomID
           createdAt
@@ -588,6 +590,7 @@ export const onDeleteUser = /* GraphQL */ `
           attachment
           attachmentName
           when
+          recipients
           userId
           messageRoomID
           createdAt
@@ -4727,6 +4730,7 @@ export const onCreateDirectMessageRoom = /* GraphQL */ `
           attachment
           attachmentName
           when
+          recipients
           userId
           messageRoomID
           createdAt
@@ -4762,6 +4766,7 @@ export const onUpdateDirectMessageRoom = /* GraphQL */ `
           attachment
           attachmentName
           when
+          recipients
           userId
           messageRoomID
           createdAt
@@ -4797,6 +4802,7 @@ export const onDeleteDirectMessageRoom = /* GraphQL */ `
           attachment
           attachmentName
           when
+          recipients
           userId
           messageRoomID
           createdAt
@@ -4817,6 +4823,7 @@ export const onCreateDirectMessage = /* GraphQL */ `
       attachment
       attachmentName
       when
+      recipients
       userId
       author {
         id
@@ -4918,6 +4925,7 @@ export const onUpdateDirectMessage = /* GraphQL */ `
       attachment
       attachmentName
       when
+      recipients
       userId
       author {
         id
@@ -5019,6 +5027,7 @@ export const onDeleteDirectMessage = /* GraphQL */ `
       attachment
       attachmentName
       when
+      recipients
       userId
       author {
         id

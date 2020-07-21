@@ -120,6 +120,7 @@ export const getUser = /* GraphQL */ `
           attachment
           attachmentName
           when
+          recipients
           userId
           messageRoomID
           createdAt
@@ -1787,6 +1788,7 @@ export const getDirectMessageRoom = /* GraphQL */ `
           attachment
           attachmentName
           when
+          recipients
           userId
           messageRoomID
           createdAt
@@ -1834,6 +1836,7 @@ export const getDirectMessage = /* GraphQL */ `
       attachment
       attachmentName
       when
+      recipients
       userId
       author {
         id
@@ -1940,6 +1943,7 @@ export const listDirectMessages = /* GraphQL */ `
         attachment
         attachmentName
         when
+        recipients
         userId
         author {
           id
@@ -3162,6 +3166,7 @@ export const directMessagesByRoom = /* GraphQL */ `
         attachment
         attachmentName
         when
+        recipients
         userId
         author {
           id
