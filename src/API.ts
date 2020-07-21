@@ -2,6 +2,12 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
+export type batchCreateDirectMessageUsersInput = {
+  userId: string,
+  userName: string,
+  roomId: string,
+};
+
 export type CreateUserInput = {
   id?: string | null,
   given_name: string,
@@ -1061,6 +1067,120 @@ export enum SearchableGroupSortableFields {
   isSponsored = "isSponsored",
 }
 
+
+export type BatchCreateDirectMessageUsersMutationVariables = {
+  dmusers?: Array< batchCreateDirectMessageUsersInput | null > | null,
+};
+
+export type BatchCreateDirectMessageUsersMutation = {
+  batchCreateDirectMessageUsers:  Array< {
+    __typename: "DirectMessageUser",
+    id: string,
+    userName: string | null,
+    userID: string,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      mainUserGroup: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+        geocodeFull: string | null,
+        geocodeCity: string | null,
+        geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: Array< string | null > | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      denomination: string | null,
+      pplServed: string | null,
+      sundayAttendance: string | null,
+      numberVolunteers: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      primaryOrganization: string | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      directMessages:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      alertConfig:  {
+        __typename: "AlertConfig",
+        emailDirectMessage: string | null,
+        emailGroupMessage: string | null,
+        emailEventMessage: string | null,
+        emailOrgMessage: string | null,
+        emailResourceMessage: string | null,
+        emailCourseMessage: string | null,
+        emailPromotions: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    roomID: string,
+    room:  {
+      __typename: "DirectMessageRoom",
+      id: string,
+      name: string | null,
+      messageUsers:  {
+        __typename: "ModelDirectMessageUserConnection",
+        nextToken: string | null,
+      } | null,
+      directMessage:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null > | null,
+};
 
 export type CreateUserMutationVariables = {
   input: CreateUserInput,
@@ -11741,6 +11861,73 @@ export type GroupByTypeQuery = {
       eventUrl: string | null,
       tz: string | null,
       isSponsored: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type DmUsersByUserQueryVariables = {
+  roomID?: string | null,
+  userID?: ModelIDKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelDirectMessageUserFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type DmUsersByUserQuery = {
+  dmUsersByUser:  {
+    __typename: "ModelDirectMessageUserConnection",
+    items:  Array< {
+      __typename: "DirectMessageUser",
+      id: string,
+      userName: string | null,
+      userID: string,
+      user:  {
+        __typename: "User",
+        id: string,
+        given_name: string,
+        family_name: string,
+        email: string | null,
+        phone: string | null,
+        owner: string | null,
+        mainUserGroup: string | null,
+        hasPaidState: string | null,
+        profileState: string | null,
+        address: string | null,
+        city: string | null,
+        province: string | null,
+        postalCode: string | null,
+        country: string | null,
+        aboutMeShort: string | null,
+        aboutMeLong: string | null,
+        interests: Array< string | null > | null,
+        currentRole: string | null,
+        currentScope: string | null,
+        personality: string | null,
+        orgName: string | null,
+        orgType: string | null,
+        orgSize: string | null,
+        denomination: string | null,
+        pplServed: string | null,
+        sundayAttendance: string | null,
+        numberVolunteers: string | null,
+        orgDescription: string | null,
+        joined: string | null,
+        primaryOrganization: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      roomID: string,
+      room:  {
+        __typename: "DirectMessageRoom",
+        id: string,
+        name: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
       createdAt: string,
       updatedAt: string,
     } | null > | null,
