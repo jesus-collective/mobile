@@ -125,9 +125,14 @@ class OrganizationImpl extends JCComponent<Props, State> {
         this.setState({
           OrganizationDetails: getOrg.data.getOrganization,
           isEditable: getOrg.data.getOrganization.admins.includes(this.state.currentUser),
-        }, () => { this.getProfileImage(); this.convertProfileToMapData() }
-        )
+        }, () => { this.getProfileImage(); this.convertProfileToMapData() })
       } catch (e) {
+        if (e.data?.getOrganization) {
+          this.setState({
+            OrganizationDetails: e.data.getOrganization,
+            isEditable: e.data.getOrganization.admins.includes(this.state.currentUser),
+          }, () => { this.getProfileImage(); this.convertProfileToMapData() })
+        }
         console.error(e)
       }
     } else {
