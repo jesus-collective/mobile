@@ -78,7 +78,6 @@ export default EStyleSheet.create({
         borderColor: "#F0493E",
         boxShadow: "unset",
         height: 36,
-        widht: '100%'
     },
     OutlineSmallText: {
         color: "#F0493E",
