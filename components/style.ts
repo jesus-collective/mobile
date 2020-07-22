@@ -453,7 +453,8 @@ export default class MainStyles {
                 textAlign: "center",
                 color: "#FFFFFF",
                 width: "100%",
-                alignSelf: "center"
+                alignSelf: "center",
+                height: 85
             },
             fontConnectWith: {
                 fontFamily: 'Graphik-Bold-App',
@@ -1183,7 +1184,7 @@ export default class MainStyles {
             },
             resourceHeaderImgContainer: {
                 //    backgroundColor: "#000000", 
-                maxHeight: "350px"
+                maxHeight: "450px"
             },
             resourceHeaderImg: {
                 position: "relative",
