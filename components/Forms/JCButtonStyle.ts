@@ -67,16 +67,18 @@ export default EStyleSheet.create({
     },
     OutlineSmallButton:
     {
-        paddingTop: 10,
-        paddingBottom: 10,
+        paddingTop: 0,
+        paddingBottom: 0,
         marginBottom: 20,
-        marginLeft: 10,
-        marginRight: 10,
+        marginLeft: 0,
+        marginRight: 0,
         //    color:"#F0493E",
         backgroundColor: "#ffffff",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset"
+        boxShadow: "unset",
+        height: 36,
+        widht: '100%'
     },
     OutlineSmallText: {
         color: "#F0493E",
