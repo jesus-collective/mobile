@@ -19,8 +19,8 @@ interface Props {
 }
 interface State extends JCState {
   showMap: boolean
-  width: any
-  height: any
+  width: number
+  height: number
   mapData: MapData[]
 }
 

@@ -8,11 +8,11 @@ import JCComponent, { JCState } from '../JCComponent/JCComponent';
 
 Amplify.configure(awsconfig);
 
-
 interface Props {
     user: any
-    size: any
+    size: "small" | "xsmall" | "medium" | "large"
     style?: 'map' | 'my-people'
+    isOrg?: boolean
 }
 interface State extends JCState {
     profileImage: any
@@ -28,7 +28,11 @@ export default class MyProfile extends JCComponent<Props, State> {
         }
 
         if (typeof props.user === "string" && props.user !== "") {
-            this.getProfileImageFromUserID(props.user)
+            if (this.props.isOrg) {
+                this.getProfileImageFromOrgID(props.user)
+            } else {
+                this.getProfileImageFromUserID(props.user)
+            }
         } else {
             this.getProfileImage(props.user ? props.user.profileImage : null)
         }
@@ -72,6 +76,17 @@ export default class MyProfile extends JCComponent<Props, State> {
             this.getProfileImage(json.data.getUser.profileImage)
         }).catch((e) => {
 
+            if (e.data) {
+                this.getProfileImage(e.data.getUser.profileImage)
+            }
+        })
+    }
+
+    getProfileImageFromOrgID(user: string): void {
+        const getUser: any = API.graphql(graphqlOperation(customQueries.getOrgForImage, { id: user }));
+        getUser.then((json) => {
+            this.getProfileImage(json.data.getUser.profileImage)
+        }).catch((e) => {
             if (e.data) {
                 this.getProfileImage(e.data.getUser.profileImage)
             }

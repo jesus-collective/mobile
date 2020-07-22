@@ -125,8 +125,8 @@ export default class CourseScreen extends JCComponent<Props, State>{
           length: "",
           time: "",
           effort: "",
-          cost: ""
-          //ownerOrgID: "00000000-0000-0000-0000-000000000000"
+          cost: "",
+          ownerOrgID: "0000000000000"
           //   organizerUser: { name: "" },
           //   instructors: [],
           //   course: []

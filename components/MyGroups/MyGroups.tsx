@@ -221,24 +221,43 @@ export default class MyGroups extends JCComponent<Props, State> {
             user.signInUserSession.accessToken.payload["cognito:groups"].includes("admin")
             : this.props.type == "course" ?
               user.signInUserSession.accessToken.payload["cognito:groups"].includes("courseAdmin") || user.signInUserSession.accessToken.payload["cognito:groups"].includes("admins")
-              :
-              user.signInUserSession.accessToken.payload["cognito:groups"].includes("verifiedUsers")
+              : this.props.type == "organization" ?
+                user.signInUserSession.accessToken.payload["cognito:groups"].includes("admins")
+                : user.signInUserSession.accessToken.payload["cognito:groups"].includes("verifiedUsers")
         })
     })
   }
-  convertProfileToMapData(data: any): MapData[] {
-    return data.map((dataItem) => {
-      if (dataItem.location && dataItem.location.latitude && dataItem.location.longitude)
-        return {
-          latitude: Number(dataItem.location.latitude) + Number(dataItem.location.randomLatitude),
-          longitude: Number(dataItem.location.longitude) + Number(dataItem.location.randomLongitude),
-          name: dataItem.given_name + " " + dataItem.family_name,
-          user: dataItem,
-          link: "",
-          type: "profile"
-        } as MapData
-      else return null
-    }).filter(o => o)
+
+  convertProfileToMapData(data: any, isOrg?: boolean): MapData[] {
+
+    if (isOrg) {
+      return data.map((dataItem) => {
+        if (dataItem.location && dataItem.location.latitude && dataItem.location.longitude)
+          return {
+            latitude: Number(dataItem.location.latitude) + Number(dataItem.location.randomLatitude),
+            longitude: Number(dataItem.location.longitude) + Number(dataItem.location.randomLongitude),
+            name: dataItem.orgName,
+            user: dataItem,
+            link: "",
+            type: "organization"
+          } as MapData
+        else return null
+      }).filter(o => o)
+    } else {
+      return data.map((dataItem) => {
+        if (dataItem.location && dataItem.location.latitude && dataItem.location.longitude)
+          return {
+            latitude: Number(dataItem.location.latitude) + Number(dataItem.location.randomLatitude),
+            longitude: Number(dataItem.location.longitude) + Number(dataItem.location.randomLongitude),
+            name: dataItem.given_name + " " + dataItem.family_name,
+            user: dataItem,
+            link: "",
+            type: "profile"
+          } as MapData
+        else return null
+      }).filter(o => o)
+    }
+
   }
 
   convertEventToMapData(data: any): MapData[] {
@@ -264,7 +283,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       case "resource":
         return []
       case "organization":
-        return []
+        return this.convertProfileToMapData(data, true)
       case "course":
         return []
       case "profile":
@@ -293,8 +312,23 @@ export default class MyGroups extends JCComponent<Props, State> {
         }, () => { this.props.onDataload(this.convertToMapData(this.state.data)) })
       }
       listUsers.then(processList).catch(processList)
-    }
-    else {
+    } else if (props.type == "organization") {
+      const listOrgs: any = API.graphql({
+        query: queries.listOrganizations,
+        variables: { limit: 20, filter: { profileState: { eq: 'Complete' } }, nextToken: this.state.nextToken },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+      });
+
+      const processList = (json) => {
+        console.log({ profile: json })
+        const temp = [...this.state.data, ...json.data.listOrganizations.items]
+        this.setState({
+          data: temp,
+          nextToken: json.data.listOrganizations.nextToken
+        }, () => { this.props.onDataload(this.convertToMapData(this.state.data)) })
+      }
+      listOrgs.then(processList).catch(processList)
+    } else {
       const listGroup: any = API.graphql({
         query: customQueries.groupByTypeForMyGroups,
         variables: { limit: 20, type: props.type, nextToken: this.state.nextToken },
@@ -557,7 +591,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0, width: this.state.cardWidth, right: 5 }}>
         <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 70 }} source={require('../../assets/svg/pattern.svg')}></Image>
       </CardItem>
-      {item.name.length > 17 || item.name.length == 17 ?
+      {item.name.length > 29 || item.name.length == 29 ?
         <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitleGroup} data-tip={item.name}>{item.name}</Text>
           <ReactTooltip place="top" type="dark" effect="solid" backgroundColor="#F0493E" /></CardItem>
         : <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitleGroup}>{item.name}</Text></CardItem>}
@@ -569,13 +603,9 @@ export default class MyGroups extends JCComponent<Props, State> {
   }
   renderOrganization(item: any): React.ReactNode {
     return <Card style={[this.styles.style.orgCard, { width: this.state.cardWidth }]}>
-      <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0 }}>
-        <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 20 }} source={require('../../assets/svg/pattern.svg')}></Image>
-      </CardItem>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitle}>{item.name}</Text></CardItem>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetail}>{item.kind}</Text></CardItem>
-      {true ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Organization") }}>Join</JCButton><Right></Right></CardItem> : null}
-      {false ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Organization") }}>Leave</JCButton><Right></Right></CardItem> : null}
+      <CardItem ><ProfileImage size="small" user={item}></ProfileImage></CardItem>
+      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitle}>{item.orgName}</Text></CardItem>
+      <CardItem ><JCButton buttonType={ButtonTypes.Outline} onPress={() => null}>View</JCButton><Right></Right></CardItem>
     </Card>
   }
   renderCourse(item: any): React.ReactNode {

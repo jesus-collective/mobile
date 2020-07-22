@@ -22,7 +22,7 @@ import { interests, numberOfEmployees, sundayAttendance, orgTypesChurches, orgTy
 import { constants } from '../../src/constants'
 import JCComponent, { JCState } from '../JCComponent/JCComponent';
 import { useRoute, useNavigation } from '@react-navigation/native';
-import { MapData } from 'components/MyGroups/MyGroups';
+import { MapData } from '../MyGroups/MyGroups';
 import { TextInput } from 'react-native-gesture-handler';
 import JCSwitch from '../../components/JCSwitch/JCSwitch';
 
@@ -42,10 +42,10 @@ export type UserData = NonNullable<GetUserQuery['getUser']>;
 interface State extends JCState {
   UserDetails: UserData
   interest: string
-  interestsArray: any
-  profileImage: any
-  validationText: any
-  mapVisible: any
+  interestsArray: string[]
+  profileImage: string
+  validationText: string
+  mapVisible: boolean
   // mapCoord: any
   isEditable: boolean
   showAccountSettings: boolean
@@ -274,12 +274,12 @@ class MyProfileImpl extends JCComponent<Props, State> {
   getProfileImage(): void {
     console.log("get profile image")
     //console.log(this.state.UserDetails.profileImage)
-    if (this.state.UserDetails.profileImage != null)
+    if (this.state.UserDetails.profileImage)
       Storage.get(this.state.UserDetails.profileImage.filenameUpload, {
         level: 'protected',
         identityId: this.state.UserDetails.profileImage.userId
       })
-        .then(result => this.setState({ profileImage: result }))
+        .then(result => this.setState({ profileImage: result as string }))
         .catch(err => { console.log(err) });
   }
   getValueFromKey(myObject: unknown, string: string) {
@@ -595,12 +595,13 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   : <Text style={this.styles.style.myprofileAboutMe}>About me</Text>
                 }
 
-              <EditableText onChange={(e) => { this.handleInputChange(e, "aboutMeLong") }}
-                placeholder="type here" multiline={true}
-                data-testid="profile-aboutMeLong"
-                textStyle={this.styles.style.fontFormSmallDarkGrey}
-                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28, height: 150 }}
-                value={this.state.UserDetails.aboutMeLong} isEditable={this.state.isEditable && this.state.editMode}></EditableText>
+
+                <EditableText onChange={(e) => { this.handleInputChange(e, "aboutMeLong") }}
+                  placeholder="type here" multiline={true}
+                  data-testid="profile-aboutMeLong"
+                  textStyle={this.styles.style.fontFormSmallDarkGrey}
+                  inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28, height: 150 }}
+                  value={this.state.UserDetails.aboutMeLong} isEditable={this.state.isEditable && this.state.editMode}></EditableText>
 
                 {this.state.isEditable && this.state.editMode ?
                   <Text style={this.styles.style.fontBold}><Text style={this.styles.style.fontFormMandatory}>*</Text>My Interests</Text>
@@ -677,7 +678,6 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   textStyle={this.styles.style.fontFormSmallDarkGrey}
                   inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
                   value={this.state.UserDetails.currentScope} isEditable={this.state.isEditable && this.state.editMode}></EditableText>
-
 
                 <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text>
                 {this.state.isEditable && this.state.editMode ?
