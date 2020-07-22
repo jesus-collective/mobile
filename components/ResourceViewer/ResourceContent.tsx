@@ -243,6 +243,7 @@ class ResourceContent extends JCComponent<Props, State> {
                                         accessibilityHint={"Navigate to series " + series.title}
                                         onPress={() => { !state.isEditable ? actions.changeSeries(index) : null }}>
                                         <CardItem style={this.styles.style.resourceContentCurrentSeriesIframeContainer}>
+
                                             {series.type === "ky-preschool" ?
                                                 <Image
                                                     accessible={true}
@@ -256,7 +257,11 @@ class ResourceContent extends JCComponent<Props, State> {
                                                     accessibilityLabel={series.title + " thumbnail"}
                                                     style={{ padding: 0, width: '100%', height: '100%', borderTopRightRadius: 4, borderTopLeftRadius: 4 }}
                                                     resizeMode="contain"
-                                                    source={{ uri: "https://img.youtube.com/vi/" + series.episodes.items[thumbnailIndex].videoPreview.replace("https://youtu.be/", "") + "/maxresdefault.jpg" }}
+                                                    source={{
+                                                        uri: series.episodes.items[thumbnailIndex]?.videoPreview ?
+                                                            "https://img.youtube.com/vi/" + series.episodes.items[thumbnailIndex].videoPreview.replace("https://youtu.be/", "") + "/maxresdefault.jpg"
+                                                            : "no.jpg"
+                                                    }}
                                                 />
                                             }
                                         </CardItem>
@@ -343,7 +348,11 @@ class ResourceContent extends JCComponent<Props, State> {
                                                                 accessibilityLabel={series2.title + " thumbnail"}
                                                                 style={{ padding: 0, width: '100%', height: '100%', borderTopRightRadius: 4, borderTopLeftRadius: 4 }}
                                                                 resizeMode="contain"
-                                                                source={{ uri: "https://img.youtube.com/vi/" + series2.episodes.items[firstEpisodeIndex].videoPreview.replace("https://youtu.be/", "") + "/maxresdefault.jpg" }}
+                                                                source={{
+                                                                    uri: series2.episodes.items[firstEpisodeIndex]?.videoPreview ?
+                                                                        "https://img.youtube.com/vi/" + series2.episodes.items[firstEpisodeIndex].videoPreview.replace("https://youtu.be/", "") + "/maxresdefault.jpg"
+                                                                        : "no.jpg"
+                                                                }}
                                                             />
                                                         }
                                                     </CardItem>
