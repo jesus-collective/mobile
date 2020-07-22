@@ -1151,6 +1151,7 @@ export const createGroup = /* GraphQL */ `
           emailCourseMessage
           emailPromotions
         }
+
         createdAt
         updatedAt
       }
@@ -1235,6 +1236,7 @@ export const createGroup = /* GraphQL */ `
         resource {
           nextToken
         }
+
         createdAt
         updatedAt
       }
@@ -1370,6 +1372,7 @@ export const updateGroup = /* GraphQL */ `
           emailCourseMessage
           emailPromotions
         }
+
         createdAt
         updatedAt
       }
@@ -1454,6 +1457,7 @@ export const updateGroup = /* GraphQL */ `
         resource {
           nextToken
         }
+
         createdAt
         updatedAt
       }
@@ -1541,6 +1545,7 @@ export const deleteGroup = /* GraphQL */ `
           geocodeRegion
           randomLatitude
           randomLongitude
+
         }
         profileImage {
           userId
@@ -1614,6 +1619,7 @@ export const deleteGroup = /* GraphQL */ `
           geocodeRegion
           randomLatitude
           randomLongitude
+
         }
         profileImage {
           userId
@@ -1672,6 +1678,15 @@ export const deleteGroup = /* GraphQL */ `
         }
         resource {
           nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
         }
         createdAt
         updatedAt

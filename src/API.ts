@@ -2112,6 +2112,7 @@ export type DeleteGroupMemberMutation = {
         createdAt: string,
         updatedAt: string,
       } | null,
+
       ownerOrg:  {
         __typename: "Organization",
         id: string,
@@ -2141,6 +2142,7 @@ export type DeleteGroupMemberMutation = {
         createdAt: string,
         updatedAt: string,
       } | null,
+
       type: string,
       name: string,
       description: string,
@@ -2355,6 +2357,7 @@ export type CreateGroupMutation = {
         emailCourseMessage: string | null,
         emailPromotions: string | null,
       } | null,
+
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -2447,6 +2450,7 @@ export type CreateGroupMutation = {
         __typename: "ModelResourceRootConnection",
         nextToken: string | null,
       } | null,
+
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -2600,6 +2604,7 @@ export type UpdateGroupMutation = {
         emailCourseMessage: string | null,
         emailPromotions: string | null,
       } | null,
+
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -2692,6 +2697,7 @@ export type UpdateGroupMutation = {
         __typename: "ModelResourceRootConnection",
         nextToken: string | null,
       } | null,
+
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -2845,6 +2851,7 @@ export type DeleteGroupMutation = {
         emailCourseMessage: string | null,
         emailPromotions: string | null,
       } | null,
+
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -2937,6 +2944,7 @@ export type DeleteGroupMutation = {
         __typename: "ModelResourceRootConnection",
         nextToken: string | null,
       } | null,
+
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -8845,6 +8853,7 @@ export type GetGroupQuery = {
         emailCourseMessage: string | null,
         emailPromotions: string | null,
       } | null,
+
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -8937,6 +8946,7 @@ export type GetGroupQuery = {
         __typename: "ModelResourceRootConnection",
         nextToken: string | null,
       } | null,
+
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -13530,6 +13540,7 @@ export type OnDeleteGroupMemberSubscription = {
         geocodeRegion: string | null,
         randomLatitude: string | null,
         randomLongitude: string | null,
+
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -13624,6 +13635,7 @@ export type OnCreateGroupSubscription = {
         geocodeRegion: string | null,
         randomLatitude: string | null,
         randomLongitude: string | null,
+
       } | null,
       profileImage:  {
         __typename: "Image",
@@ -13770,6 +13782,16 @@ export type OnCreateGroupSubscription = {
       resource:  {
         __typename: "ModelResourceRootConnection",
         nextToken: string | null,
+      } | null,
+      alertConfig:  {
+        __typename: "AlertConfig",
+        emailDirectMessage: string | null,
+        emailGroupMessage: string | null,
+        emailEventMessage: string | null,
+        emailOrgMessage: string | null,
+        emailResourceMessage: string | null,
+        emailCourseMessage: string | null,
+        emailPromotions: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -13920,6 +13942,7 @@ export type OnUpdateGroupSubscription = {
         emailCourseMessage: string | null,
         emailPromotions: string | null,
       } | null,
+
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -14012,6 +14035,7 @@ export type OnUpdateGroupSubscription = {
         __typename: "ModelResourceRootConnection",
         nextToken: string | null,
       } | null,
+
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -14161,6 +14185,7 @@ export type OnDeleteGroupSubscription = {
         emailCourseMessage: string | null,
         emailPromotions: string | null,
       } | null,
+
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -14253,6 +14278,7 @@ export type OnDeleteGroupSubscription = {
         __typename: "ModelResourceRootConnection",
         nextToken: string | null,
       } | null,
+
       createdAt: string,
       updatedAt: string,
     } | null,

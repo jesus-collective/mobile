@@ -227,6 +227,7 @@ export default class MyGroups extends JCComponent<Props, State> {
         })
     })
   }
+
   convertProfileToMapData(data: any, isOrg?: boolean): MapData[] {
 
     if (isOrg) {
@@ -256,6 +257,7 @@ export default class MyGroups extends JCComponent<Props, State> {
         else return null
       }).filter(o => o)
     }
+
   }
 
   convertEventToMapData(data: any): MapData[] {

@@ -1241,6 +1241,7 @@ export const onCreateGroup = /* GraphQL */ `
           emailCourseMessage
           emailPromotions
         }
+
         createdAt
         updatedAt
       }
@@ -1679,6 +1680,7 @@ export const onDeleteGroup = /* GraphQL */ `
           emailCourseMessage
           emailPromotions
         }
+
         createdAt
         updatedAt
       }
@@ -1763,6 +1765,7 @@ export const onDeleteGroup = /* GraphQL */ `
         resource {
           nextToken
         }
+
         createdAt
         updatedAt
       }

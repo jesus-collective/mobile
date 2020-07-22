@@ -304,6 +304,7 @@ export const getGroup = /* GraphQL */ `
           emailCourseMessage
           emailPromotions
         }
+
         createdAt
         updatedAt
       }
@@ -388,6 +389,7 @@ export const getGroup = /* GraphQL */ `
         resource {
           nextToken
         }
+
         createdAt
         updatedAt
       }

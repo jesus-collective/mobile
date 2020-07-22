@@ -23,6 +23,7 @@ export default class OrganizationScreen extends JCComponent<Props, State>{
       ...super.getInitialState(),
       loadId: props.route.params.id,
       createNew: props.route.params.create === "true" || props.route.params.create === true ? true : false,
+
     }
   }
   render(): React.ReactNode {

@@ -5026,6 +5026,7 @@
         "enumValues" : null,
         "possibleTypes" : null
       }, {
+
         "kind" : "INPUT_OBJECT",
         "name" : "ModelIntFilterInput",
         "description" : null,
@@ -5671,7 +5672,9 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
+
           "name" : "whoIsThisFor",
+
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -5940,7 +5943,9 @@
           "isDeprecated" : false,
           "deprecationReason" : null
         }, {
+
           "name" : "type",
+
           "description" : null,
           "args" : [ ],
           "type" : {
@@ -17107,7 +17112,9 @@
         "possibleTypes" : null
       }, {
         "kind" : "INPUT_OBJECT",
+
         "name" : "ModelBooleanFilterInput",
+
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
@@ -17120,7 +17127,7 @@
           },
           "defaultValue" : null
         }, {
-          "name" : "eq",
+          "name" : "gt",
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -17147,16 +17154,9 @@
           },
           "defaultValue" : null
         }, {
+
           "name" : "gt",
-          "description" : null,
-          "type" : {
-            "kind" : "SCALAR",
-            "name" : "Float",
-            "ofType" : null
-          },
-          "defaultValue" : null
-        }, {
-          "name" : "lt",
+
           "description" : null,
           "type" : {
             "kind" : "SCALAR",
@@ -17174,6 +17174,17 @@
           },
           "defaultValue" : null
         }, {
+
+          "name" : "gte",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "Float",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+
           "name" : "lte",
           "description" : null,
           "type" : {
@@ -17183,6 +17194,7 @@
           },
           "defaultValue" : null
         }, {
+
           "name" : "eq",
           "description" : null,
           "type" : {
@@ -18140,6 +18152,23 @@
         "description" : "Tells the service this field/object has access authorized by an OIDC token.",
         "locations" : [ "OBJECT", "FIELD_DEFINITION" ],
         "args" : [ ],
+        "onOperation" : false,
+        "onFragment" : false,
+        "onField" : false
+      }, {
+        "name" : "deprecated",
+        "description" : null,
+        "locations" : [ "FIELD_DEFINITION", "ENUM_VALUE" ],
+        "args" : [ {
+          "name" : "reason",
+          "description" : null,
+          "type" : {
+            "kind" : "SCALAR",
+            "name" : "String",
+            "ofType" : null
+          },
+          "defaultValue" : "\"No longer supported\""
+        } ],
         "onOperation" : false,
         "onFragment" : false,
         "onField" : false

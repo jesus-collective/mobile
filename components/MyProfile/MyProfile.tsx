@@ -595,11 +595,12 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   : <Text style={this.styles.style.myprofileAboutMe}>About me</Text>
                 }
 
+
                 <EditableText onChange={(e) => { this.handleInputChange(e, "aboutMeLong") }}
                   placeholder="type here" multiline={true}
                   data-testid="profile-aboutMeLong"
                   textStyle={this.styles.style.fontFormSmallDarkGrey}
-                  inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
+                  inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28, height: 150 }}
                   value={this.state.UserDetails.aboutMeLong} isEditable={this.state.isEditable && this.state.editMode}></EditableText>
 
                 {this.state.isEditable && this.state.editMode ?
@@ -677,7 +678,6 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   textStyle={this.styles.style.fontFormSmallDarkGrey}
                   inputStyle={{ borderWidth: 1, borderColor: "#dddddd", width: "100%", marginBottom: 15, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
                   value={this.state.UserDetails.currentScope} isEditable={this.state.isEditable && this.state.editMode}></EditableText>
-
 
                 <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text>
                 {this.state.isEditable && this.state.editMode ?
