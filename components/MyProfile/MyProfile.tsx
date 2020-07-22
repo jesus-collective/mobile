@@ -643,7 +643,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                         }) : null}
                     </View>
                   </Container>
-                  : <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', alignContent: 'flex-start', maxHeight: 100 }}>
+                  : <View style={{ flex: 1, flexDirection: 'row', flexWrap: 'wrap', alignContent: 'flex-start', maxHeight: 100, marginTop: 20, marginBottom: 20 }}>
                     {this.state.UserDetails.interests ?
                       this.state.UserDetails.interests.map((item, index) => {
                         return (

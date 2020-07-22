@@ -290,7 +290,7 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28, color: "#333333", borderColor: "#dddddd", borderWidth: 1, height: 40, width: "100%", paddingBottom: 60, paddingLeft: 10
             },
             fontFormSmallDarkGrey: {
-                fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 26, color: "#333333", paddingTop: 20, width: "100%"
+                fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 26, color: "#333333", paddingTop: 12, width: "100%"
             },
             fontFormSmallDarkGreyCoordinates: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 22, color: "#333333", paddingTop: 5, width: "100%"
@@ -314,7 +314,7 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 26, letterSpacing: -0.3, textTransform: "uppercase", color: "#333333"
             },
             fontFormSmall: {
-                fontFamily: 'Graphik-Regular-App', fontSize: 12, lineHeight: 21, textTransform: "uppercase", color: "#333333", opacity: 0.5
+                fontFamily: 'Graphik-Regular-App', fontSize: 12, lineHeight: 21, textTransform: "uppercase", color: "#333333", opacity: 0.5, marginTop: 10
             },
             fontBold: {
                 fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24
