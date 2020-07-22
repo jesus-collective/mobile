@@ -1151,9 +1151,13 @@ export default class MainStyles {
             },
             resourcesOverviewRightCard: {
                 display: "inline",
-                marginTop: 10,
+                marginTop: 30,
                 overflow: "visible",
-                width: "100%"
+                width: "100%",
+                paddingTop: 40,
+                paddingLeft: 30,
+                paddingRight: 30,
+
             },
             myProfileErrorValidation: {
                 color: "red",
