@@ -36,23 +36,23 @@ class ResourceOverviewImpl extends JCComponent<Props>{
         return (
             <Container style={{ minHeight: 30 }}>
                 {state.canJoin ?
-                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { actions.joinGroup() }} >Join Group</JCButton> :
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { actions.joinGroup() }} >Join Resource</JCButton> :
                     null
                 }
                 {state.canLeave ?
-                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { actions.leaveGroup() }} >Leave Group</JCButton> :
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { actions.leaveGroup() }} >Leave Resource</JCButton> :
                     null
                 }
                 {state.createNew ?
-                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { actions.createGroup() }} >Create Group</JCButton>
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { actions.createGroup() }} >Create Resource</JCButton>
                     : null
                 }
                 {state.canSave ?
-                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { actions.saveGroup() }} >Save Group</JCButton>
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { actions.saveGroup() }} >Save Resource</JCButton>
                     : null
                 }
                 {state.canDelete ?
-                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this group?')) actions.deleteGroup() }}>Delete Group</JCButton>
+                    <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this group?')) actions.deleteGroup() }}>Delete Resource</JCButton>
                     : null
                 }
                 <Text>{state.validationError}</Text>
@@ -106,9 +106,14 @@ class ResourceOverviewImpl extends JCComponent<Props>{
                             {this.renderButtons(state, actions)}
                         </Container>
                         <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', backgroundColor: "#F9FAFC", height: "100%" }}>
-                            {state.resourceData.resources.items[state.currentResource] ? <Container style={this.styles.style.resourcesOverviewRightCard} >
-                                <EditableRichText onChange={(val) => { actions.updateResource(state.currentResource, "extendedDescription", val) }} value={state.resourceData.resources.items[state.currentResource].extendedDescription} isEditable={state.isEditable} textStyle=""></EditableRichText>
-                            </Container> : null}
+                            {state.resourceData.resources.items[state.currentResource] ?
+                                <Container style={this.styles.style.resourcesOverviewRightCard} >
+                                    <EditableRichText
+                                        onChange={(val) => { actions.updateResource(state.currentResource, "extendedDescription", val) }}
+                                        value={state.resourceData.resources.items[state.currentResource].extendedDescription}
+                                        isEditable={state.isEditable}
+                                        textStyle=""></EditableRichText>
+                                </Container> : null}
                         </Container>
                     </Container>
                 else
