@@ -290,7 +290,7 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28, color: "#333333", borderColor: "#dddddd", borderWidth: 1, height: 40, width: "100%", paddingBottom: 60, paddingLeft: 10
             },
             fontFormSmallDarkGrey: {
-                fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 26, color: "#333333", paddingTop: 20, width: "100%"
+                fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 26, color: "#333333", paddingTop: 12, width: "100%"
             },
             fontFormSmallDarkGreyCoordinates: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 22, color: "#333333", paddingTop: 5, width: "100%"
@@ -314,7 +314,7 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 26, letterSpacing: -0.3, textTransform: "uppercase", color: "#333333"
             },
             fontFormSmall: {
-                fontFamily: 'Graphik-Regular-App', fontSize: 12, lineHeight: 21, textTransform: "uppercase", color: "#333333", opacity: 0.5
+                fontFamily: 'Graphik-Regular-App', fontSize: 12, lineHeight: 21, textTransform: "uppercase", color: "#333333", opacity: 0.5, marginTop: 10
             },
             fontBold: {
                 fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24
@@ -391,12 +391,14 @@ export default class MainStyles {
             fontResourceHeaderBold: {
                 fontFamily: 'Graphik-Regular-App',
                 fontWeight: 400,
-                fontSize: 100,
+                fontSize: 85,
                 lineHeight: 35,
                 alignSelf: "center",
                 textAlign: "center",
                 color: "#FFFFFF",
-                width: "100%"
+                width: "100%",
+                height: 75, 
+                paddingTop: 25
             },
             resourceHeaderAgeGroupBox: {
                 height: "58px",
@@ -406,7 +408,7 @@ export default class MainStyles {
                 alignItems: "center",
                 paddingRight: 21,
                 paddingLeft: 21,
-                width: "30%",
+                width: "40%",
                 borderRadius: 4,
                 alignSelf: "center",
                 marginTop: 30,
@@ -1517,7 +1519,10 @@ export default class MainStyles {
                     fontSize: 80,
                 },
                 fontResourceHeaderBold: {
-                    fontSize: 80,
+                    fontSize: 70,
+                    width: 650, 
+                    height: 70,
+                    paddingTop: 20,
                 },
                 myProfileOrgView: {
                     flexDirection: 'column'
@@ -1539,6 +1544,12 @@ export default class MainStyles {
                     paddingTop: 10,
                     paddingBottom: 10,
                     width: '75%'
+                },
+                fontResourceHeaderDescription: {
+                    width: "75%",
+                },
+                resourceHeaderAgeGroupBox: {
+                    width: "35%"
                 },
             },
 
@@ -1619,6 +1630,12 @@ export default class MainStyles {
                 fontFormSmallDarkGreyCoordinates: {
                     width: "100%",
                     marginBottom: 15
+                },
+                fontResourceHeaderBold: {
+                    fontSize: 75,
+                    width: 700,
+                    height: 70, 
+                    paddingTop: 20
                 },
             },
 
@@ -1841,6 +1858,9 @@ export default class MainStyles {
                 },
                 fontResourceHeaderBold: {
                     fontSize: 50,
+                    width: 300,
+                    height: 140,
+                    lineHeight: 60,
                 },
                 myProfileOrgView: {
                     flexDirection: 'column'
@@ -1856,6 +1876,15 @@ export default class MainStyles {
                 },
                 jcDirectoryButton: {
                     width: '90%'
+                },
+                fontResourceHeaderDescription: {
+                    height: 155,
+                },
+                resourceHeaderAgeGroupBox: {
+                    width: "70%"
+                },
+                resourceHeaderImgContainer: {
+                    maxHeight: "550px"
                 },
             },
 

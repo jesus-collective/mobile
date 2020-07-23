@@ -88,7 +88,7 @@ class ResourceHeader extends JCComponent<EmptyProps, State> {
                                     state.resourceData.resources.items[state.currentResource] ?
                                         <View style={this.styles.style.resourcefileFieldWrapper}>
                                             <EditableText onChange={(val) => { actions.updateResource(state.currentResource, "title", val) }}
-                                                multiline={false}
+                                                multiline={true}
                                                 inputStyle={this.styles.style.fontResourceHeaderBold}
                                                 textStyle={this.styles.style.fontCourseHeaderBold}
                                                 value={state.resourceData.resources.items[state.currentResource].title}
