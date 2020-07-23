@@ -1517,7 +1517,8 @@ export default class MainStyles {
                     fontSize: 80,
                 },
                 fontResourceHeaderBold: {
-                    fontSize: 80,
+                    fontSize: 70,
+                    width: 650
                 },
                 myProfileOrgView: {
                     flexDirection: 'column'
@@ -1539,6 +1540,9 @@ export default class MainStyles {
                     paddingTop: 10,
                     paddingBottom: 10,
                     width: '75%'
+                },
+                fontResourceHeaderDescription: {
+                    width: "75%",
                 },
             },
 
