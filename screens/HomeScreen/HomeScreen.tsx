@@ -5,6 +5,10 @@ import { Platform } from 'react-native';
 import { Dimensions } from 'react-native'
 import MyGroups, { MapData } from '../../components/MyGroups/MyGroups'
 import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
+
 
 const MyConversations = lazy(() => import('../../components/MyConversations/MyConversations'));
 //const MyGroups = lazy(() => import('../../components/MyGroups/MyGroups'));
@@ -31,7 +35,7 @@ class HomeScreen extends JCComponent<Props, State>{
     this.state = {
       ...super.getInitialState(),
       mapData: [],
-      showMap: true,
+      showMap: cookies.get('showMap') ? cookies.get('showMap') == "true" : true,
       width: Dimensions.get('window').width,
       height: Dimensions.get('window').height
     }
@@ -41,7 +45,8 @@ class HomeScreen extends JCComponent<Props, State>{
     })
   }
   mapChanged = (): void => {
-    this.setState({ showMap: !this.state.showMap })
+
+    this.setState({ showMap: !this.state.showMap }, () => { cookies.set('showMap', this.state.showMap, { path: '/' }) })
   }
   mergeMapData(mapData: MapData[]): void {
     console.log(mapData)

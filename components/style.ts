@@ -397,7 +397,7 @@ export default class MainStyles {
                 textAlign: "center",
                 color: "#FFFFFF",
                 width: "100%",
-                height: 75, 
+                height: 75,
                 paddingTop: 25
             },
             resourceHeaderAgeGroupBox: {
@@ -1520,7 +1520,7 @@ export default class MainStyles {
                 },
                 fontResourceHeaderBold: {
                     fontSize: 70,
-                    width: 650, 
+                    width: 650,
                     height: 70,
                     paddingTop: 20,
                 },
@@ -1634,7 +1634,7 @@ export default class MainStyles {
                 fontResourceHeaderBold: {
                     fontSize: 75,
                     width: 700,
-                    height: 70, 
+                    height: 70,
                     paddingTop: 20
                 },
             },
@@ -1889,7 +1889,7 @@ export default class MainStyles {
             },
 
             dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
-                { height: 2300, flex: 1, display: "flex", flexDirection: "row" } :
+                { height: 2800, flex: 1, display: "flex", flexDirection: "row" } :
                 { flexDirection: "column", },
 
             authView: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?

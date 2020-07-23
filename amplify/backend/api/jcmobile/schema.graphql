@@ -60,7 +60,7 @@ type User
   groups: [GroupMember] @connection(name: "UserMembers", keyField: "userID")
   messages: [Message] @connection(name: "UserMessages", keyField: "userId", sortField: "when")
   directMessages: [DirectMessage] @connection(keyName: "dmsByUser", fields: ["id"])
-
+  
   alertConfig:AlertConfig
 }
 type AlertConfig{

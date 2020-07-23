@@ -68,7 +68,8 @@
     "react-tooltip": "^4.2.7",
     "request": "^2.88.2",
     "resize-observer-polyfill": "^1.5.1",
-    "sentry-expo": "^2.1.2"
+    "sentry-expo": "^2.1.2",
+    "universal-cookie": "^4.0.3"
   },
   "private": true,
   "devDependencies": {
