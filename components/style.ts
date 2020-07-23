@@ -1865,6 +1865,15 @@ export default class MainStyles {
                 jcDirectoryButton: {
                     width: '90%'
                 },
+                fontResourceHeaderDescription: {
+                    height: 155,
+                },
+                resourceHeaderAgeGroupBox: {
+                    width: "70%"
+                },
+                resourceHeaderImgContainer: {
+                    maxHeight: "550px"
+                },
             },
 
             dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
