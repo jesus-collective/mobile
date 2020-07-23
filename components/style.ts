@@ -396,7 +396,9 @@ export default class MainStyles {
                 alignSelf: "center",
                 textAlign: "center",
                 color: "#FFFFFF",
-                width: "100%"
+                width: "100%",
+                height: 75, 
+                paddingTop: 25
             },
             resourceHeaderAgeGroupBox: {
                 height: "58px",
@@ -406,7 +408,7 @@ export default class MainStyles {
                 alignItems: "center",
                 paddingRight: 21,
                 paddingLeft: 21,
-                width: "30%",
+                width: "40%",
                 borderRadius: 4,
                 alignSelf: "center",
                 marginTop: 30,
@@ -1518,7 +1520,9 @@ export default class MainStyles {
                 },
                 fontResourceHeaderBold: {
                     fontSize: 70,
-                    width: 650
+                    width: 650, 
+                    height: 70,
+                    paddingTop: 20,
                 },
                 myProfileOrgView: {
                     flexDirection: 'column'
@@ -1543,6 +1547,9 @@ export default class MainStyles {
                 },
                 fontResourceHeaderDescription: {
                     width: "75%",
+                },
+                resourceHeaderAgeGroupBox: {
+                    width: "35%"
                 },
             },
 
@@ -1626,7 +1633,9 @@ export default class MainStyles {
                 },
                 fontResourceHeaderBold: {
                     fontSize: 75,
-                    width: 700
+                    width: 700,
+                    height: 70, 
+                    paddingTop: 20
                 },
             },
 
