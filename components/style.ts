@@ -391,7 +391,7 @@ export default class MainStyles {
             fontResourceHeaderBold: {
                 fontFamily: 'Graphik-Regular-App',
                 fontWeight: 400,
-                fontSize: 100,
+                fontSize: 85,
                 lineHeight: 35,
                 alignSelf: "center",
                 textAlign: "center",
@@ -1619,6 +1619,10 @@ export default class MainStyles {
                 fontFormSmallDarkGreyCoordinates: {
                     width: "100%",
                     marginBottom: 15
+                },
+                fontResourceHeaderBold: {
+                    fontSize: 75,
+                    width: 700
                 },
             },
 
