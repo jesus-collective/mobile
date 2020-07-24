@@ -980,9 +980,13 @@
 }
 
 .rdw-editor-main {
-  height: 100%;
+  height: auto;
+  max-height: 10vw;
   overflow: auto;
   box-sizing: border-box;
+  font-family: 'Graphik-Regular-App'!important;
+  font-size: 16px;
+  line-height: 26;
 }
 
 .rdw-editor-toolbar {
@@ -1088,7 +1092,8 @@
 .public-DraftEditorPlaceholder-root {
   color: #9197a3;
   position: absolute;
-  z-index: 0
+  z-index: 0;
+  top: -200px
 }
 
 .public-DraftEditorPlaceholder-hasFocus {
@@ -1106,7 +1111,9 @@
 
 .public-DraftStyleDefault-ltr {
   direction: ltr;
-  text-align: left
+  text-align: left;
+  position: relative;
+  top: -200px;
 }
 
 .public-DraftStyleDefault-rtl {
