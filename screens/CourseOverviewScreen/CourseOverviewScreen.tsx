@@ -503,15 +503,15 @@ export default class CourseScreen extends JCComponent<Props, State>{
                       <EditableRichText onChange={(val) => { this.updateCourse(this.state.courseData, "introduction", val) }}
                         value={this.state.courseData.introduction}
                         isEditable={true}
-                        textStyle=""></EditableRichText>
+                        textStyle={this.styles.style.courseDetails} inputStyle={this.styles.style.courseDetails}></EditableRichText>
                       : null}
 
 
                     {data.courseInfo.introduction.map((item: any, index) => {
-                      return <Text key={index}>{item}</Text>
+                      return <Text key={index} style={this.styles.style.fontFormSmallDarkGrey}>{item}</Text>
                     })}
 
-                    <Text>Course Details</Text>
+                    <Text style={this.styles.style.courseDetails}>Course Details</Text>
                     <Accordion
                       dataArray={data.courseDetails.map((item: any, index1) => {
                         return (

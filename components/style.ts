@@ -350,6 +350,12 @@ export default class MainStyles {
                 fontSize: 24,
                 marginTop: 60,
             },
+            courseDetails: {
+                fontFamily: 'Graphik-Bold-App',
+                fontWeight: 'bold',
+                fontSize: 24,
+                marginTop: 60,
+            },
             fontTitle: {
                 fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 22, lineHeight: 30, height: 60, color: '#333333'
             },
