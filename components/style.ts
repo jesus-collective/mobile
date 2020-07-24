@@ -397,7 +397,7 @@ export default class MainStyles {
                 textAlign: "center",
                 color: "#FFFFFF",
                 width: "100%",
-                height: 75,
+                height: 85,
                 paddingTop: 25
             },
             resourceHeaderAgeGroupBox: {
@@ -1521,7 +1521,7 @@ export default class MainStyles {
                 fontResourceHeaderBold: {
                     fontSize: 70,
                     width: 650,
-                    height: 70,
+                    height: 80,
                     paddingTop: 20,
                 },
                 myProfileOrgView: {
@@ -1634,7 +1634,7 @@ export default class MainStyles {
                 fontResourceHeaderBold: {
                     fontSize: 75,
                     width: 700,
-                    height: 70,
+                    height: 80,
                     paddingTop: 20
                 },
             },
