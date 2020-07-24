@@ -1297,6 +1297,17 @@ export default class MainStyles {
                 alignItems: "center",
                 justifyContent: "center"
             },
+            coursesRightCard: {
+                flex: 70, 
+                flexDirection: "column", 
+                alignContent: 'flex-start', 
+                alignItems: 'flex-start', 
+                justifyContent: 'flex-start',
+                paddingTop: 30,
+                paddingRight: 30,
+                paddingBottom: 30, 
+                paddingLeft: 30
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {

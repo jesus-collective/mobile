@@ -498,7 +498,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
                   {this.renderButtons()}
                 </Container>
                 <Container style={this.styles.style.detailScreenRightCard}>
-                  <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                  <Container style={this.styles.style.coursesRightCard}>
                     {this.state.courseData ?
                       <EditableRichText onChange={(val) => { this.updateCourse(this.state.courseData, "introduction", val) }}
                         value={this.state.courseData.introduction}
