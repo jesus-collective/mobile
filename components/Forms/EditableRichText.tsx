@@ -121,7 +121,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
                 return <TouchableOpacity onPress={() => { this.setState({ isEditMode: true }) }}>
                     <div id="comment-div">
                         <div dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(this.state.value) }}></div>
-                        <div>Hold to Edit</div>
+                        <div style={{ fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 16, marginTop: 0, color: '#F0493E', textDecoration: 'underline' }}>Hold to Edit</div>
                     </div>
                 </TouchableOpacity>
         else

@@ -503,7 +503,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
                       <EditableRichText onChange={(val) => { this.updateCourse(this.state.courseData, "introduction", val) }}
                         value={this.state.courseData.introduction}
                         isEditable={true}
-                        textStyle={this.styles.style.courseDetails} inputStyle={this.styles.style.courseDetails}></EditableRichText>
+                        textStyle=''></EditableRichText>
                       : null}
 
 
