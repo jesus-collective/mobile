@@ -209,6 +209,31 @@ export default class MainStyles {
                 fontFamily: "Graphik-Bold-App",
                 width: "100%"
             },
+            courseDateInput: {
+                padding: 3,
+                paddingLeft: 0,
+                flex: 0,
+                fontSize: 14,
+                lineHeight: 16,
+                fontFamily: "Graphik-bold-App",
+                width: "100%",
+                marginBottom: 20
+            },
+            courseDescriptionInput: {
+                borderColor: 'white',
+                borderWidth: 1,
+                marginTop: 8,
+                borderRadius: 5,
+                padding: 3,
+                paddingLeft: 0,
+                flex: 0,
+                minHeight: 100,
+                fontSize: 16,
+                lineHeight: 23,
+                fontWeight: "normal",
+                fontFamily: "Graphik-Regular-App",
+                width: "100%"
+            },
             textInput: {
                 height: 40,
                 borderColor: 'white',
