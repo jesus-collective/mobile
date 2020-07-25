@@ -304,7 +304,6 @@ export const getGroup = /* GraphQL */ `
           emailCourseMessage
           emailPromotions
         }
-
         createdAt
         updatedAt
       }
@@ -389,7 +388,6 @@ export const getGroup = /* GraphQL */ `
         resource {
           nextToken
         }
-
         createdAt
         updatedAt
       }
@@ -969,6 +967,8 @@ export const getCourseInfo = /* GraphQL */ `
         nextToken
       }
       introduction
+      sylabusAttachment
+      sylabusAttachmentName
       createdAt
       updatedAt
     }
@@ -1027,6 +1027,8 @@ export const listCourseInfos = /* GraphQL */ `
           nextToken
         }
         introduction
+        sylabusAttachment
+        sylabusAttachmentName
         createdAt
         updatedAt
       }
@@ -1084,6 +1086,8 @@ export const getCourseTriads = /* GraphQL */ `
           nextToken
         }
         introduction
+        sylabusAttachment
+        sylabusAttachmentName
         createdAt
         updatedAt
       }
@@ -1255,6 +1259,8 @@ export const listCourseTriadss = /* GraphQL */ `
           summary
           subTitle
           introduction
+          sylabusAttachment
+          sylabusAttachmentName
           createdAt
           updatedAt
         }
@@ -1390,6 +1396,8 @@ export const getCourseWeek = /* GraphQL */ `
           nextToken
         }
         introduction
+        sylabusAttachment
+        sylabusAttachmentName
         createdAt
         updatedAt
       }
@@ -1434,6 +1442,8 @@ export const listCourseWeeks = /* GraphQL */ `
           summary
           subTitle
           introduction
+          sylabusAttachment
+          sylabusAttachmentName
           createdAt
           updatedAt
         }
@@ -1472,6 +1482,8 @@ export const getCourseLesson = /* GraphQL */ `
           summary
           subTitle
           introduction
+          sylabusAttachment
+          sylabusAttachmentName
           createdAt
           updatedAt
         }

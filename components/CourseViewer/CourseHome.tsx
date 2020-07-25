@@ -15,6 +15,7 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import { CourseContext } from './CourseContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import EditableRichText from '../../components/Forms/EditableRichText';
+import EditableFileUpload from '../../components/Forms/EditableFileUpload';
 
 interface Props {
   navigation?: any
@@ -67,7 +68,22 @@ class CourseHomeImpl extends JCComponent<Props>{
                             value={state.instructor} isEditable={true}></EditableUsers>
                           <Text>Syllabus</Text>
                           <Card>
-                            <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Upload</JCButton>
+                            {state.courseData ?
+                              <EditableFileUpload
+                                textStyle={null}
+                                inputStyle={null}
+                                attachment={state.courseData.sylabusAttachment}
+                                isEditable={state.isEditable}
+                                attachmentName={state.courseData.sylabusAttachmentName}
+                                onChange={(obj) => {
+                                  console.log({ "attachmentName": obj.attachmentName, "attachment": obj.attachment })
+                                  if (obj.attachmentName != undefined) actions.updateCourse("sylabusAttachmentName", obj.attachmentName)
+                                  if (obj.attachment != undefined) actions.updateCourse("sylabusAttachment", obj.attachment)
+                                }}>
+
+                              </EditableFileUpload>
+                              : null}
+
                           </Card>
                           {state.isEditable ?
                             (<>

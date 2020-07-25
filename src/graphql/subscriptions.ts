@@ -1241,7 +1241,6 @@ export const onCreateGroup = /* GraphQL */ `
           emailCourseMessage
           emailPromotions
         }
-
         createdAt
         updatedAt
       }
@@ -1680,7 +1679,6 @@ export const onDeleteGroup = /* GraphQL */ `
           emailCourseMessage
           emailPromotions
         }
-
         createdAt
         updatedAt
       }
@@ -1765,7 +1763,6 @@ export const onDeleteGroup = /* GraphQL */ `
         resource {
           nextToken
         }
-
         createdAt
         updatedAt
       }
@@ -3072,6 +3069,8 @@ export const onCreateCourseInfo = /* GraphQL */ `
         nextToken
       }
       introduction
+      sylabusAttachment
+      sylabusAttachmentName
       createdAt
       updatedAt
     }
@@ -3182,6 +3181,8 @@ export const onUpdateCourseInfo = /* GraphQL */ `
         nextToken
       }
       introduction
+      sylabusAttachment
+      sylabusAttachmentName
       createdAt
       updatedAt
     }
@@ -3292,6 +3293,8 @@ export const onDeleteCourseInfo = /* GraphQL */ `
         nextToken
       }
       introduction
+      sylabusAttachment
+      sylabusAttachmentName
       createdAt
       updatedAt
     }
@@ -3347,6 +3350,8 @@ export const onCreateCourseTriads = /* GraphQL */ `
           nextToken
         }
         introduction
+        sylabusAttachment
+        sylabusAttachmentName
         createdAt
         updatedAt
       }
@@ -3553,6 +3558,8 @@ export const onUpdateCourseTriads = /* GraphQL */ `
           nextToken
         }
         introduction
+        sylabusAttachment
+        sylabusAttachmentName
         createdAt
         updatedAt
       }
@@ -3759,6 +3766,8 @@ export const onDeleteCourseTriads = /* GraphQL */ `
           nextToken
         }
         introduction
+        sylabusAttachment
+        sylabusAttachmentName
         createdAt
         updatedAt
       }
@@ -3972,6 +3981,8 @@ export const onCreateCourseWeek = /* GraphQL */ `
           nextToken
         }
         introduction
+        sylabusAttachment
+        sylabusAttachmentName
         createdAt
         updatedAt
       }
@@ -4051,6 +4062,8 @@ export const onUpdateCourseWeek = /* GraphQL */ `
           nextToken
         }
         introduction
+        sylabusAttachment
+        sylabusAttachmentName
         createdAt
         updatedAt
       }
@@ -4130,6 +4143,8 @@ export const onDeleteCourseWeek = /* GraphQL */ `
           nextToken
         }
         introduction
+        sylabusAttachment
+        sylabusAttachmentName
         createdAt
         updatedAt
       }
@@ -4177,6 +4192,8 @@ export const onCreateCourseLesson = /* GraphQL */ `
           summary
           subTitle
           introduction
+          sylabusAttachment
+          sylabusAttachmentName
           createdAt
           updatedAt
         }
@@ -4227,6 +4244,8 @@ export const onUpdateCourseLesson = /* GraphQL */ `
           summary
           subTitle
           introduction
+          sylabusAttachment
+          sylabusAttachmentName
           createdAt
           updatedAt
         }
@@ -4277,6 +4296,8 @@ export const onDeleteCourseLesson = /* GraphQL */ `
           summary
           subTitle
           introduction
+          sylabusAttachment
+          sylabusAttachmentName
           createdAt
           updatedAt
         }

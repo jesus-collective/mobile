@@ -4,6 +4,8 @@ query GetCourseInfo($id: ID!) {
     id
     designedBy
     summary
+    sylabusAttachmentName
+    sylabusAttachment
     courseWeeks {
       items {
         id

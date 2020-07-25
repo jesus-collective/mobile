@@ -228,6 +228,8 @@ type CourseInfo
   instructor: [User]
   triads:[CourseTriads]@connection(name:"courseTriads",keyField: "id")
   introduction: String
+  sylabusAttachment:String
+  sylabusAttachmentName:String
 }
 type CourseTriads
 @model

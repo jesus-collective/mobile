@@ -1151,7 +1151,6 @@ export const createGroup = /* GraphQL */ `
           emailCourseMessage
           emailPromotions
         }
-
         createdAt
         updatedAt
       }
@@ -1236,7 +1235,6 @@ export const createGroup = /* GraphQL */ `
         resource {
           nextToken
         }
-
         createdAt
         updatedAt
       }
@@ -1372,7 +1370,6 @@ export const updateGroup = /* GraphQL */ `
           emailCourseMessage
           emailPromotions
         }
-
         createdAt
         updatedAt
       }
@@ -1457,7 +1454,6 @@ export const updateGroup = /* GraphQL */ `
         resource {
           nextToken
         }
-
         createdAt
         updatedAt
       }
@@ -1545,7 +1541,6 @@ export const deleteGroup = /* GraphQL */ `
           geocodeRegion
           randomLatitude
           randomLongitude
-
         }
         profileImage {
           userId
@@ -1619,7 +1614,6 @@ export const deleteGroup = /* GraphQL */ `
           geocodeRegion
           randomLatitude
           randomLongitude
-
         }
         profileImage {
           userId
@@ -1678,15 +1672,6 @@ export const deleteGroup = /* GraphQL */ `
         }
         resource {
           nextToken
-        }
-        alertConfig {
-          emailDirectMessage
-          emailGroupMessage
-          emailEventMessage
-          emailOrgMessage
-          emailResourceMessage
-          emailCourseMessage
-          emailPromotions
         }
         createdAt
         updatedAt
@@ -2994,6 +2979,8 @@ export const createCourseInfo = /* GraphQL */ `
         nextToken
       }
       introduction
+      sylabusAttachment
+      sylabusAttachmentName
       createdAt
       updatedAt
     }
@@ -3104,6 +3091,8 @@ export const updateCourseInfo = /* GraphQL */ `
         nextToken
       }
       introduction
+      sylabusAttachment
+      sylabusAttachmentName
       createdAt
       updatedAt
     }
@@ -3214,6 +3203,8 @@ export const deleteCourseInfo = /* GraphQL */ `
         nextToken
       }
       introduction
+      sylabusAttachment
+      sylabusAttachmentName
       createdAt
       updatedAt
     }
@@ -3269,6 +3260,8 @@ export const createCourseTriads = /* GraphQL */ `
           nextToken
         }
         introduction
+        sylabusAttachment
+        sylabusAttachmentName
         createdAt
         updatedAt
       }
@@ -3475,6 +3468,8 @@ export const updateCourseTriads = /* GraphQL */ `
           nextToken
         }
         introduction
+        sylabusAttachment
+        sylabusAttachmentName
         createdAt
         updatedAt
       }
@@ -3681,6 +3676,8 @@ export const deleteCourseTriads = /* GraphQL */ `
           nextToken
         }
         introduction
+        sylabusAttachment
+        sylabusAttachmentName
         createdAt
         updatedAt
       }
@@ -3894,6 +3891,8 @@ export const createCourseWeek = /* GraphQL */ `
           nextToken
         }
         introduction
+        sylabusAttachment
+        sylabusAttachmentName
         createdAt
         updatedAt
       }
@@ -3973,6 +3972,8 @@ export const updateCourseWeek = /* GraphQL */ `
           nextToken
         }
         introduction
+        sylabusAttachment
+        sylabusAttachmentName
         createdAt
         updatedAt
       }
@@ -4052,6 +4053,8 @@ export const deleteCourseWeek = /* GraphQL */ `
           nextToken
         }
         introduction
+        sylabusAttachment
+        sylabusAttachmentName
         createdAt
         updatedAt
       }
@@ -4099,6 +4102,8 @@ export const createCourseLesson = /* GraphQL */ `
           summary
           subTitle
           introduction
+          sylabusAttachment
+          sylabusAttachmentName
           createdAt
           updatedAt
         }
@@ -4149,6 +4154,8 @@ export const updateCourseLesson = /* GraphQL */ `
           summary
           subTitle
           introduction
+          sylabusAttachment
+          sylabusAttachmentName
           createdAt
           updatedAt
         }
@@ -4199,6 +4206,8 @@ export const deleteCourseLesson = /* GraphQL */ `
           summary
           subTitle
           introduction
+          sylabusAttachment
+          sylabusAttachmentName
           createdAt
           updatedAt
         }
