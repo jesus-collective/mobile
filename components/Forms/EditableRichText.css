@@ -22,6 +22,9 @@
     padding-top: 0px;
     padding-bottom: 0px;
     border-radius: 10px;
+    font-family: 'Graphik-Regular-App';
+    font-size: 16px;
+    line-height: 26;
 
 }
 
@@ -49,6 +52,9 @@
     border-color: #777777;
     border-radius: 10px;
     max-height: 200px;
+    font-family: 'Graphik-Regular-App'!important;
+    font-size: 16px;
+    line-height: 26;
 
 
 }

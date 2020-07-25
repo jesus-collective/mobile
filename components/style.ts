@@ -209,6 +209,31 @@ export default class MainStyles {
                 fontFamily: "Graphik-Bold-App",
                 width: "100%"
             },
+            courseDateInput: {
+                padding: 3,
+                paddingLeft: 0,
+                flex: 0,
+                fontSize: 14,
+                lineHeight: 16,
+                fontFamily: "Graphik-bold-App",
+                width: "100%",
+                marginBottom: 20
+            },
+            courseDescriptionInput: {
+                borderColor: 'white',
+                borderWidth: 1,
+                marginTop: 8,
+                borderRadius: 5,
+                padding: 3,
+                paddingLeft: 0,
+                flex: 0,
+                minHeight: 100,
+                fontSize: 16,
+                lineHeight: 23,
+                fontWeight: "normal",
+                fontFamily: "Graphik-Regular-App",
+                width: "100%"
+            },
             textInput: {
                 height: 40,
                 borderColor: 'white',
@@ -325,6 +350,12 @@ export default class MainStyles {
                 fontSize: 24,
                 marginTop: 60,
             },
+            courseDetails: {
+                fontFamily: 'Graphik-Bold-App',
+                fontWeight: 'bold',
+                fontSize: 24,
+                marginTop: 60,
+            },
             fontTitle: {
                 fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 22, lineHeight: 30, height: 60, color: '#333333'
             },
@@ -397,7 +428,7 @@ export default class MainStyles {
                 textAlign: "center",
                 color: "#FFFFFF",
                 width: "100%",
-                height: 75,
+                height: 85,
                 paddingTop: 25
             },
             resourceHeaderAgeGroupBox: {
@@ -1272,6 +1303,17 @@ export default class MainStyles {
                 alignItems: "center",
                 justifyContent: "center"
             },
+            coursesRightCard: {
+                flex: 70, 
+                flexDirection: "column", 
+                alignContent: 'flex-start', 
+                alignItems: 'flex-start', 
+                justifyContent: 'flex-start',
+                paddingTop: 30,
+                paddingRight: 30,
+                paddingBottom: 30, 
+                paddingLeft: 30
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -1521,7 +1563,7 @@ export default class MainStyles {
                 fontResourceHeaderBold: {
                     fontSize: 70,
                     width: 650,
-                    height: 70,
+                    height: 80,
                     paddingTop: 20,
                 },
                 myProfileOrgView: {
@@ -1634,7 +1676,7 @@ export default class MainStyles {
                 fontResourceHeaderBold: {
                     fontSize: 75,
                     width: 700,
-                    height: 70,
+                    height: 80,
                     paddingTop: 20
                 },
             },

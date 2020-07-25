@@ -463,22 +463,22 @@ export default class CourseScreen extends JCComponent<Props, State>{
                       onChange={(time: any, timeZone: any) => { this.updateValue("time", time); this.updateValue("tz", timeZone) }}
                       placeholder="Enter Course Start Date"
                       multiline={false}
-                      textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupNameInput}
+                      textStyle={this.styles.style.courseDateInput} inputStyle={this.styles.style.courseDescriptionInput}
                       value={this.state.data.time}
                       tz={this.state.data.tz ? this.state.data.tz : moment.tz.guess()}
                       isEditable={this.state.isEditable}></EditableDate>
 
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#333333', textTransform: "uppercase", flex: 0 }}>Duration</Text>
-                    <EditableText onChange={(value: any) => { this.updateValue("length", value) }} placeholder="Enter Course Length" multiline={false} textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupDescriptionInput} value={this.state.data.length} isEditable={this.state.isEditable}></EditableText>
+                    <EditableText onChange={(value: any) => { this.updateValue("length", value) }} placeholder="Enter Course Length" multiline={false} textStyle={this.styles.style.courseDateInput} inputStyle={this.styles.style.courseDescriptionInput} value={this.state.data.length} isEditable={this.state.isEditable}></EditableText>
 
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#333333', textTransform: "uppercase", flex: 0 }}>Effort</Text>
-                    <EditableText onChange={(value: any) => { this.updateValue("effort", value) }} placeholder="Enter Course Effort" multiline={false} textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupDescriptionInput} value={this.state.data.effort} isEditable={this.state.isEditable}></EditableText>
+                    <EditableText onChange={(value: any) => { this.updateValue("effort", value) }} placeholder="Enter Course Effort" multiline={false} textStyle={this.styles.style.courseDateInput} inputStyle={this.styles.style.courseDescriptionInput} value={this.state.data.effort} isEditable={this.state.isEditable}></EditableText>
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#333333', textTransform: "uppercase", flex: 0 }}>Cost</Text>
-                    <EditableDollar onChange={(value: any) => { this.updateValue("cost", value) }} placeholder="Enter Course Cost" multiline={false} textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupDescriptionInput} value={this.state.data.cost} isEditable={this.state.isEditable}></EditableDollar>
+                    <EditableDollar onChange={(value: any) => { this.updateValue("cost", value) }} placeholder="Enter Course Cost" multiline={false} textStyle={this.styles.style.courseDateInput} inputStyle={this.styles.style.courseDescriptionInput} value={this.state.data.cost} isEditable={this.state.isEditable}></EditableDollar>
 
                   </View>
 
-                  <Text style={{ fontFamily: "Graphik-Regular-App", fontSize: 16, lineHeight: 23, color: "#333333", paddingBottom: 12 }}>Organizer</Text>
+                  <Text style={{ fontFamily: "Graphik-Regular-App", fontSize: 16, lineHeight: 23, color: "#333333", paddingBottom: 12, marginTop: 52 }}>Organizer</Text>
                   <TouchableOpacity onPress={() => { this.showProfile(this.state.data.ownerUser ? this.state.data.ownerUser.id : this.state.currentUserProfile.id) }}>
                     <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
                   </TouchableOpacity>
@@ -498,20 +498,20 @@ export default class CourseScreen extends JCComponent<Props, State>{
                   {this.renderButtons()}
                 </Container>
                 <Container style={this.styles.style.detailScreenRightCard}>
-                  <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                  <Container style={this.styles.style.coursesRightCard}>
                     {this.state.courseData ?
                       <EditableRichText onChange={(val) => { this.updateCourse(this.state.courseData, "introduction", val) }}
                         value={this.state.courseData.introduction}
                         isEditable={true}
-                        textStyle=""></EditableRichText>
+                        textStyle=''></EditableRichText>
                       : null}
 
 
                     {data.courseInfo.introduction.map((item: any, index) => {
-                      return <Text key={index}>{item}</Text>
+                      return <Text key={index} style={this.styles.style.fontFormSmallDarkGrey}>{item}</Text>
                     })}
 
-                    <Text>Course Details</Text>
+                    <Text style={this.styles.style.courseDetails}>Course Details</Text>
                     <Accordion
                       dataArray={data.courseDetails.map((item: any, index1) => {
                         return (
