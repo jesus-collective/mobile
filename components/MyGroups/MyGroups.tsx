@@ -220,9 +220,9 @@ export default class MyGroups extends JCComponent<Props, State> {
           showCreateButton: this.props.type == "resource" ?
             user.signInUserSession.accessToken.payload["cognito:groups"].includes("admin")
             : this.props.type == "course" ?
-              user.signInUserSession.accessToken.payload["cognito:groups"].includes("courseAdmin") || user.signInUserSession.accessToken.payload["cognito:groups"].includes("admins")
+              user.signInUserSession.accessToken.payload["cognito:groups"].includes("courseAdmin") || user.signInUserSession.accessToken.payload["cognito:groups"].includes("admin")
               : this.props.type == "organization" ?
-                user.signInUserSession.accessToken.payload["cognito:groups"].includes("admins")
+                user.signInUserSession.accessToken.payload["cognito:groups"].includes("admin")
                 : user.signInUserSession.accessToken.payload["cognito:groups"].includes("verifiedUsers")
         })
     })
@@ -602,7 +602,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     </Card>
   }
   renderOrganization(item: any): React.ReactNode {
-    return <Card style={[this.styles.style.orgCard, { width: this.state.cardWidth }]}>
+    return <Card style={[this.styles.style.resourceCard, { width: this.state.cardWidth }]}>
       <CardItem ><ProfileImage size="small" user={item}></ProfileImage></CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitle}>{item.orgName}</Text></CardItem>
       <CardItem ><JCButton buttonType={ButtonTypes.Outline} onPress={() => null}>View</JCButton><Right></Right></CardItem>
