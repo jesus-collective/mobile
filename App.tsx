@@ -163,9 +163,9 @@ class AwesomeApp extends JCComponent<Props, State> {
               width: "100%", top: "0", left: "0", height: "100%"
             }}>
             <HomeScreen />
-            <MySignIn />
             <MyConfirmSignIn />
             <MyRequireNewPassword />
+            <MySignIn onStateChange={(authState) => this.setState({ authState: authState })} authState={this.state.authState} />
             <MySignUp signUpConfig={{
               signUpFields: [{ displayOrder: 6, key: "family_name", label: "Last Name", required: true },
               { displayOrder: 5, key: "given_name", label: "First Name", required: true }]

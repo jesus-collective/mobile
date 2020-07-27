@@ -86,6 +86,54 @@ export default EStyleSheet.create({
         padding: 5
 
     },
+    SolidCreateAccountButton:
+    {
+        marginLeft: 0,
+        marginRight: 0,
+        backgroundColor: "#ffffff",
+        borderWidth: 1,
+        borderColor: "#F0493E",
+        boxShadow: "unset",
+        borderRadius: 4,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    SolidCreateAccountText: {
+        color: "#F0493E",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        lineHeight: 28,
+        padding: 12,
+        fontWeight: "600",
+    },
+    SolidSignInButton:
+    {
+        paddingTop: 6,
+        paddingBottom: 6,
+        paddingLeft: 29,
+        paddingRight: 29,
+        marginBottom: 20,
+        marginLeft: 0,
+        marginRight: 0,
+        backgroundColor: "#F0493E",
+        borderWidth: 1,
+        borderColor: "#F0493E",
+        boxShadow: "unset",
+        borderRadius: 4,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    SolidSignInText: {
+        color: "#ffffff",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        padding: 10,
+        fontWeight: "600",
+    },
     SolidButton:
     {
         paddingTop: 6,

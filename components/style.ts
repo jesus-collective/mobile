@@ -1935,6 +1935,10 @@ export default class MainStyles {
                 { height: 2800, flex: 1, display: "flex", flexDirection: "row" } :
                 { flexDirection: "column", },
 
+            authView2: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
+                { left: "37.5%", width: 500, top: "20%", height: "auto" } :
+                { left: "2%", width: "96%", top: "0%", height: "100%" },
+
             authView: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
                 { left: "35%", width: "40%", top: 100, height: "auto" } :
                 { left: "2%", width: "96%", top: "0%", height: "100%" },
