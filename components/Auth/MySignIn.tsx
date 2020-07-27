@@ -62,7 +62,7 @@ class MySignIn extends React.Component<Props, State> {
         return (
             this.props.authState === 'signIn' || this.props.authState === "signedOut" || this.props.authState === "signedUp" ?
                 (<View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>
-                    <View style={{ position: 'absolute', top: '6%', right: '3.5%' }} >
+                    <View style={this.styles.style.createAccountButtonWrapper} >
                         <JCButton buttonType={ButtonTypes.SolidCreateAccount} onPress={() => this.changeAuthState('signUp')}>Create an Account</JCButton>
                     </View>
                     <View style={this.styles.style.authView2}>
