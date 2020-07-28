@@ -16,6 +16,7 @@ import { CourseContext } from './CourseContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import EditableRichText from '../../components/Forms/EditableRichText';
 import EditableFileUpload from '../../components/Forms/EditableFileUpload';
+import { AntDesign } from '@expo/vector-icons';
 
 interface Props {
   navigation?: any
@@ -110,6 +111,9 @@ class CourseHomeImpl extends JCComponent<Props>{
                                     textStyle={this.styles.style.fontFormSmallDarkGrey}
                                     inputStyle={this.styles.style.fontFormLargeInput}
                                     value={item.triad} isEditable={true}></EditableUsers>
+                                  <TouchableOpacity onPress={() => { actions.deleteTriad(index) }}>
+                                    <AntDesign name="close" size={20} color="black" />
+                                  </TouchableOpacity>
                                 </Card>
                               })
                               }
