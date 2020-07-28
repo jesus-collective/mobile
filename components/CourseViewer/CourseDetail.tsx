@@ -18,6 +18,7 @@ import EditableText from '../Forms/EditableText';
 import EditableDate from '../Forms/EditableDate';
 import moment from 'moment-timezone';
 import EditableRichText from '../Forms/EditableRichText';
+import { AntDesign } from '@expo/vector-icons';
 
 interface Props {
   navigation?: any
@@ -64,7 +65,7 @@ class CourseDetailImpl extends JCComponent<Props>{
               inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
               value={week.leader} isEditable={state.isEditable}></EditableText>
 
-            {week.lessons?.items?.map((item: any, lesson: any) => {
+            {week.lessons?.items?.map((item: any, lesson: number) => {
               return (
                 <TouchableOpacity key={lesson} onPress={() => { actions.setActiveLesson(lesson) }}>
                   <Card style={{ minHeight: "40px", maxHeight: "100px", width: "80% " }}>
@@ -86,6 +87,9 @@ class CourseDetailImpl extends JCComponent<Props>{
                       </Container>
                       <Text>Completed</Text>
                       <Text><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/checkmark.svg')} /></Text>
+                      <TouchableOpacity onPress={() => { actions.deleteLesson(state.activeWeek, lesson) }}>
+                        <AntDesign name="close" size={20} color="black" />
+                      </TouchableOpacity>
                     </Container>
                   </Card>
                 </TouchableOpacity>
@@ -115,7 +119,7 @@ class CourseDetailImpl extends JCComponent<Props>{
   renderLessonDetails(state, actions, week: any): React.ReactNode {
     // console.log(this.state.activeLesson)
     if (week?.lessons) {
-      const lesson = week.lessons[state.activeLesson]
+      const lesson = week.lessons.items[state.activeLesson]
       return (
         state.activeLesson != null ?
           <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>

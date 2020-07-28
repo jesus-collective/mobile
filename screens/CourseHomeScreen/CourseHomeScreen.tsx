@@ -339,6 +339,25 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
     }
 
   }
+  deleteLesson = async (week: number, lesson: number): Promise<void> => {
+
+    try {
+      console.log({ "Deleting Course lesson": week + " " + lesson })
+      const deleteResource: any = await API.graphql({
+        query: mutations.deleteCourseLesson,
+        variables: { input: { id: this.state.courseData.courseWeeks.items[week].lessons.items[lesson].id } },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+      });
+      console.log(deleteResource)
+      const temp = this.state.courseData
+      temp.courseWeeks.items[week].lessons.items.splice(lesson, 1)
+      this.setState({ courseData: temp }, this.updateWeekOrder)
+
+    } catch (e) {
+      console.log(e)
+    }
+
+  }
   render(): React.ReactNode {
 
     //console.log(acc)
@@ -362,6 +381,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
             updateWeekOrder: this.updateWeekOrder,
             createLesson: this.createLesson,
             updateLesson: this.updateLesson,
+            deleteLesson: this.deleteLesson,
             createTriad: this.createTriad,
             updateTriad: this.updateTriad,
             deleteTriad: this.deleteTriad
