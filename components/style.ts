@@ -721,7 +721,7 @@ export default class MainStyles {
                 backgroundColor: "#F9FAFC"
             },
             dashboardRightCard: {
-                flex: 30,
+                flex: 25,
                 flexDirection: "column"
             },
             myProfileMainContainer: {
