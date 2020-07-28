@@ -104,8 +104,16 @@ class MySignUp extends React.Component<Props, State> {
             }
             if (!this.validate())
                 return;
-            await Auth.signUp({ username: this.state.user.email, password: this.state.user.pass, attributes: { family_name: this.state.user.last, given_name: this.state.user.first, phone_number: this.state.user.code + this.state.user.phone, email: this.state.user.email } })
-            this.changeAuthState('confirmSignUp')
+            await Auth.signUp({
+                username: this.state.user.email,
+                password: this.state.user.pass,
+                attributes: {
+                    family_name: this.state.user.last,
+                    given_name: this.state.user.first,
+                    phone_number: this.state.user.code + this.state.user.phone,
+                    email: this.state.user.email
+                }
+            }).then(() => this.changeAuthState('confirmSignUp'));
         } catch (e) {
             this.setState({ authError: e.message })
         }
@@ -144,15 +152,15 @@ class MySignUp extends React.Component<Props, State> {
                     <View style={this.styles.style.authView3}>
                         <Text style={{ width: "100%", marginBottom: '8.33%', fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 22, lineHeight: 30 }}>Create your account</Text>
                         <View style={{ display: 'flex', flexDirection: 'row', marginBottom: '5.5%' }}>
-                            <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput placeholder="First Name" value={this.state.user.first} onChange={e => this.handleChange('first', e.nativeEvent.text)} style={{ borderBottomWidth: 1, borderColor: "#00000020", marginBottom: '1.4%', marginRight: 30, width: '100%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
-                            <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput placeholder="Last Name" value={this.state.user.last} onChange={e => this.handleChange('last', e.nativeEvent.text)} style={{ borderBottomWidth: 1, borderColor: "#00000020", marginBottom: '1.4%', width: '100%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
+                            <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput textContentType="name" placeholder="First Name" value={this.state.user.first} onChange={e => this.handleChange('first', e.nativeEvent.text)} style={{ borderBottomWidth: 1, borderColor: "#00000020", marginBottom: '1.4%', marginRight: 30, width: '100%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
+                            <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput textContentType="familyName" placeholder="Last Name" value={this.state.user.last} onChange={e => this.handleChange('last', e.nativeEvent.text)} style={{ borderBottomWidth: 1, borderColor: "#00000020", marginBottom: '1.4%', width: '100%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
                         </View>
                         <View style={{ display: 'flex', flexDirection: 'row', marginBottom: '1.4%', }}>
-                            <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput placeholder="Email address" value={this.state.user.email} onChange={e => this.handleChange('email', e.nativeEvent.text)} style={{ borderBottomWidth: 1, borderColor: "#00000020", width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
+                            <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput autoCompleteType="email" textContentType="emailAddress" keyboardType="email-address" placeholder="Email address" value={this.state.user.email} onChange={e => this.handleChange('email', e.nativeEvent.text)} style={{ borderBottomWidth: 1, borderColor: "#00000020", width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
                         </View>
                         <View style={{ display: 'flex', flexDirection: 'row', marginBottom: '5.5%' }}>
-                            <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput placeholder="Create Password" value={this.state.user.pass} onChange={e => this.handleChange('pass', e.nativeEvent.text)} secureTextEntry={true} style={{ borderBottomWidth: 1, borderColor: "#00000020", marginBottom: '1.4%', marginRight: 30, width: '100%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
-                            <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput placeholder="Confirm Password" value={this.state.user.pass2} onChange={e => this.handleChange('pass2', e.nativeEvent.text)} secureTextEntry={true} style={{ borderBottomWidth: 1, borderColor: "#00000020", marginBottom: '1.4%', width: '100%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
+                            <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput textContentType="newPassword" placeholder="Create Password" value={this.state.user.pass} onChange={e => this.handleChange('pass', e.nativeEvent.text)} secureTextEntry={true} style={{ borderBottomWidth: 1, borderColor: "#00000020", marginBottom: '1.4%', marginRight: 30, width: '100%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
+                            <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput textContentType="newPassword" placeholder="Confirm Password" value={this.state.user.pass2} onChange={e => this.handleChange('pass2', e.nativeEvent.text)} secureTextEntry={true} style={{ borderBottomWidth: 1, borderColor: "#00000020", marginBottom: '1.4%', width: '100%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
                         </View>
                         <View style={{ display: 'flex', flexDirection: 'row', marginBottom: '8.33%' }}>
                             <Picker
@@ -165,7 +173,7 @@ class MySignUp extends React.Component<Props, State> {
                                 ))}
                             </Picker>
                             <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text>
-                            <TextInput onKeyPress={(e) => this.handleEnter(e)} keyboardType="number-pad" placeholder="Phone number" value={this.state.user.phone} onChange={e => this.handleChange('phone', e.nativeEvent.text)} style={{ borderBottomWidth: 1, borderColor: "#00000020", width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
+                            <TextInput autoCompleteType="tel" textContentType="telephoneNumber" onKeyPress={(e) => this.handleEnter(e)} keyboardType="phone-pad" placeholder="Phone number" value={this.state.user.phone} onChange={e => this.handleChange('phone', e.nativeEvent.text)} style={{ borderBottomWidth: 1, borderColor: "#00000020", width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
                         </View>
                         <JCButton enabled={this.state.enabled} buttonType={this.state.enabled ? ButtonTypes.SolidSignIn : ButtonTypes.DisabledSignIn} onPress={() => this.signUp()}>Continue</JCButton>
                         <TouchableOpacity onPress={() => this.changeAuthState('confirmSignUp')}>

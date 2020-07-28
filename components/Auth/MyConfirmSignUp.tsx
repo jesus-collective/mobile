@@ -41,8 +41,7 @@ class MyConfirmSignUp extends React.Component<Props, State> {
 
     async handleConfirmSignUp(): Promise<void> {
         try {
-            await Auth.confirmSignUp(this.state.email, this.state.code)
-            this.changeAuthState('signIn')
+            await Auth.confirmSignUp(this.state.email, this.state.code).then(() => this.changeAuthState('signIn'))
         } catch (e) {
             this.setState({ authError: e.message })
         }
@@ -71,9 +70,9 @@ class MyConfirmSignUp extends React.Component<Props, State> {
                     </View>
                     <View style={this.styles.style.authView2}>
                         <Text style={{ width: "100%", marginBottom: '5.5%', fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 22, lineHeight: 30 }}>Enter your security code</Text>
-                        <TextInput placeholder="Email address" value={this.state.email} onChange={e => this.setState({ email: e.nativeEvent.text })} style={{ borderBottomWidth: 1, borderColor: "#00000020", width: "100%", marginBottom: '1.4%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
+                        <TextInput autoCompleteType="email" textContentType="emailAddress" keyboardType="email-address" placeholder="Email address" value={this.state.email} onChange={e => this.setState({ email: e.nativeEvent.text })} style={{ borderBottomWidth: 1, borderColor: "#00000020", width: "100%", marginBottom: '1.4%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
                         <View style={this.styles.style.confirmationCodeWrapper}>
-                            <TextInput onKeyPress={(e) => this.handleEnter(e)} placeholder="One-time security code" value={this.state.code} onChange={e => this.setState({ code: e.nativeEvent.text })} style={{ borderBottomWidth: 1, borderColor: "#00000020", marginBottom: '1.4%', marginRight: 30, width: '100%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
+                            <TextInput textContentType="oneTimeCode" keyboardType="number-pad" onKeyPress={(e) => this.handleEnter(e)} placeholder="One-time security code" value={this.state.code} onChange={e => this.setState({ code: e.nativeEvent.text })} style={{ borderBottomWidth: 1, borderColor: "#00000020", marginBottom: '1.4%', marginRight: 30, width: '100%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
                             <JCButton buttonType={ButtonTypes.SolidSignIn2} onPress={() => this.handleConfirmSignUp()}>Submit</JCButton>
                         </View>
                         <Text style={{ alignSelf: 'center', alignItems: 'center', fontSize: 14, fontFamily: 'Graphik-Regular-App', lineHeight: 22, marginTop: 20 }} >{this.state.authError ? <Entypo name="warning" size={18} color="#F0493E" /> : null} {this.state.authError}</Text>

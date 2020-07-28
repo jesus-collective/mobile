@@ -41,8 +41,7 @@ class MySignIn extends React.Component<Props, State> {
 
     async handleSignIn(): Promise<void> {
         try {
-            await Auth.signIn(this.state.user, this.state.pass)
-            this.changeAuthState('signedIn')
+            await Auth.signIn(this.state.user, this.state.pass).then(() => this.changeAuthState('signedIn'));
         } catch (err) {
 
             if (!this.state.pass && this.state.user) {
@@ -74,8 +73,8 @@ class MySignIn extends React.Component<Props, State> {
                     </View>
                     <View style={this.styles.style.authView2}>
                         <Text style={{ width: "100%", marginBottom: '5.5%', fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 22, lineHeight: 30 }}>Sign in to Jesus Collective</Text>
-                        <TextInput placeholder="Email" value={this.state.user} onChange={e => this.setState({ user: e.nativeEvent.text })} secureTextEntry={false} style={{ borderBottomWidth: 1, borderColor: "#00000020", width: "100%", marginBottom: '1.4%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
-                        <TextInput onKeyPress={(e) => this.handleEnter(e)} placeholder="Password" value={this.state.pass} onChange={e => this.setState({ pass: e.nativeEvent.text })} secureTextEntry={true} style={{ borderBottomWidth: 1, borderColor: "#00000020", width: "100%", marginBottom: '4.2%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
+                        <TextInput autoCompleteType="email" textContentType="emailAddress" autoFocus keyboardType="email-address" placeholder="Email" value={this.state.user} onChange={e => this.setState({ user: e.nativeEvent.text })} secureTextEntry={false} style={{ borderBottomWidth: 1, borderColor: "#00000020", width: "100%", marginBottom: '1.4%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
+                        <TextInput autoCompleteType="password" textContentType="password" onKeyPress={(e) => this.handleEnter(e)} placeholder="Password" value={this.state.pass} onChange={e => this.setState({ pass: e.nativeEvent.text })} secureTextEntry={true} style={{ borderBottomWidth: 1, borderColor: "#00000020", width: "100%", marginBottom: '4.2%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
                         <JCButton buttonType={ButtonTypes.SolidSignIn} onPress={() => this.handleSignIn()}>Sign In</JCButton>
                         <TouchableOpacity onPress={() => this.changeAuthState('forgotPassword')}>
                             <Text style={{ alignSelf: 'flex-end', marginRight: 30, fontSize: 14, fontFamily: 'Graphik-Regular-App', lineHeight: 22, color: '#333333', opacity: 0.7, marginTop: 20 }}>Forgot password?</Text>
