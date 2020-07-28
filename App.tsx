@@ -44,13 +44,13 @@ const SignUpSidebar = lazy(() => import('./components/SignUpSidebar/SignUpSideba
 Amplify.configure(awsConfig);
 
 
-const MyDisabledButton = Object.assign({}, AmplifyTheme.button, { backgroundColor: '#979797', alignItems: 'center', padding: 16 });
+/*const MyDisabledButton = Object.assign({}, AmplifyTheme.button, { backgroundColor: '#979797', alignItems: 'center', padding: 16 });
 const MyButton = Object.assign({}, AmplifyTheme.button, { backgroundColor: '#F0493E', alignItems: 'center', padding: 16 });
 const mySection = Object.assign({}, AmplifyTheme.section, { marginTop: 0, padding: 0 });
 const myNavBar = Object.assign({}, AmplifyTheme.navBar, { width: 0, height: 0 });
 const myContainer = Object.assign({}, AmplifyTheme.container, { marginTop: 0, width: "100%", height: "100%" });
 //const MyTheme = Object.assign({}, AmplifyTheme, { navBar: myNavBar, s });
-const MyTheme = Object.assign({}, AmplifyTheme, { container: myContainer, navBar: myNavBar, section: mySection, button: MyButton, buttonDisabled: MyDisabledButton });
+const MyTheme = Object.assign({}, AmplifyTheme, { container: myContainer, navBar: myNavBar, section: mySection, button: MyButton, buttonDisabled: MyDisabledButton });*/
 
 
 const authScreenLabels = {
@@ -152,31 +152,16 @@ class AwesomeApp extends JCComponent<Props, State> {
               : null
           }
 
-          < Authenticator hideDefault={true} theme={MyTheme}
-            usernameAttributes='email' onStateChange={(authState) => this.setState({ authState: authState })} federated={federated}
-            signUpConfig={{
-              signUpFields: [
-                { displayOrder: 6, key: "family_name", type: "text", label: "Last Name", placeHolder: "Last Name", required: true },
-                { displayOrder: 5, key: "given_name", type: "text", label: "First Name", placeHolder: "First Name", required: true }
-              ]
-            }} style={{
-              width: "100%", top: "0", left: "0", height: "100%"
-            }}>
+          <Authenticator hideDefault={true} federated={federated} usernameAttributes='email' onStateChange={(authState) => this.setState({ authState: authState })}>
             <HomeScreen />
+            <MySignIn onStateChange={(authState) => this.setState({ authState: authState })} authState={this.state.authState} />
+            <MySignUp onStateChange={(authState) => this.setState({ authState: authState })} authState={this.state.authState} />
+            <MyConfirmSignUp onStateChange={(authState) => this.setState({ authState: authState })} authState={this.state.authState} />
+            <MyForgotPassword onStateChange={(authState) => this.setState({ authState: authState })} authState={this.state.authState} />
             <MyConfirmSignIn />
             <MyRequireNewPassword />
-            <MySignIn onStateChange={(authState) => this.setState({ authState: authState })} authState={this.state.authState} />
-            <MySignUp signUpConfig={{
-              signUpFields: [{ displayOrder: 6, key: "family_name", label: "Last Name", required: true },
-              { displayOrder: 5, key: "given_name", label: "First Name", required: true }]
-            }}
-            />
-            <MyConfirmSignUp />
             <MyVerifyContact />
-            <MyForgotPassword />
             <MyLoading authState={this.state.authState} />
-
-
           </Authenticator>
         </View >
       )

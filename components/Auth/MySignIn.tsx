@@ -7,6 +7,7 @@ import { Auth } from 'aws-amplify';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton';
 import MainStyles from '../../components/style';
 import { Entypo } from '@expo/vector-icons';
+import { Copyright } from './Copyright';
 
 interface Props {
     authState: string;
@@ -40,9 +41,15 @@ class MySignIn extends React.Component<Props, State> {
 
     async handleSignIn(): Promise<void> {
         try {
-            await Auth.signIn(this.state.user, this.state.pass).then(() => this.changeAuthState('signedIn'))
+            await Auth.signIn(this.state.user, this.state.pass)
+            this.changeAuthState('signedIn')
         } catch (err) {
-            this.setState({ authError: err.message })
+
+            if (!this.state.pass && this.state.user) {
+                this.setState({ authError: 'Password cannot be empty' })
+            } else {
+                this.setState({ authError: err.message })
+            }
         }
     }
 
@@ -71,9 +78,10 @@ class MySignIn extends React.Component<Props, State> {
                         <TextInput onKeyPress={(e) => this.handleEnter(e)} placeholder="Password" value={this.state.pass} onChange={e => this.setState({ pass: e.nativeEvent.text })} secureTextEntry={true} style={{ borderBottomWidth: 1, borderColor: "#00000020", width: "100%", marginBottom: 45, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 20, lineHeight: 28 }}></TextInput>
                         <JCButton buttonType={ButtonTypes.SolidSignIn} onPress={() => this.handleSignIn()}>Sign In</JCButton>
                         <TouchableOpacity onPress={() => this.changeAuthState('forgotPassword')}>
-                            <Text style={{ alignSelf: 'flex-end', marginRight: 30, fontSize: 14, fontFamily: 'Graphik-Regular-App', lineHeight: 22, color: '#333333', opacity: 0.7 }}>Forgot password?</Text>
+                            <Text style={{ alignSelf: 'flex-end', marginRight: 30, fontSize: 14, fontFamily: 'Graphik-Regular-App', lineHeight: 22, color: '#333333', opacity: 0.7, marginTop: 20 }}>Forgot password?</Text>
                         </TouchableOpacity>
                         <Text style={{ alignSelf: 'center', alignItems: 'center', fontSize: 14, fontFamily: 'Graphik-Regular-App', lineHeight: 22, marginTop: 20 }} >{this.state.authError ? <Entypo name="warning" size={18} color="#F0493E" /> : null} {this.state.authError}</Text>
+                        <Copyright />
                     </View>
                     {Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
                         <SignUpSidebar text="It’s time to unite, equip, and amplify a Jesus-centred movement." />
