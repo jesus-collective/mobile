@@ -1705,7 +1705,7 @@ export default class MainStyles {
                 },
                 dashboardRightCard: {
                     flexBasis: "auto",
-                    top: 1150
+                    top: 2250
                 },
                 myProfileMainContainer: {
                     flexDirection: "column"
@@ -1852,7 +1852,8 @@ export default class MainStyles {
                 },
                 dashboardConversationCard: {
                     marginLeft: 0,
-                    width: "100vw"
+                    width: "100vw",
+                    paddingRight: 10
                 },
                 dashboardConversationBody: {
                     alignItems: "center"
