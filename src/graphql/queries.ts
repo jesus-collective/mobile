@@ -78,6 +78,7 @@ export const getUser = /* GraphQL */ `
           length
           effort
           cost
+          promotionalText
           eventType
           eventUrl
           tz
@@ -421,6 +422,7 @@ export const getGroup = /* GraphQL */ `
       length
       effort
       cost
+      promotionalText
       messages {
         items {
           id
@@ -542,6 +544,7 @@ export const listGroups = /* GraphQL */ `
         length
         effort
         cost
+        promotionalText
         messages {
           nextToken
         }
@@ -741,6 +744,7 @@ export const getOrganization = /* GraphQL */ `
           length
           effort
           cost
+          promotionalText
           eventType
           eventUrl
           tz
@@ -2182,6 +2186,7 @@ export const getMessage = /* GraphQL */ `
         length
         effort
         cost
+        promotionalText
         messages {
           nextToken
         }
@@ -2263,6 +2268,7 @@ export const listMessages = /* GraphQL */ `
           length
           effort
           cost
+          promotionalText
           eventType
           eventUrl
           tz
@@ -2836,6 +2842,7 @@ export const groupMemberByGroup = /* GraphQL */ `
           length
           effort
           cost
+          promotionalText
           eventType
           eventUrl
           tz
@@ -2920,6 +2927,7 @@ export const groupMemberByUser = /* GraphQL */ `
           length
           effort
           cost
+          promotionalText
           eventType
           eventUrl
           tz
@@ -3074,6 +3082,7 @@ export const groupByType = /* GraphQL */ `
         length
         effort
         cost
+        promotionalText
         messages {
           nextToken
         }
@@ -3306,6 +3315,7 @@ export const messagesByRoom = /* GraphQL */ `
           length
           effort
           cost
+          promotionalText
           eventType
           eventUrl
           tz
@@ -3514,6 +3524,7 @@ export const searchGroups = /* GraphQL */ `
         length
         effort
         cost
+        promotionalText
         messages {
           nextToken
         }

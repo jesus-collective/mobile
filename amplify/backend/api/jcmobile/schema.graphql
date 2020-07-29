@@ -142,6 +142,7 @@ type Group
   length: String
   effort: String
   cost: String
+  promotionalText:String
   #organizerGroup:[Group]
   #organizerUser:[User]
   #instructors:[User]

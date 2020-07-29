@@ -178,6 +178,7 @@ export const createUser = /* GraphQL */ `
           length
           effort
           cost
+          promotionalText
           eventType
           eventUrl
           tz
@@ -318,6 +319,7 @@ export const updateUser = /* GraphQL */ `
           length
           effort
           cost
+          promotionalText
           eventType
           eventUrl
           tz
@@ -458,6 +460,7 @@ export const deleteUser = /* GraphQL */ `
           length
           effort
           cost
+          promotionalText
           eventType
           eventUrl
           tz
@@ -617,6 +620,7 @@ export const createGroupMember = /* GraphQL */ `
         length
         effort
         cost
+        promotionalText
         messages {
           nextToken
         }
@@ -801,6 +805,7 @@ export const updateGroupMember = /* GraphQL */ `
         length
         effort
         cost
+        promotionalText
         messages {
           nextToken
         }
@@ -985,6 +990,7 @@ export const deleteGroupMember = /* GraphQL */ `
         length
         effort
         cost
+        promotionalText
         messages {
           nextToken
         }
@@ -1268,6 +1274,7 @@ export const createGroup = /* GraphQL */ `
       length
       effort
       cost
+      promotionalText
       messages {
         items {
           id
@@ -1487,6 +1494,7 @@ export const updateGroup = /* GraphQL */ `
       length
       effort
       cost
+      promotionalText
       messages {
         items {
           id
@@ -1706,6 +1714,7 @@ export const deleteGroup = /* GraphQL */ `
       length
       effort
       cost
+      promotionalText
       messages {
         items {
           id
@@ -2426,6 +2435,7 @@ export const createOrganization = /* GraphQL */ `
           length
           effort
           cost
+          promotionalText
           eventType
           eventUrl
           tz
@@ -2637,6 +2647,7 @@ export const updateOrganization = /* GraphQL */ `
           length
           effort
           cost
+          promotionalText
           eventType
           eventUrl
           tz
@@ -2848,6 +2859,7 @@ export const deleteOrganization = /* GraphQL */ `
           length
           effort
           cost
+          promotionalText
           eventType
           eventUrl
           tz
@@ -5230,6 +5242,7 @@ export const createMessage = /* GraphQL */ `
         length
         effort
         cost
+        promotionalText
         messages {
           nextToken
         }
@@ -5420,6 +5433,7 @@ export const updateMessage = /* GraphQL */ `
         length
         effort
         cost
+        promotionalText
         messages {
           nextToken
         }
@@ -5610,6 +5624,7 @@ export const deleteMessage = /* GraphQL */ `
         length
         effort
         cost
+        promotionalText
         messages {
           nextToken
         }

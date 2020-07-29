@@ -126,7 +126,8 @@ export default class CourseScreen extends JCComponent<Props, State>{
           time: "",
           effort: "",
           cost: "",
-          ownerOrgID: "0000000000000"
+          ownerOrgID: "0000000000000",
+          promotionalText: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent()))
           //   organizerUser: { name: "" },
           //   instructors: [],
           //   course: []
@@ -393,6 +394,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
     });
   }
   updateValue(field: string, value: any): void {
+
     const temp = this.state.data
     temp[field] = value
     this.setState({ data: temp })
@@ -499,21 +501,18 @@ export default class CourseScreen extends JCComponent<Props, State>{
                 </Container>
                 <Container style={this.styles.style.detailScreenRightCard}>
                   <Container style={this.styles.style.coursesRightCard}>
-                    {this.state.courseData ?
-                      <EditableRichText onChange={(val) => { this.updateCourse(this.state.courseData, "introduction", val) }}
-                        value={this.state.courseData.introduction}
+                    {this.state.data ?
+                      <EditableRichText onChange={(val) => { this.updateValue("promotionalText", val) }}
+                        value={this.state.data.promotionalText}
                         isEditable={true}
                         textStyle=''></EditableRichText>
                       : null}
 
 
-                    {data.courseInfo.introduction.map((item: any, index) => {
-                      return <Text key={index} style={this.styles.style.fontFormSmallDarkGrey}>{item}</Text>
-                    })}
 
                     <Text style={this.styles.style.courseDetails}>Course Details</Text>
                     <Accordion
-                      dataArray={data.courseDetails.map((item: any, index1) => {
+                      dataArray={this.state.courseData?.courseWeeks.items.map((item: any, index1) => {
                         return (
                           {
                             title: "Week " + index1,

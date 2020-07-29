@@ -177,6 +177,7 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
         length
         effort
         cost
+        promotionalText
         messages {
           nextToken
         }
@@ -268,6 +269,7 @@ export const onCreateUser = /* GraphQL */ `
           length
           effort
           cost
+          promotionalText
           eventType
           eventUrl
           tz
@@ -408,6 +410,7 @@ export const onUpdateUser = /* GraphQL */ `
           length
           effort
           cost
+          promotionalText
           eventType
           eventUrl
           tz
@@ -548,6 +551,7 @@ export const onDeleteUser = /* GraphQL */ `
           length
           effort
           cost
+          promotionalText
           eventType
           eventUrl
           tz
@@ -707,6 +711,7 @@ export const onCreateGroupMember = /* GraphQL */ `
         length
         effort
         cost
+        promotionalText
         messages {
           nextToken
         }
@@ -891,6 +896,7 @@ export const onUpdateGroupMember = /* GraphQL */ `
         length
         effort
         cost
+        promotionalText
         messages {
           nextToken
         }
@@ -1075,6 +1081,7 @@ export const onDeleteGroupMember = /* GraphQL */ `
         length
         effort
         cost
+        promotionalText
         messages {
           nextToken
         }
@@ -1358,6 +1365,7 @@ export const onCreateGroup = /* GraphQL */ `
       length
       effort
       cost
+      promotionalText
       messages {
         items {
           id
@@ -1577,6 +1585,7 @@ export const onUpdateGroup = /* GraphQL */ `
       length
       effort
       cost
+      promotionalText
       messages {
         items {
           id
@@ -1796,6 +1805,7 @@ export const onDeleteGroup = /* GraphQL */ `
       length
       effort
       cost
+      promotionalText
       messages {
         items {
           id
@@ -2516,6 +2526,7 @@ export const onCreateOrganization = /* GraphQL */ `
           length
           effort
           cost
+          promotionalText
           eventType
           eventUrl
           tz
@@ -2727,6 +2738,7 @@ export const onUpdateOrganization = /* GraphQL */ `
           length
           effort
           cost
+          promotionalText
           eventType
           eventUrl
           tz
@@ -2938,6 +2950,7 @@ export const onDeleteOrganization = /* GraphQL */ `
           length
           effort
           cost
+          promotionalText
           eventType
           eventUrl
           tz
@@ -5320,6 +5333,7 @@ export const onCreateMessage = /* GraphQL */ `
         length
         effort
         cost
+        promotionalText
         messages {
           nextToken
         }
@@ -5510,6 +5524,7 @@ export const onUpdateMessage = /* GraphQL */ `
         length
         effort
         cost
+        promotionalText
         messages {
           nextToken
         }
@@ -5700,6 +5715,7 @@ export const onDeleteMessage = /* GraphQL */ `
         length
         effort
         cost
+        promotionalText
         messages {
           nextToken
         }
