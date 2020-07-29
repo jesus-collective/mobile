@@ -56,7 +56,7 @@ class CourseSidebarImpl extends JCComponent<Props> {
     render(): React.ReactNode {
         //const { navigate } = this.props.navigation;
         return (
-            <Container style={{ flex: 15, backgroundColor: "#000000" }}>
+            <Container style={this.styles.style.courseSideBar}>
                 <Button
                     transparent
                     data-testid="header-logo"
