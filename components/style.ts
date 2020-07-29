@@ -1314,6 +1314,11 @@ export default class MainStyles {
                 paddingBottom: 30,
                 paddingLeft: 30
             },
+            courseSideBar: {
+                flex: 15, 
+                backgroundColor: "#000000", 
+                height: '100vh'
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {

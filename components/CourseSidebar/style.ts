@@ -51,9 +51,9 @@ export default class HeaderStyles {
                 resizeMode: "stretch",
                 width: 126,
                 height: 33,
-                marginRight: 70,
-                marginTop: 20,
-                marginLeft: 20,
+                marginRight: 0,
+                marginTop: 30,
+                marginLeft: 35,
                 marginBottom: 10,
             }
 

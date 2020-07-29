@@ -386,7 +386,25 @@ export default EStyleSheet.create({
         fontFamily: 'Graphik-Regular-App',
         fontSize: 16,
         padding: 5
-
+    },
+    CourseSideBarButton: {
+        paddingTop: 10,
+        paddingBottom: 10,
+        marginBottom: 20,
+        marginLeft: 10,
+        marginRight: 10,
+        backgroundColor: "#ffffff00",
+        borderWidth: 0,
+        borderColor: "#ffffff00",
+        boxShadow: "unset"
+    },
+    CourseSideBarText: {
+        color: "#ffffff",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 20,
+        lineHeight: 26,
+        padding: 5, 
+        marginLeft: 18
     },
     TransparentNoPaddingButton: {
         marginBottom: 20,
