@@ -52,7 +52,7 @@
 						"ENV": {
 							"Ref": "env"
 						},
-						"GROUP": "admin",
+						"GROUP": "userpool",
 						"USERPOOL": {
 							"Ref": "authjcmobileUserPoolId"
 						}
