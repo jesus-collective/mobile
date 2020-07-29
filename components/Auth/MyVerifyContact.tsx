@@ -26,7 +26,6 @@ class MyVerifyContact extends VerifyContact<Props> {
     render(): React.ReactNode {
         //  console.log(this.props.authState)
         return (
-
             this.props.authState === 'verifyContact' ?
                 (<View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>
                     <View style={this.styles.style.authView}>
@@ -35,8 +34,6 @@ class MyVerifyContact extends VerifyContact<Props> {
                     {Platform.OS === 'web' && Dimensions.get('window').width > 720 ? <SignUpSidebar position="2" /> : null}
                 </View>)
                 : null
-
-
         );
     }
 }

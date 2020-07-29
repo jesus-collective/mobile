@@ -1304,19 +1304,27 @@ export default class MainStyles {
                 justifyContent: "center"
             },
             coursesRightCard: {
-                flex: 70, 
-                flexDirection: "column", 
-                alignContent: 'flex-start', 
-                alignItems: 'flex-start', 
+                flex: 70,
+                flexDirection: "column",
+                alignContent: 'flex-start',
+                alignItems: 'flex-start',
                 justifyContent: 'flex-start',
                 paddingTop: 30,
                 paddingRight: 30,
-                paddingBottom: 30, 
+                paddingBottom: 30,
                 paddingLeft: 30
+            },
+            courseSideBar: {
+                flex: 15, 
+                backgroundColor: "#000000", 
+                height: '100vh'
             },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
+                confirmationCodeWrapper: { display: 'flex', flexDirection: 'column' },
+                signUpBackButtonWrapper: { position: 'absolute', top: '10%', left: '30%' },
+                authView2: { left: "37.5%", width: 300, top: "20%", height: "auto" },
                 connectWithSliderButton: {
                     height: 45,
                     paddingTop: 6,
@@ -1697,6 +1705,10 @@ export default class MainStyles {
             },
 
             '@media (min-width: 320px) and (max-width: 720px)': {
+                authView2: { left: "2%", width: "96%", top: "12%", height: "100%" },
+                createAccountButtonWrapper: { position: 'absolute', top: '0%', right: '5%' },
+                confirmationCodeWrapper: { display: 'flex', flexDirection: 'column' },
+                signUpBackButtonWrapper: { position: 'absolute', top: '0%', left: '5%' },
                 // rightCardWidth: {
                 //     width: "100%"
                 // },
@@ -1934,6 +1946,25 @@ export default class MainStyles {
             dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
                 { height: 2800, flex: 1, display: "flex", flexDirection: "row" } :
                 { flexDirection: "column", },
+
+            authView2: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
+                { left: "37.5%", width: 500, top: "20%", height: "auto" } :
+                { left: "2%", width: "96%", top: "0%", height: "100%" },
+
+            authView3: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
+                { left: "32.5%", width: 600, top: "15%", height: "auto" } :
+                { left: "2%", width: "96%", top: "0%", height: "100%" },
+
+            createAccountButtonWrapper: {
+                position: 'absolute', top: '6%', right: '3.5%'
+            },
+
+            signUpBackButtonWrapper: {
+                position: 'absolute', top: '6%', left: '20%'
+            },
+
+            confirmationCodeWrapper: { display: 'flex', flexDirection: 'row' },
+
 
             authView: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
                 { left: "35%", width: "40%", top: 100, height: "auto" } :

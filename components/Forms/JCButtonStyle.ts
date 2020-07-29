@@ -86,6 +86,103 @@ export default EStyleSheet.create({
         padding: 5
 
     },
+    SolidCreateAccountButton:
+    {
+        marginLeft: 0,
+        marginRight: 0,
+        backgroundColor: "#ffffff",
+        borderWidth: 1,
+        borderColor: "#F0493E",
+        boxShadow: "unset",
+        borderRadius: 4,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    SolidCreateAccountText: {
+        color: "#F0493E",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        lineHeight: 28,
+        padding: 12,
+        fontWeight: "600",
+    },
+    SolidSignIn2Button:
+    {
+        paddingTop: 6,
+        paddingBottom: 6,
+        paddingLeft: 60,
+        paddingRight: 60,
+        marginLeft: 0,
+        marginRight: 0,
+        backgroundColor: "#F0493E",
+        borderWidth: 1,
+        borderColor: "#F0493E",
+        boxShadow: "unset",
+        borderRadius: 4,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    SolidSignIn2Text: {
+        color: "#ffffff",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        padding: 10,
+        fontWeight: "600",
+    },
+    DisabledSignInButton:
+    {
+        paddingTop: 6,
+        paddingBottom: 6,
+        paddingLeft: 29,
+        paddingRight: 29,
+        marginLeft: 0,
+        marginRight: 0,
+        backgroundColor: "#33333370",
+        borderWidth: 1,
+        borderColor: "#33333370",
+        boxShadow: "unset",
+        borderRadius: 4,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    DisabledSignInText: {
+        color: "#ffffff",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        padding: 10,
+        fontWeight: "600",
+    },
+    SolidSignInButton:
+    {
+        paddingTop: 6,
+        paddingBottom: 6,
+        paddingLeft: 29,
+        paddingRight: 29,
+        marginLeft: 0,
+        marginRight: 0,
+        backgroundColor: "#F0493E",
+        borderWidth: 1,
+        borderColor: "#F0493E",
+        boxShadow: "unset",
+        borderRadius: 4,
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    SolidSignInText: {
+        color: "#ffffff",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        padding: 10,
+        fontWeight: "600",
+    },
     SolidButton:
     {
         paddingTop: 6,
@@ -289,7 +386,25 @@ export default EStyleSheet.create({
         fontFamily: 'Graphik-Regular-App',
         fontSize: 16,
         padding: 5
-
+    },
+    CourseSideBarButton: {
+        paddingTop: 10,
+        paddingBottom: 10,
+        marginBottom: 20,
+        marginLeft: 10,
+        marginRight: 10,
+        backgroundColor: "#ffffff00",
+        borderWidth: 0,
+        borderColor: "#ffffff00",
+        boxShadow: "unset"
+    },
+    CourseSideBarText: {
+        color: "#ffffff",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 20,
+        lineHeight: 26,
+        padding: 5, 
+        marginLeft: 18
     },
     TransparentNoPaddingButton: {
         marginBottom: 20,

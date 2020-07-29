@@ -56,7 +56,7 @@ class CourseSidebarImpl extends JCComponent<Props> {
     render(): React.ReactNode {
         //const { navigate } = this.props.navigation;
         return (
-            <Container style={{ flex: 15, backgroundColor: "#000000" }}>
+            <Container style={this.styles.style.courseSideBar}>
                 <Button
                     transparent
                     data-testid="header-logo"
@@ -65,9 +65,9 @@ class CourseSidebarImpl extends JCComponent<Props> {
                         source={require('../../assets/header/icon.png')}
                     /></Button>
 
-                <JCButton buttonType={ButtonTypes.Transparent} onPress={this.openCourseHome}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/home.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Home</Text></JCButton>
-                <JCButton buttonType={ButtonTypes.Transparent} onPress={this.openCourseDetails}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/education.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Course</Text></JCButton>
-                <JCButton buttonType={ButtonTypes.Transparent} onPress={this.openCourseCoaching}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/calendar.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Coaching</Text></JCButton>
+                <JCButton buttonType={ButtonTypes.CourseSideBar} onPress={this.openCourseHome}><Image style={{ marginRight: 12, width: "30px", height: "30px" }} source={require('../../assets/svg/home.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Home</Text></JCButton>
+                <JCButton buttonType={ButtonTypes.CourseSideBar} onPress={this.openCourseDetails}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/education.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Course</Text></JCButton>
+                <JCButton buttonType={ButtonTypes.CourseSideBar} onPress={this.openCourseCoaching}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/calendar.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Coaching</Text></JCButton>
                 <Container style={{ backgroundColor: "#00000000" }}>
                     <AnimatedProgressWheel
                         size={120}
