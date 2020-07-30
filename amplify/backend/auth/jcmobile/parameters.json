@@ -43,7 +43,9 @@
         "email",
         "family_name",
         "given_name",
-        "phone_number"
+        "phone_number",
+        "custom:orgName",
+        "custom:isOrg"
     ],
     "userpoolClientReadAttributes": [
         "address",
@@ -64,7 +66,9 @@
         "website",
         "zoneinfo",
         "email_verified",
-        "phone_number_verified"
+        "phone_number_verified",
+        "custom:orgName",
+        "custom:isOrg"
     ],
     "userpoolClientLambdaRole": "jcmobi44a13962_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": true,
