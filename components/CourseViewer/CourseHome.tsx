@@ -45,18 +45,24 @@ class CourseHomeImpl extends JCComponent<Props>{
                   <CourseHeader groupData={state.data}></CourseHeader>
                   <Container style={{ flex: 80 }}>
                     <Content contentContainerStyle={{ flex: 80 }} style={{ flex: 80 }}>
-                      <Container style={{ flex: 80, display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
+                      <Container style={{ flex: 80, display: "flex", flexDirection: "row", justifyContent: 'flex-start', paddingLeft: '5%' }}>
                         <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
-                          <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
-                          <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Book a Call</JCButton>
-                          <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Send Message</JCButton>
-                          <Text>Welcome Message</Text>
+                          <Container style={{ flexDirection: 'row' }}>
+                            <Container style={{ flexDirection: 'column', marginTop: 30, flex: 20 }}>
+                              <Image style={{ margin: 0, padding: 0, width: 110, height: 136, marginBottom: 20 }} source={require("../../assets/profile-placeholder.png")} />
+                              <JCButton onPress={() => { null }} buttonType={ButtonTypes.CourseHome}>Book a Call</JCButton>
+                              <JCButton onPress={() => { null }} buttonType={ButtonTypes.CourseHome}>Send Message</JCButton>
+                            </Container>
+                            <Container style={{ flex: 80 }}>
+                            <Text style={{ marginTop: 30, marginLeft: 30, marginRight: 30, fontFamily: 'Graphik-Regular-App', fontSize: 20, lineHeight: 30 }}>Welcome Message</Text>
+                            </Container>
+                          </Container>
+                          <Container style={{ marginTop: 150 }}>
                           {state.courseData ?
                             <EditableRichText onChange={(val) => { actions.updateCourse("introduction", val) }}
                               value={state.courseData.introduction}
                               isEditable={true}
                               textStyle=""></EditableRichText> : null}
-
                           <Text>Instructor:</Text>
                           <EditableUsers
                             limit={1}
@@ -160,6 +166,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                               inputStyle={this.styles.style.fontFormLargeInput}
                               value={state.cohort} isEditable={true}></EditableUsers>
                           </Card>
+                          </Container>
                         </Container>
                         <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
 

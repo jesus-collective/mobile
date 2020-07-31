@@ -7,6 +7,7 @@ import JCComponent from '../JCComponent/JCComponent';
 export enum ButtonTypes {
     CourseSideBar,
     CourseSideBarFirst,
+    CourseHome,
     Solid,
     SolidSignIn,
     SolidSignIn2,
