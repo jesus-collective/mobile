@@ -49,9 +49,9 @@ class CourseHomeImpl extends JCComponent<Props>{
                         <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
                           <Container style={{ flexDirection: 'row' }}>
                             <Container style={{ flexDirection: 'column', marginTop: 30, flex: 20 }}>
-                              <Image style={{ margin: 0, padding: 0, width: 110, height: 136, marginBottom: 20 }} source={require("../../assets/profile-placeholder.png")} />
+                              <Image style={{ margin: 0, padding: 0, width: 110, height: 136, marginBottom: 20, marginLeft: '15%' }} source={require("../../assets/profile-placeholder.png")} />
                               <JCButton onPress={() => { null }} buttonType={ButtonTypes.CourseHome}>Book a Call</JCButton>
-                              <JCButton onPress={() => { null }} buttonType={ButtonTypes.CourseHome}>Send Message</JCButton>
+                              <JCButton onPress={() => { null }} buttonType={ButtonTypes.TransparentBoldOrange}>Send Message</JCButton>
                             </Container>
                             <Container style={{ flex: 80 }}>
                             <Text style={{ marginTop: 30, marginLeft: 30, marginRight: 30, fontFamily: 'Graphik-Regular-App', fontSize: 20, lineHeight: 30 }}>Welcome Message</Text>
@@ -63,7 +63,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                               value={state.courseData.introduction}
                               isEditable={true}
                               textStyle=""></EditableRichText> : null}
-                          <Text>Instructor:</Text>
+                          <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 25 }}>Instructor:</Text>
                           <EditableUsers
                             limit={1}
                             onChange={(value: any[]) => { actions.updateCourse("instructor", value) }}
