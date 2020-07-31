@@ -65,10 +65,10 @@ class CourseSidebarImpl extends JCComponent<Props> {
                         source={require('../../assets/header/icon.png')}
                     /></Button>
 
-                <JCButton buttonType={ButtonTypes.CourseSideBar} onPress={this.openCourseHome}><Image style={{ marginRight: 12, width: "30px", height: "30px" }} source={require('../../assets/svg/home.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Home</Text></JCButton>
-                <JCButton buttonType={ButtonTypes.CourseSideBar} onPress={this.openCourseDetails}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/education.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Course</Text></JCButton>
-                <JCButton buttonType={ButtonTypes.CourseSideBar} onPress={this.openCourseCoaching}><Image style={{ marginLeft: 20, width: "22px", height: "22px" }} source={require('../../assets/svg/calendar.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Coaching</Text></JCButton>
-                <Container style={{ backgroundColor: "#00000000" }}>
+                <JCButton buttonType={ButtonTypes.CourseSideBarFirst} onPress={this.openCourseHome}><Image style={{ marginRight: 12, width: "30px", height: "30px", top: 6 }} source={require('../../assets/svg/home.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Home</Text></JCButton>
+                <JCButton buttonType={ButtonTypes.CourseSideBar} onPress={this.openCourseDetails}><Image style={{ marginRight: 12, width: "30px", height: "30px", top: 6 }} source={require('../../assets/svg/education.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Course</Text></JCButton>
+                <JCButton buttonType={ButtonTypes.CourseSideBar} onPress={this.openCourseCoaching}><Image style={{ marginRight: 12, width: "30px", height: "30px", top: 6 }} source={require('../../assets/svg/calendar.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Coaching</Text></JCButton>
+                <Container style={{ backgroundColor: "#00000000", alignSelf: 'center', marginTop: 75 }}>
                     <AnimatedProgressWheel
                         size={120}
                         width={10}

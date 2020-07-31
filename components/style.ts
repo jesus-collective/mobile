@@ -411,13 +411,14 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Regular-App', fontSize: 12, color: '#ffffFF', padding: 10
             },
             fontCourseHeaderBold: {
-                fontFamily: 'Graphik-Regular-App',
+                fontFamily: 'Graphik-Bold-App',
                 fontWeight: 400,
-                fontSize: 100,
-                lineHeight: 35,
-                textAlign: "center",
+                fontSize: 45,
+                lineHeight: 45,
+                textAlign: "left",
                 color: "#FFFFFF",
-                marginBottom: "1.5rem"
+                marginBottom: 15,
+                marginLeft: "5%", 
             },
             fontResourceHeaderBold: {
                 fontFamily: 'Graphik-Regular-App',
@@ -458,25 +459,30 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Regular-App',
                 fontWeight: "normal",
                 fontSize: 30,
-                lineHeight: 35,
-                textAlign: "center",
-                color: "#FFFFFF"
+                lineHeight: 25,
+                textAlign: "left",
+                color: "#FFFFFF",
+                marginLeft: '5%',
             },
             fontCourseHeaderTime: {
                 fontFamily: 'Graphik-Regular-App',
                 fontWeight: "normal",
-                fontSize: 10,
-                lineHeight: 35,
-                textAlign: "center",
-                color: "#FFFFFF"
+                fontSize: 14,
+                lineHeight: 20,
+                textAlign: "left",
+                color: "#FFFFFF",
+                marginLeft: '5%',
+                textTransform: 'uppercase',
+                marginTop: 30,
             },
             fontCourseHeaderDescription: {
                 fontFamily: 'Graphik-Regular-App',
                 fontWeight: "normal",
                 fontSize: 20,
                 lineHeight: 30,
-                textAlign: "center",
-                color: "#FFFFFF"
+                textAlign: "left",
+                color: "#FFFFFF",
+                marginLeft: '5%',
             },
             fontResourceHeaderDescription: {
                 fontFamily: 'Graphik-Regular-App',
