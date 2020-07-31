@@ -4,7 +4,7 @@ import { View } from 'native-base';
 import { Platform, TextInput, Text, NativeSyntheticEvent, TextInputKeyPressEventData, Picker, TouchableOpacity } from 'react-native';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton';
 import { Entypo } from '@expo/vector-icons';
-import { Dimensions } from 'react-native'
+import { Dimensions, ActivityIndicator } from 'react-native'
 import MainStyles from '../../components/style';
 import countryDialCodes from 'aws-amplify-react-native/src/CountryDialCodes';
 import { Auth } from 'aws-amplify';
@@ -29,6 +29,7 @@ interface State {
     authError: string;
     enabled: boolean;
     joinedAs: 'individual' | 'organization' | null;
+    sendingData: boolean;
 }
 
 class MySignUp extends React.Component<Props, State> {
@@ -48,6 +49,7 @@ class MySignUp extends React.Component<Props, State> {
             authError: '',
             enabled: false,
             joinedAs: null,
+            sendingData: false,
         }
     }
 
@@ -66,6 +68,7 @@ class MySignUp extends React.Component<Props, State> {
             authError: '',
             enabled: false,
             joinedAs: null,
+            sendingData: false,
         })
         this.props.onStateChange(state);
     }
@@ -114,6 +117,8 @@ class MySignUp extends React.Component<Props, State> {
             }
             if (!this.validate())
                 return;
+
+            this.setState({ sendingData: true })
             await Auth.signUp({
                 username: this.state.user.email,
                 password: this.state.user.pass,
@@ -127,7 +132,7 @@ class MySignUp extends React.Component<Props, State> {
                 }
             }).then(() => this.changeAuthState('confirmSignUp'));
         } catch (e) {
-            this.setState({ authError: e.message })
+            this.setState({ authError: e.message, sendingData: false })
         }
     }
 
@@ -188,7 +193,7 @@ class MySignUp extends React.Component<Props, State> {
                                 <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text>
                                 <TextInput autoCompleteType="tel" textContentType="telephoneNumber" onKeyPress={(e) => this.handleEnter(e)} keyboardType="phone-pad" placeholder="Phone number" value={this.state.user.phone} onChange={e => this.handleChange('phone', e.nativeEvent.text)} style={{ borderBottomWidth: 1, borderColor: "#00000020", width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
                             </View>
-                            <JCButton enabled={this.state.enabled} buttonType={this.state.enabled ? ButtonTypes.SolidSignIn : ButtonTypes.DisabledSignIn} onPress={() => this.signUp()}>Continue</JCButton>
+                            <JCButton enabled={this.state.enabled} buttonType={this.state.enabled ? ButtonTypes.SolidSignIn : ButtonTypes.DisabledSignIn} onPress={() => this.signUp()}>{this.state.sendingData ? <ActivityIndicator animating color="#333333" /> : 'Continue'}</JCButton>
                             <TouchableOpacity onPress={() => this.changeAuthState('confirmSignUp')}>
                                 <Text style={{ alignSelf: 'flex-end', marginRight: 30, fontSize: 14, fontFamily: 'Graphik-Regular-App', lineHeight: 22, color: '#333333', opacity: 0.7, marginTop: 20 }}>Confirm a code</Text>
                             </TouchableOpacity>
@@ -222,7 +227,7 @@ class MySignUp extends React.Component<Props, State> {
                                 <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text>
                                 <TextInput autoCompleteType="tel" textContentType="telephoneNumber" onKeyPress={(e) => this.handleEnter(e)} keyboardType="phone-pad" placeholder="Phone number" value={this.state.user.phone} onChange={e => this.handleChange('phone', e.nativeEvent.text)} style={{ borderBottomWidth: 1, borderColor: "#00000020", width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
                             </View>
-                            <JCButton enabled={this.state.enabled} buttonType={this.state.enabled ? ButtonTypes.SolidSignIn : ButtonTypes.DisabledSignIn} onPress={() => this.signUp()}>Continue</JCButton>
+                            <JCButton enabled={this.state.enabled} buttonType={this.state.enabled ? ButtonTypes.SolidSignIn : ButtonTypes.DisabledSignIn} onPress={() => this.signUp()}>{this.state.sendingData ? <ActivityIndicator animating color="#333333" /> : 'Continue'}</JCButton>
                             <TouchableOpacity onPress={() => this.changeAuthState('confirmSignUp')}>
                                 <Text style={{ alignSelf: 'flex-end', marginRight: 30, fontSize: 14, fontFamily: 'Graphik-Regular-App', lineHeight: 22, color: '#333333', opacity: 0.7, marginTop: 20 }}>Confirm a code</Text>
                             </TouchableOpacity>
