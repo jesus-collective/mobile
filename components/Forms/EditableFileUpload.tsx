@@ -30,7 +30,8 @@ export default class EditableFileUpload extends JCComponent<Props> {
                         {this.renderFileIcon(this.props.attachment)}
                         <Text style={{ fontSize: 18, paddingHorizontal: 10 }}>{this.props.attachmentName ?
                             this.props.attachmentName :
-                            this.processFileName(this.props.attachment)}</Text>
+                        this.processFileName(this.props.attachment)}
+                        </Text>
                     </View>
                 </Badge>
             </TouchableOpacity>
@@ -51,7 +52,7 @@ export default class EditableFileUpload extends JCComponent<Props> {
                     </TouchableOpacity>
                 </View>
             </Badge>
-            <Label style={{ fontSize: 12, marginLeft: 10 }}>{this.processFileName(this.props.attachment)}</Label>
+            <Label style={{ fontSize: 12, marginLeft: 10, marginTop: 7 }}>{this.processFileName(this.props.attachment)}</Label>
         </View > : null
     }
 
@@ -130,7 +131,7 @@ export default class EditableFileUpload extends JCComponent<Props> {
     render(): React.ReactNode {
         return (
             this.props.isEditable ?
-                <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     {this.props.attachment ? this.renderFileUploadBadge() : null}
                     < View style={{ marginRight: 10 }}>
                         <JCButton buttonType={ButtonTypes.SolidRightJustified} onPress={() => { null }}>

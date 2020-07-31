@@ -100,7 +100,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                               </EditableFileUpload>
                               : null}
 
-                              <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 25 }}>Instructor:</Text>
+                              <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Instructor:</Text>
                               <EditableUsers
                                 limit={1}
                                 onChange={(value: any[]) => { actions.updateCourse("instructor", value) }}
@@ -110,7 +110,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                 textStyle={this.styles.style.fontFormSmallDarkGrey}
                                 inputStyle={this.styles.style.fontFormLargeInput}
                                 value={state.instructor} isEditable={true}></EditableUsers>
-                              <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 25 }}>Syllabus</Text>
+                              <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Syllabus</Text>
                                 {state.courseData ?
                                   <EditableFileUpload
                                     textStyle={null}
@@ -131,7 +131,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                 (<>
                                   {state.courseData?.triads?.items.map((item, index) => {
                                     <Card>
-                                      <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 25 }}>Coach</Text>
+                                      <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Coach</Text>
                                       <EditableUsers
                                         limit={1}
                                         onChange={(value: any[]) => { actions.updateTriad(index, "coach", value) }}
@@ -142,7 +142,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                         inputStyle={this.styles.style.fontFormLargeInput}
                                         value={item.coach} isEditable={true}></EditableUsers>
 
-                                      <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 25 }}>Triad</Text>
+                                      <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Triad</Text>
                                       <EditableUsers
                                         limit={3}
                                         onChange={(value: any[]) => { actions.updateTriad(index, "triad", value) }}
@@ -163,7 +163,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                   </TouchableOpacity>
                                 </>)
                                 : (<>
-                                  <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 25 }}>My Coach</Text>
+                                  <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>My Coach</Text>
                                   <Card>
                                     <EditableUsers
                                       limit={1}
@@ -175,7 +175,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                       inputStyle={this.styles.style.fontFormLargeInput}
                                       value={state.myTriad.coach} isEditable={false}></EditableUsers>
                                   </Card>
-                                  <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 25 }}>My Triad</Text>
+                                  <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>My Triad</Text>
                                   <Card>
                                     <EditableUsers
                                       limit={3}
@@ -189,7 +189,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                   </Card>
                                 </>)
                               }
-                              <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 25 }}>My Cohort</Text>
+                              <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>My Cohort</Text>
                               <Card>
                                 <EditableUsers
                                   limit={15}
