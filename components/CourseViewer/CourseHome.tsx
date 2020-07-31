@@ -70,17 +70,18 @@ class CourseHomeImpl extends JCComponent<Props>{
                               value={state.courseData.introduction}
                               isEditable={true}
                               textStyle=""></EditableRichText> : null}
-                          <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 25 }}>Instructor:</Text>
-                          <EditableUsers
-                            limit={1}
-                            onChange={(value: any[]) => { actions.updateCourse("instructor", value) }}
-                            multiline={false}
-                            data-testid="profile-currentRole"
-                            showProfileImages={true}
-                            textStyle={this.styles.style.fontFormSmallDarkGrey}
-                            inputStyle={this.styles.style.fontFormLargeInput}
-                            value={state.instructor} isEditable={true}></EditableUsers>
-                          <Text>Syllabus</Text>
+                            <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 25 }}>Instructor:</Text>
+                            <EditableUsers
+                              limit={1}
+                              onChange={(value: any[]) => { actions.updateCourse("instructor", value) }}
+                              multiline={false}
+                              data-testid="profile-currentRole"
+                              showProfileImages={true}
+                              textStyle={this.styles.style.fontFormSmallDarkGrey}
+                              inputStyle={this.styles.style.fontFormLargeInput}
+                              value={state.instructor} isEditable={true}></EditableUsers>
+                          </Container>
+                            <Text>Syllabus</Text>
                           <Card>
                             {state.courseData ?
                               <EditableFileUpload
@@ -199,9 +200,10 @@ class CourseHomeImpl extends JCComponent<Props>{
                                 showProfileImages={true}
                                 textStyle={this.styles.style.fontFormSmallDarkGrey}
                                 inputStyle={this.styles.style.fontFormLargeInput}
-                                value={state.cohort} isEditable={true}></EditableUsers>
+                                value={state.cohort} isEditable={true}>
+                              </EditableUsers>
                             </Card>
-                          </Container>
+                          </Card>
                         </Container>
                         <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
 
@@ -232,7 +234,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                     </Content>
                   </Container>
                 </Container>
-
+                            
               </StyleProvider > :
               null
           )
