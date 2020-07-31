@@ -5,7 +5,7 @@ import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import { AmplifyTheme, Authenticator } from 'aws-amplify-react-native';
+import { Authenticator } from 'aws-amplify-react-native';
 import { View } from 'native-base';
 import { Dimensions } from 'react-native'
 import { Platform } from 'react-native';
@@ -76,6 +76,7 @@ interface State extends JCState {
   isLoggedIn: boolean
   fontLoaded: boolean
   authState: any
+  joinedAs: 'individual' | 'organization';
 }
 const federated = {
   google_client_id: '',
@@ -96,7 +97,6 @@ class AwesomeApp extends JCComponent<Props, State> {
       fontLoaded: false,
       isLoggedIn: false,
       authState: ""
-
     };
     //  this.ionViewCanEnter();
   }
@@ -152,12 +152,12 @@ class AwesomeApp extends JCComponent<Props, State> {
               : null
           }
 
-          <Authenticator hideDefault={true} federated={federated} usernameAttributes='email' onStateChange={(authState) => this.setState({ authState: authState })}>
+          <Authenticator hideDefault={true} federated={federated} usernameAttributes='email'>
             <HomeScreen />
-            <MySignIn onStateChange={(authState) => this.setState({ authState: authState })} authState={this.state.authState} />
-            <MySignUp onStateChange={(authState) => this.setState({ authState: authState })} authState={this.state.authState} />
-            <MyConfirmSignUp onStateChange={(authState) => this.setState({ authState: authState })} authState={this.state.authState} />
-            <MyForgotPassword onStateChange={(authState) => this.setState({ authState: authState })} authState={this.state.authState} />
+            <MySignIn onStateChange={(authState) => this.setState({ authState })} authState={this.state.authState} />
+            <MySignUp onStateChange={(authState) => this.setState({ authState })} authState={this.state.authState} />
+            <MyConfirmSignUp onStateChange={(authState) => this.setState({ authState })} authState={this.state.authState} />
+            <MyForgotPassword onStateChange={(authState) => this.setState({ authState })} authState={this.state.authState} />
             <MyConfirmSignIn />
             <MyRequireNewPassword />
             <MyVerifyContact />

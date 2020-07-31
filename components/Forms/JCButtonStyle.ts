@@ -530,6 +530,24 @@ export default EStyleSheet.create({
         padding: 10,
         fontWeight: "bold"
     },
+    TransparentBoldGreyNoMarginButton:
+    {
+        paddingTop: 10,
+        paddingBottom: 10,
+        backgroundColor: "#ffffff",
+        borderWidth: 0,
+        borderColor: "#ffffff",
+        boxShadow: "unset"
+    },
+    TransparentBoldGreyNoMarginText: {
+        color: "#333333",
+        opacity: 0.3,
+        fontFamily: 'Graphik-Bold-App',
+        fontSize: 20,
+        lineHeight: 25,
+        padding: 10,
+        fontWeight: "bold"
+    },
     TransparentBoldOrangeButton:
     {
         paddingTop: 10,

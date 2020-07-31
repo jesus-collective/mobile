@@ -8,7 +8,7 @@ import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native';
 import { GraphQLResult } from '@aws-amplify/api/lib/types';
 import ProfileImage from '../ProfileImage/ProfileImage';
 import { Auth } from 'aws-amplify';
-import { GetOrganizationQuery, CreateOrganizationInput } from '../../src/API'
+import { GetOrganizationQuery, CreateOrganizationInput, CreateOrganizationMemberInput } from '../../src/API'
 import Amplify from 'aws-amplify'
 import awsconfig from '../../src/aws-exports';
 import Validate from '../Validate/Validate';
@@ -125,6 +125,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
         this.setState({
           OrganizationDetails: getOrg.data.getOrganization,
           isEditable: getOrg.data.getOrganization.admins.includes(this.state.currentUser),
+          editMode: getOrg.data.getOrganization.admins.includes(this.state.currentUser) && getOrg.data.getOrganization.profileState === 'Incomplete',
         }, () => { this.getProfileImage(); this.convertProfileToMapData() })
       } catch (e) {
         if (e.data?.getOrganization) {
@@ -152,6 +153,26 @@ class OrganizationImpl extends JCComponent<Props, State> {
           variables: { input: orgInput },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
         })
+
+        const orgMember: CreateOrganizationMemberInput = {
+          userRole: 'superAdmin',
+          userId: this.state.currentUser,
+          organizationId: createOrg.data.createOrganization.id
+        }
+
+        try {
+          const createOrgMember: any = await API.graphql({
+            query: mutations.createOrganizationMember,
+            variables: {
+              input: orgMember
+            },
+            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+          });
+          console.log({ createOrgMember: createOrgMember })
+        } catch (e) {
+          console.log({ error: e })
+        }
+
         this.setState({
           OrganizationDetails: createOrg.data.createOrganization,
           isEditable: true,
@@ -240,7 +261,10 @@ class OrganizationImpl extends JCComponent<Props, State> {
         const toSave = this.clean(this.state.OrganizationDetails)
         toSave["profileState"] = "Complete"
         await API.graphql(graphqlOperation(mutations.updateOrganization, { input: toSave }));
-        this.setState({ dirty: false, editMode: false })
+        if (this.props.finalizeProfile)
+          this.props.finalizeProfile()
+        else
+          this.setState({ dirty: false, editMode: false })
       } catch (e) {
         console.log(e)
       }
@@ -401,7 +425,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
         <Content>
           <View style={this.styles.style.myProfileTopButtons}>
             {this.state.isEditable && (this.state.editMode || this.state.showAccountSettings) ?
-              <Text style={this.styles.style.profileFontTitle}>Setup your profile</Text>
+              <Text style={this.styles.style.profileFontTitle}>Create Organization/Church Profile</Text>
               : <Text style={this.styles.style.profileFontTitle}>{this.state.OrganizationDetails.orgName}</Text>
             }
             <View style={this.styles.style.myProfileTopButtonsExternalContainer}>
@@ -456,7 +480,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   <Text style={this.styles.style.fontFormSmallDarkGreyCoordinates}><Image style={{ width: "22px", height: "22px", top: 6, marginRight: 5 }} source={require('../../assets/svg/pin 2.svg')}></Image>{this.state.OrganizationDetails.location?.geocodeFull ? this.state.OrganizationDetails.location.geocodeFull : "Location not defined"}</Text>
                   {this.state.isEditable && this.state.OrganizationDetails.profileState !== "Incomplete" ? <JCButton buttonType={ButtonTypes.EditButton} onPress={() => this.handleEditMode()}>{this.state.editMode ? 'View Profile' : 'Edit Profile'}</JCButton> : null}
                 </View>
-                <Text style={this.styles.style.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px", top: 3, marginRight: 5 }} source={require('../../assets/svg/calendar.svg')}></Image>{this.state.OrganizationDetails.joined ? moment(this.state.OrganizationDetails.joined).format('MMMM Do YYYY') : "Join date unknown"}</Text>
+                <Text style={this.styles.style.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px", top: 3, marginRight: 5 }} source={require('../../assets/svg/calendar.svg')}></Image>Joined: {this.state.OrganizationDetails.joined ? moment(this.state.OrganizationDetails.joined).format('MMMM Do YYYY') : "Join date unknown"}</Text>
                 <Text style={this.styles.style.fontFormSmallGrey}><Image style={{ width: "22px", height: "22px", top: 3, marginRight: 5 }} source={require('../../assets/svg/church.svg')}></Image>{this.state.OrganizationDetails.orgName ? this.state.OrganizationDetails.orgName : "No Organization Name"}</Text>
                 {/*!this.state.isEditable ?
                   <Button bordered style={this.styles.style.connectWithSliderButton} onPress={() => { this.openConversation(this.state.OrganizationDetails.id, this.state.OrganizationDetails.given_name + " " + this.state.OrganizationDetails.family_name) }}><Text style={this.styles.style.fontStartConversation}>Start Conversation</Text></Button>
@@ -544,12 +568,12 @@ class OrganizationImpl extends JCComponent<Props, State> {
                       onChange={(e) => { this.handleInputChange(e, "country") }} />
                   </Item>
                   <Item stackedLabel>
-                    <Label style={this.styles.style.fontFormSmall}><Text style={this.styles.style.fontFormMandatory}>*</Text>Email Address</Label>
+                    <Label style={this.styles.style.fontFormSmall}><Text style={this.styles.style.fontFormMandatory}>*</Text>Admin Email Address</Label>
                     <Input data-testid="org-Email" style={this.styles.style.fontFormMediumInput} value={this.state.OrganizationDetails.adminEmail}
                       onChange={(e) => { this.handleInputChange(e, "adminEmail") }} />
                   </Item>
                   <Item stackedLabel>
-                    <Label style={this.styles.style.fontFormSmall}><Text style={this.styles.style.fontFormMandatory}>*</Text>Phone #</Label>
+                    <Label style={this.styles.style.fontFormSmall}><Text style={this.styles.style.fontFormMandatory}>*</Text>Admin Phone #</Label>
                     <Input data-testid="org-Phone" style={this.styles.style.fontFormMediumInput} value={this.state.OrganizationDetails.phone}
                       onChange={(e) => { this.handleInputChange(e, "phone") }} />
                   </Item>

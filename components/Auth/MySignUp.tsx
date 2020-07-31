@@ -24,9 +24,11 @@ interface State {
         email: string;
         phone: string;
         code: string;
+        orgName: string;
     }
     authError: string;
     enabled: boolean;
+    joinedAs: 'individual' | 'organization' | null;
 }
 
 class MySignUp extends React.Component<Props, State> {
@@ -41,9 +43,11 @@ class MySignUp extends React.Component<Props, State> {
                 email: '',
                 phone: '',
                 code: '+1', // default to Canada
+                orgName: '',
             },
             authError: '',
             enabled: false,
+            joinedAs: null,
         }
     }
 
@@ -57,9 +61,11 @@ class MySignUp extends React.Component<Props, State> {
                 email: '',
                 phone: '',
                 code: '+1',
+                orgName: ''
             },
             authError: '',
             enabled: false,
+            joinedAs: null,
         })
         this.props.onStateChange(state);
     }
@@ -87,6 +93,10 @@ class MySignUp extends React.Component<Props, State> {
             val = false;
         }
 
+        if (!this.state.user.orgName && this.state.joinedAs === 'organization') {
+            val = false;
+        }
+
         return val
     }
 
@@ -111,7 +121,9 @@ class MySignUp extends React.Component<Props, State> {
                     family_name: this.state.user.last,
                     given_name: this.state.user.first,
                     phone_number: this.state.user.code + this.state.user.phone,
-                    email: this.state.user.email
+                    email: this.state.user.email,
+                    'custom:orgName': this.state.user.orgName,
+                    'custom:isOrg': Boolean(this.state.joinedAs === 'organization').toString()
                 }
             }).then(() => this.changeAuthState('confirmSignUp'));
         } catch (e) {
@@ -143,47 +155,91 @@ class MySignUp extends React.Component<Props, State> {
     render(): React.ReactNode {
         return (
             this.props.authState === 'signUp' ?
-                (<View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>
+                <View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>
                     <View style={this.styles.style.signUpBackButtonWrapper} >
                         <TouchableOpacity onPress={() => this.changeAuthState('signIn')}>
                             <Text style={{ alignSelf: 'flex-end', marginRight: 30, fontSize: 20, fontFamily: 'Graphik-Regular-App', lineHeight: 24, color: '#333333' }}><Entypo name="chevron-left" size={20} color="#333333" />Back</Text>
                         </TouchableOpacity>
                     </View>
-                    <View style={this.styles.style.authView3}>
-                        <Text style={{ width: "100%", marginBottom: '8.33%', fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 22, lineHeight: 30 }}>Create your account</Text>
-                        <View style={{ display: 'flex', flexDirection: 'row', marginBottom: '5.5%' }}>
-                            <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput textContentType="name" placeholder="First Name" value={this.state.user.first} onChange={e => this.handleChange('first', e.nativeEvent.text)} style={{ borderBottomWidth: 1, borderColor: "#00000020", marginBottom: '1.4%', marginRight: 30, width: '100%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
-                            <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput textContentType="familyName" placeholder="Last Name" value={this.state.user.last} onChange={e => this.handleChange('last', e.nativeEvent.text)} style={{ borderBottomWidth: 1, borderColor: "#00000020", marginBottom: '1.4%', width: '100%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
+                    {this.state.joinedAs ? this.state.joinedAs === 'individual' ?
+                        <View style={this.styles.style.authView3}>
+                            <Text style={{ width: "100%", marginBottom: '8.33%', fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 22, lineHeight: 30 }}>Create your account</Text>
+                            <View style={{ display: 'flex', flexDirection: 'row', marginBottom: '5.5%' }}>
+                                <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput textContentType="name" placeholder="First Name" value={this.state.user.first} onChange={e => this.handleChange('first', e.nativeEvent.text)} style={{ borderBottomWidth: 1, borderColor: "#00000020", marginBottom: '1.4%', marginRight: 30, width: '100%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
+                                <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput textContentType="familyName" placeholder="Last Name" value={this.state.user.last} onChange={e => this.handleChange('last', e.nativeEvent.text)} style={{ borderBottomWidth: 1, borderColor: "#00000020", marginBottom: '1.4%', width: '100%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
+                            </View>
+                            <View style={{ display: 'flex', flexDirection: 'row', marginBottom: '1.4%', }}>
+                                <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput autoCompleteType="email" textContentType="emailAddress" keyboardType="email-address" placeholder="Email address" value={this.state.user.email} onChange={e => this.handleChange('email', e.nativeEvent.text)} style={{ borderBottomWidth: 1, borderColor: "#00000020", width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
+                            </View>
+                            <View style={{ display: 'flex', flexDirection: 'row', marginBottom: '5.5%' }}>
+                                <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput textContentType="newPassword" placeholder="Create Password" value={this.state.user.pass} onChange={e => this.handleChange('pass', e.nativeEvent.text)} secureTextEntry={true} style={{ borderBottomWidth: 1, borderColor: "#00000020", marginBottom: '1.4%', marginRight: 30, width: '100%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
+                                <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput textContentType="newPassword" placeholder="Confirm Password" value={this.state.user.pass2} onChange={e => this.handleChange('pass2', e.nativeEvent.text)} secureTextEntry={true} style={{ borderBottomWidth: 1, borderColor: "#00000020", marginBottom: '1.4%', width: '100%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
+                            </View>
+                            <View style={{ display: 'flex', flexDirection: 'row', marginBottom: '8.33%' }}>
+                                <Picker
+                                    selectedValue={this.state.user.code}
+                                    onValueChange={val => this.handleChange('code', val)}
+                                    style={{ marginRight: 5, borderColor: '#00000070' }}
+                                >
+                                    {countryDialCodes.map(dialCode => (
+                                        <Picker.Item key={dialCode} value={dialCode} label={dialCode} />
+                                    ))}
+                                </Picker>
+                                <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text>
+                                <TextInput autoCompleteType="tel" textContentType="telephoneNumber" onKeyPress={(e) => this.handleEnter(e)} keyboardType="phone-pad" placeholder="Phone number" value={this.state.user.phone} onChange={e => this.handleChange('phone', e.nativeEvent.text)} style={{ borderBottomWidth: 1, borderColor: "#00000020", width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
+                            </View>
+                            <JCButton enabled={this.state.enabled} buttonType={this.state.enabled ? ButtonTypes.SolidSignIn : ButtonTypes.DisabledSignIn} onPress={() => this.signUp()}>Continue</JCButton>
+                            <TouchableOpacity onPress={() => this.changeAuthState('confirmSignUp')}>
+                                <Text style={{ alignSelf: 'flex-end', marginRight: 30, fontSize: 14, fontFamily: 'Graphik-Regular-App', lineHeight: 22, color: '#333333', opacity: 0.7, marginTop: 20 }}>Confirm a code</Text>
+                            </TouchableOpacity>
+                            <Text style={{ alignSelf: 'center', alignItems: 'center', fontSize: 14, fontFamily: 'Graphik-Regular-App', lineHeight: 22, marginTop: 20 }} >{this.state.authError ? <Entypo name="warning" size={18} color="#F0493E" /> : null} {this.state.authError}</Text>
+                            <Copyright />
                         </View>
-                        <View style={{ display: 'flex', flexDirection: 'row', marginBottom: '1.4%', }}>
-                            <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput autoCompleteType="email" textContentType="emailAddress" keyboardType="email-address" placeholder="Email address" value={this.state.user.email} onChange={e => this.handleChange('email', e.nativeEvent.text)} style={{ borderBottomWidth: 1, borderColor: "#00000020", width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
+                        : <View style={this.styles.style.authView3}>
+                            <Text style={{ width: "100%", marginBottom: '8.33%', fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 22, lineHeight: 30 }}>Set up the account for the administrator of your organization first</Text>
+                            <View style={{ display: 'flex', flexDirection: 'row', marginBottom: '5.5%' }}>
+                                <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput textContentType="name" placeholder="First Name" value={this.state.user.first} onChange={e => this.handleChange('first', e.nativeEvent.text)} style={{ borderBottomWidth: 1, borderColor: "#00000020", marginBottom: '1.4%', marginRight: 30, width: '100%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
+                                <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput textContentType="familyName" placeholder="Last Name" value={this.state.user.last} onChange={e => this.handleChange('last', e.nativeEvent.text)} style={{ borderBottomWidth: 1, borderColor: "#00000020", marginBottom: '1.4%', width: '100%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
+                            </View>
+                            <View style={{ display: 'flex', flexDirection: 'row', marginBottom: '1.4%', }}>
+                                <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput autoCompleteType="email" textContentType="emailAddress" keyboardType="email-address" placeholder="Email Address" value={this.state.user.email} onChange={e => this.handleChange('email', e.nativeEvent.text)} style={{ borderBottomWidth: 1, marginRight: 30, borderColor: "#00000020", width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
+                                <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput placeholder="Organization Name" value={this.state.user.orgName} onChange={e => this.handleChange('orgName', e.nativeEvent.text)} style={{ borderBottomWidth: 1, borderColor: "#00000020", width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
+                            </View>
+                            <View style={{ display: 'flex', flexDirection: 'row', marginBottom: '5.5%' }}>
+                                <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput textContentType="newPassword" placeholder="Create Password" value={this.state.user.pass} onChange={e => this.handleChange('pass', e.nativeEvent.text)} secureTextEntry={true} style={{ borderBottomWidth: 1, borderColor: "#00000020", marginBottom: '1.4%', marginRight: 30, width: '100%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
+                                <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput textContentType="newPassword" placeholder="Confirm Password" value={this.state.user.pass2} onChange={e => this.handleChange('pass2', e.nativeEvent.text)} secureTextEntry={true} style={{ borderBottomWidth: 1, borderColor: "#00000020", marginBottom: '1.4%', width: '100%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
+                            </View>
+                            <View style={{ display: 'flex', flexDirection: 'row', marginBottom: '8.33%' }}>
+                                <Picker
+                                    selectedValue={this.state.user.code}
+                                    onValueChange={val => this.handleChange('code', val)}
+                                    style={{ marginRight: 5, borderColor: '#00000070' }}
+                                >
+                                    {countryDialCodes.map(dialCode => (
+                                        <Picker.Item key={dialCode} value={dialCode} label={dialCode} />
+                                    ))}
+                                </Picker>
+                                <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text>
+                                <TextInput autoCompleteType="tel" textContentType="telephoneNumber" onKeyPress={(e) => this.handleEnter(e)} keyboardType="phone-pad" placeholder="Phone number" value={this.state.user.phone} onChange={e => this.handleChange('phone', e.nativeEvent.text)} style={{ borderBottomWidth: 1, borderColor: "#00000020", width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
+                            </View>
+                            <JCButton enabled={this.state.enabled} buttonType={this.state.enabled ? ButtonTypes.SolidSignIn : ButtonTypes.DisabledSignIn} onPress={() => this.signUp()}>Continue</JCButton>
+                            <TouchableOpacity onPress={() => this.changeAuthState('confirmSignUp')}>
+                                <Text style={{ alignSelf: 'flex-end', marginRight: 30, fontSize: 14, fontFamily: 'Graphik-Regular-App', lineHeight: 22, color: '#333333', opacity: 0.7, marginTop: 20 }}>Confirm a code</Text>
+                            </TouchableOpacity>
+                            <Text style={{ alignSelf: 'center', alignItems: 'center', fontSize: 14, fontFamily: 'Graphik-Regular-App', lineHeight: 22, marginTop: 20 }} >{this.state.authError ? <Entypo name="warning" size={18} color="#F0493E" /> : null} {this.state.authError}</Text>
+                            <Copyright />
                         </View>
-                        <View style={{ display: 'flex', flexDirection: 'row', marginBottom: '5.5%' }}>
-                            <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput textContentType="newPassword" placeholder="Create Password" value={this.state.user.pass} onChange={e => this.handleChange('pass', e.nativeEvent.text)} secureTextEntry={true} style={{ borderBottomWidth: 1, borderColor: "#00000020", marginBottom: '1.4%', marginRight: 30, width: '100%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
-                            <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text><TextInput textContentType="newPassword" placeholder="Confirm Password" value={this.state.user.pass2} onChange={e => this.handleChange('pass2', e.nativeEvent.text)} secureTextEntry={true} style={{ borderBottomWidth: 1, borderColor: "#00000020", marginBottom: '1.4%', width: '100%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
-                        </View>
-                        <View style={{ display: 'flex', flexDirection: 'row', marginBottom: '8.33%' }}>
-                            <Picker
-                                selectedValue={this.state.user.code}
-                                onValueChange={val => this.handleChange('code', val)}
-                                style={{ marginRight: 5, borderColor: '#00000070' }}
-                            >
-                                {countryDialCodes.map(dialCode => (
-                                    <Picker.Item key={dialCode} value={dialCode} label={dialCode} />
-                                ))}
-                            </Picker>
-                            <Text style={{ fontSize: 22, color: '#F0493E', fontFamily: 'Graphik-Regular-App' }}>*</Text>
-                            <TextInput autoCompleteType="tel" textContentType="telephoneNumber" onKeyPress={(e) => this.handleEnter(e)} keyboardType="phone-pad" placeholder="Phone number" value={this.state.user.phone} onChange={e => this.handleChange('phone', e.nativeEvent.text)} style={{ borderBottomWidth: 1, borderColor: "#00000020", width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
-                        </View>
-                        <JCButton enabled={this.state.enabled} buttonType={this.state.enabled ? ButtonTypes.SolidSignIn : ButtonTypes.DisabledSignIn} onPress={() => this.signUp()}>Continue</JCButton>
-                        <TouchableOpacity onPress={() => this.changeAuthState('confirmSignUp')}>
-                            <Text style={{ alignSelf: 'flex-end', marginRight: 30, fontSize: 14, fontFamily: 'Graphik-Regular-App', lineHeight: 22, color: '#333333', opacity: 0.7, marginTop: 20 }}>Confirm a code</Text>
-                        </TouchableOpacity>
-                        <Text style={{ alignSelf: 'center', alignItems: 'center', fontSize: 14, fontFamily: 'Graphik-Regular-App', lineHeight: 22, marginTop: 20 }} >{this.state.authError ? <Entypo name="warning" size={18} color="#F0493E" /> : null} {this.state.authError}</Text>
-                        <Copyright />
-                    </View>
+                        : <View style={this.styles.style.authView3}>
+                            <Text style={{ width: "100%", marginBottom: '8.33%', fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 22, lineHeight: 30, alignSelf: 'center' }}>Welcome. What type of account would you like to create?</Text>
+                            <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                                <JCButton buttonType={ButtonTypes.SolidSignIn2} onPress={() => this.setState({ joinedAs: 'individual' })}>Individual</JCButton>
+                                <Text style={{ fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 22, marginHorizontal: 15 }}>or</Text>
+                                <JCButton buttonType={ButtonTypes.SolidSignIn2} onPress={() => this.setState({ joinedAs: 'organization' })}>Organization</JCButton>
+                            </View>
+                            <Copyright marginTop={90} />
+                        </View>}
                     {Platform.OS === 'web' && Dimensions.get('window').width > 720 ? <SignUpSidebar position="1" /> : null}
-                </View>)
+                </View >
                 : null
         );
     }

@@ -16,6 +16,7 @@ import Validate from '../../components/Validate/Validate'
 import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
 import { UserContext } from './UserContext'
 import SignUpScreen3 from '../../components/Auth/SignUpScreen3'
+import { CreateOrganizationInput, CreateOrganizationMemberInput, CreateUserInput } from '../../src/API';
 
 import moment from "moment";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native"
@@ -377,13 +378,24 @@ class MainAppRouter extends JCComponent {
               }
             </Stack.Navigator>
           );
-
-
         }}
       </MainAppRouter.Consumer>
     )
   }
+}
 
+interface Props {
+  authState?: any;
+}
+interface State extends JCState {
+  hasCompletedPersonalProfile: string;
+  hasPaidState: string;
+  userExists: boolean;
+  user: any;
+  authState: any;
+  hasCompletedOrganizationProfile: string;
+  orgId: string;
+  isOrg: boolean;
 }
 
 class HomeScreenRouter extends JCComponent<Props, State> {
@@ -395,7 +407,10 @@ class HomeScreenRouter extends JCComponent<Props, State> {
       hasPaidState: "Complete",
       userExists: false,
       user: null,
-      authState: props.authState
+      authState: props.authState,
+      hasCompletedOrganizationProfile: "Unknown",
+      orgId: '',
+      isOrg: false
     }
   }
   componentDidMount(): void {
@@ -418,15 +433,17 @@ class HomeScreenRouter extends JCComponent<Props, State> {
     if (this.user != null) {
       const { attributes } = this.user;
       const handleUser = async (getUser) => {
+
         if (getUser.data.getUser === null) {
           console.log("Trying to create")
-          const inputData = {
+          const inputData: CreateUserInput = {
             id: this.user['username'],
             given_name: attributes['given_name'],
             family_name: attributes['family_name'],
             email: attributes['email'],
             phone: attributes['phone_number'],
             profileState: "Incomplete",
+            orgName: attributes['custom:orgName'],
             alertConfig: {
               emailDirectMessage: "true",
               emailGroupMessage: "true",
@@ -450,16 +467,77 @@ class HomeScreenRouter extends JCComponent<Props, State> {
             });
 
             userExists = true
-
             console.log({ createUser: createUser })
           } catch (e) {
             console.log({ error: e })
           }
-
         }
         else {
           userExists = true
           console.log("User exists")
+        }
+
+        if (attributes['custom:isOrg'] === 'true' && getUser) {
+          this.setState({ isOrg: true })
+          if (getUser?.data.getUser.organizations.items.length === 0) {
+            console.log('creating organziation')
+            const id = `organization-${Date.now()}`;
+            const orgInput: CreateOrganizationInput = {
+              id: id,
+              orgName: attributes['custom:orgName'],
+              adminEmail: attributes['email'],
+              phone: attributes['phone_number'],
+              profileState: "Incomplete",
+              admins: [this.user['username']],
+              superAdmin: this.user['username'],
+              parentOrganizationId: id,
+              joined: moment().format()
+            }
+
+            let orgId = '';
+
+            try {
+              const createOrg: any = await API.graphql({
+                query: mutations.createOrganization,
+                variables: {
+                  input: orgInput
+                },
+                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+              });
+              console.log({ createOrg: createOrg })
+              orgId = createOrg.data.createOrganization.id
+            } catch (e) {
+              if (e?.data?.createOrganization)
+                orgId = e.data.createOrganization.id
+              console.error({ error: e })
+            }
+
+            this.setState({ orgId })
+
+            const orgMember: CreateOrganizationMemberInput = {
+              userRole: 'superAdmin',
+              userId: this.user['username'],
+              organizationId: orgId
+            }
+
+            try {
+              const createOrgMember: any = await API.graphql({
+                query: mutations.createOrganizationMember,
+                variables: {
+                  input: orgMember
+                },
+                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+              });
+              console.log({ createOrgMember: createOrgMember })
+            } catch (e) {
+              console.log({ error: e })
+            }
+          } else if (getUser?.data?.getUser?.organizations?.items[0]?.organizationId && getUser?.data.getUser.organizations.items.length === 1) {
+            console.log('organzation exists: setting organization id')
+            this.setState({ orgId: getUser.data.getUser.organizations.items[0].organizationId })
+          } else {
+            console.error('error finding or creating user\'s organziation')
+          }
         }
       }
       const z: any = API.graphql(
@@ -600,27 +678,10 @@ async function trackUserId() {
   }
 }
 
-
-
-
-
-
-interface Props {
-  authState?: any;
-
-}
-interface State extends JCState {
-  hasCompletedPersonalProfile: string;
-  hasPaidState: string;
-  userExists: boolean;
-  user: any;
-  authState: any
-}
 interface AppState extends JCState {
 
   authState: any
 }
-
 
 export default class App extends JCComponent<Props, AppState>{
   constructor(props: Props) {
