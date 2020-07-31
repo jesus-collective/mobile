@@ -21,7 +21,7 @@ class CourseHeaderImpl extends JCComponent<Props> {
         //const { navigate } = this.props.navigation;
         return (
             this.props.groupData ?
-                <Container style={{ backgroundColor: "#F0493E", flex: 20 }}>
+                <Container style={{ backgroundColor: "#F0493E", flex: 55 }}>
                     <Text style={this.styles.style.fontCourseHeaderTime}>{moment(this.props.groupData.time).format('MMMM Do YYYY')} - {this.props.groupData.length}</Text>
                     <EditableText multiline={false} textStyle={this.styles.style.fontCourseHeaderBold} value={this.props.groupData.name} isEditable={false}></EditableText>
                     <Text style={this.styles.style.fontCourseHeader}>Course</Text>
