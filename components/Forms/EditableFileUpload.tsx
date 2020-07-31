@@ -133,9 +133,9 @@ export default class EditableFileUpload extends JCComponent<Props> {
             this.props.isEditable ?
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                     {this.props.attachment ? this.renderFileUploadBadge() : null}
-                    < View style={{ marginRight: 10 }}>
+                    < View style={{ marginRight: 0 }}>
                         <JCButton buttonType={ButtonTypes.SolidRightJustified} onPress={() => { null }}>
-                            <AntDesign name="clouduploado" size={16} color="white" style={{ marginRight: 5 }} />Attach a file</JCButton>
+                            <AntDesign name="clouduploado" size={18} color="white" style={{ marginRight: 5 }} />Attach a file</JCButton>
                         <input multiple={false}
                             style={{ cursor: 'pointer', width: '100%', height: '100%', position: "absolute", top: "0px", right: "0px", opacity: "0" }}
                             type="file"
