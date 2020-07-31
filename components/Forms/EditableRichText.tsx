@@ -61,8 +61,8 @@ export default class EditableRichText extends JCComponent<Props, State> {
     }
     updateInput(value: any): void {
 
-        this.setState({ value: JSON.stringify(value) },
-            this.props.onChange(this.state.value)
+        this.setState({ value: JSON.stringify(value) }
+            // this.props.onChange(this.state.value)
         )
 
     }
