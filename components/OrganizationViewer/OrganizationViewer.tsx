@@ -8,7 +8,7 @@ import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native';
 import { GraphQLResult } from '@aws-amplify/api/lib/types';
 import ProfileImage from '../ProfileImage/ProfileImage';
 import { Auth } from 'aws-amplify';
-import { GetOrganizationQuery, CreateOrganizationInput } from '../../src/API'
+import { GetOrganizationQuery, CreateOrganizationInput, CreateOrganizationMemberInput } from '../../src/API'
 import Amplify from 'aws-amplify'
 import awsconfig from '../../src/aws-exports';
 import Validate from '../Validate/Validate';
@@ -298,12 +298,18 @@ class OrganizationImpl extends JCComponent<Props, State> {
     }
 
     const newAdmins = this.state.OrganizationDetails.admins;
+    const justNewAdmins = []
 
     this.state.newAdmins.forEach(user => {
 
       if (!newAdmins.includes(user.id))
         newAdmins.push(user.id)
+      justNewAdmins.push(user.id)
     })
+
+    if (newAdmins.length < this.state.OrganizationDetails.admins.length) {
+      return
+    }
 
     try {
       const addAdmins = await API.graphql(graphqlOperation(mutations.updateOrganization, { input: { id: this.state.OrganizationDetails.id, admins: newAdmins } }));
@@ -311,6 +317,29 @@ class OrganizationImpl extends JCComponent<Props, State> {
     } catch (err) {
       console.error(err)
     }
+    this.createGroupMembers(justNewAdmins);
+  }
+
+  createGroupMembers(admins: string[]) {
+    admins.map(async (admin) => {
+      const orgMember: CreateOrganizationMemberInput = {
+        userRole: 'admin',
+        userId: admin,
+        organizationId: this.state.OrganizationDetails.id
+      }
+      try {
+        const createOrgMember: any = await API.graphql({
+          query: mutations.createOrganizationMember,
+          variables: {
+            input: orgMember
+          },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+        });
+        console.log({ createOrgMember: createOrgMember })
+      } catch (e) {
+        console.error(e)
+      }
+    })
   }
 
   async removeAdmins(): Promise<void> {

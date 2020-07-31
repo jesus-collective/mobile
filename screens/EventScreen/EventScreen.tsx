@@ -22,7 +22,8 @@ import EditableDate from '../../components/Forms/EditableDate'
 import EditableLocation from '../../components/Forms/EditableLocation'
 import EditableUrl from '../../components/Forms/EditableUrl'
 import moment from 'moment-timezone'
-import { MapData } from 'components/MyGroups/MyGroups';
+import { MapData } from '../../components/MyGroups/MyGroups';
+import { GetUserQuery } from '../../src/API'
 
 const MessageBoard = lazy(() => import('../../components/MessageBoard/MessageBoard'));
 
@@ -47,6 +48,7 @@ interface State extends JCState {
   attendeeIDs: string[]
   mapData: MapData[]
   initCenter: any
+  ownsOrgs: GetUserQuery['getUser']['organizations']['items']
 }
 
 
@@ -71,7 +73,8 @@ export default class EventScreen extends JCComponent<Props, State>{
       currentUserProfile: null,
       attendeeIDs: [],
       mapData: [],
-      initCenter: { lat: 44, lng: -78 }
+      initCenter: { lat: 44, lng: -78 },
+      ownsOrgs: []
     }
     Auth.currentAuthenticatedUser().then((user: any) => {
       this.setState({
@@ -80,6 +83,7 @@ export default class EventScreen extends JCComponent<Props, State>{
       const getUser: any = API.graphql(graphqlOperation(queries.getUser, { id: user['username'] }));
       getUser.then((json) => {
         this.setState({
+          ownsOrgs: json.data.getUser.organizations.items.filter(item => item.userRole === 'superAdmin' || item.userRole === 'admin'),
           currentUserProfile: json.data.getUser,
 
         }, () => {
@@ -322,6 +326,10 @@ export default class EventScreen extends JCComponent<Props, State>{
     console.log("Navigate to profileScreen")
     this.props.navigation.push("ProfileScreen", { id: id, create: false });
   }
+  showOrg(id: string): void {
+    console.log("Navigate to org")
+    this.props.navigation.push("OrganizationScreen", { id: id, create: false });
+  }
   renderButtons(): React.ReactNode {
     return (
       <Container style={{ flexDirection: "column", flexGrow: 1 }}>
@@ -333,6 +341,21 @@ export default class EventScreen extends JCComponent<Props, State>{
           <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Don&apos;t Attend</JCButton> :
           null
         }
+        {this.state.createNew ? <Text>Create as organization:</Text> : null}
+        {this.state.createNew ? <Picker
+          mode="dropdown"
+          style={{ width: "100%", marginBottom: 30, fontSize: 16, height: 30, flexGrow: 0 }}
+          selectedValue={this.state.data.ownerOrgID}
+          onValueChange={(value: any) => { this.updateValue("ownerOrgID", value) }}
+        >
+          <Picker.Item label="None selected" value="" />
+          {this.state.ownsOrgs.map(org => {
+            return (
+              <Picker.Item key={org.organizationId} label={org.organizationId} value={org.organizationId} />
+            )
+          })}
+        </Picker>
+          : null}
         {this.state.createNew ?
           <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.createNew() }} >Create Event</JCButton>
           : null
@@ -437,8 +460,8 @@ export default class EventScreen extends JCComponent<Props, State>{
                   }
 
                   <Text style={{ fontFamily: "Graphik-Regular-App", fontSize: 16, lineHeight: 23, color: "#333333", paddingBottom: 12, marginTop: 52 }}>Organizer</Text>
-                  <TouchableOpacity onPress={() => { this.showProfile(this.state.data.ownerUser ? this.state.data.ownerUser.id : this.state.currentUserProfile.id) }}>
-                    <ProfileImage user={this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
+                  <TouchableOpacity onPress={() => { this.state.data.ownerOrg ? this.showOrg(this.state.data.ownerOrg.id) : this.showProfile(this.state.data.ownerUser ? this.state.data.ownerUser.id : this.state.currentUserProfile.id) }}>
+                    <ProfileImage user={this.state.data.ownerOrg ? this.state.data.ownerOrg.id : this.state.data.ownerUser ? this.state.data.ownerUser : this.state.currentUserProfile} size="small" />
                   </TouchableOpacity>
 
                   <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, letterSpacing: -0.3, color: "#333333", paddingTop: 48, paddingBottom: 12 }}>Attending ({this.state.attendeeIDs.length})</Text>
