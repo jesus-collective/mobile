@@ -64,53 +64,26 @@ class CourseHomeImpl extends JCComponent<Props>{
                               </Text>
                             </Container>
                           </Container>
-                          <Container style={{ marginTop: 150 }}>
-                          {state.courseData ?
-                            <EditableRichText onChange={(val) => { actions.updateCourse("introduction", val) }}
-                              value={state.courseData.introduction}
-                              isEditable={true}
-                              textStyle=""></EditableRichText> : null}
-                            <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 25 }}>Instructor:</Text>
-                            <EditableUsers
-                              limit={1}
-                              onChange={(value: any[]) => { actions.updateCourse("instructor", value) }}
-                              multiline={false}
-                              data-testid="profile-currentRole"
-                              showProfileImages={true}
-                              textStyle={this.styles.style.fontFormSmallDarkGrey}
-                              inputStyle={this.styles.style.fontFormLargeInput}
-                              value={state.instructor} isEditable={true}></EditableUsers>
-                          </Container>
-                            <Text>Syllabus</Text>
-                          <Card>
+                          <Container style={{ marginTop: 200 }}>
                             {state.courseData ?
-                              <EditableFileUpload
-                                textStyle={null}
-                                inputStyle={null}
-                                attachment={state.courseData.sylabusAttachment}
-                                isEditable={state.isEditable}
-                                attachmentName={state.courseData.sylabusAttachmentName}
-                                onChange={(obj) => {
-                                  console.log({ "attachmentName": obj.attachmentName, "attachment": obj.attachment })
-                                  if (obj.attachmentName != undefined) actions.updateCourse("sylabusAttachmentName", obj.attachmentName)
-                                  if (obj.attachment != undefined) actions.updateCourse("sylabusAttachment", obj.attachment)
-                                }}>
-
-                              </EditableFileUpload>
-                              : null}
-
-                            <Text>Instructor:</Text>
-                            <EditableUsers
-                              limit={1}
-                              onChange={(value: any[]) => { actions.updateCourse("instructor", value) }}
-                              multiline={false}
-                              data-testid="profile-currentRole"
-                              showProfileImages={true}
-                              textStyle={this.styles.style.fontFormSmallDarkGrey}
-                              inputStyle={this.styles.style.fontFormLargeInput}
-                              value={state.instructor} isEditable={true}></EditableUsers>
-                            <Text>Syllabus</Text>
-                            <Card>
+                              <EditableRichText onChange={(val) => { actions.updateCourse("introduction", val) }}
+                                value={state.courseData.introduction}
+                                isEditable={true}
+                                textStyle=""></EditableRichText> : null}
+                              <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 25 }}>Instructor:</Text>
+                              <EditableUsers
+                                limit={1}
+                                onChange={(value: any[]) => { actions.updateCourse("instructor", value) }}
+                                multiline={false}
+                                data-testid="profile-currentRole"
+                                showProfileImages={true}
+                                textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                inputStyle={this.styles.style.fontFormLargeInput}
+                                value={state.instructor} isEditable={true}></EditableUsers>
+                          </Container>
+                          <Container>
+                            <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 25 }}>Syllabus</Text>
+                            <Card style={{ width: '90%', borderColor: '#FFFFFF'}}>
                               {state.courseData ?
                                 <EditableFileUpload
                                   textStyle={null}
@@ -127,83 +100,112 @@ class CourseHomeImpl extends JCComponent<Props>{
                                 </EditableFileUpload>
                                 : null}
 
-                            </Card>
-                            {state.isEditable ?
-                              (<>
-                                {state.courseData?.triads?.items.map((item, index) => {
-                                  <Card>
-                                    <Text>Coach</Text>
-                                    <EditableUsers
-                                      limit={1}
-                                      onChange={(value: any[]) => { actions.updateTriad(index, "coach", value) }}
-                                      multiline={false}
-                                      data-testid="profile-currentRole"
-                                      showProfileImages={true}
-                                      textStyle={this.styles.style.fontFormSmallDarkGrey}
-                                      inputStyle={this.styles.style.fontFormLargeInput}
-                                      value={item.coach} isEditable={true}></EditableUsers>
-
-                                    <Text>Triad</Text>
-                                    <EditableUsers
-                                      limit={3}
-                                      onChange={(value: any[]) => { actions.updateTriad(index, "triad", value) }}
-                                      multiline={false}
-                                      data-testid="profile-currentRole"
-                                      showProfileImages={true}
-                                      textStyle={this.styles.style.fontFormSmallDarkGrey}
-                                      inputStyle={this.styles.style.fontFormLargeInput}
-                                      value={item.triad} isEditable={true}></EditableUsers>
-                                    <TouchableOpacity onPress={() => { actions.deleteTriad(index) }}>
-                                      <AntDesign name="close" size={20} color="black" />
-                                    </TouchableOpacity>
-                                  </Card>
-                                })
-                                }
-                                <TouchableOpacity onPress={() => { actions.createTriad() }}>
-                                  < Card ><Text>Add Triad</Text></Card>
-                                </TouchableOpacity>
-                              </>)
-                              : (<>
-                                <Text>My Coach</Text>
-                                <Card>
-                                  <EditableUsers
-                                    limit={1}
-                                    onChange={(value: any[]) => { null }}
-                                    multiline={false}
-                                    data-testid="profile-currentRole"
-                                    showProfileImages={true}
-                                    textStyle={this.styles.style.fontFormSmallDarkGrey}
-                                    inputStyle={this.styles.style.fontFormLargeInput}
-                                    value={state.myTriad.coach} isEditable={false}></EditableUsers>
-                                </Card>
-                                <Text>My Triad</Text>
-                                <Card>
-                                  <EditableUsers
-                                    limit={3}
-                                    onChange={(value: any[]) => { null }}
-                                    multiline={false}
-                                    data-testid="profile-currentRole"
-                                    showProfileImages={true}
-                                    textStyle={this.styles.style.fontFormSmallDarkGrey}
-                                    inputStyle={this.styles.style.fontFormLargeInput}
-                                    value={state.myTriad.coach} isEditable={false}></EditableUsers>
-                                </Card>
-                              </>)
-                            }
-                            <Text>My Cohort</Text>
-                            <Card>
+                              <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 25 }}>Instructor:</Text>
                               <EditableUsers
-                                limit={15}
-                                //  onChange={(value: any[]) => { actions.updateTriad({ newToList: value }) }}
+                                limit={1}
+                                onChange={(value: any[]) => { actions.updateCourse("instructor", value) }}
                                 multiline={false}
                                 data-testid="profile-currentRole"
                                 showProfileImages={true}
                                 textStyle={this.styles.style.fontFormSmallDarkGrey}
                                 inputStyle={this.styles.style.fontFormLargeInput}
-                                value={state.cohort} isEditable={true}>
-                              </EditableUsers>
+                                value={state.instructor} isEditable={true}></EditableUsers>
+                              <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 25 }}>Syllabus</Text>
+                              <Card>
+                                {state.courseData ?
+                                  <EditableFileUpload
+                                    textStyle={null}
+                                    inputStyle={null}
+                                    attachment={state.courseData.sylabusAttachment}
+                                    isEditable={state.isEditable}
+                                    attachmentName={state.courseData.sylabusAttachmentName}
+                                    onChange={(obj) => {
+                                      console.log({ "attachmentName": obj.attachmentName, "attachment": obj.attachment })
+                                      if (obj.attachmentName != undefined) actions.updateCourse("sylabusAttachmentName", obj.attachmentName)
+                                      if (obj.attachment != undefined) actions.updateCourse("sylabusAttachment", obj.attachment)
+                                    }}>
+
+                                  </EditableFileUpload>
+                                  : null}
+
+                              </Card>
+                              {state.isEditable ?
+                                (<>
+                                  {state.courseData?.triads?.items.map((item, index) => {
+                                    <Card>
+                                      <Text>Coach</Text>
+                                      <EditableUsers
+                                        limit={1}
+                                        onChange={(value: any[]) => { actions.updateTriad(index, "coach", value) }}
+                                        multiline={false}
+                                        data-testid="profile-currentRole"
+                                        showProfileImages={true}
+                                        textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                        inputStyle={this.styles.style.fontFormLargeInput}
+                                        value={item.coach} isEditable={true}></EditableUsers>
+
+                                      <Text>Triad</Text>
+                                      <EditableUsers
+                                        limit={3}
+                                        onChange={(value: any[]) => { actions.updateTriad(index, "triad", value) }}
+                                        multiline={false}
+                                        data-testid="profile-currentRole"
+                                        showProfileImages={true}
+                                        textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                        inputStyle={this.styles.style.fontFormLargeInput}
+                                        value={item.triad} isEditable={true}></EditableUsers>
+                                      <TouchableOpacity onPress={() => { actions.deleteTriad(index) }}>
+                                        <AntDesign name="close" size={20} color="black" />
+                                      </TouchableOpacity>
+                                    </Card>
+                                  })
+                                  }
+                                  <TouchableOpacity onPress={() => { actions.createTriad() }}>
+                                    < Card ><Text>Add Triad</Text></Card>
+                                  </TouchableOpacity>
+                                </>)
+                                : (<>
+                                  <Text>My Coach</Text>
+                                  <Card>
+                                    <EditableUsers
+                                      limit={1}
+                                      onChange={(value: any[]) => { null }}
+                                      multiline={false}
+                                      data-testid="profile-currentRole"
+                                      showProfileImages={true}
+                                      textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                      inputStyle={this.styles.style.fontFormLargeInput}
+                                      value={state.myTriad.coach} isEditable={false}></EditableUsers>
+                                  </Card>
+                                  <Text>My Triad</Text>
+                                  <Card>
+                                    <EditableUsers
+                                      limit={3}
+                                      onChange={(value: any[]) => { null }}
+                                      multiline={false}
+                                      data-testid="profile-currentRole"
+                                      showProfileImages={true}
+                                      textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                      inputStyle={this.styles.style.fontFormLargeInput}
+                                      value={state.myTriad.coach} isEditable={false}></EditableUsers>
+                                  </Card>
+                                </>)
+                              }
+                              <Text>My Cohort</Text>
+                              <Card>
+                                <EditableUsers
+                                  limit={15}
+                                  //  onChange={(value: any[]) => { actions.updateTriad({ newToList: value }) }}
+                                  multiline={false}
+                                  data-testid="profile-currentRole"
+                                  showProfileImages={true}
+                                  textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                  inputStyle={this.styles.style.fontFormLargeInput}
+                                  value={state.cohort} isEditable={true}>
+                                </EditableUsers>
+                              </Card>
                             </Card>
-                          </Card>
+                          </Container>
                         </Container>
                         <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
 
