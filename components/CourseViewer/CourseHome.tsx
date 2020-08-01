@@ -212,8 +212,8 @@ class CourseHomeImpl extends JCComponent<Props>{
                             <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App' }}>Coaching call with {state.coachName}</Text>
                           </Card>
 
-                          <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30, width: '90%' }}>My Calendar</Text>
-                          <Calendar
+                          <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 50, width: '90%' }}>My Calendar</Text>
+                          <Calendar style={{ width: '90%', borderColor: '#FFFFFF', paddingLeft: 60, paddingRight: 60, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 15, paddingTop: 20, paddingBottom: 20 }}
                             // Collection of dates that have to be marked. Default = {}
                             current={'2020-05-01'}
                             markedDates={{
@@ -223,7 +223,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                               '2020-05-19': { disabled: true, disableTouchEvent: true }
                             }}
                           />
-                          <Text>Course Activity</Text>
+                          <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 50, width: '90%' }}>Course Activity</Text>
                           <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Today</JCButton>
                           <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Yesterday</JCButton>
                           <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>This Week</JCButton>
