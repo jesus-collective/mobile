@@ -224,10 +224,10 @@ class CourseHomeImpl extends JCComponent<Props>{
                             }}
                           />
                           <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 50, width: '90%' }}>Course Activity</Text>
-                          <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Today</JCButton>
-                          <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Yesterday</JCButton>
-                          <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>This Week</JCButton>
-                          <Text>Adam posted assignement to review</Text>
+                          <JCButton onPress={() => { null }} buttonType={ButtonTypes.CourseHomeSidebarTop}>Today</JCButton>
+                          <JCButton onPress={() => { null }} buttonType={ButtonTypes.CourseHome}>Yesterday</JCButton>
+                          <JCButton onPress={() => { null }} buttonType={ButtonTypes.CourseHome}>This Week</JCButton>
+                          <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App' }}>Adam posted assignement to review</Text>
                         </Container>
 
                       </Container>
