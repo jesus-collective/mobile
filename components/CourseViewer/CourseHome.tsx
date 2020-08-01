@@ -66,10 +66,11 @@ class CourseHomeImpl extends JCComponent<Props>{
                           </Container>
                           <Container style={{ marginTop: 200 }}>
                             {state.courseData ?
+                              <Container style={{ width: '90%' }}>
                               <EditableRichText onChange={(val) => { actions.updateCourse("introduction", val) }}
                                 value={state.courseData.introduction}
                                 isEditable={true}
-                                textStyle=""></EditableRichText> : null}
+                                textStyle=""></EditableRichText></Container> : null}
                               <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 25, width: '90%' }}>Instructor:</Text>
                               <EditableUsers
                                 limit={1}
@@ -77,13 +78,13 @@ class CourseHomeImpl extends JCComponent<Props>{
                                 multiline={false}
                                 data-testid="profile-currentRole"
                                 showProfileImages={true}
-                                textStyle={this.styles.style.fontFormSmallDarkGrey}
-                                inputStyle={this.styles.style.fontFormLargeInput}
+                                textStyle={this.styles.style.courseFormLargeInput}
+                                inputStyle={this.styles.style.courseFormLargeInput}
                                 value={state.instructor} isEditable={true}></EditableUsers>
                           </Container>
                           <Container style={{  }}>
-                            <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 25, width: '90%' }}>Syllabus</Text>
-                            <Card style={{ width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 15, paddingTop: 30, paddingBottom: 30 }}>
+                            <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>Syllabus</Text>
+                            <Card style={{ width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 30, paddingTop: 30, paddingBottom: 30 }}>
                               {state.courseData ?
                               <EditableFileUpload
                                 textStyle={null}
