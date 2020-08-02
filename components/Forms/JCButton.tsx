@@ -8,6 +8,7 @@ export enum ButtonTypes {
     CourseSideBar,
     CourseSideBarFirst,
     CourseHome,
+    CourseHomeSidebarTop,
     Solid,
     SolidSignIn,
     SolidSignIn2,

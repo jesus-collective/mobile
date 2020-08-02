@@ -47,13 +47,13 @@ class CourseHomeImpl extends JCComponent<Props>{
                     <Content contentContainerStyle={{ flex: 80 }} style={{ flex: 80 }}>
                       <Container style={{ flex: 80, display: "flex", flexDirection: "row", justifyContent: 'flex-start', paddingLeft: '5%' }}>
                         <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
-                          <Container style={{ flexDirection: 'row' }}>
+                          <Container style={{ flexDirection: 'row', paddingBottom: 30 }}>
                             <Container style={{ flexDirection: 'column', marginTop: 30, flex: 20 }}>
                               <Image style={{ margin: 0, padding: 0, width: 110, height: 136, marginBottom: 20, marginLeft: '15%' }} source={require("../../assets/profile-placeholder.png")} />
                               <JCButton onPress={() => { null }} buttonType={ButtonTypes.CourseHome}>Book a Call</JCButton>
                               <JCButton onPress={() => { null }} buttonType={ButtonTypes.TransparentBoldOrange}>Send Message</JCButton>
                             </Container>
-                            <Container style={{ flex: 80 }}>
+                            <Container style={{ flex: 80, height: 200 }}>
                               <Text style={{ marginTop: 30, marginLeft: 30, marginRight: 30, fontFamily: 'Graphik-Regular-App', fontSize: 20, lineHeight: 30 }}>
                                 {state.courseData ?
                                   <EditableRichText onChange={(val) => { actions.updateCourse("introduction", val) }}
@@ -64,25 +64,28 @@ class CourseHomeImpl extends JCComponent<Props>{
                               </Text>
                             </Container>
                           </Container>
-                          <Container style={{ marginTop: 150 }}>
-                          {state.courseData ?
-                            <EditableRichText onChange={(val) => { actions.updateCourse("introduction", val) }}
-                              value={state.courseData.introduction}
-                              isEditable={true}
-                              textStyle=""></EditableRichText> : null}
-                          <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 25 }}>Instructor:</Text>
-                          <EditableUsers
-                            limit={1}
-                            onChange={(value: any[]) => { actions.updateCourse("instructor", value) }}
-                            multiline={false}
-                            data-testid="profile-currentRole"
-                            showProfileImages={true}
-                            textStyle={this.styles.style.fontFormSmallDarkGrey}
-                            inputStyle={this.styles.style.fontFormLargeInput}
-                            value={state.instructor} isEditable={true}></EditableUsers>
-                          <Text>Syllabus</Text>
-                          <Card>
+                          <Container style={{ marginTop: 200 }}>
                             {state.courseData ?
+                              <Container style={{ width: '90%' }}>
+                              <EditableRichText onChange={(val) => { actions.updateCourse("introduction", val) }}
+                                value={state.courseData.introduction}
+                                isEditable={true}
+                                textStyle=""></EditableRichText></Container> : null}
+                              <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 25, width: '90%' }}>Instructor:</Text>
+                              <EditableUsers
+                                limit={1}
+                                onChange={(value: any[]) => { actions.updateCourse("instructor", value) }}
+                                multiline={false}
+                                data-testid="profile-currentRole"
+                                showProfileImages={true}
+                                textStyle={this.styles.style.courseFormLargeInput}
+                                inputStyle={this.styles.style.courseFormLargeInput}
+                                value={state.instructor} isEditable={true}></EditableUsers>
+                          </Container>
+                          <Container style={{  }}>
+                            <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>Syllabus</Text>
+                            <Card style={{ width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 30, paddingTop: 30, paddingBottom: 30 }}>
+                              {state.courseData ?
                               <EditableFileUpload
                                 textStyle={null}
                                 inputStyle={null}
@@ -98,120 +101,120 @@ class CourseHomeImpl extends JCComponent<Props>{
                               </EditableFileUpload>
                               : null}
 
-                            <Text>Instructor:</Text>
-                            <EditableUsers
-                              limit={1}
-                              onChange={(value: any[]) => { actions.updateCourse("instructor", value) }}
-                              multiline={false}
-                              data-testid="profile-currentRole"
-                              showProfileImages={true}
-                              textStyle={this.styles.style.fontFormSmallDarkGrey}
-                              inputStyle={this.styles.style.fontFormLargeInput}
-                              value={state.instructor} isEditable={true}></EditableUsers>
-                            <Text>Syllabus</Text>
-                            <Card>
-                              {state.courseData ?
-                                <EditableFileUpload
-                                  textStyle={null}
-                                  inputStyle={null}
-                                  attachment={state.courseData.sylabusAttachment}
-                                  isEditable={state.isEditable}
-                                  attachmentName={state.courseData.sylabusAttachmentName}
-                                  onChange={(obj) => {
-                                    console.log({ "attachmentName": obj.attachmentName, "attachment": obj.attachment })
-                                    if (obj.attachmentName != undefined) actions.updateCourse("sylabusAttachmentName", obj.attachmentName)
-                                    if (obj.attachment != undefined) actions.updateCourse("sylabusAttachment", obj.attachment)
-                                  }}>
-
-                                </EditableFileUpload>
-                                : null}
-
-                            </Card>
-                            {state.isEditable ?
-                              (<>
-                                {state.courseData?.triads?.items.map((item, index) => {
-                                  <Card>
-                                    <Text>Coach</Text>
-                                    <EditableUsers
-                                      limit={1}
-                                      onChange={(value: any[]) => { actions.updateTriad(index, "coach", value) }}
-                                      multiline={false}
-                                      data-testid="profile-currentRole"
-                                      showProfileImages={true}
-                                      textStyle={this.styles.style.fontFormSmallDarkGrey}
-                                      inputStyle={this.styles.style.fontFormLargeInput}
-                                      value={item.coach} isEditable={true}></EditableUsers>
-
-                                    <Text>Triad</Text>
-                                    <EditableUsers
-                                      limit={3}
-                                      onChange={(value: any[]) => { actions.updateTriad(index, "triad", value) }}
-                                      multiline={false}
-                                      data-testid="profile-currentRole"
-                                      showProfileImages={true}
-                                      textStyle={this.styles.style.fontFormSmallDarkGrey}
-                                      inputStyle={this.styles.style.fontFormLargeInput}
-                                      value={item.triad} isEditable={true}></EditableUsers>
-                                    <TouchableOpacity onPress={() => { actions.deleteTriad(index) }}>
-                                      <AntDesign name="close" size={20} color="black" />
-                                    </TouchableOpacity>
-                                  </Card>
-                                })
-                                }
-                                <TouchableOpacity onPress={() => { actions.createTriad() }}>
-                                  < Card ><Text>Add Triad</Text></Card>
-                                </TouchableOpacity>
-                              </>)
-                              : (<>
-                                <Text>My Coach</Text>
-                                <Card>
-                                  <EditableUsers
-                                    limit={1}
-                                    onChange={(value: any[]) => { null }}
-                                    multiline={false}
-                                    data-testid="profile-currentRole"
-                                    showProfileImages={true}
-                                    textStyle={this.styles.style.fontFormSmallDarkGrey}
-                                    inputStyle={this.styles.style.fontFormLargeInput}
-                                    value={state.myTriad.coach} isEditable={false}></EditableUsers>
-                                </Card>
-                                <Text>My Triad</Text>
-                                <Card>
-                                  <EditableUsers
-                                    limit={3}
-                                    onChange={(value: any[]) => { null }}
-                                    multiline={false}
-                                    data-testid="profile-currentRole"
-                                    showProfileImages={true}
-                                    textStyle={this.styles.style.fontFormSmallDarkGrey}
-                                    inputStyle={this.styles.style.fontFormLargeInput}
-                                    value={state.myTriad.coach} isEditable={false}></EditableUsers>
-                                </Card>
-                              </>)
-                            }
-                            <Text>My Cohort</Text>
-                            <Card>
+                              <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Instructor:</Text>
                               <EditableUsers
-                                limit={15}
-                                //  onChange={(value: any[]) => { actions.updateTriad({ newToList: value }) }}
+                                limit={1}
+                                onChange={(value: any[]) => { actions.updateCourse("instructor", value) }}
                                 multiline={false}
                                 data-testid="profile-currentRole"
                                 showProfileImages={true}
                                 textStyle={this.styles.style.fontFormSmallDarkGrey}
                                 inputStyle={this.styles.style.fontFormLargeInput}
-                                value={state.cohort} isEditable={true}></EditableUsers>
+                                value={state.instructor} isEditable={true}></EditableUsers>
+                              <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Syllabus</Text>
+                                {state.courseData ?
+                                  <EditableFileUpload
+                                    textStyle={null}
+                                    inputStyle={null}
+                                    attachment={state.courseData.sylabusAttachment}
+                                    isEditable={state.isEditable}
+                                    attachmentName={state.courseData.sylabusAttachmentName}
+                                    onChange={(obj) => {
+                                      console.log({ "attachmentName": obj.attachmentName, "attachment": obj.attachment })
+                                      if (obj.attachmentName != undefined) actions.updateCourse("sylabusAttachmentName", obj.attachmentName)
+                                      if (obj.attachment != undefined) actions.updateCourse("sylabusAttachment", obj.attachment)
+                                    }}>
+
+                                  </EditableFileUpload>
+                                  : null}
+                           
+                              {state.isEditable ?
+                                (<>
+                                  {state.courseData?.triads?.items.map((item, index) => {
+                                    <Card>
+                                      <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Coach</Text>
+                                      <EditableUsers
+                                        limit={1}
+                                        onChange={(value: any[]) => { actions.updateTriad(index, "coach", value) }}
+                                        multiline={false}
+                                        data-testid="profile-currentRole"
+                                        showProfileImages={true}
+                                        textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                        inputStyle={this.styles.style.fontFormLargeInput}
+                                        value={item.coach} isEditable={true}></EditableUsers>
+
+                                      <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Triad</Text>
+                                      <EditableUsers
+                                        limit={3}
+                                        onChange={(value: any[]) => { actions.updateTriad(index, "triad", value) }}
+                                        multiline={false}
+                                        data-testid="profile-currentRole"
+                                        showProfileImages={true}
+                                        textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                        inputStyle={this.styles.style.fontFormLargeInput}
+                                        value={item.triad} isEditable={true}></EditableUsers>
+                                      <TouchableOpacity onPress={() => { actions.deleteTriad(index) }}>
+                                        <AntDesign name="close" size={20} color="black" />
+                                      </TouchableOpacity>
+                                    </Card>
+                                  })
+                                  }
+                                  <TouchableOpacity onPress={() => { actions.createTriad() }}>
+                                    <Card><Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', paddingLeft: 5, paddingTop: 6, paddingBottom: 6 }}>Add Triad</Text></Card>
+                                  </TouchableOpacity>
+                                </>)
+                                : (<>
+                                  <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>My Coach</Text>
+                                  <Card>
+                                    <EditableUsers
+                                      limit={1}
+                                      onChange={(value: any[]) => { null }}
+                                      multiline={false}
+                                      data-testid="profile-currentRole"
+                                      showProfileImages={true}
+                                      textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                      inputStyle={this.styles.style.fontFormLargeInput}
+                                      value={state.myTriad.coach} isEditable={false}></EditableUsers>
+                                  </Card>
+                                  <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>My Triad</Text>
+                                  <Card>
+                                    <EditableUsers
+                                      limit={3}
+                                      onChange={(value: any[]) => { null }}
+                                      multiline={false}
+                                      data-testid="profile-currentRole"
+                                      showProfileImages={true}
+                                      textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                      inputStyle={this.styles.style.fontFormLargeInput}
+                                      value={state.myTriad.coach} isEditable={false}></EditableUsers>
+                                  </Card>
+                                </>)
+                              }
+                              <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>My Cohort</Text>
+                              <Card>
+                                <EditableUsers
+                                  limit={15}
+                                  //  onChange={(value: any[]) => { actions.updateTriad({ newToList: value }) }}
+                                  multiline={false}
+                                  data-testid="profile-currentRole"
+                                  showProfileImages={true}
+                                  textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                  inputStyle={this.styles.style.fontFormLargeInput}
+                                  value={state.cohort} isEditable={true}>
+                                </EditableUsers>
+                              </Card>
                             </Card>
                           </Container>
                         </Container>
                         <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
 
-                          <Text>To-Do</Text>
-                          <Card>
-                            <Text>Coaching call with {state.coachName}</Text>
+                          <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30, width: '90%' }}>To-Do</Text>
+                          <Card style={{ width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 15, paddingTop: 30, paddingBottom: 30 }}>
+                            <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App' }}>Coaching call with {state.coachName}</Text>
                           </Card>
 
-                          <Text>My Calendar</Text>
-                          <Calendar
+                          <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 50, width: '90%' }}>My Calendar</Text>
+                          <Calendar style={{ width: '90%', borderColor: '#FFFFFF', paddingLeft: 60, paddingRight: 60, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 15, paddingTop: 20, paddingBottom: 20 }}
                             // Collection of dates that have to be marked. Default = {}
                             current={'2020-05-01'}
                             markedDates={{
@@ -221,18 +224,18 @@ class CourseHomeImpl extends JCComponent<Props>{
                               '2020-05-19': { disabled: true, disableTouchEvent: true }
                             }}
                           />
-                          <Text>Course Activity</Text>
-                          <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Today</JCButton>
-                          <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>Yesterday</JCButton>
-                          <JCButton onPress={() => { null }} buttonType={ButtonTypes.Outline}>This Week</JCButton>
-                          <Text>Adam posted assignement to review</Text>
+                          <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 50, width: '90%' }}>Course Activity</Text>
+                          <JCButton onPress={() => { null }} buttonType={ButtonTypes.CourseHomeSidebarTop}>Today</JCButton>
+                          <JCButton onPress={() => { null }} buttonType={ButtonTypes.CourseHome}>Yesterday</JCButton>
+                          <JCButton onPress={() => { null }} buttonType={ButtonTypes.CourseHome}>This Week</JCButton>
+                          <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App' }}>Adam posted assignement to review</Text>
                         </Container>
 
                       </Container>
                     </Content>
                   </Container>
                 </Container>
-
+                            
               </StyleProvider > :
               null
           )
