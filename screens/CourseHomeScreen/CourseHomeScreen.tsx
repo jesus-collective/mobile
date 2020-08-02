@@ -137,14 +137,14 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
       console.log(e)
     }
   }
-  deleteTriad = async (index): Promise<void> => {
+  deleteTriad = async (index: number): Promise<void> => {
 
     try {
-      console.log("Creating Triad")
+      console.log("Deleting Triad")
 
       const createTriad: any = await API.graphql({
         query: mutations.deleteCourseTriads,
-        variables: { id: this.state.courseData.triads.items[index].id },
+        variables: { input: { id: this.state.courseData.triads.items[index].id } },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       console.log(createTriad)
@@ -159,6 +159,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
   createTriad = async (): Promise<void> => {
     const triad: CreateCourseTriadsInput =
     {
+      courseInfoID: this.state.courseData.id
     }
     try {
       console.log("Creating Triad")

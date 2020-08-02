@@ -228,7 +228,7 @@ type CourseInfo
   courseWeeks: [CourseWeek] @connection(name:"courseInfo",keyField: "courseInfoID",sortField:"week")
   subTitle: String
   instructor: [User]
-  triads:[CourseTriads]@connection(name:"courseTriads",keyField: "id")
+  triads: [CourseTriads] @connection(name:"courseTriads",keyField: "courseInfoID")
   introduction: String
   sylabusAttachment:String
   sylabusAttachmentName:String
@@ -237,10 +237,12 @@ type CourseTriads
 @model
 {
   id:ID!
-  courseInfo:CourseInfo @connection(name:"courseTriads",keyField:"id")
-  coach:[User]
-  triad:[User]
+  courseInfoID: String
+  courseInfo: CourseInfo @connection(name:"courseTriads",keyField:"courseInfoID")
+  coachIDs:[String]
+  triadUserIDs:[String]
 }
+
 type CourseWeek
  @model 
   @auth(

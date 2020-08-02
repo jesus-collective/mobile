@@ -104,32 +104,34 @@ class CourseHomeImpl extends JCComponent<Props>{
                                   <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Triads:</Text>
 
                                   {state.courseData?.triads?.items.map((item, index) => {
-                                    <Card>
-                                      <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Coach</Text>
-                                      <EditableUsers
-                                        limit={1}
-                                        onChange={(value: any[]) => { actions.updateTriad(index, "coach", value) }}
-                                        multiline={false}
-                                        data-testid="profile-currentRole"
-                                        showProfileImages={true}
-                                        textStyle={this.styles.style.fontFormSmallDarkGrey}
-                                        inputStyle={this.styles.style.fontFormLargeInput}
-                                        value={item.coach} isEditable={true}></EditableUsers>
+                                    return (
+                                      <Card key={index}>
+                                        <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Coach</Text>
+                                        <EditableUsers
+                                          limit={1}
+                                          onChange={(value: any[]) => { actions.updateTriad(index, "coach", value) }}
+                                          multiline={false}
+                                          data-testid="profile-currentRole"
+                                          showProfileImages={true}
+                                          textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                          inputStyle={this.styles.style.fontFormLargeInput}
+                                          value={item.coach} isEditable={true}></EditableUsers>
 
-                                      <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Triad</Text>
-                                      <EditableUsers
-                                        limit={3}
-                                        onChange={(value: any[]) => { actions.updateTriad(index, "triad", value) }}
-                                        multiline={false}
-                                        data-testid="profile-currentRole"
-                                        showProfileImages={true}
-                                        textStyle={this.styles.style.fontFormSmallDarkGrey}
-                                        inputStyle={this.styles.style.fontFormLargeInput}
-                                        value={item.triad} isEditable={true}></EditableUsers>
-                                      <TouchableOpacity onPress={() => { actions.deleteTriad(index) }}>
-                                        <AntDesign name="close" size={20} color="black" />
-                                      </TouchableOpacity>
-                                    </Card>
+                                        <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Triad</Text>
+                                        <EditableUsers
+                                          limit={3}
+                                          onChange={(value: any[]) => { actions.updateTriad(index, "triad", value) }}
+                                          multiline={false}
+                                          data-testid="profile-currentRole"
+                                          showProfileImages={true}
+                                          textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                          inputStyle={this.styles.style.fontFormLargeInput}
+                                          value={item.triad} isEditable={true}></EditableUsers>
+                                        <TouchableOpacity onPress={() => { actions.deleteTriad(index) }}>
+                                          <AntDesign name="close" size={20} color="black" />
+                                        </TouchableOpacity>
+                                      </Card>
+                                    )
                                   })
                                   }
                                   <TouchableOpacity onPress={() => { actions.createTriad() }}>
