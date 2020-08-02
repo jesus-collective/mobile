@@ -1,7 +1,7 @@
 import React from 'react';
 
 import SignUpSidebar from '../../components/SignUpSidebar/SignUpSidebar'
-import { Platform, TextInput, Text, NativeSyntheticEvent, TextInputKeyPressEventData, TouchableOpacity } from 'react-native';
+import { Platform, TextInput, Text, NativeSyntheticEvent, TextInputKeyPressEventData, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { View } from 'native-base';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton';
 import { Dimensions } from 'react-native'
@@ -22,6 +22,8 @@ interface State {
     code: string;
     newPass: string;
     newPass2: string;
+    sendingCode: boolean;
+    reseting: boolean;
 }
 
 class MyForgotPassword extends React.Component<Props, State> {
@@ -34,6 +36,8 @@ class MyForgotPassword extends React.Component<Props, State> {
             code: '',
             newPass: '',
             newPass2: '',
+            sendingCode: false,
+            reseting: false,
         }
     }
 
@@ -45,15 +49,18 @@ class MyForgotPassword extends React.Component<Props, State> {
             code: '',
             newPass: '',
             newPass2: '',
+            sendingCode: false,
+            reseting: false,
         })
         this.props.onStateChange(state);
     }
 
     async sendCode(): Promise<void> {
         try {
+            this.setState({ sendingCode: true })
             await Auth.forgotPassword(this.state.email).then(() => this.setState({ codeSent: true }))
         } catch (e) {
-            this.setState({ authError: e.message })
+            this.setState({ authError: e.message, sendingCode: false })
         }
     }
 
@@ -63,9 +70,10 @@ class MyForgotPassword extends React.Component<Props, State> {
                 this.setState({ authError: 'Passwords do not match' })
                 return;
             }
+            this.setState({ reseting: true })
             await Auth.forgotPasswordSubmit(this.state.email, this.state.code, this.state.newPass).then(() => this.changeAuthState('signIn'));
         } catch (e) {
-            this.setState({ authError: e.message })
+            this.setState({ authError: e.message, reseting: false })
         }
     }
 
@@ -98,7 +106,7 @@ class MyForgotPassword extends React.Component<Props, State> {
                     {!this.state.codeSent ? <View style={this.styles.style.authView2}>
                         <Text style={{ width: "100%", marginBottom: '5.5%', fontFamily: 'Graphik-Regular-App', fontWeight: 'bold', fontSize: 22, lineHeight: 30 }}>Reset your password</Text>
                         <TextInput autoCompleteType="email" textContentType="emailAddress" keyboardType="email-address" onKeyPress={(e) => this.handleEnter(e)} placeholder="Enter your email" value={this.state.email} onChange={e => this.setState({ email: e.nativeEvent.text })} secureTextEntry={false} style={{ borderBottomWidth: 1, borderColor: "#00000020", width: "100%", marginBottom: '4.2%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
-                        <JCButton buttonType={ButtonTypes.SolidSignIn} onPress={() => this.sendCode()}>Send</JCButton>
+                        <JCButton buttonType={ButtonTypes.SolidSignIn} onPress={() => this.sendCode()}>{this.state.sendingCode ? <ActivityIndicator animating color="#333333" /> : 'Send'}</JCButton>
                         <TouchableOpacity onPress={() => this.setState({ codeSent: true, authError: '' })}>
                             <Text style={{ alignSelf: 'flex-end', marginRight: 30, fontSize: 14, fontFamily: 'Graphik-Regular-App', lineHeight: 22, color: '#333333', opacity: 0.7, marginTop: 20 }}>Submit a code</Text>
                         </TouchableOpacity>
@@ -113,7 +121,7 @@ class MyForgotPassword extends React.Component<Props, State> {
                                 <TextInput textContentType="newPassword" onKeyPress={(e) => this.handleEnter(e)} placeholder="New password" value={this.state.newPass} onChange={e => this.setState({ newPass: e.nativeEvent.text })} secureTextEntry={true} style={{ borderBottomWidth: 1, borderColor: "#00000020", width: "100%", marginRight: 30, paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
                                 <TextInput textContentType="newPassword" onKeyPress={(e) => this.handleEnter(e)} placeholder="Confirm new password" value={this.state.newPass2} onChange={e => this.setState({ newPass2: e.nativeEvent.text })} secureTextEntry={true} style={{ borderBottomWidth: 1, borderColor: "#00000020", width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
                             </View>
-                            <JCButton buttonType={ButtonTypes.SolidSignIn} onPress={() => this.resetPass()}>Submit</JCButton>
+                            <JCButton buttonType={ButtonTypes.SolidSignIn} onPress={() => this.resetPass()}>{this.state.reseting ? <ActivityIndicator animating color="#333333" /> : 'Submit'}</JCButton>
                             <Text style={{ alignSelf: 'center', alignItems: 'center', fontSize: 14, fontFamily: 'Graphik-Regular-App', lineHeight: 22, marginTop: 20 }} >{this.state.authError ? <Entypo name="warning" size={18} color="#F0493E" /> : null} {this.state.authError}</Text>
                             <Copyright />
                         </View>}

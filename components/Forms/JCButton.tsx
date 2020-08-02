@@ -31,6 +31,7 @@ export enum ButtonTypes {
     TransparentNoPadding,
     TransparentBoldBlack,
     TransparentBoldBlackNoMargin,
+    TransparentBoldGreyNoMargin,
     TransparentBoldOrange,
     TransparentRegularOrange,
     MoreSeriesOutlineBold,

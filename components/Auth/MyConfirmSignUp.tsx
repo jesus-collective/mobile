@@ -1,7 +1,7 @@
 import React from 'react';
 import SignUpSidebar from '../../components/SignUpSidebar/SignUpSidebar'
 import { View } from 'native-base';
-import { Platform, TextInput, Text, TouchableOpacity, NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native';
+import { Platform, TextInput, Text, TouchableOpacity, NativeSyntheticEvent, TextInputKeyPressEventData, ActivityIndicator } from 'react-native';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton';
 import { Dimensions } from 'react-native'
 import MainStyles from '../../components/style';
@@ -18,6 +18,7 @@ interface State {
     email: string;
     code: string;
     authError: string;
+    sendingData: boolean;
 }
 class MyConfirmSignUp extends React.Component<Props, State> {
     constructor(props: Props) {
@@ -26,6 +27,7 @@ class MyConfirmSignUp extends React.Component<Props, State> {
             email: '',
             code: '',
             authError: '',
+            sendingData: false
         }
     }
 
@@ -34,16 +36,17 @@ class MyConfirmSignUp extends React.Component<Props, State> {
             email: '',
             code: '',
             authError: '',
-
+            sendingData: false
         })
         this.props.onStateChange(state);
     }
 
     async handleConfirmSignUp(): Promise<void> {
         try {
+            this.setState({ sendingData: true })
             await Auth.confirmSignUp(this.state.email, this.state.code).then(() => this.changeAuthState('signIn'))
         } catch (e) {
-            this.setState({ authError: e.message })
+            this.setState({ authError: e.message, sendingData: false })
         }
     }
 
@@ -73,7 +76,7 @@ class MyConfirmSignUp extends React.Component<Props, State> {
                         <TextInput autoCompleteType="email" textContentType="emailAddress" keyboardType="email-address" placeholder="Email address" value={this.state.email} onChange={e => this.setState({ email: e.nativeEvent.text })} style={{ borderBottomWidth: 1, borderColor: "#00000020", width: "100%", marginBottom: '1.4%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
                         <View style={this.styles.style.confirmationCodeWrapper}>
                             <TextInput textContentType="oneTimeCode" keyboardType="number-pad" onKeyPress={(e) => this.handleEnter(e)} placeholder="One-time security code" value={this.state.code} onChange={e => this.setState({ code: e.nativeEvent.text })} style={{ borderBottomWidth: 1, borderColor: "#00000020", marginBottom: '1.4%', marginRight: 30, width: '100%', paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 18, lineHeight: 24 }}></TextInput>
-                            <JCButton buttonType={ButtonTypes.SolidSignIn2} onPress={() => this.handleConfirmSignUp()}>Submit</JCButton>
+                            <JCButton buttonType={ButtonTypes.SolidSignIn2} onPress={() => this.handleConfirmSignUp()}>{this.state.sendingData ? <ActivityIndicator animating color="#333333" /> : 'Submit'}</JCButton>
                         </View>
                         <Text style={{ alignSelf: 'center', alignItems: 'center', fontSize: 14, fontFamily: 'Graphik-Regular-App', lineHeight: 22, marginTop: 20 }} >{this.state.authError ? <Entypo name="warning" size={18} color="#F0493E" /> : null} {this.state.authError}</Text>
                         <Copyright />
