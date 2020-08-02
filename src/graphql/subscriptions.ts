@@ -248,6 +248,7 @@ export const onCreateUser = /* GraphQL */ `
           userRole
           userId
           organizationId
+          organizationName
           createdAt
           updatedAt
         }
@@ -389,6 +390,7 @@ export const onUpdateUser = /* GraphQL */ `
           userRole
           userId
           organizationId
+          organizationName
           createdAt
           updatedAt
         }
@@ -530,6 +532,7 @@ export const onDeleteUser = /* GraphQL */ `
           userRole
           userId
           organizationId
+          organizationName
           createdAt
           updatedAt
         }
@@ -1838,6 +1841,7 @@ export const onCreateOrganizationMember = /* GraphQL */ `
       userRole
       userId
       organizationId
+      organizationName
       user {
         id
         given_name
@@ -2008,6 +2012,7 @@ export const onUpdateOrganizationMember = /* GraphQL */ `
       userRole
       userId
       organizationId
+      organizationName
       user {
         id
         given_name
@@ -2178,6 +2183,7 @@ export const onDeleteOrganizationMember = /* GraphQL */ `
       userRole
       userId
       organizationId
+      organizationName
       user {
         id
         given_name
@@ -2505,6 +2511,7 @@ export const onCreateOrganization = /* GraphQL */ `
           userRole
           userId
           organizationId
+          organizationName
           createdAt
           updatedAt
         }
@@ -2717,6 +2724,7 @@ export const onUpdateOrganization = /* GraphQL */ `
           userRole
           userId
           organizationId
+          organizationName
           createdAt
           updatedAt
         }
@@ -2929,6 +2937,7 @@ export const onDeleteOrganization = /* GraphQL */ `
           userRole
           userId
           organizationId
+          organizationName
           createdAt
           updatedAt
         }

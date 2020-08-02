@@ -57,6 +57,7 @@ export const getUser = /* GraphQL */ `
           userRole
           userId
           organizationId
+          organizationName
           createdAt
           updatedAt
         }
@@ -723,6 +724,7 @@ export const getOrganization = /* GraphQL */ `
           userRole
           userId
           organizationId
+          organizationName
           createdAt
           updatedAt
         }
