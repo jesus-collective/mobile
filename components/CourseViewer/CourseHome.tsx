@@ -64,42 +64,28 @@ class CourseHomeImpl extends JCComponent<Props>{
                               </Text>
                             </Container>
                           </Container>
-                          <Container style={{ marginTop: 200 }}>
-                            {state.courseData ?
-                              <Container style={{ width: '90%' }}>
-                              <EditableRichText onChange={(val) => { actions.updateCourse("introduction", val) }}
-                                value={state.courseData.introduction}
-                                isEditable={true}
-                                textStyle=""></EditableRichText></Container> : null}
-                              <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 25, width: '90%' }}>Instructor:</Text>
-                              <EditableUsers
-                                limit={1}
-                                onChange={(value: any[]) => { actions.updateCourse("instructor", value) }}
-                                multiline={false}
-                                data-testid="profile-currentRole"
-                                showProfileImages={true}
-                                textStyle={this.styles.style.courseFormLargeInput}
-                                inputStyle={this.styles.style.courseFormLargeInput}
-                                value={state.instructor} isEditable={true}></EditableUsers>
-                          </Container>
-                          <Container style={{  }}>
+
+                          <Container style={{}}>
                             <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>Syllabus</Text>
                             <Card style={{ width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 30, paddingTop: 30, paddingBottom: 30 }}>
                               {state.courseData ?
-                              <EditableFileUpload
-                                textStyle={null}
-                                inputStyle={null}
-                                attachment={state.courseData.sylabusAttachment}
-                                isEditable={state.isEditable}
-                                attachmentName={state.courseData.sylabusAttachmentName}
-                                onChange={(obj) => {
-                                  console.log({ "attachmentName": obj.attachmentName, "attachment": obj.attachment })
-                                  if (obj.attachmentName != undefined) actions.updateCourse("sylabusAttachmentName", obj.attachmentName)
-                                  if (obj.attachment != undefined) actions.updateCourse("sylabusAttachment", obj.attachment)
-                                }}>
+                                <EditableFileUpload
+                                  textStyle={null}
+                                  inputStyle={null}
+                                  attachment={state.courseData.sylabusAttachment}
+                                  isEditable={state.isEditable}
+                                  attachmentName={state.courseData.sylabusAttachmentName}
+                                  onChange={(obj) => {
+                                    console.log({ "attachmentName": obj.attachmentName, "attachment": obj.attachment })
+                                    if (obj.attachmentName != undefined) actions.updateCourse("sylabusAttachmentName", obj.attachmentName)
+                                    if (obj.attachment != undefined) actions.updateCourse("sylabusAttachment", obj.attachment)
+                                  }}>
 
-                              </EditableFileUpload>
-                              : null}
+                                </EditableFileUpload>
+                                : null}
+                            </Card>
+                            <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>User Setup</Text>
+                            <Card style={{ width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 30, paddingTop: 30, paddingBottom: 30 }}>
 
                               <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Instructor:</Text>
                               <EditableUsers
@@ -111,25 +97,12 @@ class CourseHomeImpl extends JCComponent<Props>{
                                 textStyle={this.styles.style.fontFormSmallDarkGrey}
                                 inputStyle={this.styles.style.fontFormLargeInput}
                                 value={state.instructor} isEditable={true}></EditableUsers>
-                              <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Syllabus</Text>
-                                {state.courseData ?
-                                  <EditableFileUpload
-                                    textStyle={null}
-                                    inputStyle={null}
-                                    attachment={state.courseData.sylabusAttachment}
-                                    isEditable={state.isEditable}
-                                    attachmentName={state.courseData.sylabusAttachmentName}
-                                    onChange={(obj) => {
-                                      console.log({ "attachmentName": obj.attachmentName, "attachment": obj.attachment })
-                                      if (obj.attachmentName != undefined) actions.updateCourse("sylabusAttachmentName", obj.attachmentName)
-                                      if (obj.attachment != undefined) actions.updateCourse("sylabusAttachment", obj.attachment)
-                                    }}>
 
-                                  </EditableFileUpload>
-                                  : null}
-                           
+
                               {state.isEditable ?
                                 (<>
+                                  <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Triads:</Text>
+
                                   {state.courseData?.triads?.items.map((item, index) => {
                                     <Card>
                                       <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Coach</Text>
@@ -190,19 +163,21 @@ class CourseHomeImpl extends JCComponent<Props>{
                                   </Card>
                                 </>)
                               }
-                              <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>My Cohort</Text>
-                              <Card>
-                                <EditableUsers
-                                  limit={15}
-                                  //  onChange={(value: any[]) => { actions.updateTriad({ newToList: value }) }}
-                                  multiline={false}
-                                  data-testid="profile-currentRole"
-                                  showProfileImages={true}
-                                  textStyle={this.styles.style.fontFormSmallDarkGrey}
-                                  inputStyle={this.styles.style.fontFormLargeInput}
-                                  value={state.cohort} isEditable={true}>
-                                </EditableUsers>
-                              </Card>
+                              {!state.isEditable ? <>
+                                <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>My Cohort</Text>
+                                <Card>
+                                  <EditableUsers
+                                    limit={15}
+                                    //  onChange={(value: any[]) => { actions.updateTriad({ newToList: value }) }}
+                                    multiline={false}
+                                    data-testid="profile-currentRole"
+                                    showProfileImages={true}
+                                    textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                    inputStyle={this.styles.style.fontFormLargeInput}
+                                    value={state.cohort} isEditable={true}>
+                                  </EditableUsers>
+                                </Card>
+                              </> : null}
                             </Card>
                           </Container>
                         </Container>
@@ -235,7 +210,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                     </Content>
                   </Container>
                 </Container>
-                            
+
               </StyleProvider > :
               null
           )
