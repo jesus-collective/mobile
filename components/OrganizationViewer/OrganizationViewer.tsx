@@ -322,12 +322,18 @@ class OrganizationImpl extends JCComponent<Props, State> {
     }
 
     const newAdmins = this.state.OrganizationDetails.admins;
+    const justNewAdmins = []
 
     this.state.newAdmins.forEach(user => {
 
       if (!newAdmins.includes(user.id))
         newAdmins.push(user.id)
+      justNewAdmins.push(user.id)
     })
+
+    if (newAdmins.length < this.state.OrganizationDetails.admins.length) {
+      return
+    }
 
     try {
       const addAdmins = await API.graphql(graphqlOperation(mutations.updateOrganization, { input: { id: this.state.OrganizationDetails.id, admins: newAdmins } }));
@@ -335,6 +341,29 @@ class OrganizationImpl extends JCComponent<Props, State> {
     } catch (err) {
       console.error(err)
     }
+    this.createGroupMembers(justNewAdmins);
+  }
+
+  createGroupMembers(admins: string[]) {
+    admins.map(async (admin) => {
+      const orgMember: CreateOrganizationMemberInput = {
+        userRole: 'admin',
+        userId: admin,
+        organizationId: this.state.OrganizationDetails.id
+      }
+      try {
+        const createOrgMember: any = await API.graphql({
+          query: mutations.createOrganizationMember,
+          variables: {
+            input: orgMember
+          },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+        });
+        console.log({ createOrgMember: createOrgMember })
+      } catch (e) {
+        console.error(e)
+      }
+    })
   }
 
   async removeAdmins(): Promise<void> {

@@ -161,6 +161,7 @@ type OrganizationMember
   userRole: String!
   userId: ID!
   organizationId: ID!
+  organizationName: String
   user: User! @connection(fields: ["userId"])
   organization: Organization! @connection(fields: ["organizationId"])
 }
