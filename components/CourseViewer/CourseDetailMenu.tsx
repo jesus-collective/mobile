@@ -35,12 +35,13 @@ class CourseDetailMenu extends JCComponent<EmptyProps> {
                 {({ state, actions }) => {
 
                     return (<Header style={this.headerStyles.style.resourceContainer}>
-                        <Left></Left>
+                        {/* <Left></Left> */}
                         <Body style={{
                             flex: 1,
                             flexDirection: 'row',
                             justifyContent: 'flex-start',
-                            alignItems: 'flex-start'
+                            alignItems: 'flex-start',
+                            marginLeft: '5%'
                         }}>
                             {state.courseData?.courseWeeks.items.map((item, index) => {
                                 if (item != null)
