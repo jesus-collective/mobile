@@ -82,7 +82,7 @@ export default class EditableText extends JCComponent<Props> {
         if (this.props.isEditable)
             return (
                 <Chips
-
+                    
                     fromSuggestionsOnly={true}
                     uniqueChips={true}
                     value={this.props.value ? this.props.value : []}

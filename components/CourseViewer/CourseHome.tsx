@@ -87,7 +87,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                             <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>User Setup</Text>
                             <Card style={{ width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 30, paddingTop: 30, paddingBottom: 30 }}>
 
-                              <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Instructor:</Text>
+                              <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 0 }}>Instructor:</Text>
                               <EditableUsers
                                 limit={1}
                                 onChange={(value: any[]) => { actions.updateCourse("instructor", value) }}
@@ -101,12 +101,12 @@ class CourseHomeImpl extends JCComponent<Props>{
 
                               {state.isEditable ?
                                 (<>
-                                  <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Triads:</Text>
+                                  <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Triads:</Text>
 
                                   {state.courseData?.triads?.items.map((item, index) => {
                                     return (
                                       <Card key={index} style={{ borderColor: '#FFFFFF' }}>
-                                        <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Coach</Text>
+                                        <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 20 }}>Coach</Text>
                                         <EditableUsers
                                           limit={1}
                                           onChange={(value: any[]) => { actions.updateTriad(index, "coachIDs", value) }}
@@ -127,14 +127,14 @@ class CourseHomeImpl extends JCComponent<Props>{
                                           textStyle={this.styles.style.fontFormSmallDarkGrey}
                                           inputStyle={this.styles.style.fontFormLargeInput}
                                           value={item.triadUserIDs ? item.triadUserIDs : null} isEditable={true}></EditableUsers>
-                                        <TouchableOpacity style={{ backgroundColor: '#F0493E', width: '20%', marginTop: 10, borderRadius: 5, height: 30, justifyContent:'center', alignItems: 'center' }} onPress={() => { actions.deleteTriad(index) }}>
+                                        <TouchableOpacity style={{ backgroundColor: '#F0493E', width: '100%', marginTop: 10, borderRadius: 5, height: 30, justifyContent:'center', alignItems: 'center', boxShadow: '0px' }} onPress={() => { actions.deleteTriad(index) }}>
                                           <AntDesign name="close" size={23} color="white" />
                                         </TouchableOpacity>
                                       </Card>
                                     )
                                   })
                                   }
-                                  <TouchableOpacity onPress={() => { actions.createTriad() }}>
+                                  <TouchableOpacity style={{ marginTop: 30 }} onPress={() => { actions.createTriad() }}>
                                     <Card><Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', paddingLeft: 5, paddingTop: 6, paddingBottom: 6 }}>Add Triad</Text></Card>
                                   </TouchableOpacity>
                                 </>)
