@@ -68,19 +68,19 @@ class CourseDetailImpl extends JCComponent<Props>{
             {week.lessons?.items?.map((item: any, lesson: number) => {
               return (
                 <TouchableOpacity key={lesson} onPress={() => { actions.setActiveLesson(lesson) }}>
-                  <Card style={{ minHeight: "40px", maxHeight: "100px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 30, paddingRight: 30, paddingBottom: 30, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 30 }}>
+                  <Card style={{ minHeight: "40px", maxHeight: "100px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 50, paddingRight: 30, paddingBottom: 50, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 30 }}>
                     <Container style={{ flexDirection: "row" }}>
                       <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 35, alignSelf: 'center' }}>MON</Text>
-                      <Container style={{ flexDirection: "column", height: "60px", alignSelf: 'center'  }}>
+                      <Container style={{ flexDirection: "column", height: "50px", alignSelf: 'center'  }}>
 
                         <EditableText onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "name", e) }}
                           placeholder="Title" multiline={true}
                           data-testid="course-lessonTitle"
                           textStyle={this.styles.style.fontFormSmallDarkGrey}
-                          inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
+                          inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 0, marginBottom: 10, width: "100%", paddingTop: 5, paddingRight: 10, paddingBottom: 25, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, height: 30 }}
                           value={item.name} isEditable={state.isEditable}></EditableText>
 
-                        <Container style={{ flexDirection: "row", minHeight: "40px", maxHeight: "80px" }}>
+                        <Container style={{ flexDirection: "row" }}>
                           <Text><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/time.svg')} />3 hours</Text>
                           <Text><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/document.svg')} />Assignment</Text>
                         </Container>
