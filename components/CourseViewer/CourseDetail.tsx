@@ -96,11 +96,11 @@ class CourseDetailImpl extends JCComponent<Props>{
               )
             })}
             <TouchableOpacity onPress={() => { actions.createLesson() }}>
-              <Card style={{ minHeight: "40px", maxHeight: "100px", width: "80% " }}>
+              <Card style={{ minHeight: "40px", maxHeight: "500px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 50, paddingRight: 30, paddingBottom: 50, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 30 }}>
                 <Container style={{ flexDirection: "row" }}>
-                  <Text></Text>
+                  <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Regular-App', alignSelf: 'center' }}></Text>
                   <Container style={{ flexDirection: "column", minHeight: "40px", maxHeight: "80px" }}>
-                    <Text>Create New Lesson</Text>
+                    <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', alignSelf: 'center', color: '#333333' }}>Create New Lesson</Text>
                     <Container style={{ flexDirection: "row", minHeight: "40px", maxHeight: "80px" }}>
                       <Text></Text>
                       <Text></Text>
