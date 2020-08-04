@@ -80,9 +80,9 @@ class CourseDetailImpl extends JCComponent<Props>{
                           inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 0, marginBottom: 10, width: "100%", paddingTop: 5, paddingRight: 10, paddingBottom: 25, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, height: 30 }}
                           value={item.name} isEditable={state.isEditable}></EditableText>
 
-                        <Container style={{ flexDirection: "row" }}>
-                          <Text><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/time.svg')} />3 hours</Text>
-                          <Text><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/document.svg')} />Assignment</Text>
+                        <Container style={{ flexDirection: "row", height: 'auto' }}>
+                          <Text style={{ alignSelf: 'center', marginRight: 30 }}><Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }} source={require('../../assets/svg/time.svg')} />3 hours</Text>
+                          <Text style={{ alignSelf: 'center' }}><Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }} source={require('../../assets/svg/document.svg')} />Assignment</Text>
                         </Container>
                       </Container>
                         <Text style={{ fontSize: 12, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#FFF', marginLeft: 30, marginRight: 15, paddingLeft: 10, paddingRight: 10, textTransform: 'uppercase', backgroundColor: '#71C209', borderRadius: 50, height: 20, alignSelf: 'center' }}>Completed</Text>
