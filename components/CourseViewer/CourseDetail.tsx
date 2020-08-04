@@ -71,7 +71,7 @@ class CourseDetailImpl extends JCComponent<Props>{
                   <Card style={{ minHeight: "40px", maxHeight: "100px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 30, paddingRight: 30, paddingBottom: 30, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 30 }}>
                     <Container style={{ flexDirection: "row" }}>
                       <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 35, alignSelf: 'center' }}>MON</Text>
-                      <Container style={{ flexDirection: "column", height: "60px"  }}>
+                      <Container style={{ flexDirection: "column", height: "60px", alignSelf: 'center'  }}>
 
                         <EditableText onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "name", e) }}
                           placeholder="Title" multiline={true}
@@ -85,7 +85,7 @@ class CourseDetailImpl extends JCComponent<Props>{
                           <Text><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/document.svg')} />Assignment</Text>
                         </Container>
                       </Container>
-                        <Text style={{ fontSize: 12, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#FFF', marginLeft: 30, marginRight: 30, paddingLeft: 10, paddingRight: 10, textTransform: 'uppercase', backgroundColor: '#71C209', borderRadius: 50, height: 20 }}>Completed</Text>
+                        <Text style={{ fontSize: 12, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#FFF', marginLeft: 30, marginRight: 30, paddingLeft: 10, paddingRight: 10, textTransform: 'uppercase', backgroundColor: '#71C209', borderRadius: 50, height: 20, alignSelf: 'center' }}>Completed</Text>
                       <Text><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/checkmark.svg')} /></Text>
                       <TouchableOpacity onPress={() => { actions.deleteLesson(state.activeWeek, lesson) }}>
                         <AntDesign name="close" size={20} color="black" />
