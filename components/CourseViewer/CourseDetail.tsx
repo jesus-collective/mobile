@@ -45,7 +45,7 @@ class CourseDetailImpl extends JCComponent<Props>{
               placeholder="Week Title" multiline={true}
               data-testid="course-weekTitle"
               textStyle={this.styles.style.fontFormSmallDarkGrey}
-              inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
+              inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 30, marginBottom: 60, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 35, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
               value={week.title} isEditable={state.isEditable}></EditableText>
 
             <EditableDate type="date"
@@ -62,32 +62,32 @@ class CourseDetailImpl extends JCComponent<Props>{
               placeholder="Lesson Leader" multiline={true}
               data-testid="course-lessonTitle"
               textStyle={this.styles.style.fontFormSmallDarkGrey}
-              inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
+              inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 35, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
               value={week.leader} isEditable={state.isEditable}></EditableText>
 
             {week.lessons?.items?.map((item: any, lesson: number) => {
               return (
                 <TouchableOpacity key={lesson} onPress={() => { actions.setActiveLesson(lesson) }}>
-                  <Card style={{ minHeight: "40px", maxHeight: "100px", width: "80% " }}>
+                  <Card style={{ minHeight: "40px", maxHeight: "100px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 50, paddingRight: 30, paddingBottom: 50, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 30 }}>
                     <Container style={{ flexDirection: "row" }}>
-                      <Text>MON</Text>
-                      <Container style={{ flexDirection: "column", minHeight: "40px", maxHeight: "80px" }}>
+                      <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 35, alignSelf: 'center' }}>MON</Text>
+                      <Container style={{ flexDirection: "column", height: "50px", alignSelf: 'center'  }}>
 
                         <EditableText onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "name", e) }}
                           placeholder="Title" multiline={true}
                           data-testid="course-lessonTitle"
                           textStyle={this.styles.style.fontFormSmallDarkGrey}
-                          inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "100%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
+                          inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 0, marginBottom: 10, width: "100%", paddingTop: 5, paddingRight: 10, paddingBottom: 25, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, height: 30 }}
                           value={item.name} isEditable={state.isEditable}></EditableText>
 
-                        <Container style={{ flexDirection: "row", minHeight: "40px", maxHeight: "80px" }}>
-                          <Text><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/time.svg')} />3 hours</Text>
-                          <Text><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/document.svg')} />Assignment</Text>
+                        <Container style={{ flexDirection: "row", height: 'auto' }}>
+                          <Text style={{ alignSelf: 'center', marginRight: 30 }}><Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }} source={require('../../assets/svg/time.svg')} />3 hours</Text>
+                          <Text style={{ alignSelf: 'center' }}><Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }} source={require('../../assets/svg/document.svg')} />Assignment</Text>
                         </Container>
                       </Container>
-                      <Text>Completed</Text>
-                      <Text><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/checkmark.svg')} /></Text>
-                      <TouchableOpacity onPress={() => { actions.deleteLesson(state.activeWeek, lesson) }}>
+                        <Text style={{ fontSize: 12, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#FFF', marginLeft: 30, marginRight: 15, paddingLeft: 10, paddingRight: 10, textTransform: 'uppercase', backgroundColor: '#71C209', borderRadius: 50, height: 20, alignSelf: 'center' }}>Completed</Text>
+                      <Text style={{ alignSelf: 'center' }}><Image style={{ width: "30px", height: "30px" }} source={require('../../assets/svg/checkmark.svg')} /></Text>
+                      <TouchableOpacity style={{ alignSelf: 'center', marginLeft: 15 }} onPress={() => { actions.deleteLesson(state.activeWeek, lesson) }}>
                         <AntDesign name="close" size={20} color="black" />
                       </TouchableOpacity>
                     </Container>
@@ -96,11 +96,11 @@ class CourseDetailImpl extends JCComponent<Props>{
               )
             })}
             <TouchableOpacity onPress={() => { actions.createLesson() }}>
-              <Card style={{ minHeight: "40px", maxHeight: "100px", width: "80% " }}>
+              <Card style={{ minHeight: "40px", maxHeight: "500px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 50, paddingRight: 30, paddingBottom: 50, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 30 }}>
                 <Container style={{ flexDirection: "row" }}>
-                  <Text></Text>
+                  <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Regular-App', alignSelf: 'center' }}></Text>
                   <Container style={{ flexDirection: "column", minHeight: "40px", maxHeight: "80px" }}>
-                    <Text>Create New Lesson</Text>
+                    <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', alignSelf: 'center', color: '#333333' }}>Create New Lesson</Text>
                     <Container style={{ flexDirection: "row", minHeight: "40px", maxHeight: "80px" }}>
                       <Text></Text>
                       <Text></Text>
@@ -172,7 +172,7 @@ class CourseDetailImpl extends JCComponent<Props>{
                   <CourseDetailMenu></CourseDetailMenu>
                   <Container style={{ flex: 80 }}>
                     <Content style={{ flex: 85 }}>
-                      <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
+                      <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start', paddingLeft: '5%' }}>
 
                         {this.renderWeekDetails(state, actions, week)}
                         {this.renderLessonDetails(state, actions, week)}
