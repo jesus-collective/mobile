@@ -68,10 +68,10 @@ class CourseDetailImpl extends JCComponent<Props>{
             {week.lessons?.items?.map((item: any, lesson: number) => {
               return (
                 <TouchableOpacity key={lesson} onPress={() => { actions.setActiveLesson(lesson) }}>
-                  <Card style={{ minHeight: "40px", maxHeight: "100px", width: "80% " }}>
+                  <Card style={{ minHeight: "40px", maxHeight: "100px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 30, paddingRight: 30, paddingBottom: 30, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 30 }}>
                     <Container style={{ flexDirection: "row" }}>
-                      <Text>MON</Text>
-                      <Container style={{ flexDirection: "column", minHeight: "40px", maxHeight: "80px" }}>
+                      <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 35 }}>MON</Text>
+                      <Container style={{ flexDirection: "column", height: "60px"  }}>
 
                         <EditableText onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "name", e) }}
                           placeholder="Title" multiline={true}
@@ -85,7 +85,9 @@ class CourseDetailImpl extends JCComponent<Props>{
                           <Text><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/document.svg')} />Assignment</Text>
                         </Container>
                       </Container>
-                      <Text>Completed</Text>
+                      <Container style={{ width: 10, height: 40, backgroundColor: '#71C209', borderRadius: 50 }}>
+                        <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 35, textTransform: 'uppercase' }}>Completed</Text>
+                      </Container>
                       <Text><Image style={{ width: "22px", height: "22px" }} source={require('../../assets/svg/checkmark.svg')} /></Text>
                       <TouchableOpacity onPress={() => { actions.deleteLesson(state.activeWeek, lesson) }}>
                         <AntDesign name="close" size={20} color="black" />
