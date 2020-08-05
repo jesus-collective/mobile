@@ -7,6 +7,7 @@ import { Storage } from 'aws-amplify';
 import './react-draft-wysiwyg.css';
 //TODO FIGURE OUT WHY THIS DOESN"T WORK
 //import '../MessageBoard.css';
+import { EditorState } from 'draft-js';
 
 import { v1 as uuidv1 } from 'uuid';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -120,14 +121,17 @@ export default class EditableRichText extends JCComponent<Props, State> {
             else
                 return <TouchableOpacity onPress={() => { this.setState({ isEditMode: true }) }}>
                     <div id="comment-div">
-                        <div
-                            dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(this.props.value) }}
-                            style={{ fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 26, color: "#333333", marginTop: 0, paddingTop: 0 }}></div>
-                        <div style={{ fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 16, marginTop: 0, color: '#F0493E', textDecoration: 'underline', position: 'relative', bottom: 350 }}>Hold to Edit</div>
+                        {console.log(convertFromRaw(JSON.parse(this.state.value)).hasText())}
+                        {!convertFromRaw(JSON.parse(this.state.value)).hasText() || this.state.value == null ?
+                            <div style={{ fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 16, marginTop: 0, color: '#F0493E', textDecoration: 'underline' }}>Hold to Edit</div>
+                            :
+                            <div
+                                dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(this.props.value) }}
+                                style={{ fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 26, color: "#333333", marginTop: 0, paddingTop: 0 }}></div>}
                     </div>
                 </TouchableOpacity>
         else
-            return <div id="comment-div" style={{  }}>
+            return <div id="comment-div" style={{}}>
                 <div dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(this.state.value) }} style={{ fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 26, color: "#333333", marginTop: 0, paddingTop: 0, height: 250 }}></div>
             </div>
 
