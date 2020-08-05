@@ -177,12 +177,12 @@ class CourseDetailImpl extends JCComponent<Props>{
                         {this.renderWeekDetails(state, actions, week)}
                         {this.renderLessonDetails(state, actions, week)}
                         <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                          <Container style={{ flex: 5, flexDirection: "row" }}>
+                          <Container style={{ flex: 5, flexDirection: "row", marginTop: 30, borderBottom: '1px solid #333333', width: '100%', paddingBottom: 40 }}>
                             <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Cohort</JCButton>
                             <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Triad</JCButton>
                             <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Instructor</JCButton>
                           </Container>
-                          <Container style={{ flex: 95, flexDirection: "row" }}>
+                          <Container style={{ flex: 95, flexDirection: "row", marginTop: 25 }}>
                             <MessageBoard groupId={state.data.id}></MessageBoard>
                           </Container>
                         </Container>
