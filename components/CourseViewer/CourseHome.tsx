@@ -116,6 +116,9 @@ class CourseHomeImpl extends JCComponent<Props>{
                                           textStyle={this.styles.style.fontFormSmallDarkGrey}
                                           inputStyle={this.styles.style.fontFormLargeInput}
                                           value={item.coachIDs ? item.coachIDs : []} isEditable={true}></EditableUsers>
+                                          <TouchableOpacity style={{ backgroundColor: '#F0493E', width: '100%', marginTop: 10, borderRadius: 5, height: 30, justifyContent:'center', alignItems: 'center', boxShadow: '0px' }} onPress={() => { actions.deleteTriad(index) }}>
+                                          <AntDesign name="close" size={23} color="white" />
+                                        </TouchableOpacity>
 
                                         <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Triad</Text>
                                         <EditableUsers
@@ -127,9 +130,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                           textStyle={this.styles.style.fontFormSmallDarkGrey}
                                           inputStyle={this.styles.style.fontFormLargeInput}
                                           value={item.triadUserIDs ? item.triadUserIDs : null} isEditable={true}></EditableUsers>
-                                        <TouchableOpacity style={{ backgroundColor: '#F0493E', width: '100%', marginTop: 10, borderRadius: 5, height: 30, justifyContent:'center', alignItems: 'center', boxShadow: '0px' }} onPress={() => { actions.deleteTriad(index) }}>
-                                          <AntDesign name="close" size={23} color="white" />
-                                        </TouchableOpacity>
+                                        
                                       </Card>
                                     )
                                   })
