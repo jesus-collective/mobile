@@ -71,7 +71,7 @@ class CourseDetailImpl extends JCComponent<Props>{
                   <Card style={{ minHeight: "40px", maxHeight: "100px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 50, paddingRight: 30, paddingBottom: 50, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 30 }}>
                     <Container style={{ flexDirection: "row" }}>
                       <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 35, alignSelf: 'center' }}>MON</Text>
-                      <Container style={{ flexDirection: "column", height: "50px", alignSelf: 'center'  }}>
+                      <Container style={{ flexDirection: "column", height: "50px", alignSelf: 'center' }}>
 
                         <EditableText onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "name", e) }}
                           placeholder="Title" multiline={true}
@@ -85,7 +85,7 @@ class CourseDetailImpl extends JCComponent<Props>{
                           <Text style={{ alignSelf: 'center' }}><Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }} source={require('../../assets/svg/document.svg')} />Assignment</Text>
                         </Container>
                       </Container>
-                        <Text style={{ fontSize: 12, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#FFF', marginLeft: 30, marginRight: 15, paddingLeft: 10, paddingRight: 10, textTransform: 'uppercase', backgroundColor: '#71C209', borderRadius: 50, height: 20, alignSelf: 'center' }}>Completed</Text>
+                      <Text style={{ fontSize: 12, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#FFF', marginLeft: 30, marginRight: 15, paddingLeft: 10, paddingRight: 10, textTransform: 'uppercase', backgroundColor: '#71C209', borderRadius: 50, height: 20, alignSelf: 'center' }}>Completed</Text>
                       <Text style={{ alignSelf: 'center' }}><Image style={{ width: "30px", height: "30px" }} source={require('../../assets/svg/checkmark.svg')} /></Text>
                       <TouchableOpacity style={{ alignSelf: 'center', marginLeft: 15 }} onPress={() => { actions.deleteLesson(state.activeWeek, lesson) }}>
                         <AntDesign name="close" size={20} color="black" />
@@ -183,7 +183,7 @@ class CourseDetailImpl extends JCComponent<Props>{
                             <JCButton buttonType={ButtonTypes.TransparentCourse} onPress={() => { null }}>Instructor</JCButton>
                           </Container>
                           <Container style={{ flex: 95, flexDirection: "row", marginTop: 25 }}>
-                            <MessageBoard groupId={state.data.id}></MessageBoard>
+                            <MessageBoard style="mini" groupId={state.data.id}></MessageBoard>
                           </Container>
                         </Container>
                       </Container>

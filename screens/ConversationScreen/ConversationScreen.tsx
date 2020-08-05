@@ -219,7 +219,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
                 }) : null}
             </Container>
             <Container style={this.styles.style.detailScreenRightCard}>
-              <MessageBoard roomId={this.state.currentRoomId}></MessageBoard>
+              <MessageBoard style="regular" roomId={this.state.currentRoomId}></MessageBoard>
             </Container>
           </Container>
         </Content>

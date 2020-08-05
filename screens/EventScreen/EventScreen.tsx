@@ -480,7 +480,7 @@ export default class EventScreen extends JCComponent<Props, State>{
                   <Text>{this.state.validationError}</Text>
                 </Container>
                 <Container style={this.styles.style.detailScreenRightCard}>
-                  <MessageBoard groupId={this.state.data.id}></MessageBoard>
+                  <MessageBoard style="regular" groupId={this.state.data.id}></MessageBoard>
                   {/*  <Zoom></Zoom>*/}
                 </Container>
               </Container>

@@ -29,6 +29,7 @@ interface Props {
   roomId?: string
   route?: any
   navigation?: any
+  style: "mini" | "regular"
 }
 interface State extends JCState {
   data: any,
