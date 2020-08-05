@@ -29,6 +29,7 @@ export enum ButtonTypes {
     PostOutline,
     Transparent,
     TransparentNoPadding,
+    TransparentCourse,
     TransparentBoldBlack,
     TransparentBoldBlackNoMargin,
     TransparentBoldGreyNoMargin,

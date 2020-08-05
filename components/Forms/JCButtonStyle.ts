@@ -494,6 +494,24 @@ export default EStyleSheet.create({
         fontSize: 16,
         padding: 5
     },
+    TransparentCourseButton: {
+        marginBottom: 20,
+        paddingTop: 0,
+        paddingBottom: 0,
+        marginLeft: 20,
+        marginRight: 20,
+        backgroundColor: "#ffffff00",
+        borderWidth: 0,
+        borderColor: "#ffffff00",
+        boxShadow: "unset",
+        alignSelf: "flex-start"
+    },
+    TransparentCourseText: {
+        color: "#F0493E",
+        fontFamily: 'Graphik-Bold-App',
+        fontSize: 16,
+        padding: 5
+    },
     EditButtonButton: {
         paddingTop: 0,
         paddingBottom: 0,
