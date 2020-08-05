@@ -25,6 +25,7 @@ const {
   listUsers,
   listGroupsForUser,
   listUsersInGroup,
+  adminCreateUser,
   signUserOut,
 } = require('./cognitoActions');
 
@@ -43,7 +44,7 @@ app.use((req, res, next) => {
 // Only perform tasks if the user is in a specific group
 const allowedGroup = process.env.GROUP;
 
-const checkGroup = function(req, res, next) {
+const checkGroup = function (req, res, next) {
   if (req.path == '/signUserOut') {
     return next();
   }
@@ -213,6 +214,22 @@ app.get('/listUsersInGroup', async (req, res, next) => {
     } else {
       response = await listUsersInGroup(req.query.groupname);
     }
+    res.status(200).json(response);
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.get('/adminCreateUser', async (req, res, next) => {
+  if (!req.query.email) {
+    const err = new Error('email is required');
+    err.statusCode = 400;
+    return next(err);
+  }
+
+  try {
+    let response;
+    response = await adminCreateUser(req.query.email);
     res.status(200).json(response);
   } catch (err) {
     next(err);

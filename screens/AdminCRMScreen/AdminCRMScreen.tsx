@@ -80,6 +80,23 @@ export default class AdminScreen extends JCComponent<Props, State>{
     nextToken = NextToken;
     return rest;
   }
+
+  async adminCreateUser(email: string): Promise<any> {
+    const apiName = 'AdminQueries';
+    const path = '/adminCreateUser';
+    const myInit = {
+      queryStringParameters: {
+        "email": email
+      },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
+      }
+    }
+    const { ...rest } = await API.get(apiName, path, myInit);
+    // nextToken = NextToken;
+    return rest;
+  }
   renderHeader(): React.ReactNode {
     return (
       <View style={{ backgroundColor: "#aaaaaa", flex: 1, maxHeight: 25, alignSelf: 'stretch', flexDirection: 'row' }}>
@@ -150,8 +167,11 @@ export default class AdminScreen extends JCComponent<Props, State>{
       </View>
     )
   }
-  sendInvite(email: string): void {
+  async sendInvite(email: string): Promise<void> {
+
     console.log({ "inviting:": email })
+    let z = await this.adminCreateUser(email)
+    console.log(z)
   }
   render(): React.ReactNode {
     console.log("AdminScreen")

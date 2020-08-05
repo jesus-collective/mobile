@@ -177,10 +177,10 @@ async function listGroupsForUser(username, Limit, NextToken) {
      */
     result.Groups.forEach((val) => {
       delete val.UserPoolId,
-      delete val.LastModifiedDate,
-      delete val.CreationDate,
-      delete val.Precedence,
-      delete val.RoleArn;
+        delete val.LastModifiedDate,
+        delete val.CreationDate,
+        delete val.Precedence,
+        delete val.RoleArn;
     });
 
     return result;
@@ -190,6 +190,35 @@ async function listGroupsForUser(username, Limit, NextToken) {
   }
 }
 
+async function adminCreateUser(email) {
+  const params = {
+    // ClientMetadata: { "string" : "string" },
+    DesiredDeliveryMediums: ["EMAIL"],
+    ForceAliasCreation: false,
+    // MessageAction: "string",
+    // TemporaryPassword: "string",
+    UserAttributes: [
+      {
+        Name: "email",
+        Value: email
+      }
+    ],
+    Username: email,
+    UserPoolId: userPoolId,
+    //ValidationData: [ { "Name": "string","Value": "string"}]
+
+  };
+
+  console.log(`Attempting to invite ${email}`);
+
+  try {
+    const result = await cognitoIdentityServiceProvider.adminCreateUser(params).promise();
+    return result;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
 
 async function listUsersInGroup(groupname, Limit, NextToken) {
   const params = {
@@ -241,5 +270,6 @@ module.exports = {
   listUsers,
   listGroupsForUser,
   listUsersInGroup,
+  adminCreateUser,
   signUserOut,
 };
