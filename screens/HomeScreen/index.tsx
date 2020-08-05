@@ -44,6 +44,7 @@ const ProfileScreen = lazy(() => import('../ProfileScreen/ProfileScreen'));
 const ProfilesScreen = lazy(() => import('../ProfilesScreen/ProfilesScreen'));
 const SearchScreen = lazy(() => import('../SearchScreen/SearchScreen'));
 const AdminScreen = lazy(() => import('../AdminScreen/AdminScreen'));
+const AdminCRMScreen = lazy(() => import('../AdminCRMScreen/AdminCRMScreen'));
 
 Amplify.configure(awsconfig);
 
@@ -77,7 +78,8 @@ const linking = {
               SearchScreen: 'search',
               ProfileScreen: 'profile',
               ProfilesScreen: 'profiles',
-              AdminScreen: 'admin'
+              AdminScreen: 'admin',
+              AdminCRMScreen: 'crm'
             }
           }
         }
@@ -278,6 +280,11 @@ class MainAppRouter extends JCComponent {
                     component={AdminScreen}
                     options={{ title: 'Jesus Collective' }}
                   />
+                  <Stack.Screen
+                    name="AdminCRMScreen"
+                    component={AdminCRMScreen}
+                    options={{ title: 'Jesus Collective' }}
+                  />
                 </>)
                 : (<>
                   <Stack.Screen
@@ -371,6 +378,11 @@ class MainAppRouter extends JCComponent {
                   />
                   <Stack.Screen
                     name="AdminScreen"
+                    component={Nothing}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="AdminCRMScreen"
                     component={Nothing}
                     options={{ title: 'Jesus Collective' }}
                   />

@@ -45,6 +45,10 @@ export default class HeaderJC extends JCComponent<Props> {
     const user = await Auth.currentAuthenticatedUser();
     this.props.navigation.push("AdminScreen", { id: user['username'], create: false });
   }
+  openAdminCRM = async (): Promise<void> => {
+    const user = await Auth.currentAuthenticatedUser();
+    this.props.navigation.push("AdminCRMScreen", { id: user['username'], create: false });
+  }
   openSearch = (): void => {
     this.props.navigation.push("SearchScreen");
   }
@@ -88,14 +92,14 @@ export default class HeaderJC extends JCComponent<Props> {
           <Button
             transparent
             data-testId="header-events"
-            onPress={this.openEvents}
+            onPress={this.openAdmin}
             style={this.headerStyles.style.centerMenuButtons}>
             <Text style={this.headerStyles.style.centerMenuButtonsText}>Admin</Text>
           </Button>
           <Button
             transparent
             data-testid="header-events"
-            onPress={this.openEvents}
+            onPress={this.openAdminCRM}
             style={this.headerStyles.style.centerMenuButtons}>
             <Text style={this.headerStyles.style.centerMenuButtonsText}>CRM</Text>
           </Button>
