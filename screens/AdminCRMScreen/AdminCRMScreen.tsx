@@ -143,16 +143,16 @@ export default class AdminScreen extends JCComponent<Props, State>{
     return (
       <View style={{ flex: 1, maxHeight: 25, alignSelf: 'stretch', flexDirection: 'row' }}>
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>{item.Attributes.find(e => e.Name == "given_name").Value}</Text>
+          <Text style={this.styles.style.fontRegular}>{item.Attributes.find(e => e.Name == "given_name")?.Value}</Text>
         </View>
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>{item.Attributes.find(e => e.Name == "family_name").Value}</Text>
+          <Text style={this.styles.style.fontRegular}>{item.Attributes.find(e => e.Name == "family_name")?.Value}</Text>
         </View>
         <View style={{ flex: 2, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>{item.Attributes.find(e => e.Name == "email").Value}</Text>
+          <Text style={this.styles.style.fontRegular}>{item.Attributes.find(e => e.Name == "email")?.Value}</Text>
         </View>
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>{item.Attributes.find(e => e.Name == "phone_number").Value}</Text>
+          <Text style={this.styles.style.fontRegular}>{item.Attributes.find(e => e.Name == "phone_number")?.Value}</Text>
         </View>
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
           <Text style={this.styles.style.fontRegular}>{item.UserStatus}</Text>
