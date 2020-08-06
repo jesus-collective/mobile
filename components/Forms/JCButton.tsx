@@ -22,6 +22,7 @@ export enum ButtonTypes {
     SolidResources,
     SolidRightMargin,
     SolidRightJustified,
+    SolidRightJustifiedMini,
     Outline,
     OutlineBold,
     OutlineBoldNoMargin,

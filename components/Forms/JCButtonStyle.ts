@@ -700,6 +700,30 @@ export default EStyleSheet.create({
         padding: 10,
         fontWeight: "600",
     },
+    SolidRightJustifiedMiniButton: {
+        paddingTop: 6,
+        paddingBottom: 6,
+        paddingLeft: 29,
+        paddingRight: 29,
+        marginBottom: 20,
+        marginLeft: 0,
+        marginRight: 10,
+        //   color:"#F0493E",
+        backgroundColor: "#F0493E",
+        borderWidth: 1,
+        borderColor: "#F0493E",
+        boxShadow: "unset",
+        borderRadius: 4,
+        alignSelf: "flex-end"
+    },
+    SolidRightJustifiedMiniText: {
+        color: "#ffffff",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        padding: 10,
+        fontWeight: "600",
+    },
+
 
     '@media (min-width: 481) and (max-width: 768)': {
         SolidRightMarginButton: {
