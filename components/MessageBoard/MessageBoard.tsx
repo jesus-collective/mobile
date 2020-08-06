@@ -358,7 +358,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             <Content style={{ marginBottom: 40 }}>
 
               {
-                this.state.UserDetails != null ?
+                this.state.UserDetails != null && this.props.style=="regular" ?
                   <ProfileImage size="small" user={this.state.UserDetails}></ProfileImage>
                   : null
               }
