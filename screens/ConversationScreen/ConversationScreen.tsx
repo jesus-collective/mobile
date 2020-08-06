@@ -140,7 +140,6 @@ export default class ConversationScreen extends JCComponent<Props, State>{
           this.setState({ data: this.state.data.concat(json.data.listDirectMessageUsers.items) }, this.shouldCreateRoom)
         }
       } catch (json) {
-        console.error(json)
         if (json?.data?.listDirectMessageUsers?.nextToken !== null) {
           console.log({ 'customQueries.listDirectMessageUsers': json.data.listDirectMessageUsers })
           this.setState({ data: this.state.data.concat(json.data.listDirectMessageUsers.items) })
@@ -149,6 +148,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
           console.log({ 'customQueries.listDirectMessageUsers': json.data.listDirectMessageUsers })
           this.setState({ data: this.state.data.concat(json.data.listDirectMessageUsers.items) }, this.shouldCreateRoom)
         }
+        console.error(json)
       }
     } catch (err) {
       console.error(err)
@@ -176,7 +176,12 @@ export default class ConversationScreen extends JCComponent<Props, State>{
     this.setState({ selectedRoom: index })
     this.setState({ currentRoomId: this.state.data[index].roomID })
   }
-
+  getCurrentRoomRecipients(): string[] {
+    const ids = [];
+    console.log(this.state.data[this.state.selectedRoom])
+    this.state.data[this.state.selectedRoom]?.room?.messageUsers?.items.forEach(user => { ids.push(user.userID) })
+    return ids
+  }
   render(): React.ReactNode {
     console.log("ConversationScreen")
     console.log({ StateData: this.state.data })
@@ -227,7 +232,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
                 }) : null}
             </Container>
             <Container style={this.styles.style.detailScreenRightCard}>
-              <MessageBoard style="regular" roomId={this.state.currentRoomId}></MessageBoard>
+              <MessageBoard style="regular" roomId={this.state.currentRoomId} recipients={this.getCurrentRoomRecipients()}></MessageBoard>
             </Container>
           </Container>
         </Content>

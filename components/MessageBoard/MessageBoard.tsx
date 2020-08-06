@@ -30,6 +30,7 @@ interface Props {
   route?: any
   navigation?: any
   style: "mini" | "regular"
+  recipients?: string[]
 }
 interface State extends JCState {
   data: any,
@@ -310,7 +311,8 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           attachment: this.state.attachment,
           attachmentName: this.state.attachmentName,
           when: Date.now().toString(),
-          messageRoomID: this.props.roomId
+          messageRoomID: this.props.roomId,
+          recipients: this.props.recipients ? this.props.recipients : null
         }
         const createDirectMessage: any = API.graphql({
           query: mutations.createDirectMessage,
