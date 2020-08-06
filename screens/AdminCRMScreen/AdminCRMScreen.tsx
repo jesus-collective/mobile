@@ -141,7 +141,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
   }
   renderRow(item: any, index: number): React.ReactNode {
     return (
-      <View style={{ flex: 1, maxHeight: 25, alignSelf: 'stretch', flexDirection: 'row' }}>
+      <View style={{ flex: 1, maxHeight: 40, alignSelf: 'stretch', flexDirection: 'row' }}>
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
           <Text style={this.styles.style.fontRegular}>{item.Attributes.find(e => e.Name == "given_name")?.Value}</Text>
         </View>

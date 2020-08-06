@@ -139,8 +139,16 @@ export default class ConversationScreen extends JCComponent<Props, State>{
           console.log({ 'customQueries.listDirectMessageUsers': json.data.listDirectMessageUsers })
           this.setState({ data: this.state.data.concat(json.data.listDirectMessageUsers.items) }, this.shouldCreateRoom)
         }
-      } catch (err) {
-        console.error(err)
+      } catch (json) {
+        console.error(json)
+        if (json?.data?.listDirectMessageUsers?.nextToken !== null) {
+          console.log({ 'customQueries.listDirectMessageUsers': json.data.listDirectMessageUsers })
+          this.setState({ data: this.state.data.concat(json.data.listDirectMessageUsers.items) })
+          this.getInitialData(json.data.listDirectMessageUsers.nextToken)
+        } else if (json?.data?.listDirectMessageUsers) {
+          console.log({ 'customQueries.listDirectMessageUsers': json.data.listDirectMessageUsers })
+          this.setState({ data: this.state.data.concat(json.data.listDirectMessageUsers.items) }, this.shouldCreateRoom)
+        }
       }
     } catch (err) {
       console.error(err)
