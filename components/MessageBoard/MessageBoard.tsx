@@ -420,7 +420,11 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                   <JCButton buttonType={ButtonTypes.SolidRightJustified} onPress={() => { null }}><AntDesign name="clouduploado" size={16} color="white" style={{ marginRight: 5 }} />Share a file</JCButton>
                   <input multiple={false} style={{ cursor: 'pointer', width: '100%', height: '100%', position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='.pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx' onChange={(e) => this.handleUpload(e)} />
                 </View>
-                <JCButton buttonType={ButtonTypes.SolidRightJustified} onPress={() => { this.saveMessage() }} >Post</JCButton>
+                {
+                  this.props.style=="regular" ? 
+                  <JCButton buttonType={ButtonTypes.SolidRightJustified} onPress={() => { this.saveMessage() }} >Post</JCButton>
+                   : <JCButton buttonType={ButtonTypes.SolidRightJustifiedMini} onPress={() => { this.saveMessage() }} >Post</JCButton>
+                }
               </View>
 
             </Content>
