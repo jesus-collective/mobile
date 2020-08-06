@@ -362,28 +362,53 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                   <ProfileImage size="small" user={this.state.UserDetails}></ProfileImage>
                   : null
               }
-              <Editor
-                placeholder="Write a message..."
-                editorState={this.state.editorState}
-                toolbarClassName="customToolbar"
-                wrapperClassName="customWrapperSendmessage"
-                editorClassName="customEditorSendmessage"
-                onEditorStateChange={(z) => { this.updateEditorInput(z) }}
 
-                toolbar={{
-                  options: ['inline', 'list', 'emoji'],
-                  inline: {
-                    options: ['bold', 'italic', 'underline']
-                  },
-                  list: {
-                    options: ['unordered', 'ordered']
-                  },
-                  emoji: {
-                    popupClassName: "customEmojiModal"
-                  }
-                }}
+              {
+                this.props.style=="regular" ?
+                  <Editor
+                    placeholder="Write a message..."
+                    editorState={this.state.editorState}
+                    toolbarClassName="customToolbar"
+                    wrapperClassName="customWrapperSendmessage"
+                    editorClassName="customEditorSendmessage"
+                    onEditorStateChange={(z) => { this.updateEditorInput(z) }}
 
-              />
+                    toolbar={{
+                      options: ['inline', 'list', 'emoji'],
+                      inline: {
+                        options: ['bold', 'italic', 'underline']
+                      },
+                      list: {
+                        options: ['unordered', 'ordered']
+                      },
+                      emoji: {
+                        popupClassName: "customEmojiModal"
+                      }
+                    }}
+                  /> 
+                  :
+                  <Editor
+                    placeholder="Write a message..."
+                    editorState={this.state.editorState}
+                    toolbarClassName="customToolbar"
+                    wrapperClassName="customWrapperSendmessageMini"
+                    editorClassName="customEditorSendmessage"
+                    onEditorStateChange={(z) => { this.updateEditorInput(z) }}
+
+                    toolbar={{
+                      options: ['inline', 'list', 'emoji'],
+                      inline: {
+                        options: ['bold', 'italic', 'underline']
+                      },
+                      list: {
+                        options: ['unordered', 'ordered']
+                      },
+                      emoji: {
+                        popupClassName: "customEmojiModal"
+                      }
+                    }}
+                  /> 
+              }
               <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
                 {this.state.attachment ? this.renderFileUploadBadge(this.state) : null}
                 <View style={{ marginRight: 10 }}>

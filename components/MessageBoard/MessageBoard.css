@@ -20,6 +20,20 @@
     top: -50px;
 }
 
+.customWrapperSendmessageMini {
+    position: relative;
+    background-color: #eeeeee;
+    font-family: 'Graphik-Regular-App';
+    border-radius: 10px;
+    border: 1px;
+    margin-left: 0px;
+    margin-bottom: 20px;
+    height: unset;
+    width: 95%;
+    left: 0px;
+    top: 0px;
+}
+
 .customToolbar {
     background-color: #eeeeee;
     font-family: 'Graphik-Regular-App';
