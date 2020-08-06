@@ -360,73 +360,50 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             <Content style={{ marginBottom: 40 }}>
 
               {
-                this.state.UserDetails != null && this.props.style=="regular" ?
+                this.state.UserDetails != null && this.props.style == "regular" ?
                   <ProfileImage size="small" user={this.state.UserDetails}></ProfileImage>
                   : null
               }
 
-              {
-                this.props.style=="regular" ?
-                  <Editor
-                    placeholder="Write a message..."
-                    editorState={this.state.editorState}
-                    toolbarClassName="customToolbar"
-                    wrapperClassName="customWrapperSendmessage"
-                    editorClassName="customEditorSendmessage"
-                    onEditorStateChange={(z) => { this.updateEditorInput(z) }}
 
-                    toolbar={{
-                      options: ['inline', 'list', 'emoji'],
-                      inline: {
-                        options: ['bold', 'italic', 'underline']
-                      },
-                      list: {
-                        options: ['unordered', 'ordered']
-                      },
-                      emoji: {
-                        popupClassName: "customEmojiModal"
-                      }
-                    }}
-                  /> 
-                  :
-                  <Editor
-                    placeholder="Write a message..."
-                    editorState={this.state.editorState}
-                    toolbarClassName="customToolbar"
-                    wrapperClassName="customWrapperSendmessageMini"
-                    editorClassName="customEditorSendmessage"
-                    onEditorStateChange={(z) => { this.updateEditorInput(z) }}
 
-                    toolbar={{
-                      options: ['inline', 'list', 'emoji'],
-                      inline: {
-                        options: ['bold', 'italic', 'underline']
-                      },
-                      list: {
-                        options: ['unordered', 'ordered']
-                      },
-                      emoji: {
-                        popupClassName: "customEmojiModal"
-                      }
-                    }}
-                  /> 
-              }
-              <View 
+              <Editor
+                placeholder="Write a message..."
+                editorState={this.state.editorState}
+                toolbarClassName="customToolbar"
+                wrapperClassName={this.props.style == "regular" ? "customWrapperSendmessage" : "customWrapperSendmessageMini"}
+                editorClassName="customEditorSendmessage"
+                onEditorStateChange={(z) => { this.updateEditorInput(z) }}
+
+                toolbar={{
+                  options: ['inline', 'list', 'emoji'],
+                  inline: {
+                    options: ['bold', 'italic', 'underline']
+                  },
+                  list: {
+                    options: ['unordered', 'ordered']
+                  },
+                  emoji: {
+                    popupClassName: "customEmojiModal"
+                  }
+                }}
+              />
+
+              <View
                 style={
-                  this.props.style=="regular" ? 
-                  this.styles.style.courseDetailJCButtonRegular : this.styles.style.courseDetailJCButtonMini
-                  }>
-                
+                  this.props.style == "regular" ?
+                    this.styles.style.courseDetailJCButtonRegular : this.styles.style.courseDetailJCButtonMini
+                }>
+
                 {this.state.attachment ? this.renderFileUploadBadge(this.state) : null}
                 <View style={{ marginRight: 10 }}>
                   <JCButton buttonType={ButtonTypes.SolidRightJustified} onPress={() => { null }}><AntDesign name="clouduploado" size={16} color="white" style={{ marginRight: 5 }} />Share a file</JCButton>
                   <input multiple={false} style={{ cursor: 'pointer', width: '100%', height: '100%', position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='.pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx' onChange={(e) => this.handleUpload(e)} />
                 </View>
-                {
-                  this.props.style=="regular" ? 
-                  <JCButton buttonType={ButtonTypes.SolidRightJustified} onPress={() => { this.saveMessage() }} >Post</JCButton>
-                   : <JCButton buttonType={ButtonTypes.SolidRightJustifiedMini} onPress={() => { this.saveMessage() }} >Post</JCButton>
-                }
+                <JCButton
+                  buttonType={this.props.style == "regular" ? ButtonTypes.SolidRightJustified : ButtonTypes.SolidRightJustifiedMini}
+                  onPress={() => { this.saveMessage() }} >Post</JCButton>
+
               </View>
 
             </Content>
