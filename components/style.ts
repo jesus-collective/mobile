@@ -1328,6 +1328,14 @@ export default class MainStyles {
                 backgroundColor: "#000000", 
                 height: '100vh'
             },
+            courseDetailJCButtonRegular: {
+                flexDirection: 'row', 
+                justifyContent: 'flex-end'
+            },
+            courseDetailJCButtonMini: {
+                flexDirection: 'column', 
+                justifyContent: 'flex-end'
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {

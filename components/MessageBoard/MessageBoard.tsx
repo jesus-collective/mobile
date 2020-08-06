@@ -409,7 +409,12 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                     }}
                   /> 
               }
-              <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+              <View 
+                style={
+                  this.props.style=="regular" ? 
+                  this.styles.style.courseDetailJCButtonRegular : this.styles.style.courseDetailJCButtonMini
+                  }>
+                
                 {this.state.attachment ? this.renderFileUploadBadge(this.state) : null}
                 <View style={{ marginRight: 10 }}>
                   <JCButton buttonType={ButtonTypes.SolidRightJustified} onPress={() => { null }}><AntDesign name="clouduploado" size={16} color="white" style={{ marginRight: 5 }} />Share a file</JCButton>
