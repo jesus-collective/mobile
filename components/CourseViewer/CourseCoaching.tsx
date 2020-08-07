@@ -40,16 +40,16 @@ class CourseCoachingImpl extends JCComponent<Props>{
 
                   <Container style={{ flex: 80 }}>
                     <Content style={{ flex: 80 }}>
-                      <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
+                      <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start', paddingLeft: '5%' }}>
                         <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
-                          <Image style={{ margin: 0, padding: 0, width: 40, height: 45 }} source={require("../../assets/profile-placeholder.png")} />
+                          <Image style={{ margin: 0, padding: 0, width: 110, height: 136, marginBottom: 20, marginLeft: '15%' }} source={require("../../assets/profile-placeholder.png")} />
                           <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Book a Call</JCButton>
                           <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Send Message</JCButton>
                           <Text>Hi </Text>
                           <Text>For your journey in leadership formation, I’d like to invite you to our bi-weekly coaching sessions where we can connect and discuss issues in more details. Let’s schedule our Coaching Calls - talk soon!
 
-                          Thanks!
-- Jon</Text>
+                          Thanks! - Jon
+                          </Text>
                           <Container>
                             <Text>Schedule your</Text>
                             <Text>30 Minute Coaching Call</Text>
