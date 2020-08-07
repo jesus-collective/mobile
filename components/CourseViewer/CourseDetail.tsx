@@ -182,7 +182,7 @@ class CourseDetailImpl extends JCComponent<Props>{
                             <JCButton buttonType={ButtonTypes.TransparentCourse} onPress={() => { null }}>Triad</JCButton>
                             <JCButton buttonType={ButtonTypes.TransparentCourse} onPress={() => { null }}>Instructor</JCButton>
                           </Container>
-                          <Container style={{ flex: 95, flexDirection: "row", marginTop: 25 }}>
+                          <Container style={{ flex: 95, flexDirection: "row", marginTop: 25, width: '100%' }}>
                             <MessageBoard style="mini" groupId={state.data.id}></MessageBoard>
                           </Container>
                         </Container>
