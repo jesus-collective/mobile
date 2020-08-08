@@ -1,5 +1,5 @@
 ﻿import React, { lazy } from 'react';
-import { StyleProvider, Card, Container, Content } from 'native-base';
+import { StyleProvider, Card, Container, Content, Picker, Icon } from 'native-base';
 import { Text } from 'react-native'
 import JCButton, { ButtonTypes } from '../Forms/JCButton'
 
@@ -42,10 +42,10 @@ class CourseDetailImpl extends JCComponent<Props>{
           <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
 
             <EditableText onChange={(e) => { actions.updateWeek(state.activeWeek, "title", e) }}
-              placeholder="Week Title" multiline={true}
+              placeholder="Week Title" multiline={false}
               data-testid="course-weekTitle"
               textStyle={this.styles.style.fontFormSmallDarkGrey}
-              inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 30, marginBottom: 60, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 35, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
+              inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 30, marginBottom: 60, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
               value={week.title} isEditable={state.isEditable}></EditableText>
 
             <EditableDate type="date"
@@ -59,10 +59,10 @@ class CourseDetailImpl extends JCComponent<Props>{
             <Text>{week.date}</Text>
 
             <EditableText onChange={(e) => { actions.updateWeek(state.activeWeek, "leader", e) }}
-              placeholder="Lesson Leader" multiline={true}
+              placeholder="Lesson Leader" multiline={false}
               data-testid="course-lessonTitle"
               textStyle={this.styles.style.fontFormSmallDarkGrey}
-              inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 35, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
+              inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
               value={week.leader} isEditable={state.isEditable}></EditableText>
 
             {week.lessons?.items?.map((item: any, lesson: number) => {
@@ -77,12 +77,59 @@ class CourseDetailImpl extends JCComponent<Props>{
                           placeholder="Title" multiline={true}
                           data-testid="course-lessonTitle"
                           textStyle={this.styles.style.fontFormSmallDarkGrey}
-                          inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 0, marginBottom: 10, width: "100%", paddingTop: 5, paddingRight: 10, paddingBottom: 25, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, height: 30 }}
+                          inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 0, marginBottom: 10, width: "100%", paddingTop: 5, paddingRight: 5, paddingBottom: 5, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, height: 30 }}
                           value={item.name} isEditable={state.isEditable}></EditableText>
 
                         <Container style={{ flexDirection: "row", height: 'auto' }}>
-                          <Text style={{ alignSelf: 'center', marginRight: 30 }}><Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }} source={require('../../assets/svg/time.svg')} />3 hours</Text>
-                          <Text style={{ alignSelf: 'center' }}><Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }} source={require('../../assets/svg/document.svg')} />Assignment</Text>
+                          <Text style={{ alignSelf: 'center', marginRight: 30 }}>
+                            {state.isEditable ?
+                              null
+                              : <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }} source={require('../../assets/svg/time.svg')} />
+                            }
+                            <EditableText onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "duration", e) }}
+                              placeholder="Duration" multiline={false}
+                              data-testid="course-lessonDuration"
+                              textStyle={this.styles.style.fontFormSmallDarkGrey}
+                              inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 5, marginBottom: 5, width: "100%", paddingTop: 5, paddingRight: 5, paddingBottom: 5, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, height: 30 }}
+                              value={item.duration} isEditable={state.isEditable}></EditableText>
+                          </Text>
+
+                          {state.isEditable ?
+                            <Picker
+
+                              onStartShouldSetResponder={() => true}
+                              onMoveShouldSetResponderCapture={() => true}
+                              onStartShouldSetResponderCapture={() => true}
+                              onMoveShouldSetResponder={() => true}
+                              mode="dropdown"
+                              iosIcon={<Icon name="arrow-down" />}
+                              style={{ width: "50%", marginBottom: 0, marginTop: 0, fontSize: 16, height: 30, flexGrow: 0 }}
+                              placeholder="Event type"
+                              placeholderStyle={{ color: "#bfc6ea" }}
+                              placeholderIconColor="#007aff"
+                              selectedValue={item.lessonType ? item.lessonType : "zoom"}
+                              onValueChange={(value: any) => { actions.updateLesson(state.activeWeek, lesson, "lessonType", value) }}
+                            >
+                              <Picker.Item label="Zoom Call" value="zoom" />
+                              <Picker.Item label="Assignment" value="assignment" />
+                              <Picker.Item label="Respond" value="respond" />
+
+                            </Picker>
+                            :
+                            {
+                              'assignment': (<Text style={{ alignSelf: 'center' }}>
+                                <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
+                                  source={require('../../assets/svg/document.svg')} />Assignment</Text>),
+                              'respond': (<Text style={{ alignSelf: 'center' }}>
+                                <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
+                                  source={require('../../assets/svg/document.svg')} />Respond</Text>),
+                              'zoom': (<Text style={{ alignSelf: 'center' }}>
+                                <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
+                                  source={require('../../assets/svg/document.svg')} />Zoom</Text>)
+                            }[item.lessonType] || (<Text style={{ alignSelf: 'center' }}>
+                              <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
+                                source={require('../../assets/svg/document.svg')} />Zoom</Text>)
+                          }
                         </Container>
                       </Container>
                       <Text style={{ fontSize: 12, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#FFF', marginLeft: 30, marginRight: 15, paddingLeft: 10, paddingRight: 10, textTransform: 'uppercase', backgroundColor: '#71C209', borderRadius: 50, height: 20, alignSelf: 'center' }}>Completed</Text>
@@ -96,18 +143,14 @@ class CourseDetailImpl extends JCComponent<Props>{
               )
             })}
             <TouchableOpacity onPress={() => { actions.createLesson() }}>
-              <Card style={{ minHeight: "40px", maxHeight: "500px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 50, paddingRight: 30, paddingBottom: 50, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 30 }}>
+              <Card style={{ minHeight: "40px", maxHeight: "80px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 30, paddingRight: 30, paddingBottom: 50, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 30 }}>
                 <Container style={{ flexDirection: "row" }}>
                   <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Regular-App', alignSelf: 'center' }}></Text>
-                  <Container style={{ flexDirection: "column", minHeight: "40px", maxHeight: "80px" }}>
+                  <Container style={{ flexDirection: "column", minHeight: "30px", maxHeight: "30px" }}>
                     <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', alignSelf: 'center', color: '#333333' }}>Create New Lesson</Text>
-                    <Container style={{ flexDirection: "row", minHeight: "40px", maxHeight: "80px" }}>
-                      <Text></Text>
-                      <Text></Text>
-                    </Container>
+
                   </Container>
-                  <Text></Text>
-                  <Text></Text>
+
                 </Container>
               </Card>
             </TouchableOpacity>

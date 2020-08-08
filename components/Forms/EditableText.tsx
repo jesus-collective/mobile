@@ -57,7 +57,10 @@ export default class EditableText extends JCComponent<Props, State> {
                 onChange={(val: any) => { this.setState({ value: val.target.value }) }}
 
 
-
+                onStartShouldSetResponder={() => true}
+                onMoveShouldSetResponderCapture={() => true}
+                onStartShouldSetResponderCapture={() => true}
+                onMoveShouldSetResponder={() => true}
                 //onChange={(value) => { this.onChanged(value) }}
                 placeholder={this.props.placeholder}
                 placeholderTextColor={this.props.placeholderTextColor}

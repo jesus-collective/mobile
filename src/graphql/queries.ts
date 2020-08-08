@@ -1204,9 +1204,11 @@ export const getCourseWeek = /* GraphQL */ `
         items {
           id
           lesson
+          lessonType
           name
           time
           tz
+          duration
           description
           courseWeekID
           createdAt
@@ -1261,9 +1263,11 @@ export const getCourseLesson = /* GraphQL */ `
     getCourseLesson(id: $id) {
       id
       lesson
+      lessonType
       name
       time
       tz
+      duration
       description
       courseWeekID
       courseWeek {
@@ -1318,9 +1322,11 @@ export const listCourseLessons = /* GraphQL */ `
       items {
         id
         lesson
+        lessonType
         name
         time
         tz
+        duration
         description
         courseWeekID
         courseWeek {
@@ -1355,9 +1361,11 @@ export const getCourseAssignment = /* GraphQL */ `
       courseLesson {
         id
         lesson
+        lessonType
         name
         time
         tz
+        duration
         description
         courseWeekID
         courseWeek {
@@ -1402,9 +1410,11 @@ export const listCourseAssignments = /* GraphQL */ `
         courseLesson {
           id
           lesson
+          lessonType
           name
           time
           tz
+          duration
           description
           courseWeekID
           createdAt

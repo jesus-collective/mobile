@@ -3495,9 +3495,11 @@ export const createCourseWeek = /* GraphQL */ `
         items {
           id
           lesson
+          lessonType
           name
           time
           tz
+          duration
           description
           courseWeekID
           createdAt
@@ -3576,9 +3578,11 @@ export const updateCourseWeek = /* GraphQL */ `
         items {
           id
           lesson
+          lessonType
           name
           time
           tz
+          duration
           description
           courseWeekID
           createdAt
@@ -3657,9 +3661,11 @@ export const deleteCourseWeek = /* GraphQL */ `
         items {
           id
           lesson
+          lessonType
           name
           time
           tz
+          duration
           description
           courseWeekID
           createdAt
@@ -3677,9 +3683,11 @@ export const createCourseLesson = /* GraphQL */ `
     createCourseLesson(input: $input) {
       id
       lesson
+      lessonType
       name
       time
       tz
+      duration
       description
       courseWeekID
       courseWeek {
@@ -3729,9 +3737,11 @@ export const updateCourseLesson = /* GraphQL */ `
     updateCourseLesson(input: $input) {
       id
       lesson
+      lessonType
       name
       time
       tz
+      duration
       description
       courseWeekID
       courseWeek {
@@ -3781,9 +3791,11 @@ export const deleteCourseLesson = /* GraphQL */ `
     deleteCourseLesson(input: $input) {
       id
       lesson
+      lessonType
       name
       time
       tz
+      duration
       description
       courseWeekID
       courseWeek {
@@ -3838,9 +3850,11 @@ export const createCourseAssignment = /* GraphQL */ `
       courseLesson {
         id
         lesson
+        lessonType
         name
         time
         tz
+        duration
         description
         courseWeekID
         courseWeek {
@@ -3876,9 +3890,11 @@ export const updateCourseAssignment = /* GraphQL */ `
       courseLesson {
         id
         lesson
+        lessonType
         name
         time
         tz
+        duration
         description
         courseWeekID
         courseWeek {
@@ -3914,9 +3930,11 @@ export const deleteCourseAssignment = /* GraphQL */ `
       courseLesson {
         id
         lesson
+        lessonType
         name
         time
         tz
+        duration
         description
         courseWeekID
         courseWeek {
