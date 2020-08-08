@@ -85,13 +85,19 @@ query GetCourseInfo($id: ID!) {
         id
         week
         date
+        tz
         name
+        title
         leader
-         lessons {
+        lessons {
           items {
             id
+            lesson
+            lessonType
             name
             time
+            tz
+            duration 
             description
             createdAt
             updatedAt
