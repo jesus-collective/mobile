@@ -121,9 +121,9 @@ export default class MainStyles {
                 display: "inline",
                 overflow: "visible",
                 width: "100%",
-                paddingTop: 30,
-                paddingLeft: 30,
-                paddingRight: 30,
+                paddingTop: 0,
+                paddingLeft: 0,
+                paddingRight: 0,
                 marginBottom: 60
             },
             groupNameInput: {
