@@ -15,6 +15,7 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import { CourseContext } from './CourseContext';
 import CourseDetailMenu from './CourseDetailMenu';
 import EditableText from '../Forms/EditableText';
+import EditableCourseAssignment from '../Forms/EditableCourseAssignment'
 import EditableDate from '../Forms/EditableDate';
 import moment from 'moment-timezone';
 import EditableRichText from '../Forms/EditableRichText';
@@ -24,9 +25,6 @@ interface Props {
   navigation?: any
   route?: any
 }
-
-
-
 
 class CourseDetailImpl extends JCComponent<Props>{
   constructor(props: Props) {
@@ -159,39 +157,72 @@ class CourseDetailImpl extends JCComponent<Props>{
         : null
     )
   }
+  renderZoom(state, actions, week, lesson) {
+    return (
+      <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+        <JCButton buttonType={ButtonTypes.Outline} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
+        <Text>{week.week}</Text>
+        <Text>{week.date}</Text>
+        <Text>{week.leader}</Text>
+        <Text>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
+        <Text>{lesson.time}</Text>
+        <EditableRichText onChange={(val) => { actions.updateLesson(state.activeWeek, state.activeLesson, "description", val) }}
+          value={lesson.description}
+          isEditable={true}
+          textStyle=""></EditableRichText>
+      </Container>)
+  }
+  renderRespond(state, actions, week, lesson) {
+    return (
+      <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+        <JCButton buttonType={ButtonTypes.Outline} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
+        <Text>{week.week}</Text>
+        <Text>{week.date}</Text>
+        <Text>{week.leader}</Text>
+        <Text>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
+        <Text>{lesson.time}</Text>
+        <EditableRichText onChange={(val) => { actions.updateLesson(state.activeWeek, state.activeLesson, "description", val) }}
+          value={lesson.description}
+          isEditable={true}
+          textStyle=""></EditableRichText>
+      </Container>)
+  }
+  renderAssignment(state, actions, week, lesson) {
+    return (
+      <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+        <JCButton buttonType={ButtonTypes.Outline} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
+        <Text>{week.week}</Text>
+        <Text>{week.date}</Text>
+        <Text>{week.leader}</Text>
+        <Text>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
+        <Text>{lesson.time}</Text>
+        <EditableRichText onChange={(val) => { actions.updateLesson(state.activeWeek, state.activeLesson, "description", val) }}
+          value={lesson.description}
+          isEditable={true}
+          textStyle=""></EditableRichText>
+        <EditableCourseAssignment onChange={(val) => { actions.updateLesson(state.activeWeek, state.activeLesson, "description", val) }}
+          value={lesson.description}
+          isEditable={true}
+          textStyle=""></EditableCourseAssignment>
+      </Container>)
+  }
+  renderLessonType(state, actions, week, lesson) {
+    switch (lesson.lessonType) {
+      case 'respond':
+        return this.renderRespond(state, actions, week, lesson)
+      case 'assignment':
+        return this.renderAssignment(state, actions, week, lesson)
+      default:
+        return this.renderZoom(state, actions, week, lesson)
+    }
+  }
   renderLessonDetails(state, actions, week: any): React.ReactNode {
     // console.log(this.state.activeLesson)
     if (week?.lessons) {
       const lesson = week.lessons.items[state.activeLesson]
       return (
         state.activeLesson != null ?
-          <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-            <JCButton buttonType={ButtonTypes.Outline} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
-            <Text>{week.week}</Text>
-            <Text>{week.date}</Text>
-            <Text>{week.leader}</Text>
-            <Text>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
-            <Text>{lesson.time}</Text>
-            <EditableRichText onChange={(val) => { actions.updateLesson(state.activeWeek, state.activeLesson, "description", val) }}
-              value={lesson.description}
-              isEditable={true}
-              textStyle=""></EditableRichText>
-
-            {lesson.assignment ? (
-              <Container>
-                <Text>{lesson.assignment.due}</Text>
-                {
-                  lesson.assignment.description.map((item: any, index) => {
-                    return <Text key={index}>{item}</Text>
-                  })
-
-                }
-              </Container>
-            )
-              : null
-            }
-
-          </Container>
+          this.renderLessonType(state, actions, week, lesson)
           : null
       )
     } else {
