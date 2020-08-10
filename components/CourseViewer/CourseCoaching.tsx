@@ -40,16 +40,20 @@ class CourseCoachingImpl extends JCComponent<Props>{
 
                   <Container style={{ flex: 80 }}>
                     <Content style={{ flex: 80 }}>
-                      <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start', paddingLeft: '5%' }}>
-                        <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
-                          <Image style={{ margin: 0, padding: 0, width: 110, height: 136, marginBottom: 20, marginLeft: '15%' }} source={require("../../assets/profile-placeholder.png")} />
-                          <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Book a Call</JCButton>
-                          <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Send Message</JCButton>
-                          <Text>Hi </Text>
-                          <Text>For your journey in leadership formation, I’d like to invite you to our bi-weekly coaching sessions where we can connect and discuss issues in more details. Let’s schedule our Coaching Calls - talk soon!
-
-                          Thanks! - Jon
-                          </Text>
+                      <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
+                        <Container style={{ flex: 100, flexDirection: "column", justifyContent: 'flex-start', paddingLeft: '5%' }}>
+                          <Container style={{ flexDirection: 'row', paddingBottom: 30, paddingTop: 30 }}>  
+                            <Container style={{ flexDirection: 'column', marginTop: 30, flex: 20 }}>
+                              <Image style={{ margin: 0, padding: 0, width: 110, height: 136, marginBottom: 20, marginLeft: '15%' }} source={require("../../assets/profile-placeholder.png")} />
+                              <JCButton buttonType={ButtonTypes.CourseHome} onPress={() => { null }}>Book a Call</JCButton>
+                              <JCButton buttonType={ButtonTypes.CourseHome} onPress={() => { null }}>Send Message</JCButton>
+                            </Container>
+                            <Container style={{ flex: 80, height: 200 }}>
+                              <Text style={{ marginTop: 30, marginLeft: 30, marginRight: 30, fontFamily: 'Graphik-Regular-App', fontSize: 20, lineHeight: 30 }}>Hi </Text>
+                              <Text style={{ marginTop: 30, marginLeft: 30, marginRight: 30, fontFamily: 'Graphik-Regular-App', fontSize: 20, lineHeight: 30 }}>For your journey in leadership formation, I’d like to invite you to our bi-weekly coaching sessions where we can connect and discuss issues in more details. Let’s schedule our Coaching Calls - talk soon!
+                              Thanks! - Jon</Text>
+                            </Container>
+                          </Container>
                           <Container>
                             <Text>Schedule your</Text>
                             <Text>30 Minute Coaching Call</Text>
