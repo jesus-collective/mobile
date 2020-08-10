@@ -209,7 +209,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
   createLesson = async (): Promise<void> => {
     const resource: CreateCourseLessonInput =
     {
-      name: "New Menu Item",//this.state.courseData.courseWeeks.items.length + 1,
+      name: "New Lesson",//this.state.courseData.courseWeeks.items.length + 1,
       lesson: this.state.courseData.courseWeeks.items[this.state.activeWeek].lessons.items.length + 1,
       //time: "",
       description: "...",

@@ -51,7 +51,6 @@ class CourseCoachingImpl extends JCComponent<Props>{
                             <Container style={{ flex: 80, height: 200 }}>
                               <Text style={{ marginTop: 30, marginLeft: 30, marginRight: 30, fontFamily: 'Graphik-Regular-App', fontSize: 20, lineHeight: 30 }}>Hi </Text>
                               <Text style={{ marginTop: 30, marginLeft: 30, marginRight: 30, fontFamily: 'Graphik-Regular-App', fontSize: 20, lineHeight: 30 }}>For your journey in leadership formation, I’d like to invite you to our bi-weekly coaching sessions where we can connect and discuss issues in more details. Let’s schedule our Coaching Calls - talk soon!
-
                               Thanks! - Jon</Text>
                             </Container>
                           </Container>

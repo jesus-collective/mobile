@@ -276,9 +276,11 @@ type CourseLesson
 {
   id: ID!
   lesson:String
+  lessonType:String
   name: String
   time: String
   tz:String
+  duration:String
   description: String
   courseWeekID:String
   courseWeek: CourseWeek @connection(name: "courseLesson", keyField: "courseWeekID")

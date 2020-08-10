@@ -8,6 +8,7 @@
     "search.exclude": {
       "**/node_modules": false
     },
-    "typescript.tsserver.experimental.enableProjectDiagnostics": true
+    "typescript.tsserver.experimental.enableProjectDiagnostics": true,
+    "python.pythonPath": "/usr/local/opt/python@2/bin/python2.7"
   }
 }
