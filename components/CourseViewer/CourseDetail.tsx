@@ -44,7 +44,7 @@ class CourseDetailImpl extends JCComponent<Props>{
               data-testid="course-weekTitle"
               textStyle={this.styles.style.fontFormSmallDarkGrey}
               inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 30, marginBottom: 60, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
-              value={week.title} isEditable={state.isEditable}></EditableText>
+              value={week.title} isEditable={state.isEditable && state.editMode}></EditableText>
 
             <EditableDate type="date"
               onChange={(time: any, timeZone: any) => { actions.updateWeek(state.activeWeek, "date", time); actions.updateWeek(state.activeWeek, "tz", timeZone) }}
@@ -53,7 +53,7 @@ class CourseDetailImpl extends JCComponent<Props>{
               textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupNameInput}
               value={week.date}
               tz={week.tz ? week.tz : moment.tz.guess()}
-              isEditable={this.state.isEditable}></EditableDate>
+              isEditable={this.state.isEditable && state.editMode}></EditableDate>
             <Text>{week.date}</Text>
 
             <EditableText onChange={(e) => { actions.updateWeek(state.activeWeek, "leader", e) }}
@@ -61,7 +61,7 @@ class CourseDetailImpl extends JCComponent<Props>{
               data-testid="course-lessonTitle"
               textStyle={this.styles.style.fontFormSmallDarkGrey}
               inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
-              value={week.leader} isEditable={state.isEditable}></EditableText>
+              value={week.leader} isEditable={state.isEditable && state.editMode}></EditableText>
 
             {week.lessons?.items?.map((item: any, lesson: number) => {
               return (
@@ -76,7 +76,7 @@ class CourseDetailImpl extends JCComponent<Props>{
                           data-testid="course-lessonTitle"
                           textStyle={this.styles.style.fontFormSmallDarkGrey}
                           inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 0, marginBottom: 10, width: "100%", paddingTop: 5, paddingRight: 5, paddingBottom: 5, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, height: 30 }}
-                          value={item.name} isEditable={state.isEditable}></EditableText>
+                          value={item.name} isEditable={state.isEditable && state.editMode}></EditableText>
 
                         <Container style={{ flexDirection: "row", height: 'auto' }}>
                           <Text style={{ alignSelf: 'center', marginRight: 30 }}>
@@ -89,10 +89,10 @@ class CourseDetailImpl extends JCComponent<Props>{
                               data-testid="course-lessonDuration"
                               textStyle={this.styles.style.fontFormSmallDarkGrey}
                               inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 5, marginBottom: 5, width: "100%", paddingTop: 5, paddingRight: 5, paddingBottom: 5, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, height: 30 }}
-                              value={item.duration} isEditable={state.isEditable}></EditableText>
+                              value={item.duration} isEditable={state.isEditable && state.editMode}></EditableText>
                           </Text>
 
-                          {state.isEditable ?
+                          {state.isEditable && state.editMode ?
                             <Picker
 
                               onStartShouldSetResponder={() => true}
@@ -140,18 +140,21 @@ class CourseDetailImpl extends JCComponent<Props>{
                 </TouchableOpacity>
               )
             })}
-            <TouchableOpacity onPress={() => { actions.createLesson() }}>
-              <Card style={{ minHeight: "40px", maxHeight: "80px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 30, paddingRight: 30, paddingBottom: 50, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 30 }}>
-                <Container style={{ flexDirection: "row" }}>
-                  <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Regular-App', alignSelf: 'center' }}></Text>
-                  <Container style={{ flexDirection: "column", minHeight: "30px", maxHeight: "30px" }}>
-                    <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', alignSelf: 'center', color: '#333333' }}>Create New Lesson</Text>
+            {state.isEditable && state.editMode ?
+              <TouchableOpacity onPress={() => { actions.createLesson() }}>
+                <Card style={{ minHeight: "40px", maxHeight: "80px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 30, paddingRight: 30, paddingBottom: 50, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 30 }}>
+                  <Container style={{ flexDirection: "row" }}>
+                    <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Regular-App', alignSelf: 'center' }}></Text>
+                    <Container style={{ flexDirection: "column", minHeight: "30px", maxHeight: "30px" }}>
+                      <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', alignSelf: 'center', color: '#333333' }}>Create New Lesson</Text>
+
+                    </Container>
 
                   </Container>
-
-                </Container>
-              </Card>
-            </TouchableOpacity>
+                </Card>
+              </TouchableOpacity> :
+              null
+            }
           </Container>
           : <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}><Text>Please create your first week</Text></Container>
         : null

@@ -5,7 +5,7 @@ import CourseSidebar from '../../components/CourseSidebar/CourseSidebar'
 import getTheme from '../../native-base-theme/components';
 
 import Validate from '../../components/Validate/Validate'
-import { API } from 'aws-amplify';
+import { API, Auth } from 'aws-amplify';
 import * as queries from '../../src/graphql/queries';
 import * as customQueries from '../../src/graphql-custom/queries';
 import * as mutations from '../../src/graphql/mutations';
@@ -26,11 +26,16 @@ interface State extends JCState {
   loadId: string
   data: any
   courseData: any
+  editMode: boolean
   isEditable: boolean
   validationError: string
   currentScreen: string
+  currentUser: string
   activeWeek: number
   activeLesson: number
+  myCoach: any
+  myTriad: any
+  myCohort: any
 }
 
 
@@ -45,13 +50,19 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
       showMap: false,
       loadId: props.route.params.id,
       data: null,
+      currentUser: null,
       courseData: null,
       isEditable: true,
+      editMode: false,
       validationError: "",
       activeWeek: 0,
       activeLesson: null
     }
-    this.setInitialData(props)
+    Auth.currentAuthenticatedUser().then((user: any) => {
+      this.setState({ currentUser: user.username }, () => {
+        this.setInitialData(props)
+      })
+    })
   }
   static Provider = CourseContext.Provider;
 
@@ -69,16 +80,36 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
     });
     const processResults2 = (json) => {
       console.log({ courseData: json })
-      this.setState({ courseData: json.data.getCourseInfo })
+      this.setState({ courseData: json.data.getCourseInfo }, () => { this.getTriadDetails() })
     }
     getCourse.then(processResults2).catch(processResults2)
     const processResults = (json) => {
-      console.log({ groupData: json })
+      const isEditable = json.data.getGroup.owner == this.state.currentUser
+      console.log({
+        isEditable: isEditable,
+        groupData: json
+      })
       this.setState({ data: json.data.getGroup })
+
     }
     getGroup.then(processResults).catch(processResults)
   }
-
+  getTriadDetails = (): void => {
+    const myCohort = this.state.courseData.triads.items.map((item) => {
+      console.log(item)
+      if (item.coachIDs?.includes(this.state.currentUser) || item.triadUserIDs?.includes(this.state.currentUser)) {
+        this.setState({
+          myCoach: item.coachIDs,
+          myTriad: item.triadUserIDs
+        })
+        return []
+      }
+      else return [].concat(item.coachIDs).concat(item.triadUserIDs)
+    })
+    this.setState({
+      myCohort: myCohort
+    })
+  }
   openHome = (): void => {
     this.props.navigation.push("HomeScreen");
   }
@@ -96,6 +127,9 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
     const temp = this.state.data
     temp[field] = value
     this.setState({ data: temp })
+  }
+  setEditMode = (editMode: boolean): void => {
+    this.setState({ editMode: editMode }, () => { this.forceUpdate() })
   }
   setActiveScreen = (screen: string): void => {
     this.setState({
@@ -385,7 +419,8 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
             deleteLesson: this.deleteLesson,
             createTriad: this.createTriad,
             updateTriad: this.updateTriad,
-            deleteTriad: this.deleteTriad
+            deleteTriad: this.deleteTriad,
+            setEditMode: this.setEditMode
           }
         }}>
           <StyleProvider style={getTheme()}>

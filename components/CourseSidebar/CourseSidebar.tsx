@@ -8,6 +8,7 @@ import { Image, Text, Dimensions } from 'react-native';
 import AnimatedProgressWheel from 'react-native-progress-wheel';
 import JCComponent from '../JCComponent/JCComponent';
 import JCButton, { ButtonTypes } from '../Forms/JCButton';
+import { CourseContext } from '../CourseViewer/CourseContext';
 
 interface Props {
     navigation?: any,
@@ -21,6 +22,7 @@ class CourseSidebarImpl extends JCComponent<Props> {
     constructor(props: Props) {
         super(props);
     }
+    static Consumer = CourseContext.Consumer;
     headerStyles = HeaderStyles.getInstance();
 
     updateStyles = (): void => {
@@ -56,41 +58,61 @@ class CourseSidebarImpl extends JCComponent<Props> {
     render(): React.ReactNode {
         //const { navigate } = this.props.navigation;
         return (
-            <Container style={this.styles.style.courseSideBar}>
-                <Button
-                    transparent
-                    data-testid="header-logo"
-                    onPress={this.openHome}>
-                    <Image style={this.headerStyles.style.logo}
-                        source={require('../../assets/header/icon.png')}
-                    /></Button>
+            <CourseSidebarImpl.Consumer>
+                {({ state, actions }) => {
+                    return (
+                        <Container style={this.styles.style.courseSideBar}>
+                            <Button
+                                transparent
+                                data-testid="header-logo"
+                                onPress={this.openHome}>
+                                <Image style={this.headerStyles.style.logo}
+                                    source={require('../../assets/header/icon.png')}
+                                /></Button>
 
-                <JCButton buttonType={ButtonTypes.CourseSideBarFirst} onPress={this.openCourseHome}><Image style={{ marginRight: 12, width: "30px", height: "30px", top: 6 }} source={require('../../assets/svg/home.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Home</Text></JCButton>
-                <JCButton buttonType={ButtonTypes.CourseSideBar} onPress={this.openCourseDetails}><Image style={{ marginRight: 12, width: "30px", height: "30px", top: 6 }} source={require('../../assets/svg/education.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Course</Text></JCButton>
-                <JCButton buttonType={ButtonTypes.CourseSideBar} onPress={this.openCourseCoaching}><Image style={{ marginRight: 12, width: "30px", height: "30px", top: 6 }} source={require('../../assets/svg/calendar.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Coaching</Text></JCButton>
-                <Container style={{ backgroundColor: "#00000000", alignSelf: 'center', marginTop: 75 }}>
-                    <AnimatedProgressWheel
-                        size={120}
-                        width={10}
-                        color={'#71C209'}
-                        progress={45}
-                        backgroundColor={'#333333'}
-                        animateFromValue={0}
-                        duration={1000}
-                    />
-                    <Container style={{ backgroundColor: "#00000000", position: "absolute", top: 15, left: 15 }}>
-                        <AnimatedProgressWheel
-                            size={90}
-                            width={10}
-                            color={'#F0493E'}
-                            progress={45}
-                            backgroundColor={'#333333'}
-                            animateFromValue={0}
-                            duration={1000}
-                        />
-                    </Container>
-                </Container>
-            </Container>
+                            <JCButton buttonType={ButtonTypes.CourseSideBarFirst} onPress={this.openCourseHome}><Image style={{ marginRight: 12, width: "30px", height: "30px", top: 6 }} source={require('../../assets/svg/home.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Home</Text></JCButton>
+                            <JCButton buttonType={ButtonTypes.CourseSideBar} onPress={this.openCourseDetails}><Image style={{ marginRight: 12, width: "30px", height: "30px", top: 6 }} source={require('../../assets/svg/education.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Course</Text></JCButton>
+                            <JCButton buttonType={ButtonTypes.CourseSideBar} onPress={this.openCourseCoaching}><Image style={{ marginRight: 12, width: "30px", height: "30px", top: 6 }} source={require('../../assets/svg/calendar.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Coaching</Text></JCButton>
+                            <Container style={{ backgroundColor: "#00000000", alignSelf: 'center', marginTop: 75 }}>
+                                <AnimatedProgressWheel
+                                    size={120}
+                                    width={10}
+                                    color={'#71C209'}
+                                    progress={45}
+                                    backgroundColor={'#333333'}
+                                    animateFromValue={0}
+                                    duration={1000}
+                                />
+                                <Container style={{ backgroundColor: "#00000000", position: "absolute", top: 15, left: 15 }}>
+                                    <AnimatedProgressWheel
+                                        size={90}
+                                        width={10}
+                                        color={'#F0493E'}
+                                        progress={45}
+                                        backgroundColor={'#333333'}
+                                        animateFromValue={0}
+                                        duration={1000}
+                                    />
+                                </Container>
+                            </Container>
+                            {
+                                state.isEditable ?
+                                    <JCButton
+                                        buttonType={ButtonTypes.EditButton}
+                                        onPress={() => { actions.setEditMode(!state.editMode) }}>
+                                        <Text style={{ color: "#ffffff" }}>
+                                            {state.editMode ? "View Course" : "Edit Course"}
+                                        </Text>
+                                    </JCButton>
+                                    : null
+                            }
+                        </Container>
+                    )
+
+
+                }
+                }
+            </CourseSidebarImpl.Consumer >
         )
     }
 }

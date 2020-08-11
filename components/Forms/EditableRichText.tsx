@@ -25,7 +25,7 @@ interface Props {
 }
 interface State extends JCState {
     value: string,
-    isEditable: boolean,
+
     isEditMode: boolean,
     textStyle: any,
     inputStyle: any,
@@ -39,7 +39,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
             ...super.getInitialState(),
             value: props.value,
             isEditMode: false,
-            isEditable: props.isEditable,
+
             textStyle: props.textStyle,
             inputStyle: props.inputStyle,
             placeholder: props.placeholder,
@@ -77,7 +77,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
     }
     render(): React.ReactNode {
 
-        if (this.state.isEditable)
+        if (this.props.isEditable)
             if (this.state.isEditMode)
                 return <Editor
                     placeholder="Empty Content"
