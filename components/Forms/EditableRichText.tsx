@@ -131,7 +131,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
                     </div>
                 </TouchableOpacity>
         else
-            return <div id="comment-div" style={{}}>
+            return <div id="comment-div">
                 <div dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(this.state.value) }} style={{ fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 26, color: "#333333", marginTop: 0, paddingTop: 0, height: 250 }}></div>
             </div>
 
