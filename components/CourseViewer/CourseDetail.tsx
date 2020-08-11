@@ -69,7 +69,7 @@ class CourseDetailImpl extends JCComponent<Props>{
                   <Card style={{ minHeight: "40px", maxHeight: "100px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 50, paddingRight: 30, paddingBottom: 50, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 30 }}>
                     <Container style={{ flexDirection: "row" }}>
                       <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 35, alignSelf: 'center' }}>MON</Text>
-                      <Container style={{ flexDirection: "column", height: "50px", alignSelf: 'center' }}>
+                      <Container style={{ flexDirection: "column", height: "70px", alignSelf: 'center' }}>
 
                         <EditableText onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "name", e) }}
                           placeholder="Title" multiline={true}
@@ -101,7 +101,7 @@ class CourseDetailImpl extends JCComponent<Props>{
                               onMoveShouldSetResponder={() => true}
                               mode="dropdown"
                               iosIcon={<Icon name="arrow-down" />}
-                              style={{ width: "50%", marginBottom: 0, marginTop: 0, fontSize: 16, height: 30, flexGrow: 0 }}
+                              style={{ width: "50%", marginBottom: 0, marginTop: 0, fontSize: 16, height: 30, flexGrow: 0, marginRight: 0, borderColor: '#dddddd' }}
                               placeholder="Event type"
                               placeholderStyle={{ color: "#bfc6ea" }}
                               placeholderIconColor="#007aff"
