@@ -115,8 +115,42 @@ query GetCourseInfo($id: ID!) {
         items {
           id
           courseInfoID
-          coachIDs
-          triadUserIDs
+          coaches {
+            items {
+              id
+              triadID
+              userID
+              user {
+                id
+                given_name
+                family_name
+                email
+                phone
+                owner
+              }
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          users {
+            items {
+              id
+              triadID
+              userID
+              user {
+                id
+                given_name
+                family_name
+                email
+                phone
+                owner
+              }
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
           createdAt
           updatedAt
         }

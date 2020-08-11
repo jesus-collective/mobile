@@ -76,6 +76,12 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -321,6 +327,26 @@ export const onCreateUser = /* GraphQL */ `
         }
         nextToken
       }
+      coachingTriad {
+        items {
+          id
+          triadID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      userTriad {
+        items {
+          id
+          triadID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       alertConfig {
         emailDirectMessage
         emailGroupMessage
@@ -463,6 +489,26 @@ export const onUpdateUser = /* GraphQL */ `
         }
         nextToken
       }
+      coachingTriad {
+        items {
+          id
+          triadID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      userTriad {
+        items {
+          id
+          triadID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       alertConfig {
         emailDirectMessage
         emailGroupMessage
@@ -600,6 +646,26 @@ export const onDeleteUser = /* GraphQL */ `
           recipients
           userId
           messageRoomID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      coachingTriad {
+        items {
+          id
+          triadID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      userTriad {
+        items {
+          id
+          triadID
+          userID
           createdAt
           updatedAt
         }
@@ -787,6 +853,12 @@ export const onCreateGroupMember = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -970,6 +1042,12 @@ export const onUpdateGroupMember = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
           nextToken
         }
         alertConfig {
@@ -1157,6 +1235,12 @@ export const onDeleteGroupMember = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -1240,6 +1324,12 @@ export const onCreateGroup = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
           nextToken
         }
         alertConfig {
@@ -1462,6 +1552,12 @@ export const onUpdateGroup = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -1680,6 +1776,12 @@ export const onDeleteGroup = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
           nextToken
         }
         alertConfig {
@@ -1904,6 +2006,12 @@ export const onCreateOrganizationMember = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -2075,6 +2183,12 @@ export const onUpdateOrganizationMember = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -2244,6 +2358,12 @@ export const onDeleteOrganizationMember = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
           nextToken
         }
         alertConfig {
@@ -3070,6 +3190,12 @@ export const onCreateCourseInfo = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -3086,8 +3212,6 @@ export const onCreateCourseInfo = /* GraphQL */ `
         items {
           id
           courseInfoID
-          coachIDs
-          triadUserIDs
           createdAt
           updatedAt
         }
@@ -3185,6 +3309,12 @@ export const onUpdateCourseInfo = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -3201,8 +3331,6 @@ export const onUpdateCourseInfo = /* GraphQL */ `
         items {
           id
           courseInfoID
-          coachIDs
-          triadUserIDs
           createdAt
           updatedAt
         }
@@ -3300,6 +3428,12 @@ export const onDeleteCourseInfo = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -3316,8 +3450,6 @@ export const onDeleteCourseInfo = /* GraphQL */ `
         items {
           id
           courseInfoID
-          coachIDs
-          triadUserIDs
           createdAt
           updatedAt
         }
@@ -3387,8 +3519,26 @@ export const onCreateCourseTriads = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      coachIDs
-      triadUserIDs
+      coaches {
+        items {
+          id
+          triadID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      users {
+        items {
+          id
+          triadID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -3450,8 +3600,26 @@ export const onUpdateCourseTriads = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      coachIDs
-      triadUserIDs
+      coaches {
+        items {
+          id
+          triadID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      users {
+        items {
+          id
+          triadID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -3513,8 +3681,710 @@ export const onDeleteCourseTriads = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      coachIDs
-      triadUserIDs
+      coaches {
+        items {
+          id
+          triadID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      users {
+        items {
+          id
+          triadID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateCourseTriadCoaches = /* GraphQL */ `
+  subscription OnCreateCourseTriadCoaches {
+    onCreateCourseTriadCoaches {
+      id
+      triadID
+      triad {
+        id
+        courseInfoID
+        courseInfo {
+          id
+          designedBy
+          summary
+          subTitle
+          introduction
+          sylabusAttachment
+          sylabusAttachmentName
+          createdAt
+          updatedAt
+        }
+        coaches {
+          nextToken
+        }
+        users {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateCourseTriadCoaches = /* GraphQL */ `
+  subscription OnUpdateCourseTriadCoaches {
+    onUpdateCourseTriadCoaches {
+      id
+      triadID
+      triad {
+        id
+        courseInfoID
+        courseInfo {
+          id
+          designedBy
+          summary
+          subTitle
+          introduction
+          sylabusAttachment
+          sylabusAttachmentName
+          createdAt
+          updatedAt
+        }
+        coaches {
+          nextToken
+        }
+        users {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteCourseTriadCoaches = /* GraphQL */ `
+  subscription OnDeleteCourseTriadCoaches {
+    onDeleteCourseTriadCoaches {
+      id
+      triadID
+      triad {
+        id
+        courseInfoID
+        courseInfo {
+          id
+          designedBy
+          summary
+          subTitle
+          introduction
+          sylabusAttachment
+          sylabusAttachmentName
+          createdAt
+          updatedAt
+        }
+        coaches {
+          nextToken
+        }
+        users {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateCourseTriadUsers = /* GraphQL */ `
+  subscription OnCreateCourseTriadUsers {
+    onCreateCourseTriadUsers {
+      id
+      triadID
+      triad {
+        id
+        courseInfoID
+        courseInfo {
+          id
+          designedBy
+          summary
+          subTitle
+          introduction
+          sylabusAttachment
+          sylabusAttachmentName
+          createdAt
+          updatedAt
+        }
+        coaches {
+          nextToken
+        }
+        users {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateCourseTriadUsers = /* GraphQL */ `
+  subscription OnUpdateCourseTriadUsers {
+    onUpdateCourseTriadUsers {
+      id
+      triadID
+      triad {
+        id
+        courseInfoID
+        courseInfo {
+          id
+          designedBy
+          summary
+          subTitle
+          introduction
+          sylabusAttachment
+          sylabusAttachmentName
+          createdAt
+          updatedAt
+        }
+        coaches {
+          nextToken
+        }
+        users {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteCourseTriadUsers = /* GraphQL */ `
+  subscription OnDeleteCourseTriadUsers {
+    onDeleteCourseTriadUsers {
+      id
+      triadID
+      triad {
+        id
+        courseInfoID
+        courseInfo {
+          id
+          designedBy
+          summary
+          subTitle
+          introduction
+          sylabusAttachment
+          sylabusAttachmentName
+          createdAt
+          updatedAt
+        }
+        coaches {
+          nextToken
+        }
+        users {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -4119,6 +4989,12 @@ export const onCreateDirectMessageUser = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -4217,6 +5093,12 @@ export const onUpdateDirectMessageUser = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -4313,6 +5195,12 @@ export const onDeleteDirectMessageUser = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
           nextToken
         }
         alertConfig {
@@ -4525,6 +5413,12 @@ export const onCreateDirectMessage = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -4625,6 +5519,12 @@ export const onUpdateDirectMessage = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
           nextToken
         }
         alertConfig {
@@ -4729,6 +5629,12 @@ export const onDeleteDirectMessage = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -4831,6 +5737,12 @@ export const onCreateMessage = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
           nextToken
         }
         alertConfig {
@@ -5024,6 +5936,12 @@ export const onUpdateMessage = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -5213,6 +6131,12 @@ export const onDeleteMessage = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
           nextToken
         }
         alertConfig {

@@ -61,6 +61,10 @@ type User
   messages: [Message] @connection(name: "UserMessages", keyField: "userId", sortField: "when")
   directMessages: [DirectMessage] @connection(keyName: "dmsByUser", fields: ["id"])
   
+  coachingTriad:[CourseTriadCoaches] @connection(name:"courseCoachTriad",keyField: "userID")
+  userTriad:[CourseTriadUsers] @connection(name:"courseUserTriad",keyField: "userID")
+
+
   alertConfig:AlertConfig
 }
 type AlertConfig{
@@ -239,10 +243,30 @@ type CourseTriads
   id:ID!
   courseInfoID: String
   courseInfo: CourseInfo @connection(name:"courseTriads",keyField:"courseInfoID")
-  coachIDs:[String]
-  triadUserIDs:[String]
+
+  coaches: [CourseTriadCoaches] @connection(name:"courseTriadCoaches",keyField: "triadID")
+  users: [CourseTriadUsers] @connection(name:"courseTriadUsers",keyField: "triadID")
 }
 
+type CourseTriadCoaches
+@model
+{
+  id:ID!
+  triadID: String
+  triad: CourseTriads @connection(name:"courseTriadCoaches",keyField:"triadID") 
+  userID: String
+  user: User @connection(name:"courseCoachTriad",keyField:"userID") 
+}
+type CourseTriadUsers
+@model
+{
+  id:ID!
+  triadID: String
+  triad: CourseTriads @connection(name:"courseTriadUsers",keyField:"triadID") 
+  userID: String
+  user: User @connection(name:"courseUserTriad",keyField:"userID") 
+
+}
 type CourseWeek
  @model 
   @auth(

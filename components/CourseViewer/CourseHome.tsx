@@ -54,6 +54,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                 <Text style={this.styles.style.fontConnectWithName}>{user.given_name} {user.family_name}</Text>
                 <Text style={this.styles.style.fontConnectConversation}>{user.currentRole}</Text>
                 <Button bordered style={this.styles.style.connectWithSliderButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.fontStartConversation}>Start Conversation</Text></Button>
+                <Button bordered style={this.styles.style.connectWithSliderButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.fontStartConversation}>Book Call</Text></Button>
               </Body>
             </Left>
           </CardItem>
