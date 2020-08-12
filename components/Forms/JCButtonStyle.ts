@@ -522,8 +522,9 @@ export default EStyleSheet.create({
         borderRadius: 5,
         borderColor: "#C4CDD5",
         boxShadow: "unset",
-        alignSelf: "flex-start",
+        alignSelf: "center",
         height: 32,
+        marginBottom: 50,
     },
     EditButtonText: {
         color: "#333333",
