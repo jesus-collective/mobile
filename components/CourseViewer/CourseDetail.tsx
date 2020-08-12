@@ -42,7 +42,7 @@ class CourseDetailImpl extends JCComponent<Props>{
             <EditableText onChange={(e) => { actions.updateWeek(state.activeWeek, "title", e) }}
               placeholder="Week Title" multiline={false}
               data-testid="course-weekTitle"
-              textStyle={this.styles.style.fontFormSmallDarkGrey}
+              textStyle={this.styles.style.fontFormSmallDarkGreyCourseTopEditable}
               inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 30, marginBottom: 60, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
               value={week.title} isEditable={state.isEditable && state.editMode}></EditableText>
 
@@ -66,7 +66,7 @@ class CourseDetailImpl extends JCComponent<Props>{
             {week.lessons?.items?.map((item: any, lesson: number) => {
               return (
                 <TouchableOpacity key={lesson} onPress={() => { actions.setActiveLesson(lesson) }}>
-                  <Card style={{ minHeight: "40px", maxHeight: "100px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 50, paddingRight: 30, paddingBottom: 50, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 30 }}>
+                  <Card style={{ minHeight: "40px", maxHeight: "100px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 50, paddingRight: 30, paddingBottom: 50, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 30, marginTop: 30 }}>
                     <Container style={{ flexDirection: "row" }}>
                       <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 35, alignSelf: 'center' }}>MON</Text>
                       <Container style={{ flexDirection: "column", height: "70px", alignSelf: 'center' }}>
