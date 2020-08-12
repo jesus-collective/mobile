@@ -397,7 +397,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
 
                 {this.state.attachment ? this.renderFileUploadBadge(this.state) : null}
                 <View style={{ marginRight: 10 }}>
-                  <JCButton buttonType={ButtonTypes.SolidRightJustified} onPress={() => { null }}><AntDesign name="clouduploado" size={16} color="white" style={{ marginRight: 5 }} />Share a file</JCButton>
+                  <JCButton buttonType={ButtonTypes.SolidRightJustifiedTopMini} onPress={() => { null }}><AntDesign name="clouduploado" size={16} color="white" style={{ marginRight: 5 }} />Share a file</JCButton>
                   <input multiple={false} style={{ cursor: 'pointer', width: '100%', height: '100%', position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='.pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx' onChange={(e) => this.handleUpload(e)} />
                 </View>
                 <JCButton

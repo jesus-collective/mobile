@@ -42,7 +42,7 @@ class CourseDetailImpl extends JCComponent<Props>{
             <EditableText onChange={(e) => { actions.updateWeek(state.activeWeek, "title", e) }}
               placeholder="Week Title" multiline={false}
               data-testid="course-weekTitle"
-              textStyle={this.styles.style.fontFormSmallDarkGrey}
+              textStyle={this.styles.style.fontFormSmallDarkGreyCourseTopEditable}
               inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 30, marginBottom: 60, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
               value={week.title} isEditable={state.isEditable && state.editMode}></EditableText>
 
@@ -66,7 +66,7 @@ class CourseDetailImpl extends JCComponent<Props>{
             {week.lessons?.items?.map((item: any, lesson: number) => {
               return (
                 <TouchableOpacity key={lesson} onPress={() => { actions.setActiveLesson(lesson) }}>
-                  <Card style={{ minHeight: "40px", maxHeight: "100px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 50, paddingRight: 30, paddingBottom: 50, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 30 }}>
+                  <Card style={{ minHeight: "40px", maxHeight: "100px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 50, paddingRight: 30, paddingBottom: 50, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 30, marginTop: 30 }}>
                     <Container style={{ flexDirection: "row" }}>
                       <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 35, alignSelf: 'center' }}>MON</Text>
                       <Container style={{ flexDirection: "column", height: "70px", alignSelf: 'center' }}>
@@ -115,13 +115,13 @@ class CourseDetailImpl extends JCComponent<Props>{
                             </Picker>
                             :
                             {
-                              'assignment': (<Text style={{ alignSelf: 'center' }}>
+                              'assignment': (<Text style={{ alignSelf: 'flex-start' }}>
                                 <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
                                   source={require('../../assets/svg/document.svg')} />Assignment</Text>),
                               'respond': (<Text style={{ alignSelf: 'center' }}>
                                 <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
                                   source={require('../../assets/svg/document.svg')} />Respond</Text>),
-                              'zoom': (<Text style={{ alignSelf: 'center' }}>
+                              'zoom': (<Text style={{ alignSelf: 'flex-start' }}>
                                 <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
                                   source={require('../../assets/svg/document.svg')} />Zoom</Text>)
                             }[item.lessonType] || (<Text style={{ alignSelf: 'center' }}>
@@ -163,16 +163,16 @@ class CourseDetailImpl extends JCComponent<Props>{
   renderZoom(state, actions, week, lesson) {
     return (
       <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-        <JCButton buttonType={ButtonTypes.Outline} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
-        <Text>{week.week}</Text>
-        <Text>{week.date}</Text>
-        <Text>{week.leader}</Text>
-        <Text>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
-        <Text>{lesson.time}</Text>
+        <JCButton buttonType={ButtonTypes.CourseHomeSidebarTop} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
+        <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{week.week}</Text>
+        <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{week.date}</Text>
+        <Text style={{ fontSize: 28, lineHeight: 33, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{week.leader}</Text>
+        <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333', marginBottom: 20 }}>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
+        <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.time}</Text>
         <EditableRichText onChange={(val) => { actions.updateLesson(state.activeWeek, state.activeLesson, "description", val) }}
           value={lesson.description}
           isEditable={true}
-          textStyle=""></EditableRichText>
+          textStyle={{ marginLeft: 10 }} inputStyle={{ margintop: 20, marginLeft: 20 }}></EditableRichText>
       </Container>)
   }
   renderRespond(state, actions, week, lesson) {
@@ -249,7 +249,7 @@ class CourseDetailImpl extends JCComponent<Props>{
                   <CourseDetailMenu></CourseDetailMenu>
                   <Container style={{ flex: 80 }}>
                     <Content style={{ flex: 85 }}>
-                      <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start', paddingLeft: '5%' }}>
+                      <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start', paddingLeft: '6%', paddingRight: '2%' }}>
 
                         {this.renderWeekDetails(state, actions, week)}
                         {this.renderLessonDetails(state, actions, week)}
