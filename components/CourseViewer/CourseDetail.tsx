@@ -163,16 +163,16 @@ class CourseDetailImpl extends JCComponent<Props>{
   renderZoom(state, actions, week, lesson) {
     return (
       <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-        <JCButton buttonType={ButtonTypes.Outline} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
-        <Text>{week.week}</Text>
-        <Text>{week.date}</Text>
-        <Text>{week.leader}</Text>
-        <Text>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
-        <Text>{lesson.time}</Text>
+        <JCButton buttonType={ButtonTypes.CourseHomeSidebarTop} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
+        <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{week.week}</Text>
+        <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{week.date}</Text>
+        <Text style={{ fontSize: 28, lineHeight: 33, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{week.leader}</Text>
+        <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333', marginBottom: 20 }}>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
+        <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.time}</Text>
         <EditableRichText onChange={(val) => { actions.updateLesson(state.activeWeek, state.activeLesson, "description", val) }}
           value={lesson.description}
           isEditable={true}
-          textStyle=""></EditableRichText>
+          textStyle={{ marginLeft: 10 }} inputStyle={{ margintop: 20, marginLeft: 20 }}></EditableRichText>
       </Container>)
   }
   renderRespond(state, actions, week, lesson) {
@@ -249,7 +249,7 @@ class CourseDetailImpl extends JCComponent<Props>{
                   <CourseDetailMenu></CourseDetailMenu>
                   <Container style={{ flex: 80 }}>
                     <Content style={{ flex: 85 }}>
-                      <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start', paddingLeft: '5%', paddingRight: '2%' }}>
+                      <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start', paddingLeft: '6%', paddingRight: '2%' }}>
 
                         {this.renderWeekDetails(state, actions, week)}
                         {this.renderLessonDetails(state, actions, week)}
