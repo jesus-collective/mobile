@@ -707,7 +707,7 @@ export default EStyleSheet.create({
         paddingRight: 29,
         marginBottom: 20,
         marginLeft: 0,
-        marginRight: 10,
+        marginRight: 20,
         //   color:"#F0493E",
         backgroundColor: "#F0493E",
         borderWidth: 1,
@@ -717,6 +717,29 @@ export default EStyleSheet.create({
         alignSelf: "flex-end"
     },
     SolidRightJustifiedMiniText: {
+        color: "#ffffff",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        padding: 10,
+        fontWeight: "600",
+    },
+    SolidRightJustifiedTopMiniButton: {
+        paddingTop: 6,
+        paddingBottom: 6,
+        paddingLeft: 29,
+        paddingRight: 29,
+        marginBottom: 20,
+        marginLeft: 0,
+        marginRight: 10,
+        //   color:"#F0493E",
+        backgroundColor: "#F0493E",
+        borderWidth: 1,
+        borderColor: "#F0493E",
+        boxShadow: "unset",
+        borderRadius: 4,
+        alignSelf: "flex-end"
+    },
+    SolidRightJustifiedTopMiniText: {
         color: "#ffffff",
         fontFamily: 'Graphik-Regular-App',
         fontSize: 16,
