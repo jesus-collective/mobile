@@ -143,18 +143,23 @@ class CourseHomeImpl extends JCComponent<Props>{
                                       <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Triads:</Text>
 
                                       {state.courseData?.triads?.items.map((item, index) => {
+                                        const coaches = item.coaches.items.map((item) => { return item.user })
+                                        const users = item.users.items.map((item) => { return item.user })
+                                        console.log(item)
+                                        console.log(coaches)
+                                        console.log(users)
                                         return (
                                           <Card key={index} style={{ borderColor: '#FFFFFF' }}>
                                             <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 20 }}>Coach</Text>
                                             <EditableUsers
                                               limit={1}
-                                              onChange={(value: any[]) => { actions.updateTriad(index, "coachIDs", value) }}
+                                              onChange={(value: any[]) => { actions.updateTriadCoaches(index, value) }}
                                               multiline={false}
                                               data-testid="profile-currentRole"
                                               showProfileImages={true}
                                               textStyle={this.styles.style.fontFormSmallDarkGrey}
                                               inputStyle={this.styles.style.fontFormLargeInput}
-                                              value={item.coachIDs ? item.coachIDs : []} isEditable={true}></EditableUsers>
+                                              value={coaches ? coaches : []} isEditable={true}></EditableUsers>
                                             <TouchableOpacity style={{ backgroundColor: '#F0493E', width: '100%', marginTop: 10, borderRadius: 5, height: 30, justifyContent: 'center', alignItems: 'center', boxShadow: '0px' }} onPress={() => { actions.deleteTriad(index) }}>
                                               <AntDesign name="close" size={23} color="white" />
                                             </TouchableOpacity>
@@ -162,13 +167,13 @@ class CourseHomeImpl extends JCComponent<Props>{
                                             <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Triad</Text>
                                             <EditableUsers
                                               limit={3}
-                                              onChange={(value: any[]) => { actions.updateTriad(index, "triadUserIDs", value) }}
+                                              onChange={(value: any[]) => { actions.updateTriadUsers(index, value) }}
                                               multiline={false}
                                               data-testid="profile-currentRole"
                                               showProfileImages={true}
                                               textStyle={this.styles.style.fontFormSmallDarkGrey}
                                               inputStyle={this.styles.style.fontFormLargeInput}
-                                              value={item.triadUserIDs ? item.triadUserIDs : null} isEditable={true}></EditableUsers>
+                                              value={users ? users : []} isEditable={true}></EditableUsers>
 
                                           </Card>
                                         )

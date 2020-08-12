@@ -16,6 +16,7 @@ import CourseDetail from '../../components/CourseViewer/CourseDetail'
 import CourseCoaching from '../../components/CourseViewer/CourseCoaching'
 import { CourseContext } from '../../components/CourseViewer/CourseContext';
 import { CreateCourseWeekInput, CreateCourseLessonInput, CreateCourseTriadsInput } from 'src/API';
+import { add } from 'react-native-reanimated';
 
 interface Props {
   navigation: any
@@ -94,6 +95,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
     }
     getGroup.then(processResults).catch(processResults)
   }
+
   getTriadDetails = (): void => {
     const myCohort = this.state.courseData.triads.items.map((item) => {
       console.log(item)
@@ -146,6 +148,138 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
   setActiveLesson = (index: number): void => {
     this.setState({
       activeLesson: index
+    })
+  }
+  updateTriadUsers = async (index: number, value: any): Promise<void> => {
+
+    const del = this.state.courseData.triads.items[index].users.items.filter(x => !value.map(z => z.id).includes(x.user.id));
+    const add = value.filter(x => !this.state.courseData.triads.items[index].users.items.map(z => z.user.id).includes(x.id));
+    // const delTriadID= this.state.courseData.triads.items[index].users.items.map((item)=>{del.contains(item.})
+    console.log({ del: del })
+    add.map(async (item) => {
+      let createCourseTriadUsers: any
+      try {
+        console.log({ "Adding": item })
+
+        createCourseTriadUsers = await API.graphql({
+          query: mutations.createCourseTriadUsers,
+          variables: {
+            input: {
+              triadID: this.state.courseData.triads.items[index].id,
+              userID: item.id
+            }
+          },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+        });
+        console.log(createCourseTriadUsers)
+        const temp = this.state.courseData
+        temp.triads.items[index].users.items.push(createCourseTriadUsers.data.createCourseTriadUsers)
+        console.log(temp)
+        this.setState({ courseData: temp })
+
+      } catch (e) {
+        console.log(createCourseTriadUsers)
+        const temp = this.state.courseData
+        temp.triads.items[index].users.items.push(createCourseTriadUsers.data.createCourseTriadUsers)
+        console.log(temp)
+        this.setState({ courseData: temp })
+
+      }
+    })
+
+    del.map(async (item) => {
+
+      try {
+        console.log({ "Deleting": item })
+
+        const createCourseTriadUsers: any = await API.graphql({
+          query: mutations.deleteCourseTriadUsers,
+          variables: {
+            input: {
+              id: item.id
+            }
+          },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+        });
+        console.log(createCourseTriadUsers)
+        const temp = this.state.courseData
+        temp.triads.items[index].users.items = temp.triads.items[index].users.items.filter(user => user.id !== item.id)
+        console.log(temp)
+        this.setState({ courseData: temp })
+
+      } catch (createCourseTriadUsers) {
+        console.log(createCourseTriadUsers)
+        const temp = this.state.courseData
+        temp.triads.items[index].users.items = temp.triads.items[index].users.items.filter(user => user.id !== item.id)
+        console.log(temp)
+        this.setState({ courseData: temp })
+
+      }
+    })
+  }
+  updateTriadCoaches = async (index: number, value: any): Promise<void> => {
+    const del = this.state.courseData.triads.items[index].coaches.items.filter(x => !value.map(z => z.id).includes(x.user.id));
+    const add = value.filter(x => !this.state.courseData.triads.items[index].coaches.items.map(z => z.user.id).includes(x.id));
+    // const delTriadID= this.state.courseData.triads.items[index].users.items.map((item)=>{del.contains(item.})
+    add.map(async (item) => {
+
+      try {
+        console.log({ "Adding": item })
+
+        const createCourseTriadCoaches: any = await API.graphql({
+          query: mutations.createCourseTriadCoaches,
+          variables: {
+            input: {
+              triadID: this.state.courseData.triads.items[index].id,
+              userID: item.id
+            }
+          },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+        });
+        console.log(createCourseTriadCoaches)
+        const temp = this.state.courseData
+        temp.triads.items[index].coaches.items.push(createCourseTriadCoaches.data.createCourseTriadCoaches)
+        console.log(temp)
+        this.setState({ courseData: temp })
+
+      } catch (createCourseTriadCoaches) {
+        console.log(createCourseTriadCoaches)
+        const temp = this.state.courseData
+        temp.triads.items[index].coaches.items.push(createCourseTriadCoaches.data.createCourseTriadCoaches)
+        console.log(temp)
+        this.setState({ courseData: temp })
+
+      }
+    })
+
+    del.map(async (item) => {
+
+      try {
+        console.log({ "Deleting": item })
+
+        const deleteCourseTriadCoaches: any = await API.graphql({
+          query: mutations.deleteCourseTriadCoaches,
+          variables: {
+            input: {
+              id: item.id
+            }
+          },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+        });
+        console.log(deleteCourseTriadCoaches)
+        const temp = this.state.courseData
+        temp.triads.items[index].coaches.items = temp.triads.items[index].coaches.items.filter(user => user.id !== item.id)
+        console.log(temp)
+        this.setState({ courseData: temp })
+
+      } catch (deleteCourseTriadCoaches) {
+        console.log(deleteCourseTriadCoaches)
+        const temp = this.state.courseData
+        temp.triads.items[index].coaches.items = temp.triads.items[index].coaches.items.filter(user => user.id !== item.id)
+        console.log(temp)
+        this.setState({ courseData: temp })
+
+      }
     })
   }
   updateTriad = async (index: number, item: string, value: any): Promise<void> => {
@@ -420,7 +554,9 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
             createTriad: this.createTriad,
             updateTriad: this.updateTriad,
             deleteTriad: this.deleteTriad,
-            setEditMode: this.setEditMode
+            setEditMode: this.setEditMode,
+            updateTriadCoaches: this.updateTriadCoaches,
+            updateTriadUsers: this.updateTriadUsers
           }
         }}>
           <StyleProvider style={getTheme()}>
