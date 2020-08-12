@@ -115,13 +115,13 @@ class CourseDetailImpl extends JCComponent<Props>{
                             </Picker>
                             :
                             {
-                              'assignment': (<Text style={{ alignSelf: 'center' }}>
+                              'assignment': (<Text style={{ alignSelf: 'flex-start' }}>
                                 <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
                                   source={require('../../assets/svg/document.svg')} />Assignment</Text>),
                               'respond': (<Text style={{ alignSelf: 'center' }}>
                                 <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
                                   source={require('../../assets/svg/document.svg')} />Respond</Text>),
-                              'zoom': (<Text style={{ alignSelf: 'center' }}>
+                              'zoom': (<Text style={{ alignSelf: 'flex-start' }}>
                                 <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
                                   source={require('../../assets/svg/document.svg')} />Zoom</Text>)
                             }[item.lessonType] || (<Text style={{ alignSelf: 'center' }}>
