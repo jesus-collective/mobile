@@ -90,7 +90,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                               <JCButton onPress={() => { null }} buttonType={ButtonTypes.CourseHome}>Book a Call</JCButton>
                               <JCButton onPress={() => { this.openConversation(state.instructor?.id, state.instructor?.given_name + " " + state.instructor?.family_name) }} buttonType={ButtonTypes.TransparentBoldOrange}>Send Message</JCButton>
                             </Container>
-                            <Container style={{ flex: 80, height: 200 }}>
+                            <Container style={{ flex: 80, height: 200, marginRight: 50 }}>
                               <Text style={{ marginTop: 30, marginLeft: 30, marginRight: 30, fontFamily: 'Graphik-Regular-App', fontSize: 20, lineHeight: 30 }}>
                                 {state.courseData ?
                                   <EditableRichText onChange={(val) => { actions.updateCourse("introduction", val) }}
