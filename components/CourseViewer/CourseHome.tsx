@@ -46,15 +46,15 @@ class CourseHomeImpl extends JCComponent<Props>{
       <TouchableOpacity key={user.id} onPress={() => { this.showProfile(user.id) }}>
         <Card style={this.styles.style.dashboardConversationCard}>
           <CardItem>
-            <Left style={this.styles.style.dashboardConversationCardLeft}>
-              <ProfileImage user={user} size='medium' style='my-people'>
+            <Left style={this.styles.style.courseHomeConversationCard}>
+              <ProfileImage user={user} size='large' style='my-people'>
               </ProfileImage>
 
               <Body style={this.styles.style.dashboardConversationBody}>
                 <Text style={this.styles.style.fontConnectWithName}>{user.given_name} {user.family_name}</Text>
                 <Text style={this.styles.style.fontConnectConversation}>{user.currentRole}</Text>
-                <Button bordered style={this.styles.style.connectWithSliderButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.fontStartConversation}>Start Conversation</Text></Button>
-                <Button bordered style={this.styles.style.connectWithSliderButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.fontStartConversation}>Book Call</Text></Button>
+                <Button bordered style={this.styles.style.courseHomeConversationButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.courseFontStartConversation}>Start Conversation</Text></Button>
+                <Button bordered style={this.styles.style.courseHomeConversationButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.courseFontStartConversation}>Book Call</Text></Button>
               </Body>
             </Left>
           </CardItem>
@@ -236,7 +236,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                       return this.renderProfileCard(user)
                                     })
                                     :
-                                    <Text>You have not been assigned a coach yet</Text>
+                                    <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginTop: 70, width: '90%' }}>You have not been assigned a coach yet</Text>
                                 }
                                 <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Triad</Text>
                                 {
@@ -244,7 +244,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                     state.myTriad.map((user) => {
                                       return this.renderProfileCard(user)
                                     }) :
-                                    <Text>You have not been assigned a triad yet</Text>
+                                    <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginTop: 70, width: '90%' }}>You have not been assigned a triad yet</Text>
                                 }
                                 <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Cohort</Text>
                                 {

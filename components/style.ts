@@ -413,6 +413,9 @@ export default class MainStyles {
             fontStartConversation: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, color: '#F0493E', padding: 5
             },
+            courseFontStartConversation: {
+                color: "#ffffff", fontFamily: 'Graphik-Regular-App', fontSize: 16, padding: 10, fontWeight: "600"
+            },
             fontOrangeButton: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 12, color: '#ffffFF', padding: 10
             },
@@ -593,6 +596,22 @@ export default class MainStyles {
                 width: "100%",
                 alignItems: "center",
                 justifyContent: "center"
+            },
+            courseHomeConversationButton: {
+                paddingTop: 6,
+                paddingBottom: 6,
+                paddingLeft: 8,
+                paddingRight: 8,
+                marginBottom: 20,
+                marginLeft: 0,
+                marginRight: 0,
+                //   color:"#F0493E",
+                backgroundColor: "#F0493E",
+                borderWidth: 1,
+                borderColor: "#F0493E",
+                boxShadow: "unset",
+                borderRadius: 4,
+                justifyContent: 'center',
             },
             myMapConnectWithSliderButton: {
                 padding: 0,
@@ -1170,6 +1189,9 @@ export default class MainStyles {
             },
             dashboardConversationCardLeft: {
                 flexDirection: "row"
+            },
+            courseHomeConversationCard: {
+                flexDirection: "column"
             },
             dashboardConversationBody: {
                 width: "100%"
