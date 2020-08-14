@@ -80,7 +80,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                     <Content contentContainerStyle={{ flex: 80 }} style={{ flex: 80 }}>
                       <Container style={{ flex: 80, display: "flex", flexDirection: "row", justifyContent: 'flex-start', paddingLeft: '5%' }}>
                         <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
-                          <Container style={{ flexDirection: 'row', paddingBottom: 30 }}>
+                          <Container style={{ flexDirection: 'row', paddingBottom: 30, marginBottom: 100 }}>
                             <Container style={{ flexDirection: 'column', marginTop: 30, flex: 20 }}>
                               <ProfileImage user={state.instructor} size='medium' style='my-people'>
                               </ProfileImage>
@@ -103,7 +103,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                           </Container>
 
                           <Container style={{}}>
-                            <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 0, width: '90%' }}>Syllabus</Text>
+                            <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30, width: '90%' }}>Syllabus</Text>
                             <Card style={{ width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 30, paddingTop: 30, paddingBottom: 30 }}>
                               {state.courseData ?
                                 <EditableFileUpload
