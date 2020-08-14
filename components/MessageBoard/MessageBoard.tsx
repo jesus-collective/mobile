@@ -355,8 +355,8 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       (this.state.created) ?
 
         <StyleProvider style={getTheme()}>
-          <Container style={this.styles.style.messageBoardContainer} >
-
+          <Container style={this.props.style == "regular" ? this.styles.style.messageBoardContainerFullSize : this.styles.style.messageBoardContainer } >
+          
             <Content style={{ marginBottom: 40 }}>
 
               {

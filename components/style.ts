@@ -126,6 +126,15 @@ export default class MainStyles {
                 paddingRight: 0,
                 marginBottom: 60
             },
+            messageBoardContainerFullSize: {
+                display: "inline",
+                overflow: "visible",
+                width: "100%",
+                paddingTop: 0,
+                paddingLeft: 30,
+                paddingRight: 30,
+                marginBottom: 60
+            },
             groupNameInput: {
                 borderColor: 'white',
                 borderWidth: 1,
