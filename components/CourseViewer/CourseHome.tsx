@@ -44,7 +44,7 @@ class CourseHomeImpl extends JCComponent<Props>{
   renderProfileCard(user): React.ReactNode {
     return (
       <TouchableOpacity key={user.id} onPress={() => { this.showProfile(user.id) }}>
-        <Card style={this.styles.style.dashboardConversationCard}>
+        <Card style={this.styles.style.courseConversationCard}>
           <CardItem>
             <Left style={this.styles.style.courseHomeConversationCard}>
               <ProfileImage user={user} size='large' style='my-people'>

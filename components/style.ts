@@ -1183,12 +1183,24 @@ export default class MainStyles {
                 paddingBottom: 28,
                 borderStyle: "solid",
                 borderColor: "#FFFFFF",
+                width: "100%",
+                paddingRight: 30, 
+                paddingLeft: 30,
+                boxShadow: "0 6px 20px 0 rgba(0, 0, 0, 0.19)", 
+                marginTop: 30
+            },
+            courseConversationCard: {
+                paddingTop: 28,
+                paddingBottom: 28,
+                borderStyle: "solid",
+                borderColor: "#FFFFFF",
                 width: "35%",
                 paddingRight: 30, 
                 paddingLeft: 30,
                 boxShadow: "0 6px 20px 0 rgba(0, 0, 0, 0.19)", 
                 marginTop: 30
             },
+            
             dashboardConversationCardLeft: {
                 flexDirection: "row"
             },
