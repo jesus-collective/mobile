@@ -160,7 +160,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                               textStyle={this.styles.style.fontFormSmallDarkGrey}
                                               inputStyle={this.styles.style.fontFormLargeInput}
                                               value={coaches ? coaches : []} isEditable={true}></EditableUsers>
-                                            <TouchableOpacity style={{ backgroundColor: '#F0493E', width: '100%', marginTop: 10, borderRadius: 5, height: 30, justifyContent: 'center', alignItems: 'center', boxShadow: '0px' }} onPress={() => { actions.deleteTriad(index) }}>
+                                            <TouchableOpacity style={{ backgroundColor: '#F0493E', width: '20%', marginTop: 10, borderRadius: 5, height: 30, justifyContent: 'center', alignItems: 'center', boxShadow: '0px' }} onPress={() => { actions.deleteTriad(index) }}>
                                               <AntDesign name="close" size={23} color="white" />
                                             </TouchableOpacity>
 
