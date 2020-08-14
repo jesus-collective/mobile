@@ -120,19 +120,19 @@ export default class EditableRichText extends JCComponent<Props, State> {
 
             else
                 return <TouchableOpacity onPress={() => { this.setState({ isEditMode: true }) }}>
-                    <div id="comment-div" style={{ width: '80%' }}>
+                    <div id="comment-div" style={{ width: '100%' }}>
                         {console.log(convertFromRaw(JSON.parse(this.state.value)).hasText())}
                         {!convertFromRaw(JSON.parse(this.state.value)).hasText() || this.state.value == null ?
                             <div style={{ fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 16, marginTop: 0, color: '#F0493E', textDecoration: 'underline' }}>Hold to Edit</div>
                             :
                             <div
                                 dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(this.props.value) }}
-                                style={{ fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: '26px', color: "#333333", marginTop: 0, paddingTop: 0, paddingRight: 30 }}></div>}
+                                style={{ fontFamily: 'Graphik-Regular-App', fontSize: '16px', lineHeight: '26px', color: "#333333", marginTop: 0, paddingTop: 0, paddingRight: '30px' }}></div>}
                     </div>
                 </TouchableOpacity>
         else
             return <div id="comment-div">
-                <div dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(this.state.value) }} style={{ fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: '26px', color: "#333333", marginTop: 0, paddingTop: 0, height: 250 }}></div>
+                <div dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(this.state.value) }} style={{ fontFamily: 'Graphik-Regular-App', fontSize: '16px', lineHeight: '26px', color: "#333333", marginTop: 0, paddingTop: 0, minHeight: 50, maxHeight: 275, overflow: 'scroll' }}></div>
             </div>
 
 
