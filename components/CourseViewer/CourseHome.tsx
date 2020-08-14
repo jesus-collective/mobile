@@ -288,7 +288,6 @@ class CourseHomeImpl extends JCComponent<Props>{
                     </Content>
                   </Container>
                 </Container>
-
               </StyleProvider > :
               null
           )

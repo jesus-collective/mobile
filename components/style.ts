@@ -1321,6 +1321,19 @@ export default class MainStyles {
                 fontSize: 16,
                 lineHeight: 24
             },
+            courseSidebarNavTextActive: {
+                fontFamily: 'Graphik-Regular-App',
+                fontSize: 20,
+                lineHeight: 28,
+                color: '#ffffff',
+            },
+            courseSidebarNavTextInactive: {
+                fontFamily: 'Graphik-Regular-App',
+                fontSize: 20,
+                lineHeight: 28,
+                color: '#ffffff',
+                opacity: 0.5
+            },
             headerLeft: {
                 flex: 0
             },

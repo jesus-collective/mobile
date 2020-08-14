@@ -69,9 +69,9 @@ class CourseSidebarImpl extends JCComponent<Props> {
                                 <Image style={this.headerStyles.style.logo}
                                     source={require('../../assets/header/icon.png')}
                                 /></Button>
-
-                            <JCButton buttonType={ButtonTypes.CourseSideBarFirst} onPress={this.openCourseHome}><Image style={{ marginRight: 12, width: "30px", height: "30px", top: 6 }} source={require('../../assets/svg/home.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Home</Text></JCButton>
-                            <JCButton buttonType={ButtonTypes.CourseSideBar} onPress={this.openCourseDetails}><Image style={{ marginRight: 12, width: "30px", height: "30px", top: 6 }} source={require('../../assets/svg/education.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Course</Text></JCButton>
+                        
+                            <JCButton buttonType={ButtonTypes.CourseSideBarFirst} onPress={this.openCourseHome}><Image style={{ marginRight: 12, width: "30px", height: "30px", top: 6 }} source={require('../../assets/svg/home.svg')} /><Text style={state.currentScreen == "Home" ? this.styles.style.courseSidebarNavTextActive : this.styles.style.courseSidebarNavTextInactive}>Home</Text></JCButton>
+                            <JCButton buttonType={ButtonTypes.CourseSideBar} onPress={this.openCourseDetails}><Image style={{ marginRight: 12, width: "30px", height: "30px", top: 6 }} source={require('../../assets/svg/education.svg')} /><Text style={state.currentScreen == "Details" ? this.styles.style.courseSidebarNavTextActive : this.styles.style.courseSidebarNavTextInactive}>Course</Text></JCButton>
                             {/*  <JCButton buttonType={ButtonTypes.CourseSideBar} onPress={this.openCourseCoaching}><Image style={{ marginRight: 12, width: "30px", height: "30px", top: 6 }} source={require('../../assets/svg/calendar.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Coaching</Text></JCButton>*/}
                             <Container style={{ backgroundColor: "#00000000", alignSelf: 'center', marginTop: 75 }}>
                                 <AnimatedProgressWheel
@@ -109,7 +109,7 @@ class CourseSidebarImpl extends JCComponent<Props> {
                         </Container>
                     )
 
-
+                            
                 }
                 }
             </CourseSidebarImpl.Consumer >
