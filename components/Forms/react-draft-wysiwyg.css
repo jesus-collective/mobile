@@ -1047,7 +1047,8 @@
 }
 
 .DraftEditor-root {
-  position: relative
+  position: relative;
+  top: 190px;
 }
 
 .DraftEditor-editorContainer {
