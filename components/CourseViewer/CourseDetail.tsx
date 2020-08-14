@@ -132,9 +132,12 @@ class CourseDetailImpl extends JCComponent<Props>{
                       </Container>
                       <Text style={{ fontSize: 12, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#FFF', marginLeft: 30, marginRight: 15, paddingLeft: 10, paddingRight: 10, textTransform: 'uppercase', backgroundColor: '#71C209', borderRadius: 50, height: 20, alignSelf: 'center' }}>Completed</Text>
                       <Text style={{ alignSelf: 'center' }}><Image style={{ width: "30px", height: "30px" }} source={require('../../assets/svg/checkmark.svg')} /></Text>
-                      <TouchableOpacity style={{ alignSelf: 'center', marginLeft: 15 }} onPress={() => { actions.deleteLesson(state.activeWeek, lesson) }}>
-                        <AntDesign name="close" size={20} color="black" />
-                      </TouchableOpacity>
+                      {state.isEditable && state.editMode ?
+                        <TouchableOpacity style={{ alignSelf: 'center', marginLeft: 15 }} onPress={() => { actions.deleteLesson(state.activeWeek, lesson) }}>
+                          <AntDesign name="close" size={20} color="black" />
+                        </TouchableOpacity>
+                        : null
+                      }
                     </Container>
                   </Card>
                 </TouchableOpacity>
