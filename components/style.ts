@@ -1179,22 +1179,25 @@ export default class MainStyles {
                 color: "#aaaaaa"
             },
             dashboardConversationCard: {
-                minHeight: 50,
                 paddingTop: 28,
                 paddingBottom: 28,
                 borderStyle: "solid",
                 borderColor: "#FFFFFF",
-                width: "100%",
-                paddingRight: 70
+                width: "35%",
+                paddingRight: 30, 
+                paddingLeft: 30,
+                boxShadow: "0 6px 20px 0 rgba(0, 0, 0, 0.19)", 
+                marginTop: 30
             },
             dashboardConversationCardLeft: {
                 flexDirection: "row"
             },
             courseHomeConversationCard: {
-                flexDirection: "column"
+                flexDirection: "column",
             },
             dashboardConversationBody: {
-                width: "100%"
+                width: "100%",
+                marginLeft: 0
             },
             myMapDashboardConversationCard: {
                 height: 233,
