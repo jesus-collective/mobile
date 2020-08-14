@@ -1281,11 +1281,12 @@ export default class MainStyles {
                 flexDirection: 'row',
             },
             myprofileBadgeContainer: {
-                flex: 1,
+                flex: 0,
                 flexDirection: 'row',
                 flexWrap: 'wrap',
                 alignContent: 'flex-start',
                 top: 20,
+                marginBottom: 120,
             },
             myprofileMyRoleContainer: {
                 marginBottom: 15,
