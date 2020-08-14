@@ -1334,6 +1334,19 @@ export default class MainStyles {
                 color: '#ffffff',
                 opacity: 0.5
             },
+            courseSidebarNavIconActive: {
+                marginRight: 12, 
+                width: "30px", 
+                height: "30px", 
+                top: 6, 
+            },
+            courseSidebarNavIconInactive: {
+                marginRight: 12, 
+                width: "30px", 
+                height: "30px", 
+                top: 6, 
+                opacity: 0.5
+            },
             headerLeft: {
                 flex: 0
             },
