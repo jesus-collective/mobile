@@ -986,7 +986,7 @@
   box-sizing: border-box;
   font-family: 'Graphik-Regular-App'!important;
   font-size: 16px;
-  line-height: 26;
+  line-height: 26px;
 }
 
 .rdw-editor-toolbar {
@@ -1047,7 +1047,8 @@
 }
 
 .DraftEditor-root {
-  position: relative
+  position: relative;
+  top: 190px;
 }
 
 .DraftEditor-editorContainer {

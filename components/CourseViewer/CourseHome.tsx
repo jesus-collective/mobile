@@ -44,17 +44,17 @@ class CourseHomeImpl extends JCComponent<Props>{
   renderProfileCard(user): React.ReactNode {
     return (
       <TouchableOpacity key={user.id} onPress={() => { this.showProfile(user.id) }}>
-        <Card style={this.styles.style.dashboardConversationCard}>
+        <Card style={this.styles.style.courseConversationCard}>
           <CardItem>
-            <Left style={this.styles.style.dashboardConversationCardLeft}>
-              <ProfileImage user={user} size='medium' style='my-people'>
+            <Left style={this.styles.style.courseHomeConversationCard}>
+              <ProfileImage user={user} size='large' style='my-people'>
               </ProfileImage>
 
               <Body style={this.styles.style.dashboardConversationBody}>
                 <Text style={this.styles.style.fontConnectWithName}>{user.given_name} {user.family_name}</Text>
                 <Text style={this.styles.style.fontConnectConversation}>{user.currentRole}</Text>
-                <Button bordered style={this.styles.style.connectWithSliderButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.fontStartConversation}>Start Conversation</Text></Button>
-                <Button bordered style={this.styles.style.connectWithSliderButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.fontStartConversation}>Book Call</Text></Button>
+                <Button bordered style={this.styles.style.courseHomeConversationButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.courseFontStartConversation}>Start Conversation</Text></Button>
+                <Button bordered style={this.styles.style.courseHomeConversationButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.courseFontStartConversation}>Book Call</Text></Button>
               </Body>
             </Left>
           </CardItem>
@@ -80,7 +80,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                     <Content contentContainerStyle={{ flex: 80 }} style={{ flex: 80 }}>
                       <Container style={{ flex: 80, display: "flex", flexDirection: "row", justifyContent: 'flex-start', paddingLeft: '5%' }}>
                         <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
-                          <Container style={{ flexDirection: 'row', paddingBottom: 30 }}>
+                          <Container style={{ flexDirection: 'row' }}>
                             <Container style={{ flexDirection: 'column', marginTop: 30, flex: 20 }}>
                               <ProfileImage user={state.instructor} size='medium' style='my-people'>
                               </ProfileImage>
@@ -90,7 +90,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                               <JCButton onPress={() => { null }} buttonType={ButtonTypes.CourseHome}>Book a Call</JCButton>
                               <JCButton onPress={() => { this.openConversation(state.instructor?.id, state.instructor?.given_name + " " + state.instructor?.family_name) }} buttonType={ButtonTypes.TransparentBoldOrange}>Send Message</JCButton>
                             </Container>
-                            <Container style={{ flex: 80, height: 200 }}>
+                            <Container style={{ flex: 80, height: 200, marginRight: 50 }}>
                               <Text style={{ marginTop: 30, marginLeft: 30, marginRight: 30, fontFamily: 'Graphik-Regular-App', fontSize: 20, lineHeight: 30 }}>
                                 {state.courseData ?
                                   <EditableRichText onChange={(val) => { actions.updateCourse("introduction", val) }}
@@ -103,7 +103,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                           </Container>
 
                           <Container style={{}}>
-                            <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>Syllabus</Text>
+                            <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 0, width: '90%' }}>Syllabus</Text>
                             <Card style={{ width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 30, paddingTop: 30, paddingBottom: 30 }}>
                               {state.courseData ?
                                 <EditableFileUpload
@@ -160,7 +160,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                               textStyle={this.styles.style.fontFormSmallDarkGrey}
                                               inputStyle={this.styles.style.fontFormLargeInput}
                                               value={coaches ? coaches : []} isEditable={true}></EditableUsers>
-                                            <TouchableOpacity style={{ backgroundColor: '#F0493E', width: '100%', marginTop: 10, borderRadius: 5, height: 30, justifyContent: 'center', alignItems: 'center', boxShadow: '0px' }} onPress={() => { actions.deleteTriad(index) }}>
+                                            <TouchableOpacity style={{ backgroundColor: '#F0493E', width: '20%', marginTop: 10, borderRadius: 5, height: 30, justifyContent: 'center', alignItems: 'center', boxShadow: '0px' }} onPress={() => { actions.deleteTriad(index) }}>
                                               <AntDesign name="close" size={23} color="white" />
                                             </TouchableOpacity>
 
@@ -236,7 +236,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                       return this.renderProfileCard(user)
                                     })
                                     :
-                                    <Text>You have not been assigned a coach yet</Text>
+                                    <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginTop: 70, width: '90%' }}>You have not been assigned a coach yet</Text>
                                 }
                                 <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Triad</Text>
                                 {
@@ -244,7 +244,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                     state.myTriad.map((user) => {
                                       return this.renderProfileCard(user)
                                     }) :
-                                    <Text>You have not been assigned a triad yet</Text>
+                                    <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginTop: 70, width: '90%' }}>You have not been assigned a triad yet</Text>
                                 }
                                 <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Cohort</Text>
                                 {
@@ -288,7 +288,6 @@ class CourseHomeImpl extends JCComponent<Props>{
                     </Content>
                   </Container>
                 </Container>
-
               </StyleProvider > :
               null
           )

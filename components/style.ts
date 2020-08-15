@@ -126,6 +126,15 @@ export default class MainStyles {
                 paddingRight: 0,
                 marginBottom: 60
             },
+            messageBoardContainerFullSize: {
+                display: "inline",
+                overflow: "visible",
+                width: "100%",
+                paddingTop: 0,
+                paddingLeft: 30,
+                paddingRight: 30,
+                marginBottom: 60
+            },
             groupNameInput: {
                 borderColor: 'white',
                 borderWidth: 1,
@@ -413,6 +422,9 @@ export default class MainStyles {
             fontStartConversation: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, color: '#F0493E', padding: 5
             },
+            courseFontStartConversation: {
+                color: "#ffffff", fontFamily: 'Graphik-Regular-App', fontSize: 16, padding: 10, fontWeight: "600"
+            },
             fontOrangeButton: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 12, color: '#ffffFF', padding: 10
             },
@@ -593,6 +605,22 @@ export default class MainStyles {
                 width: "100%",
                 alignItems: "center",
                 justifyContent: "center"
+            },
+            courseHomeConversationButton: {
+                paddingTop: 6,
+                paddingBottom: 6,
+                paddingLeft: 8,
+                paddingRight: 8,
+                marginBottom: 20,
+                marginLeft: 0,
+                marginRight: 0,
+                //   color:"#F0493E",
+                backgroundColor: "#F0493E",
+                borderWidth: 1,
+                borderColor: "#F0493E",
+                boxShadow: "unset",
+                borderRadius: 4,
+                justifyContent: 'center',
             },
             myMapConnectWithSliderButton: {
                 padding: 0,
@@ -1160,19 +1188,37 @@ export default class MainStyles {
                 color: "#aaaaaa"
             },
             dashboardConversationCard: {
-                minHeight: 50,
                 paddingTop: 28,
                 paddingBottom: 28,
                 borderStyle: "solid",
                 borderColor: "#FFFFFF",
                 width: "100%",
-                paddingRight: 70
+                paddingRight: 30, 
+                paddingLeft: 30,
+                boxShadow: "0 6px 20px 0 rgba(0, 0, 0, 0.19)", 
+                marginTop: 30
             },
+            courseConversationCard: {
+                paddingTop: 28,
+                paddingBottom: 28,
+                borderStyle: "solid",
+                borderColor: "#FFFFFF",
+                width: "35%",
+                paddingRight: 30, 
+                paddingLeft: 30,
+                boxShadow: "0 6px 20px 0 rgba(0, 0, 0, 0.19)", 
+                marginTop: 30
+            },
+            
             dashboardConversationCardLeft: {
                 flexDirection: "row"
             },
+            courseHomeConversationCard: {
+                flexDirection: "column",
+            },
             dashboardConversationBody: {
-                width: "100%"
+                width: "100%",
+                marginLeft: 0
             },
             myMapDashboardConversationCard: {
                 height: 233,
@@ -1256,11 +1302,12 @@ export default class MainStyles {
                 flexDirection: 'row',
             },
             myprofileBadgeContainer: {
-                flex: 1,
+                flex: 0,
                 flexDirection: 'row',
                 flexWrap: 'wrap',
                 alignContent: 'flex-start',
                 top: 20,
+                marginBottom: 120,
             },
             myprofileMyRoleContainer: {
                 marginBottom: 15,
@@ -1295,6 +1342,32 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Regular-App',
                 fontSize: 16,
                 lineHeight: 24
+            },
+            courseSidebarNavTextActive: {
+                fontFamily: 'Graphik-Regular-App',
+                fontSize: 20,
+                lineHeight: 28,
+                color: '#ffffff',
+            },
+            courseSidebarNavTextInactive: {
+                fontFamily: 'Graphik-Regular-App',
+                fontSize: 20,
+                lineHeight: 28,
+                color: '#ffffff',
+                opacity: 0.5
+            },
+            courseSidebarNavIconActive: {
+                marginRight: 12, 
+                width: "30px", 
+                height: "30px", 
+                top: 6, 
+            },
+            courseSidebarNavIconInactive: {
+                marginRight: 12, 
+                width: "30px", 
+                height: "30px", 
+                top: 6, 
+                opacity: 0.5
             },
             headerLeft: {
                 flex: 0
