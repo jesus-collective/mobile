@@ -313,6 +313,26 @@
 											}
 										]
 									]
+								},
+								{
+									"Fn::Join": [
+										"",
+										[
+											"arn:aws:mobiletargeting:",
+											{
+												"Ref": "analyticsjcmobileRegion"
+											},
+											":",
+											{
+												"Ref": "AWS::AccountId"
+											},
+											":apps/",
+											{
+												"Ref": "analyticsjcmobileId"
+											},
+											"/*"
+										]
+									]
 								}
 							]
 						}

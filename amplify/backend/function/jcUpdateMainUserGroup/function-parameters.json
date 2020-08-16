@@ -1,5 +1,13 @@
 {
   "permissions": {
+    "auth": {
+      "jcmobile": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    },
     "api": {
       "jcmobile": [
         "create",
@@ -7,26 +15,6 @@
         "update",
         "delete"
       ]
-    }
-  },
-  "mutableParametersState": {
-    "permissions": {
-      "auth": {
-        "jcmobile": [
-          "create",
-          "read",
-          "update",
-          "delete"
-        ]
-      },
-      "api": {
-        "jcmobile": [
-          "create",
-          "read",
-          "update",
-          "delete"
-        ]
-      }
     }
   },
   "lambdaLayers": []

@@ -12,5 +12,7 @@
   "triggerTemplate": "PreSignup.json.ejs",
   "triggerEventPath": "PreSignup.event.json",
   "skipEdit": true,
-  "resourceName": "jcmobilePreSignup"
+  "resourceName": "jcmobilePreSignup",
+  "permissions": {},
+  "lambdaLayers": []
 }

@@ -1,4 +1,7 @@
-const resizeHandler = require("./resizeHandler.js");
+/* Amplify Params - DO NOT EDIT
+	ENV
+	REGION
+Amplify Params - DO NOT EDIT */const resizeHandler = require("./resizeHandler.js");
 
 exports.handler = async function (event, context) {
   //eslint-disable-line

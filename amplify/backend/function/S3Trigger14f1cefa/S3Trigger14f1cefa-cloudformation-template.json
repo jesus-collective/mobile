@@ -47,6 +47,9 @@
 					"Variables": {
 						"ENV": {
 							"Ref": "env"
+						},
+						"REGION": {
+							"Ref": "AWS::Region"
 						}
 					}
 				},
@@ -60,8 +63,9 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-jc-mobile-beta-155138-deployment",
-					"S3Key": "amplify-builds/S3Trigger14f1cefa-4a683371584448682f31-build.zip"
-				}
+					"S3Key": "amplify-builds/S3Trigger14f1cefa-50755934534c6f77556a-build.zip"
+				},
+				"Layers": []
 			}
 		},
 		"LambdaExecutionRole": {

@@ -12,5 +12,7 @@
   "triggerTemplate": "PostConfirmation.json.ejs",
   "triggerEventPath": "PostConfirmation.event.json",
   "skipEdit": true,
-  "resourceName": "jcmobilePostConfirmation"
+  "resourceName": "jcmobilePostConfirmation",
+  "permissions": {},
+  "lambdaLayers": []
 }

@@ -3,12 +3,14 @@
         "jcmobilePostConfirmation": {
             "service": "Lambda",
             "providerPlugin": "awscloudformation",
-            "build": true
+            "build": true,
+            "dependsOn": []
         },
         "S3Trigger14f1cefa": {
             "service": "Lambda",
             "providerPlugin": "awscloudformation",
-            "build": true
+            "build": true,
+            "dependsOn": []
         },
         "S3Trigger839efa13": {
             "service": "Lambda",
@@ -32,7 +34,8 @@
         "jcmobilePreSignup": {
             "build": true,
             "providerPlugin": "awscloudformation",
-            "service": "Lambda"
+            "service": "Lambda",
+            "dependsOn": []
         },
         "jcUpdateMainUserGroup": {
             "build": true,
