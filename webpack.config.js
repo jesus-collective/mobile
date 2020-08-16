@@ -73,9 +73,7 @@ module.exports = webpackConfig = async function (env, argv) {
             path.resolve("node_modules/react-native-drawer"),
             path.resolve("node_modules/react-native-safe-area-view"),
             path.resolve("node_modules/react-native-vector-icons"),
-            path.resolve(
-              "node_modules/react-native-keyboard-aware-scroll-view"
-            ),
+            path.resolve("node_modules/@codler/react-native-keyboard-aware-scroll-view"),
             path.resolve("node_modules/react-native-web"),
             path.resolve("node_modules/react-native-tab-view"),
             path.resolve("node_modules/aws-amplify-react-native"),
