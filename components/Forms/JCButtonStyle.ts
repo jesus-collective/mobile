@@ -476,6 +476,27 @@ export default EStyleSheet.create({
         padding: 10,
         fontWeight: "600",
     },
+    CourseTransparentBoldOrangeButton:
+    {
+        paddingTop: 10,
+        paddingBottom: 10,
+        marginBottom: 20,
+        marginLeft: 10,
+        marginRight: 10,
+        // color:"#ffffff",
+        backgroundColor: "#ffffff00",
+        borderWidth: 0,
+        borderColor: "#ffffff",
+        boxShadow: "unset",
+        width: '100%'
+    },
+    CourseTransparentBoldOrangeText: {
+        color: "#F0493E",
+        fontFamily: 'Graphik-Bold-App',
+        fontSize: 16,
+        padding: 10,
+        fontWeight: "bold"
+    },
     TransparentNoPaddingButton: {
         marginBottom: 20,
         paddingTop: 0,
@@ -602,7 +623,6 @@ export default EStyleSheet.create({
         borderWidth: 0,
         borderColor: "#ffffff",
         boxShadow: "unset",
-        width: '100%'
     },
     TransparentBoldOrangeText: {
         color: "#F0493E",
