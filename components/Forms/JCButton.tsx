@@ -9,6 +9,7 @@ export enum ButtonTypes {
     CourseSideBarFirst,
     CourseHome,
     CourseHomeSidebarTop,
+    CourseTransparentBoldOrange,
     Solid,
     SolidSignIn,
     SolidSignIn2,
