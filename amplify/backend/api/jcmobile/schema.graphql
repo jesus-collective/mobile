@@ -64,6 +64,7 @@ type User
   coachingTriad:[CourseTriadCoaches] @connection(name:"courseCoachTriad",keyField: "userID")
   userTriad:[CourseTriadUsers] @connection(name:"courseUserTriad",keyField: "userID")
 
+  completions: [CourseLessonCompletion] @connection(name:"courseUserCompletions",keyField: "courseUserID",sortField:"courseLessonID")
 
   alertConfig:AlertConfig
 }
@@ -309,6 +310,16 @@ type CourseLesson
   courseWeekID:String
   courseWeek: CourseWeek @connection(name: "courseLesson", keyField: "courseWeekID")
   assignments: [CourseAssignment] @connection(name: "courseAssignment", keyField: "id",sortField:"assignment")
+  completions: [CourseLessonCompletion] @connection(name:"courseCompletions",keyField: "courseLessonID",sortField:"userID")
+}
+type CourseLessonCompletion
+@model
+{
+  id: ID!
+  courseLessonID:String
+  courseLesson: CourseLesson @connection(name: "courseCompletions", keyField: "courseLessonID")
+  userID:String
+  user: User @connection(name:"courseUserCompletions", keyField:"userID")
 }
 type CourseAssignment 
 @model 

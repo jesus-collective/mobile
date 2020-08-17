@@ -150,6 +150,16 @@ export const getUser = /* GraphQL */ `
         }
         nextToken
       }
+      completions {
+        items {
+          id
+          courseLessonID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       alertConfig {
         emailDirectMessage
         emailGroupMessage
@@ -237,6 +247,9 @@ export const listUsers = /* GraphQL */ `
           nextToken
         }
         userTriad {
+          nextToken
+        }
+        completions {
           nextToken
         }
         alertConfig {
@@ -327,6 +340,9 @@ export const getGroup = /* GraphQL */ `
           nextToken
         }
         userTriad {
+          nextToken
+        }
+        completions {
           nextToken
         }
         alertConfig {
@@ -990,6 +1006,9 @@ export const getCourseInfo = /* GraphQL */ `
         userTriad {
           nextToken
         }
+        completions {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -1293,6 +1312,9 @@ export const getCourseTriadCoaches = /* GraphQL */ `
         userTriad {
           nextToken
         }
+        completions {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -1467,6 +1489,9 @@ export const getCourseTriadUsers = /* GraphQL */ `
           nextToken
         }
         userTriad {
+          nextToken
+        }
+        completions {
           nextToken
         }
         alertConfig {
@@ -1717,6 +1742,16 @@ export const getCourseLesson = /* GraphQL */ `
         }
         nextToken
       }
+      completions {
+        items {
+          id
+          courseLessonID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -1753,6 +1788,203 @@ export const listCourseLessons = /* GraphQL */ `
         }
         assignments {
           nextToken
+        }
+        completions {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getCourseLessonCompletion = /* GraphQL */ `
+  query GetCourseLessonCompletion($id: ID!) {
+    getCourseLessonCompletion(id: $id) {
+      id
+      courseLessonID
+      courseLesson {
+        id
+        lesson
+        lessonType
+        name
+        time
+        tz
+        duration
+        description
+        courseWeekID
+        courseWeek {
+          id
+          week
+          date
+          tz
+          name
+          title
+          leader
+          courseInfoID
+          createdAt
+          updatedAt
+        }
+        assignments {
+          nextToken
+        }
+        completions {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        completions {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listCourseLessonCompletions = /* GraphQL */ `
+  query ListCourseLessonCompletions(
+    $filter: ModelCourseLessonCompletionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCourseLessonCompletions(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        courseLessonID
+        courseLesson {
+          id
+          lesson
+          lessonType
+          name
+          time
+          tz
+          duration
+          description
+          courseWeekID
+          createdAt
+          updatedAt
+        }
+        userID
+        user {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
         }
         createdAt
         updatedAt
@@ -1791,6 +2023,9 @@ export const getCourseAssignment = /* GraphQL */ `
           updatedAt
         }
         assignments {
+          nextToken
+        }
+        completions {
           nextToken
         }
         createdAt
@@ -1909,6 +2144,9 @@ export const getDirectMessageUser = /* GraphQL */ `
           nextToken
         }
         userTriad {
+          nextToken
+        }
+        completions {
           nextToken
         }
         alertConfig {
@@ -2145,6 +2383,9 @@ export const getDirectMessage = /* GraphQL */ `
         userTriad {
           nextToken
         }
+        completions {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -2316,6 +2557,9 @@ export const getMessage = /* GraphQL */ `
           nextToken
         }
         userTriad {
+          nextToken
+        }
+        completions {
           nextToken
         }
         alertConfig {
@@ -3642,6 +3886,9 @@ export const searchUsers = /* GraphQL */ `
           nextToken
         }
         userTriad {
+          nextToken
+        }
+        completions {
           nextToken
         }
         alertConfig {

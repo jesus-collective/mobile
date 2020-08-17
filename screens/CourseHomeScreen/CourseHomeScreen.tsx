@@ -16,7 +16,7 @@ import CourseDetail from '../../components/CourseViewer/CourseDetail'
 import CourseCoaching from '../../components/CourseViewer/CourseCoaching'
 import { CourseContext } from '../../components/CourseViewer/CourseContext';
 import { CreateCourseWeekInput, CreateCourseLessonInput, CreateCourseTriadsInput } from 'src/API';
-import { add } from 'react-native-reanimated';
+
 
 interface Props {
   navigation: any
@@ -37,6 +37,7 @@ interface State extends JCState {
   myCoach: any
   myTriad: any
   myCohort: any
+  activeMessageBoard: string
 }
 
 
@@ -57,7 +58,8 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
       editMode: false,
       validationError: "",
       activeWeek: 0,
-      activeLesson: null
+      activeLesson: null,
+      activeMessageBoard: "cohort"
     }
     Auth.currentAuthenticatedUser().then((user: any) => {
       this.setState({ currentUser: user.username }, () => {
@@ -148,6 +150,11 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
   setActiveLesson = (index: number): void => {
     this.setState({
       activeLesson: index
+    })
+  }
+  setActiveMessageBoard = (messageBoard: string): void => {
+    this.setState({
+      activeMessageBoard: messageBoard
     })
   }
   updateTriadUsers = async (index: number, value: any): Promise<void> => {
@@ -556,7 +563,8 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
             deleteTriad: this.deleteTriad,
             setEditMode: this.setEditMode,
             updateTriadCoaches: this.updateTriadCoaches,
-            updateTriadUsers: this.updateTriadUsers
+            updateTriadUsers: this.updateTriadUsers,
+            setActiveMessageBoard: this.setActiveMessageBoard
           }
         }}>
           <StyleProvider style={getTheme()}>

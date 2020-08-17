@@ -78,6 +78,9 @@ export const batchCreateDirectMessageUsers = /* GraphQL */ `
         userTriad {
           nextToken
         }
+        completions {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -256,6 +259,16 @@ export const createUser = /* GraphQL */ `
         }
         nextToken
       }
+      completions {
+        items {
+          id
+          courseLessonID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       alertConfig {
         emailDirectMessage
         emailGroupMessage
@@ -418,6 +431,16 @@ export const updateUser = /* GraphQL */ `
         }
         nextToken
       }
+      completions {
+        items {
+          id
+          courseLessonID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       alertConfig {
         emailDirectMessage
         emailGroupMessage
@@ -574,6 +597,16 @@ export const deleteUser = /* GraphQL */ `
         items {
           id
           triadID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      completions {
+        items {
+          id
+          courseLessonID
           userID
           createdAt
           updatedAt
@@ -768,6 +801,9 @@ export const createGroupMember = /* GraphQL */ `
         userTriad {
           nextToken
         }
+        completions {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -957,6 +993,9 @@ export const updateGroupMember = /* GraphQL */ `
           nextToken
         }
         userTriad {
+          nextToken
+        }
+        completions {
           nextToken
         }
         alertConfig {
@@ -1150,6 +1189,9 @@ export const deleteGroupMember = /* GraphQL */ `
         userTriad {
           nextToken
         }
+        completions {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -1239,6 +1281,9 @@ export const createGroup = /* GraphQL */ `
           nextToken
         }
         userTriad {
+          nextToken
+        }
+        completions {
           nextToken
         }
         alertConfig {
@@ -1467,6 +1512,9 @@ export const updateGroup = /* GraphQL */ `
         userTriad {
           nextToken
         }
+        completions {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -1691,6 +1739,9 @@ export const deleteGroup = /* GraphQL */ `
           nextToken
         }
         userTriad {
+          nextToken
+        }
+        completions {
           nextToken
         }
         alertConfig {
@@ -1921,6 +1972,9 @@ export const createOrganizationMember = /* GraphQL */ `
         userTriad {
           nextToken
         }
+        completions {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -2098,6 +2152,9 @@ export const updateOrganizationMember = /* GraphQL */ `
         userTriad {
           nextToken
         }
+        completions {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -2273,6 +2330,9 @@ export const deleteOrganizationMember = /* GraphQL */ `
           nextToken
         }
         userTriad {
+          nextToken
+        }
+        completions {
           nextToken
         }
         alertConfig {
@@ -3105,6 +3165,9 @@ export const createCourseInfo = /* GraphQL */ `
         userTriad {
           nextToken
         }
+        completions {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -3224,6 +3287,9 @@ export const updateCourseInfo = /* GraphQL */ `
         userTriad {
           nextToken
         }
+        completions {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -3341,6 +3407,9 @@ export const deleteCourseInfo = /* GraphQL */ `
           nextToken
         }
         userTriad {
+          nextToken
+        }
+        completions {
           nextToken
         }
         alertConfig {
@@ -3712,6 +3781,9 @@ export const createCourseTriadCoaches = /* GraphQL */ `
         userTriad {
           nextToken
         }
+        completions {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -3824,6 +3896,9 @@ export const updateCourseTriadCoaches = /* GraphQL */ `
           nextToken
         }
         userTriad {
+          nextToken
+        }
+        completions {
           nextToken
         }
         alertConfig {
@@ -3940,6 +4015,9 @@ export const deleteCourseTriadCoaches = /* GraphQL */ `
         userTriad {
           nextToken
         }
+        completions {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -4052,6 +4130,9 @@ export const createCourseTriadUsers = /* GraphQL */ `
           nextToken
         }
         userTriad {
+          nextToken
+        }
+        completions {
           nextToken
         }
         alertConfig {
@@ -4168,6 +4249,9 @@ export const updateCourseTriadUsers = /* GraphQL */ `
         userTriad {
           nextToken
         }
+        completions {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -4280,6 +4364,9 @@ export const deleteCourseTriadUsers = /* GraphQL */ `
           nextToken
         }
         userTriad {
+          nextToken
+        }
+        completions {
           nextToken
         }
         alertConfig {
@@ -4597,6 +4684,16 @@ export const createCourseLesson = /* GraphQL */ `
         }
         nextToken
       }
+      completions {
+        items {
+          id
+          courseLessonID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -4646,6 +4743,16 @@ export const updateCourseLesson = /* GraphQL */ `
           assignment
           due
           description
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      completions {
+        items {
+          id
+          courseLessonID
+          userID
           createdAt
           updatedAt
         }
@@ -4705,6 +4812,397 @@ export const deleteCourseLesson = /* GraphQL */ `
         }
         nextToken
       }
+      completions {
+        items {
+          id
+          courseLessonID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createCourseLessonCompletion = /* GraphQL */ `
+  mutation CreateCourseLessonCompletion(
+    $input: CreateCourseLessonCompletionInput!
+  ) {
+    createCourseLessonCompletion(input: $input) {
+      id
+      courseLessonID
+      courseLesson {
+        id
+        lesson
+        lessonType
+        name
+        time
+        tz
+        duration
+        description
+        courseWeekID
+        courseWeek {
+          id
+          week
+          date
+          tz
+          name
+          title
+          leader
+          courseInfoID
+          createdAt
+          updatedAt
+        }
+        assignments {
+          nextToken
+        }
+        completions {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        completions {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateCourseLessonCompletion = /* GraphQL */ `
+  mutation UpdateCourseLessonCompletion(
+    $input: UpdateCourseLessonCompletionInput!
+  ) {
+    updateCourseLessonCompletion(input: $input) {
+      id
+      courseLessonID
+      courseLesson {
+        id
+        lesson
+        lessonType
+        name
+        time
+        tz
+        duration
+        description
+        courseWeekID
+        courseWeek {
+          id
+          week
+          date
+          tz
+          name
+          title
+          leader
+          courseInfoID
+          createdAt
+          updatedAt
+        }
+        assignments {
+          nextToken
+        }
+        completions {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        completions {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteCourseLessonCompletion = /* GraphQL */ `
+  mutation DeleteCourseLessonCompletion(
+    $input: DeleteCourseLessonCompletionInput!
+  ) {
+    deleteCourseLessonCompletion(input: $input) {
+      id
+      courseLessonID
+      courseLesson {
+        id
+        lesson
+        lessonType
+        name
+        time
+        tz
+        duration
+        description
+        courseWeekID
+        courseWeek {
+          id
+          week
+          date
+          tz
+          name
+          title
+          leader
+          courseInfoID
+          createdAt
+          updatedAt
+        }
+        assignments {
+          nextToken
+        }
+        completions {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        completions {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -4740,6 +5238,9 @@ export const createCourseAssignment = /* GraphQL */ `
           updatedAt
         }
         assignments {
+          nextToken
+        }
+        completions {
           nextToken
         }
         createdAt
@@ -4782,6 +5283,9 @@ export const updateCourseAssignment = /* GraphQL */ `
         assignments {
           nextToken
         }
+        completions {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -4820,6 +5324,9 @@ export const deleteCourseAssignment = /* GraphQL */ `
           updatedAt
         }
         assignments {
+          nextToken
+        }
+        completions {
           nextToken
         }
         createdAt
@@ -4902,6 +5409,9 @@ export const createDirectMessageUser = /* GraphQL */ `
           nextToken
         }
         userTriad {
+          nextToken
+        }
+        completions {
           nextToken
         }
         alertConfig {
@@ -5008,6 +5518,9 @@ export const updateDirectMessageUser = /* GraphQL */ `
         userTriad {
           nextToken
         }
+        completions {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -5110,6 +5623,9 @@ export const deleteDirectMessageUser = /* GraphQL */ `
           nextToken
         }
         userTriad {
+          nextToken
+        }
+        completions {
           nextToken
         }
         alertConfig {
@@ -5328,6 +5844,9 @@ export const createDirectMessage = /* GraphQL */ `
         userTriad {
           nextToken
         }
+        completions {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -5434,6 +5953,9 @@ export const updateDirectMessage = /* GraphQL */ `
           nextToken
         }
         userTriad {
+          nextToken
+        }
+        completions {
           nextToken
         }
         alertConfig {
@@ -5544,6 +6066,9 @@ export const deleteDirectMessage = /* GraphQL */ `
         userTriad {
           nextToken
         }
+        completions {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -5652,6 +6177,9 @@ export const createMessage = /* GraphQL */ `
           nextToken
         }
         userTriad {
+          nextToken
+        }
+        completions {
           nextToken
         }
         alertConfig {
@@ -5851,6 +6379,9 @@ export const updateMessage = /* GraphQL */ `
         userTriad {
           nextToken
         }
+        completions {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -6046,6 +6577,9 @@ export const deleteMessage = /* GraphQL */ `
           nextToken
         }
         userTriad {
+          nextToken
+        }
+        completions {
           nextToken
         }
         alertConfig {

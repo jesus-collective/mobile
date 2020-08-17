@@ -258,9 +258,9 @@ class CourseDetailImpl extends JCComponent<Props>{
                         {this.renderLessonDetails(state, actions, week)}
                         <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                           <Container style={{ flex: 5, flexDirection: "row", marginTop: 30, borderBottom: '1px solid #333333', width: '95%', paddingBottom: 30 }}>
-                            <JCButton buttonType={ButtonTypes.TransparentCourse} onPress={() => { null }}>Cohort</JCButton>
-                            <JCButton buttonType={ButtonTypes.TransparentCourse} onPress={() => { null }}>Triad</JCButton>
-                            <JCButton buttonType={ButtonTypes.TransparentCourse} onPress={() => { null }}>Instructor</JCButton>
+                            <JCButton buttonType={state.activeMessageBoard == "cohort" ? ButtonTypes.TransparentCourse : ButtonTypes.TransparentBoldBlack} onPress={() => { actions.setActiveMessageBoard("cohort") }}>Cohort</JCButton>
+                            <JCButton buttonType={state.activeMessageBoard == "triad" ? ButtonTypes.TransparentCourse : ButtonTypes.TransparentBoldBlack} onPress={() => { actions.setActiveMessageBoard("triad") }}>Triad</JCButton>
+                            <JCButton buttonType={state.activeMessageBoard == "instructor" ? ButtonTypes.TransparentCourse : ButtonTypes.TransparentBoldBlack} onPress={() => { actions.setActiveMessageBoard("instructor") }}>Instructor</JCButton>
                           </Container>
                           <Container style={{ flex: 95, flexDirection: "row", marginTop: 10, width: '100%' }}>
                             <MessageBoard style="mini" groupId={state.data.id}></MessageBoard>

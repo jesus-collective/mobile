@@ -384,6 +384,22 @@ export type DeleteCourseLessonInput = {
   id?: string | null,
 };
 
+export type CreateCourseLessonCompletionInput = {
+  id?: string | null,
+  courseLessonID?: string | null,
+  userID?: string | null,
+};
+
+export type UpdateCourseLessonCompletionInput = {
+  id: string,
+  courseLessonID?: string | null,
+  userID?: string | null,
+};
+
+export type DeleteCourseLessonCompletionInput = {
+  id?: string | null,
+};
+
 export type CreateCourseAssignmentInput = {
   id?: string | null,
   assignment?: string | null,
@@ -809,6 +825,15 @@ export type ModelCourseLessonFilterInput = {
   not?: ModelCourseLessonFilterInput | null,
 };
 
+export type ModelCourseLessonCompletionFilterInput = {
+  id?: ModelIDFilterInput | null,
+  courseLessonID?: ModelStringFilterInput | null,
+  userID?: ModelStringFilterInput | null,
+  and?: Array< ModelCourseLessonCompletionFilterInput | null > | null,
+  or?: Array< ModelCourseLessonCompletionFilterInput | null > | null,
+  not?: ModelCourseLessonCompletionFilterInput | null,
+};
+
 export type ModelCourseAssignmentFilterInput = {
   id?: ModelIDFilterInput | null,
   assignment?: ModelStringFilterInput | null,
@@ -1231,6 +1256,10 @@ export type BatchCreateDirectMessageUsersMutation = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -1433,6 +1462,18 @@ export type CreateUserMutation = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    completions:  {
+      __typename: "ModelCourseLessonCompletionConnection",
+      items:  Array< {
+        __typename: "CourseLessonCompletion",
+        id: string,
+        courseLessonID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     alertConfig:  {
       __typename: "AlertConfig",
       emailDirectMessage: string | null,
@@ -1616,6 +1657,18 @@ export type UpdateUserMutation = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    completions:  {
+      __typename: "ModelCourseLessonCompletionConnection",
+      items:  Array< {
+        __typename: "CourseLessonCompletion",
+        id: string,
+        courseLessonID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     alertConfig:  {
       __typename: "AlertConfig",
       emailDirectMessage: string | null,
@@ -1793,6 +1846,18 @@ export type DeleteUserMutation = {
         __typename: "CourseTriadUsers",
         id: string,
         triadID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    completions:  {
+      __typename: "ModelCourseLessonCompletionConnection",
+      items:  Array< {
+        __typename: "CourseLessonCompletion",
+        id: string,
+        courseLessonID: string | null,
         userID: string | null,
         createdAt: string,
         updatedAt: string,
@@ -2008,6 +2073,10 @@ export type CreateGroupMemberMutation = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -2218,6 +2287,10 @@ export type UpdateGroupMemberMutation = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -2432,6 +2505,10 @@ export type DeleteGroupMemberMutation = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -2536,6 +2613,10 @@ export type CreateGroupMutation = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -2792,6 +2873,10 @@ export type UpdateGroupMutation = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -3044,6 +3129,10 @@ export type DeleteGroupMutation = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -3302,6 +3391,10 @@ export type CreateOrganizationMemberMutation = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -3502,6 +3595,10 @@ export type UpdateOrganizationMemberMutation = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -3700,6 +3797,10 @@ export type DeleteOrganizationMemberMutation = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -4623,6 +4724,10 @@ export type CreateCourseInfoMutation = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -4761,6 +4866,10 @@ export type UpdateCourseInfoMutation = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -4897,6 +5006,10 @@ export type DeleteCourseInfoMutation = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -5325,6 +5438,10 @@ export type CreateCourseTriadCoachesMutation = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -5456,6 +5573,10 @@ export type UpdateCourseTriadCoachesMutation = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -5591,6 +5712,10 @@ export type DeleteCourseTriadCoachesMutation = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -5722,6 +5847,10 @@ export type CreateCourseTriadUsersMutation = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -5857,6 +5986,10 @@ export type UpdateCourseTriadUsersMutation = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -5988,6 +6121,10 @@ export type DeleteCourseTriadUsersMutation = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -6345,6 +6482,18 @@ export type CreateCourseLessonMutation = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    completions:  {
+      __typename: "ModelCourseLessonCompletionConnection",
+      items:  Array< {
+        __typename: "CourseLessonCompletion",
+        id: string,
+        courseLessonID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -6403,6 +6552,18 @@ export type UpdateCourseLessonMutation = {
         assignment: string | null,
         due: string | null,
         description: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    completions:  {
+      __typename: "ModelCourseLessonCompletionConnection",
+      items:  Array< {
+        __typename: "CourseLessonCompletion",
+        id: string,
+        courseLessonID: string | null,
+        userID: string | null,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -6471,6 +6632,453 @@ export type DeleteCourseLessonMutation = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    completions:  {
+      __typename: "ModelCourseLessonCompletionConnection",
+      items:  Array< {
+        __typename: "CourseLessonCompletion",
+        id: string,
+        courseLessonID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateCourseLessonCompletionMutationVariables = {
+  input: CreateCourseLessonCompletionInput,
+};
+
+export type CreateCourseLessonCompletionMutation = {
+  createCourseLessonCompletion:  {
+    __typename: "CourseLessonCompletion",
+    id: string,
+    courseLessonID: string | null,
+    courseLesson:  {
+      __typename: "CourseLesson",
+      id: string,
+      lesson: string | null,
+      lessonType: string | null,
+      name: string | null,
+      time: string | null,
+      tz: string | null,
+      duration: string | null,
+      description: string | null,
+      courseWeekID: string | null,
+      courseWeek:  {
+        __typename: "CourseWeek",
+        id: string,
+        week: string | null,
+        date: string | null,
+        tz: string | null,
+        name: string | null,
+        title: string | null,
+        leader: string | null,
+        courseInfoID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      assignments:  {
+        __typename: "ModelCourseAssignmentConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      mainUserGroup: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+        geocodeFull: string | null,
+        geocodeCity: string | null,
+        geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: Array< string | null > | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      denomination: string | null,
+      pplServed: string | null,
+      sundayAttendance: string | null,
+      numberVolunteers: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      primaryOrganization: string | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      directMessages:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      coachingTriad:  {
+        __typename: "ModelCourseTriadCoachesConnection",
+        nextToken: string | null,
+      } | null,
+      userTriad:  {
+        __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
+      alertConfig:  {
+        __typename: "AlertConfig",
+        emailDirectMessage: string | null,
+        emailGroupMessage: string | null,
+        emailEventMessage: string | null,
+        emailOrgMessage: string | null,
+        emailResourceMessage: string | null,
+        emailCourseMessage: string | null,
+        emailPromotions: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateCourseLessonCompletionMutationVariables = {
+  input: UpdateCourseLessonCompletionInput,
+};
+
+export type UpdateCourseLessonCompletionMutation = {
+  updateCourseLessonCompletion:  {
+    __typename: "CourseLessonCompletion",
+    id: string,
+    courseLessonID: string | null,
+    courseLesson:  {
+      __typename: "CourseLesson",
+      id: string,
+      lesson: string | null,
+      lessonType: string | null,
+      name: string | null,
+      time: string | null,
+      tz: string | null,
+      duration: string | null,
+      description: string | null,
+      courseWeekID: string | null,
+      courseWeek:  {
+        __typename: "CourseWeek",
+        id: string,
+        week: string | null,
+        date: string | null,
+        tz: string | null,
+        name: string | null,
+        title: string | null,
+        leader: string | null,
+        courseInfoID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      assignments:  {
+        __typename: "ModelCourseAssignmentConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      mainUserGroup: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+        geocodeFull: string | null,
+        geocodeCity: string | null,
+        geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: Array< string | null > | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      denomination: string | null,
+      pplServed: string | null,
+      sundayAttendance: string | null,
+      numberVolunteers: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      primaryOrganization: string | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      directMessages:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      coachingTriad:  {
+        __typename: "ModelCourseTriadCoachesConnection",
+        nextToken: string | null,
+      } | null,
+      userTriad:  {
+        __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
+      alertConfig:  {
+        __typename: "AlertConfig",
+        emailDirectMessage: string | null,
+        emailGroupMessage: string | null,
+        emailEventMessage: string | null,
+        emailOrgMessage: string | null,
+        emailResourceMessage: string | null,
+        emailCourseMessage: string | null,
+        emailPromotions: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteCourseLessonCompletionMutationVariables = {
+  input: DeleteCourseLessonCompletionInput,
+};
+
+export type DeleteCourseLessonCompletionMutation = {
+  deleteCourseLessonCompletion:  {
+    __typename: "CourseLessonCompletion",
+    id: string,
+    courseLessonID: string | null,
+    courseLesson:  {
+      __typename: "CourseLesson",
+      id: string,
+      lesson: string | null,
+      lessonType: string | null,
+      name: string | null,
+      time: string | null,
+      tz: string | null,
+      duration: string | null,
+      description: string | null,
+      courseWeekID: string | null,
+      courseWeek:  {
+        __typename: "CourseWeek",
+        id: string,
+        week: string | null,
+        date: string | null,
+        tz: string | null,
+        name: string | null,
+        title: string | null,
+        leader: string | null,
+        courseInfoID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      assignments:  {
+        __typename: "ModelCourseAssignmentConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      mainUserGroup: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+        geocodeFull: string | null,
+        geocodeCity: string | null,
+        geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: Array< string | null > | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      denomination: string | null,
+      pplServed: string | null,
+      sundayAttendance: string | null,
+      numberVolunteers: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      primaryOrganization: string | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      directMessages:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      coachingTriad:  {
+        __typename: "ModelCourseTriadCoachesConnection",
+        nextToken: string | null,
+      } | null,
+      userTriad:  {
+        __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
+      alertConfig:  {
+        __typename: "AlertConfig",
+        emailDirectMessage: string | null,
+        emailGroupMessage: string | null,
+        emailEventMessage: string | null,
+        emailOrgMessage: string | null,
+        emailResourceMessage: string | null,
+        emailCourseMessage: string | null,
+        emailPromotions: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -6513,6 +7121,10 @@ export type CreateCourseAssignmentMutation = {
       } | null,
       assignments:  {
         __typename: "ModelCourseAssignmentConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       createdAt: string,
@@ -6562,6 +7174,10 @@ export type UpdateCourseAssignmentMutation = {
         __typename: "ModelCourseAssignmentConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -6607,6 +7223,10 @@ export type DeleteCourseAssignmentMutation = {
       } | null,
       assignments:  {
         __typename: "ModelCourseAssignmentConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       createdAt: string,
@@ -6703,6 +7323,10 @@ export type CreateDirectMessageUserMutation = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -6827,6 +7451,10 @@ export type UpdateDirectMessageUserMutation = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -6947,6 +7575,10 @@ export type DeleteDirectMessageUserMutation = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -7207,6 +7839,10 @@ export type CreateDirectMessageMutation = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -7331,6 +7967,10 @@ export type UpdateDirectMessageMutation = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -7459,6 +8099,10 @@ export type DeleteDirectMessageMutation = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -7585,6 +8229,10 @@ export type CreateMessageMutation = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -7805,6 +8453,10 @@ export type UpdateMessageMutation = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -8021,6 +8673,10 @@ export type DeleteMessageMutation = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -9434,6 +10090,18 @@ export type GetUserQuery = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    completions:  {
+      __typename: "ModelCourseLessonCompletionConnection",
+      items:  Array< {
+        __typename: "CourseLessonCompletion",
+        id: string,
+        courseLessonID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     alertConfig:  {
       __typename: "AlertConfig",
       emailDirectMessage: string | null,
@@ -9534,6 +10202,10 @@ export type ListUsersQuery = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -9639,6 +10311,10 @@ export type GetGroupQuery = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -10372,6 +11048,10 @@ export type GetCourseInfoQuery = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -10720,6 +11400,10 @@ export type GetCourseTriadCoachesQuery = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -10914,6 +11598,10 @@ export type GetCourseTriadUsersQuery = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -11190,6 +11878,18 @@ export type GetCourseLessonQuery = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    completions:  {
+      __typename: "ModelCourseLessonCompletionConnection",
+      items:  Array< {
+        __typename: "CourseLessonCompletion",
+        id: string,
+        courseLessonID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -11231,6 +11931,225 @@ export type ListCourseLessonsQuery = {
       assignments:  {
         __typename: "ModelCourseAssignmentConnection",
         nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type GetCourseLessonCompletionQueryVariables = {
+  id: string,
+};
+
+export type GetCourseLessonCompletionQuery = {
+  getCourseLessonCompletion:  {
+    __typename: "CourseLessonCompletion",
+    id: string,
+    courseLessonID: string | null,
+    courseLesson:  {
+      __typename: "CourseLesson",
+      id: string,
+      lesson: string | null,
+      lessonType: string | null,
+      name: string | null,
+      time: string | null,
+      tz: string | null,
+      duration: string | null,
+      description: string | null,
+      courseWeekID: string | null,
+      courseWeek:  {
+        __typename: "CourseWeek",
+        id: string,
+        week: string | null,
+        date: string | null,
+        tz: string | null,
+        name: string | null,
+        title: string | null,
+        leader: string | null,
+        courseInfoID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      assignments:  {
+        __typename: "ModelCourseAssignmentConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      mainUserGroup: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+        geocodeFull: string | null,
+        geocodeCity: string | null,
+        geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: Array< string | null > | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      denomination: string | null,
+      pplServed: string | null,
+      sundayAttendance: string | null,
+      numberVolunteers: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      primaryOrganization: string | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      directMessages:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      coachingTriad:  {
+        __typename: "ModelCourseTriadCoachesConnection",
+        nextToken: string | null,
+      } | null,
+      userTriad:  {
+        __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
+      alertConfig:  {
+        __typename: "AlertConfig",
+        emailDirectMessage: string | null,
+        emailGroupMessage: string | null,
+        emailEventMessage: string | null,
+        emailOrgMessage: string | null,
+        emailResourceMessage: string | null,
+        emailCourseMessage: string | null,
+        emailPromotions: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListCourseLessonCompletionsQueryVariables = {
+  filter?: ModelCourseLessonCompletionFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListCourseLessonCompletionsQuery = {
+  listCourseLessonCompletions:  {
+    __typename: "ModelCourseLessonCompletionConnection",
+    items:  Array< {
+      __typename: "CourseLessonCompletion",
+      id: string,
+      courseLessonID: string | null,
+      courseLesson:  {
+        __typename: "CourseLesson",
+        id: string,
+        lesson: string | null,
+        lessonType: string | null,
+        name: string | null,
+        time: string | null,
+        tz: string | null,
+        duration: string | null,
+        description: string | null,
+        courseWeekID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      userID: string | null,
+      user:  {
+        __typename: "User",
+        id: string,
+        given_name: string,
+        family_name: string,
+        email: string | null,
+        phone: string | null,
+        owner: string | null,
+        mainUserGroup: string | null,
+        hasPaidState: string | null,
+        profileState: string | null,
+        address: string | null,
+        city: string | null,
+        province: string | null,
+        postalCode: string | null,
+        country: string | null,
+        aboutMeShort: string | null,
+        aboutMeLong: string | null,
+        interests: Array< string | null > | null,
+        currentRole: string | null,
+        currentScope: string | null,
+        personality: string | null,
+        orgName: string | null,
+        orgType: string | null,
+        orgSize: string | null,
+        denomination: string | null,
+        pplServed: string | null,
+        sundayAttendance: string | null,
+        numberVolunteers: string | null,
+        orgDescription: string | null,
+        joined: string | null,
+        primaryOrganization: string | null,
+        createdAt: string,
+        updatedAt: string,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -11276,6 +12195,10 @@ export type GetCourseAssignmentQuery = {
       } | null,
       assignments:  {
         __typename: "ModelCourseAssignmentConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       createdAt: string,
@@ -11408,6 +12331,10 @@ export type GetDirectMessageUserQuery = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -11672,6 +12599,10 @@ export type GetDirectMessageQuery = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -11866,6 +12797,10 @@ export type GetMessageQuery = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -13261,6 +14196,10 @@ export type SearchUsersQuery = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -13492,6 +14431,10 @@ export type OnCreateMessageByRoomIdSubscription = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -13782,6 +14725,18 @@ export type OnCreateUserSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    completions:  {
+      __typename: "ModelCourseLessonCompletionConnection",
+      items:  Array< {
+        __typename: "CourseLessonCompletion",
+        id: string,
+        courseLessonID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     alertConfig:  {
       __typename: "AlertConfig",
       emailDirectMessage: string | null,
@@ -13961,6 +14916,18 @@ export type OnUpdateUserSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    completions:  {
+      __typename: "ModelCourseLessonCompletionConnection",
+      items:  Array< {
+        __typename: "CourseLessonCompletion",
+        id: string,
+        courseLessonID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     alertConfig:  {
       __typename: "AlertConfig",
       emailDirectMessage: string | null,
@@ -14134,6 +15101,18 @@ export type OnDeleteUserSubscription = {
         __typename: "CourseTriadUsers",
         id: string,
         triadID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    completions:  {
+      __typename: "ModelCourseLessonCompletionConnection",
+      items:  Array< {
+        __typename: "CourseLessonCompletion",
+        id: string,
+        courseLessonID: string | null,
         userID: string | null,
         createdAt: string,
         updatedAt: string,
@@ -14345,6 +15324,10 @@ export type OnCreateGroupMemberSubscription = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -14551,6 +15534,10 @@ export type OnUpdateGroupMemberSubscription = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -14761,6 +15748,10 @@ export type OnDeleteGroupMemberSubscription = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -14861,6 +15852,10 @@ export type OnCreateGroupSubscription = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -15113,6 +16108,10 @@ export type OnUpdateGroupSubscription = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -15361,6 +16360,10 @@ export type OnDeleteGroupSubscription = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -15615,6 +16618,10 @@ export type OnCreateOrganizationMemberSubscription = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -15811,6 +16818,10 @@ export type OnUpdateOrganizationMemberSubscription = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -16005,6 +17016,10 @@ export type OnDeleteOrganizationMemberSubscription = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -16916,6 +17931,10 @@ export type OnCreateCourseInfoSubscription = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -17054,6 +18073,10 @@ export type OnUpdateCourseInfoSubscription = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -17190,6 +18213,10 @@ export type OnDeleteCourseInfoSubscription = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -17602,6 +18629,10 @@ export type OnCreateCourseTriadCoachesSubscription = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -17729,6 +18760,10 @@ export type OnUpdateCourseTriadCoachesSubscription = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -17860,6 +18895,10 @@ export type OnDeleteCourseTriadCoachesSubscription = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -17987,6 +19026,10 @@ export type OnCreateCourseTriadUsersSubscription = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -18118,6 +19161,10 @@ export type OnUpdateCourseTriadUsersSubscription = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -18245,6 +19292,10 @@ export type OnDeleteCourseTriadUsersSubscription = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -18602,6 +19653,18 @@ export type OnCreateCourseLessonSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    completions:  {
+      __typename: "ModelCourseLessonCompletionConnection",
+      items:  Array< {
+        __typename: "CourseLessonCompletion",
+        id: string,
+        courseLessonID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -18660,6 +19723,18 @@ export type OnUpdateCourseLessonSubscription = {
         assignment: string | null,
         due: string | null,
         description: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    completions:  {
+      __typename: "ModelCourseLessonCompletionConnection",
+      items:  Array< {
+        __typename: "CourseLessonCompletion",
+        id: string,
+        courseLessonID: string | null,
+        userID: string | null,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -18728,6 +19803,441 @@ export type OnDeleteCourseLessonSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    completions:  {
+      __typename: "ModelCourseLessonCompletionConnection",
+      items:  Array< {
+        __typename: "CourseLessonCompletion",
+        id: string,
+        courseLessonID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateCourseLessonCompletionSubscription = {
+  onCreateCourseLessonCompletion:  {
+    __typename: "CourseLessonCompletion",
+    id: string,
+    courseLessonID: string | null,
+    courseLesson:  {
+      __typename: "CourseLesson",
+      id: string,
+      lesson: string | null,
+      lessonType: string | null,
+      name: string | null,
+      time: string | null,
+      tz: string | null,
+      duration: string | null,
+      description: string | null,
+      courseWeekID: string | null,
+      courseWeek:  {
+        __typename: "CourseWeek",
+        id: string,
+        week: string | null,
+        date: string | null,
+        tz: string | null,
+        name: string | null,
+        title: string | null,
+        leader: string | null,
+        courseInfoID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      assignments:  {
+        __typename: "ModelCourseAssignmentConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      mainUserGroup: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+        geocodeFull: string | null,
+        geocodeCity: string | null,
+        geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: Array< string | null > | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      denomination: string | null,
+      pplServed: string | null,
+      sundayAttendance: string | null,
+      numberVolunteers: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      primaryOrganization: string | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      directMessages:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      coachingTriad:  {
+        __typename: "ModelCourseTriadCoachesConnection",
+        nextToken: string | null,
+      } | null,
+      userTriad:  {
+        __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
+      alertConfig:  {
+        __typename: "AlertConfig",
+        emailDirectMessage: string | null,
+        emailGroupMessage: string | null,
+        emailEventMessage: string | null,
+        emailOrgMessage: string | null,
+        emailResourceMessage: string | null,
+        emailCourseMessage: string | null,
+        emailPromotions: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateCourseLessonCompletionSubscription = {
+  onUpdateCourseLessonCompletion:  {
+    __typename: "CourseLessonCompletion",
+    id: string,
+    courseLessonID: string | null,
+    courseLesson:  {
+      __typename: "CourseLesson",
+      id: string,
+      lesson: string | null,
+      lessonType: string | null,
+      name: string | null,
+      time: string | null,
+      tz: string | null,
+      duration: string | null,
+      description: string | null,
+      courseWeekID: string | null,
+      courseWeek:  {
+        __typename: "CourseWeek",
+        id: string,
+        week: string | null,
+        date: string | null,
+        tz: string | null,
+        name: string | null,
+        title: string | null,
+        leader: string | null,
+        courseInfoID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      assignments:  {
+        __typename: "ModelCourseAssignmentConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      mainUserGroup: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+        geocodeFull: string | null,
+        geocodeCity: string | null,
+        geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: Array< string | null > | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      denomination: string | null,
+      pplServed: string | null,
+      sundayAttendance: string | null,
+      numberVolunteers: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      primaryOrganization: string | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      directMessages:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      coachingTriad:  {
+        __typename: "ModelCourseTriadCoachesConnection",
+        nextToken: string | null,
+      } | null,
+      userTriad:  {
+        __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
+      alertConfig:  {
+        __typename: "AlertConfig",
+        emailDirectMessage: string | null,
+        emailGroupMessage: string | null,
+        emailEventMessage: string | null,
+        emailOrgMessage: string | null,
+        emailResourceMessage: string | null,
+        emailCourseMessage: string | null,
+        emailPromotions: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteCourseLessonCompletionSubscription = {
+  onDeleteCourseLessonCompletion:  {
+    __typename: "CourseLessonCompletion",
+    id: string,
+    courseLessonID: string | null,
+    courseLesson:  {
+      __typename: "CourseLesson",
+      id: string,
+      lesson: string | null,
+      lessonType: string | null,
+      name: string | null,
+      time: string | null,
+      tz: string | null,
+      duration: string | null,
+      description: string | null,
+      courseWeekID: string | null,
+      courseWeek:  {
+        __typename: "CourseWeek",
+        id: string,
+        week: string | null,
+        date: string | null,
+        tz: string | null,
+        name: string | null,
+        title: string | null,
+        leader: string | null,
+        courseInfoID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      assignments:  {
+        __typename: "ModelCourseAssignmentConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      mainUserGroup: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+        geocodeFull: string | null,
+        geocodeCity: string | null,
+        geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: Array< string | null > | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      denomination: string | null,
+      pplServed: string | null,
+      sundayAttendance: string | null,
+      numberVolunteers: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      primaryOrganization: string | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      directMessages:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      coachingTriad:  {
+        __typename: "ModelCourseTriadCoachesConnection",
+        nextToken: string | null,
+      } | null,
+      userTriad:  {
+        __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
+      alertConfig:  {
+        __typename: "AlertConfig",
+        emailDirectMessage: string | null,
+        emailGroupMessage: string | null,
+        emailEventMessage: string | null,
+        emailOrgMessage: string | null,
+        emailResourceMessage: string | null,
+        emailCourseMessage: string | null,
+        emailPromotions: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -18770,6 +20280,10 @@ export type OnCreateCourseAssignmentSubscription = {
       } | null,
       assignments:  {
         __typename: "ModelCourseAssignmentConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       createdAt: string,
@@ -18819,6 +20333,10 @@ export type OnUpdateCourseAssignmentSubscription = {
         __typename: "ModelCourseAssignmentConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -18864,6 +20382,10 @@ export type OnDeleteCourseAssignmentSubscription = {
       } | null,
       assignments:  {
         __typename: "ModelCourseAssignmentConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       createdAt: string,
@@ -18956,6 +20478,10 @@ export type OnCreateDirectMessageUserSubscription = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -19076,6 +20602,10 @@ export type OnUpdateDirectMessageUserSubscription = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -19192,6 +20722,10 @@ export type OnDeleteDirectMessageUserSubscription = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -19436,6 +20970,10 @@ export type OnCreateDirectMessageSubscription = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -19556,6 +21094,10 @@ export type OnUpdateDirectMessageSubscription = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -19680,6 +21222,10 @@ export type OnDeleteDirectMessageSubscription = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -19802,6 +21348,10 @@ export type OnCreateMessageSubscription = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -20018,6 +21568,10 @@ export type OnUpdateMessageSubscription = {
         __typename: "ModelCourseTriadUsersConnection",
         nextToken: string | null,
       } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -20230,6 +21784,10 @@ export type OnDeleteMessageSubscription = {
       } | null,
       userTriad:  {
         __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      completions:  {
+        __typename: "ModelCourseLessonCompletionConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
