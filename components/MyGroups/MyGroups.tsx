@@ -355,7 +355,7 @@ export default class MyGroups extends JCComponent<Props, State> {
   openSingle(id: string): void {
     console.log({ "Navigate to": this.state.openSingle })
     // console.log(id)
-    if (this.state.openSingle == "CourseOverviewScreen" && this.canLeave(id))
+    if (this.state.openSingle == "CourseOverviewScreen" && this.canLeave(id) && !this.isOwner(id))
       this.props.navigation.push("CourseHomeScreen", { id: id, create: false })
     else
       this.props.navigation.push(this.state.openSingle, { id: id, create: false })
