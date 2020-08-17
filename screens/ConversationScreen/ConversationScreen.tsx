@@ -225,7 +225,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
                   return (
                     <TouchableOpacity style={{ backgroundColor: this.state.selectedRoom == index ? "#eeeeee" : "unset", borderRadius: 10, width: "100%", paddingTop: 8, paddingBottom: 8, display: "flex", alignItems: "center" }} key={item.id} onPress={() => this.switchRoom(index)}>
                       <Text style={{ fontSize: 20, lineHeight: 25, fontWeight: "normal", fontFamily: "Graphik-Regular-App", width: "100%", display: "flex", alignItems: "center" }} >
-                        <ProfileImage user={otherUsers.ids.length === 1 ? otherUsers.ids[0] : null} size="small"></ProfileImage>
+                        <ProfileImage user={otherUsers.ids.length === 1 ? otherUsers.ids[0] : null} size="small2"></ProfileImage>
                         {item.room.name ? item.room.name : stringOfNames}
                       </Text>
                     </TouchableOpacity>)
