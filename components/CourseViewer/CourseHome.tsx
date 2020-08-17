@@ -278,9 +278,12 @@ class CourseHomeImpl extends JCComponent<Props>{
                             }}
                           />
                           <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 50, width: '90%' }}>Course Activity</Text>
-                          <JCButton onPress={() => { null }} buttonType={ButtonTypes.CourseHomeSidebarTop}>Today</JCButton>
-                          <JCButton onPress={() => { null }} buttonType={ButtonTypes.CourseHome}>Yesterday</JCButton>
-                          <JCButton onPress={() => { null }} buttonType={ButtonTypes.CourseHome}>This Week</JCButton>
+                          <Container style={{ flex: 5, flexDirection: "row", marginTop: 30, borderBottom: '1px solid #333333', width: '95%', paddingBottom: 30 }}>
+                            <JCButton buttonType={state.activeCourseActivity == "today" ? ButtonTypes.TransparentCourse : ButtonTypes.TransparentBoldBlack} onPress={() => { actions.setActiveCourseActivity("today") }}>Today</JCButton>
+                            <JCButton buttonType={state.activeCourseActivity == "yesterday" ? ButtonTypes.TransparentCourse : ButtonTypes.TransparentBoldBlack} onPress={() => { actions.setActiveCourseActivity("yesterday") }}>Yesterday</JCButton>
+                            <JCButton buttonType={state.activeCourseActivity == "thisweek" ? ButtonTypes.TransparentCourse : ButtonTypes.TransparentBoldBlack} onPress={() => { actions.setActiveCourseActivity("thisweek") }}>This Week</JCButton>
+                          </Container>
+
                           <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App' }}>Adam posted assignement to review</Text>
                         </Container>
 

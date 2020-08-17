@@ -38,6 +38,7 @@ interface State extends JCState {
   myTriad: any
   myCohort: any
   activeMessageBoard: string
+  activeCourseActivity: string
 }
 
 
@@ -59,7 +60,8 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
       validationError: "",
       activeWeek: 0,
       activeLesson: null,
-      activeMessageBoard: "cohort"
+      activeMessageBoard: "cohort",
+      activeCourseActivity: "today"
     }
     Auth.currentAuthenticatedUser().then((user: any) => {
       this.setState({ currentUser: user.username }, () => {
@@ -155,6 +157,11 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
   setActiveMessageBoard = (messageBoard: string): void => {
     this.setState({
       activeMessageBoard: messageBoard
+    })
+  }
+  setActiveCourseActivity = (courseActivity: string): void => {
+    this.setState({
+      activeCourseActivity: courseActivity
     })
   }
   updateTriadUsers = async (index: number, value: any): Promise<void> => {
@@ -564,7 +571,8 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
             setEditMode: this.setEditMode,
             updateTriadCoaches: this.updateTriadCoaches,
             updateTriadUsers: this.updateTriadUsers,
-            setActiveMessageBoard: this.setActiveMessageBoard
+            setActiveMessageBoard: this.setActiveMessageBoard,
+            setActiveCourseActivity: this.setActiveCourseActivity
           }
         }}>
           <StyleProvider style={getTheme()}>
