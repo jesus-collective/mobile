@@ -355,7 +355,11 @@ export default class MyGroups extends JCComponent<Props, State> {
   openSingle(id: string): void {
     console.log({ "Navigate to": this.state.openSingle })
     // console.log(id)
-    this.props.navigation.push(this.state.openSingle, { id: id, create: false })
+    if (this.state.openSingle == "CourseOverviewScreen" && this.canLeave(id))
+      this.props.navigation.push("CourseHomeScreen", { id: id, create: false })
+    else
+      this.props.navigation.push(this.state.openSingle, { id: id, create: false })
+
   }
   createSingle(): void {
     console.log({ "Navigate to": this.state.openSingle })
@@ -615,8 +619,9 @@ export default class MyGroups extends JCComponent<Props, State> {
       </CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitleGroup}>{item.name}</Text></CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetail}>Last Updated: {item.lastupdated}</Text></CardItem>
-      {true ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Course") }}>Join</JCButton><Right></Right></CardItem> : null}
-      {false ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.leave(item, "Course") }}>Leave</JCButton><Right></Right></CardItem> : null}
+      {this.canJoin(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Course") }}>Join</JCButton><Right></Right></CardItem> : null}
+      {this.canLeave(item.id) && !this.isOwner(item.id) ? <CardItem ><Text>Member</Text><Right></Right></CardItem> : null}
+      {this.isOwner(item.id) ? <CardItem ><Text>Owner</Text><Right></Right></CardItem> : null}
     </Card>
   }
   filterMy = (item: any): boolean => {
