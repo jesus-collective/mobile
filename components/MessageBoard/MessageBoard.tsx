@@ -413,7 +413,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                   <CardItem style={this.styles.style.eventPageMessageBoard}>
                     <Left style={this.styles.style.eventPageMessageBoardLeft}>
                       <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
-                        <ProfileImage size="small" user={item.owner ? item.owner : null}></ProfileImage>
+                        <ProfileImage size="small2" user={item.owner ? item.owner : null}></ProfileImage>
                       </TouchableOpacity>
                       <Body>
                         <Text style={this.styles.style.groupFormName}>
