@@ -464,8 +464,8 @@ export default class CourseScreen extends JCComponent<Props, State>{
                     <EditableDate type="date"
                       onChange={(time: any, timeZone: any) => { this.updateValue("time", time); this.updateValue("tz", timeZone) }}
                       placeholder="Enter Course Start Date"
-                      multiline={false}
-                      textStyle={this.styles.style.courseDateInput} inputStyle={this.styles.style.courseDescriptionInput}
+                      textStyle={this.styles.style.courseDateInput}
+                      inputStyle={this.styles.style.courseDescriptionInput}
                       value={this.state.data.time}
                       tz={this.state.data.tz ? this.state.data.tz : moment.tz.guess()}
                       isEditable={this.state.isEditable}></EditableDate>

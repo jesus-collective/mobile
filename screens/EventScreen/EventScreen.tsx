@@ -405,7 +405,6 @@ export default class EventScreen extends JCComponent<Props, State>{
                         type="datetime"
                         onChange={(time: any, timeZone: any) => { this.updateValue("time", time); this.updateValue("tz", timeZone) }}
                         placeholder="Enter Event Time"
-                        multiline={false}
                         textStyle={this.styles.style.eventDateInput}
                         inputStyle={this.styles.style.eventDateInput}
                         value={this.state.data.time}
@@ -415,7 +414,6 @@ export default class EventScreen extends JCComponent<Props, State>{
                         type="datetime"
                         onChange={(time: any, timeZone: any) => { this.updateValue("time", time); this.updateValue("tz", timeZone) }}
                         placeholder="Enter Event Time"
-                        multiline={false}
                         textStyle={this.styles.style.eventDateInput}
                         inputStyle={this.styles.style.eventDateInput}
                         value={this.state.data.time}
