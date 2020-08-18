@@ -2,7 +2,7 @@ import { Content, Left, Right, Body, StyleProvider, Container, Card, CardItem, B
 import * as React from 'react';
 import { Text, View, TextInput } from 'react-native'
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
-
+import ReactTooltip from "react-tooltip";
 import getTheme from '../../native-base-theme/components';
 import { TouchableOpacity } from 'react-native'
 import { CreateMessageInput, CreateDirectMessageInput } from '../../src/API'
@@ -410,6 +410,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             {this.props.groupId && this.state.data.items.map((item: any) => {
               return (
                 <Card key={item.id} style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }}>
+                  {this.props.style == "regular" ? 
                   <CardItem style={this.styles.style.eventPageMessageBoard}>
                     <Left style={this.styles.style.eventPageMessageBoardLeft}>
                       <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
@@ -427,7 +428,24 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                     <Right>
                       <Text style={this.styles.style.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
                     </Right>
-                  </CardItem>
+                  </CardItem> : 
+                  <CardItem style={this.styles.style.eventPageMessageBoard}>
+                  <Left style={this.styles.style.coursePageMessageBoardLeftMini}>
+                    <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
+                      <ProfileImage size="small2" user={item.owner ? item.owner : null}></ProfileImage>
+                    </TouchableOpacity>
+                  </Left>
+                  <Right style={{ flexDirection: "column", flex: 7, alignItems: "flex-start" }}>
+                      <Text style={this.styles.style.groupFormName}>
+                        {item.author != null ? item.author.given_name : null} {item.author != null ? item.author.family_name : null}
+                      </Text>
+                      {/* <Text style={this.styles.style.groupFormRole}>
+                        {item.author != null ? item.author.currentRole : null}
+                      </Text> */}
+                    <Text style={this.styles.style.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
+                  </Right>
+                </CardItem>
+                  }
                   <CardItem style={this.styles.style.eventPageMessageBoardInnerCard}>
 
                     <div id="comment-div">
