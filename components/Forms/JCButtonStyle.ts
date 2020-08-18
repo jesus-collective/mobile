@@ -535,6 +535,26 @@ export default EStyleSheet.create({
         padding: 0,
         fontWeight: "bold"
     },
+    TransparentActivityCourseButton: {
+        marginBottom: 20,
+        paddingTop: 0,
+        paddingBottom: 0,
+        marginLeft: 0,
+        marginRight: 20,
+        backgroundColor: "#ffffff00",
+        borderWidth: 0,
+        borderColor: "#ffffff00",
+        boxShadow: "unset",
+        alignSelf: "flex-start"
+    },
+    TransparentActivityCourseText: {
+        color: "#F0493E",
+        fontFamily: 'Graphik-Bold-App',
+        fontSize: 20,
+        lineHeight: 25,
+        padding: 0,
+        fontWeight: "bold"
+    },
     EditButtonButton: {
         paddingTop: 0,
         paddingBottom: 0,
@@ -556,7 +576,7 @@ export default EStyleSheet.create({
         paddingLeft: 16,
         paddingRight: 16,
     },
-    courseTransparentBoldBlackButton:
+    courseTransparentRegularBlackButton:
     {
         paddingTop: 10,
         paddingBottom: 10,
@@ -570,12 +590,33 @@ export default EStyleSheet.create({
         borderColor: "#ffffff",
         boxShadow: "unset"
     },
-    courseTransparentBoldBlackText: {
+    courseTransparentRegularBlackText: {
         color: "#000000",
         fontFamily: 'Graphik-Regular-App',
         fontSize: 20,
         lineHeight: 25,
         padding: 10,
+    },
+    courseActivityTransparentRegularBlackButton:
+    {
+        paddingTop: 10,
+        paddingBottom: 10,
+
+        marginBottom: 20,
+        marginLeft: 0,
+        marginRight: 20,
+        //  color:"#ffffff",
+        backgroundColor: "#ffffff",
+        borderWidth: 0,
+        borderColor: "#ffffff",
+        boxShadow: "unset"
+    },
+    courseActivityTransparentRegularBlackText: {
+        color: "#000000",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 20,
+        lineHeight: 25,
+        padding: 0,
     },
     TransparentBoldBlackButton:
     {
