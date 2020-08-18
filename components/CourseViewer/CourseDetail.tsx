@@ -1,5 +1,5 @@
 ﻿import React, { lazy } from 'react';
-import { StyleProvider, Card, Container, Content, Picker, Icon } from 'native-base';
+import { StyleProvider, Card, CardItem, Container, Content, Picker, Icon } from 'native-base';
 import { Text } from 'react-native'
 import JCButton, { ButtonTypes } from '../Forms/JCButton'
 
@@ -53,7 +53,7 @@ class CourseDetailImpl extends JCComponent<Props>{
               textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupNameInput}
               value={week.date}
               tz={week.tz ? week.tz : moment.tz.guess()}
-              isEditable={this.state.isEditable && state.editMode}></EditableDate>
+              isEditable={state.isEditable && state.editMode}></EditableDate>
             <Text>{week.date}</Text>
 
             <EditableText onChange={(e) => { actions.updateWeek(state.activeWeek, "leader", e) }}
@@ -66,8 +66,8 @@ class CourseDetailImpl extends JCComponent<Props>{
             {week.lessons?.items?.map((item: any, lesson: number) => {
               return (
                 <TouchableOpacity key={lesson} onPress={() => { actions.setActiveLesson(lesson) }}>
-                  <Card style={{ minHeight: "40px", maxHeight: "100px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 50, paddingRight: 30, paddingBottom: 50, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 30, marginTop: 30 }}>
-                    <Container style={{ flexDirection: "row" }}>
+                  <Card style={{ minHeight: "40px", maxHeight: "200px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 10, paddingRight: 30, paddingBottom: 10, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 10, marginTop: 10 }}>
+                    <Container style={{ flexDirection: "row", minHeight: "40px", maxHeight: "90px" }}>
                       <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 35, alignSelf: 'center' }}>MON</Text>
                       <Container style={{ flexDirection: "column", height: "70px", alignSelf: 'center' }}>
 
@@ -139,6 +139,43 @@ class CourseDetailImpl extends JCComponent<Props>{
                         : null
                       }
                     </Container>
+                    <>
+                      {{
+                        'assignment': (<Text>Due date:  <EditableDate type="date"
+                          onChange={(time: any, timeZone: any) => { actions.updateLesson(state.activeWeek, lesson, "time", time); actions.updateLesson(state.activeWeek, lesson, "tz", timeZone) }}
+                          placeholder="Enter Assignment Due Date"
+                          multiline={false}
+                          textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupNameInput}
+                          value={item.time}
+                          tz={item.tz ? item.tz : moment.tz.guess()}
+                          isEditable={state.isEditable && state.editMode}></EditableDate></Text>),
+                        'respond': (<Text>Response date:   <EditableDate type="date"
+                          onChange={(time: any, timeZone: any) => { actions.updateLesson(state.activeWeek, lesson, "time", time); actions.updateLesson(state.activeWeek, lesson, "tz", timeZone) }}
+                          placeholder="Enter Response Due Date"
+                          multiline={false}
+                          textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupNameInput}
+                          value={item.time}
+                          tz={item.tz ? item.tz : moment.tz.guess()}
+                          isEditable={state.isEditable && state.editMode}></EditableDate></Text>),
+                        'zoom': (<Text>Zoom time: <EditableDate type="date"
+                          onChange={(time: any, timeZone: any) => { actions.updateLesson(state.activeWeek, lesson, "time", time); actions.updateLesson(state.activeWeek, lesson, "tz", timeZone) }}
+                          placeholder="Enter Zoom Date/Time"
+                          multiline={false}
+                          textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupNameInput}
+                          value={item.time}
+                          tz={item.tz ? item.tz : moment.tz.guess()}
+                          isEditable={state.isEditable && state.editMode}></EditableDate></Text>)
+                      }[item.lessonType] || (<Text>Zoom time:   <EditableDate type="date"
+                        onChange={(time: any, timeZone: any) => { actions.updateLesson(state.activeWeek, lesson, "time", time); actions.updateLesson(state.activeWeek, lesson, "tz", timeZone) }}
+                        placeholder="Enter Zoom Date/Time"
+                        multiline={false}
+                        textStyle={this.styles.style.fontRegular} inputStyle={this.styles.style.groupNameInput}
+                        value={item.time}
+                        tz={item.tz ? item.tz : moment.tz.guess()}
+                        isEditable={state.isEditable && state.editMode}></EditableDate></Text>)
+                      }
+                    </>
+
                   </Card>
                 </TouchableOpacity>
               )

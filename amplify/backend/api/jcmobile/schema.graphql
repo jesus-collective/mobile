@@ -64,7 +64,7 @@ type User
   coachingTriad:[CourseTriadCoaches] @connection(name:"courseCoachTriad",keyField: "userID")
   userTriad:[CourseTriadUsers] @connection(name:"courseUserTriad",keyField: "userID")
 
-  completions: [CourseLessonCompletion] @connection(name:"courseUserCompletions",keyField: "courseUserID",sortField:"courseLessonID")
+  completions: [CourseLessonCompletion] @connection(name:"courseUserCompletions",keyField: "userID",sortField:"courseLessonID")
 
   alertConfig:AlertConfig
 }

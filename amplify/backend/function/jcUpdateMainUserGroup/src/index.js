@@ -183,7 +183,7 @@ query ListUsers(
       }
     })
     console.log("Done config")
-    await Amplify.Auth.signIn("george.bell@themeetinghouse.com", "Tacobell#1")
+    await Amplify.Auth.signIn("george.bell@themeetinghouse.com", "")
     console.log("Done login")
     currentSession = await Amplify.Auth.currentSession()
 
