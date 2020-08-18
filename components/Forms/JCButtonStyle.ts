@@ -530,8 +530,30 @@ export default EStyleSheet.create({
     TransparentCourseText: {
         color: "#F0493E",
         fontFamily: 'Graphik-Bold-App',
-        fontSize: 16,
-        padding: 5
+        fontSize: 20,
+        lineHeight: 25,
+        padding: 0,
+        fontWeight: "bold"
+    },
+    TransparentActivityCourseButton: {
+        marginBottom: 20,
+        paddingTop: 0,
+        paddingBottom: 0,
+        marginLeft: 0,
+        marginRight: 20,
+        backgroundColor: "#ffffff00",
+        borderWidth: 0,
+        borderColor: "#ffffff00",
+        boxShadow: "unset",
+        alignSelf: "flex-start"
+    },
+    TransparentActivityCourseText: {
+        color: "#F0493E",
+        fontFamily: 'Graphik-Bold-App',
+        fontSize: 20,
+        lineHeight: 25,
+        padding: 0,
+        fontWeight: "bold"
     },
     EditButtonButton: {
         paddingTop: 0,
@@ -553,6 +575,48 @@ export default EStyleSheet.create({
         fontSize: 16,
         paddingLeft: 16,
         paddingRight: 16,
+    },
+    courseTransparentRegularBlackButton:
+    {
+        paddingTop: 10,
+        paddingBottom: 10,
+
+        marginBottom: 20,
+        marginLeft: 10,
+        marginRight: 10,
+        //  color:"#ffffff",
+        backgroundColor: "#ffffff",
+        borderWidth: 0,
+        borderColor: "#ffffff",
+        boxShadow: "unset"
+    },
+    courseTransparentRegularBlackText: {
+        color: "#000000",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 20,
+        lineHeight: 25,
+        padding: 10,
+    },
+    courseActivityTransparentRegularBlackButton:
+    {
+        paddingTop: 10,
+        paddingBottom: 10,
+
+        marginBottom: 20,
+        marginLeft: 0,
+        marginRight: 20,
+        //  color:"#ffffff",
+        backgroundColor: "#ffffff",
+        borderWidth: 0,
+        borderColor: "#ffffff",
+        boxShadow: "unset"
+    },
+    courseActivityTransparentRegularBlackText: {
+        color: "#000000",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 20,
+        lineHeight: 25,
+        padding: 0,
     },
     TransparentBoldBlackButton:
     {

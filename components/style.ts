@@ -866,6 +866,10 @@ export default class MainStyles {
             eventPageMessageBoardLeft: {
                 alignSelf: "center"
             },
+            coursePageMessageBoardLeftMini: {
+                alignSelf: "center",
+                flex: 3
+            },
             eventsScreenLeftContainer: {
                 flex: 70,
                 flexDirection: "column",
