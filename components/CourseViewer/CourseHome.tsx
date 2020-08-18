@@ -284,7 +284,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                             <JCButton buttonType={state.activeCourseActivity == "thisweek" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveCourseActivity("thisweek") }}>This Week</JCButton>
                           </Container>
 
-                          <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginTop: 30 }}>Adam posted assignement to review</Text>
+                          <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginTop: 15 }}>Adam posted assignement to review</Text>
                         </Container>
 
                       </Container>
