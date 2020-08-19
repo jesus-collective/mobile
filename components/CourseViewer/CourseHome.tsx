@@ -278,7 +278,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                             }}
                           />
                           <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 50, width: '90%' }}>Course Activity</Text>
-                          <Container style={{ flex: 5, flexDirection: "row", marginTop: 30, borderBottom: '1px solid #333333', width: '90%', paddingBottom: 60 }}>
+                          <Container style={{ flex: 5, flexDirection: "row", marginTop: 30, borderBottom: '1px solid #333333', width: '90%', paddingBottom: 50 }}>
                             <JCButton buttonType={state.activeCourseActivity == "today" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveCourseActivity("today") }}>Today</JCButton>
                             <JCButton buttonType={state.activeCourseActivity == "yesterday" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveCourseActivity("yesterday") }}>Yesterday</JCButton>
                             <JCButton buttonType={state.activeCourseActivity == "thisweek" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveCourseActivity("thisweek") }}>This Week</JCButton>
