@@ -132,7 +132,7 @@ export default class EditableDate extends JCComponent<Props> {
                 )
         }
         else
-            return <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', width: '90%', marginBottom: 20, marginTop: 20 }}>
+            return <Text style={{ fontSize: 16, lineHeight: 26, fontFamily: 'Graphik-Regular-App', width: '90%', marginBottom: 20, marginTop: 20 }}>
                 {moment.tz(this.props.value, this.props.tz).format('dddd, MMMM D, YYYY @ h:mm a')}
                     &nbsp;
                 {moment.tz.zone(this.props.tz).abbr(+moment(this.props.value).format('x'))}

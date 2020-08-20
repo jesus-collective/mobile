@@ -69,7 +69,7 @@ class CourseDetailImpl extends JCComponent<Props>{
                   <Card style={{ minHeight: "40px", maxHeight: "200px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 10, paddingRight: 30, paddingBottom: 10, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 10, marginTop: 10 }}>
                     <Container style={{ flexDirection: "row", minHeight: "40px", maxHeight: "90px" }}>
                       <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 35, alignSelf: 'center' }}>MON</Text>
-                      <Container style={{ flexDirection: "column", height: "70px", alignSelf: 'center' }}>
+                      <Container style={{ flexDirection: "column", height: "110px", alignSelf: 'center' }}>
 
                         <EditableText onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "name", e) }}
                           placeholder="Title" multiline={true}
@@ -129,6 +129,45 @@ class CourseDetailImpl extends JCComponent<Props>{
                                 source={require('../../assets/svg/document.svg')} />Zoom</Text>)
                           }
                         </Container>
+                        <Container style={{ flexDirection: "row" }}>
+                          <>
+                          {{
+                            'assignment': (<Text style={{ fontSize: 16, lineHeight: 26, fontFamily: 'Graphik-Bold-App', alignSelf: 'flex-start' }}>Due date:  <EditableDate type="datetime"
+                              onChange={(time: any, timeZone: any) => { actions.updateLesson(state.activeWeek, lesson, "time", time); actions.updateLesson(state.activeWeek, lesson, "tz", timeZone) }}
+                              placeholder="Enter Assignment Due Date/Time"
+                              textStyle={this.styles.style.fontRegular}
+                              inputStyle={this.styles.style.groupNameInput}
+                              value={item.time}
+                              tz={item.tz ? item.tz : moment.tz.guess()}
+                              isEditable={state.isEditable && state.editMode}></EditableDate></Text>),
+                            'respond': (<Text>Response date:   <EditableDate type="datetime"
+                              onChange={(time: any, timeZone: any) => { actions.updateLesson(state.activeWeek, lesson, "time", time); actions.updateLesson(state.activeWeek, lesson, "tz", timeZone) }}
+                              placeholder="Enter Response Due Date/Time"
+                              textStyle={this.styles.style.fontRegular}
+                              inputStyle={this.styles.style.groupNameInput}
+                              value={item.time}
+                              tz={item.tz ? item.tz : moment.tz.guess()}
+                              isEditable={state.isEditable && state.editMode}></EditableDate></Text>),
+                            'zoom': (<Text style={{ fontSize: 16, lineHeight: 26, fontFamily: 'Graphik-Bold-App', alignSelf: 'flex-start' }}>Zoom time: <EditableDate type="datetime"
+                              onChange={(time: any, timeZone: any) => { actions.updateLesson(state.activeWeek, lesson, "time", time); actions.updateLesson(state.activeWeek, lesson, "tz", timeZone) }}
+                              placeholder="Enter Zoom Date/Time"
+                              textStyle={this.styles.style.fontRegular}
+                              inputStyle={this.styles.style.groupNameInput}
+                              value={item.time}
+                              tz={item.tz ? item.tz : moment.tz.guess()}
+                              isEditable={state.isEditable && state.editMode}></EditableDate></Text>)
+                          }[item.lessonType] || (<Text style={{ fontSize: 16, lineHeight: 26, fontFamily: 'Graphik-Bold-App', alignSelf: 'flex-start' }}>Zoom time:   <EditableDate type="datetime"
+                            onChange={(time: any, timeZone: any) => { actions.updateLesson(state.activeWeek, lesson, "time", time); actions.updateLesson(state.activeWeek, lesson, "tz", timeZone) }}
+                            placeholder="Enter Zoom Date/Time"
+                            textStyle={this.styles.style.fontRegular}
+                            inputStyle={this.styles.style.groupNameInput}
+                            value={item.time}
+                            tz={item.tz ? item.tz : moment.tz.guess()}
+                            isEditable={state.isEditable && state.editMode}></EditableDate></Text>)
+                          }
+                          </>
+                        </Container>
+
                       </Container>
                       <Text style={{ fontSize: 12, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#FFF', marginLeft: 30, marginRight: 15, paddingLeft: 10, paddingRight: 10, textTransform: 'uppercase', backgroundColor: '#71C209', borderRadius: 50, height: 20, alignSelf: 'center' }}>Completed</Text>
                       <Text style={{ alignSelf: 'center' }}><Image style={{ width: "30px", height: "30px" }} source={require('../../assets/svg/checkmark.svg')} /></Text>
@@ -139,43 +178,6 @@ class CourseDetailImpl extends JCComponent<Props>{
                         : null
                       }
                     </Container>
-                    <>
-                      {{
-                        'assignment': (<Text>Due date:  <EditableDate type="datetime"
-                          onChange={(time: any, timeZone: any) => { actions.updateLesson(state.activeWeek, lesson, "time", time); actions.updateLesson(state.activeWeek, lesson, "tz", timeZone) }}
-                          placeholder="Enter Assignment Due Date/Time"
-                          textStyle={this.styles.style.fontRegular}
-                          inputStyle={this.styles.style.groupNameInput}
-                          value={item.time}
-                          tz={item.tz ? item.tz : moment.tz.guess()}
-                          isEditable={state.isEditable && state.editMode}></EditableDate></Text>),
-                        'respond': (<Text>Response date:   <EditableDate type="datetime"
-                          onChange={(time: any, timeZone: any) => { actions.updateLesson(state.activeWeek, lesson, "time", time); actions.updateLesson(state.activeWeek, lesson, "tz", timeZone) }}
-                          placeholder="Enter Response Due Date/Time"
-                          textStyle={this.styles.style.fontRegular}
-                          inputStyle={this.styles.style.groupNameInput}
-                          value={item.time}
-                          tz={item.tz ? item.tz : moment.tz.guess()}
-                          isEditable={state.isEditable && state.editMode}></EditableDate></Text>),
-                        'zoom': (<Text>Zoom time: <EditableDate type="datetime"
-                          onChange={(time: any, timeZone: any) => { actions.updateLesson(state.activeWeek, lesson, "time", time); actions.updateLesson(state.activeWeek, lesson, "tz", timeZone) }}
-                          placeholder="Enter Zoom Date/Time"
-                          textStyle={this.styles.style.fontRegular}
-                          inputStyle={this.styles.style.groupNameInput}
-                          value={item.time}
-                          tz={item.tz ? item.tz : moment.tz.guess()}
-                          isEditable={state.isEditable && state.editMode}></EditableDate></Text>)
-                      }[item.lessonType] || (<Text>Zoom time:   <EditableDate type="datetime"
-                        onChange={(time: any, timeZone: any) => { actions.updateLesson(state.activeWeek, lesson, "time", time); actions.updateLesson(state.activeWeek, lesson, "tz", timeZone) }}
-                        placeholder="Enter Zoom Date/Time"
-                        textStyle={this.styles.style.fontRegular}
-                        inputStyle={this.styles.style.groupNameInput}
-                        value={item.time}
-                        tz={item.tz ? item.tz : moment.tz.guess()}
-                        isEditable={state.isEditable && state.editMode}></EditableDate></Text>)
-                      }
-                    </>
-
                   </Card>
                 </TouchableOpacity>
               )
