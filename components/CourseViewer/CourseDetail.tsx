@@ -60,7 +60,7 @@ class CourseDetailImpl extends JCComponent<Props>{
               placeholder="Lesson Leader" multiline={false}
               data-testid="course-lessonTitle"
               textStyle={this.styles.style.fontFormSmallDarkGrey}
-              inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 15, marginBottom: 60, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
+              inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 110, marginBottom: 30, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
               value={week.leader} isEditable={state.isEditable && state.editMode}></EditableText>
 
             {week.lessons?.items?.map((item: any, lesson: number) => {
