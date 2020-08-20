@@ -66,7 +66,7 @@ class CourseDetailImpl extends JCComponent<Props>{
             {week.lessons?.items?.map((item: any, lesson: number) => {
               return (
                 <TouchableOpacity key={lesson} onPress={() => { actions.setActiveLesson(lesson) }}>
-                  <Card style={{ minHeight: "40px", maxHeight: "200px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 10, paddingRight: 30, paddingBottom: 10, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 10, marginTop: 10 }}>
+                  <Card style={state.isEditable && state.editMode ? { minHeight: "40px", maxHeight: "200px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 30, paddingRight: 30, paddingBottom: 60, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 10, marginTop: 10 } : { minHeight: "40px", maxHeight: "200px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 10, paddingRight: 30, paddingBottom: 10, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 10, marginTop: 10 }}>
                     <Container style={{ flexDirection: "row", minHeight: "40px", maxHeight: "110px" }}>
                       <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 25, alignSelf: 'center' }}>MON</Text>
                       <Container style={{ flexDirection: "column", height: "110px", alignSelf: 'center' }}>
@@ -129,7 +129,7 @@ class CourseDetailImpl extends JCComponent<Props>{
                                 source={require('../../assets/svg/document.svg')} />Zoom</Text>)
                           }
                         </Container>
-                        <Container style={{ flexDirection: "row" }}>
+                        <Container style={state.isEditable && state.editMode ? { flexDirection: "row", marginTop: 10 } : { flexDirection: "row" }}>
                           <>
                           {{
                             'assignment': (<Text style={{ fontSize: 16, lineHeight: 26, fontFamily: 'Graphik-Bold-App', alignSelf: 'flex-start' }}>Due date:  <EditableDate type="datetime"
