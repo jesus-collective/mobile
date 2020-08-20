@@ -73,7 +73,7 @@ export default class EditableDate extends JCComponent<Props> {
         if (this.props.isEditable) {
             if (this.props.type == 'datetime')
                 return (
-                    <Container style={{ maxHeight: 100 }}>
+                    <Container style={{ maxHeight: 30 }}>
                         <ThemeProvider theme={materialTheme}>
                             <KeyboardDateTimePicker
                                 variant="inline"
@@ -90,7 +90,7 @@ export default class EditableDate extends JCComponent<Props> {
                             />
                             <Picker
                                 mode="dropdown"
-                                style={{ width: "75%", marginBottom: 30, marginTop: 30, fontSize: 16, height: 30, flexGrow: 0 }}
+                                style={{ width: "75%", marginBottom: 12, marginTop: 12, fontSize: 16, height: 30, flexGrow: 0 }}
                                 selectedValue={this.props.tz}
                                 onValueChange={value => this.onTzChanged(value)}
                             >

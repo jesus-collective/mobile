@@ -67,8 +67,8 @@ class CourseDetailImpl extends JCComponent<Props>{
               return (
                 <TouchableOpacity key={lesson} onPress={() => { actions.setActiveLesson(lesson) }}>
                   <Card style={{ minHeight: "40px", maxHeight: "200px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 10, paddingRight: 30, paddingBottom: 10, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 10, marginTop: 10 }}>
-                    <Container style={{ flexDirection: "row", minHeight: "40px", maxHeight: "90px" }}>
-                      <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 35, alignSelf: 'center' }}>MON</Text>
+                    <Container style={{ flexDirection: "row", minHeight: "40px", maxHeight: "110px" }}>
+                      <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 25, alignSelf: 'center' }}>MON</Text>
                       <Container style={{ flexDirection: "column", height: "110px", alignSelf: 'center' }}>
 
                         <EditableText onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "name", e) }}
