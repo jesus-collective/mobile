@@ -74,7 +74,7 @@ class CourseDetailImpl extends JCComponent<Props>{
                         <EditableText onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "name", e) }}
                           placeholder="Title" multiline={true}
                           data-testid="course-lessonTitle"
-                          textStyle={this.styles.style.fontFormSmallDarkGrey}
+                          textStyle={this.styles.style.courseDetailHeading}
                           inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 0, marginBottom: 10, width: "100%", paddingTop: 5, paddingRight: 5, paddingBottom: 5, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, height: 30 }}
                           value={item.name} isEditable={state.isEditable && state.editMode}></EditableText>
 
