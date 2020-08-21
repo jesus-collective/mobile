@@ -424,7 +424,7 @@ export default class EventScreen extends JCComponent<Props, State>{
                   {this.state.isEditable ? <Picker
                     mode="dropdown"
                     iosIcon={<Icon name="arrow-down" />}
-                    style={{ width: "50%", marginBottom: 30, marginTop: 30, fontSize: 16, height: 30, flexGrow: 0 }}
+                    style={{ width: "50%", marginBottom: 30, marginTop: 55, fontSize: 16, height: 30, flexGrow: 0 }}
                     placeholder="Event type"
                     placeholderStyle={{ color: "#bfc6ea" }}
                     placeholderIconColor="#007aff"
