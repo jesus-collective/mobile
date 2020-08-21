@@ -1222,7 +1222,6 @@ export default class MainStyles {
                 boxShadow: "0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 marginTop: 30
             },
-
             dashboardConversationCardLeft: {
                 flexDirection: "row"
             },
@@ -1438,6 +1437,9 @@ export default class MainStyles {
                 flex: 80, 
                 height: 200, 
                 marginRight: 50
+            },
+            courseHomeSyllabusContainer: {
+                flexDirection: 'row',
             },
 
             // Media Query Desktop Tablet
@@ -1818,10 +1820,16 @@ export default class MainStyles {
                 },
                 animatedCircleContainerSideBar: {
                     marginTop: 40,
-                    flex: 0.25,
+                    flex: 0.2,
                 },
                 courseHomeMainTextContainer: {
                     marginRight: 0
+                },
+                courseHomeSyllabusContainer: {
+                    flex: 0.4,
+                },
+                courseConversationCard: {
+                    width: "50%",
                 },
             },
 

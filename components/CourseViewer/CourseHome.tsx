@@ -80,7 +80,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                     <Content contentContainerStyle={{ flex: 80 }} style={{ flex: 80 }}>
                       <Container style={{ flex: 80, display: "flex", flexDirection: "row", justifyContent: 'flex-start', paddingLeft: '5%' }}>
                         <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
-                          <Container style={{ flexDirection: 'row' }}>
+                          <Container style={this.styles.style.courseHomeSyllabusContainer}>
                             <Container style={{ flexDirection: 'column', marginTop: 30, flex: 20 }}>
                               <ProfileImage user={state.instructor} size='medium' style='my-people'>
                               </ProfileImage>
