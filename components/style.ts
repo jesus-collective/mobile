@@ -1449,6 +1449,16 @@ export default class MainStyles {
                 width: '90%', 
                 paddingBottom: 50
             },
+            courseHomeCalendar: {
+                width: '90%', 
+                borderColor: '#FFFFFF', 
+                paddingLeft: 60, 
+                paddingRight: 60, 
+                boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', 
+                marginTop: 15, 
+                paddingTop: 20, 
+                paddingBottom: 20
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -1841,6 +1851,11 @@ export default class MainStyles {
                 },
                 CourseHomeActivityContainer: {
                     flex: 0, 
+                },
+                courseHomeCalendar: {
+                    width: '85%', 
+                    paddingLeft: 20, 
+                    paddingRight: 20, 
                 },
             },
 

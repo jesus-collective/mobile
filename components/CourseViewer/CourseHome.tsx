@@ -267,7 +267,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                           </Card>
 
                           <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 50, width: '90%' }}>My Calendar</Text>
-                          <Calendar style={{ width: '90%', borderColor: '#FFFFFF', paddingLeft: 60, paddingRight: 60, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 15, paddingTop: 20, paddingBottom: 20 }}
+                          <Calendar style={this.styles.style.courseHomeCalendar}
                             // Collection of dates that have to be marked. Default = {}
                             current={'2020-05-01'}
                             markedDates={{
