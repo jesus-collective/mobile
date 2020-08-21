@@ -73,7 +73,7 @@ class CourseSidebarImpl extends JCComponent<Props> {
                             <JCButton buttonType={ButtonTypes.CourseSideBarFirst} onPress={this.openCourseHome}><Image style={ state.currentScreen == "Home" ? this.styles.style.courseSidebarNavIconActive : this.styles.style.courseSidebarNavIconInactive } source={require('../../assets/svg/home.svg')} /><Text style={state.currentScreen == "Home" ? this.styles.style.courseSidebarNavTextActive : this.styles.style.courseSidebarNavTextInactive}>Home</Text></JCButton>
                             <JCButton buttonType={ButtonTypes.CourseSideBar} onPress={this.openCourseDetails}><Image style={ state.currentScreen == "Details" ? this.styles.style.courseSidebarNavIconActive : this.styles.style.courseSidebarNavIconInactive } source={require('../../assets/svg/education.svg')} /><Text style={state.currentScreen == "Details" ? this.styles.style.courseSidebarNavTextActive : this.styles.style.courseSidebarNavTextInactive}>Course</Text></JCButton>
                             {/*  <JCButton buttonType={ButtonTypes.CourseSideBar} onPress={this.openCourseCoaching}><Image style={{ marginRight: 12, width: "30px", height: "30px", top: 6 }} source={require('../../assets/svg/calendar.svg')} /><Text style={this.styles.style.courseSidebarFontRegular}>Coaching</Text></JCButton>*/}
-                            <Container style={{ backgroundColor: "#00000000", alignSelf: 'center', marginTop: 75 }}>
+                            <Container style={this.styles.style.animatedCircleContainerSideBar}>
                                 <AnimatedProgressWheel
                                     size={120}
                                     width={10}

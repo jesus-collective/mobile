@@ -1425,6 +1425,15 @@ export default class MainStyles {
                 flexDirection: 'column',
                 justifyContent: 'flex-end'
             },
+            courseHeaderContainer: {
+                backgroundColor: "#F0493E", 
+                flex: 30
+            },
+            animatedCircleContainerSideBar: {
+                backgroundColor: "#00000000", 
+                alignSelf: 'center', 
+                marginTop: 75
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -1798,6 +1807,13 @@ export default class MainStyles {
                 },
                 courseSidebarNavIconInactive: {
                     marginRight: 8,
+                },
+                courseHeaderContainer: {
+                    flex: 14
+                },
+                animatedCircleContainerSideBar: {
+                    marginTop: 40,
+                    flex: 0.25,
                 },
             },
 

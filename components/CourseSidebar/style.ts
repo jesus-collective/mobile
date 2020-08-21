@@ -46,8 +46,7 @@ export default class HeaderStyles {
                 fontWeight: 'bold',
                 marginRight: 30
             },
-            logo:
-            {
+            logo: {
                 resizeMode: "stretch",
                 width: 126,
                 height: 33,
@@ -56,7 +55,6 @@ export default class HeaderStyles {
                 marginLeft: 35,
                 marginBottom: 10,
             },
-
              // Media Query Desktop Large Tablet
              '@media (min-width: 769) and (max-width: 1024)': {
                 logo: {
