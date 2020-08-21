@@ -1441,6 +1441,14 @@ export default class MainStyles {
             courseHomeSyllabusContainer: {
                 flexDirection: 'row',
             },
+            CourseHomeActivityContainer: {
+                flex: 5, 
+                flexDirection: "row", 
+                marginTop: 30, 
+                borderBottom: '1px solid #333333', 
+                width: '90%', 
+                paddingBottom: 50
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -1830,6 +1838,9 @@ export default class MainStyles {
                 },
                 courseConversationCard: {
                     width: "50%",
+                },
+                CourseHomeActivityContainer: {
+                    flex: 0, 
                 },
             },
 
