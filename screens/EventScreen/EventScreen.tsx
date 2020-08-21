@@ -344,7 +344,7 @@ export default class EventScreen extends JCComponent<Props, State>{
         {this.state.createNew ? <Text>Create as organization:</Text> : null}
         {this.state.createNew ? <Picker
           mode="dropdown"
-          style={{ width: "100%", marginBottom: 30, fontSize: 16, height: 30, flexGrow: 0 }}
+          style={{ width: "100%", marginTop: 10, marginBottom: 30, fontSize: 16, height: 30, flexGrow: 0, paddingTop: 3, paddingBottom: 3 }}
           selectedValue={this.state.data.ownerOrgID}
           onValueChange={(value: any) => { this.updateValue("ownerOrgID", value) }}
         >
