@@ -873,6 +873,7 @@ export default EStyleSheet.create({
         CourseSideBarFirstButton: {
             marginLeft: 0,
             marginRight: 0,
+            marginBottom: 10,
         },
         CourseSideBarButton: {
             marginLeft: 0,

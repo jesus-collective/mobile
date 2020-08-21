@@ -1462,6 +1462,11 @@ export default class MainStyles {
             courseHomeMainContainer: {
                 flex: 85,
             },
+            courseProfileImageButtonsContainer: {
+                flexDirection: 'column', 
+                marginTop: 30, 
+                flex: 20
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -1709,7 +1714,8 @@ export default class MainStyles {
                     textAlign: "center"
                 },
                 fontCourseHeaderBold: {
-                    fontSize: 80,
+                    fontSize: 45,
+                    lineHeight: 45,
                 },
                 fontResourceHeaderBold: {
                     fontSize: 70,
@@ -1752,7 +1758,13 @@ export default class MainStyles {
                 },
                 animatedCircleContainerSideBar: {
                     marginTop: 40,
-                    flex: 0.35,
+                    flex: 0.375,
+                },
+                courseHeaderContainer: {
+                    flex: 19,
+                },
+                courseHomeSyllabusContainer: {
+                    flexDirection: 'column',
                 },
             },
 
