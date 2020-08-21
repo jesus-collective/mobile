@@ -1750,6 +1750,10 @@ export default class MainStyles {
                 courseHomeMainContainer: {
                     flex: 80,
                 },
+                animatedCircleContainerSideBar: {
+                    marginTop: 40,
+                    flex: 0.35,
+                },
             },
 
             // Media Query Desktop Large Tablet
