@@ -58,12 +58,19 @@ export default class HeaderStyles {
              // Media Query Desktop Large Tablet
              '@media (min-width: 769) and (max-width: 1024)': {
                 logo: {
-                marginLeft: '13%',
-                width: 115, 
-                height: 30,
-                },
-             }
-
+                    marginLeft: '13%',
+                    width: 115, 
+                    height: 30,
+                    },
+             },
+              // Media Query Desktop Tablet
+            '@media (min-width: 350) and (max-width: 768)': {
+                logo: {
+                    marginLeft: '15%',
+                    width: 110 , 
+                    height: 29,
+                    },
+            },
         });
     }
 }

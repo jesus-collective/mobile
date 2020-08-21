@@ -74,7 +74,7 @@ class CourseHomeImpl extends JCComponent<Props>{
             state.data && state.currentScreen == "Home" ?
               <StyleProvider style={getTheme()}>
 
-                <Container style={{ flex: 85 }}>
+                <Container style={this.styles.style.courseHomeMainContainer}>
                   <CourseHeader groupData={state.data}></CourseHeader>
                   <Container style={{ flex: 80 }}>
                     <Content contentContainerStyle={{ flex: 80 }} style={{ flex: 80 }}>

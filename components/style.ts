@@ -1459,6 +1459,9 @@ export default class MainStyles {
                 paddingTop: 20, 
                 paddingBottom: 20
             },
+            courseHomeMainContainer: {
+                flex: 85,
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -1740,6 +1743,12 @@ export default class MainStyles {
                 },
                 resourceHeaderAgeGroupBox: {
                     width: "35%"
+                },
+                courseSideBar: {
+                    flex: 20,
+                },
+                courseHomeMainContainer: {
+                    flex: 80,
                 },
             },
 
