@@ -871,7 +871,7 @@ export default EStyleSheet.create({
             width: 130
         },
     },
-
+    // Media Query Mobile
     '@media (min-width: 320px) and (max-width: 480px)': {
         SolidRightMarginButton: {
             paddingLeft: 0,
@@ -932,4 +932,15 @@ export default EStyleSheet.create({
             justifyContent: "center"
         },
     },
+    // Media Query Desktop Large Tablet
+    '@media (min-width: 769) and (max-width: 1024)': {
+        CourseSideBarFirstButton: {
+            marginLeft: 0,
+            marginRight: 0,
+        },
+        CourseSideBarButton: {
+            marginLeft: 0,
+            marginRight: 0,
+        },
+    }
 })

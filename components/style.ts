@@ -1793,6 +1793,12 @@ export default class MainStyles {
                     height: 80,
                     paddingTop: 20
                 },
+                courseSidebarNavIconActive: {
+                    marginRight: 8,
+                },
+                courseSidebarNavIconInactive: {
+                    marginRight: 8,
+                },
             },
 
             '@media (min-width: 769px) and (max-width: 1279px)': {
