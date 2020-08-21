@@ -326,6 +326,9 @@ export default class MainStyles {
             fontFormSmallDarkGrey: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 26, color: "#333333", paddingTop: 12, width: "100%"
             },
+            courseDetailHeading: {
+                fontFamily: 'Graphik-Bold-App', fontSize: 20, lineHeight: 26, color: "#333333", paddingTop: 12
+            },
             fontFormSmallDarkGreyCourseTopEditable: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 26, color: "#333333", paddingTop: 30, width: "100%"
             },

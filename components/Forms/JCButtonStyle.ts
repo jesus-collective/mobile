@@ -550,7 +550,7 @@ export default EStyleSheet.create({
     TransparentActivityCourseText: {
         color: "#F0493E",
         fontFamily: 'Graphik-Bold-App',
-        fontSize: 20,
+        fontSize: 16,
         lineHeight: 25,
         padding: 0,
         fontWeight: "bold"
@@ -614,7 +614,7 @@ export default EStyleSheet.create({
     courseActivityTransparentRegularBlackText: {
         color: "#000000",
         fontFamily: 'Graphik-Regular-App',
-        fontSize: 20,
+        fontSize: 16,
         lineHeight: 25,
         padding: 0,
     },
