@@ -386,6 +386,10 @@ export default class MainStyles {
             myMapFontTitle: {
                 fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24, lineHeight: 30, height: 60, color: '#333333'
             },
+            groupsLoadMoreFont: {
+                fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 16, lineHeight: 24, height: '100%', color: '#333333'
+
+            },
             conversationsLoadMoreFont: {
                 fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 16, lineHeight: 24, height: '100%', color: '#ffffff'
             },
@@ -439,7 +443,7 @@ export default class MainStyles {
                 textAlign: "left",
                 color: "#FFFFFF",
                 marginBottom: 15,
-                marginLeft: "5%", 
+                marginLeft: "5%",
             },
             fontResourceHeaderBold: {
                 fontFamily: 'Graphik-Regular-App',
@@ -946,15 +950,17 @@ export default class MainStyles {
                 width: "100%",
                 flexDirection: "row",
                 justifyContent: "flex-start",
-                alignItems: "flex-start"
+                alignItems: "flex-start",
+                alignContent: "flex-start"
             },
             profileMyGroupsWrap: {
-                overflow: "scroll",
-                overflowY: "hidden",
-                minHeight: "100vw",
+                // overflowX: "scroll",
+                // overflowY: "hidden",
+                //minHeight: "100vw",
                 flexWrap: "wrap",
                 flexGrow: 1,
                 width: "100%",
+                //  height: "100%",
                 flexDirection: "row",
                 justifyContent: "flex-start",
                 alignItems: "flex-start"
@@ -1200,9 +1206,9 @@ export default class MainStyles {
                 borderStyle: "solid",
                 borderColor: "#FFFFFF",
                 width: "100%",
-                paddingRight: 30, 
+                paddingRight: 30,
                 paddingLeft: 30,
-                boxShadow: "0 6px 20px 0 rgba(0, 0, 0, 0.19)", 
+                boxShadow: "0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 marginTop: 30
             },
             courseConversationCard: {
@@ -1211,12 +1217,12 @@ export default class MainStyles {
                 borderStyle: "solid",
                 borderColor: "#FFFFFF",
                 width: "35%",
-                paddingRight: 30, 
+                paddingRight: 30,
                 paddingLeft: 30,
-                boxShadow: "0 6px 20px 0 rgba(0, 0, 0, 0.19)", 
+                boxShadow: "0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 marginTop: 30
             },
-            
+
             dashboardConversationCardLeft: {
                 flexDirection: "row"
             },
@@ -1237,7 +1243,7 @@ export default class MainStyles {
             },
             profilesCard: {
                 width: "100%",
-                minHeight: 50,
+                minHeight: "50px",
                 borderColor: "#ffffff"
             },
             sectionHeadingDashboard: {
@@ -1364,16 +1370,16 @@ export default class MainStyles {
                 opacity: 0.5
             },
             courseSidebarNavIconActive: {
-                marginRight: 12, 
-                width: "30px", 
-                height: "30px", 
-                top: 6, 
+                marginRight: 12,
+                width: "30px",
+                height: "30px",
+                top: 6,
             },
             courseSidebarNavIconInactive: {
-                marginRight: 12, 
-                width: "30px", 
-                height: "30px", 
-                top: 6, 
+                marginRight: 12,
+                width: "30px",
+                height: "30px",
+                top: 6,
                 opacity: 0.5
             },
             headerLeft: {
@@ -1407,16 +1413,16 @@ export default class MainStyles {
                 paddingLeft: 30
             },
             courseSideBar: {
-                flex: 15, 
-                backgroundColor: "#000000", 
+                flex: 15,
+                backgroundColor: "#000000",
                 height: '100vh'
             },
             courseDetailJCButtonRegular: {
-                flexDirection: 'row', 
+                flexDirection: 'row',
                 justifyContent: 'flex-end'
             },
             courseDetailJCButtonMini: {
-                flexDirection: 'column', 
+                flexDirection: 'column',
                 justifyContent: 'flex-end'
             },
 

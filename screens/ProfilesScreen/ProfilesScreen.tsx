@@ -42,7 +42,11 @@ export default class HomeScreen extends JCComponent<Props, State>{
           <MyMap type={"no-filters"} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
           <Container style={this.styles.style.profilesScreenMainContainer}>
             <Container style={this.styles.style.profilesScreenLeftContainer}>
-              <MyGroups showMore={true} type="profile" wrap={true} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
+              <MyGroups showMore={true}
+                type="profile"
+                wrap={true}
+                navigation={this.props.navigation}
+                onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
             </Container>
             {/*
             <Container style={this.styles.style.profilesScreensRightContainer}>

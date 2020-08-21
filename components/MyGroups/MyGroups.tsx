@@ -681,11 +681,28 @@ export default class MyGroups extends JCComponent<Props, State> {
                   }
                   {this.state.nextToken ?
                     this.props.showMore ?
-                      <TouchableOpacity style={{ top: 15, height: 80 }} onPress={() => { this.setInitialData(this.props) }} >
-                        <Card style={[this.styles.style.groupMoreCard, { width: this.state.cardWidth }]}>
-                          <CardItem style={{ backgroundColor: "none", alignItems: "center" }}  ><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.conversationsLoadMoreFont}>Load more...</Text></CardItem>
-                        </Card>
-                      </TouchableOpacity>
+                      this.state.type == "profile" ?
+                        <ListItem noBorder style={this.styles.style.conversationsCard} button onPress={() => { this.setInitialData(this.props) }}>
+
+                          <Card style={[this.styles.style.profilesCard, { width: this.state.cardWidth }]}>
+
+                            <CardItem style={this.styles.style.profileCard}  >
+                              <Text ellipsizeMode='tail' numberOfLines={3}
+                                style={this.styles.style.groupsLoadMoreFont}>Load more...</Text>
+                            </CardItem>
+                          </Card>
+                        </ListItem>
+                        :
+                        <TouchableOpacity style={{ top: 15, height: 80 }} onPress={() => { this.setInitialData(this.props) }} >
+                          <Card style={[this.styles.style.groupMoreCard, { width: this.state.cardWidth }]}>
+                            <CardItem style={{ backgroundColor: "none", alignItems: "center" }}
+                            ><Text
+                              ellipsizeMode='tail'
+                              numberOfLines={3}
+                              style={this.styles.style.groupsLoadMoreFont}>Load more...</Text>
+                            </CardItem>
+                          </Card>
+                        </TouchableOpacity>
                       : null
                     : null}
                 </Container>
