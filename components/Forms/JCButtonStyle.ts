@@ -943,5 +943,16 @@ export default EStyleSheet.create({
             marginLeft: 0,
             marginRight: 0,
         },
+        CourseHomeButton: {
+            paddingLeft: 5,
+            paddingRight: 5,
+        },
+        CourseTransparentBoldOrangeButton: {
+        marginLeft: 0,
+        marginRight: 0,
+        },
+        CourseTransparentBoldOrangeText: {
+            padding: 0,
+        },
     }
 })

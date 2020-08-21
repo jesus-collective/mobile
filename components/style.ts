@@ -1434,6 +1434,11 @@ export default class MainStyles {
                 alignSelf: 'center', 
                 marginTop: 75
             },
+            courseHomeMainTextContainer: {
+                flex: 80, 
+                height: 200, 
+                marginRight: 50
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -1814,6 +1819,9 @@ export default class MainStyles {
                 animatedCircleContainerSideBar: {
                     marginTop: 40,
                     flex: 0.25,
+                },
+                courseHomeMainTextContainer: {
+                    marginRight: 0
                 },
             },
 
