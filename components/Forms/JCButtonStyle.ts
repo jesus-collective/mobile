@@ -879,7 +879,11 @@ export default EStyleSheet.create({
             marginLeft: 0,
             marginRight: 0,
         },
-
+        CourseTransparentBoldOrangeButton: {
+            marginLeft: 0,
+            marginRight: 0,
+            justifyContent: 'center'
+        },
     },
     // Media Query Mobile
     '@media (min-width: 320px) and (max-width: 480px)': {

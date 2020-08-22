@@ -1467,6 +1467,26 @@ export default class MainStyles {
                 marginTop: 30, 
                 flex: 20
             },
+            courseHomeLeftContainer: {
+                flex: 70, 
+                flexDirection: "column", 
+                justifyContent: 'flex-start',
+            },
+            courseHomeRightContainer: {
+                flex: 30, 
+                flexDirection: "column", 
+                alignContent: 'flex-start', 
+                alignItems: 'flex-start', 
+                justifyContent: 'flex-start'
+            },
+            courseHomeDescriptionText: {
+                marginTop: 30, 
+                marginLeft: 30, 
+                marginRight: 30, 
+                fontFamily: 'Graphik-Regular-App', 
+                fontSize: 20, 
+                lineHeight: 30
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -1765,6 +1785,22 @@ export default class MainStyles {
                 },
                 courseHomeSyllabusContainer: {
                     flexDirection: 'column',
+                },
+                courseProfileImageButtonsContainer: {
+                    flex: 100,
+                    marginRight: 30,
+                },
+                courseHomeLeftContainer: {
+                    flex: 60, 
+                },
+                courseHomeRightContainer: {
+                    flex: 40, 
+                },
+                courseHomeMainTextContainer: {
+                    marginRight: 0,
+                },
+                courseHomeDescriptionText: {
+                    marginLeft: 0,
                 },
             },
 

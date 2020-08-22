@@ -79,7 +79,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                   <Container style={{ flex: 80 }}>
                     <Content contentContainerStyle={{ flex: 80 }} style={{ flex: 80 }}>
                       <Container style={{ flex: 80, display: "flex", flexDirection: "row", justifyContent: 'flex-start', paddingLeft: '5%' }}>
-                        <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
+                        <Container style={this.styles.style.courseHomeLeftContainer}>
                           <Container style={this.styles.style.courseHomeSyllabusContainer}>
                             <Container style={this.styles.style.courseProfileImageButtonsContainer}>
                               <ProfileImage user={state.instructor} size='medium' style='my-people'>
@@ -91,7 +91,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                               <JCButton onPress={() => { this.openConversation(state.instructor?.id, state.instructor?.given_name + " " + state.instructor?.family_name) }} buttonType={ButtonTypes.CourseTransparentBoldOrange}>Send Message</JCButton>
                             </Container>
                             <Container style={this.styles.style.courseHomeMainTextContainer}>
-                              <Text style={{ marginTop: 30, marginLeft: 30, marginRight: 30, fontFamily: 'Graphik-Regular-App', fontSize: 20, lineHeight: 30 }}>
+                              <Text style={this.styles.style.courseHomeDescriptionText}>
                                 {state.courseData ?
                                   <EditableRichText onChange={(val) => { actions.updateCourse("introduction", val) }}
                                     value={state.courseData.introduction}
@@ -102,7 +102,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                             </Container>
                           </Container>
 
-                          <Container style={{}}>
+                          <Container style={{ paddingTop: 40 }}>
                             <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 0, width: '90%' }}>Syllabus</Text>
                             <Card style={{ width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 30, paddingTop: 30, paddingBottom: 30 }}>
                               {state.courseData ?
@@ -259,7 +259,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                             }
                           </Container>
                         </Container>
-                        <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                        <Container style={this.styles.style.courseHomeRightContainer}>
 
                           <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30, width: '90%' }}>To-Do</Text>
                           <Card style={{ width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 15, paddingTop: 30, paddingBottom: 30 }}>
