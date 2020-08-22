@@ -1810,6 +1810,12 @@ export default class MainStyles {
                     paddingLeft: 10, 
                     paddingRight: 10, 
                 },
+                CourseHomeActivityContainer: {
+                    flexDirection: "column", 
+                    marginTop: 15, 
+                    paddingBottom: 25,
+                    flex: 0.75, 
+                },
             },
 
             // Media Query Desktop Large Tablet

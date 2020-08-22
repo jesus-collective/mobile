@@ -888,6 +888,12 @@ export default EStyleSheet.create({
            width: '50%',
            alignSelf: 'center',
         },
+        TransparentActivityCourseButton: {
+            marginBottom: 0,
+        },
+        courseActivityTransparentRegularBlackButton: {
+            marginBottom: 0,
+        },
     },
     // Media Query Mobile
     '@media (min-width: 320px) and (max-width: 480px)': {
