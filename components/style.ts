@@ -1802,6 +1802,9 @@ export default class MainStyles {
                 courseHomeDescriptionText: {
                     marginLeft: 0,
                 },
+                courseConversationCard: {
+                    width: "90%",
+                },
             },
 
             // Media Query Desktop Large Tablet
