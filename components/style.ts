@@ -1805,6 +1805,11 @@ export default class MainStyles {
                 courseConversationCard: {
                     width: "90%",
                 },
+                courseHomeCalendar: {
+                    width: '85%', 
+                    paddingLeft: 10, 
+                    paddingRight: 10, 
+                },
             },
 
             // Media Query Desktop Large Tablet
