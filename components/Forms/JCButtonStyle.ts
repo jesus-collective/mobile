@@ -884,6 +884,10 @@ export default EStyleSheet.create({
             marginRight: 0,
             justifyContent: 'center'
         },
+        CourseHomeButton: {
+           width: '50%',
+           alignSelf: 'center',
+        },
     },
     // Media Query Mobile
     '@media (min-width: 320px) and (max-width: 480px)': {
