@@ -22,6 +22,7 @@ export const CourseContext = React.createContext({
         setEditMode: null,
         updateTriadUsers: null,
         updateTriadCoaches: null,
+        updateInstructors: null,
         setActiveMessageBoard: null,
         setActiveCourseActivity: null
     }, state: null

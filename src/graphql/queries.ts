@@ -160,6 +160,16 @@ export const getUser = /* GraphQL */ `
         }
         nextToken
       }
+      courseInstructing {
+        items {
+          id
+          courseInfoID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       alertConfig {
         emailDirectMessage
         emailGroupMessage
@@ -250,6 +260,9 @@ export const listUsers = /* GraphQL */ `
           nextToken
         }
         completions {
+          nextToken
+        }
+        courseInstructing {
           nextToken
         }
         alertConfig {
@@ -343,6 +356,9 @@ export const getGroup = /* GraphQL */ `
           nextToken
         }
         completions {
+          nextToken
+        }
+        courseInstructing {
           nextToken
         }
         alertConfig {
@@ -938,7 +954,175 @@ export const getCourseInfo = /* GraphQL */ `
         nextToken
       }
       subTitle
-      instructor {
+      instructors {
+        items {
+          id
+          courseInfoID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      triads {
+        items {
+          id
+          courseInfoID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      introduction
+      sylabusAttachment
+      sylabusAttachmentName
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listCourseInfos = /* GraphQL */ `
+  query ListCourseInfos(
+    $filter: ModelCourseInfoFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCourseInfos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        designedBy
+        summary
+        courseWeeks {
+          nextToken
+        }
+        subTitle
+        instructors {
+          nextToken
+        }
+        triads {
+          nextToken
+        }
+        introduction
+        sylabusAttachment
+        sylabusAttachmentName
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getCourseTriads = /* GraphQL */ `
+  query GetCourseTriads($id: ID!) {
+    getCourseTriads(id: $id) {
+      id
+      courseInfoID
+      courseInfo {
+        id
+        designedBy
+        summary
+        courseWeeks {
+          nextToken
+        }
+        subTitle
+        instructors {
+          nextToken
+        }
+        triads {
+          nextToken
+        }
+        introduction
+        sylabusAttachment
+        sylabusAttachmentName
+        createdAt
+        updatedAt
+      }
+      coaches {
+        items {
+          id
+          triadID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      users {
+        items {
+          id
+          triadID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listCourseTriadss = /* GraphQL */ `
+  query ListCourseTriadss(
+    $filter: ModelCourseTriadsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCourseTriadss(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        courseInfoID
+        courseInfo {
+          id
+          designedBy
+          summary
+          subTitle
+          introduction
+          sylabusAttachment
+          sylabusAttachmentName
+          createdAt
+          updatedAt
+        }
+        coaches {
+          nextToken
+        }
+        users {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getCourseInstructors = /* GraphQL */ `
+  query GetCourseInstructors($id: ID!) {
+    getCourseInstructors(id: $id) {
+      id
+      courseInfoID
+      courseInfo {
+        id
+        designedBy
+        summary
+        courseWeeks {
+          nextToken
+        }
+        subTitle
+        instructors {
+          nextToken
+        }
+        triads {
+          nextToken
+        }
+        introduction
+        sylabusAttachment
+        sylabusAttachmentName
+        createdAt
+        updatedAt
+      }
+      userID
+      user {
         id
         given_name
         family_name
@@ -1009,6 +1193,9 @@ export const getCourseInfo = /* GraphQL */ `
         completions {
           nextToken
         }
+        courseInstructing {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -1021,173 +1208,22 @@ export const getCourseInfo = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      triads {
-        items {
-          id
-          courseInfoID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      introduction
-      sylabusAttachment
-      sylabusAttachmentName
       createdAt
       updatedAt
     }
   }
 `;
-export const listCourseInfos = /* GraphQL */ `
-  query ListCourseInfos(
-    $filter: ModelCourseInfoFilterInput
+export const listCourseInstructorss = /* GraphQL */ `
+  query ListCourseInstructorss(
+    $filter: ModelCourseInstructorsFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listCourseInfos(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        designedBy
-        summary
-        courseWeeks {
-          nextToken
-        }
-        subTitle
-        instructor {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          mainUserGroup
-          hasPaidState
-          profileState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          denomination
-          pplServed
-          sundayAttendance
-          numberVolunteers
-          orgDescription
-          joined
-          primaryOrganization
-          createdAt
-          updatedAt
-        }
-        triads {
-          nextToken
-        }
-        introduction
-        sylabusAttachment
-        sylabusAttachmentName
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getCourseTriads = /* GraphQL */ `
-  query GetCourseTriads($id: ID!) {
-    getCourseTriads(id: $id) {
-      id
-      courseInfoID
-      courseInfo {
-        id
-        designedBy
-        summary
-        courseWeeks {
-          nextToken
-        }
-        subTitle
-        instructor {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          mainUserGroup
-          hasPaidState
-          profileState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          denomination
-          pplServed
-          sundayAttendance
-          numberVolunteers
-          orgDescription
-          joined
-          primaryOrganization
-          createdAt
-          updatedAt
-        }
-        triads {
-          nextToken
-        }
-        introduction
-        sylabusAttachment
-        sylabusAttachmentName
-        createdAt
-        updatedAt
-      }
-      coaches {
-        items {
-          id
-          triadID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      users {
-        items {
-          id
-          triadID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listCourseTriadss = /* GraphQL */ `
-  query ListCourseTriadss(
-    $filter: ModelCourseTriadsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listCourseTriadss(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listCourseInstructorss(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
       items {
         id
         courseInfoID
@@ -1202,11 +1238,40 @@ export const listCourseTriadss = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        coaches {
-          nextToken
-        }
-        users {
-          nextToken
+        userID
+        user {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
         }
         createdAt
         updatedAt
@@ -1313,6 +1378,9 @@ export const getCourseTriadCoaches = /* GraphQL */ `
           nextToken
         }
         completions {
+          nextToken
+        }
+        courseInstructing {
           nextToken
         }
         alertConfig {
@@ -1494,6 +1562,9 @@ export const getCourseTriadUsers = /* GraphQL */ `
         completions {
           nextToken
         }
+        courseInstructing {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -1592,39 +1663,8 @@ export const getCourseWeek = /* GraphQL */ `
           nextToken
         }
         subTitle
-        instructor {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          mainUserGroup
-          hasPaidState
-          profileState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          denomination
-          pplServed
-          sundayAttendance
-          numberVolunteers
-          orgDescription
-          joined
-          primaryOrganization
-          createdAt
-          updatedAt
+        instructors {
+          nextToken
         }
         triads {
           nextToken
@@ -1907,6 +1947,9 @@ export const getCourseLessonCompletion = /* GraphQL */ `
         completions {
           nextToken
         }
+        courseInstructing {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -2149,6 +2192,9 @@ export const getDirectMessageUser = /* GraphQL */ `
         completions {
           nextToken
         }
+        courseInstructing {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -2386,6 +2432,9 @@ export const getDirectMessage = /* GraphQL */ `
         completions {
           nextToken
         }
+        courseInstructing {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -2560,6 +2609,9 @@ export const getMessage = /* GraphQL */ `
           nextToken
         }
         completions {
+          nextToken
+        }
+        courseInstructing {
           nextToken
         }
         alertConfig {
@@ -3889,6 +3941,9 @@ export const searchUsers = /* GraphQL */ `
           nextToken
         }
         completions {
+          nextToken
+        }
+        courseInstructing {
           nextToken
         }
         alertConfig {
