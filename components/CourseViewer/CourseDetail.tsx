@@ -296,7 +296,7 @@ class CourseDetailImpl extends JCComponent<Props>{
                         {this.renderWeekDetails(state, actions, week)}
                         {this.renderLessonDetails(state, actions, week)}
                         <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-                          <Container style={{ flex: 5, flexDirection: "row", marginTop: 30, borderBottom: '1px solid #333333', width: '95%', paddingBottom: 30 }}>
+                          <Container style={{ flex: 5, flexDirection: "row", marginTop: 30, borderBottom: '1px solid #333333', width: '95%', paddingBottom: 20 }}>
                             <JCButton buttonType={state.activeMessageBoard == "cohort" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("cohort") }}>Cohort</JCButton>
                             <JCButton buttonType={state.activeMessageBoard == "triad" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("triad") }}>Triad</JCButton>
                             <JCButton buttonType={state.activeMessageBoard == "instructor" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("instructor") }}>Instructor</JCButton>

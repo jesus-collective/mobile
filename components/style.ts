@@ -1222,7 +1222,6 @@ export default class MainStyles {
                 boxShadow: "0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 marginTop: 30
             },
-
             dashboardConversationCardLeft: {
                 flexDirection: "row"
             },
@@ -1424,6 +1423,69 @@ export default class MainStyles {
             courseDetailJCButtonMini: {
                 flexDirection: 'column',
                 justifyContent: 'flex-end'
+            },
+            courseHeaderContainer: {
+                backgroundColor: "#F0493E", 
+                flex: 30
+            },
+            animatedCircleContainerSideBar: {
+                backgroundColor: "#00000000", 
+                alignSelf: 'center', 
+                marginTop: 75
+            },
+            courseHomeMainTextContainer: {
+                flex: 80, 
+                height: 200, 
+                marginRight: 50
+            },
+            courseHomeSyllabusContainer: {
+                flexDirection: 'row',
+            },
+            CourseHomeActivityContainer: {
+                flex: 5, 
+                flexDirection: "row", 
+                marginTop: 30, 
+                borderBottom: '1px solid #333333', 
+                width: '90%', 
+                paddingBottom: 50
+            },
+            courseHomeCalendar: {
+                width: '90%', 
+                borderColor: '#FFFFFF', 
+                paddingLeft: 60, 
+                paddingRight: 60, 
+                boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', 
+                marginTop: 15, 
+                paddingTop: 20, 
+                paddingBottom: 20
+            },
+            courseHomeMainContainer: {
+                flex: 85,
+            },
+            courseProfileImageButtonsContainer: {
+                flexDirection: 'column', 
+                marginTop: 30, 
+                flex: 20
+            },
+            courseHomeLeftContainer: {
+                flex: 70, 
+                flexDirection: "column", 
+                justifyContent: 'flex-start',
+            },
+            courseHomeRightContainer: {
+                flex: 30, 
+                flexDirection: "column", 
+                alignContent: 'flex-start', 
+                alignItems: 'flex-start', 
+                justifyContent: 'flex-start'
+            },
+            courseHomeDescriptionText: {
+                marginTop: 30, 
+                marginLeft: 30, 
+                marginRight: 30, 
+                fontFamily: 'Graphik-Regular-App', 
+                fontSize: 20, 
+                lineHeight: 30
             },
 
             // Media Query Desktop Tablet
@@ -1672,7 +1734,8 @@ export default class MainStyles {
                     textAlign: "center"
                 },
                 fontCourseHeaderBold: {
-                    fontSize: 80,
+                    fontSize: 45,
+                    lineHeight: 45,
                 },
                 fontResourceHeaderBold: {
                     fontSize: 70,
@@ -1706,6 +1769,52 @@ export default class MainStyles {
                 },
                 resourceHeaderAgeGroupBox: {
                     width: "35%"
+                },
+                courseSideBar: {
+                    flex: 20,
+                },
+                courseHomeMainContainer: {
+                    flex: 80,
+                },
+                animatedCircleContainerSideBar: {
+                    marginTop: 40,
+                    flex: 0.375,
+                },
+                courseHeaderContainer: {
+                    flex: 19,
+                },
+                courseHomeSyllabusContainer: {
+                    flexDirection: 'column',
+                },
+                courseProfileImageButtonsContainer: {
+                    flex: 100,
+                    marginRight: 30,
+                },
+                courseHomeLeftContainer: {
+                    flex: 60, 
+                },
+                courseHomeRightContainer: {
+                    flex: 40, 
+                },
+                courseHomeMainTextContainer: {
+                    marginRight: 0,
+                },
+                courseHomeDescriptionText: {
+                    marginLeft: 0,
+                },
+                courseConversationCard: {
+                    width: "90%",
+                },
+                courseHomeCalendar: {
+                    width: '85%', 
+                    paddingLeft: 10, 
+                    paddingRight: 10, 
+                },
+                CourseHomeActivityContainer: {
+                    flexDirection: "column", 
+                    marginTop: 15, 
+                    paddingBottom: 25,
+                    flex: 0.75, 
                 },
             },
 
@@ -1792,6 +1901,36 @@ export default class MainStyles {
                     width: 700,
                     height: 80,
                     paddingTop: 20
+                },
+                courseSidebarNavIconActive: {
+                    marginRight: 8,
+                },
+                courseSidebarNavIconInactive: {
+                    marginRight: 8,
+                },
+                courseHeaderContainer: {
+                    flex: 14
+                },
+                animatedCircleContainerSideBar: {
+                    marginTop: 40,
+                    flex: 0.2,
+                },
+                courseHomeMainTextContainer: {
+                    marginRight: 0
+                },
+                courseHomeSyllabusContainer: {
+                    flex: 0.4,
+                },
+                courseConversationCard: {
+                    width: "50%",
+                },
+                CourseHomeActivityContainer: {
+                    flex: 0, 
+                },
+                courseHomeCalendar: {
+                    width: '85%', 
+                    paddingLeft: 20, 
+                    paddingRight: 20, 
                 },
             },
 

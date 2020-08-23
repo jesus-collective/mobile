@@ -77,15 +77,17 @@ class CourseHomeImpl extends JCComponent<Props>{
             state.data && state.currentScreen == "Home" ?
               <StyleProvider style={getTheme()}>
 
-                <Container style={{ flex: 85 }}>
+                <Container style={this.styles.style.courseHomeMainContainer}>
                   <CourseHeader groupData={state.data}></CourseHeader>
                   <Container style={{ flex: 80 }}>
                     <Content contentContainerStyle={{ flex: 80 }} style={{ flex: 80 }}>
                       <Container style={{ flex: 80, display: "flex", flexDirection: "row", justifyContent: 'flex-start', paddingLeft: '5%' }}>
-                        <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
-                          <Container style={{ flexDirection: 'row' }}>
-                            <Container style={{ flexDirection: 'column', marginTop: 30, flex: 20 }}>
+
+                        <Container style={this.styles.style.courseHomeLeftContainer}>
+                          <Container style={this.styles.style.courseHomeSyllabusContainer}>
+                            <Container style={this.styles.style.courseProfileImageButtonsContainer}>
                               <ProfileImage user={state.courseData?.instructors?.items[0]?.user} size='medium' style='my-people'>
+
                               </ProfileImage>
 
                               <Text style={this.styles.style.fontConnectWithName}>{state.courseData?.instructors?.items[0]?.user?.given_name} {state.courseData?.instructors?.items[0]?.user?.family_name}</Text>
@@ -93,8 +95,8 @@ class CourseHomeImpl extends JCComponent<Props>{
                               <JCButton onPress={() => { null }} buttonType={ButtonTypes.CourseHome}>Book a Call</JCButton>
                               <JCButton onPress={() => { this.openConversation(state.courseData?.instructors?.items[0]?.user?.id, state.courseData?.instructors?.items[0]?.user?.given_name + " " + state.courseData.instructors?.items[0]?.user?.family_name) }} buttonType={ButtonTypes.CourseTransparentBoldOrange}>Send Message</JCButton>
                             </Container>
-                            <Container style={{ flex: 80, height: 200, marginRight: 50 }}>
-                              <Text style={{ marginTop: 30, marginLeft: 30, marginRight: 30, fontFamily: 'Graphik-Regular-App', fontSize: 20, lineHeight: 30 }}>
+                            <Container style={this.styles.style.courseHomeMainTextContainer}>
+                              <Text style={this.styles.style.courseHomeDescriptionText}>
                                 {state.courseData ?
                                   <EditableRichText onChange={(val) => { actions.updateCourse("introduction", val) }}
                                     value={state.courseData.introduction}
@@ -105,7 +107,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                             </Container>
                           </Container>
 
-                          <Container style={{}}>
+                          <Container style={{ paddingTop: 40 }}>
                             <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 0, width: '90%' }}>Syllabus</Text>
                             <Card style={{ width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 30, paddingTop: 30, paddingBottom: 30 }}>
                               {state.courseData ?
@@ -235,7 +237,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                             }
                           </Container>
                         </Container>
-                        <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                        <Container style={this.styles.style.courseHomeRightContainer}>
 
                           <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30, width: '90%' }}>To-Do</Text>
                           <Card style={{ width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 15, paddingTop: 30, paddingBottom: 30 }}>
@@ -243,7 +245,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                           </Card>
 
                           <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 50, width: '90%' }}>My Calendar</Text>
-                          <Calendar style={{ width: '90%', borderColor: '#FFFFFF', paddingLeft: 60, paddingRight: 60, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 15, paddingTop: 20, paddingBottom: 20 }}
+                          <Calendar style={this.styles.style.courseHomeCalendar}
                             // Collection of dates that have to be marked. Default = {}
                             current={'2020-05-01'}
                             markedDates={{
@@ -254,7 +256,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                             }}
                           />
                           <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 50, width: '90%' }}>Course Activity</Text>
-                          <Container style={{ flex: 5, flexDirection: "row", marginTop: 30, borderBottom: '1px solid #333333', width: '90%', paddingBottom: 50 }}>
+                          <Container style={this.styles.style.CourseHomeActivityContainer}>
                             <JCButton buttonType={state.activeCourseActivity == "today" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveCourseActivity("today") }}>Today</JCButton>
                             <JCButton buttonType={state.activeCourseActivity == "yesterday" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveCourseActivity("yesterday") }}>Yesterday</JCButton>
                             <JCButton buttonType={state.activeCourseActivity == "thisweek" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveCourseActivity("thisweek") }}>This Week</JCButton>

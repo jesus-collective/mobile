@@ -832,7 +832,7 @@ export default EStyleSheet.create({
         fontWeight: "600",
     },
 
-
+    // Media Query Desktop Tablet
     '@media (min-width: 481) and (max-width: 768)': {
         SolidRightMarginButton: {
             paddingLeft: 0,
@@ -870,8 +870,32 @@ export default EStyleSheet.create({
         SolidAboutMeButton: {
             width: 130
         },
+        CourseSideBarFirstButton: {
+            marginLeft: 0,
+            marginRight: 0,
+            marginBottom: 10,
+        },
+        CourseSideBarButton: {
+            marginLeft: 0,
+            marginRight: 0,
+        },
+        CourseTransparentBoldOrangeButton: {
+            marginLeft: 0,
+            marginRight: 0,
+            justifyContent: 'center'
+        },
+        CourseHomeButton: {
+           width: '50%',
+           alignSelf: 'center',
+        },
+        TransparentActivityCourseButton: {
+            marginBottom: 0,
+        },
+        courseActivityTransparentRegularBlackButton: {
+            marginBottom: 0,
+        },
     },
-
+    // Media Query Mobile
     '@media (min-width: 320px) and (max-width: 480px)': {
         SolidRightMarginButton: {
             paddingLeft: 0,
@@ -932,4 +956,33 @@ export default EStyleSheet.create({
             justifyContent: "center"
         },
     },
+    // Media Query Desktop Large Tablet
+    '@media (min-width: 769) and (max-width: 1024)': {
+        CourseSideBarFirstButton: {
+            marginLeft: 0,
+            marginRight: 0,
+            marginBottom: 5,
+        },
+        CourseSideBarButton: {
+            marginLeft: 0,
+            marginRight: 0,
+        },
+        CourseHomeButton: {
+            paddingLeft: 5,
+            paddingRight: 5,
+        },
+        CourseTransparentBoldOrangeButton: {
+        marginLeft: 0,
+        marginRight: 0,
+        },
+        CourseTransparentBoldOrangeText: {
+            padding: 0,
+        },
+        TransparentActivityCourseButton: {
+            marginRight: 13,
+        },
+        courseActivityTransparentRegularBlackButton: {
+            marginRight: 13,
+        },
+    }
 })
