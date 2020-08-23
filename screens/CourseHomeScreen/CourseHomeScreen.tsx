@@ -164,6 +164,73 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
       activeCourseActivity: courseActivity
     })
   }
+  updateInstructors = async (value: any): Promise<void> => {
+
+    const del = this.state.courseData.instructors.items.filter(x => !value.map(z => z.id).includes(x.user.id));
+    const add = value.filter(x => !this.state.courseData.instructors.items.map(z => z.user.id).includes(x.id));
+    // const delTriadID= this.state.courseData.triads.items[index].users.items.map((item)=>{del.contains(item.})
+    console.log({ del: del })
+    add.map(async (item) => {
+      let createCourseInstructors: any
+      try {
+        console.log({ "Adding": item })
+
+        createCourseInstructors = await API.graphql({
+          query: mutations.createCourseInstructors,
+          variables: {
+            input: {
+              courseInfoID: this.state.courseData.id,
+              userID: item.id
+            }
+          },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+        });
+        console.log(createCourseInstructors)
+        const temp = this.state.courseData
+        temp.instructors.items.push(createCourseInstructors.data.createCourseInstructors)
+        console.log(temp)
+        this.setState({ courseData: temp })
+
+      } catch (createCourseInstructors) {
+        console.log(createCourseInstructors)
+        const temp = this.state.courseData
+        temp.instructors.items.push(createCourseInstructors.data.createCourseInstructors)
+        console.log(temp)
+        this.setState({ courseData: temp })
+
+      }
+    })
+
+    del.map(async (item) => {
+
+      try {
+        console.log({ "Deleting": item })
+
+        const deleteCourseInstructors: any = await API.graphql({
+          query: mutations.deleteCourseInstructors,
+          variables: {
+            input: {
+              id: item.id
+            }
+          },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+        });
+        console.log(deleteCourseInstructors)
+        const temp = this.state.courseData
+        temp.instructors.items = temp.instructors.items.filter(user => user.id !== item.id)
+        console.log(temp)
+        this.setState({ courseData: temp })
+
+      } catch (createCourseTriadUsers) {
+        console.log(createCourseTriadUsers)
+        const temp = this.state.courseData
+        temp.instructors.items = temp.instructors.users.items.filter(user => user.id !== item.id)
+        console.log(temp)
+        this.setState({ courseData: temp })
+
+      }
+    })
+  }
   updateTriadUsers = async (index: number, value: any): Promise<void> => {
 
     const del = this.state.courseData.triads.items[index].users.items.filter(x => !value.map(z => z.id).includes(x.user.id));
@@ -191,7 +258,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
         console.log(temp)
         this.setState({ courseData: temp })
 
-      } catch (e) {
+      } catch (createCourseTriadUsers) {
         console.log(createCourseTriadUsers)
         const temp = this.state.courseData
         temp.triads.items[index].users.items.push(createCourseTriadUsers.data.createCourseTriadUsers)
@@ -230,6 +297,32 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
 
       }
     })
+  }
+  myCourseGroups = (): any => {
+
+    const z: [{ cohort, triad, coach }] = this.state.courseData?.triads?.items.map((item) => {
+      console.log({ item: item })
+      let triadTemp = [], coachTemp = [], cohortTemp = []
+      if (item.users.items.filter(user => user.userID == this.state.currentUser).length > 0) {
+        triadTemp = item.users.items.filter(user => user.userID != this.state.currentUser).map(item => item.user)
+        coachTemp = item.coaches.items.map(item => item.user)
+
+      }
+      else if (item.users.items.filter(user => user.userID == this.state.currentUser).length == 0) {
+        cohortTemp = item.users.items.map(item => item.user)
+        cohortTemp = cohortTemp.concat(item.coaches.items.map(item => item.user))
+        // cohort.push(item.coaches.items)
+      }
+      return { triad: triadTemp, coach: coachTemp, cohort: cohortTemp }
+    })
+    let cohort = [], triad = [], coach = []
+    cohort = z?.map(item => item.cohort).flat()
+    triad = z?.map(item => item.triad).flat()
+    coach = z?.map(item => item.coach).flat()
+    console.log({ cohort: cohort })
+    console.log({ triad: triad })
+    console.log({ coach: coach })
+    return { cohort: cohort, triad: triad, coach: coach }
   }
   updateTriadCoaches = async (index: number, value: any): Promise<void> => {
     const del = this.state.courseData.triads.items[index].coaches.items.filter(x => !value.map(z => z.id).includes(x.user.id));
@@ -571,7 +664,9 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
             setEditMode: this.setEditMode,
             updateTriadCoaches: this.updateTriadCoaches,
             updateTriadUsers: this.updateTriadUsers,
+            updateInstructors: this.updateInstructors,
             setActiveMessageBoard: this.setActiveMessageBoard,
+            myCourseGroups: this.myCourseGroups,
             setActiveCourseActivity: this.setActiveCourseActivity
           }
         }}>

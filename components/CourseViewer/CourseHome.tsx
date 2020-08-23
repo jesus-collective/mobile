@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import { StyleProvider, Card, Container, Content } from 'native-base';
-import { Body, Left, CardItem, Button } from 'native-base';
+import { Body, Left, Right, CardItem, Button } from 'native-base';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 
 import { Text } from 'react-native'
@@ -42,25 +42,27 @@ class CourseHomeImpl extends JCComponent<Props>{
   }
   static Consumer = CourseContext.Consumer;
   renderProfileCard(user): React.ReactNode {
-    return (
-      <TouchableOpacity key={user.id} onPress={() => { this.showProfile(user.id) }}>
-        <Card style={this.styles.style.courseConversationCard}>
-          <CardItem>
-            <Left style={this.styles.style.courseHomeConversationCard}>
-              <ProfileImage user={user} size='large' style='my-people'>
-              </ProfileImage>
+    if (user)
+      return (
+        <TouchableOpacity key={user.id} onPress={() => { this.showProfile(user.id) }}>
+          <Card style={this.styles.style.courseConversationCard}>
+            <CardItem>
+              <Left style={this.styles.style.courseHomeConversationCard}>
+                <ProfileImage user={user} size='large' style='my-people'>
+                </ProfileImage>
 
-              <Body style={this.styles.style.dashboardConversationBody}>
-                <Text style={this.styles.style.fontConnectWithName}>{user.given_name} {user.family_name}</Text>
-                <Text style={this.styles.style.fontConnectConversation}>{user.currentRole}</Text>
-                <Button bordered style={this.styles.style.courseHomeConversationButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.courseFontStartConversation}>Start Conversation</Text></Button>
-                <Button bordered style={this.styles.style.courseHomeConversationButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.courseFontStartConversation}>Book Call</Text></Button>
-              </Body>
-            </Left>
-          </CardItem>
-        </Card>
-      </TouchableOpacity>
-    )
+                <Body style={this.styles.style.dashboardConversationBody}>
+                  <Text style={this.styles.style.fontConnectWithName}>{user.given_name} {user.family_name}</Text>
+                  <Text style={this.styles.style.fontConnectConversation}>{user.currentRole}</Text>
+                  <Button bordered style={this.styles.style.courseHomeConversationButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.courseFontStartConversation}>Start Conversation</Text></Button>
+                  <Button bordered style={this.styles.style.courseHomeConversationButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.courseFontStartConversation}>Book Call</Text></Button>
+                </Body>
+              </Left>
+            </CardItem>
+          </Card>
+        </TouchableOpacity>
+      )
+    else null
   }
   render(): React.ReactNode {
 
@@ -70,6 +72,7 @@ class CourseHomeImpl extends JCComponent<Props>{
       <CourseHomeImpl.Consumer>
         {({ state, actions }) => {
           console.log(state.isEditable && state.editMode)
+          const instructors = state.courseData?.instructors?.items.map((item) => { return item.user })
           return (
             state.data && state.currentScreen == "Home" ?
               <StyleProvider style={getTheme()}>
@@ -79,16 +82,18 @@ class CourseHomeImpl extends JCComponent<Props>{
                   <Container style={{ flex: 80 }}>
                     <Content contentContainerStyle={{ flex: 80 }} style={{ flex: 80 }}>
                       <Container style={{ flex: 80, display: "flex", flexDirection: "row", justifyContent: 'flex-start', paddingLeft: '5%' }}>
+
                         <Container style={this.styles.style.courseHomeLeftContainer}>
                           <Container style={this.styles.style.courseHomeSyllabusContainer}>
                             <Container style={this.styles.style.courseProfileImageButtonsContainer}>
-                              <ProfileImage user={state.instructor} size='medium' style='my-people'>
+                              <ProfileImage user={state.courseData?.instructors?.items[0]?.user} size='medium' style='my-people'>
+
                               </ProfileImage>
 
-                              <Text style={this.styles.style.fontConnectWithName}>{state.instructor?.given_name} {state.instructor?.family_name}</Text>
-                              <Text style={this.styles.style.fontConnectConversation}>{state.instructor?.currentRole}</Text>
+                              <Text style={this.styles.style.fontConnectWithName}>{state.courseData?.instructors?.items[0]?.user?.given_name} {state.courseData?.instructors?.items[0]?.user?.family_name}</Text>
+                              <Text style={this.styles.style.fontConnectConversation}>{state.courseData?.instructors?.items[0]?.user?.currentRole}</Text>
                               <JCButton onPress={() => { null }} buttonType={ButtonTypes.CourseHome}>Book a Call</JCButton>
-                              <JCButton onPress={() => { this.openConversation(state.instructor?.id, state.instructor?.given_name + " " + state.instructor?.family_name) }} buttonType={ButtonTypes.CourseTransparentBoldOrange}>Send Message</JCButton>
+                              <JCButton onPress={() => { this.openConversation(state.courseData?.instructors?.items[0]?.user?.id, state.courseData?.instructors?.items[0]?.user?.given_name + " " + state.courseData.instructors?.items[0]?.user?.family_name) }} buttonType={ButtonTypes.CourseTransparentBoldOrange}>Send Message</JCButton>
                             </Container>
                             <Container style={this.styles.style.courseHomeMainTextContainer}>
                               <Text style={this.styles.style.courseHomeDescriptionText}>
@@ -121,21 +126,23 @@ class CourseHomeImpl extends JCComponent<Props>{
                                 </EditableFileUpload>
                                 : null}
                             </Card>
+                            {}
                             {state.editMode ?
                               <>
                                 <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>User Setup</Text>
                                 <Card style={{ width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 30, paddingTop: 30, paddingBottom: 30 }}>
 
                                   <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 0 }}>Instructor:</Text>
+
                                   <EditableUsers
                                     limit={1}
-                                    onChange={(value: any[]) => { actions.updateCourse("instructor", value) }}
+                                    onChange={(value: any[]) => { actions.updateInstructors(value) }}
                                     multiline={false}
                                     data-testid="profile-currentRole"
                                     showProfileImages={true}
                                     textStyle={this.styles.style.fontFormSmallDarkGrey}
                                     inputStyle={this.styles.style.fontFormLargeInput}
-                                    value={state.instructor} isEditable={true}></EditableUsers>
+                                    value={instructors ? instructors : []} isEditable={true}></EditableUsers>
 
 
                                   {state.isEditable ?
@@ -149,32 +156,42 @@ class CourseHomeImpl extends JCComponent<Props>{
                                         console.log(coaches)
                                         console.log(users)
                                         return (
-                                          <Card key={index} style={{ borderColor: '#FFFFFF' }}>
-                                            <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 20 }}>Coach</Text>
-                                            <EditableUsers
-                                              limit={1}
-                                              onChange={(value: any[]) => { actions.updateTriadCoaches(index, value) }}
-                                              multiline={false}
-                                              data-testid="profile-currentRole"
-                                              showProfileImages={true}
-                                              textStyle={this.styles.style.fontFormSmallDarkGrey}
-                                              inputStyle={this.styles.style.fontFormLargeInput}
-                                              value={coaches ? coaches : []} isEditable={true}></EditableUsers>
-                                            <TouchableOpacity style={{ backgroundColor: '#F0493E', width: '20%', marginTop: 10, borderRadius: 5, height: 30, justifyContent: 'center', alignItems: 'center', boxShadow: '0px' }} onPress={() => { actions.deleteTriad(index) }}>
-                                              <AntDesign name="close" size={23} color="white" />
-                                            </TouchableOpacity>
-
-                                            <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Triad</Text>
-                                            <EditableUsers
-                                              limit={3}
-                                              onChange={(value: any[]) => { actions.updateTriadUsers(index, value) }}
-                                              multiline={false}
-                                              data-testid="profile-currentRole"
-                                              showProfileImages={true}
-                                              textStyle={this.styles.style.fontFormSmallDarkGrey}
-                                              inputStyle={this.styles.style.fontFormLargeInput}
-                                              value={users ? users : []} isEditable={true}></EditableUsers>
-
+                                          <Card key={index} style={{}}>
+                                            <CardItem>
+                                              <Left>
+                                                <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 20 }}>Coach</Text>
+                                              </Left>
+                                              <Right>
+                                                <TouchableOpacity style={{ backgroundColor: '#F0493E', width: '20px', marginTop: 10, borderRadius: 5, height: 30, justifyContent: 'center', alignItems: 'center', boxShadow: '0px' }} onPress={() => { actions.deleteTriad(index) }}>
+                                                  <AntDesign name="close" size={23} color="white" />
+                                                </TouchableOpacity>
+                                              </Right>
+                                            </CardItem>
+                                            <CardItem>
+                                              <EditableUsers
+                                                limit={1}
+                                                onChange={(value: any[]) => { actions.updateTriadCoaches(index, value) }}
+                                                multiline={false}
+                                                data-testid="profile-currentRole"
+                                                showProfileImages={true}
+                                                textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                                inputStyle={this.styles.style.fontFormLargeInput}
+                                                value={coaches ? coaches : []} isEditable={true}></EditableUsers>
+                                            </CardItem>
+                                            <CardItem>
+                                              <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Triad</Text>
+                                            </CardItem>
+                                            <CardItem>
+                                              <EditableUsers
+                                                limit={3}
+                                                onChange={(value: any[]) => { actions.updateTriadUsers(index, value) }}
+                                                multiline={false}
+                                                data-testid="profile-currentRole"
+                                                showProfileImages={true}
+                                                textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                                inputStyle={this.styles.style.fontFormLargeInput}
+                                                value={users ? users : []} isEditable={true}></EditableUsers>
+                                            </CardItem>
                                           </Card>
                                         )
                                       })
@@ -183,56 +200,17 @@ class CourseHomeImpl extends JCComponent<Props>{
                                         <Card><Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', paddingLeft: 5, paddingTop: 6, paddingBottom: 6 }}>Add Triad</Text></Card>
                                       </TouchableOpacity>
                                     </>)
-                                    : (<>
-                                      <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>My Coach</Text>
-                                      <Card>
-                                        <EditableUsers
-                                          limit={1}
-                                          onChange={(value: any[]) => { null }}
-                                          multiline={false}
-                                          data-testid="profile-currentRole"
-                                          showProfileImages={true}
-                                          textStyle={this.styles.style.fontFormSmallDarkGrey}
-                                          inputStyle={this.styles.style.fontFormLargeInput}
-                                          value={state.myTriad.coach} isEditable={false}></EditableUsers>
-                                      </Card>
-                                      <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>My Triad</Text>
-                                      <Card>
-                                        <EditableUsers
-                                          limit={3}
-                                          onChange={(value: any[]) => { null }}
-                                          multiline={false}
-                                          data-testid="profile-currentRole"
-                                          showProfileImages={true}
-                                          textStyle={this.styles.style.fontFormSmallDarkGrey}
-                                          inputStyle={this.styles.style.fontFormLargeInput}
-                                          value={state.myTriad.coach} isEditable={false}></EditableUsers>
-                                      </Card>
-                                    </>)
+                                    : (null)
                                   }
-                                  {!state.isEditable ? <>
-                                    <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>My Cohort</Text>
-                                    <Card>
-                                      <EditableUsers
-                                        limit={15}
-                                        //  onChange={(value: any[]) => { actions.updateTriad({ newToList: value }) }}
-                                        multiline={false}
-                                        data-testid="profile-currentRole"
-                                        showProfileImages={true}
-                                        textStyle={this.styles.style.fontFormSmallDarkGrey}
-                                        inputStyle={this.styles.style.fontFormLargeInput}
-                                        value={state.cohort} isEditable={true}>
-                                      </EditableUsers>
-                                    </Card>
-                                  </> : null}
+
                                 </Card>
                               </>
                               :
                               <>
                                 <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Coach</Text>
                                 {
-                                  state.myCoach ?
-                                    state.myCoach.map((user) => {
+                                  actions.myCourseGroups().coach ?
+                                    actions.myCourseGroups().coach.map((user) => {
                                       return this.renderProfileCard(user)
                                     })
                                     :
@@ -240,16 +218,16 @@ class CourseHomeImpl extends JCComponent<Props>{
                                 }
                                 <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Triad</Text>
                                 {
-                                  state.myTriad ?
-                                    state.myTriad.map((user) => {
+                                  actions.myCourseGroups().triad ?
+                                    actions.myCourseGroups().triad.map((user) => {
                                       return this.renderProfileCard(user)
                                     }) :
                                     <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginTop: 70, width: '90%' }}>You have not been assigned a triad yet</Text>
                                 }
                                 <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Cohort</Text>
                                 {
-                                  state.myCohort ?
-                                    state.myCohort.map((user) => {
+                                  actions.myCourseGroups().cohort ?
+                                    actions.myCourseGroups().cohort.map((user) => {
                                       return this.renderProfileCard(user)
                                     })
                                     :

@@ -65,6 +65,7 @@ type User
   userTriad:[CourseTriadUsers] @connection(name:"courseUserTriad",keyField: "userID")
 
   completions: [CourseLessonCompletion] @connection(name:"courseUserCompletions",keyField: "userID",sortField:"courseLessonID")
+  courseInstructing: [CourseInstructors] @connection(name:"courseInstructorsUser",keyField: "userID")
 
   alertConfig:AlertConfig
 }
@@ -232,7 +233,7 @@ type CourseInfo
   summary: String
   courseWeeks: [CourseWeek] @connection(name:"courseInfo",keyField: "courseInfoID",sortField:"week")
   subTitle: String
-  instructor: [User]
+  instructors: [CourseInstructors] @connection(name:"courseInstructorsInfo",keyField: "courseInfoID")
   triads: [CourseTriads] @connection(name:"courseTriads",keyField: "courseInfoID")
   introduction: String
   sylabusAttachment:String
@@ -248,7 +249,15 @@ type CourseTriads
   coaches: [CourseTriadCoaches] @connection(name:"courseTriadCoaches",keyField: "triadID")
   users: [CourseTriadUsers] @connection(name:"courseTriadUsers",keyField: "triadID")
 }
-
+type CourseInstructors
+@model
+{
+  id:ID!
+  courseInfoID: String
+  courseInfo: CourseInfo @connection(name:"courseInstructorsInfo",keyField:"courseInfoID") 
+  userID: String
+  user: User @connection(name:"courseInstructorsUser",keyField:"userID") 
+}
 type CourseTriadCoaches
 @model
 {

@@ -6,7 +6,13 @@ query GetCourseInfo($id: ID!) {
     summary
     sylabusAttachmentName
     sylabusAttachment
-    instructor {
+    instructors 
+    {
+      items {
+          id
+          courseInfoID
+          userID
+          user {
         id
         given_name
         family_name
@@ -80,6 +86,13 @@ query GetCourseInfo($id: ID!) {
         createdAt
         updatedAt
       }
+            
+          
+          createdAt
+          updatedAt
+        }
+    }
+   
     courseWeeks {
       items {
         id
@@ -127,6 +140,13 @@ query GetCourseInfo($id: ID!) {
                 email
                 phone
                 owner
+                profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
               }
               createdAt
               updatedAt
@@ -145,6 +165,13 @@ query GetCourseInfo($id: ID!) {
                 email
                 phone
                 owner
+                profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
               }
               createdAt
               updatedAt
