@@ -140,6 +140,13 @@ query GetCourseInfo($id: ID!) {
                 email
                 phone
                 owner
+                profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
               }
               createdAt
               updatedAt
@@ -158,6 +165,13 @@ query GetCourseInfo($id: ID!) {
                 email
                 phone
                 owner
+                profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
               }
               createdAt
               updatedAt
