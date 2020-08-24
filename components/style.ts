@@ -1457,9 +1457,9 @@ export default class MainStyles {
                 flex: 5, 
                 flexDirection: "row", 
                 marginTop: 30, 
-                borderBottom: '1px solid #333333', 
                 width: '90%', 
-                paddingBottom: 50
+                paddingBottom: 50,
+                borderBottom: "1px solid #333333", 
             },
             courseHomeCalendar: {
                 width: '90%', 
