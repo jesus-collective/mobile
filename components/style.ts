@@ -878,7 +878,9 @@ export default class MainStyles {
                 borderBottomLeftRadius: 10,
                 borderBottomRightRadius: 10,
                 backgroundColor: "#ffffff",
-                fontFamily: "Graphik-Regular-App"
+                fontFamily: "Graphik-Regular-App",
+                fontSize: 16,
+                lineHeight: 22,
             },
             eventPageMessageBoardLeft: {
                 alignSelf: "center"
@@ -1436,7 +1438,7 @@ export default class MainStyles {
             },
             courseHeaderContainer: {
                 backgroundColor: "#F0493E", 
-                flex: 30
+                flex: 32,
             },
             animatedCircleContainerSideBar: {
                 backgroundColor: "#00000000", 
