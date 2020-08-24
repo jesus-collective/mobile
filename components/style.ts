@@ -538,6 +538,16 @@ export default class MainStyles {
                 color: "#000000",
                 letterSpacing: -0.3
             },
+            courseFontConnectWithName: {
+                fontFamily: 'Graphik-Bold-App',
+                fontWeight: "bold",
+                fontSize: 20,
+                lineHeight: 25,
+                color: "#000000",
+                letterSpacing: -0.3,
+                alignSelf: 'center',
+                marginBottom: 10,
+            },
             fontConnectWithRole: {
                 fontFamily: 'Graphik-Regular-App',
                 fontSize: 14,
