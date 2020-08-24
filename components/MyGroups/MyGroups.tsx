@@ -617,7 +617,10 @@ export default class MyGroups extends JCComponent<Props, State> {
       <CardItem bordered style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 0, paddingBottom: 0, width: this.state.cardWidth, right: 5 }}>
         <Image style={{ margin: 0, padding: 0, width: this.state.cardWidth, height: 70 }} source={require('../../assets/svg/pattern.svg')}></Image>
       </CardItem>
-      <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitleGroup}>{item.name}</Text></CardItem>
+      <CardItem >
+        <Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitleGroup} data-tip={item.name}>{item.name}</Text>
+        <ReactTooltip place="top" type="dark" effect="solid" backgroundColor="#F0493E" />
+      </CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetail}>Last Updated: {item.lastupdated}</Text></CardItem>
       {this.canJoin(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Course") }}>Join</JCButton><Right></Right></CardItem> : null}
       {this.canLeave(item.id) && !this.isOwner(item.id) ? <CardItem ><Text>Member</Text><Right></Right></CardItem> : null}

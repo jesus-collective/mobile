@@ -52,7 +52,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                 </ProfileImage>
 
                 <Body style={this.styles.style.dashboardConversationBody}>
-                  <Text style={this.styles.style.fontConnectWithName}>{user.given_name} {user.family_name}</Text>
+                  <Text style={this.styles.style.courseFontConnectWithName}>{user.given_name} {user.family_name}</Text>
                   <Text style={this.styles.style.fontConnectConversation}>{user.currentRole}</Text>
                   <Button bordered style={this.styles.style.courseHomeConversationButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.courseFontStartConversation}>Start Conversation</Text></Button>
                   <Button bordered style={this.styles.style.courseHomeConversationButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.courseFontStartConversation}>Book Call</Text></Button>

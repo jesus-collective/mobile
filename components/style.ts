@@ -538,6 +538,16 @@ export default class MainStyles {
                 color: "#000000",
                 letterSpacing: -0.3
             },
+            courseFontConnectWithName: {
+                fontFamily: 'Graphik-Bold-App',
+                fontWeight: "bold",
+                fontSize: 20,
+                lineHeight: 25,
+                color: "#000000",
+                letterSpacing: -0.3,
+                alignSelf: 'center',
+                marginBottom: 10,
+            },
             fontConnectWithRole: {
                 fontFamily: 'Graphik-Regular-App',
                 fontSize: 14,
@@ -868,7 +878,9 @@ export default class MainStyles {
                 borderBottomLeftRadius: 10,
                 borderBottomRightRadius: 10,
                 backgroundColor: "#ffffff",
-                fontFamily: "Graphik-Regular-App"
+                fontFamily: "Graphik-Regular-App",
+                fontSize: 16,
+                lineHeight: 22,
             },
             eventPageMessageBoardLeft: {
                 alignSelf: "center"
@@ -1426,7 +1438,7 @@ export default class MainStyles {
             },
             courseHeaderContainer: {
                 backgroundColor: "#F0493E", 
-                flex: 30
+                flex: 32,
             },
             animatedCircleContainerSideBar: {
                 backgroundColor: "#00000000", 
@@ -1445,9 +1457,9 @@ export default class MainStyles {
                 flex: 5, 
                 flexDirection: "row", 
                 marginTop: 30, 
-                borderBottom: '1px solid #333333', 
                 width: '90%', 
-                paddingBottom: 50
+                paddingBottom: 50,
+                borderBottom: "1px solid #333333", 
             },
             courseHomeCalendar: {
                 width: '90%', 
