@@ -28,6 +28,8 @@ export default EStyleSheet.create({
     {
         paddingTop: 10,
         paddingBottom: 10,
+        paddingLeft: 29,
+        paddingRight: 29,
         marginBottom: 20,
         marginLeft: 10,
         marginRight: 10,
