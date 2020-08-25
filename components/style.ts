@@ -1756,8 +1756,8 @@ export default class MainStyles {
                     textAlign: "center"
                 },
                 fontCourseHeaderBold: {
-                    fontSize: 45,
-                    lineHeight: 45,
+                    fontSize: 34,
+                    lineHeight: 40,
                 },
                 fontResourceHeaderBold: {
                     fontSize: 70,
@@ -1803,7 +1803,7 @@ export default class MainStyles {
                     flex: 0.375,
                 },
                 courseHeaderContainer: {
-                    flex: 19,
+                    flex: 24,
                 },
                 courseHomeSyllabusContainer: {
                     flexDirection: 'column',
@@ -1837,6 +1837,10 @@ export default class MainStyles {
                     marginTop: 15, 
                     paddingBottom: 25,
                     flex: 0.75, 
+                },
+                fontCourseHeader: {
+                    fontSize: 24,
+                    lineHeight: 30, 
                 },
             },
 
