@@ -396,7 +396,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                 }>
 
                 {this.state.attachment ? this.renderFileUploadBadge(this.state) : null}
-                <View style={{ marginRight: 10 }}>
+                <View style={this.styles.style.courseMessageBoardButtonsView}>
                   <JCButton buttonType={ButtonTypes.SolidRightJustifiedTopMini} onPress={() => { null }}><AntDesign name="clouduploado" size={16} color="white" style={{ marginRight: 5 }} />Share a file</JCButton>
                   <input multiple={false} style={{ cursor: 'pointer', width: '100%', height: '100%', position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='.pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx' onChange={(e) => this.handleUpload(e)} />
                 </View>
@@ -429,14 +429,14 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                       <Text style={this.styles.style.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
                     </Right>
                   </CardItem> : 
-                  <CardItem style={this.styles.style.eventPageMessageBoard}>
+                  <CardItem style={this.styles.style.coursePageMessageBoard}>
                   <Left style={this.styles.style.coursePageMessageBoardLeftMini}>
                     <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
                       <ProfileImage size="small2" user={item.owner ? item.owner : null}></ProfileImage>
                     </TouchableOpacity>
                   </Left>
                   <Right style={{ flexDirection: "column", flex: 7, alignItems: "flex-start" }}>
-                      <Text style={this.styles.style.groupFormName}>
+                      <Text style={this.styles.style.courseFormName}>
                         {item.author != null ? item.author.given_name : null} {item.author != null ? item.author.family_name : null}
                       </Text>
                       {/* <Text style={this.styles.style.groupFormRole}>

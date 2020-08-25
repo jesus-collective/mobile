@@ -86,12 +86,12 @@ class CourseHomeImpl extends JCComponent<Props>{
                         <Container style={this.styles.style.courseHomeLeftContainer}>
                           <Container style={this.styles.style.courseHomeSyllabusContainer}>
                             <Container style={this.styles.style.courseProfileImageButtonsContainer}>
-                              <ProfileImage user={state.courseData?.instructors?.items[0]?.user} size='medium' style='my-people'>
+                              <ProfileImage user={state.courseData?.instructors?.items[0]?.user} size='medium' style='courseProfile'>
 
                               </ProfileImage>
 
-                              <Text style={this.styles.style.fontConnectWithName}>{state.courseData?.instructors?.items[0]?.user?.given_name} {state.courseData?.instructors?.items[0]?.user?.family_name}</Text>
-                              <Text style={this.styles.style.fontConnectConversation}>{state.courseData?.instructors?.items[0]?.user?.currentRole}</Text>
+                              <Text style={this.styles.style.courseFontConnectWithName}>{state.courseData?.instructors?.items[0]?.user?.given_name} {state.courseData?.instructors?.items[0]?.user?.family_name}</Text>
+                              <Text style={this.styles.style.courseFontConnectConversation}>{state.courseData?.instructors?.items[0]?.user?.currentRole}</Text>
                               <JCButton onPress={() => { null }} buttonType={ButtonTypes.CourseHome}>Book a Call</JCButton>
                               <JCButton onPress={() => { this.openConversation(state.courseData?.instructors?.items[0]?.user?.id, state.courseData?.instructors?.items[0]?.user?.given_name + " " + state.courseData.instructors?.items[0]?.user?.family_name) }} buttonType={ButtonTypes.CourseTransparentBoldOrange}>Send Message</JCButton>
                             </Container>
