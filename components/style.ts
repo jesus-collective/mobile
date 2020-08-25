@@ -581,6 +581,13 @@ export default class MainStyles {
                 lineHeight: 21,
                 color: "#333333"
             },
+            courseFormName: {
+                fontFamily: "Graphik-Bold-App",
+                fontWeight: "bold",
+                fontSize: 16,
+                lineHeight: 21,
+                color: "#333333"
+            },
             groupFormRole: {
                 fontFamily: "Graphik-Regular-App",
                 fontWeight: "normal",
@@ -872,6 +879,13 @@ export default class MainStyles {
                 height: "100%"
             },
             eventPageMessageBoard: {
+                borderBottomLeftRadius: 0,
+                borderBottomRightRadius: 0,
+                borderTopLeftRadius: 10,
+                borderTopRightRadius: 10,
+                backgroundColor: "#F9FAFC",
+            },
+            coursePageMessageBoard: {
                 borderBottomLeftRadius: 0,
                 borderBottomRightRadius: 0,
                 borderTopLeftRadius: 10,
@@ -1509,6 +1523,14 @@ export default class MainStyles {
                 fontSize: 20, 
                 lineHeight: 30
             },
+            courseDetailButtonTrio: {
+                flex: 5, 
+                flexDirection: "row", 
+                marginTop: 30, 
+                borderBottom: '1px solid #333333', 
+                width: '95%', 
+                paddingBottom: 20
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -1958,6 +1980,15 @@ export default class MainStyles {
                     paddingLeft: 20, 
                     paddingRight: 20, 
                 },
+                courseDetailButtonTrio: {
+                    flex: 2
+                },
+                coursePageMessageBoard: {
+                    flexDirection: "column"
+                },
+                courseFormName: {
+                    marginTop: 10,
+                },
             },
 
             '@media (min-width: 769px) and (max-width: 1279px)': {
@@ -1972,6 +2003,9 @@ export default class MainStyles {
                 },
                 resourceHeaderAgeGroupBox: {
                     width: "40%"
+                },
+                courseDetailButtonTrio: {
+                    flex: 2
                 },
             },
 
@@ -2079,6 +2113,9 @@ export default class MainStyles {
                     lineHeight: 20
                 },
                 eventPageMessageBoard: {
+                    flexDirection: "column"
+                },
+                coursePageMessageBoard: {
                     flexDirection: "column"
                 },
                 eventPageMessageBoardLeft: {
