@@ -1931,7 +1931,7 @@ export default class MainStyles {
                     marginRight: 8,
                 },
                 courseHeaderContainer: {
-                    flex: 14
+                    flex: 18
                 },
                 animatedCircleContainerSideBar: {
                     marginTop: 40,
