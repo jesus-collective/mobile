@@ -1531,6 +1531,9 @@ export default class MainStyles {
                 width: '95%', 
                 paddingBottom: 20
             },
+            courseMessageBoardButtonsView: {
+                marginRight: 10
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -1988,6 +1991,9 @@ export default class MainStyles {
                 },
                 courseFormName: {
                     marginTop: 10,
+                },
+                courseMessageBoardButtonsView: {
+                    marginTop: 40,
                 },
             },
 
