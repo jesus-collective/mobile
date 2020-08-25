@@ -536,7 +536,8 @@ export default class MainStyles {
                 fontSize: 20,
                 lineHeight: 25,
                 color: "#000000",
-                letterSpacing: -0.3
+                letterSpacing: -0.3, 
+                alignSelf: 'center',
             },
             courseFontConnectWithName: {
                 fontFamily: 'Graphik-Bold-App',
@@ -563,6 +564,15 @@ export default class MainStyles {
                 letterSpacing: -0.3,
                 color: "#333333",
                 paddingBottom: 9,
+            },
+            courseFontConnectConversation: {
+                fontFamily: 'Graphik-Regular-App',
+                fontSize: 14,
+                lineHeight: 22,
+                letterSpacing: -0.3,
+                color: "#333333",
+                paddingBottom: 9,
+                alignSelf: 'center'
             },
             groupFormName: {
                 fontFamily: "Graphik-Bold-App",
