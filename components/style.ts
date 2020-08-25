@@ -50,6 +50,14 @@ export default class MainStyles {
             whoIsThisForText: { alignSelf: 'flex-start', wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 26, lineHeight: 33, color: "#333333", paddingBottom: 20 },
             resourceContentEpisodesEpisodeTitle: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 28, lineHeight: 33, color: "#333333", paddingBottom: 0 },
             resourceContentEpisodesVideoText: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
+            courseHomeFileCard: { width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 30, paddingTop: 30, paddingBottom: 30 },
+            courseHomeUserEditCard: { width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 30, paddingTop: 30, paddingBottom: 30 },
+            courseHomeCoachingCard: { width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 15, paddingTop: 30, paddingBottom: 30 },
+            courseHomeDeleteTriad: { backgroundColor: '#F0493E', width: '20px', marginTop: 10, borderRadius: 5, height: 30, justifyContent: 'center', alignItems: 'center', boxShadow: '0px' },
+            courseCoachingCard: { width: '100%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 100, paddingTop: 30, paddingBottom: 30, height: 400 },
+            courseDetailLessonCardEdit: { minHeight: "40px", maxHeight: "200px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 30, paddingRight: 30, paddingBottom: 60, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 10, marginTop: 10 },
+            courseDetailLessonCardNoEdit: { minHeight: "40px", maxHeight: "200px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 10, paddingRight: 30, paddingBottom: 10, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 10, marginTop: 10 },
+            courseDetailLessonCardCreate: { minHeight: "40px", maxHeight: "80px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 30, paddingRight: 30, paddingBottom: 50, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 30 },
             courseCard:
             {
                 minHeight: 330,
@@ -536,7 +544,7 @@ export default class MainStyles {
                 fontSize: 20,
                 lineHeight: 25,
                 color: "#000000",
-                letterSpacing: -0.3, 
+                letterSpacing: -0.3,
                 alignSelf: 'center',
             },
             courseFontConnectWithName: {
@@ -1461,74 +1469,74 @@ export default class MainStyles {
                 justifyContent: 'flex-end'
             },
             courseHeaderContainer: {
-                backgroundColor: "#F0493E", 
+                backgroundColor: "#F0493E",
                 flex: 32,
             },
             animatedCircleContainerSideBar: {
-                backgroundColor: "#00000000", 
-                alignSelf: 'center', 
+                backgroundColor: "#00000000",
+                alignSelf: 'center',
                 marginTop: 75
             },
             courseHomeMainTextContainer: {
-                flex: 80, 
-                height: 200, 
+                flex: 80,
+                height: 200,
                 marginRight: 50
             },
             courseHomeSyllabusContainer: {
                 flexDirection: 'row',
             },
             CourseHomeActivityContainer: {
-                flex: 5, 
-                flexDirection: "row", 
-                marginTop: 30, 
-                width: '90%', 
+                flex: 5,
+                flexDirection: "row",
+                marginTop: 30,
+                width: '90%',
                 paddingBottom: 50,
-                borderBottom: "1px solid #333333", 
+                borderBottom: "1px solid #333333",
             },
             courseHomeCalendar: {
-                width: '90%', 
-                borderColor: '#FFFFFF', 
-                paddingLeft: 60, 
-                paddingRight: 60, 
-                boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', 
-                marginTop: 15, 
-                paddingTop: 20, 
+                width: '90%',
+                borderColor: '#FFFFFF',
+                paddingLeft: 60,
+                paddingRight: 60,
+                boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+                marginTop: 15,
+                paddingTop: 20,
                 paddingBottom: 20
             },
             courseHomeMainContainer: {
                 flex: 85,
             },
             courseProfileImageButtonsContainer: {
-                flexDirection: 'column', 
-                marginTop: 30, 
+                flexDirection: 'column',
+                marginTop: 30,
                 flex: 20
             },
             courseHomeLeftContainer: {
-                flex: 70, 
-                flexDirection: "column", 
+                flex: 70,
+                flexDirection: "column",
                 justifyContent: 'flex-start',
             },
             courseHomeRightContainer: {
-                flex: 30, 
-                flexDirection: "column", 
-                alignContent: 'flex-start', 
-                alignItems: 'flex-start', 
+                flex: 30,
+                flexDirection: "column",
+                alignContent: 'flex-start',
+                alignItems: 'flex-start',
                 justifyContent: 'flex-start'
             },
             courseHomeDescriptionText: {
-                marginTop: 30, 
-                marginLeft: 30, 
-                marginRight: 30, 
-                fontFamily: 'Graphik-Regular-App', 
-                fontSize: 20, 
+                marginTop: 30,
+                marginLeft: 30,
+                marginRight: 30,
+                fontFamily: 'Graphik-Regular-App',
+                fontSize: 20,
                 lineHeight: 30
             },
             courseDetailButtonTrio: {
-                flex: 5, 
-                flexDirection: "row", 
-                marginTop: 30, 
-                borderBottom: '1px solid #333333', 
-                width: '95%', 
+                flex: 5,
+                flexDirection: "row",
+                marginTop: 30,
+                borderBottom: '1px solid #333333',
+                width: '95%',
                 paddingBottom: 20
             },
             courseMessageBoardButtonsView: {
@@ -1838,10 +1846,10 @@ export default class MainStyles {
                     marginRight: 30,
                 },
                 courseHomeLeftContainer: {
-                    flex: 60, 
+                    flex: 60,
                 },
                 courseHomeRightContainer: {
-                    flex: 40, 
+                    flex: 40,
                 },
                 courseHomeMainTextContainer: {
                     marginRight: 0,
@@ -1853,19 +1861,19 @@ export default class MainStyles {
                     width: "90%",
                 },
                 courseHomeCalendar: {
-                    width: '85%', 
-                    paddingLeft: 10, 
-                    paddingRight: 10, 
+                    width: '85%',
+                    paddingLeft: 10,
+                    paddingRight: 10,
                 },
                 CourseHomeActivityContainer: {
-                    flexDirection: "column", 
-                    marginTop: 15, 
+                    flexDirection: "column",
+                    marginTop: 15,
                     paddingBottom: 25,
-                    flex: 0.75, 
+                    flex: 0.75,
                 },
                 fontCourseHeader: {
                     fontSize: 24,
-                    lineHeight: 30, 
+                    lineHeight: 30,
                 },
             },
 
@@ -1976,12 +1984,12 @@ export default class MainStyles {
                     width: "50%",
                 },
                 CourseHomeActivityContainer: {
-                    flex: 0, 
+                    flex: 0,
                 },
                 courseHomeCalendar: {
-                    width: '85%', 
-                    paddingLeft: 20, 
-                    paddingRight: 20, 
+                    width: '85%',
+                    paddingLeft: 20,
+                    paddingRight: 20,
                 },
                 courseDetailButtonTrio: {
                     flex: 2

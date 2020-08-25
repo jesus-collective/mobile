@@ -42,7 +42,7 @@ class CourseCoachingImpl extends JCComponent<Props>{
                     <Content style={{ flex: 80 }}>
                       <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
                         <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start', paddingLeft: '5%', marginRight: 30 }}>
-                          <Container style={{ flexDirection: 'row', paddingBottom: 30, paddingTop: 30, marginBottom: 250 }}>  
+                          <Container style={{ flexDirection: 'row', paddingBottom: 30, paddingTop: 30, marginBottom: 250 }}>
                             <Container style={{ flexDirection: 'column', marginTop: 30, flex: 20 }}>
                               <Image style={{ margin: 0, padding: 0, width: 110, height: 136, marginBottom: 20, marginLeft: '15%' }} source={require("../../assets/profile-placeholder.png")} />
                               <JCButton buttonType={ButtonTypes.CourseHome} onPress={() => { null }}>Book a Call</JCButton>
@@ -55,7 +55,7 @@ class CourseCoachingImpl extends JCComponent<Props>{
                               Thanks! - Jon</Text>
                             </Container>
                           </Container>
-                          <Card style={{ width: '100%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 100, paddingTop: 30, paddingBottom: 30, height: 400 }}>
+                          <Card style={this.styles.style.courseCoachingCard}>
                             <Text style={{ fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 24 }}>Schedule your</Text>
                             <Text style={{ fontFamily: 'Graphik-Bold-App', fontSize: 28, lineHeight: 33 }}>30 Minute Coaching Call</Text>
 

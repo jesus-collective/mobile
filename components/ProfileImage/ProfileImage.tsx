@@ -11,7 +11,7 @@ Amplify.configure(awsconfig);
 interface Props {
     user: any
     size: "small" | "xsmall" | "medium" | "large" | "small2"
-    style?: 'map' | 'my-people'
+    style?: 'map' | 'my-people' | 'courseProfile'
     isOrg?: boolean
 }
 interface State extends JCState {
@@ -101,9 +101,9 @@ export default class MyProfile extends JCComponent<Props, State> {
                     : this.props.size == 'small' ?
                         { width: "50px", height: "66px", borderRadius: 120, marginRight: 10, marginBottom: 15, marginLeft: 10, top: 30 } :
                         this.props.size == 'small2' ?
-                        { width: "50px", height: "66px", borderRadius: 120, marginRight: 10, marginBottom: 0, marginLeft: 10, top: 0 } :
-                        this.props.style === "map" || this.props.style === "my-people" ? { width: "80px", height: "96px", borderRadius: 120, marginRight: 10, marginBottom: 15 } : this.props.style === 'courseProfile' ? { width: "80px", height: "96px", borderRadius: 120, marginRight: 10, marginBottom: 15, alignSelf: 'center' } :
-                            { width: "250px", height: "290px", borderRadius: 120, marginRight: 10, marginBottom: 15 }
+                            { width: "50px", height: "66px", borderRadius: 120, marginRight: 10, marginBottom: 0, marginLeft: 10, top: 0 } :
+                            this.props.style === "map" || this.props.style === "my-people" ? { width: "80px", height: "96px", borderRadius: 120, marginRight: 10, marginBottom: 15 } : this.props.style === 'courseProfile' ? { width: "80px", height: "96px", borderRadius: 120, marginRight: 10, marginBottom: 15, alignSelf: 'center' } :
+                                { width: "250px", height: "290px", borderRadius: 120, marginRight: 10, marginBottom: 15 }
 
                 }
                     resizeMode={this.props.size == 'xsmall' ? "contain" : "cover"}
@@ -117,9 +117,9 @@ export default class MyProfile extends JCComponent<Props, State> {
                         : this.props.size == 'small' ?
                             { width: "60px", height: "76px", borderRadius: 120, marginRight: 10, marginBottom: 0, marginLeft: 10 } :
                             this.props.size == 'small2' ?
-                            { width: "50px", height: "66px", borderRadius: 120, marginRight: 10, marginBottom: 0, marginLeft: 10, top: 0 } :
-                            this.props.style === "map" || this.props.style === "my-people" ? { width: "80px", height: "96px", borderRadius: 120, marginRight: 10, marginBottom: 10, alignSelf: 'center' } :
-                                { width: "50px", height: "66px", borderRadius: 120, marginRight: 10, marginLeft: 10, marginBottom: 0 }
+                                { width: "50px", height: "66px", borderRadius: 120, marginRight: 10, marginBottom: 0, marginLeft: 10, top: 0 } :
+                                this.props.style === "map" || this.props.style === "my-people" ? { width: "80px", height: "96px", borderRadius: 120, marginRight: 10, marginBottom: 10, alignSelf: 'center' } :
+                                    { width: "50px", height: "66px", borderRadius: 120, marginRight: 10, marginLeft: 10, marginBottom: 0 }
 
                     }
                         resizeMode={this.props.size == 'xsmall' ? "contain" : "cover"}

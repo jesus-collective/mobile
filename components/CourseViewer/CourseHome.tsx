@@ -108,7 +108,7 @@ class CourseHomeImpl extends JCComponent<Props>{
 
                           <Container style={{ paddingTop: 40 }}>
                             <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 0, width: '90%' }}>Syllabus</Text>
-                            <Card style={{ width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 30, paddingTop: 30, paddingBottom: 30 }}>
+                            <Card style={this.styles.style.courseHomeFileCard}>
                               {state.courseData ?
                                 <EditableFileUpload
                                   textStyle={null}
@@ -129,7 +129,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                             {state.editMode ?
                               <>
                                 <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>User Setup</Text>
-                                <Card style={{ width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 30, paddingTop: 30, paddingBottom: 30 }}>
+                                <Card style={this.styles.style.courseHomeUserEditCard}>
 
                                   <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 0 }}>Instructor:</Text>
 
@@ -161,7 +161,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                                 <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 20 }}>Coach</Text>
                                               </Left>
                                               <Right>
-                                                <TouchableOpacity style={{ backgroundColor: '#F0493E', width: '20px', marginTop: 10, borderRadius: 5, height: 30, justifyContent: 'center', alignItems: 'center', boxShadow: '0px' }} onPress={() => { actions.deleteTriad(index) }}>
+                                                <TouchableOpacity style={this.styles.style.courseHomeDeleteTriad} onPress={() => { actions.deleteTriad(index) }}>
                                                   <AntDesign name="close" size={23} color="white" />
                                                 </TouchableOpacity>
                                               </Right>
@@ -239,7 +239,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                         <Container style={this.styles.style.courseHomeRightContainer}>
 
                           <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30, width: '90%' }}>To-Do</Text>
-                          <Card style={{ width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 15, paddingTop: 30, paddingBottom: 30 }}>
+                          <Card style={this.styles.style.courseHomeCoachingCard}>
                             <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App' }}>Coaching call with {state.coachName}</Text>
                           </Card>
 
