@@ -8,7 +8,6 @@ import JCButton, { ButtonTypes } from '../Forms/JCButton'
 
 import getTheme from '../../native-base-theme/components';
 
-import { Image } from 'react-native'
 import CourseHeader from '../CourseHeader/CourseHeader';
 import { Calendar } from 'react-native-calendars';
 import JCComponent from '../JCComponent/JCComponent';
