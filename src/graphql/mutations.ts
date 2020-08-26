@@ -4544,6 +4544,7 @@ export const createCourseWeek = /* GraphQL */ `
           tz
           duration
           zoomUrl
+          zoomRecording
           description
           courseWeekID
           createdAt
@@ -4597,6 +4598,7 @@ export const updateCourseWeek = /* GraphQL */ `
           tz
           duration
           zoomUrl
+          zoomRecording
           description
           courseWeekID
           createdAt
@@ -4650,6 +4652,7 @@ export const deleteCourseWeek = /* GraphQL */ `
           tz
           duration
           zoomUrl
+          zoomRecording
           description
           courseWeekID
           createdAt
@@ -4673,6 +4676,7 @@ export const createCourseLesson = /* GraphQL */ `
       tz
       duration
       zoomUrl
+      zoomRecording
       description
       courseWeekID
       courseWeek {
@@ -4738,6 +4742,7 @@ export const updateCourseLesson = /* GraphQL */ `
       tz
       duration
       zoomUrl
+      zoomRecording
       description
       courseWeekID
       courseWeek {
@@ -4803,6 +4808,7 @@ export const deleteCourseLesson = /* GraphQL */ `
       tz
       duration
       zoomUrl
+      zoomRecording
       description
       courseWeekID
       courseWeek {
@@ -4873,6 +4879,7 @@ export const createCourseLessonCompletion = /* GraphQL */ `
         tz
         duration
         zoomUrl
+        zoomRecording
         description
         courseWeekID
         courseWeek {
@@ -5004,6 +5011,7 @@ export const updateCourseLessonCompletion = /* GraphQL */ `
         tz
         duration
         zoomUrl
+        zoomRecording
         description
         courseWeekID
         courseWeek {
@@ -5135,6 +5143,7 @@ export const deleteCourseLessonCompletion = /* GraphQL */ `
         tz
         duration
         zoomUrl
+        zoomRecording
         description
         courseWeekID
         courseWeek {
@@ -5266,6 +5275,7 @@ export const createCourseAssignment = /* GraphQL */ `
         tz
         duration
         zoomUrl
+        zoomRecording
         description
         courseWeekID
         courseWeek {
@@ -5310,6 +5320,7 @@ export const updateCourseAssignment = /* GraphQL */ `
         tz
         duration
         zoomUrl
+        zoomRecording
         description
         courseWeekID
         courseWeek {
@@ -5354,6 +5365,7 @@ export const deleteCourseAssignment = /* GraphQL */ `
         tz
         duration
         zoomUrl
+        zoomRecording
         description
         courseWeekID
         courseWeek {

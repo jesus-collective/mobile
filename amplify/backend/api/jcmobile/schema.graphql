@@ -316,6 +316,7 @@ type CourseLesson
   tz:String
   duration:String
   zoomUrl:String
+  zoomRecording:String
   description: String
   courseWeekID:String
   courseWeek: CourseWeek @connection(name: "courseLesson", keyField: "courseWeekID")

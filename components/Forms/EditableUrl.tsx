@@ -31,17 +31,29 @@ class EditableUrlImpl extends JCComponent<Props> {
 
 
         if (this.props.isEditable)
-            return <TextInput
-                onChange={(value) => { this.onChanged(value) }}
-                placeholder={this.props.placeholder}
-                multiline={this.props.multiline}
-                onStartShouldSetResponder={() => true}
-                onMoveShouldSetResponderCapture={() => true}
-                onStartShouldSetResponderCapture={() => true}
-                onMoveShouldSetResponder={() => true}
-                style={this.props.inputStyle} value={this.props.value}></TextInput>
+            return (
+                <TextInput
+                    onChange={(value) => { this.onChanged(value) }}
+                    placeholder={this.props.placeholder}
+                    multiline={this.props.multiline}
+                    onStartShouldSetResponder={() => true}
+                    onMoveShouldSetResponderCapture={() => true}
+                    onStartShouldSetResponderCapture={() => true}
+                    onMoveShouldSetResponder={() => true}
+                    style={this.props.inputStyle} value={this.props.value}>
+
+                </TextInput>
+            )
         else
-            return <Button style={{ paddingTop: 6, paddingBottom: 6, paddingLeft: 29, paddingRight: 29, marginBottom: 20, marginLeft: 0, marginRight: 0, backgroundColor: "#F0493E", borderWidth: 1, borderColor: "#F0493E", borderRadius: 4 }} onPress={() => { this.navigate(this.props.value) }}><Text style={this.props.textStyle}>{this.props.title}</Text></Button>
+            return (
+                this.props.value && this.props.value != "" ? <Button
+                    style={{ paddingTop: 6, paddingBottom: 6, paddingLeft: 29, paddingRight: 29, marginBottom: 20, marginLeft: 0, marginRight: 0, backgroundColor: "#F0493E", borderWidth: 1, borderColor: "#F0493E", borderRadius: 4 }}
+                    onPress={() => { this.navigate(this.props.value) }}>
+                    <Text style={this.props.textStyle}>{this.props.title}
+                    </Text>
+                </Button >
+                    : null
+            )
     }
 }
 

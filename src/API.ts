@@ -381,6 +381,7 @@ export type CreateCourseLessonInput = {
   tz?: string | null,
   duration?: string | null,
   zoomUrl?: string | null,
+  zoomRecording?: string | null,
   description?: string | null,
   courseWeekID?: string | null,
 };
@@ -394,6 +395,7 @@ export type UpdateCourseLessonInput = {
   tz?: string | null,
   duration?: string | null,
   zoomUrl?: string | null,
+  zoomRecording?: string | null,
   description?: string | null,
   courseWeekID?: string | null,
 };
@@ -846,6 +848,7 @@ export type ModelCourseLessonFilterInput = {
   tz?: ModelStringFilterInput | null,
   duration?: ModelStringFilterInput | null,
   zoomUrl?: ModelStringFilterInput | null,
+  zoomRecording?: ModelStringFilterInput | null,
   description?: ModelStringFilterInput | null,
   courseWeekID?: ModelStringFilterInput | null,
   and?: Array< ModelCourseLessonFilterInput | null > | null,
@@ -6396,6 +6399,7 @@ export type CreateCourseWeekMutation = {
         tz: string | null,
         duration: string | null,
         zoomUrl: string | null,
+        zoomRecording: string | null,
         description: string | null,
         courseWeekID: string | null,
         createdAt: string,
@@ -6459,6 +6463,7 @@ export type UpdateCourseWeekMutation = {
         tz: string | null,
         duration: string | null,
         zoomUrl: string | null,
+        zoomRecording: string | null,
         description: string | null,
         courseWeekID: string | null,
         createdAt: string,
@@ -6522,6 +6527,7 @@ export type DeleteCourseWeekMutation = {
         tz: string | null,
         duration: string | null,
         zoomUrl: string | null,
+        zoomRecording: string | null,
         description: string | null,
         courseWeekID: string | null,
         createdAt: string,
@@ -6549,6 +6555,7 @@ export type CreateCourseLessonMutation = {
     tz: string | null,
     duration: string | null,
     zoomUrl: string | null,
+    zoomRecording: string | null,
     description: string | null,
     courseWeekID: string | null,
     courseWeek:  {
@@ -6625,6 +6632,7 @@ export type UpdateCourseLessonMutation = {
     tz: string | null,
     duration: string | null,
     zoomUrl: string | null,
+    zoomRecording: string | null,
     description: string | null,
     courseWeekID: string | null,
     courseWeek:  {
@@ -6701,6 +6709,7 @@ export type DeleteCourseLessonMutation = {
     tz: string | null,
     duration: string | null,
     zoomUrl: string | null,
+    zoomRecording: string | null,
     description: string | null,
     courseWeekID: string | null,
     courseWeek:  {
@@ -6781,6 +6790,7 @@ export type CreateCourseLessonCompletionMutation = {
       tz: string | null,
       duration: string | null,
       zoomUrl: string | null,
+      zoomRecording: string | null,
       description: string | null,
       courseWeekID: string | null,
       courseWeek:  {
@@ -6931,6 +6941,7 @@ export type UpdateCourseLessonCompletionMutation = {
       tz: string | null,
       duration: string | null,
       zoomUrl: string | null,
+      zoomRecording: string | null,
       description: string | null,
       courseWeekID: string | null,
       courseWeek:  {
@@ -7081,6 +7092,7 @@ export type DeleteCourseLessonCompletionMutation = {
       tz: string | null,
       duration: string | null,
       zoomUrl: string | null,
+      zoomRecording: string | null,
       description: string | null,
       courseWeekID: string | null,
       courseWeek:  {
@@ -7233,6 +7245,7 @@ export type CreateCourseAssignmentMutation = {
       tz: string | null,
       duration: string | null,
       zoomUrl: string | null,
+      zoomRecording: string | null,
       description: string | null,
       courseWeekID: string | null,
       courseWeek:  {
@@ -7285,6 +7298,7 @@ export type UpdateCourseAssignmentMutation = {
       tz: string | null,
       duration: string | null,
       zoomUrl: string | null,
+      zoomRecording: string | null,
       description: string | null,
       courseWeekID: string | null,
       courseWeek:  {
@@ -7337,6 +7351,7 @@ export type DeleteCourseAssignmentMutation = {
       tz: string | null,
       duration: string | null,
       zoomUrl: string | null,
+      zoomRecording: string | null,
       description: string | null,
       courseWeekID: string | null,
       courseWeek:  {
@@ -11992,6 +12007,7 @@ export type GetCourseWeekQuery = {
         tz: string | null,
         duration: string | null,
         zoomUrl: string | null,
+        zoomRecording: string | null,
         description: string | null,
         courseWeekID: string | null,
         createdAt: string,
@@ -12061,6 +12077,7 @@ export type GetCourseLessonQuery = {
     tz: string | null,
     duration: string | null,
     zoomUrl: string | null,
+    zoomRecording: string | null,
     description: string | null,
     courseWeekID: string | null,
     courseWeek:  {
@@ -12141,6 +12158,7 @@ export type ListCourseLessonsQuery = {
       tz: string | null,
       duration: string | null,
       zoomUrl: string | null,
+      zoomRecording: string | null,
       description: string | null,
       courseWeekID: string | null,
       courseWeek:  {
@@ -12190,6 +12208,7 @@ export type GetCourseLessonCompletionQuery = {
       tz: string | null,
       duration: string | null,
       zoomUrl: string | null,
+      zoomRecording: string | null,
       description: string | null,
       courseWeekID: string | null,
       courseWeek:  {
@@ -12344,6 +12363,7 @@ export type ListCourseLessonCompletionsQuery = {
         tz: string | null,
         duration: string | null,
         zoomUrl: string | null,
+        zoomRecording: string | null,
         description: string | null,
         courseWeekID: string | null,
         createdAt: string,
@@ -12413,6 +12433,7 @@ export type GetCourseAssignmentQuery = {
       tz: string | null,
       duration: string | null,
       zoomUrl: string | null,
+      zoomRecording: string | null,
       description: string | null,
       courseWeekID: string | null,
       courseWeek:  {
@@ -12469,6 +12490,7 @@ export type ListCourseAssignmentsQuery = {
         tz: string | null,
         duration: string | null,
         zoomUrl: string | null,
+        zoomRecording: string | null,
         description: string | null,
         courseWeekID: string | null,
         createdAt: string,
@@ -19779,6 +19801,7 @@ export type OnCreateCourseWeekSubscription = {
         tz: string | null,
         duration: string | null,
         zoomUrl: string | null,
+        zoomRecording: string | null,
         description: string | null,
         courseWeekID: string | null,
         createdAt: string,
@@ -19842,6 +19865,7 @@ export type OnUpdateCourseWeekSubscription = {
         tz: string | null,
         duration: string | null,
         zoomUrl: string | null,
+        zoomRecording: string | null,
         description: string | null,
         courseWeekID: string | null,
         createdAt: string,
@@ -19905,6 +19929,7 @@ export type OnDeleteCourseWeekSubscription = {
         tz: string | null,
         duration: string | null,
         zoomUrl: string | null,
+        zoomRecording: string | null,
         description: string | null,
         courseWeekID: string | null,
         createdAt: string,
@@ -19932,6 +19957,7 @@ export type OnCreateCourseLessonSubscription = {
     tz: string | null,
     duration: string | null,
     zoomUrl: string | null,
+    zoomRecording: string | null,
     description: string | null,
     courseWeekID: string | null,
     courseWeek:  {
@@ -20008,6 +20034,7 @@ export type OnUpdateCourseLessonSubscription = {
     tz: string | null,
     duration: string | null,
     zoomUrl: string | null,
+    zoomRecording: string | null,
     description: string | null,
     courseWeekID: string | null,
     courseWeek:  {
@@ -20084,6 +20111,7 @@ export type OnDeleteCourseLessonSubscription = {
     tz: string | null,
     duration: string | null,
     zoomUrl: string | null,
+    zoomRecording: string | null,
     description: string | null,
     courseWeekID: string | null,
     courseWeek:  {
@@ -20160,6 +20188,7 @@ export type OnCreateCourseLessonCompletionSubscription = {
       tz: string | null,
       duration: string | null,
       zoomUrl: string | null,
+      zoomRecording: string | null,
       description: string | null,
       courseWeekID: string | null,
       courseWeek:  {
@@ -20306,6 +20335,7 @@ export type OnUpdateCourseLessonCompletionSubscription = {
       tz: string | null,
       duration: string | null,
       zoomUrl: string | null,
+      zoomRecording: string | null,
       description: string | null,
       courseWeekID: string | null,
       courseWeek:  {
@@ -20452,6 +20482,7 @@ export type OnDeleteCourseLessonCompletionSubscription = {
       tz: string | null,
       duration: string | null,
       zoomUrl: string | null,
+      zoomRecording: string | null,
       description: string | null,
       courseWeekID: string | null,
       courseWeek:  {
@@ -20604,6 +20635,7 @@ export type OnCreateCourseAssignmentSubscription = {
       tz: string | null,
       duration: string | null,
       zoomUrl: string | null,
+      zoomRecording: string | null,
       description: string | null,
       courseWeekID: string | null,
       courseWeek:  {
@@ -20656,6 +20688,7 @@ export type OnUpdateCourseAssignmentSubscription = {
       tz: string | null,
       duration: string | null,
       zoomUrl: string | null,
+      zoomRecording: string | null,
       description: string | null,
       courseWeekID: string | null,
       courseWeek:  {
@@ -20708,6 +20741,7 @@ export type OnDeleteCourseAssignmentSubscription = {
       tz: string | null,
       duration: string | null,
       zoomUrl: string | null,
+      zoomRecording: string | null,
       description: string | null,
       courseWeekID: string | null,
       courseWeek:  {

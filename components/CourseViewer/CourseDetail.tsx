@@ -61,8 +61,18 @@ class CourseDetailImpl extends JCComponent<Props>{
     </Text>)
   }
   renderZoomConfig(state, actions, lesson, item): React.ReactNode {
-    return (<>
-      <Text style={{ fontSize: 16, lineHeight: 26, fontFamily: 'Graphik-Bold-App', alignSelf: 'flex-start' }}>Zoom time:
+    return (
+      <Container style={state.isEditable && state.editMode ? { flexDirection: "column", marginTop: 10, height: "unset" } : { flexDirection: "column", height: "unset" }}>
+        <EditableUrl title="Open in Zoom"
+          onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "zoomUrl", e) }}
+          placeholder="Enter Event URL" multiline={false} textStyle={this.styles.style.editableURLText}
+          inputStyle={this.styles.style.courseEditableURL} value={item.zoomUrl}
+          isEditable={state.isEditable && state.editMode}></EditableUrl>
+        <EditableUrl title="Zoom Recording"
+          onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "zoomRecording", e) }}
+          placeholder="Enter Recording URL" multiline={false} textStyle={this.styles.style.editableURLText}
+          inputStyle={this.styles.style.courseEditableURL} value={item.zoomRecording}
+          isEditable={state.isEditable && state.editMode}></EditableUrl>
         <EditableDate type="datetime"
           onChange={(time: any, timeZone: any) => { actions.updateLesson(state.activeWeek, lesson, "time", time); actions.updateLesson(state.activeWeek, lesson, "tz", timeZone) }}
           placeholder="Enter Zoom Date/Time"
@@ -72,17 +82,9 @@ class CourseDetailImpl extends JCComponent<Props>{
           tz={item.tz ? item.tz : moment.tz.guess()}
           isEditable={state.isEditable && state.editMode}>
         </EditableDate>
+      </Container>
 
-      </Text>
-      <Text style={{ fontSize: 16, lineHeight: 26, fontFamily: 'Graphik-Bold-App', alignSelf: 'flex-start' }}>Zoom link:
-      <EditableUrl title="Open in Zoom"
-          onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "zoomUrl", e) }}
-          placeholder="Enter Event URL" multiline={false} textStyle={this.styles.style.editableURLText}
-          inputStyle={this.styles.style.eventEditableURL} value={item.zoomUrl}
-          isEditable={state.isEditable && state.editMode}></EditableUrl>
-
-      </Text>
-    </>)
+    )
   }
   renderWeekDetails(state, actions, week): React.ReactNode {
     //console.log(this.state.activeLesson)
@@ -121,9 +123,9 @@ class CourseDetailImpl extends JCComponent<Props>{
                   <TouchableOpacity key={lesson} onPress={() => { actions.setActiveLesson(lesson) }}>
                     <Card style={state.isEditable && state.editMode ?
                       this.styles.style.courseDetailLessonCardEdit : this.styles.style.courseDetailLessonCardNoEdit}>
-                      <Container style={{ flexDirection: "row", minHeight: "40px", maxHeight: "110px" }}>
+                      <Container style={{ flexDirection: "row", minHeight: "40px", height: "unset" }}>
                         <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 25, alignSelf: 'center' }}>MON</Text>
-                        <Container style={{ flexDirection: "column", height: "110px", alignSelf: 'center' }}>
+                        <Container style={{ flexDirection: "column", alignSelf: 'center', height: "unset" }}>
 
                           <EditableText onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "name", e) }}
                             placeholder="Title" multiline={true}
@@ -132,8 +134,8 @@ class CourseDetailImpl extends JCComponent<Props>{
                             inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 0, marginBottom: 10, width: "100%", paddingTop: 5, paddingRight: 5, paddingBottom: 5, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, height: 30 }}
                             value={item.name} isEditable={state.isEditable && state.editMode}></EditableText>
 
-                          <Container style={{ flexDirection: "row", height: 'auto' }}>
-                            <Text style={{ alignSelf: 'center', marginRight: 30 }}>
+                          <Container style={{ flexDirection: "row", height: "unset" }}>
+                            <Text style={{ marginRight: 30 }}>
                               {state.isEditable ?
                                 null
                                 : <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }} source={require('../../assets/svg/time.svg')} />
@@ -183,16 +185,13 @@ class CourseDetailImpl extends JCComponent<Props>{
                                   source={require('../../assets/svg/document.svg')} />Zoom</Text>)
                             }
                           </Container>
-                          <Container style={state.isEditable && state.editMode ? { flexDirection: "row", marginTop: 10 } : { flexDirection: "row" }}>
-                            <>
-                              {{
-                                'assignment': (this.renderAssignmentConfig(state, actions, lesson, item)),
-                                'respond': (this.renderResponseConfig(state, actions, lesson, item)),
-                                'zoom': (this.renderZoomConfig(state, actions, lesson, item))
-                              }[item.lessonType] || (this.renderZoomConfig(state, actions, lesson, item))
-                              }
-                            </>
-                          </Container>
+                          {{
+                            'assignment': (this.renderAssignmentConfig(state, actions, lesson, item)),
+                            'respond': (this.renderResponseConfig(state, actions, lesson, item)),
+                            'zoom': (this.renderZoomConfig(state, actions, lesson, item))
+                          }[item.lessonType] || (this.renderZoomConfig(state, actions, lesson, item))
+                          }
+
 
                         </Container>
                         <Text style={{ fontSize: 12, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#FFF', marginLeft: 30, marginRight: 15, paddingLeft: 10, paddingRight: 10, textTransform: 'uppercase', backgroundColor: '#71C209', borderRadius: 50, height: 20, alignSelf: 'center' }}>Completed</Text>
@@ -230,6 +229,9 @@ class CourseDetailImpl extends JCComponent<Props>{
         : null
     )
   }
+  navigate(id) {
+    window.location.href = id
+  }
   renderZoom(state, actions, week, lesson) {
     return (
       <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
@@ -238,7 +240,8 @@ class CourseDetailImpl extends JCComponent<Props>{
         <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.date}</Text>
         <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333', marginBottom: 20 }}>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
         <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.time}</Text>
-        <JCButton buttonType={ButtonTypes.Outline} onPress={() => { actions.joinZoom(lesson.zoomURL) }}>Join Zoom Meeting</JCButton>
+        {lesson.zoomURL && lesson.zoomURL != "" ? <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.navigate(lesson.zoomURL) }}>Join Zoom Meeting</JCButton> : null}
+        {lesson.zoomRecording && lesson.zoomRecording != "" ? <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.navigate(lesson.zoomRecording) }}>Watch Zoom Recording</JCButton> : null}
         <EditableRichText onChange={(val) => { actions.updateLesson(state.activeWeek, state.activeLesson, "description", val) }}
           value={lesson.description}
           isEditable={true}
@@ -249,11 +252,10 @@ class CourseDetailImpl extends JCComponent<Props>{
     return (
       <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
         <JCButton buttonType={ButtonTypes.Outline} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
-        <Text>{week.week}</Text>
-        <Text>{week.date}</Text>
-        <Text>{week.leader}</Text>
-        <Text>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
-        <Text>{lesson.time}</Text>
+        <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{week.name}</Text>
+        <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.date}</Text>
+        <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333', marginBottom: 20 }}>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
+        <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.time}</Text>
         <EditableRichText onChange={(val) => { actions.updateLesson(state.activeWeek, state.activeLesson, "description", val) }}
           value={lesson.description}
           isEditable={true}
@@ -264,11 +266,10 @@ class CourseDetailImpl extends JCComponent<Props>{
     return (
       <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
         <JCButton buttonType={ButtonTypes.Outline} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
-        <Text>{week.week}</Text>
-        <Text>{week.date}</Text>
-        <Text>{week.leader}</Text>
-        <Text>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
-        <Text>{lesson.time}</Text>
+        <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{week.name}</Text>
+        <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.date}</Text>
+        <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333', marginBottom: 20 }}>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
+        <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.time}</Text>
         <EditableRichText onChange={(val) => { actions.updateLesson(state.activeWeek, state.activeLesson, "description", val) }}
           value={lesson.description}
           isEditable={true}
