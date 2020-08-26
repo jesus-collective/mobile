@@ -73,7 +73,7 @@ export default class EditableDate extends JCComponent<Props> {
         if (this.props.isEditable) {
             if (this.props.type == 'datetime')
                 return (
-                    <Container style={{ maxHeight: 30 }}>
+                    <Container style={{ height: "unset" }}>
                         <ThemeProvider theme={materialTheme}>
                             <KeyboardDateTimePicker
                                 variant="inline"
@@ -92,7 +92,14 @@ export default class EditableDate extends JCComponent<Props> {
                                 mode="dropdown"
                                 style={{ width: "75%", marginBottom: 15, marginTop: 15, fontSize: 16, height: 30, flexGrow: 0, paddingTop: 3, paddingBottom: 3 }}
                                 selectedValue={this.props.tz}
+                                placeholder="Timezone"
+                                placeholderStyle={{ color: "#bfc6ea" }}
+                                placeholderIconColor="#007aff"
                                 onValueChange={value => this.onTzChanged(value)}
+                                onStartShouldSetResponder={() => true}
+                                onMoveShouldSetResponderCapture={() => true}
+                                onStartShouldSetResponderCapture={() => true}
+                                onMoveShouldSetResponder={() => true}
                             >
                                 {moment.tz.names().map((item, index) => {
                                     return <Picker.Item key={index} label={item} value={item}></Picker.Item>
@@ -104,13 +111,12 @@ export default class EditableDate extends JCComponent<Props> {
                 )
             else
                 return (
-                    <Container style={{ maxHeight: 100 }}>
+                    <Container style={{ height: "unset" }}>
                         <ThemeProvider theme={materialTheme}>
                             <KeyboardDatePicker
-                                variant="inline"
-                                format='MMMM Do YYYY, h:mm a'
-                                placeholder={this.props.placeholder}
 
+                                format='MMMM Do YYYY'
+                                placeholder={this.props.placeholder}
                                 value={(this.props.value == null || this.props.tz == null) ? moment.now() : moment(this.props.value).tz(this.props.tz)}
                                 onChange={(value) => { this.onChanged(value, this.props.tz) }}
                                 onError={console.log}
@@ -119,9 +125,17 @@ export default class EditableDate extends JCComponent<Props> {
                             />
                             <Picker
                                 mode="dropdown"
-                                style={{ width: "75%", marginBottom: 30, marginTop: 30, fontSize: 16, height: 30, flexGrow: 0 }}
+                                style={{ width: "75%", marginBottom: 15, marginTop: 15, fontSize: 16, height: 30, flexGrow: 0, paddingTop: 3, paddingBottom: 3 }}
                                 selectedValue={this.props.tz}
+                                placeholder="Timezone"
+                                placeholderStyle={{ color: "#bfc6ea" }}
+                                placeholderIconColor="#007aff"
+                                // style={{ width: "75%", marginBottom: 30, marginTop: 30, fontSize: 16, height: 30, flexGrow: 0 }}
                                 onValueChange={value => this.onTzChanged(value)}
+                                onStartShouldSetResponder={() => true}
+                                onMoveShouldSetResponderCapture={() => true}
+                                onStartShouldSetResponderCapture={() => true}
+                                onMoveShouldSetResponder={() => true}
                             >
                                 {moment.tz.names().map((item, index) => {
                                     return <Picker.Item key={index} label={item} value={item}></Picker.Item>
@@ -132,10 +146,21 @@ export default class EditableDate extends JCComponent<Props> {
                 )
         }
         else
-            return <Text style={{ fontSize: 16, lineHeight: 26, fontFamily: 'Graphik-Regular-App', width: '90%', marginBottom: 20, marginTop: 20 }}>
-                {moment.tz(this.props.value, this.props.tz).format('dddd, MMMM D, YYYY @ h:mm a')}
+            if (this.props.type == 'datetime')
+                return (
+                    <Text style={{ fontSize: 16, lineHeight: 26, fontFamily: 'Graphik-Regular-App', width: '90%', marginBottom: 20, marginTop: 20 }}>
+                        {moment.tz(this.props.value, this.props.tz).format('dddd, MMMM D, YYYY @ h:mm a')}
                     &nbsp;
-                {moment.tz.zone(this.props.tz).abbr(+moment(this.props.value).format('x'))}
-            </Text >
+                        {moment.tz.zone(this.props.tz).abbr(+moment(this.props.value).format('x'))}
+                    </Text >
+                )
+            else
+                return (
+                    <Text style={{ fontSize: 16, lineHeight: 26, fontFamily: 'Graphik-Regular-App', width: '90%', marginBottom: 20, marginTop: 20 }}>
+                        {moment.tz(this.props.value, this.props.tz).format('dddd, MMMM D')}
+                    &nbsp;
+                        {moment.tz.zone(this.props.tz).abbr(+moment(this.props.value).format('x'))}
+                    </Text >
+                )
     }
 }

@@ -1,8 +1,7 @@
 import React from 'react';
-
-import { Input, Button } from 'native-base';
-import { Text } from 'react-native'
-import JCComponent, { JCState } from '../JCComponent/JCComponent';
+import { Text, TextInput } from 'react-native'
+import { Button } from 'native-base';
+import JCComponent from '../JCComponent/JCComponent';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
 interface Props {
@@ -17,27 +16,8 @@ interface Props {
     navigation?: any
     route?: any
 }
-interface State extends JCState {
-    // value: string,
-    isEditable: boolean,
-    textStyle: any,
-    inputStyle: any,
-    multiline: boolean,
-    placeholder: string
-}
-class EditableUrlImpl extends JCComponent<Props, State> {
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            ...super.getInitialState(),
-            isEditable: props.isEditable,
-            textStyle: props.textStyle,
-            inputStyle: props.inputStyle,
-            multiline: props.multiline,
-            placeholder: props.placeholder
-        }
-        // console.log(props)
-    }
+class EditableUrlImpl extends JCComponent<Props> {
+
     onChanged(val: any) {
         this.props.onChange(val.target.value)
     }
@@ -50,10 +30,18 @@ class EditableUrlImpl extends JCComponent<Props, State> {
     render() {
 
 
-        if (this.state.isEditable)
-            return <Input onChange={(value) => { this.onChanged(value) }} placeholder={this.state.placeholder} multiline={this.state.multiline} style={this.state.inputStyle} value={this.props.value}></Input>
+        if (this.props.isEditable)
+            return <TextInput
+                onChange={(value) => { this.onChanged(value) }}
+                placeholder={this.props.placeholder}
+                multiline={this.props.multiline}
+                onStartShouldSetResponder={() => true}
+                onMoveShouldSetResponderCapture={() => true}
+                onStartShouldSetResponderCapture={() => true}
+                onMoveShouldSetResponder={() => true}
+                style={this.props.inputStyle} value={this.props.value}></TextInput>
         else
-            return <Button style={{ paddingTop: 6, paddingBottom: 6, paddingLeft: 29, paddingRight: 29, marginBottom: 20, marginLeft: 0, marginRight: 0, backgroundColor: "#F0493E", borderWidth: 1, borderColor: "#F0493E", borderRadius: 4 }} onPress={() => { this.navigate(this.props.value) }}><Text style={this.state.textStyle}>{this.props.title}</Text></Button>
+            return <Button style={{ paddingTop: 6, paddingBottom: 6, paddingLeft: 29, paddingRight: 29, marginBottom: 20, marginLeft: 0, marginRight: 0, backgroundColor: "#F0493E", borderWidth: 1, borderColor: "#F0493E", borderRadius: 4 }} onPress={() => { this.navigate(this.props.value) }}><Text style={this.props.textStyle}>{this.props.title}</Text></Button>
     }
 }
 

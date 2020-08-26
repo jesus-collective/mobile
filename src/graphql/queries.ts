@@ -1684,6 +1684,7 @@ export const getCourseWeek = /* GraphQL */ `
           time
           tz
           duration
+          zoomUrl
           description
           courseWeekID
           createdAt
@@ -1743,6 +1744,7 @@ export const getCourseLesson = /* GraphQL */ `
       time
       tz
       duration
+      zoomUrl
       description
       courseWeekID
       courseWeek {
@@ -1812,6 +1814,7 @@ export const listCourseLessons = /* GraphQL */ `
         time
         tz
         duration
+        zoomUrl
         description
         courseWeekID
         courseWeek {
@@ -1852,6 +1855,7 @@ export const getCourseLessonCompletion = /* GraphQL */ `
         time
         tz
         duration
+        zoomUrl
         description
         courseWeekID
         courseWeek {
@@ -1989,6 +1993,7 @@ export const listCourseLessonCompletions = /* GraphQL */ `
           time
           tz
           duration
+          zoomUrl
           description
           courseWeekID
           createdAt
@@ -2051,6 +2056,7 @@ export const getCourseAssignment = /* GraphQL */ `
         time
         tz
         duration
+        zoomUrl
         description
         courseWeekID
         courseWeek {
@@ -2103,6 +2109,7 @@ export const listCourseAssignments = /* GraphQL */ `
           time
           tz
           duration
+          zoomUrl
           description
           courseWeekID
           createdAt

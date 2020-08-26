@@ -107,6 +107,7 @@ query GetCourseInfo($id: ID!) {
             id
             lesson
             lessonType
+            zoomUrl
             name
             time
             tz
