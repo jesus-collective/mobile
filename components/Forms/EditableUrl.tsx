@@ -1,14 +1,14 @@
 import React from 'react';
-import { Text, TextInput } from 'react-native'
-import { Button } from 'native-base';
+import { TextInput } from 'react-native'
 import JCComponent from '../JCComponent/JCComponent';
+import JCButton, { ButtonTypes } from '../Forms/JCButton';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
 interface Props {
     value: string,
     title: string,
     isEditable: boolean,
-    textStyle: any,
+    textStyle: ButtonTypes,
     inputStyle?: any,
     multiline: boolean,
     placeholder?: string,
@@ -46,12 +46,11 @@ class EditableUrlImpl extends JCComponent<Props> {
             )
         else
             return (
-                this.props.value && this.props.value != "" ? <Button
-                    style={{ paddingTop: 6, paddingBottom: 6, paddingLeft: 29, paddingRight: 29, marginBottom: 20, marginLeft: 0, marginRight: 0, backgroundColor: "#F0493E", borderWidth: 1, borderColor: "#F0493E", borderRadius: 4 }}
+                this.props.value && this.props.value != "" ? <JCButton
+                    buttonType={this.props.textStyle}
                     onPress={() => { this.navigate(this.props.value) }}>
-                    <Text style={this.props.textStyle}>{this.props.title}
-                    </Text>
-                </Button >
+                    {this.props.title}
+                </JCButton >
                     : null
             )
     }

@@ -33,8 +33,9 @@ class CourseDetailImpl extends JCComponent<Props>{
   }
   static Consumer = CourseContext.Consumer;
   renderAssignmentConfig(state, actions, lesson, item): React.ReactNode {
-    return (
-      <Text style={{ fontSize: 16, lineHeight: 26, fontFamily: 'Graphik-Bold-App', alignSelf: 'flex-start' }}>Due date:
+    return (<Container style={state.isEditable && state.editMode ? { flexDirection: "column", marginTop: 10, height: "unset" } : { flexDirection: "column", height: "unset" }}>
+
+      {state.isEditable && state.editMode ?
         <EditableDate type="datetime"
           onChange={(time: any, timeZone: any) => { actions.updateLesson(state.activeWeek, lesson, "time", time); actions.updateLesson(state.activeWeek, lesson, "tz", timeZone) }}
           placeholder="Enter Assignment Due Date/Time"
@@ -44,47 +45,81 @@ class CourseDetailImpl extends JCComponent<Props>{
           tz={item.tz ? item.tz : moment.tz.guess()}
           isEditable={state.isEditable && state.editMode}>
         </EditableDate>
-      </Text>)
+        : null}
+    </Container>
+    )
   }
   renderResponseConfig(state, actions, lesson, item): React.ReactNode {
-    return (<Text>Response date:
-      <EditableDate type="datetime"
-        onChange={(time: any, timeZone: any) => { actions.updateLesson(state.activeWeek, lesson, "time", time); actions.updateLesson(state.activeWeek, lesson, "tz", timeZone) }}
-        placeholder="Enter Response Due Date/Time"
-        textStyle={this.styles.style.fontRegular}
-        inputStyle={this.styles.style.groupNameInput}
-        value={item.time}
-        tz={item.tz ? item.tz : moment.tz.guess()}
-        isEditable={state.isEditable && state.editMode}>
+    return (<Container style={state.isEditable && state.editMode ? { flexDirection: "column", marginTop: 10, height: "unset" } : { flexDirection: "column", height: "unset" }}>
 
-      </EditableDate>
-    </Text>)
+      {state.isEditable && state.editMode ?
+        <EditableDate type="datetime"
+          onChange={(time: any, timeZone: any) => { actions.updateLesson(state.activeWeek, lesson, "time", time); actions.updateLesson(state.activeWeek, lesson, "tz", timeZone) }}
+          placeholder="Enter Response Due Date/Time"
+          textStyle={this.styles.style.fontRegular}
+          inputStyle={this.styles.style.groupNameInput}
+          value={item.time}
+          tz={item.tz ? item.tz : moment.tz.guess()}
+          isEditable={state.isEditable && state.editMode}>
+
+        </EditableDate>
+        : null}
+    </Container>
+    )
   }
   renderZoomConfig(state, actions, lesson, item): React.ReactNode {
     return (
       <Container style={state.isEditable && state.editMode ? { flexDirection: "column", marginTop: 10, height: "unset" } : { flexDirection: "column", height: "unset" }}>
         <EditableUrl title="Open in Zoom"
           onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "zoomUrl", e) }}
-          placeholder="Enter Event URL" multiline={false} textStyle={this.styles.style.editableURLText}
+          placeholder="Enter Event URL" multiline={false} textStyle={ButtonTypes.Solid}
           inputStyle={this.styles.style.courseEditableURL} value={item.zoomUrl}
           isEditable={state.isEditable && state.editMode}></EditableUrl>
         <EditableUrl title="Zoom Recording"
           onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "zoomRecording", e) }}
-          placeholder="Enter Recording URL" multiline={false} textStyle={this.styles.style.editableURLText}
+          placeholder="Enter Recording URL" multiline={false} textStyle={ButtonTypes.Solid}
           inputStyle={this.styles.style.courseEditableURL} value={item.zoomRecording}
           isEditable={state.isEditable && state.editMode}></EditableUrl>
-        <EditableDate type="datetime"
-          onChange={(time: any, timeZone: any) => { actions.updateLesson(state.activeWeek, lesson, "time", time); actions.updateLesson(state.activeWeek, lesson, "tz", timeZone) }}
-          placeholder="Enter Zoom Date/Time"
-          textStyle={this.styles.style.fontRegular}
-          inputStyle={this.styles.style.groupNameInput}
-          value={item.time}
-          tz={item.tz ? item.tz : moment.tz.guess()}
-          isEditable={state.isEditable && state.editMode}>
-        </EditableDate>
+        {state.isEditable && state.editMode ?
+          <EditableDate type="datetime"
+            onChange={(time: any, timeZone: any) => { actions.updateLesson(state.activeWeek, lesson, "time", time); actions.updateLesson(state.activeWeek, lesson, "tz", timeZone) }}
+            placeholder="Enter Zoom Date/Time"
+            textStyle={this.styles.style.fontRegular}
+            inputStyle={this.styles.style.groupNameInput}
+            value={item.time}
+            tz={item.tz ? item.tz : moment.tz.guess()}
+            isEditable={state.isEditable && state.editMode}>
+          </EditableDate> : null}
       </Container>
 
     )
+  }
+  getMonth(week, item, lesson) {
+    if (item.time && item.tz)
+      if (moment.tz(item.time, item.tz).format('MMM DD') == "Invalid date")
+        return "??"
+      else
+        return moment.tz(item.time, item.tz).format('MMM DD')
+    else
+      if (moment.tz(week.date, week.tz).add(lesson, 'days').format('MMM DD') == "Invalid date")
+        return "??"
+      else
+        return moment.tz(week.date, week.tz).add(lesson, 'days').format('MMM DD')
+  }
+  getDay(week, item, lesson) {
+    if (item.time && item.tz)
+      if (moment.tz(item.time, item.tz).format('H:mm') == "Invalid date")
+        return "??"
+      else
+        return moment.tz(item.time, item.tz).format('H:mm') + " " +
+          moment.tz.zone(item.tz).abbr(+moment(item.time).format('x'))
+    else
+      if (moment.tz(week.date, week.tz).add(lesson, 'days').format('H:mm') == "Invalid date")
+        return "??"
+      else
+        return moment.tz(week.date, week.tz).add(lesson, 'days').format('H:mm') + " " +
+          moment.tz.zone(week.tz).abbr(+moment(week.date).format('x'))
+
   }
   renderWeekDetails(state, actions, week): React.ReactNode {
     //console.log(this.state.activeLesson)
@@ -124,8 +159,11 @@ class CourseDetailImpl extends JCComponent<Props>{
                     <Card style={state.isEditable && state.editMode ?
                       this.styles.style.courseDetailLessonCardEdit : this.styles.style.courseDetailLessonCardNoEdit}>
                       <Container style={{ flexDirection: "row", minHeight: "40px", height: "unset" }}>
-                        <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 25, alignSelf: 'center' }}>MON</Text>
-                        <Container style={{ flexDirection: "column", alignSelf: 'center', height: "unset" }}>
+                        <Container style={{ flexDirection: "column", height: "unset", width: "unset", alignSelf: "center", flex: 2 }}>
+                          <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 0, alignSelf: 'center' }}>{this.getMonth(week, item, lesson)}</Text>
+                          <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 0, alignSelf: 'center' }}>{this.getDay(week, item, lesson)}</Text>
+                        </Container>
+                        <Container style={{ flexDirection: "column", flex: 10, alignSelf: 'center', height: "unset" }}>
 
                           <EditableText onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "name", e) }}
                             placeholder="Title" multiline={true}

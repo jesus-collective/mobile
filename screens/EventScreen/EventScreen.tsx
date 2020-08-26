@@ -440,7 +440,7 @@ export default class EventScreen extends JCComponent<Props, State>{
                   {this.state.data.eventType != "location" ?
                     <EditableUrl title={this.state.data.eventType == "eventbrite" ? "Open in Eventbrite" : "Open in Zoom"}
                       onChange={(value: any) => { this.updateValue("eventUrl", value) }}
-                      placeholder="Enter Event URL" multiline={false} textStyle={this.styles.style.editableURLText}
+                      placeholder="Enter Event URL" multiline={false} textStyle={ButtonTypes.Solid}
                       inputStyle={this.styles.style.eventEditableURL} value={this.state.data.eventUrl}
                       isEditable={this.state.isEditable}></EditableUrl>
                     :
