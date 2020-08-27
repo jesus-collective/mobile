@@ -146,7 +146,7 @@ class CourseHomeImpl extends JCComponent<Props>{
 
                                   {state.isEditable ?
                                     (<>
-                                      <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Triads:</Text>
+                                      <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Learning Groups:</Text>
 
                                       {state.courseData?.triads?.items.map((item, index) => {
                                         const coaches = item.coaches.items.map((item) => { return item.user })
@@ -158,7 +158,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                           <Card key={index} style={{}}>
                                             <CardItem>
                                               <Left>
-                                                <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 20 }}>Coach</Text>
+                                                <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 20 }}>Facilitator</Text>
                                               </Left>
                                               <Right>
                                                 <TouchableOpacity style={this.styles.style.courseHomeDeleteTriad} onPress={() => { actions.deleteTriad(index) }}>
@@ -178,7 +178,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                                 value={coaches ? coaches : []} isEditable={true}></EditableUsers>
                                             </CardItem>
                                             <CardItem>
-                                              <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Triad</Text>
+                                              <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Learning Group</Text>
                                             </CardItem>
                                             <CardItem>
                                               <EditableUsers
@@ -196,7 +196,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                       })
                                       }
                                       <TouchableOpacity style={{ marginTop: 30 }} onPress={() => { actions.createTriad() }}>
-                                        <Card><Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', paddingLeft: 5, paddingTop: 6, paddingBottom: 6 }}>Add Triad</Text></Card>
+                                        <Card><Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', paddingLeft: 5, paddingTop: 6, paddingBottom: 6 }}>Add Learning Group</Text></Card>
                                       </TouchableOpacity>
                                     </>)
                                     : (null)
@@ -206,22 +206,22 @@ class CourseHomeImpl extends JCComponent<Props>{
                               </>
                               :
                               <>
-                                <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Coach</Text>
+                                <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Facilitator</Text>
                                 {
                                   actions.myCourseGroups().coach ?
                                     actions.myCourseGroups().coach.map((user) => {
                                       return this.renderProfileCard(user)
                                     })
                                     :
-                                    <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginTop: 70, width: '90%' }}>You have not been assigned a coach yet</Text>
+                                    <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginTop: 70, width: '90%' }}>You have not been assigned a facilitator yet</Text>
                                 }
-                                <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Triad</Text>
+                                <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Learning Group</Text>
                                 {
                                   actions.myCourseGroups().triad ?
                                     actions.myCourseGroups().triad.map((user) => {
                                       return this.renderProfileCard(user)
                                     }) :
-                                    <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginTop: 70, width: '90%' }}>You have not been assigned a triad yet</Text>
+                                    <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginTop: 70, width: '90%' }}>You have not been assigned a learning group yet</Text>
                                 }
                                 <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Cohort</Text>
                                 {
@@ -230,7 +230,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                       return this.renderProfileCard(user)
                                     })
                                     :
-                                    <Text>You have not been assigned a triad yet</Text>
+                                    <Text>You have not been assigned a learning group yet</Text>
                                 }
                               </>
                             }
@@ -240,7 +240,7 @@ class CourseHomeImpl extends JCComponent<Props>{
 
                           <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30, width: '90%' }}>To-Do</Text>
                           <Card style={this.styles.style.courseHomeCoachingCard}>
-                            <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App' }}>Coaching call with {state.coachName}</Text>
+                            <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App' }}>Call with {state.coachName}</Text>
                           </Card>
 
                           <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 50, width: '90%' }}>My Calendar</Text>
