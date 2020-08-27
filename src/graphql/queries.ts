@@ -170,6 +170,111 @@ export const getUser = /* GraphQL */ `
         }
         nextToken
       }
+      courseAssignments {
+        id
+        courseAssignmentID
+        courseAssignment {
+          id
+          assignmentLessonID
+          responseLessonID
+          description
+          createdAt
+          updatedAt
+        }
+        userID
+        user {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+        responses {
+          nextToken
+        }
+        submissionText
+        status
+        createdAt
+        updatedAt
+      }
+      courseResponses {
+        id
+        courseAssignmentSubmissionID
+        courseAssignmentSubmission {
+          id
+          courseAssignmentID
+          userID
+          submissionText
+          status
+          createdAt
+          updatedAt
+        }
+        userID
+        user {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+        responseText
+        createdAt
+        updatedAt
+      }
       alertConfig {
         emailDirectMessage
         emailGroupMessage
@@ -264,6 +369,23 @@ export const listUsers = /* GraphQL */ `
         }
         courseInstructing {
           nextToken
+        }
+        courseAssignments {
+          id
+          courseAssignmentID
+          userID
+          submissionText
+          status
+          createdAt
+          updatedAt
+        }
+        courseResponses {
+          id
+          courseAssignmentSubmissionID
+          userID
+          responseText
+          createdAt
+          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -360,6 +482,23 @@ export const getGroup = /* GraphQL */ `
         }
         courseInstructing {
           nextToken
+        }
+        courseAssignments {
+          id
+          courseAssignmentID
+          userID
+          submissionText
+          status
+          createdAt
+          updatedAt
+        }
+        courseResponses {
+          id
+          courseAssignmentSubmissionID
+          userID
+          responseText
+          createdAt
+          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -1196,6 +1335,23 @@ export const getCourseInstructors = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        courseAssignments {
+          id
+          courseAssignmentID
+          userID
+          submissionText
+          status
+          createdAt
+          updatedAt
+        }
+        courseResponses {
+          id
+          courseAssignmentSubmissionID
+          userID
+          responseText
+          createdAt
+          updatedAt
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -1383,6 +1539,23 @@ export const getCourseTriadCoaches = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        courseAssignments {
+          id
+          courseAssignmentID
+          userID
+          submissionText
+          status
+          createdAt
+          updatedAt
+        }
+        courseResponses {
+          id
+          courseAssignmentSubmissionID
+          userID
+          responseText
+          createdAt
+          updatedAt
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -1564,6 +1737,23 @@ export const getCourseTriadUsers = /* GraphQL */ `
         }
         courseInstructing {
           nextToken
+        }
+        courseAssignments {
+          id
+          courseAssignmentID
+          userID
+          submissionText
+          status
+          createdAt
+          updatedAt
+        }
+        courseResponses {
+          id
+          courseAssignmentSubmissionID
+          userID
+          responseText
+          createdAt
+          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -1775,17 +1965,6 @@ export const getCourseLesson = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      assignments {
-        items {
-          id
-          assignment
-          due
-          description
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       completions {
         items {
           id
@@ -1832,9 +2011,6 @@ export const listCourseLessons = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        assignments {
-          nextToken
-        }
         completions {
           nextToken
         }
@@ -1873,9 +2049,6 @@ export const getCourseLessonCompletion = /* GraphQL */ `
           courseInfoID
           createdAt
           updatedAt
-        }
-        assignments {
-          nextToken
         }
         completions {
           nextToken
@@ -1957,6 +2130,23 @@ export const getCourseLessonCompletion = /* GraphQL */ `
         }
         courseInstructing {
           nextToken
+        }
+        courseAssignments {
+          id
+          courseAssignmentID
+          userID
+          submissionText
+          status
+          createdAt
+          updatedAt
+        }
+        courseResponses {
+          id
+          courseAssignmentSubmissionID
+          userID
+          responseText
+          createdAt
+          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -2050,42 +2240,21 @@ export const getCourseAssignment = /* GraphQL */ `
   query GetCourseAssignment($id: ID!) {
     getCourseAssignment(id: $id) {
       id
-      assignment
-      due
-      description
-      courseLesson {
-        id
-        lesson
-        lessonType
-        name
-        time
-        tz
-        duration
-        zoomUrl
-        zoomRecording
-        description
-        courseWeekID
-        courseWeek {
+      assignmentLessonID
+      responseLessonID
+      submissions {
+        items {
           id
-          week
-          date
-          tz
-          name
-          title
-          leader
-          courseInfoID
+          courseAssignmentID
+          userID
+          submissionText
+          status
           createdAt
           updatedAt
         }
-        assignments {
-          nextToken
-        }
-        completions {
-          nextToken
-        }
-        createdAt
-        updatedAt
+        nextToken
       }
+      description
       createdAt
       updatedAt
     }
@@ -2104,24 +2273,454 @@ export const listCourseAssignments = /* GraphQL */ `
     ) {
       items {
         id
-        assignment
-        due
+        assignmentLessonID
+        responseLessonID
+        submissions {
+          nextToken
+        }
         description
-        courseLesson {
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getCourseAssignmentSubmission = /* GraphQL */ `
+  query GetCourseAssignmentSubmission($id: ID!) {
+    getCourseAssignmentSubmission(id: $id) {
+      id
+      courseAssignmentID
+      courseAssignment {
+        id
+        assignmentLessonID
+        responseLessonID
+        submissions {
+          nextToken
+        }
+        description
+        createdAt
+        updatedAt
+      }
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        completions {
+          nextToken
+        }
+        courseInstructing {
+          nextToken
+        }
+        courseAssignments {
           id
-          lesson
-          lessonType
-          name
-          time
-          tz
-          duration
-          zoomUrl
-          zoomRecording
-          description
-          courseWeekID
+          courseAssignmentID
+          userID
+          submissionText
+          status
           createdAt
           updatedAt
         }
+        courseResponses {
+          id
+          courseAssignmentSubmissionID
+          userID
+          responseText
+          createdAt
+          updatedAt
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+      responses {
+        items {
+          id
+          courseAssignmentSubmissionID
+          userID
+          responseText
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      submissionText
+      status
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listCourseAssignmentSubmissions = /* GraphQL */ `
+  query ListCourseAssignmentSubmissions(
+    $filter: ModelCourseAssignmentSubmissionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCourseAssignmentSubmissions(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        courseAssignmentID
+        courseAssignment {
+          id
+          assignmentLessonID
+          responseLessonID
+          description
+          createdAt
+          updatedAt
+        }
+        userID
+        user {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+        responses {
+          nextToken
+        }
+        submissionText
+        status
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getCourseResponseSubmission = /* GraphQL */ `
+  query GetCourseResponseSubmission($id: ID!) {
+    getCourseResponseSubmission(id: $id) {
+      id
+      courseAssignmentSubmissionID
+      courseAssignmentSubmission {
+        id
+        courseAssignmentID
+        courseAssignment {
+          id
+          assignmentLessonID
+          responseLessonID
+          description
+          createdAt
+          updatedAt
+        }
+        userID
+        user {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+        responses {
+          nextToken
+        }
+        submissionText
+        status
+        createdAt
+        updatedAt
+      }
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        completions {
+          nextToken
+        }
+        courseInstructing {
+          nextToken
+        }
+        courseAssignments {
+          id
+          courseAssignmentID
+          userID
+          submissionText
+          status
+          createdAt
+          updatedAt
+        }
+        courseResponses {
+          id
+          courseAssignmentSubmissionID
+          userID
+          responseText
+          createdAt
+          updatedAt
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+      responseText
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listCourseResponseSubmissions = /* GraphQL */ `
+  query ListCourseResponseSubmissions(
+    $filter: ModelCourseResponseSubmissionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCourseResponseSubmissions(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        courseAssignmentSubmissionID
+        courseAssignmentSubmission {
+          id
+          courseAssignmentID
+          userID
+          submissionText
+          status
+          createdAt
+          updatedAt
+        }
+        userID
+        user {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+        responseText
         createdAt
         updatedAt
       }
@@ -2208,6 +2807,23 @@ export const getDirectMessageUser = /* GraphQL */ `
         }
         courseInstructing {
           nextToken
+        }
+        courseAssignments {
+          id
+          courseAssignmentID
+          userID
+          submissionText
+          status
+          createdAt
+          updatedAt
+        }
+        courseResponses {
+          id
+          courseAssignmentSubmissionID
+          userID
+          responseText
+          createdAt
+          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -2449,6 +3065,23 @@ export const getDirectMessage = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        courseAssignments {
+          id
+          courseAssignmentID
+          userID
+          submissionText
+          status
+          createdAt
+          updatedAt
+        }
+        courseResponses {
+          id
+          courseAssignmentSubmissionID
+          userID
+          responseText
+          createdAt
+          updatedAt
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -2627,6 +3260,23 @@ export const getMessage = /* GraphQL */ `
         }
         courseInstructing {
           nextToken
+        }
+        courseAssignments {
+          id
+          courseAssignmentID
+          userID
+          submissionText
+          status
+          createdAt
+          updatedAt
+        }
+        courseResponses {
+          id
+          courseAssignmentSubmissionID
+          userID
+          responseText
+          createdAt
+          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -3959,6 +4609,23 @@ export const searchUsers = /* GraphQL */ `
         }
         courseInstructing {
           nextToken
+        }
+        courseAssignments {
+          id
+          courseAssignmentID
+          userID
+          submissionText
+          status
+          createdAt
+          updatedAt
+        }
+        courseResponses {
+          id
+          courseAssignmentSubmissionID
+          userID
+          responseText
+          createdAt
+          updatedAt
         }
         alertConfig {
           emailDirectMessage

@@ -1,5 +1,5 @@
 ﻿import React, { lazy } from 'react';
-import { StyleProvider, Card, CardItem, Container, Content, Picker, Icon } from 'native-base';
+import { StyleProvider, Card, Container, Content, Picker, Icon } from 'native-base';
 import { Text } from 'react-native'
 import JCButton, { ButtonTypes } from '../Forms/JCButton'
 

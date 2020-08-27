@@ -52,9 +52,9 @@ export default class EditableButton extends JCComponent<Props, State> {
     if (this.state.isEditable)
       if (this.state.isEditMode)
         return <Input
-          onBlur={(value) => { this.onChanged(value) }}
-          onSubmitEditing={(value) => { this.onChanged(value) }}
-          onChange={(val) => { this.setState({ value: val.target.value }) }}
+          onBlur={(value: any) => { this.onChanged(value) }}
+          onSubmitEditing={(value: any) => { this.onChanged(value) }}
+          onChange={(val: any) => { this.setState({ value: val.target.value }) }}
           placeholder={this.state.placeholder} style={this.state.inputStyle} value={this.state.value} ></Input >
       else
         return <Button onLongPress={() => { this.setState({ isEditMode: true }) }} transparent onPress={() => { this.props.onPress() }}><Text style={this.state.textStyle}>{this.props.value}</Text></Button>

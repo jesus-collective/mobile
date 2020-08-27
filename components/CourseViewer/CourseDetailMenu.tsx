@@ -1,4 +1,4 @@
-import { Header, Left, Body, Right, Button } from 'native-base';
+import { Header, Body, Right, Button } from 'native-base';
 
 import React from 'react';
 import { Text, Dimensions } from 'react-native';
