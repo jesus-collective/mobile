@@ -1586,6 +1586,26 @@ export default class MainStyles {
                 width: "30px", 
                 height: "30px"
             },
+            courseActivityDetails: {
+                flexDirection: "row", 
+                height: "unset", 
+                marginBottom: 12
+            },
+            courseCompletedCallOut: {
+                fontSize: 12, 
+                lineHeight: 21, 
+                fontFamily: 'Graphik-Bold-App', 
+                color: '#FFF', 
+                marginLeft: 30, 
+                marginRight: 15, 
+                paddingLeft: 10, 
+                paddingRight: 10, 
+                textTransform: 'uppercase', 
+                backgroundColor: '#71C209', 
+                borderRadius: 50, 
+                height: 20, 
+                alignSelf: 'center'
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -1951,6 +1971,16 @@ export default class MainStyles {
                 courseCheckmark: {
                     marginBottom: 15,
                     marginTop: 10,
+                },
+                courseDetailHeading: {
+                    textAlign: 'center',
+                },
+                courseActivityDetails: {
+                    alignSelf: 'center',
+                },
+                courseCompletedCallOut: {
+                    marginLeft: 0,
+                    marginRight: 0,
                 },
 
             },

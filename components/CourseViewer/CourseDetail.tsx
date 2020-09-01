@@ -172,7 +172,7 @@ class CourseDetailImpl extends JCComponent<Props>{
                             inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 0, marginBottom: 10, width: "100%", paddingTop: 5, paddingRight: 5, paddingBottom: 5, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, height: 30 }}
                             value={item.name} isEditable={state.isEditable && state.editMode}></EditableText>
 
-                          <Container style={{ flexDirection: "row", height: "unset", marginBottom: 12 }}>
+                          <Container style={this.styles.style.courseActivityDetails}>
                             <Text style={{ marginRight: 30, paddingTop: 4 }}>
                               {state.isEditable ?
                                 null
@@ -232,7 +232,7 @@ class CourseDetailImpl extends JCComponent<Props>{
 
 
                         </Container>
-                        <Text style={{ fontSize: 12, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#FFF', marginLeft: 30, marginRight: 15, paddingLeft: 10, paddingRight: 10, textTransform: 'uppercase', backgroundColor: '#71C209', borderRadius: 50, height: 20, alignSelf: 'center' }}>Completed</Text>
+                        <Text style={this.styles.style.courseCompletedCallOut}>Completed</Text>
                         <Text style={{ alignSelf: 'center' }}><Image style={this.styles.style.courseCheckmark} source={require('../../assets/svg/checkmark.svg')} /></Text>
                         {state.isEditable && state.editMode ?
                           <TouchableOpacity style={{ alignSelf: 'center', marginLeft: 15 }} onPress={() => { actions.deleteLesson(state.activeWeek, lesson) }}>
