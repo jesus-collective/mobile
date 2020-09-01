@@ -1909,6 +1909,20 @@ export default class MainStyles {
                 courseDetailRightContainer: {
                     flex: 40, 
                 },
+                courseDetailButtonTrio: {
+                    flexDirection: "column",
+                    paddingBottom: 90,
+                },
+                courseDetailJCButtonMini: {
+                    marginTop: 50,
+                },
+                coursePageMessageBoard: {
+                    flexDirection: 'column',
+                },
+                courseFormName: {
+                    marginTop: 10,
+                },
+
             },
 
             // Media Query Desktop Large Tablet
