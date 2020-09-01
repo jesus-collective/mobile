@@ -358,7 +358,7 @@ class CourseDetailImpl extends JCComponent<Props>{
                   <CourseDetailMenu></CourseDetailMenu>
                   <Container style={{ flex: 80 }}>
                     <Content style={{ flex: 85 }}>
-                      <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start', paddingLeft: '6%', paddingRight: '2%' }}>
+                      <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start', paddingLeft: '5%', paddingRight: '2%' }}>
 
                         {this.renderWeekDetails(state, actions, week)}
                         {this.renderLessonDetails(state, actions, week)}
