@@ -69,15 +69,15 @@ class CourseDetailImpl extends JCComponent<Props>{
   }
   renderZoomConfig(state, actions, lesson, item): React.ReactNode {
     return (
-      <Container style={state.isEditable && state.editMode ? { flexDirection: "column", marginTop: 10, height: "unset" } : { flexDirection: "column", height: "unset", marginTop: 15 }}>
+      <Container style={state.isEditable && state.editMode ? this.styles.style.courseActivityButtonEditable : this.styles.style.courseActivityButtonNonEditable}>
         <EditableUrl title="Open in Zoom"
           onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "zoomUrl", e) }}
-          placeholder="Enter Event URL" multiline={false} textStyle={ButtonTypes.Solid}
+          placeholder="Enter Event URL" multiline={false} textStyle={ButtonTypes.courseCardSolid}
           inputStyle={this.styles.style.courseEditableURL} value={item.zoomUrl}
           isEditable={state.isEditable && state.editMode}></EditableUrl>
         <EditableUrl title="Zoom Recording"
           onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "zoomRecording", e) }}
-          placeholder="Enter Recording URL" multiline={false} textStyle={ButtonTypes.Solid}
+          placeholder="Enter Recording URL" multiline={false} textStyle={ButtonTypes.courseCardSolid}
           inputStyle={this.styles.style.courseEditableURL} value={item.zoomRecording}
           isEditable={state.isEditable && state.editMode}></EditableUrl>
         {state.isEditable && state.editMode ?

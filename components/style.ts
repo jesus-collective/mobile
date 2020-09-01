@@ -1606,6 +1606,16 @@ export default class MainStyles {
                 height: 20, 
                 alignSelf: 'center'
             },
+            courseActivityButtonEditable: {
+                flexDirection: "column", 
+                marginTop: 10, 
+                height: "unset"
+            },
+            courseActivityButtonNonEditable: {
+                flexDirection: "column", 
+                height: "unset", 
+                marginTop: 15
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -1981,6 +1991,9 @@ export default class MainStyles {
                 courseCompletedCallOut: {
                     marginLeft: 0,
                     marginRight: 0,
+                },
+                courseActivityButtonNonEditable: {
+                    alignSelf: 'center'
                 },
 
             },

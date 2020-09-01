@@ -208,6 +208,28 @@ export default EStyleSheet.create({
         padding: 10,
         fontWeight: "600",
     },
+    courseCardSolidButton: {
+        paddingTop: 6,
+        paddingBottom: 6,
+        paddingLeft: 29,
+        paddingRight: 29,
+        marginBottom: 20,
+        marginLeft: 0,
+        marginRight: 0,
+        //   color:"#F0493E",
+        backgroundColor: "#F0493E",
+        borderWidth: 1,
+        borderColor: "#F0493E",
+        boxShadow: "unset",
+        borderRadius: 4,
+    },
+    courseCardSolidText: {
+        color: "#ffffff",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        padding: 10,
+        fontWeight: "600",
+    },
     SolidProfileDeleteButton: {
         paddingTop: 6,
         paddingBottom: 6,
@@ -895,6 +917,11 @@ export default EStyleSheet.create({
         },
         courseActivityTransparentRegularBlackButton: {
             marginBottom: 0,
+        },
+        courseCardSolidText: {
+            textAlign: 'center',
+            paddingRight: 0,
+            paddingLeft: 0,
         },
     },
     // Media Query Mobile
