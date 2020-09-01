@@ -1537,6 +1537,20 @@ export default class MainStyles {
                 alignItems: 'flex-start',
                 justifyContent: 'flex-start'
             },
+            courseDetailLeftContainer: {
+                flex: 70, 
+                flexDirection: "column", 
+                alignContent: 'flex-start', 
+                alignItems: 'flex-start', 
+                justifyContent: 'flex-start'
+            },
+            courseDetailRightContainer: {
+                flex: 30, 
+                flexDirection: "column", 
+                alignContent: 'flex-start', 
+                alignItems: 'flex-start', 
+                justifyContent: 'flex-start'
+            },
             courseHomeDescriptionText: {
                 marginTop: 30,
                 marginLeft: 30,
@@ -1888,6 +1902,12 @@ export default class MainStyles {
                 fontCourseHeader: {
                     fontSize: 24,
                     lineHeight: 30,
+                },
+                courseDetailLeftContainer: {
+                    flex: 60, 
+                },
+                courseDetailRightContainer: {
+                    flex: 40, 
                 },
             },
 

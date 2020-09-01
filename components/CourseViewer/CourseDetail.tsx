@@ -126,7 +126,7 @@ class CourseDetailImpl extends JCComponent<Props>{
     return (
       state.activeLesson == null ?
         week ?
-          <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+          <Container style={this.styles.style.courseDetailLeftContainer}>
             <Container style={{ width: "100%" }}>
               <EditableText onChange={(e) => { actions.updateWeek(state.activeWeek, "title", e) }}
                 placeholder="Week Title" multiline={false}
@@ -362,7 +362,7 @@ class CourseDetailImpl extends JCComponent<Props>{
 
                         {this.renderWeekDetails(state, actions, week)}
                         {this.renderLessonDetails(state, actions, week)}
-                        <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                        <Container style={this.styles.style.courseDetailRightContainer}>
                           <Container style={this.styles.style.courseDetailButtonTrio}>
                             <JCButton buttonType={state.activeMessageBoard == "cohort" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("cohort") }}>Cohort</JCButton>
                             <JCButton buttonType={state.activeMessageBoard == "triad" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("triad") }}>Learning Group</JCButton>
