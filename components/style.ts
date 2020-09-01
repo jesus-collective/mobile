@@ -1570,6 +1570,22 @@ export default class MainStyles {
             courseMessageBoardButtonsView: {
                 marginRight: 10
             },
+            courseDetailActivityCard: {
+                flexDirection: "row", 
+                minHeight: "40px", 
+                height: "unset"
+            },
+            courseDetailActivityInnerCard: {
+                flexDirection: "column", 
+                height: "unset", 
+                width: "unset", 
+                alignSelf: "center", 
+                flex: 2 
+            },
+            courseCheckmark: {
+                width: "30px", 
+                height: "30px"
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -1920,6 +1936,20 @@ export default class MainStyles {
                     flexDirection: 'column',
                 },
                 courseFormName: {
+                    marginTop: 10,
+                },
+                courseDetailLessonCardNoEdit: { 
+                    width: "40vw"
+                },
+                courseDetailActivityCard: {
+                    flexDirection: "column", 
+                },
+                courseDetailActivityInnerCard: {
+                    flexDirection: "row",
+                    marginTop: 15, 
+                },
+                courseCheckmark: {
+                    marginBottom: 15,
                     marginTop: 10,
                 },
 

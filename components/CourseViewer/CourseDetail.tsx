@@ -158,8 +158,8 @@ class CourseDetailImpl extends JCComponent<Props>{
                   <TouchableOpacity key={lesson} onPress={() => { actions.setActiveLesson(lesson) }}>
                     <Card style={state.isEditable && state.editMode ?
                       this.styles.style.courseDetailLessonCardEdit : this.styles.style.courseDetailLessonCardNoEdit}>
-                      <Container style={{ flexDirection: "row", minHeight: "40px", height: "unset" }}>
-                        <Container style={{ flexDirection: "column", height: "unset", width: "unset", alignSelf: "center", flex: 2 }}>
+                      <Container style={this.styles.style.courseDetailActivityCard}>
+                        <Container style={this.styles.style.courseDetailActivityInnerCard}>
                           <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 0, alignSelf: 'flex-start' }}>{this.getMonth(week, item, lesson)}</Text>
                           <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 0, alignSelf: 'flex-start' }}>{this.getDay(week, item, lesson)}</Text>
                         </Container>
@@ -233,7 +233,7 @@ class CourseDetailImpl extends JCComponent<Props>{
 
                         </Container>
                         <Text style={{ fontSize: 12, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#FFF', marginLeft: 30, marginRight: 15, paddingLeft: 10, paddingRight: 10, textTransform: 'uppercase', backgroundColor: '#71C209', borderRadius: 50, height: 20, alignSelf: 'center' }}>Completed</Text>
-                        <Text style={{ alignSelf: 'center' }}><Image style={{ width: "30px", height: "30px" }} source={require('../../assets/svg/checkmark.svg')} /></Text>
+                        <Text style={{ alignSelf: 'center' }}><Image style={this.styles.style.courseCheckmark} source={require('../../assets/svg/checkmark.svg')} /></Text>
                         {state.isEditable && state.editMode ?
                           <TouchableOpacity style={{ alignSelf: 'center', marginLeft: 15 }} onPress={() => { actions.deleteLesson(state.activeWeek, lesson) }}>
                             <AntDesign name="close" size={20} color="black" />
