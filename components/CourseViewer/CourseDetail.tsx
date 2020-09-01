@@ -69,7 +69,7 @@ class CourseDetailImpl extends JCComponent<Props>{
   }
   renderZoomConfig(state, actions, lesson, item): React.ReactNode {
     return (
-      <Container style={state.isEditable && state.editMode ? { flexDirection: "column", marginTop: 10, height: "unset" } : { flexDirection: "column", height: "unset" }}>
+      <Container style={state.isEditable && state.editMode ? { flexDirection: "column", marginTop: 10, height: "unset" } : { flexDirection: "column", height: "unset", marginTop: 15 }}>
         <EditableUrl title="Open in Zoom"
           onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "zoomUrl", e) }}
           placeholder="Enter Event URL" multiline={false} textStyle={ButtonTypes.Solid}
@@ -160,10 +160,10 @@ class CourseDetailImpl extends JCComponent<Props>{
                       this.styles.style.courseDetailLessonCardEdit : this.styles.style.courseDetailLessonCardNoEdit}>
                       <Container style={{ flexDirection: "row", minHeight: "40px", height: "unset" }}>
                         <Container style={{ flexDirection: "column", height: "unset", width: "unset", alignSelf: "center", flex: 2 }}>
-                          <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 0, alignSelf: 'center' }}>{this.getMonth(week, item, lesson)}</Text>
-                          <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 0, alignSelf: 'center' }}>{this.getDay(week, item, lesson)}</Text>
+                          <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 0, alignSelf: 'flex-start' }}>{this.getMonth(week, item, lesson)}</Text>
+                          <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 0, alignSelf: 'flex-start' }}>{this.getDay(week, item, lesson)}</Text>
                         </Container>
-                        <Container style={{ flexDirection: "column", flex: 10, alignSelf: 'center', height: "unset" }}>
+                        <Container style={{ flexDirection: "column", flex: 7, alignSelf: 'center', height: "unset" }}>
 
                           <EditableText onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "name", e) }}
                             placeholder="Title" multiline={true}
@@ -172,8 +172,8 @@ class CourseDetailImpl extends JCComponent<Props>{
                             inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 0, marginBottom: 10, width: "100%", paddingTop: 5, paddingRight: 5, paddingBottom: 5, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, height: 30 }}
                             value={item.name} isEditable={state.isEditable && state.editMode}></EditableText>
 
-                          <Container style={{ flexDirection: "row", height: "unset" }}>
-                            <Text style={{ marginRight: 30 }}>
+                          <Container style={{ flexDirection: "row", height: "unset", marginBottom: 12 }}>
+                            <Text style={{ marginRight: 30, paddingTop: 4 }}>
                               {state.isEditable ?
                                 null
                                 : <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }} source={require('../../assets/svg/time.svg')} />
