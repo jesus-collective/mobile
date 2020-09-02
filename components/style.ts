@@ -1995,6 +1995,12 @@ export default class MainStyles {
                 courseActivityButtonNonEditable: {
                     alignSelf: 'center'
                 },
+                courseSidebarNavIconActive: {
+                    marginRight: 6,
+                },
+                courseSidebarNavIconInactive: {
+                    marginRight: 6,
+                },
 
             },
 
