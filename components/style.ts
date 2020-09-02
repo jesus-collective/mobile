@@ -1616,6 +1616,24 @@ export default class MainStyles {
                 height: "unset", 
                 marginTop: 15
             },
+            courseDetailLessonText: {
+                fontSize: 16, 
+                lineHeight: 21, 
+                fontFamily: 'Graphik-Bold-App', 
+                color: '#333333', 
+                marginBottom: 20
+            },
+            courseDetailLongDescriptionText: {
+                fontFamily: 'Graphik-Regular-App', 
+                fontSize: '16px', 
+                lineHeight: '26px', 
+                color: "#333333", 
+                marginTop: 0, 
+                paddingTop: 0, 
+                minHeight: 50, 
+                maxHeight: 275, 
+                overflow: 'scroll'
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2000,6 +2018,9 @@ export default class MainStyles {
                 },
                 courseSidebarNavIconInactive: {
                     marginRight: 6,
+                },
+                courseDetailLessonText: {
+                    width: '95%',
                 },
 
             },
