@@ -1635,6 +1635,9 @@ export default class MainStyles {
                 maxHeight: 275, 
                 overflow: 'scroll'
             },
+            courseHomeScreenMainContainer: {
+                flexDirection: "row"
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2380,7 +2383,9 @@ export default class MainStyles {
                     textAlign: "center"
                 },
                 fontCourseHeaderBold: {
-                    fontSize: 50,
+                    fontSize: 40,
+                    lineHeight: 42,
+                    marginRight: '5%',
                 },
                 fontResourceHeaderBold: {
                     fontSize: 50,
@@ -2411,6 +2416,19 @@ export default class MainStyles {
                 },
                 resourceHeaderImgContainer: {
                     maxHeight: "550px"
+                },
+                courseHeaderContainer: {
+                    flex: 120,
+                },
+                fontCourseHeaderDescription: {
+                    marginRight: '5%',
+                    lineHeight: 30,
+                },
+                courseHomeScreenMainContainer: {
+                    flexDirection: "column"
+                },
+                fontCourseHeaderTime: {
+                    marginBottom: 5,
                 },
             },
 
