@@ -559,7 +559,7 @@ export default class MainStyles {
                 lineHeight: 25,
                 color: "#000000",
                 letterSpacing: -0.3,
-                alignSelf: 'center',
+                alignSelf: 'flex-start',
             },
             courseFontConnectWithName: {
                 fontFamily: 'Graphik-Bold-App',
