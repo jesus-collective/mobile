@@ -207,6 +207,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                               :
                               <>
                                 <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Facilitator</Text>
+                                <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                                 {
                                   actions.myCourseGroups().coach ?
                                     actions.myCourseGroups().coach.map((user) => {
@@ -215,7 +216,9 @@ class CourseHomeImpl extends JCComponent<Props>{
                                     :
                                     <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginTop: 70, width: '90%' }}>You have not been assigned a facilitator yet</Text>
                                 }
+                                </View>
                                 <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Learning Group</Text>
+                                <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                                 {
                                   actions.myCourseGroups().triad ?
                                     actions.myCourseGroups().triad.map((user) => {
@@ -223,6 +226,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                     }) :
                                     <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginTop: 70, width: '90%' }}>You have not been assigned a learning group yet</Text>
                                 }
+                                </View>
                                 <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Cohort</Text>
                                 <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
                                   {
