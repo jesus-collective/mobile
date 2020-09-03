@@ -665,8 +665,8 @@ export default class MainStyles {
             courseHomeConversationButton: {
                 paddingTop: 6,
                 paddingBottom: 6,
-                paddingLeft: 8,
-                paddingRight: 8,
+                paddingLeft: 0,
+                paddingRight: 0,
                 marginBottom: 20,
                 marginLeft: 0,
                 marginRight: 0,
@@ -1270,13 +1270,13 @@ export default class MainStyles {
                 marginTop: 30
             },
             courseConversationCard: {
-                paddingTop: 28,
-                paddingBottom: 28,
+                paddingTop: 10,
+                paddingBottom: 0,
                 borderStyle: "solid",
                 borderColor: "#FFFFFF",
-                width: "35%",
-                paddingRight: 30,
-                paddingLeft: 30,
+                width: 200,
+                paddingRight: 0,
+                paddingLeft: 0,
                 boxShadow: "0 6px 20px 0 rgba(0, 0, 0, 0.19)",
                 marginTop: 30
             },
