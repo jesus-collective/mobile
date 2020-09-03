@@ -1,7 +1,7 @@
 ﻿import React, { lazy } from 'react';
-import { Icon, Picker, StyleProvider, Container, Content, View } from 'native-base';
+import { Icon, Picker, StyleProvider, Container, Content, View, CardItem } from 'native-base';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
-import { Text, TouchableOpacity } from 'react-native'
+import { Text, TouchableOpacity, Image } from 'react-native'
 
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
@@ -444,7 +444,8 @@ export default class EventScreen extends JCComponent<Props, State>{
                       inputStyle={this.styles.style.eventEditableURL} value={this.state.data.eventUrl}
                       isEditable={this.state.isEditable}></EditableUrl>
                     :
-                    <EditableLocation onChange={(value: any, location: any) => {
+                    <CardItem style={{ paddingLeft: 0, paddingRight: 0 }}>
+                    <Image style={{ width: "22px", height: "22px", marginRight: 5 }} source={require('../../assets/svg/pin 2.svg')}></Image><EditableLocation onChange={(value: any, location: any) => {
                       this.updateValue("location", value)
                       console.log(location)
                       if (location != undefined && location != null)
@@ -454,7 +455,7 @@ export default class EventScreen extends JCComponent<Props, State>{
                     }}
                       placeholder="Enter Event Location" multiline={false} textStyle={this.styles.style.fontRegular}
                       inputStyle={this.styles.style.groupNameInput} value={this.state.data.location}
-                      isEditable={this.state.isEditable}></EditableLocation>
+                      isEditable={this.state.isEditable}></EditableLocation></CardItem>
                   }
 
                   <Text style={{ fontFamily: "Graphik-Regular-App", fontSize: 16, lineHeight: 23, color: "#333333", paddingBottom: 12, marginTop: 52 }}>Organizer</Text>
