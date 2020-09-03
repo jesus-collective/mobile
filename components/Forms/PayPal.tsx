@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import { Auth } from 'aws-amplify';
 
 interface PayPalWindow extends Window {
     paypal: any;
@@ -7,6 +8,7 @@ interface PayPalWindow extends Window {
 
 interface Params {
     cost: number;
+    productId: string;
     onSuccessCallback(details: any): void;
     onFailureCallback(details: any): void;
     onErrorCallback?(err: any): void;
@@ -14,11 +16,12 @@ interface Params {
 
 declare const window: PayPalWindow
 
-const PayPal = ({ cost, onSuccessCallback, onFailureCallback, onErrorCallback }: Params): JSX.Element => {
+const PayPal = ({ cost, productId, onSuccessCallback, onFailureCallback, onErrorCallback }: Params): JSX.Element => {
     const [sdkReady, setSdkReady] = useState(false);
+    const [userId, setUserId] = useState('');
 
     const loadPayPal = () => {
-        const clientID = 'sb'; //sandbox testing id
+        const clientID = 'AUW6ZpBxjxS6tKYDekqS__8B2DB3f5HwMQRlQ590YL-bcGtVyA9X6qxf1P7Wp2Fydv5eVV6LJ8qslHpt'; //sandbox id
         const script = document.createElement('script');
         script.type = 'text/javascript';
         script.src = `https://www.paypal.com/sdk/js?client-id=${clientID}&currency=CAD&locale=en_CA`;
@@ -31,9 +34,14 @@ const PayPal = ({ cost, onSuccessCallback, onFailureCallback, onErrorCallback }:
     };
 
     useEffect(() => {
+        async function getUser() {
+            const user = await Auth.currentAuthenticatedUser();
+            setUserId(user.username)
+        }
         if (window && !window.paypal) {
             loadPayPal();
         }
+        getUser();
     }, []);
 
 
@@ -45,13 +53,13 @@ const PayPal = ({ cost, onSuccessCallback, onFailureCallback, onErrorCallback }:
                 }
             },
             intent: 'CAPTURE',
-            purchase_units: [
-                {
-                    amount: {
-                        value: cost,
-                    }
-                }
-            ],
+            purchase_units: [{
+                amount: {
+                    value: cost,
+                },
+                invoice_id: `JC-${Date.now()}-U-${userId}`,
+                custom_id: productId,
+            }],
             application_context: {
                 shipping_preference: 'NO_SHIPPING',
                 brand_name: 'Jesus Collective',
@@ -79,7 +87,8 @@ const PayPal = ({ cost, onSuccessCallback, onFailureCallback, onErrorCallback }:
             <Button
                 createOrder={(data: any, actions: any) => createOrder(data, actions)}
                 onApprove={(data: any, actions: any) => onApprove(data, actions)}
-                onError={(err) => onErrorCallback(err)}
+                onError={(err: any) => onErrorCallback(err)}
+                onShippingChange={(e) => console.log(e)}
             />
         );
     }

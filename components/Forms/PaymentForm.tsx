@@ -4,12 +4,15 @@ import PayPal from './PayPal';
 import { ViewStyle, StyleSheet } from 'react-native';
 
 interface Params {
-    productId: string
+    product: any
     containerStyle?: ViewStyle
     payPalWrapperStyle?: ViewStyle
+    onSuccessCallback(details: any): void;
+    onFailureCallback(details: any): void;
+    onErrorCallback?(err: any): void;
 }
 
-export default function PaymentForm({ productId, containerStyle, payPalWrapperStyle }: Params): JSX.Element {
+export default function PaymentForm({ product, containerStyle, payPalWrapperStyle, onSuccessCallback, onFailureCallback, onErrorCallback }: Params): JSX.Element {
 
     const styles = StyleSheet.create({
         productName: {
@@ -30,13 +33,6 @@ export default function PaymentForm({ productId, containerStyle, payPalWrapperSt
             color: '#333333'
         }
     })
-
-    const [product, setProduct] = useState({});
-
-    useEffect(() => {
-        //fetch product
-
-    }, [])
 
     const testHTML = `<ul>
     <li>Learn how to use the Force like Luke Skywalker</li>
@@ -69,7 +65,7 @@ export default function PaymentForm({ productId, containerStyle, payPalWrapperSt
             <Text style={styles.totalPrice} >$500.00</Text>
         </View>
         <View style={payPalWrapperStyle} >
-            <PayPal cost={999.00} onSuccessCallback={() => null} onFailureCallback={() => null} />
+            <PayPal cost={500.00} productId='test' onSuccessCallback={onSuccessCallback} onFailureCallback={onFailureCallback} onErrorCallback={onErrorCallback} />
         </View>
     </View>
 }
