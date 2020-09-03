@@ -3,7 +3,7 @@ import { StyleProvider, Card, Container, Content } from 'native-base';
 import { Body, Left, Right, CardItem, Button } from 'native-base';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 
-import { Text } from 'react-native'
+import { Text, View } from 'react-native'
 import JCButton, { ButtonTypes } from '../Forms/JCButton'
 
 import getTheme from '../../native-base-theme/components';
@@ -224,14 +224,16 @@ class CourseHomeImpl extends JCComponent<Props>{
                                     <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginTop: 70, width: '90%' }}>You have not been assigned a learning group yet</Text>
                                 }
                                 <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Cohort</Text>
-                                {
-                                  actions.myCourseGroups().cohort ?
-                                    actions.myCourseGroups().cohort.map((user) => {
-                                      return this.renderProfileCard(user)
-                                    })
-                                    :
-                                    <Text>You have not been assigned a learning group yet</Text>
-                                }
+                                <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                                  {
+                                    actions.myCourseGroups().cohort ?
+                                      actions.myCourseGroups().cohort.map((user) => {
+                                        return this.renderProfileCard(user)
+                                      })
+                                      :
+                                      <Text>You have not been assigned a learning group yet</Text>
+                                  }
+                                </View>
                               </>
                             }
                           </Container>

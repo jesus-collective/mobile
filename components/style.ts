@@ -1278,7 +1278,8 @@ export default class MainStyles {
                 paddingRight: 0,
                 paddingLeft: 0,
                 boxShadow: "0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                marginTop: 30
+                marginTop: 30,
+                marginRight: 20,
             },
             dashboardConversationCardLeft: {
                 flexDirection: "row"
