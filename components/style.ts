@@ -1951,7 +1951,7 @@ export default class MainStyles {
                     marginLeft: 0,
                 },
                 courseConversationCard: {
-                    width: "90%",
+                    width: "93%",
                 },
                 courseHomeCalendar: {
                     width: '85%',
