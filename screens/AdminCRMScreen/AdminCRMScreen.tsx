@@ -197,7 +197,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
             </Container>
 
             <Container style={this.styles.style.fontRegular}>
-              <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flexStart' }}>
+              <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
                 {this.renderHeader()}
                 {
                   this.state.data ?
