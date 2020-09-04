@@ -88,7 +88,6 @@ const PayPal = ({ cost, productId, onSuccessCallback, onFailureCallback, onError
                 createOrder={(data: any, actions: any) => createOrder(data, actions)}
                 onApprove={(data: any, actions: any) => onApprove(data, actions)}
                 onError={(err: any) => onErrorCallback(err)}
-                onShippingChange={(e) => console.log(e)}
             />
         );
     }

@@ -3,7 +3,6 @@ import { Container, Content, Text } from 'native-base';
 import Header from '../../components/Header/Header'
 import PaymentFrom from '../../components/Forms/PaymentForm';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton';
-import Sentry from 'components/Sentry';
 
 interface Params {
     navigation: any
@@ -11,7 +10,6 @@ interface Params {
 }
 
 export default function CoursePayment({ navigation, route }: Params): JSX.Element {
-
     const productId = route.params?.id;
     const [product, setProduct] = useState({})
 
@@ -31,7 +29,7 @@ export default function CoursePayment({ navigation, route }: Params): JSX.Elemen
             <Container >
                 <Header title="Jesus Collective" navigation={navigation} />
                 <Content>
-                    <Container style={{ width: '50%', alignSelf: 'center', marginVertical: 64 }} >
+                    <Container style={{ maxWidth: 800, alignSelf: 'center', marginVertical: 48, marginHorizontal: 24 }} >
                         <PaymentFrom product={{}} onSuccessCallback={success} onFailureCallback={(e) => console.error(e)} />
                     </Container>
                 </Content>

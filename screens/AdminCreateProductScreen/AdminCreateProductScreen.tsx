@@ -8,6 +8,7 @@ import { View, TextInput, NativeSyntheticEvent, TextInputChangeEventData } from 
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton';
 import EditableRichText from '../../components/Forms/EditableRichText';
 import { EditorState, convertToRaw } from 'draft-js';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 interface Props {
@@ -38,7 +39,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
         super(props);
         this.state = {
             ...super.getInitialState(),
-            products: [],
+            products: [{ name: 'test', id: 'JC-0001', description: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())), confirmationMsg: 'yeet', price: 100.00 }],
             name: '',
             description: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
             productId: '',
@@ -49,6 +50,16 @@ export default class AdminScreen extends JCComponent<Props, State>{
     }
     async setInitialData(): Promise<void> {
         //console.log('test')
+    }
+
+    handlePress(product: any): void {
+        this.setState({
+            name: product.name,
+            productId: product.id,
+            description: product.description,
+            confirmationMsg: product.confirmationMsg,
+            price: product.price.toFixed(2)
+        })
     }
 
     render(): React.ReactNode {
@@ -86,6 +97,33 @@ export default class AdminScreen extends JCComponent<Props, State>{
 
                         <JCButton buttonType={ButtonTypes.Outline} onPress={() => { null }}>Create Product</JCButton>
                         <Container style={this.styles.style.fontRegular}>
+                            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', width: 750 }} >
+                                <View style={{ borderColor: 'black', borderWidth: 1, width: 250, margin: 0, borderRadius: 0 }}>
+                                    <Text style={{ alignSelf: 'center' }} >Name</Text>
+                                </View>
+                                <View style={{ borderColor: 'black', borderWidth: 1, width: 250, margin: 0, borderRadius: 0 }}>
+                                    <Text style={{ alignSelf: 'center' }} >Id</Text>
+                                </View>
+                                <View style={{ borderColor: 'black', borderWidth: 1, width: 250, margin: 0, borderRadius: 0 }}>
+                                    <Text style={{ alignSelf: 'center' }} >Price (CAD)</Text>
+                                </View>
+                            </View>
+                            {this.state.products.map(product => {
+                                return <TouchableOpacity key={product.id} onPress={() => this.handlePress(product)} >
+                                    <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', width: 750 }} >
+                                        <View style={{ borderColor: 'black', borderWidth: 1, width: 250, margin: 0, borderRadius: 0 }}>
+                                            <Text style={{ alignSelf: 'center' }} >{product.name}</Text>
+                                        </View>
+                                        <View style={{ borderColor: 'black', borderWidth: 1, width: 250, margin: 0, borderRadius: 0 }}>
+                                            <Text style={{ alignSelf: 'center' }}>{product.id}</Text>
+                                        </View>
+                                        <View style={{ borderColor: 'black', borderWidth: 1, width: 250, margin: 0, borderRadius: 0 }}>
+                                            <Text style={{ alignSelf: 'center' }}>{product.price.toFixed(2)}</Text>
+                                        </View>
+                                    </View>
+                                </TouchableOpacity>
+
+                            })}
                         </Container>
 
                     </Content>
