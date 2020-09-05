@@ -2430,6 +2430,9 @@ export default class MainStyles {
                 fontCourseHeaderTime: {
                     marginBottom: 5,
                 },
+                courseSideBar: {
+                    flex: 10,
+                },
             },
 
             dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
