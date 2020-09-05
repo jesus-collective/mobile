@@ -3,6 +3,10 @@ import { Container, Content, Text } from 'native-base';
 import { Image } from 'react-native';
 import Header from '../../components/Header/Header'
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton';
+import { graphqlOperation, API } from 'aws-amplify';
+import * as queries from '../../src/graphql/queries'
+import { GraphQLResult } from '@aws-amplify/api/lib/types';
+import { GetProductQuery } from '../../src/API';
 
 interface Params {
     navigation: any
@@ -15,12 +19,26 @@ export default function PurchaseConfirmationScreen({ navigation, route }: Params
     const id = route.params?.id;
 
     const [message, setMessage] = useState('');
+    const [productExists, setProductExists] = useState<boolean | 'unknown'>('unknown')
 
     useEffect(() => {
-        //get product
+        async function getProduct() {
+            try {
+                const getProduct = await API.graphql(graphqlOperation(queries.getProduct, { id: productId })) as GraphQLResult<GetProductQuery>;
+                setProductExists(Boolean(getProduct.data.getProduct))
+                setMessage(getProduct.data.getProduct?.confirmationMsg);
+            } catch (e) {
+                console.error(e)
+            }
+        }
+        getProduct();
     }, [])
 
-    if (id) {
+    if (productExists === 'unknown') {
+        return <Container></Container>
+    }
+
+    if (productExists) {
         return (
             <Container >
                 <Header title="Jesus Collective" navigation={navigation} />

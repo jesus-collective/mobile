@@ -57,7 +57,7 @@ const PayPal = ({ cost, productId, onSuccessCallback, onFailureCallback, onError
                 amount: {
                     value: cost,
                 },
-                invoice_id: `JC-${Date.now()}-U-${userId}`,
+                invoice_id: `JC-${Date.now()}-U-${userId.split('-')[0]}`,
                 custom_id: productId,
             }],
             application_context: {
