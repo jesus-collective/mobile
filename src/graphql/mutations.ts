@@ -9449,3 +9449,42 @@ export const deleteResourceEpisode = /* GraphQL */ `
     }
   }
 `;
+export const createProduct = /* GraphQL */ `
+  mutation CreateProduct($input: CreateProductInput!) {
+    createProduct(input: $input) {
+      id
+      price
+      name
+      description
+      confirmationMsg
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateProduct = /* GraphQL */ `
+  mutation UpdateProduct($input: UpdateProductInput!) {
+    updateProduct(input: $input) {
+      id
+      price
+      name
+      description
+      confirmationMsg
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteProduct = /* GraphQL */ `
+  mutation DeleteProduct($input: DeleteProductInput!) {
+    deleteProduct(input: $input) {
+      id
+      price
+      name
+      description
+      confirmationMsg
+      createdAt
+      updatedAt
+    }
+  }
+`;

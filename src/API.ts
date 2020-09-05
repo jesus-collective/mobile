@@ -690,6 +690,26 @@ export type DeleteResourceEpisodeInput = {
   id?: string | null,
 };
 
+export type CreateProductInput = {
+  id?: string | null,
+  price?: number | null,
+  name?: string | null,
+  description?: string | null,
+  confirmationMsg?: string | null,
+};
+
+export type UpdateProductInput = {
+  id: string,
+  price?: number | null,
+  name?: string | null,
+  description?: string | null,
+  confirmationMsg?: string | null,
+};
+
+export type DeleteProductInput = {
+  id?: string | null,
+};
+
 export type ModelUserFilterInput = {
   id?: ModelIDFilterInput | null,
   given_name?: ModelStringFilterInput | null,
@@ -1047,6 +1067,27 @@ export type ModelResourceEpisodeFilterInput = {
   and?: Array< ModelResourceEpisodeFilterInput | null > | null,
   or?: Array< ModelResourceEpisodeFilterInput | null > | null,
   not?: ModelResourceEpisodeFilterInput | null,
+};
+
+export type ModelProductFilterInput = {
+  id?: ModelIDFilterInput | null,
+  price?: ModelFloatFilterInput | null,
+  name?: ModelStringFilterInput | null,
+  description?: ModelStringFilterInput | null,
+  confirmationMsg?: ModelStringFilterInput | null,
+  and?: Array< ModelProductFilterInput | null > | null,
+  or?: Array< ModelProductFilterInput | null > | null,
+  not?: ModelProductFilterInput | null,
+};
+
+export type ModelFloatFilterInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
 };
 
 export type ModelIDKeyConditionInput = {
@@ -12029,6 +12070,57 @@ export type DeleteResourceEpisodeMutation = {
   } | null,
 };
 
+export type CreateProductMutationVariables = {
+  input: CreateProductInput,
+};
+
+export type CreateProductMutation = {
+  createProduct:  {
+    __typename: "Product",
+    id: string,
+    price: number | null,
+    name: string | null,
+    description: string | null,
+    confirmationMsg: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateProductMutationVariables = {
+  input: UpdateProductInput,
+};
+
+export type UpdateProductMutation = {
+  updateProduct:  {
+    __typename: "Product",
+    id: string,
+    price: number | null,
+    name: string | null,
+    description: string | null,
+    confirmationMsg: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteProductMutationVariables = {
+  input: DeleteProductInput,
+};
+
+export type DeleteProductMutation = {
+  deleteProduct:  {
+    __typename: "Product",
+    id: string,
+    price: number | null,
+    name: string | null,
+    description: string | null,
+    confirmationMsg: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type GetUserQueryVariables = {
   id: string,
 };
@@ -16499,6 +16591,46 @@ export type ListResourceEpisodesQuery = {
         createdAt: string,
         updatedAt: string,
       },
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type GetProductQueryVariables = {
+  id: string,
+};
+
+export type GetProductQuery = {
+  getProduct:  {
+    __typename: "Product",
+    id: string,
+    price: number | null,
+    name: string | null,
+    description: string | null,
+    confirmationMsg: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListProductsQueryVariables = {
+  filter?: ModelProductFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListProductsQuery = {
+  listProducts:  {
+    __typename: "ModelProductConnection",
+    items:  Array< {
+      __typename: "Product",
+      id: string,
+      price: number | null,
+      name: string | null,
+      description: string | null,
+      confirmationMsg: string | null,
       createdAt: string,
       updatedAt: string,
     } | null > | null,
@@ -27955,6 +28087,45 @@ export type OnDeleteResourceEpisodeSubscription = {
       createdAt: string,
       updatedAt: string,
     },
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateProductSubscription = {
+  onCreateProduct:  {
+    __typename: "Product",
+    id: string,
+    price: number | null,
+    name: string | null,
+    description: string | null,
+    confirmationMsg: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateProductSubscription = {
+  onUpdateProduct:  {
+    __typename: "Product",
+    id: string,
+    price: number | null,
+    name: string | null,
+    description: string | null,
+    confirmationMsg: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteProductSubscription = {
+  onDeleteProduct:  {
+    __typename: "Product",
+    id: string,
+    price: number | null,
+    name: string | null,
+    description: string | null,
+    confirmationMsg: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,

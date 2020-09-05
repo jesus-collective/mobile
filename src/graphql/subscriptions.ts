@@ -9522,3 +9522,42 @@ export const onDeleteResourceEpisode = /* GraphQL */ `
     }
   }
 `;
+export const onCreateProduct = /* GraphQL */ `
+  subscription OnCreateProduct {
+    onCreateProduct {
+      id
+      price
+      name
+      description
+      confirmationMsg
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateProduct = /* GraphQL */ `
+  subscription OnUpdateProduct {
+    onUpdateProduct {
+      id
+      price
+      name
+      description
+      confirmationMsg
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteProduct = /* GraphQL */ `
+  subscription OnDeleteProduct {
+    onDeleteProduct {
+      id
+      price
+      name
+      description
+      confirmationMsg
+      createdAt
+      updatedAt
+    }
+  }
+`;

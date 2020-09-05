@@ -561,12 +561,13 @@ type ResourceEpisode
   parentSeries: ResourceSeries! @connection(name:"r3",keyField: "episodeID")
 }
 
-type Product @model
-  @auth(rules: {
+type Product
+  @model
+  @auth(rules: [
       { allow: groups, groups: ["admin"] }
-      { allow: public, operations: [read] }
+    
       { allow: groups, groups: ["verifiedUsers"], operations: [read] }
-  })
+  ])
   {
     id: ID!
     price: Float

@@ -3999,6 +3999,39 @@ export const listResourceEpisodes = /* GraphQL */ `
     }
   }
 `;
+export const getProduct = /* GraphQL */ `
+  query GetProduct($id: ID!) {
+    getProduct(id: $id) {
+      id
+      price
+      name
+      description
+      confirmationMsg
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listProducts = /* GraphQL */ `
+  query ListProducts(
+    $filter: ModelProductFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listProducts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        price
+        name
+        description
+        confirmationMsg
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const groupMemberByGroup = /* GraphQL */ `
   query GroupMemberByGroup(
     $groupID: ID

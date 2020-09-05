@@ -2,7 +2,7 @@ const createExpoWebpackConfigAsync = require('@expo/webpack-config');
 const path = require("path");
 const webpack = require('webpack');
 const { merge } = require('webpack-merge');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+//const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const ManifestPlugin = require('webpack-manifest-plugin');
 const DynamicCdnWebpackPlugin = require('dynamic-cdn-webpack-plugin');
