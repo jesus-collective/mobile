@@ -671,7 +671,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
           }
         }}>
           <StyleProvider style={getTheme()}>
-            <Container style={{ flexDirection: "row" }}>
+            <Container style={this.styles.style.courseHomeScreenMainContainer}>
               <CourseSidebar courseId={this.state.data.id}></CourseSidebar>
               <CourseHome></CourseHome>
               <CourseDetail></CourseDetail>

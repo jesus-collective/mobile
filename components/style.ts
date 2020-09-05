@@ -559,7 +559,7 @@ export default class MainStyles {
                 lineHeight: 25,
                 color: "#000000",
                 letterSpacing: -0.3,
-                alignSelf: 'center',
+                alignSelf: 'flex-start',
             },
             courseFontConnectWithName: {
                 fontFamily: 'Graphik-Bold-App',
@@ -665,8 +665,8 @@ export default class MainStyles {
             courseHomeConversationButton: {
                 paddingTop: 6,
                 paddingBottom: 6,
-                paddingLeft: 8,
-                paddingRight: 8,
+                paddingLeft: 0,
+                paddingRight: 0,
                 marginBottom: 20,
                 marginLeft: 0,
                 marginRight: 0,
@@ -1270,15 +1270,16 @@ export default class MainStyles {
                 marginTop: 30
             },
             courseConversationCard: {
-                paddingTop: 28,
-                paddingBottom: 28,
+                paddingTop: 10,
+                paddingBottom: 0,
                 borderStyle: "solid",
                 borderColor: "#FFFFFF",
-                width: "35%",
-                paddingRight: 30,
-                paddingLeft: 30,
+                width: 200,
+                paddingRight: 0,
+                paddingLeft: 0,
                 boxShadow: "0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-                marginTop: 30
+                marginTop: 30,
+                marginRight: 20,
             },
             dashboardConversationCardLeft: {
                 flexDirection: "row"
@@ -1537,6 +1538,20 @@ export default class MainStyles {
                 alignItems: 'flex-start',
                 justifyContent: 'flex-start'
             },
+            courseDetailLeftContainer: {
+                flex: 70, 
+                flexDirection: "column", 
+                alignContent: 'flex-start', 
+                alignItems: 'flex-start', 
+                justifyContent: 'flex-start'
+            },
+            courseDetailRightContainer: {
+                flex: 30, 
+                flexDirection: "column", 
+                alignContent: 'flex-start', 
+                alignItems: 'flex-start', 
+                justifyContent: 'flex-start'
+            },
             courseHomeDescriptionText: {
                 marginTop: 30,
                 marginLeft: 30,
@@ -1555,6 +1570,73 @@ export default class MainStyles {
             },
             courseMessageBoardButtonsView: {
                 marginRight: 10
+            },
+            courseDetailActivityCard: {
+                flexDirection: "row", 
+                minHeight: "40px", 
+                height: "unset"
+            },
+            courseDetailActivityInnerCard: {
+                flexDirection: "column", 
+                height: "unset", 
+                width: "unset", 
+                alignSelf: "center", 
+                flex: 2 
+            },
+            courseCheckmark: {
+                width: "30px", 
+                height: "30px"
+            },
+            courseActivityDetails: {
+                flexDirection: "row", 
+                height: "unset", 
+                marginBottom: 12
+            },
+            courseCompletedCallOut: {
+                fontSize: 12, 
+                lineHeight: 21, 
+                fontFamily: 'Graphik-Bold-App', 
+                color: '#FFF', 
+                marginLeft: 30, 
+                marginRight: 15, 
+                paddingLeft: 10, 
+                paddingRight: 10, 
+                textTransform: 'uppercase', 
+                backgroundColor: '#71C209', 
+                borderRadius: 50, 
+                height: 20, 
+                alignSelf: 'center'
+            },
+            courseActivityButtonEditable: {
+                flexDirection: "column", 
+                marginTop: 10, 
+                height: "unset"
+            },
+            courseActivityButtonNonEditable: {
+                flexDirection: "column", 
+                height: "unset", 
+                marginTop: 15
+            },
+            courseDetailLessonText: {
+                fontSize: 16, 
+                lineHeight: 21, 
+                fontFamily: 'Graphik-Bold-App', 
+                color: '#333333', 
+                marginBottom: 20
+            },
+            courseDetailLongDescriptionText: {
+                fontFamily: 'Graphik-Regular-App', 
+                fontSize: '16px', 
+                lineHeight: '26px', 
+                color: "#333333", 
+                marginTop: 0, 
+                paddingTop: 0, 
+                minHeight: 50, 
+                maxHeight: 275, 
+                overflow: 'scroll'
+            },
+            courseHomeScreenMainContainer: {
+                flexDirection: "row"
             },
 
             // Media Query Desktop Tablet
@@ -1872,7 +1954,7 @@ export default class MainStyles {
                     marginLeft: 0,
                 },
                 courseConversationCard: {
-                    width: "90%",
+                    width: "93%",
                 },
                 courseHomeCalendar: {
                     width: '85%',
@@ -1889,6 +1971,62 @@ export default class MainStyles {
                     fontSize: 24,
                     lineHeight: 30,
                 },
+                courseDetailLeftContainer: {
+                    flex: 60, 
+                },
+                courseDetailRightContainer: {
+                    flex: 40, 
+                },
+                courseDetailButtonTrio: {
+                    flexDirection: "column",
+                    paddingBottom: 90,
+                },
+                courseDetailJCButtonMini: {
+                    marginTop: 50,
+                },
+                coursePageMessageBoard: {
+                    flexDirection: 'column',
+                },
+                courseFormName: {
+                    marginTop: 10,
+                },
+                courseDetailLessonCardNoEdit: { 
+                    width: "40vw"
+                },
+                courseDetailActivityCard: {
+                    flexDirection: "column", 
+                },
+                courseDetailActivityInnerCard: {
+                    flexDirection: "row",
+                    marginTop: 15, 
+                },
+                courseCheckmark: {
+                    marginBottom: 15,
+                    marginTop: 10,
+                },
+                courseDetailHeading: {
+                    textAlign: 'center',
+                },
+                courseActivityDetails: {
+                    alignSelf: 'center',
+                },
+                courseCompletedCallOut: {
+                    marginLeft: 0,
+                    marginRight: 0,
+                },
+                courseActivityButtonNonEditable: {
+                    alignSelf: 'center'
+                },
+                courseSidebarNavIconActive: {
+                    marginRight: 6,
+                },
+                courseSidebarNavIconInactive: {
+                    marginRight: 6,
+                },
+                courseDetailLessonText: {
+                    width: '95%',
+                },
+
             },
 
             // Media Query Desktop Large Tablet
@@ -2245,7 +2383,9 @@ export default class MainStyles {
                     textAlign: "center"
                 },
                 fontCourseHeaderBold: {
-                    fontSize: 50,
+                    fontSize: 40,
+                    lineHeight: 42,
+                    marginRight: '5%',
                 },
                 fontResourceHeaderBold: {
                     fontSize: 50,
@@ -2276,6 +2416,19 @@ export default class MainStyles {
                 },
                 resourceHeaderImgContainer: {
                     maxHeight: "550px"
+                },
+                courseHeaderContainer: {
+                    flex: 120,
+                },
+                fontCourseHeaderDescription: {
+                    marginRight: '5%',
+                    lineHeight: 30,
+                },
+                courseHomeScreenMainContainer: {
+                    flexDirection: "column"
+                },
+                fontCourseHeaderTime: {
+                    marginBottom: 5,
                 },
             },
 

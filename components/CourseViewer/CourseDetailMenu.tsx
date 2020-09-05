@@ -41,7 +41,7 @@ class CourseDetailMenu extends JCComponent<EmptyProps> {
                             flexDirection: 'row',
                             justifyContent: 'flex-start',
                             alignItems: 'flex-start',
-                            marginLeft: '5%'
+                            marginLeft: '4.5%'
                         }}>
                             {state.courseData?.courseWeeks.items.map((item, index) => {
                                 if (item != null)

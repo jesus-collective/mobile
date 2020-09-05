@@ -69,15 +69,15 @@ class CourseDetailImpl extends JCComponent<Props>{
   }
   renderZoomConfig(state, actions, lesson, item): React.ReactNode {
     return (
-      <Container style={state.isEditable && state.editMode ? { flexDirection: "column", marginTop: 10, height: "unset" } : { flexDirection: "column", height: "unset" }}>
+      <Container style={state.isEditable && state.editMode ? this.styles.style.courseActivityButtonEditable : this.styles.style.courseActivityButtonNonEditable}>
         <EditableUrl title="Open in Zoom"
           onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "zoomUrl", e) }}
-          placeholder="Enter Event URL" multiline={false} textStyle={ButtonTypes.Solid}
+          placeholder="Enter Event URL" multiline={false} textStyle={ButtonTypes.courseCardSolid}
           inputStyle={this.styles.style.courseEditableURL} value={item.zoomUrl}
           isEditable={state.isEditable && state.editMode}></EditableUrl>
         <EditableUrl title="Zoom Recording"
           onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "zoomRecording", e) }}
-          placeholder="Enter Recording URL" multiline={false} textStyle={ButtonTypes.Solid}
+          placeholder="Enter Recording URL" multiline={false} textStyle={ButtonTypes.courseCardSolid}
           inputStyle={this.styles.style.courseEditableURL} value={item.zoomRecording}
           isEditable={state.isEditable && state.editMode}></EditableUrl>
         {state.isEditable && state.editMode ?
@@ -126,7 +126,7 @@ class CourseDetailImpl extends JCComponent<Props>{
     return (
       state.activeLesson == null ?
         week ?
-          <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+          <Container style={this.styles.style.courseDetailLeftContainer}>
             <Container style={{ width: "100%" }}>
               <EditableText onChange={(e) => { actions.updateWeek(state.activeWeek, "title", e) }}
                 placeholder="Week Title" multiline={false}
@@ -158,12 +158,12 @@ class CourseDetailImpl extends JCComponent<Props>{
                   <TouchableOpacity key={lesson} onPress={() => { actions.setActiveLesson(lesson) }}>
                     <Card style={state.isEditable && state.editMode ?
                       this.styles.style.courseDetailLessonCardEdit : this.styles.style.courseDetailLessonCardNoEdit}>
-                      <Container style={{ flexDirection: "row", minHeight: "40px", height: "unset" }}>
-                        <Container style={{ flexDirection: "column", height: "unset", width: "unset", alignSelf: "center", flex: 2 }}>
-                          <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 0, alignSelf: 'center' }}>{this.getMonth(week, item, lesson)}</Text>
-                          <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 0, alignSelf: 'center' }}>{this.getDay(week, item, lesson)}</Text>
+                      <Container style={this.styles.style.courseDetailActivityCard}>
+                        <Container style={this.styles.style.courseDetailActivityInnerCard}>
+                          <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 0, alignSelf: 'flex-start' }}>{this.getMonth(week, item, lesson)}</Text>
+                          <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 0, alignSelf: 'flex-start' }}>{this.getDay(week, item, lesson)}</Text>
                         </Container>
-                        <Container style={{ flexDirection: "column", flex: 10, alignSelf: 'center', height: "unset" }}>
+                        <Container style={{ flexDirection: "column", flex: 7, alignSelf: 'center', height: "unset" }}>
 
                           <EditableText onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "name", e) }}
                             placeholder="Title" multiline={true}
@@ -172,8 +172,8 @@ class CourseDetailImpl extends JCComponent<Props>{
                             inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 0, marginBottom: 10, width: "100%", paddingTop: 5, paddingRight: 5, paddingBottom: 5, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, height: 30 }}
                             value={item.name} isEditable={state.isEditable && state.editMode}></EditableText>
 
-                          <Container style={{ flexDirection: "row", height: "unset" }}>
-                            <Text style={{ marginRight: 30 }}>
+                          <Container style={this.styles.style.courseActivityDetails}>
+                            <Text style={{ marginRight: 30, paddingTop: 4 }}>
                               {state.isEditable ?
                                 null
                                 : <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }} source={require('../../assets/svg/time.svg')} />
@@ -232,8 +232,8 @@ class CourseDetailImpl extends JCComponent<Props>{
 
 
                         </Container>
-                        <Text style={{ fontSize: 12, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#FFF', marginLeft: 30, marginRight: 15, paddingLeft: 10, paddingRight: 10, textTransform: 'uppercase', backgroundColor: '#71C209', borderRadius: 50, height: 20, alignSelf: 'center' }}>Completed</Text>
-                        <Text style={{ alignSelf: 'center' }}><Image style={{ width: "30px", height: "30px" }} source={require('../../assets/svg/checkmark.svg')} /></Text>
+                        <Text style={this.styles.style.courseCompletedCallOut}>Completed</Text>
+                        <Text style={{ alignSelf: 'center' }}><Image style={this.styles.style.courseCheckmark} source={require('../../assets/svg/checkmark.svg')} /></Text>
                         {state.isEditable && state.editMode ?
                           <TouchableOpacity style={{ alignSelf: 'center', marginLeft: 15 }} onPress={() => { actions.deleteLesson(state.activeWeek, lesson) }}>
                             <AntDesign name="close" size={20} color="black" />
@@ -276,7 +276,7 @@ class CourseDetailImpl extends JCComponent<Props>{
         <JCButton buttonType={ButtonTypes.CourseHomeSidebarTop} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
         <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{week.name}</Text>
         <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.date}</Text>
-        <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333', marginBottom: 20 }}>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
+        <Text style={this.styles.style.courseDetailLessonText}>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
         <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.time}</Text>
         {lesson.zoomURL && lesson.zoomURL != "" ? <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.navigate(lesson.zoomURL) }}>Join Zoom Meeting</JCButton> : null}
         {lesson.zoomRecording && lesson.zoomRecording != "" ? <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.navigate(lesson.zoomRecording) }}>Watch Zoom Recording</JCButton> : null}
@@ -358,11 +358,11 @@ class CourseDetailImpl extends JCComponent<Props>{
                   <CourseDetailMenu></CourseDetailMenu>
                   <Container style={{ flex: 80 }}>
                     <Content style={{ flex: 85 }}>
-                      <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start', paddingLeft: '6%', paddingRight: '2%' }}>
+                      <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start', paddingLeft: '5%', paddingRight: '2%' }}>
 
                         {this.renderWeekDetails(state, actions, week)}
                         {this.renderLessonDetails(state, actions, week)}
-                        <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+                        <Container style={this.styles.style.courseDetailRightContainer}>
                           <Container style={this.styles.style.courseDetailButtonTrio}>
                             <JCButton buttonType={state.activeMessageBoard == "cohort" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("cohort") }}>Cohort</JCButton>
                             <JCButton buttonType={state.activeMessageBoard == "triad" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("triad") }}>Learning Group</JCButton>
