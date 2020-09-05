@@ -15,6 +15,7 @@ import { API, graphqlOperation, Auth, Analytics } from 'aws-amplify';
 import { CreateGroupInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
+import * as customQueries from '../../src/graphql-custom/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
@@ -80,21 +81,26 @@ export default class EventScreen extends JCComponent<Props, State>{
       this.setState({
         currentUser: user.username
       })
-      const getUser: any = API.graphql(graphqlOperation(queries.getUser, { id: user['username'] }));
+      const getUser: any = API.graphql(graphqlOperation(customQueries.getUserForGroupOrEvent, { id: user['username'] }));
       getUser.then((json) => {
         this.setState({
           ownsOrgs: json.data.getUser.organizations.items.filter(item => item.userRole === 'superAdmin' || item.userRole === 'admin'),
           currentUserProfile: json.data.getUser,
-
         }, () => {
           this.setInitialData(props)
         })
 
       }).catch((e) => {
-        console.log({
-          "Error Loading User": e
+        if (e.data?.getUser) {
+          this.setState({
+            currentUserProfile: e.data.getUser,
+            ownsOrgs: e.data.getUser.organizations.items.filter(item => item.userRole === 'superAdmin' || item.userRole === 'admin')
+          }, () => {
+            this.setInitialData(props)
+          })
         }
-        )
+
+        console.error({ "Error Loading User": e })
       })
     })
 
