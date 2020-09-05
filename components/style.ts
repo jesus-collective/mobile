@@ -2418,7 +2418,7 @@ export default class MainStyles {
                     maxHeight: "550px"
                 },
                 courseHeaderContainer: {
-                    flex: 120,
+                    flex: 95,
                 },
                 fontCourseHeaderDescription: {
                     marginRight: '5%',
@@ -2431,7 +2431,7 @@ export default class MainStyles {
                     marginBottom: 5,
                 },
                 courseSideBar: {
-                    flex: 10,
+                    flex: 8,
                 },
             },
 
