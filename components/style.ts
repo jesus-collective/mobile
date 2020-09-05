@@ -1638,6 +1638,25 @@ export default class MainStyles {
             courseHomeScreenMainContainer: {
                 flexDirection: "row"
             },
+            courseHomeScreenSubMainContainer: {
+                flex: 80, 
+                display: "flex", 
+                flexDirection: "row", 
+                justifyContent: 'flex-start', 
+                paddingLeft: '5%'
+            },
+            courseMyCohortContainer: {
+                flexDirection: 'row', 
+                flexWrap: 'wrap'
+            },
+            courseMyFacilitatorContainer: {
+                flexDirection: 'row', 
+                flexWrap: 'wrap'
+            },
+            courseMyLearningGroupContainer: {
+                flexDirection: 'row', 
+                flexWrap: 'wrap'
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2432,6 +2451,22 @@ export default class MainStyles {
                 },
                 courseSideBar: {
                     flex: 8,
+                },
+                courseHomeScreenSubMainContainer: {
+                    flexDirection: "column", 
+                    paddingRight: '5%'
+                },
+                courseMyCohortContainer: {
+                    flexWrap: 'nowrap',
+                    overflow: 'scroll'
+                },
+                courseMyFacilitatorContainer: {
+                    flexWrap: 'nowrap',
+                    overflow: 'scroll'
+                },
+                courseMyLearningGroupContainer: {
+                    flexWrap: 'nowrap',
+                    overflow: 'scroll'
                 },
             },
 
