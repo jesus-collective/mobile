@@ -7,7 +7,7 @@ import { MapData } from 'components/MyGroups/MyGroups';
 import { Auth, API } from 'aws-amplify';
 import { View, TextInput, Modal } from 'react-native';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton';
-
+import JCSwitch from '../../components/JCSwitch/JCSwitch';
 
 interface Props {
   navigation: any
@@ -21,7 +21,11 @@ interface State extends JCState {
   invite: string
   showGroups: boolean
   showGroupsId: string
-  groupData: []
+  groupData: [],
+  showUid: boolean,
+  showEmail: boolean,
+  showPhone: boolean,
+  showStatus: boolean,
 }
 
 
@@ -35,7 +39,11 @@ export default class AdminScreen extends JCComponent<Props, State>{
       showMy: this.props.route.params ? this.props.route.params.mine : false,
       data: [],
       showGroups: false,
-      showGroupsId: null
+      showGroupsId: null,
+      showUid: false,
+      showEmail: true,
+      showPhone: true,
+      showStatus: true,
     }
     this.setInitialData()
   }
@@ -106,15 +114,18 @@ export default class AdminScreen extends JCComponent<Props, State>{
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
           <Text style={this.styles.style.fontRegular}>Last Name</Text>
         </View>
-        <View style={{ flex: 2, alignSelf: 'stretch' }}>
+        {this.state.showUid ? <View style={{ flex: 3, alignSelf: 'stretch' }}>
+          <Text style={this.styles.style.fontRegular}>User id</Text>
+        </View> : null}
+        {this.state.showEmail ? <View style={{ flex: 3, alignSelf: 'stretch' }}>
           <Text style={this.styles.style.fontRegular}>Email</Text>
-        </View>
-        <View style={{ flex: 1, alignSelf: 'stretch' }}>
+        </View> : null}
+        {this.state.showPhone ? <View style={{ flex: 1, alignSelf: 'stretch' }}>
           <Text style={this.styles.style.fontRegular}>Phone</Text>
-        </View>
-        <View style={{ flex: 1, alignSelf: 'stretch' }}>
+        </View> : null}
+        {this.state.showStatus ? <View style={{ flex: 1, alignSelf: 'stretch' }}>
           <Text style={this.styles.style.fontRegular}>Status</Text>
-        </View>
+        </View> : null}
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
           <Text style={this.styles.style.fontRegular}>Enabled</Text>
         </View>
@@ -140,6 +151,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
     })
   }
   renderRow(item: any, index: number): React.ReactNode {
+    console.log(item)
     return (
       <View style={{ flex: 1, maxHeight: 40, alignSelf: 'stretch', flexDirection: 'row' }}>
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
@@ -148,15 +160,18 @@ export default class AdminScreen extends JCComponent<Props, State>{
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
           <Text style={this.styles.style.fontRegular}>{item.Attributes.find(e => e.Name == "family_name")?.Value}</Text>
         </View>
-        <View style={{ flex: 2, alignSelf: 'stretch' }}>
+        {this.state.showUid ? <View style={{ flex: 3, alignSelf: 'stretch' }}>
+          <Text style={this.styles.style.fontRegular}>{item.Username}</Text>
+        </View> : null}
+        {this.state.showEmail ? <View style={{ flex: 3, alignSelf: 'stretch' }}>
           <Text style={this.styles.style.fontRegular}>{item.Attributes.find(e => e.Name == "email")?.Value}</Text>
-        </View>
-        <View style={{ flex: 1, alignSelf: 'stretch' }}>
+        </View> : null}
+        {this.state.showPhone ? <View style={{ flex: 1, alignSelf: 'stretch' }}>
           <Text style={this.styles.style.fontRegular}>{item.Attributes.find(e => e.Name == "phone_number")?.Value}</Text>
-        </View>
-        <View style={{ flex: 1, alignSelf: 'stretch' }}>
+        </View> : null}
+        {this.state.showStatus ? <View style={{ flex: 1, alignSelf: 'stretch' }}>
           <Text style={this.styles.style.fontRegular}>{item.UserStatus}</Text>
-        </View>
+        </View> : null}
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
           <Text style={this.styles.style.fontRegular}>{item.Enabled.toString()}</Text>
         </View>
@@ -197,7 +212,13 @@ export default class AdminScreen extends JCComponent<Props, State>{
             </Container>
 
             <Container style={this.styles.style.fontRegular}>
-              <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flexStart' }}>
+              <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
+                <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', width: '100%', marginBottom: 12 }} >
+                  <JCSwitch switchLabel='show user id' initState={false} onPress={() => this.setState({ showUid: !this.state.showUid })} />
+                  <JCSwitch switchLabel='show email' initState={true} onPress={() => this.setState({ showEmail: !this.state.showEmail })} />
+                  <JCSwitch switchLabel='show phone #' initState={true} onPress={() => this.setState({ showPhone: !this.state.showPhone })} />
+                  <JCSwitch switchLabel='show status' initState={true} onPress={() => this.setState({ showStatus: !this.state.showStatus })} />
+                </View>
                 {this.renderHeader()}
                 {
                   this.state.data ?

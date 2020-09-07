@@ -1,14 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
+import { Auth } from 'aws-amplify';
 
-const PayPal = (props: { cost: number }): JSX.Element => {
+interface PayPalWindow extends Window {
+    paypal: any;
+}
+
+interface Params {
+    cost: number;
+    productId: string;
+    onSuccessCallback(details: any): void;
+    onFailureCallback(details: any): void;
+    onErrorCallback?(err: any): void;
+}
+
+declare const window: PayPalWindow
+
+const PayPal = ({ cost, productId, onSuccessCallback, onFailureCallback, onErrorCallback }: Params): JSX.Element => {
     const [sdkReady, setSdkReady] = useState(false);
+    const [userId, setUserId] = useState('');
 
     const loadPayPal = () => {
-        const clientID = 'sb'; //sandbox testing id
+        const clientID = 'AUW6ZpBxjxS6tKYDekqS__8B2DB3f5HwMQRlQ590YL-bcGtVyA9X6qxf1P7Wp2Fydv5eVV6LJ8qslHpt'; //sandbox id
         const script = document.createElement('script');
         script.type = 'text/javascript';
-        script.src = `https://www.paypal.com/sdk/js?client-id=${clientID}`;
+        script.src = `https://www.paypal.com/sdk/js?client-id=${clientID}&currency=CAD&locale=en_CA`;
         script.async = true;
         script.onload = () => { setSdkReady(true); };
         script.onerror = () => {
@@ -18,29 +34,44 @@ const PayPal = (props: { cost: number }): JSX.Element => {
     };
 
     useEffect(() => {
+        async function getUser() {
+            const user = await Auth.currentAuthenticatedUser();
+            setUserId(user.username)
+        }
         if (window && !window.paypal) {
             loadPayPal();
         }
+        getUser();
     }, []);
 
 
-    const createOrder = (_data, actions) => {
+    const createOrder = (_data: any, actions: any) => {
         return actions.order.create({
-            purchase_units: [
-                {
-                    amount: {
-                        currency_code: 'USD', // only USD works with the sandbox
-                        value: props.cost,
-                    }
+            payer: {
+                address: {
+                    country_code: 'CA'
                 }
-            ]
+            },
+            intent: 'CAPTURE',
+            purchase_units: [{
+                amount: {
+                    value: cost,
+                },
+                invoice_id: `JC-${Date.now()}-U-${userId.split('-')[0]}`,
+                custom_id: productId,
+            }],
+            application_context: {
+                shipping_preference: 'NO_SHIPPING',
+                brand_name: 'Jesus Collective',
+                user_action: 'PAY_NOW'
+            }
         });
     };
 
-    const onApprove = (data, actions) => {
+    const onApprove = (_data: any, actions: any) => {
         return actions.order.capture()
-            .then((details) => { console.log(details) })
-            .catch(err => { console.log(err) });
+            .then((details: any) => { onSuccessCallback(details) })
+            .catch((details: any) => { onFailureCallback(details) });
     };
 
     if (!sdkReady && !window.paypal) {
@@ -49,14 +80,14 @@ const PayPal = (props: { cost: number }): JSX.Element => {
         );
     }
 
-    if (props.cost) {
+    if (cost) {
         const Button = window.paypal.Buttons.driver('react', { React, ReactDOM });
 
         return (
             <Button
-                {...props}
-                createOrder={(data, actions) => createOrder(data, actions)}
-                onApprove={(data, actions) => onApprove(data, actions)}
+                createOrder={(data: any, actions: any) => createOrder(data, actions)}
+                onApprove={(data: any, actions: any) => onApprove(data, actions)}
+                onError={(err: any) => onErrorCallback(err)}
             />
         );
     }

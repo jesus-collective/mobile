@@ -45,7 +45,9 @@ const ProfilesScreen = lazy(() => import('../ProfilesScreen/ProfilesScreen'));
 const SearchScreen = lazy(() => import('../SearchScreen/SearchScreen'));
 const AdminScreen = lazy(() => import('../AdminScreen/AdminScreen'));
 const AdminCRMScreen = lazy(() => import('../AdminCRMScreen/AdminCRMScreen'));
-
+const CoursePaymentScreen = lazy(() => import('../CoursePaymentScreen/CoursePaymentScreen'));
+const PurchaseConfirmationScreen = lazy(() => import('../PurchaseConfirmationScreen/PurchaseConfirmationScreen'));
+const AdminCreateProductScreen = lazy(() => import('../AdminCreateProductScreen/AdminCreateProductScreen'))
 Amplify.configure(awsconfig);
 
 const prefix = Linking.makeUrl('/');
@@ -79,7 +81,10 @@ const linking = {
               ProfileScreen: 'profile',
               ProfilesScreen: 'profiles',
               AdminScreen: 'admin',
-              AdminCRMScreen: 'crm'
+              AdminCRMScreen: 'crm',
+              AdminCreateProductScreen: 'products',
+              CoursePaymentScreen: 'coursepayment',
+              PurchaseConfirmationScreen: 'success'
             }
           }
         }
@@ -285,6 +290,21 @@ class MainAppRouter extends JCComponent {
                     component={AdminCRMScreen}
                     options={{ title: 'Jesus Collective' }}
                   />
+                  <Stack.Screen
+                    name="CoursePaymentScreen"
+                    component={CoursePaymentScreen}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="PurchaseConfirmationScreen"
+                    component={PurchaseConfirmationScreen}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="AdminCreateProductScreen"
+                    component={AdminCreateProductScreen}
+                    options={{ title: 'Jesus Collective' }}
+                  />
                 </>)
                 : (<>
                   <Stack.Screen
@@ -383,6 +403,21 @@ class MainAppRouter extends JCComponent {
                   />
                   <Stack.Screen
                     name="AdminCRMScreen"
+                    component={Nothing}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="CoursePaymentScreen"
+                    component={Nothing}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="PurchaseConfirmationScreen"
+                    component={Nothing}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="AdminCreateProductScreen"
                     component={Nothing}
                     options={{ title: 'Jesus Collective' }}
                   />
