@@ -71,6 +71,14 @@ export default class HeaderStyles {
                     height: 29,
                     },
             },
+            // Media Query Mobile
+            '@media (min-width: 320px) and (max-width: 720px)': {
+                logo: {
+                    marginLeft: '15%',
+                    width: 123 , 
+                    height: 32,
+                    },
+            },
         });
     }
 }
