@@ -1657,6 +1657,9 @@ export default class MainStyles {
                 flexDirection: 'row', 
                 flexWrap: 'wrap'
             },
+            courseProfileImageContainer: {
+                paddingTop: 40,
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2467,6 +2470,12 @@ export default class MainStyles {
                 courseMyLearningGroupContainer: {
                     flexWrap: 'nowrap',
                     overflow: 'scroll'
+                },
+                courseProfileImageContainer: {
+                    marginTop: 400,
+                },
+                courseHomeDescriptionText: {
+                    marginTop: 300,
                 },
             },
 

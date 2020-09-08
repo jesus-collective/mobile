@@ -106,7 +106,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                             </Container>
                           </Container>
 
-                          <Container style={{ paddingTop: 40 }}>
+                          <Container style={this.styles.style.courseProfileImageContainer}>
                             <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 0, width: '90%' }}>Syllabus</Text>
                             <Card style={this.styles.style.courseHomeFileCard}>
                               {state.courseData ?
