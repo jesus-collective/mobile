@@ -2188,6 +2188,10 @@ export default class MainStyles {
                 courseDetailActivityInnerCardCenter: {
                     flex: 6,
                 },
+                courseDetailLessonCardNoEdit: {
+                    paddingLeft: 20,
+                    paddingRight: 20,
+                },
             },
 
             '@media (min-width: 769px) and (max-width: 1279px)': {
