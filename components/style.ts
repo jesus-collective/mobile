@@ -1666,6 +1666,19 @@ export default class MainStyles {
                 alignSelf: 'center', 
                 height: "unset"
             },
+            courseDetailMainContainer: {
+                display: "flex", 
+                flexDirection: "row", 
+                justifyContent: 'flex-start', 
+                paddingLeft: '5%', 
+                paddingRight: '2%'
+            },
+            courseDetailMessageBoardContainer: {
+                flex: 95, 
+                flexDirection: "row", 
+                marginTop: 10, 
+                width: '100%'
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2497,6 +2510,19 @@ export default class MainStyles {
                 },
                 courseProfileImageButtonsContainer: {
                     marginRight: 0,
+                },
+                courseDetailMainContainer: {
+                    flexDirection: 'column',
+                    paddingRight: '5%'
+                },
+                courseDetailLessonCardNoEdit: {
+                    width: '100%'
+                },
+                courseDetailRightContainer: {
+                    top: 650,
+                },
+                courseDetailMessageBoardContainer: {
+                    marginTop: 100, 
                 },
             },
 

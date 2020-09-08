@@ -358,7 +358,7 @@ class CourseDetailImpl extends JCComponent<Props>{
                   <CourseDetailMenu></CourseDetailMenu>
                   <Container style={{ flex: 80 }}>
                     <Content style={{ flex: 85 }}>
-                      <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start', paddingLeft: '5%', paddingRight: '2%' }}>
+                      <Container style={this.styles.style.courseDetailMainContainer}>
 
                         {this.renderWeekDetails(state, actions, week)}
                         {this.renderLessonDetails(state, actions, week)}
@@ -368,7 +368,7 @@ class CourseDetailImpl extends JCComponent<Props>{
                             <JCButton buttonType={state.activeMessageBoard == "triad" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("triad") }}>Learning Group</JCButton>
                             <JCButton buttonType={state.activeMessageBoard == "instructor" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("instructor") }}>Facilitator</JCButton>
                           </Container>
-                          <Container style={{ flex: 95, flexDirection: "row", marginTop: 10, width: '100%' }}>
+                          <Container style={this.styles.style.courseDetailMessageBoardContainer}>
                             <MessageBoard style="mini" groupId={state.data.id}></MessageBoard>
                           </Container>
                         </Container>
