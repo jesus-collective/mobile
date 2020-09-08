@@ -1660,6 +1660,12 @@ export default class MainStyles {
             courseProfileImageContainer: {
                 paddingTop: 40,
             },
+            courseDetailActivityInnerCardCenter: {
+                flexDirection: "column", 
+                flex: 7, 
+                alignSelf: 'center', 
+                height: "unset"
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2048,7 +2054,6 @@ export default class MainStyles {
                 courseDetailLessonText: {
                     width: '95%',
                 },
-
             },
 
             // Media Query Desktop Large Tablet
@@ -2176,6 +2181,12 @@ export default class MainStyles {
                 },
                 courseMessageBoardButtonsView: {
                     marginTop: 40,
+                },
+                courseDetailActivityInnerCard:{
+                    flex: 3,
+                },
+                courseDetailActivityInnerCardCenter: {
+                    flex: 6,
                 },
             },
 

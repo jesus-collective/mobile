@@ -163,7 +163,7 @@ class CourseDetailImpl extends JCComponent<Props>{
                           <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 0, alignSelf: 'flex-start' }}>{this.getMonth(week, item, lesson)}</Text>
                           <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 0, alignSelf: 'flex-start' }}>{this.getDay(week, item, lesson)}</Text>
                         </Container>
-                        <Container style={{ flexDirection: "column", flex: 7, alignSelf: 'center', height: "unset" }}>
+                        <Container style={this.styles.style.courseDetailActivityInnerCardCenter}>
 
                           <EditableText onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "name", e) }}
                             placeholder="Title" multiline={true}
