@@ -2155,7 +2155,7 @@ export default class MainStyles {
                     flex: 0.4,
                 },
                 courseConversationCard: {
-                    width: "50%",
+                    width: "93%",
                 },
                 CourseHomeActivityContainer: {
                     flex: 0,
