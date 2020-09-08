@@ -2480,6 +2480,9 @@ export default class MainStyles {
                 courseHomeRightContainer: {
                     top: 1450,
                 },
+                courseProfileImageButtonsContainer: {
+                    marginRight: 0,
+                },
             },
 
             dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?

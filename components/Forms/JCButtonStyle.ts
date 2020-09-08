@@ -986,6 +986,8 @@ export default EStyleSheet.create({
         },
         CourseTransparentBoldOrangeButton: {
             justifyContent: "center",
+            marginRight: 0,
+            marginLeft: 0,
         },
     },
     // Media Query Desktop Large Tablet
