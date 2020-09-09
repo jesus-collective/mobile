@@ -2536,6 +2536,9 @@ export default class MainStyles {
                 courseActivityButtonNonEditable: {
                     alignSelf: 'flex-start'
                 },
+                courseDetailActivityInnerCardCenter: {
+                    alignSelf: 'flex-start', 
+                },
             },
 
             dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?

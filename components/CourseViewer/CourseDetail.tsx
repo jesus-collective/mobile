@@ -376,7 +376,6 @@ class CourseDetailImpl extends JCComponent<Props>{
                     </Content>
                   </Container>
                 </Container>
-
               </StyleProvider>
               :
               null
