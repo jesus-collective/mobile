@@ -2332,7 +2332,7 @@ export default class MainStyles {
                     flexDirection: "column"
                 },
                 coursePageMessageBoard: {
-                    flexDirection: "column"
+                    flexDirection: "row"
                 },
                 eventPageMessageBoardLeft: {
                     alignSelf: "flex-start"
