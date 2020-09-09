@@ -2524,6 +2524,18 @@ export default class MainStyles {
                 courseDetailMessageBoardContainer: {
                     marginTop: 100, 
                 },
+                courseDetailActivityInnerCard:{
+                    alignSelf: 'flex-start',
+                },
+                courseDetailHeading: {
+                    textAlign: 'flex-start',
+                },
+                courseActivityDetails: {
+                    alignSelf: 'flex-start'
+                },
+                courseActivityButtonNonEditable: {
+                    alignSelf: 'flex-start'
+                },
             },
 
             dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
