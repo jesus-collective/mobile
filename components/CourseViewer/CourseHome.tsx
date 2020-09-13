@@ -80,7 +80,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                   <CourseHeader groupData={state.data}></CourseHeader>
                   <Container style={{ flex: 80 }}>
                     <Content contentContainerStyle={{ flex: 80 }} style={{ flex: 80 }}>
-                      <Container style={{ flex: 80, display: "flex", flexDirection: "row", justifyContent: 'flex-start', paddingLeft: '5%' }}>
+                      <Container style={this.styles.style.courseHomeScreenSubMainContainer}>
 
                         <Container style={this.styles.style.courseHomeLeftContainer}>
                           <Container style={this.styles.style.courseHomeSyllabusContainer}>
@@ -207,7 +207,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                               :
                               <>
                                 <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Facilitator</Text>
-                                <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                                <View style={this.styles.style.courseMyFacilitatorContainer}>
                                 {
                                   actions.myCourseGroups().coach ?
                                     actions.myCourseGroups().coach.map((user) => {
@@ -218,7 +218,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                 }
                                 </View>
                                 <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Learning Group</Text>
-                                <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                                <View style={this.styles.style.courseMyLearningGroupContainer}>
                                 {
                                   actions.myCourseGroups().triad ?
                                     actions.myCourseGroups().triad.map((user) => {
@@ -228,7 +228,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                 }
                                 </View>
                                 <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Cohort</Text>
-                                <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
+                                <View style={this.styles.style.courseMyCohortContainer}>
                                   {
                                     actions.myCourseGroups().cohort ?
                                       actions.myCourseGroups().cohort.map((user) => {
@@ -243,7 +243,6 @@ class CourseHomeImpl extends JCComponent<Props>{
                           </Container>
                         </Container>
                         <Container style={this.styles.style.courseHomeRightContainer}>
-
                           <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30, width: '90%' }}>To-Do</Text>
                           <Card style={this.styles.style.courseHomeCoachingCard}>
                             <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App' }}>Call with {state.coachName}</Text>

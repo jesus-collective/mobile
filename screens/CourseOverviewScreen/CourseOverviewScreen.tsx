@@ -27,6 +27,7 @@ import data from './course.json';
 import EditableRichText from '../../components/Forms/EditableRichText';
 import moment from 'moment-timezone';
 import { MapData } from 'components/MyGroups/MyGroups';
+import PaymentFrom from '../../components/Forms/PaymentForm';
 interface Props {
   navigation: any
   route: any
@@ -521,8 +522,6 @@ export default class CourseScreen extends JCComponent<Props, State>{
                       })
                       }
                     />
-
-
                   </Container>
 
                 </Container>

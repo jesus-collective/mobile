@@ -21,7 +21,8 @@ interface Props {
     textStyle: any,
     inputStyle?: any,
     placeholder?: string,
-    onChange?(string)
+    onChange?(string),
+    toolBar?: any
 }
 interface State extends JCState {
     value: string,
@@ -88,7 +89,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
                     editorClassName="customEditorRichTextEdit"
                     onEditorStateChange={(z) => { this.updateEditorInput(z) }}
                     onContentStateChange={(z) => { this.updateInput(z) }}
-                    toolbar={{
+                    toolbar={this.props.toolBar ?? {
                         options: ['inline', 'list', 'colorPicker', 'link', 'emoji', 'image', 'history'],
                         inline: {
                             options: ['bold', 'italic', 'underline', 'strikethrough']
