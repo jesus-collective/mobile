@@ -180,7 +180,7 @@ class CourseDetailImpl extends JCComponent<Props>{
                           <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 0, alignSelf: 'flex-start' }}>{this.getMonth(week, item, lesson)}</Text>
                           <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginRight: 0, alignSelf: 'flex-start' }}>{this.getDay(week, item, lesson)}</Text>
                         </Container>
-                        <Container style={{ flexDirection: "column", flex: 7, alignSelf: 'center', height: "unset" }}>
+                        <Container style={this.styles.style.courseDetailActivityInnerCardCenter}>
 
                           <EditableText onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "name", e) }}
                             placeholder="Title" multiline={true}
@@ -378,7 +378,7 @@ class CourseDetailImpl extends JCComponent<Props>{
                   <CourseDetailMenu></CourseDetailMenu>
                   <Container style={{ flex: 80 }}>
                     <Content style={{ flex: 85 }}>
-                      <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start', paddingLeft: '5%', paddingRight: '2%' }}>
+                      <Container style={this.styles.style.courseDetailMainContainer}>
 
                         {this.renderWeekDetails(state, actions, week)}
                         {this.renderLessonDetails(state, actions, week)}
@@ -388,7 +388,7 @@ class CourseDetailImpl extends JCComponent<Props>{
                             <JCButton buttonType={state.activeMessageBoard == "triad" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("triad") }}>Learning Group</JCButton>
                             <JCButton buttonType={state.activeMessageBoard == "instructor" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("instructor") }}>Facilitator</JCButton>
                           </Container>
-                          <Container style={{ flex: 95, flexDirection: "row", marginTop: 10, width: '100%' }}>
+                          <Container style={this.styles.style.courseDetailMessageBoardContainer}>
                             <MessageBoard style="mini" groupId={state.data.id}></MessageBoard>
                           </Container>
                         </Container>
@@ -396,7 +396,6 @@ class CourseDetailImpl extends JCComponent<Props>{
                     </Content>
                   </Container>
                 </Container>
-
               </StyleProvider>
               :
               null

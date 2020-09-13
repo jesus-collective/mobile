@@ -1657,6 +1657,28 @@ export default class MainStyles {
                 flexDirection: 'row', 
                 flexWrap: 'wrap'
             },
+            courseProfileImageContainer: {
+                paddingTop: 40,
+            },
+            courseDetailActivityInnerCardCenter: {
+                flexDirection: "column", 
+                flex: 7, 
+                alignSelf: 'center', 
+                height: "unset"
+            },
+            courseDetailMainContainer: {
+                display: "flex", 
+                flexDirection: "row", 
+                justifyContent: 'flex-start', 
+                paddingLeft: '5%', 
+                paddingRight: '2%'
+            },
+            courseDetailMessageBoardContainer: {
+                flex: 95, 
+                flexDirection: "row", 
+                marginTop: 10, 
+                width: '100%'
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2045,7 +2067,6 @@ export default class MainStyles {
                 courseDetailLessonText: {
                     width: '95%',
                 },
-
             },
 
             // Media Query Desktop Large Tablet
@@ -2152,7 +2173,7 @@ export default class MainStyles {
                     flex: 0.4,
                 },
                 courseConversationCard: {
-                    width: "50%",
+                    width: "93%",
                 },
                 CourseHomeActivityContainer: {
                     flex: 0,
@@ -2173,6 +2194,16 @@ export default class MainStyles {
                 },
                 courseMessageBoardButtonsView: {
                     marginTop: 40,
+                },
+                courseDetailActivityInnerCard:{
+                    flex: 3,
+                },
+                courseDetailActivityInnerCardCenter: {
+                    flex: 6,
+                },
+                courseDetailLessonCardNoEdit: {
+                    paddingLeft: 20,
+                    paddingRight: 20,
                 },
             },
 
@@ -2301,7 +2332,7 @@ export default class MainStyles {
                     flexDirection: "column"
                 },
                 coursePageMessageBoard: {
-                    flexDirection: "column"
+                    flexDirection: "row"
                 },
                 eventPageMessageBoardLeft: {
                     alignSelf: "flex-start"
@@ -2467,6 +2498,46 @@ export default class MainStyles {
                 courseMyLearningGroupContainer: {
                     flexWrap: 'nowrap',
                     overflow: 'scroll'
+                },
+                courseProfileImageContainer: {
+                    marginTop: 400,
+                },
+                courseHomeDescriptionText: {
+                    marginTop: 300,
+                },
+                courseHomeRightContainer: {
+                    top: 1450,
+                },
+                courseProfileImageButtonsContainer: {
+                    marginRight: 0,
+                },
+                courseDetailMainContainer: {
+                    flexDirection: 'column',
+                    paddingRight: '5%'
+                },
+                courseDetailLessonCardNoEdit: {
+                    width: '100%'
+                },
+                courseDetailRightContainer: {
+                    top: 650,
+                },
+                courseDetailMessageBoardContainer: {
+                    marginTop: 100, 
+                },
+                courseDetailActivityInnerCard:{
+                    alignSelf: 'flex-start',
+                },
+                courseDetailHeading: {
+                    textAlign: 'flex-start',
+                },
+                courseActivityDetails: {
+                    alignSelf: 'flex-start'
+                },
+                courseActivityButtonNonEditable: {
+                    alignSelf: 'flex-start'
+                },
+                courseDetailActivityInnerCardCenter: {
+                    alignSelf: 'flex-start', 
                 },
             },
 

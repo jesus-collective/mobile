@@ -982,7 +982,12 @@ export default EStyleSheet.create({
             justifyContent: "center",
         },
         SolidAboutMeButton: {
-            justifyContent: "center"
+            justifyContent: "center",
+        },
+        CourseTransparentBoldOrangeButton: {
+            justifyContent: "center",
+            marginRight: 0,
+            marginLeft: 0,
         },
     },
     // Media Query Desktop Large Tablet
