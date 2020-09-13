@@ -219,6 +219,8 @@ query GetCourseInfo($id: ID!) {
             id
             lesson
             lessonType
+            wordCount
+            courseLessonResponseId
             zoomUrl
             name
             time

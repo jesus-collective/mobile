@@ -36,15 +36,12 @@ class CourseDetailImpl extends JCComponent<Props>{
     return (<Container style={state.isEditable && state.editMode ? { flexDirection: "column", marginTop: 10, height: "unset" } : { flexDirection: "column", height: "unset" }}>
 
       {state.isEditable && state.editMode ?
-        <EditableDate type="datetime"
-          onChange={(time: any, timeZone: any) => { actions.updateLesson(state.activeWeek, lesson, "time", time); actions.updateLesson(state.activeWeek, lesson, "tz", timeZone) }}
-          placeholder="Enter Assignment Due Date/Time"
-          textStyle={this.styles.style.fontRegular}
-          inputStyle={this.styles.style.groupNameInput}
-          value={item.time}
-          tz={item.tz ? item.tz : moment.tz.guess()}
-          isEditable={state.isEditable && state.editMode}>
-        </EditableDate>
+        <EditableText onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "wordCount", e) }}
+          placeholder="Word Count" multiline={false}
+          data-testid="course-wordCount"
+          textStyle={this.styles.style.fontFormSmallDarkGreyCourseTopEditable}
+          inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 30, marginBottom: 30, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
+          value={item.wordCount} isEditable={state.isEditable && state.editMode}></EditableText>
         : null}
     </Container>
     )
@@ -53,16 +50,36 @@ class CourseDetailImpl extends JCComponent<Props>{
     return (<Container style={state.isEditable && state.editMode ? { flexDirection: "column", marginTop: 10, height: "unset" } : { flexDirection: "column", height: "unset" }}>
 
       {state.isEditable && state.editMode ?
-        <EditableDate type="datetime"
-          onChange={(time: any, timeZone: any) => { actions.updateLesson(state.activeWeek, lesson, "time", time); actions.updateLesson(state.activeWeek, lesson, "tz", timeZone) }}
-          placeholder="Enter Response Due Date/Time"
-          textStyle={this.styles.style.fontRegular}
-          inputStyle={this.styles.style.groupNameInput}
-          value={item.time}
-          tz={item.tz ? item.tz : moment.tz.guess()}
-          isEditable={state.isEditable && state.editMode}>
+        <>
+          <Picker
 
-        </EditableDate>
+            onStartShouldSetResponder={() => true}
+            onMoveShouldSetResponderCapture={() => true}
+            onStartShouldSetResponderCapture={() => true}
+            onMoveShouldSetResponder={() => true}
+            mode="dropdown"
+            iosIcon={<Icon name="arrow-down" />}
+            style={{ width: "50%", marginBottom: 0, marginTop: 0, fontSize: 16, height: 30, flexGrow: 0, marginRight: 0, borderColor: '#dddddd' }}
+            placeholder="Event type"
+            placeholderStyle={{ color: "#bfc6ea" }}
+            placeholderIconColor="#007aff"
+            selectedValue={item.lessonType ? item.lessonType : "zoom"}
+            onValueChange={(value: any) => { actions.updateLesson(state.activeWeek, lesson, "courseLessonResponseId", value) }}
+          >
+            {actions.getAssignmentList()?.map((item) => {
+              console.log(item)
+              if (item)
+                return <Picker.Item key={item.id} label={item.name} value={item.id} />
+            })}
+
+          </Picker>
+          <EditableText onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "wordCount", e) }}
+            placeholder="Word Count" multiline={false}
+            data-testid="course-wordCount"
+            textStyle={this.styles.style.fontFormSmallDarkGreyCourseTopEditable}
+            inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 30, marginBottom: 30, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
+            value={item.wordCount} isEditable={state.isEditable && state.editMode}></EditableText>
+        </>
         : null}
     </Container>
     )
@@ -155,7 +172,7 @@ class CourseDetailImpl extends JCComponent<Props>{
             <Container>
               {week.lessons?.items?.map((item: any, lesson: number) => {
                 return (
-                  <TouchableOpacity key={lesson} onPress={() => { actions.setActiveLesson(lesson) }}>
+                  <TouchableOpacity key={lesson} onPress={() => { !state.editMode ? actions.setActiveLesson(lesson) : null }}>
                     <Card style={state.isEditable && state.editMode ?
                       this.styles.style.courseDetailLessonCardEdit : this.styles.style.courseDetailLessonCardNoEdit}>
                       <Container style={this.styles.style.courseDetailActivityCard}>
@@ -232,8 +249,11 @@ class CourseDetailImpl extends JCComponent<Props>{
 
 
                         </Container>
-                        <Text style={this.styles.style.courseCompletedCallOut}>Completed</Text>
-                        <Text style={{ alignSelf: 'center' }}><Image style={this.styles.style.courseCheckmark} source={require('../../assets/svg/checkmark.svg')} /></Text>
+                        {item.lessonType == "zoom" && moment.tz(item.time, item.tz) < moment() ?
+                          < Text style={{ alignSelf: 'center' }}>
+                            <Image style={this.styles.style.courseCheckmark} source={require('../../assets/svg/checkmark.svg')} />
+                          </Text> : null
+                        }
                         {state.isEditable && state.editMode ?
                           <TouchableOpacity style={{ alignSelf: 'center', marginLeft: 15 }} onPress={() => { actions.deleteLesson(state.activeWeek, lesson) }}>
                             <AntDesign name="close" size={20} color="black" />
@@ -262,7 +282,7 @@ class CourseDetailImpl extends JCComponent<Props>{
                 null
               }
             </Container>
-          </Container>
+          </Container >
           : <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}><Text>Please create your first week</Text></Container>
         : null
     )

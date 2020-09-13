@@ -82,28 +82,8 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -370,16 +350,6 @@ export const onCreateUser = /* GraphQL */ `
         }
         nextToken
       }
-      completions {
-        items {
-          id
-          courseLessonID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       courseInstructing {
         items {
           id
@@ -389,111 +359,6 @@ export const onCreateUser = /* GraphQL */ `
           updatedAt
         }
         nextToken
-      }
-      courseAssignments {
-        id
-        courseAssignmentID
-        courseAssignment {
-          id
-          assignmentLessonID
-          responseLessonID
-          description
-          createdAt
-          updatedAt
-        }
-        userID
-        user {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          mainUserGroup
-          hasPaidState
-          profileState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          denomination
-          pplServed
-          sundayAttendance
-          numberVolunteers
-          orgDescription
-          joined
-          primaryOrganization
-          createdAt
-          updatedAt
-        }
-        responses {
-          nextToken
-        }
-        submissionText
-        status
-        createdAt
-        updatedAt
-      }
-      courseResponses {
-        id
-        courseAssignmentSubmissionID
-        courseAssignmentSubmission {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        userID
-        user {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          mainUserGroup
-          hasPaidState
-          profileState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          denomination
-          pplServed
-          sundayAttendance
-          numberVolunteers
-          orgDescription
-          joined
-          primaryOrganization
-          createdAt
-          updatedAt
-        }
-        responseText
-        createdAt
-        updatedAt
       }
       alertConfig {
         emailDirectMessage
@@ -657,16 +522,6 @@ export const onUpdateUser = /* GraphQL */ `
         }
         nextToken
       }
-      completions {
-        items {
-          id
-          courseLessonID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       courseInstructing {
         items {
           id
@@ -676,111 +531,6 @@ export const onUpdateUser = /* GraphQL */ `
           updatedAt
         }
         nextToken
-      }
-      courseAssignments {
-        id
-        courseAssignmentID
-        courseAssignment {
-          id
-          assignmentLessonID
-          responseLessonID
-          description
-          createdAt
-          updatedAt
-        }
-        userID
-        user {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          mainUserGroup
-          hasPaidState
-          profileState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          denomination
-          pplServed
-          sundayAttendance
-          numberVolunteers
-          orgDescription
-          joined
-          primaryOrganization
-          createdAt
-          updatedAt
-        }
-        responses {
-          nextToken
-        }
-        submissionText
-        status
-        createdAt
-        updatedAt
-      }
-      courseResponses {
-        id
-        courseAssignmentSubmissionID
-        courseAssignmentSubmission {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        userID
-        user {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          mainUserGroup
-          hasPaidState
-          profileState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          denomination
-          pplServed
-          sundayAttendance
-          numberVolunteers
-          orgDescription
-          joined
-          primaryOrganization
-          createdAt
-          updatedAt
-        }
-        responseText
-        createdAt
-        updatedAt
       }
       alertConfig {
         emailDirectMessage
@@ -944,16 +694,6 @@ export const onDeleteUser = /* GraphQL */ `
         }
         nextToken
       }
-      completions {
-        items {
-          id
-          courseLessonID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       courseInstructing {
         items {
           id
@@ -963,111 +703,6 @@ export const onDeleteUser = /* GraphQL */ `
           updatedAt
         }
         nextToken
-      }
-      courseAssignments {
-        id
-        courseAssignmentID
-        courseAssignment {
-          id
-          assignmentLessonID
-          responseLessonID
-          description
-          createdAt
-          updatedAt
-        }
-        userID
-        user {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          mainUserGroup
-          hasPaidState
-          profileState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          denomination
-          pplServed
-          sundayAttendance
-          numberVolunteers
-          orgDescription
-          joined
-          primaryOrganization
-          createdAt
-          updatedAt
-        }
-        responses {
-          nextToken
-        }
-        submissionText
-        status
-        createdAt
-        updatedAt
-      }
-      courseResponses {
-        id
-        courseAssignmentSubmissionID
-        courseAssignmentSubmission {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        userID
-        user {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          mainUserGroup
-          hasPaidState
-          profileState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          denomination
-          pplServed
-          sundayAttendance
-          numberVolunteers
-          orgDescription
-          joined
-          primaryOrganization
-          createdAt
-          updatedAt
-        }
-        responseText
-        createdAt
-        updatedAt
       }
       alertConfig {
         emailDirectMessage
@@ -1257,28 +892,8 @@ export const onCreateGroupMember = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -1471,28 +1086,8 @@ export const onUpdateGroupMember = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -1685,28 +1280,8 @@ export const onDeleteGroupMember = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -1799,28 +1374,8 @@ export const onCreateGroup = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -2048,28 +1603,8 @@ export const onUpdateGroup = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -2297,28 +1832,8 @@ export const onDeleteGroup = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -2548,28 +2063,8 @@ export const onCreateOrganizationMember = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -2748,28 +2243,8 @@ export const onUpdateOrganizationMember = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -2948,28 +2423,8 @@ export const onDeleteOrganizationMember = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -4102,28 +3557,8 @@ export const onCreateCourseInstructors = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -4236,28 +3671,8 @@ export const onUpdateCourseInstructors = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -4370,28 +3785,8 @@ export const onDeleteCourseInstructors = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -4507,28 +3902,8 @@ export const onCreateCourseTriadCoaches = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -4644,28 +4019,8 @@ export const onUpdateCourseTriadCoaches = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -4781,28 +4136,8 @@ export const onDeleteCourseTriadCoaches = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -4918,28 +4253,8 @@ export const onCreateCourseTriadUsers = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -5055,28 +4370,8 @@ export const onUpdateCourseTriadUsers = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -5192,28 +4487,8 @@ export const onDeleteCourseTriadUsers = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -5274,6 +4549,8 @@ export const onCreateCourseWeek = /* GraphQL */ `
           duration
           zoomUrl
           zoomRecording
+          courseLessonResponseId
+          wordCount
           description
           courseWeekID
           createdAt
@@ -5328,6 +4605,8 @@ export const onUpdateCourseWeek = /* GraphQL */ `
           duration
           zoomUrl
           zoomRecording
+          courseLessonResponseId
+          wordCount
           description
           courseWeekID
           createdAt
@@ -5382,6 +4661,8 @@ export const onDeleteCourseWeek = /* GraphQL */ `
           duration
           zoomUrl
           zoomRecording
+          courseLessonResponseId
+          wordCount
           description
           courseWeekID
           createdAt
@@ -5406,6 +4687,8 @@ export const onCreateCourseLesson = /* GraphQL */ `
       duration
       zoomUrl
       zoomRecording
+      courseLessonResponseId
+      wordCount
       description
       courseWeekID
       courseWeek {
@@ -5433,16 +4716,6 @@ export const onCreateCourseLesson = /* GraphQL */ `
         }
         createdAt
         updatedAt
-      }
-      completions {
-        items {
-          id
-          courseLessonID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
       }
       createdAt
       updatedAt
@@ -5461,6 +4734,8 @@ export const onUpdateCourseLesson = /* GraphQL */ `
       duration
       zoomUrl
       zoomRecording
+      courseLessonResponseId
+      wordCount
       description
       courseWeekID
       courseWeek {
@@ -5488,16 +4763,6 @@ export const onUpdateCourseLesson = /* GraphQL */ `
         }
         createdAt
         updatedAt
-      }
-      completions {
-        items {
-          id
-          courseLessonID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
       }
       createdAt
       updatedAt
@@ -5516,6 +4781,8 @@ export const onDeleteCourseLesson = /* GraphQL */ `
       duration
       zoomUrl
       zoomRecording
+      courseLessonResponseId
+      wordCount
       description
       courseWeekID
       courseWeek {
@@ -5544,1441 +4811,6 @@ export const onDeleteCourseLesson = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      completions {
-        items {
-          id
-          courseLessonID
-          userID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateCourseLessonCompletion = /* GraphQL */ `
-  subscription OnCreateCourseLessonCompletion {
-    onCreateCourseLessonCompletion {
-      id
-      courseLessonID
-      courseLesson {
-        id
-        lesson
-        lessonType
-        name
-        time
-        tz
-        duration
-        zoomUrl
-        zoomRecording
-        description
-        courseWeekID
-        courseWeek {
-          id
-          week
-          date
-          tz
-          name
-          title
-          leader
-          courseInfoID
-          createdAt
-          updatedAt
-        }
-        completions {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      userID
-      user {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        mainUserGroup
-        hasPaidState
-        profileState
-        address
-        city
-        province
-        postalCode
-        country
-        location {
-          latitude
-          longitude
-          geocodeFull
-          geocodeCity
-          geocodeRegion
-          randomLatitude
-          randomLongitude
-        }
-        profileImage {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        denomination
-        pplServed
-        sundayAttendance
-        numberVolunteers
-        orgDescription
-        joined
-        primaryOrganization
-        organizations {
-          nextToken
-        }
-        owns {
-          nextToken
-        }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        directMessages {
-          nextToken
-        }
-        coachingTriad {
-          nextToken
-        }
-        userTriad {
-          nextToken
-        }
-        completions {
-          nextToken
-        }
-        courseInstructing {
-          nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
-        }
-        alertConfig {
-          emailDirectMessage
-          emailGroupMessage
-          emailEventMessage
-          emailOrgMessage
-          emailResourceMessage
-          emailCourseMessage
-          emailPromotions
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateCourseLessonCompletion = /* GraphQL */ `
-  subscription OnUpdateCourseLessonCompletion {
-    onUpdateCourseLessonCompletion {
-      id
-      courseLessonID
-      courseLesson {
-        id
-        lesson
-        lessonType
-        name
-        time
-        tz
-        duration
-        zoomUrl
-        zoomRecording
-        description
-        courseWeekID
-        courseWeek {
-          id
-          week
-          date
-          tz
-          name
-          title
-          leader
-          courseInfoID
-          createdAt
-          updatedAt
-        }
-        completions {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      userID
-      user {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        mainUserGroup
-        hasPaidState
-        profileState
-        address
-        city
-        province
-        postalCode
-        country
-        location {
-          latitude
-          longitude
-          geocodeFull
-          geocodeCity
-          geocodeRegion
-          randomLatitude
-          randomLongitude
-        }
-        profileImage {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        denomination
-        pplServed
-        sundayAttendance
-        numberVolunteers
-        orgDescription
-        joined
-        primaryOrganization
-        organizations {
-          nextToken
-        }
-        owns {
-          nextToken
-        }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        directMessages {
-          nextToken
-        }
-        coachingTriad {
-          nextToken
-        }
-        userTriad {
-          nextToken
-        }
-        completions {
-          nextToken
-        }
-        courseInstructing {
-          nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
-        }
-        alertConfig {
-          emailDirectMessage
-          emailGroupMessage
-          emailEventMessage
-          emailOrgMessage
-          emailResourceMessage
-          emailCourseMessage
-          emailPromotions
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteCourseLessonCompletion = /* GraphQL */ `
-  subscription OnDeleteCourseLessonCompletion {
-    onDeleteCourseLessonCompletion {
-      id
-      courseLessonID
-      courseLesson {
-        id
-        lesson
-        lessonType
-        name
-        time
-        tz
-        duration
-        zoomUrl
-        zoomRecording
-        description
-        courseWeekID
-        courseWeek {
-          id
-          week
-          date
-          tz
-          name
-          title
-          leader
-          courseInfoID
-          createdAt
-          updatedAt
-        }
-        completions {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      userID
-      user {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        mainUserGroup
-        hasPaidState
-        profileState
-        address
-        city
-        province
-        postalCode
-        country
-        location {
-          latitude
-          longitude
-          geocodeFull
-          geocodeCity
-          geocodeRegion
-          randomLatitude
-          randomLongitude
-        }
-        profileImage {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        denomination
-        pplServed
-        sundayAttendance
-        numberVolunteers
-        orgDescription
-        joined
-        primaryOrganization
-        organizations {
-          nextToken
-        }
-        owns {
-          nextToken
-        }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        directMessages {
-          nextToken
-        }
-        coachingTriad {
-          nextToken
-        }
-        userTriad {
-          nextToken
-        }
-        completions {
-          nextToken
-        }
-        courseInstructing {
-          nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
-        }
-        alertConfig {
-          emailDirectMessage
-          emailGroupMessage
-          emailEventMessage
-          emailOrgMessage
-          emailResourceMessage
-          emailCourseMessage
-          emailPromotions
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateCourseAssignment = /* GraphQL */ `
-  subscription OnCreateCourseAssignment($owner: String) {
-    onCreateCourseAssignment(owner: $owner) {
-      id
-      assignmentLessonID
-      responseLessonID
-      submissions {
-        items {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      description
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateCourseAssignment = /* GraphQL */ `
-  subscription OnUpdateCourseAssignment($owner: String) {
-    onUpdateCourseAssignment(owner: $owner) {
-      id
-      assignmentLessonID
-      responseLessonID
-      submissions {
-        items {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      description
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteCourseAssignment = /* GraphQL */ `
-  subscription OnDeleteCourseAssignment($owner: String) {
-    onDeleteCourseAssignment(owner: $owner) {
-      id
-      assignmentLessonID
-      responseLessonID
-      submissions {
-        items {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      description
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateCourseAssignmentSubmission = /* GraphQL */ `
-  subscription OnCreateCourseAssignmentSubmission($owner: String) {
-    onCreateCourseAssignmentSubmission(owner: $owner) {
-      id
-      courseAssignmentID
-      courseAssignment {
-        id
-        assignmentLessonID
-        responseLessonID
-        submissions {
-          nextToken
-        }
-        description
-        createdAt
-        updatedAt
-      }
-      userID
-      user {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        mainUserGroup
-        hasPaidState
-        profileState
-        address
-        city
-        province
-        postalCode
-        country
-        location {
-          latitude
-          longitude
-          geocodeFull
-          geocodeCity
-          geocodeRegion
-          randomLatitude
-          randomLongitude
-        }
-        profileImage {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        denomination
-        pplServed
-        sundayAttendance
-        numberVolunteers
-        orgDescription
-        joined
-        primaryOrganization
-        organizations {
-          nextToken
-        }
-        owns {
-          nextToken
-        }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        directMessages {
-          nextToken
-        }
-        coachingTriad {
-          nextToken
-        }
-        userTriad {
-          nextToken
-        }
-        completions {
-          nextToken
-        }
-        courseInstructing {
-          nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
-        }
-        alertConfig {
-          emailDirectMessage
-          emailGroupMessage
-          emailEventMessage
-          emailOrgMessage
-          emailResourceMessage
-          emailCourseMessage
-          emailPromotions
-        }
-        createdAt
-        updatedAt
-      }
-      responses {
-        items {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      submissionText
-      status
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateCourseAssignmentSubmission = /* GraphQL */ `
-  subscription OnUpdateCourseAssignmentSubmission($owner: String) {
-    onUpdateCourseAssignmentSubmission(owner: $owner) {
-      id
-      courseAssignmentID
-      courseAssignment {
-        id
-        assignmentLessonID
-        responseLessonID
-        submissions {
-          nextToken
-        }
-        description
-        createdAt
-        updatedAt
-      }
-      userID
-      user {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        mainUserGroup
-        hasPaidState
-        profileState
-        address
-        city
-        province
-        postalCode
-        country
-        location {
-          latitude
-          longitude
-          geocodeFull
-          geocodeCity
-          geocodeRegion
-          randomLatitude
-          randomLongitude
-        }
-        profileImage {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        denomination
-        pplServed
-        sundayAttendance
-        numberVolunteers
-        orgDescription
-        joined
-        primaryOrganization
-        organizations {
-          nextToken
-        }
-        owns {
-          nextToken
-        }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        directMessages {
-          nextToken
-        }
-        coachingTriad {
-          nextToken
-        }
-        userTriad {
-          nextToken
-        }
-        completions {
-          nextToken
-        }
-        courseInstructing {
-          nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
-        }
-        alertConfig {
-          emailDirectMessage
-          emailGroupMessage
-          emailEventMessage
-          emailOrgMessage
-          emailResourceMessage
-          emailCourseMessage
-          emailPromotions
-        }
-        createdAt
-        updatedAt
-      }
-      responses {
-        items {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      submissionText
-      status
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteCourseAssignmentSubmission = /* GraphQL */ `
-  subscription OnDeleteCourseAssignmentSubmission($owner: String) {
-    onDeleteCourseAssignmentSubmission(owner: $owner) {
-      id
-      courseAssignmentID
-      courseAssignment {
-        id
-        assignmentLessonID
-        responseLessonID
-        submissions {
-          nextToken
-        }
-        description
-        createdAt
-        updatedAt
-      }
-      userID
-      user {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        mainUserGroup
-        hasPaidState
-        profileState
-        address
-        city
-        province
-        postalCode
-        country
-        location {
-          latitude
-          longitude
-          geocodeFull
-          geocodeCity
-          geocodeRegion
-          randomLatitude
-          randomLongitude
-        }
-        profileImage {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        denomination
-        pplServed
-        sundayAttendance
-        numberVolunteers
-        orgDescription
-        joined
-        primaryOrganization
-        organizations {
-          nextToken
-        }
-        owns {
-          nextToken
-        }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        directMessages {
-          nextToken
-        }
-        coachingTriad {
-          nextToken
-        }
-        userTriad {
-          nextToken
-        }
-        completions {
-          nextToken
-        }
-        courseInstructing {
-          nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
-        }
-        alertConfig {
-          emailDirectMessage
-          emailGroupMessage
-          emailEventMessage
-          emailOrgMessage
-          emailResourceMessage
-          emailCourseMessage
-          emailPromotions
-        }
-        createdAt
-        updatedAt
-      }
-      responses {
-        items {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      submissionText
-      status
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateCourseResponseSubmission = /* GraphQL */ `
-  subscription OnCreateCourseResponseSubmission($owner: String) {
-    onCreateCourseResponseSubmission(owner: $owner) {
-      id
-      courseAssignmentSubmissionID
-      courseAssignmentSubmission {
-        id
-        courseAssignmentID
-        courseAssignment {
-          id
-          assignmentLessonID
-          responseLessonID
-          description
-          createdAt
-          updatedAt
-        }
-        userID
-        user {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          mainUserGroup
-          hasPaidState
-          profileState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          denomination
-          pplServed
-          sundayAttendance
-          numberVolunteers
-          orgDescription
-          joined
-          primaryOrganization
-          createdAt
-          updatedAt
-        }
-        responses {
-          nextToken
-        }
-        submissionText
-        status
-        createdAt
-        updatedAt
-      }
-      userID
-      user {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        mainUserGroup
-        hasPaidState
-        profileState
-        address
-        city
-        province
-        postalCode
-        country
-        location {
-          latitude
-          longitude
-          geocodeFull
-          geocodeCity
-          geocodeRegion
-          randomLatitude
-          randomLongitude
-        }
-        profileImage {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        denomination
-        pplServed
-        sundayAttendance
-        numberVolunteers
-        orgDescription
-        joined
-        primaryOrganization
-        organizations {
-          nextToken
-        }
-        owns {
-          nextToken
-        }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        directMessages {
-          nextToken
-        }
-        coachingTriad {
-          nextToken
-        }
-        userTriad {
-          nextToken
-        }
-        completions {
-          nextToken
-        }
-        courseInstructing {
-          nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
-        }
-        alertConfig {
-          emailDirectMessage
-          emailGroupMessage
-          emailEventMessage
-          emailOrgMessage
-          emailResourceMessage
-          emailCourseMessage
-          emailPromotions
-        }
-        createdAt
-        updatedAt
-      }
-      responseText
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateCourseResponseSubmission = /* GraphQL */ `
-  subscription OnUpdateCourseResponseSubmission($owner: String) {
-    onUpdateCourseResponseSubmission(owner: $owner) {
-      id
-      courseAssignmentSubmissionID
-      courseAssignmentSubmission {
-        id
-        courseAssignmentID
-        courseAssignment {
-          id
-          assignmentLessonID
-          responseLessonID
-          description
-          createdAt
-          updatedAt
-        }
-        userID
-        user {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          mainUserGroup
-          hasPaidState
-          profileState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          denomination
-          pplServed
-          sundayAttendance
-          numberVolunteers
-          orgDescription
-          joined
-          primaryOrganization
-          createdAt
-          updatedAt
-        }
-        responses {
-          nextToken
-        }
-        submissionText
-        status
-        createdAt
-        updatedAt
-      }
-      userID
-      user {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        mainUserGroup
-        hasPaidState
-        profileState
-        address
-        city
-        province
-        postalCode
-        country
-        location {
-          latitude
-          longitude
-          geocodeFull
-          geocodeCity
-          geocodeRegion
-          randomLatitude
-          randomLongitude
-        }
-        profileImage {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        denomination
-        pplServed
-        sundayAttendance
-        numberVolunteers
-        orgDescription
-        joined
-        primaryOrganization
-        organizations {
-          nextToken
-        }
-        owns {
-          nextToken
-        }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        directMessages {
-          nextToken
-        }
-        coachingTriad {
-          nextToken
-        }
-        userTriad {
-          nextToken
-        }
-        completions {
-          nextToken
-        }
-        courseInstructing {
-          nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
-        }
-        alertConfig {
-          emailDirectMessage
-          emailGroupMessage
-          emailEventMessage
-          emailOrgMessage
-          emailResourceMessage
-          emailCourseMessage
-          emailPromotions
-        }
-        createdAt
-        updatedAt
-      }
-      responseText
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteCourseResponseSubmission = /* GraphQL */ `
-  subscription OnDeleteCourseResponseSubmission($owner: String) {
-    onDeleteCourseResponseSubmission(owner: $owner) {
-      id
-      courseAssignmentSubmissionID
-      courseAssignmentSubmission {
-        id
-        courseAssignmentID
-        courseAssignment {
-          id
-          assignmentLessonID
-          responseLessonID
-          description
-          createdAt
-          updatedAt
-        }
-        userID
-        user {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          mainUserGroup
-          hasPaidState
-          profileState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          denomination
-          pplServed
-          sundayAttendance
-          numberVolunteers
-          orgDescription
-          joined
-          primaryOrganization
-          createdAt
-          updatedAt
-        }
-        responses {
-          nextToken
-        }
-        submissionText
-        status
-        createdAt
-        updatedAt
-      }
-      userID
-      user {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        mainUserGroup
-        hasPaidState
-        profileState
-        address
-        city
-        province
-        postalCode
-        country
-        location {
-          latitude
-          longitude
-          geocodeFull
-          geocodeCity
-          geocodeRegion
-          randomLatitude
-          randomLongitude
-        }
-        profileImage {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        denomination
-        pplServed
-        sundayAttendance
-        numberVolunteers
-        orgDescription
-        joined
-        primaryOrganization
-        organizations {
-          nextToken
-        }
-        owns {
-          nextToken
-        }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        directMessages {
-          nextToken
-        }
-        coachingTriad {
-          nextToken
-        }
-        userTriad {
-          nextToken
-        }
-        completions {
-          nextToken
-        }
-        courseInstructing {
-          nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
-        }
-        alertConfig {
-          emailDirectMessage
-          emailGroupMessage
-          emailEventMessage
-          emailOrgMessage
-          emailResourceMessage
-          emailCourseMessage
-          emailPromotions
-        }
-        createdAt
-        updatedAt
-      }
-      responseText
       createdAt
       updatedAt
     }
@@ -7058,28 +4890,8 @@ export const onCreateDirectMessageUser = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -7185,28 +4997,8 @@ export const onUpdateDirectMessageUser = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -7312,28 +5104,8 @@ export const onDeleteDirectMessageUser = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -7551,28 +5323,8 @@ export const onCreateDirectMessage = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -7682,28 +5434,8 @@ export const onUpdateDirectMessage = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -7813,28 +5545,8 @@ export const onDeleteDirectMessage = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -7946,28 +5658,8 @@ export const onCreateMessage = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -8166,28 +5858,8 @@ export const onUpdateMessage = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage
@@ -8386,28 +6058,8 @@ export const onDeleteMessage = /* GraphQL */ `
         userTriad {
           nextToken
         }
-        completions {
-          nextToken
-        }
         courseInstructing {
           nextToken
-        }
-        courseAssignments {
-          id
-          courseAssignmentID
-          userID
-          submissionText
-          status
-          createdAt
-          updatedAt
-        }
-        courseResponses {
-          id
-          courseAssignmentSubmissionID
-          userID
-          responseText
-          createdAt
-          updatedAt
         }
         alertConfig {
           emailDirectMessage

@@ -509,7 +509,14 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
     }
 
   }
-
+  getAssignmentList = (): void => {
+    return this.state.courseData.courseWeeks.items.map((week) => {
+      return week.lessons.items.map((lesson) => {
+        if (lesson.lessonType == "assignment")
+          return lesson
+      })
+    }).flat()
+  }
   updateWeekOrder = (): void => {
     try {
       this.state.courseData.courseWeeks.items.forEach((item, index) => {
@@ -667,7 +674,8 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
             updateInstructors: this.updateInstructors,
             setActiveMessageBoard: this.setActiveMessageBoard,
             myCourseGroups: this.myCourseGroups,
-            setActiveCourseActivity: this.setActiveCourseActivity
+            setActiveCourseActivity: this.setActiveCourseActivity,
+            getAssignmentList: this.getAssignmentList
           }
         }}>
           <StyleProvider style={getTheme()}>

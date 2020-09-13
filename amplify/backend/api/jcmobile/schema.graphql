@@ -64,11 +64,8 @@ type User
   coachingTriad:[CourseTriadCoaches] @connection(name:"courseCoachTriad",keyField: "userID")
   userTriad:[CourseTriadUsers] @connection(name:"courseUserTriad",keyField: "userID")
 
-  completions: [CourseLessonCompletion] @connection(name:"courseUserCompletions",keyField: "userID",sortField:"courseLessonID")
   courseInstructing: [CourseInstructors] @connection(name:"courseInstructorsUser",keyField: "userID")
 
-  courseAssignments:CourseAssignmentSubmission @connection(name:"courseUserAssignmentSubmissions",keyField: "userID")
-  courseResponses:CourseResponseSubmission @connection(name:"courseUserResponseSubmissions",keyField: "userID")
   alertConfig:AlertConfig
 }
 type AlertConfig{
@@ -311,7 +308,7 @@ type CourseLesson
     ]
   )
 {
-  id: ID!
+    id: ID!
   lesson:String
   lessonType:String
   name: String
@@ -320,75 +317,15 @@ type CourseLesson
   duration:String
   zoomUrl:String
   zoomRecording:String
+  courseLessonResponseId:String
+  wordCount:String
   description: String
   courseWeekID:String
   courseWeek: CourseWeek @connection(name: "courseLesson", keyField: "courseWeekID")
  
-  completions: [CourseLessonCompletion] @connection(name:"courseCompletions",keyField: "courseLessonID",sortField:"userID")
-}
-type CourseLessonCompletion
-@model
-{
-  id: ID!
-  courseLessonID:String
-  courseLesson: CourseLesson @connection(name: "courseCompletions", keyField: "courseLessonID")
-  userID:String
-  user: User @connection(name:"courseUserCompletions", keyField:"userID")
 }
 
-type CourseAssignment 
-@model 
- @auth(
-    rules: [
-      { allow: owner, ownerField: "owner" }
-      { allow: groups, groups: ["courseUsers"], operations: [read] }
-      { allow: groups, groups: ["courseAdmin"]}
-    ]
-  )
-{
-  id: ID!
-  assignmentLessonID: String
-  responseLessonID:String
-  submissions: [CourseAssignmentSubmission] @connection(name:"courseAssignmentSubmissions",keyField: "courseAssignmentID",sortField:"userID")
-  description: String
-}
-type CourseAssignmentSubmission
-@model 
- @auth(
-    rules: [
-      { allow: owner, ownerField: "owner" }
-      { allow: groups, groups: ["courseUsers"], operations: [read] }
-      { allow: groups, groups: ["courseAdmin"]}
-    ]
-  )
-{
-  id: ID!
-  courseAssignmentID:String
-  courseAssignment:CourseAssignment @connection(name: "courseAssignmentSubmissions", keyField: "courseAssignmentID")
-  userID:String
-  user:User @connection(name: "courseUserAssignmentSubmissions", keyField: "userID")
-  responses:[CourseResponseSubmission] @connection(name:"courseResponseSubmissions",keyField: "courseAssignmentSubmissionID",sortField:"userID")
-  submissionText:String
-  status:String
-}
-type CourseResponseSubmission
-@model 
- @auth(
-    rules: [
-      { allow: owner, ownerField: "owner" }
-      { allow: groups, groups: ["courseUsers"], operations: [read] }
-      { allow: groups, groups: ["courseAdmin"]}
-    ]
-  )
-  {
-    id:ID!
-    courseAssignmentSubmissionID:String
-    courseAssignmentSubmission:CourseAssignmentSubmission @connection(name: "courseResponseSubmissions", keyField: "courseAssignmentSubmissionID")
-    userID:String
-    user:User @connection(name: "courseUserResponseSubmissions", keyField: "userID")
-    responseText:String
 
-  }
 type DirectMessageUser
 @model
  @key(name: "byMessageRoom", fields: ["userID", "roomID"])
