@@ -1590,7 +1590,7 @@ export default class MainStyles {
             courseActivityDetails: {
                 flexDirection: "row", 
                 height: "unset", 
-                marginBottom: 12
+                marginBottom: 12,
             },
             courseCompletedCallOut: {
                 fontSize: 12, 
@@ -2044,23 +2044,24 @@ export default class MainStyles {
                 courseDetailActivityInnerCard: {
                     flexDirection: "row",
                     marginTop: 15, 
+                    alignSelf: 'flex-start'
                 },
                 courseCheckmark: {
                     marginBottom: 15,
                     marginTop: 10,
                 },
                 courseDetailHeading: {
-                    textAlign: 'center',
+                    textAlign: 'left',
                 },
                 courseActivityDetails: {
-                    alignSelf: 'center',
+                    alignSelf: 'flex-start',
                 },
                 courseCompletedCallOut: {
                     marginLeft: 0,
                     marginRight: 0,
                 },
                 courseActivityButtonNonEditable: {
-                    alignSelf: 'center'
+                    alignSelf: 'flex-start'
                 },
                 courseSidebarNavIconActive: {
                     marginRight: 6,
@@ -2070,6 +2071,12 @@ export default class MainStyles {
                 },
                 courseDetailLessonText: {
                     width: '95%',
+                },
+                courseDetailCoureInfoContainer: {
+                    maxHeight: 225,
+                },
+                courseDetailActivityInnerCardCenter: {
+                    width: '100%'
                 },
             },
 
