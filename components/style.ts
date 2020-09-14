@@ -2212,7 +2212,7 @@ export default class MainStyles {
                     paddingRight: 20,
                 },
                 courseDetailCoureInfoContainer: {
-                    maxHeight: 250,
+                    maxHeight: 225,
                 },
             },
 
