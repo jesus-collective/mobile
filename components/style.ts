@@ -2555,6 +2555,12 @@ export default class MainStyles {
                 courseDetailActivityInnerCardCenter: {
                     alignSelf: 'flex-start', 
                 },
+                courseDetailLeftContainer: {
+                    flex: 10,
+                },
+                courseDetailCoureInfoContainer: {
+                    marginBottom: 200,
+                },
             },
 
             dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
