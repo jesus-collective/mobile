@@ -1615,7 +1615,8 @@ export default class MainStyles {
             courseActivityButtonNonEditable: {
                 flexDirection: "column", 
                 height: "unset", 
-                marginTop: 15
+                marginTop: 15, 
+                alignSelf: 'flex-start'
             },
             courseDetailLessonText: {
                 fontSize: 16, 
