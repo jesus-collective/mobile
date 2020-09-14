@@ -1680,6 +1680,9 @@ export default class MainStyles {
                 marginTop: 10, 
                 width: '100%'
             },
+            courseDetailCoureInfoContainer: {
+                width: "100%"
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2205,6 +2208,9 @@ export default class MainStyles {
                 courseDetailLessonCardNoEdit: {
                     paddingLeft: 20,
                     paddingRight: 20,
+                },
+                courseDetailCoureInfoContainer: {
+                    maxHeight: 250,
                 },
             },
 
