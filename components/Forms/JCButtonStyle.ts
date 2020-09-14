@@ -1014,9 +1014,11 @@ export default EStyleSheet.create({
         },
         TransparentActivityCourseButton: {
             marginRight: 13,
+            marginBottom: 5,
         },
         courseActivityTransparentRegularBlackButton: {
             marginRight: 13,
+            marginBottom: 5,
         },
     }
 })

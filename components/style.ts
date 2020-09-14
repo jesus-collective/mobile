@@ -2188,7 +2188,9 @@ export default class MainStyles {
                     paddingRight: 20,
                 },
                 courseDetailButtonTrio: {
-                    flex: 2
+                    flex: 2, 
+                    marginBottom: 100,
+                    flexDirection: 'column'
                 },
                 coursePageMessageBoard: {
                     flexDirection: "column"
