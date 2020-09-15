@@ -108,7 +108,7 @@
 				"Runtime": "nodejs10.x",
 				"Timeout": "25",
 				"Code": {
-					"S3Bucket": "amplify-jc-mobile-beta-155138-deployment",
+					"S3Bucket": "jc-mobile-dev-20190809190418-deployment",
 					"S3Key": "amplify-builds/jcmobilePreSignup-4979334165444b52342b-build.zip"
 				},
 				"Layers": []

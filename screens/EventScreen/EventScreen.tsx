@@ -451,17 +451,17 @@ export default class EventScreen extends JCComponent<Props, State>{
                       isEditable={this.state.isEditable}></EditableUrl>
                     :
                     <CardItem style={{ paddingLeft: 0, paddingRight: 0 }}>
-                    <Image style={{ width: "22px", height: "22px", marginRight: 5 }} source={require('../../assets/svg/pin 2.svg')}></Image><EditableLocation onChange={(value: any, location: any) => {
-                      this.updateValue("location", value)
-                      console.log(location)
-                      if (location != undefined && location != null)
-                        this.updateValue("locationLatLong", { latitude: location.lat, longitude: location.lng })
-                      else
-                        this.updateValue("locationLatLong", null)
-                    }}
-                      placeholder="Enter Event Location" multiline={false} textStyle={this.styles.style.fontRegular}
-                      inputStyle={this.styles.style.groupNameInput} value={this.state.data.location}
-                      isEditable={this.state.isEditable}></EditableLocation></CardItem>
+                      <Image style={{ width: "22px", height: "22px", marginRight: 5 }} source={require('../../assets/svg/pin 2.svg')}></Image><EditableLocation onChange={(value: any, location: any) => {
+                        this.updateValue("location", value)
+                        console.log(location)
+                        if (location != undefined && location != null)
+                          this.updateValue("locationLatLong", { latitude: location.lat, longitude: location.lng })
+                        else
+                          this.updateValue("locationLatLong", null)
+                      }}
+                        placeholder="Enter Event Location" multiline={false} textStyle={this.styles.style.fontRegular}
+                        inputStyle={this.styles.style.groupNameInput} value={this.state.data.location}
+                        isEditable={this.state.isEditable}></EditableLocation></CardItem>
                   }
 
                   <Text style={{ fontFamily: "Graphik-Regular-App", fontSize: 16, lineHeight: 23, color: "#333333", paddingBottom: 12, marginTop: 52 }}>Organizer</Text>

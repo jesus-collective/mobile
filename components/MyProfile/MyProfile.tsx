@@ -207,6 +207,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
     delete item._lastChangedAt
     delete item.createdAt
     delete item.updatedAt
+    delete item.coachingTriad
+    delete item.userTriad
+    delete item.courseInstructing
     if (item.profileImage)
       delete item.profileImage["__typename"]
     delete item.directMessages
