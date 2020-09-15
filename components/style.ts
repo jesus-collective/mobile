@@ -2044,7 +2044,8 @@ export default class MainStyles {
                 courseDetailActivityInnerCard: {
                     flexDirection: "row",
                     marginTop: 15, 
-                    alignSelf: 'flex-start'
+                    alignSelf: 'flex-start',
+                    marginBottom: 8,
                 },
                 courseCheckmark: {
                     marginBottom: 15,
