@@ -1683,6 +1683,12 @@ export default class MainStyles {
             courseDetailCoureInfoContainer: {
                 width: "100%"
             },
+            courseHomeCourseActivityText: {
+                fontSize: 16, 
+                lineHeight: 25, 
+                fontFamily: 'Graphik-Regular-App', 
+                marginTop: 15
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2045,7 +2051,7 @@ export default class MainStyles {
                     flexDirection: "row",
                     marginTop: 15, 
                     alignSelf: 'flex-start',
-                    marginBottom: 8,
+                    marginBottom: 8, 
                 },
                 courseCheckmark: {
                     marginBottom: 15,
@@ -2561,6 +2567,9 @@ export default class MainStyles {
                 },
                 courseDetailCoureInfoContainer: {
                     marginBottom: 200,
+                },
+                courseHomeCourseActivityText: {
+                    marginTop: 75
                 },
             },
 
