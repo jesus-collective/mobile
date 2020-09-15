@@ -2085,6 +2085,14 @@ export default class MainStyles {
                 courseDetailActivityInnerCardCenter: {
                     width: '100%'
                 },
+                courseMyCohortContainer: {
+                    flexWrap: 'nowrap',
+                    overflow: 'scroll'
+                },
+                courseMyFacilitatorContainer: {
+                    flexWrap: 'nowrap',
+                    overflow: 'scroll'
+                },
             },
 
             // Media Query Desktop Large Tablet
