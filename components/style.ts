@@ -1689,6 +1689,13 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Regular-App', 
                 marginTop: 15
             },
+            resourcesSubMenu: {
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start',
+                marginRight: 65
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {

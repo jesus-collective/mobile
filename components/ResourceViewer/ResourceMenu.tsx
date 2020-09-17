@@ -36,12 +36,7 @@ class ResourceMenu extends JCComponent<EmptyProps> {
                 {({ state, actions }) => {
                     return (<Header style={this.headerStyles.style.resourceContainer}>
                         <Left></Left>
-                        <Body style={{
-                            flex: 1,
-                            flexDirection: 'row',
-                            justifyContent: 'flex-start',
-                            alignItems: 'flex-start'
-                        }}>
+                        <Body style={this.styles.style.resourcesSubMenu}>
                             {state.resourceData.resources.items.map((item, index) => {
                                 if (item != null)
                                     return <EditableButton onDelete={() => actions.deleteResource(index)} onChange={(value) => actions.updateResource(index, "menuTitle", value)} key={index} placeholder="temp" isEditable={state.isEditable} onPress={() => actions.changeResource(index)}
