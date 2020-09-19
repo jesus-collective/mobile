@@ -989,6 +989,12 @@ export default EStyleSheet.create({
             marginRight: 0,
             marginLeft: 0,
         },
+        TransparentActivityCourseButton: {
+            marginBottom: 5,
+        },
+        courseActivityTransparentRegularBlackButton: {
+            marginBottom: 5,
+        },
     },
     // Media Query Desktop Large Tablet
     '@media (min-width: 769) and (max-width: 1024)': {
@@ -1014,9 +1020,11 @@ export default EStyleSheet.create({
         },
         TransparentActivityCourseButton: {
             marginRight: 13,
+            marginBottom: 5,
         },
         courseActivityTransparentRegularBlackButton: {
             marginRight: 13,
+            marginBottom: 5,
         },
     }
 })
