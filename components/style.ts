@@ -1590,7 +1590,7 @@ export default class MainStyles {
             courseActivityDetails: {
                 flexDirection: "row", 
                 height: "unset", 
-                marginBottom: 12
+                marginBottom: 12,
             },
             courseCompletedCallOut: {
                 fontSize: 12, 
@@ -1615,7 +1615,8 @@ export default class MainStyles {
             courseActivityButtonNonEditable: {
                 flexDirection: "column", 
                 height: "unset", 
-                marginTop: 15
+                marginTop: 15, 
+                alignSelf: 'flex-start'
             },
             courseDetailLessonText: {
                 fontSize: 16, 
@@ -1678,6 +1679,22 @@ export default class MainStyles {
                 flexDirection: "row", 
                 marginTop: 10, 
                 width: '100%'
+            },
+            courseDetailCoureInfoContainer: {
+                width: "100%"
+            },
+            courseHomeCourseActivityText: {
+                fontSize: 16, 
+                lineHeight: 25, 
+                fontFamily: 'Graphik-Regular-App', 
+                marginTop: 15
+            },
+            resourcesSubMenu: {
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start',
+                marginRight: 65
             },
 
             // Media Query Desktop Tablet
@@ -2040,23 +2057,25 @@ export default class MainStyles {
                 courseDetailActivityInnerCard: {
                     flexDirection: "row",
                     marginTop: 15, 
+                    alignSelf: 'flex-start',
+                    marginBottom: 8, 
                 },
                 courseCheckmark: {
                     marginBottom: 15,
                     marginTop: 10,
                 },
                 courseDetailHeading: {
-                    textAlign: 'center',
+                    textAlign: 'left',
                 },
                 courseActivityDetails: {
-                    alignSelf: 'center',
+                    alignSelf: 'flex-start',
                 },
                 courseCompletedCallOut: {
                     marginLeft: 0,
                     marginRight: 0,
                 },
                 courseActivityButtonNonEditable: {
-                    alignSelf: 'center'
+                    alignSelf: 'flex-start'
                 },
                 courseSidebarNavIconActive: {
                     marginRight: 6,
@@ -2066,6 +2085,20 @@ export default class MainStyles {
                 },
                 courseDetailLessonText: {
                     width: '95%',
+                },
+                courseDetailCoureInfoContainer: {
+                    maxHeight: 225,
+                },
+                courseDetailActivityInnerCardCenter: {
+                    width: '100%'
+                },
+                courseMyCohortContainer: {
+                    flexWrap: 'nowrap',
+                    overflow: 'scroll'
+                },
+                courseMyFacilitatorContainer: {
+                    flexWrap: 'nowrap',
+                    overflow: 'scroll'
                 },
             },
 
@@ -2184,7 +2217,9 @@ export default class MainStyles {
                     paddingRight: 20,
                 },
                 courseDetailButtonTrio: {
-                    flex: 2
+                    flex: 2, 
+                    marginBottom: 100,
+                    flexDirection: 'column'
                 },
                 coursePageMessageBoard: {
                     flexDirection: "column"
@@ -2204,6 +2239,9 @@ export default class MainStyles {
                 courseDetailLessonCardNoEdit: {
                     paddingLeft: 20,
                     paddingRight: 20,
+                },
+                courseDetailCoureInfoContainer: {
+                    maxHeight: 225,
                 },
             },
 
@@ -2538,6 +2576,15 @@ export default class MainStyles {
                 },
                 courseDetailActivityInnerCardCenter: {
                     alignSelf: 'flex-start', 
+                },
+                courseDetailLeftContainer: {
+                    flex: 10,
+                },
+                courseDetailCoureInfoContainer: {
+                    marginBottom: 200,
+                },
+                courseHomeCourseActivityText: {
+                    marginTop: 75
                 },
             },
 
