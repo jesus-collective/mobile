@@ -145,7 +145,7 @@ class CourseDetailImpl extends JCComponent<Props>{
       state.activeLesson == null ?
         week ?
           <Container style={this.styles.style.courseDetailLeftContainer}>
-            <Container style={{ width: "100%" }}>
+            <Container style={this.styles.style.courseDetailCoureInfoContainer}>
               <EditableText onChange={(e) => { actions.updateWeek(state.activeWeek, "title", e) }}
                 placeholder="Week Title" multiline={false}
                 data-testid="course-weekTitle"
