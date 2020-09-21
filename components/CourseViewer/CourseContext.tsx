@@ -26,6 +26,7 @@ export const CourseContext = React.createContext({
         setActiveMessageBoard: null,
         setActiveCourseActivity: null,
         myCourseGroups: null,
-        getAssignmentList: null
+        getAssignmentList: null,
+        getLessonById: null
     }, state: null
 })

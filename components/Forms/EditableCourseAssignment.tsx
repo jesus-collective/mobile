@@ -7,6 +7,10 @@ import { Storage } from 'aws-amplify';
 import './react-draft-wysiwyg.css';
 //TODO FIGURE OUT WHY THIS DOESN"T WORK
 //import '../MessageBoard.css';
+import * as customQueries from '../../src/graphql-custom/queries';
+import * as queries from '../../src/graphql/queries';
+import * as mutations from '../../src/graphql/mutations';
+
 import { EditorState } from 'draft-js';
 import { Text } from 'react-native'
 import { v1 as uuidv1 } from 'uuid';
@@ -14,138 +18,226 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import JCComponent, { JCState } from '../JCComponent/JCComponent';
 import { ContentState, convertFromRaw, convertToRaw } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
+import MessageBoard from '../MessageBoard/MessageBoard';
+import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
+import { API, Auth } from 'aws-amplify';
+import { Container } from 'native-base';
+import ProfileImage from '../../components/ProfileImage/ProfileImage'
 
 interface Props {
-    value: string,
-    isEditable: boolean,
-    textStyle: any,
-    inputStyle?: any,
-    placeholder?: string,
-    onChange?(string)
+    wordCount: number
+    assignmentId: String
+    actions: any
 }
 interface State extends JCState {
-    value: string,
-    isEditable: boolean,
-    isEditMode: boolean,
-    textStyle: any,
-    inputStyle: any,
-    placeholder: string,
-    wordCount: number,
-    editorState
+    assignmentComplete: boolean
+    selectedRoom: any
+    data: any
+    currentUser: any
+    currentRoomId: string
+    newToList: any
+    userList: any
+
 }
 export default class EditableRichText extends JCComponent<Props, State> {
     constructor(props: Props) {
         super(props);
+        const z = this.props.actions?.myCourseGroups()
         this.state = {
             ...super.getInitialState(),
-            value: props.value,
-            isEditMode: false,
-            isEditable: props.isEditable,
-            textStyle: props.textStyle,
-            inputStyle: props.inputStyle,
-            placeholder: props.placeholder,
-            wordCount: 0,
-            editorState: null
+            selectedRoom: null,
+            data: [],
+            currentUser: null,
+            currentRoomId: null,
+            newToList: [],
+            assignmentComplete: false,
+            userList: [...z.cohort, ...z.triad, ...z.coach]
         }
-    }
-    componentDidUpdate(prevProps: Props): void {
-        if (prevProps.value !== this.props.value) {
-            this.setState({ value: this.props.value })
-        }
-    }
-    onChanged(val: any): void {
+        console.log({ userList: this.state.userList })
 
-        this.props.onChange(val)
-        this.setState({ isEditMode: false })
+        Auth.currentAuthenticatedUser().then((user: any) => { this.setState({ currentUser: user.username }) })
+        this.getInitialData(null)
     }
-    updateEditorInput(value: any): void {
-        const str = value.getCurrentContent().getPlainText(' ')
-        const wordArray = str.match(/\S+/g);  // matches words according to whitespace
-        this.setState({
-            editorState: value,
-            wordCount: wordArray ? wordArray.length : 0
-        })
-    }
-    updateInput(value: any): void {
-
-        this.setState({ value: JSON.stringify(value) }
-            // this.props.onChange(this.state.value)
-        )
-
-    }
-    convertCommentFromJSONToHTML = (text: string): string => {
+    async getInitialData(next: string): Promise<void> {
         try {
-            return stateToHTML(convertFromRaw(JSON.parse(text)))
-        } catch (e) {
-            console.log({ errorMessage: e })
-            return "<div>Message Can't Be Displayed</div>"
+            const user = await Auth.currentAuthenticatedUser();
+
+            /*  try {
+                  const query2 = { input: { id: "course-" + this.props.assignmentId + "-" + user['username'] } }
+                  const json2: any = await API.graphql({
+                      query: mutations.deleteDirectMessageRoom,
+                      variables: query2,
+                      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+                  });
+              } catch (e) {
+                  console.log({ error: e })
+              }*/
+            try {
+                const query = { limit: 20, filter: { id: { contains: "course-" + this.props.assignmentId + "-" } }, nextToken: next }
+
+                const json: any = await API.graphql({
+                    query: customQueries.listDirectMessageRooms,
+                    variables: query,
+                    authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+                });
+                if (json?.data?.listDirectMessageRooms?.nextToken !== null) {
+                    console.log({ 'customQueries.listDirectMessageRooms': json.data.listDirectMessageRooms })
+                    this.setState({ data: this.state.data.concat(json.data.listDirectMessageRooms.items) })
+                    this.getInitialData(json.data.listDirectMessageRooms.nextToken)
+                } else if (json?.data?.listDirectMessageRooms) {
+                    console.log({ 'customQueries.listDirectMessageRooms': json.data.listDirectMessageRooms })
+                    this.setState({ data: this.state.data.concat(json.data.listDirectMessageRooms.items) }, this.shouldCreateRoom)
+                }
+            } catch (json) {
+                if (json?.data?.listDirectMessageRooms?.nextToken !== null) {
+                    console.log({ 'customQueries.listDirectMessageRooms': json.data.listDirectMessageRooms })
+                    this.setState({ data: this.state.data.concat(json.data.listDirectMessageRooms.items) })
+                    this.getInitialData(json.data.listDirectMessageRooms.nextToken)
+                } else if (json?.data?.listDirectMessageUsers) {
+                    console.log({ 'customQueries.listDirectMessageRooms': json.data.listDirectMessageRooms })
+                    this.setState({ data: this.state.data.concat(json.data.listDirectMessageRooms.items) }, this.shouldCreateRoom)
+                }
+                console.error({ Error: json })
+            }
+        } catch (err) {
+            console.error(err)
         }
+    }
+    createRoom = (): void => {
+        console.log("CreateRoom")
+        Auth.currentAuthenticatedUser().then((user: any) => {
+            const createDirectMessageRoom: any = API.graphql({
+                query: mutations.createDirectMessageRoom,
+                variables: { input: { id: "course-" + this.props.assignmentId + "-" + user['username'], name: user.attributes['given_name'] + ' ' + user.attributes['family_name'] + ' assignment' } },
+                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+            });
+            createDirectMessageRoom.then((json) => {
+                console.log({ createDirectMessageRoom: json })
+                console.log("createDMUser")
+                const userList = this.state.userList
+                userList.map((item) => {
+                    const createDirectMessageUser2: any = API.graphql({
+                        query: mutations.createDirectMessageUser,
+                        variables: { input: { roomID: "course-" + this.props.assignmentId + "-" + user['username'], userID: item.id, userName: item.name } },
+                        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+                    });
+                    createDirectMessageUser2.then((json2) => {
+                        console.log(json2);
+                        //     this.getNewUser(json2.data.createDirectMessageUser.id)
+                    }
+                    ).catch((json2) => {
+                        console.log(json2);
+                        //   this.getNewUser(json2.data.createDirectMessageUser.id)
+                    }
+                    )
+                })
+            })
+
+        }).catch((e) => { console.log(e) })
+
+    }
+    shouldCreateRoom = async (): Promise<void> => {
+        console.log({ "Number of rooms:": this.state.data.length })
+        const user = await Auth.currentAuthenticatedUser();
+        if (this.state.data.filter(item => item.id == "course-" + this.props.assignmentId + "-" + user['username']).length <= 0)
+            this.createRoom()
+
+    }
+    hasInitialPost = (): boolean => {
+
+        console.log(this.state.data.filter(item => item.id == "course-" + this.props.assignmentId + "-" + this.state.currentUser)[0]?.directMessage.items.length)
+        if (this.state.data.filter(item => item.id == "course-" + this.props.assignmentId + "-" + this.state.currentUser)[0]?.directMessage.items.length <= 0) {
+            console.log(false)
+            return false
+        }
+        else
+            return true
+    }
+    /*async getNewUser(id: string): Promise < void> {
+        try {
+            const json: any = await API.graphql({
+                query: customQueries.getDirectMessageUser,
+                variables: { id: id },
+                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+            });
+            if(json?.data?.getDirectMessageUser) {
+                console.log({ 'customQueries.getDirectMessageUser': json.data.getDirectMessageUser })
+                this.setState({ data: this.state.data.concat([json.data.getDirectMessageUser]) }, () => {
+                    const index = this.state.data.indexOf(json.data.getDirectMessageUser)
+                    this.setState({ selectedRoom: index, currentRoomId: this.state.data[index].roomID })
+                })
+            }
+        } catch(err) {
+            console.error(err)
+        }
+    }*/
+
+
+
+    getOtherUsers(data: any): { ids: string[], names: string[] } {
+        const ids = [];
+        const names = [];
+        data.messageUsers.items.forEach(user => {
+            if (user.userID !== this.state.currentUser) {
+                ids.push(user.userID)
+                names.push(user.userName)
+            }
+        });
+
+        return { ids, names }
+    }
+
+    switchRoom(index: number): void {
+        this.setState({ selectedRoom: index })
+        this.setState({ currentRoomId: this.state.data[index].roomID })
+    }
+    getCurrentRoomRecipients(): string[] {
+        const ids = [];
+        console.log(this.state.data[this.state.selectedRoom])
+        this.state.data[this.state.selectedRoom]?.room?.messageUsers?.items.forEach(user => { ids.push(user.userID) })
+        return ids
     }
     render(): React.ReactNode {
+        console.log(this.hasInitialPost())
+        return <>
+            <div style={{ padding: 5, width: "100%", backgroundColor: !this.hasInitialPost() ? "#ff0000" : "#00ff00", color: "#ffffff" }}>Assignment</div>
+            {this.hasInitialPost() ?
+                <Container style={this.styles.style.conversationScreenMainContainer}>
 
-        if (this.state.isEditable)
-            if (this.state.isEditMode)
-                return (
-                    <>
-                        <Editor
-                            placeholder="Empty Content"
-                            initialContentState={ContentState.createFromText(this.state.value)}
-                            editorState={this.state.editorState}
-                            toolbarClassName="customToolbarRichText"
-                            wrapperClassName="customWrapperRichTextEdit"
-                            editorClassName="customEditorRichTextEdit"
-                            onEditorStateChange={(z) => { this.updateEditorInput(z) }}
-                            onContentStateChange={(z) => { this.updateInput(z) }}
-                            toolbar={{
-                                options: ['inline', 'list', 'colorPicker', 'link', 'emoji', 'image', 'history'],
-                                inline: {
-                                    options: ['bold', 'italic', 'underline', 'strikethrough']
-                                },
-                                list: {
-                                    options: ['unordered', 'ordered']
-                                },
-                                image: {
-                                    uploadCallback: async (z1) => {
-                                        const id = uuidv1()
+                    <Container style={this.styles.style.conversationScreenLeftCard}>
+                        <Text style={this.styles.style.eventNameInput}>Review Assignments</Text>
 
-                                        const download = await Storage.get("messages/" + id + ".png", {
-                                            level: 'protected',
-                                            contentType: z1.type,
-                                            identityId: ""
-                                        })
-                                        return { data: { link: download } }
-                                    },
-                                    previewImage: true,
-                                    alt: { present: true, mandatory: true },
-                                    defaultSize: {
-                                        height: 'auto',
-                                        width: 'auto',
+                        {this.state.data != null ?
+                            this.state.data.map((item, index) => {
+                                console.log({ item: item })
+                                const otherUsers = this.getOtherUsers(item)
+                                let stringOfNames = ''
+                                otherUsers.names.forEach((name, index) => {
+                                    if (otherUsers.names.length === index + 1) {
+                                        stringOfNames += name
+                                    } else {
+                                        stringOfNames += (name + ', ')
                                     }
-                                }
-                            }}
-                            onBlur={() => { this.onChanged(JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()))); }}
-                        />
-                        <Text>Word count: {this.state.wordCount}</Text>
-                    </>
-                )
+                                })
 
-            else
-                return <TouchableOpacity onPress={() => { this.setState({ isEditMode: true }) }}>
-                    <div id="comment-div">
-                        {console.log(convertFromRaw(JSON.parse(this.state.value)).hasText())}
-                        {!convertFromRaw(JSON.parse(this.state.value)).hasText() || this.state.value == null ?
-                            <div style={{ fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 16, marginTop: 0, color: '#F0493E', textDecoration: 'underline' }}>Hold to Edit</div>
-                            :
-                            <div
-                                dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(this.props.value) }}
-                                style={{ fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 26, color: "#333333", marginTop: 0, paddingTop: 0 }}></div>}
-                    </div>
-                </TouchableOpacity>
-        else
-            return <div id="comment-div" style={{}}>
-                <div dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(this.state.value) }} style={{ fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 26, color: "#333333", marginTop: 0, paddingTop: 0, height: 250 }}></div>
-            </div>
+                                return (
+                                    <TouchableOpacity style={{ backgroundColor: this.state.selectedRoom == index ? "#eeeeee" : "unset", borderRadius: 10, width: "100%", paddingTop: 8, paddingBottom: 8, display: "flex", alignItems: "center" }} key={item.id} onPress={() => this.switchRoom(index)}>
+                                        <Text style={{ fontSize: 20, lineHeight: 25, fontWeight: "normal", fontFamily: "Graphik-Regular-App", width: "100%", display: "flex", alignItems: "center" }} >
+                                            <ProfileImage user={otherUsers.ids.length === 1 ? otherUsers.ids[0] : null} size="small2"></ProfileImage>
+                                            {item.name ? item.name : stringOfNames}
+                                        </Text>
+                                    </TouchableOpacity>)
+                            }) : null}
+                    </Container>
 
 
+                    <Container style={this.styles.style.detailScreenRightCard}>
+                        <MessageBoard showWordCount={true} totalWordCount={this.props.wordCount} style="courseResponse" roomId={"course-" + this.props.assignmentId + "-" + this.state.currentUser} recipients={this.state.userList}></MessageBoard>
+                    </Container>
+                </Container> :
+                <MessageBoard showWordCount={true} totalWordCount={this.props.wordCount} style="course" roomId={"course-" + this.props.assignmentId + "-" + this.state.currentUser} recipients={this.state.userList}></MessageBoard>
+            }
+
+        </>
     }
 }

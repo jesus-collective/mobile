@@ -66,6 +66,7 @@ class CourseDetailImpl extends JCComponent<Props>{
             selectedValue={item.lessonType ? item.lessonType : "zoom"}
             onValueChange={(value: any) => { actions.updateLesson(state.activeWeek, lesson, "courseLessonResponseId", value) }}
           >
+            <Picker.Item label="Pick an assigment to Review" />
             {actions.getAssignmentList()?.map((item) => {
               console.log(item)
               if (item)
@@ -307,6 +308,7 @@ class CourseDetailImpl extends JCComponent<Props>{
       </Container>)
   }
   renderRespond(state, actions, week, lesson) {
+    console.log({ courseLessonResponseId: lesson.courseLessonResponseId })
     return (
       <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
         <JCButton buttonType={ButtonTypes.Outline} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
@@ -318,6 +320,9 @@ class CourseDetailImpl extends JCComponent<Props>{
           value={lesson.description}
           isEditable={true}
           textStyle=""></EditableRichText>
+        <EditableCourseAssignment actions={actions} assignmentId={actions.getLessonById(lesson.courseLessonResponseId)} wordCount={lesson.wordCount}
+
+        ></EditableCourseAssignment>
       </Container>)
   }
   renderAssignment(state, actions, week, lesson) {
@@ -332,10 +337,7 @@ class CourseDetailImpl extends JCComponent<Props>{
           value={lesson.description}
           isEditable={true}
           textStyle=""></EditableRichText>
-        <EditableCourseAssignment onChange={(val) => { actions.updateLesson(state.activeWeek, state.activeLesson, "description", val) }}
-          value={lesson.description}
-          isEditable={true}
-          textStyle=""></EditableCourseAssignment>
+        <EditableCourseAssignment actions={actions} assignmentId={lesson.id} wordCount={lesson.wordCount}></EditableCourseAssignment>
       </Container>)
   }
   renderLessonType(state, actions, week, lesson) {
@@ -368,7 +370,8 @@ class CourseDetailImpl extends JCComponent<Props>{
       <CourseDetailImpl.Consumer>
         {({ state, actions }) => {
           const week = state.courseData?.courseWeeks.items[state.activeWeek]
-
+          const lesson = week?.lessons.items[state.activeLesson]
+          console.log({ lesson: lesson })
           return (
             state.data && state.currentScreen == "Details" ?
               <StyleProvider style={getTheme()}>
@@ -382,16 +385,18 @@ class CourseDetailImpl extends JCComponent<Props>{
 
                         {this.renderWeekDetails(state, actions, week)}
                         {this.renderLessonDetails(state, actions, week)}
-                        <Container style={this.styles.style.courseDetailRightContainer}>
-                          <Container style={this.styles.style.courseDetailButtonTrio}>
-                            <JCButton buttonType={state.activeMessageBoard == "cohort" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("cohort") }}>Cohort</JCButton>
-                            <JCButton buttonType={state.activeMessageBoard == "triad" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("triad") }}>Learning Group</JCButton>
-                            <JCButton buttonType={state.activeMessageBoard == "instructor" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("instructor") }}>Facilitator</JCButton>
-                          </Container>
-                          <Container style={this.styles.style.courseDetailMessageBoardContainer}>
-                            <MessageBoard style="mini" groupId={state.data.id}></MessageBoard>
-                          </Container>
-                        </Container>
+                        {!(lesson?.lessonType == "respond" || lesson?.lessonType == "assignment") ?
+                          <Container style={this.styles.style.courseDetailRightContainer}>
+                            <Container style={this.styles.style.courseDetailButtonTrio}>
+                              <JCButton buttonType={state.activeMessageBoard == "cohort" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("cohort") }}>Cohort</JCButton>
+                              <JCButton buttonType={state.activeMessageBoard == "triad" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("triad") }}>Learning Group</JCButton>
+                              <JCButton buttonType={state.activeMessageBoard == "instructor" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("instructor") }}>Facilitator</JCButton>
+                            </Container>
+                            <Container style={this.styles.style.courseDetailMessageBoardContainer}>
+                              <MessageBoard style="mini" groupId={state.data.id}></MessageBoard>
+                            </Container>
+                          </Container> : null
+                        }
                       </Container>
                     </Content>
                   </Container>

@@ -1,3 +1,50 @@
+export const listDirectMessageRooms = /* GraphQL */ `
+  query ListDirectMessageRooms(
+    $filter: ModelDirectMessageRoomFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listDirectMessageRooms(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        messageUsers {
+          items {
+            id
+            userName
+            userID
+            roomID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        directMessage {
+          items {
+            id
+            content
+            attachment
+            attachmentName
+            when
+            recipients
+            userId
+            messageRoomID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getUserForGroupOrEvent = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {

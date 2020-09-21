@@ -16,6 +16,7 @@ import CourseDetail from '../../components/CourseViewer/CourseDetail'
 import CourseCoaching from '../../components/CourseViewer/CourseCoaching'
 import { CourseContext } from '../../components/CourseViewer/CourseContext';
 import { CreateCourseWeekInput, CreateCourseLessonInput, CreateCourseTriadsInput } from 'src/API';
+import { EditorState, ContentState, convertFromRaw, convertToRaw } from 'draft-js';
 
 
 interface Props {
@@ -315,14 +316,15 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
       }
       return { triad: triadTemp, coach: coachTemp, cohort: cohortTemp }
     })
-    let cohort = [], triad = [], coach = []
+    let cohort = [], triad = [], coach = [],all=[]
     cohort = z?.map(item => item.cohort).flat()
     triad = z?.map(item => item.triad).flat()
     coach = z?.map(item => item.coach).flat()
+
     console.log({ cohort: cohort })
     console.log({ triad: triad })
     console.log({ coach: coach })
-    return { cohort: cohort, triad: triad, coach: coach }
+    return {cohort: cohort, triad: triad, coach: coach }
   }
   updateTriadCoaches = async (index: number, value: any): Promise<void> => {
     const del = this.state.courseData.triads.items[index].coaches.items.filter(x => !value.map(z => z.id).includes(x.user.id));
@@ -487,7 +489,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
       name: "New Lesson",//this.state.courseData.courseWeeks.items.length + 1,
       lesson: this.state.courseData.courseWeeks.items[this.state.activeWeek].lessons.items.length + 1,
       //time: "",
-      description: "...",
+      description: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
       courseWeekID: this.state.courseData.courseWeeks.items[this.state.activeWeek].id
     }
     try {
@@ -508,6 +510,14 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
       console.log(e)
     }
 
+  }
+  getLessonById = (id): any => {
+    return this.state.courseData.courseWeeks.items.map((week) => {
+      return week.lessons.items.filter((lesson) => {
+        if (lesson.id == id)
+          return lesson
+      })
+    }).flat()[0]
   }
   getAssignmentList = (): void => {
     return this.state.courseData.courseWeeks.items.map((week) => {
@@ -675,7 +685,9 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
             setActiveMessageBoard: this.setActiveMessageBoard,
             myCourseGroups: this.myCourseGroups,
             setActiveCourseActivity: this.setActiveCourseActivity,
-            getAssignmentList: this.getAssignmentList
+            getAssignmentList: this.getAssignmentList,
+            getLessonById: this.getLessonById
+          
           }
         }}>
           <StyleProvider style={getTheme()}>

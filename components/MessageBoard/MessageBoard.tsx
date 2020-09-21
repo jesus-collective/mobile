@@ -29,8 +29,10 @@ interface Props {
   roomId?: string
   route?: any
   navigation?: any
-  style: "mini" | "regular"
+  style: "mini" | "regular" | "course" | "courseResponse"
   recipients?: string[]
+  showWordCount?: boolean
+  totalWordCount?: number
 }
 interface State extends JCState {
   data: any,
@@ -41,7 +43,8 @@ interface State extends JCState {
   editorState: any,
   attachment: string,
   attachmentName: string,
-  fileNameWidth: number
+  fileNameWidth: number,
+  wordCount: number
 }
 class MessageBoardImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
@@ -56,6 +59,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       editorState: EditorState.createEmpty(),
       attachment: null,
       attachmentName: null,
+      wordCount: 0
     }
 
     this.setInitialData(props)
@@ -246,14 +250,20 @@ class MessageBoardImpl extends JCComponent<Props, State> {
   }
 
   updateEditorInput(value: any) {
-    this.setState({ editorState: value })
+    const str = value.getCurrentContent().getPlainText(' ')
+    const wordArray = str.match(/\S+/g);  // matches words according to whitespace
+    this.setState({
+      editorState: value,
+      wordCount: wordArray ? wordArray.length : 0
+    })
+    //    this.setState({ editorState: value })
   }
   convertCommentFromJSONToHTML = (text) => {
     try {
       return stateToHTML(convertFromRaw(JSON.parse(text)))
     } catch (e) {
       console.log({ errorMessage: e })
-      return "<div>Message Can't Be Displayed</div>"
+      return "<div>" + this.props.style == "course" || this.props.style == "courseResponse" ? "Assignment/Response" : "Message" + " Can't Be Displayed</div>"
     }
   }
 
@@ -355,12 +365,12 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       (this.state.created) ?
 
         <StyleProvider style={getTheme()}>
-          <Container style={this.props.style == "regular" ? this.styles.style.messageBoardContainerFullSize : this.styles.style.messageBoardContainer } >
-          
+          <Container style={this.props.style == "regular" || this.props.style == "course" || this.props.style == "courseResponse" ? this.styles.style.messageBoardContainerFullSize : this.styles.style.messageBoardContainer} >
+
             <Content style={{ marginBottom: 40 }}>
 
               {
-                this.state.UserDetails != null && this.props.style == "regular" ?
+                this.state.UserDetails != null && (this.props.style == "regular" || this.props.style == "course" || this.props.style == "courseResponse") ?
                   <ProfileImage size="small" user={this.state.UserDetails}></ProfileImage>
                   : null
               }
@@ -368,10 +378,13 @@ class MessageBoardImpl extends JCComponent<Props, State> {
 
 
               <Editor
-                placeholder="Write a message..."
+                placeholder={this.props.style == "course" ?
+                  "Write Assignment..." :
+                  this.props.style == "courseResponse" ?
+                    "Write a response...." : "Write a message..."}
                 editorState={this.state.editorState}
                 toolbarClassName="customToolbar"
-                wrapperClassName={this.props.style == "regular" ? "customWrapperSendmessage" : "customWrapperSendmessageMini"}
+                wrapperClassName={this.props.style == "regular" || this.props.style == "course" || this.props.style == "courseResponse" ? "customWrapperSendmessage" : "customWrapperSendmessageMini"}
                 editorClassName="customEditorSendmessage"
                 onEditorStateChange={(z) => { this.updateEditorInput(z) }}
 
@@ -388,10 +401,10 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                   }
                 }}
               />
-
+              {this.props.showWordCount ? <Text>Word count: {this.state.wordCount}/{this.props.totalWordCount}</Text> : null}
               <View
                 style={
-                  this.props.style == "regular" ?
+                  this.props.style == "regular" || this.props.style == "course" || this.props.style == "courseResponse" ?
                     this.styles.style.courseDetailJCButtonRegular : this.styles.style.courseDetailJCButtonMini
                 }>
 
@@ -401,8 +414,8 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                   <input multiple={false} style={{ cursor: 'pointer', width: '100%', height: '100%', position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='.pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx' onChange={(e) => this.handleUpload(e)} />
                 </View>
                 <JCButton
-                  buttonType={this.props.style == "regular" ? ButtonTypes.SolidRightJustified : ButtonTypes.SolidRightJustifiedMini}
-                  onPress={() => { this.saveMessage() }} >Post</JCButton>
+                  buttonType={this.props.style == "regular" || this.props.style == "course" || this.props.style == "courseResponse" ? ButtonTypes.SolidRightJustified : ButtonTypes.SolidRightJustifiedMini}
+                  onPress={() => { this.saveMessage() }} >{this.props.style == "course" || this.props.style == "courseResponse" ? "Save" : "Post"}</JCButton>
 
               </View>
 
@@ -410,41 +423,41 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             {this.props.groupId && this.state.data.items.map((item: any) => {
               return (
                 <Card key={item.id} style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }}>
-                  {this.props.style == "regular" ? 
-                  <CardItem style={this.styles.style.eventPageMessageBoard}>
-                    <Left style={this.styles.style.eventPageMessageBoardLeft}>
-                      <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
-                        <ProfileImage size="small2" user={item.owner ? item.owner : null}></ProfileImage>
-                      </TouchableOpacity>
-                      <Body>
-                        <Text style={this.styles.style.groupFormName}>
+                  {this.props.style == "regular" || this.props.style == "course" || this.props.style == "courseResponse" ?
+                    <CardItem style={this.styles.style.eventPageMessageBoard}>
+                      <Left style={this.styles.style.eventPageMessageBoardLeft}>
+                        <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
+                          <ProfileImage size="small2" user={item.owner ? item.owner : null}></ProfileImage>
+                        </TouchableOpacity>
+                        <Body>
+                          <Text style={this.styles.style.groupFormName}>
+                            {item.author != null ? item.author.given_name : null} {item.author != null ? item.author.family_name : null}
+                          </Text>
+                          <Text style={this.styles.style.groupFormRole}>
+                            {item.author != null ? item.author.currentRole : null}
+                          </Text>
+                        </Body>
+                      </Left>
+                      <Right>
+                        <Text style={this.styles.style.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
+                      </Right>
+                    </CardItem> :
+                    <CardItem style={this.styles.style.coursePageMessageBoard}>
+                      <Left style={this.styles.style.coursePageMessageBoardLeftMini}>
+                        <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
+                          <ProfileImage size="small2" user={item.owner ? item.owner : null}></ProfileImage>
+                        </TouchableOpacity>
+                      </Left>
+                      <Right style={{ flexDirection: "column", flex: 7, alignItems: "flex-start" }}>
+                        <Text style={this.styles.style.courseFormName}>
                           {item.author != null ? item.author.given_name : null} {item.author != null ? item.author.family_name : null}
                         </Text>
-                        <Text style={this.styles.style.groupFormRole}>
-                          {item.author != null ? item.author.currentRole : null}
-                        </Text>
-                      </Body>
-                    </Left>
-                    <Right>
-                      <Text style={this.styles.style.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
-                    </Right>
-                  </CardItem> : 
-                  <CardItem style={this.styles.style.coursePageMessageBoard}>
-                  <Left style={this.styles.style.coursePageMessageBoardLeftMini}>
-                    <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
-                      <ProfileImage size="small2" user={item.owner ? item.owner : null}></ProfileImage>
-                    </TouchableOpacity>
-                  </Left>
-                  <Right style={{ flexDirection: "column", flex: 7, alignItems: "flex-start" }}>
-                      <Text style={this.styles.style.courseFormName}>
-                        {item.author != null ? item.author.given_name : null} {item.author != null ? item.author.family_name : null}
-                      </Text>
-                      {/* <Text style={this.styles.style.groupFormRole}>
+                        {/* <Text style={this.styles.style.groupFormRole}>
                         {item.author != null ? item.author.currentRole : null}
                       </Text> */}
-                    <Text style={this.styles.style.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
-                  </Right>
-                </CardItem>
+                        <Text style={this.styles.style.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
+                      </Right>
+                    </CardItem>
                   }
                   <CardItem style={this.styles.style.eventPageMessageBoardInnerCard}>
 

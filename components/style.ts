@@ -1506,7 +1506,9 @@ export default class MainStyles {
                 marginTop: 30,
                 width: '90%',
                 paddingBottom: 50,
-                borderBottom: "1px solid #333333",
+                borderBottomWidth: "1px",
+                borderBottomStyle: "solid",
+                borderBottomColor: "#333333",
             },
             courseHomeCalendar: {
                 width: '90%',
@@ -1539,17 +1541,17 @@ export default class MainStyles {
                 justifyContent: 'flex-start'
             },
             courseDetailLeftContainer: {
-                flex: 70, 
-                flexDirection: "column", 
-                alignContent: 'flex-start', 
-                alignItems: 'flex-start', 
+                flex: 70,
+                flexDirection: "column",
+                alignContent: 'flex-start',
+                alignItems: 'flex-start',
                 justifyContent: 'flex-start'
             },
             courseDetailRightContainer: {
-                flex: 30, 
-                flexDirection: "column", 
-                alignContent: 'flex-start', 
-                alignItems: 'flex-start', 
+                flex: 30,
+                flexDirection: "column",
+                alignContent: 'flex-start',
+                alignItems: 'flex-start',
                 justifyContent: 'flex-start'
             },
             courseHomeDescriptionText: {
@@ -1564,7 +1566,9 @@ export default class MainStyles {
                 flex: 5,
                 flexDirection: "row",
                 marginTop: 30,
-                borderBottom: '1px solid #333333',
+                borderBottomWidth: "1px",
+                borderBottomStyle: "solid",
+                borderBottomColor: "#333333",
                 width: '95%',
                 paddingBottom: 20
             },
@@ -1572,111 +1576,111 @@ export default class MainStyles {
                 marginRight: 10
             },
             courseDetailActivityCard: {
-                flexDirection: "row", 
-                minHeight: "40px", 
+                flexDirection: "row",
+                minHeight: "40px",
                 height: "unset"
             },
             courseDetailActivityInnerCard: {
-                flexDirection: "column", 
-                height: "unset", 
-                width: "unset", 
-                alignSelf: "center", 
-                flex: 2 
+                flexDirection: "column",
+                height: "unset",
+                width: "unset",
+                alignSelf: "center",
+                flex: 2
             },
             courseCheckmark: {
-                width: "30px", 
+                width: "30px",
                 height: "30px"
             },
             courseActivityDetails: {
-                flexDirection: "row", 
-                height: "unset", 
+                flexDirection: "row",
+                height: "unset",
                 marginBottom: 12
             },
             courseCompletedCallOut: {
-                fontSize: 12, 
-                lineHeight: 21, 
-                fontFamily: 'Graphik-Bold-App', 
-                color: '#FFF', 
-                marginLeft: 30, 
-                marginRight: 15, 
-                paddingLeft: 10, 
-                paddingRight: 10, 
-                textTransform: 'uppercase', 
-                backgroundColor: '#71C209', 
-                borderRadius: 50, 
-                height: 20, 
+                fontSize: 12,
+                lineHeight: 21,
+                fontFamily: 'Graphik-Bold-App',
+                color: '#FFF',
+                marginLeft: 30,
+                marginRight: 15,
+                paddingLeft: 10,
+                paddingRight: 10,
+                textTransform: 'uppercase',
+                backgroundColor: '#71C209',
+                borderRadius: 50,
+                height: 20,
                 alignSelf: 'center'
             },
             courseActivityButtonEditable: {
-                flexDirection: "column", 
-                marginTop: 10, 
+                flexDirection: "column",
+                marginTop: 10,
                 height: "unset"
             },
             courseActivityButtonNonEditable: {
-                flexDirection: "column", 
-                height: "unset", 
+                flexDirection: "column",
+                height: "unset",
                 marginTop: 15
             },
             courseDetailLessonText: {
-                fontSize: 16, 
-                lineHeight: 21, 
-                fontFamily: 'Graphik-Bold-App', 
-                color: '#333333', 
+                fontSize: 16,
+                lineHeight: 21,
+                fontFamily: 'Graphik-Bold-App',
+                color: '#333333',
                 marginBottom: 20
             },
             courseDetailLongDescriptionText: {
-                fontFamily: 'Graphik-Regular-App', 
-                fontSize: '16px', 
-                lineHeight: '26px', 
-                color: "#333333", 
-                marginTop: 0, 
-                paddingTop: 0, 
-                minHeight: 50, 
-                maxHeight: 275, 
+                fontFamily: 'Graphik-Regular-App',
+                fontSize: '16px',
+                lineHeight: '26px',
+                color: "#333333",
+                marginTop: 0,
+                paddingTop: 0,
+                minHeight: 50,
+                maxHeight: 275,
                 overflow: 'scroll'
             },
             courseHomeScreenMainContainer: {
                 flexDirection: "row"
             },
             courseHomeScreenSubMainContainer: {
-                flex: 80, 
-                display: "flex", 
-                flexDirection: "row", 
-                justifyContent: 'flex-start', 
+                flex: 80,
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: 'flex-start',
                 paddingLeft: '5%'
             },
             courseMyCohortContainer: {
-                flexDirection: 'row', 
+                flexDirection: 'row',
                 flexWrap: 'wrap'
             },
             courseMyFacilitatorContainer: {
-                flexDirection: 'row', 
+                flexDirection: 'row',
                 flexWrap: 'wrap'
             },
             courseMyLearningGroupContainer: {
-                flexDirection: 'row', 
+                flexDirection: 'row',
                 flexWrap: 'wrap'
             },
             courseProfileImageContainer: {
                 paddingTop: 40,
             },
             courseDetailActivityInnerCardCenter: {
-                flexDirection: "column", 
-                flex: 7, 
-                alignSelf: 'center', 
+                flexDirection: "column",
+                flex: 7,
+                alignSelf: 'center',
                 height: "unset"
             },
             courseDetailMainContainer: {
-                display: "flex", 
-                flexDirection: "row", 
-                justifyContent: 'flex-start', 
-                paddingLeft: '5%', 
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: 'flex-start',
+                paddingLeft: '5%',
                 paddingRight: '2%'
             },
             courseDetailMessageBoardContainer: {
-                flex: 95, 
-                flexDirection: "row", 
-                marginTop: 10, 
+                flex: 95,
+                flexDirection: "row",
+                marginTop: 10,
                 width: '100%'
             },
 
@@ -2013,10 +2017,10 @@ export default class MainStyles {
                     lineHeight: 30,
                 },
                 courseDetailLeftContainer: {
-                    flex: 60, 
+                    flex: 60,
                 },
                 courseDetailRightContainer: {
-                    flex: 40, 
+                    flex: 40,
                 },
                 courseDetailButtonTrio: {
                     flexDirection: "column",
@@ -2031,15 +2035,15 @@ export default class MainStyles {
                 courseFormName: {
                     marginTop: 10,
                 },
-                courseDetailLessonCardNoEdit: { 
+                courseDetailLessonCardNoEdit: {
                     width: "40vw"
                 },
                 courseDetailActivityCard: {
-                    flexDirection: "column", 
+                    flexDirection: "column",
                 },
                 courseDetailActivityInnerCard: {
                     flexDirection: "row",
-                    marginTop: 15, 
+                    marginTop: 15,
                 },
                 courseCheckmark: {
                     marginBottom: 15,
@@ -2195,7 +2199,7 @@ export default class MainStyles {
                 courseMessageBoardButtonsView: {
                     marginTop: 40,
                 },
-                courseDetailActivityInnerCard:{
+                courseDetailActivityInnerCard: {
                     flex: 3,
                 },
                 courseDetailActivityInnerCardCenter: {
@@ -2484,7 +2488,7 @@ export default class MainStyles {
                     flex: 8,
                 },
                 courseHomeScreenSubMainContainer: {
-                    flexDirection: "column", 
+                    flexDirection: "column",
                     paddingRight: '5%'
                 },
                 courseMyCohortContainer: {
@@ -2522,9 +2526,9 @@ export default class MainStyles {
                     top: 650,
                 },
                 courseDetailMessageBoardContainer: {
-                    marginTop: 100, 
+                    marginTop: 100,
                 },
-                courseDetailActivityInnerCard:{
+                courseDetailActivityInnerCard: {
                     alignSelf: 'flex-start',
                 },
                 courseDetailHeading: {
@@ -2537,7 +2541,7 @@ export default class MainStyles {
                     alignSelf: 'flex-start'
                 },
                 courseDetailActivityInnerCardCenter: {
-                    alignSelf: 'flex-start', 
+                    alignSelf: 'flex-start',
                 },
             },
 
