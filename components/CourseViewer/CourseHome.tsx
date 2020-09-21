@@ -12,6 +12,8 @@ import CourseHeader from '../CourseHeader/CourseHeader';
 import { Calendar } from 'react-native-calendars';
 import JCComponent from '../JCComponent/JCComponent';
 import EditableUsers from '../../components/Forms/EditableUsers'
+import moment from 'moment-timezone';
+import { Image } from 'react-native'
 
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { CourseContext } from './CourseContext';
@@ -72,6 +74,16 @@ class CourseHomeImpl extends JCComponent<Props>{
         {({ state, actions }) => {
           console.log(state.isEditable && state.editMode)
           const instructors = state.courseData?.instructors?.items.map((item) => { return item.user })
+          var markedDates = {};
+          for (var i = 0; i < actions.myCourseDates().zoom?.length; i++)
+            markedDates[actions.myCourseDates().zoom[i]] = { marked: true, dotColor: 'red' };
+          for (var i = 0; i < actions.myCourseDates().assignments?.length; i++)
+            markedDates[actions.myCourseDates().assignments[i]] = { marked: true, dotColor: 'green' };
+          for (var i = 0; i < actions.myCourseDates().respond?.length; i++)
+            markedDates[actions.myCourseDates().respond[i]] = { marked: true, dotColor: 'blue' };
+
+          var toDo = actions.myCourseTodo()
+
           return (
             state.data && state.currentScreen == "Home" ?
               <StyleProvider style={getTheme()}>
@@ -208,24 +220,24 @@ class CourseHomeImpl extends JCComponent<Props>{
                               <>
                                 <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Facilitator</Text>
                                 <View style={this.styles.style.courseMyFacilitatorContainer}>
-                                {
-                                  actions.myCourseGroups().coach ?
-                                    actions.myCourseGroups().coach.map((user) => {
-                                      return this.renderProfileCard(user)
-                                    })
-                                    :
-                                    <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginTop: 70, width: '90%' }}>You have not been assigned a facilitator yet</Text>
-                                }
+                                  {
+                                    actions.myCourseGroups().coach ?
+                                      actions.myCourseGroups().coach.map((user) => {
+                                        return this.renderProfileCard(user)
+                                      })
+                                      :
+                                      <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginTop: 70, width: '90%' }}>You have not been assigned a facilitator yet</Text>
+                                  }
                                 </View>
                                 <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Learning Group</Text>
                                 <View style={this.styles.style.courseMyLearningGroupContainer}>
-                                {
-                                  actions.myCourseGroups().triad ?
-                                    actions.myCourseGroups().triad.map((user) => {
-                                      return this.renderProfileCard(user)
-                                    }) :
-                                    <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginTop: 70, width: '90%' }}>You have not been assigned a learning group yet</Text>
-                                }
+                                  {
+                                    actions.myCourseGroups().triad ?
+                                      actions.myCourseGroups().triad.map((user) => {
+                                        return this.renderProfileCard(user)
+                                      }) :
+                                      <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginTop: 70, width: '90%' }}>You have not been assigned a learning group yet</Text>
+                                  }
                                 </View>
                                 <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Cohort</Text>
                                 <View style={this.styles.style.courseMyCohortContainer}>
@@ -245,20 +257,38 @@ class CourseHomeImpl extends JCComponent<Props>{
                         <Container style={this.styles.style.courseHomeRightContainer}>
                           <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30, width: '90%' }}>To-Do</Text>
                           <Card style={this.styles.style.courseHomeCoachingCard}>
-                            <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App' }}>Call with {state.coachName}</Text>
+                            {toDo.map((item) => {
+                              return (<>
+                                <Text style={{ fontSize: 16, lineHeight: 25, fontWeight: "bold", fontFamily: 'Graphik-Regular-App' }}>{item.date}</Text>
+                                {{
+                                  'assignment': (<Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App' }}>
+                                    <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
+                                      source={require('../../assets/svg/document.svg')} />Assignment due @ {item.time}</Text>),
+                                  'respond': (<Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App' }}>
+                                    <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
+                                      source={require('../../assets/svg/document.svg')} />Responses due @ {item.time}</Text>),
+                                  'zoom': (<Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App' }}>
+                                    <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
+                                      source={require('../../assets/svg/document.svg')} />Zoom call @ {item.time}</Text>)
+                                }[item.lessonType] || (<Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App' }}>
+                                  <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
+                                    source={require('../../assets/svg/document.svg')} />Zoom call @ {item.time}</Text>)
+                                }
+                              </>)
+                            })}
+
                           </Card>
 
                           <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 50, width: '90%' }}>My Calendar</Text>
+
                           <Calendar style={this.styles.style.courseHomeCalendar}
                             // Collection of dates that have to be marked. Default = {}
-                            current={'2020-05-01'}
-                            markedDates={{
-                              '2020-05-16': { selected: true, marked: true, selectedColor: 'blue' },
-                              '2020-05-17': { marked: true },
-                              '2020-05-18': { marked: true, dotColor: 'red', activeOpacity: 0 },
-                              '2020-05-19': { disabled: true, disableTouchEvent: true }
-                            }}
+                            current={moment().format("YYYY-MM-DD")}
+                            markedDates={markedDates}
                           />
+                          <Text style={{ fontSize: 10, lineHeight: 25, color: "#ff0000", fontFamily: 'Graphik-Bold-App', marginTop: 10, width: '30%' }}>* Zoom</Text>
+                          <Text style={{ fontSize: 10, lineHeight: 25, color: "#00ff00", fontFamily: 'Graphik-Bold-App', marginTop: 10, width: '30%' }}>* Assignment</Text>
+                          <Text style={{ fontSize: 10, lineHeight: 25, color: "#0000ff", fontFamily: 'Graphik-Bold-App', marginTop: 10, width: '30%' }}>* Response</Text>
                           <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 50, width: '90%' }}>Course Activity</Text>
                           <Container style={this.styles.style.CourseHomeActivityContainer}>
                             <JCButton buttonType={state.activeCourseActivity == "today" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveCourseActivity("today") }}>Today</JCButton>

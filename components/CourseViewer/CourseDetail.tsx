@@ -34,7 +34,16 @@ class CourseDetailImpl extends JCComponent<Props>{
   static Consumer = CourseContext.Consumer;
   renderAssignmentConfig(state, actions, lesson, item): React.ReactNode {
     return (<Container style={state.isEditable && state.editMode ? { flexDirection: "column", marginTop: 10, height: "unset" } : { flexDirection: "column", height: "unset" }}>
-
+      {state.isEditable && state.editMode ?
+        <EditableDate type="datetime"
+          onChange={(time: any, timeZone: any) => { actions.updateLesson(state.activeWeek, lesson, "time", time); actions.updateLesson(state.activeWeek, lesson, "tz", timeZone) }}
+          placeholder="Enter Zoom Date/Time"
+          textStyle={this.styles.style.fontRegular}
+          inputStyle={this.styles.style.groupNameInput}
+          value={item.time}
+          tz={item.tz ? item.tz : moment.tz.guess()}
+          isEditable={state.isEditable && state.editMode}>
+        </EditableDate> : null}
       {state.isEditable && state.editMode ?
         <EditableText onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "wordCount", e) }}
           placeholder="Word Count" multiline={false}
@@ -48,7 +57,16 @@ class CourseDetailImpl extends JCComponent<Props>{
   }
   renderResponseConfig(state, actions, lesson, item): React.ReactNode {
     return (<Container style={state.isEditable && state.editMode ? { flexDirection: "column", marginTop: 10, height: "unset" } : { flexDirection: "column", height: "unset" }}>
-
+      {state.isEditable && state.editMode ?
+        <EditableDate type="datetime"
+          onChange={(time: any, timeZone: any) => { actions.updateLesson(state.activeWeek, lesson, "time", time); actions.updateLesson(state.activeWeek, lesson, "tz", timeZone) }}
+          placeholder="Enter Zoom Date/Time"
+          textStyle={this.styles.style.fontRegular}
+          inputStyle={this.styles.style.groupNameInput}
+          value={item.time}
+          tz={item.tz ? item.tz : moment.tz.guess()}
+          isEditable={state.isEditable && state.editMode}>
+        </EditableDate> : null}
       {state.isEditable && state.editMode ?
         <>
           <Picker

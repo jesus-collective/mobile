@@ -1,5 +1,6 @@
 ﻿import React from 'react';
 import { StyleProvider, Container } from 'native-base';
+import moment from 'moment-timezone';
 
 import CourseSidebar from '../../components/CourseSidebar/CourseSidebar'
 import getTheme from '../../native-base-theme/components';
@@ -316,7 +317,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
       }
       return { triad: triadTemp, coach: coachTemp, cohort: cohortTemp }
     })
-    let cohort = [], triad = [], coach = [],all=[]
+    let cohort = [], triad = [], coach = [], all = []
     cohort = z?.map(item => item.cohort).flat()
     triad = z?.map(item => item.triad).flat()
     coach = z?.map(item => item.coach).flat()
@@ -324,7 +325,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
     console.log({ cohort: cohort })
     console.log({ triad: triad })
     console.log({ coach: coach })
-    return {cohort: cohort, triad: triad, coach: coach }
+    return { cohort: cohort, triad: triad, coach: coach }
   }
   updateTriadCoaches = async (index: number, value: any): Promise<void> => {
     const del = this.state.courseData.triads.items[index].coaches.items.filter(x => !value.map(z => z.id).includes(x.user.id));
@@ -613,6 +614,91 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
       console.log(e)
     }
   }
+  myCourseTodo = () => {
+    if (this.state.courseData != null) {
+      const assignments = this.state.courseData?.courseWeeks.items.map((week) => {
+        return week.lessons.items.map((lesson) => {
+          if (lesson.lessonType == "assignment")
+            return lesson
+        })
+      }).flat().filter(item => item != null).map((item: any) => {
+
+        const tz = item.tz ? item.tz : moment.tz.guess()
+        const time = moment.tz(item.time, tz).format('hh:mm')
+        const date = moment.tz(item.time, tz).format('YYYY-MM-DD')
+        const m = moment.tz(item.time, tz)
+        return { lessonType: item.lessonType, time: time, date: date, moment: m }
+      }).filter(item => {
+        console.log({ z: item })
+        return item.time != "Invalid date"
+      })
+
+      const zoom = this.state.courseData?.courseWeeks.items.map((week) => {
+        return week.lessons.items.map((lesson) => {
+          if (lesson.lessonType == "zoom" || lesson.lessonType == null)
+            return lesson
+        })
+      }).flat().filter(item => item != null).map((item: any) => {
+        const tz = item.tz ? item.tz : moment.tz.guess()
+        const time = moment.tz(item.time, tz).format('hh:mm')
+        const date = moment.tz(item.time, tz).format('YYYY-MM-DD')
+        const m = moment.tz(item.time, tz)
+        return { lessonType: item.lessonType, time: time, date: date, moment: m }
+      }).filter(item => item.time != "Invalid date")
+
+      const respond = this.state.courseData?.courseWeeks.items.map((week) => {
+        return week.lessons.items.map((lesson) => {
+          if (lesson.lessonType == "respond")
+            return lesson
+        })
+      }).flat().filter(item => item != null).map((item: any) => {
+        const tz = item.tz ? item.tz : moment.tz.guess()
+        const time = moment.tz(item.time, tz).format('hh:mm')
+        const date = moment.tz(item.time, tz).format('YYYY-MM-DD')
+        const m = moment.tz(item.time, tz)
+        return { lessonType: item.lessonType, time: time, date: date, moment: m }
+      }).filter(item => item.time != "Invalid date")
+
+      return [...assignments, ...zoom, ...respond].filter(item => item.moment > moment()).sort((a, b) => { return a.moment.diff(b.moment) })
+    }
+    else
+      return []
+  }
+  myCourseDates = () => {
+    console.log({ courseData: this.state.courseData })
+    const assignments = this.state.courseData?.courseWeeks.items.map((week) => {
+      return week.lessons.items.map((lesson) => {
+        if (lesson.lessonType == "assignment")
+          return lesson
+      })
+    }).flat().filter(item => item != null).map((item: any) => {
+
+      const tz = item.tz ? item.tz : moment.tz.guess()
+      return moment.tz(item.time, tz).format('YYYY-MM-DD')
+    }).filter(item => item != "Invalid date")
+
+    const zoom = this.state.courseData?.courseWeeks.items.map((week) => {
+      return week.lessons.items.map((lesson) => {
+        if (lesson.lessonType == "zoom" || lesson.lessonType == null)
+          return lesson
+      })
+    }).flat().filter(item => item != null).map((item: any) => {
+      const tz = item?.tz ? item.tz : moment.tz.guess()
+      return moment.tz(item.time, tz).format('YYYY-MM-DD')
+    }).filter(item => item != "Invalid date")
+
+    const respond = this.state.courseData?.courseWeeks.items.map((week) => {
+      return week.lessons.items.map((lesson) => {
+        if (lesson.lessonType == "respond")
+          return lesson
+      })
+    }).flat().filter(item => item != null).map((item: any) => {
+      const tz = item?.tz ? item.tz : moment.tz.guess()
+      return moment.tz(item.time, tz).format('YYYY-MM-DD')
+    }).filter(item => item != "Invalid date")
+    console.log({ zoom: zoom, assignments: assignments, respond: respond })
+    return { zoom: zoom, assignments: assignments, respond: respond }
+  }
   deleteWeek = async (index: number): Promise<void> => {
 
     try {
@@ -686,8 +772,9 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
             myCourseGroups: this.myCourseGroups,
             setActiveCourseActivity: this.setActiveCourseActivity,
             getAssignmentList: this.getAssignmentList,
-            getLessonById: this.getLessonById
-          
+            getLessonById: this.getLessonById,
+            myCourseDates: this.myCourseDates,
+            myCourseTodo: this.myCourseTodo
           }
         }}>
           <StyleProvider style={getTheme()}>
