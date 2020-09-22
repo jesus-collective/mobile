@@ -90,7 +90,7 @@ class ResourceHeader extends JCComponent<EmptyProps, State> {
                                             <EditableText onChange={(val) => { actions.updateResource(state.currentResource, "title", val) }}
                                                 multiline={true}
                                                 inputStyle={this.styles.style.fontResourceHeaderBold}
-                                                textStyle={this.styles.style.fontCourseHeaderBold}
+                                                textStyle={this.styles.style.fontResourceHeaderBold}
                                                 value={state.resourceData.resources.items[state.currentResource].title}
                                                 isEditable={state.isEditable}></EditableText>
                                             <View style={this.styles.style.resourceHeaderAgeGroupBox}>
@@ -103,7 +103,7 @@ class ResourceHeader extends JCComponent<EmptyProps, State> {
                                             </View>
 
                                             {state.resourceData.resources.items[state.currentResource].title != 'Overview' ?
-                                                <EditableText onChange={(val) => { actions.updateResource(state.currentResource, "description", val) }} multiline={true} inputStyle={this.styles.style.fontResourceHeaderDescription} textStyle={this.styles.style.fontCourseHeaderDescription} value={state.resourceData.resources.items[state.currentResource].description} isEditable={state.isEditable}></EditableText> :
+                                                <EditableText onChange={(val) => { actions.updateResource(state.currentResource, "description", val) }} multiline={true} inputStyle={this.styles.style.fontResourceHeaderDescription} textStyle={this.styles.style.fontResourceHeaderDescription} value={state.resourceData.resources.items[state.currentResource].description} isEditable={state.isEditable}></EditableText> :
                                                 <EditableText onChange={(val) => { actions.updateResource(state.currentResource, "description", val) }} multiline={true} inputStyle={this.styles.style.fontResourceHeaderDescription} textStyle={this.styles.style.fontCourseHeaderDescriptionOverview} value={state.resourceData.resources.items[state.currentResource].description} isEditable={state.isEditable}></EditableText>
 
                                             }
