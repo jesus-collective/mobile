@@ -470,8 +470,8 @@ export default class MainStyles {
             fontResourceHeaderBold: {
                 fontFamily: 'Graphik-Regular-App',
                 fontWeight: 400,
-                fontSize: 85,
-                lineHeight: 35,
+                fontSize: 45,
+                lineHeight: 45,
                 alignSelf: "center",
                 textAlign: "center",
                 color: "#FFFFFF",
