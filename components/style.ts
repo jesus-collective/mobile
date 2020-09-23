@@ -2590,6 +2590,15 @@ export default class MainStyles {
                 courseHomeCourseActivityText: {
                     marginTop: 75
                 },
+                courseHomeFileCard: { 
+                    width: '100%'
+                 },
+                 courseHomeCoachingCard: { 
+                    width: '100%'
+                 },
+                 courseHomeCalendar: {
+                     width: '138%'
+                 },
             },
 
             dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
