@@ -330,9 +330,11 @@ class CourseHomeImpl extends JCComponent<Props>{
                             current={moment().format("YYYY-MM-DD")}
                             markedDates={markedDates}
                           />
-                          <Text style={{ fontSize: 10, lineHeight: 25, color: "#ff0000", fontFamily: 'Graphik-Bold-App', marginTop: 10, width: '30%' }}>* Zoom</Text>
-                          <Text style={{ fontSize: 10, lineHeight: 25, color: "#00ff00", fontFamily: 'Graphik-Bold-App', marginTop: 10, width: '30%' }}>* Assignment</Text>
-                          <Text style={{ fontSize: 10, lineHeight: 25, color: "#0000ff", fontFamily: 'Graphik-Bold-App', marginTop: 10, width: '30%' }}>* Response</Text>
+                          <Container style={{ flexDirection: 'row', width: '100%', justifyContent: 'flex-start' }}>
+                            <Text style={{ fontSize: 25, color: "#ff0000", fontFamily: 'Graphik-Bold-App', marginTop: 10, marginRight: 25 }}>• <span style={{ fontFamily: 'Graphik-Regular-App', color: '#000000', fontSize: 13 }}>Zoom</span></Text>
+                            <Text style={{ fontSize: 25, color: "#00ff00", fontFamily: 'Graphik-Bold-App', marginTop: 10, marginRight: 25 }}>• <span style={{ fontFamily: 'Graphik-Regular-App', color: '#000000', fontSize: 13 }}>Assignment</span></Text>
+                            <Text style={{ fontSize: 25, color: "#0000ff", fontFamily: 'Graphik-Bold-App', marginTop: 10, marginRight: 25 }}>• <span style={{ fontFamily: 'Graphik-Regular-App', color: '#000000', fontSize: 13 }}>Response</span></Text>
+                          </Container>
                           <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 50, width: '90%' }}>Course Activity</Text>
                           <Container style={this.styles.style.CourseHomeActivityContainer}>
                             <JCButton buttonType={state.activeCourseActivity == "today" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveCourseActivity("today") }}>Today</JCButton>
