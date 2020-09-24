@@ -115,7 +115,7 @@ export default class MyProfile extends JCComponent<Props, State> {
                     <Image style={this.props.size == 'xsmall' ?
                         { width: "20px", height: "20px", borderRadius: 18, marginRight: 5, marginBottom: 0 }
                         : this.props.size == 'small' ?
-                            { width: "60px", height: "76px", borderRadius: 120, marginRight: 10, marginBottom: 0, marginLeft: 10 } :
+                            { width: "50px", height: "66px", borderRadius: 120, marginRight: 10, marginBottom: 15, marginLeft: 10, top: 30 } :
                             this.props.size == 'small2' ?
                                 { width: "50px", height: "66px", borderRadius: 120, marginRight: 10, marginBottom: 0, marginLeft: 10, top: 0 } :
                                 this.props.style === "map" || this.props.style === "my-people" ? { width: "80px", height: "96px", borderRadius: 120, marginRight: 10, marginBottom: 15, alignSelf: 'center' } :
