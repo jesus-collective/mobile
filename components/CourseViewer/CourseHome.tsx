@@ -259,20 +259,64 @@ class CourseHomeImpl extends JCComponent<Props>{
                           <Card style={this.styles.style.courseHomeCoachingCard}>
                             {toDo.map((item) => {
                               return (<>
-                                <Text style={{ fontSize: 16, lineHeight: 25, fontWeight: "bold", fontFamily: 'Graphik-Regular-App' }}>{item.date}</Text>
                                 {{
-                                  'assignment': (<Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App' }}>
-                                    <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
-                                      source={require('../../assets/svg/document.svg')} />Assignment due @ {item.time}</Text>),
-                                  'respond': (<Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App' }}>
-                                    <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
-                                      source={require('../../assets/svg/document.svg')} />Responses due @ {item.time}</Text>),
-                                  'zoom': (<Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App' }}>
-                                    <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
-                                      source={require('../../assets/svg/document.svg')} />Zoom call @ {item.time}</Text>)
-                                }[item.lessonType] || (<Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App' }}>
-                                  <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
-                                    source={require('../../assets/svg/document.svg')} />Zoom call @ {item.time}</Text>)
+                                  'assignment': (
+                                  <Container style={{ flexDirection: "row", marginTop: 10, marginBottom: 10 }}>
+                                    <Left style={{ flex: 1 }}>
+                                      <Image style={{ width: "40px", height: "40px", alignSelf: 'center' }}
+                                        source={require('../../assets/svg/document.svg')} />
+                                    </Left>
+                                    <Right style={{ flex: 9, alignItems: 'flex-start', marginLeft: 20 }}>
+                                      <Text style={{ fontSize: 18, lineHeight: 25, fontFamily: 'Graphik-Bold-App' }}>{item.date}</Text>
+                                      <Text style={{ fontSize: 11, lineHeight: 17, fontFamily: 'Graphik-Regular-App', textTransform: 'uppercase' }}>
+                                        Assignment due @ {item.time}
+                                      </Text>
+                                    </Right>
+                                  </Container>
+                                  ),
+                                  'respond': (
+                                    <Container style={{ flexDirection: "row", marginTop: 10, marginBottom: 10 }}>
+                                    <Left style={{ flex: 1 }}>
+                                      <Image style={{ width: "40px", height: "40px", alignSelf: 'center' }}
+                                        source={require('../../assets/svg/document.svg')} />
+                                    </Left>
+                                    <Right style={{ flex: 9, alignItems: 'flex-start', marginLeft: 20 }}>
+                                      <Text style={{ fontSize: 18, lineHeight: 25, fontFamily: 'Graphik-Bold-App' }}>{item.date}</Text>
+                                      <Text style={{ fontSize: 11, lineHeight: 17, fontFamily: 'Graphik-Regular-App', textTransform: 'uppercase' }}>
+                                      Responses due @ {item.time}
+                                      </Text>
+                                    </Right>
+                                  </Container>
+                                  ),
+                                  'zoom': (
+                                    <Container style={{ flexDirection: "row", marginTop: 10, marginBottom: 10 }}>
+                                    <Left style={{ flex: 1 }}>
+                                      <Image style={{ width: "40px", height: "40px", alignSelf: 'center' }}
+                                        source={require('../../assets/svg/document.svg')} />
+                                    </Left>
+                                    <Right style={{ flex: 9, alignItems: 'flex-start', marginLeft: 20 }}>
+                                      <Text style={{ fontSize: 18, lineHeight: 25, fontFamily: 'Graphik-Bold-App' }}>{item.date}</Text>
+                                      <Text style={{ fontSize: 11, lineHeight: 17, fontFamily: 'Graphik-Regular-App', textTransform: 'uppercase' }}>
+                                      Zoom call @ {item.time}
+                                      </Text>
+                                    </Right>
+                                  </Container>
+                                  )
+                                }[item.lessonType] || 
+                                (
+                                  <Container style={{ flexDirection: "row", marginTop: 10, marginBottom: 10 }}>
+                                  <Left style={{ flex: 1 }}>
+                                    <Image style={{ width: "40px", height: "40px", alignSelf: 'center' }}
+                                      source={require('../../assets/svg/document.svg')} />
+                                  </Left>
+                                  <Right style={{ flex: 9, alignItems: 'flex-start', marginLeft: 20 }}>
+                                    <Text style={{ fontSize: 18, lineHeight: 25, fontFamily: 'Graphik-Bold-App' }}>{item.date}</Text>
+                                    <Text style={{ fontSize: 11, lineHeight: 17, fontFamily: 'Graphik-Regular-App', textTransform: 'uppercase' }}>
+                                    Zoom call @ {item.time}
+                                    </Text>
+                                  </Right>
+                                </Container>
+                                )
                                 }
                               </>)
                             })}
@@ -286,10 +330,14 @@ class CourseHomeImpl extends JCComponent<Props>{
                             current={moment().format("YYYY-MM-DD")}
                             markedDates={markedDates}
                           />
-                          <Text style={{ fontSize: 10, lineHeight: 25, color: "#ff0000", fontFamily: 'Graphik-Bold-App', marginTop: 10, width: '30%' }}>* Zoom</Text>
-                          <Text style={{ fontSize: 10, lineHeight: 25, color: "#00ff00", fontFamily: 'Graphik-Bold-App', marginTop: 10, width: '30%' }}>* Assignment</Text>
-                          <Text style={{ fontSize: 10, lineHeight: 25, color: "#0000ff", fontFamily: 'Graphik-Bold-App', marginTop: 10, width: '30%' }}>* Response</Text>
-                          <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 50, width: '90%' }}>Course Activity</Text>
+                          <Container style={{ flexDirection: 'row', width: '100%', justifyContent: 'flex-start' }}>
+                            <Text style={{ fontSize: 25, color: "#ff0000", fontFamily: 'Graphik-Bold-App', marginTop: 10, marginRight: 25 }}>• <span style={{ fontFamily: 'Graphik-Regular-App', color: '#000000', fontSize: 13 }}>Zoom</span></Text>
+                            <Text style={{ fontSize: 25, color: "#00ff00", fontFamily: 'Graphik-Bold-App', marginTop: 10, marginRight: 25 }}>• <span style={{ fontFamily: 'Graphik-Regular-App', color: '#000000', fontSize: 13 }}>Assignment</span></Text>
+                            <Text style={{ fontSize: 25, color: "#0000ff", fontFamily: 'Graphik-Bold-App', marginTop: 10, marginRight: 25 }}>• <span style={{ fontFamily: 'Graphik-Regular-App', color: '#000000', fontSize: 13 }}>Response</span></Text>
+                          </Container>
+                          <Container style={{ width: '100%', marginTop: 30, marginBottom: 50 }}>
+                            <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 50, width: '90%' }}>Course Activity</Text>
+                          </Container>
                           <Container style={this.styles.style.CourseHomeActivityContainer}>
                             <JCButton buttonType={state.activeCourseActivity == "today" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveCourseActivity("today") }}>Today</JCButton>
                             <JCButton buttonType={state.activeCourseActivity == "yesterday" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveCourseActivity("yesterday") }}>Yesterday</JCButton>
