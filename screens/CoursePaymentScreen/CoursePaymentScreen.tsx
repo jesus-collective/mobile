@@ -5,8 +5,10 @@ import PaymentFrom from '../../components/Forms/PaymentForm';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton';
 import { graphqlOperation, API } from 'aws-amplify';
 import * as queries from '../../src/graphql/queries'
+import * as mutations from '../../src/graphql/mutations'
 import { GraphQLResult } from '@aws-amplify/api/lib/types';
 import { GetProductQuery } from '../../src/API';
+import { Auth } from 'aws-amplify';
 
 interface Params {
     navigation: any
@@ -29,9 +31,19 @@ export default function CoursePayment({ navigation, route }: Params): JSX.Elemen
         getProduct();
     }, [])
 
-    const success = (details: any) => {
+    const success = async (details: any) => {
         const productId = details?.purchase_units[0]?.custom_id
         const id = details?.purchase_units[0]?.invoice_id
+        const create_time = details?.create_time
+        const user = await Auth.currentAuthenticatedUser();
+
+        try {
+            const saveResult = await API.graphql(graphqlOperation(mutations.createPayment, { input: { id: productId + "-" + user['username'], productID: productId, userID: user['username'], dateCompleted: create_time, paymentType: "Paypal", paymentInfo: details } })) as GraphQLResult<GetProductQuery>;
+            console.log(saveResult)
+        }
+        catch (e) {
+            console.error(e)
+        }
         navigation.push('PurchaseConfirmationScreen', { productId, id })
     }
 
