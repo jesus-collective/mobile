@@ -401,7 +401,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                   }
                 }}
               />
-              {this.props.showWordCount ? <Text>Word count: {this.state.wordCount}/{this.props.totalWordCount}</Text> : null}
+              {this.props.showWordCount ? <Text style={{ textAlign: 'right', marginBottom: 30 }}>Word count: {this.state.wordCount}/{this.props.totalWordCount}</Text> : null}
               <View
                 style={
                   this.props.style == "regular" || this.props.style == "course" || this.props.style == "courseResponse" ?
