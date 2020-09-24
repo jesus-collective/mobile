@@ -39,6 +39,7 @@ interface State extends JCState {
   courseData: any
   createNew: boolean
   canSave: boolean
+  canPurchase: boolean
   canLeave: boolean
   canJoin: boolean
   isEditable: boolean
@@ -67,6 +68,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
       createNew: props.route.params.create === "true" || props.route.params.create === true ? true : false,
       data: null,
       courseData: null,
+      canPurchase: true,
       canSave: false,
       canLeave: false,
       canJoin: false,
@@ -394,6 +396,9 @@ export default class CourseScreen extends JCComponent<Props, State>{
       console.log({ "Error mutations.deleteGroup": err });
     });
   }
+  purchase() {
+    this.props.navigation.push("CoursePaymentScreen", { id: this.state.data.id })
+  }
   updateValue(field: string, value: any): void {
 
     const temp = this.state.data
@@ -410,6 +415,10 @@ export default class CourseScreen extends JCComponent<Props, State>{
         {this.state.canJoin ?
           <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Join Course</JCButton> :
           null
+        }
+        {
+          this.state.canPurchase ? <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.purchase() }} >Purchase</JCButton> :
+            null
         }
         {this.state.canLeave ?
           <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Leave Course</JCButton> :
