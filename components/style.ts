@@ -733,9 +733,12 @@ export default class MainStyles {
             rightCardWidth: {
                 minWidth: "100%"
             },
-            conversationScreenLeftCard:
-                { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", height: "80vh", width: 446, paddingBottom: 40, overflowY: 'scroll' }
-            ,
+            conversationScreenLeftCard: { 
+                flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", height: "80vh", width: 446, paddingBottom: 40, overflowY: 'scroll' 
+            },
+            courseAssignmentScreenLeftCard: { 
+                flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 15, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", height: "80vh", width: 446, paddingBottom: 40, overflowY: 'scroll' 
+            },
             detailScreenLeftCard: Platform.OS === 'web' ?
                 { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", width: 446, paddingBottom: 40, minHeight: "calc(100vw * 1.05)" } :
                 { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, width: 446, paddingBottom: 40, minHeight: "calc(100vw * 1.05)" }
@@ -892,6 +895,14 @@ export default class MainStyles {
                 justifyContent: 'flex-start',
                 backgroundColor: "#F9FAFC",
                 height: "100%"
+            },
+            courseAssignmentMainContainer: {
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: 'flex-start',
+                backgroundColor: "#F9FAFC",
+                height: "100%",
+                width: '96%'
             },
             groupScreenMainContainer: {
                 display: "flex",
