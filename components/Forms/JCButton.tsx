@@ -13,6 +13,7 @@ export enum ButtonTypes {
     courseTransparentRegularBlack,
     courseActivityTransparentRegularBlack,
     courseCardSolid,
+    courseAssignment,
     Solid,
     SolidSignIn,
     SolidSignIn2,
