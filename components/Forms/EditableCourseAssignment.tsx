@@ -200,7 +200,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
     render(): React.ReactNode {
         console.log(this.hasInitialPost())
         return <>
-            <div style={{ padding: 5, width: "100%", backgroundColor: !this.hasInitialPost() ? "#ff0000" : "#00ff00", color: "#ffffff" }}>Assignment</div>
+            <div style={{ padding: 5, height: 25, width: "90%", marginTop: 20, backgroundColor: !this.hasInitialPost() ? "#ff0000" : "#00ff00", borderRadius: 4 }}><span style={{ color: "#ffffff", fontSize: 18, fontFamily: 'Graphik-Bold-App', alignSelf: 'center', paddingLeft: 10, paddingTop: 15 }}>Assignment</span></div>
             {this.hasInitialPost() ?
                 <Container style={this.styles.style.conversationScreenMainContainer}>
 
