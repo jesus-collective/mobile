@@ -55,7 +55,7 @@ type User
  
   primaryOrganization: String
   organizations: [OrganizationMember] @connection(keyName: "orgMemberByUser", fields: ["id"])
-
+  
   owns: [Group] @connection(name: "OwnerUser", keyField: "owner")
   groups: [GroupMember] @connection(name: "UserMembers", keyField: "userID")
   messages: [Message] @connection(name: "UserMessages", keyField: "userId", sortField: "when")
@@ -65,6 +65,7 @@ type User
   userTriad:[CourseTriadUsers] @connection(name:"courseUserTriad",keyField: "userID")
 
   courseInstructing: [CourseInstructors] @connection(name:"courseInstructorsUser",keyField: "userID")
+  payments: [Payment] @connection(name:"paymentUser",keyField: "userID")
 
   alertConfig:AlertConfig
 }
@@ -218,6 +219,21 @@ type Organization
   #messages: [Message] @connection(keyName: "byAuthorOrg", fields: ["id"])
   resource: [ResourceRoot] @connection(keyName: "resourceByOrganization", fields: ["id"])
 }
+
+
+type Payment
+  @model
+ {
+   id:ID!
+   productID:String
+   product:Product @connection(name:"paymentProduct",keyField:"productID")
+   userID:String
+   user:User @connection(name:"paymentUser",keyField:"userID")
+   dateCompleted:String
+   paymentType:String
+   paymentInfo:String
+   
+ }
 type CourseInfo
   @model
   @auth(
@@ -511,4 +527,5 @@ type Product
     name: String
     description: String
     confirmationMsg: String
+    payments: [Payment] @connection(name:"paymentProduct",keyField: "productID")
   }

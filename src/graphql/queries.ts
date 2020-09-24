@@ -160,6 +160,19 @@ export const getUser = /* GraphQL */ `
         }
         nextToken
       }
+      payments {
+        items {
+          id
+          productID
+          userID
+          dateCompleted
+          paymentType
+          paymentInfo
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       alertConfig {
         emailDirectMessage
         emailGroupMessage
@@ -250,6 +263,9 @@ export const listUsers = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        payments {
           nextToken
         }
         alertConfig {
@@ -343,6 +359,9 @@ export const getGroup = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        payments {
           nextToken
         }
         alertConfig {
@@ -916,6 +935,182 @@ export const listOrganizations = /* GraphQL */ `
     }
   }
 `;
+export const getPayment = /* GraphQL */ `
+  query GetPayment($id: ID!) {
+    getPayment(id: $id) {
+      id
+      productID
+      product {
+        id
+        price
+        name
+        description
+        confirmationMsg
+        payments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        courseInstructing {
+          nextToken
+        }
+        payments {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+      dateCompleted
+      paymentType
+      paymentInfo
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listPayments = /* GraphQL */ `
+  query ListPayments(
+    $filter: ModelPaymentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPayments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        productID
+        product {
+          id
+          price
+          name
+          description
+          confirmationMsg
+          createdAt
+          updatedAt
+        }
+        userID
+        user {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+        dateCompleted
+        paymentType
+        paymentInfo
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getCourseInfo = /* GraphQL */ `
   query GetCourseInfo($id: ID!) {
     getCourseInfo(id: $id) {
@@ -1177,6 +1372,9 @@ export const getCourseInstructors = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        payments {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -1361,6 +1559,9 @@ export const getCourseTriadCoaches = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        payments {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -1538,6 +1739,9 @@ export const getCourseTriadUsers = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        payments {
           nextToken
         }
         alertConfig {
@@ -1876,6 +2080,9 @@ export const getDirectMessageUser = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        payments {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -2113,6 +2320,9 @@ export const getDirectMessage = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        payments {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -2287,6 +2497,9 @@ export const getMessage = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        payments {
           nextToken
         }
         alertConfig {
@@ -3018,6 +3231,19 @@ export const getProduct = /* GraphQL */ `
       name
       description
       confirmationMsg
+      payments {
+        items {
+          id
+          productID
+          userID
+          dateCompleted
+          paymentType
+          paymentInfo
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -3036,6 +3262,9 @@ export const listProducts = /* GraphQL */ `
         name
         description
         confirmationMsg
+        payments {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -3649,6 +3878,9 @@ export const searchUsers = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        payments {
           nextToken
         }
         alertConfig {

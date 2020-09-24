@@ -260,6 +260,28 @@ export type DeleteOrganizationInput = {
   id?: string | null,
 };
 
+export type CreatePaymentInput = {
+  id?: string | null,
+  productID?: string | null,
+  userID?: string | null,
+  dateCompleted?: string | null,
+  paymentType?: string | null,
+  paymentInfo?: string | null,
+};
+
+export type UpdatePaymentInput = {
+  id: string,
+  productID?: string | null,
+  userID?: string | null,
+  dateCompleted?: string | null,
+  paymentType?: string | null,
+  paymentInfo?: string | null,
+};
+
+export type DeletePaymentInput = {
+  id?: string | null,
+};
+
 export type CreateCourseInfoInput = {
   id?: string | null,
   designedBy?: string | null,
@@ -765,6 +787,18 @@ export type ModelOrganizationFilterInput = {
   and?: Array< ModelOrganizationFilterInput | null > | null,
   or?: Array< ModelOrganizationFilterInput | null > | null,
   not?: ModelOrganizationFilterInput | null,
+};
+
+export type ModelPaymentFilterInput = {
+  id?: ModelIDFilterInput | null,
+  productID?: ModelStringFilterInput | null,
+  userID?: ModelStringFilterInput | null,
+  dateCompleted?: ModelStringFilterInput | null,
+  paymentType?: ModelStringFilterInput | null,
+  paymentInfo?: ModelStringFilterInput | null,
+  and?: Array< ModelPaymentFilterInput | null > | null,
+  or?: Array< ModelPaymentFilterInput | null > | null,
+  not?: ModelPaymentFilterInput | null,
 };
 
 export type ModelCourseInfoFilterInput = {
@@ -1285,6 +1319,10 @@ export type BatchCreateDirectMessageUsersMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -1499,6 +1537,21 @@ export type CreateUserMutation = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    payments:  {
+      __typename: "ModelPaymentConnection",
+      items:  Array< {
+        __typename: "Payment",
+        id: string,
+        productID: string | null,
+        userID: string | null,
+        dateCompleted: string | null,
+        paymentType: string | null,
+        paymentInfo: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     alertConfig:  {
       __typename: "AlertConfig",
       emailDirectMessage: string | null,
@@ -1694,6 +1747,21 @@ export type UpdateUserMutation = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    payments:  {
+      __typename: "ModelPaymentConnection",
+      items:  Array< {
+        __typename: "Payment",
+        id: string,
+        productID: string | null,
+        userID: string | null,
+        dateCompleted: string | null,
+        paymentType: string | null,
+        paymentInfo: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     alertConfig:  {
       __typename: "AlertConfig",
       emailDirectMessage: string | null,
@@ -1884,6 +1952,21 @@ export type DeleteUserMutation = {
         id: string,
         courseInfoID: string | null,
         userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    payments:  {
+      __typename: "ModelPaymentConnection",
+      items:  Array< {
+        __typename: "Payment",
+        id: string,
+        productID: string | null,
+        userID: string | null,
+        dateCompleted: string | null,
+        paymentType: string | null,
+        paymentInfo: string | null,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -2102,6 +2185,10 @@ export type CreateGroupMemberMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -2316,6 +2403,10 @@ export type UpdateGroupMemberMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -2534,6 +2625,10 @@ export type DeleteGroupMemberMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -2642,6 +2737,10 @@ export type CreateGroupMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -2902,6 +3001,10 @@ export type UpdateGroupMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -3158,6 +3261,10 @@ export type DeleteGroupMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -3420,6 +3527,10 @@ export type CreateOrganizationMemberMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -3624,6 +3735,10 @@ export type UpdateOrganizationMemberMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -3826,6 +3941,10 @@ export type DeleteOrganizationMemberMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -4643,6 +4762,399 @@ export type DeleteOrganizationMutation = {
   } | null,
 };
 
+export type CreatePaymentMutationVariables = {
+  input: CreatePaymentInput,
+};
+
+export type CreatePaymentMutation = {
+  createPayment:  {
+    __typename: "Payment",
+    id: string,
+    productID: string | null,
+    product:  {
+      __typename: "Product",
+      id: string,
+      price: number | null,
+      name: string | null,
+      description: string | null,
+      confirmationMsg: string | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      mainUserGroup: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+        geocodeFull: string | null,
+        geocodeCity: string | null,
+        geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: Array< string | null > | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      denomination: string | null,
+      pplServed: string | null,
+      sundayAttendance: string | null,
+      numberVolunteers: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      primaryOrganization: string | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      directMessages:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      coachingTriad:  {
+        __typename: "ModelCourseTriadCoachesConnection",
+        nextToken: string | null,
+      } | null,
+      userTriad:  {
+        __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      courseInstructing:  {
+        __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
+      alertConfig:  {
+        __typename: "AlertConfig",
+        emailDirectMessage: string | null,
+        emailGroupMessage: string | null,
+        emailEventMessage: string | null,
+        emailOrgMessage: string | null,
+        emailResourceMessage: string | null,
+        emailCourseMessage: string | null,
+        emailPromotions: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    dateCompleted: string | null,
+    paymentType: string | null,
+    paymentInfo: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdatePaymentMutationVariables = {
+  input: UpdatePaymentInput,
+};
+
+export type UpdatePaymentMutation = {
+  updatePayment:  {
+    __typename: "Payment",
+    id: string,
+    productID: string | null,
+    product:  {
+      __typename: "Product",
+      id: string,
+      price: number | null,
+      name: string | null,
+      description: string | null,
+      confirmationMsg: string | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      mainUserGroup: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+        geocodeFull: string | null,
+        geocodeCity: string | null,
+        geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: Array< string | null > | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      denomination: string | null,
+      pplServed: string | null,
+      sundayAttendance: string | null,
+      numberVolunteers: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      primaryOrganization: string | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      directMessages:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      coachingTriad:  {
+        __typename: "ModelCourseTriadCoachesConnection",
+        nextToken: string | null,
+      } | null,
+      userTriad:  {
+        __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      courseInstructing:  {
+        __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
+      alertConfig:  {
+        __typename: "AlertConfig",
+        emailDirectMessage: string | null,
+        emailGroupMessage: string | null,
+        emailEventMessage: string | null,
+        emailOrgMessage: string | null,
+        emailResourceMessage: string | null,
+        emailCourseMessage: string | null,
+        emailPromotions: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    dateCompleted: string | null,
+    paymentType: string | null,
+    paymentInfo: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeletePaymentMutationVariables = {
+  input: DeletePaymentInput,
+};
+
+export type DeletePaymentMutation = {
+  deletePayment:  {
+    __typename: "Payment",
+    id: string,
+    productID: string | null,
+    product:  {
+      __typename: "Product",
+      id: string,
+      price: number | null,
+      name: string | null,
+      description: string | null,
+      confirmationMsg: string | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      mainUserGroup: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+        geocodeFull: string | null,
+        geocodeCity: string | null,
+        geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: Array< string | null > | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      denomination: string | null,
+      pplServed: string | null,
+      sundayAttendance: string | null,
+      numberVolunteers: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      primaryOrganization: string | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      directMessages:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      coachingTriad:  {
+        __typename: "ModelCourseTriadCoachesConnection",
+        nextToken: string | null,
+      } | null,
+      userTriad:  {
+        __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      courseInstructing:  {
+        __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
+      alertConfig:  {
+        __typename: "AlertConfig",
+        emailDirectMessage: string | null,
+        emailGroupMessage: string | null,
+        emailEventMessage: string | null,
+        emailOrgMessage: string | null,
+        emailResourceMessage: string | null,
+        emailCourseMessage: string | null,
+        emailPromotions: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    dateCompleted: string | null,
+    paymentType: string | null,
+    paymentInfo: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type CreateCourseInfoMutationVariables = {
   input: CreateCourseInfoInput,
 };
@@ -5122,6 +5634,10 @@ export type CreateCourseInstructorsMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -5256,6 +5772,10 @@ export type UpdateCourseInstructorsMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -5388,6 +5908,10 @@ export type DeleteCourseInstructorsMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -5527,6 +6051,10 @@ export type CreateCourseTriadCoachesMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -5662,6 +6190,10 @@ export type UpdateCourseTriadCoachesMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -5801,6 +6333,10 @@ export type DeleteCourseTriadCoachesMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -5936,6 +6472,10 @@ export type CreateCourseTriadUsersMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -6075,6 +6615,10 @@ export type UpdateCourseTriadUsersMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -6210,6 +6754,10 @@ export type DeleteCourseTriadUsersMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -6682,6 +7230,10 @@ export type CreateDirectMessageUserMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -6808,6 +7360,10 @@ export type UpdateDirectMessageUserMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -6932,6 +7488,10 @@ export type DeleteDirectMessageUserMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -7196,6 +7756,10 @@ export type CreateDirectMessageMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -7324,6 +7888,10 @@ export type UpdateDirectMessageMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -7456,6 +8024,10 @@ export type DeleteDirectMessageMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -7586,6 +8158,10 @@ export type CreateMessageMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -7810,6 +8386,10 @@ export type UpdateMessageMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -8030,6 +8610,10 @@ export type DeleteMessageMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -9287,6 +9871,21 @@ export type CreateProductMutation = {
     name: string | null,
     description: string | null,
     confirmationMsg: string | null,
+    payments:  {
+      __typename: "ModelPaymentConnection",
+      items:  Array< {
+        __typename: "Payment",
+        id: string,
+        productID: string | null,
+        userID: string | null,
+        dateCompleted: string | null,
+        paymentType: string | null,
+        paymentInfo: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -9304,6 +9903,21 @@ export type UpdateProductMutation = {
     name: string | null,
     description: string | null,
     confirmationMsg: string | null,
+    payments:  {
+      __typename: "ModelPaymentConnection",
+      items:  Array< {
+        __typename: "Payment",
+        id: string,
+        productID: string | null,
+        userID: string | null,
+        dateCompleted: string | null,
+        paymentType: string | null,
+        paymentInfo: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -9321,6 +9935,21 @@ export type DeleteProductMutation = {
     name: string | null,
     description: string | null,
     confirmationMsg: string | null,
+    payments:  {
+      __typename: "ModelPaymentConnection",
+      items:  Array< {
+        __typename: "Payment",
+        id: string,
+        productID: string | null,
+        userID: string | null,
+        dateCompleted: string | null,
+        paymentType: string | null,
+        paymentInfo: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -9506,6 +10135,21 @@ export type GetUserQuery = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    payments:  {
+      __typename: "ModelPaymentConnection",
+      items:  Array< {
+        __typename: "Payment",
+        id: string,
+        productID: string | null,
+        userID: string | null,
+        dateCompleted: string | null,
+        paymentType: string | null,
+        paymentInfo: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     alertConfig:  {
       __typename: "AlertConfig",
       emailDirectMessage: string | null,
@@ -9610,6 +10254,10 @@ export type ListUsersQuery = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -9719,6 +10367,10 @@ export type GetGroupQuery = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -10346,6 +10998,206 @@ export type ListOrganizationsQuery = {
   } | null,
 };
 
+export type GetPaymentQueryVariables = {
+  id: string,
+};
+
+export type GetPaymentQuery = {
+  getPayment:  {
+    __typename: "Payment",
+    id: string,
+    productID: string | null,
+    product:  {
+      __typename: "Product",
+      id: string,
+      price: number | null,
+      name: string | null,
+      description: string | null,
+      confirmationMsg: string | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      mainUserGroup: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+        geocodeFull: string | null,
+        geocodeCity: string | null,
+        geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: Array< string | null > | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      denomination: string | null,
+      pplServed: string | null,
+      sundayAttendance: string | null,
+      numberVolunteers: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      primaryOrganization: string | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      directMessages:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      coachingTriad:  {
+        __typename: "ModelCourseTriadCoachesConnection",
+        nextToken: string | null,
+      } | null,
+      userTriad:  {
+        __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      courseInstructing:  {
+        __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
+      alertConfig:  {
+        __typename: "AlertConfig",
+        emailDirectMessage: string | null,
+        emailGroupMessage: string | null,
+        emailEventMessage: string | null,
+        emailOrgMessage: string | null,
+        emailResourceMessage: string | null,
+        emailCourseMessage: string | null,
+        emailPromotions: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    dateCompleted: string | null,
+    paymentType: string | null,
+    paymentInfo: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListPaymentsQueryVariables = {
+  filter?: ModelPaymentFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListPaymentsQuery = {
+  listPayments:  {
+    __typename: "ModelPaymentConnection",
+    items:  Array< {
+      __typename: "Payment",
+      id: string,
+      productID: string | null,
+      product:  {
+        __typename: "Product",
+        id: string,
+        price: number | null,
+        name: string | null,
+        description: string | null,
+        confirmationMsg: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      userID: string | null,
+      user:  {
+        __typename: "User",
+        id: string,
+        given_name: string,
+        family_name: string,
+        email: string | null,
+        phone: string | null,
+        owner: string | null,
+        mainUserGroup: string | null,
+        hasPaidState: string | null,
+        profileState: string | null,
+        address: string | null,
+        city: string | null,
+        province: string | null,
+        postalCode: string | null,
+        country: string | null,
+        aboutMeShort: string | null,
+        aboutMeLong: string | null,
+        interests: Array< string | null > | null,
+        currentRole: string | null,
+        currentScope: string | null,
+        personality: string | null,
+        orgName: string | null,
+        orgType: string | null,
+        orgSize: string | null,
+        denomination: string | null,
+        pplServed: string | null,
+        sundayAttendance: string | null,
+        numberVolunteers: string | null,
+        orgDescription: string | null,
+        joined: string | null,
+        primaryOrganization: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      dateCompleted: string | null,
+      paymentType: string | null,
+      paymentInfo: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
 export type GetCourseInfoQueryVariables = {
   id: string,
 };
@@ -10660,6 +11512,10 @@ export type GetCourseInstructorsQuery = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -10865,6 +11721,10 @@ export type GetCourseTriadCoachesQuery = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -11063,6 +11923,10 @@ export type GetCourseTriadUsersQuery = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -11444,6 +12308,10 @@ export type GetDirectMessageUserQuery = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -11710,6 +12578,10 @@ export type GetDirectMessageQuery = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -11908,6 +12780,10 @@ export type GetMessageQuery = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -12712,6 +13588,21 @@ export type GetProductQuery = {
     name: string | null,
     description: string | null,
     confirmationMsg: string | null,
+    payments:  {
+      __typename: "ModelPaymentConnection",
+      items:  Array< {
+        __typename: "Payment",
+        id: string,
+        productID: string | null,
+        userID: string | null,
+        dateCompleted: string | null,
+        paymentType: string | null,
+        paymentInfo: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -12733,6 +13624,10 @@ export type ListProductsQuery = {
       name: string | null,
       description: string | null,
       confirmationMsg: string | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     } | null > | null,
@@ -13347,6 +14242,10 @@ export type SearchUsersQuery = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -13582,6 +14481,10 @@ export type OnCreateMessageByRoomIdSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -13884,6 +14787,21 @@ export type OnCreateUserSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    payments:  {
+      __typename: "ModelPaymentConnection",
+      items:  Array< {
+        __typename: "Payment",
+        id: string,
+        productID: string | null,
+        userID: string | null,
+        dateCompleted: string | null,
+        paymentType: string | null,
+        paymentInfo: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     alertConfig:  {
       __typename: "AlertConfig",
       emailDirectMessage: string | null,
@@ -14075,6 +14993,21 @@ export type OnUpdateUserSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    payments:  {
+      __typename: "ModelPaymentConnection",
+      items:  Array< {
+        __typename: "Payment",
+        id: string,
+        productID: string | null,
+        userID: string | null,
+        dateCompleted: string | null,
+        paymentType: string | null,
+        paymentInfo: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     alertConfig:  {
       __typename: "AlertConfig",
       emailDirectMessage: string | null,
@@ -14261,6 +15194,21 @@ export type OnDeleteUserSubscription = {
         id: string,
         courseInfoID: string | null,
         userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    payments:  {
+      __typename: "ModelPaymentConnection",
+      items:  Array< {
+        __typename: "Payment",
+        id: string,
+        productID: string | null,
+        userID: string | null,
+        dateCompleted: string | null,
+        paymentType: string | null,
+        paymentInfo: string | null,
         createdAt: string,
         updatedAt: string,
       } | null > | null,
@@ -14475,6 +15423,10 @@ export type OnCreateGroupMemberSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -14685,6 +15637,10 @@ export type OnUpdateGroupMemberSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -14899,6 +15855,10 @@ export type OnDeleteGroupMemberSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -15003,6 +15963,10 @@ export type OnCreateGroupSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -15259,6 +16223,10 @@ export type OnUpdateGroupSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -15511,6 +16479,10 @@ export type OnDeleteGroupSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -15769,6 +16741,10 @@ export type OnCreateOrganizationMemberSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -15969,6 +16945,10 @@ export type OnUpdateOrganizationMemberSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -16167,6 +17147,10 @@ export type OnDeleteOrganizationMemberSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -16972,6 +17956,387 @@ export type OnDeleteOrganizationSubscription = {
   } | null,
 };
 
+export type OnCreatePaymentSubscription = {
+  onCreatePayment:  {
+    __typename: "Payment",
+    id: string,
+    productID: string | null,
+    product:  {
+      __typename: "Product",
+      id: string,
+      price: number | null,
+      name: string | null,
+      description: string | null,
+      confirmationMsg: string | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      mainUserGroup: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+        geocodeFull: string | null,
+        geocodeCity: string | null,
+        geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: Array< string | null > | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      denomination: string | null,
+      pplServed: string | null,
+      sundayAttendance: string | null,
+      numberVolunteers: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      primaryOrganization: string | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      directMessages:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      coachingTriad:  {
+        __typename: "ModelCourseTriadCoachesConnection",
+        nextToken: string | null,
+      } | null,
+      userTriad:  {
+        __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      courseInstructing:  {
+        __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
+      alertConfig:  {
+        __typename: "AlertConfig",
+        emailDirectMessage: string | null,
+        emailGroupMessage: string | null,
+        emailEventMessage: string | null,
+        emailOrgMessage: string | null,
+        emailResourceMessage: string | null,
+        emailCourseMessage: string | null,
+        emailPromotions: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    dateCompleted: string | null,
+    paymentType: string | null,
+    paymentInfo: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdatePaymentSubscription = {
+  onUpdatePayment:  {
+    __typename: "Payment",
+    id: string,
+    productID: string | null,
+    product:  {
+      __typename: "Product",
+      id: string,
+      price: number | null,
+      name: string | null,
+      description: string | null,
+      confirmationMsg: string | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      mainUserGroup: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+        geocodeFull: string | null,
+        geocodeCity: string | null,
+        geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: Array< string | null > | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      denomination: string | null,
+      pplServed: string | null,
+      sundayAttendance: string | null,
+      numberVolunteers: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      primaryOrganization: string | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      directMessages:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      coachingTriad:  {
+        __typename: "ModelCourseTriadCoachesConnection",
+        nextToken: string | null,
+      } | null,
+      userTriad:  {
+        __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      courseInstructing:  {
+        __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
+      alertConfig:  {
+        __typename: "AlertConfig",
+        emailDirectMessage: string | null,
+        emailGroupMessage: string | null,
+        emailEventMessage: string | null,
+        emailOrgMessage: string | null,
+        emailResourceMessage: string | null,
+        emailCourseMessage: string | null,
+        emailPromotions: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    dateCompleted: string | null,
+    paymentType: string | null,
+    paymentInfo: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeletePaymentSubscription = {
+  onDeletePayment:  {
+    __typename: "Payment",
+    id: string,
+    productID: string | null,
+    product:  {
+      __typename: "Product",
+      id: string,
+      price: number | null,
+      name: string | null,
+      description: string | null,
+      confirmationMsg: string | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      mainUserGroup: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+        geocodeFull: string | null,
+        geocodeCity: string | null,
+        geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: Array< string | null > | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      denomination: string | null,
+      pplServed: string | null,
+      sundayAttendance: string | null,
+      numberVolunteers: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      primaryOrganization: string | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      directMessages:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      coachingTriad:  {
+        __typename: "ModelCourseTriadCoachesConnection",
+        nextToken: string | null,
+      } | null,
+      userTriad:  {
+        __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      courseInstructing:  {
+        __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
+      alertConfig:  {
+        __typename: "AlertConfig",
+        emailDirectMessage: string | null,
+        emailGroupMessage: string | null,
+        emailEventMessage: string | null,
+        emailOrgMessage: string | null,
+        emailResourceMessage: string | null,
+        emailCourseMessage: string | null,
+        emailPromotions: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    dateCompleted: string | null,
+    paymentType: string | null,
+    paymentInfo: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type OnCreateCourseInfoSubscriptionVariables = {
   owner?: string | null,
 };
@@ -17435,6 +18800,10 @@ export type OnCreateCourseInstructorsSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -17565,6 +18934,10 @@ export type OnUpdateCourseInstructorsSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -17693,6 +19066,10 @@ export type OnDeleteCourseInstructorsSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -17828,6 +19205,10 @@ export type OnCreateCourseTriadCoachesSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -17959,6 +19340,10 @@ export type OnUpdateCourseTriadCoachesSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -18094,6 +19479,10 @@ export type OnDeleteCourseTriadCoachesSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -18225,6 +19614,10 @@ export type OnCreateCourseTriadUsersSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -18360,6 +19753,10 @@ export type OnUpdateCourseTriadUsersSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -18491,6 +19888,10 @@ export type OnDeleteCourseTriadUsersSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -18959,6 +20360,10 @@ export type OnCreateDirectMessageUserSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -19081,6 +20486,10 @@ export type OnUpdateDirectMessageUserSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -19201,6 +20610,10 @@ export type OnDeleteDirectMessageUserSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -19449,6 +20862,10 @@ export type OnCreateDirectMessageSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -19573,6 +20990,10 @@ export type OnUpdateDirectMessageSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -19701,6 +21122,10 @@ export type OnDeleteDirectMessageSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -19827,6 +21252,10 @@ export type OnCreateMessageSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -20047,6 +21476,10 @@ export type OnUpdateMessageSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
       alertConfig:  {
         __typename: "AlertConfig",
         emailDirectMessage: string | null,
@@ -20263,6 +21696,10 @@ export type OnDeleteMessageSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
       alertConfig:  {
@@ -21504,6 +22941,21 @@ export type OnCreateProductSubscription = {
     name: string | null,
     description: string | null,
     confirmationMsg: string | null,
+    payments:  {
+      __typename: "ModelPaymentConnection",
+      items:  Array< {
+        __typename: "Payment",
+        id: string,
+        productID: string | null,
+        userID: string | null,
+        dateCompleted: string | null,
+        paymentType: string | null,
+        paymentInfo: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -21517,6 +22969,21 @@ export type OnUpdateProductSubscription = {
     name: string | null,
     description: string | null,
     confirmationMsg: string | null,
+    payments:  {
+      __typename: "ModelPaymentConnection",
+      items:  Array< {
+        __typename: "Payment",
+        id: string,
+        productID: string | null,
+        userID: string | null,
+        dateCompleted: string | null,
+        paymentType: string | null,
+        paymentInfo: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -21530,6 +22997,21 @@ export type OnDeleteProductSubscription = {
     name: string | null,
     description: string | null,
     confirmationMsg: string | null,
+    payments:  {
+      __typename: "ModelPaymentConnection",
+      items:  Array< {
+        __typename: "Payment",
+        id: string,
+        productID: string | null,
+        userID: string | null,
+        dateCompleted: string | null,
+        paymentType: string | null,
+        paymentInfo: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,

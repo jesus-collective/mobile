@@ -81,6 +81,9 @@ export const batchCreateDirectMessageUsers = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        payments {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -269,6 +272,19 @@ export const createUser = /* GraphQL */ `
         }
         nextToken
       }
+      payments {
+        items {
+          id
+          productID
+          userID
+          dateCompleted
+          paymentType
+          paymentInfo
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       alertConfig {
         emailDirectMessage
         emailGroupMessage
@@ -441,6 +457,19 @@ export const updateUser = /* GraphQL */ `
         }
         nextToken
       }
+      payments {
+        items {
+          id
+          productID
+          userID
+          dateCompleted
+          paymentType
+          paymentInfo
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       alertConfig {
         emailDirectMessage
         emailGroupMessage
@@ -608,6 +637,19 @@ export const deleteUser = /* GraphQL */ `
           id
           courseInfoID
           userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      payments {
+        items {
+          id
+          productID
+          userID
+          dateCompleted
+          paymentType
+          paymentInfo
           createdAt
           updatedAt
         }
@@ -804,6 +846,9 @@ export const createGroupMember = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        payments {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -996,6 +1041,9 @@ export const updateGroupMember = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        payments {
           nextToken
         }
         alertConfig {
@@ -1192,6 +1240,9 @@ export const deleteGroupMember = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        payments {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -1284,6 +1335,9 @@ export const createGroup = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        payments {
           nextToken
         }
         alertConfig {
@@ -1515,6 +1569,9 @@ export const updateGroup = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        payments {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -1742,6 +1799,9 @@ export const deleteGroup = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        payments {
           nextToken
         }
         alertConfig {
@@ -1975,6 +2035,9 @@ export const createOrganizationMember = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        payments {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -2155,6 +2218,9 @@ export const updateOrganizationMember = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        payments {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -2333,6 +2399,9 @@ export const deleteOrganizationMember = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        payments {
           nextToken
         }
         alertConfig {
@@ -3075,6 +3144,342 @@ export const deleteOrganization = /* GraphQL */ `
     }
   }
 `;
+export const createPayment = /* GraphQL */ `
+  mutation CreatePayment($input: CreatePaymentInput!) {
+    createPayment(input: $input) {
+      id
+      productID
+      product {
+        id
+        price
+        name
+        description
+        confirmationMsg
+        payments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        courseInstructing {
+          nextToken
+        }
+        payments {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+      dateCompleted
+      paymentType
+      paymentInfo
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updatePayment = /* GraphQL */ `
+  mutation UpdatePayment($input: UpdatePaymentInput!) {
+    updatePayment(input: $input) {
+      id
+      productID
+      product {
+        id
+        price
+        name
+        description
+        confirmationMsg
+        payments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        courseInstructing {
+          nextToken
+        }
+        payments {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+      dateCompleted
+      paymentType
+      paymentInfo
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deletePayment = /* GraphQL */ `
+  mutation DeletePayment($input: DeletePaymentInput!) {
+    deletePayment(input: $input) {
+      id
+      productID
+      product {
+        id
+        price
+        name
+        description
+        confirmationMsg
+        payments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        courseInstructing {
+          nextToken
+        }
+        payments {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+      dateCompleted
+      paymentType
+      paymentInfo
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createCourseInfo = /* GraphQL */ `
   mutation CreateCourseInfo($input: CreateCourseInfoInput!) {
     createCourseInfo(input: $input) {
@@ -3469,6 +3874,9 @@ export const createCourseInstructors = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        payments {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -3583,6 +3991,9 @@ export const updateCourseInstructors = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        payments {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -3695,6 +4106,9 @@ export const deleteCourseInstructors = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        payments {
           nextToken
         }
         alertConfig {
@@ -3814,6 +4228,9 @@ export const createCourseTriadCoaches = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        payments {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -3929,6 +4346,9 @@ export const updateCourseTriadCoaches = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        payments {
           nextToken
         }
         alertConfig {
@@ -4048,6 +4468,9 @@ export const deleteCourseTriadCoaches = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        payments {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -4163,6 +4586,9 @@ export const createCourseTriadUsers = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        payments {
           nextToken
         }
         alertConfig {
@@ -4282,6 +4708,9 @@ export const updateCourseTriadUsers = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        payments {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -4397,6 +4826,9 @@ export const deleteCourseTriadUsers = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        payments {
           nextToken
         }
         alertConfig {
@@ -4802,6 +5234,9 @@ export const createDirectMessageUser = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        payments {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -4909,6 +5344,9 @@ export const updateDirectMessageUser = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        payments {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -5014,6 +5452,9 @@ export const deleteDirectMessageUser = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        payments {
           nextToken
         }
         alertConfig {
@@ -5235,6 +5676,9 @@ export const createDirectMessage = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        payments {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -5344,6 +5788,9 @@ export const updateDirectMessage = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        payments {
           nextToken
         }
         alertConfig {
@@ -5457,6 +5904,9 @@ export const deleteDirectMessage = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        payments {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -5568,6 +6018,9 @@ export const createMessage = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        payments {
           nextToken
         }
         alertConfig {
@@ -5770,6 +6223,9 @@ export const updateMessage = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        payments {
+          nextToken
+        }
         alertConfig {
           emailDirectMessage
           emailGroupMessage
@@ -5968,6 +6424,9 @@ export const deleteMessage = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        payments {
           nextToken
         }
         alertConfig {
@@ -7091,6 +7550,19 @@ export const createProduct = /* GraphQL */ `
       name
       description
       confirmationMsg
+      payments {
+        items {
+          id
+          productID
+          userID
+          dateCompleted
+          paymentType
+          paymentInfo
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -7104,6 +7576,19 @@ export const updateProduct = /* GraphQL */ `
       name
       description
       confirmationMsg
+      payments {
+        items {
+          id
+          productID
+          userID
+          dateCompleted
+          paymentType
+          paymentInfo
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -7117,6 +7602,19 @@ export const deleteProduct = /* GraphQL */ `
       name
       description
       confirmationMsg
+      payments {
+        items {
+          id
+          productID
+          userID
+          dateCompleted
+          paymentType
+          paymentInfo
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
