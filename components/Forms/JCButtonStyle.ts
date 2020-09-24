@@ -24,8 +24,7 @@ export default EStyleSheet.create({
 
     },
 
-    OutlineButton:
-    {
+    OutlineButton: {
         paddingTop: 10,
         paddingBottom: 10,
         paddingLeft: 29,
@@ -44,7 +43,29 @@ export default EStyleSheet.create({
         fontFamily: 'Graphik-Regular-App',
         fontSize: 16,
         padding: 5
-
+    },
+    courseAssignmentButton: {
+        paddingTop: 6,
+        paddingBottom: 6,
+        paddingLeft: 8,
+        paddingRight: 8,
+        marginBottom: 20,
+        marginLeft: 0,
+        marginRight: 0,
+        marginTop: 20,
+        backgroundColor: "#F0493E",
+        borderWidth: 1,
+        borderColor: "#F0493E",
+        boxShadow: "unset",
+        borderRadius: 4,
+        justifyContent: 'center',
+    },
+    courseAssignmentText: {
+        color: "#ffffff",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        padding: 10,
+        fontWeight: "600",
     },
     OutlineBoldButton:
     {
