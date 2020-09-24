@@ -522,7 +522,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
 
                     <Text style={this.styles.style.courseDetails}>Course Details</Text>
                     <Accordion style={{ marginTop: 15, width: 100 }}
-                      dataArray={this.state.courseData?.courseWeeks.items.map((item: any, index1) => {
+                      dataArray={this.state.courseData?.courseWeeks?.items.map((item: any, index1) => {
                         return (
                           {
                             title: "Week " + index1,
