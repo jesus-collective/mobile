@@ -406,8 +406,8 @@ class CourseDetailImpl extends JCComponent<Props>{
                         {!(lesson?.lessonType == "respond" || lesson?.lessonType == "assignment") ?
                           <Container style={this.styles.style.courseDetailRightContainer}>
                             <Container style={this.styles.style.courseDetailButtonTrio}>
-                              <JCButton buttonType={state.activeMessageBoard == "cohort" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("cohort") }}>Cohort</JCButton>
-                              <JCButton buttonType={state.activeMessageBoard == "triad" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("triad") }}>Learning Group</JCButton>
+                              <JCButton buttonType={state.activeMessageBoard == "cohort" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("cohort") }}> Learning Collective</JCButton>
+                              <JCButton buttonType={state.activeMessageBoard == "triad" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("triad") }}>Cohort</JCButton>
                               <JCButton buttonType={state.activeMessageBoard == "instructor" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("instructor") }}>Facilitator</JCButton>
                             </Container>
                             <Container style={this.styles.style.courseDetailMessageBoardContainer}>

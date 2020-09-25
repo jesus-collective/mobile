@@ -5,7 +5,7 @@ import HeaderAdmin from '../../components/HeaderAdmin/HeaderAdmin';
 import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
 import { MapData } from 'components/MyGroups/MyGroups';
 import { Auth, API } from 'aws-amplify';
-import { View, TextInput, Modal } from 'react-native';
+import { View, TextInput, Modal, Picker } from 'react-native';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton';
 import JCSwitch from '../../components/JCSwitch/JCSwitch';
 
@@ -26,6 +26,8 @@ interface State extends JCState {
   showEmail: boolean,
   showPhone: boolean,
   showStatus: boolean,
+  groupToAdd: string,
+  groupList: any
 }
 
 
@@ -44,12 +46,14 @@ export default class AdminScreen extends JCComponent<Props, State>{
       showEmail: true,
       showPhone: true,
       showStatus: true,
+      groupToAdd: null,
+      groupList: ["admin", "verifiedUsers", "partners", "friends", "courseUser", "courseAdmin", "courseCoach"]
     }
     this.setInitialData()
   }
   async setInitialData(): Promise<void> {
     const data = await this.listUsers(20, null)
-    console.log(data)
+
     this.setState({ data: data.Users })
   }
   async listUsers(limit: number, nextToken: string): Promise<any> {
@@ -70,6 +74,42 @@ export default class AdminScreen extends JCComponent<Props, State>{
     return rest;
   }
 
+  async removeUserFromGroup(user: string, groupname: string) {
+    console.log(user)
+    console.log(groupname)
+    const apiName = 'AdminQueries';
+    const path = '/removeUserFromGroup';
+    const myInit = {
+      body: {
+        "username": user,
+        "groupname": groupname
+      },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
+      }
+    }
+    const { ...rest } = await API.post(apiName, path, myInit);
+    return rest;
+  }
+  async addUserToGroup(user: string, groupname: string) {
+    console.log(user)
+    console.log(groupname)
+    const apiName = 'AdminQueries';
+    const path = '/addUserToGroup';
+    const myInit = {
+      body: {
+        "username": user,
+        "groupname": groupname
+      },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
+      }
+    }
+    const { ...rest } = await API.post(apiName, path, myInit);
+    return rest;
+  }
   async listGroupsForUser(user: string, limit: number, nextToken: string): Promise<any> {
     const apiName = 'AdminQueries';
     const path = '/listGroupsForUser';
@@ -141,17 +181,27 @@ export default class AdminScreen extends JCComponent<Props, State>{
       showGroupsId: null
     })
   }
+  async removeGroup(user, group): Promise<void> {
+    await this.removeUserFromGroup(user, group)
+    this.showGroups(this.state.showGroupsId)
+
+  }
+  async addGroup(user, group): Promise<void> {
+    await this.addUserToGroup(user, group)
+    this.showGroups(this.state.showGroupsId)
+  }
   async showGroups(id: string): Promise<void> {
     this.setState({
       showGroups: true,
       showGroupsId: id
     }, async () => {
       const groups = await this.listGroupsForUser(id, 20, null)
+      console.log(groups)
       this.setState({ groupData: groups.Groups })
     })
   }
   renderRow(item: any, index: number): React.ReactNode {
-    console.log(item)
+
     return (
       <View style={{ flex: 1, maxHeight: 40, alignSelf: 'stretch', flexDirection: 'row' }}>
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
@@ -243,17 +293,33 @@ export default class AdminScreen extends JCComponent<Props, State>{
           this.state.showGroups ?
             <Modal visible={this.state.showGroups}>
               <Container>
-                <Text style={this.styles.style.fontRegular}>Groups</Text>{
+
+                <Text style={this.styles.style.fontRegular}>Groups</Text>
+                <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.closeGroups() }}>X</JCButton>
+
+                {
                   this.state.groupData ?
                     this.state.groupData.map((item: any, index: number) => {
-                      return (
+                      return (<>
                         <Text style={this.styles.style.fontRegular} key={index}>{item.GroupName}</Text>
-                      )
+                        <JCButton buttonType={ButtonTypes.Outline}
+                          onPress={() => { this.removeGroup(this.state.showGroupsId, item.GroupName) }}>X</JCButton>
+                      </>)
                     })
                     : null
                 }
-                <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.closeGroups() }}>X</JCButton>
-                <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.addGroup() }}>Add Group</JCButton>
+                <Picker
+                  selectedValue={this.state.groupToAdd}
+                  onValueChange={val => { this.setState({ groupToAdd: val }) }}
+                >       <Picker.Item value={null} label="pick a group to add" />
+                  {this.state.groupList.map(item => (
+                    <Picker.Item key={item} value={item} label={item} />
+                  ))}
+                </Picker>
+                <JCButton buttonType={ButtonTypes.Outline} onPress={() => {
+                  this.addGroup(this.state.showGroupsId, this.state.groupToAdd)
+
+                }}>Add Group</JCButton>
               </Container>
             </Modal> : null
         }

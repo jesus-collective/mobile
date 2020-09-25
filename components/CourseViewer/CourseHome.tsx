@@ -158,7 +158,7 @@ class CourseHomeImpl extends JCComponent<Props>{
 
                                   {state.isEditable ?
                                     (<>
-                                      <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Learning Groups:</Text>
+                                      <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Cohorts:</Text>
 
                                       {state.courseData?.triads?.items.map((item, index) => {
                                         const coaches = item.coaches.items.map((item) => { return item.user })
@@ -239,7 +239,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                       <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginTop: 70, width: '90%' }}>You have not been assigned a learning group yet</Text>
                                   }
                                 </View>
-                                <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Cohort</Text>
+                                <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>Learning Collective</Text>
                                 <View style={this.styles.style.courseMyCohortContainer}>
                                   {
                                     actions.myCourseGroups().cohort ?
@@ -247,7 +247,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                         return this.renderProfileCard(user)
                                       })
                                       :
-                                      <Text>You have not been assigned a learning group yet</Text>
+                                      <Text>You have not been assigned a learning collective yet</Text>
                                   }
                                 </View>
                               </>
@@ -261,62 +261,62 @@ class CourseHomeImpl extends JCComponent<Props>{
                               return (<>
                                 {{
                                   'assignment': (
-                                  <Container style={{ flexDirection: "row", marginTop: 10, marginBottom: 10 }}>
-                                    <Left style={{ flex: 1 }}>
-                                      <Image style={{ width: "40px", height: "40px", alignSelf: 'center' }}
-                                        source={require('../../assets/svg/document.svg')} />
-                                    </Left>
-                                    <Right style={{ flex: 9, alignItems: 'flex-start', marginLeft: 20 }}>
-                                      <Text style={{ fontSize: 18, lineHeight: 25, fontFamily: 'Graphik-Bold-App' }}>{item.date}</Text>
-                                      <Text style={{ fontSize: 11, lineHeight: 17, fontFamily: 'Graphik-Regular-App', textTransform: 'uppercase' }}>
-                                        Assignment due @ {item.time}
-                                      </Text>
-                                    </Right>
-                                  </Container>
+                                    <Container style={{ flexDirection: "row", marginTop: 10, marginBottom: 10 }}>
+                                      <Left style={{ flex: 1 }}>
+                                        <Image style={{ width: "40px", height: "40px", alignSelf: 'center' }}
+                                          source={require('../../assets/svg/document.svg')} />
+                                      </Left>
+                                      <Right style={{ flex: 9, alignItems: 'flex-start', marginLeft: 20 }}>
+                                        <Text style={{ fontSize: 18, lineHeight: 25, fontFamily: 'Graphik-Bold-App' }}>{item.date}</Text>
+                                        <Text style={{ fontSize: 11, lineHeight: 17, fontFamily: 'Graphik-Regular-App', textTransform: 'uppercase' }}>
+                                          Assignment due @ {item.time}
+                                        </Text>
+                                      </Right>
+                                    </Container>
                                   ),
                                   'respond': (
                                     <Container style={{ flexDirection: "row", marginTop: 10, marginBottom: 10 }}>
-                                    <Left style={{ flex: 1 }}>
-                                      <Image style={{ width: "40px", height: "40px", alignSelf: 'center' }}
-                                        source={require('../../assets/svg/document.svg')} />
-                                    </Left>
-                                    <Right style={{ flex: 9, alignItems: 'flex-start', marginLeft: 20 }}>
-                                      <Text style={{ fontSize: 18, lineHeight: 25, fontFamily: 'Graphik-Bold-App' }}>{item.date}</Text>
-                                      <Text style={{ fontSize: 11, lineHeight: 17, fontFamily: 'Graphik-Regular-App', textTransform: 'uppercase' }}>
-                                      Responses due @ {item.time}
-                                      </Text>
-                                    </Right>
-                                  </Container>
+                                      <Left style={{ flex: 1 }}>
+                                        <Image style={{ width: "40px", height: "40px", alignSelf: 'center' }}
+                                          source={require('../../assets/svg/document.svg')} />
+                                      </Left>
+                                      <Right style={{ flex: 9, alignItems: 'flex-start', marginLeft: 20 }}>
+                                        <Text style={{ fontSize: 18, lineHeight: 25, fontFamily: 'Graphik-Bold-App' }}>{item.date}</Text>
+                                        <Text style={{ fontSize: 11, lineHeight: 17, fontFamily: 'Graphik-Regular-App', textTransform: 'uppercase' }}>
+                                          Responses due @ {item.time}
+                                        </Text>
+                                      </Right>
+                                    </Container>
                                   ),
                                   'zoom': (
                                     <Container style={{ flexDirection: "row", marginTop: 10, marginBottom: 10 }}>
-                                    <Left style={{ flex: 1 }}>
-                                      <Image style={{ width: "40px", height: "40px", alignSelf: 'center' }}
-                                        source={require('../../assets/svg/document.svg')} />
-                                    </Left>
-                                    <Right style={{ flex: 9, alignItems: 'flex-start', marginLeft: 20 }}>
-                                      <Text style={{ fontSize: 18, lineHeight: 25, fontFamily: 'Graphik-Bold-App' }}>{item.date}</Text>
-                                      <Text style={{ fontSize: 11, lineHeight: 17, fontFamily: 'Graphik-Regular-App', textTransform: 'uppercase' }}>
-                                      Zoom call @ {item.time}
-                                      </Text>
-                                    </Right>
-                                  </Container>
+                                      <Left style={{ flex: 1 }}>
+                                        <Image style={{ width: "40px", height: "40px", alignSelf: 'center' }}
+                                          source={require('../../assets/svg/document.svg')} />
+                                      </Left>
+                                      <Right style={{ flex: 9, alignItems: 'flex-start', marginLeft: 20 }}>
+                                        <Text style={{ fontSize: 18, lineHeight: 25, fontFamily: 'Graphik-Bold-App' }}>{item.date}</Text>
+                                        <Text style={{ fontSize: 11, lineHeight: 17, fontFamily: 'Graphik-Regular-App', textTransform: 'uppercase' }}>
+                                          Zoom call @ {item.time}
+                                        </Text>
+                                      </Right>
+                                    </Container>
                                   )
-                                }[item.lessonType] || 
-                                (
-                                  <Container style={{ flexDirection: "row", marginTop: 10, marginBottom: 10 }}>
-                                  <Left style={{ flex: 1 }}>
-                                    <Image style={{ width: "40px", height: "40px", alignSelf: 'center' }}
-                                      source={require('../../assets/svg/document.svg')} />
-                                  </Left>
-                                  <Right style={{ flex: 9, alignItems: 'flex-start', marginLeft: 20 }}>
-                                    <Text style={{ fontSize: 18, lineHeight: 25, fontFamily: 'Graphik-Bold-App' }}>{item.date}</Text>
-                                    <Text style={{ fontSize: 11, lineHeight: 17, fontFamily: 'Graphik-Regular-App', textTransform: 'uppercase' }}>
-                                    Zoom call @ {item.time}
-                                    </Text>
-                                  </Right>
-                                </Container>
-                                )
+                                }[item.lessonType] ||
+                                  (
+                                    <Container style={{ flexDirection: "row", marginTop: 10, marginBottom: 10 }}>
+                                      <Left style={{ flex: 1 }}>
+                                        <Image style={{ width: "40px", height: "40px", alignSelf: 'center' }}
+                                          source={require('../../assets/svg/document.svg')} />
+                                      </Left>
+                                      <Right style={{ flex: 9, alignItems: 'flex-start', marginLeft: 20 }}>
+                                        <Text style={{ fontSize: 18, lineHeight: 25, fontFamily: 'Graphik-Bold-App' }}>{item.date}</Text>
+                                        <Text style={{ fontSize: 11, lineHeight: 17, fontFamily: 'Graphik-Regular-App', textTransform: 'uppercase' }}>
+                                          Zoom call @ {item.time}
+                                        </Text>
+                                      </Right>
+                                    </Container>
+                                  )
                                 }
                               </>)
                             })}
