@@ -613,6 +613,7 @@ export default EStyleSheet.create({
         alignSelf: "center",
         height: 32,
         marginBottom: 50,
+        marginTop: 20
     },
     EditButtonText: {
         color: "#333333",
