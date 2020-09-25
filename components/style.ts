@@ -1712,6 +1712,15 @@ export default class MainStyles {
                 alignItems: 'flex-start',
                 marginRight: 65
             },
+            courseWordCountSmall: {
+                textAlign: 'right', 
+                marginBottom: 30
+            },
+            courseWordCount: {
+                textAlign: 'right', 
+                marginBottom: 30, 
+                marginRight: 30,
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
