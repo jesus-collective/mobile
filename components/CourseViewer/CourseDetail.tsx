@@ -329,7 +329,7 @@ class CourseDetailImpl extends JCComponent<Props>{
     console.log({ courseLessonResponseId: lesson.courseLessonResponseId })
     return (
       <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-        <JCButton buttonType={ButtonTypes.Outline} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
+        <JCButton buttonType={ButtonTypes.CourseHomeSidebarTop} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
         <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{week.name}</Text>
         <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.date}</Text>
         <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333', marginBottom: 20 }}>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
