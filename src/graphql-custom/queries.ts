@@ -156,7 +156,51 @@ export const getUserForGroupOrEvent = /* GraphQL */ `
     }
   }
 `;
-
+export const getCourseInfoForOverview = /* GraphQL */ `
+query GetCourseInfo($id: ID!) {
+  getCourseInfo(id: $id) {
+    id
+    designedBy
+    summary
+    sylabusAttachmentName
+    sylabusAttachment
+    
+   
+    courseWeeks {
+      items {
+        id
+        week
+        date
+        tz
+        name
+        title
+        leader
+        lessons {
+          items {
+            id
+            lesson
+            lessonType
+            name
+            time
+            tz
+            duration 
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+    subTitle
+    introduction
+    createdAt
+    updatedAt
+  }
+}
+`
 export const getCourseInfo = /* GraphQL */ `
 query GetCourseInfo($id: ID!) {
   getCourseInfo(id: $id) {

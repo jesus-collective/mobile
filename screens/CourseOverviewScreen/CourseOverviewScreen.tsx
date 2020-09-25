@@ -1,8 +1,8 @@
 ﻿import React from 'react';
-import { StyleProvider, Container, Content, View, Accordion } from 'native-base';
+import { StyleProvider, Container, Content, View } from 'native-base';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 import { Text, TouchableOpacity } from 'react-native'
-
+import Accordion from './Accordion'
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
 
@@ -16,6 +16,7 @@ import { API, graphqlOperation, Auth, Analytics } from 'aws-amplify';
 import { CreateGroupInput, CreateCourseInfoInput } from '../../src/API'
 import * as mutations from '../../src/graphql/mutations';
 import * as queries from '../../src/graphql/queries';
+import * as customQueries from '../../src/graphql-custom/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
 import JCComponent, {
@@ -174,7 +175,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
 
           () => {
             const getCourseInfo: any = API.graphql({
-              query: queries.getCourseInfo,
+              query: customQueries.getCourseInfoForOverview,
               variables: { id: props.route.params.id },
               authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
             });
@@ -319,9 +320,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
     }
 
   }
-  updateCourse(a: string, b: string, c: string): void {
-    console.log(a + b + c)
-  }
+
   leave(): void {
     Analytics.record({
       name: 'leftCourse',
@@ -521,16 +520,22 @@ export default class CourseScreen extends JCComponent<Props, State>{
 
 
                     <Text style={this.styles.style.courseDetails}>Course Details</Text>
-                    <Accordion style={{ marginTop: 15, width: 100 }}
-                      dataArray={this.state.courseData?.courseWeeks?.items.map((item: any, index1) => {
-                        return (
-                          {
-                            title: "Week " + index1,
-                            content: item
+
+                    {this.state.courseData?.courseWeeks?.items.map((item: any, index1) => {
+
+                      return (<Accordion key={index1}
+                        header={<><Text>Week {index1 + 1} - {item.title}</Text></>}
+                      ><View>
+                          {item.lessons.items.map((lesson, index2) => {
+                            return (<Text>{index1 + 1}.{index2 + 1} - {lesson.name}</Text>)
                           })
-                      })
-                      }
-                    />
+                          }
+                        </View>
+                      </Accordion>)
+
+                    })
+                    }
+
                   </Container>
 
                 </Container>
