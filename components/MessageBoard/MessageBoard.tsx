@@ -384,7 +384,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                     "Write a response...." : "Write a message..."}
                 editorState={this.state.editorState}
                 toolbarClassName="customToolbar"
-                wrapperClassName={this.props.style == "regular" || this.props.style == "course" || this.props.style == "courseResponse" ? "customWrapperSendmessage" : "customWrapperSendmessageMini"}
+                wrapperClassName={this.props.style == "regular" || this.props.style == "course" ? "customWrapperSendmessage" : this.props.style == "courseResponse" ? "customWrapperSendmessageCourse" : "customWrapperSendmessageMini"}
                 editorClassName="customEditorSendmessage"
                 onEditorStateChange={(z) => { this.updateEditorInput(z) }}
 
