@@ -1495,6 +1495,11 @@ export default class MainStyles {
                 flexDirection: 'column',
                 justifyContent: 'flex-end'
             },
+            courseDetailJCButtonAssignments: {
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+                marginRight: 30,
+            },
             courseHeaderContainer: {
                 backgroundColor: "#F0493E",
                 flex: 32,
