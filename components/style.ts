@@ -1495,6 +1495,11 @@ export default class MainStyles {
                 flexDirection: 'column',
                 justifyContent: 'flex-end'
             },
+            courseDetailJCButtonAssignments: {
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+                marginRight: 30,
+            },
             courseHeaderContainer: {
                 backgroundColor: "#F0493E",
                 flex: 32,
@@ -1711,6 +1716,15 @@ export default class MainStyles {
                 justifyContent: 'flex-start',
                 alignItems: 'flex-start',
                 marginRight: 65
+            },
+            courseWordCountSmall: {
+                textAlign: 'right', 
+                marginBottom: 30
+            },
+            courseWordCount: {
+                textAlign: 'right', 
+                marginBottom: 30, 
+                marginRight: 30,
             },
 
             // Media Query Desktop Tablet

@@ -384,7 +384,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                     "Write a response...." : "Write a message..."}
                 editorState={this.state.editorState}
                 toolbarClassName="customToolbar"
-                wrapperClassName={this.props.style == "regular" || this.props.style == "course" || this.props.style == "courseResponse" ? "customWrapperSendmessage" : "customWrapperSendmessageMini"}
+                wrapperClassName={this.props.style == "regular" || this.props.style == "course" ? "customWrapperSendmessage" : this.props.style == "courseResponse" ? "customWrapperSendmessageCourse" : "customWrapperSendmessageMini"}
                 editorClassName="customEditorSendmessage"
                 onEditorStateChange={(z) => { this.updateEditorInput(z) }}
 
@@ -401,11 +401,10 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                   }
                 }}
               />
-              {this.props.showWordCount ? <Text style={{ textAlign: 'right', marginBottom: 30 }}>Word count: {this.state.wordCount}/{this.props.totalWordCount}</Text> : null}
+              {this.props.showWordCount ? <Text style={ this.props.style == "course" ? this.styles.style.courseWordCount : this.styles.style.courseWordCountSmall }>Word count: {this.state.wordCount}/{this.props.totalWordCount}</Text> : null}
               <View
                 style={
-                  this.props.style == "regular" || this.props.style == "course" || this.props.style == "courseResponse" ?
-                    this.styles.style.courseDetailJCButtonRegular : this.styles.style.courseDetailJCButtonMini
+                  this.props.style == "regular" || this.props.style == "courseResponse" ? this.styles.style.courseDetailJCButtonRegular : this.props.style == "course" ? this.styles.style.courseDetailJCButtonAssignments : this.styles.style.courseDetailJCButtonMini
                 }>
 
                 {this.state.attachment ? this.renderFileUploadBadge(this.state) : null}

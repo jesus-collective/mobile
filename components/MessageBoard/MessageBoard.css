@@ -39,6 +39,23 @@
     height: 205px;
 }
 
+.customWrapperSendmessageCourse {
+    position: relative;
+    background-color: #eeeeee;
+    font-family: 'Graphik-Regular-App';
+    border-radius: 10px;
+    border: 1px;
+    margin-left: 10px;
+    height: unset;
+    width: 85%;
+    left: 50px;
+    /* top: 0px; */
+    margin-left: 30px;
+    /* margin-top: 30px; */
+    /* margin-bottom: 30px; */
+    bottom: 50px;
+}
+
 .customToolbar {
     background-color: #eeeeee;
     font-family: 'Graphik-Regular-App';
