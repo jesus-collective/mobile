@@ -8,6 +8,8 @@ import { Auth, API } from 'aws-amplify';
 import { View, TextInput, Modal, Picker } from 'react-native';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton';
 import JCSwitch from '../../components/JCSwitch/JCSwitch';
+import * as queries from '../../src/graphql/queries';
+import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 
 interface Props {
   navigation: any
@@ -28,6 +30,10 @@ interface State extends JCState {
   showStatus: boolean,
   groupToAdd: string,
   groupList: any
+  paymentsData: [],
+  showPayments: boolean,
+  showPaymentsId: string,
+  productList: []
 }
 
 
@@ -53,7 +59,12 @@ export default class AdminScreen extends JCComponent<Props, State>{
   }
   async setInitialData(): Promise<void> {
     const data = await this.listUsers(20, null)
-
+    const listProducts: any = await API.graphql({
+      query: queries.listProducts,
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+    console.log(listProducts)
+    this.setState({ productList: listProducts.data.listProducts.items })
     this.setState({ data: data.Users })
   }
   async listUsers(limit: number, nextToken: string): Promise<any> {
@@ -172,8 +183,41 @@ export default class AdminScreen extends JCComponent<Props, State>{
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
           <Text style={this.styles.style.fontRegular}>Groups</Text>
         </View>
+        <View style={{ flex: 1, alignSelf: 'stretch' }}>
+          <Text style={this.styles.style.fontRegular}>Payments</Text>
+        </View>
       </View>
     )
+  }
+
+  async showPayments(id: string): Promise<void> {
+    this.setState({
+      showPayments: true,
+      showPaymentsId: id
+    }, async () => {
+      const payments: any = await API.graphql({
+        query: queries.listPayments,
+        variables: { user: { eq: id } },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+      });
+      console.log(payments)
+      this.setState({ paymentsData: payments.data.listPayments.items })
+    })
+  }
+  closePayments(): void {
+    this.setState({
+      showPayments: false,
+      showPaymentsId: null
+    })
+  }
+  async removePayment(user, group): Promise<void> {
+    //await this.removeUserFromGroup(user, group)
+    this.showGroups(this.state.showPaymentsId)
+
+  }
+  async addPayment(user, group): Promise<void> {
+    //await this.//addUserToGroup(user, group)
+    this.showPayments(this.state.showPaymentsId)
   }
   closeGroups(): void {
     this.setState({
@@ -200,10 +244,11 @@ export default class AdminScreen extends JCComponent<Props, State>{
       this.setState({ groupData: groups.Groups })
     })
   }
+
   renderRow(item: any, index: number): React.ReactNode {
 
     return (
-      <View style={{ flex: 1, maxHeight: 40, alignSelf: 'stretch', flexDirection: 'row' }}>
+      <View key={index} style={{ flex: 1, maxHeight: 40, alignSelf: 'stretch', flexDirection: 'row' }}>
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
           <Text style={this.styles.style.fontRegular}>{item.Attributes.find(e => e.Name == "given_name")?.Value}</Text>
         </View>
@@ -229,6 +274,10 @@ export default class AdminScreen extends JCComponent<Props, State>{
           <JCButton buttonType={ButtonTypes.Outline}
             onPress={() => { this.showGroups(item.Username) }}>Groups</JCButton>
         </View>
+        <View style={{ flex: 1, alignSelf: 'stretch' }}>
+          <JCButton buttonType={ButtonTypes.Outline}
+            onPress={() => { this.showPayments(item.Username) }}>Payments</JCButton>
+        </View>
       </View>
     )
   }
@@ -237,6 +286,79 @@ export default class AdminScreen extends JCComponent<Props, State>{
     console.log({ "inviting:": email })
     let z = await this.adminCreateUser(email)
     console.log(z)
+  }
+  renderGroupsModal(): React.ReactNode {
+    return (this.state.showGroups ?
+      <Modal visible={this.state.showGroups}>
+        <Container>
+
+          <Text style={this.styles.style.fontRegular}>Groups</Text>
+          <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.closeGroups() }}>X</JCButton>
+
+          {
+            this.state.groupData ?
+              this.state.groupData.map((item: any, index: number) => {
+                return (<View key={index} >
+                  <Text style={this.styles.style.fontRegular} key={index}>{item.GroupName}</Text>
+                  <JCButton buttonType={ButtonTypes.Outline}
+                    onPress={() => { this.removeGroup(this.state.showGroupsId, item.GroupName) }}>X</JCButton>
+                </View>)
+              })
+              : null
+          }
+          <Picker
+            selectedValue={this.state.groupToAdd}
+            onValueChange={val => { this.setState({ groupToAdd: val }) }}
+          >       <Picker.Item value={null} label="pick a group to add" />
+            {this.state.groupList.map((item, index) => {
+              return <Picker.Item key={index} value={item} label={item} />
+            })}
+          </Picker>
+          <JCButton buttonType={ButtonTypes.Outline} onPress={() => {
+            this.addGroup(this.state.showGroupsId, this.state.groupToAdd)
+
+          }}>Add Group</JCButton>
+        </Container>
+      </Modal > : null
+    )
+  }
+  renderPaymentsModal(): React.ReactNode {
+    return (this.state.showPayments ?
+      <Modal visible={this.state.showPayments}>
+        <Container>
+
+          <Text style={this.styles.style.fontRegular}>Payments</Text>
+          <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.closePayments() }}>X</JCButton>
+
+          {
+            this.state.paymentsData ?
+              this.state.paymentsData.map((item: any, index: number) => {
+                return (<View key={index}>
+                  <Text style={this.styles.style.fontRegular} key={index}>{item.product.name}</Text>
+                  <JCButton buttonType={ButtonTypes.Outline}
+                    onPress={() => { this.removePayment(this.state.showPaymentsId, item.id) }}>X</JCButton>
+                </View>)
+              })
+              : null
+          }
+          <Picker
+            selectedValue={this.state.groupToAdd}
+            onValueChange={val => { this.setState({ groupToAdd: val }) }}
+          >       <Picker.Item value={null} label="pick a group to add" />
+            {
+              this.state.productList.map((item: any, index) => {
+                console.log(item)
+                return <Picker.Item key={index} value={item.id} label={item.name} />
+              })
+            }
+          </Picker>
+          <JCButton buttonType={ButtonTypes.Outline} onPress={() => {
+            this.addPayment(this.state.showGroupsId, this.state.groupToAdd)
+
+          }}>Add Group</JCButton>
+        </Container>
+      </Modal> : null
+    )
   }
   render(): React.ReactNode {
     console.log("AdminScreen")
@@ -289,40 +411,8 @@ export default class AdminScreen extends JCComponent<Props, State>{
             </Container>
           </Content>
         }
-        {
-          this.state.showGroups ?
-            <Modal visible={this.state.showGroups}>
-              <Container>
-
-                <Text style={this.styles.style.fontRegular}>Groups</Text>
-                <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.closeGroups() }}>X</JCButton>
-
-                {
-                  this.state.groupData ?
-                    this.state.groupData.map((item: any, index: number) => {
-                      return (<>
-                        <Text style={this.styles.style.fontRegular} key={index}>{item.GroupName}</Text>
-                        <JCButton buttonType={ButtonTypes.Outline}
-                          onPress={() => { this.removeGroup(this.state.showGroupsId, item.GroupName) }}>X</JCButton>
-                      </>)
-                    })
-                    : null
-                }
-                <Picker
-                  selectedValue={this.state.groupToAdd}
-                  onValueChange={val => { this.setState({ groupToAdd: val }) }}
-                >       <Picker.Item value={null} label="pick a group to add" />
-                  {this.state.groupList.map(item => (
-                    <Picker.Item key={item} value={item} label={item} />
-                  ))}
-                </Picker>
-                <JCButton buttonType={ButtonTypes.Outline} onPress={() => {
-                  this.addGroup(this.state.showGroupsId, this.state.groupToAdd)
-
-                }}>Add Group</JCButton>
-              </Container>
-            </Modal> : null
-        }
+        {this.renderGroupsModal()}
+        {this.renderPaymentsModal()}
       </Container>
 
 
