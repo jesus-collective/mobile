@@ -49,10 +49,7 @@
     height: unset;
     width: 85%;
     left: 50px;
-    /* top: 0px; */
     margin-left: 30px;
-    /* margin-top: 30px; */
-    /* margin-bottom: 30px; */
     bottom: 50px;
 }
 
@@ -103,5 +100,14 @@
 @media (min-width: 320px) and (max-width: 480px) {
     .MuiFormControl-root {
         width: 100%;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .customWrapperSendmessageCourse {
+        width: 78%;
+    }
+    .customWrapperSendmessage {
+        width: 88%;
     }
 }
