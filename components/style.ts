@@ -1726,6 +1726,9 @@ export default class MainStyles {
                 marginBottom: 30, 
                 marginRight: 30,
             },
+            assignmentCheckmark: {
+                alignSelf: 'center'
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2129,6 +2132,9 @@ export default class MainStyles {
                 courseMyFacilitatorContainer: {
                     flexWrap: 'nowrap',
                     overflow: 'scroll'
+                },
+                assignmentCheckmark: {
+                    alignSelf: 'flex-start'
                 },
             },
 
