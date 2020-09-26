@@ -2273,6 +2273,12 @@ export default class MainStyles {
                 courseDetailCoureInfoContainer: {
                     maxHeight: 225,
                 },
+                courseWordCount: {
+                    marginRight: 10,
+                },
+                courseDetailJCButtonAssignments: {
+                    marginRight: 10,
+                },
             },
 
             '@media (min-width: 769px) and (max-width: 1279px)': {
