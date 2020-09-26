@@ -162,7 +162,7 @@ class MySignUp extends React.Component<Props, State> {
             this.props.authState === 'signUp' ?
                 <View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>
                     <View style={this.styles.style.signUpBackButtonWrapper} >
-                        <TouchableOpacity onPress={() => this.changeAuthState('signIn')}>
+                        <TouchableOpacity onPress={() => { this.changeAuthState('signIn') }}>
                             <Text style={{ alignSelf: 'flex-end', marginRight: 30, fontSize: 20, fontFamily: 'Graphik-Regular-App', lineHeight: 24, color: '#333333' }}><Entypo name="chevron-left" size={20} color="#333333" />Back</Text>
                         </TouchableOpacity>
                     </View>

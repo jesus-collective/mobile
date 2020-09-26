@@ -71,7 +71,7 @@ class MyForgotPassword extends React.Component<Props, State> {
                 return;
             }
             this.setState({ reseting: true })
-            await Auth.forgotPasswordSubmit(this.state.email, this.state.code, this.state.newPass).then(() => this.changeAuthState('signIn'));
+            await Auth.forgotPasswordSubmit(this.state.email, this.state.code, this.state.newPass).then(() => { this.changeAuthState('signIn') });
         } catch (e) {
             this.setState({ authError: e.message, reseting: false })
         }
@@ -99,7 +99,7 @@ class MyForgotPassword extends React.Component<Props, State> {
             this.props.authState === 'forgotPassword' ?
                 (<View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>
                     <View style={this.styles.style.signUpBackButtonWrapper} >
-                        <TouchableOpacity onPress={() => this.changeAuthState('signIn')}>
+                        <TouchableOpacity onPress={() => { this.changeAuthState('signIn') }}>
                             <Text style={{ alignSelf: 'flex-end', marginRight: 30, fontSize: 20, fontFamily: 'Graphik-Regular-App', lineHeight: 24, color: '#333333' }}><Entypo name="chevron-left" size={20} color="#333333" />Back</Text>
                         </TouchableOpacity>
                     </View>

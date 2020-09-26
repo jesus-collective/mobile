@@ -50,7 +50,7 @@ class SignUpScreen3Impl extends JCComponent<Props, State>{
 
           console.log(state)
 
-          if (state.hasPaidState == "Complete" && state.hasCompletedPersonalProfile == "Incomplete")
+          if (state.hasPaidState == "Complete" && state.hasCompletedPersonalProfile == "Incomplete") {
 
             return (
               <View style={this.styles.style.signUpScreen1PaymentBody}>
@@ -75,6 +75,7 @@ class SignUpScreen3Impl extends JCComponent<Props, State>{
                     </View>}
                 </Content>
               </View>)
+          }
           else return null
         }}
       </SignUpScreen3Impl.Consumer>

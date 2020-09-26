@@ -12,6 +12,7 @@ import { Copyright } from './Copyright';
 interface Props {
     authState: string;
     onStateChange(state: string): any;
+    onSetUser(user: any): any
 }
 
 interface State {
@@ -30,18 +31,29 @@ class MySignIn extends React.Component<Props, State> {
         }
     }
 
-    changeAuthState(state: string): void {
+    changeAuthState(state: string, user?: string): void {
         this.setState({
             pass: '',
             user: '',
             authError: '',
         })
-        this.props.onStateChange(state);
+        this.props.onStateChange(state)
+        if (user)
+            this.props.onSetUser(user);
+
+
     }
 
     async handleSignIn(): Promise<void> {
         try {
-            await Auth.signIn(this.state.user, this.state.pass).then(() => this.changeAuthState('signedIn'));
+            await Auth.signIn(this.state.user, this.state.pass).then((user) => {
+                if (user.challengeName == "NEW_PASSWORD_REQUIRED") {
+                    console.log("New Password Required")
+                    this.changeAuthState('requireNewPassword', user)
+                }
+                else
+                    this.changeAuthState('signedIn')
+            });
         } catch (err) {
 
             if (!this.state.pass && this.state.user) {

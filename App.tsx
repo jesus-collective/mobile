@@ -77,6 +77,7 @@ interface State extends JCState {
   fontLoaded: boolean
   authState: any
   joinedAs: 'individual' | 'organization';
+  username: any
 }
 const federated = {
   google_client_id: '',
@@ -96,7 +97,8 @@ class AwesomeApp extends JCComponent<Props, State> {
       ...super.getInitialState(),
       fontLoaded: false,
       isLoggedIn: false,
-      authState: ""
+      authState: "",
+      username: ""
     };
     //  this.ionViewCanEnter();
   }
@@ -133,6 +135,7 @@ class AwesomeApp extends JCComponent<Props, State> {
     return null
   }
   render(): React.ReactNode {
+
     if (this.state.fontLoaded) {
 
       return (
@@ -154,12 +157,12 @@ class AwesomeApp extends JCComponent<Props, State> {
 
           <Authenticator hideDefault={true} federated={federated} usernameAttributes='email'>
             <HomeScreen />
-            <MySignIn onStateChange={(authState) => this.setState({ authState })} authState={this.state.authState} />
-            <MySignUp onStateChange={(authState) => this.setState({ authState })} authState={this.state.authState} />
-            <MyConfirmSignUp onStateChange={(authState) => this.setState({ authState })} authState={this.state.authState} />
-            <MyForgotPassword onStateChange={(authState) => this.setState({ authState })} authState={this.state.authState} />
+            <MySignIn onSetUser={(user) => { this.setState({ username: user }) }} onStateChange={(authState) => { this.setState({ authState: authState }) }} authState={this.state.authState} />
+            <MySignUp onStateChange={(authState) => { this.setState({ authState: authState }) }} authState={this.state.authState} />
+            <MyConfirmSignUp onStateChange={(authState) => { this.setState({ authState: authState }) }} authState={this.state.authState} />
+            <MyForgotPassword onStateChange={(authState) => { this.setState({ authState: authState }) }} authState={this.state.authState} />
             <MyConfirmSignIn />
-            <MyRequireNewPassword />
+            <MyRequireNewPassword onStateChange={(authState) => { this.setState({ authState: authState }) }} username={this.state.username} authState={this.state.authState} />
             <MyVerifyContact />
             <MyLoading authState={this.state.authState} />
           </Authenticator>

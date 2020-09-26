@@ -44,7 +44,7 @@ class MyConfirmSignUp extends React.Component<Props, State> {
     async handleConfirmSignUp(): Promise<void> {
         try {
             this.setState({ sendingData: true })
-            await Auth.confirmSignUp(this.state.email, this.state.code).then(() => this.changeAuthState('signIn'))
+            await Auth.confirmSignUp(this.state.email, this.state.code).then(() => { this.changeAuthState('signIn') })
         } catch (e) {
             this.setState({ authError: e.message, sendingData: false })
         }
@@ -67,7 +67,7 @@ class MyConfirmSignUp extends React.Component<Props, State> {
             this.props.authState === 'confirmSignUp' ?
                 (<View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>
                     <View style={this.styles.style.signUpBackButtonWrapper} >
-                        <TouchableOpacity onPress={() => this.changeAuthState('signIn')}>
+                        <TouchableOpacity onPress={() => { this.changeAuthState('signIn') }}>
                             <Text style={{ alignSelf: 'flex-end', marginRight: 30, fontSize: 20, fontFamily: 'Graphik-Regular-App', lineHeight: 24, color: '#333333' }}><Entypo name="chevron-left" size={20} color="#333333" />Back</Text>
                         </TouchableOpacity>
                     </View>
