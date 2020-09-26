@@ -2071,6 +2071,8 @@ export default class MainStyles {
                 courseDetailButtonTrio: {
                     flexDirection: "column",
                     paddingBottom: 90,
+                    borderBottomWidth: "0px",
+                    borderBottomColor: "#ffffff",
                 },
                 courseDetailJCButtonMini: {
                     marginTop: 50,
@@ -2255,7 +2257,9 @@ export default class MainStyles {
                 courseDetailButtonTrio: {
                     flex: 2,
                     marginBottom: 100,
-                    flexDirection: 'column'
+                    flexDirection: 'column',
+                    borderBottomWidth: "0px",
+                    borderBottomColor: "#ffffff",
                 },
                 coursePageMessageBoard: {
                     flexDirection: "column"
