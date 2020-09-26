@@ -2279,6 +2279,9 @@ export default class MainStyles {
                 courseDetailJCButtonAssignments: {
                     marginRight: 10,
                 },
+                courseAssignmentScreenLeftCard: { 
+                    flex: 35,
+                },
             },
 
             '@media (min-width: 769px) and (max-width: 1279px)': {
