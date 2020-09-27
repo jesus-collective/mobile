@@ -9,6 +9,7 @@ import { View, TextInput, Modal, Picker } from 'react-native';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton';
 import JCSwitch from '../../components/JCSwitch/JCSwitch';
 import * as queries from '../../src/graphql/queries';
+import * as customQueries from '../../src/graphql-custom/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 
 interface Props {
@@ -33,7 +34,11 @@ interface State extends JCState {
   paymentsData: [],
   showPayments: boolean,
   showPaymentsId: string,
-  productList: []
+  productList: [],
+  showInvite: boolean,
+  inviteType: string,
+  inviteData: string,
+  inviteDataList: any
 }
 
 
@@ -53,12 +58,16 @@ export default class AdminScreen extends JCComponent<Props, State>{
       showPhone: true,
       showStatus: true,
       groupToAdd: null,
+      showInvite: false,
+      inviteType: null,
+      inviteData: null,
+      inviteDataList: [],
       groupList: ["admin", "verifiedUsers", "partners", "friends", "courseUser", "courseAdmin", "courseCoach"]
     }
     this.setInitialData()
   }
   async setInitialData(): Promise<void> {
-    const data = await this.listUsers(20, null)
+    const data = await this.listUsers(40, null)
     const listProducts: any = await API.graphql({
       query: queries.listProducts,
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
@@ -219,6 +228,16 @@ export default class AdminScreen extends JCComponent<Props, State>{
     //await this.//addUserToGroup(user, group)
     this.showPayments(this.state.showPaymentsId)
   }
+  closeInvite(): void {
+    this.setState({
+      showInvite: false
+    })
+  }
+  showInvite(): void {
+    this.setState({
+      showInvite: true
+    })
+  }
   closeGroups(): void {
     this.setState({
       showGroups: false,
@@ -360,6 +379,67 @@ export default class AdminScreen extends JCComponent<Props, State>{
       </Modal> : null
     )
   }
+  async updateInviteDataList(nextToken: any) {
+    const listGroup: any = await API.graphql({
+      query: customQueries.groupByTypeForMyGroups,
+      variables: { limit: 20, type: this.state.inviteType, nextToken: nextToken },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+    console.log(listGroup)
+    this.setState({ inviteDataList: listGroup.data.groupByType.items })
+  }
+  renderInviteModal(): React.ReactNode {
+    return (this.state.showInvite ?
+      <Modal visible={this.state.showInvite}>
+        <View>
+          <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.closeInvite() }}>X</JCButton>
+          <Text>Invite: </Text>
+          <TextInput
+            onChange={(val: any) => { this.setState({ invite: val.target.value }) }}
+            placeholder="Enter Email Address"
+            multiline={false}
+            value={this.state.invite}></TextInput>
+          <Picker
+            selectedValue={this.state.inviteType}
+            onValueChange={val => { this.setState({ inviteType: val, inviteData: null, inviteDataList: [] }, () => { this.updateInviteDataList(null) }) }}
+          >
+            <Picker.Item value={null} label="pick a group to add" />
+            <Picker.Item value="JC" label="Invite to Jesus Collective" />
+            <Picker.Item value="course" label="Invite to Course" />
+            <Picker.Item value="group" label="Invite to Group" />
+            <Picker.Item value="event" label="Invite to Event" />
+            <Picker.Item value="resource" label="Invite to Resource" />
+
+          </Picker>
+
+          {this.state.inviteType != null && this.state.inviteType != "JC" ?
+            <Picker
+              selectedValue={this.state.inviteData}
+              onValueChange={val => { this.setState({ inviteData: val }) }}
+            >
+
+              <Picker.Item value={null} label="pick a group to add" />
+              {this.state.inviteDataList.map((item, index) => {
+                return (<Picker.Item key={index} value={item.value} label={item.name} />)
+              })
+              }
+            </Picker>
+
+
+            : null
+          }
+
+
+          < JCButton buttonType={ButtonTypes.Outline}
+            onPress={() => {
+              this.sendInvite(this.state.invite);
+              this.closeInvite();
+              this.setInitialData()
+            }}>Send Invite</JCButton>
+        </View>
+      </Modal > : null
+    )
+  }
   render(): React.ReactNode {
     console.log("AdminScreen")
     return (
@@ -371,17 +451,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
         {this.isMemberOf("admin") ?
           <Content>
 
-            <Container style={{ maxHeight: 100 }}>
-              <View>
-                <Text>Invite: </Text>
-                <TextInput
-                  onChange={(val: any) => { this.setState({ invite: val.target.value }) }}
-                  placeholder="Enter Email Address"
-                  multiline={false}
-                  value={this.state.invite}></TextInput>
-                <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.sendInvite(this.state.invite) }}>Send Invite</JCButton>
-              </View>
-            </Container>
+
 
             <Container style={this.styles.style.fontRegular}>
               <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
@@ -390,6 +460,8 @@ export default class AdminScreen extends JCComponent<Props, State>{
                   <JCSwitch switchLabel='show email' initState={true} onPress={() => this.setState({ showEmail: !this.state.showEmail })} />
                   <JCSwitch switchLabel='show phone #' initState={true} onPress={() => this.setState({ showPhone: !this.state.showPhone })} />
                   <JCSwitch switchLabel='show status' initState={true} onPress={() => this.setState({ showStatus: !this.state.showStatus })} />
+                  <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.showInvite() }}>Invite</JCButton>
+
                 </View>
                 {this.renderHeader()}
                 {
@@ -413,6 +485,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
         }
         {this.renderGroupsModal()}
         {this.renderPaymentsModal()}
+        {this.renderInviteModal()}
       </Container>
 
 

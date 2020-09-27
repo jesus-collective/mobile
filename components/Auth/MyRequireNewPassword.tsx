@@ -45,7 +45,8 @@ class MyForgotPassword extends React.Component<Props, State> {
             newPass: '',
             newPass2: '',
             reseting: false,
-            username: props.username
+            username: props.username,
+            authState: null
         }
     }
 

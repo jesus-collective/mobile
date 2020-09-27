@@ -292,8 +292,14 @@ class MyProfileImpl extends JCComponent<Props, State> {
   }
   logout(): void {
     Auth.signOut()
-      .then(data => console.log(data))
-      .catch(err => console.log(err));
+      .then(data => {
+        console.log(data)
+        this.props.navigation.push("", null)
+      })
+      .catch(err => {
+        console.log(err)
+        this.props.navigation.push("", null)
+      });
 
   }
   showMap(): void {
@@ -342,13 +348,14 @@ class MyProfileImpl extends JCComponent<Props, State> {
         console.log(c)
         const delStat = user.deleteUser()
         console.log(delStat)
-        this.props.navigation.navigate("/")
+        this.props.navigation.push("", null)
         // return delStat
       }).catch((e: any) => {
         console.log(e)
         const delStat = user.deleteUser()
         console.log(delStat)
-        this.props.navigation.navigate("/")
+        this.props.navigation.push("", null)
+        //        this.props.navigation.navigate("/")
         // return delStat
       })
     })

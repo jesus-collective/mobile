@@ -195,12 +195,16 @@ async function adminCreateUser(email) {
     // ClientMetadata: { "string" : "string" },
     DesiredDeliveryMediums: ["EMAIL"],
     ForceAliasCreation: false,
-    // MessageAction: "string",
+    // MessageAction: "SUPPRESS",
     // TemporaryPassword: "string",
     UserAttributes: [
       {
         Name: "email",
         Value: email
+      },
+      {
+        Name: "email_verified",
+        Value: "true"
       }
     ],
     Username: email,
