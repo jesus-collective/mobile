@@ -1726,6 +1726,9 @@ export default class MainStyles {
                 marginBottom: 30, 
                 marginRight: 30,
             },
+            assignmentCheckmark: {
+                alignSelf: 'center'
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2068,6 +2071,8 @@ export default class MainStyles {
                 courseDetailButtonTrio: {
                     flexDirection: "column",
                     paddingBottom: 90,
+                    borderBottomWidth: "0px",
+                    borderBottomColor: "#ffffff",
                 },
                 courseDetailJCButtonMini: {
                     marginTop: 50,
@@ -2129,6 +2134,9 @@ export default class MainStyles {
                 courseMyFacilitatorContainer: {
                     flexWrap: 'nowrap',
                     overflow: 'scroll'
+                },
+                assignmentCheckmark: {
+                    alignSelf: 'flex-start'
                 },
             },
 
@@ -2249,7 +2257,9 @@ export default class MainStyles {
                 courseDetailButtonTrio: {
                     flex: 2,
                     marginBottom: 100,
-                    flexDirection: 'column'
+                    flexDirection: 'column',
+                    borderBottomWidth: "0px",
+                    borderBottomColor: "#ffffff",
                 },
                 coursePageMessageBoard: {
                     flexDirection: "column"
@@ -2272,6 +2282,15 @@ export default class MainStyles {
                 },
                 courseDetailCoureInfoContainer: {
                     maxHeight: 225,
+                },
+                courseWordCount: {
+                    marginRight: 10,
+                },
+                courseDetailJCButtonAssignments: {
+                    marginRight: 10,
+                },
+                courseAssignmentScreenLeftCard: { 
+                    flex: 35,
                 },
             },
 

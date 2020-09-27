@@ -269,7 +269,7 @@ class CourseDetailImpl extends JCComponent<Props>{
 
                         </Container>
                         {item.lessonType == "zoom" && moment.tz(item.time, item.tz) < moment() ?
-                          < Text style={{ alignSelf: 'center' }}>
+                          < Text style={this.styles.style.assignmentCheckmark}>
                             <Image style={this.styles.style.courseCheckmark} source={require('../../assets/svg/checkmark.svg')} />
                           </Text> : null
                         }
