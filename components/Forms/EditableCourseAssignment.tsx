@@ -2,15 +2,10 @@ import React from 'react';
 import { Editor } from 'react-draft-wysiwyg';
 import { Storage } from 'aws-amplify';
 
-//import './react-draft-wysiwyg.css';
-//import './EditableRichText.css';
 import './react-draft-wysiwyg.css';
-//TODO FIGURE OUT WHY THIS DOESN"T WORK
-//import '../MessageBoard.css';
 import * as customQueries from '../../src/graphql-custom/queries';
 import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
-
 import { EditorState } from 'draft-js';
 import { Text } from 'react-native'
 import { v1 as uuidv1 } from 'uuid';
@@ -51,7 +46,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
             currentRoomId: null,
             newToList: [],
             assignmentComplete: false,
-            userList: [...z.cohort, ...z.triad, ...z.coach]
+            userList: [...z.all]
         }
         console.log({ userList: this.state.userList })
 
@@ -147,7 +142,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
 
         console.log(this.state.data.filter(item => item.id == "course-" + this.props.assignmentId + "-" + this.state.currentUser)[0]?.directMessage.items.length)
         if (this.state.data.filter(item => item.id == "course-" + this.props.assignmentId + "-" + this.state.currentUser)[0]?.directMessage.items.length <= 0) {
-            console.log(false)
+            console.log("Does not have initial post")
             return false
         }
         else

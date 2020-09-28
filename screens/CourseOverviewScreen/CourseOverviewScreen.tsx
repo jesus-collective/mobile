@@ -52,7 +52,7 @@ interface State extends JCState {
   members: any
   mapData: MapData[]
   canGotoActiveCourse: boolean
-  myTriad: any
+
 
 }
 

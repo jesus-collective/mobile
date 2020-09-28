@@ -36,9 +36,7 @@ interface State extends JCState {
   currentUser: string
   activeWeek: number
   activeLesson: number
-  myCoach: any
-  myTriad: any
-  myCohort: any
+
   activeMessageBoard: string
   activeCourseActivity: string
 }
@@ -87,7 +85,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
     });
     const processResults2 = (json) => {
       console.log({ courseData: json })
-      this.setState({ courseData: json.data.getCourseInfo }, () => { this.getTriadDetails() })
+      this.setState({ courseData: json.data.getCourseInfo })
     }
     getCourse.then(processResults2).catch(processResults2)
     const processResults = (json) => {
@@ -102,22 +100,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
     getGroup.then(processResults).catch(processResults)
   }
 
-  getTriadDetails = (): void => {
-    const myCohort = this.state.courseData.triads.items.map((item) => {
-      console.log(item)
-      if (item.coachIDs?.includes(this.state.currentUser) || item.triadUserIDs?.includes(this.state.currentUser)) {
-        this.setState({
-          myCoach: item.coachIDs,
-          myTriad: item.triadUserIDs
-        })
-        return []
-      }
-      else return [].concat(item.coachIDs).concat(item.triadUserIDs)
-    })
-    this.setState({
-      myCohort: myCohort
-    })
-  }
+
   openHome = (): void => {
     this.props.navigation.push("HomeScreen");
   }
@@ -300,32 +283,45 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
       }
     })
   }
-  myCourseGroups = (): any => {
+  removeDuplicates(originalArray, prop) {
+    var newArray = [];
+    var lookupObject = {};
 
-    const z: [{ cohort, triad, coach }] = this.state.courseData?.triads?.items.map((item) => {
-      console.log({ item: item })
+    for (var i in originalArray) {
+      lookupObject[originalArray[i][prop]] = originalArray[i];
+    }
+
+    for (i in lookupObject) {
+      newArray.push(lookupObject[i]);
+    }
+    return newArray;
+  }
+  myCourseGroups = (): { all: any[], cohort: any[], completeTriad: any[] } => {
+
+    const z: [{ cohort, completeTriad }] = this.state.courseData?.triads?.items.map((item) => {
       let triadTemp = [], coachTemp = [], cohortTemp = []
+      let completeTriad = null
       if (item.users.items.filter(user => user.userID == this.state.currentUser).length > 0) {
         triadTemp = item.users.items.filter(user => user.userID != this.state.currentUser).map(item => item.user)
         coachTemp = item.coaches.items.map(item => item.user)
-
+        completeTriad = { triad: triadTemp, coach: coachTemp, id: item.id }
       }
       else if (item.users.items.filter(user => user.userID == this.state.currentUser).length == 0) {
         cohortTemp = item.users.items.map(item => item.user)
         cohortTemp = cohortTemp.concat(item.coaches.items.map(item => item.user))
         // cohort.push(item.coaches.items)
       }
-      return { triad: triadTemp, coach: coachTemp, cohort: cohortTemp }
+      return { completeTriad: completeTriad, cohort: cohortTemp }
     })
-    let cohort = [], triad = [], coach = [], all = []
-    cohort = z?.map(item => item.cohort).flat()
-    triad = z?.map(item => item.triad).flat()
-    coach = z?.map(item => item.coach).flat()
-
-    console.log({ cohort: cohort })
-    console.log({ triad: triad })
-    console.log({ coach: coach })
-    return { cohort: cohort, triad: triad, coach: coach }
+    const all = this.removeDuplicates(this.state.courseData?.triads?.items.map((item) => {
+      return [...item.users.items, ...item.coaches.items]
+    }).flat().filter(item => item.user != null).map(item => item.user), "id")
+    let cohort = [], completeTriad = []
+    cohort = this.removeDuplicates(z?.map(item => item.cohort).flat().filter(z => z != null), "id")
+    completeTriad = z?.map(item => item.completeTriad).filter(z => z != null)
+    const final = { all: all, cohort: cohort, completeTriad: completeTriad }
+    console.log(final)
+    return final
   }
   updateTriadCoaches = async (index: number, value: any): Promise<void> => {
     const del = this.state.courseData.triads.items[index].coaches.items.filter(x => !value.map(z => z.id).includes(x.user.id));
@@ -775,6 +771,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
             getLessonById: this.getLessonById,
             myCourseDates: this.myCourseDates,
             myCourseTodo: this.myCourseTodo
+
           }
         }}>
           <StyleProvider style={getTheme()}>

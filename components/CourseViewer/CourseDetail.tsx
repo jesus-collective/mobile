@@ -8,7 +8,7 @@ import getTheme from '../../native-base-theme/components';
 import { Image } from 'react-native'
 import CourseHeader from '../CourseHeader/CourseHeader';
 import { TouchableOpacity } from 'react-native';
-import JCComponent from '../JCComponent/JCComponent';
+import JCComponent, { JCState } from '../JCComponent/JCComponent';
 const MessageBoard = lazy(() => import('../MessageBoard/MessageBoard'));
 
 import { useRoute, useNavigation } from '@react-navigation/native';
@@ -26,10 +26,16 @@ interface Props {
   navigation?: any
   route?: any
 }
-
-class CourseDetailImpl extends JCComponent<Props>{
+interface State extends JCState {
+  triadSelection: number
+}
+class CourseDetailImpl extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
+    this.state = {
+      ...super.getInitialState(),
+      triadSelection: 0
+    }
   }
   static Consumer = CourseContext.Consumer;
   renderAssignmentConfig(state, actions, lesson, item): React.ReactNode {
@@ -321,7 +327,7 @@ class CourseDetailImpl extends JCComponent<Props>{
         {lesson.zoomRecording && lesson.zoomRecording != "" ? <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.navigate(lesson.zoomRecording) }}>Watch Zoom Recording</JCButton> : null}
         <EditableRichText onChange={(val) => { actions.updateLesson(state.activeWeek, state.activeLesson, "description", val) }}
           value={lesson.description}
-          isEditable={true}
+          isEditable={state.isEditable && state.editMode}
           textStyle={{ marginLeft: 10 }} inputStyle={{ margintop: 20, marginLeft: 20 }}></EditableRichText>
       </Container>)
   }
@@ -336,7 +342,7 @@ class CourseDetailImpl extends JCComponent<Props>{
         <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.time}</Text>
         <EditableRichText onChange={(val) => { actions.updateLesson(state.activeWeek, state.activeLesson, "description", val) }}
           value={lesson.description}
-          isEditable={true}
+          isEditable={state.isEditable && state.editMode}
           textStyle=""></EditableRichText>
         <EditableCourseAssignment actions={actions} assignmentId={actions.getLessonById(lesson.courseLessonResponseId)} wordCount={lesson.wordCount}
 
@@ -353,7 +359,7 @@ class CourseDetailImpl extends JCComponent<Props>{
         <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.time}</Text>
         <EditableRichText onChange={(val) => { actions.updateLesson(state.activeWeek, state.activeLesson, "description", val) }}
           value={lesson.description}
-          isEditable={true}
+          isEditable={state.isEditable && state.editMode}
           textStyle=""></EditableRichText>
         <EditableCourseAssignment actions={actions} assignmentId={lesson.id} wordCount={lesson.wordCount}></EditableCourseAssignment>
       </Container>)
@@ -411,7 +417,47 @@ class CourseDetailImpl extends JCComponent<Props>{
                               <JCButton buttonType={state.activeMessageBoard == "instructor" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("instructor") }}>Facilitator</JCButton>
                             </Container>
                             <Container style={this.styles.style.courseDetailMessageBoardContainer}>
-                              <MessageBoard style="mini" groupId={state.data.id}></MessageBoard>
+                              {state.activeMessageBoard == "cohort" ? <MessageBoard style="mini" groupId={state.data.id}></MessageBoard> : null}
+                              {state.activeMessageBoard == "triad" ?
+
+                                actions.myCourseGroups().completeTriad.length == 0 ? <Text>You have not been added to a cohort</Text> :
+                                  actions.myCourseGroups().completeTriad.length == 1 ? <>
+                                    <MessageBoard style="mini" groupId={state.data.id + "-" + actions.myCourseGroups().completeTriad[0].id}></MessageBoard>
+                                    {console.log({ MessageboardgroupId: state.data.id + "-" + actions.myCourseGroups().completeTriad[0].id })}
+                                  </>
+                                    : <>
+                                      <Picker
+
+                                        onStartShouldSetResponder={() => true}
+                                        onMoveShouldSetResponderCapture={() => true}
+                                        onStartShouldSetResponderCapture={() => true}
+                                        onMoveShouldSetResponder={() => true}
+                                        mode="dropdown"
+                                        iosIcon={<Icon name="arrow-down" />}
+                                        style={{ width: "50%", marginBottom: 0, marginTop: 0, fontSize: 16, height: 30, flexGrow: 0, marginRight: 0, borderColor: '#dddddd' }}
+                                        placeholder="Triad"
+                                        placeholderStyle={{ color: "#bfc6ea" }}
+                                        placeholderIconColor="#007aff"
+                                        selectedValue={this.state.triadSelection}
+                                        onValueChange={(value: any) => { this.setState({ triadSelection: value }) }}
+                                      >
+
+                                        {actions.myCourseGroups().completeTriad?.map((item: any, index: any) => {
+                                          console.log({ assignmentList: item })
+                                          if (item) {
+                                            const name = item.triad.users.items.map((item) => { return item.user.name }).join(", ")
+                                            return <Picker.Item key={index} label={name} value={index} />
+                                          }
+                                        })}
+
+                                      </Picker>
+                                      {console.log({ MessageboardgroupId: state.data.id + "-" + actions.myCourseGroups().completeTriad[this.state.triadSelection]?.id })}
+                                      <MessageBoard style="mini" groupId={state.data.id + "-" + actions.myCourseGroups().completeTriad[this.state.triadSelection]?.id}></MessageBoard>
+                                    </>
+                                : null}
+
+
+                              {state.activeMessageBoard == "instructor" ? <MessageBoard style="mini" groupId={state.data.id}></MessageBoard> : null}
                             </Container>
                           </Container> : null
                         }

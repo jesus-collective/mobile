@@ -82,7 +82,7 @@ export default class EditableText extends JCComponent<Props> {
         if (this.props.isEditable)
             return (
                 <Chips
-                    
+
                     fromSuggestionsOnly={true}
                     uniqueChips={true}
                     value={this.props.value ? this.props.value : []}
@@ -92,7 +92,7 @@ export default class EditableText extends JCComponent<Props> {
                             <Chip>
                                 <span>
                                     {this.props.showProfileImages ? <ProfileImage size="xsmall" user={value}></ProfileImage> : null}
-                                    <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: 'Graphik-Bold-App' }}>{value.given_name} {value.family_name}</Text>
+                                    <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: 'Graphik-Bold-App' }}>{value?.given_name} {value?.family_name}</Text>
                                 </span>
                             </Chip>
                         )
