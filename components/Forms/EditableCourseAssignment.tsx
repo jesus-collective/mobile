@@ -226,7 +226,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
                     </Container>
 
 
-                    <Container style={this.styles.style.detailScreenRightCard}>
+                    <Container style={this.styles.style.courseAssignmentScreenRightCard}>
                         <MessageBoard showWordCount={true} totalWordCount={this.props.wordCount} style="courseResponse" roomId={"course-" + this.props.assignmentId + "-" + this.state.currentUser} recipients={this.state.userList}></MessageBoard>
                     </Container>
                 </Container> :
