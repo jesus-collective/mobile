@@ -338,7 +338,7 @@ export default class EventScreen extends JCComponent<Props, State>{
   }
   renderButtons(): React.ReactNode {
     return (
-      <Container style={{ flexDirection: "column", flexGrow: 1 }}>
+      <Container style={this.styles.style.eventCreationScreenCreateContainer}>
         {this.state.canJoin ?
           <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Attend</JCButton> :
           null
@@ -482,7 +482,7 @@ export default class EventScreen extends JCComponent<Props, State>{
                       })}
                   </View>
                   {this.renderButtons()}
-                  <Text>{this.state.validationError}</Text>
+                  <Text style={{ marginTop: 170, color: 'red', fontWeight: 'bold' }}>{this.state.validationError}</Text>
                 </Container>
                 <Container style={this.styles.style.detailScreenRightCard}>
                   <MessageBoard style="regular" groupId={this.state.data.id}></MessageBoard>

@@ -97,17 +97,43 @@
     width: 100%;
 }
 
-@media (min-width: 320px) and (max-width: 480px) {
-    .MuiFormControl-root {
-        width: 100%;
-    }
-}
-
 @media screen and (max-width: 1024px) {
     .customWrapperSendmessageCourse {
         width: 77%;
     }
     .customWrapperSendmessage {
         width: 88%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .customWrapperSendmessageCourse {
+        width: 81%;
+    }
+
+    .customWrapperSendmessage {
+        width: 79%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .MuiFormControl-root {
+        width: 100%;
+    }
+    .customWrapperSendmessageCourse {
+        width: 100%;
+        margin-left: 0px;
+        top: 30px;
+        left: 0px;
+    }
+
+    .customWrapperSendmessage {
+        width: 100%;
+        bottom: 0px;
+        left: 0px;
+        margin-left: 0px;
+        margin-top: 20px;
+
+
     }
 }
