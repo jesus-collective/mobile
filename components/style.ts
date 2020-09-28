@@ -1733,6 +1733,15 @@ export default class MainStyles {
             assignmentCheckmark: {
                 alignSelf: 'center'
             },
+            smallProfileImageMBoard: {
+                width: "50px", 
+                height: "66px", 
+                borderRadius: 120, 
+                marginRight: 10, 
+                marginBottom: 15, 
+                marginLeft: 10, 
+                top: 30
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2436,8 +2445,9 @@ export default class MainStyles {
                 },
                 courseAssignmentScreenRightCard: {
                     width: "auto",
-                    marginLeft: 0,
-                    marginRight: 0
+                    marginLeft: 15,
+                    marginRight: 15,
+                    minHeight: 'calc(60vw * 2)'
                 },
                 groupNameInput: {
                     width: "100%"
@@ -2642,7 +2652,7 @@ export default class MainStyles {
                     width: '100%'
                 },
                 courseDetailRightContainer: {
-                    top: 650,
+                    top: 750,
                 },
                 courseDetailMessageBoardContainer: {
                     marginTop: 100,
@@ -2680,6 +2690,17 @@ export default class MainStyles {
                  courseHomeCalendar: {
                      width: '138%'
                  },
+                 courseAssignmentScreenLeftCard: { 
+                    marginLeft: 15,
+                    marginRight: 15,
+                    marginTop: 15,
+                },
+                smallProfileImageMBoard: {
+                    display: 'none'
+                },
+                courseWordCountSmall: {
+                    marginTop: 50
+                },
             },
 
             dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?

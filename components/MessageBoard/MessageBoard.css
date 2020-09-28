@@ -97,12 +97,6 @@
     width: 100%;
 }
 
-@media (min-width: 320px) and (max-width: 480px) {
-    .MuiFormControl-root {
-        width: 100%;
-    }
-}
-
 @media screen and (max-width: 1024px) {
     .customWrapperSendmessageCourse {
         width: 77%;
@@ -119,5 +113,17 @@
 
     .customWrapperSendmessage {
         width: 79%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .MuiFormControl-root {
+        width: 100%;
+    }
+    .customWrapperSendmessageCourse {
+        width: 100%;
+        margin-left: 0px;
+        top: 30px;
+        left: 0px
     }
 }
