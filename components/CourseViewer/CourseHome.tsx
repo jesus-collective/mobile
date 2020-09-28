@@ -335,7 +335,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                           />
                           <Container style={{ flexDirection: 'row', width: '100%', justifyContent: 'flex-start' }}>
                             <Text style={{ fontSize: 25, color: "#ff0000", fontFamily: 'Graphik-Bold-App', marginTop: 10, marginRight: 25 }}>• <span style={{ fontFamily: 'Graphik-Regular-App', color: '#000000', fontSize: 13 }}>Zoom</span></Text>
-                            <Text style={{ fontSize: 25, color: "#00ff00", fontFamily: 'Graphik-Bold-App', marginTop: 10, marginRight: 25 }}>• <span style={{ fontFamily: 'Graphik-Regular-App', color: '#000000', fontSize: 13 }}>Assignment</span></Text>
+                            <Text style={{ fontSize: 25, color: "#71C209", fontFamily: 'Graphik-Bold-App', marginTop: 10, marginRight: 25 }}>• <span style={{ fontFamily: 'Graphik-Regular-App', color: '#000000', fontSize: 13 }}>Assignment</span></Text>
                             <Text style={{ fontSize: 25, color: "#0000ff", fontFamily: 'Graphik-Bold-App', marginTop: 10, marginRight: 25 }}>• <span style={{ fontFamily: 'Graphik-Regular-App', color: '#000000', fontSize: 13 }}>Response</span></Text>
                           </Container>
                           <Container style={{ width: '100%', marginTop: 30, marginBottom: 50 }}>
