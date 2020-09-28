@@ -2138,6 +2138,16 @@ export default class MainStyles {
                 assignmentCheckmark: {
                     alignSelf: 'flex-start'
                 },
+                courseAssignmentMainContainer: {
+                    flexDirection: "column",
+                },
+                courseAssignmentScreenLeftCard: { 
+                    width: 'auto',
+                    overflowY: 'none',
+                    paddingTop: 30,
+                    paddingBottom: 80,
+                    height: 'auto'
+                },
             },
 
             // Media Query Desktop Large Tablet
