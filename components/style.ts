@@ -1343,8 +1343,8 @@ export default class MainStyles {
                 fontWeight: "bold",
                 flex: .75,
                 paddingLeft: 20,
-                paddingTop: 14,
-                textAlign: "right"
+                textAlign: "right",
+                paddingBottom: 20,
             },
             myMapCalloutEventContainer: {
                 height: 233,

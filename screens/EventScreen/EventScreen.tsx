@@ -482,7 +482,7 @@ export default class EventScreen extends JCComponent<Props, State>{
                       })}
                   </View>
                   {this.renderButtons()}
-                  <Text style={{ marginTop: 170 }}>{this.state.validationError}</Text>
+                  <Text style={{ marginTop: 170, color: 'red', fontWeight: 'bold' }}>{this.state.validationError}</Text>
                 </Container>
                 <Container style={this.styles.style.detailScreenRightCard}>
                   <MessageBoard style="regular" groupId={this.state.data.id}></MessageBoard>
