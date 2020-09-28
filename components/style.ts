@@ -747,6 +747,10 @@ export default class MainStyles {
                 { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: "calc(100vw * 2)", width: 446, } :
                 { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, minHeight: "calc(100vw * 2)", width: 446, }
             ,
+            courseAssignmentScreenRightCard: Platform.OS === 'web' ?
+                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: "calc(100vw * 2)", width: 446, } :
+                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, minHeight: "calc(100vw * 2)", width: 446, }
+            ,
             profileScreenLeftCard: Platform.OS === 'web' ?
                 { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 0, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: 700, width: 446 } :
                 { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 0, borderRadius: 4, minHeight: 700, width: 446 }
@@ -1765,6 +1769,13 @@ export default class MainStyles {
                     marginLeft: 10,
                     flex: 65,
                 },
+                courseAssignmentScreenRightCard: {
+                    marginLeft: 30,
+                    flex: 65,
+                    width: 'auto',
+                    minHeight: "calc(60vw * 2)"
+
+                },
                 groupNameInput: {
                     fontSize: 24,
                     lineHeight: 30,
@@ -2146,6 +2157,7 @@ export default class MainStyles {
                     overflowY: 'none',
                     paddingTop: 30,
                     paddingBottom: 80,
+                    marginRight: 30,
                     height: 'auto'
                 },
             },
@@ -2170,6 +2182,9 @@ export default class MainStyles {
                     flex: 40,
                 },
                 detailScreenRightCard: {
+                    marginLeft: 10,
+                },
+                courseAssignmentScreenRightCard: {
                     marginLeft: 10,
                 },
                 profileScreenLeftCard: {
@@ -2409,6 +2424,11 @@ export default class MainStyles {
                     flex: 10,
                 },
                 detailScreenRightCard: {
+                    width: "auto",
+                    marginLeft: 0,
+                    marginRight: 0
+                },
+                courseAssignmentScreenRightCard: {
                     width: "auto",
                     marginLeft: 0,
                     marginRight: 0

@@ -111,3 +111,9 @@
         width: 88%;
     }
 }
+
+@media screen and (max-width: 768px) {
+    .customWrapperSendmessageCourse {
+        width: 81%;
+    }
+}
