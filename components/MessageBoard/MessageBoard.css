@@ -124,6 +124,16 @@
         width: 100%;
         margin-left: 0px;
         top: 30px;
-        left: 0px
+        left: 0px;
+    }
+
+    .customWrapperSendmessage {
+        width: 100%;
+        bottom: 0px;
+        left: 0px;
+        margin-left: 0px;
+        margin-top: 20px;
+
+
     }
 }

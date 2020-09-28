@@ -2701,6 +2701,13 @@ export default class MainStyles {
                 courseWordCountSmall: {
                     marginTop: 50
                 },
+                courseWordCount: {
+                    marginRight: 0,
+                    marginTop: 20,
+                },
+                courseDetailJCButtonAssignments: {
+                    marginRight: 0,
+                },
             },
 
             dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
