@@ -1773,7 +1773,7 @@ export default class MainStyles {
                     marginLeft: 30,
                     flex: 65,
                     width: 'auto',
-                    minHeight: "calc(60vw * 2)"
+                    minHeight: "calc(40vw * 2)"
 
                 },
                 groupNameInput: {
