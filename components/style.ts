@@ -2125,9 +2125,15 @@ export default class MainStyles {
                 },
                 courseSidebarNavIconActive: {
                     marginRight: 6,
+                    width: '25px',
+                    height: '25px',
+                    top: 5
                 },
                 courseSidebarNavIconInactive: {
                     marginRight: 6,
+                    width: '25px',
+                    height: '25px',
+                    top: 5
                 },
                 courseDetailLessonText: {
                     width: '95%',
