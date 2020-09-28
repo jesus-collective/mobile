@@ -1742,6 +1742,10 @@ export default class MainStyles {
                 marginLeft: 10, 
                 top: 30
             },
+            eventCreationScreenCreateContainer: {
+                flexDirection: "column", 
+                flexGrow: 0,
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
