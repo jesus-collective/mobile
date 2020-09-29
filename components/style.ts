@@ -238,7 +238,7 @@ export default class MainStyles {
                 lineHeight: 23,
                 fontWeight: "bold",
                 fontFamily: "Graphik-Bold-App",
-                width: "30%"
+                width: "100%"
             },
             courseDateInput: {
                 padding: 3,

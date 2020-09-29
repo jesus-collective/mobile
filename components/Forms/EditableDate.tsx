@@ -73,7 +73,7 @@ export default class EditableDate extends JCComponent<Props> {
         if (this.props.isEditable) {
             if (this.props.type == 'datetime')
                 return (
-                    <Container style={{ height: "unset", width: '52%', marginTop: 10 }}>
+                    <Container style={{ height: "unset", width: '55%', marginTop: 10 }}>
                         <ThemeProvider theme={materialTheme}>
                             <KeyboardDateTimePicker
                                 variant="inline"
