@@ -665,9 +665,13 @@ class HomeScreenRouter extends JCComponent<Props, State> {
   }
   static Provider = UserContext.Provider;
   render() {
-    console.log("User has signed in")
-    console.log({ "Paid state": this.state.hasPaidState })
-    console.log({ "Profile state": this.state.hasCompletedPersonalProfile })
+    console.log({
+      UserState: [
+        "User has signed in",
+        { "Paid state": this.state.hasPaidState },
+        { "Profile state": this.state.hasCompletedPersonalProfile }]
+    })
+
     trackUserId();
     return (
       <HomeScreenRouter.Provider value={{

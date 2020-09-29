@@ -428,7 +428,7 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, color: '#333333', opacity: 0.4, paddingTop: 23, textTransform: "uppercase"
             },
             sponsoredTag: {
-                fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, color: '#333333', opacity: 0.4, textTransform: "uppercase", marginRight: 8, fontWeight: 600
+                fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, color: '#333333', opacity: 0.4, textTransform: "uppercase", marginRight: 8, fontWeight: "600"
             },
             myMapFontDetailTop: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 14, lineHeight: 16, color: '#333333', opacity: 0.4, paddingTop: 23
@@ -462,7 +462,7 @@ export default class MainStyles {
             },
             fontCourseHeaderBold: {
                 fontFamily: 'Graphik-Bold-App',
-                fontWeight: 400,
+                fontWeight: "400",
                 fontSize: 45,
                 lineHeight: 45,
                 textAlign: "left",
@@ -472,7 +472,7 @@ export default class MainStyles {
             },
             fontResourceHeaderBold: {
                 fontFamily: 'Graphik-Regular-App',
-                fontWeight: 400,
+                fontWeight: "400",
                 fontSize: 45,
                 lineHeight: 45,
                 alignSelf: "center",
@@ -736,11 +736,11 @@ export default class MainStyles {
             rightCardWidth: {
                 minWidth: "100%"
             },
-            conversationScreenLeftCard: { 
-                flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", height: "80vh", width: 446, paddingBottom: 40, overflowY: 'scroll' 
+            conversationScreenLeftCard: {
+                flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", height: "80vh", width: 446, paddingBottom: 40, overflowY: 'scroll'
             },
-            courseAssignmentScreenLeftCard: { 
-                flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 30, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", height: "80vh", width: 446, paddingBottom: 40, overflowY: 'scroll' 
+            courseAssignmentScreenLeftCard: {
+                flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 30, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", height: "80vh", width: 446, paddingBottom: 40, overflowY: 'scroll'
             },
             detailScreenLeftCard: Platform.OS === 'web' ?
                 { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", width: 446, paddingBottom: 40, minHeight: "calc(100vw * 1.05)" } :
@@ -908,7 +908,7 @@ export default class MainStyles {
                 flexDirection: "row",
                 justifyContent: 'flex-start',
                 backgroundColor: "#F9FAFC",
-                width: '96%', 
+                width: '96%',
                 flex: 'none',
                 height: '100vw'
             },
@@ -1725,37 +1725,37 @@ export default class MainStyles {
                 marginRight: 65
             },
             courseWordCountSmall: {
-                textAlign: 'right', 
+                textAlign: 'right',
                 marginBottom: 30
             },
             courseWordCount: {
-                textAlign: 'right', 
-                marginBottom: 30, 
+                textAlign: 'right',
+                marginBottom: 30,
                 marginRight: 30,
             },
             assignmentCheckmark: {
                 alignSelf: 'center'
             },
             smallProfileImageMBoard: {
-                width: "50px", 
-                height: "66px", 
-                borderRadius: 120, 
-                marginRight: 10, 
-                marginBottom: 15, 
-                marginLeft: 10, 
+                width: "50px",
+                height: "66px",
+                borderRadius: 120,
+                marginRight: 10,
+                marginBottom: 15,
+                marginLeft: 10,
                 top: 30
             },
             smallProfileImageConversations: {
-                width: "50px", 
-                height: "66px", 
-                borderRadius: 120, 
-                marginRight: 10, 
-                marginBottom: 15, 
-                marginLeft: 10, 
+                width: "50px",
+                height: "66px",
+                borderRadius: 120,
+                marginRight: 10,
+                marginBottom: 15,
+                marginLeft: 10,
                 top: 0
             },
             eventCreationScreenCreateContainer: {
-                flexDirection: "column", 
+                flexDirection: "column",
                 flexGrow: 0,
             },
 
@@ -2183,7 +2183,7 @@ export default class MainStyles {
                 courseAssignmentMainContainer: {
                     flexDirection: "column",
                 },
-                courseAssignmentScreenLeftCard: { 
+                courseAssignmentScreenLeftCard: {
                     width: 'auto',
                     overflowY: 'none',
                     paddingTop: 30,
@@ -2345,7 +2345,7 @@ export default class MainStyles {
                 courseDetailJCButtonAssignments: {
                     marginRight: 10,
                 },
-                courseAssignmentScreenLeftCard: { 
+                courseAssignmentScreenLeftCard: {
                     flex: 35,
                 },
             },
@@ -2523,7 +2523,7 @@ export default class MainStyles {
                 },
                 resourceContentEpisodeMainContainer: {
                     flexDirection: "column",
-                    minHeight: 400,
+                    minHeight: "400",
                 },
                 resourceContentEpisodeLeftContainer: {
                     marginLeft: 0,
@@ -2649,7 +2649,7 @@ export default class MainStyles {
                     overflow: 'scroll'
                 },
                 courseProfileImageContainer: {
-                    marginTop: 400,
+                    marginTop: "400",
                 },
                 courseHomeDescriptionText: {
                     marginTop: 300,
@@ -2697,16 +2697,16 @@ export default class MainStyles {
                 courseHomeCourseActivityText: {
                     marginTop: 75
                 },
-                courseHomeFileCard: { 
+                courseHomeFileCard: {
                     width: '100%'
-                 },
-                 courseHomeCoachingCard: { 
+                },
+                courseHomeCoachingCard: {
                     width: '100%'
-                 },
-                 courseHomeCalendar: {
-                     width: '138%'
-                 },
-                 courseAssignmentScreenLeftCard: { 
+                },
+                courseHomeCalendar: {
+                    width: '138%'
+                },
+                courseAssignmentScreenLeftCard: {
                     marginLeft: 15,
                     marginRight: 15,
                     marginTop: 15,

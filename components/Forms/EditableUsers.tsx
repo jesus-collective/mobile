@@ -48,7 +48,6 @@ export default class EditableText extends JCComponent<Props> {
         if (this.props.limit)
             if (val.length > this.props.limit)
                 val.slice(0, this.props.limit)
-        console.log(val)
         this.props.onChange(val)
     }
     async autoCompleteUser(value: string): Promise<any[]> {
@@ -67,11 +66,10 @@ export default class EditableText extends JCComponent<Props> {
                 },
                 authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
             })
-            console.log({ searchUsers: searchUsers })
             return searchUsers.data.searchUsers.items
         }
         catch (e) {
-            console.log({ error: e })
+            console.log({ Error: e })
             return e.data.searchUsers.items
         }
 
@@ -79,10 +77,8 @@ export default class EditableText extends JCComponent<Props> {
     render(): React.ReactNode {
 
         if (this.props.isEditable) {
-            console.log({ listOfUsers: this.props.value })
             return (
                 <Chips
-
                     fromSuggestionsOnly={true}
                     uniqueChips={true}
                     value={this.props.value ? this.props.value : []}

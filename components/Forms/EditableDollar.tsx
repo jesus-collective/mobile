@@ -37,15 +37,12 @@ export default class EditableDollar extends JCComponent<Props, State> {
             placeholder: props.placeholder
         }
     }
-    // console.log(props)
 
     onChanged(val: any): void {
         this.props.onChange(val.target.value)
     }
 
     render(): React.ReactNode {
-
-
         if (this.state.isEditable)
             return (<FormControl fullWidth>
                 <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>

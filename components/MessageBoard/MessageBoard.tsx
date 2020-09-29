@@ -110,20 +110,16 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       const user = await Auth.currentCredentials();
       const userId = user.identityId
       const fn = 'messages/uploads/' + 'jc-upload-' + new Date().getTime() + '-' + file.name
-
       const upload = await Storage.put(fn, file, {
         level: 'protected',
         contentType: file.type,
         identityId: userId
       })
-      if (upload) {
-        console.log('jon')
+      if (upload)
         this.setState({ attachment: fn })
-      }
     } catch (e) {
       console.error(e)
     }
-
   }
 
   async setInitialData(props) {
@@ -136,7 +132,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       // console.log(this.state.UserDetails)
     }
     catch (e) {
-      console.log({ errorLoadingUser: e })
+      console.log({ Error: e })
     }
     if (props.route.params.create === "true" || props.route.params.create === true) {
       this.setState({ created: false })
@@ -149,7 +145,6 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       const processMessages = (json) => {
-        console.log({ process: json })
         this.setState({
           created: true,
           data: json.data.messagesByRoom,
@@ -165,7 +160,6 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       const processMessages = (json) => {
-        console.log(json)
         this.setState({
           created: true,
           data: json.data.directMessagesByRoom,
@@ -262,7 +256,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     try {
       return stateToHTML(convertFromRaw(JSON.parse(text)))
     } catch (e) {
-      console.log({ errorMessage: e })
+      console.log({ Error: e })
       return "<div>" + this.props.style == "course" || this.props.style == "courseResponse" ? "Assignment/Response" : "Message" + " Can't Be Displayed</div>"
     }
   }
@@ -401,7 +395,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                   }
                 }}
               />
-              {this.props.showWordCount ? <Text style={ this.props.style == "course" ? this.styles.style.courseWordCount : this.styles.style.courseWordCountSmall }>Word count: {this.state.wordCount}/{this.props.totalWordCount}</Text> : null}
+              {this.props.showWordCount ? <Text style={this.props.style == "course" ? this.styles.style.courseWordCount : this.styles.style.courseWordCountSmall}>Word count: {this.state.wordCount}/{this.props.totalWordCount}</Text> : null}
               <View
                 style={
                   this.props.style == "regular" || this.props.style == "courseResponse" ? this.styles.style.courseDetailJCButtonRegular : this.props.style == "course" ? this.styles.style.courseDetailJCButtonAssignments : this.styles.style.courseDetailJCButtonMini

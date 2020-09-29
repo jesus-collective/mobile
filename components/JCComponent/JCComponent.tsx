@@ -13,7 +13,6 @@ export default class JCComponent<Props = any, State extends JCState = any> exten
         this.state = this.getInitialState()
         const user = Auth.currentAuthenticatedUser();
         user.then((user) => {
-            // console.log(user.signInUserSession.accessToken.payload["cognito:groups"])
             this.setState({
                 groups: user.signInUserSession.accessToken.payload["cognito:groups"]
             })
@@ -28,7 +27,6 @@ export default class JCComponent<Props = any, State extends JCState = any> exten
     }
 
     isMemberOf(group: string): boolean {
-        //        console.log(this.state.groups)
         if (this.state.groups)
             return this.state.groups.includes(group)
         else return false

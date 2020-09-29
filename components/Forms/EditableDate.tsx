@@ -82,7 +82,7 @@ export default class EditableDate extends JCComponent<Props> {
                                 value={(this.props.value == null || this.props.tz == null) ? moment.now() : moment(this.props.value).tz(this.props.tz)}
                                 format='MMMM Do YYYY, h:mm a '
                                 onChange={(value) => { this.onChanged(value, this.props.tz) }}
-                                onError={(e) => { console.log(e) }}
+                                onError={(e) => { console.log({ Error: e }) }}
                                 disablePast
                                 minutesStep={15}
                                 emptyLabel="Date not set"

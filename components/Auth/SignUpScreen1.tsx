@@ -25,18 +25,21 @@ export default class SignUpScreen1 extends JCComponent<Props>{
     console.log("Make Payment")
     const user = await Auth.currentAuthenticatedUser();
     try {
-      await API.graphql(graphqlOperation(mutations.updateUser, { input: { id: user['username'], hasPaidState: "In Progress" } }));
+      await API.graphql(graphqlOperation(mutations.updateUser, {
+        input: {
+          id: user['username'],
+          hasPaidState: "In Progress"
+        }
+      }));
       actions.onPaidStateChanged()
     } catch (e) {
-      console.log(e)
+      console.log({ Error: e })
     }
 
   }
 
 
   render(): React.ReactNode {
-    // const { navigate } = this.props.navigation;
-
     return (
       <SignUpScreen1.Consumer>
         {({ state, actions }) => {

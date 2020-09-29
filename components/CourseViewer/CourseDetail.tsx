@@ -92,7 +92,6 @@ class CourseDetailImpl extends JCComponent<Props, State>{
           >
             <Picker.Item label="Pick an assigment to Review" />
             {actions.getAssignmentList()?.map((item) => {
-              console.log(item)
               if (item)
                 return <Picker.Item key={item.id} label={item.name} value={item.id} />
             })}
@@ -164,7 +163,6 @@ class CourseDetailImpl extends JCComponent<Props, State>{
 
   }
   renderWeekDetails(state, actions, week): React.ReactNode {
-    //console.log(this.state.activeLesson)
     return (
       state.activeLesson == null ?
         week ?
@@ -215,7 +213,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                             value={item.name} isEditable={state.isEditable && state.editMode}></EditableText>
 
                           <Container style={this.styles.style.courseActivityDetails}>
-                            <Text style={state.isEditable && state.editMode ? { marginRight: 10, paddingTop: 0 } : { marginRight: 20, paddingTop: 5 } }>
+                            <Text style={state.isEditable && state.editMode ? { marginRight: 10, paddingTop: 0 } : { marginRight: 20, paddingTop: 5 }}>
                               {state.isEditable ?
                                 null
                                 : <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }} source={require('../../assets/svg/time.svg')} />
@@ -332,7 +330,6 @@ class CourseDetailImpl extends JCComponent<Props, State>{
       </Container>)
   }
   renderRespond(state, actions, week, lesson) {
-    console.log({ courseLessonResponseId: lesson.courseLessonResponseId })
     return (
       <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
         <JCButton buttonType={ButtonTypes.CourseHomeSidebarTop} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
@@ -375,7 +372,6 @@ class CourseDetailImpl extends JCComponent<Props, State>{
     }
   }
   renderLessonDetails(state, actions, week: any): React.ReactNode {
-    // console.log(this.state.activeLesson)
     if (week?.lessons) {
       const lesson = week.lessons.items[state.activeLesson]
       return (
@@ -395,7 +391,6 @@ class CourseDetailImpl extends JCComponent<Props, State>{
         {({ state, actions }) => {
           const week = state.courseData?.courseWeeks.items[state.activeWeek]
           const lesson = week?.lessons.items[state.activeLesson]
-          console.log({ lesson: lesson })
           return (
             state.data && state.currentScreen == "Details" ?
               <StyleProvider style={getTheme()}>
@@ -412,19 +407,29 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                         {!(lesson?.lessonType == "respond" || lesson?.lessonType == "assignment") ?
                           <Container style={this.styles.style.courseDetailRightContainer}>
                             <Container style={this.styles.style.courseDetailButtonTrio}>
-                              <JCButton buttonType={state.activeMessageBoard == "cohort" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("cohort") }}> Learning Collective</JCButton>
-                              <JCButton buttonType={state.activeMessageBoard == "triad" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("triad") }}>Cohort</JCButton>
+                              <JCButton
+                                buttonType={state.activeMessageBoard == "cohort" ?
+                                  ButtonTypes.TransparentActivityCourse
+                                  : ButtonTypes.courseActivityTransparentRegularBlack}
+                                onPress={() => { actions.setActiveMessageBoard("cohort") }}> Learning Collective</JCButton>
+                              <JCButton
+                                buttonType={state.activeMessageBoard == "triad" ?
+                                  ButtonTypes.TransparentActivityCourse
+                                  : ButtonTypes.courseActivityTransparentRegularBlack}
+                                onPress={() => { actions.setActiveMessageBoard("triad") }}>Cohort</JCButton>
                               {/*   <JCButton buttonType={state.activeMessageBoard == "instructor" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("instructor") }}>Facilitator</JCButton>*/}
                             </Container>
                             <Container style={this.styles.style.courseDetailMessageBoardContainer}>
                               {state.activeMessageBoard == "cohort" ? <MessageBoard style="mini" groupId={state.data.id}></MessageBoard> : null}
                               {state.activeMessageBoard == "triad" ?
 
-                                actions.myCourseGroups().completeTriad.length == 0 ? <Text>You have not been added to a cohort</Text> :
-                                  actions.myCourseGroups().completeTriad.length == 1 ? <>
-                                    <MessageBoard style="mini" groupId={state.data.id + "-" + actions.myCourseGroups().completeTriad[0].id}></MessageBoard>
-                                    {console.log({ MessageboardgroupId: state.data.id + "-" + actions.myCourseGroups().completeTriad[0].id })}
-                                  </>
+                                actions.myCourseGroups().completeTriad.length == 0 ?
+                                  <Text>You have not been added to a cohort</Text> :
+                                  actions.myCourseGroups().completeTriad.length == 1 ?
+                                    <>
+                                      <MessageBoard style="mini" groupId={state.data.id + "-" + actions.myCourseGroups().completeTriad[0].id}></MessageBoard>
+
+                                    </>
                                     : <>
                                       <Picker
 
@@ -443,7 +448,6 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                                       >
 
                                         {actions.myCourseGroups().completeTriad?.map((item: any, index: any) => {
-                                          console.log({ assignmentList: item })
                                           if (item) {
                                             const name = item.triad.users.items.map((item) => { return item.user.name }).join(", ")
                                             return <Picker.Item key={index} label={name} value={index} />
@@ -451,7 +455,6 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                                         })}
 
                                       </Picker>
-                                      {console.log({ MessageboardgroupId: state.data.id + "-" + actions.myCourseGroups().completeTriad[this.state.triadSelection]?.id })}
                                       <MessageBoard style="mini" groupId={state.data.id + "-" + actions.myCourseGroups().completeTriad[this.state.triadSelection]?.id}></MessageBoard>
                                     </>
                                 : null}

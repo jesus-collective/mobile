@@ -15,7 +15,6 @@ interface Props {
   navigation?: any
   route?: any
   authState?: string
-  //profileComplete(): void
 }
 
 interface State {
@@ -42,14 +41,9 @@ class SignUpScreen3Impl extends JCComponent<Props, State>{
     actions.updateHasCompletedPersonalProfile()
   }
   render(): React.ReactNode {
-    // const { navigate } = this.props.navigation;
-
     return (
       <SignUpScreen3Impl.Consumer>
         {({ state, actions }) => {
-
-          console.log(state)
-
           if (state.hasPaidState == "Complete" && state.hasCompletedPersonalProfile == "Incomplete") {
 
             return (

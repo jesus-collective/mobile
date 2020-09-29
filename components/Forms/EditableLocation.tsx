@@ -56,8 +56,6 @@ export default class EditableLocation extends JCComponent<Props, State> {
 
     };
     render(): React.ReactNode {
-        console.log(this.state.value)
-
         if (this.state.isEditable)
             return <PlacesAutocomplete
                 value={this.state.value}

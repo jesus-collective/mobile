@@ -12,9 +12,7 @@ import JCComponent from '../../components/JCComponent/JCComponent';
 import { UserContext } from '../../screens/HomeScreen/UserContext';
 
 interface Props {
-  //navigation?: any,
   authState?: string,
-  // payStateChanged(): void
 }
 export default class SignUpScreen2 extends JCComponent<Props>{
   static Consumer = UserContext.Consumer
@@ -23,15 +21,19 @@ export default class SignUpScreen2 extends JCComponent<Props>{
     console.log("Finish Payment")
     const user = await Auth.currentAuthenticatedUser();
     try {
-      await API.graphql(graphqlOperation(mutations.updateUser, { input: { id: user['username'], hasPaidState: "Complete" } }));
+      await API.graphql(graphqlOperation(mutations.updateUser, {
+        input: {
+          id: user['username'],
+          hasPaidState: "Complete"
+        }
+      }));
       actions.onPaidStateChanged()
     } catch (e) {
-      console.log(e)
+      console.log({ Error: e })
     }
   }
 
   render(): React.ReactNode {
-    // const { navigate } = this.props.navigation;
 
     return (
       <SignUpScreen2.Consumer>
@@ -42,7 +44,8 @@ export default class SignUpScreen2 extends JCComponent<Props>{
               <View style={{ position: "absolute", left: "35%", width: "25%", top: 100, height: "100%" }}>
                 <Text>Payment Successful</Text>
 
-                <Button color="#F0493E" title="Setup Profile" onPress={() => { this.makePayment(actions) }} />
+                <Button color="#F0493E" title="Setup Profile"
+                  onPress={() => { this.makePayment(actions) }} />
               </View>
 
             </View>

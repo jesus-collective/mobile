@@ -69,16 +69,9 @@ class MyForgotPassword extends React.Component<Props, State> {
         console.log("Saving")
         try {
             if (this.state.newPass !== this.state.newPass2) {
-                console.log("Passwords do not match")
                 this.setState({ authError: 'Passwords do not match' })
                 return;
             }
-            //this.setState({ reseting: true })
-            //const user = await Auth.currentAuthenticatedUser();
-            //console.log(user)
-            console.log("Saving2")
-            console.log(this.state.username)
-            console.log(this.state.newPass)
             await Auth.completeNewPassword(this.state.username, this.state.newPass,
                 {
                     family_name: this.state.last,
@@ -86,7 +79,7 @@ class MyForgotPassword extends React.Component<Props, State> {
                     phone_number: this.state.code + this.state.phone
                 })
                 .then(() => { this.changeAuthState('signedIn') })
-                .catch((e) => { console.log(e) });
+                .catch((e) => { console.log({ Error: e }) });
         } catch (e) {
             this.setState({ authError: e.message, reseting: false })
         }

@@ -72,7 +72,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
         try {
             return stateToHTML(convertFromRaw(JSON.parse(text)))
         } catch (e) {
-            console.log({ errorMessage: e })
+            console.log({ Error: e })
             return "<div>Message Can't Be Displayed</div>"
         }
     }
@@ -122,7 +122,6 @@ export default class EditableRichText extends JCComponent<Props, State> {
             else
                 return <TouchableOpacity onPress={() => { this.setState({ isEditMode: true }) }}>
                     <div id="comment-div" style={{ width: '100%' }}>
-                        {console.log(convertFromRaw(JSON.parse(this.state.value)).hasText())}
                         {!convertFromRaw(JSON.parse(this.state.value)).hasText() || this.state.value == null ?
                             <div style={{ fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 16, marginTop: 0, color: '#F0493E', textDecoration: 'underline' }}>Hold to Edit</div>
                             :
@@ -133,7 +132,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
                 </TouchableOpacity>
         else
             return <div id="comment-div">
-                <div dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(this.state.value) }} style={{fontFamily: 'Graphik-Regular-App', fontSize: '16px', lineHeight: '26px', color: "#333333", marginTop: 0, paddingTop: 0, minHeight: 50 }}></div>
+                <div dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(this.state.value) }} style={{ fontFamily: 'Graphik-Regular-App', fontSize: '16px', lineHeight: '26px', color: "#333333", marginTop: 0, paddingTop: 0, minHeight: 50 }}></div>
             </div>
 
 

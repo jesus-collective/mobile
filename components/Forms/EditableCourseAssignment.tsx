@@ -56,17 +56,6 @@ export default class EditableRichText extends JCComponent<Props, State> {
     async getInitialData(next: string): Promise<void> {
         try {
             const user = await Auth.currentAuthenticatedUser();
-
-            /*  try {
-                  const query2 = { input: { id: "course-" + this.props.assignmentId + "-" + user['username'] } }
-                  const json2: any = await API.graphql({
-                      query: mutations.deleteDirectMessageRoom,
-                      variables: query2,
-                      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-                  });
-              } catch (e) {
-                  console.log({ error: e })
-              }*/
             try {
                 const query = { limit: 20, filter: { id: { contains: "course-" + this.props.assignmentId + "-" } }, nextToken: next }
 
@@ -76,20 +65,16 @@ export default class EditableRichText extends JCComponent<Props, State> {
                     authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
                 });
                 if (json?.data?.listDirectMessageRooms?.nextToken !== null) {
-                    console.log({ 'customQueries.listDirectMessageRooms': json.data.listDirectMessageRooms })
                     this.setState({ data: this.state.data.concat(json.data.listDirectMessageRooms.items) })
                     this.getInitialData(json.data.listDirectMessageRooms.nextToken)
                 } else if (json?.data?.listDirectMessageRooms) {
-                    console.log({ 'customQueries.listDirectMessageRooms': json.data.listDirectMessageRooms })
                     this.setState({ data: this.state.data.concat(json.data.listDirectMessageRooms.items) }, this.shouldCreateRoom)
                 }
             } catch (json) {
                 if (json?.data?.listDirectMessageRooms?.nextToken !== null) {
-                    console.log({ 'customQueries.listDirectMessageRooms': json.data.listDirectMessageRooms })
                     this.setState({ data: this.state.data.concat(json.data.listDirectMessageRooms.items) })
                     this.getInitialData(json.data.listDirectMessageRooms.nextToken)
                 } else if (json?.data?.listDirectMessageUsers) {
-                    console.log({ 'customQueries.listDirectMessageRooms': json.data.listDirectMessageRooms })
                     this.setState({ data: this.state.data.concat(json.data.listDirectMessageRooms.items) }, this.shouldCreateRoom)
                 }
                 console.error({ Error: json })
@@ -117,22 +102,21 @@ export default class EditableRichText extends JCComponent<Props, State> {
                         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
                     });
                     createDirectMessageUser2.then((json2) => {
-                        console.log(json2);
-                        //     this.getNewUser(json2.data.createDirectMessageUser.id)
+                        console.log({ createDirectMessageUser: json2 });
                     }
                     ).catch((json2) => {
-                        console.log(json2);
-                        //   this.getNewUser(json2.data.createDirectMessageUser.id)
-                    }
-                    )
+                        console.log({ Error: json2 });
+                    })
                 })
             })
 
-        }).catch((e) => { console.log(e) })
+        }).catch((e) => {
+            console.log({ Error: e })
+        })
 
     }
     shouldCreateRoom = async (): Promise<void> => {
-        console.log({ "Number of rooms:": this.state.data.length })
+        console.log({ "Number of rooms": this.state.data.length })
         const user = await Auth.currentAuthenticatedUser();
         if (this.state.data.filter(item => item.id == "course-" + this.props.assignmentId + "-" + user['username']).length <= 0)
             this.createRoom()
@@ -140,35 +124,15 @@ export default class EditableRichText extends JCComponent<Props, State> {
     }
     hasInitialPost = (): boolean => {
 
-        console.log(this.state.data.filter(item => item.id == "course-" + this.props.assignmentId + "-" + this.state.currentUser)[0]?.directMessage.items.length)
         if (this.state.data.filter(item => item.id == "course-" + this.props.assignmentId + "-" + this.state.currentUser)[0]?.directMessage.items.length <= 0) {
-            console.log("Does not have initial post")
+            console.log("Assignment does not have initial post")
             return false
         }
-        else
+        else {
+            console.log("Assignment has initial post")
             return true
-    }
-    /*async getNewUser(id: string): Promise < void> {
-        try {
-            const json: any = await API.graphql({
-                query: customQueries.getDirectMessageUser,
-                variables: { id: id },
-                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-            });
-            if(json?.data?.getDirectMessageUser) {
-                console.log({ 'customQueries.getDirectMessageUser': json.data.getDirectMessageUser })
-                this.setState({ data: this.state.data.concat([json.data.getDirectMessageUser]) }, () => {
-                    const index = this.state.data.indexOf(json.data.getDirectMessageUser)
-                    this.setState({ selectedRoom: index, currentRoomId: this.state.data[index].roomID })
-                })
-            }
-        } catch(err) {
-            console.error(err)
         }
-    }*/
-
-
-
+    }
     getOtherUsers(data: any): { ids: string[], names: string[] } {
         const ids = [];
         const names = [];
@@ -181,19 +145,18 @@ export default class EditableRichText extends JCComponent<Props, State> {
 
         return { ids, names }
     }
-
     switchRoom(index: number): void {
         this.setState({ selectedRoom: index })
         this.setState({ currentRoomId: this.state.data[index].roomID })
     }
     getCurrentRoomRecipients(): string[] {
         const ids = [];
-        console.log(this.state.data[this.state.selectedRoom])
-        this.state.data[this.state.selectedRoom]?.room?.messageUsers?.items.forEach(user => { ids.push(user.userID) })
+        this.state.data[this.state.selectedRoom]?.room?.messageUsers?.items.forEach(user => {
+            ids.push(user.userID)
+        })
         return ids
     }
     render(): React.ReactNode {
-        console.log(this.hasInitialPost())
         return <>
             <div style={{ padding: 5, height: 25, width: "94%", marginTop: 20, backgroundColor: !this.hasInitialPost() ? "#71C209" : "#71C209", borderRadius: 4 }}><span style={{ color: "#ffffff", fontSize: 18, fontFamily: 'Graphik-Bold-App', alignSelf: 'center', paddingLeft: 10, paddingTop: 15 }}>Assignment</span></div>
             {this.hasInitialPost() ?
@@ -204,17 +167,14 @@ export default class EditableRichText extends JCComponent<Props, State> {
 
                         {this.state.data != null ?
                             this.state.data.map((item, index) => {
-                                console.log({ item: item })
                                 const otherUsers = this.getOtherUsers(item)
                                 let stringOfNames = ''
                                 otherUsers.names.forEach((name, index) => {
-                                    if (otherUsers.names.length === index + 1) {
+                                    if (otherUsers.names.length === index + 1)
                                         stringOfNames += name
-                                    } else {
+                                    else
                                         stringOfNames += (name + ', ')
-                                    }
                                 })
-
                                 return (
                                     <TouchableOpacity style={{ backgroundColor: this.state.selectedRoom == index ? "#eeeeee" : "unset", borderRadius: 10, width: "100%", paddingTop: 8, paddingBottom: 8, display: "flex", alignItems: "center" }} key={item.id} onPress={() => this.switchRoom(index)}>
                                         <Text style={{ fontSize: 20, lineHeight: 25, fontWeight: "normal", fontFamily: "Graphik-Regular-App", width: "100%", display: "flex", alignItems: "center" }} >

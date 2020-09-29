@@ -43,7 +43,6 @@ export default class EditableText extends JCComponent<Props, State> {
     }
 
     onChanged(val: any): void {
-        console.log(val)
         this.props.onChange(val)
     }
     render(): React.ReactNode {

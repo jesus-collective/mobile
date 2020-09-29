@@ -30,7 +30,7 @@ export default class EditableFileUpload extends JCComponent<Props> {
                         {this.renderFileIcon(this.props.attachment)}
                         <Text style={{ fontSize: 18, paddingHorizontal: 10 }}>{this.props.attachmentName ?
                             this.props.attachmentName :
-                        this.processFileName(this.props.attachment)}
+                            this.processFileName(this.props.attachment)}
                         </Text>
                     </View>
                 </Badge>
@@ -57,7 +57,7 @@ export default class EditableFileUpload extends JCComponent<Props> {
     }
 
     renderFileIcon(filePath: string): React.ReactNode {
-        console.log(filePath)
+        console.log({ File: filePath })
         const lastDot = filePath.lastIndexOf('.');
         const ext = filePath.substring(lastDot + 1);
 
@@ -112,21 +112,16 @@ export default class EditableFileUpload extends JCComponent<Props> {
             const user = await Auth.currentCredentials();
             const userId = user.identityId
             const fn = 'course/uploads/' + 'jc-upload-' + new Date().getTime() + '-' + file.name
-
             const upload = await Storage.put(fn, file, {
                 level: 'protected',
                 contentType: file.type,
                 identityId: userId
             })
-            if (upload) {
-                console.log('jon')
+            if (upload)
                 this.props.onChange({ attachment: fn, attachmentName: null })
-                //  this.setState({ attachment: fn })
-            }
         } catch (e) {
             console.error(e)
         }
-
     }
     render(): React.ReactNode {
         return (

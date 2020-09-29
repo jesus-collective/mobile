@@ -449,9 +449,9 @@ export default EStyleSheet.create({
         fontSize: 20,
         lineHeight: 26,
         paddingLeft: 5,
-        paddingRight: 5, 
+        paddingRight: 5,
         marginLeft: 18,
-        fontWeight: 800,
+        fontWeight: "800",
     },
     CourseSideBarFirstButton: {
         paddingTop: 10,
@@ -471,9 +471,9 @@ export default EStyleSheet.create({
         fontSize: 20,
         lineHeight: 26,
         paddingLeft: 5,
-        paddingRight: 5, 
+        paddingRight: 5,
         marginLeft: 18,
-        fontWeight: 800,
+        fontWeight: "800",
     },
     CourseHomeButton: {
         paddingTop: 6,
@@ -931,8 +931,8 @@ export default EStyleSheet.create({
             justifyContent: 'center'
         },
         CourseHomeButton: {
-           width: '50%',
-           alignSelf: 'center',
+            width: '50%',
+            alignSelf: 'center',
         },
         TransparentActivityCourseButton: {
             marginBottom: 0,
@@ -1034,8 +1034,8 @@ export default EStyleSheet.create({
             paddingRight: 5,
         },
         CourseTransparentBoldOrangeButton: {
-        marginLeft: 0,
-        marginRight: 0,
+            marginLeft: 0,
+            marginRight: 0,
         },
         CourseTransparentBoldOrangeText: {
             padding: 0,

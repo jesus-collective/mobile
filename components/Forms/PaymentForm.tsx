@@ -42,7 +42,7 @@ export default function PaymentForm({ product, containerStyle, payPalWrapperStyl
         try {
             return stateToHTML(convertFromRaw(JSON.parse(text)))
         } catch (e) {
-            console.log({ errorMessage: e })
+            console.log({ Error: e })
             return "<div>Message Can't Be Displayed</div>"
         }
     }

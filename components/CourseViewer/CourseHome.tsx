@@ -72,7 +72,6 @@ class CourseHomeImpl extends JCComponent<Props>{
 
       <CourseHomeImpl.Consumer>
         {({ state, actions }) => {
-          console.log(state.isEditable && state.editMode)
           const instructors = state.courseData?.instructors?.items.map((item) => { return item.user })
           var markedDates = {};
           for (var i = 0; i < actions.myCourseDates().zoom?.length; i++)
@@ -167,9 +166,6 @@ class CourseHomeImpl extends JCComponent<Props>{
                                       {state.courseData?.triads?.items.map((item, index) => {
                                         const coaches = item.coaches.items.map((item) => { return item.user })
                                         const users = item.users.items.map((item) => { return item.user })
-                                        console.log(item)
-                                        console.log(coaches)
-                                        console.log(users)
                                         return (
                                           <Card key={index}>
                                             <CardItem style={{ zIndex: -1 }}>
@@ -222,8 +218,8 @@ class CourseHomeImpl extends JCComponent<Props>{
                               </>
                               :
                               <>
-                                {actions.myCourseGroups().completeTriad?.map((completeTriad) => {
-                                  return <><Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Facilitator</Text>
+                                {actions.myCourseGroups().completeTriad?.map((completeTriad, index) => {
+                                  return <React.Fragment key={index}><Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Facilitator</Text>
                                     <View style={this.styles.style.courseMyFacilitatorContainer}>
                                       {
                                         completeTriad.coach ?
@@ -244,7 +240,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                           <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginTop: 70, width: '90%' }}>You have not been assigned a learning group yet</Text>
                                       }
                                     </View>
-                                  </>
+                                  </React.Fragment>
                                 })}
                                 <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>Learning Collective</Text>
                                 <View style={this.styles.style.courseMyCohortContainer}>
@@ -264,8 +260,8 @@ class CourseHomeImpl extends JCComponent<Props>{
                         <Container style={this.styles.style.courseHomeRightContainer}>
                           <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30, width: '90%' }}>To-Do</Text>
                           <Card style={this.styles.style.courseHomeCoachingCard}>
-                            {toDo.map((item) => {
-                              return (<>
+                            {toDo.map((item, index) => {
+                              return (<React.Fragment key={index}>
                                 {{
                                   'assignment': (
                                     <Container style={{ flexDirection: "row", marginTop: 10, marginBottom: 10 }}>
@@ -325,7 +321,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                     </Container>
                                   )
                                 }
-                              </>)
+                              </React.Fragment>)
                             })}
 
                           </Card>
@@ -333,7 +329,6 @@ class CourseHomeImpl extends JCComponent<Props>{
                           <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 50, width: '90%' }}>My Calendar</Text>
 
                           <Calendar style={this.styles.style.courseHomeCalendar}
-                            // Collection of dates that have to be marked. Default = {}
                             current={moment().format("YYYY-MM-DD")}
                             markedDates={markedDates}
                           />

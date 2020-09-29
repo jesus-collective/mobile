@@ -22,7 +22,6 @@ class MyConfirmSignIn extends ConfirmSignIn<Props> {
         Dimensions.removeEventListener("change", () => { this.styles.updateStyles(this) });
     }
     render(): React.ReactNode {
-        //        console.log(this.props.authState)
         return (
 
             this.props.authState === 'confirmSignIn' ?

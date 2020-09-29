@@ -24,7 +24,6 @@ class MyVerifyContact extends VerifyContact<Props> {
     };
 
     render(): React.ReactNode {
-        //  console.log(this.props.authState)
         return (
             this.props.authState === 'verifyContact' ?
                 (<View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>

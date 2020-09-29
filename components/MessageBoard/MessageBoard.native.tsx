@@ -73,7 +73,6 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       this.setState({
         UserDetails: getUser.data.getUser
       })
-      // console.log(this.state.UserDetails)
     }
     catch (e) {
       console.log(e)
@@ -89,7 +88,6 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       const processMessages = (json) => {
-        //  console.log(json)
         this.setState({
           created: true,
           data: json.data.messagesByRoom,

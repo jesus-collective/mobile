@@ -24,7 +24,6 @@ export default class MyLoading extends Loading<Props> {
 
     props: Props
     render(): React.ReactNode {
-        //   console.log(this.props.authState)
         return (
 
             this.props.authState === 'loading' ?

@@ -299,7 +299,6 @@ export default class MyGroups extends JCComponent<Props, State> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       const processList = (json) => {
-        //console.log({ profile: json })
 
         let temp: any[]
         if (this.state.data)
@@ -336,7 +335,6 @@ export default class MyGroups extends JCComponent<Props, State> {
       });
 
       const processList = (json) => {
-        //console.log({ profile: json })
         this.setCanLeave(json.data.groupByType.items)
         this.setIsOwner(json.data.groupByType.items)
         let temp: any[]
@@ -354,7 +352,6 @@ export default class MyGroups extends JCComponent<Props, State> {
   }
   openSingle(id: string): void {
     console.log({ "Navigate to": this.state.openSingle })
-    // console.log(id)
     if (this.state.openSingle == "CourseOverviewScreen" && this.canLeave(id) && !this.isOwner(id))
       this.props.navigation.push("CourseHomeScreen", { id: id, create: false })
     else
@@ -377,7 +374,6 @@ export default class MyGroups extends JCComponent<Props, State> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       groupMemberByUser.then((json: any) => {
-        // console.log({ "groupMemberByUser": json })
         if (json.data.groupMemberByUser.items.length > 0) {
           this.setState({ canLeave: this.state.canLeave.concat([item.id]) })
         }
@@ -508,7 +504,6 @@ export default class MyGroups extends JCComponent<Props, State> {
   }
 
   renderGroup(item: any): React.ReactNode {
-    console.log(item)
     return <Card style={[this.styles.style.groupCard, { width: this.state.cardWidth }]} >
       <CardItem style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 10, height: 50, paddingBottom: 0 }} >
         {item.isSponsored === 'true' || item.isSponsored === true ?
@@ -569,7 +564,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       {
         item.name.length > 54 || item.name.length == 54 ?
           <CardItem style={{ height: 60, marginTop: 8 }}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitle} data-tip={item.name}>{item.name}</Text>
-            <ReactTooltip place="top" type="dark" effect="solid" backgroundColor="#F0493E" className="tooltipStyle"/>
+            <ReactTooltip place="top" type="dark" effect="solid" backgroundColor="#F0493E" className="tooltipStyle" />
           </CardItem>
           : <CardItem style={{ height: 60, marginTop: 8 }}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitle}>{item.name}</Text>
           </CardItem>
@@ -597,7 +592,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       </CardItem>
       {item.name.length > 29 || item.name.length == 29 ?
         <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitleGroup} data-tip={item.name}>{item.name}</Text>
-          <ReactTooltip place="top" type="dark" effect="solid" backgroundColor="#F0493E" className="tooltipStyle"/></CardItem>
+          <ReactTooltip place="top" type="dark" effect="solid" backgroundColor="#F0493E" className="tooltipStyle" /></CardItem>
         : <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitleGroup}>{item.name}</Text></CardItem>}
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetailMiddle}>Last Updated: {item.lastupdated}</Text></CardItem>
       {this.canJoin(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Resource") }}>Join</JCButton><Right></Right></CardItem> : null}
