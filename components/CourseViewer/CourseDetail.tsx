@@ -414,7 +414,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                             <Container style={this.styles.style.courseDetailButtonTrio}>
                               <JCButton buttonType={state.activeMessageBoard == "cohort" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("cohort") }}> Learning Collective</JCButton>
                               <JCButton buttonType={state.activeMessageBoard == "triad" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("triad") }}>Cohort</JCButton>
-                              <JCButton buttonType={state.activeMessageBoard == "instructor" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("instructor") }}>Facilitator</JCButton>
+                              {/*   <JCButton buttonType={state.activeMessageBoard == "instructor" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("instructor") }}>Facilitator</JCButton>*/}
                             </Container>
                             <Container style={this.styles.style.courseDetailMessageBoardContainer}>
                               {state.activeMessageBoard == "cohort" ? <MessageBoard style="mini" groupId={state.data.id}></MessageBoard> : null}
@@ -457,7 +457,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                                 : null}
 
 
-                              {state.activeMessageBoard == "instructor" ? <MessageBoard style="mini" groupId={state.data.id}></MessageBoard> : null}
+                              {/*state.activeMessageBoard == "instructor" ? <MessageBoard style="mini" groupId={state.data.id}></MessageBoard> : null*/}
                             </Container>
                           </Container> : null
                         }
