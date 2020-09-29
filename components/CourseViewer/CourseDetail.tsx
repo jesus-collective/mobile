@@ -55,7 +55,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
           placeholder="Word Count" multiline={false}
           data-testid="course-wordCount"
           textStyle={this.styles.style.fontFormSmallDarkGreyCourseTopEditable}
-          inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 30, marginBottom: 0, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
+          inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 30, marginBottom: 0, width: "23%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28, height: 30 }}
           value={item.wordCount} isEditable={state.isEditable && state.editMode}></EditableText>
         : null}
     </Container>
@@ -102,7 +102,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
             placeholder="Word Count" multiline={false}
             data-testid="course-wordCount"
             textStyle={this.styles.style.fontFormSmallDarkGreyCourseTopEditable}
-            inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 30, marginBottom: 0, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
+            inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 30, marginBottom: 0, width: "25%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28, height: 30 }}
             value={item.wordCount} isEditable={state.isEditable && state.editMode}></EditableText>
         </>
         : null}
