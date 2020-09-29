@@ -195,7 +195,7 @@ class MyMapImpl extends JCComponent<Props, State> {
 
           <View style={{ display: 'flex', height: this.props.visible ? '75%' : 0 }}>
             <View style={{ flex: 1, minHeight: 50 }}>
-              <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: '5%' }}>
+              <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start', paddingLeft: '4.5%' }}>
                 <JCSwitch switchLabel="Show Events" initState={false} onPress={() => this.setState({ eventsEnabled: !this.state.eventsEnabled })}></JCSwitch>
                 <JCSwitch switchLabel="Show Profiles" initState={true} onPress={() => this.setState({ profilesEnabled: !this.state.profilesEnabled })}></JCSwitch>
                 <JCSwitch switchLabel="Show Organizations" initState={true} containerWidth={200} onPress={() => this.setState({ organizationsEnabled: !this.state.organizationsEnabled })}></JCSwitch>
