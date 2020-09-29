@@ -51,7 +51,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
     Auth.currentAuthenticatedUser().then((user: any) => {
       const createDirectMessageRoom: any = API.graphql({
         query: mutations.createDirectMessageRoom,
-        variables: { input: { name: '' } },
+        variables: { input: { name: '', roomType: "directMessage", } },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
       createDirectMessageRoom.then((json) => {
@@ -88,12 +88,13 @@ export default class ConversationScreen extends JCComponent<Props, State>{
   }
   shouldCreateRoom = (): void => {
     if (!(this.state.data.map((item, index) => {
-      if ((item.room.messageUsers.items.length == 2) &&
-        (item.room.messageUsers.items[0].userID == this.props.route.params.initialUserID || item.room.messageUsers.items[1].userID == this.props.route.params.initialUserID)) {
-        console.log("Found")
-        this.setState({ selectedRoom: index, currentRoomId: this.state.data[index].roomID })
-        return true
-      }
+      if (item.room.roomType == null || item.room.roomType == "directMessage")
+        if ((item.room.messageUsers.items.length == 2) &&
+          (item.room.messageUsers.items[0].userID == this.props.route.params.initialUserID || item.room.messageUsers.items[1].userID == this.props.route.params.initialUserID)) {
+          console.log("Found")
+          this.setState({ selectedRoom: index, currentRoomId: this.state.data[index].roomID })
+          return true
+        }
     }).some((z) => { return z }))) {
       console.log("Creating Room")
       if (this.props.route.params.initialUserID != null && this.props.route.params.initialUserName != null && this.props.route.params.initialUserID != 'null' && this.props.route.params.initialUserName != 'null')
@@ -211,7 +212,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
               }
 
               {this.state.data != null ?
-                this.state.data.map((item, index) => {
+                this.state.data.filter(item => item.room.roomType == "directMessage" || item.room.roomType == null).map((item, index) => {
                   const otherUsers = this.getOtherUsers(item)
                   let stringOfNames = ''
                   otherUsers.names.forEach((name, index) => {

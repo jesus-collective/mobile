@@ -12,6 +12,7 @@ export const listDirectMessageRooms = /* GraphQL */ `
       items {
         id
         name
+        roomType
         messageUsers {
           items {
             id
@@ -459,6 +460,7 @@ export const getDirectMessageUser = /* GraphQL */ `
        room {
          id
          name
+         roomType
          messageUsers {
            items {
              id
@@ -638,6 +640,7 @@ export const listDirectMessageUsers = /* GraphQL */ `
         room {
           id
           name
+          roomType
           messageUsers {
             items {
               id

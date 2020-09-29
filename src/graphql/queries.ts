@@ -2105,6 +2105,7 @@ export const getDirectMessageUser = /* GraphQL */ `
         directMessage {
           nextToken
         }
+        roomType
         createdAt
         updatedAt
       }
@@ -2166,6 +2167,7 @@ export const listDirectMessageUsers = /* GraphQL */ `
         room {
           id
           name
+          roomType
           createdAt
           updatedAt
         }
@@ -2207,6 +2209,7 @@ export const getDirectMessageRoom = /* GraphQL */ `
         }
         nextToken
       }
+      roomType
       createdAt
       updatedAt
     }
@@ -2232,6 +2235,7 @@ export const listDirectMessageRooms = /* GraphQL */ `
         directMessage {
           nextToken
         }
+        roomType
         createdAt
         updatedAt
       }
@@ -2345,6 +2349,7 @@ export const getDirectMessage = /* GraphQL */ `
         directMessage {
           nextToken
         }
+        roomType
         createdAt
         updatedAt
       }
@@ -2406,6 +2411,7 @@ export const listDirectMessages = /* GraphQL */ `
         messageRoom {
           id
           name
+          roomType
           createdAt
           updatedAt
         }
@@ -3622,6 +3628,7 @@ export const dmUsersByUser = /* GraphQL */ `
         room {
           id
           name
+          roomType
           createdAt
           updatedAt
         }
@@ -3695,6 +3702,7 @@ export const directMessagesByRoom = /* GraphQL */ `
         messageRoom {
           id
           name
+          roomType
           createdAt
           updatedAt
         }

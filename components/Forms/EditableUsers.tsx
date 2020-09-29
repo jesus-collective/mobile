@@ -78,8 +78,8 @@ export default class EditableText extends JCComponent<Props> {
     }
     render(): React.ReactNode {
 
-
-        if (this.props.isEditable)
+        if (this.props.isEditable) {
+            console.log({ listOfUsers: this.props.value })
             return (
                 <Chips
 
@@ -116,6 +116,7 @@ export default class EditableText extends JCComponent<Props> {
                     }}
                 />
             )
+        }
         else
             return <div>{
                 this.props.value.map((item) => {

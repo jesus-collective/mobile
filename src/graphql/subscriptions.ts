@@ -5350,6 +5350,7 @@ export const onCreateDirectMessageUser = /* GraphQL */ `
         directMessage {
           nextToken
         }
+        roomType
         createdAt
         updatedAt
       }
@@ -5460,6 +5461,7 @@ export const onUpdateDirectMessageUser = /* GraphQL */ `
         directMessage {
           nextToken
         }
+        roomType
         createdAt
         updatedAt
       }
@@ -5570,6 +5572,7 @@ export const onDeleteDirectMessageUser = /* GraphQL */ `
         directMessage {
           nextToken
         }
+        roomType
         createdAt
         updatedAt
       }
@@ -5609,6 +5612,7 @@ export const onCreateDirectMessageRoom = /* GraphQL */ `
         }
         nextToken
       }
+      roomType
       createdAt
       updatedAt
     }
@@ -5645,6 +5649,7 @@ export const onUpdateDirectMessageRoom = /* GraphQL */ `
         }
         nextToken
       }
+      roomType
       createdAt
       updatedAt
     }
@@ -5681,6 +5686,7 @@ export const onDeleteDirectMessageRoom = /* GraphQL */ `
         }
         nextToken
       }
+      roomType
       createdAt
       updatedAt
     }
@@ -5792,6 +5798,7 @@ export const onCreateDirectMessage = /* GraphQL */ `
         directMessage {
           nextToken
         }
+        roomType
         createdAt
         updatedAt
       }
@@ -5906,6 +5913,7 @@ export const onUpdateDirectMessage = /* GraphQL */ `
         directMessage {
           nextToken
         }
+        roomType
         createdAt
         updatedAt
       }
@@ -6020,6 +6028,7 @@ export const onDeleteDirectMessage = /* GraphQL */ `
         directMessage {
           nextToken
         }
+        roomType
         createdAt
         updatedAt
       }

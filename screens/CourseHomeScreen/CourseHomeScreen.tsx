@@ -150,9 +150,9 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
     })
   }
   updateInstructors = async (value: any): Promise<void> => {
-
-    const del = this.state.courseData.instructors.items.filter(x => !value.map(z => z.id).includes(x.user.id));
-    const add = value.filter(x => !this.state.courseData.instructors.items.map(z => z.user.id).includes(x.id));
+    console.log(this.state.courseData.instructors.items)
+    const del = this.state.courseData.instructors.items.filter(x => !value.map(z => z.id).includes(x.userID));
+    const add = value.filter(x => !this.state.courseData.instructors.items.map(z => z.userID).includes(x.id));
     // const delTriadID= this.state.courseData.triads.items[index].users.items.map((item)=>{del.contains(item.})
     console.log({ del: del })
     add.map(async (item) => {
@@ -218,8 +218,8 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
   }
   updateTriadUsers = async (index: number, value: any): Promise<void> => {
 
-    const del = this.state.courseData.triads.items[index].users.items.filter(x => !value.map(z => z.id).includes(x.user.id));
-    const add = value.filter(x => !this.state.courseData.triads.items[index].users.items.map(z => z.user.id).includes(x.id));
+    const del = this.state.courseData.triads.items[index].users.items.filter(x => !value.map(z => z.id).includes(x.userID));
+    const add = value.filter(x => !this.state.courseData.triads.items[index].users.items.map(z => z.userID).includes(x.id));
     // const delTriadID= this.state.courseData.triads.items[index].users.items.map((item)=>{del.contains(item.})
     console.log({ del: del })
     add.map(async (item) => {
@@ -324,8 +324,8 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
     return final
   }
   updateTriadCoaches = async (index: number, value: any): Promise<void> => {
-    const del = this.state.courseData.triads.items[index].coaches.items.filter(x => !value.map(z => z.id).includes(x.user.id));
-    const add = value.filter(x => !this.state.courseData.triads.items[index].coaches.items.map(z => z.user.id).includes(x.id));
+    const del = this.state.courseData.triads.items[index].coaches.items.filter(x => !value.map(z => z.id).includes(x.userID));
+    const add = value.filter(x => !this.state.courseData.triads.items[index].coaches.items.map(z => z.userID).includes(x.id));
     // const delTriadID= this.state.courseData.triads.items[index].users.items.map((item)=>{del.contains(item.})
     add.map(async (item) => {
 

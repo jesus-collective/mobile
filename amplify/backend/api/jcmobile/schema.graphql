@@ -361,7 +361,7 @@ type DirectMessageRoom
   name:String
   messageUsers:[DirectMessageUser] @connection(keyName: "byUser", fields: ["id"])
   directMessage:[DirectMessage] @connection(keyName: "byMessageUser", fields: ["id"])
-
+  roomType:String
 }
 type DirectMessage
 @model

@@ -106,6 +106,7 @@ export const batchCreateDirectMessageUsers = /* GraphQL */ `
         directMessage {
           nextToken
         }
+        roomType
         createdAt
         updatedAt
       }
@@ -5259,6 +5260,7 @@ export const createDirectMessageUser = /* GraphQL */ `
         directMessage {
           nextToken
         }
+        roomType
         createdAt
         updatedAt
       }
@@ -5369,6 +5371,7 @@ export const updateDirectMessageUser = /* GraphQL */ `
         directMessage {
           nextToken
         }
+        roomType
         createdAt
         updatedAt
       }
@@ -5479,6 +5482,7 @@ export const deleteDirectMessageUser = /* GraphQL */ `
         directMessage {
           nextToken
         }
+        roomType
         createdAt
         updatedAt
       }
@@ -5518,6 +5522,7 @@ export const createDirectMessageRoom = /* GraphQL */ `
         }
         nextToken
       }
+      roomType
       createdAt
       updatedAt
     }
@@ -5554,6 +5559,7 @@ export const updateDirectMessageRoom = /* GraphQL */ `
         }
         nextToken
       }
+      roomType
       createdAt
       updatedAt
     }
@@ -5590,6 +5596,7 @@ export const deleteDirectMessageRoom = /* GraphQL */ `
         }
         nextToken
       }
+      roomType
       createdAt
       updatedAt
     }
@@ -5701,6 +5708,7 @@ export const createDirectMessage = /* GraphQL */ `
         directMessage {
           nextToken
         }
+        roomType
         createdAt
         updatedAt
       }
@@ -5815,6 +5823,7 @@ export const updateDirectMessage = /* GraphQL */ `
         directMessage {
           nextToken
         }
+        roomType
         createdAt
         updatedAt
       }
@@ -5929,6 +5938,7 @@ export const deleteDirectMessage = /* GraphQL */ `
         directMessage {
           nextToken
         }
+        roomType
         createdAt
         updatedAt
       }

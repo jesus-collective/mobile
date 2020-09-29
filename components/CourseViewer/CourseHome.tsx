@@ -56,7 +56,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                   <Text style={this.styles.style.courseFontConnectWithName}>{user.given_name} {user.family_name}</Text>
                   <Text style={this.styles.style.fontConnectConversation}>{user.currentRole}</Text>
                   <Button bordered style={this.styles.style.courseHomeConversationButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.courseFontStartConversation}>Start Conversation</Text></Button>
-                  <Button bordered style={this.styles.style.courseHomeConversationButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.courseFontStartConversation}>Book Call</Text></Button>
+                  {/*<Button bordered style={this.styles.style.courseHomeConversationButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.courseFontStartConversation}>Book Call</Text></Button>*/}
                 </Body>
               </Left>
             </CardItem>
@@ -103,8 +103,12 @@ class CourseHomeImpl extends JCComponent<Props>{
 
                               <Text style={this.styles.style.courseFontConnectWithName}>{state.courseData?.instructors?.items[0]?.user?.given_name} {state.courseData?.instructors?.items[0]?.user?.family_name}</Text>
                               <Text style={this.styles.style.courseFontConnectConversation}>{state.courseData?.instructors?.items[0]?.user?.currentRole}</Text>
-                              <JCButton onPress={() => { null }} buttonType={ButtonTypes.CourseHome}>Book a Call</JCButton>
-                              <JCButton onPress={() => { this.openConversation(state.courseData?.instructors?.items[0]?.user?.id, state.courseData?.instructors?.items[0]?.user?.given_name + " " + state.courseData.instructors?.items[0]?.user?.family_name) }} buttonType={ButtonTypes.CourseTransparentBoldOrange}>Send Message</JCButton>
+                              {/*  <JCButton onPress={() => { null }} buttonType={ButtonTypes.CourseHome}>Book a Call</JCButton>*/}
+                              {state.courseData?.instructors?.items[0]?.user?.id ?
+                                <JCButton
+                                  onPress={() => { this.openConversation(state.courseData?.instructors?.items[0]?.user?.id, state.courseData?.instructors?.items[0]?.user?.given_name + " " + state.courseData.instructors?.items[0]?.user?.family_name) }}
+                                  buttonType={ButtonTypes.CourseTransparentBoldOrange}>Start Conversation</JCButton>
+                                : null}
                             </Container>
                             <Container style={this.styles.style.courseHomeMainTextContainer}>
                               <Text style={this.styles.style.courseHomeDescriptionText}>
