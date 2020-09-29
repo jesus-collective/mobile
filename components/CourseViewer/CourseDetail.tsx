@@ -175,22 +175,11 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                 inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 30, marginBottom: 30, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
                 value={week.title} isEditable={state.isEditable && state.editMode}></EditableText>
 
-              <EditableDate type="date"
-                onChange={(time: any, timeZone: any) => { actions.updateWeek(state.activeWeek, "date", time); actions.updateWeek(state.activeWeek, "tz", timeZone) }}
-                placeholder="Enter Week Start Date"
-                textStyle={this.styles.style.fontRegular}
-                inputStyle={this.styles.style.groupNameInput}
-                value={week.date}
-                tz={week.tz ? week.tz : moment.tz.guess()}
-                isEditable={state.isEditable && state.editMode}></EditableDate>
+              <EditableRichText onChange={(val) => { actions.updateWeek(state.activeWeek, "leader", val) }}
+                value={week.leader}
+                isEditable={state.isEditable && state.editMode}
+                textStyle={{ marginLeft: 10 }} inputStyle={{ margintop: 20, marginLeft: 20 }}></EditableRichText>
 
-
-              <EditableText onChange={(e) => { actions.updateWeek(state.activeWeek, "leader", e) }}
-                placeholder="Lesson Leader" multiline={false}
-                data-testid="course-lessonTitle"
-                textStyle={this.styles.style.fontFormSmallDarkGrey}
-                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 30, marginBottom: 30, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
-                value={week.leader} isEditable={state.isEditable && state.editMode}></EditableText>
             </Container>
             <Container>
               {week.lessons?.items?.map((item: any, lesson: number) => {

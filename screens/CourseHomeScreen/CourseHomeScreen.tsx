@@ -458,7 +458,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
     {
       week: this.state.courseData.courseWeeks.items.length + 1,
       name: "New Menu Item",
-      leader: "Leader TBD",
+      leader: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
       courseInfoID: this.state.courseData.id
     }
     try {
