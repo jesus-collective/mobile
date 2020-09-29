@@ -623,7 +623,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       </CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetail}>Last Updated: {item.lastupdated}</Text></CardItem>
       {this.canJoin(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Course") }}>Join</JCButton><Right></Right></CardItem> : null}
-      {this.canLeave(item.id) && !this.isOwner(item.id) ? <CardItem ><Text>Member</Text><Right></Right></CardItem> : null}
+      {this.canLeave(item.id) && !this.isOwner(item.id) ? <CardItem ><Text style={{ fontFamily: "Graphik-Bold-App", color: "#333333" }}>Member</Text><Right></Right></CardItem> : null}
       {this.isOwner(item.id) ? <CardItem ><Text>Owner</Text><Right></Right></CardItem> : null}
     </Card>
   }
