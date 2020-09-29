@@ -49,9 +49,7 @@ class CourseHomeImpl extends JCComponent<Props>{
           <Card style={this.styles.style.courseConversationCard}>
             <CardItem>
               <Left style={this.styles.style.courseHomeConversationCard}>
-                <ProfileImage user={user} size='large' style='my-people'>
-                </ProfileImage>
-
+                <ProfileImage linkToProfile={true} user={user} size='large' style='my-people' />
                 <Body style={this.styles.style.dashboardConversationBody}>
                   <Text style={this.styles.style.courseFontConnectWithName}>{user.given_name} {user.family_name}</Text>
                   <Text style={this.styles.style.fontConnectConversation}>{user.currentRole}</Text>
@@ -96,9 +94,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                         <Container style={this.styles.style.courseHomeLeftContainer}>
                           <Container style={this.styles.style.courseHomeSyllabusContainer}>
                             <Container style={this.styles.style.courseProfileImageButtonsContainer}>
-                              <ProfileImage user={state.courseData?.instructors?.items[0]?.user} size='medium' style='courseProfile'>
-
-                              </ProfileImage>
+                              <ProfileImage linkToProfile={true} user={state.courseData?.instructors?.items[0]?.user} size='medium' style='courseProfile' />
 
                               <Text style={this.styles.style.courseFontConnectWithName}>{state.courseData?.instructors?.items[0]?.user?.given_name} {state.courseData?.instructors?.items[0]?.user?.family_name}</Text>
                               <Text style={this.styles.style.courseFontConnectConversation}>{state.courseData?.instructors?.items[0]?.user?.currentRole}</Text>
@@ -190,7 +186,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                                 value={coaches ? coaches : []} isEditable={true}></EditableUsers>
                                             </CardItem>
                                             <CardItem style={{ zIndex: -1 }}>
-                                              <Text style={{ zIndex: -1, fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Learning Group</Text>
+                                              <Text style={{ zIndex: -1, fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Cohort</Text>
                                             </CardItem>
                                             <CardItem >
                                               <EditableUsers
@@ -208,7 +204,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                       })
                                       }
                                       <TouchableOpacity containerStyle={{ zIndex: -1 }} style={{ marginTop: 30, zIndex: -1 }} onPress={() => { actions.createTriad() }}>
-                                        <Card style={{ zIndex: -1 }}><Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', paddingLeft: 5, paddingTop: 6, paddingBottom: 6 }}>Add Learning Group</Text></Card>
+                                        <Card style={{ zIndex: -1 }}><Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', paddingLeft: 5, paddingTop: 6, paddingBottom: 6 }}>Add Cohort</Text></Card>
                                       </TouchableOpacity>
                                     </>)
                                     : (null)
@@ -230,14 +226,14 @@ class CourseHomeImpl extends JCComponent<Props>{
                                           <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginTop: 70, width: '90%' }}>You have not been assigned a facilitator yet</Text>
                                       }
                                     </View>
-                                    <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Learning Group</Text>
+                                    <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Cohort</Text>
                                     <View style={this.styles.style.courseMyLearningGroupContainer}>
                                       {
                                         completeTriad.triad ?
                                           completeTriad.triad.map((user) => {
                                             return this.renderProfileCard(user)
                                           }) :
-                                          <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginTop: 70, width: '90%' }}>You have not been assigned a learning group yet</Text>
+                                          <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Regular-App', marginTop: 70, width: '90%' }}>You have not been assigned a cohort yet</Text>
                                       }
                                     </View>
                                   </React.Fragment>

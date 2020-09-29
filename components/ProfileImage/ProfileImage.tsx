@@ -1,10 +1,11 @@
-import { Image } from 'react-native'
+import { Image, TouchableOpacity } from 'react-native'
 import * as React from 'react';
 import * as customQueries from '../../src/graphql-custom/queries';
 import { API, graphqlOperation, Storage } from 'aws-amplify';
 import Amplify from 'aws-amplify'
 import awsconfig from '../../src/aws-exports';
 import JCComponent, { JCState } from '../JCComponent/JCComponent';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 Amplify.configure(awsconfig);
 
@@ -13,12 +14,15 @@ interface Props {
     size: "small" | "xsmall" | "medium" | "large" | "small2" | "small3"
     style?: 'map' | 'my-people' | 'courseProfile'
     isOrg?: boolean
+    linkToProfile?: boolean
+    navigation?: any
+    route?: any
 }
 interface State extends JCState {
     profileImage: any
     showEmpty: boolean
 }
-export default class MyProfile extends JCComponent<Props, State> {
+class MyProfileImpl extends JCComponent<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -37,6 +41,20 @@ export default class MyProfile extends JCComponent<Props, State> {
             this.getProfileImage(props.user ? props.user.profileImage : null)
         }
     }
+    showProfile(): void {
+        console.log("Navigate to profileScreen")
+        if (typeof this.props.user === "string" && this.props.user !== "") {
+            if (this.props.isOrg) {
+                this.props.navigation.push("OrganizationScreen", { id: this.props.user, create: false });
+            } else {
+                this.props.navigation.push("ProfileScreen", { id: this.props.user, create: false });
+            }
+        } else {
+            this.props.navigation.push("ProfileScreen", { id: this.props.user.id, create: false });
+        }
+
+    }
+
     componentDidUpdate(prevProps: Props): void {
         if (prevProps.user !== this.props.user)
             if (typeof this.props.user === "string" && this.props.user !== "") {
@@ -93,18 +111,18 @@ export default class MyProfile extends JCComponent<Props, State> {
         })
     }
 
-    render(): React.ReactNode {
+    renderImage(): React.ReactNode {
         return (
             this.state.profileImage != null ?
                 <Image style={this.props.size == 'xsmall' ?
                     { width: "20px", height: "20px", borderRadius: 18, marginRight: 5, marginBottom: 5 }
                     : this.props.size == 'small' ?
                         this.styles.style.smallProfileImageMBoard : this.props.size == 'small3' ?
-                        this.styles.style.smallProfileImageConversations :
-                        this.props.size == 'small2' ?
-                            { width: "50px", height: "66px", borderRadius: 120, marginRight: 10, marginBottom: 0, marginLeft: 10, top: 0 } :
-                            this.props.style === "map" || this.props.style === "my-people" ? { width: "80px", height: "96px", borderRadius: 120, marginRight: 10, marginBottom: 15 } : this.props.style === 'courseProfile' ? { width: "80px", height: "96px", borderRadius: 120, marginRight: 10, marginBottom: 15, alignSelf: 'center' } :
-                                { width: "250px", height: "290px", borderRadius: 120, marginRight: 10, marginBottom: 15 }
+                            this.styles.style.smallProfileImageConversations :
+                            this.props.size == 'small2' ?
+                                { width: "50px", height: "66px", borderRadius: 120, marginRight: 10, marginBottom: 0, marginLeft: 10, top: 0 } :
+                                this.props.style === "map" || this.props.style === "my-people" ? { width: "80px", height: "96px", borderRadius: 120, marginRight: 10, marginBottom: 15 } : this.props.style === 'courseProfile' ? { width: "80px", height: "96px", borderRadius: 120, marginRight: 10, marginBottom: 15, alignSelf: 'center' } :
+                                    { width: "250px", height: "290px", borderRadius: 120, marginRight: 10, marginBottom: 15 }
 
                 }
                     resizeMode={this.props.size == 'xsmall' ? "contain" : "cover"}
@@ -132,4 +150,17 @@ export default class MyProfile extends JCComponent<Props, State> {
 
         )
     }
+    render(): React.ReactNode {
+        if (this.props.linkToProfile)
+            return <TouchableOpacity onPress={() => { this.showProfile() }}>
+                {this.renderImage()}
+            </TouchableOpacity>
+        else
+            return this.renderImage()
+    }
+}
+export default function MyProfile(props: Props): JSX.Element {
+    const route = useRoute();
+    const navigation = useNavigation()
+    return <MyProfileImpl {...props} navigation={navigation} route={route} />;
 }
