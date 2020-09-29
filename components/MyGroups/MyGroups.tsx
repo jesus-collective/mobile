@@ -3,7 +3,7 @@ import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
 import ReactTooltip from "react-tooltip";
 import * as React from 'react';
 import { Text, Dimensions, View } from 'react-native'
-
+import './MyGroups.css';
 import getTheme from '../../native-base-theme/components';
 import { Image } from 'react-native'
 import * as customQueries from '../../src/graphql-custom/queries';
@@ -520,7 +520,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       {item.name.length > 54 || item.name.length == 54 ?
         <CardItem style={{ height: 100, paddingTop: 0 }}><Text ellipsizeMode='tail' numberOfLines={3} style={[this.styles.style.fontTitleGroup, { paddingTop: 0 }]} data-tip={item.name}>{item.name}</Text>
           <Image style={{ margin: 0, padding: 0, width: 40, height: 40, borderRadius: 100, alignSelf: 'flex-end' }} source={require('../../assets/icon.png')}></Image>
-          <ReactTooltip place="top" type="dark" effect="solid" backgroundColor="#F0493E" />
+          <ReactTooltip place="top" type="dark" effect="solid" backgroundColor="#F0493E" className="tooltipStyle" />
         </CardItem>
         : <CardItem style={{ height: 100, paddingTop: 0 }}><Text ellipsizeMode='tail' numberOfLines={3} style={[this.styles.style.fontTitleGroup, { paddingTop: 0 }]}>{item.name}</Text>
         </CardItem>
@@ -542,8 +542,8 @@ export default class MyGroups extends JCComponent<Props, State> {
   renderProfile(item: any): React.ReactNode {
     return <Card key={item.id} style={this.styles.style.profilesCard}>
       <CardItem style={this.styles.style.profileCard}>
-        <Left style={{ paddingTop: 20 }}>
-          <ProfileImage user={item} size="small"></ProfileImage>
+        <Left style={{ paddingTop: 15 }}>
+          <ProfileImage user={item} size="small3"></ProfileImage>
           <Body>
             <Text style={this.styles.style.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
             <Text style={this.styles.style.fontConnectWithRole}>{item.currentRole}</Text>
@@ -569,7 +569,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       {
         item.name.length > 54 || item.name.length == 54 ?
           <CardItem style={{ height: 60, marginTop: 8 }}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitle} data-tip={item.name}>{item.name}</Text>
-            <ReactTooltip place="top" type="dark" effect="solid" backgroundColor="#F0493E" />
+            <ReactTooltip place="top" type="dark" effect="solid" backgroundColor="#F0493E" className="tooltipStyle"/>
           </CardItem>
           : <CardItem style={{ height: 60, marginTop: 8 }}><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitle}>{item.name}</Text>
           </CardItem>
@@ -597,7 +597,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       </CardItem>
       {item.name.length > 29 || item.name.length == 29 ?
         <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitleGroup} data-tip={item.name}>{item.name}</Text>
-          <ReactTooltip place="top" type="dark" effect="solid" backgroundColor="#F0493E" /></CardItem>
+          <ReactTooltip place="top" type="dark" effect="solid" backgroundColor="#F0493E" className="tooltipStyle"/></CardItem>
         : <CardItem ><Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitleGroup}>{item.name}</Text></CardItem>}
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetailMiddle}>Last Updated: {item.lastupdated}</Text></CardItem>
       {this.canJoin(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Resource") }}>Join</JCButton><Right></Right></CardItem> : null}
@@ -619,11 +619,11 @@ export default class MyGroups extends JCComponent<Props, State> {
       </CardItem>
       <CardItem >
         <Text ellipsizeMode='tail' numberOfLines={3} style={this.styles.style.fontTitleGroup} data-tip={item.name}>{item.name}</Text>
-        <ReactTooltip place="top" type="dark" effect="solid" backgroundColor="#F0493E" />
+        <ReactTooltip place="top" type="dark" effect="solid" backgroundColor="#F0493E" className="tooltipStyle" />
       </CardItem>
       <CardItem ><Text ellipsizeMode='tail' numberOfLines={1} style={this.styles.style.fontDetail}>Last Updated: {item.lastupdated}</Text></CardItem>
       {this.canJoin(item.id) && !this.isOwner(item.id) ? <CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.join(item, "Course") }}>Join</JCButton><Right></Right></CardItem> : null}
-      {this.canLeave(item.id) && !this.isOwner(item.id) ? <CardItem ><Text>Member</Text><Right></Right></CardItem> : null}
+      {this.canLeave(item.id) && !this.isOwner(item.id) ? <CardItem ><Text style={{ fontFamily: "Graphik-Bold-App", color: "#333333" }}>Member</Text><Right></Right></CardItem> : null}
       {this.isOwner(item.id) ? <CardItem ><Text>Owner</Text><Right></Right></CardItem> : null}
     </Card>
   }
