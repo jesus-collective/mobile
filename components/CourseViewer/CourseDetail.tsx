@@ -215,7 +215,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                             value={item.name} isEditable={state.isEditable && state.editMode}></EditableText>
 
                           <Container style={this.styles.style.courseActivityDetails}>
-                            <Text style={state.isEditable ? { marginRight: 30, paddingTop: 0 } : { marginRight: 30, paddingTop: 4 } }>
+                            <Text style={state.isEditable && state.editMode ? { marginRight: 30, paddingTop: 0 } : { marginRight: 30, paddingTop: 5 } }>
                               {state.isEditable ?
                                 null
                                 : <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }} source={require('../../assets/svg/time.svg')} />
@@ -260,7 +260,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                                 'zoom': (<Text style={{ alignSelf: 'flex-start' }}>
                                   <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
                                     source={require('../../assets/svg/document.svg')} />Zoom</Text>)
-                              }[item.lessonType] || (<Text style={{ alignSelf: 'center' }}>
+                              }[item.lessonType] || (<Text style={{ alignSelf: 'flex-start' }}>
                                 <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
                                   source={require('../../assets/svg/document.svg')} />Zoom</Text>)
                             }
