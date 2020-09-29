@@ -47,7 +47,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
             products: [],
             name: '',
             description: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
-            productId: '',
+            productId: `JC-${Date.now()}`,
             confirmationMsg: '',
             price: '',
             mode: 'save'
@@ -97,11 +97,13 @@ export default class AdminScreen extends JCComponent<Props, State>{
     }
 
     async saveProduct(): Promise<void> {
+        if (isNaN(parseInt(this.state.price)))
+            return;
         try {
             switch (this.state.mode) {
                 case 'save':
                     const newProduct: CreateProductInput = {
-                        id: `JC-${Date.now()}`,
+                        id: this.state.productId,
                         price: parseFloat(this.state.price),
                         description: this.state.description,
                         name: this.state.name,
@@ -117,7 +119,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
                     this.setState({
                         name: '',
                         description: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
-                        productId: '',
+                        productId: `JC-${Date.now()}`,
                         confirmationMsg: '',
                         price: '',
                     });
@@ -140,9 +142,10 @@ export default class AdminScreen extends JCComponent<Props, State>{
                     this.setState({
                         name: '',
                         description: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
-                        productId: '',
+                        productId: `JC-${Date.now()}`,
                         confirmationMsg: '',
                         price: '',
+
                     });
                     break;
             }
@@ -160,6 +163,12 @@ export default class AdminScreen extends JCComponent<Props, State>{
                 {this.isMemberOf("admin") ?
                     <Content>
                         <View>
+                            <Text>Id: </Text>
+                            <TextInput
+                                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => { this.setState({ name: val.nativeEvent.text }) }}
+                                placeholder="Name"
+                                multiline={false}
+                                value={this.state.productId}></TextInput>
                             <Text>Product name: </Text>
                             <TextInput
                                 onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => { this.setState({ name: val.nativeEvent.text }) }}
@@ -206,7 +215,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
                                             <Text style={{ alignSelf: 'center' }}>{product.id}</Text>
                                         </View>
                                         <View style={{ borderColor: 'black', borderWidth: 1, width: 250, margin: 0, borderRadius: 0 }}>
-                                            <Text style={{ alignSelf: 'center' }}>{product.price.toFixed(2)}</Text>
+                                            <Text style={{ alignSelf: 'center' }}>{typeof (product.price) == "number" ? product.price.toFixed(2) : "NaN"}</Text>
                                         </View>
                                     </View>
                                     <AntDesign name="delete" size={20} color="black" onPress={() => this.deleteProduct(product.id)} />
