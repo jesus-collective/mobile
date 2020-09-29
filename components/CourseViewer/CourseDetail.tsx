@@ -55,7 +55,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
           placeholder="Word Count" multiline={false}
           data-testid="course-wordCount"
           textStyle={this.styles.style.fontFormSmallDarkGreyCourseTopEditable}
-          inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 30, marginBottom: 30, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
+          inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 30, marginBottom: 0, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
           value={item.wordCount} isEditable={state.isEditable && state.editMode}></EditableText>
         : null}
     </Container>
@@ -102,7 +102,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
             placeholder="Word Count" multiline={false}
             data-testid="course-wordCount"
             textStyle={this.styles.style.fontFormSmallDarkGreyCourseTopEditable}
-            inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 30, marginBottom: 30, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
+            inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 30, marginBottom: 0, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
             value={item.wordCount} isEditable={state.isEditable && state.editMode}></EditableText>
         </>
         : null}
@@ -215,7 +215,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                             value={item.name} isEditable={state.isEditable && state.editMode}></EditableText>
 
                           <Container style={this.styles.style.courseActivityDetails}>
-                            <Text style={state.isEditable && state.editMode ? { marginRight: 30, paddingTop: 0 } : { marginRight: 30, paddingTop: 5 } }>
+                            <Text style={state.isEditable && state.editMode ? { marginRight: 10, paddingTop: 0 } : { marginRight: 20, paddingTop: 5 } }>
                               {state.isEditable ?
                                 null
                                 : <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }} source={require('../../assets/svg/time.svg')} />
@@ -224,7 +224,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                                 placeholder="Duration" multiline={false}
                                 data-testid="course-lessonDuration"
                                 textStyle={this.styles.style.courseTimeNonEditable}
-                                inputStyle={state.isEditable ? { borderWidth: 1, borderColor: "#dddddd", marginTop: 0, marginBottom: 0, width: "100%", paddingTop: 5, paddingRight: 5, paddingBottom: 5, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, height: 30 } : { borderWidth: 1, borderColor: "#dddddd", marginTop: 5, marginBottom: 5, width: "100%", paddingTop: 5, paddingRight: 5, paddingBottom: 5, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, height: 30 }}
+                                inputStyle={state.isEditable && state.editMode ? { borderWidth: 1, borderColor: "#dddddd", marginTop: 0, marginBottom: 0, width: "100%", paddingTop: 5, paddingRight: 5, paddingBottom: 5, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, height: 30 } : { borderWidth: 1, borderColor: "#dddddd", marginTop: 5, marginBottom: 5, width: "100%", paddingTop: 5, paddingRight: 5, paddingBottom: 5, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, height: 30 }}
                                 value={item.duration} isEditable={state.isEditable && state.editMode}></EditableText>
                             </Text>
 
@@ -237,7 +237,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                                 onMoveShouldSetResponder={() => true}
                                 mode="dropdown"
                                 iosIcon={<Icon name="arrow-down" />}
-                                style={{ width: "50%", marginBottom: 0, marginTop: 0, fontSize: 16, height: 30, flexGrow: 0, marginRight: 0, borderColor: '#dddddd' }}
+                                style={{ width: "30%", marginBottom: 0, marginTop: 0, fontSize: 16, height: 30, flexGrow: 0, marginRight: 0, borderColor: '#dddddd' }}
                                 placeholder="Event type"
                                 placeholderStyle={{ color: "#bfc6ea" }}
                                 placeholderIconColor="#007aff"
