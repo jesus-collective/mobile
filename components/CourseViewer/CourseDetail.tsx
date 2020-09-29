@@ -215,7 +215,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                             value={item.name} isEditable={state.isEditable && state.editMode}></EditableText>
 
                           <Container style={this.styles.style.courseActivityDetails}>
-                            <Text style={{ marginRight: 30, paddingTop: 4 }}>
+                            <Text style={state.isEditable ? { marginRight: 30, paddingTop: 0 } : { marginRight: 30, paddingTop: 4 } }>
                               {state.isEditable ?
                                 null
                                 : <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }} source={require('../../assets/svg/time.svg')} />
@@ -223,8 +223,8 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                               <EditableText onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "duration", e) }}
                                 placeholder="Duration" multiline={false}
                                 data-testid="course-lessonDuration"
-                                textStyle={this.styles.style.fontFormSmallDarkGrey}
-                                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 5, marginBottom: 5, width: "100%", paddingTop: 5, paddingRight: 5, paddingBottom: 5, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, height: 30 }}
+                                textStyle={this.styles.style.courseTimeNonEditable}
+                                inputStyle={state.isEditable ? { borderWidth: 1, borderColor: "#dddddd", marginTop: 0, marginBottom: 0, width: "100%", paddingTop: 5, paddingRight: 5, paddingBottom: 5, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, height: 30 } : { borderWidth: 1, borderColor: "#dddddd", marginTop: 5, marginBottom: 5, width: "100%", paddingTop: 5, paddingRight: 5, paddingBottom: 5, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, height: 30 }}
                                 value={item.duration} isEditable={state.isEditable && state.editMode}></EditableText>
                             </Text>
 
