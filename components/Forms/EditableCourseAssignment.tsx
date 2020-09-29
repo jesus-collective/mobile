@@ -88,7 +88,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
         Auth.currentAuthenticatedUser().then((user: any) => {
             const createDirectMessageRoom: any = API.graphql({
                 query: mutations.createDirectMessageRoom,
-                variables: { input: { id: "course-" + this.props.assignmentId + "-" + user['username'], roomType: "assignment", name: user.attributes['given_name'] + ' ' + user.attributes['family_name'] + ' assignment' } },
+                variables: { input: { id: "course-" + this.props.assignmentId + "-" + user['username'], roomType: "assignment", name: user.attributes['given_name'] + ' ' + user.attributes['family_name'] + "'s assignment" } },
                 authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
             });
             createDirectMessageRoom.then((json) => {
