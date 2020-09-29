@@ -542,8 +542,8 @@ export default class MyGroups extends JCComponent<Props, State> {
   renderProfile(item: any): React.ReactNode {
     return <Card key={item.id} style={this.styles.style.profilesCard}>
       <CardItem style={this.styles.style.profileCard}>
-        <Left style={{ paddingTop: 20 }}>
-          <ProfileImage user={item} size="small"></ProfileImage>
+        <Left style={{ paddingTop: 15 }}>
+          <ProfileImage user={item} size="small3"></ProfileImage>
           <Body>
             <Text style={this.styles.style.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
             <Text style={this.styles.style.fontConnectWithRole}>{item.currentRole}</Text>

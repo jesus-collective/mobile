@@ -1742,6 +1742,15 @@ export default class MainStyles {
                 marginLeft: 10, 
                 top: 30
             },
+            smallProfileImageConversations: {
+                width: "50px", 
+                height: "66px", 
+                borderRadius: 120, 
+                marginRight: 10, 
+                marginBottom: 15, 
+                marginLeft: 10, 
+                top: 0
+            },
             eventCreationScreenCreateContainer: {
                 flexDirection: "column", 
                 flexGrow: 0,
