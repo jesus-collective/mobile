@@ -118,7 +118,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                           </Container>
 
                           <Container style={this.styles.style.courseProfileImageContainer}>
-                            <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 0, width: '90%' }}>Syllabus</Text>
+                            <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 0, width: '90%' }}>Learning Guide</Text>
                             <Card style={this.styles.style.courseHomeFileCard}>
                               {state.courseData ?
                                 <EditableFileUpload
