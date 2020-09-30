@@ -32,7 +32,8 @@
         "jcmobile": {
           "facebookAppId": "373637213227697",
           "googleClientId": "16570899094-ehc6d53sjd40c0shm9gaj6r70qs3jbv1.apps.googleusercontent.com"
-        }
+        },
+        "userPoolGroups": {}
       }
     }
   },

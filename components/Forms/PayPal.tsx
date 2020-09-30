@@ -21,7 +21,13 @@ const PayPal = ({ cost, productId, onSuccessCallback, onFailureCallback, onError
     const [userId, setUserId] = useState('');
 
     const loadPayPal = () => {
-        const clientID = 'AUW6ZpBxjxS6tKYDekqS__8B2DB3f5HwMQRlQ590YL-bcGtVyA9X6qxf1P7Wp2Fydv5eVV6LJ8qslHpt'; //sandbox id
+        let clientID
+        if (window.location.hostname === "localhost")
+            clientID = 'AUW6ZpBxjxS6tKYDekqS__8B2DB3f5HwMQRlQ590YL-bcGtVyA9X6qxf1P7Wp2Fydv5eVV6LJ8qslHpt'; //sandbox id
+        else if (window.location.hostname.includes("dev."))
+            clientID = 'AUW6ZpBxjxS6tKYDekqS__8B2DB3f5HwMQRlQ590YL-bcGtVyA9X6qxf1P7Wp2Fydv5eVV6LJ8qslHpt'; //sandbox id
+        else
+            clientID = 'ASPzCFJkUPKeGwW0BwWo0DXSPU_M_gq3qHJE-CXcldHs8pWbrbzitRzFdJ1r8tnolOEDBRWRZZ5TQPyr'; //production id
         const script = document.createElement('script');
         script.type = 'text/javascript';
         script.src = `https://www.paypal.com/sdk/js?client-id=${clientID}&currency=CAD&locale=en_CA`;
