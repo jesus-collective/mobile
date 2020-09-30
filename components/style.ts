@@ -1569,7 +1569,8 @@ export default class MainStyles {
                 flexDirection: "column",
                 alignContent: 'flex-start',
                 alignItems: 'flex-start',
-                justifyContent: 'flex-start'
+                justifyContent: 'flex-start',
+                paddingRight: 30,
             },
             courseDetailRightContainer: {
                 flex: 30,
