@@ -151,9 +151,10 @@ export default class EditableRichText extends JCComponent<Props, State> {
     }
     getCurrentRoomRecipients(): string[] {
         const ids = [];
-        this.state.data[this.state.selectedRoom]?.room?.messageUsers?.items.forEach(user => {
-            ids.push(user.userID)
+        this.state.userList.forEach(user => {
+            ids.push(user.id)
         })
+        console.log(ids)
         return ids
     }
     render(): React.ReactNode {
@@ -187,10 +188,10 @@ export default class EditableRichText extends JCComponent<Props, State> {
 
 
                     <Container style={this.styles.style.courseAssignmentScreenRightCard}>
-                        <MessageBoard showWordCount={true} totalWordCount={this.props.wordCount} style="courseResponse" roomId={"course-" + this.props.assignmentId + "-" + this.state.currentUser} recipients={this.state.userList}></MessageBoard>
+                        <MessageBoard showWordCount={true} totalWordCount={this.props.wordCount} style="courseResponse" roomId={"course-" + this.props.assignmentId + "-" + this.state.currentUser} recipients={this.getCurrentRoomRecipients()}></MessageBoard>
                     </Container>
                 </Container> :
-                <MessageBoard showWordCount={true} totalWordCount={this.props.wordCount} style="course" roomId={"course-" + this.props.assignmentId + "-" + this.state.currentUser} recipients={this.state.userList}></MessageBoard>
+                <MessageBoard showWordCount={true} totalWordCount={this.props.wordCount} style="course" roomId={"course-" + this.props.assignmentId + "-" + this.state.currentUser} recipients={this.getCurrentRoomRecipients()}></MessageBoard>
             }
 
         </>
