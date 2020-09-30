@@ -172,7 +172,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                 placeholder="Week Title" multiline={false}
                 data-testid="course-weekTitle"
                 textStyle={this.styles.style.fontFormSmallDarkGreyCourseTopEditable}
-                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 30, marginBottom: 30, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 28 }}
+                inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 30, marginBottom: 15, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 40, lineHeight: 30 }}
                 value={week.title} isEditable={state.isEditable && state.editMode}></EditableText>
 
               <EditableRichText onChange={(val) => { actions.updateWeek(state.activeWeek, "leader", val) }}

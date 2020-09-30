@@ -526,14 +526,15 @@ export default EStyleSheet.create({
         paddingTop: 10,
         paddingBottom: 10,
         marginBottom: 20,
-        marginLeft: 10,
-        marginRight: 10,
+        marginLeft: 0,
+        marginRight: 0,
         // color:"#ffffff",
         backgroundColor: "#ffffff00",
         borderWidth: 0,
         borderColor: "#ffffff",
         boxShadow: "unset",
-        width: '100%'
+        width: '100%', 
+        textAlign: 'center'
     },
     CourseTransparentBoldOrangeText: {
         color: "#F0493E",
