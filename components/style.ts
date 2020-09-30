@@ -1709,7 +1709,8 @@ export default class MainStyles {
                 width: '100%'
             },
             courseDetailCoureInfoContainer: {
-                width: "100%"
+                width: "100%",
+                flex: 0.3,
             },
             courseHomeCourseActivityText: {
                 fontSize: 16,
