@@ -355,7 +355,7 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Bold-App', fontSize: 20, lineHeight: 26, color: "#333333", paddingTop: 12
             },
             fontFormSmallDarkGreyCourseTopEditable: {
-                fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 26, color: "#333333", paddingTop: 30, width: "100%"
+                fontFamily: 'Graphik-Regular-App', fontSize: 40, lineHeight: 30, color: "#333333", paddingTop: 30, width: "100%", marginBottom: 15
             },
             fontFormSmallDarkGreyCoordinates: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 22, color: "#333333", paddingTop: 5, width: "100%"
