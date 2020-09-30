@@ -300,11 +300,15 @@ export default class AdminScreen extends JCComponent<Props, State>{
       </View>
     )
   }
-  async sendInvite(email: string): Promise<void> {
+  async sendInvite(email: string, inviteType: string): Promise<void> {
 
     console.log({ "inviting:": email })
     let z = await this.adminCreateUser(email)
-    console.log(z)
+    await this.addUserToGroup(z.User.Username, "verifiedUsers")
+    if (inviteType == "course") {
+      await this.addUserToGroup(z.User.Username, "courseUser")
+    }
+
   }
   renderGroupsModal(): React.ReactNode {
     return (this.state.showGroups ?
@@ -432,7 +436,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
 
           < JCButton buttonType={ButtonTypes.Outline}
             onPress={() => {
-              this.sendInvite(this.state.invite);
+              this.sendInvite(this.state.invite, this.state.inviteType);
               this.closeInvite();
               this.setInitialData()
             }}>Send Invite</JCButton>

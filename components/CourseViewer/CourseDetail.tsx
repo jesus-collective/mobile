@@ -138,25 +138,25 @@ class CourseDetailImpl extends JCComponent<Props, State>{
   getMonth(week, item, lesson) {
     if (item.time && item.tz)
       if (moment.tz(item.time, item.tz).format('MMM DD') == "Invalid date")
-        return "??"
+        return ""
       else
         return moment.tz(item.time, item.tz).format('MMM DD')
     else
       if (moment.tz(week.date, week.tz).add(lesson, 'days').format('MMM DD') == "Invalid date")
-        return "??"
+        return ""
       else
         return moment.tz(week.date, week.tz).add(lesson, 'days').format('MMM DD')
   }
   getDay(week, item, lesson) {
     if (item.time && item.tz)
       if (moment.tz(item.time, item.tz).format('H:mm') == "Invalid date")
-        return "??"
+        return ""
       else
         return moment.tz(item.time, item.tz).format('H:mm') + " " +
           moment.tz.zone(item.tz).abbr(+moment(item.time).format('x'))
     else
       if (moment.tz(week.date, week.tz).add(lesson, 'days').format('H:mm') == "Invalid date")
-        return "??"
+        return ""
       else
         return moment.tz(week.date, week.tz).add(lesson, 'days').format('H:mm') + " " +
           moment.tz.zone(week.tz).abbr(+moment(week.date).format('x'))
