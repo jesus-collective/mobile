@@ -46,7 +46,7 @@ class MySignIn extends React.Component<Props, State> {
 
     async handleSignIn(): Promise<void> {
         try {
-            await Auth.signIn(this.state.user, this.state.pass).then((user) => {
+            await Auth.signIn(this.state.user.toLowerCase(), this.state.pass).then((user) => {
                 if (user.challengeName == "NEW_PASSWORD_REQUIRED")
                     this.changeAuthState('requireNewPassword', user)
                 else

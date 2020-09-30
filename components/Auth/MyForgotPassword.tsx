@@ -58,7 +58,7 @@ class MyForgotPassword extends React.Component<Props, State> {
     async sendCode(): Promise<void> {
         try {
             this.setState({ sendingCode: true })
-            await Auth.forgotPassword(this.state.email).then(() => this.setState({ codeSent: true }))
+            await Auth.forgotPassword(this.state.email.toLowerCase()).then(() => this.setState({ codeSent: true }))
         } catch (e) {
             this.setState({ authError: e.message, sendingCode: false })
         }
@@ -71,7 +71,7 @@ class MyForgotPassword extends React.Component<Props, State> {
                 return;
             }
             this.setState({ reseting: true })
-            await Auth.forgotPasswordSubmit(this.state.email, this.state.code, this.state.newPass).then(() => { this.changeAuthState('signIn') });
+            await Auth.forgotPasswordSubmit(this.state.email.toLowerCase(), this.state.code, this.state.newPass).then(() => { this.changeAuthState('signIn') });
         } catch (e) {
             this.setState({ authError: e.message, reseting: false })
         }

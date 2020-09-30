@@ -79,6 +79,34 @@ async function confirmUserSignUp(username) {
   }
 }
 
+async function adminUpdateUserAttributes(username, email) {
+  const params = {
+    UserAttributes: [ /* required */
+      {
+        Name: "email",
+        Value: email
+      },
+      {
+        Name: "email_verified",
+        Value: "true"
+      }
+      /* more items */
+    ],
+    UserPoolId: userPoolId, /* required */
+    Username: username
+  };
+  try {
+    const result = await cognitoIdentityServiceProvider.adminUpdateUserAttributes(params).promise();
+    console.log(`Confirmed ${username} registration`);
+    return {
+      message: `Confirmed ${username} registration`,
+    };
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
 
 async function disableUser(username) {
   const params = {
@@ -276,4 +304,5 @@ module.exports = {
   listUsersInGroup,
   adminCreateUser,
   signUserOut,
+  adminUpdateUserAttributes,
 };

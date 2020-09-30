@@ -20,7 +20,7 @@ interface State extends JCState {
   showMap: boolean
   mapData: MapData[]
   showMy: boolean
-  data: []
+  data: any
   invite: string
   showGroups: boolean
   showGroupsId: string
@@ -66,15 +66,23 @@ export default class AdminScreen extends JCComponent<Props, State>{
     }
     this.setInitialData()
   }
+  async getUsers(nextToken: string) {
+    console.log("getUsers")
+    const data = await this.listUsers(40, nextToken)
+    console.log({ data: data })
+    this.setState({ data: this.state.data.concat(data.Users) })
+    if (data.nextToken)
+      this.getUsers(data.nextToken)
+  }
   async setInitialData(): Promise<void> {
-    const data = await this.listUsers(40, null)
+    this.getUsers(null)
+
     const listProducts: any = await API.graphql({
       query: queries.listProducts,
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
     console.log(listProducts)
     this.setState({ productList: listProducts.data.listProducts.items })
-    this.setState({ data: data.Users })
   }
   async listUsers(limit: number, nextToken: string): Promise<any> {
     const apiName = 'AdminQueries';
@@ -89,9 +97,11 @@ export default class AdminScreen extends JCComponent<Props, State>{
         Authorization: `${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
       }
     }
-    const { NextToken, ...rest } = await API.get(apiName, path, myInit);
+    const z = await API.get(apiName, path, myInit);
+    console.log(z)
+    const { NextToken, ...rest } = z
     nextToken = NextToken;
-    return rest;
+    return { nextToken, ...rest };
   }
 
   async removeUserFromGroup(user: string, groupname: string) {
@@ -130,6 +140,26 @@ export default class AdminScreen extends JCComponent<Props, State>{
     const { ...rest } = await API.post(apiName, path, myInit);
     return rest;
   }
+  async adminUpdateUserAttributes(user: string, email: string) {
+    console.log(user)
+    console.log(email)
+    const apiName = 'AdminQueries';
+    const path = '/adminUpdateUserAttributes';
+    const myInit = {
+      body: {
+        "username": user,
+        "email": email
+      },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `${(await Auth.currentSession()).getAccessToken().getJwtToken()}`
+      }
+    }
+    const z = await API.post(apiName, path, myInit);
+    console.log({ adminUpdateUserAttributes: z })
+    return z;
+  }
+
   async listGroupsForUser(user: string, limit: number, nextToken: string): Promise<any> {
     const apiName = 'AdminQueries';
     const path = '/listGroupsForUser';
@@ -303,7 +333,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
   async sendInvite(email: string, inviteType: string): Promise<void> {
 
     console.log({ "inviting:": email })
-    let z = await this.adminCreateUser(email)
+    let z = await this.adminCreateUser(email.toLowerCase())
     await this.addUserToGroup(z.User.Username, "verifiedUsers")
     if (inviteType == "course") {
       await this.addUserToGroup(z.User.Username, "courseUser")
@@ -467,14 +497,17 @@ export default class AdminScreen extends JCComponent<Props, State>{
                   <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.showInvite() }}>Invite</JCButton>
 
                 </View>
-                {this.renderHeader()}
-                {
-                  this.state.data ?
-                    this.state.data.map((item: any, index: number) => { // This will render a row for each data element.
-                      return this.renderRow(item, index);
-                    })
-                    : null
-                }
+
+                <Content >
+                  {this.renderHeader()}
+                  {
+                    this.state.data ?
+                      this.state.data.map((item: any, index: number) => { // This will render a row for each data element.
+                        return this.renderRow(item, index);
+                      })
+                      : null
+                  }
+                </Content>
               </View>
             </Container>
 

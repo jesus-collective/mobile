@@ -120,13 +120,13 @@ class MySignUp extends React.Component<Props, State> {
 
             this.setState({ sendingData: true })
             await Auth.signUp({
-                username: this.state.user.email,
+                username: this.state.user.email.toLowerCase(),
                 password: this.state.user.pass,
                 attributes: {
                     family_name: this.state.user.last,
                     given_name: this.state.user.first,
                     phone_number: this.state.user.code + this.state.user.phone,
-                    email: this.state.user.email,
+                    email: this.state.user.email.toLowerCase(),
                     'custom:orgName': this.state.user.orgName,
                     'custom:isOrg': Boolean(this.state.joinedAs === 'organization').toString()
                 }

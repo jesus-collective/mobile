@@ -44,7 +44,7 @@ class MyConfirmSignUp extends React.Component<Props, State> {
     async handleConfirmSignUp(): Promise<void> {
         try {
             this.setState({ sendingData: true })
-            await Auth.confirmSignUp(this.state.email, this.state.code).then(() => { this.changeAuthState('signIn') })
+            await Auth.confirmSignUp(this.state.email.toLowerCase(), this.state.code).then(() => { this.changeAuthState('signIn') })
         } catch (e) {
             this.setState({ authError: e.message, sendingData: false })
         }

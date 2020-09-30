@@ -24,6 +24,7 @@ const {
   getUser,
   listUsers,
   listGroupsForUser,
+  adminUpdateUserAttributes,
   listUsersInGroup,
   adminCreateUser,
   signUserOut,
@@ -79,6 +80,20 @@ app.post('/addUserToGroup', async (req, res, next) => {
 
   try {
     const response = await addUserToGroup(req.body.username, req.body.groupname);
+    res.status(200).json(response);
+  } catch (err) {
+    next(err);
+  }
+});
+app.post('/adminUpdateUserAttributes', async (req, res, next) => {
+  if (!req.body.username || !req.body.email) {
+    const err = new Error('username and email are required');
+    err.statusCode = 400;
+    return next(err);
+  }
+
+  try {
+    const response = await adminUpdateUserAttributes(req.body.username, req.body.email);
     res.status(200).json(response);
   } catch (err) {
     next(err);

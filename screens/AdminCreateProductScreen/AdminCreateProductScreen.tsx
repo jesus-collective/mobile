@@ -165,8 +165,8 @@ export default class AdminScreen extends JCComponent<Props, State>{
                         <View>
                             <Text>Id: </Text>
                             <TextInput
-                                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => { this.setState({ name: val.nativeEvent.text }) }}
-                                placeholder="Name"
+                                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => { this.setState({ productId: val.nativeEvent.text }) }}
+                                placeholder="productId"
                                 multiline={false}
                                 value={this.state.productId}></TextInput>
                             <Text>Product name: </Text>
