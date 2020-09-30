@@ -304,5 +304,4 @@ module.exports = {
   listUsersInGroup,
   adminCreateUser,
   signUserOut,
-  adminUpdateUserAttributes,
 };

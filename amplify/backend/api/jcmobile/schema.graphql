@@ -55,7 +55,7 @@ type User
  
   primaryOrganization: String
   organizations: [OrganizationMember] @connection(keyName: "orgMemberByUser", fields: ["id"])
-
+  
   owns: [Group] @connection(name: "OwnerUser", keyField: "owner")
   groups: [GroupMember] @connection(name: "UserMembers", keyField: "userID")
   messages: [Message] @connection(name: "UserMessages", keyField: "userId", sortField: "when")
