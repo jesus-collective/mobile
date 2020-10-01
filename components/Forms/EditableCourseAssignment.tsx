@@ -18,7 +18,11 @@ import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import { API, Auth } from 'aws-amplify';
 import { Container } from 'native-base';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
-
+enum initialPostState {
+    Yes,
+    No,
+    Unknown
+}
 interface Props {
     wordCount: number
     assignmentId: String
@@ -122,16 +126,19 @@ export default class EditableRichText extends JCComponent<Props, State> {
             this.createRoom()
 
     }
-    hasInitialPost = (): boolean => {
 
-        if (this.state.data.filter(item => item.id == "course-" + this.props.assignmentId + "-" + this.state.currentUser)[0]?.directMessage.items.length <= 0) {
-            console.log("Assignment does not have initial post")
-            return false
-        }
-        else {
-            console.log("Assignment has initial post")
-            return true
-        }
+    hasInitialPost = (): initialPostState => {
+        if (this.props.assignmentId)
+            if (this.state.data.filter(item => item.id == "course-" + this.props.assignmentId + "-" + this.state.currentUser)[0]?.directMessage.items.length <= 0) {
+                console.log({ "Assignment does not have initial post": this.props.assignmentId })
+                return initialPostState.No
+            }
+            else {
+                console.log({ "Assignment has initial post": this.props.assignmentId })
+                return initialPostState.Yes
+            }
+        else
+            return initialPostState.Unknown
     }
     getOtherUsers(data: any): { ids: string[], names: string[] } {
         const ids = [];
@@ -159,8 +166,8 @@ export default class EditableRichText extends JCComponent<Props, State> {
     }
     render(): React.ReactNode {
         return <>
-            <div style={{ padding: 5, height: 25, width: "94%", marginTop: 20, backgroundColor: !this.hasInitialPost() ? "#71C209" : "#71C209", borderRadius: 4 }}><span style={{ color: "#ffffff", fontSize: 18, fontFamily: 'Graphik-Bold-App', alignSelf: 'center', paddingLeft: 10, paddingTop: 15 }}>Assignment</span></div>
-            {this.hasInitialPost() ?
+            <div style={{ padding: 5, height: 25, width: "94%", marginTop: 20, backgroundColor: (this.hasInitialPost() == initialPostState.Yes) ? "#71C209" : "#71C209", borderRadius: 4 }}><span style={{ color: "#ffffff", fontSize: 18, fontFamily: 'Graphik-Bold-App', alignSelf: 'center', paddingLeft: 10, paddingTop: 15 }}>Assignment</span></div>
+            {(this.hasInitialPost() == initialPostState.Yes) ?
                 <Container style={this.styles.style.courseAssignmentMainContainer}>
 
                     <Container style={this.styles.style.courseAssignmentScreenLeftCard}>
@@ -190,9 +197,12 @@ export default class EditableRichText extends JCComponent<Props, State> {
                     <Container style={this.styles.style.courseAssignmentScreenRightCard}>
                         <MessageBoard showWordCount={true} totalWordCount={this.props.wordCount} style="courseResponse" roomId={"course-" + this.props.assignmentId + "-" + this.state.currentUser} recipients={this.getCurrentRoomRecipients()}></MessageBoard>
                     </Container>
-                </Container> :
-                <MessageBoard showWordCount={true} totalWordCount={this.props.wordCount} style="course" roomId={"course-" + this.props.assignmentId + "-" + this.state.currentUser} recipients={this.getCurrentRoomRecipients()}></MessageBoard>
+                </Container>
+                : (this.hasInitialPost() == initialPostState.No) ?
+                    <MessageBoard showWordCount={true} totalWordCount={this.props.wordCount} style="course" roomId={"course-" + this.props.assignmentId + "-" + this.state.currentUser} recipients={this.getCurrentRoomRecipients()}></MessageBoard>
+                    : null
             }
+
 
         </>
     }

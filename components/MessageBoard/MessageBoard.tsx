@@ -163,20 +163,21 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     });
     const processMessages = (json) => {
       console.log(json)
-      if (nextToken)
-        this.setState({
-          created: true,
-          data: [...this.state.data, ...json.data.directMessagesByRoom.items],
-          nextToken: json.data.directMessagesByRoom.nextToken
+      if (json.data.directMessagesByRoom)
+        if (nextToken)
+          this.setState({
+            created: true,
+            data: [...this.state.data, ...json.data.directMessagesByRoom.items],
+            nextToken: json.data.directMessagesByRoom.nextToken
 
-        })
-      else
-        this.setState({
-          created: true,
-          data: json.data.directMessagesByRoom.items,
-          nextToken: json.data.directMessagesByRoom.nextToken
+          })
+        else
+          this.setState({
+            created: true,
+            data: json.data.directMessagesByRoom.items,
+            nextToken: json.data.directMessagesByRoom.nextToken
 
-        })
+          })
 
     }
     directMessagesByRoom.then(processMessages).catch(processMessages)
