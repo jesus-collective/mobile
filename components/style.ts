@@ -751,7 +751,7 @@ export default class MainStyles {
                 { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, minHeight: "calc(100vw * 2)", width: 446, }
             ,
             courseAssignmentScreenRightCard: Platform.OS === 'web' ?
-                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", height: "auto", width: 446 } :
+                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", height: 'auto', width: 446 } :
                 { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, height: "auto", width: 446 }
             ,
             profileScreenLeftCard: Platform.OS === 'web' ?
@@ -910,7 +910,7 @@ export default class MainStyles {
                 backgroundColor: "#F9FAFC",
                 width: '96%',
                 flex: 'none',
-                minHeight: 'calc(50vw * 2)',
+                height: 'auto',
                 paddingBottom: 30,
             },
             groupScreenMainContainer: {
