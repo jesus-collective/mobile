@@ -452,7 +452,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
             <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.state.createNew ? null : this.mapChanged} />
             <Content>
               <MyMap type={"no-filters"} size={'25%'} visible={this.state.showMap} mapData={this.state.mapData}></MyMap>
-              <Container style={this.styles.style.groupScreenMainContainer}>
+              <Container style={this.styles.style.coursesScreenMainContainer}>
                 <Container style={this.styles.style.detailScreenLeftCard}>
                   <Container style={{ display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 20 }}>
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#333333', textTransform: "uppercase", flex: 0 }}>Course</Text>

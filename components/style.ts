@@ -747,8 +747,8 @@ export default class MainStyles {
                 { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, width: 446, paddingBottom: 40, minHeight: "calc(100vw * 1.05)" }
             ,
             detailScreenRightCard: Platform.OS === 'web' ?
-                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: "calc(100vw * 2)", width: 446, } :
-                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, minHeight: "calc(100vw * 2)", width: 446, }
+                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", height: "auto", width: 446, } :
+                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, height: "auto", width: 446, }
             ,
             courseAssignmentScreenRightCard: Platform.OS === 'web' ?
                 { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", height: 'auto', width: 446 } :
@@ -919,6 +919,14 @@ export default class MainStyles {
                 justifyContent: 'flex-start',
                 backgroundColor: "#F9FAFC",
                 height: "100%"
+            },
+            coursesScreenMainContainer: {
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: 'flex-start',
+                backgroundColor: "#F9FAFC",
+                height: "auto",
+                paddingBottom: 30
             },
             eventPageMessageBoard: {
                 borderBottomLeftRadius: 0,
@@ -1488,7 +1496,8 @@ export default class MainStyles {
                 paddingTop: 30,
                 paddingRight: 30,
                 paddingBottom: 30,
-                paddingLeft: 30
+                paddingLeft: 30,
+                height: 'auto'
             },
             courseSideBar: {
                 flex: 15,
@@ -2447,6 +2456,9 @@ export default class MainStyles {
                     flexDirection: "column",
                 },
                 groupScreenMainContainer: {
+                    flexDirection: "column",
+                },
+                coursesScreenMainContainer: {
                     flexDirection: "column",
                 },
                 detailScreenLeftCard: {
