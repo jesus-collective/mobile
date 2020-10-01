@@ -44,14 +44,15 @@ interface State extends JCState {
   attachment: string,
   attachmentName: string,
   fileNameWidth: number,
-  wordCount: number
+  wordCount: number,
+  nextToken: string
 }
 class MessageBoardImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
       ...super.getInitialState(),
-      data: null,
+      data: [],
       dmAuthors: null,
       created: false,
       UserDetails: null,
@@ -61,39 +62,47 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       attachmentName: null,
       wordCount: 0
     }
-
+    this.bottom = React.createRef();
     this.setInitialData(props)
-    const subscription: any = API.graphql(
-      graphqlOperation(subscriptions.onCreateMessage, { roomId: this.props.groupId })
-    )
+    const subscription: any = API.graphql({
+      query: subscriptions.onCreateMessage,
+      variables: { roomId: this.props.groupId },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
     subscription.subscribe(
       {
-        next: (todoData) => {
-          let temp: any = this.state.data
-          if (temp === null)
-            temp = { items: [] }
-          if (temp.items == null)
-            temp.items = [todoData.value.data.onCreateMessage]
-          else
-            temp.items = [todoData.value.data.onCreateMessage, ...temp.items]
-          this.setState({ data: temp })
+        next: async (todoData) => {
+          this.getMessages(null)
+          /*          console.log({ onCreateMessage: todoData })
+                    let temp: any = this.state.data
+                    if (temp === null)
+                      temp = { items: [] }
+                    if (temp.items == null)
+                      temp.items = [todoData.value.data.onCreateMessage]
+                    else
+                      temp.items = [todoData.value.data.onCreateMessage, ...temp.items]
+                    this.setState({ data: temp })*/
         }
       });
-
-    const subscription2: any = API.graphql(
-      graphqlOperation(subscriptions.onCreateDirectMessage, { messageRoomID: this.props.roomId })
-    )
+    const subscription2: any = API.graphql({
+      query: subscriptions.onCreateDirectMessage,
+      variables: { messageRoomID: this.props.roomId },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
     subscription2.subscribe(
       {
-        next: (todoData) => {
-          let temp: any = this.state.data
-          if (temp === null)
-            temp = { items: [] }
-          if (temp.items == null)
-            temp.items = [todoData.value.data.onCreateDirectMessage]
-          else
-            temp.items = [todoData.value.data.onCreateDirectMessage, ...temp.items]
-          this.setState({ data: temp })
+        next: async (todoData) => {
+          this.getDirectMessages(null)
+          /*          console.log({ onCreateDirectMessage2: todoData })
+          
+                    let temp: any = this.state.data
+                    if (temp === null)
+                      temp = { items: [] }
+                    if (temp.items == null)
+                      temp.items = [todoData.value.data.onCreateDirectMessage]
+                    else
+                      temp.items = [todoData.value.data.onCreateDirectMessage, ...temp.items]
+                    this.setState({ data: temp })*/
         }
       });
   }
@@ -121,7 +130,58 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       console.error(e)
     }
   }
+  getMessages(nextToken: string) {
+    const messagesByRoom: any = API.graphql({
+      query: queries.messagesByRoom,
+      variables: { roomId: this.props.groupId, sortDirection: "DESC", limit: 10, nextToken: nextToken },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+    const processMessages = (json) => {
+      console.log(json)
+      if (json.data.messagesByRoom)
+        if (nextToken)
+          this.setState({
+            created: true,
+            data: [...this.state.data, ...json.data.messagesByRoom.items],
+            nextToken: json.data.messagesByRoom.nextToken
+          })
+        else
+          this.setState({
+            created: true,
+            data: json.data.messagesByRoom.items,
+            nextToken: json.data.messagesByRoom.nextToken
+          })
+    }
+    messagesByRoom.then(processMessages).catch(processMessages)
+  }
 
+  getDirectMessages(nextToken: string) {
+    const directMessagesByRoom: any = API.graphql({
+      query: queries.directMessagesByRoom,
+      variables: { messageRoomID: this.props.roomId, sortDirection: "DESC", limit: 100, nextToken: nextToken },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+    const processMessages = (json) => {
+      console.log(json)
+      if (nextToken)
+        this.setState({
+          created: true,
+          data: [...this.state.data, ...json.data.directMessagesByRoom.items],
+          nextToken: json.data.directMessagesByRoom.nextToken
+
+        })
+      else
+        this.setState({
+          created: true,
+          data: json.data.directMessagesByRoom.items,
+          nextToken: json.data.directMessagesByRoom.nextToken
+
+        })
+
+    }
+    directMessagesByRoom.then(processMessages).catch(processMessages)
+
+  }
   async setInitialData(props) {
     const user = await Auth.currentAuthenticatedUser();
     try {
@@ -138,34 +198,9 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       this.setState({ created: false })
     }
     else if (this.props.groupId) {
-
-      const messagesByRoom: any = API.graphql({
-        query: queries.messagesByRoom,
-        variables: { roomId: this.props.groupId, sortDirection: "DESC" },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-      });
-      const processMessages = (json) => {
-        this.setState({
-          created: true,
-          data: json.data.messagesByRoom,
-
-        })
-      }
-      messagesByRoom.then(processMessages).catch(processMessages)
-
+      this.getMessages(null)
     } else if (this.props.roomId) {
-      const directMessagesByRoom: any = API.graphql({
-        query: queries.directMessagesByRoom,
-        variables: { messageRoomID: this.props.roomId, sortDirection: "DESC" },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-      });
-      const processMessages = (json) => {
-        this.setState({
-          created: true,
-          data: json.data.directMessagesByRoom,
-        })
-      }
-      directMessagesByRoom.then(processMessages).catch(processMessages)
+      this.getDirectMessages(null)
     }
   }
 
@@ -348,74 +383,141 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     console.log("Navigate to profileScreen")
     this.props.navigation.push("ProfileScreen", { id: id, create: false });
   }
-  render() {
+  renderWordCount() {
+    return this.props.showWordCount ?
+      <Text style={this.props.style == "course" ?
+        this.styles.style.courseWordCount
+        : this.styles.style.courseWordCountSmall}>Word count: {this.state.wordCount}/{this.props.totalWordCount}</Text>
+      : null
 
-    if (this.props.groupId && this.props.roomId) {
-      console.error('groupId and roomId cannot be used together')
-      return null
-    }
-
+  }
+  renderMessageInput() {
     return (
-      (this.state.created) ?
+      <Content style={{ marginBottom: 40 }}>
+        {
+          this.state.UserDetails != null && (this.props.style == "regular" || this.props.style == "course" || this.props.style == "courseResponse") ?
+            <ProfileImage size="small" user={this.state.UserDetails}></ProfileImage>
+            : null
+        }
 
-        <StyleProvider style={getTheme()}>
-          <Container style={this.props.style == "regular" || this.props.style == "course" || this.props.style == "courseResponse" ? this.styles.style.messageBoardContainerFullSize : this.styles.style.messageBoardContainer} >
+        <Editor
+          placeholder={this.props.style == "course" ?
+            "Write Assignment..." :
+            this.props.style == "courseResponse" ?
+              "Write a response...." : "Write a message..."}
+          editorState={this.state.editorState}
+          toolbarClassName="customToolbar"
+          wrapperClassName={this.props.style == "regular" || this.props.style == "course" ? "customWrapperSendmessage" : this.props.style == "courseResponse" ? "customWrapperSendmessageCourse" : "customWrapperSendmessageMini"}
+          editorClassName="customEditorSendmessage"
+          onEditorStateChange={(z) => { this.updateEditorInput(z) }}
 
-            <Content style={{ marginBottom: 40 }}>
+          toolbar={{
+            options: ['inline', 'list', 'emoji'],
+            inline: {
+              options: ['bold', 'italic', 'underline']
+            },
+            list: {
+              options: ['unordered', 'ordered']
+            },
+            emoji: {
+              popupClassName: "customEmojiModal"
+            }
+          }}
+        />
+        {this.renderWordCount()}
+        <View
+          style={
+            this.props.style == "regular" || this.props.style == "courseResponse" ? this.styles.style.courseDetailJCButtonRegular : this.props.style == "course" ? this.styles.style.courseDetailJCButtonAssignments : this.styles.style.courseDetailJCButtonMini
+          }>
 
-              {
-                this.state.UserDetails != null && (this.props.style == "regular" || this.props.style == "course" || this.props.style == "courseResponse") ?
-                  <ProfileImage size="small" user={this.state.UserDetails}></ProfileImage>
-                  : null
-              }
+          {this.state.attachment ? this.renderFileUploadBadge(this.state) : null}
+          <View style={this.styles.style.courseMessageBoardButtonsView}>
+            <JCButton buttonType={ButtonTypes.SolidRightJustifiedTopMini} onPress={() => { null }}><AntDesign name="clouduploado" size={16} color="white" style={{ marginRight: 5 }} />Share a file</JCButton>
+            <input multiple={false} style={{ cursor: 'pointer', width: '100%', height: '100%', position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='.pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx' onChange={(e) => this.handleUpload(e)} />
+          </View>
+          <JCButton
+            buttonType={this.props.style == "regular" || this.props.style == "course" || this.props.style == "courseResponse" ? ButtonTypes.SolidRightJustified : ButtonTypes.SolidRightJustifiedMini}
+            onPress={() => { this.saveMessage() }} >{this.props.style == "course" || this.props.style == "courseResponse" ? "Save" : "Post"}</JCButton>
 
+        </View>
 
+      </Content>
+    )
+  }
+  renderDirectMessages() {
+    return (
+      this.props.roomId ?
+        <>
+          {this.state.data?.map((item: any, index: any) => {
+            if (!item?.author) {
+              return null
+            }
+            return (
+              <Card key={index} style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }}>
+                <CardItem style={this.styles.style.eventPageMessageBoard}>
+                  <Left style={this.styles.style.eventPageMessageBoardLeft}>
+                    <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
+                      <ProfileImage size="small2" user={item.author?.id ?? null}></ProfileImage>
+                    </TouchableOpacity>
+                    <Body>
+                      <Text style={this.styles.style.groupFormName}>
+                        {item.author != null ? item.author.given_name : null} {item.author != null ? item.author.family_name : null}
+                      </Text>
+                      <Text style={this.styles.style.groupFormRole}>
+                        {item.author != null ? item.author.currentRole : null}
+                      </Text>
+                    </Body>
+                  </Left>
+                  <Right>
+                    <Text style={this.styles.style.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
+                  </Right>
+                </CardItem>
+                <CardItem style={this.styles.style.eventPageMessageBoardInnerCard}>
 
-              <Editor
-                placeholder={this.props.style == "course" ?
-                  "Write Assignment..." :
-                  this.props.style == "courseResponse" ?
-                    "Write a response...." : "Write a message..."}
-                editorState={this.state.editorState}
-                toolbarClassName="customToolbar"
-                wrapperClassName={this.props.style == "regular" || this.props.style == "course" ? "customWrapperSendmessage" : this.props.style == "courseResponse" ? "customWrapperSendmessageCourse" : "customWrapperSendmessageMini"}
-                editorClassName="customEditorSendmessage"
-                onEditorStateChange={(z) => { this.updateEditorInput(z) }}
+                  <div id="comment-div">
+                    <div dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(item.content) }}></div>
+                  </div>
 
-                toolbar={{
-                  options: ['inline', 'list', 'emoji'],
-                  inline: {
-                    options: ['bold', 'italic', 'underline']
-                  },
-                  list: {
-                    options: ['unordered', 'ordered']
-                  },
-                  emoji: {
-                    popupClassName: "customEmojiModal"
-                  }
-                }}
-              />
-              {this.props.showWordCount ? <Text style={this.props.style == "course" ? this.styles.style.courseWordCount : this.styles.style.courseWordCountSmall}>Word count: {this.state.wordCount}/{this.props.totalWordCount}</Text> : null}
-              <View
-                style={
-                  this.props.style == "regular" || this.props.style == "courseResponse" ? this.styles.style.courseDetailJCButtonRegular : this.props.style == "course" ? this.styles.style.courseDetailJCButtonAssignments : this.styles.style.courseDetailJCButtonMini
-                }>
+                </CardItem>
+                {item.attachment ?
+                  <CardItem>
+                    {this.renderFileDownloadBadge(item)}
+                  </CardItem> : null}
 
-                {this.state.attachment ? this.renderFileUploadBadge(this.state) : null}
-                <View style={this.styles.style.courseMessageBoardButtonsView}>
-                  <JCButton buttonType={ButtonTypes.SolidRightJustifiedTopMini} onPress={() => { null }}><AntDesign name="clouduploado" size={16} color="white" style={{ marginRight: 5 }} />Share a file</JCButton>
-                  <input multiple={false} style={{ cursor: 'pointer', width: '100%', height: '100%', position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='.pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx' onChange={(e) => this.handleUpload(e)} />
-                </View>
-                <JCButton
-                  buttonType={this.props.style == "regular" || this.props.style == "course" || this.props.style == "courseResponse" ? ButtonTypes.SolidRightJustified : ButtonTypes.SolidRightJustifiedMini}
-                  onPress={() => { this.saveMessage() }} >{this.props.style == "course" || this.props.style == "courseResponse" ? "Save" : "Post"}</JCButton>
+              </Card>
+            )
+          })
+          }
+          {this.state.nextToken ?
+            <TouchableOpacity onPress={() => { this.loadMoreDirectMessages() }}>
 
-              </View>
+              <Card style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }} onEndReached={() => { this.loadMore() }}>
+                <CardItem><Text>Loading More</Text></CardItem>
+              </Card>
+            </TouchableOpacity> : null
+          }
+        </> : null
+    )
+  }
 
-            </Content>
-            {this.props.groupId && this.state.data.items.map((item: any) => {
+  loadMoreDirectMessages() {
+    console.log({ "LOADING MORE": this.state.nextToken })
+    this.getDirectMessages(this.state.nextToken)
+
+  }
+  loadMoreMessages() {
+    console.log({ "LOADING MORE": this.state.nextToken })
+    this.getMessages(this.state.nextToken)
+
+  }
+  renderMessages() {
+    return (
+      this.props.groupId ?
+        <>
+          {
+            this.state.data?.map((item: any, index: any) => {
               return (
-                <Card key={item.id} style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }}>
+                <Card key={index} style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }}>
                   {this.props.style == "regular" || this.props.style == "course" || this.props.style == "courseResponse" ?
                     <CardItem style={this.styles.style.eventPageMessageBoard}>
                       <Left style={this.styles.style.eventPageMessageBoardLeft}>
@@ -446,8 +548,8 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                           {item.author != null ? item.author.given_name : null} {item.author != null ? item.author.family_name : null}
                         </Text>
                         {/* <Text style={this.styles.style.groupFormRole}>
-                        {item.author != null ? item.author.currentRole : null}
-                      </Text> */}
+                {item.author != null ? item.author.currentRole : null}
+              </Text> */}
                         <Text style={this.styles.style.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
                       </Right>
                     </CardItem>
@@ -462,49 +564,37 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                     {this.renderFileDownloadBadge(item)}
                   </CardItem> : null}
                 </Card>
-
               )
-            })}
+            })
+          }
+          {this.state.nextToken ?
+            <TouchableOpacity onPress={() => { this.loadMoreMessages() }}>
+              <Card style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }} >
 
-            {this.props.roomId && this.state.data.items.map((item: any) => {
-              if (!item?.author) {
-                return null
-              }
-              return (
-                <Card key={item.id} style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }}>
-                  <CardItem style={this.styles.style.eventPageMessageBoard}>
-                    <Left style={this.styles.style.eventPageMessageBoardLeft}>
-                      <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
-                        <ProfileImage size="small2" user={item.author?.id ?? null}></ProfileImage>
-                      </TouchableOpacity>
-                      <Body>
-                        <Text style={this.styles.style.groupFormName}>
-                          {item.author != null ? item.author.given_name : null} {item.author != null ? item.author.family_name : null}
-                        </Text>
-                        <Text style={this.styles.style.groupFormRole}>
-                          {item.author != null ? item.author.currentRole : null}
-                        </Text>
-                      </Body>
-                    </Left>
-                    <Right>
-                      <Text style={this.styles.style.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
-                    </Right>
-                  </CardItem>
-                  <CardItem style={this.styles.style.eventPageMessageBoardInnerCard}>
+                <CardItem><Text>Load More</Text></CardItem>
 
-                    <div id="comment-div">
-                      <div dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(item.content) }}></div>
-                    </div>
+              </Card>
+            </TouchableOpacity> : null
+          }
+        </> : null
+    )
+  }
 
-                  </CardItem>
-                  {item.attachment ?
-                    <CardItem>
-                      {this.renderFileDownloadBadge(item)}
-                    </CardItem> : null}
 
-                </Card>
-              )
-            })}
+  render() {
+
+    if (this.props.groupId && this.props.roomId) {
+      console.error('groupId and roomId cannot be used together')
+      return null
+    }
+
+    return (
+      (this.state.created) ?
+        <StyleProvider style={getTheme()}>
+          <Container style={this.props.style == "regular" || this.props.style == "course" || this.props.style == "courseResponse" ? this.styles.style.messageBoardContainerFullSize : this.styles.style.messageBoardContainer} >
+            {this.renderMessageInput()}
+            {this.renderDirectMessages()}
+            {this.renderMessages()}
           </Container>
         </StyleProvider >
         : null
