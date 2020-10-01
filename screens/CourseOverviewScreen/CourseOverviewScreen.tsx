@@ -412,31 +412,31 @@ export default class CourseScreen extends JCComponent<Props, State>{
     return (
       <Container style={{ minHeight: 30 }}>
         {this.state.canJoin ?
-          <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Join Course</JCButton> :
+          <JCButton buttonType={ButtonTypes.courseMktOutlineBoldNoMargin} onPress={() => { this.join() }} >Join Course</JCButton> :
           null
         }
         {
-          this.state.canPurchase ? <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.purchase() }} >Purchase</JCButton> :
+          this.state.canPurchase ? <JCButton buttonType={ButtonTypes.courseMktOutlineBoldNoMargin} onPress={() => { this.purchase() }} >Purchase</JCButton> :
             null
         }
         {this.state.canLeave ?
-          <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Leave Course</JCButton> :
+          <JCButton buttonType={ButtonTypes.courseMktOutlineBoldNoMargin} onPress={() => { this.leave() }} >Leave Course</JCButton> :
           null
         }
         {this.state.createNew ?
-          <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.createNew() }}>Create Course</JCButton>
+          <JCButton buttonType={ButtonTypes.courseMktOutlineBoldNoMargin} onPress={() => { this.createNew() }}>Create Course</JCButton>
           : null
         }
         {this.state.canSave ?
-          <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.save() }}>Save Course</JCButton>
+          <JCButton buttonType={ButtonTypes.courseMktOutlineBoldNoMargin} onPress={() => { this.save() }}>Save Course</JCButton>
           : null
         }
         {this.state.canDelete ?
-          <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this course?')) this.delete() }} >Delete Course</JCButton>
+          <JCButton buttonType={ButtonTypes.courseMktOutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this course?')) this.delete() }} >Delete Course</JCButton>
           : null
         }
         {this.state.canGotoActiveCourse ?
-          <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => this.gotoActiveCourse()} >Go to Course</JCButton>
+          <JCButton buttonType={ButtonTypes.courseMktOutlineBoldNoMargin} onPress={() => this.gotoActiveCourse()} >Go to Course</JCButton>
           : null
         }
         <Text>{this.state.validationError}</Text>
