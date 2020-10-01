@@ -166,7 +166,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
     }
     render(): React.ReactNode {
         return <>
-            <div style={{ padding: 5, height: 25, width: "94%", marginTop: 20, backgroundColor: (this.hasInitialPost() == initialPostState.Yes) ? "#71C209" : "#71C209", borderRadius: 4 }}><span style={{ color: "#ffffff", fontSize: 18, fontFamily: 'Graphik-Bold-App', alignSelf: 'center', paddingLeft: 10, paddingTop: 15 }}>Assignment</span></div>
+            <div style={{ padding: 5, height: 25, width: "95%", marginTop: 20, backgroundColor: (this.hasInitialPost() == initialPostState.Yes) ? "#71C209" : "#71C209", borderRadius: 4 }}><span style={{ color: "#ffffff", fontSize: 18, fontFamily: 'Graphik-Bold-App', alignSelf: 'center', paddingLeft: 10, paddingTop: 15 }}>Assignment</span></div>
             {(this.hasInitialPost() == initialPostState.Yes) ?
                 <Container style={this.styles.style.courseAssignmentMainContainer}>
 
