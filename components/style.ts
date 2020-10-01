@@ -253,17 +253,18 @@ export default class MainStyles {
             courseDescriptionInput: {
                 borderColor: 'white',
                 borderWidth: 1,
-                marginTop: 8,
+                marginTop: 0,
                 borderRadius: 5,
                 padding: 3,
                 paddingLeft: 0,
                 flex: 0,
-                minHeight: 100,
+                minHeight: 'auto',
                 fontSize: 16,
                 lineHeight: 23,
                 fontWeight: "normal",
                 fontFamily: "Graphik-Regular-App",
-                width: "100%"
+                width: "100%", 
+                marginBottom: 8
             },
             textInput: {
                 height: 40,

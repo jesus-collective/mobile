@@ -47,7 +47,7 @@ export default class EditableDollar extends JCComponent<Props, State> {
             return (<FormControl fullWidth>
                 <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
                 <Input
-
+                    style={{ width: '70%' }}
                     value={this.props.value}
                     onChange={(value) => { this.onChanged(value) }}
                     startAdornment={<InputAdornment position="start">$</InputAdornment>}
