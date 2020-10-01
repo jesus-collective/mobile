@@ -197,33 +197,33 @@ export default class AdminScreen extends JCComponent<Props, State>{
   }
   renderHeader(): React.ReactNode {
     return (
-      <View style={{ backgroundColor: "#aaaaaa", flex: 1, maxHeight: 25, alignSelf: 'stretch', flexDirection: 'row' }}>
+      <View style={{ backgroundColor: "#F0493E", flex: 1, height: 40, alignSelf: 'stretch', flexDirection: 'row', paddingBottom: 10, paddingTop: 10, paddingRight: 10, paddingLeft: 10, width: 1300, justifyContent: 'center' }}>
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>First Name</Text>
+          <Text style={this.styles.style.adminCRMTableHeading}>First Name</Text>
         </View>
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>Last Name</Text>
+          <Text style={this.styles.style.adminCRMTableHeading}>Last Name</Text>
         </View>
         {this.state.showUid ? <View style={{ flex: 3, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>User id</Text>
+          <Text style={this.styles.style.adminCRMTableHeading}>User id</Text>
         </View> : null}
         {this.state.showEmail ? <View style={{ flex: 3, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>Email</Text>
+          <Text style={this.styles.style.adminCRMTableHeading}>Email</Text>
         </View> : null}
         {this.state.showPhone ? <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>Phone</Text>
+          <Text style={this.styles.style.adminCRMTableHeading}>Phone</Text>
         </View> : null}
         {this.state.showStatus ? <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>Status</Text>
+          <Text style={this.styles.style.adminCRMTableHeading}>Status</Text>
         </View> : null}
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>Enabled</Text>
+          <Text style={this.styles.style.adminCRMTableHeading}>Enabled</Text>
         </View>
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>Groups</Text>
+          <Text style={this.styles.style.adminCRMTableHeading}>Groups</Text>
         </View>
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>Payments</Text>
+          <Text style={this.styles.style.adminCRMTableHeading}>Payments</Text>
         </View>
       </View>
     )
@@ -498,7 +498,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
 
                 </View>
 
-                <Content >
+                <Content style={{ width: '100%' }}>
                   {this.renderHeader()}
                   {
                     this.state.data ?

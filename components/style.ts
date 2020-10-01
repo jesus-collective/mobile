@@ -283,6 +283,10 @@ export default class MainStyles {
             fontRegular: {
                 fontFamily: "Graphik-Regular-App"
             },
+            adminCRMTableHeading: {
+                fontFamily: "Graphik-Bold-App",
+                color: '#ffffff'
+            },
             editableURLText: {
                 fontFamily: "Graphik-Bold-App",
                 fontSize: 16,
