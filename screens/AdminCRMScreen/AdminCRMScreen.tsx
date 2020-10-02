@@ -297,26 +297,26 @@ export default class AdminScreen extends JCComponent<Props, State>{
   renderRow(item: any, index: number): React.ReactNode {
 
     return (
-      <View key={index} style={{ flex: 1, maxHeight: 40, alignSelf: 'stretch', flexDirection: 'row', marginTop: 10, marginBottom: 10 }}>
-        <View style={{ flex: 1, alignSelf: 'stretch' }}>
+      <View key={index} style={{ flex: 1, maxHeight: 40, alignSelf: 'stretch', flexDirection: 'row', marginTop: 10, marginBottom: 10, alignContent: 'center' }}>
+        <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center' }}>
           <Text style={this.styles.style.adminCRMTableParagraph}>{item.Attributes.find(e => e.Name == "given_name")?.Value}</Text>
         </View>
-        <View style={{ flex: 1, alignSelf: 'stretch' }}>
+        <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center' }}>
           <Text style={this.styles.style.adminCRMTableParagraph}>{item.Attributes.find(e => e.Name == "family_name")?.Value}</Text>
         </View>
-        {this.state.showUid ? <View style={{ flex: 3, alignSelf: 'stretch' }}>
+        {this.state.showUid ? <View style={{ flex: 3, alignSelf: 'stretch', justifyContent: 'center' }}>
           <Text style={this.styles.style.fontRegular}>{item.Username}</Text>
         </View> : null}
-        {this.state.showEmail ? <View style={{ flex: 3, alignSelf: 'stretch' }}>
+        {this.state.showEmail ? <View style={{ flex: 3, alignSelf: 'stretch', justifyContent: 'center' }}>
           <Text style={this.styles.style.adminCRMTableParagraph}>{item.Attributes.find(e => e.Name == "email")?.Value}</Text>
         </View> : null}
-        {this.state.showPhone ? <View style={{ flex: 1, alignSelf: 'stretch' }}>
+        {this.state.showPhone ? <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center' }}>
           <Text style={this.styles.style.fontRegular}>{item.Attributes.find(e => e.Name == "phone_number")?.Value}</Text>
         </View> : null}
-        {this.state.showStatus ? <View style={{ flex: 1, alignSelf: 'stretch' }}>
+        {this.state.showStatus ? <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center' }}>
           <Text style={this.styles.style.fontRegular}>{item.UserStatus}</Text>
         </View> : null}
-        <View style={{ flex: 1, alignSelf: 'stretch' }}>
+        <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center' }}>
           <Text style={this.styles.style.fontRegular}>{item.Enabled.toString()}</Text>
         </View>
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
@@ -342,36 +342,40 @@ export default class AdminScreen extends JCComponent<Props, State>{
   }
   renderGroupsModal(): React.ReactNode {
     return (this.state.showGroups ?
-      <Modal visible={this.state.showGroups}>
-        <Container>
-
-          <Text style={this.styles.style.fontRegular}>Groups</Text>
-          <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.closeGroups() }}>X</JCButton>
-
-          {
-            this.state.groupData ?
-              this.state.groupData.map((item: any, index: number) => {
-                return (<View key={index} >
-                  <Text style={this.styles.style.fontRegular} key={index}>{item.GroupName}</Text>
-                  <JCButton buttonType={ButtonTypes.Outline}
-                    onPress={() => { this.removeGroup(this.state.showGroupsId, item.GroupName) }}>X</JCButton>
-                </View>)
-              })
-              : null
-          }
-          <Picker
-            selectedValue={this.state.groupToAdd}
-            onValueChange={val => { this.setState({ groupToAdd: val }) }}
-          >       <Picker.Item value={null} label="pick a group to add" />
-            {this.state.groupList.map((item, index) => {
-              return <Picker.Item key={index} value={item} label={item} />
-            })}
-          </Picker>
-          <JCButton buttonType={ButtonTypes.Outline} onPress={() => {
-            this.addGroup(this.state.showGroupsId, this.state.groupToAdd)
-
-          }}>Add Group</JCButton>
-        </Container>
+      <Modal animationType="slide" visible={this.state.showGroups} 
+      transparent={true} presentationStyle="pageSheet">
+          <View style={{ width: '100vw', height: 100, flexDirection: 'row', paddingTop: 20, paddingBottom: 20, justifyContent: 'center' }}>
+            <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', width: 70, marginLeft: 20, marginRight: 20, flex: 0.25 }}>
+              <Text style={this.styles.style.fontRegular}>Groups</Text>
+              <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.closeGroups() }}>X</JCButton>
+            </View>
+           
+            {
+              this.state.groupData ?
+                this.state.groupData.map((item: any, index: number) => {
+                  return (<View style={{ height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginRight: 20, flex: 0.25 }} key={index} >
+                      <Text style={this.styles.style.fontRegular} key={index}>{item.GroupName}</Text>
+                      <JCButton buttonType={ButtonTypes.Outline}
+                        onPress={() => { this.removeGroup(this.state.showGroupsId, item.GroupName) }}>X</JCButton>
+                  </View>)
+                })
+                : null
+            }
+           
+            <Container style={{ height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginRight: 20, flex: 0.25 }}>
+              <Picker style={{ height: 40 }}
+                selectedValue={this.state.groupToAdd}
+                onValueChange={val => { this.setState({ groupToAdd: val }) }}
+              >       <Picker.Item value={null} label="pick a group to add" />
+                {this.state.groupList.map((item, index) => {
+                  return <Picker.Item key={index} value={item} label={item} />
+                })}
+              </Picker>
+              <JCButton buttonType={ButtonTypes.Outline} onPress={() => {
+                this.addGroup(this.state.showGroupsId, this.state.groupToAdd)
+              }}>Add Group</JCButton>
+            </Container>
+          </View>
       </Modal > : null
     )
   }

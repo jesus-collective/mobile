@@ -290,7 +290,7 @@ export default class MainStyles {
             adminCRMTableParagraph: {
                 fontFamily: "Graphik-Regular-App",
                 color: '#000000', 
-                paddingLeft: 10
+                paddingLeft: 10,
             },
             editableURLText: {
                 fontFamily: "Graphik-Bold-App",
