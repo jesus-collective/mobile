@@ -5,6 +5,8 @@ import styles from './JCButtonStyle'
 import JCComponent from '../JCComponent/JCComponent';
 
 export enum ButtonTypes {
+    AdminOutline,
+    AdminSmallOutline,
     CourseSideBar,
     CourseSideBarFirst,
     CourseHome,
@@ -14,6 +16,7 @@ export enum ButtonTypes {
     courseActivityTransparentRegularBlack,
     courseCardSolid,
     courseAssignment,
+    courseMktOutlineBoldNoMargin,
     Solid,
     SolidSignIn,
     SolidSignIn2,

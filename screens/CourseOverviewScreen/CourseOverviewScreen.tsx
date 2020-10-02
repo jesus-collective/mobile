@@ -412,31 +412,31 @@ export default class CourseScreen extends JCComponent<Props, State>{
     return (
       <Container style={{ minHeight: 30 }}>
         {this.state.canJoin ?
-          <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.join() }} >Join Course</JCButton> :
+          <JCButton buttonType={ButtonTypes.courseMktOutlineBoldNoMargin} onPress={() => { this.join() }} >Join Course</JCButton> :
           null
         }
         {
-          this.state.canPurchase ? <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.purchase() }} >Purchase</JCButton> :
+          this.state.canPurchase ? <JCButton buttonType={ButtonTypes.courseMktOutlineBoldNoMargin} onPress={() => { this.purchase() }} >Purchase</JCButton> :
             null
         }
         {this.state.canLeave ?
-          <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.leave() }} >Leave Course</JCButton> :
+          <JCButton buttonType={ButtonTypes.courseMktOutlineBoldNoMargin} onPress={() => { this.leave() }} >Leave Course</JCButton> :
           null
         }
         {this.state.createNew ?
-          <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.createNew() }}>Create Course</JCButton>
+          <JCButton buttonType={ButtonTypes.courseMktOutlineBoldNoMargin} onPress={() => { this.createNew() }}>Create Course</JCButton>
           : null
         }
         {this.state.canSave ?
-          <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { this.save() }}>Save Course</JCButton>
+          <JCButton buttonType={ButtonTypes.courseMktOutlineBoldNoMargin} onPress={() => { this.save() }}>Save Course</JCButton>
           : null
         }
         {this.state.canDelete ?
-          <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this course?')) this.delete() }} >Delete Course</JCButton>
+          <JCButton buttonType={ButtonTypes.courseMktOutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this course?')) this.delete() }} >Delete Course</JCButton>
           : null
         }
         {this.state.canGotoActiveCourse ?
-          <JCButton buttonType={ButtonTypes.OutlineBoldNoMargin} onPress={() => this.gotoActiveCourse()} >Go to Course</JCButton>
+          <JCButton buttonType={ButtonTypes.courseMktOutlineBoldNoMargin} onPress={() => this.gotoActiveCourse()} >Go to Course</JCButton>
           : null
         }
         <Text>{this.state.validationError}</Text>
@@ -452,7 +452,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
             <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.state.createNew ? null : this.mapChanged} />
             <Content>
               <MyMap type={"no-filters"} size={'25%'} visible={this.state.showMap} mapData={this.state.mapData}></MyMap>
-              <Container style={this.styles.style.groupScreenMainContainer}>
+              <Container style={this.styles.style.coursesScreenMainContainer}>
                 <Container style={this.styles.style.detailScreenLeftCard}>
                   <Container style={{ display: "flex", flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 20 }}>
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#333333', textTransform: "uppercase", flex: 0 }}>Course</Text>
@@ -469,7 +469,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
                     <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Course Name" multiline={false} textStyle={this.styles.style.groupNameInput} inputStyle={this.styles.style.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
                     <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Course Description" multiline={true} textStyle={this.styles.style.groupDescriptionInput} inputStyle={this.styles.style.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
 
-                    <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#333333', textTransform: "uppercase", flex: 0 }}>Start Date</Text>
+                    <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#333333', textTransform: "uppercase", flex: 0, marginTop: 20 }}>Start Date</Text>
                     <EditableDate type="date"
                       onChange={(time: any, timeZone: any) => { this.updateValue("time", time); this.updateValue("tz", timeZone) }}
                       placeholder="Enter Course Start Date"
@@ -479,7 +479,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
                       tz={this.state.data.tz ? this.state.data.tz : moment.tz.guess()}
                       isEditable={this.state.isEditable}></EditableDate>
 
-                    <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#333333', textTransform: "uppercase", flex: 0 }}>Duration</Text>
+                    <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#333333', textTransform: "uppercase", flex: 0, marginTop: 8 }}>Duration</Text>
                     <EditableText onChange={(value: any) => { this.updateValue("length", value) }} placeholder="Enter Course Length" multiline={false} textStyle={this.styles.style.courseDateInput} inputStyle={this.styles.style.courseDescriptionInput} value={this.state.data.length} isEditable={this.state.isEditable}></EditableText>
 
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#333333', textTransform: "uppercase", flex: 0 }}>Effort</Text>

@@ -197,33 +197,33 @@ export default class AdminScreen extends JCComponent<Props, State>{
   }
   renderHeader(): React.ReactNode {
     return (
-      <View style={{ backgroundColor: "#aaaaaa", flex: 1, maxHeight: 25, alignSelf: 'stretch', flexDirection: 'row' }}>
+      <View style={{ backgroundColor: "#F0493E", flex: 1, height: 40, alignSelf: 'stretch', flexDirection: 'row', paddingBottom: 10, paddingTop: 10, paddingRight: 10, paddingLeft: 10, width: 1300, justifyContent: 'center' }}>
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>First Name</Text>
+          <Text style={this.styles.style.adminCRMTableHeading}>First Name</Text>
         </View>
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>Last Name</Text>
+          <Text style={this.styles.style.adminCRMTableHeading}>Last Name</Text>
         </View>
         {this.state.showUid ? <View style={{ flex: 3, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>User id</Text>
+          <Text style={this.styles.style.adminCRMTableHeading}>User id</Text>
         </View> : null}
         {this.state.showEmail ? <View style={{ flex: 3, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>Email</Text>
+          <Text style={this.styles.style.adminCRMTableHeading}>Email</Text>
         </View> : null}
         {this.state.showPhone ? <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>Phone</Text>
+          <Text style={this.styles.style.adminCRMTableHeading}>Phone</Text>
         </View> : null}
         {this.state.showStatus ? <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>Status</Text>
+          <Text style={this.styles.style.adminCRMTableHeading}>Status</Text>
         </View> : null}
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>Enabled</Text>
+          <Text style={this.styles.style.adminCRMTableHeading}>Enabled</Text>
         </View>
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>Groups</Text>
+          <Text style={this.styles.style.adminCRMTableHeading}>Groups</Text>
         </View>
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>Payments</Text>
+          <Text style={this.styles.style.adminCRMTableHeading}>Payments</Text>
         </View>
       </View>
     )
@@ -297,34 +297,34 @@ export default class AdminScreen extends JCComponent<Props, State>{
   renderRow(item: any, index: number): React.ReactNode {
 
     return (
-      <View key={index} style={{ flex: 1, maxHeight: 40, alignSelf: 'stretch', flexDirection: 'row' }}>
-        <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>{item.Attributes.find(e => e.Name == "given_name")?.Value}</Text>
+      <View key={index} style={{ flex: 1, maxHeight: 40, alignSelf: 'stretch', flexDirection: 'row', marginTop: 10, marginBottom: 10, alignContent: 'center' }}>
+        <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center' }}>
+          <Text style={this.styles.style.adminCRMTableParagraph}>{item.Attributes.find(e => e.Name == "given_name")?.Value}</Text>
         </View>
-        <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>{item.Attributes.find(e => e.Name == "family_name")?.Value}</Text>
+        <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center' }}>
+          <Text style={this.styles.style.adminCRMTableParagraph}>{item.Attributes.find(e => e.Name == "family_name")?.Value}</Text>
         </View>
-        {this.state.showUid ? <View style={{ flex: 3, alignSelf: 'stretch' }}>
+        {this.state.showUid ? <View style={{ flex: 3, alignSelf: 'stretch', justifyContent: 'center' }}>
           <Text style={this.styles.style.fontRegular}>{item.Username}</Text>
         </View> : null}
-        {this.state.showEmail ? <View style={{ flex: 3, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>{item.Attributes.find(e => e.Name == "email")?.Value}</Text>
+        {this.state.showEmail ? <View style={{ flex: 3, alignSelf: 'stretch', justifyContent: 'center' }}>
+          <Text style={this.styles.style.adminCRMTableParagraph}>{item.Attributes.find(e => e.Name == "email")?.Value}</Text>
         </View> : null}
-        {this.state.showPhone ? <View style={{ flex: 1, alignSelf: 'stretch' }}>
+        {this.state.showPhone ? <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center' }}>
           <Text style={this.styles.style.fontRegular}>{item.Attributes.find(e => e.Name == "phone_number")?.Value}</Text>
         </View> : null}
-        {this.state.showStatus ? <View style={{ flex: 1, alignSelf: 'stretch' }}>
+        {this.state.showStatus ? <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center' }}>
           <Text style={this.styles.style.fontRegular}>{item.UserStatus}</Text>
         </View> : null}
-        <View style={{ flex: 1, alignSelf: 'stretch' }}>
+        <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center' }}>
           <Text style={this.styles.style.fontRegular}>{item.Enabled.toString()}</Text>
         </View>
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <JCButton buttonType={ButtonTypes.Outline}
+          <JCButton buttonType={ButtonTypes.AdminSmallOutline}
             onPress={() => { this.showGroups(item.Username) }}>Groups</JCButton>
         </View>
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <JCButton buttonType={ButtonTypes.Outline}
+          <JCButton buttonType={ButtonTypes.AdminSmallOutline}
             onPress={() => { this.showPayments(item.Username) }}>Payments</JCButton>
         </View>
       </View>
@@ -342,36 +342,40 @@ export default class AdminScreen extends JCComponent<Props, State>{
   }
   renderGroupsModal(): React.ReactNode {
     return (this.state.showGroups ?
-      <Modal visible={this.state.showGroups}>
-        <Container>
-
-          <Text style={this.styles.style.fontRegular}>Groups</Text>
-          <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.closeGroups() }}>X</JCButton>
-
-          {
-            this.state.groupData ?
-              this.state.groupData.map((item: any, index: number) => {
-                return (<View key={index} >
-                  <Text style={this.styles.style.fontRegular} key={index}>{item.GroupName}</Text>
-                  <JCButton buttonType={ButtonTypes.Outline}
-                    onPress={() => { this.removeGroup(this.state.showGroupsId, item.GroupName) }}>X</JCButton>
-                </View>)
-              })
-              : null
-          }
-          <Picker
-            selectedValue={this.state.groupToAdd}
-            onValueChange={val => { this.setState({ groupToAdd: val }) }}
-          >       <Picker.Item value={null} label="pick a group to add" />
-            {this.state.groupList.map((item, index) => {
-              return <Picker.Item key={index} value={item} label={item} />
-            })}
-          </Picker>
-          <JCButton buttonType={ButtonTypes.Outline} onPress={() => {
-            this.addGroup(this.state.showGroupsId, this.state.groupToAdd)
-
-          }}>Add Group</JCButton>
-        </Container>
+      <Modal animationType="slide" visible={this.state.showGroups} 
+      transparent={true} presentationStyle="pageSheet">
+          <View style={{ width: '100vw', height: 100, flexDirection: 'row', paddingTop: 20, paddingBottom: 20, justifyContent: 'center' }}>
+            <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', width: 70, marginLeft: 20, marginRight: 20, flex: 0.25 }}>
+              <Text style={this.styles.style.adminCRMModal}>Groups</Text>
+              <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.closeGroups() }}>X</JCButton>
+            </View>
+           
+            {
+              this.state.groupData ?
+                this.state.groupData.map((item: any, index: number) => {
+                  return (<View style={{ height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginRight: 20, flex: 0.25 }} key={index} >
+                      <Text style={this.styles.style.adminCRMModal} key={index}>{item.GroupName}</Text>
+                      <JCButton buttonType={ButtonTypes.Outline}
+                        onPress={() => { this.removeGroup(this.state.showGroupsId, item.GroupName) }}>X</JCButton>
+                  </View>)
+                })
+                : null
+            }
+           
+            <Container style={{ height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginRight: 20, flex: 0.25, justifyContent: 'center' }}>
+              <Picker style={{ height: 45, width: 250, paddingLeft: 10, paddingRight: 10 }}
+                selectedValue={this.state.groupToAdd}
+                onValueChange={val => { this.setState({ groupToAdd: val }) }}
+              >       <Picker.Item value={null} label="pick a group to add" />
+                {this.state.groupList.map((item, index) => {
+                  return <Picker.Item key={index} value={item} label={item} />
+                })}
+              </Picker>
+              <JCButton buttonType={ButtonTypes.Outline} onPress={() => {
+                this.addGroup(this.state.showGroupsId, this.state.groupToAdd)
+              }}>Add Group</JCButton>
+            </Container>
+          </View>
       </Modal > : null
     )
   }
@@ -489,16 +493,16 @@ export default class AdminScreen extends JCComponent<Props, State>{
 
             <Container style={this.styles.style.fontRegular}>
               <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
-                <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', width: '100%', marginBottom: 12 }} >
+                <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: 25, marginBottom: 25 }} >
                   <JCSwitch switchLabel='show user id' initState={false} onPress={() => this.setState({ showUid: !this.state.showUid })} />
                   <JCSwitch switchLabel='show email' initState={true} onPress={() => this.setState({ showEmail: !this.state.showEmail })} />
                   <JCSwitch switchLabel='show phone #' initState={true} onPress={() => this.setState({ showPhone: !this.state.showPhone })} />
                   <JCSwitch switchLabel='show status' initState={true} onPress={() => this.setState({ showStatus: !this.state.showStatus })} />
-                  <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.showInvite() }}>Invite</JCButton>
+                  <JCButton buttonType={ButtonTypes.AdminOutline} onPress={() => { this.showInvite() }}>Invite</JCButton>
 
                 </View>
 
-                <Content >
+                <Content style={{ width: '100%' }}>
                   {this.renderHeader()}
                   {
                     this.state.data ?

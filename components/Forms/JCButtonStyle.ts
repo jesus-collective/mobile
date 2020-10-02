@@ -44,6 +44,44 @@ export default EStyleSheet.create({
         fontSize: 16,
         padding: 5
     },
+    AdminOutlineButton: {
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 29,
+        paddingRight: 29,
+        marginLeft: 10,
+        marginRight: 10,
+        //    color:"#F0493E",
+        backgroundColor: "#ffffff",
+        borderWidth: 1,
+        borderColor: "#F0493E",
+        boxShadow: "unset",
+    },
+    AdminOutlineText: {
+        color: "#F0493E",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        padding: 5
+    },
+    AdminSmallOutlineButton: {
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 10,
+        paddingRight: 10,
+        marginLeft: 0,
+        marginRight: 0,
+        //    color:"#F0493E",
+        backgroundColor: "#ffffff",
+        borderWidth: 1,
+        borderColor: "#F0493E",
+        boxShadow: "unset",
+    },
+    AdminSmallOutlineText: {
+        color: "#F0493E",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        padding: 5
+    },
     courseAssignmentButton: {
         paddingTop: 6,
         paddingBottom: 6,
@@ -784,7 +822,31 @@ export default EStyleSheet.create({
         fontSize: 16,
         padding: 10,
         fontWeight: "bold"
-
+    },
+    courseMktOutlineBoldNoMarginButton:
+    {
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 29,
+        paddingRight: 29,
+        marginTop: 20,
+        marginBottom: 8,
+        marginLeft: 0,
+        marginRight: 0,
+        //   color:"#F0493E",
+        backgroundColor: "#ffffff",
+        borderWidth: 1,
+        borderColor: "#F0493E",
+        boxShadow: "unset"
+    },
+    courseMktOutlineBoldNoMarginText: {
+        color: "#F0493E",
+        fontFamily: 'Graphik-Bold-App',
+        fontSize: 16,
+        padding: 10,
+        fontWeight: "bold",
+        width: '100%',
+        textAlign: 'center'
     },
     MoreSeriesOutlineBoldButton:
     {

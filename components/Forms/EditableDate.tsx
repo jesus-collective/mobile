@@ -111,7 +111,7 @@ export default class EditableDate extends JCComponent<Props> {
                 )
             else
                 return (
-                    <Container style={{ height: "unset", width: '30%' }}>
+                    <Container style={{ height: "unset", width: '70%' }}>
                         <ThemeProvider theme={materialTheme}>
                             <KeyboardDatePicker
 

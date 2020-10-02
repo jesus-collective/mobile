@@ -253,17 +253,18 @@ export default class MainStyles {
             courseDescriptionInput: {
                 borderColor: 'white',
                 borderWidth: 1,
-                marginTop: 8,
+                marginTop: 0,
                 borderRadius: 5,
                 padding: 3,
                 paddingLeft: 0,
                 flex: 0,
-                minHeight: 100,
+                minHeight: 'auto',
                 fontSize: 16,
                 lineHeight: 23,
                 fontWeight: "normal",
                 fontFamily: "Graphik-Regular-App",
-                width: "100%"
+                width: "100%", 
+                marginBottom: 8
             },
             textInput: {
                 height: 40,
@@ -281,6 +282,20 @@ export default class MainStyles {
             },
             fontRegular: {
                 fontFamily: "Graphik-Regular-App"
+            },
+            adminCRMTableHeading: {
+                fontFamily: "Graphik-Bold-App",
+                color: '#ffffff'
+            },
+            adminCRMTableParagraph: {
+                fontFamily: "Graphik-Regular-App",
+                color: '#000000', 
+                paddingLeft: 10,
+            },
+            adminCRMModal: {
+                fontFamily: "Graphik-Bold-App",
+                color: '#000000', 
+                paddingLeft: 10,
             },
             editableURLText: {
                 fontFamily: "Graphik-Bold-App",
@@ -747,12 +762,12 @@ export default class MainStyles {
                 { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, width: 446, paddingBottom: 40, minHeight: "calc(100vw * 1.05)" }
             ,
             detailScreenRightCard: Platform.OS === 'web' ?
-                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: "calc(100vw * 2)", width: 446, } :
-                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, minHeight: "calc(100vw * 2)", width: 446, }
+                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", height: "auto", width: 446, } :
+                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, height: "auto", width: 446, }
             ,
             courseAssignmentScreenRightCard: Platform.OS === 'web' ?
-                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: "calc(100vw * 2)", width: 446, } :
-                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, minHeight: "calc(100vw * 2)", width: 446, }
+                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", height: 'auto', width: 446 } :
+                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, height: "auto", width: 446 }
             ,
             profileScreenLeftCard: Platform.OS === 'web' ?
                 { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 0, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: 700, width: 446 } :
@@ -910,7 +925,8 @@ export default class MainStyles {
                 backgroundColor: "#F9FAFC",
                 width: '96%',
                 flex: 'none',
-                height: '100vw'
+                height: 'auto',
+                paddingBottom: 30,
             },
             groupScreenMainContainer: {
                 display: "flex",
@@ -918,6 +934,14 @@ export default class MainStyles {
                 justifyContent: 'flex-start',
                 backgroundColor: "#F9FAFC",
                 height: "100%"
+            },
+            coursesScreenMainContainer: {
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: 'flex-start',
+                backgroundColor: "#F9FAFC",
+                height: "auto",
+                paddingBottom: 30
             },
             eventPageMessageBoard: {
                 borderBottomLeftRadius: 0,
@@ -1487,7 +1511,8 @@ export default class MainStyles {
                 paddingTop: 30,
                 paddingRight: 30,
                 paddingBottom: 30,
-                paddingLeft: 30
+                paddingLeft: 30,
+                height: 'auto'
             },
             courseSideBar: {
                 flex: 15,
@@ -1711,7 +1736,7 @@ export default class MainStyles {
             },
             courseDetailCoureInfoContainer: {
                 width: "100%",
-                flex: 0.3,
+                minHeight: 'auto',
             },
             courseHomeCourseActivityText: {
                 fontSize: 16,
@@ -2446,6 +2471,9 @@ export default class MainStyles {
                     flexDirection: "column",
                 },
                 groupScreenMainContainer: {
+                    flexDirection: "column",
+                },
+                coursesScreenMainContainer: {
                     flexDirection: "column",
                 },
                 detailScreenLeftCard: {

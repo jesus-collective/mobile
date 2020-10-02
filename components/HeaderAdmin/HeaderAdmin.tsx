@@ -91,7 +91,8 @@ export default class HeaderJC extends JCComponent<Props> {
           flex: 1,
           flexDirection: 'row',
           justifyContent: 'flex-start',
-          alignItems: 'flex-start'
+          alignItems: 'flex-start', 
+          right: 15
         }}>
           <Button
             transparent

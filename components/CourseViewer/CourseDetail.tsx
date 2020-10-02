@@ -181,7 +181,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                 textStyle={{ marginLeft: 10 }} inputStyle={{ margintop: 20, marginLeft: 20 }}></EditableRichText>
 
             </Container>
-            <Container>
+            <Container style={{ marginTop: 30 }}>
               {week.lessons?.items?.map((item: any, lesson: number) => {
                 return (
                   <TouchableOpacity key={lesson} onPress={() => { !state.editMode ? actions.setActiveLesson(lesson) : null }}>
