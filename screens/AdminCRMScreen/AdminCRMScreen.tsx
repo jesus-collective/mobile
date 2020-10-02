@@ -297,18 +297,18 @@ export default class AdminScreen extends JCComponent<Props, State>{
   renderRow(item: any, index: number): React.ReactNode {
 
     return (
-      <View key={index} style={{ flex: 1, maxHeight: 40, alignSelf: 'stretch', flexDirection: 'row' }}>
+      <View key={index} style={{ flex: 1, maxHeight: 40, alignSelf: 'stretch', flexDirection: 'row', marginTop: 10, marginBottom: 10 }}>
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>{item.Attributes.find(e => e.Name == "given_name")?.Value}</Text>
+          <Text style={this.styles.style.adminCRMTableParagraph}>{item.Attributes.find(e => e.Name == "given_name")?.Value}</Text>
         </View>
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>{item.Attributes.find(e => e.Name == "family_name")?.Value}</Text>
+          <Text style={this.styles.style.adminCRMTableParagraph}>{item.Attributes.find(e => e.Name == "family_name")?.Value}</Text>
         </View>
         {this.state.showUid ? <View style={{ flex: 3, alignSelf: 'stretch' }}>
           <Text style={this.styles.style.fontRegular}>{item.Username}</Text>
         </View> : null}
         {this.state.showEmail ? <View style={{ flex: 3, alignSelf: 'stretch' }}>
-          <Text style={this.styles.style.fontRegular}>{item.Attributes.find(e => e.Name == "email")?.Value}</Text>
+          <Text style={this.styles.style.adminCRMTableParagraph}>{item.Attributes.find(e => e.Name == "email")?.Value}</Text>
         </View> : null}
         {this.state.showPhone ? <View style={{ flex: 1, alignSelf: 'stretch' }}>
           <Text style={this.styles.style.fontRegular}>{item.Attributes.find(e => e.Name == "phone_number")?.Value}</Text>
@@ -320,11 +320,11 @@ export default class AdminScreen extends JCComponent<Props, State>{
           <Text style={this.styles.style.fontRegular}>{item.Enabled.toString()}</Text>
         </View>
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <JCButton buttonType={ButtonTypes.Outline}
+          <JCButton buttonType={ButtonTypes.AdminSmallOutline}
             onPress={() => { this.showGroups(item.Username) }}>Groups</JCButton>
         </View>
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <JCButton buttonType={ButtonTypes.Outline}
+          <JCButton buttonType={ButtonTypes.AdminSmallOutline}
             onPress={() => { this.showPayments(item.Username) }}>Payments</JCButton>
         </View>
       </View>

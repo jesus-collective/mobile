@@ -63,6 +63,25 @@ export default EStyleSheet.create({
         fontSize: 16,
         padding: 5
     },
+    AdminSmallOutlineButton: {
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 10,
+        paddingRight: 10,
+        marginLeft: 0,
+        marginRight: 0,
+        //    color:"#F0493E",
+        backgroundColor: "#ffffff",
+        borderWidth: 1,
+        borderColor: "#F0493E",
+        boxShadow: "unset",
+    },
+    AdminSmallOutlineText: {
+        color: "#F0493E",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        padding: 5
+    },
     courseAssignmentButton: {
         paddingTop: 6,
         paddingBottom: 6,
