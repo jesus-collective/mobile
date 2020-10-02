@@ -292,6 +292,11 @@ export default class MainStyles {
                 color: '#000000', 
                 paddingLeft: 10,
             },
+            adminCRMModal: {
+                fontFamily: "Graphik-Bold-App",
+                color: '#000000', 
+                paddingLeft: 10,
+            },
             editableURLText: {
                 fontFamily: "Graphik-Bold-App",
                 fontSize: 16,
