@@ -54,38 +54,49 @@ export default class EditableRichText extends JCComponent<Props, State> {
         }
         console.log({ userList: this.state.userList })
 
-        Auth.currentAuthenticatedUser().then((user: any) => { this.setState({ currentUser: user.username }) })
+        Auth.currentAuthenticatedUser().then((user: any) => { this.setState({ currentRoomId: null, currentUser: user.username }) })
         this.getInitialData(null)
     }
-    async getInitialData(next: string): Promise<void> {
-        try {
-            const user = await Auth.currentAuthenticatedUser();
-            try {
-                const query = { limit: 20, filter: { id: { contains: "course-" + this.props.assignmentId + "-" } }, nextToken: next }
+    componentDidUpdate(prevProps) {
+        if (prevProps.assignmentId !== this.props.assignmentId) {
 
-                const json: any = await API.graphql({
-                    query: customQueries.listDirectMessageRooms,
-                    variables: query,
-                    authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-                });
-                if (json?.data?.listDirectMessageRooms?.nextToken !== null) {
-                    this.setState({ data: this.state.data.concat(json.data.listDirectMessageRooms.items) })
-                    this.getInitialData(json.data.listDirectMessageRooms.nextToken)
-                } else if (json?.data?.listDirectMessageRooms) {
-                    this.setState({ data: this.state.data.concat(json.data.listDirectMessageRooms.items) }, this.shouldCreateRoom)
-                }
-            } catch (json) {
-                if (json?.data?.listDirectMessageRooms?.nextToken !== null) {
-                    this.setState({ data: this.state.data.concat(json.data.listDirectMessageRooms.items) })
-                    this.getInitialData(json.data.listDirectMessageRooms.nextToken)
-                } else if (json?.data?.listDirectMessageUsers) {
-                    this.setState({ data: this.state.data.concat(json.data.listDirectMessageRooms.items) }, this.shouldCreateRoom)
-                }
-                console.error({ Error: json })
-            }
-        } catch (err) {
-            console.error(err)
+            this.getInitialData(null);
         }
+    }
+    async getInitialData(next: string): Promise<void> {
+        if (this.props.assignmentId)
+            try {
+                this.setState({ currentRoomId: "course-" + this.props.assignmentId + "-" + this.state.currentRoomId })
+                console.log({ Assignment: this.props.assignmentId })
+                const user = await Auth.currentAuthenticatedUser();
+                try {
+                    const query = { limit: 20, filter: { id: { contains: "course-" + this.props.assignmentId + "-" } }, nextToken: next }
+
+                    const json: any = await API.graphql({
+                        query: customQueries.listDirectMessageRooms,
+                        variables: query,
+                        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+                    });
+
+                    if (json.data.listDirectMessageRooms.nextToken !== null) {
+                        this.setState({ data: [...this.state.data, ...json.data.listDirectMessageRooms.items] })
+                        this.getInitialData(json.data.listDirectMessageRooms.nextToken)
+                    } else if (json.data.listDirectMessageRooms) {
+                        this.setState({ data: [...this.state.data, ...json.data.listDirectMessageRooms.items] }, this.shouldCreateRoom)
+                    }
+                } catch (json2: any) {
+                    console.error({ Error: json2 })
+                    if (json2.data.listDirectMessageRooms.nextToken !== null) {
+                        this.setState({ data: [...this.state.data, ...json2.data.listDirectMessageRooms.items] })
+                        this.getInitialData(json2.data.listDirectMessageRooms.nextToken)
+                    } else if (json2.data.listDirectMessageRooms) {
+                        this.setState({ data: [...this.state.data, ...json2.data.listDirectMessageRooms.items] }, this.shouldCreateRoom)
+                    }
+
+                }
+            } catch (err) {
+                console.error(err)
+            }
     }
     createRoom = (): void => {
         console.log("CreateRoom")
@@ -154,7 +165,9 @@ export default class EditableRichText extends JCComponent<Props, State> {
     }
     switchRoom(index: number): void {
         this.setState({ selectedRoom: index })
-        this.setState({ currentRoomId: this.state.data[index].roomID })
+
+        this.setState({ currentRoomId: this.state.data[index].id })
+        console.log(this.state.data[index])
     }
     getCurrentRoomRecipients(): string[] {
         const ids = [];
@@ -175,6 +188,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
 
                         {this.state.data != null ?
                             this.state.data.map((item, index) => {
+
                                 const otherUsers = this.getOtherUsers(item)
                                 let stringOfNames = ''
                                 otherUsers.names.forEach((name, index) => {
@@ -195,11 +209,11 @@ export default class EditableRichText extends JCComponent<Props, State> {
 
 
                     <Container style={this.styles.style.courseAssignmentScreenRightCard}>
-                        <MessageBoard showWordCount={true} totalWordCount={this.props.wordCount} style="courseResponse" roomId={"course-" + this.props.assignmentId + "-" + this.state.currentUser} recipients={this.getCurrentRoomRecipients()}></MessageBoard>
+                        <MessageBoard showWordCount={true} totalWordCount={this.props.wordCount} style="courseResponse" roomId={this.state.currentRoomId} recipients={this.getCurrentRoomRecipients()}></MessageBoard>
                     </Container>
                 </Container>
                 : (this.hasInitialPost() == initialPostState.No) ?
-                    <MessageBoard showWordCount={true} totalWordCount={this.props.wordCount} style="course" roomId={"course-" + this.props.assignmentId + "-" + this.state.currentUser} recipients={this.getCurrentRoomRecipients()}></MessageBoard>
+                    <MessageBoard showWordCount={true} totalWordCount={this.props.wordCount} style="course" roomId={this.state.currentRoomId} recipients={this.getCurrentRoomRecipients()}></MessageBoard>
                     : null
             }
 
