@@ -11,7 +11,7 @@ import JCSwitch from '../../components/JCSwitch/JCSwitch';
 
 
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
-import { ResourceContext } from './ResourceContext';
+import { ResourceContext, ResourceState } from './ResourceContext';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import JCComponent from '../JCComponent/JCComponent';
 
@@ -32,7 +32,7 @@ class ResourceOverviewImpl extends JCComponent<Props>{
 
 
 
-    renderButtons(state, actions): React.ReactNode {
+    renderButtons(state: ResourceState, actions): React.ReactNode {
         return (
             <Container style={{ minHeight: 30 }}>
                 {state.canJoin ?
@@ -63,7 +63,10 @@ class ResourceOverviewImpl extends JCComponent<Props>{
         console.log("ResourceScreen")
         return (<ResourceOverviewImpl.Consumer>
             {({ state, actions }) => {
+                if (!state)
+                    return null
                 if (state.groupData != null)
+
                     return <Container style={this.styles.style.resourcesOverviewScreenMainContainer}>
 
                         <Container style={this.styles.style.detailScreenLeftCard}>

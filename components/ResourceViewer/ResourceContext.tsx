@@ -1,6 +1,30 @@
 
+import { JCState } from 'components/JCComponent/JCComponent';
 import * as React from 'react';
-export const ResourceContext = React.createContext({
+export interface ResourceState extends JCState {
+    groupData: any
+    resourceData: any
+    currentResource: number
+    currentSeries: number
+    currentEpisode: number
+    showMap: boolean
+    loadId: string
+    createNew: boolean
+    canSave: boolean
+    canLeave: boolean
+    canJoin: boolean
+    isEditable: boolean
+    canDelete: boolean
+    validationError: string
+    currentUser: string
+    currentUserProfile: any
+    memberIDs: string[]
+}
+type ResourceContextType = {
+    actions: any,
+    state: ResourceState | undefined
+}
+export const ResourceContext = React.createContext<ResourceContextType>({
     actions: {
         createResource: null,
         changeResource: null,
@@ -28,5 +52,5 @@ export const ResourceContext = React.createContext({
         updateValueGroup: null
 
 
-    }, state: null
+    }, state: undefined
 })

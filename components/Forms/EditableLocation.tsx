@@ -79,7 +79,7 @@ export default class EditableLocation extends JCComponent<Props, State> {
                         />
                         <div className="autocomplete-dropdown-container" style={{ minWidth: 110, padding: "7px 25px 7px 10px", maxHeight: 80, overflowY: "scroll", width: "70%" }}>
                             {loading && <div className="autocomplete-dropdown-container" style={{ borderWidth: 2, borderColor: "#333333", fontFamily: "Graphik-Regular-App", fontSize: 16 }} >Loading...</div>}
-                            {suggestions.map((suggestion, index) => {
+                            {suggestions.map((suggestion, index: number) => {
                                 const className = suggestion.active
                                     ? 'suggestion-item--active'
                                     : 'suggestion-item';

@@ -10,7 +10,7 @@ interface Props {
     multiline: boolean,
     placeholder?: string,
     placeholderTextColor?: string,
-    onChange?(string),
+    onChange?(string): void,
     "data-testid"?: any,
     ellipsizeMode?: 'head' | 'middle' | 'tail' | 'clip',
     numberOfLines?: number
@@ -43,7 +43,8 @@ export default class EditableText extends JCComponent<Props, State> {
     }
 
     onChanged(val: any): void {
-        this.props.onChange(val)
+        if (this.props.onChange)
+            this.props.onChange(val)
     }
     render(): React.ReactNode {
 

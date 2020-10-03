@@ -37,13 +37,16 @@ class SignUpScreen3Impl extends JCComponent<Props, State>{
   }
 
   static Consumer = UserContext.Consumer
-  onFinalizeProfile(actions): void {
+  onFinalizeProfile(actions:any): void {
     actions.updateHasCompletedPersonalProfile()
   }
   render(): React.ReactNode {
     return (
       <SignUpScreen3Impl.Consumer>
         {({ state, actions }) => {
+          if (!state)
+            return null
+
           if (state.hasPaidState == "Complete" && state.hasCompletedPersonalProfile == "Incomplete") {
 
             return (

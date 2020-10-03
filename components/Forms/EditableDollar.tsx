@@ -14,7 +14,7 @@ interface Props {
     inputStyle?: any,
     multiline: boolean,
     placeholder?: string,
-    onChange?(string)
+    onChange?(string): void
 }
 interface State extends JCState {
     // value: string,
@@ -39,7 +39,8 @@ export default class EditableDollar extends JCComponent<Props, State> {
     }
 
     onChanged(val: any): void {
-        this.props.onChange(val.target.value)
+        if (this.props.onChange)
+            this.props.onChange(val.target.value)
     }
 
     render(): React.ReactNode {

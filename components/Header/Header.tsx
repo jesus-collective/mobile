@@ -48,6 +48,7 @@ const resourcesStyle2 = {
 }
 
 export default class HeaderJC extends JCComponent<Props, State> {
+  headerStyles: HeaderStyles = HeaderStyles.getInstance();
 
   constructor(props: Props) {
     super(props);
@@ -57,8 +58,8 @@ export default class HeaderJC extends JCComponent<Props, State> {
       resourcesStyle: resourcesStyle1,
       chevronStyle: Dimensions.get('window').width > 720 ? chevronStyle1 : chevronStyle2
     }
+
   }
-  headerStyles = HeaderStyles.getInstance();
 
   updateStyles = (): void => {
     this.headerStyles.update()

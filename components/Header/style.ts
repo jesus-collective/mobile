@@ -7,16 +7,15 @@ export default class HeaderStyles {
     constructor() {
         this.update()
     }
-    static instance = null
+    static instance: HeaderStyles
     public static getInstance(): HeaderStyles {
-        if (HeaderStyles.instance == null) {
+        if (!HeaderStyles.instance) {
             HeaderStyles.instance = new HeaderStyles();
         }
 
         return this.instance;
     }
-    style = null
-
+    style!: EStyleSheet.AnyObject;
     update(): void {
         this.style = EStyleSheet.create({
 
@@ -46,6 +45,17 @@ export default class HeaderStyles {
             },
             centerMenuButtonsText: {
                 color: '#aaaaaa',
+                fontSize: 15,
+                fontWeight: 'bold',
+                marginRight: 30,
+                '@media only screen and (max-width: 600px)': {
+
+                    display: 'none',
+
+                },
+            },
+            centerMenuButtonsTextSelected: {
+                color: '#ffffff',
                 fontSize: 15,
                 fontWeight: 'bold',
                 marginRight: 30,

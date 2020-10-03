@@ -112,8 +112,7 @@ class MyMapImpl extends JCComponent<Props, State> {
       <CardItem >
         <Body style={{ flex: 1, flexDirection: 'row' }}>
           <View style={{ marginRight: 10 }}>
-            <ProfileImage user={this.state.selectedPlace.mapItem.user.id} size='medium' style='map'>
-            </ProfileImage>
+            <ProfileImage user={this.state.selectedPlace.mapItem.user.id} size='medium' style='map' />
           </View>
           <View>
             <Text style={this.styles.style.fontConnectWithName}>{this.state.selectedPlace.mapItem.user.orgName}</Text>
@@ -139,8 +138,7 @@ class MyMapImpl extends JCComponent<Props, State> {
       <CardItem >
         <Body style={{ flex: 1, flexDirection: 'row' }}>
           <View style={{ marginRight: 10 }}>
-            <ProfileImage user={this.state.selectedPlace.mapItem.user.id} size='medium' style='map'>
-            </ProfileImage>
+            <ProfileImage user={this.state.selectedPlace.mapItem.user.id} size='medium' style='map' />
           </View>
           <View>
             <Text style={this.styles.style.fontConnectWithName}>{this.state.selectedPlace.mapItem.user.given_name} {this.state.selectedPlace.mapItem.user.family_name}</Text>

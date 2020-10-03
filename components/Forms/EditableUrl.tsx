@@ -12,20 +12,18 @@ interface Props {
     inputStyle?: any,
     multiline: boolean,
     placeholder?: string,
-    onChange?(string),
+    onChange?(string): void,
     navigation?: any
     route?: any
 }
 class EditableUrlImpl extends JCComponent<Props> {
 
     onChanged(val: any) {
-        this.props.onChange(val.target.value)
+        if (this.props.onChange)
+            this.props.onChange(val.target.value)
     }
-    navigate(id) {
-
+    navigate(id: string) {
         window.location.href = id
-
-
     }
     render() {
 

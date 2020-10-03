@@ -529,3 +529,34 @@ type Product
     confirmationMsg: String
     payments: [Payment] @connection(name:"paymentProduct",keyField: "productID")
   }
+
+
+type vodAsset @model (subscriptions: {level: public})
+@auth(
+  rules: [
+    {allow: owner, ownerField: "owner", operations: [create, update, delete, read] },
+    {allow: groups, groups:["Admin"], operations: [create, update, delete, read]},
+    {allow: private, operations: [read]}
+  ]
+)
+{
+  id:ID!
+  title:String!
+  description:String!
+
+  #DO NOT EDIT
+  video:videoObject @connection
+} 
+
+#DO NOT EDIT
+type videoObject @model
+@auth(
+  rules: [
+    {allow: owner, ownerField: "owner", operations: [create, update, delete, read] },
+    {allow: groups, groups:["Admin"], operations: [create, update, delete, read]},
+    {allow: private, operations: [read]}
+  ]
+)
+{
+  id:ID!
+}

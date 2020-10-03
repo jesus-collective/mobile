@@ -17,7 +17,7 @@ interface Props {
 export default class SignUpScreen2 extends JCComponent<Props>{
   static Consumer = UserContext.Consumer
 
-  async makePayment(actions): Promise<void> {
+  async makePayment(actions:any): Promise<void> {
     console.log("Finish Payment")
     const user = await Auth.currentAuthenticatedUser();
     try {

@@ -9,9 +9,9 @@ interface Props {
   textStyle: any,
   inputStyle?: any,
   placeholder?: string,
-  onChange?(string),
-  onPress(),
-  onDelete()
+  onChange?(arg0: string): void,
+  onPress(): void,
+  onDelete(): void
 }
 interface State extends JCState {
   value: string,
@@ -19,7 +19,7 @@ interface State extends JCState {
   isEditMode: boolean,
   textStyle: any,
   inputStyle: any,
-  placeholder: string
+  placeholder?: string
 }
 export default class EditableButton extends JCComponent<Props, State> {
   constructor(props: Props) {
@@ -29,8 +29,8 @@ export default class EditableButton extends JCComponent<Props, State> {
       value: props.value,
       isEditMode: false,
       isEditable: props.isEditable,
-      textStyle: props.textStyle,
-      inputStyle: props.inputStyle,
+      //      textStyle: props.textStyle,
+      //      inputStyle: props.inputStyle,
       placeholder: props.placeholder
     }
   }
@@ -40,8 +40,10 @@ export default class EditableButton extends JCComponent<Props, State> {
       this.props.onDelete()
     }
     else {
-      this.props.onChange(val.target.value)
-      this.setState({ isEditMode: false })
+      if (this.props.onChange) {
+        this.props.onChange(val.target.value)
+        this.setState({ isEditMode: false })
+      }
     }
   }
 
@@ -54,11 +56,11 @@ export default class EditableButton extends JCComponent<Props, State> {
           onBlur={(value: any) => { this.onChanged(value) }}
           onSubmitEditing={(value: any) => { this.onChanged(value) }}
           onChange={(val: any) => { this.setState({ value: val.target.value }) }}
-          placeholder={this.state.placeholder} style={this.state.inputStyle} value={this.state.value} ></Input >
+          placeholder={this.state.placeholder} style={this.props.inputStyle} value={this.state.value} ></Input >
       else
-        return <Button onLongPress={() => { this.setState({ isEditMode: true }) }} transparent onPress={() => { this.props.onPress() }}><Text style={this.state.textStyle}>{this.props.value}</Text></Button>
+        return <Button onLongPress={() => { this.setState({ isEditMode: true }) }} transparent onPress={() => { this.props.onPress() }}><Text style={this.props.textStyle}>{this.props.value}</Text></Button>
     else
-      return <Button transparent onPress={() => { this.props.onPress() }}><Text style={this.state.textStyle}>{this.props.value}</Text></Button>
+      return <Button transparent onPress={() => { this.props.onPress() }}><Text style={this.props.textStyle}>{this.props.value}</Text></Button>
 
 
   }

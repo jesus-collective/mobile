@@ -5,7 +5,7 @@ import HeaderStyles from '../CourseSidebar/style';
 
 import React from 'react';
 import { Image, Text, Dimensions } from 'react-native';
-import AnimatedProgressWheel from 'react-native-progress-wheel';
+//import AnimatedProgressWheel from 'react-native-progress-wheel';
 import JCComponent from '../JCComponent/JCComponent';
 import JCButton, { ButtonTypes } from '../Forms/JCButton';
 import { CourseContext } from '../CourseViewer/CourseContext';
@@ -60,6 +60,9 @@ class CourseSidebarImpl extends JCComponent<Props> {
         return (
             <CourseSidebarImpl.Consumer>
                 {({ state, actions }) => {
+                    if (!state)
+                        return null
+
                     return (
                         <Container style={this.styles.style.courseSideBar}>
                             <Button

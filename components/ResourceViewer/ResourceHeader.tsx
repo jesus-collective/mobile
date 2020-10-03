@@ -51,7 +51,8 @@ class ResourceHeader extends JCComponent<EmptyProps, State> {
         return (
             <ResourceHeader.Consumer>
                 {({ state, actions }) => {
-
+                    if (!state)
+                        return null
                     if (this.state.imageUrl == null || this.state.image != state.resourceData.resources.items[state.currentResource].image)
                         this.getImage(state.resourceData.resources.items[state.currentResource].image)
                     return (

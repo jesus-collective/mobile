@@ -27,17 +27,19 @@ class ResourceMenu extends JCComponent<EmptyProps> {
         // Important to stop updating state after unmount
         Dimensions.removeEventListener("change", this.updateStyles);
     }
-    headerStyles = new HeaderStyles()
+    headerStyles: HeaderStyles = new HeaderStyles()
     render(): React.ReactNode {
 
         //const { navigate } = this.props.navigation;
         return (
             <ResourceMenu.Consumer>
                 {({ state, actions }) => {
+                    if (!state)
+                        return null
                     return (<Header style={this.headerStyles.style.resourceContainer}>
                         <Left></Left>
                         <Body style={this.styles.style.resourcesSubMenu}>
-                            {state.resourceData.resources.items.map((item, index) => {
+                            {state.resourceData.resources.items.map((item, index: number) => {
                                 if (item != null)
                                     return <EditableButton onDelete={() => actions.deleteResource(index)} onChange={(value) => actions.updateResource(index, "menuTitle", value)} key={index} placeholder="temp" isEditable={state.isEditable} onPress={() => actions.changeResource(index)}
                                         inputStyle={this.headerStyles.style.centerMenuButtonsText} textStyle={this.headerStyles.style.centerMenuButtonsText} value={item.menuTitle}>

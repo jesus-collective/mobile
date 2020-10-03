@@ -87,7 +87,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
     }).catch((e) => { console.log(e) })
   }
   shouldCreateRoom = (): void => {
-    if (!(this.state.data.map((item, index) => {
+    if (!(this.state.data.map((item, index: number) => {
       if (item.room.roomType == null || item.room.roomType == "directMessage")
         if ((item.room.messageUsers.items.length == 2) &&
           (item.room.messageUsers.items[0].userID == this.props.route.params.initialUserID || item.room.messageUsers.items[1].userID == this.props.route.params.initialUserID)) {
@@ -212,10 +212,10 @@ export default class ConversationScreen extends JCComponent<Props, State>{
               }
 
               {this.state.data != null ?
-                this.state.data.filter(item => item.room.roomType == "directMessage" || item.room.roomType == null).map((item, index) => {
+                this.state.data.filter(item => item.room.roomType == "directMessage" || item.room.roomType == null).map((item, index: number) => {
                   const otherUsers = this.getOtherUsers(item)
                   let stringOfNames = ''
-                  otherUsers.names.forEach((name, index) => {
+                  otherUsers.names.forEach((name, index: number) => {
                     if (otherUsers.names.length === index + 1) {
                       stringOfNames += name
                     } else {

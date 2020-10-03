@@ -98,7 +98,7 @@ class MyForgotPassword extends React.Component<Props, State> {
     componentWillUnmount(): void {
         Dimensions.removeEventListener("change", () => { this.styles.updateStyles(this) });
     }
-    static getDerivedStateFromProps(nextProps, prevState) {
+    static getDerivedStateFromProps(nextProps: Props, prevState: Props) {
 
         if (nextProps.authState != prevState.authState)
             return { authState: nextProps.authState }

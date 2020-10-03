@@ -9,15 +9,15 @@ export default class MainStyles {
     constructor() {
         this.update()
     }
-    static instance: MainStyles = null
+    static instance: MainStyles
     public static getInstance(): MainStyles {
-        if (MainStyles.instance == null) {
+        if (MainStyles.instance == undefined) {
             MainStyles.instance = new MainStyles();
         }
 
         return this.instance;
     }
-    style = null
+    style!: EStyleSheet.AnyObject;
     updateStyles = (obj: any): void => {
         obj.styles.update()
         obj.forceUpdate();
@@ -263,7 +263,7 @@ export default class MainStyles {
                 lineHeight: 23,
                 fontWeight: "normal",
                 fontFamily: "Graphik-Regular-App",
-                width: "100%", 
+                width: "100%",
                 marginBottom: 8
             },
             textInput: {
@@ -289,12 +289,12 @@ export default class MainStyles {
             },
             adminCRMTableParagraph: {
                 fontFamily: "Graphik-Regular-App",
-                color: '#000000', 
+                color: '#000000',
                 paddingLeft: 10,
             },
             adminCRMModal: {
                 fontFamily: "Graphik-Bold-App",
-                color: '#000000', 
+                color: '#000000',
                 paddingLeft: 10,
             },
             editableURLText: {

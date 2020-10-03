@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Card, CardItem, ListItem, List } from 'native-base';
 
 import { Text, Image, Dimensions } from 'react-native'
-import { ResourceContext } from './ResourceContext';
+import { ResourceContext, ResourceState } from './ResourceContext';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
@@ -51,7 +51,7 @@ class ResourceContent extends JCComponent<Props, State> {
         }
     }
 
-    renderSeriesMobile(state, actions): React.ReactNode {
+    renderSeriesMobile(state: ResourceState, actions): React.ReactNode {
         const moreVideosLength = state.resourceData.resources.items[state.currentResource].series.items.length - 3
         return (
             <Container style={{ display: "flex", flexDirection: "column", justifyContent: 'flex-start', backgroundColor: "#F9FAFC" }}>
@@ -60,7 +60,7 @@ class ResourceContent extends JCComponent<Props, State> {
                         <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: "Graphik-Bold-App", color: '#333333' }}>Current Series</Text>
                     </Container>
                     <List>
-                        {state.resourceData.resources.items[state.currentResource].series.items.slice(0, 3).map((series, index) => {
+                        {state.resourceData.resources.items[state.currentResource].series.items.slice(0, 3).map((series, index: number) => {
                             const thumbnailIndex = this.findFirstEpisode(series.episodes.items)
                             return (
                                 <ListItem key={series.id} style={{ borderBottomWidth: 0 }}>
@@ -132,7 +132,7 @@ class ResourceContent extends JCComponent<Props, State> {
                     </Container>
                     <List style={{ height: '100%' }}>
 
-                        {state.resourceData.resources.items[state.currentResource].series.items.slice(3, this.state.numberOfVideos + 4).map((series, index) => {
+                        {state.resourceData.resources.items[state.currentResource].series.items.slice(3, this.state.numberOfVideos + 4).map((series, index: number) => {
                             const thumbnailIndex = this.findFirstEpisode(series.episodes.items)
                             index += 3
                             return (
@@ -212,7 +212,7 @@ class ResourceContent extends JCComponent<Props, State> {
             </Container >)
     }
 
-    renderSeries(state, actions): React.ReactNode {
+    renderSeries(state: ResourceState, actions): React.ReactNode {
         let temp = [];
         const moreVideosLength = state.resourceData.resources.items[state.currentResource].series.items.length - 3
         return (
@@ -223,7 +223,7 @@ class ResourceContent extends JCComponent<Props, State> {
                     </Container>
                     <Container style={this.styles.style.resourceContentCurrentSeriesContainer}>
 
-                        {state.resourceData.resources.items[state.currentResource].series.items.length > 3 ? state.resourceData.resources.items[state.currentResource].series.items.slice(0, 3).map((series, index) => {
+                        {state.resourceData.resources.items[state.currentResource].series.items.length > 3 ? state.resourceData.resources.items[state.currentResource].series.items.slice(0, 3).map((series, index: number) => {
                             const thumbnailIndex = this.findFirstEpisode(series.episodes.items)
                             return (
                                 <Card key={series.id} style={this.styles.style.resourceContentCurrentSeriesCard}>
@@ -301,7 +301,7 @@ class ResourceContent extends JCComponent<Props, State> {
                     </Container>
                     <Container style={{ height: this.state.cardHeight * this.state.numberOfVideos / this.state.rowLength, width: "100%" }}>
 
-                        {state.resourceData.resources.items[state.currentResource].series.items.slice(3, this.state.numberOfVideos + 4).map((series, index) => {
+                        {state.resourceData.resources.items[state.currentResource].series.items.slice(3, this.state.numberOfVideos + 4).map((series, index: number) => {
                             temp.push(series)
                             if (index + 1 === moreVideosLength && this.state.numberOfVideos - moreVideosLength > 0) {
                                 const offset = 4 - temp.length
@@ -465,11 +465,11 @@ class ResourceContent extends JCComponent<Props, State> {
                 </Container>
             </Container >)
     }
-    generateKey(state): string {
+    generateKey(state: ResourceState): string {
         return state.currentResource + "-" + state.currentSeries + "-" + state.currentEpisode
     }
 
-    renderEpisodesMobile(state, actions): React.ReactNode {
+    renderEpisodesMobile(state: ResourceState, actions): React.ReactNode {
         const series = state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries]
         if (series.type === 'ky-preschool') {
             const img = series.playlistImage
@@ -514,7 +514,7 @@ class ResourceContent extends JCComponent<Props, State> {
                             <JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>Share with Others</JCButton>
                         </ListItem>
                         <Container>
-                            {series.episodes.items.sort((a, b) => state.isEditable ? 0 : a.episodeNumber - b.episodeNumber).map((episode, index) => {
+                            {series.episodes.items.sort((a, b) => state.isEditable ? 0 : a.episodeNumber - b.episodeNumber).map((episode, index: number) => {
                                 return (
                                     <Card
                                         key={episode.id}
@@ -659,7 +659,7 @@ class ResourceContent extends JCComponent<Props, State> {
                             <JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>Share with Others</JCButton>
                         </ListItem>
                         <Container>
-                            {series.episodes.items.sort((a, b) => state.isEditable ? 0 : a.episodeNumber - b.episodeNumber).map((episode, index) => {
+                            {series.episodes.items.sort((a, b) => state.isEditable ? 0 : a.episodeNumber - b.episodeNumber).map((episode, index: number) => {
                                 return (
                                     <Card
                                         key={episode.id}
@@ -769,7 +769,7 @@ class ResourceContent extends JCComponent<Props, State> {
         }
     }
 
-    renderEpisodes(state, actions): React.ReactNode {
+    renderEpisodes(state: ResourceState, actions): React.ReactNode {
         const series = state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries]
         if (series.type === 'ky-preschool') {
             const img = series.playlistImage
@@ -833,7 +833,7 @@ class ResourceContent extends JCComponent<Props, State> {
                                             source={{ uri: img }}
                                         />
                                         <Container style={{ marginLeft: 40 }}>
-                                            {series.episodes.items.sort((a, b) => state.isEditable ? 0 : a.episodeNumber - b.episodeNumber).map((episode, index) => {
+                                            {series.episodes.items.sort((a, b) => state.isEditable ? 0 : a.episodeNumber - b.episodeNumber).map((episode, index: number) => {
                                                 return (
                                                     <Container key={episode.id}>
                                                         <CardItem style={{ paddingLeft: 0, paddingRight: 0 }}>
@@ -949,7 +949,7 @@ class ResourceContent extends JCComponent<Props, State> {
                         {/*<Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].category}</Text>*/}
 
                         <Container style={this.styles.style.resourceContentEpisodesContainer}>
-                            {series.episodes.items.sort((a, b) => state.isEditable ? 0 : a.episodeNumber - b.episodeNumber).map((episode, index) => {
+                            {series.episodes.items.sort((a, b) => state.isEditable ? 0 : a.episodeNumber - b.episodeNumber).map((episode, index: number) => {
                                 return (
                                     <Card key={episode.id} style={this.styles.style.resourceContentEpisodeCard}>
                                         {state.isEditable ?
@@ -1055,7 +1055,7 @@ class ResourceContent extends JCComponent<Props, State> {
                 </Container >)
         }
     }
-    renderEpisode(state, actions): React.ReactNode {
+    renderEpisode(state: ResourceState, actions): React.ReactNode {
         const series = state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries]
         const episode = state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode]
         return (
@@ -1174,7 +1174,8 @@ class ResourceContent extends JCComponent<Props, State> {
         return (
             <ResourceContent.Consumer>
                 {({ state, actions }) => {
-                    console.log(state.data)
+                    if (!state)
+                        return null
                     if (state.currentEpisode != null)
                         return this.renderEpisode(state, actions)
                     if (state.currentSeries != null)

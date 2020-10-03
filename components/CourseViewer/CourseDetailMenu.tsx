@@ -33,7 +33,8 @@ class CourseDetailMenu extends JCComponent<EmptyProps> {
         return (
             <CourseDetailMenu.Consumer>
                 {({ state, actions }) => {
-
+                    if (!state)
+                        return null
                     return (<Header style={this.headerStyles.style.resourceContainer}>
                         {/* <Left></Left> */}
                         <Body style={{
@@ -43,8 +44,8 @@ class CourseDetailMenu extends JCComponent<EmptyProps> {
                             alignItems: 'flex-start',
                             marginLeft: '4.5%'
                         }}>
-                            {state.courseData?.courseWeeks.items.map((item, index) => {
-                                if (item != null)
+                            {state.courseData?.courseWeeks.items.map((item, index: number) => {
+                                if (item != null) {
                                     return (
                                         <EditableButton onDelete={() => actions.deleteWeek(index)}
                                             onChange={(value) => actions.updateWeek(index, "name", value)}
@@ -53,10 +54,11 @@ class CourseDetailMenu extends JCComponent<EmptyProps> {
                                             isEditable={state.isEditable}
                                             onPress={() => actions.setActiveWeek(index)}
                                             inputStyle={this.headerStyles.style.centerMenuButtonsText}
-                                            textStyle={this.headerStyles.style.centerMenuButtonsText}
+                                            textStyle={state.activeWeek == index ? this.headerStyles.style.centerMenuButtonsTextSelected : this.headerStyles.style.centerMenuButtonsText}
                                             value={item.name}>
                                         </EditableButton>
                                     )
+                                }
                                 else
                                     return null
                             }

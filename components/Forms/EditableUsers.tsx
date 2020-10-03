@@ -48,7 +48,8 @@ export default class EditableText extends JCComponent<Props> {
         if (this.props.limit)
             if (val.length > this.props.limit)
                 val.slice(0, this.props.limit)
-        this.props.onChange(val)
+        if (this.props.onChange)
+            this.props.onChange(val)
     }
     async autoCompleteUser(value: string): Promise<any[]> {
         let searchUsers: any

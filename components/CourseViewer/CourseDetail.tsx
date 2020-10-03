@@ -12,7 +12,7 @@ import JCComponent, { JCState } from '../JCComponent/JCComponent';
 const MessageBoard = lazy(() => import('../MessageBoard/MessageBoard'));
 
 import { useRoute, useNavigation } from '@react-navigation/native';
-import { CourseContext } from './CourseContext';
+import { CourseContext, CourseState } from './CourseContext';
 import CourseDetailMenu from './CourseDetailMenu';
 import EditableText from '../Forms/EditableText';
 import EditableCourseAssignment from '../Forms/EditableCourseAssignment'
@@ -38,7 +38,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
     }
   }
   static Consumer = CourseContext.Consumer;
-  renderAssignmentConfig(state, actions, lesson, item): React.ReactNode {
+  renderAssignmentConfig(state: CourseState, actions: any, lesson, item): React.ReactNode {
     return (<Container style={state.isEditable && state.editMode ? { flexDirection: "column", marginTop: 10, height: "unset" } : { flexDirection: "column", height: "unset" }}>
       {state.isEditable && state.editMode ?
         <EditableDate type="datetime"
@@ -61,7 +61,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
     </Container>
     )
   }
-  renderResponseConfig(state, actions, lesson, item): React.ReactNode {
+  renderResponseConfig(state: CourseState, actions: any, lesson, item): React.ReactNode {
     return (<Container style={state.isEditable && state.editMode ? { flexDirection: "column", marginTop: 10, height: "unset" } : { flexDirection: "column", height: "unset" }}>
       {state.isEditable && state.editMode ?
         <EditableDate type="datetime"
@@ -108,7 +108,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
     </Container>
     )
   }
-  renderZoomConfig(state, actions, lesson, item): React.ReactNode {
+  renderZoomConfig(state: CourseState, actions: any, lesson, item): React.ReactNode {
     return (
       <Container style={state.isEditable && state.editMode ? this.styles.style.courseActivityButtonEditable : this.styles.style.courseActivityButtonNonEditable}>
         <EditableUrl title="Open in Zoom"
@@ -162,7 +162,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
           moment.tz.zone(week.tz).abbr(+moment(week.date).format('x'))
 
   }
-  renderWeekDetails(state, actions, week): React.ReactNode {
+  renderWeekDetails(state: CourseState, actions: any, week): React.ReactNode {
     return (
       state.activeLesson == null ?
         week ?
@@ -302,7 +302,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
   navigate(id) {
     window.location.href = id
   }
-  renderZoom(state, actions, week, lesson) {
+  renderZoom(state: CourseState, actions: any, week, lesson) {
     return (
       <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
         <JCButton buttonType={ButtonTypes.CourseHomeSidebarTop} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
@@ -318,7 +318,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
           textStyle={{ marginLeft: 10 }} inputStyle={{ margintop: 20, marginLeft: 20 }}></EditableRichText>
       </Container>)
   }
-  renderRespond(state, actions, week, lesson) {
+  renderRespond(state: CourseState, actions: any, week, lesson) {
     return (
       <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
         <JCButton buttonType={ButtonTypes.CourseHomeSidebarTop} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
@@ -335,7 +335,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
         ></EditableCourseAssignment>
       </Container>)
   }
-  renderAssignment(state, actions, week, lesson) {
+  renderAssignment(state: CourseState, actions: any, week, lesson) {
     return (
       <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
         <JCButton buttonType={ButtonTypes.courseAssignment} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
@@ -350,7 +350,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
         <EditableCourseAssignment actions={actions} assignmentId={lesson.id} wordCount={lesson.wordCount}></EditableCourseAssignment>
       </Container>)
   }
-  renderLessonType(state, actions, week, lesson) {
+  renderLessonType(state: CourseState, actions: any, week, lesson) {
     switch (lesson.lessonType) {
       case 'respond':
         return this.renderRespond(state, actions, week, lesson)
@@ -360,7 +360,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
         return this.renderZoom(state, actions, week, lesson)
     }
   }
-  renderLessonDetails(state, actions, week: any): React.ReactNode {
+  renderLessonDetails(state: CourseState, actions: any, week: any): React.ReactNode {
     if (week?.lessons) {
       const lesson = week.lessons.items[state.activeLesson]
       return (
@@ -378,6 +378,8 @@ class CourseDetailImpl extends JCComponent<Props, State>{
 
       <CourseDetailImpl.Consumer>
         {({ state, actions }) => {
+          if (!state)
+            return null
           const week = state.courseData?.courseWeeks.items[state.activeWeek]
           const lesson = week?.lessons.items[state.activeLesson]
           return (

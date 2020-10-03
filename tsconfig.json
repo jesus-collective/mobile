@@ -2,7 +2,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "allowSyntheticDefaultImports": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
     "module": "commonjs",
     "outDir": "./output",
     "target": "es6",
@@ -10,7 +11,10 @@
     "alwaysStrict": true,
     "allowJs": true,
     "checkJs": true,
-    "types": ["cypress"],
+    "strict": true,
+    "types": [
+      "cypress"
+    ],
     "resolveJsonModule": true
   },
   "exclude": [

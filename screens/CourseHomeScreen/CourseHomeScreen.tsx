@@ -15,35 +15,20 @@ import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
 import CourseHome from '../../components/CourseViewer/CourseHome'
 import CourseDetail from '../../components/CourseViewer/CourseDetail'
 import CourseCoaching from '../../components/CourseViewer/CourseCoaching'
-import { CourseContext } from '../../components/CourseViewer/CourseContext';
+import { CourseContext, CourseState } from '../../components/CourseViewer/CourseContext';
 import { CreateCourseWeekInput, CreateCourseLessonInput, CreateCourseTriadsInput } from 'src/API';
-import { EditorState, ContentState, convertFromRaw, convertToRaw } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 
 
 interface Props {
   navigation: any
   route: any
 }
-interface State extends JCState {
-  showMap: boolean
-  loadId: string
-  data: any
-  courseData: any
-  editMode: boolean
-  isEditable: boolean
-  validationError: string
-  currentScreen: string
-  currentUser: string
-  activeWeek: number
-  activeLesson: number
-
-  activeMessageBoard: string
-  activeCourseActivity: string
-}
 
 
 
-export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
+
+export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState>{
   constructor(props: Props) {
     super(props);
 
@@ -327,7 +312,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
     const del = this.state.courseData.triads.items[index].coaches.items.filter(x => !value.map(z => z.id).includes(x.userID));
     const add = value.filter(x => !this.state.courseData.triads.items[index].coaches.items.map(z => z.userID).includes(x.id));
     // const delTriadID= this.state.courseData.triads.items[index].users.items.map((item)=>{del.contains(item.})
-    add.map(async (item) => {
+    add.map(async (item: any) => {
 
       try {
         console.log({ "Adding": item })
@@ -526,7 +511,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, State>{
   }
   updateWeekOrder = (): void => {
     try {
-      this.state.courseData.courseWeeks.items.forEach((item, index) => {
+      this.state.courseData.courseWeeks.items.forEach((item, index: number) => {
         this.updateWeek(index, "week", index)
       })
 

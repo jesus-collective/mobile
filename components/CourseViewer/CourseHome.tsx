@@ -70,6 +70,10 @@ class CourseHomeImpl extends JCComponent<Props>{
 
       <CourseHomeImpl.Consumer>
         {({ state, actions }) => {
+          if (!state)
+            return null
+
+
           const instructors = state.courseData?.instructors?.items.map((item) => { return item.user })
           var markedDates = {};
           for (var i = 0; i < actions.myCourseDates().zoom?.length; i++)
@@ -159,7 +163,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                     (<>
                                       <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30 }}>Cohorts:</Text>
 
-                                      {state.courseData?.triads?.items.map((item, index) => {
+                                      {state.courseData?.triads?.items.map((item, index: number) => {
                                         const coaches = item.coaches.items.map((item) => { return item.user })
                                         const users = item.users.items.map((item) => { return item.user })
                                         return (
@@ -214,7 +218,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                               </>
                               :
                               <>
-                                {actions.myCourseGroups().completeTriad?.map((completeTriad, index) => {
+                                {actions.myCourseGroups().completeTriad?.map((completeTriad, index: number) => {
                                   return <React.Fragment key={index}><Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 70, width: '90%' }}>My Facilitator</Text>
                                     <View style={this.styles.style.courseMyFacilitatorContainer}>
                                       {
@@ -256,11 +260,11 @@ class CourseHomeImpl extends JCComponent<Props>{
                         <Container style={this.styles.style.courseHomeRightContainer}>
                           <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 30, width: '90%' }}>To-Do</Text>
                           <Card style={this.styles.style.courseHomeCoachingCard}>
-                            {toDo.map((item, index) => {
+                            {toDo.map((item, index: number) => {
                               return (<React.Fragment key={index}>
                                 {{
                                   'assignment': (
-                                    <Container style={{ flexDirection: "row", marginTop: 10, marginBottom: 10 }}>
+                                    <Container style={{ flexDirection: "row", height: "unset", marginTop: 10, marginBottom: 10 }}>
                                       <Left style={{ flex: 1 }}>
                                         <Image style={{ width: "40px", height: "40px", alignSelf: 'center' }}
                                           source={require('../../assets/svg/document.svg')} />
@@ -274,7 +278,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                     </Container>
                                   ),
                                   'respond': (
-                                    <Container style={{ flexDirection: "row", marginTop: 10, marginBottom: 10 }}>
+                                    <Container style={{ flexDirection: "row", height: "unset", marginTop: 10, marginBottom: 10 }}>
                                       <Left style={{ flex: 1 }}>
                                         <Image style={{ width: "40px", height: "40px", alignSelf: 'center' }}
                                           source={require('../../assets/svg/document.svg')} />
@@ -288,7 +292,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                     </Container>
                                   ),
                                   'zoom': (
-                                    <Container style={{ flexDirection: "row", marginTop: 10, marginBottom: 10 }}>
+                                    <Container style={{ flexDirection: "row", height: "unset", marginTop: 10, marginBottom: 10 }}>
                                       <Left style={{ flex: 1 }}>
                                         <Image style={{ width: "40px", height: "40px", alignSelf: 'center' }}
                                           source={require('../../assets/svg/document.svg')} />
@@ -303,7 +307,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                                   )
                                 }[item.lessonType] ||
                                   (
-                                    <Container style={{ flexDirection: "row", marginTop: 10, marginBottom: 10 }}>
+                                    <Container style={{ flexDirection: "row", height: "unset", marginTop: 10, marginBottom: 10 }}>
                                       <Left style={{ flex: 1 }}>
                                         <Image style={{ width: "40px", height: "40px", alignSelf: 'center' }}
                                           source={require('../../assets/svg/document.svg')} />

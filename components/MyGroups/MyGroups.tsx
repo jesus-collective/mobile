@@ -39,7 +39,7 @@ interface State extends JCState {
   data: any
   showCreateButton: boolean
   currentUser: string
-  nextToken: string
+  nextToken: string | null
   canLeave: any
   isOwner: any
 }
@@ -298,7 +298,7 @@ export default class MyGroups extends JCComponent<Props, State> {
         variables: { limit: 20, filter: { profileState: { eq: "Complete" } }, nextToken: this.state.nextToken },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
-      const processList = (json) => {
+      const processList = (json: any) => {
 
         let temp: any[]
         if (this.state.data)
@@ -334,7 +334,7 @@ export default class MyGroups extends JCComponent<Props, State> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
       });
 
-      const processList = (json) => {
+      const processList = (json: any) => {
         this.setCanLeave(json.data.groupByType.items)
         this.setIsOwner(json.data.groupByType.items)
         let temp: any[]
@@ -400,21 +400,21 @@ export default class MyGroups extends JCComponent<Props, State> {
     });
   }
   canLeave(id: string): boolean {
-    const test = this.state.canLeave.filter((elem) => elem === id)
+    const test = this.state.canLeave.filter((elem: any) => elem === id)
     if (test.length > 0)
       return true
     else
       return false
   }
   canJoin(id: string): boolean {
-    const test = this.state.canLeave.filter((elem) => elem === id)
+    const test = this.state.canLeave.filter((elem: any) => elem === id)
     if (test.length > 0)
       return false
     else
       return true
   }
   isOwner(id: string): boolean {
-    const test = this.state.isOwner.filter((elem) => elem === id)
+    const test = this.state.isOwner.filter((elem: any) => elem === id)
     if (test.length > 0)
       return true
     else
@@ -460,7 +460,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     groupMemberByUser.then((json: any) => {
       console.log({ "Success queries.groupMemberByUser": json });
 
-      json.data.groupMemberByUser.items.map((item) => {
+      json.data.groupMemberByUser.items.map((item: any) => {
         const deleteGroupMember: any = API.graphql({
           query: mutations.deleteGroupMember,
           variables: { input: { id: item.id } },
@@ -664,7 +664,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                 <Container style={(this.props.wrap && this.props.type != "profile") ? this.styles.style.ResourcesMyGroupsWrap : (this.props.wrap && this.props.type == "profile") ? this.styles.style.profileMyGroupsWrap : this.styles.style.ResourcesMyGroupsNoWrap}>
                   {this.state.data ?
                     this.state.data.filter(this.filterMy).filter(this.filterEvent).length > 0 ?
-                      this.state.data.filter(this.filterMy).filter(this.filterEvent).map((item, index) => {
+                      this.state.data.filter(this.filterMy).filter(this.filterEvent).map((item: any, index: number) => {
 
                         return (
                           <ErrorBoundry key={index}>

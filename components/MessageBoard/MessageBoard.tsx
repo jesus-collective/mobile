@@ -23,7 +23,8 @@ import { stateToHTML } from 'draft-js-export-html';
 import JCComponent, { JCState } from '../JCComponent/JCComponent';
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
-
+import CameraRecorder from './CameraRecorder';
+const configShowVideo = false
 interface Props {
   groupId?: string
   roomId?: string
@@ -35,6 +36,7 @@ interface Props {
   totalWordCount?: number
 }
 interface State extends JCState {
+  showVideo: boolean
   data: any,
   dmAuthors: any,
   created: boolean,
@@ -60,9 +62,10 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       editorState: EditorState.createEmpty(),
       attachment: null,
       attachmentName: null,
-      wordCount: 0
+      wordCount: 0,
+      showVideo: false
     }
-    this.bottom = React.createRef();
+    //    this.bottom = React.createRef();
     this.setInitialData(props)
     const subscription: any = API.graphql({
       query: subscriptions.onCreateMessage,
@@ -380,6 +383,9 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       }
     })
   }
+  showVideo() {
+    this.setState({ showVideo: !this.state.showVideo })
+  }
   showProfile(id) {
     console.log("Navigate to profileScreen")
     this.props.navigation.push("ProfileScreen", { id: id, create: false });
@@ -400,38 +406,46 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             <ProfileImage size="small" user={this.state.UserDetails}></ProfileImage>
             : null
         }
+        {
+          this.state.showVideo ?
+            <CameraRecorder></CameraRecorder> : <>
+              <Editor
+                placeholder={this.props.style == "course" ?
+                  "Write Assignment..." :
+                  this.props.style == "courseResponse" ?
+                    "Write a response...." : "Write a message..."}
+                editorState={this.state.editorState}
+                toolbarClassName="customToolbar"
+                wrapperClassName={this.props.style == "regular" || this.props.style == "course" ? "customWrapperSendmessage" : this.props.style == "courseResponse" ? "customWrapperSendmessageCourse" : "customWrapperSendmessageMini"}
+                editorClassName="customEditorSendmessage"
+                onEditorStateChange={(z) => { this.updateEditorInput(z) }}
 
-        <Editor
-          placeholder={this.props.style == "course" ?
-            "Write Assignment..." :
-            this.props.style == "courseResponse" ?
-              "Write a response...." : "Write a message..."}
-          editorState={this.state.editorState}
-          toolbarClassName="customToolbar"
-          wrapperClassName={this.props.style == "regular" || this.props.style == "course" ? "customWrapperSendmessage" : this.props.style == "courseResponse" ? "customWrapperSendmessageCourse" : "customWrapperSendmessageMini"}
-          editorClassName="customEditorSendmessage"
-          onEditorStateChange={(z) => { this.updateEditorInput(z) }}
-
-          toolbar={{
-            options: ['inline', 'list', 'emoji'],
-            inline: {
-              options: ['bold', 'italic', 'underline']
-            },
-            list: {
-              options: ['unordered', 'ordered']
-            },
-            emoji: {
-              popupClassName: "customEmojiModal"
-            }
-          }}
-        />
-        {this.renderWordCount()}
+                toolbar={{
+                  options: ['inline', 'list', 'emoji'],
+                  inline: {
+                    options: ['bold', 'italic', 'underline']
+                  },
+                  list: {
+                    options: ['unordered', 'ordered']
+                  },
+                  emoji: {
+                    popupClassName: "customEmojiModal"
+                  }
+                }}
+              />
+              {this.renderWordCount()}
+            </>
+        }
         <View
           style={
             this.props.style == "regular" || this.props.style == "courseResponse" ? this.styles.style.courseDetailJCButtonRegular : this.props.style == "course" ? this.styles.style.courseDetailJCButtonAssignments : this.styles.style.courseDetailJCButtonMini
           }>
 
+
           {this.state.attachment ? this.renderFileUploadBadge(this.state) : null}
+          {configShowVideo ? <JCButton
+            buttonType={this.props.style == "regular" || this.props.style == "course" || this.props.style == "courseResponse" ? ButtonTypes.SolidRightJustified : ButtonTypes.SolidRightJustifiedMini}
+            onPress={() => { this.showVideo() }} >{this.props.style == "course" || this.state.showVideo ? "Text" : "Video"}</JCButton> : null}
           <View style={this.styles.style.courseMessageBoardButtonsView}>
             <JCButton buttonType={ButtonTypes.SolidRightJustifiedTopMini} onPress={() => { null }}><AntDesign name="clouduploado" size={16} color="white" style={{ marginRight: 5 }} />Share a file</JCButton>
             <input multiple={false} style={{ cursor: 'pointer', width: '100%', height: '100%', position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='.pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx' onChange={(e) => this.handleUpload(e)} />
@@ -492,7 +506,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           {this.state.nextToken ?
             <TouchableOpacity onPress={() => { this.loadMoreDirectMessages() }}>
 
-              <Card style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }} onEndReached={() => { this.loadMore() }}>
+              <Card style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }} >
                 <CardItem><Text>Loading More</Text></CardItem>
               </Card>
             </TouchableOpacity> : null
@@ -596,6 +610,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             {this.renderMessageInput()}
             {this.renderDirectMessages()}
             {this.renderMessages()}
+
           </Container>
         </StyleProvider >
         : null

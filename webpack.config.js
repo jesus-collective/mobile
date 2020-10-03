@@ -5,7 +5,7 @@ const { merge } = require('webpack-merge');
 //const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const ManifestPlugin = require('webpack-manifest-plugin');
-const DynamicCdnWebpackPlugin = require('dynamic-cdn-webpack-plugin');
+//const DynamicCdnWebpackPlugin = require('dynamic-cdn-webpack-plugin');
 
 module.exports = webpackConfig = async function (env, argv) {
   const config = await createExpoWebpackConfigAsync(env, argv);
@@ -21,7 +21,7 @@ module.exports = webpackConfig = async function (env, argv) {
       new ManifestPlugin({
         fileName: 'manifest.json'
       }),
-      new DynamicCdnWebpackPlugin(),
+      //      new DynamicCdnWebpackPlugin(),
       new webpack.HashedModuleIdsPlugin(), // so that file hashes don't change unexpectedly
     ],
     optimization: {

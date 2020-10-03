@@ -72,6 +72,11 @@
         },
         "jcProcessDMAlerts": {},
         "jcmobile": {}
+      },
+      "video": {
+        "jesuscollectiveCourses": {
+          "s3UUID": "zgyka8ke"
+        }
       }
     }
   }

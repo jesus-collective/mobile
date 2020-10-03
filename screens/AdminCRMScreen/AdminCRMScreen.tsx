@@ -342,40 +342,40 @@ export default class AdminScreen extends JCComponent<Props, State>{
   }
   renderGroupsModal(): React.ReactNode {
     return (this.state.showGroups ?
-      <Modal animationType="slide" visible={this.state.showGroups} 
-      transparent={true} presentationStyle="pageSheet">
-          <View style={{ width: '100vw', height: 100, flexDirection: 'row', paddingTop: 20, paddingBottom: 20, justifyContent: 'center' }}>
-            <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', width: 70, marginLeft: 20, marginRight: 20, flex: 0.25 }}>
-              <Text style={this.styles.style.adminCRMModal}>Groups</Text>
-              <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.closeGroups() }}>X</JCButton>
-            </View>
-           
-            {
-              this.state.groupData ?
-                this.state.groupData.map((item: any, index: number) => {
-                  return (<View style={{ height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginRight: 20, flex: 0.25 }} key={index} >
-                      <Text style={this.styles.style.adminCRMModal} key={index}>{item.GroupName}</Text>
-                      <JCButton buttonType={ButtonTypes.Outline}
-                        onPress={() => { this.removeGroup(this.state.showGroupsId, item.GroupName) }}>X</JCButton>
-                  </View>)
-                })
-                : null
-            }
-           
-            <Container style={{ height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginRight: 20, flex: 0.25, justifyContent: 'center' }}>
-              <Picker style={{ height: 45, width: 250, paddingLeft: 10, paddingRight: 10 }}
-                selectedValue={this.state.groupToAdd}
-                onValueChange={val => { this.setState({ groupToAdd: val }) }}
-              >       <Picker.Item value={null} label="pick a group to add" />
-                {this.state.groupList.map((item, index) => {
-                  return <Picker.Item key={index} value={item} label={item} />
-                })}
-              </Picker>
-              <JCButton buttonType={ButtonTypes.Outline} onPress={() => {
-                this.addGroup(this.state.showGroupsId, this.state.groupToAdd)
-              }}>Add Group</JCButton>
-            </Container>
+      <Modal animationType="slide" visible={this.state.showGroups}
+        transparent={true} presentationStyle="pageSheet">
+        <View style={{ width: '100vw', height: 100, flexDirection: 'row', paddingTop: 20, paddingBottom: 20, justifyContent: 'center' }}>
+          <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', width: 70, marginLeft: 20, marginRight: 20, flex: 0.25 }}>
+            <Text style={this.styles.style.adminCRMModal}>Groups</Text>
+            <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.closeGroups() }}>X</JCButton>
           </View>
+
+          {
+            this.state.groupData ?
+              this.state.groupData.map((item: any, index: number) => {
+                return (<View style={{ height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginRight: 20, flex: 0.25 }} key={index} >
+                  <Text style={this.styles.style.adminCRMModal} key={index}>{item.GroupName}</Text>
+                  <JCButton buttonType={ButtonTypes.Outline}
+                    onPress={() => { this.removeGroup(this.state.showGroupsId, item.GroupName) }}>X</JCButton>
+                </View>)
+              })
+              : null
+          }
+
+          <Container style={{ height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginRight: 20, flex: 0.25, justifyContent: 'center' }}>
+            <Picker style={{ height: 45, width: 250, paddingLeft: 10, paddingRight: 10 }}
+              selectedValue={this.state.groupToAdd}
+              onValueChange={val => { this.setState({ groupToAdd: val }) }}
+            >       <Picker.Item value={null} label="pick a group to add" />
+              {this.state.groupList.map((item, index: number) => {
+                return <Picker.Item key={index} value={item} label={item} />
+              })}
+            </Picker>
+            <JCButton buttonType={ButtonTypes.Outline} onPress={() => {
+              this.addGroup(this.state.showGroupsId, this.state.groupToAdd)
+            }}>Add Group</JCButton>
+          </Container>
+        </View>
       </Modal > : null
     )
   }
@@ -457,7 +457,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
             >
 
               <Picker.Item value={null} label="pick a group to add" />
-              {this.state.inviteDataList.map((item, index) => {
+              {this.state.inviteDataList.map((item, index: number) => {
                 return (<Picker.Item key={index} value={item.value} label={item.name} />)
               })
               }

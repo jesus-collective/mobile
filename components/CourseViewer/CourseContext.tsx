@@ -1,6 +1,27 @@
 
+import { JCState } from 'components/JCComponent/JCComponent';
 import * as React from 'react';
-export const CourseContext = React.createContext({
+export interface CourseState extends JCState {
+    showMap: boolean
+    loadId: string
+    data: any
+    courseData: any
+    editMode: boolean
+    isEditable: boolean
+    validationError: string
+    currentScreen: string
+    currentUser: string
+    activeWeek: number
+    activeLesson: number
+
+    activeMessageBoard: string
+    activeCourseActivity: string
+}
+type CourseContextType = {
+    actions: any
+    state: CourseState | undefined
+}
+export const CourseContext = React.createContext<CourseContextType>({
     actions: {
         createCourse: null,
         changeCourse: null,
@@ -30,5 +51,5 @@ export const CourseContext = React.createContext({
         getLessonById: null,
         myCourseDates: null,
         myCourseTodo: null
-    }, state: null
+    }, state: undefined
 })

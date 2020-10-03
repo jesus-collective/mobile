@@ -87,7 +87,7 @@ class MyForgotPassword extends React.Component<Props, State> {
         }
     }
 
-    styles = MainStyles.getInstance();
+    styles: MainStyles = MainStyles.getInstance();
     componentDidMount(): void {
         Dimensions.addEventListener('change', () => { this.styles.updateStyles(this) })
     }

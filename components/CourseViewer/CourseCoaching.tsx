@@ -31,7 +31,10 @@ class CourseCoachingImpl extends JCComponent<Props>{
 
       <CourseCoachingImpl.Consumer>
         {({ state }) => {
+          if (!state)
+            return null
           return (
+
             state.data && state.currentScreen == "Coaching" ?
               <StyleProvider style={getTheme()}>
 

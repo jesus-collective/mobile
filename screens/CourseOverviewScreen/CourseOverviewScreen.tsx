@@ -521,12 +521,12 @@ export default class CourseScreen extends JCComponent<Props, State>{
 
                     <Text style={this.styles.style.courseDetails}>Course Details</Text>
 
-                    {this.state.courseData?.courseWeeks?.items.map((item: any, index1) => {
+                    {this.state.courseData?.courseWeeks?.items.map((item: any, index1: number) => {
 
                       return (<Accordion key={index1}
                         header={<><Text>Week {index1 + 1} - {item.title}</Text></>}
                       ><View>
-                          {item.lessons.items.map((lesson, index2) => {
+                          {item.lessons.items.map((lesson, index2: number) => {
                             return (<Text>{index1 + 1}.{index2 + 1} - {lesson.name}</Text>)
                           })
                           }

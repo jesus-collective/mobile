@@ -21,7 +21,7 @@ interface Props {
     textStyle: any,
     inputStyle?: any,
     placeholder?: string,
-    onChange?(string),
+    onChange?(string): void,
     toolBar?: any
 }
 interface State extends JCState {
@@ -53,9 +53,10 @@ export default class EditableRichText extends JCComponent<Props, State> {
         }
     }
     onChanged(val: any): void {
-
-        this.props.onChange(val)
-        this.setState({ isEditMode: false })
+        if (this.props.onChange) {
+            this.props.onChange(val)
+            this.setState({ isEditMode: false })
+        }
     }
     updateEditorInput(value: any): void {
 

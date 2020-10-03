@@ -3,7 +3,8 @@ import Amplify, { Analytics } from 'aws-amplify'
 import { API, graphqlOperation } from 'aws-amplify';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
-import { View, Platform, AsyncStorage } from 'react-native'
+import { View, Platform } from 'react-native'
+import AsyncStorage from '@react-native-community/async-storage'
 import { Auth } from 'aws-amplify';
 import { Text } from 'react-native'
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
@@ -14,7 +15,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import awsconfig from '../../src/aws-exports';
 import Validate from '../../components/Validate/Validate'
 import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
-import { UserContext } from './UserContext'
+import { UserContext, UserState } from './UserContext'
 import SignUpScreen3 from '../../components/Auth/SignUpScreen3'
 import { CreateOrganizationInput, CreateOrganizationMemberInput, CreateUserInput } from '../../src/API';
 
@@ -177,6 +178,8 @@ class MainAppRouter extends JCComponent {
     return (
       <MainAppRouter.Consumer>
         {({ state, actions }) => {
+          if (!state)
+            return null
           return (
             <Stack.Navigator
 
@@ -434,18 +437,9 @@ class MainAppRouter extends JCComponent {
 interface Props {
   authState?: any;
 }
-interface State extends JCState {
-  hasCompletedPersonalProfile: string;
-  hasPaidState: string;
-  userExists: boolean;
-  user: any;
-  authState: any;
-  hasCompletedOrganizationProfile: string;
-  orgId: string;
-  isOrg: boolean;
-}
 
-class HomeScreenRouter extends JCComponent<Props, State> {
+
+class HomeScreenRouter extends JCComponent<Props, UserState> {
   constructor(props: Props) {
     super(props)
     this.state = {
@@ -479,7 +473,7 @@ class HomeScreenRouter extends JCComponent<Props, State> {
       catch(() => { console.log('No currrent authenticated user') });
     if (this.user != null) {
       const { attributes } = this.user;
-      const handleUser = async (getUser) => {
+      const handleUser = async (getUser: any) => {
 
         if (getUser.data.getUser === null) {
           console.log("Trying to create")
@@ -599,7 +593,7 @@ class HomeScreenRouter extends JCComponent<Props, State> {
   async checkIfPaid(): Promise<void> {
     console.log("checkIfPaid")
     if (this.state.userExists) {
-      const handleGetUser = (getUser) => {
+      const handleGetUser = (getUser: any) => {
         if (getUser.data.getUser.hasPaidState == null)
           this.setState({ hasPaidState: "Complete" })
         else {
@@ -633,7 +627,7 @@ class HomeScreenRouter extends JCComponent<Props, State> {
     console.debug("checkIfCompletedProfile")
     console.debug({ user: this.state.userExists, hasPaidState: this.state.hasPaidState })
     if (this.state.userExists && this.state.hasPaidState == "Complete") {
-      const handleUser = (getUser) => {
+      const handleUser = (getUser: any) => {
         const response = Validate.Profile(getUser.data.getUser)
         console.debug({ checkIfCompletedProfileResult: response.result })
         if (response.result && this.state.hasCompletedPersonalProfile != "Completed")

@@ -1,18 +1,18 @@
 import React from 'react';
-import { Editor } from 'react-draft-wysiwyg';
-import { Storage } from 'aws-amplify';
+//import { Editor } from 'react-draft-wysiwyg';
+//import { Storage } from 'aws-amplify';
 
 import './react-draft-wysiwyg.css';
 import * as customQueries from '../../src/graphql-custom/queries';
-import * as queries from '../../src/graphql/queries';
+//import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
-import { EditorState } from 'draft-js';
+//import { EditorState } from 'draft-js';
 import { Text } from 'react-native'
-import { v1 as uuidv1 } from 'uuid';
+//import { v1 as uuidv1 } from 'uuid';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import JCComponent, { JCState } from '../JCComponent/JCComponent';
-import { ContentState, convertFromRaw, convertToRaw } from 'draft-js';
-import { stateToHTML } from 'draft-js-export-html';
+//import { ContentState, convertFromRaw, convertToRaw } from 'draft-js';
+//import { stateToHTML } from 'draft-js-export-html';
 import MessageBoard from '../MessageBoard/MessageBoard';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import { API, Auth } from 'aws-amplify';
@@ -57,7 +57,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
         Auth.currentAuthenticatedUser().then((user: any) => { this.setState({ currentRoomId: null, currentUser: user.username }) })
         this.getInitialData(null)
     }
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps: Props) {
         if (prevProps.assignmentId !== this.props.assignmentId) {
 
             this.getInitialData(null);
@@ -187,7 +187,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
                         <Text style={this.styles.style.eventNameInput}>Review Assignments</Text>
 
                         {this.state.data != null ?
-                            this.state.data.map((item, index) => {
+                            this.state.data.map((item, index: number) => {
 
                                 const otherUsers = this.getOtherUsers(item)
                                 let stringOfNames = ''

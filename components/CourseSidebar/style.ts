@@ -7,15 +7,15 @@ export default class HeaderStyles {
     constructor() {
         this.update()
     }
-    static instance = null
+    static instance: HeaderStyles
     public static getInstance(): HeaderStyles {
-        if (HeaderStyles.instance == null) {
+        if (!HeaderStyles.instance) {
             HeaderStyles.instance = new HeaderStyles();
         }
 
         return this.instance;
     }
-    style = null
+    style!: EStyleSheet.AnyObject;
 
     update(): void {
         this.style = EStyleSheet.create({
@@ -55,29 +55,29 @@ export default class HeaderStyles {
                 marginLeft: 35,
                 marginBottom: 10,
             },
-             // Media Query Desktop Large Tablet
-             '@media (min-width: 769) and (max-width: 1024)': {
+            // Media Query Desktop Large Tablet
+            '@media (min-width: 769) and (max-width: 1024)': {
                 logo: {
                     marginLeft: '13%',
-                    width: 115, 
+                    width: 115,
                     height: 30,
-                    },
-             },
-              // Media Query Desktop Tablet
+                },
+            },
+            // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
                 logo: {
                     marginLeft: '15%',
-                    width: 110 , 
+                    width: 110,
                     height: 29,
-                    },
+                },
             },
             // Media Query Mobile
             '@media (min-width: 320px) and (max-width: 720px)': {
                 logo: {
                     marginLeft: '15%',
-                    width: 123 , 
+                    width: 123,
                     height: 32,
-                    },
+                },
             },
         });
     }

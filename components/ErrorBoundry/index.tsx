@@ -14,8 +14,7 @@ export default class ErrorBoundary extends JCComponent<Props, IState>  {
     constructor(props: Props) {
         super(props)
         this.state = {
-            ...super.getInitialState(),
-            error: null
+            ...super.getInitialState()
         };
 
     }

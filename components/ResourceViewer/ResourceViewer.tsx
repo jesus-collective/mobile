@@ -15,7 +15,7 @@ import ResourceHeader from './ResourceHeader'
 import ResourceOverview from './ResourceOverview'
 import ResourceContent from './ResourceContent'
 //import { DataStore, Predicates } from '@aws-amplify/datastore'
-import { ResourceContext } from './ResourceContext';
+import { ResourceContext, ResourceState } from './ResourceContext';
 import ErrorBoundary from '../ErrorBoundry'
 import { CreateGroupInput } from 'src/API';
 import Validate from '../Validate/Validate';
@@ -30,26 +30,8 @@ interface Props {
     route?: any
     // isEditable: boolean
 }
-interface State extends JCState {
-    groupData: any
-    resourceData: any
-    currentResource: number
-    currentSeries: number
-    currentEpisode: number
-    showMap: boolean
-    loadId: string
-    createNew: boolean
-    canSave: boolean
-    canLeave: boolean
-    canJoin: boolean
-    isEditable: boolean
-    canDelete: boolean
-    validationError: string
-    currentUser: string
-    currentUserProfile: any
-    memberIDs: string[]
-}
-class ResourceViewerImpl extends JCComponent<Props, State> {
+
+class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     static Provider = ResourceContext.Provider;
     constructor(props: Props) {
         super(props);
@@ -95,7 +77,7 @@ class ResourceViewerImpl extends JCComponent<Props, State> {
         })
 
     }
-    setInitialData(props): void {
+    setInitialData(props: Props): void {
         if (props.route.params.create === "true" || props.route.params.create === true) {
             console.log("creating Resource")
             Auth.currentAuthenticatedUser().then((user: any) => {
@@ -563,7 +545,7 @@ class ResourceViewerImpl extends JCComponent<Props, State> {
     }
     updateResourceOrder = (): void => {
         try {
-            this.state.resourceData.resources.items.forEach((item, index) => {
+            this.state.resourceData.resources.items.forEach((item, index: number) => {
                 this.updateResource(index, "order", index)
             })
 
@@ -578,7 +560,7 @@ class ResourceViewerImpl extends JCComponent<Props, State> {
             console.log(e)
         }
     }
-    deleteResource = async (index) => {
+    deleteResource = async (index: number) => {
 
         try {
             console.log({ "Deleting Resource": index })
@@ -597,9 +579,9 @@ class ResourceViewerImpl extends JCComponent<Props, State> {
         }
 
     }
-    updateSeriesOrder = (resourceIndex) => {
+    updateSeriesOrder = (resourceIndex: number) => {
         try {
-            this.state.resourceData.resources.items[resourceIndex].series.items.forEach((item, index) => {
+            this.state.resourceData.resources.items[resourceIndex].series.items.forEach((item, index: number) => {
                 this.updateSeries(resourceIndex, index, "order", index)
             })
         } catch (e) {
@@ -651,7 +633,7 @@ class ResourceViewerImpl extends JCComponent<Props, State> {
     }
     updateEpisodesOrder = (resourceIndex: number, seriesIndex: number): void => {
         try {
-            this.state.resourceData.resources.items[resourceIndex].series.items[seriesIndex].episodes.items.forEach((item, index) => {
+            this.state.resourceData.resources.items[resourceIndex].series.items[seriesIndex].episodes.items.forEach((item, index: number) => {
                 this.updateEpisode(resourceIndex, seriesIndex, index, "order", index)
             })
         } catch (e) {
@@ -710,7 +692,7 @@ class ResourceViewerImpl extends JCComponent<Props, State> {
         const key = Object.keys(myObject).filter(k => k.includes(string));
         return key.length ? myObject[key[0]] : "";
     }
-    updateResourceImage = async (index1, e): Promise<void> => {
+    updateResourceImage = async (index1: number, e): Promise<void> => {
 
         const file = e.target.files[0];
         const lastDot = file.name.lastIndexOf('.');
