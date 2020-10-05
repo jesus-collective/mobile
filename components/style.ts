@@ -1840,7 +1840,7 @@ export default class MainStyles {
             courseSponsorContainer: {
                 display: "flex", 
                 flexDirection: "row", 
-                width: "110%", 
+                width: "105%", 
                 justifyContent: "space-between", 
                 flexGrow: 0, 
                 marginBottom: 20, 
