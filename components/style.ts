@@ -157,6 +157,20 @@ export default class MainStyles {
                 fontFamily: "Graphik-Bold-App",
                 width: "100%"
             },
+            courseMktNameInput: {
+                borderColor: 'white',
+                borderWidth: 1,
+                marginTop: 8,
+                borderRadius: 5,
+                padding: 3,
+                paddingLeft: 0,
+                flex: 0,
+                fontSize: 30,
+                lineHeight: 36,
+                fontWeight: "bold",
+                fontFamily: "Graphik-Bold-App",
+                width: "100%"
+            },
             eventNameInput: {
                 borderColor: 'white',
                 borderWidth: 1,
@@ -172,6 +186,21 @@ export default class MainStyles {
                 width: "100%"
             },
             groupDescriptionInput: {
+                borderColor: 'white',
+                borderWidth: 1,
+                marginTop: 8,
+                borderRadius: 5,
+                padding: 3,
+                paddingLeft: 0,
+                flex: 0,
+                minHeight: 100,
+                fontSize: 16,
+                lineHeight: 23,
+                fontWeight: "normal",
+                fontFamily: "Graphik-Regular-App",
+                width: "100%"
+            },
+            courseMktDescriptionInput: {
                 borderColor: 'white',
                 borderWidth: 1,
                 marginTop: 8,
@@ -758,8 +787,8 @@ export default class MainStyles {
                 flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 30, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", height: "80vh", width: 446, paddingBottom: 40, overflowY: 'scroll'
             },
             detailScreenLeftCard: Platform.OS === 'web' ?
-                { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", width: 446, paddingBottom: 40, minHeight: "calc(100vw * 1.05)" } :
-                { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, width: 446, paddingBottom: 40, minHeight: "calc(100vw * 1.05)" }
+                { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", width: 446, paddingBottom: 40, height: "auto" } :
+                { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, width: 446, paddingBottom: 40, height: "auto" }
             ,
             detailScreenRightCard: Platform.OS === 'web' ?
                 { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", height: "auto", width: 446, } :
@@ -1798,6 +1827,25 @@ export default class MainStyles {
                 width: 1300, 
                 justifyContent: 'center'
             },
+            pickerDropDown: {
+                width: "75%", 
+                marginBottom: 15, 
+                marginTop: 15, 
+                fontSize: 16, 
+                height: 30, 
+                flexGrow: 0, 
+                paddingTop: 3, 
+                paddingBottom: 3
+            },
+            courseSponsorContainer: {
+                display: "flex", 
+                flexDirection: "row", 
+                width: "105%", 
+                justifyContent: "space-between", 
+                flexGrow: 0, 
+                marginBottom: 20, 
+                height: 45
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -1845,6 +1893,11 @@ export default class MainStyles {
                     fontSize: 24,
                     lineHeight: 30,
                     width: '50%'
+                },
+                courseMktNameInput: {
+                    fontSize: 24,
+                    lineHeight: 30,
+                    width: '100%'
                 },
                 eventNameInput: {
                     fontSize: 24,
@@ -2231,6 +2284,9 @@ export default class MainStyles {
                     marginRight: 30,
                     height: 'auto'
                 },
+                pickerDropDown: {
+                    width: "100%", 
+                },
             },
 
             // Media Query Desktop Large Tablet
@@ -2514,6 +2570,9 @@ export default class MainStyles {
                 groupNameInput: {
                     width: "100%"
                 },
+                courseMktNameInput: {
+                    width: "100%"
+                },
                 eventNameInput: {
                     width: "100%"
                 },
@@ -2769,6 +2828,13 @@ export default class MainStyles {
                 },
                 courseDetailJCButtonAssignments: {
                     marginRight: 0,
+                },
+                courseSponsorContainer: {
+                    height: 20,
+                },
+                courseMktDescriptionInput: {
+                   width: '110%',
+                   minHeight: 300,
                 },
             },
 
