@@ -454,7 +454,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
               <MyMap type={"no-filters"} size={'25%'} visible={this.state.showMap} mapData={this.state.mapData}></MyMap>
               <Container style={this.styles.style.coursesScreenMainContainer}>
                 <Container style={this.styles.style.detailScreenLeftCard}>
-                  <Container style={{ display: "flex", flexDirection: "row", width: "110%", justifyContent: "space-between", flexGrow: 0, marginBottom: 20 }}>
+                  <Container style={{ display: "flex", flexDirection: "row", width: "110%", justifyContent: "space-between", flexGrow: 0, marginBottom: 20, height: 45 }}>
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#333333', textTransform: "uppercase", flex: 0 }}>Course</Text>
                     {this.state.isEditable ?
                       <JCSwitch switchLabel="Sponsored" initState={this.state.data.isSponsored ? this.state.data.isSponsored === "true" : false} onPress={(status) => { this.updateValue("isSponsored", status ? "true" : "false") }}></JCSwitch>
