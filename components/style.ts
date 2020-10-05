@@ -1702,8 +1702,8 @@ export default class MainStyles {
                 alignSelf: 'flex-start'
             },
             courseDetailLessonText: {
-                fontSize: 16,
-                lineHeight: 21,
+                fontSize: 40,
+                lineHeight: 55,
                 fontFamily: 'Graphik-Bold-App',
                 color: '#333333',
                 marginBottom: 20
