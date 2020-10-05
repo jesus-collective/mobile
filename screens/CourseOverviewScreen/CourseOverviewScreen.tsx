@@ -40,7 +40,8 @@ interface State extends JCState {
   courseData: any
   createNew: boolean
   canSave: boolean
-  canPurchase: boolean
+  isPaid: boolean
+  canPay: boolean
   canLeave: boolean
   canJoin: boolean
   isEditable: boolean
@@ -69,7 +70,8 @@ export default class CourseScreen extends JCComponent<Props, State>{
       createNew: props.route.params.create === "true" || props.route.params.create === true ? true : false,
       data: null,
       courseData: null,
-      canPurchase: true,
+      canPay: false,
+      isPaid: false,
       canSave: false,
       canLeave: false,
       canJoin: false,
@@ -113,6 +115,26 @@ export default class CourseScreen extends JCComponent<Props, State>{
   getValueFromKey(myObject: unknown, string: string): string {
     const key = Object.keys(myObject).filter(k => k.includes(string));
     return key.length ? myObject[key[0]] : "";
+  }
+  setMembers() {
+    this.state.memberIDs.map(id => {
+      const getUser: any = API.graphql({
+        query: queries.getUser,
+        variables: { id: id },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+      });
+      getUser.then((json: any) => {
+        this.setState({ members: this.state.members.concat(json.data.getUser) }, () => {
+          this.setState({ mapData: this.state.mapData.concat(this.convertProfileToMapData(this.state.members)) })
+        })
+      }).catch((e: any) => {
+        if (e.data) {
+          this.setState({ members: this.state.members.concat(e.data.getUser) }, () => {
+            this.setState({ mapData: this.state.mapData.concat(this.convertProfileToMapData(this.state.members)) })
+          })
+        }
+      })
+    });
   }
   setInitialData(props: Props): void {
     if (props.route.params.create === true || props.route.params.create === "true")
@@ -196,25 +218,9 @@ export default class CourseScreen extends JCComponent<Props, State>{
               else
                 this.setState({ canJoin: true && !this.state.isEditable, canLeave: false })
             });
-
-            this.state.memberIDs.map(id => {
-              const getUser: any = API.graphql({
-                query: queries.getUser,
-                variables: { id: id },
-                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-              });
-              getUser.then((json: any) => {
-                this.setState({ members: this.state.members.concat(json.data.getUser) }, () => {
-                  this.setState({ mapData: this.state.mapData.concat(this.convertProfileToMapData(this.state.members)) })
-                })
-              }).catch((e: any) => {
-                if (e.data) {
-                  this.setState({ members: this.state.members.concat(e.data.getUser) }, () => {
-                    this.setState({ mapData: this.state.mapData.concat(this.convertProfileToMapData(this.state.members)) })
-                  })
-                }
-              })
-            });
+            this.setCanPay()
+            this.setIsPaid()
+            this.setMembers()
 
             const getUser: any = API.graphql({
               query: queries.getUser,
@@ -408,20 +414,131 @@ export default class CourseScreen extends JCComponent<Props, State>{
     console.log("Navigate to profileScreen")
     this.props.navigation.push("ProfileScreen", { id: id, create: false });
   }
+  canPurchase() {
+    const id = this.state.data.id
+    if (this.isOwner(id))
+      return (false)
+    else if (this.isCourseCoach(id))
+      return (false)
+    else if (this.isCourseAdmin(id))
+      return (false)
+    else if (this.canCoursePay(id))
+      return (true)
+    else if (this.isCoursePaid(id))
+      return (false)
+    else if (this.canCourseApply(id))
+      return (false)
+    else
+      return (false)
+  }
+  isCourseCoach(id: string) {
+    return this.isMemberOf("courseCoach")
+  }
+  isCourseAdmin(id: string) {
+    return this.isMemberOf("courseAdmin")
+  }
+  canCourseApply(id: string) {
+    return this
+  }
+  isOwner(id: string) {
+    return this.state.isEditable
+  }
+  async setCanPay(): Promise<void> {
+    const courseTriadUserByUser: any = API.graphql({
+      query: queries.courseTriadUserByUser,
+      variables: { userID: this.state.currentUser },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+    courseTriadUserByUser.then((json: any) => {
+      console.log(json)
+      const results = json.data.courseTriadUserByUser.items.map((item: any) => {
+        if (this.state.data.id == item.triad.courseInfoID)
+          return true
+        else
+          return false
+      }).filter((item: any) => item == true)
+      if (results.length > 0)
+        this.setState({ canPay: true })
+      else
+        this.setState({ canPay: false })
+
+    }).catch((err: any) => {
+      console.log({ "Error query.getPayment": err });
+    });
+
+  }
+  async setIsPaid(): Promise<void> {
+
+    const getPayment: any = API.graphql({
+      query: queries.getPayment,
+      variables: { id: this.state.data.id + "-" + this.state.currentUser },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+    });
+    getPayment.then((json: any) => {
+      console.log(json)
+      if (json.data.getPayment != null)
+        this.setState({ isPaid: true })
+      else
+        this.setState({ isPaid: false })
+
+    }).catch((err: any) => {
+      console.log({ "Error query.getPayment": err });
+    });
+  }
+  canGotoCourse() {
+    const id = this.state.data.id
+    if (this.isOwner(id))
+      return (true)
+    else if (this.isCourseCoach(id))
+      return (true)
+    else if (this.isCourseAdmin(id))
+      return (true)
+    else if (this.canCoursePay(id))
+      return (false)
+    else if (this.isCoursePaid(id))
+      return (true)
+    else if (this.canCourseApply(id))
+      return (false)
+    else
+      return (false)
+  }
+  isCourseClosed() {
+    const id = this.state.data.id
+    if (this.isOwner(id))
+      return (false)
+    else if (this.isCourseCoach(id))
+      return (false)
+    else if (this.isCourseAdmin(id))
+      return (false)
+    else if (this.canCoursePay(id))
+      return (false)
+    else if (this.isCoursePaid(id))
+      return (false)
+    else if (this.canCourseApply(id))
+      return (false)
+    else
+      return (true)
+  }
+  canCoursePay(id: string) {
+    return this.state.canPay && !this.isCoursePaid(id)
+  }
+  isCoursePaid(id: string) {
+    return this.state.isPaid
+  }
   renderButtons(): React.ReactNode {
     return (
       <Container style={{ minHeight: 30 }}>
-        {this.state.canJoin ?
-          <JCButton buttonType={ButtonTypes.courseMktOutlineBoldNoMargin} onPress={() => { this.join() }} >Join Course</JCButton> :
+        {this.isCourseClosed() ?
+          <Text>Course Closed</Text> :
           null
         }
-        {
-          this.state.canPurchase ? <JCButton buttonType={ButtonTypes.courseMktOutlineBoldNoMargin} onPress={() => { this.purchase() }} >Purchase</JCButton> :
-            null
-        }
-        {this.state.canLeave ?
-          <JCButton buttonType={ButtonTypes.courseMktOutlineBoldNoMargin} onPress={() => { this.leave() }} >Leave Course</JCButton> :
+        {this.canPurchase() ?
+          <JCButton buttonType={ButtonTypes.courseMktOutlineBoldNoMargin} onPress={() => { this.purchase() }} >Purchase</JCButton> :
           null
+        }
+        {this.canGotoCourse() ?
+          <JCButton buttonType={ButtonTypes.courseMktOutlineBoldNoMargin} onPress={() => this.gotoActiveCourse()} >Go to Course</JCButton>
+          : null
         }
         {this.state.createNew ?
           <JCButton buttonType={ButtonTypes.courseMktOutlineBoldNoMargin} onPress={() => { this.createNew() }}>Create Course</JCButton>
@@ -433,10 +550,6 @@ export default class CourseScreen extends JCComponent<Props, State>{
         }
         {this.state.canDelete ?
           <JCButton buttonType={ButtonTypes.courseMktOutlineBoldNoMargin} onPress={() => { if (window.confirm('Are you sure you wish to delete this course?')) this.delete() }} >Delete Course</JCButton>
-          : null
-        }
-        {this.state.canGotoActiveCourse ?
-          <JCButton buttonType={ButtonTypes.courseMktOutlineBoldNoMargin} onPress={() => this.gotoActiveCourse()} >Go to Course</JCButton>
           : null
         }
         <Text>{this.state.validationError}</Text>

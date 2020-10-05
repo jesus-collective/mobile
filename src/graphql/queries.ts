@@ -1049,11 +1049,19 @@ export const getPayment = /* GraphQL */ `
 `;
 export const listPayments = /* GraphQL */ `
   query ListPayments(
+    $id: ID
     $filter: ModelPaymentFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listPayments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listPayments(
+      id: $id
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
         id
         productID
@@ -1763,14 +1771,18 @@ export const getCourseTriadUsers = /* GraphQL */ `
 `;
 export const listCourseTriadUserss = /* GraphQL */ `
   query ListCourseTriadUserss(
+    $id: ID
     $filter: ModelCourseTriadUsersFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
     listCourseTriadUserss(
+      id: $id
       filter: $filter
       limit: $limit
       nextToken: $nextToken
+      sortDirection: $sortDirection
     ) {
       items {
         id
@@ -3278,6 +3290,70 @@ export const listProducts = /* GraphQL */ `
     }
   }
 `;
+export const getVodAsset = /* GraphQL */ `
+  query GetVodAsset($id: ID!) {
+    getVodAsset(id: $id) {
+      id
+      title
+      description
+      video {
+        id
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listVodAssets = /* GraphQL */ `
+  query ListVodAssets(
+    $filter: ModelvodAssetFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listVodAssets(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        title
+        description
+        video {
+          id
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getVideoObject = /* GraphQL */ `
+  query GetVideoObject($id: ID!) {
+    getVideoObject(id: $id) {
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listVideoObjects = /* GraphQL */ `
+  query ListVideoObjects(
+    $filter: ModelvideoObjectFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listVideoObjects(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const groupMemberByGroup = /* GraphQL */ `
   query GroupMemberByGroup(
     $groupID: ID
@@ -3562,6 +3638,144 @@ export const groupByType = /* GraphQL */ `
         eventUrl
         tz
         isSponsored
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const paymentByUser = /* GraphQL */ `
+  query PaymentByUser(
+    $userID: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelPaymentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    paymentByUser(
+      userID: $userID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        productID
+        product {
+          id
+          price
+          name
+          description
+          confirmationMsg
+          createdAt
+          updatedAt
+        }
+        userID
+        user {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+        dateCompleted
+        paymentType
+        paymentInfo
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const courseTriadUserByUser = /* GraphQL */ `
+  query CourseTriadUserByUser(
+    $userID: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelCourseTriadUsersFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    courseTriadUserByUser(
+      userID: $userID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        triadID
+        triad {
+          id
+          courseInfoID
+          createdAt
+          updatedAt
+        }
+        userID
+        user {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }

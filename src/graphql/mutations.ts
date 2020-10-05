@@ -7630,3 +7630,78 @@ export const deleteProduct = /* GraphQL */ `
     }
   }
 `;
+export const createVodAsset = /* GraphQL */ `
+  mutation CreateVodAsset($input: CreateVodAssetInput!) {
+    createVodAsset(input: $input) {
+      id
+      title
+      description
+      video {
+        id
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateVodAsset = /* GraphQL */ `
+  mutation UpdateVodAsset($input: UpdateVodAssetInput!) {
+    updateVodAsset(input: $input) {
+      id
+      title
+      description
+      video {
+        id
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteVodAsset = /* GraphQL */ `
+  mutation DeleteVodAsset($input: DeleteVodAssetInput!) {
+    deleteVodAsset(input: $input) {
+      id
+      title
+      description
+      video {
+        id
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createVideoObject = /* GraphQL */ `
+  mutation CreateVideoObject($input: CreateVideoObjectInput!) {
+    createVideoObject(input: $input) {
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateVideoObject = /* GraphQL */ `
+  mutation UpdateVideoObject($input: UpdateVideoObjectInput!) {
+    updateVideoObject(input: $input) {
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteVideoObject = /* GraphQL */ `
+  mutation DeleteVideoObject($input: DeleteVideoObjectInput!) {
+    deleteVideoObject(input: $input) {
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;

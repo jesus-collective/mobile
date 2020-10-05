@@ -223,6 +223,10 @@ type Organization
 
 type Payment
   @model
+  @key(fields:["id"])
+  @key(name: "paymentProduct", fields: ["productID"])
+  @key(name: "paymentUser", fields: ["userID"],queryField:"paymentByUser")
+
  {
    id:ID!
    productID:String
@@ -240,6 +244,7 @@ type CourseInfo
     rules: [
       { allow: owner, ownerField: "owner" }
       { allow: groups, groups: ["courseUsers"], operations: [read] }
+      { allow: groups, groups: ["courseCoach"], operations: [read] }
       { allow: groups, groups: ["courseAdmin"]}
     ]
   ) {
@@ -256,6 +261,14 @@ type CourseInfo
 }
 type CourseTriads
 @model
+@auth(
+    rules: [
+      { allow: groups, groups: ["courseUser"],operations: [read]}
+      { allow: groups, groups: ["courseCoach"], operations: [read] }
+      { allow: groups, groups: ["courseAdmin"]}
+    ]
+  )
+
 {
   id:ID!
   courseInfoID: String
@@ -266,6 +279,14 @@ type CourseTriads
 }
 type CourseInstructors
 @model
+@auth(
+    rules: [
+      { allow: groups, groups: ["courseUser"],operations: [read]}
+      { allow: groups, groups: ["courseCoach"], operations: [read] }
+      { allow: groups, groups: ["courseAdmin"]}
+    ]
+  )
+
 {
   id:ID!
   courseInfoID: String
@@ -275,6 +296,14 @@ type CourseInstructors
 }
 type CourseTriadCoaches
 @model
+@auth(
+    rules: [
+      { allow: groups, groups: ["courseUser"],operations: [read]}
+      { allow: groups, groups: ["courseCoach"], operations: [read] }
+      { allow: groups, groups: ["courseAdmin"]}
+    ]
+  )
+
 {
   id:ID!
   triadID: String
@@ -283,7 +312,18 @@ type CourseTriadCoaches
   user: User @connection(name:"courseCoachTriad",keyField:"userID") 
 }
 type CourseTriadUsers
+  @key(fields:["id"])
+  @key(name: "courseTriadUsers", fields: ["triadID"])
+  @key(name: "courseUserTriad", fields: ["userID"],queryField:"courseTriadUserByUser")
+
 @model
+@auth(
+    rules: [
+      { allow: groups, groups: ["courseUser"],operations: [read]}
+      { allow: groups, groups: ["courseCoach"], operations: [read] }
+      { allow: groups, groups: ["courseAdmin"]}
+    ]
+  )
 {
   id:ID!
   triadID: String
@@ -298,6 +338,7 @@ type CourseWeek
     rules: [
       { allow: owner, ownerField: "owner" }
       { allow: groups, groups: ["courseUsers"], operations: [read] }
+      { allow: groups, groups: ["courseCoach"], operations: [read] }
       { allow: groups, groups: ["courseAdmin"]}
     ]
   )
@@ -320,6 +361,7 @@ type CourseLesson
     rules: [
       { allow: owner, ownerField: "owner" }
       { allow: groups, groups: ["courseUsers"], operations: [read] }
+      { allow: groups, groups: ["courseCoach"], operations: [read] }
       { allow: groups, groups: ["courseAdmin"]}
     ]
   )
@@ -518,7 +560,6 @@ type Product
   @model
   @auth(rules: [
       { allow: groups, groups: ["admin"] }
-    
       { allow: groups, groups: ["verifiedUsers"], operations: [read] }
   ])
   {

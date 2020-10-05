@@ -279,7 +279,7 @@ export type UpdatePaymentInput = {
 };
 
 export type DeletePaymentInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateCourseInfoInput = {
@@ -365,7 +365,7 @@ export type UpdateCourseTriadUsersInput = {
 };
 
 export type DeleteCourseTriadUsersInput = {
-  id?: string | null,
+  id: string,
 };
 
 export type CreateCourseWeekInput = {
@@ -664,6 +664,36 @@ export type DeleteProductInput = {
   id?: string | null,
 };
 
+export type CreateVodAssetInput = {
+  id?: string | null,
+  title: string,
+  description: string,
+  vodAssetVideoId?: string | null,
+};
+
+export type UpdateVodAssetInput = {
+  id: string,
+  title?: string | null,
+  description?: string | null,
+  vodAssetVideoId?: string | null,
+};
+
+export type DeleteVodAssetInput = {
+  id?: string | null,
+};
+
+export type CreateVideoObjectInput = {
+  id?: string | null,
+};
+
+export type UpdateVideoObjectInput = {
+  id: string,
+};
+
+export type DeleteVideoObjectInput = {
+  id?: string | null,
+};
+
 export type ModelUserFilterInput = {
   id?: ModelIDFilterInput | null,
   given_name?: ModelStringFilterInput | null,
@@ -802,6 +832,12 @@ export type ModelPaymentFilterInput = {
   or?: Array< ModelPaymentFilterInput | null > | null,
   not?: ModelPaymentFilterInput | null,
 };
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
 
 export type ModelCourseInfoFilterInput = {
   id?: ModelIDFilterInput | null,
@@ -1019,6 +1055,22 @@ export type ModelFloatFilterInput = {
   between?: Array< number | null > | null,
 };
 
+export type ModelvodAssetFilterInput = {
+  id?: ModelIDFilterInput | null,
+  title?: ModelStringFilterInput | null,
+  description?: ModelStringFilterInput | null,
+  and?: Array< ModelvodAssetFilterInput | null > | null,
+  or?: Array< ModelvodAssetFilterInput | null > | null,
+  not?: ModelvodAssetFilterInput | null,
+};
+
+export type ModelvideoObjectFilterInput = {
+  id?: ModelIDFilterInput | null,
+  and?: Array< ModelvideoObjectFilterInput | null > | null,
+  or?: Array< ModelvideoObjectFilterInput | null > | null,
+  not?: ModelvideoObjectFilterInput | null,
+};
+
 export type ModelIDKeyConditionInput = {
   eq?: string | null,
   le?: string | null,
@@ -1028,12 +1080,6 @@ export type ModelIDKeyConditionInput = {
   between?: Array< string | null > | null,
   beginsWith?: string | null,
 };
-
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC",
-}
-
 
 export type ModelGroupMemberFilterInput = {
   id?: ModelIDFilterInput | null,
@@ -9968,6 +10014,108 @@ export type DeleteProductMutation = {
   } | null,
 };
 
+export type CreateVodAssetMutationVariables = {
+  input: CreateVodAssetInput,
+};
+
+export type CreateVodAssetMutation = {
+  createVodAsset:  {
+    __typename: "vodAsset",
+    id: string,
+    title: string,
+    description: string,
+    video:  {
+      __typename: "videoObject",
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateVodAssetMutationVariables = {
+  input: UpdateVodAssetInput,
+};
+
+export type UpdateVodAssetMutation = {
+  updateVodAsset:  {
+    __typename: "vodAsset",
+    id: string,
+    title: string,
+    description: string,
+    video:  {
+      __typename: "videoObject",
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteVodAssetMutationVariables = {
+  input: DeleteVodAssetInput,
+};
+
+export type DeleteVodAssetMutation = {
+  deleteVodAsset:  {
+    __typename: "vodAsset",
+    id: string,
+    title: string,
+    description: string,
+    video:  {
+      __typename: "videoObject",
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateVideoObjectMutationVariables = {
+  input: CreateVideoObjectInput,
+};
+
+export type CreateVideoObjectMutation = {
+  createVideoObject:  {
+    __typename: "videoObject",
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateVideoObjectMutationVariables = {
+  input: UpdateVideoObjectInput,
+};
+
+export type UpdateVideoObjectMutation = {
+  updateVideoObject:  {
+    __typename: "videoObject",
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteVideoObjectMutationVariables = {
+  input: DeleteVideoObjectInput,
+};
+
+export type DeleteVideoObjectMutation = {
+  deleteVideoObject:  {
+    __typename: "videoObject",
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type GetUserQueryVariables = {
   id: string,
 };
@@ -11143,9 +11291,11 @@ export type GetPaymentQuery = {
 };
 
 export type ListPaymentsQueryVariables = {
+  id?: string | null,
   filter?: ModelPaymentFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
 };
 
 export type ListPaymentsQuery = {
@@ -11961,9 +12111,11 @@ export type GetCourseTriadUsersQuery = {
 };
 
 export type ListCourseTriadUserssQueryVariables = {
+  id?: string | null,
   filter?: ModelCourseTriadUsersFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
 };
 
 export type ListCourseTriadUserssQuery = {
@@ -13654,6 +13806,86 @@ export type ListProductsQuery = {
   } | null,
 };
 
+export type GetVodAssetQueryVariables = {
+  id: string,
+};
+
+export type GetVodAssetQuery = {
+  getVodAsset:  {
+    __typename: "vodAsset",
+    id: string,
+    title: string,
+    description: string,
+    video:  {
+      __typename: "videoObject",
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListVodAssetsQueryVariables = {
+  filter?: ModelvodAssetFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListVodAssetsQuery = {
+  listVodAssets:  {
+    __typename: "ModelvodAssetConnection",
+    items:  Array< {
+      __typename: "vodAsset",
+      id: string,
+      title: string,
+      description: string,
+      video:  {
+        __typename: "videoObject",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type GetVideoObjectQueryVariables = {
+  id: string,
+};
+
+export type GetVideoObjectQuery = {
+  getVideoObject:  {
+    __typename: "videoObject",
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListVideoObjectsQueryVariables = {
+  filter?: ModelvideoObjectFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListVideoObjectsQuery = {
+  listVideoObjects:  {
+    __typename: "ModelvideoObjectConnection",
+    items:  Array< {
+      __typename: "videoObject",
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
 export type GroupMemberByGroupQueryVariables = {
   groupID?: string | null,
   userID?: ModelIDKeyConditionInput | null,
@@ -13935,6 +14167,142 @@ export type GroupByTypeQuery = {
       eventUrl: string | null,
       tz: string | null,
       isSponsored: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type PaymentByUserQueryVariables = {
+  userID?: string | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelPaymentFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type PaymentByUserQuery = {
+  paymentByUser:  {
+    __typename: "ModelPaymentConnection",
+    items:  Array< {
+      __typename: "Payment",
+      id: string,
+      productID: string | null,
+      product:  {
+        __typename: "Product",
+        id: string,
+        price: number | null,
+        name: string | null,
+        description: string | null,
+        confirmationMsg: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      userID: string | null,
+      user:  {
+        __typename: "User",
+        id: string,
+        given_name: string,
+        family_name: string,
+        email: string | null,
+        phone: string | null,
+        owner: string | null,
+        mainUserGroup: string | null,
+        hasPaidState: string | null,
+        profileState: string | null,
+        address: string | null,
+        city: string | null,
+        province: string | null,
+        postalCode: string | null,
+        country: string | null,
+        aboutMeShort: string | null,
+        aboutMeLong: string | null,
+        interests: Array< string | null > | null,
+        currentRole: string | null,
+        currentScope: string | null,
+        personality: string | null,
+        orgName: string | null,
+        orgType: string | null,
+        orgSize: string | null,
+        denomination: string | null,
+        pplServed: string | null,
+        sundayAttendance: string | null,
+        numberVolunteers: string | null,
+        orgDescription: string | null,
+        joined: string | null,
+        primaryOrganization: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      dateCompleted: string | null,
+      paymentType: string | null,
+      paymentInfo: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type CourseTriadUserByUserQueryVariables = {
+  userID?: string | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelCourseTriadUsersFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type CourseTriadUserByUserQuery = {
+  courseTriadUserByUser:  {
+    __typename: "ModelCourseTriadUsersConnection",
+    items:  Array< {
+      __typename: "CourseTriadUsers",
+      id: string,
+      triadID: string | null,
+      triad:  {
+        __typename: "CourseTriads",
+        id: string,
+        courseInfoID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      userID: string | null,
+      user:  {
+        __typename: "User",
+        id: string,
+        given_name: string,
+        family_name: string,
+        email: string | null,
+        phone: string | null,
+        owner: string | null,
+        mainUserGroup: string | null,
+        hasPaidState: string | null,
+        profileState: string | null,
+        address: string | null,
+        city: string | null,
+        province: string | null,
+        postalCode: string | null,
+        country: string | null,
+        aboutMeShort: string | null,
+        aboutMeLong: string | null,
+        interests: Array< string | null > | null,
+        currentRole: string | null,
+        currentScope: string | null,
+        personality: string | null,
+        orgName: string | null,
+        orgType: string | null,
+        orgSize: string | null,
+        denomination: string | null,
+        pplServed: string | null,
+        sundayAttendance: string | null,
+        numberVolunteers: string | null,
+        orgDescription: string | null,
+        joined: string | null,
+        primaryOrganization: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
       createdAt: string,
       updatedAt: string,
     } | null > | null,
@@ -23042,6 +23410,84 @@ export type OnDeleteProductSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateVodAssetSubscription = {
+  onCreateVodAsset:  {
+    __typename: "vodAsset",
+    id: string,
+    title: string,
+    description: string,
+    video:  {
+      __typename: "videoObject",
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateVodAssetSubscription = {
+  onUpdateVodAsset:  {
+    __typename: "vodAsset",
+    id: string,
+    title: string,
+    description: string,
+    video:  {
+      __typename: "videoObject",
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteVodAssetSubscription = {
+  onDeleteVodAsset:  {
+    __typename: "vodAsset",
+    id: string,
+    title: string,
+    description: string,
+    video:  {
+      __typename: "videoObject",
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateVideoObjectSubscription = {
+  onCreateVideoObject:  {
+    __typename: "videoObject",
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateVideoObjectSubscription = {
+  onUpdateVideoObject:  {
+    __typename: "videoObject",
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteVideoObjectSubscription = {
+  onDeleteVideoObject:  {
+    __typename: "videoObject",
+    id: string,
     createdAt: string,
     updatedAt: string,
   } | null,
