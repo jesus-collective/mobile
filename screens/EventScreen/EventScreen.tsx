@@ -390,7 +390,7 @@ export default class EventScreen extends JCComponent<Props, State>{
               <MyMap initCenter={this.state.initCenter} type={"no-filters"} size={'25%'} visible={this.state.showMap} mapData={this.state.mapData}></MyMap>
               <Container style={this.styles.style.eventScreenMainContainer}>
                 <Container style={this.styles.style.detailScreenLeftCard}>
-                  <Container style={{ flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 20 }}>
+                  <Container style={{ flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 20, height: 'auto' }}>
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#333333', textTransform: "uppercase", flex: 0 }}>Event</Text>
                     {this.state.isEditable ?
                       <JCSwitch switchLabel="Sponsored" initState={this.state.data.isSponsored ? this.state.data.isSponsored === "true" : false} onPress={(status) => { this.updateValue("isSponsored", status ? "true" : "false") }}></JCSwitch>

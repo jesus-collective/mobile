@@ -70,7 +70,7 @@ class ResourceOverviewImpl extends JCComponent<Props>{
                     return <Container style={this.styles.style.resourcesOverviewScreenMainContainer}>
 
                         <Container style={this.styles.style.detailScreenLeftCard}>
-                            <Container style={{ flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 20 }}>
+                            <Container style={{ flexDirection: "row", width: "100%", justifyContent: "space-between", flexGrow: 0, marginBottom: 20, height: 'auto' }}>
                                 <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#333333', textTransform: "uppercase", flex: 0 }}>Resource</Text>
                                 {state.isEditable ?
                                     <JCSwitch switchLabel="Sponsored" initState={state.groupData.isSponsored ? state.groupData.isSponsored === "true" : false} onPress={(status) => { actions.updateValueGroup("isSponsored", status ? "true" : "false") }}></JCSwitch>
