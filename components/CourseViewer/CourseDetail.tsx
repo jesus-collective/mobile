@@ -75,6 +75,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
         </EditableDate> : null}
       {state.isEditable && state.editMode ?
         <>
+
           <Picker
 
             onStartShouldSetResponder={() => true}
@@ -87,7 +88,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
             placeholder="Event type"
             placeholderStyle={{ color: "#bfc6ea" }}
             placeholderIconColor="#007aff"
-            selectedValue={item.lessonType ? item.lessonType : "zoom"}
+            selectedValue={item.courseLessonResponseId}
             onValueChange={(value: any) => { actions.updateLesson(state.activeWeek, lesson, "courseLessonResponseId", value) }}
           >
             <Picker.Item label="Pick an assigment to Review" />

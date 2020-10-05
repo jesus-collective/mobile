@@ -14,6 +14,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import JCComponent, { JCState } from '../JCComponent/JCComponent';
 import { ContentState, convertFromRaw, convertToRaw } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
+import { Pressable } from 'react-native';
 
 interface Props {
     value: string,
@@ -28,9 +29,9 @@ interface State extends JCState {
     value: string,
 
     isEditMode: boolean,
-    textStyle: any,
-    inputStyle: any,
-    placeholder: string,
+    // textStyle: any,
+    // inputStyle: any,
+    //placeholder: string,
     editorState
 }
 export default class EditableRichText extends JCComponent<Props, State> {
@@ -41,15 +42,18 @@ export default class EditableRichText extends JCComponent<Props, State> {
             value: props.value,
             isEditMode: false,
 
-            textStyle: props.textStyle,
-            inputStyle: props.inputStyle,
+            //textStyle: props.textStyle,
+            //inputStyle: props.inputStyle,
             placeholder: props.placeholder,
-            editorState: null
+            editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(props.value)))
         }
     }
     componentDidUpdate(prevProps: Props): void {
         if (prevProps.value !== this.props.value) {
-            this.setState({ value: this.props.value })
+            this.setState({
+                value: this.props.value,
+                editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(this.props.value)))
+            })
         }
     }
     onChanged(val: any): void {
@@ -120,8 +124,9 @@ export default class EditableRichText extends JCComponent<Props, State> {
                     onBlur={() => { this.onChanged(JSON.stringify(convertToRaw(this.state.editorState.getCurrentContent()))); }}
                 />
 
-            else
-                return <TouchableOpacity onPress={() => { this.setState({ isEditMode: true }) }}>
+            else {
+                console.log("PRESSABLE")
+                return <Pressable onPress={() => { console.log("PRESSED"); this.setState({ isEditMode: true }) }}>
                     <div id="comment-div" style={{ width: '100%' }}>
                         {!convertFromRaw(JSON.parse(this.state.value)).hasText() || this.state.value == null ?
                             <div style={{ fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 16, marginTop: 0, color: '#F0493E', textDecoration: 'underline' }}>Hold to Edit</div>
@@ -130,12 +135,14 @@ export default class EditableRichText extends JCComponent<Props, State> {
                                 dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(this.props.value) }}
                                 style={{ fontFamily: 'Graphik-Regular-App', fontSize: '16px', lineHeight: '26px', color: "#333333", marginTop: 0, paddingTop: 0, paddingRight: '30px', minHeight: 50 }}></div>}
                     </div>
-                </TouchableOpacity>
-        else
+                </Pressable>
+            }
+        else {
+            console.log("NOT PRESSABLE")
             return <div id="comment-div">
                 <div dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(this.state.value) }} style={{ fontFamily: 'Graphik-Regular-App', fontSize: '16px', lineHeight: '26px', color: "#333333", marginTop: 0, paddingTop: 0, minHeight: 50, paddingRight: 15 }}></div>
             </div>
-
+        }
 
     }
 }
