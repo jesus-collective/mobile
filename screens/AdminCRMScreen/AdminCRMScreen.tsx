@@ -4,13 +4,15 @@ import Header from '../../components/Header/Header'
 import HeaderAdmin from '../../components/HeaderAdmin/HeaderAdmin';
 import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
 import { MapData } from 'components/MyGroups/MyGroups';
-import { Auth, API } from 'aws-amplify';
+import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { View, TextInput, Modal, Picker } from 'react-native';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton';
 import JCSwitch from '../../components/JCSwitch/JCSwitch';
 import * as queries from '../../src/graphql/queries';
 import * as customQueries from '../../src/graphql-custom/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
+import * as mutations from '../../src/graphql/mutations';
+import { GetProductQuery } from 'src/API';
 
 interface Props {
   navigation: any
@@ -234,13 +236,19 @@ export default class AdminScreen extends JCComponent<Props, State>{
       showPayments: true,
       showPaymentsId: id
     }, async () => {
-      const payments: any = await API.graphql({
-        query: queries.listPayments,
-        variables: { user: { eq: id } },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-      });
-      console.log(payments)
-      this.setState({ paymentsData: payments.data.listPayments.items })
+      try {
+        const payments: any = await API.graphql({
+          query: queries.paymentByUser,
+          variables: { userID: id },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+        });
+        console.log(payments)
+        this.setState({ paymentsData: payments.data.paymentByUser.items })
+      }
+      catch (e: any) {
+        console.log(e)
+        this.setState({ paymentsData: e.data.paymentByUser.items })
+      }
     })
   }
   closePayments(): void {
@@ -249,14 +257,36 @@ export default class AdminScreen extends JCComponent<Props, State>{
       showPaymentsId: null
     })
   }
-  async removePayment(user, group): Promise<void> {
-    //await this.removeUserFromGroup(user, group)
-    this.showGroups(this.state.showPaymentsId)
+  async removePayment(user: string, group: string): Promise<void> {
+    console.log(user)
+    console.log(group)
+
+    try {
+      const saveResult = await API.graphql(graphqlOperation(mutations.deletePayment, { input: { id: group } }));
+      console.log(saveResult)
+    }
+    catch (e) {
+      console.error(e)
+    }
+    this.setState({ paymentsData: [], showPaymentsId: null, showPayments: null })
 
   }
-  async addPayment(user, group): Promise<void> {
+  async addPayment(user: string, group: string): Promise<void> {
+    console.log(user)
+    console.log(group)
+
+
+    try {
+      const saveResult = await API.graphql(graphqlOperation(mutations.createPayment, { input: { id: group + "-" + user, productID: group, userID: user, dateCompleted: Date.now(), paymentType: "Admin/CRM", paymentInfo: "By: " } })) as GraphQLResult<GetProductQuery>;
+      console.log(saveResult)
+    }
+    catch (e) {
+      console.error(e)
+    }
+    this.setState({ paymentsData: [], showPaymentsId: null, showPayments: null })
+
     //await this.//addUserToGroup(user, group)
-    this.showPayments(this.state.showPaymentsId)
+    //this.showPayments(this.state.showPaymentsId)
   }
   closeInvite(): void {
     this.setState({
@@ -356,14 +386,14 @@ export default class AdminScreen extends JCComponent<Props, State>{
                 return (<View style={{ height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginRight: 20, flex: 0.1 }} key={index} >
                   <Text style={this.styles.style.adminCRMModal} key={index}>{item.GroupName}</Text>
                   <JCButton buttonType={ButtonTypes.AdminSmallOutline}
-                    onPress={() => { this.removeGroup(this.state.showGroupsId, item.GroupName) }}>X</JCButton>
+                    onPress={() => { if (window.confirm('Are you sure you wish to delete this group?')) this.removeGroup(this.state.showGroupsId, item.GroupName) }}>X</JCButton>
                 </View>)
               })
               : null
           }
 
           <Container style={{ height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 40, marginRight: 20, flex: 0.25, justifyContent: 'center' }}>
-            <Picker style={{ height: 45, width: 250, paddingLeft: 10, paddingRight: 10  }}
+            <Picker style={{ height: 45, width: 250, paddingLeft: 10, paddingRight: 10 }}
               selectedValue={this.state.groupToAdd}
               onValueChange={val => { this.setState({ groupToAdd: val }) }}
             >       <Picker.Item value={null} label="pick a group to add" />
@@ -384,8 +414,8 @@ export default class AdminScreen extends JCComponent<Props, State>{
       <Modal visible={this.state.showPayments}>
         <View style={{ width: '100vw', height: 100, flexDirection: 'row', paddingTop: 20, paddingBottom: 20, justifyContent: 'center' }}>
           <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', width: 70, marginLeft: 20, marginRight: 20, flex: 0.1 }}>
-          <Text style={this.styles.style.adminCRMModal}>Payments</Text>
-          <JCButton buttonType={ButtonTypes.AdminSmallOutline} onPress={() => { this.closePayments() }}>X</JCButton>
+            <Text style={this.styles.style.adminCRMModal}>Payments</Text>
+            <JCButton buttonType={ButtonTypes.AdminSmallOutline} onPress={() => { this.closePayments() }}>X</JCButton>
           </View>
           {
             this.state.paymentsData ?
@@ -393,13 +423,13 @@ export default class AdminScreen extends JCComponent<Props, State>{
                 return (<View style={{ height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginRight: 20, flex: 0.2 }} key={index} >
                   <Text style={this.styles.style.adminCRMModal} key={index}>{item.product.name}</Text>
                   <JCButton buttonType={ButtonTypes.AdminSmallOutline}
-                    onPress={() => { this.removePayment(this.state.showPaymentsId, item.id) }}>X</JCButton>
+                    onPress={() => { if (window.confirm('Are you sure you wish to delete this payment?')) this.removePayment(this.state.showPaymentsId, item.id) }}>X</JCButton>
                 </View>)
               })
               : null
           }
           <Container style={{ height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 40, marginRight: 20, flex: 0.25, justifyContent: 'center' }}>
-            <Picker style={{ height: 45, width: 250, paddingLeft: 10,   paddingRight: 10  }}
+            <Picker style={{ height: 45, width: 250, paddingLeft: 10, paddingRight: 10 }}
               selectedValue={this.state.groupToAdd}
               onValueChange={val => { this.setState({ groupToAdd: val }) }}
             >       <Picker.Item value={null} label="pick a group to add" />
@@ -411,9 +441,9 @@ export default class AdminScreen extends JCComponent<Props, State>{
               }
             </Picker>
             <JCButton buttonType={ButtonTypes.AdminSmallOutline} onPress={() => {
-              this.addPayment(this.state.showGroupsId, this.state.groupToAdd)
+              this.addPayment(this.state.showPaymentsId, this.state.groupToAdd)
 
-            }}>Add Group</JCButton>
+            }}>Add Payment</JCButton>
           </Container>
         </View>
       </Modal> : null
