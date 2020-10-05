@@ -1785,6 +1785,19 @@ export default class MainStyles {
                 flexDirection: "column",
                 flexGrow: 0,
             },
+            adminCRMTableContainer: {
+                backgroundColor: "#F0493E", 
+                flex: 1, 
+                height: 40, 
+                alignSelf: 'stretch', 
+                flexDirection: 'row', 
+                paddingBottom: 10, 
+                paddingTop: 10, 
+                paddingRight: 10, 
+                paddingLeft: 10, 
+                width: 1300, 
+                justifyContent: 'center'
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2375,6 +2388,9 @@ export default class MainStyles {
                 courseAssignmentScreenLeftCard: {
                     flex: 35,
                 },
+                adminCRMTableContainer: {
+                    width: 1000,    
+                    },
             },
 
             '@media (min-width: 769px) and (max-width: 1279px)': {

@@ -197,7 +197,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
   }
   renderHeader(): React.ReactNode {
     return (
-      <View style={{ backgroundColor: "#F0493E", flex: 1, height: 40, alignSelf: 'stretch', flexDirection: 'row', paddingBottom: 10, paddingTop: 10, paddingRight: 10, paddingLeft: 10, width: 1300, justifyContent: 'center' }}>
+      <View style={this.styles.style.adminCRMTableContainer}>
         <View style={{ flex: 1, alignSelf: 'stretch' }}>
           <Text style={this.styles.style.adminCRMTableHeading}>First Name</Text>
         </View>
@@ -345,7 +345,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
       <Modal animationType="slide" visible={this.state.showGroups}
         transparent={true} presentationStyle="pageSheet">
         <View style={{ width: '100vw', height: 100, flexDirection: 'row', paddingTop: 20, paddingBottom: 20, justifyContent: 'center' }}>
-          <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', width: 70, marginLeft: 20, marginRight: 20, flex: 0.25 }}>
+          <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', width: 70, marginLeft: 20, marginRight: 20, flex: 0.1 }}>
             <Text style={this.styles.style.adminCRMModal}>Groups</Text>
             <JCButton buttonType={ButtonTypes.AdminSmallOutline} onPress={() => { this.closeGroups() }}>X</JCButton>
           </View>
@@ -353,7 +353,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
           {
             this.state.groupData ?
               this.state.groupData.map((item: any, index: number) => {
-                return (<View style={{ height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginRight: 20, flex: 0.25 }} key={index} >
+                return (<View style={{ height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginRight: 20, flex: 0.1 }} key={index} >
                   <Text style={this.styles.style.adminCRMModal} key={index}>{item.GroupName}</Text>
                   <JCButton buttonType={ButtonTypes.AdminSmallOutline}
                     onPress={() => { this.removeGroup(this.state.showGroupsId, item.GroupName) }}>X</JCButton>
@@ -362,7 +362,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
               : null
           }
 
-          <Container style={{ height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginRight: 20, flex: 0.25, justifyContent: 'center' }}>
+          <Container style={{ height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 40, marginRight: 20, flex: 0.25, justifyContent: 'center' }}>
             <Picker style={{ height: 45, width: 250, paddingLeft: 10, paddingRight: 10  }}
               selectedValue={this.state.groupToAdd}
               onValueChange={val => { this.setState({ groupToAdd: val }) }}
@@ -383,14 +383,14 @@ export default class AdminScreen extends JCComponent<Props, State>{
     return (this.state.showPayments ?
       <Modal visible={this.state.showPayments}>
         <View style={{ width: '100vw', height: 100, flexDirection: 'row', paddingTop: 20, paddingBottom: 20, justifyContent: 'center' }}>
-          <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', width: 70, marginLeft: 20, marginRight: 20, flex: 0.25 }}>
+          <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', width: 70, marginLeft: 20, marginRight: 20, flex: 0.1 }}>
           <Text style={this.styles.style.adminCRMModal}>Payments</Text>
           <JCButton buttonType={ButtonTypes.AdminSmallOutline} onPress={() => { this.closePayments() }}>X</JCButton>
           </View>
           {
             this.state.paymentsData ?
               this.state.paymentsData.map((item: any, index: number) => {
-                return (<View style={{ height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginRight: 20, flex: 0.25 }} key={index} >
+                return (<View style={{ height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginRight: 20, flex: 0.2 }} key={index} >
                   <Text style={this.styles.style.adminCRMModal} key={index}>{item.product.name}</Text>
                   <JCButton buttonType={ButtonTypes.AdminSmallOutline}
                     onPress={() => { this.removePayment(this.state.showPaymentsId, item.id) }}>X</JCButton>
@@ -398,7 +398,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
               })
               : null
           }
-          <Container style={{ height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginRight: 20, flex: 0.25, justifyContent: 'center' }}>
+          <Container style={{ height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 40, marginRight: 20, flex: 0.25, justifyContent: 'center' }}>
             <Picker style={{ height: 45, width: 250, paddingLeft: 10,   paddingRight: 10  }}
               selectedValue={this.state.groupToAdd}
               onValueChange={val => { this.setState({ groupToAdd: val }) }}
