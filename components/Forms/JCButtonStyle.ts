@@ -64,11 +64,11 @@ export default EStyleSheet.create({
         padding: 5
     },
     AdminSmallOutlineButton: {
-        paddingTop: 10,
-        paddingBottom: 10,
-        paddingLeft: 10,
-        paddingRight: 10,
-        marginLeft: 0,
+        paddingTop: 7,
+        paddingBottom: 7,
+        paddingLeft: 7,
+        paddingRight: 7,
+        marginLeft: 10,
         marginRight: 0,
         //    color:"#F0493E",
         backgroundColor: "#ffffff",
