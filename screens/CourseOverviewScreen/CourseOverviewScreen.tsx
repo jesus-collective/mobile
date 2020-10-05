@@ -454,7 +454,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
               <MyMap type={"no-filters"} size={'25%'} visible={this.state.showMap} mapData={this.state.mapData}></MyMap>
               <Container style={this.styles.style.coursesScreenMainContainer}>
                 <Container style={this.styles.style.detailScreenLeftCard}>
-                  <Container style={{ display: "flex", flexDirection: "row", width: "110%", justifyContent: "space-between", flexGrow: 0, marginBottom: 20, height: 45 }}>
+                  <Container style={this.styles.style.courseSponsorContainer}>
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#333333', textTransform: "uppercase", flex: 0 }}>Course</Text>
                     {this.state.isEditable ?
                       <JCSwitch switchLabel="Sponsored" initState={this.state.data.isSponsored ? this.state.data.isSponsored === "true" : false} onPress={(status) => { this.updateValue("isSponsored", status ? "true" : "false") }}></JCSwitch>
@@ -466,8 +466,8 @@ export default class CourseScreen extends JCComponent<Props, State>{
                   </Container>
 
                   <View>
-                    <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Course Name" multiline={false} textStyle={this.styles.style.groupNameInput} inputStyle={this.styles.style.groupNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
-                    <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Course Description" multiline={true} textStyle={this.styles.style.groupDescriptionInput} inputStyle={this.styles.style.groupDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
+                    <EditableText onChange={(value: any) => { this.updateValue("name", value) }} placeholder="Enter Course Name" multiline={false} textStyle={this.styles.style.courseMktNameInput} inputStyle={this.styles.style.courseMktNameInput} value={this.state.data.name} isEditable={this.state.isEditable}></EditableText>
+                    <EditableText onChange={(value: any) => { this.updateValue("description", value) }} placeholder="Enter Course Description" multiline={true} textStyle={this.styles.style.courseMktDescriptionInput} inputStyle={this.styles.style.courseMktDescriptionInput} value={this.state.data.description} isEditable={this.state.isEditable}></EditableText>
 
                     <Text style={{ fontSize: 12, lineHeight: 16, fontFamily: "Graphik-Regular-App", color: '#333333', textTransform: "uppercase", flex: 0, marginTop: 20 }}>Start Date</Text>
                     <EditableDate type="date"
