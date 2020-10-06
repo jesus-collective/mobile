@@ -1851,6 +1851,10 @@ export default class MainStyles {
                 marginTop: 30, 
                 flex: 0.5
             },
+            courseLessonContainer: {
+                marginTop: 30,
+                minHeight: 'auto'
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
