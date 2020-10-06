@@ -66,7 +66,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
       {state.isEditable && state.editMode ?
         <EditableDate type="datetime"
           onChange={(time: any, timeZone: any) => { actions.updateLesson(state.activeWeek, lesson, "time", time); actions.updateLesson(state.activeWeek, lesson, "tz", timeZone) }}
-          placeholder="Enter Zoom Date/Time"
+          placeholder="Enter Response Date/Time"
           textStyle={this.styles.style.fontRegular}
           inputStyle={this.styles.style.groupNameInput}
           value={item.time}
@@ -122,6 +122,29 @@ class CourseDetailImpl extends JCComponent<Props, State>{
           placeholder="Enter Recording URL" multiline={false} textStyle={ButtonTypes.courseCardSolid}
           inputStyle={this.styles.style.courseEditableURL} value={item.zoomRecording}
           isEditable={state.isEditable && state.editMode}></EditableUrl>
+        {state.isEditable && state.editMode ?
+          <EditableDate type="datetime"
+            onChange={(time: any, timeZone: any) => { actions.updateLesson(state.activeWeek, lesson, "time", time); actions.updateLesson(state.activeWeek, lesson, "tz", timeZone) }}
+            placeholder="Enter Zoom Date/Time"
+            textStyle={this.styles.style.fontRegular}
+            inputStyle={this.styles.style.groupNameInput}
+            value={item.time}
+            tz={item.tz ? item.tz : moment.tz.guess()}
+            isEditable={state.isEditable && state.editMode}>
+          </EditableDate> : null}
+      </Container>
+
+    )
+  }
+  renderYoutubeConfig(state: CourseState, actions: any, lesson, item): React.ReactNode {
+    return (
+      <Container style={state.isEditable && state.editMode ? this.styles.style.courseActivityButtonEditable : this.styles.style.courseActivityButtonNonEditable}>
+        {state.isEditable && state.editMode ? <EditableUrl title="Open in Youtube"
+          onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "zoomRecording", e) }}
+          placeholder="Enter youtube URL" multiline={false} textStyle={ButtonTypes.courseCardSolid}
+          inputStyle={this.styles.style.courseEditableURL} value={item.zoomRecording}
+          isEditable={state.isEditable && state.editMode}></EditableUrl> : null}
+
         {state.isEditable && state.editMode ?
           <EditableDate type="datetime"
             onChange={(time: any, timeZone: any) => { actions.updateLesson(state.activeWeek, lesson, "time", time); actions.updateLesson(state.activeWeek, lesson, "tz", timeZone) }}
@@ -235,6 +258,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                                 <Picker.Item label="Zoom Call" value="zoom" />
                                 <Picker.Item label="Assignment" value="assignment" />
                                 <Picker.Item label="Respond" value="respond" />
+                                <Picker.Item label="Youtube" value="youtube" />
 
                               </Picker>
                               :
@@ -247,7 +271,10 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                                     source={require('../../assets/svg/document.svg')} />Respond</Text>),
                                 'zoom': (<Text style={{ alignSelf: 'flex-start' }}>
                                   <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
-                                    source={require('../../assets/svg/document.svg')} />Zoom</Text>)
+                                    source={require('../../assets/svg/document.svg')} />Zoom</Text>),
+                                'youtube': (<Text style={{ alignSelf: 'flex-start' }}>
+                                  <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
+                                    source={require('../../assets/svg/document.svg')} />Youtube</Text>)
                               }[item.lessonType] || (<Text style={{ alignSelf: 'flex-start' }}>
                                 <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
                                   source={require('../../assets/svg/document.svg')} />Zoom</Text>)
@@ -256,7 +283,8 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                           {{
                             'assignment': (this.renderAssignmentConfig(state, actions, lesson, item)),
                             'respond': (this.renderResponseConfig(state, actions, lesson, item)),
-                            'zoom': (this.renderZoomConfig(state, actions, lesson, item))
+                            'zoom': (this.renderZoomConfig(state, actions, lesson, item)),
+                            'youtube': (this.renderYoutubeConfig(state, actions, lesson, item))
                           }[item.lessonType] || (this.renderZoomConfig(state, actions, lesson, item))
                           }
 
@@ -302,6 +330,35 @@ class CourseDetailImpl extends JCComponent<Props, State>{
   }
   navigate(id) {
     window.location.href = id
+  }
+  renderYoutube(state: CourseState, actions: any, week, lesson) {
+    return (
+      <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+        <JCButton buttonType={ButtonTypes.CourseHomeSidebarTop} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
+        <Container style={{ flexDirection: 'row', marginTop: 30, flex: 0.5 }}>
+          <Container style={{ flex: 0.9, height: 'auto' }}>
+            <Text style={{ fontSize: 20, lineHeight: 30, fontFamily: 'Graphik-Regular-App', color: '#333333', textTransform: 'uppercase' }}>{week.name}</Text>
+            <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.date}</Text>
+            <Text style={this.styles.style.courseDetailLessonText}>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
+          </Container>
+          <Image style={{ width: "22px", height: "22px", marginRight: 5, marginTop: 43 }} source={require('../../assets/svg/calendar.svg')}></Image>
+          <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Regular-App', color: '#333333', marginTop: 45 }}>{lesson.time}</Text>
+        </Container>
+        <Container>
+          <Container style={{ borderBottomColor: '#333333', opacity: 0.2, borderBottomWidth: 1, width: '95%', marginBottom: 30 }}></Container>
+          {lesson.zoomRecording && lesson.zoomRecording != "" ?
+            <iframe title="Youtube" src={"https://www.youtube.com/embed/" + lesson.zoomRecording}
+              style={{ width: "40vw", height: "30vw" }}
+              frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen></iframe>
+
+            : null}
+          <EditableRichText onChange={(val) => { actions.updateLesson(state.activeWeek, state.activeLesson, "description", val) }}
+            value={lesson.description}
+            isEditable={state.isEditable && state.editMode}
+            textStyle={{ marginLeft: 10 }} inputStyle={{ margintop: 20, marginLeft: 20 }}></EditableRichText>
+        </Container>
+      </Container>)
   }
   renderZoom(state: CourseState, actions: any, week, lesson) {
     return (
@@ -365,6 +422,8 @@ class CourseDetailImpl extends JCComponent<Props, State>{
         return this.renderRespond(state, actions, week, lesson)
       case 'assignment':
         return this.renderAssignment(state, actions, week, lesson)
+      case 'youtube':
+        return this.renderYoutube(state, actions, week, lesson)
       default:
         return this.renderZoom(state, actions, week, lesson)
     }

@@ -314,6 +314,7 @@ query GetCourseInfo($id: ID!) {
             wordCount
             courseLessonResponseId
             zoomUrl
+            zoomRecording
             name
             time
             tz
