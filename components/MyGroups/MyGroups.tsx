@@ -12,7 +12,7 @@ import * as mutations from '../../src/graphql/mutations';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import { API, Auth, Analytics } from 'aws-amplify';
 import ProfileImage from '../../components/ProfileImage/ProfileImage'
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native';
 import { constants } from '../../src/constants'
 import ErrorBoundry from '../../components/ErrorBoundry'
 import moment from 'moment-timezone';
@@ -724,8 +724,8 @@ export default class MyGroups extends JCComponent<Props, State> {
       return (<CardItem ><Text style={{ fontFamily: "Graphik-Bold-App", color: "#333333" }}>Owner</Text><Right></Right></CardItem>)
     else if (this.isCourseCoach(item.id))
       return (<CardItem ><Text style={{ fontFamily: "Graphik-Bold-App", color: "#333333" }}>Coach</Text><Right></Right></CardItem>)
-   // else if (this.isCourseAdmin(item.id))
-   //   return (<CardItem ><Text style={{ fontFamily: "Graphik-Bold-App", color: "#333333" }}>Admin</Text><Right></Right></CardItem>)
+    // else if (this.isCourseAdmin(item.id))
+    //   return (<CardItem ><Text style={{ fontFamily: "Graphik-Bold-App", color: "#333333" }}>Admin</Text><Right></Right></CardItem>)
     else if (this.canCoursePay(item.id))
       return (<CardItem ><JCButton buttonType={ButtonTypes.Solid} onPress={() => { this.purchase(item.id) }}>Pay</JCButton><Right></Right></CardItem>)
     else if (this.isCoursePaid(item.id))

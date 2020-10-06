@@ -34,10 +34,12 @@ interface Props {
   recipients?: string[]
   showWordCount?: boolean
   totalWordCount?: number
+  inputAt: "top" | "bottom"
 }
 interface State extends JCState {
   showVideo: boolean
   data: any,
+  dataAssignment: any,
   dmAuthors: any,
   created: boolean,
   UserDetails: any,
@@ -50,11 +52,15 @@ interface State extends JCState {
   nextToken: string
 }
 class MessageBoardImpl extends JCComponent<Props, State> {
+  static defaultProps = {
+    inputAt: "top"
+  }
   constructor(props: Props) {
     super(props);
     this.state = {
       ...super.getInitialState(),
       data: [],
+      dataAssignment: [],
       dmAuthors: null,
       created: false,
       UserDetails: null,
@@ -96,6 +102,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       {
         next: async (todoData) => {
           this.getDirectMessages(null)
+          this.getCourseAssignment()
           /*          console.log({ onCreateDirectMessage2: todoData })
           
                     let temp: any = this.state.data
@@ -140,7 +147,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
     const processMessages = (json) => {
-      console.log(json)
+
       if (json.data.messagesByRoom)
         if (nextToken)
           this.setState({
@@ -165,7 +172,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
     });
     const processMessages = (json) => {
-      console.log(json)
+
       if (json.data.directMessagesByRoom)
         if (nextToken)
           this.setState({
@@ -181,10 +188,29 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             nextToken: json.data.directMessagesByRoom.nextToken
 
           })
-
     }
+
+
     directMessagesByRoom.then(processMessages).catch(processMessages)
 
+  }
+  getCourseAssignment() {
+    if (this.props.style == "courseResponse") {
+      const directMessagesByRoom: any = API.graphql({
+        query: queries.directMessagesByRoom,
+        variables: { messageRoomID: this.props.roomId, sortDirection: "ASC", limit: 1 },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+      });
+      const processAssignment = (json) => {
+
+        if (json.data.directMessagesByRoom)
+          this.setState({
+            dataAssignment: json.data.directMessagesByRoom.items,
+
+          })
+      }
+      directMessagesByRoom.then(processAssignment).catch(processAssignment)
+    }
   }
   async setInitialData(props) {
     const user = await Auth.currentAuthenticatedUser();
@@ -205,6 +231,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       this.getMessages(null)
     } else if (this.props.roomId) {
       this.getDirectMessages(null)
+      this.getCourseAssignment()
     }
   }
 
@@ -459,59 +486,92 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       </Content>
     )
   }
-  renderDirectMessages() {
+  renderDirectMessage(item: any, index: number) {
+    if (!item?.author) {
+      return null
+    }
     return (
-      this.props.roomId ?
-        <>
-          {this.state.data?.map((item: any, index: any) => {
-            if (!item?.author) {
-              return null
-            }
-            return (
-              <Card key={index} style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }}>
-                <CardItem style={this.styles.style.eventPageMessageBoard}>
-                  <Left style={this.styles.style.eventPageMessageBoardLeft}>
-                    <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
-                      <ProfileImage size="small2" user={item.author?.id ?? null}></ProfileImage>
-                    </TouchableOpacity>
-                    <Body>
-                      <Text style={this.styles.style.groupFormName}>
-                        {item.author != null ? item.author.given_name : null} {item.author != null ? item.author.family_name : null}
-                      </Text>
-                      <Text style={this.styles.style.groupFormRole}>
-                        {item.author != null ? item.author.currentRole : null}
-                      </Text>
-                    </Body>
-                  </Left>
-                  <Right>
-                    <Text style={this.styles.style.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
-                  </Right>
-                </CardItem>
-                <CardItem style={this.styles.style.eventPageMessageBoardInnerCard}>
+      <Card key={index} style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }}>
+        <CardItem style={this.styles.style.eventPageMessageBoard}>
+          <Left style={this.styles.style.eventPageMessageBoardLeft}>
+            <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
+              <ProfileImage size="small2" user={item.author?.id ?? null}></ProfileImage>
+            </TouchableOpacity>
+            <Body>
+              <Text style={this.styles.style.groupFormName}>
+                {item.author != null ? item.author.given_name : null} {item.author != null ? item.author.family_name : null}
+              </Text>
+              <Text style={this.styles.style.groupFormRole}>
+                {item.author != null ? item.author.currentRole : null}
+              </Text>
+            </Body>
+          </Left>
+          <Right>
+            <Text style={this.styles.style.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
+          </Right>
+        </CardItem>
+        <CardItem style={this.styles.style.eventPageMessageBoardInnerCard}>
 
-                  <div id="comment-div">
-                    <div dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(item.content) }}></div>
-                  </div>
+          <div id="comment-div">
+            <div dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(item.content) }}></div>
+          </div>
 
-                </CardItem>
-                {item.attachment ?
-                  <CardItem>
-                    {this.renderFileDownloadBadge(item)}
-                  </CardItem> : null}
+        </CardItem>
+        {item.attachment ?
+          <CardItem>
+            {this.renderFileDownloadBadge(item)}
+          </CardItem> : null}
 
-              </Card>
-            )
-          })
-          }
-          {this.state.nextToken ?
-            <TouchableOpacity onPress={() => { this.loadMoreDirectMessages() }}>
+      </Card>
+    )
 
-              <Card style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }} >
-                <CardItem><Text>Loading More</Text></CardItem>
-              </Card>
-            </TouchableOpacity> : null
-          }
-        </> : null
+  }
+  renderMoreMessageButton() {
+    return (
+      this.state.nextToken ?
+        <TouchableOpacity onPress={() => {
+          if (this.props.groupId)
+            this.loadMoreMessages()
+          if (this.props.roomId)
+            this.loadMoreDirectMessages()
+        }}>
+          <Card style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }} >
+            <CardItem><Text>Load More</Text></CardItem>
+          </Card>
+        </TouchableOpacity> : null
+    )
+  }
+  renderAssignment() {
+    if (this.state.dataAssignment.length > 0) {
+      return this.renderDirectMessage(this.state.dataAssignment[0], -1)
+    }
+  }
+  renderMessagesInOrder() {
+    const z = this.state.data?.map((item: any, index: any) => {
+      if (this.props.style == "courseResponse" && this.state.dataAssignment.length > 0) {
+        if (item.id == this.state.dataAssignment[0].id) {
+          return null
+        }
+      }
+      if (this.props.groupId)
+        return this.renderMessage(item, index)
+      else if (this.props.roomId)
+        return this.renderDirectMessage(item, index)
+    })
+
+    if (this.props.inputAt == "bottom")
+      return z.reverse()
+    else
+      return z
+  }
+  renderMessages() {
+    return (
+      <>
+        {this.props.style == "courseResponse" && this.renderAssignment()}
+        {this.props.inputAt == "bottom" && this.renderMoreMessageButton()}
+        {this.renderMessagesInOrder()}
+        {this.props.inputAt == "top" && this.renderMoreMessageButton()}
+      </>
     )
   }
 
@@ -525,75 +585,58 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     this.getMessages(this.state.nextToken)
 
   }
-  renderMessages() {
+  renderMessage(item, index: number) {
     return (
-      this.props.groupId ?
-        <>
-          {
-            this.state.data?.map((item: any, index: any) => {
-              return (
-                <Card key={index} style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }}>
-                  {this.props.style == "regular" || this.props.style == "course" || this.props.style == "courseResponse" ?
-                    <CardItem style={this.styles.style.eventPageMessageBoard}>
-                      <Left style={this.styles.style.eventPageMessageBoardLeft}>
-                        <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
-                          <ProfileImage size="small2" user={item.owner ? item.owner : null}></ProfileImage>
-                        </TouchableOpacity>
-                        <Body>
-                          <Text style={this.styles.style.groupFormName}>
-                            {item.author != null ? item.author.given_name : null} {item.author != null ? item.author.family_name : null}
-                          </Text>
-                          <Text style={this.styles.style.groupFormRole}>
-                            {item.author != null ? item.author.currentRole : null}
-                          </Text>
-                        </Body>
-                      </Left>
-                      <Right>
-                        <Text style={this.styles.style.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
-                      </Right>
-                    </CardItem> :
-                    <CardItem style={this.styles.style.coursePageMessageBoard}>
-                      <Left style={this.styles.style.coursePageMessageBoardLeftMini}>
-                        <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
-                          <ProfileImage size="small2" user={item.owner ? item.owner : null}></ProfileImage>
-                        </TouchableOpacity>
-                      </Left>
-                      <Right style={{ flexDirection: "column", flex: 7, alignItems: "flex-start" }}>
-                        <Text style={this.styles.style.courseFormName}>
-                          {item.author != null ? item.author.given_name : null} {item.author != null ? item.author.family_name : null}
-                        </Text>
-                        {/* <Text style={this.styles.style.groupFormRole}>
-                {item.author != null ? item.author.currentRole : null}
-              </Text> */}
-                        <Text style={this.styles.style.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
-                      </Right>
-                    </CardItem>
-                  }
-                  <CardItem style={this.styles.style.eventPageMessageBoardInnerCard}>
+      <Card key={index} style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }}>
+        {this.props.style == "regular" || this.props.style == "course" || this.props.style == "courseResponse" ?
+          <CardItem style={this.styles.style.eventPageMessageBoard}>
+            <Left style={this.styles.style.eventPageMessageBoardLeft}>
+              <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
+                <ProfileImage size="small2" user={item.owner ? item.owner : null}></ProfileImage>
+              </TouchableOpacity>
+              <Body>
+                <Text style={this.styles.style.groupFormName}>
+                  {item.author != null ? item.author.given_name : null} {item.author != null ? item.author.family_name : null}
+                </Text>
+                <Text style={this.styles.style.groupFormRole}>
+                  {item.author != null ? item.author.currentRole : null}
+                </Text>
+              </Body>
+            </Left>
+            <Right>
+              <Text style={this.styles.style.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
+            </Right>
+          </CardItem> :
+          <CardItem style={this.styles.style.coursePageMessageBoard}>
+            <Left style={this.styles.style.coursePageMessageBoardLeftMini}>
+              <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
+                <ProfileImage size="small2" user={item.owner ? item.owner : null}></ProfileImage>
+              </TouchableOpacity>
+            </Left>
+            <Right style={{ flexDirection: "column", flex: 7, alignItems: "flex-start" }}>
+              <Text style={this.styles.style.courseFormName}>
+                {item.author != null ? item.author.given_name : null} {item.author != null ? item.author.family_name : null}
+              </Text>
+              {/* <Text style={this.styles.style.groupFormRole}>
+      {item.author != null ? item.author.currentRole : null}
+    </Text> */}
+              <Text style={this.styles.style.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
+            </Right>
+          </CardItem>
+        }
+        <CardItem style={this.styles.style.eventPageMessageBoardInnerCard}>
 
-                    <div id="comment-div">
-                      <div dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(item.content) }}></div>
-                    </div>
-                  </CardItem>
-                  {item.attachment ? <CardItem>
-                    {this.renderFileDownloadBadge(item)}
-                  </CardItem> : null}
-                </Card>
-              )
-            })
-          }
-          {this.state.nextToken ?
-            <TouchableOpacity onPress={() => { this.loadMoreMessages() }}>
-              <Card style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }} >
-
-                <CardItem><Text>Load More</Text></CardItem>
-
-              </Card>
-            </TouchableOpacity> : null
-          }
-        </> : null
+          <div id="comment-div">
+            <div dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(item.content) }}></div>
+          </div>
+        </CardItem>
+        {item.attachment ? <CardItem>
+          {this.renderFileDownloadBadge(item)}
+        </CardItem> : null}
+      </Card>
     )
   }
+
 
 
   render() {
@@ -607,10 +650,9 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       (this.state.created) ?
         <StyleProvider style={getTheme()}>
           <Container style={this.props.style == "regular" || this.props.style == "course" || this.props.style == "courseResponse" ? this.styles.style.messageBoardContainerFullSize : this.styles.style.messageBoardContainer} >
-            {this.renderMessageInput()}
-            {this.renderDirectMessages()}
+            {this.props.inputAt == "top" && this.renderMessageInput()}
             {this.renderMessages()}
-
+            {this.props.inputAt == "bottom" && this.renderMessageInput()}
           </Container>
         </StyleProvider >
         : null

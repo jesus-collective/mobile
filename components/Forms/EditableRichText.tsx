@@ -10,11 +10,10 @@ import './react-draft-wysiwyg.css';
 import { EditorState } from 'draft-js';
 
 import { v1 as uuidv1 } from 'uuid';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native';
 import JCComponent, { JCState } from '../JCComponent/JCComponent';
 import { ContentState, convertFromRaw, convertToRaw } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
-import { Pressable } from 'react-native';
 
 interface Props {
     value: string,
@@ -125,8 +124,8 @@ export default class EditableRichText extends JCComponent<Props, State> {
                 />
 
             else {
-                console.log("PRESSABLE")
-                return <Pressable onPress={() => { console.log("PRESSED"); this.setState({ isEditMode: true }) }}>
+
+                return <TouchableOpacity onPress={() => { this.setState({ isEditMode: true }) }}>
                     <div id="comment-div" style={{ width: '100%' }}>
                         {!convertFromRaw(JSON.parse(this.state.value)).hasText() || this.state.value == null ?
                             <div style={{ fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 16, marginTop: 0, color: '#F0493E', textDecoration: 'underline' }}>Hold to Edit</div>
@@ -135,10 +134,10 @@ export default class EditableRichText extends JCComponent<Props, State> {
                                 dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(this.props.value) }}
                                 style={{ fontFamily: 'Graphik-Regular-App', fontSize: '16px', lineHeight: '26px', color: "#333333", marginTop: 0, paddingTop: 0, paddingRight: '30px', minHeight: 50 }}></div>}
                     </div>
-                </Pressable>
+                </TouchableOpacity>
             }
         else {
-            console.log("NOT PRESSABLE")
+
             return <div id="comment-div">
                 <div dangerouslySetInnerHTML={{ __html: this.convertCommentFromJSONToHTML(this.state.value) }} style={{ fontFamily: 'Graphik-Regular-App', fontSize: '16px', lineHeight: '26px', color: "#333333", marginTop: 0, paddingTop: 0, minHeight: 50, paddingRight: 15 }}></div>
             </div>

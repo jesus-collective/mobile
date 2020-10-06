@@ -3,7 +3,7 @@ import { Container, Card, CardItem, ListItem, List } from 'native-base';
 
 import { Text, Image, Dimensions } from 'react-native'
 import { ResourceContext, ResourceState } from './ResourceContext';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'

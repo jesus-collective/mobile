@@ -23,7 +23,7 @@ import { constants } from '../../src/constants'
 import JCComponent, { JCState } from '../JCComponent/JCComponent';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { MapData } from '../MyGroups/MyGroups';
-import { TextInput } from 'react-native-gesture-handler';
+import { TextInput } from 'react-native';
 import JCSwitch from '../../components/JCSwitch/JCSwitch';
 
 const orgTypes = orgTypesChurches.concat(orgTypesNonChurch)

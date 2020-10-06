@@ -17,7 +17,7 @@ import { Image } from 'react-native'
 
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { CourseContext } from './CourseContext';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native';
 import EditableRichText from '../../components/Forms/EditableRichText';
 import EditableFileUpload from '../../components/Forms/EditableFileUpload';
 import { AntDesign } from '@expo/vector-icons';
@@ -337,6 +337,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                             <Text style={{ fontSize: 25, color: "#71C209", fontFamily: 'Graphik-Bold-App', marginTop: 10, marginRight: 25 }}>• <span style={{ fontFamily: 'Graphik-Regular-App', color: '#000000', fontSize: 13 }}>Assignment</span></Text>
                             <Text style={{ fontSize: 25, color: "#0000ff", fontFamily: 'Graphik-Bold-App', marginTop: 10, marginRight: 25 }}>• <span style={{ fontFamily: 'Graphik-Regular-App', color: '#000000', fontSize: 13 }}>Response</span></Text>
                           </Container>
+                          {/*
                           <Container style={{ width: '100%', marginTop: 30, marginBottom: 50 }}>
                             <Text style={{ fontSize: 20, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 50, width: '90%' }}>Course Activity</Text>
                           </Container>
@@ -347,6 +348,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                           </Container>
 
                           <Text style={this.styles.style.courseHomeCourseActivityText}>Adam posted assignement to review</Text>
+                          */}
                         </Container>
 
                       </Container>

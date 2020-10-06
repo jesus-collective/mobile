@@ -7,9 +7,9 @@ import * as customQueries from '../../src/graphql-custom/queries';
 //import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';
 //import { EditorState } from 'draft-js';
-import { Text } from 'react-native'
+import { Pressable, Text } from 'react-native'
 //import { v1 as uuidv1 } from 'uuid';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native';
 import JCComponent, { JCState } from '../JCComponent/JCComponent';
 //import { ContentState, convertFromRaw, convertToRaw } from 'draft-js';
 //import { stateToHTML } from 'draft-js-export-html';
@@ -177,47 +177,60 @@ export default class EditableRichText extends JCComponent<Props, State> {
         console.log(ids)
         return ids
     }
+    renderCourseReview() {
+        return <Container style={this.styles.style.courseAssignmentMainContainer}>
+
+            <Container style={this.styles.style.courseAssignmentScreenLeftCard}>
+                <Text style={this.styles.style.eventNameInput}>Review Assignments</Text>
+
+                {this.state.data != null || this.state.data.length == 0 ?
+                    this.state.data.map((item, index: number) => {
+
+                        const otherUsers = this.getOtherUsers(item)
+                        let stringOfNames = ''
+                        otherUsers.names.forEach((name, index) => {
+                            if (otherUsers.names.length === index + 1)
+                                stringOfNames += name
+                            else
+                                stringOfNames += (name + ', ')
+                        })
+                        return (
+                            <TouchableOpacity
+                                style={{ backgroundColor: this.state.selectedRoom == index ? "#eeeeee" : "unset", borderRadius: 10, width: "100%", paddingTop: 8, paddingBottom: 8, display: "flex", alignItems: "center" }}
+                                key={item.id}
+                                onPress={() => { this.switchRoom(index) }}>
+                                <Text style={{ fontSize: 20, lineHeight: 25, fontWeight: "normal", fontFamily: "Graphik-Regular-App", width: "100%", display: "flex", alignItems: "center" }} >
+                                    <ProfileImage user={otherUsers.ids.length === 1 ? otherUsers.ids[0] : null} size="small2"></ProfileImage>
+                                    {item.name ? item.name : stringOfNames}
+                                </Text>
+                            </TouchableOpacity>)
+                    }) : <Text>Nothing to review</Text>}
+            </Container>
+
+
+            <Container style={this.styles.style.courseAssignmentScreenRightCard}>
+                <MessageBoard inputAt="bottom" showWordCount={true} totalWordCount={this.props.wordCount} style="courseResponse" roomId={this.state.currentRoomId} recipients={this.getCurrentRoomRecipients()}></MessageBoard>
+            </Container>
+        </Container>
+    }
     render(): React.ReactNode {
-        return <>
-            <div style={{ padding: 5, height: 25, width: "95%", marginTop: 20, backgroundColor: (this.hasInitialPost() == initialPostState.Yes) ? "#71C209" : "#71C209", borderRadius: 4 }}><span style={{ color: "#ffffff", fontSize: 18, fontFamily: 'Graphik-Bold-App', alignSelf: 'center', paddingLeft: 10, paddingTop: 15 }}>Assignment</span></div>
-            {(this.hasInitialPost() == initialPostState.Yes) ?
-                <Container style={this.styles.style.courseAssignmentMainContainer}>
+        return this.isMemberOf("courseAdmin") || this.isMemberOf("courseCoach") ?
+            <>
+                <div style={{ padding: 5, height: 25, width: "95%", marginTop: 20, backgroundColor: "#71C209", borderRadius: 4 }}><span style={{ color: "#ffffff", fontSize: 18, fontFamily: 'Graphik-Bold-App', alignSelf: 'center', paddingLeft: 10, paddingTop: 15 }}>Admin/Coach View</span></div>
+                {this.renderCourseReview()}
 
-                    <Container style={this.styles.style.courseAssignmentScreenLeftCard}>
-                        <Text style={this.styles.style.eventNameInput}>Review Assignments</Text>
+            </> :
+            <>
+                <div style={{ padding: 5, height: 25, width: "95%", marginTop: 20, backgroundColor: (this.hasInitialPost() == initialPostState.Yes) ? "#71C209" : "#71C209", borderRadius: 4 }}><span style={{ color: "#ffffff", fontSize: 18, fontFamily: 'Graphik-Bold-App', alignSelf: 'center', paddingLeft: 10, paddingTop: 15 }}>Assignment</span></div>
 
-                        {this.state.data != null ?
-                            this.state.data.map((item, index: number) => {
-
-                                const otherUsers = this.getOtherUsers(item)
-                                let stringOfNames = ''
-                                otherUsers.names.forEach((name, index) => {
-                                    if (otherUsers.names.length === index + 1)
-                                        stringOfNames += name
-                                    else
-                                        stringOfNames += (name + ', ')
-                                })
-                                return (
-                                    <TouchableOpacity style={{ backgroundColor: this.state.selectedRoom == index ? "#eeeeee" : "unset", borderRadius: 10, width: "100%", paddingTop: 8, paddingBottom: 8, display: "flex", alignItems: "center" }} key={item.id} onPress={() => this.switchRoom(index)}>
-                                        <Text style={{ fontSize: 20, lineHeight: 25, fontWeight: "normal", fontFamily: "Graphik-Regular-App", width: "100%", display: "flex", alignItems: "center" }} >
-                                            <ProfileImage user={otherUsers.ids.length === 1 ? otherUsers.ids[0] : null} size="small2"></ProfileImage>
-                                            {item.name ? item.name : stringOfNames}
-                                        </Text>
-                                    </TouchableOpacity>)
-                            }) : null}
-                    </Container>
+                {(this.hasInitialPost() == initialPostState.Yes) ?
+                    this.renderCourseReview()
+                    : (this.hasInitialPost() == initialPostState.No) ?
+                        <MessageBoard showWordCount={true} totalWordCount={this.props.wordCount} style="course" roomId={this.state.currentRoomId} recipients={this.getCurrentRoomRecipients()}></MessageBoard>
+                        : null
+                }
 
 
-                    <Container style={this.styles.style.courseAssignmentScreenRightCard}>
-                        <MessageBoard showWordCount={true} totalWordCount={this.props.wordCount} style="courseResponse" roomId={this.state.currentRoomId} recipients={this.getCurrentRoomRecipients()}></MessageBoard>
-                    </Container>
-                </Container>
-                : (this.hasInitialPost() == initialPostState.No) ?
-                    <MessageBoard showWordCount={true} totalWordCount={this.props.wordCount} style="course" roomId={this.state.currentRoomId} recipients={this.getCurrentRoomRecipients()}></MessageBoard>
-                    : null
-            }
-
-
-        </>
+            </>
     }
 }
