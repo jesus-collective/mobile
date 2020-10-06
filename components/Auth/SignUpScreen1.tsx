@@ -23,8 +23,8 @@ export default class SignUpScreen1 extends JCComponent<Props>{
 
   async makePayment(actions: any): Promise<void> {
     console.log("Make Payment")
-    const user = await Auth.currentAuthenticatedUser();
     try {
+      const user = await Auth.currentAuthenticatedUser();
       await API.graphql(graphqlOperation(mutations.updateUser, {
         input: {
           id: user['username'],

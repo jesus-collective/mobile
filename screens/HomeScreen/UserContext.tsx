@@ -19,6 +19,7 @@ export const UserContext = React.createContext<UserContextType>({
     actions: {
         updateHasCompletedPersonalProfile: null,
         onPaidStateChanged: null,
-        updateHasCompletedOrganizationProfile: null
+        updateHasCompletedOrganizationProfile: null,
+        onStateChange: null
     }, state: null
 })

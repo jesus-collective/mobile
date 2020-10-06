@@ -156,7 +156,7 @@ class AwesomeApp extends JCComponent<Props, State> {
           }
 
           <Authenticator hideDefault={true} federated={federated} usernameAttributes='email'>
-            <HomeScreen />
+            <HomeScreen onStateChange={(item1, item2) => { console.log(item1); this.setState({ authState: item1 }) }} authState={this.state.authState} />
             <MySignIn onSetUser={(user) => { this.setState({ username: user }) }} onStateChange={(authState) => { this.setState({ authState: authState }) }} authState={this.state.authState} />
             <MySignUp onStateChange={(authState) => { this.setState({ authState: authState }) }} authState={this.state.authState} />
             <MyConfirmSignUp onStateChange={(authState) => { this.setState({ authState: authState }) }} authState={this.state.authState} />

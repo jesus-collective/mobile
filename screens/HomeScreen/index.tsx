@@ -436,6 +436,7 @@ class MainAppRouter extends JCComponent {
 
 interface Props {
   authState?: any;
+  onStateChange(state: string, data: string): void
 }
 
 
@@ -673,7 +674,8 @@ class HomeScreenRouter extends JCComponent<Props, UserState> {
           ...this.state
         }, actions: {
           updateHasCompletedPersonalProfile: this.updateHasCompletedPersonalProfile,
-          onPaidStateChanged: this.onPaidStateChanged
+          onPaidStateChanged: this.onPaidStateChanged,
+          onStateChange: this.props.onStateChange
         }
 
       }}>
@@ -747,7 +749,7 @@ export default class App extends JCComponent<Props, AppState>{
         <Suspense fallback={this.renderFallback()}>
           <View style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1 }}>
             <MuiPickersUtilsProvider utils={MomentUtils}>
-              <Main authState={this.props.authState} />
+              <Main onStateChange={(e, e2) => { console.log(e); this.props.onStateChange(e, e2) }} authState={this.props.authState} />
             </MuiPickersUtilsProvider>
 
           </View>
@@ -806,7 +808,7 @@ function Main(props: any) {
       }
       }
     >
-      <HomeScreenRouter authState={props.authState}></HomeScreenRouter>
+      <HomeScreenRouter onStateChange={props.onStateChange} authState={props.authState}></HomeScreenRouter>
 
     </NavigationContainer>
   );

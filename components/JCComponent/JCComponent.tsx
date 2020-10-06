@@ -11,12 +11,17 @@ export default class JCComponent<Props = any, State extends JCState = any> exten
     constructor(props: Props) {
         super(props)
         this.state = this.getInitialState()
-        const user = Auth.currentAuthenticatedUser();
-        user.then((user) => {
-            this.setState({
-                groups: user.signInUserSession.accessToken.payload["cognito:groups"]
+        try {
+            const user = Auth.currentAuthenticatedUser()
+            user.then((user) => {
+                this.setState({
+                    groups: user.signInUserSession.accessToken.payload["cognito:groups"]
+                })
             })
-        })
+        }
+        catch (e) {
+            console.log(e)
+        }
     }
     componentDidMount(): void {
 
