@@ -419,7 +419,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
           </Container>
         </Container>
         <Container>
-          <Container style={{ borderBottomColor: '#333333', opacity: 0.2, borderBottomWidth: 1, width: '95%', marginBottom: 30, marginTop: 50 }}></Container>
+          <Container style={{ borderBottomColor: '#333333', opacity: 0.2, borderBottomWidth: 1, width: '95%', marginBottom: 30, marginTop: 30 }}></Container>
           <EditableRichText onChange={(val) => { actions.updateLesson(state.activeWeek, state.activeLesson, "description", val) }}
               value={lesson.description}
               isEditable={state.isEditable && state.editMode}
