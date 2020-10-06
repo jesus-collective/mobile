@@ -1766,6 +1766,7 @@ export default class MainStyles {
             courseDetailCoureInfoContainer: {
                 width: "100%",
                 minHeight: 'auto',
+                height: "unset"
             },
             courseHomeCourseActivityText: {
                 fontSize: 16,
@@ -1815,40 +1816,40 @@ export default class MainStyles {
                 flexGrow: 0,
             },
             adminCRMTableContainer: {
-                backgroundColor: "#F0493E", 
-                flex: 1, 
-                height: 40, 
-                alignSelf: 'stretch', 
-                flexDirection: 'row', 
-                paddingBottom: 10, 
-                paddingTop: 10, 
-                paddingRight: 10, 
-                paddingLeft: 10, 
-                width: 1300, 
+                backgroundColor: "#F0493E",
+                flex: 1,
+                height: 40,
+                alignSelf: 'stretch',
+                flexDirection: 'row',
+                paddingBottom: 10,
+                paddingTop: 10,
+                paddingRight: 10,
+                paddingLeft: 10,
+                width: 1300,
                 justifyContent: 'center'
             },
             pickerDropDown: {
-                width: "75%", 
-                marginBottom: 15, 
-                marginTop: 15, 
-                fontSize: 16, 
-                height: 30, 
-                flexGrow: 0, 
-                paddingTop: 3, 
+                width: "75%",
+                marginBottom: 15,
+                marginTop: 15,
+                fontSize: 16,
+                height: 30,
+                flexGrow: 0,
+                paddingTop: 3,
                 paddingBottom: 3
             },
             courseSponsorContainer: {
-                display: "flex", 
-                flexDirection: "row", 
-                width: "105%", 
-                justifyContent: "space-between", 
-                flexGrow: 0, 
-                marginBottom: 20, 
+                display: "flex",
+                flexDirection: "row",
+                width: "105%",
+                justifyContent: "space-between",
+                flexGrow: 0,
+                marginBottom: 20,
                 height: 45
             },
             courseZoomMainContainer: {
-                flexDirection: 'row', 
-                marginTop: 30, 
+                flexDirection: 'row',
+                marginTop: 30,
                 flex: 0.5
             },
             courseLessonContainer: {
@@ -2267,6 +2268,7 @@ export default class MainStyles {
                 },
                 courseDetailCoureInfoContainer: {
                     maxHeight: 225,
+                    height: "unset"
                 },
                 courseDetailActivityInnerCardCenter: {
                     width: '100%'
@@ -2294,7 +2296,7 @@ export default class MainStyles {
                     height: 'auto'
                 },
                 pickerDropDown: {
-                    width: "100%", 
+                    width: "100%",
                 },
             },
 
@@ -2454,10 +2456,10 @@ export default class MainStyles {
                     flex: 35,
                 },
                 adminCRMTableContainer: {
-                    width: 1000,    
+                    width: 1000,
                 },
                 courseZoomMainContainer: {
-                    flexDirection: 'column', 
+                    flexDirection: 'column',
                 },
             },
 
@@ -2845,8 +2847,8 @@ export default class MainStyles {
                     height: 20,
                 },
                 courseMktDescriptionInput: {
-                   width: '110%',
-                   minHeight: 300,
+                    width: '110%',
+                    minHeight: 300,
                 },
             },
 
