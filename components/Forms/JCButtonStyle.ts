@@ -44,6 +44,25 @@ export default EStyleSheet.create({
         fontSize: 16,
         padding: 5
     },
+    CourseZoomButton: {
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 29,
+        paddingRight: 29,
+        marginBottom: 10,
+        marginLeft: 0,
+        marginRight: 0,
+        backgroundColor: "#4A8AF7",
+        borderWidth: 1,
+        borderColor: "#4A8AF7",
+        boxShadow: "unset"
+    },
+    CourseZoomText: {
+        color: "#FFFFFF",
+        fontFamily: 'Graphik-Bold-App',
+        fontSize: 16,
+        padding: 5
+    },
     AdminOutlineButton: {
         paddingTop: 10,
         paddingBottom: 10,

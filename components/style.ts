@@ -393,13 +393,13 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 26, color: "#333333", paddingTop: 12, width: "100%"
             },
             courseTimeNonEditable: {
-                fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 26, color: "#333333", paddingTop: 12, width: "100%", marginTop: 5, marginBottom: 5
+                fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 26, color: "#333333", paddingTop: 12, width: "100%", marginTop: 5, marginBottom: 5, marginRight: 20
             },
             courseDetailHeading: {
                 fontFamily: 'Graphik-Bold-App', fontSize: 20, lineHeight: 26, color: "#333333", paddingTop: 12
             },
             fontFormSmallDarkGreyCourseTopEditable: {
-                fontFamily: 'Graphik-Regular-App', fontSize: 40, lineHeight: 30, color: "#333333", paddingTop: 30, width: "100%", marginBottom: 15
+                fontFamily: 'Graphik-Regular-App', fontSize: 40, lineHeight: 55, color: "#333333", paddingTop: 30, width: "100%", marginBottom: 15
             },
             fontFormSmallDarkGreyCoordinates: {
                 fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 22, color: "#333333", paddingTop: 5, width: "100%"
@@ -1846,6 +1846,11 @@ export default class MainStyles {
                 marginBottom: 20, 
                 height: 45
             },
+            courseZoomMainContainer: {
+                flexDirection: 'row', 
+                marginTop: 30, 
+                flex: 0.5
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2446,7 +2451,10 @@ export default class MainStyles {
                 },
                 adminCRMTableContainer: {
                     width: 1000,    
-                    },
+                },
+                courseZoomMainContainer: {
+                    flexDirection: 'column', 
+                },
             },
 
             '@media (min-width: 769px) and (max-width: 1279px)': {
