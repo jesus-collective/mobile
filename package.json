@@ -49,6 +49,7 @@
     "react": "16.13.1",
     "react-chips": "^0.8.0",
     "react-datepicker": "^2.14.1",
+    "react-device-detect": "^1.14.0",
     "react-dom": "16.13.1",
     "react-draft-wysiwyg": "^1.14.4",
     "react-google-maps": "^9.4.5",

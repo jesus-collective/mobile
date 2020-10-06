@@ -141,7 +141,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
       <Container style={state.isEditable && state.editMode ? this.styles.style.courseActivityButtonEditable : this.styles.style.courseActivityButtonNonEditable}>
         {state.isEditable && state.editMode ? <EditableUrl title="Open in Youtube"
           onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "zoomRecording", e) }}
-          placeholder="Enter youtube URL" multiline={false} textStyle={ButtonTypes.courseCardSolid}
+          placeholder="Enter youtube ID" multiline={false} textStyle={ButtonTypes.courseCardSolid}
           inputStyle={this.styles.style.courseEditableURL} value={item.zoomRecording}
           isEditable={state.isEditable && state.editMode}></EditableUrl> : null}
 
