@@ -226,7 +226,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                             value={item.name} isEditable={state.isEditable && state.editMode}></EditableText>
 
                           <Container style={this.styles.style.courseActivityDetails}>
-                            <Text style={state.isEditable && state.editMode ? { marginRight: 10, paddingTop: 0 } : { marginRight: 20, paddingTop: 5 }}>
+                            <Text style={state.isEditable && state.editMode ? { marginRight: 10, paddingTop: 0 } : { marginRight: 0, paddingTop: 5 }}>
                               {state.isEditable ?
                                 null
                                 : <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }} source={require('../../assets/svg/time.svg')} />
@@ -344,11 +344,11 @@ class CourseDetailImpl extends JCComponent<Props, State>{
           <Image style={{ width: "22px", height: "22px", marginRight: 5, marginTop: 43 }} source={require('../../assets/svg/calendar.svg')}></Image>
           <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Regular-App', color: '#333333', marginTop: 45 }}>{lesson.time}</Text>
         </Container>
-        <Container>
+        <Container> 
           <Container style={{ borderBottomColor: '#333333', opacity: 0.2, borderBottomWidth: 1, width: '95%', marginBottom: 30 }}></Container>
           {lesson.zoomRecording && lesson.zoomRecording != "" ?
             <iframe title="Youtube" src={"https://www.youtube.com/embed/" + lesson.zoomRecording}
-              style={{ width: "40vw", height: "30vw" }}
+              style={{ width: "40vw", height: "30vw", marginBottom: 20 }}
               frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen></iframe>
 
@@ -364,7 +364,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
     return (
       <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
         <JCButton buttonType={ButtonTypes.CourseHomeSidebarTop} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
-        <Container style={{ flexDirection: 'row', marginTop: 30, flex: 0.5 }}>
+        <Container style={this.styles.style.courseZoomMainContainer}>
           <Container style={{ flex: 0.6, height: 'auto' }}>
             <Text style={{ fontSize: 20, lineHeight: 30, fontFamily: 'Graphik-Regular-App', color: '#333333', textTransform: 'uppercase' }}>{week.name}</Text>
             <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.date}</Text>
