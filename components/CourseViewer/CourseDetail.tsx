@@ -198,7 +198,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                 textStyle={this.styles.style.fontFormSmallDarkGreyCourseTopEditable}
                 inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 30, marginBottom: 15, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 40, lineHeight: 55 }}
                 value={week.title} isEditable={state.isEditable && state.editMode}></EditableText>
-
+            
               <EditableRichText onChange={(val) => { actions.updateWeek(state.activeWeek, "leader", val) }}
                 value={week.leader}
                 isEditable={state.isEditable && state.editMode}
@@ -344,7 +344,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
           <Image style={{ width: "22px", height: "22px", marginRight: 5, marginTop: 43 }} source={require('../../assets/svg/calendar.svg')}></Image>
           <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Regular-App', color: '#333333', marginTop: 45 }}>{lesson.time}</Text>
         </Container>
-        <Container> 
+        <Container>
           <Container style={{ borderBottomColor: '#333333', opacity: 0.2, borderBottomWidth: 1, width: '95%', marginBottom: 30 }}></Container>
           {lesson.zoomRecording && lesson.zoomRecording != "" ?
             <iframe title="Youtube" src={"https://www.youtube.com/embed/" + lesson.zoomRecording}
@@ -396,7 +396,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
             <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.date}</Text>
             <Text style={this.styles.style.courseDetailLessonText}>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
           </Container>
-          <Container style={{ flex: 0.4, height: 'auto', flexDirection:  'row', marginLeft: 20 }}>
+          <Container style={{ flex: 0.4, height: 'auto', flexDirection: 'row', marginLeft: 20 }}>
             <Image style={{ width: "22px", height: "22px", marginRight: 5, marginTop: 43 }} source={require('../../assets/svg/calendar.svg')}></Image>
             <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Regular-App', color: '#333333', marginTop: 45 }}>{lesson.time}</Text>
           </Container>
@@ -422,7 +422,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
             <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.date}</Text>
             <Text style={this.styles.style.courseDetailLessonText}>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
           </Container>
-          <Container style={{ flex: 0.4, height: 'auto', flexDirection:  'row', marginLeft: 20 }}>
+          <Container style={{ flex: 0.4, height: 'auto', flexDirection: 'row', marginLeft: 20 }}>
             <Image style={{ width: "22px", height: "22px", marginRight: 5, marginTop: 43 }} source={require('../../assets/svg/calendar.svg')}></Image>
             <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Regular-App', color: '#333333', marginTop: 45 }}>{lesson.time}</Text>
           </Container>
@@ -430,9 +430,9 @@ class CourseDetailImpl extends JCComponent<Props, State>{
         <Container>
           <Container style={{ borderBottomColor: '#333333', opacity: 0.2, borderBottomWidth: 1, width: '95%', marginBottom: 30, marginTop: 30 }}></Container>
           <EditableRichText onChange={(val) => { actions.updateLesson(state.activeWeek, state.activeLesson, "description", val) }}
-              value={lesson.description}
-              isEditable={state.isEditable && state.editMode}
-              textStyle=""></EditableRichText>
+            value={lesson.description}
+            isEditable={state.isEditable && state.editMode}
+            textStyle=""></EditableRichText>
           <EditableCourseAssignment actions={actions} assignmentId={lesson.id} wordCount={lesson.wordCount}></EditableCourseAssignment>
         </Container>
       </Container>)

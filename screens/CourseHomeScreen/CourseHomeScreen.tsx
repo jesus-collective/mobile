@@ -40,7 +40,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       data: null,
       currentUser: null,
       courseData: null,
-      isEditable: true,
+      isEditable: false,
       editMode: false,
       validationError: "",
       activeWeek: 0,

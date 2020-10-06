@@ -3,6 +3,10 @@ import EStyleSheet from 'react-native-extended-stylesheet';
 import Constants from 'expo-constants';
 import { Dimensions } from 'react-native'
 const mainColor = '#ffffff';
+import {
+    isSafari,
+    isChrome
+} from "react-device-detect";
 
 export default class MainStyles {
 
@@ -1763,11 +1767,14 @@ export default class MainStyles {
                 marginTop: 10,
                 width: '100%'
             },
-            courseDetailCoureInfoContainer: {
+            courseDetailCoureInfoContainer: isChrome ? {
                 width: "100%",
                 minHeight: 'auto',
                 height: "unset"
-            },
+            } : {
+                    width: "100%",
+                    minHeight: "fit-content"
+                },
             courseHomeCourseActivityText: {
                 fontSize: 16,
                 lineHeight: 25,
@@ -2267,7 +2274,7 @@ export default class MainStyles {
                     width: '95%',
                 },
                 courseDetailCoureInfoContainer: {
-                    maxHeight: 225,
+                    //maxHeight: 225,
                     height: "unset"
                 },
                 courseDetailActivityInnerCardCenter: {
@@ -2444,7 +2451,8 @@ export default class MainStyles {
                     paddingRight: 20,
                 },
                 courseDetailCoureInfoContainer: {
-                    maxHeight: 225,
+                    //maxHeight: 225,
+                    height: "unset"
                 },
                 courseWordCount: {
                     marginRight: 10,

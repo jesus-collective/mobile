@@ -183,7 +183,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
             <Container style={this.styles.style.courseAssignmentScreenLeftCard}>
                 <Text style={this.styles.style.eventNameInput}>Review Assignments</Text>
 
-                {this.state.data != null || this.state.data.length == 0 ?
+                {this.state.data != null && this.state.data.length != 0 ?
                     this.state.data.map((item, index: number) => {
 
                         const otherUsers = this.getOtherUsers(item)
@@ -207,10 +207,11 @@ export default class EditableRichText extends JCComponent<Props, State> {
                     }) : <Text>Nothing to review</Text>}
             </Container>
 
-
-            <Container style={this.styles.style.courseAssignmentScreenRightCard}>
-                <MessageBoard inputAt="bottom" showWordCount={true} totalWordCount={this.props.wordCount} style="courseResponse" roomId={this.state.currentRoomId} recipients={this.getCurrentRoomRecipients()}></MessageBoard>
-            </Container>
+            {this.state.data != null && this.state.data.length != 0 ?
+                <Container style={this.styles.style.courseAssignmentScreenRightCard}>
+                    <MessageBoard inputAt="bottom" showWordCount={true} totalWordCount={this.props.wordCount} style="courseResponse" roomId={this.state.currentRoomId} recipients={this.getCurrentRoomRecipients()}></MessageBoard>
+                </Container>
+                : null}
         </Container>
     }
     render(): React.ReactNode {
