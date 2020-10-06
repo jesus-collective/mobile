@@ -17,6 +17,7 @@ export enum ButtonTypes {
     courseCardSolid,
     courseAssignment,
     courseMktOutlineBoldNoMargin,
+    CourseZoom,
     Solid,
     SolidSignIn,
     SolidSignIn2,

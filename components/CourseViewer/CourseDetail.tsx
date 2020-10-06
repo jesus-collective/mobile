@@ -369,14 +369,14 @@ class CourseDetailImpl extends JCComponent<Props, State>{
             <Text style={{ fontSize: 20, lineHeight: 30, fontFamily: 'Graphik-Regular-App', color: '#333333', textTransform: 'uppercase' }}>{week.name}</Text>
             <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.date}</Text>
             <Text style={this.styles.style.courseDetailLessonText}>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
-            {lesson.zoomURL && lesson.zoomURL != "" ? <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.navigate(lesson.zoomURL) }}>Join Zoom Meeting</JCButton> : null}
-            {lesson.zoomRecording && lesson.zoomRecording != "" ? <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.navigate(lesson.zoomRecording) }}>Watch Zoom Recording</JCButton> : null}
+            {lesson.zoomURL && lesson.zoomURL != "" ? <JCButton buttonType={ButtonTypes.CourseZoom} onPress={() => { this.navigate(lesson.zoomURL) }}>Join Zoom Meeting</JCButton> : null}
+            {lesson.zoomRecording && lesson.zoomRecording != "" ? <JCButton buttonType={ButtonTypes.CourseZoom} onPress={() => { this.navigate(lesson.zoomRecording) }}>Watch Zoom Recording</JCButton> : null}
           </Container>
           <Image style={{ width: "22px", height: "22px", marginRight: 5, marginTop: 43 }} source={require('../../assets/svg/calendar.svg')}></Image>
           <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Regular-App', color: '#333333', marginTop: 45 }}>{lesson.time}</Text>
         </Container>
         <Container>
-          <Container style={{ borderBottomColor: '#333333', opacity: 0.2, borderBottomWidth: 1, width: '95%', marginBottom: 30 }}></Container>
+          <Container style={{ borderBottomColor: '#333333', opacity: 0.2, borderBottomWidth: 1, width: '95%', marginBottom: 30, marginTop: 50 }}></Container>
           <EditableRichText onChange={(val) => { actions.updateLesson(state.activeWeek, state.activeLesson, "description", val) }}
             value={lesson.description}
             isEditable={state.isEditable && state.editMode}
