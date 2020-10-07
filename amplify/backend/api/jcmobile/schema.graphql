@@ -65,6 +65,7 @@ type User
   userTriad:[CourseTriadUsers] @connection(name:"courseUserTriad",keyField: "userID")
 
   courseInstructing: [CourseInstructors] @connection(name:"courseInstructorsUser",keyField: "userID")
+  courseBackOfficeStaff: [CourseBackOfficeStaff] @connection(name:"courseBackOfficeStaffUser",keyField: "userID")
   payments: [Payment] @connection(name:"paymentUser",keyField: "userID")
 
   alertConfig:AlertConfig
@@ -254,6 +255,7 @@ type CourseInfo
   courseWeeks: [CourseWeek] @connection(name:"courseInfo",keyField: "courseInfoID",sortField:"week")
   subTitle: String
   instructors: [CourseInstructors] @connection(name:"courseInstructorsInfo",keyField: "courseInfoID")
+  backOfficeStaff: [CourseBackOfficeStaff] @connection(name:"courseBackOfficeStaffInfo",keyField: "courseInfoID")
   triads: [CourseTriads] @connection(name:"courseTriads",keyField: "courseInfoID")
   introduction: String
   sylabusAttachment:String
@@ -276,6 +278,24 @@ type CourseTriads
 
   coaches: [CourseTriadCoaches] @connection(name:"courseTriadCoaches",keyField: "triadID")
   users: [CourseTriadUsers] @connection(name:"courseTriadUsers",keyField: "triadID")
+}
+
+type CourseBackOfficeStaff
+@model
+@auth(
+    rules: [
+      { allow: groups, groups: ["courseUser"],operations: [read]}
+      { allow: groups, groups: ["courseCoach"], operations: [read] }
+      { allow: groups, groups: ["courseAdmin"]}
+    ]
+  )
+
+{
+  id:ID!
+  courseInfoID: String
+  courseInfo: CourseInfo @connection(name:"courseBackOfficeStaffInfo",keyField:"courseInfoID") 
+  userID: String
+  user: User @connection(name:"courseBackOfficeStaffUser",keyField:"userID") 
 }
 type CourseInstructors
 @model

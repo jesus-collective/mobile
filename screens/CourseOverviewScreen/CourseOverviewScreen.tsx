@@ -303,6 +303,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
     delete item.organizerGroup
     delete item.organizerUser
     delete item.instructors
+    delete item.backOfficeStaff
     delete item.ownerUser
     delete item._deleted
     delete item._lastChangedAt

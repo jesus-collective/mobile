@@ -85,6 +85,9 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        courseBackOfficeStaff {
+          nextToken
+        }
         payments {
           nextToken
         }
@@ -363,6 +366,16 @@ export const onCreateUser = /* GraphQL */ `
         }
         nextToken
       }
+      courseBackOfficeStaff {
+        items {
+          id
+          courseInfoID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       payments {
         items {
           id
@@ -548,6 +561,16 @@ export const onUpdateUser = /* GraphQL */ `
         }
         nextToken
       }
+      courseBackOfficeStaff {
+        items {
+          id
+          courseInfoID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       payments {
         items {
           id
@@ -724,6 +747,16 @@ export const onDeleteUser = /* GraphQL */ `
         nextToken
       }
       courseInstructing {
+        items {
+          id
+          courseInfoID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      courseBackOfficeStaff {
         items {
           id
           courseInfoID
@@ -937,6 +970,9 @@ export const onCreateGroupMember = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        courseBackOfficeStaff {
+          nextToken
+        }
         payments {
           nextToken
         }
@@ -1132,6 +1168,9 @@ export const onUpdateGroupMember = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
           nextToken
         }
         payments {
@@ -1331,6 +1370,9 @@ export const onDeleteGroupMember = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        courseBackOfficeStaff {
+          nextToken
+        }
         payments {
           nextToken
         }
@@ -1426,6 +1468,9 @@ export const onCreateGroup = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
           nextToken
         }
         payments {
@@ -1660,6 +1705,9 @@ export const onUpdateGroup = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        courseBackOfficeStaff {
+          nextToken
+        }
         payments {
           nextToken
         }
@@ -1890,6 +1938,9 @@ export const onDeleteGroup = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
           nextToken
         }
         payments {
@@ -2126,6 +2177,9 @@ export const onCreateOrganizationMember = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        courseBackOfficeStaff {
+          nextToken
+        }
         payments {
           nextToken
         }
@@ -2309,6 +2363,9 @@ export const onUpdateOrganizationMember = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        courseBackOfficeStaff {
+          nextToken
+        }
         payments {
           nextToken
         }
@@ -2490,6 +2547,9 @@ export const onDeleteOrganizationMember = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
           nextToken
         }
         payments {
@@ -3324,6 +3384,9 @@ export const onCreatePayment = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        courseBackOfficeStaff {
+          nextToken
+        }
         payments {
           nextToken
         }
@@ -3434,6 +3497,9 @@ export const onUpdatePayment = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
           nextToken
         }
         payments {
@@ -3548,6 +3614,9 @@ export const onDeletePayment = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        courseBackOfficeStaff {
+          nextToken
+        }
         payments {
           nextToken
         }
@@ -3594,6 +3663,16 @@ export const onCreateCourseInfo = /* GraphQL */ `
       }
       subTitle
       instructors {
+        items {
+          id
+          courseInfoID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      backOfficeStaff {
         items {
           id
           courseInfoID
@@ -3652,6 +3731,16 @@ export const onUpdateCourseInfo = /* GraphQL */ `
         }
         nextToken
       }
+      backOfficeStaff {
+        items {
+          id
+          courseInfoID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       triads {
         items {
           id
@@ -3701,6 +3790,16 @@ export const onDeleteCourseInfo = /* GraphQL */ `
         }
         nextToken
       }
+      backOfficeStaff {
+        items {
+          id
+          courseInfoID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       triads {
         items {
           id
@@ -3732,6 +3831,9 @@ export const onCreateCourseTriads = /* GraphQL */ `
         }
         subTitle
         instructors {
+          nextToken
+        }
+        backOfficeStaff {
           nextToken
         }
         triads {
@@ -3784,6 +3886,9 @@ export const onUpdateCourseTriads = /* GraphQL */ `
         instructors {
           nextToken
         }
+        backOfficeStaff {
+          nextToken
+        }
         triads {
           nextToken
         }
@@ -3834,6 +3939,9 @@ export const onDeleteCourseTriads = /* GraphQL */ `
         instructors {
           nextToken
         }
+        backOfficeStaff {
+          nextToken
+        }
         triads {
           nextToken
         }
@@ -3868,9 +3976,9 @@ export const onDeleteCourseTriads = /* GraphQL */ `
     }
   }
 `;
-export const onCreateCourseInstructors = /* GraphQL */ `
-  subscription OnCreateCourseInstructors {
-    onCreateCourseInstructors {
+export const onCreateCourseBackOfficeStaff = /* GraphQL */ `
+  subscription OnCreateCourseBackOfficeStaff {
+    onCreateCourseBackOfficeStaff {
       id
       courseInfoID
       courseInfo {
@@ -3882,6 +3990,9 @@ export const onCreateCourseInstructors = /* GraphQL */ `
         }
         subTitle
         instructors {
+          nextToken
+        }
+        backOfficeStaff {
           nextToken
         }
         triads {
@@ -3963,6 +4074,378 @@ export const onCreateCourseInstructors = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
+          nextToken
+        }
+        payments {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateCourseBackOfficeStaff = /* GraphQL */ `
+  subscription OnUpdateCourseBackOfficeStaff {
+    onUpdateCourseBackOfficeStaff {
+      id
+      courseInfoID
+      courseInfo {
+        id
+        designedBy
+        summary
+        courseWeeks {
+          nextToken
+        }
+        subTitle
+        instructors {
+          nextToken
+        }
+        backOfficeStaff {
+          nextToken
+        }
+        triads {
+          nextToken
+        }
+        introduction
+        sylabusAttachment
+        sylabusAttachmentName
+        createdAt
+        updatedAt
+      }
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
+          nextToken
+        }
+        payments {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteCourseBackOfficeStaff = /* GraphQL */ `
+  subscription OnDeleteCourseBackOfficeStaff {
+    onDeleteCourseBackOfficeStaff {
+      id
+      courseInfoID
+      courseInfo {
+        id
+        designedBy
+        summary
+        courseWeeks {
+          nextToken
+        }
+        subTitle
+        instructors {
+          nextToken
+        }
+        backOfficeStaff {
+          nextToken
+        }
+        triads {
+          nextToken
+        }
+        introduction
+        sylabusAttachment
+        sylabusAttachmentName
+        createdAt
+        updatedAt
+      }
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
+          nextToken
+        }
+        payments {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateCourseInstructors = /* GraphQL */ `
+  subscription OnCreateCourseInstructors {
+    onCreateCourseInstructors {
+      id
+      courseInfoID
+      courseInfo {
+        id
+        designedBy
+        summary
+        courseWeeks {
+          nextToken
+        }
+        subTitle
+        instructors {
+          nextToken
+        }
+        backOfficeStaff {
+          nextToken
+        }
+        triads {
+          nextToken
+        }
+        introduction
+        sylabusAttachment
+        sylabusAttachmentName
+        createdAt
+        updatedAt
+      }
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
           nextToken
         }
         payments {
@@ -4001,6 +4484,9 @@ export const onUpdateCourseInstructors = /* GraphQL */ `
         instructors {
           nextToken
         }
+        backOfficeStaff {
+          nextToken
+        }
         triads {
           nextToken
         }
@@ -4080,6 +4566,9 @@ export const onUpdateCourseInstructors = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
           nextToken
         }
         payments {
@@ -4118,6 +4607,9 @@ export const onDeleteCourseInstructors = /* GraphQL */ `
         instructors {
           nextToken
         }
+        backOfficeStaff {
+          nextToken
+        }
         triads {
           nextToken
         }
@@ -4197,6 +4689,9 @@ export const onDeleteCourseInstructors = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
           nextToken
         }
         payments {
@@ -4319,6 +4814,9 @@ export const onCreateCourseTriadCoaches = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        courseBackOfficeStaff {
+          nextToken
+        }
         payments {
           nextToken
         }
@@ -4437,6 +4935,9 @@ export const onUpdateCourseTriadCoaches = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
           nextToken
         }
         payments {
@@ -4559,6 +5060,9 @@ export const onDeleteCourseTriadCoaches = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        courseBackOfficeStaff {
+          nextToken
+        }
         payments {
           nextToken
         }
@@ -4677,6 +5181,9 @@ export const onCreateCourseTriadUsers = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
           nextToken
         }
         payments {
@@ -4799,6 +5306,9 @@ export const onUpdateCourseTriadUsers = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        courseBackOfficeStaff {
+          nextToken
+        }
         payments {
           nextToken
         }
@@ -4919,6 +5429,9 @@ export const onDeleteCourseTriadUsers = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        courseBackOfficeStaff {
+          nextToken
+        }
         payments {
           nextToken
         }
@@ -4959,6 +5472,9 @@ export const onCreateCourseWeek = /* GraphQL */ `
         }
         subTitle
         instructors {
+          nextToken
+        }
+        backOfficeStaff {
           nextToken
         }
         triads {
@@ -5017,6 +5533,9 @@ export const onUpdateCourseWeek = /* GraphQL */ `
         instructors {
           nextToken
         }
+        backOfficeStaff {
+          nextToken
+        }
         triads {
           nextToken
         }
@@ -5071,6 +5590,9 @@ export const onDeleteCourseWeek = /* GraphQL */ `
         }
         subTitle
         instructors {
+          nextToken
+        }
+        backOfficeStaff {
           nextToken
         }
         triads {
@@ -5325,6 +5847,9 @@ export const onCreateDirectMessageUser = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        courseBackOfficeStaff {
+          nextToken
+        }
         payments {
           nextToken
         }
@@ -5436,6 +5961,9 @@ export const onUpdateDirectMessageUser = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        courseBackOfficeStaff {
+          nextToken
+        }
         payments {
           nextToken
         }
@@ -5545,6 +6073,9 @@ export const onDeleteDirectMessageUser = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
           nextToken
         }
         payments {
@@ -5773,6 +6304,9 @@ export const onCreateDirectMessage = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        courseBackOfficeStaff {
+          nextToken
+        }
         payments {
           nextToken
         }
@@ -5886,6 +6420,9 @@ export const onUpdateDirectMessage = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
           nextToken
         }
         payments {
@@ -6003,6 +6540,9 @@ export const onDeleteDirectMessage = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        courseBackOfficeStaff {
+          nextToken
+        }
         payments {
           nextToken
         }
@@ -6118,6 +6658,9 @@ export const onCreateMessage = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
           nextToken
         }
         payments {
@@ -6323,6 +6866,9 @@ export const onUpdateMessage = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        courseBackOfficeStaff {
+          nextToken
+        }
         payments {
           nextToken
         }
@@ -6524,6 +7070,9 @@ export const onDeleteMessage = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
           nextToken
         }
         payments {

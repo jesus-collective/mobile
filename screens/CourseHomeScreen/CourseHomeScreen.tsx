@@ -133,6 +133,73 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       activeCourseActivity: courseActivity
     })
   }
+  updateBackOfficeStaff = async (value: any): Promise<void> => {
+    console.log(this.state.courseData.backOfficeStaff.items)
+    const del = this.state.courseData.backOfficeStaff.items.filter(x => !value.map(z => z.id).includes(x.userID));
+    const add = value.filter(x => !this.state.courseData.backOfficeStaff.items.map(z => z.userID).includes(x.id));
+    // const delTriadID= this.state.courseData.triads.items[index].users.items.map((item)=>{del.contains(item.})
+    console.log({ del: del })
+    add.map(async (item) => {
+      let createCourseBackOfficeStaff: any
+      try {
+        console.log({ "Adding": item })
+
+        createCourseBackOfficeStaff = await API.graphql({
+          query: mutations.createCourseBackOfficeStaff,
+          variables: {
+            input: {
+              courseInfoID: this.state.courseData.id,
+              userID: item.id
+            }
+          },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+        });
+        console.log(createCourseBackOfficeStaff)
+        const temp = this.state.courseData
+        temp.backOfficeStaff.items.push(createCourseBackOfficeStaff.data.createCourseBackOfficeStaff)
+        console.log(temp)
+        this.setState({ courseData: temp })
+
+      } catch (createCourseBackOfficeStaff) {
+        console.log(createCourseBackOfficeStaff)
+        const temp = this.state.courseData
+        temp.backOfficeStaff.items.push(createCourseBackOfficeStaff.data.createCourseBackOfficeStaff)
+        console.log(temp)
+        this.setState({ courseData: temp })
+
+      }
+    })
+
+    del.map(async (item) => {
+
+      try {
+        console.log({ "Deleting": item })
+
+        const deleteCourseBackOfficeStaff: any = await API.graphql({
+          query: mutations.deleteCourseBackOfficeStaff,
+          variables: {
+            input: {
+              id: item.id
+            }
+          },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
+        });
+        console.log(deleteCourseBackOfficeStaff)
+        const temp = this.state.courseData
+        temp.backOfficeStaff.items = temp.backOfficeStaff.items.filter(user => user.id !== item.id)
+        console.log(temp)
+        this.setState({ courseData: temp })
+
+      } catch (createCourseTriadUsers) {
+        console.log(createCourseTriadUsers)
+        const temp = this.state.courseData
+        temp.backOfficeStaff.items = temp.backOfficeStaff.users.items.filter(user => user.id !== item.id)
+        console.log(temp)
+        this.setState({ courseData: temp })
+
+      }
+    })
+  }
   updateInstructors = async (value: any): Promise<void> => {
     console.log(this.state.courseData.instructors.items)
     const del = this.state.courseData.instructors.items.filter(x => !value.map(z => z.id).includes(x.userID));
@@ -298,9 +365,18 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       }
       return { completeTriad: completeTriad, cohort: cohortTemp }
     })
-    const all = this.removeDuplicates(this.state.courseData?.triads?.items.map((item) => {
+    let fromTriads: Array<any> = this.state.courseData?.triads?.items.map((item: any) => {
       return [...item.users.items, ...item.coaches.items]
-    }).flat().filter(item => item.user != null).map(item => item.user), "id")
+    }).flat().filter((item: any) => { return item.user != null }).map((item: any) => { return item.user })
+    if (fromTriads == undefined)
+      fromTriads = []
+    const instructors: Array<any> = this.state.courseData ? this.state.courseData.instructors.items.map((item) => { return item.user }) : []
+    const backOfficeStaff: Array<any> = this.state.courseData ? this.state.courseData.backOfficeStaff.items.map((item) => { return item.user }) : []
+    console.log(instructors)
+    console.log(backOfficeStaff)
+    console.log(fromTriads)
+    const allWithDuplicates: Array<any> = [...fromTriads, ...instructors, ...backOfficeStaff]
+    const all = this.removeDuplicates(allWithDuplicates, "id")
     let cohort = [], completeTriad = []
     cohort = this.removeDuplicates(z?.map(item => item.cohort).flat().filter(z => z != null), "id")
     completeTriad = z?.map(item => item.completeTriad).filter(z => z != null)
@@ -749,6 +825,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
             updateTriadCoaches: this.updateTriadCoaches,
             updateTriadUsers: this.updateTriadUsers,
             updateInstructors: this.updateInstructors,
+            updateBackOfficeStaff: this.updateBackOfficeStaff,
             setActiveMessageBoard: this.setActiveMessageBoard,
             myCourseGroups: this.myCourseGroups,
             setActiveCourseActivity: this.setActiveCourseActivity,

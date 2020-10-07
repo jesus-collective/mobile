@@ -160,6 +160,16 @@ export const getUser = /* GraphQL */ `
         }
         nextToken
       }
+      courseBackOfficeStaff {
+        items {
+          id
+          courseInfoID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       payments {
         items {
           id
@@ -265,6 +275,9 @@ export const listUsers = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        courseBackOfficeStaff {
+          nextToken
+        }
         payments {
           nextToken
         }
@@ -359,6 +372,9 @@ export const getGroup = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
           nextToken
         }
         payments {
@@ -1024,6 +1040,9 @@ export const getPayment = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        courseBackOfficeStaff {
+          nextToken
+        }
         payments {
           nextToken
         }
@@ -1151,6 +1170,16 @@ export const getCourseInfo = /* GraphQL */ `
         }
         nextToken
       }
+      backOfficeStaff {
+        items {
+          id
+          courseInfoID
+          userID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       triads {
         items {
           id
@@ -1186,6 +1215,9 @@ export const listCourseInfos = /* GraphQL */ `
         instructors {
           nextToken
         }
+        backOfficeStaff {
+          nextToken
+        }
         triads {
           nextToken
         }
@@ -1213,6 +1245,9 @@ export const getCourseTriads = /* GraphQL */ `
         }
         subTitle
         instructors {
+          nextToken
+        }
+        backOfficeStaff {
           nextToken
         }
         triads {
@@ -1283,9 +1318,9 @@ export const listCourseTriadss = /* GraphQL */ `
     }
   }
 `;
-export const getCourseInstructors = /* GraphQL */ `
-  query GetCourseInstructors($id: ID!) {
-    getCourseInstructors(id: $id) {
+export const getCourseBackOfficeStaff = /* GraphQL */ `
+  query GetCourseBackOfficeStaff($id: ID!) {
+    getCourseBackOfficeStaff(id: $id) {
       id
       courseInfoID
       courseInfo {
@@ -1297,6 +1332,9 @@ export const getCourseInstructors = /* GraphQL */ `
         }
         subTitle
         instructors {
+          nextToken
+        }
+        backOfficeStaff {
           nextToken
         }
         triads {
@@ -1378,6 +1416,199 @@ export const getCourseInstructors = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
+          nextToken
+        }
+        payments {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listCourseBackOfficeStaffs = /* GraphQL */ `
+  query ListCourseBackOfficeStaffs(
+    $filter: ModelCourseBackOfficeStaffFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCourseBackOfficeStaffs(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        courseInfoID
+        courseInfo {
+          id
+          designedBy
+          summary
+          subTitle
+          introduction
+          sylabusAttachment
+          sylabusAttachmentName
+          createdAt
+          updatedAt
+        }
+        userID
+        user {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getCourseInstructors = /* GraphQL */ `
+  query GetCourseInstructors($id: ID!) {
+    getCourseInstructors(id: $id) {
+      id
+      courseInfoID
+      courseInfo {
+        id
+        designedBy
+        summary
+        courseWeeks {
+          nextToken
+        }
+        subTitle
+        instructors {
+          nextToken
+        }
+        backOfficeStaff {
+          nextToken
+        }
+        triads {
+          nextToken
+        }
+        introduction
+        sylabusAttachment
+        sylabusAttachmentName
+        createdAt
+        updatedAt
+      }
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
           nextToken
         }
         payments {
@@ -1567,6 +1798,9 @@ export const getCourseTriadCoaches = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        courseBackOfficeStaff {
+          nextToken
+        }
         payments {
           nextToken
         }
@@ -1749,6 +1983,9 @@ export const getCourseTriadUsers = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        courseBackOfficeStaff {
+          nextToken
+        }
         payments {
           nextToken
         }
@@ -1855,6 +2092,9 @@ export const getCourseWeek = /* GraphQL */ `
         }
         subTitle
         instructors {
+          nextToken
+        }
+        backOfficeStaff {
           nextToken
         }
         triads {
@@ -2090,6 +2330,9 @@ export const getDirectMessageUser = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
           nextToken
         }
         payments {
@@ -2336,6 +2579,9 @@ export const getDirectMessage = /* GraphQL */ `
         courseInstructing {
           nextToken
         }
+        courseBackOfficeStaff {
+          nextToken
+        }
         payments {
           nextToken
         }
@@ -2515,6 +2761,9 @@ export const getMessage = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
           nextToken
         }
         payments {
@@ -4100,6 +4349,9 @@ export const searchUsers = /* GraphQL */ `
           nextToken
         }
         courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
           nextToken
         }
         payments {

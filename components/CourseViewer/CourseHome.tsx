@@ -75,6 +75,7 @@ class CourseHomeImpl extends JCComponent<Props>{
 
 
           const instructors = state.courseData?.instructors?.items.map((item) => { return item.user })
+          const backOfficeStaff = state.courseData?.backOfficeStaff?.items.map((item) => { return item.user })
           var markedDates = {};
           for (var i = 0; i < actions.myCourseDates().zoom?.length; i++)
             markedDates[actions.myCourseDates().zoom[i]] = { marked: true, dotColor: 'red' };
@@ -158,6 +159,16 @@ class CourseHomeImpl extends JCComponent<Props>{
                                     inputStyle={this.styles.style.fontFormLargeInput}
                                     value={instructors ? instructors : []} isEditable={true}></EditableUsers>
 
+                                  <Text style={{ fontSize: 16, lineHeight: 25, fontFamily: 'Graphik-Bold-App', marginTop: 0 }}>Back Office Staff:</Text>
+                                  <EditableUsers
+                                    limit={1}
+                                    onChange={(value: any[]) => { actions.updateBackOfficeStaff(value) }}
+                                    multiline={false}
+                                    data-testid="profile-backOfficeStaff"
+                                    showProfileImages={true}
+                                    textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                    inputStyle={this.styles.style.fontFormLargeInput}
+                                    value={backOfficeStaff ? backOfficeStaff : []} isEditable={true}></EditableUsers>
 
                                   {state.isEditable ?
                                     (<>

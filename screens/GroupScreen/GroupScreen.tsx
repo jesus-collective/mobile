@@ -244,6 +244,7 @@ export default class GroupScreen extends JCComponent<Props, State>{
     delete item.messages
     delete item.organizerGroup
     delete item.organizerUser
+    delete item.backOfficeStaff
     delete item.instructors
     delete item.ownerUser
     delete item._deleted

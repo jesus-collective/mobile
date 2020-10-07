@@ -320,6 +320,22 @@ export type DeleteCourseTriadsInput = {
   id?: string | null,
 };
 
+export type CreateCourseBackOfficeStaffInput = {
+  id?: string | null,
+  courseInfoID?: string | null,
+  userID?: string | null,
+};
+
+export type UpdateCourseBackOfficeStaffInput = {
+  id: string,
+  courseInfoID?: string | null,
+  userID?: string | null,
+};
+
+export type DeleteCourseBackOfficeStaffInput = {
+  id?: string | null,
+};
+
 export type CreateCourseInstructorsInput = {
   id?: string | null,
   courseInfoID?: string | null,
@@ -860,6 +876,15 @@ export type ModelCourseTriadsFilterInput = {
   not?: ModelCourseTriadsFilterInput | null,
 };
 
+export type ModelCourseBackOfficeStaffFilterInput = {
+  id?: ModelIDFilterInput | null,
+  courseInfoID?: ModelStringFilterInput | null,
+  userID?: ModelStringFilterInput | null,
+  and?: Array< ModelCourseBackOfficeStaffFilterInput | null > | null,
+  or?: Array< ModelCourseBackOfficeStaffFilterInput | null > | null,
+  not?: ModelCourseBackOfficeStaffFilterInput | null,
+};
+
 export type ModelCourseInstructorsFilterInput = {
   id?: ModelIDFilterInput | null,
   courseInfoID?: ModelStringFilterInput | null,
@@ -1368,6 +1393,10 @@ export type BatchCreateDirectMessageUsersMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -1587,6 +1616,18 @@ export type CreateUserMutation = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    courseBackOfficeStaff:  {
+      __typename: "ModelCourseBackOfficeStaffConnection",
+      items:  Array< {
+        __typename: "CourseBackOfficeStaff",
+        id: string,
+        courseInfoID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     payments:  {
       __typename: "ModelPaymentConnection",
       items:  Array< {
@@ -1797,6 +1838,18 @@ export type UpdateUserMutation = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    courseBackOfficeStaff:  {
+      __typename: "ModelCourseBackOfficeStaffConnection",
+      items:  Array< {
+        __typename: "CourseBackOfficeStaff",
+        id: string,
+        courseInfoID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     payments:  {
       __typename: "ModelPaymentConnection",
       items:  Array< {
@@ -1999,6 +2052,18 @@ export type DeleteUserMutation = {
       __typename: "ModelCourseInstructorsConnection",
       items:  Array< {
         __typename: "CourseInstructors",
+        id: string,
+        courseInfoID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    courseBackOfficeStaff:  {
+      __typename: "ModelCourseBackOfficeStaffConnection",
+      items:  Array< {
+        __typename: "CourseBackOfficeStaff",
         id: string,
         courseInfoID: string | null,
         userID: string | null,
@@ -2235,6 +2300,10 @@ export type CreateGroupMemberMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -2453,6 +2522,10 @@ export type UpdateGroupMemberMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -2675,6 +2748,10 @@ export type DeleteGroupMemberMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -2787,6 +2864,10 @@ export type CreateGroupMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -3051,6 +3132,10 @@ export type UpdateGroupMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -3311,6 +3396,10 @@ export type DeleteGroupMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -3577,6 +3666,10 @@ export type CreateOrganizationMemberMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -3785,6 +3878,10 @@ export type UpdateOrganizationMemberMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -3991,6 +4088,10 @@ export type DeleteOrganizationMemberMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -4918,6 +5019,10 @@ export type CreatePaymentMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -5047,6 +5152,10 @@ export type UpdatePaymentMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -5180,6 +5289,10 @@ export type DeletePaymentMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -5237,6 +5350,18 @@ export type CreateCourseInfoMutation = {
       __typename: "ModelCourseInstructorsConnection",
       items:  Array< {
         __typename: "CourseInstructors",
+        id: string,
+        courseInfoID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    backOfficeStaff:  {
+      __typename: "ModelCourseBackOfficeStaffConnection",
+      items:  Array< {
+        __typename: "CourseBackOfficeStaff",
         id: string,
         courseInfoID: string | null,
         userID: string | null,
@@ -5304,6 +5429,18 @@ export type UpdateCourseInfoMutation = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    backOfficeStaff:  {
+      __typename: "ModelCourseBackOfficeStaffConnection",
+      items:  Array< {
+        __typename: "CourseBackOfficeStaff",
+        id: string,
+        courseInfoID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     triads:  {
       __typename: "ModelCourseTriadsConnection",
       items:  Array< {
@@ -5363,6 +5500,18 @@ export type DeleteCourseInfoMutation = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    backOfficeStaff:  {
+      __typename: "ModelCourseBackOfficeStaffConnection",
+      items:  Array< {
+        __typename: "CourseBackOfficeStaff",
+        id: string,
+        courseInfoID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     triads:  {
       __typename: "ModelCourseTriadsConnection",
       items:  Array< {
@@ -5403,6 +5552,10 @@ export type CreateCourseTriadsMutation = {
       subTitle: string | null,
       instructors:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       triads:  {
@@ -5467,6 +5620,10 @@ export type UpdateCourseTriadsMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
@@ -5529,6 +5686,10 @@ export type DeleteCourseTriadsMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
@@ -5568,13 +5729,13 @@ export type DeleteCourseTriadsMutation = {
   } | null,
 };
 
-export type CreateCourseInstructorsMutationVariables = {
-  input: CreateCourseInstructorsInput,
+export type CreateCourseBackOfficeStaffMutationVariables = {
+  input: CreateCourseBackOfficeStaffInput,
 };
 
-export type CreateCourseInstructorsMutation = {
-  createCourseInstructors:  {
-    __typename: "CourseInstructors",
+export type CreateCourseBackOfficeStaffMutation = {
+  createCourseBackOfficeStaff:  {
+    __typename: "CourseBackOfficeStaff",
     id: string,
     courseInfoID: string | null,
     courseInfo:  {
@@ -5589,6 +5750,10 @@ export type CreateCourseInstructorsMutation = {
       subTitle: string | null,
       instructors:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       triads:  {
@@ -5682,6 +5847,448 @@ export type CreateCourseInstructorsMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
+      alertConfig:  {
+        __typename: "AlertConfig",
+        emailDirectMessage: string | null,
+        emailGroupMessage: string | null,
+        emailEventMessage: string | null,
+        emailOrgMessage: string | null,
+        emailResourceMessage: string | null,
+        emailCourseMessage: string | null,
+        emailPromotions: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateCourseBackOfficeStaffMutationVariables = {
+  input: UpdateCourseBackOfficeStaffInput,
+};
+
+export type UpdateCourseBackOfficeStaffMutation = {
+  updateCourseBackOfficeStaff:  {
+    __typename: "CourseBackOfficeStaff",
+    id: string,
+    courseInfoID: string | null,
+    courseInfo:  {
+      __typename: "CourseInfo",
+      id: string,
+      designedBy: string | null,
+      summary: string | null,
+      courseWeeks:  {
+        __typename: "ModelCourseWeekConnection",
+        nextToken: string | null,
+      } | null,
+      subTitle: string | null,
+      instructors:  {
+        __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
+      triads:  {
+        __typename: "ModelCourseTriadsConnection",
+        nextToken: string | null,
+      } | null,
+      introduction: string | null,
+      sylabusAttachment: string | null,
+      sylabusAttachmentName: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      mainUserGroup: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+        geocodeFull: string | null,
+        geocodeCity: string | null,
+        geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: Array< string | null > | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      denomination: string | null,
+      pplServed: string | null,
+      sundayAttendance: string | null,
+      numberVolunteers: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      primaryOrganization: string | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      directMessages:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      coachingTriad:  {
+        __typename: "ModelCourseTriadCoachesConnection",
+        nextToken: string | null,
+      } | null,
+      userTriad:  {
+        __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      courseInstructing:  {
+        __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
+      alertConfig:  {
+        __typename: "AlertConfig",
+        emailDirectMessage: string | null,
+        emailGroupMessage: string | null,
+        emailEventMessage: string | null,
+        emailOrgMessage: string | null,
+        emailResourceMessage: string | null,
+        emailCourseMessage: string | null,
+        emailPromotions: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteCourseBackOfficeStaffMutationVariables = {
+  input: DeleteCourseBackOfficeStaffInput,
+};
+
+export type DeleteCourseBackOfficeStaffMutation = {
+  deleteCourseBackOfficeStaff:  {
+    __typename: "CourseBackOfficeStaff",
+    id: string,
+    courseInfoID: string | null,
+    courseInfo:  {
+      __typename: "CourseInfo",
+      id: string,
+      designedBy: string | null,
+      summary: string | null,
+      courseWeeks:  {
+        __typename: "ModelCourseWeekConnection",
+        nextToken: string | null,
+      } | null,
+      subTitle: string | null,
+      instructors:  {
+        __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
+      triads:  {
+        __typename: "ModelCourseTriadsConnection",
+        nextToken: string | null,
+      } | null,
+      introduction: string | null,
+      sylabusAttachment: string | null,
+      sylabusAttachmentName: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      mainUserGroup: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+        geocodeFull: string | null,
+        geocodeCity: string | null,
+        geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: Array< string | null > | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      denomination: string | null,
+      pplServed: string | null,
+      sundayAttendance: string | null,
+      numberVolunteers: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      primaryOrganization: string | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      directMessages:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      coachingTriad:  {
+        __typename: "ModelCourseTriadCoachesConnection",
+        nextToken: string | null,
+      } | null,
+      userTriad:  {
+        __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      courseInstructing:  {
+        __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
+      alertConfig:  {
+        __typename: "AlertConfig",
+        emailDirectMessage: string | null,
+        emailGroupMessage: string | null,
+        emailEventMessage: string | null,
+        emailOrgMessage: string | null,
+        emailResourceMessage: string | null,
+        emailCourseMessage: string | null,
+        emailPromotions: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateCourseInstructorsMutationVariables = {
+  input: CreateCourseInstructorsInput,
+};
+
+export type CreateCourseInstructorsMutation = {
+  createCourseInstructors:  {
+    __typename: "CourseInstructors",
+    id: string,
+    courseInfoID: string | null,
+    courseInfo:  {
+      __typename: "CourseInfo",
+      id: string,
+      designedBy: string | null,
+      summary: string | null,
+      courseWeeks:  {
+        __typename: "ModelCourseWeekConnection",
+        nextToken: string | null,
+      } | null,
+      subTitle: string | null,
+      instructors:  {
+        __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
+      triads:  {
+        __typename: "ModelCourseTriadsConnection",
+        nextToken: string | null,
+      } | null,
+      introduction: string | null,
+      sylabusAttachment: string | null,
+      sylabusAttachmentName: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      mainUserGroup: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+        geocodeFull: string | null,
+        geocodeCity: string | null,
+        geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: Array< string | null > | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      denomination: string | null,
+      pplServed: string | null,
+      sundayAttendance: string | null,
+      numberVolunteers: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      primaryOrganization: string | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      directMessages:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      coachingTriad:  {
+        __typename: "ModelCourseTriadCoachesConnection",
+        nextToken: string | null,
+      } | null,
+      userTriad:  {
+        __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      courseInstructing:  {
+        __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -5729,6 +6336,10 @@ export type UpdateCourseInstructorsMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
@@ -5820,6 +6431,10 @@ export type UpdateCourseInstructorsMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -5867,6 +6482,10 @@ export type DeleteCourseInstructorsMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
@@ -5958,6 +6577,10 @@ export type DeleteCourseInstructorsMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -6101,6 +6724,10 @@ export type CreateCourseTriadCoachesMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -6240,6 +6867,10 @@ export type UpdateCourseTriadCoachesMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -6383,6 +7014,10 @@ export type DeleteCourseTriadCoachesMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -6522,6 +7157,10 @@ export type CreateCourseTriadUsersMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -6665,6 +7304,10 @@ export type UpdateCourseTriadUsersMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -6806,6 +7449,10 @@ export type DeleteCourseTriadUsersMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -6855,6 +7502,10 @@ export type CreateCourseWeekMutation = {
       subTitle: string | null,
       instructors:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       triads:  {
@@ -6923,6 +7574,10 @@ export type UpdateCourseWeekMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
@@ -6987,6 +7642,10 @@ export type DeleteCourseWeekMutation = {
       subTitle: string | null,
       instructors:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       triads:  {
@@ -7280,6 +7939,10 @@ export type CreateDirectMessageUserMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -7411,6 +8074,10 @@ export type UpdateDirectMessageUserMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -7540,6 +8207,10 @@ export type DeleteDirectMessageUserMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -7812,6 +8483,10 @@ export type CreateDirectMessageMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -7945,6 +8620,10 @@ export type UpdateDirectMessageMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -8082,6 +8761,10 @@ export type DeleteDirectMessageMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -8217,6 +8900,10 @@ export type CreateMessageMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -8445,6 +9132,10 @@ export type UpdateMessageMutation = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -8669,6 +9360,10 @@ export type DeleteMessageMutation = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -10296,6 +10991,18 @@ export type GetUserQuery = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    courseBackOfficeStaff:  {
+      __typename: "ModelCourseBackOfficeStaffConnection",
+      items:  Array< {
+        __typename: "CourseBackOfficeStaff",
+        id: string,
+        courseInfoID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     payments:  {
       __typename: "ModelPaymentConnection",
       items:  Array< {
@@ -10417,6 +11124,10 @@ export type ListUsersQuery = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -10528,6 +11239,10 @@ export type GetGroupQuery = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -11265,6 +11980,10 @@ export type GetPaymentQuery = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -11401,6 +12120,18 @@ export type GetCourseInfoQuery = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    backOfficeStaff:  {
+      __typename: "ModelCourseBackOfficeStaffConnection",
+      items:  Array< {
+        __typename: "CourseBackOfficeStaff",
+        id: string,
+        courseInfoID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     triads:  {
       __typename: "ModelCourseTriadsConnection",
       items:  Array< {
@@ -11443,6 +12174,10 @@ export type ListCourseInfosQuery = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
@@ -11478,6 +12213,10 @@ export type GetCourseTriadsQuery = {
       subTitle: string | null,
       instructors:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       triads:  {
@@ -11559,13 +12298,13 @@ export type ListCourseTriadssQuery = {
   } | null,
 };
 
-export type GetCourseInstructorsQueryVariables = {
+export type GetCourseBackOfficeStaffQueryVariables = {
   id: string,
 };
 
-export type GetCourseInstructorsQuery = {
-  getCourseInstructors:  {
-    __typename: "CourseInstructors",
+export type GetCourseBackOfficeStaffQuery = {
+  getCourseBackOfficeStaff:  {
+    __typename: "CourseBackOfficeStaff",
     id: string,
     courseInfoID: string | null,
     courseInfo:  {
@@ -11580,6 +12319,10 @@ export type GetCourseInstructorsQuery = {
       subTitle: string | null,
       instructors:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       triads:  {
@@ -11673,6 +12416,224 @@ export type GetCourseInstructorsQuery = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
+      alertConfig:  {
+        __typename: "AlertConfig",
+        emailDirectMessage: string | null,
+        emailGroupMessage: string | null,
+        emailEventMessage: string | null,
+        emailOrgMessage: string | null,
+        emailResourceMessage: string | null,
+        emailCourseMessage: string | null,
+        emailPromotions: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListCourseBackOfficeStaffsQueryVariables = {
+  filter?: ModelCourseBackOfficeStaffFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListCourseBackOfficeStaffsQuery = {
+  listCourseBackOfficeStaffs:  {
+    __typename: "ModelCourseBackOfficeStaffConnection",
+    items:  Array< {
+      __typename: "CourseBackOfficeStaff",
+      id: string,
+      courseInfoID: string | null,
+      courseInfo:  {
+        __typename: "CourseInfo",
+        id: string,
+        designedBy: string | null,
+        summary: string | null,
+        subTitle: string | null,
+        introduction: string | null,
+        sylabusAttachment: string | null,
+        sylabusAttachmentName: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      userID: string | null,
+      user:  {
+        __typename: "User",
+        id: string,
+        given_name: string,
+        family_name: string,
+        email: string | null,
+        phone: string | null,
+        owner: string | null,
+        mainUserGroup: string | null,
+        hasPaidState: string | null,
+        profileState: string | null,
+        address: string | null,
+        city: string | null,
+        province: string | null,
+        postalCode: string | null,
+        country: string | null,
+        aboutMeShort: string | null,
+        aboutMeLong: string | null,
+        interests: Array< string | null > | null,
+        currentRole: string | null,
+        currentScope: string | null,
+        personality: string | null,
+        orgName: string | null,
+        orgType: string | null,
+        orgSize: string | null,
+        denomination: string | null,
+        pplServed: string | null,
+        sundayAttendance: string | null,
+        numberVolunteers: string | null,
+        orgDescription: string | null,
+        joined: string | null,
+        primaryOrganization: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type GetCourseInstructorsQueryVariables = {
+  id: string,
+};
+
+export type GetCourseInstructorsQuery = {
+  getCourseInstructors:  {
+    __typename: "CourseInstructors",
+    id: string,
+    courseInfoID: string | null,
+    courseInfo:  {
+      __typename: "CourseInfo",
+      id: string,
+      designedBy: string | null,
+      summary: string | null,
+      courseWeeks:  {
+        __typename: "ModelCourseWeekConnection",
+        nextToken: string | null,
+      } | null,
+      subTitle: string | null,
+      instructors:  {
+        __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
+      triads:  {
+        __typename: "ModelCourseTriadsConnection",
+        nextToken: string | null,
+      } | null,
+      introduction: string | null,
+      sylabusAttachment: string | null,
+      sylabusAttachmentName: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      mainUserGroup: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+        geocodeFull: string | null,
+        geocodeCity: string | null,
+        geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: Array< string | null > | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      denomination: string | null,
+      pplServed: string | null,
+      sundayAttendance: string | null,
+      numberVolunteers: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      primaryOrganization: string | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      directMessages:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      coachingTriad:  {
+        __typename: "ModelCourseTriadCoachesConnection",
+        nextToken: string | null,
+      } | null,
+      userTriad:  {
+        __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      courseInstructing:  {
+        __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -11884,6 +12845,10 @@ export type GetCourseTriadCoachesQuery = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -12088,6 +13053,10 @@ export type GetCourseTriadUsersQuery = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -12202,6 +13171,10 @@ export type GetCourseWeekQuery = {
       subTitle: string | null,
       instructors:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       triads:  {
@@ -12471,6 +13444,10 @@ export type GetDirectMessageUserQuery = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -12747,6 +13724,10 @@ export type GetDirectMessageQuery = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -12951,6 +13932,10 @@ export type GetMessageQuery = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -14631,6 +15616,10 @@ export type SearchUsersQuery = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -14870,6 +15859,10 @@ export type OnCreateMessageByRoomIdSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -15176,6 +16169,18 @@ export type OnCreateUserSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    courseBackOfficeStaff:  {
+      __typename: "ModelCourseBackOfficeStaffConnection",
+      items:  Array< {
+        __typename: "CourseBackOfficeStaff",
+        id: string,
+        courseInfoID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     payments:  {
       __typename: "ModelPaymentConnection",
       items:  Array< {
@@ -15382,6 +16387,18 @@ export type OnUpdateUserSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    courseBackOfficeStaff:  {
+      __typename: "ModelCourseBackOfficeStaffConnection",
+      items:  Array< {
+        __typename: "CourseBackOfficeStaff",
+        id: string,
+        courseInfoID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     payments:  {
       __typename: "ModelPaymentConnection",
       items:  Array< {
@@ -15580,6 +16597,18 @@ export type OnDeleteUserSubscription = {
       __typename: "ModelCourseInstructorsConnection",
       items:  Array< {
         __typename: "CourseInstructors",
+        id: string,
+        courseInfoID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    courseBackOfficeStaff:  {
+      __typename: "ModelCourseBackOfficeStaffConnection",
+      items:  Array< {
+        __typename: "CourseBackOfficeStaff",
         id: string,
         courseInfoID: string | null,
         userID: string | null,
@@ -15812,6 +16841,10 @@ export type OnCreateGroupMemberSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -16026,6 +17059,10 @@ export type OnUpdateGroupMemberSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -16244,6 +17281,10 @@ export type OnDeleteGroupMemberSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -16352,6 +17393,10 @@ export type OnCreateGroupSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -16612,6 +17657,10 @@ export type OnUpdateGroupSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -16868,6 +17917,10 @@ export type OnDeleteGroupSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -17130,6 +18183,10 @@ export type OnCreateOrganizationMemberSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -17334,6 +18391,10 @@ export type OnUpdateOrganizationMemberSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -17536,6 +18597,10 @@ export type OnDeleteOrganizationMemberSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -18447,6 +19512,10 @@ export type OnCreatePaymentSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -18572,6 +19641,10 @@ export type OnUpdatePaymentSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -18701,6 +19774,10 @@ export type OnDeletePaymentSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -18758,6 +19835,18 @@ export type OnCreateCourseInfoSubscription = {
       __typename: "ModelCourseInstructorsConnection",
       items:  Array< {
         __typename: "CourseInstructors",
+        id: string,
+        courseInfoID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    backOfficeStaff:  {
+      __typename: "ModelCourseBackOfficeStaffConnection",
+      items:  Array< {
+        __typename: "CourseBackOfficeStaff",
         id: string,
         courseInfoID: string | null,
         userID: string | null,
@@ -18825,6 +19914,18 @@ export type OnUpdateCourseInfoSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    backOfficeStaff:  {
+      __typename: "ModelCourseBackOfficeStaffConnection",
+      items:  Array< {
+        __typename: "CourseBackOfficeStaff",
+        id: string,
+        courseInfoID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     triads:  {
       __typename: "ModelCourseTriadsConnection",
       items:  Array< {
@@ -18884,6 +19985,18 @@ export type OnDeleteCourseInfoSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
+    backOfficeStaff:  {
+      __typename: "ModelCourseBackOfficeStaffConnection",
+      items:  Array< {
+        __typename: "CourseBackOfficeStaff",
+        id: string,
+        courseInfoID: string | null,
+        userID: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     triads:  {
       __typename: "ModelCourseTriadsConnection",
       items:  Array< {
@@ -18920,6 +20033,10 @@ export type OnCreateCourseTriadsSubscription = {
       subTitle: string | null,
       instructors:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       triads:  {
@@ -18980,6 +20097,10 @@ export type OnUpdateCourseTriadsSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
@@ -19038,6 +20159,10 @@ export type OnDeleteCourseTriadsSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
@@ -19077,9 +20202,9 @@ export type OnDeleteCourseTriadsSubscription = {
   } | null,
 };
 
-export type OnCreateCourseInstructorsSubscription = {
-  onCreateCourseInstructors:  {
-    __typename: "CourseInstructors",
+export type OnCreateCourseBackOfficeStaffSubscription = {
+  onCreateCourseBackOfficeStaff:  {
+    __typename: "CourseBackOfficeStaff",
     id: string,
     courseInfoID: string | null,
     courseInfo:  {
@@ -19094,6 +20219,10 @@ export type OnCreateCourseInstructorsSubscription = {
       subTitle: string | null,
       instructors:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       triads:  {
@@ -19187,6 +20316,436 @@ export type OnCreateCourseInstructorsSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
+      alertConfig:  {
+        __typename: "AlertConfig",
+        emailDirectMessage: string | null,
+        emailGroupMessage: string | null,
+        emailEventMessage: string | null,
+        emailOrgMessage: string | null,
+        emailResourceMessage: string | null,
+        emailCourseMessage: string | null,
+        emailPromotions: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateCourseBackOfficeStaffSubscription = {
+  onUpdateCourseBackOfficeStaff:  {
+    __typename: "CourseBackOfficeStaff",
+    id: string,
+    courseInfoID: string | null,
+    courseInfo:  {
+      __typename: "CourseInfo",
+      id: string,
+      designedBy: string | null,
+      summary: string | null,
+      courseWeeks:  {
+        __typename: "ModelCourseWeekConnection",
+        nextToken: string | null,
+      } | null,
+      subTitle: string | null,
+      instructors:  {
+        __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
+      triads:  {
+        __typename: "ModelCourseTriadsConnection",
+        nextToken: string | null,
+      } | null,
+      introduction: string | null,
+      sylabusAttachment: string | null,
+      sylabusAttachmentName: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      mainUserGroup: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+        geocodeFull: string | null,
+        geocodeCity: string | null,
+        geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: Array< string | null > | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      denomination: string | null,
+      pplServed: string | null,
+      sundayAttendance: string | null,
+      numberVolunteers: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      primaryOrganization: string | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      directMessages:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      coachingTriad:  {
+        __typename: "ModelCourseTriadCoachesConnection",
+        nextToken: string | null,
+      } | null,
+      userTriad:  {
+        __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      courseInstructing:  {
+        __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
+      alertConfig:  {
+        __typename: "AlertConfig",
+        emailDirectMessage: string | null,
+        emailGroupMessage: string | null,
+        emailEventMessage: string | null,
+        emailOrgMessage: string | null,
+        emailResourceMessage: string | null,
+        emailCourseMessage: string | null,
+        emailPromotions: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteCourseBackOfficeStaffSubscription = {
+  onDeleteCourseBackOfficeStaff:  {
+    __typename: "CourseBackOfficeStaff",
+    id: string,
+    courseInfoID: string | null,
+    courseInfo:  {
+      __typename: "CourseInfo",
+      id: string,
+      designedBy: string | null,
+      summary: string | null,
+      courseWeeks:  {
+        __typename: "ModelCourseWeekConnection",
+        nextToken: string | null,
+      } | null,
+      subTitle: string | null,
+      instructors:  {
+        __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
+      triads:  {
+        __typename: "ModelCourseTriadsConnection",
+        nextToken: string | null,
+      } | null,
+      introduction: string | null,
+      sylabusAttachment: string | null,
+      sylabusAttachmentName: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      mainUserGroup: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+        geocodeFull: string | null,
+        geocodeCity: string | null,
+        geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: Array< string | null > | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      denomination: string | null,
+      pplServed: string | null,
+      sundayAttendance: string | null,
+      numberVolunteers: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      primaryOrganization: string | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      directMessages:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      coachingTriad:  {
+        __typename: "ModelCourseTriadCoachesConnection",
+        nextToken: string | null,
+      } | null,
+      userTriad:  {
+        __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      courseInstructing:  {
+        __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
+      payments:  {
+        __typename: "ModelPaymentConnection",
+        nextToken: string | null,
+      } | null,
+      alertConfig:  {
+        __typename: "AlertConfig",
+        emailDirectMessage: string | null,
+        emailGroupMessage: string | null,
+        emailEventMessage: string | null,
+        emailOrgMessage: string | null,
+        emailResourceMessage: string | null,
+        emailCourseMessage: string | null,
+        emailPromotions: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateCourseInstructorsSubscription = {
+  onCreateCourseInstructors:  {
+    __typename: "CourseInstructors",
+    id: string,
+    courseInfoID: string | null,
+    courseInfo:  {
+      __typename: "CourseInfo",
+      id: string,
+      designedBy: string | null,
+      summary: string | null,
+      courseWeeks:  {
+        __typename: "ModelCourseWeekConnection",
+        nextToken: string | null,
+      } | null,
+      subTitle: string | null,
+      instructors:  {
+        __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
+      triads:  {
+        __typename: "ModelCourseTriadsConnection",
+        nextToken: string | null,
+      } | null,
+      introduction: string | null,
+      sylabusAttachment: string | null,
+      sylabusAttachmentName: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    userID: string | null,
+    user:  {
+      __typename: "User",
+      id: string,
+      given_name: string,
+      family_name: string,
+      email: string | null,
+      phone: string | null,
+      owner: string | null,
+      mainUserGroup: string | null,
+      hasPaidState: string | null,
+      profileState: string | null,
+      address: string | null,
+      city: string | null,
+      province: string | null,
+      postalCode: string | null,
+      country: string | null,
+      location:  {
+        __typename: "LatLong",
+        latitude: string | null,
+        longitude: string | null,
+        geocodeFull: string | null,
+        geocodeCity: string | null,
+        geocodeRegion: string | null,
+        randomLatitude: string | null,
+        randomLongitude: string | null,
+      } | null,
+      profileImage:  {
+        __typename: "Image",
+        userId: string | null,
+        filenameSmall: string | null,
+        filenameMedium: string | null,
+        filenameLarge: string | null,
+        filenameUpload: string | null,
+      } | null,
+      aboutMeShort: string | null,
+      aboutMeLong: string | null,
+      interests: Array< string | null > | null,
+      currentRole: string | null,
+      currentScope: string | null,
+      personality: string | null,
+      orgName: string | null,
+      orgType: string | null,
+      orgSize: string | null,
+      denomination: string | null,
+      pplServed: string | null,
+      sundayAttendance: string | null,
+      numberVolunteers: string | null,
+      orgDescription: string | null,
+      joined: string | null,
+      primaryOrganization: string | null,
+      organizations:  {
+        __typename: "ModelOrganizationMemberConnection",
+        nextToken: string | null,
+      } | null,
+      owns:  {
+        __typename: "ModelGroupConnection",
+        nextToken: string | null,
+      } | null,
+      groups:  {
+        __typename: "ModelGroupMemberConnection",
+        nextToken: string | null,
+      } | null,
+      messages:  {
+        __typename: "ModelMessageConnection",
+        nextToken: string | null,
+      } | null,
+      directMessages:  {
+        __typename: "ModelDirectMessageConnection",
+        nextToken: string | null,
+      } | null,
+      coachingTriad:  {
+        __typename: "ModelCourseTriadCoachesConnection",
+        nextToken: string | null,
+      } | null,
+      userTriad:  {
+        __typename: "ModelCourseTriadUsersConnection",
+        nextToken: string | null,
+      } | null,
+      courseInstructing:  {
+        __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -19230,6 +20789,10 @@ export type OnUpdateCourseInstructorsSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
@@ -19321,6 +20884,10 @@ export type OnUpdateCourseInstructorsSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -19364,6 +20931,10 @@ export type OnDeleteCourseInstructorsSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
@@ -19455,6 +21026,10 @@ export type OnDeleteCourseInstructorsSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -19594,6 +21169,10 @@ export type OnCreateCourseTriadCoachesSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -19729,6 +21308,10 @@ export type OnUpdateCourseTriadCoachesSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -19868,6 +21451,10 @@ export type OnDeleteCourseTriadCoachesSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -20003,6 +21590,10 @@ export type OnCreateCourseTriadUsersSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -20142,6 +21733,10 @@ export type OnUpdateCourseTriadUsersSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -20279,6 +21874,10 @@ export type OnDeleteCourseTriadUsersSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -20328,6 +21927,10 @@ export type OnCreateCourseWeekSubscription = {
       subTitle: string | null,
       instructors:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       triads:  {
@@ -20396,6 +21999,10 @@ export type OnUpdateCourseWeekSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       triads:  {
         __typename: "ModelCourseTriadsConnection",
         nextToken: string | null,
@@ -20460,6 +22067,10 @@ export type OnDeleteCourseWeekSubscription = {
       subTitle: string | null,
       instructors:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      backOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       triads:  {
@@ -20749,6 +22360,10 @@ export type OnCreateDirectMessageUserSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -20876,6 +22491,10 @@ export type OnUpdateDirectMessageUserSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -21001,6 +22620,10 @@ export type OnDeleteDirectMessageUserSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -21257,6 +22880,10 @@ export type OnCreateDirectMessageSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -21386,6 +23013,10 @@ export type OnUpdateDirectMessageSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -21519,6 +23150,10 @@ export type OnDeleteDirectMessageSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -21650,6 +23285,10 @@ export type OnCreateMessageSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
@@ -21874,6 +23513,10 @@ export type OnUpdateMessageSubscription = {
         __typename: "ModelCourseInstructorsConnection",
         nextToken: string | null,
       } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
+        nextToken: string | null,
+      } | null,
       payments:  {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
@@ -22094,6 +23737,10 @@ export type OnDeleteMessageSubscription = {
       } | null,
       courseInstructing:  {
         __typename: "ModelCourseInstructorsConnection",
+        nextToken: string | null,
+      } | null,
+      courseBackOfficeStaff:  {
+        __typename: "ModelCourseBackOfficeStaffConnection",
         nextToken: string | null,
       } | null,
       payments:  {
