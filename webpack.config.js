@@ -8,7 +8,11 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 //const DynamicCdnWebpackPlugin = require('dynamic-cdn-webpack-plugin');
 
 module.exports = webpackConfig = async function (env, argv) {
-  const config = await createExpoWebpackConfigAsync(env, argv);
+  const config = await createExpoWebpackConfigAsync({
+    ...env,
+    // Passing true will enable the default Workbox + Expo SW configuration.
+    offline: true,
+  }, argv);
 
   /* config.plugins.push(
      new BundleAnalyzerPlugin({

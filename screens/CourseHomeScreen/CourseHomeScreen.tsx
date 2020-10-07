@@ -50,14 +50,13 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     }
     Auth.currentAuthenticatedUser().then((user: any) => {
       this.setState({ currentUser: user.username }, () => {
-        this.setInitialData(props)
+        this.setInitialData(props, user.signInUserSession.accessToken.payload["cognito:groups"])
       })
     })
   }
   static Provider = CourseContext.Provider;
 
-  setInitialData(props: Props): void {
-
+  setInitialData(props: Props, groups): void {
     const getGroup: any = API.graphql({
       query: queries.getGroup,
       variables: { id: props.route.params.id },
@@ -74,12 +73,12 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     }
     getCourse.then(processResults2).catch(processResults2)
     const processResults = (json) => {
-      const isEditable = json.data.getGroup.owner == this.state.currentUser
+      const isEditable = (json.data.getGroup.owner == this.state.currentUser) || groups.includes("courseAdmin")
       console.log({
         isEditable: isEditable,
         groupData: json
       })
-      this.setState({ data: json.data.getGroup })
+      this.setState({ isEditable: isEditable, data: json.data.getGroup })
 
     }
     getGroup.then(processResults).catch(processResults)
@@ -286,12 +285,13 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     const z: [{ cohort, completeTriad }] = this.state.courseData?.triads?.items.map((item) => {
       let triadTemp = [], coachTemp = [], cohortTemp = []
       let completeTriad = null
-      if (item.users.items.filter(user => user.userID == this.state.currentUser).length > 0) {
+      if ((item.users.items.filter(user => user.userID == this.state.currentUser).length > 0) ||
+        (item.coaches.items.filter(user => user.userID == this.state.currentUser).length > 0)) {
         triadTemp = item.users.items.filter(user => user.userID != this.state.currentUser).map(item => item.user)
         coachTemp = item.coaches.items.map(item => item.user)
         completeTriad = { triad: triadTemp, coach: coachTemp, id: item.id }
       }
-      else if (item.users.items.filter(user => user.userID == this.state.currentUser).length == 0) {
+      else {
         cohortTemp = item.users.items.map(item => item.user)
         cohortTemp = cohortTemp.concat(item.coaches.items.map(item => item.user))
         // cohort.push(item.coaches.items)
@@ -640,7 +640,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         return { lessonType: item.lessonType, time: time, date: date, moment: m }
       }).filter(item => item.time != "Invalid date")
 
-      return [...assignments, ...zoom, ...respond].filter(item => item.moment > moment()).sort((a, b) => { return a.moment.diff(b.moment) })
+      return [...assignments, ...zoom, ...respond].filter(item => item.moment > moment()).sort((a, b) => { return a.moment.diff(b.moment) }).slice(0, 7)
     }
     else
       return []

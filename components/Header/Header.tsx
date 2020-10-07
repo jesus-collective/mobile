@@ -197,7 +197,7 @@ export default class HeaderJC extends JCComponent<Props, State> {
               </Menu> : null
           }
           {
-            constants["SETTING_ISVISIBLE_course"] && this.isMemberOf("courseUser") ?
+            constants["SETTING_ISVISIBLE_course"] && (this.isMemberOf("courseUser") || this.isMemberOf("courseCoach") || this.isMemberOf("courseAdmin")) ?
               <Button
                 transparent
                 data-testid="header-courses"

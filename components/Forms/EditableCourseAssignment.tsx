@@ -66,7 +66,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
     async getInitialData(next: string): Promise<void> {
         if (this.props.assignmentId)
             try {
-                this.setState({ currentRoomId: "course-" + this.props.assignmentId + "-" + this.state.currentRoomId })
+                this.setState({ currentRoomId: "course-" + this.props.assignmentId + "-" + this.state.currentUser })
                 console.log({ Assignment: this.props.assignmentId })
                 const user = await Auth.currentAuthenticatedUser();
                 try {
@@ -134,19 +134,20 @@ export default class EditableRichText extends JCComponent<Props, State> {
         console.log({ "Number of rooms": this.state.data.length })
         const user = await Auth.currentAuthenticatedUser();
         if (this.state.data.filter(item => item.id == "course-" + this.props.assignmentId + "-" + user['username']).length <= 0)
-            this.createRoom()
+            if (!this.isMemberOf("courseAdmin") && !this.isMemberOf("courseCoach"))
+                this.createRoom()
 
     }
 
     hasInitialPost = (): initialPostState => {
         if (this.props.assignmentId)
-            if (this.state.data.filter(item => item.id == "course-" + this.props.assignmentId + "-" + this.state.currentUser)[0]?.directMessage.items.length <= 0) {
-                console.log({ "Assignment does not have initial post": this.props.assignmentId })
-                return initialPostState.No
-            }
-            else {
+            if (this.state.data.filter(item => item.id == "course-" + this.props.assignmentId + "-" + this.state.currentUser)[0]?.directMessage.items.length > 0) {
                 console.log({ "Assignment has initial post": this.props.assignmentId })
                 return initialPostState.Yes
+            }
+            else {
+                console.log({ "Assignment does not have initial post": this.props.assignmentId })
+                return initialPostState.No
             }
         else
             return initialPostState.Unknown
@@ -194,16 +195,17 @@ export default class EditableRichText extends JCComponent<Props, State> {
                             else
                                 stringOfNames += (name + ', ')
                         })
-                        return (
-                            <TouchableOpacity
-                                style={{ backgroundColor: this.state.selectedRoom == index ? "#eeeeee" : "unset", borderRadius: 10, width: "100%", paddingTop: 8, paddingBottom: 8, display: "flex", alignItems: "center" }}
-                                key={item.id}
-                                onPress={() => { this.switchRoom(index) }}>
-                                <Text style={{ fontSize: 20, lineHeight: 25, fontWeight: "normal", fontFamily: "Graphik-Regular-App", width: "100%", display: "flex", alignItems: "center" }} >
-                                    <ProfileImage user={otherUsers.ids.length === 1 ? otherUsers.ids[0] : null} size="small2"></ProfileImage>
-                                    {item.name ? item.name : stringOfNames}
-                                </Text>
-                            </TouchableOpacity>)
+                        if (item.directMessage.items.length > 0)
+                            return (
+                                <TouchableOpacity
+                                    style={{ backgroundColor: this.state.selectedRoom == index ? "#eeeeee" : "unset", borderRadius: 10, width: "100%", paddingTop: 8, paddingBottom: 8, display: "flex", alignItems: "center" }}
+                                    key={item.id}
+                                    onPress={() => { this.switchRoom(index) }}>
+                                    <Text style={{ fontSize: 20, lineHeight: 25, fontWeight: "normal", fontFamily: "Graphik-Regular-App", width: "100%", display: "flex", alignItems: "center" }} >
+                                        <ProfileImage user={otherUsers.ids.length === 1 ? otherUsers.ids[0] : null} size="small2"></ProfileImage>
+                                        {item.name ? item.name : stringOfNames}
+                                    </Text>
+                                </TouchableOpacity>)
                     }) : <Text>Nothing to review</Text>}
             </Container>
 
@@ -223,10 +225,10 @@ export default class EditableRichText extends JCComponent<Props, State> {
             </> :
             <>
                 <div style={{ padding: 5, height: 25, width: "95%", marginTop: 20, backgroundColor: (this.hasInitialPost() == initialPostState.Yes) ? "#71C209" : "#71C209", borderRadius: 4 }}><span style={{ color: "#ffffff", fontSize: 18, fontFamily: 'Graphik-Bold-App', alignSelf: 'center', paddingLeft: 10, paddingTop: 15 }}>Assignment</span></div>
-
                 {(this.hasInitialPost() == initialPostState.Yes) ?
                     this.renderCourseReview()
                     : (this.hasInitialPost() == initialPostState.No) ?
+
                         <MessageBoard showWordCount={true} totalWordCount={this.props.wordCount} style="course" roomId={this.state.currentRoomId} recipients={this.getCurrentRoomRecipients()}></MessageBoard>
                         : null
                 }

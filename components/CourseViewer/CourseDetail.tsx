@@ -198,7 +198,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                 textStyle={this.styles.style.fontFormSmallDarkGreyCourseTopEditable}
                 inputStyle={{ borderWidth: 1, borderColor: "#dddddd", marginTop: 30, marginBottom: 15, width: "90%", paddingTop: 10, paddingRight: 10, paddingBottom: 10, paddingLeft: 10, fontFamily: 'Graphik-Regular-App', fontSize: 40, lineHeight: 55 }}
                 value={week.title} isEditable={state.isEditable && state.editMode}></EditableText>
-            
+
               <EditableRichText onChange={(val) => { actions.updateWeek(state.activeWeek, "leader", val) }}
                 value={week.leader}
                 isEditable={state.isEditable && state.editMode}
@@ -407,7 +407,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
             value={lesson.description}
             isEditable={state.isEditable && state.editMode}
             textStyle=""></EditableRichText>
-          <EditableCourseAssignment actions={actions} assignmentId={actions.getLessonById(lesson.courseLessonResponseId)} wordCount={lesson.wordCount}
+          <EditableCourseAssignment actions={actions} assignmentId={actions.getLessonById(lesson.courseLessonResponseId).id} wordCount={lesson.wordCount}
           ></EditableCourseAssignment>
         </Container>
       </Container>)
@@ -502,7 +502,6 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                             <Container style={this.styles.style.courseDetailMessageBoardContainer}>
                               {state.activeMessageBoard == "cohort" ? <MessageBoard style="mini" groupId={state.data.id}></MessageBoard> : null}
                               {state.activeMessageBoard == "triad" ?
-
                                 actions.myCourseGroups().completeTriad.length == 0 ?
                                   <Text>You have not been added to a cohort</Text> :
                                   actions.myCourseGroups().completeTriad.length == 1 ?
@@ -529,7 +528,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
 
                                         {actions.myCourseGroups().completeTriad?.map((item: any, index: any) => {
                                           if (item) {
-                                            const name = item.triad.users.items.map((item) => { return item.user.name }).join(", ")
+                                            const name = item.triad.map((item) => { return item.given_name }).join(", ")
                                             return <Picker.Item key={index} label={name} value={index} />
                                           }
                                         })}
