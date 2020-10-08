@@ -526,20 +526,22 @@ export default class AdminScreen extends JCComponent<Props, State>{
         <HeaderAdmin title="Jesus Collective" navigation={this.props.navigation} />
         {this.isMemberOf("admin") ?
           <Content>
-
-
-
             <Container style={this.styles.style.fontRegular}>
               <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
-                <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: 25, marginBottom: 25 }} >
-                  <JCSwitch switchLabel='show user id' initState={false} onPress={() => this.setState({ showUid: !this.state.showUid })} />
-                  <JCSwitch switchLabel='show email' initState={true} onPress={() => this.setState({ showEmail: !this.state.showEmail })} />
-                  <JCSwitch switchLabel='show phone #' initState={true} onPress={() => this.setState({ showPhone: !this.state.showPhone })} />
-                  <JCSwitch switchLabel='show status' initState={true} onPress={() => this.setState({ showStatus: !this.state.showStatus })} />
-                  <JCButton buttonType={ButtonTypes.AdminOutline} onPress={() => { this.showInvite() }}>Invite</JCButton>
-
+                <View style={this.styles.style.adminSubNavMainContainer} >
+                  <View style={this.styles.style.adminSubNavTogglesView}>
+                    <JCSwitch toggleSpacing={'space-between'} containerWidth={150} toggleMargin={5} switchLabel='show user id' initState={false} onPress={() => this.setState({ showUid: !this.state.showUid })} />
+                    <JCSwitch toggleSpacing={'space-between'} containerWidth={150} toggleMargin={5}  switchLabel='show email' initState={true} onPress={() => this.setState({ showEmail: !this.state.showEmail })} />
+                  </View>
+                  <View style={this.styles.style.adminSubNavTogglesView}>
+                    <JCSwitch toggleSpacing={'space-between'} containerWidth={160} toggleMargin={5} switchLabel='show phone #' initState={true} onPress={() => this.setState({ showPhone: !this.state.showPhone })} />
+                    <JCSwitch toggleSpacing={'space-between'} containerWidth={160} toggleMargin={5} switchLabel='show status' initState={true} onPress={() => this.setState({ showStatus: !this.state.showStatus })} />
+                  </View>
+                  <View style={this.styles.style.adminInviteButton}>
+                    <JCButton buttonType={ButtonTypes.AdminOutline} onPress={() => { this.showInvite() }}>Invite</JCButton>
+                  </View>
                 </View>
-
+     
                 <Content style={{ width: '100%' }}>
                   {this.renderHeader()}
                   {

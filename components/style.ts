@@ -1888,6 +1888,18 @@ export default class MainStyles {
                 alignItems: 'flex-start', 
                 right: 15
             },
+            adminSubNavMainContainer: {
+                display: 'flex', 
+                flexDirection: 'row', 
+                justifyContent: 'center', 
+                alignItems: 'center', 
+                width: '100%', 
+                marginTop: 25, 
+                marginBottom: 25
+            },
+            adminSubNavTogglesView: {
+                flexDirection: 'row'
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2335,6 +2347,15 @@ export default class MainStyles {
                     justifyContent: 'flex-end',
                     right: 0,
                 },
+                adminSubNavTogglesView: {
+                    flexDirection: 'column',
+                    marginLeft: 15,
+                    marginRight: 15,
+                },
+                adminInviteButton: {
+                    alignItems: 'center', 
+                    marginLeft: 20
+                }
             },
 
             // Media Query Desktop Large Tablet
