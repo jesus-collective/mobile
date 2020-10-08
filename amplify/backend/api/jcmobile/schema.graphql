@@ -55,7 +55,7 @@ type User
  
   primaryOrganization: String
   organizations: [OrganizationMember] @connection(keyName: "orgMemberByUser", fields: ["id"])
-
+  
   owns: [Group] @connection(name: "OwnerUser", keyField: "owner")
   groups: [GroupMember] @connection(name: "UserMembers", keyField: "userID")
   messages: [Message] @connection(name: "UserMessages", keyField: "userId", sortField: "when")
@@ -382,7 +382,7 @@ type CourseLesson
       { allow: owner, ownerField: "owner" }
       { allow: groups, groups: ["courseUser"], operations: [read] }
       { allow: groups, groups: ["courseCoach"], operations: [read] }
-     { allow: groups, groups: ["courseAdmin"]}
+      { allow: groups, groups: ["courseAdmin"]}
     ]
   )
 {

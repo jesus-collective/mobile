@@ -1,369 +1,369 @@
 {
-	"AWSTemplateFormatVersion": "2010-09-09",
-	"Description": "Lambda resource stack creation using Amplify CLI",
-	"Parameters": {
-		"CloudWatchRule": {
-			"Type": "String",
-			"Default": "NONE",
-			"Description": " Schedule Expression"
-		},
-		"env": {
-			"Type": "String"
-		},
-		"authjcmobileUserPoolId": {
-			"Type": "String",
-			"Default": "authjcmobileUserPoolId"
-		},
-		"apijcmobileGraphQLAPIIdOutput": {
-			"Type": "String",
-			"Default": "apijcmobileGraphQLAPIIdOutput"
-		},
-		"apijcmobileGraphQLAPIEndpointOutput": {
-			"Type": "String",
-			"Default": "apijcmobileGraphQLAPIEndpointOutput"
-		},
-		"analyticsjcmobileId": {
-			"Type": "String",
-			"Default": "analyticsjcmobileId"
-		},
-		"analyticsjcmobileRegion": {
-			"Type": "String",
-			"Default": "analyticsjcmobileRegion"
-		}
-	},
-	"Conditions": {
-		"ShouldNotCreateEnvResources": {
-			"Fn::Equals": [
-				{
-					"Ref": "env"
-				},
-				"NONE"
-			]
-		}
-	},
-	"Resources": {
-		"LambdaFunction": {
-			"Type": "AWS::Lambda::Function",
-			"Metadata": {
-				"aws:asset:path": "./src",
-				"aws:asset:property": "Code"
-			},
-			"Properties": {
-				"Handler": "index.handler",
-				"FunctionName": {
-					"Fn::If": [
-						"ShouldNotCreateEnvResources",
-						"jcProcessDMAlerts",
-						{
-							"Fn::Join": [
-								"",
-								[
-									"jcProcessDMAlerts",
-									"-",
-									{
-										"Ref": "env"
-									}
-								]
-							]
-						}
-					]
-				},
-				"Environment": {
-					"Variables": {
-						"ENV": {
-							"Ref": "env"
-						},
-						"REGION": {
-							"Ref": "AWS::Region"
-						},
-						"AUTH_JCMOBILE_USERPOOLID": {
-							"Ref": "authjcmobileUserPoolId"
-						},
-						"API_JCMOBILE_GRAPHQLAPIIDOUTPUT": {
-							"Ref": "apijcmobileGraphQLAPIIdOutput"
-						},
-						"API_JCMOBILE_GRAPHQLAPIENDPOINTOUTPUT": {
-							"Ref": "apijcmobileGraphQLAPIEndpointOutput"
-						},
-						"ANALYTICS_JCMOBILE_ID": {
-							"Ref": "analyticsjcmobileId"
-						},
-						"ANALYTICS_JCMOBILE_REGION": {
-							"Ref": "analyticsjcmobileRegion"
-						}
-					}
-				},
-				"Role": {
-					"Fn::GetAtt": [
-						"LambdaExecutionRole",
-						"Arn"
-					]
-				},
-				"Runtime": "nodejs12.x",
-				"Timeout": "25",
-				"Code": {
-					"S3Bucket": "amplify-jc-mobile-beta-155138-deployment",
-					"S3Key": "amplify-builds/jcProcessDMAlerts-2b713330524930416d75-build.zip"
-				},
-				"Layers": []
-			}
-		},
-		"LambdaExecutionRole": {
-			"Type": "AWS::IAM::Role",
-			"Properties": {
-				"RoleName": {
-					"Fn::If": [
-						"ShouldNotCreateEnvResources",
-						"jcmobileLambdaRole93f16ea8",
-						{
-							"Fn::Join": [
-								"",
-								[
-									"jcmobileLambdaRole93f16ea8",
-									"-",
-									{
-										"Ref": "env"
-									}
-								]
-							]
-						}
-					]
-				},
-				"AssumeRolePolicyDocument": {
-					"Version": "2012-10-17",
-					"Statement": [
-						{
-							"Effect": "Allow",
-							"Principal": {
-								"Service": [
-									"lambda.amazonaws.com"
-								]
-							},
-							"Action": [
-								"sts:AssumeRole"
-							]
-						}
-					]
-				}
-			}
-		},
-		"lambdaexecutionpolicy": {
-			"DependsOn": [
-				"LambdaExecutionRole"
-			],
-			"Type": "AWS::IAM::Policy",
-			"Properties": {
-				"PolicyName": "lambda-execution-policy",
-				"Roles": [
-					{
-						"Ref": "LambdaExecutionRole"
-					}
-				],
-				"PolicyDocument": {
-					"Version": "2012-10-17",
-					"Statement": [
-						{
-							"Effect": "Allow",
-							"Action": [
-								"logs:CreateLogGroup",
-								"logs:CreateLogStream",
-								"logs:PutLogEvents"
-							],
-							"Resource": {
-								"Fn::Sub": [
-									"arn:aws:logs:${region}:${account}:log-group:/aws/lambda/${lambda}:log-stream:*",
-									{
-										"region": {
-											"Ref": "AWS::Region"
-										},
-										"account": {
-											"Ref": "AWS::AccountId"
-										},
-										"lambda": {
-											"Ref": "LambdaFunction"
-										}
-									}
-								]
-							}
-						},
-						{
-							"Effect": "Allow",
-							"Action": [
-								"ses:SendEmail"
-							],
-							"Resource": {
-								"Fn::Sub": [
-									"arn:aws:ses:${region}:${account}:identity/donot-reply@jesuscollective.com",
-									{
-										"region": {
-											"Ref": "AWS::Region"
-										},
-										"account": {
-											"Ref": "AWS::AccountId"
-										},
-										"lambda": {
-											"Ref": "LambdaFunction"
-										}
-									}
-								]
-							}
-						}
-					]
-				}
-			}
-		},
-		"LambdaTriggerPolicyDirectMessage": {
-			"DependsOn": [
-				"LambdaExecutionRole"
-			],
-			"Type": "AWS::IAM::Policy",
-			"Properties": {
-				"PolicyName": "amplify-lambda-execution-policy-DirectMessage",
-				"Roles": [
-					{
-						"Ref": "LambdaExecutionRole"
-					}
-				],
-				"PolicyDocument": {
-					"Version": "2012-10-17",
-					"Statement": [
-						{
-							"Effect": "Allow",
-							"Action": [
-								"dynamodb:DescribeStream",
-								"dynamodb:GetRecords",
-								"dynamodb:GetShardIterator",
-								"dynamodb:ListStreams"
-							],
-							"Resource": {
-								"Fn::ImportValue": {
-									"Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:DirectMessageTable:StreamArn"
-								}
-							}
-						}
-					]
-				}
-			}
-		},
-		"LambdaEventSourceMappingDirectMessage": {
-			"Type": "AWS::Lambda::EventSourceMapping",
-			"DependsOn": [
-				"LambdaTriggerPolicyDirectMessage",
-				"LambdaExecutionRole"
-			],
-			"Properties": {
-				"BatchSize": 100,
-				"Enabled": true,
-				"EventSourceArn": {
-					"Fn::ImportValue": {
-						"Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:DirectMessageTable:StreamArn"
-					}
-				},
-				"FunctionName": {
-					"Fn::GetAtt": [
-						"LambdaFunction",
-						"Arn"
-					]
-				},
-				"StartingPosition": "LATEST"
-			}
-		},
-		"AmplifyResourcesPolicy": {
-			"DependsOn": [
-				"LambdaExecutionRole"
-			],
-			"Type": "AWS::IAM::Policy",
-			"Properties": {
-				"PolicyName": "amplify-lambda-execution-policy",
-				"Roles": [
-					{
-						"Ref": "LambdaExecutionRole"
-					}
-				],
-				"PolicyDocument": {
-					"Version": "2012-10-17",
-					"Statement": [
-						{
-							"Effect": "Allow",
-							"Action": [
-								"mobiletargeting:Put*",
-								"mobiletargeting:Create*",
-								"mobiletargeting:Send*",
-								"mobiletargeting:Get*",
-								"mobiletargeting:List*",
-								"mobiletargeting:Update*",
-								"mobiletargeting:Delete*"
-							],
-							"Resource": [
-								{
-									"Fn::Join": [
-										"",
-										[
-											"arn:aws:mobiletargeting:",
-											{
-												"Ref": "analyticsjcmobileRegion"
-											},
-											":",
-											{
-												"Ref": "AWS::AccountId"
-											},
-											":apps/",
-											{
-												"Ref": "analyticsjcmobileId"
-											}
-										]
-									]
-								},
-								{
-									"Fn::Join": [
-										"",
-										[
-											"arn:aws:mobiletargeting:",
-											{
-												"Ref": "analyticsjcmobileRegion"
-											},
-											":",
-											{
-												"Ref": "AWS::AccountId"
-											},
-											":apps/",
-											{
-												"Ref": "analyticsjcmobileId"
-											},
-											"/*"
-										]
-									]
-								}
-							]
-						}
-					]
-				}
-			}
-		}
-	},
-	"Outputs": {
-		"Name": {
-			"Value": {
-				"Ref": "LambdaFunction"
-			}
-		},
-		"Arn": {
-			"Value": {
-				"Fn::GetAtt": [
-					"LambdaFunction",
-					"Arn"
-				]
-			}
-		},
-		"Region": {
-			"Value": {
-				"Ref": "AWS::Region"
-			}
-		},
-		"LambdaExecutionRole": {
-			"Value": {
-				"Ref": "LambdaExecutionRole"
-			}
-		}
-	}
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Lambda resource stack creation using Amplify CLI",
+  "Parameters": {
+    "CloudWatchRule": {
+      "Type": "String",
+      "Default": "NONE",
+      "Description": " Schedule Expression"
+    },
+    "env": {
+      "Type": "String"
+    },
+    "authjcmobileUserPoolId": {
+      "Type": "String",
+      "Default": "authjcmobileUserPoolId"
+    },
+    "apijcmobileGraphQLAPIIdOutput": {
+      "Type": "String",
+      "Default": "apijcmobileGraphQLAPIIdOutput"
+    },
+    "apijcmobileGraphQLAPIEndpointOutput": {
+      "Type": "String",
+      "Default": "apijcmobileGraphQLAPIEndpointOutput"
+    },
+    "analyticsjcmobileId": {
+      "Type": "String",
+      "Default": "analyticsjcmobileId"
+    },
+    "analyticsjcmobileRegion": {
+      "Type": "String",
+      "Default": "analyticsjcmobileRegion"
+    }
+  },
+  "Conditions": {
+    "ShouldNotCreateEnvResources": {
+      "Fn::Equals": [
+        {
+          "Ref": "env"
+        },
+        "NONE"
+      ]
+    }
+  },
+  "Resources": {
+    "LambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Metadata": {
+        "aws:asset:path": "./src",
+        "aws:asset:property": "Code"
+      },
+      "Properties": {
+        "Handler": "index.handler",
+        "FunctionName": {
+          "Fn::If": [
+            "ShouldNotCreateEnvResources",
+            "jcProcessDMAlerts",
+            {
+              "Fn::Join": [
+                "",
+                [
+                  "jcProcessDMAlerts",
+                  "-",
+                  {
+                    "Ref": "env"
+                  }
+                ]
+              ]
+            }
+          ]
+        },
+        "Environment": {
+          "Variables": {
+            "ENV": {
+              "Ref": "env"
+            },
+            "REGION": {
+              "Ref": "AWS::Region"
+            },
+            "AUTH_JCMOBILE_USERPOOLID": {
+              "Ref": "authjcmobileUserPoolId"
+            },
+            "API_JCMOBILE_GRAPHQLAPIIDOUTPUT": {
+              "Ref": "apijcmobileGraphQLAPIIdOutput"
+            },
+            "API_JCMOBILE_GRAPHQLAPIENDPOINTOUTPUT": {
+              "Ref": "apijcmobileGraphQLAPIEndpointOutput"
+            },
+            "ANALYTICS_JCMOBILE_ID": {
+              "Ref": "analyticsjcmobileId"
+            },
+            "ANALYTICS_JCMOBILE_REGION": {
+              "Ref": "analyticsjcmobileRegion"
+            }
+          }
+        },
+        "Role": {
+          "Fn::GetAtt": [
+            "LambdaExecutionRole",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs12.x",
+        "Timeout": "25",
+        "Code": {
+          "S3Bucket": "amplify-jc-mobile-beta-155138-deployment",
+          "S3Key": "amplify-builds/jcProcessDMAlerts-4d3477765a645a737551-build.zip"
+        },
+        "Layers": []
+      }
+    },
+    "LambdaExecutionRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "RoleName": {
+          "Fn::If": [
+            "ShouldNotCreateEnvResources",
+            "jcmobileLambdaRole93f16ea8",
+            {
+              "Fn::Join": [
+                "",
+                [
+                  "jcmobileLambdaRole93f16ea8",
+                  "-",
+                  {
+                    "Ref": "env"
+                  }
+                ]
+              ]
+            }
+          ]
+        },
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "lambdaexecutionpolicy": {
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "lambda-execution-policy",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+              ],
+              "Resource": {
+                "Fn::Sub": [
+                  "arn:aws:logs:${region}:${account}:log-group:/aws/lambda/${lambda}:log-stream:*",
+                  {
+                    "region": {
+                      "Ref": "AWS::Region"
+                    },
+                    "account": {
+                      "Ref": "AWS::AccountId"
+                    },
+                    "lambda": {
+                      "Ref": "LambdaFunction"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "ses:SendEmail"
+              ],
+              "Resource": {
+                "Fn::Sub": [
+                  "arn:aws:ses:${region}:${account}:identity/donot-reply@jesuscollective.com",
+                  {
+                    "region": {
+                      "Ref": "AWS::Region"
+                    },
+                    "account": {
+                      "Ref": "AWS::AccountId"
+                    },
+                    "lambda": {
+                      "Ref": "LambdaFunction"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "LambdaTriggerPolicyDirectMessage": {
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "amplify-lambda-execution-policy-DirectMessage",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:DescribeStream",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:ListStreams"
+              ],
+              "Resource": {
+                "Fn::ImportValue": {
+                  "Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:DirectMessageTable:StreamArn"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "LambdaEventSourceMappingDirectMessage": {
+      "Type": "AWS::Lambda::EventSourceMapping",
+      "DependsOn": [
+        "LambdaTriggerPolicyDirectMessage",
+        "LambdaExecutionRole"
+      ],
+      "Properties": {
+        "BatchSize": 100,
+        "Enabled": true,
+        "EventSourceArn": {
+          "Fn::ImportValue": {
+            "Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:DirectMessageTable:StreamArn"
+          }
+        },
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "LambdaFunction",
+            "Arn"
+          ]
+        },
+        "StartingPosition": "LATEST"
+      }
+    },
+    "AmplifyResourcesPolicy": {
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "amplify-lambda-execution-policy",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "mobiletargeting:Put*",
+                "mobiletargeting:Create*",
+                "mobiletargeting:Send*",
+                "mobiletargeting:Get*",
+                "mobiletargeting:List*",
+                "mobiletargeting:Update*",
+                "mobiletargeting:Delete*"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:mobiletargeting:",
+                      {
+                        "Ref": "analyticsjcmobileRegion"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":apps/",
+                      {
+                        "Ref": "analyticsjcmobileId"
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:mobiletargeting:",
+                      {
+                        "Ref": "analyticsjcmobileRegion"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":apps/",
+                      {
+                        "Ref": "analyticsjcmobileId"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+  "Outputs": {
+    "Name": {
+      "Value": {
+        "Ref": "LambdaFunction"
+      }
+    },
+    "Arn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "LambdaFunction",
+          "Arn"
+        ]
+      }
+    },
+    "Region": {
+      "Value": {
+        "Ref": "AWS::Region"
+      }
+    },
+    "LambdaExecutionRole": {
+      "Value": {
+        "Ref": "LambdaExecutionRole"
+      }
+    }
+  }
 }
