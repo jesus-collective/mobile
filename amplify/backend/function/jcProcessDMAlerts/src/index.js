@@ -1,10 +1,4 @@
-/* Amplify Params - DO NOT EDIT
-  ANALYTICS_JCMOBILE_ID
-  ANALYTICS_JCMOBILE_REGION
-  API_JCMOBILE_GRAPHQLAPIENDPOINTOUTPUT
-  API_JCMOBILE_GRAPHQLAPIIDOUTPUT
-  ENV
-  REGION
+/* 
 Amplify Params - DO NOT EDIT *//* Amplify Params - DO NOT EDIT
   ANALYTICS_JCMOBILE_ID
   ANALYTICS_JCMOBILE_REGION
@@ -21,56 +15,63 @@ const Amplify = require('aws-amplify');
 global.fetch = require("node-fetch");
 const queries = require('./queries')
 const htmlToText = require('html-to-text');
+const configSendAlerts = true
 
-
-async function getRecipient(id) {
+async function getUser(id) {
   try {
-    // console.log(process.env)
-    var region = process.env.REGION
-    var API_JCMOBILE_GRAPHQLAPIENDPOINTOUTPUT = process.env.API_JCMOBILE_GRAPHQLAPIENDPOINTOUTPUT
     Amplify.default.configure({
-      aws_appsync_graphqlEndpoint: API_JCMOBILE_GRAPHQLAPIENDPOINTOUTPUT,
-      aws_appsync_region: region,
+      aws_appsync_graphqlEndpoint: process.env.API_JCMOBILE_GRAPHQLAPIENDPOINTOUTPUT,
+      aws_appsync_region: process.env.region,
       aws_appsync_authenticationType: "AMAZON_COGNITO_USER_POOLS",
       Auth: {
         mandatorySignIn: false,
-        region: region,
+        region: process.env.region,
         userPoolId: process.env.userPoolId,
-        identityPoolRegion: region,
+        identityPoolRegion: process.env.region,
         userPoolWebClientId: process.env.userPoolWebClientId,
         identityPoolId: process.env.identityPoolId
       }
     })
-    console.log("Done config")
-    await Amplify.Auth.signIn("george.bell@themeetinghouse.com", "Tacobell#1")
+    await Amplify.Auth.signIn("george.bell@themeetinghouse.com", "")
     console.log("Done login")
-    currentSession = await Amplify.Auth.currentSession()
-
+    const currentSession = await Amplify.Auth.currentSession()
     Amplify.default.configure({
       Authorization: currentSession.getIdToken().getJwtToken(),
     })
-    console.log("Done Auth")
-    json = await Amplify.API.graphql({
-      query: queries.getUser,
-      variables: { limit: 20, filter: { profileState: { eq: "Complete" } }, nextToken: null },
-      authMode: "AMAZON_COGNITO_USER_POOLS"
-    });
-    console.log("Done List Users")
-    await Promise.all(json.data.listUsers.items.map(async (item) => {
-      console.log(item)
-    }))
+    try {
+      console.log("Done Auth")
+      const json = await Amplify.API.graphql({
+        query: queries.getUser,
+        variables: { id: id },
+        authMode: 'AMAZON_COGNITO_USER_POOLS'
+      });
+      console.log("Done Get Users")
+      const email = json.data.getUser.email
+      const name = json.data.getUser.given_name + " " + json.data.getUser.family_name
+      const alertConfig = json.data.getUser.alertConfig
+      return { email: email, name: name, alertConfig: alertConfig }
+    }
+    catch (json) {
+      if (json && json.data && json.data.getUser) {
+        const email = json.data.getUser.email
+        const name = json.data.getUser.given_name + " " + json.data.getUser.family_name
+        const alertConfig = json.data.getUser.alertConfig
+        return { email: email, name: name, alertConfig: alertConfig }
+      }
+      console.log({ "Error getting user": json })
+      return null
+    }
   }
   catch (e) {
     console.log({ "ERROR:": e })
+    return null
   }
 }
 
-const configSendAlerts = true
-// Provide the full path to your config.json file. 
-async function sendEmail(recipient, message) {
+async function sendEmail(recipient, message, name) {
   console.log("Setting Up Email");
   const sender = "Jesus Collective <donot-reply@jesuscollective.com>";
-  const subject = "Jesus Collective Message Alert";
+  const subject = "Jesus Collective DM from " + name;
   const charset = "UTF-8";
   console.log("Create SES");
   var ses = new aws.SES();
@@ -106,9 +107,6 @@ async function sendEmail(recipient, message) {
   }
 
 }
-function getRecipient(user) {
-  return null
-}
 function convertCommentFromJSONToHTML(text) {
   try {
     return stateToHTML(convertFromRaw(JSON.parse(text)))
@@ -127,22 +125,21 @@ function convertCommentFromJSONToTEXT(text) {
     return null
   }
 }
-function generateMessage(html, text) {
-  const body_text = "You have received a message on Jesus Collective\r\n" +
+function generateMessage(html, text, name) {
+  const body_text = "You have received a message on Jesus Collective from " + name + "\r\n" +
     text
-    + "Please login to view it.";
+    + "\r\nPlease login to view it.";
 
   // The HTML body of the email.
   const body_html = `<html>
     <head></head>
     <body>
       <h1>Jesus Collective Message Alert</h1>
-      <p>You have received a direct message on Jesus Collective</p>`+
+      <p>You have received a direct message on Jesus Collective from `+ name + `</p>` +
     html
     + `<a href='https://dev.jesuscollective.com/app/conversation?initialUserID=null&initialUserName=null'>Login</a></p>
     </body>
   </html>`;
-  console.log(body_text)
   //  console.log(body_html)
   return { html: body_html, text: body_text }
 }
@@ -171,17 +168,20 @@ async function Execute(event) {
       const content = record.dynamodb.NewImage.content.S
       const from = record.dynamodb.NewImage.userId.S
       console.log("Starting Send Loop")
+      const fromInfo = await getUser(from)
       await asyncForEach(recipients.filter(item => item != from), async (recipientID) => {
         if (!messageRoomID.startsWith("course-")) {
-          console.log({ "Sending DM Alert to": recipientID })
-          const rec = await getRecipient(recipientID)
-          const recipient = "george.bell@themeetinghouse.com";
-          const html = convertCommentFromJSONToHTML(content)
-          const text = convertCommentFromJSONToTEXT(content)
-          if (html && text) {
-            const message = generateMessage(html, text)
-            const data = await sendEmail(recipient, message)
-            console.log(data)
+          console.log({ "Lookup user": recipientID })
+          const recipientInfo = await getUser(recipientID)
+          if (recipientInfo && recipientInfo.alertConfig.emailDirectMessage) {
+            console.log({ "Sending a DM to": recipientInfo })
+            const html = convertCommentFromJSONToHTML(content)
+            const text = convertCommentFromJSONToTEXT(content)
+            if (html && text) {
+              const message = generateMessage(html, text, fromInfo.name)
+              const data = await sendEmail(recipientInfo.email, message, fromInfo.name)
+              console.log(data)
+            }
           }
         }
       })

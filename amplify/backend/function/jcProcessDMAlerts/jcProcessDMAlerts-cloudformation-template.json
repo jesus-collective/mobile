@@ -7,6 +7,18 @@
       "Default": "NONE",
       "Description": " Schedule Expression"
     },
+    "userPoolId": {
+      "Type": "String",
+      "Default": ""
+    },
+    "userPoolWebClientId": {
+      "Type": "String",
+      "Default": ""
+    },
+    "identityPoolId": {
+      "Type": "String",
+      "Default": ""
+    },
     "env": {
       "Type": "String"
     },
@@ -70,6 +82,15 @@
         },
         "Environment": {
           "Variables": {
+            "userPoolId": {
+              "Ref": "userPoolId"
+            },
+            "userPoolWebClientId": {
+              "Ref": "userPoolWebClientId"
+            },
+            "identityPoolId": {
+              "Ref": "identityPoolId"
+            },
             "ENV": {
               "Ref": "env"
             },
@@ -103,7 +124,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-jc-mobile-beta-155138-deployment",
-          "S3Key": "amplify-builds/jcProcessDMAlerts-4d3477765a645a737551-build.zip"
+          "S3Key": "amplify-builds/jcProcessDMAlerts-772f503334715734376d-build.zip"
         },
         "Layers": []
       }
@@ -286,6 +307,31 @@
             {
               "Effect": "Allow",
               "Action": [
+                "appsync:Get*",
+                "appsync:List*"
+              ],
+              "Resource": [
+                {
+                  "Fn::Sub": [
+                    "arn:aws:appsync:${region}:${account}:apis/${graph}/*",
+                    {
+                      "region": {
+                        "Ref": "AWS::Region"
+                      },
+                      "account": {
+                        "Ref": "AWS::AccountId"
+                      },
+                      "graph": {
+                        "Ref": "apijcmobileGraphQLAPIIdOutput"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
                 "mobiletargeting:Put*",
                 "mobiletargeting:Create*",
                 "mobiletargeting:Send*",
@@ -296,42 +342,35 @@
               ],
               "Resource": [
                 {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:aws:mobiletargeting:",
-                      {
+                  "Fn::Sub": [
+                    "arn:aws:mobiletargeting:${region}:${account}:apps/${mobile}",
+                    {
+                      "region": {
                         "Ref": "analyticsjcmobileRegion"
                       },
-                      ":",
-                      {
+                      "account": {
                         "Ref": "AWS::AccountId"
                       },
-                      ":apps/",
-                      {
+                      "mobile": {
                         "Ref": "analyticsjcmobileId"
                       }
-                    ]
+                    }
                   ]
                 },
                 {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:aws:mobiletargeting:",
-                      {
+                  "Fn::Sub": [
+                    "arn:aws:mobiletargeting:${region}:${account}:apps/${mobile}/*",
+                    {
+                      "region": {
                         "Ref": "analyticsjcmobileRegion"
                       },
-                      ":",
-                      {
+                      "account": {
                         "Ref": "AWS::AccountId"
                       },
-                      ":apps/",
-                      {
+                      "mobile": {
                         "Ref": "analyticsjcmobileId"
-                      },
-                      "/*"
-                    ]
+                      }
+                    }
                   ]
                 }
               ]

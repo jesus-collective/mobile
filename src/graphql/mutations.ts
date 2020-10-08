@@ -10,6 +10,22 @@ export const batchCreateDirectMessageUsers = /* GraphQL */ `
       id
       userName
       userID
+      roomID
+      room {
+        id
+        name
+        messageUsers {
+          nextToken
+        }
+        directMessage {
+          nextToken
+        }
+        roomType
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
       user {
         id
         given_name
@@ -99,22 +115,6 @@ export const batchCreateDirectMessageUsers = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      roomID
-      room {
-        id
-        name
-        messageUsers {
-          nextToken
-        }
-        directMessage {
-          nextToken
-        }
-        roomType
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -713,40 +713,6 @@ export const createGroupMember = /* GraphQL */ `
         id
         owner
         ownerOrgID
-        ownerUser {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          mainUserGroup
-          hasPaidState
-          profileState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          denomination
-          pplServed
-          sundayAttendance
-          numberVolunteers
-          orgDescription
-          joined
-          primaryOrganization
-          createdAt
-          updatedAt
-        }
         ownerOrg {
           id
           orgName
@@ -808,7 +774,43 @@ export const createGroupMember = /* GraphQL */ `
         isSponsored
         createdAt
         updatedAt
+        ownerUser {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
       }
+      createdAt
+      updatedAt
       user {
         id
         given_name
@@ -898,8 +900,6 @@ export const createGroupMember = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -913,40 +913,6 @@ export const updateGroupMember = /* GraphQL */ `
         id
         owner
         ownerOrgID
-        ownerUser {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          mainUserGroup
-          hasPaidState
-          profileState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          denomination
-          pplServed
-          sundayAttendance
-          numberVolunteers
-          orgDescription
-          joined
-          primaryOrganization
-          createdAt
-          updatedAt
-        }
         ownerOrg {
           id
           orgName
@@ -1008,7 +974,43 @@ export const updateGroupMember = /* GraphQL */ `
         isSponsored
         createdAt
         updatedAt
+        ownerUser {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
       }
+      createdAt
+      updatedAt
       user {
         id
         given_name
@@ -1098,8 +1100,6 @@ export const updateGroupMember = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -1113,40 +1113,6 @@ export const deleteGroupMember = /* GraphQL */ `
         id
         owner
         ownerOrgID
-        ownerUser {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          mainUserGroup
-          hasPaidState
-          profileState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          denomination
-          pplServed
-          sundayAttendance
-          numberVolunteers
-          orgDescription
-          joined
-          primaryOrganization
-          createdAt
-          updatedAt
-        }
         ownerOrg {
           id
           orgName
@@ -1208,7 +1174,43 @@ export const deleteGroupMember = /* GraphQL */ `
         isSponsored
         createdAt
         updatedAt
+        ownerUser {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
       }
+      createdAt
+      updatedAt
       user {
         id
         given_name
@@ -1298,8 +1300,6 @@ export const deleteGroupMember = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -1309,95 +1309,6 @@ export const createGroup = /* GraphQL */ `
       id
       owner
       ownerOrgID
-      ownerUser {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        mainUserGroup
-        hasPaidState
-        profileState
-        address
-        city
-        province
-        postalCode
-        country
-        location {
-          latitude
-          longitude
-          geocodeFull
-          geocodeCity
-          geocodeRegion
-          randomLatitude
-          randomLongitude
-        }
-        profileImage {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        denomination
-        pplServed
-        sundayAttendance
-        numberVolunteers
-        orgDescription
-        joined
-        primaryOrganization
-        organizations {
-          nextToken
-        }
-        owns {
-          nextToken
-        }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        directMessages {
-          nextToken
-        }
-        coachingTriad {
-          nextToken
-        }
-        userTriad {
-          nextToken
-        }
-        courseInstructing {
-          nextToken
-        }
-        courseBackOfficeStaff {
-          nextToken
-        }
-        payments {
-          nextToken
-        }
-        alertConfig {
-          emailDirectMessage
-          emailGroupMessage
-          emailEventMessage
-          emailOrgMessage
-          emailResourceMessage
-          emailCourseMessage
-          emailPromotions
-        }
-        createdAt
-        updatedAt
-      }
       ownerOrg {
         id
         orgName
@@ -1535,6 +1446,95 @@ export const createGroup = /* GraphQL */ `
       isSponsored
       createdAt
       updatedAt
+      ownerUser {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
+          nextToken
+        }
+        payments {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
     }
   }
 `;
@@ -1544,95 +1544,6 @@ export const updateGroup = /* GraphQL */ `
       id
       owner
       ownerOrgID
-      ownerUser {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        mainUserGroup
-        hasPaidState
-        profileState
-        address
-        city
-        province
-        postalCode
-        country
-        location {
-          latitude
-          longitude
-          geocodeFull
-          geocodeCity
-          geocodeRegion
-          randomLatitude
-          randomLongitude
-        }
-        profileImage {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        denomination
-        pplServed
-        sundayAttendance
-        numberVolunteers
-        orgDescription
-        joined
-        primaryOrganization
-        organizations {
-          nextToken
-        }
-        owns {
-          nextToken
-        }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        directMessages {
-          nextToken
-        }
-        coachingTriad {
-          nextToken
-        }
-        userTriad {
-          nextToken
-        }
-        courseInstructing {
-          nextToken
-        }
-        courseBackOfficeStaff {
-          nextToken
-        }
-        payments {
-          nextToken
-        }
-        alertConfig {
-          emailDirectMessage
-          emailGroupMessage
-          emailEventMessage
-          emailOrgMessage
-          emailResourceMessage
-          emailCourseMessage
-          emailPromotions
-        }
-        createdAt
-        updatedAt
-      }
       ownerOrg {
         id
         orgName
@@ -1770,6 +1681,95 @@ export const updateGroup = /* GraphQL */ `
       isSponsored
       createdAt
       updatedAt
+      ownerUser {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
+          nextToken
+        }
+        payments {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
     }
   }
 `;
@@ -1779,95 +1779,6 @@ export const deleteGroup = /* GraphQL */ `
       id
       owner
       ownerOrgID
-      ownerUser {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        mainUserGroup
-        hasPaidState
-        profileState
-        address
-        city
-        province
-        postalCode
-        country
-        location {
-          latitude
-          longitude
-          geocodeFull
-          geocodeCity
-          geocodeRegion
-          randomLatitude
-          randomLongitude
-        }
-        profileImage {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        denomination
-        pplServed
-        sundayAttendance
-        numberVolunteers
-        orgDescription
-        joined
-        primaryOrganization
-        organizations {
-          nextToken
-        }
-        owns {
-          nextToken
-        }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        directMessages {
-          nextToken
-        }
-        coachingTriad {
-          nextToken
-        }
-        userTriad {
-          nextToken
-        }
-        courseInstructing {
-          nextToken
-        }
-        courseBackOfficeStaff {
-          nextToken
-        }
-        payments {
-          nextToken
-        }
-        alertConfig {
-          emailDirectMessage
-          emailGroupMessage
-          emailEventMessage
-          emailOrgMessage
-          emailResourceMessage
-          emailCourseMessage
-          emailPromotions
-        }
-        createdAt
-        updatedAt
-      }
       ownerOrg {
         id
         orgName
@@ -2005,6 +1916,95 @@ export const deleteGroup = /* GraphQL */ `
       isSponsored
       createdAt
       updatedAt
+      ownerUser {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
+          nextToken
+        }
+        payments {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
     }
   }
 `;
@@ -2016,6 +2016,92 @@ export const createOrganizationMember = /* GraphQL */ `
       userId
       organizationId
       organizationName
+      organization {
+        id
+        orgName
+        adminEmail
+        phone
+        admins
+        superAdmin
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        parentOrganizationId
+        parentOrganization {
+          id
+          orgName
+          adminEmail
+          phone
+          admins
+          superAdmin
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          parentOrganizationId
+          createdAt
+          updatedAt
+        }
+        subOrganizations {
+          nextToken
+        }
+        members {
+          nextToken
+        }
+        ownsGroups {
+          nextToken
+        }
+        resource {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
       user {
         id
         given_name
@@ -2105,92 +2191,6 @@ export const createOrganizationMember = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      organization {
-        id
-        orgName
-        adminEmail
-        phone
-        admins
-        superAdmin
-        hasPaidState
-        profileState
-        address
-        city
-        province
-        postalCode
-        country
-        location {
-          latitude
-          longitude
-          geocodeFull
-          geocodeCity
-          geocodeRegion
-          randomLatitude
-          randomLongitude
-        }
-        profileImage {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
-        aboutMeShort
-        aboutMeLong
-        orgType
-        orgSize
-        denomination
-        pplServed
-        sundayAttendance
-        numberVolunteers
-        orgDescription
-        joined
-        parentOrganizationId
-        parentOrganization {
-          id
-          orgName
-          adminEmail
-          phone
-          admins
-          superAdmin
-          hasPaidState
-          profileState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          orgType
-          orgSize
-          denomination
-          pplServed
-          sundayAttendance
-          numberVolunteers
-          orgDescription
-          joined
-          parentOrganizationId
-          createdAt
-          updatedAt
-        }
-        subOrganizations {
-          nextToken
-        }
-        members {
-          nextToken
-        }
-        ownsGroups {
-          nextToken
-        }
-        resource {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -2202,6 +2202,92 @@ export const updateOrganizationMember = /* GraphQL */ `
       userId
       organizationId
       organizationName
+      organization {
+        id
+        orgName
+        adminEmail
+        phone
+        admins
+        superAdmin
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        parentOrganizationId
+        parentOrganization {
+          id
+          orgName
+          adminEmail
+          phone
+          admins
+          superAdmin
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          parentOrganizationId
+          createdAt
+          updatedAt
+        }
+        subOrganizations {
+          nextToken
+        }
+        members {
+          nextToken
+        }
+        ownsGroups {
+          nextToken
+        }
+        resource {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
       user {
         id
         given_name
@@ -2291,92 +2377,6 @@ export const updateOrganizationMember = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      organization {
-        id
-        orgName
-        adminEmail
-        phone
-        admins
-        superAdmin
-        hasPaidState
-        profileState
-        address
-        city
-        province
-        postalCode
-        country
-        location {
-          latitude
-          longitude
-          geocodeFull
-          geocodeCity
-          geocodeRegion
-          randomLatitude
-          randomLongitude
-        }
-        profileImage {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
-        aboutMeShort
-        aboutMeLong
-        orgType
-        orgSize
-        denomination
-        pplServed
-        sundayAttendance
-        numberVolunteers
-        orgDescription
-        joined
-        parentOrganizationId
-        parentOrganization {
-          id
-          orgName
-          adminEmail
-          phone
-          admins
-          superAdmin
-          hasPaidState
-          profileState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          orgType
-          orgSize
-          denomination
-          pplServed
-          sundayAttendance
-          numberVolunteers
-          orgDescription
-          joined
-          parentOrganizationId
-          createdAt
-          updatedAt
-        }
-        subOrganizations {
-          nextToken
-        }
-        members {
-          nextToken
-        }
-        ownsGroups {
-          nextToken
-        }
-        resource {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -2388,6 +2388,92 @@ export const deleteOrganizationMember = /* GraphQL */ `
       userId
       organizationId
       organizationName
+      organization {
+        id
+        orgName
+        adminEmail
+        phone
+        admins
+        superAdmin
+        hasPaidState
+        profileState
+        address
+        city
+        province
+        postalCode
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        parentOrganizationId
+        parentOrganization {
+          id
+          orgName
+          adminEmail
+          phone
+          admins
+          superAdmin
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          parentOrganizationId
+          createdAt
+          updatedAt
+        }
+        subOrganizations {
+          nextToken
+        }
+        members {
+          nextToken
+        }
+        ownsGroups {
+          nextToken
+        }
+        resource {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
       user {
         id
         given_name
@@ -2477,92 +2563,6 @@ export const deleteOrganizationMember = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      organization {
-        id
-        orgName
-        adminEmail
-        phone
-        admins
-        superAdmin
-        hasPaidState
-        profileState
-        address
-        city
-        province
-        postalCode
-        country
-        location {
-          latitude
-          longitude
-          geocodeFull
-          geocodeCity
-          geocodeRegion
-          randomLatitude
-          randomLongitude
-        }
-        profileImage {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
-        aboutMeShort
-        aboutMeLong
-        orgType
-        orgSize
-        denomination
-        pplServed
-        sundayAttendance
-        numberVolunteers
-        orgDescription
-        joined
-        parentOrganizationId
-        parentOrganization {
-          id
-          orgName
-          adminEmail
-          phone
-          admins
-          superAdmin
-          hasPaidState
-          profileState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          orgType
-          orgSize
-          denomination
-          pplServed
-          sundayAttendance
-          numberVolunteers
-          orgDescription
-          joined
-          parentOrganizationId
-          createdAt
-          updatedAt
-        }
-        subOrganizations {
-          nextToken
-        }
-        members {
-          nextToken
-        }
-        ownsGroups {
-          nextToken
-        }
-        resource {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -3223,6 +3223,11 @@ export const createPayment = /* GraphQL */ `
         updatedAt
       }
       userID
+      dateCompleted
+      paymentType
+      paymentInfo
+      createdAt
+      updatedAt
       user {
         id
         given_name
@@ -3312,11 +3317,6 @@ export const createPayment = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      dateCompleted
-      paymentType
-      paymentInfo
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -3338,6 +3338,11 @@ export const updatePayment = /* GraphQL */ `
         updatedAt
       }
       userID
+      dateCompleted
+      paymentType
+      paymentInfo
+      createdAt
+      updatedAt
       user {
         id
         given_name
@@ -3427,11 +3432,6 @@ export const updatePayment = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      dateCompleted
-      paymentType
-      paymentInfo
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -3453,6 +3453,11 @@ export const deletePayment = /* GraphQL */ `
         updatedAt
       }
       userID
+      dateCompleted
+      paymentType
+      paymentInfo
+      createdAt
+      updatedAt
       user {
         id
         given_name
@@ -3542,11 +3547,6 @@ export const deletePayment = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      dateCompleted
-      paymentType
-      paymentInfo
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -3917,6 +3917,8 @@ export const createCourseBackOfficeStaff = /* GraphQL */ `
         updatedAt
       }
       userID
+      createdAt
+      updatedAt
       user {
         id
         given_name
@@ -4006,8 +4008,6 @@ export const createCourseBackOfficeStaff = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -4042,6 +4042,8 @@ export const updateCourseBackOfficeStaff = /* GraphQL */ `
         updatedAt
       }
       userID
+      createdAt
+      updatedAt
       user {
         id
         given_name
@@ -4131,8 +4133,6 @@ export const updateCourseBackOfficeStaff = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -4167,6 +4167,8 @@ export const deleteCourseBackOfficeStaff = /* GraphQL */ `
         updatedAt
       }
       userID
+      createdAt
+      updatedAt
       user {
         id
         given_name
@@ -4256,8 +4258,6 @@ export const deleteCourseBackOfficeStaff = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -4290,6 +4290,8 @@ export const createCourseInstructors = /* GraphQL */ `
         updatedAt
       }
       userID
+      createdAt
+      updatedAt
       user {
         id
         given_name
@@ -4379,8 +4381,6 @@ export const createCourseInstructors = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -4413,6 +4413,8 @@ export const updateCourseInstructors = /* GraphQL */ `
         updatedAt
       }
       userID
+      createdAt
+      updatedAt
       user {
         id
         given_name
@@ -4502,8 +4504,6 @@ export const updateCourseInstructors = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -4536,6 +4536,8 @@ export const deleteCourseInstructors = /* GraphQL */ `
         updatedAt
       }
       userID
+      createdAt
+      updatedAt
       user {
         id
         given_name
@@ -4625,8 +4627,6 @@ export const deleteCourseInstructors = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -4659,6 +4659,8 @@ export const createCourseTriadCoaches = /* GraphQL */ `
         updatedAt
       }
       userID
+      createdAt
+      updatedAt
       user {
         id
         given_name
@@ -4748,8 +4750,6 @@ export const createCourseTriadCoaches = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -4782,6 +4782,8 @@ export const updateCourseTriadCoaches = /* GraphQL */ `
         updatedAt
       }
       userID
+      createdAt
+      updatedAt
       user {
         id
         given_name
@@ -4871,8 +4873,6 @@ export const updateCourseTriadCoaches = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -4905,6 +4905,8 @@ export const deleteCourseTriadCoaches = /* GraphQL */ `
         updatedAt
       }
       userID
+      createdAt
+      updatedAt
       user {
         id
         given_name
@@ -4994,8 +4996,6 @@ export const deleteCourseTriadCoaches = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -5028,6 +5028,8 @@ export const createCourseTriadUsers = /* GraphQL */ `
         updatedAt
       }
       userID
+      createdAt
+      updatedAt
       user {
         id
         given_name
@@ -5117,8 +5119,6 @@ export const createCourseTriadUsers = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -5151,6 +5151,8 @@ export const updateCourseTriadUsers = /* GraphQL */ `
         updatedAt
       }
       userID
+      createdAt
+      updatedAt
       user {
         id
         given_name
@@ -5240,8 +5242,6 @@ export const updateCourseTriadUsers = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -5274,6 +5274,8 @@ export const deleteCourseTriadUsers = /* GraphQL */ `
         updatedAt
       }
       userID
+      createdAt
+      updatedAt
       user {
         id
         given_name
@@ -5363,8 +5365,6 @@ export const deleteCourseTriadUsers = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -5692,6 +5692,22 @@ export const createDirectMessageUser = /* GraphQL */ `
       id
       userName
       userID
+      roomID
+      room {
+        id
+        name
+        messageUsers {
+          nextToken
+        }
+        directMessage {
+          nextToken
+        }
+        roomType
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
       user {
         id
         given_name
@@ -5781,22 +5797,6 @@ export const createDirectMessageUser = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      roomID
-      room {
-        id
-        name
-        messageUsers {
-          nextToken
-        }
-        directMessage {
-          nextToken
-        }
-        roomType
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -5806,6 +5806,22 @@ export const updateDirectMessageUser = /* GraphQL */ `
       id
       userName
       userID
+      roomID
+      room {
+        id
+        name
+        messageUsers {
+          nextToken
+        }
+        directMessage {
+          nextToken
+        }
+        roomType
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
       user {
         id
         given_name
@@ -5895,22 +5911,6 @@ export const updateDirectMessageUser = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      roomID
-      room {
-        id
-        name
-        messageUsers {
-          nextToken
-        }
-        directMessage {
-          nextToken
-        }
-        roomType
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -5920,6 +5920,22 @@ export const deleteDirectMessageUser = /* GraphQL */ `
       id
       userName
       userID
+      roomID
+      room {
+        id
+        name
+        messageUsers {
+          nextToken
+        }
+        directMessage {
+          nextToken
+        }
+        roomType
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
       user {
         id
         given_name
@@ -6009,22 +6025,6 @@ export const deleteDirectMessageUser = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      roomID
-      room {
-        id
-        name
-        messageUsers {
-          nextToken
-        }
-        directMessage {
-          nextToken
-        }
-        roomType
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -6149,6 +6149,22 @@ export const createDirectMessage = /* GraphQL */ `
       when
       recipients
       userId
+      messageRoomID
+      messageRoom {
+        id
+        name
+        messageUsers {
+          nextToken
+        }
+        directMessage {
+          nextToken
+        }
+        roomType
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
       author {
         id
         given_name
@@ -6238,22 +6254,6 @@ export const createDirectMessage = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      messageRoomID
-      messageRoom {
-        id
-        name
-        messageUsers {
-          nextToken
-        }
-        directMessage {
-          nextToken
-        }
-        roomType
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -6267,6 +6267,22 @@ export const updateDirectMessage = /* GraphQL */ `
       when
       recipients
       userId
+      messageRoomID
+      messageRoom {
+        id
+        name
+        messageUsers {
+          nextToken
+        }
+        directMessage {
+          nextToken
+        }
+        roomType
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
       author {
         id
         given_name
@@ -6356,22 +6372,6 @@ export const updateDirectMessage = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      messageRoomID
-      messageRoom {
-        id
-        name
-        messageUsers {
-          nextToken
-        }
-        directMessage {
-          nextToken
-        }
-        roomType
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -6385,6 +6385,22 @@ export const deleteDirectMessage = /* GraphQL */ `
       when
       recipients
       userId
+      messageRoomID
+      messageRoom {
+        id
+        name
+        messageUsers {
+          nextToken
+        }
+        directMessage {
+          nextToken
+        }
+        roomType
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
       author {
         id
         given_name
@@ -6474,22 +6490,6 @@ export const deleteDirectMessage = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      messageRoomID
-      messageRoom {
-        id
-        name
-        messageUsers {
-          nextToken
-        }
-        directMessage {
-          nextToken
-        }
-        roomType
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -6505,6 +6505,108 @@ export const createMessage = /* GraphQL */ `
       userId
       postingAs
       owner
+      room {
+        id
+        owner
+        ownerOrgID
+        ownerOrg {
+          id
+          orgName
+          adminEmail
+          phone
+          admins
+          superAdmin
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          parentOrganizationId
+          createdAt
+          updatedAt
+        }
+        type
+        name
+        description
+        memberCount
+        members {
+          nextToken
+        }
+        image
+        time
+        lastUpdated
+        location
+        locationLatLong {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        length
+        effort
+        cost
+        promotionalText
+        messages {
+          nextToken
+        }
+        eventType
+        eventUrl
+        tz
+        isSponsored
+        createdAt
+        updatedAt
+        ownerUser {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+      }
+      createdAt
+      updatedAt
       author {
         id
         given_name
@@ -6594,108 +6696,6 @@ export const createMessage = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      room {
-        id
-        owner
-        ownerOrgID
-        ownerUser {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          mainUserGroup
-          hasPaidState
-          profileState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          denomination
-          pplServed
-          sundayAttendance
-          numberVolunteers
-          orgDescription
-          joined
-          primaryOrganization
-          createdAt
-          updatedAt
-        }
-        ownerOrg {
-          id
-          orgName
-          adminEmail
-          phone
-          admins
-          superAdmin
-          hasPaidState
-          profileState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          orgType
-          orgSize
-          denomination
-          pplServed
-          sundayAttendance
-          numberVolunteers
-          orgDescription
-          joined
-          parentOrganizationId
-          createdAt
-          updatedAt
-        }
-        type
-        name
-        description
-        memberCount
-        members {
-          nextToken
-        }
-        image
-        time
-        lastUpdated
-        location
-        locationLatLong {
-          latitude
-          longitude
-          geocodeFull
-          geocodeCity
-          geocodeRegion
-          randomLatitude
-          randomLongitude
-        }
-        length
-        effort
-        cost
-        promotionalText
-        messages {
-          nextToken
-        }
-        eventType
-        eventUrl
-        tz
-        isSponsored
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -6711,6 +6711,108 @@ export const updateMessage = /* GraphQL */ `
       userId
       postingAs
       owner
+      room {
+        id
+        owner
+        ownerOrgID
+        ownerOrg {
+          id
+          orgName
+          adminEmail
+          phone
+          admins
+          superAdmin
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          parentOrganizationId
+          createdAt
+          updatedAt
+        }
+        type
+        name
+        description
+        memberCount
+        members {
+          nextToken
+        }
+        image
+        time
+        lastUpdated
+        location
+        locationLatLong {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        length
+        effort
+        cost
+        promotionalText
+        messages {
+          nextToken
+        }
+        eventType
+        eventUrl
+        tz
+        isSponsored
+        createdAt
+        updatedAt
+        ownerUser {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+      }
+      createdAt
+      updatedAt
       author {
         id
         given_name
@@ -6800,108 +6902,6 @@ export const updateMessage = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      room {
-        id
-        owner
-        ownerOrgID
-        ownerUser {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          mainUserGroup
-          hasPaidState
-          profileState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          denomination
-          pplServed
-          sundayAttendance
-          numberVolunteers
-          orgDescription
-          joined
-          primaryOrganization
-          createdAt
-          updatedAt
-        }
-        ownerOrg {
-          id
-          orgName
-          adminEmail
-          phone
-          admins
-          superAdmin
-          hasPaidState
-          profileState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          orgType
-          orgSize
-          denomination
-          pplServed
-          sundayAttendance
-          numberVolunteers
-          orgDescription
-          joined
-          parentOrganizationId
-          createdAt
-          updatedAt
-        }
-        type
-        name
-        description
-        memberCount
-        members {
-          nextToken
-        }
-        image
-        time
-        lastUpdated
-        location
-        locationLatLong {
-          latitude
-          longitude
-          geocodeFull
-          geocodeCity
-          geocodeRegion
-          randomLatitude
-          randomLongitude
-        }
-        length
-        effort
-        cost
-        promotionalText
-        messages {
-          nextToken
-        }
-        eventType
-        eventUrl
-        tz
-        isSponsored
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -6917,6 +6917,108 @@ export const deleteMessage = /* GraphQL */ `
       userId
       postingAs
       owner
+      room {
+        id
+        owner
+        ownerOrgID
+        ownerOrg {
+          id
+          orgName
+          adminEmail
+          phone
+          admins
+          superAdmin
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          parentOrganizationId
+          createdAt
+          updatedAt
+        }
+        type
+        name
+        description
+        memberCount
+        members {
+          nextToken
+        }
+        image
+        time
+        lastUpdated
+        location
+        locationLatLong {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        length
+        effort
+        cost
+        promotionalText
+        messages {
+          nextToken
+        }
+        eventType
+        eventUrl
+        tz
+        isSponsored
+        createdAt
+        updatedAt
+        ownerUser {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+      }
+      createdAt
+      updatedAt
       author {
         id
         given_name
@@ -7006,108 +7108,6 @@ export const deleteMessage = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      room {
-        id
-        owner
-        ownerOrgID
-        ownerUser {
-          id
-          given_name
-          family_name
-          email
-          phone
-          owner
-          mainUserGroup
-          hasPaidState
-          profileState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          interests
-          currentRole
-          currentScope
-          personality
-          orgName
-          orgType
-          orgSize
-          denomination
-          pplServed
-          sundayAttendance
-          numberVolunteers
-          orgDescription
-          joined
-          primaryOrganization
-          createdAt
-          updatedAt
-        }
-        ownerOrg {
-          id
-          orgName
-          adminEmail
-          phone
-          admins
-          superAdmin
-          hasPaidState
-          profileState
-          address
-          city
-          province
-          postalCode
-          country
-          aboutMeShort
-          aboutMeLong
-          orgType
-          orgSize
-          denomination
-          pplServed
-          sundayAttendance
-          numberVolunteers
-          orgDescription
-          joined
-          parentOrganizationId
-          createdAt
-          updatedAt
-        }
-        type
-        name
-        description
-        memberCount
-        members {
-          nextToken
-        }
-        image
-        time
-        lastUpdated
-        location
-        locationLatLong {
-          latitude
-          longitude
-          geocodeFull
-          geocodeCity
-          geocodeRegion
-          randomLatitude
-          randomLongitude
-        }
-        length
-        effort
-        cost
-        promotionalText
-        messages {
-          nextToken
-        }
-        eventType
-        eventUrl
-        tz
-        isSponsored
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
     }
   }
 `;
