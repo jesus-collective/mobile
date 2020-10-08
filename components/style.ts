@@ -325,6 +325,11 @@ export default class MainStyles {
                 color: '#000000',
                 paddingLeft: 10,
             },
+            adminCRMTableEmailStatus: {
+                fontFamily: "Graphik-Regular-App",
+                color: '#000000',
+                paddingLeft: 10,
+            },
             adminCRMModal: {
                 fontFamily: "Graphik-Regular-App",
                 color: '#000000',
@@ -1867,6 +1872,15 @@ export default class MainStyles {
                 marginTop: 30,
                 minHeight: 'auto'
             },
+            adminCRMTableRow: {
+                flex: 3, 
+                alignSelf: 'stretch', 
+                justifyContent: 'center'
+            },
+            adminCRMTableHeader: {
+                flex: 3, 
+                alignSelf: 'stretch', 
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2472,6 +2486,19 @@ export default class MainStyles {
                 },
                 courseZoomMainContainer: {
                     flexDirection: 'column',
+                },
+                adminCRMTableParagraph: {
+                    fontSize: 14,
+                },
+                adminCRMTableEmailStatus: {
+                    fontSize: 14,
+                    paddingLeft: 0,
+                },
+                adminCRMTableRow: {
+                    flex: 2.5,
+                },
+                adminCRMTableHeader: {
+                    flex: 2.5,
                 },
             },
 

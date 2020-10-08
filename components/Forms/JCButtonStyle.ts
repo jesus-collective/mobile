@@ -1166,5 +1166,8 @@ export default EStyleSheet.create({
             marginRight: 13,
             marginBottom: 5,
         },
+        AdminSmallOutlineButton: {
+            marginLeft: 0,
+        },
     }
 })

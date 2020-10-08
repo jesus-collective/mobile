@@ -209,7 +209,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
         {this.state.showUid ? <View style={{ flex: 3, alignSelf: 'stretch' }}>
           <Text style={this.styles.style.adminCRMTableHeading}>User id</Text>
         </View> : null}
-        {this.state.showEmail ? <View style={{ flex: 3, alignSelf: 'stretch' }}>
+        {this.state.showEmail ? <View style={this.styles.style.adminCRMTableHeader}>
           <Text style={this.styles.style.adminCRMTableHeading}>Email</Text>
         </View> : null}
         {this.state.showPhone ? <View style={{ flex: 1, alignSelf: 'stretch' }}>
@@ -337,14 +337,14 @@ export default class AdminScreen extends JCComponent<Props, State>{
         {this.state.showUid ? <View style={{ flex: 3, alignSelf: 'stretch', justifyContent: 'center' }}>
           <Text style={this.styles.style.fontRegular}>{item.Username}</Text>
         </View> : null}
-        {this.state.showEmail ? <View style={{ flex: 3, alignSelf: 'stretch', justifyContent: 'center' }}>
+        {this.state.showEmail ? <View style={this.styles.style.adminCRMTableRow}>
           <Text style={this.styles.style.adminCRMTableParagraph}>{item.Attributes.find(e => e.Name == "email")?.Value}</Text>
         </View> : null}
         {this.state.showPhone ? <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center' }}>
-          <Text style={this.styles.style.fontRegular}>{item.Attributes.find(e => e.Name == "phone_number")?.Value}</Text>
+          <Text style={this.styles.style.adminCRMTableEmailStatus}>{item.Attributes.find(e => e.Name == "phone_number")?.Value}</Text>
         </View> : null}
         {this.state.showStatus ? <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center' }}>
-          <Text style={this.styles.style.fontRegular}>{item.UserStatus}</Text>
+          <Text style={this.styles.style.adminCRMTableEmailStatus}>{item.UserStatus}</Text>
         </View> : null}
         <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center' }}>
           <Text style={this.styles.style.fontRegular}>{item.Enabled.toString()}</Text>
