@@ -413,25 +413,28 @@ export default class AdminScreen extends JCComponent<Props, State>{
   }
   renderPaymentsModal(): React.ReactNode {
     return (this.state.showPayments ?
-      <Modal visible={this.state.showPayments}>
-        <View style={{ width: '100vw', height: 100, flexDirection: 'row', paddingTop: 20, paddingBottom: 20, justifyContent: 'center' }}>
-          <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', width: 70, marginLeft: 20, marginRight: 20, flex: 0.1 }}>
-            <Text style={this.styles.style.adminCRMModal}>Payments</Text>
-            <JCButton buttonType={ButtonTypes.AdminSmallOutline} onPress={() => { this.closePayments() }}>X</JCButton>
-          </View>
+      <Modal animationType="slide" visible={this.state.showPayments} transparent={true} presentationStyle="pageSheet" style={{ width: '100%', height: '100%', borderWidth: 0 }}>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <View style={{ margin: 20, backgroundColor: "white",borderRadius: 10, paddingTop: 10, paddingBottom: 25, paddingLeft: 20, paddingRight: 20, alignItems: "center", shadowColor: "#000", shadowOffset: { width: 0, height: 2 },shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+              <Text style={this.styles.style.adminCRMModalHeading}>Payments</Text>
+              <JCButton buttonType={ButtonTypes.AdminModal} onPress={() => { this.closePayments() }}>X</JCButton>
+            </View>
+            <View style={{ borderBottomColor: '#333333', opacity: 0.2, borderBottomWidth: 1, width: '100%', marginBottom: 15 }}>
+            </View>
           {
             this.state.paymentsData ?
               this.state.paymentsData.map((item: any, index: number) => {
-                return (<View style={{ height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 20, marginRight: 20, flex: 0.2 }} key={index} >
+                return (<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' }} key={index} >
                   <Text style={this.styles.style.adminCRMModal} key={index}>{item.product.name}</Text>
-                  <JCButton buttonType={ButtonTypes.AdminSmallOutline}
+                  <JCButton buttonType={ButtonTypes.AdminModalOrange}
                     onPress={() => { if (window.confirm('Are you sure you wish to delete this payment?')) this.removePayment(this.state.showPaymentsId, item.id) }}>X</JCButton>
                 </View>)
               })
               : null
           }
-          <Container style={{ height: 50, flexDirection: 'row', alignItems: 'center', marginLeft: 40, marginRight: 20, flex: 0.25, justifyContent: 'center' }}>
-            <Picker style={{ height: 45, width: 250, paddingLeft: 10, paddingRight: 10 }}
+          <Container style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <Picker style={{ height: 45, paddingLeft: 10, paddingRight: 10, marginTop: 10 }}
               selectedValue={this.state.groupToAdd}
               onValueChange={val => { this.setState({ groupToAdd: val }) }}
             >       <Picker.Item value={null} label="pick a group to add" />
@@ -442,11 +445,12 @@ export default class AdminScreen extends JCComponent<Props, State>{
                 })
               }
             </Picker>
-            <JCButton buttonType={ButtonTypes.AdminSmallOutline} onPress={() => {
+            <JCButton buttonType={ButtonTypes.AdminAdd} onPress={() => {
               this.addPayment(this.state.showPaymentsId, this.state.groupToAdd)
 
             }}>Add Payment</JCButton>
           </Container>
+          </View>
         </View>
       </Modal> : null
     )
