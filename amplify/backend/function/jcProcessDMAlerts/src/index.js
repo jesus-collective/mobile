@@ -1,15 +1,70 @@
 /* Amplify Params - DO NOT EDIT
   ANALYTICS_JCMOBILE_ID
   ANALYTICS_JCMOBILE_REGION
+  API_JCMOBILE_GRAPHQLAPIENDPOINTOUTPUT
+  API_JCMOBILE_GRAPHQLAPIIDOUTPUT
+  ENV
+  REGION
+Amplify Params - DO NOT EDIT *//* Amplify Params - DO NOT EDIT
+  ANALYTICS_JCMOBILE_ID
+  ANALYTICS_JCMOBILE_REGION
   ENV
   REGION
 Amplify Params - DO NOT EDIT */
 
 'use strict';
 
-var aws = require('aws-sdk');
-var convertFromRaw = require('draft-js').convertFromRaw;
-var stateToHTML = require('draft-js-export-html').stateToHTML
+const aws = require('aws-sdk');
+const convertFromRaw = require('draft-js').convertFromRaw;
+const stateToHTML = require('draft-js-export-html').stateToHTML
+const Amplify = require('aws-amplify');
+global.fetch = require("node-fetch");
+const queries = require('./queries')
+const htmlToText = require('html-to-text');
+
+
+async function getRecipient(id) {
+  try {
+    // console.log(process.env)
+    var region = process.env.REGION
+    var API_JCMOBILE_GRAPHQLAPIENDPOINTOUTPUT = process.env.API_JCMOBILE_GRAPHQLAPIENDPOINTOUTPUT
+    Amplify.default.configure({
+      aws_appsync_graphqlEndpoint: API_JCMOBILE_GRAPHQLAPIENDPOINTOUTPUT,
+      aws_appsync_region: region,
+      aws_appsync_authenticationType: "AMAZON_COGNITO_USER_POOLS",
+      Auth: {
+        mandatorySignIn: false,
+        region: region,
+        userPoolId: process.env.userPoolId,
+        identityPoolRegion: region,
+        userPoolWebClientId: process.env.userPoolWebClientId,
+        identityPoolId: process.env.identityPoolId
+      }
+    })
+    console.log("Done config")
+    await Amplify.Auth.signIn("george.bell@themeetinghouse.com", "Tacobell#1")
+    console.log("Done login")
+    currentSession = await Amplify.Auth.currentSession()
+
+    Amplify.default.configure({
+      Authorization: currentSession.getIdToken().getJwtToken(),
+    })
+    console.log("Done Auth")
+    json = await Amplify.API.graphql({
+      query: queries.getUser,
+      variables: { limit: 20, filter: { profileState: { eq: "Complete" } }, nextToken: null },
+      authMode: "AMAZON_COGNITO_USER_POOLS"
+    });
+    console.log("Done List Users")
+    await Promise.all(json.data.listUsers.items.map(async (item) => {
+      console.log(item)
+    }))
+  }
+  catch (e) {
+    console.log({ "ERROR:": e })
+  }
+}
+
 const configSendAlerts = true
 // Provide the full path to your config.json file. 
 async function sendEmail(recipient, message) {
@@ -64,7 +119,9 @@ function convertCommentFromJSONToHTML(text) {
 }
 function convertCommentFromJSONToTEXT(text) {
   try {
-    return stateToHTML(convertFromRaw(JSON.parse(text)))
+    return htmlToText.fromString(stateToHTML(convertFromRaw(JSON.parse(text))), {
+      wordwrap: 130
+    })
   } catch (e) {
     console.log({ "Converting TEXT Error": e })
     return null
@@ -117,7 +174,7 @@ async function Execute(event) {
       await asyncForEach(recipients.filter(item => item != from), async (recipientID) => {
         if (!messageRoomID.startsWith("course-")) {
           console.log({ "Sending DM Alert to": recipientID })
-          const rec = getRecipient(recipientID)
+          const rec = await getRecipient(recipientID)
           const recipient = "george.bell@themeetinghouse.com";
           const html = convertCommentFromJSONToHTML(content)
           const text = convertCommentFromJSONToTEXT(content)
