@@ -5,6 +5,7 @@ import styles from './JCButtonStyle'
 import JCComponent from '../JCComponent/JCComponent';
 
 export enum ButtonTypes {
+    AdminModal,
     AdminOutline,
     AdminSmallOutline,
     CourseSideBar,

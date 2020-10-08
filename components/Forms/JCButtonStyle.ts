@@ -101,6 +101,24 @@ export default EStyleSheet.create({
         fontSize: 16,
         padding: 5
     },
+    AdminModalButton: {
+        paddingTop: 7,
+        paddingBottom: 7,
+        paddingLeft: 7,
+        paddingRight: 7,
+        marginLeft: 10,
+        marginRight: 0,
+        backgroundColor: "#ffffff",
+        // borderWidth: 1,
+        // borderColor: "#F0493E",
+        // boxShadow: "unset",
+    },
+    AdminModalText: {
+        color: "#F0493E",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        padding: 5
+    },
     courseAssignmentButton: {
         paddingTop: 6,
         paddingBottom: 6,

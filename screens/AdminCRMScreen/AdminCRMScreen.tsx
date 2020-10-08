@@ -373,13 +373,13 @@ export default class AdminScreen extends JCComponent<Props, State>{
   renderGroupsModal(): React.ReactNode {
     return (this.state.showGroups ?
       <Modal animationType="slide" visible={this.state.showGroups}
-        transparent={true} presentationStyle="pageSheet">
-        <View style={{ width: '100vw', height: 100, flexDirection: 'row', paddingTop: 20, paddingBottom: 20, justifyContent: 'center' }}>
-          <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', width: 70, marginLeft: 20, marginRight: 20, flex: 0.1 }}>
-            <Text style={this.styles.style.adminCRMModal}>Groups</Text>
-            <JCButton buttonType={ButtonTypes.AdminSmallOutline} onPress={() => { this.closeGroups() }}>X</JCButton>
-          </View>
-
+        transparent={true} presentationStyle="pageSheet" style={{ width: '100%', height: '100%', borderWidth: 0 }}>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <View style={{  margin: 20, backgroundColor: "white",borderRadius: 20, padding: 35, alignItems: "center", shadowColor: "#000", shadowOffset: { width: 0, height: 2 },shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5 }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%', paddingLeft: 20, paddingRight: 20 }}>
+              <Text style={this.styles.style.adminCRMModal}>Groups</Text>
+              <JCButton buttonType={ButtonTypes.AdminModal} onPress={() => { this.closeGroups() }}>X</JCButton>
+            </View>
           {
             this.state.groupData ?
               this.state.groupData.map((item: any, index: number) => {
@@ -405,6 +405,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
               this.addGroup(this.state.showGroupsId, this.state.groupToAdd)
             }}>Add Group</JCButton>
           </Container>
+          </View>
         </View>
       </Modal > : null
     )
