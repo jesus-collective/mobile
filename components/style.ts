@@ -1881,6 +1881,13 @@ export default class MainStyles {
                 flex: 3, 
                 alignSelf: 'stretch', 
             },
+            adminSubNav: {
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start', 
+                right: 15
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2322,6 +2329,11 @@ export default class MainStyles {
                 },
                 pickerDropDown: {
                     width: "100%",
+                },
+                adminSubNav: {
+                    flex: 3,
+                    justifyContent: 'flex-end',
+                    right: 0,
                 },
             },
 
