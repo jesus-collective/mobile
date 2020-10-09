@@ -485,7 +485,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                 {this.state.isEditable && this.state.editMode ?
                   <View style={this.styles.style.fileInputWrapper}>
                     <JCButton buttonType={ButtonTypes.SolidProfile} onPress={() => { null }}>Set Profile Picture</JCButton>
-                    <input data-testid="org-image" style={{ cursor: 'pointer', fontSize: "200px", position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='image/*' onChange={(e) => this.onProfileImageChange(e)} />
+                    <input data-testid="org-image" style={{ cursor: 'pointer', fontSize: 200, position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='image/*' onChange={(e) => this.onProfileImageChange(e)} />
                   </View>
                   : null
                 }

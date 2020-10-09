@@ -40,31 +40,77 @@ export default class MainStyles {
                 { position: "fixed", left: 0, top: 0, width: "100%", height: "100%", zIndex: 100, backgroundColor: "#33333366" } :
                 { position: "absolute", left: 0, top: 0, width: "100%", height: "100%", zIndex: 100, backgroundColor: "#33333366" }
             ,
-            peopleContainer: { width: "100%", flexDirection: 'column', alignItems: 'flex-start', minHeight: 675, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)" },
-            dashboardPrimaryContainer: { display: "block" },
-            episodeTitle: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333" },
-            episodeDescription: { wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' },
-            seriesTitle: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 22, lineHeight: 30, color: "#333333", paddingBottom: 0 },
-            moreSeriesTitle: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 18, lineHeight: 24, color: "#333333", paddingBottom: 0 },
-            seriesDescription: { wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 14, lineHeight: 22, color: "#333333", opacity: 0.6, paddingBottom: 0 },
-            headerSeriesTitle: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
-            headerSeriesDescription: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
-            headerEpisodeTitle: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
-            headerEpisodeDescription: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
-            resourceContentEpisodesDescription: { wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
-            resourceContentEpisodesText: { wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 18, lineHeight: 28, color: "#333333", paddingBottom: 0 },
-            resourceContentEpisodesDownloadInfo: { wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 18, lineHeight: 28, color: "#333333", paddingBottom: 25 },
-            whoIsThisForText: { alignSelf: 'flex-start', wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 26, lineHeight: 33, color: "#333333", paddingBottom: 20 },
-            resourceContentEpisodesEpisodeTitle: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 28, lineHeight: 33, color: "#333333", paddingBottom: 0 },
-            resourceContentEpisodesVideoText: { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
-            courseHomeFileCard: { width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 30, paddingTop: 30, paddingBottom: 30 },
-            courseHomeUserEditCard: { width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 30, paddingTop: 30, paddingBottom: 30 },
-            courseHomeCoachingCard: { width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 15, paddingTop: 20, paddingBottom: 20 },
-            courseHomeDeleteTriad: { backgroundColor: '#F0493E', width: '20px', marginTop: 10, borderRadius: 5, height: 30, justifyContent: 'center', alignItems: 'center', boxShadow: '0px' },
-            courseCoachingCard: { width: '100%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginTop: 100, paddingTop: 30, paddingBottom: 30, height: 400 },
-            courseDetailLessonCardEdit: { minHeight: "40px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 30, paddingRight: 30, paddingBottom: 30, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 10, marginTop: 10 },
-            courseDetailLessonCardNoEdit: { minHeight: "40px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 10, paddingRight: 30, paddingBottom: 10, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 10, marginTop: 10 },
-            courseDetailLessonCardCreate: { minHeight: "40px", maxHeight: "80px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 30, paddingRight: 30, paddingBottom: 50, paddingLeft: 30, boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)', marginBottom: 30 },
+            peopleContainer: { width: "100%", flexDirection: 'column', alignItems: 'flex-start', minHeight: 675, marginTop: 30, borderRadius: 4, shadowOffset: { width: 0, height: 0 }, shadowColor: "rgba(0, 0, 0, 0.19)", shadowRadius: 30 },
+            dashboardPrimaryContainer: Platform.OS === 'web' ?
+                { display: "block" } :
+                { display: "flex" },
+            episodeTitle: Platform.OS === 'web' ?
+                { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333" } :
+                { fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333" },
+            episodeDescription: Platform.OS === 'web' ?
+                { wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' } :
+                { fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' },
+
+            seriesTitle: Platform.OS === 'web' ?
+                { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 22, lineHeight: 30, color: "#333333", paddingBottom: 0 } :
+                { fontFamily: "Graphik-Bold-App", fontSize: 22, lineHeight: 30, color: "#333333", paddingBottom: 0 },
+
+            moreSeriesTitle: Platform.OS === 'web' ?
+                { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 18, lineHeight: 24, color: "#333333", paddingBottom: 0 } :
+                { fontFamily: "Graphik-Bold-App", fontSize: 18, lineHeight: 24, color: "#333333", paddingBottom: 0 },
+
+            seriesDescription: Platform.OS === 'web' ?
+                { wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 14, lineHeight: 22, color: "#333333", opacity: 0.6, paddingBottom: 0 } :
+                { fontFamily: "Graphik-Regular-App", fontSize: 14, lineHeight: 22, color: "#333333", opacity: 0.6, paddingBottom: 0 },
+
+            headerSeriesTitle: Platform.OS === 'web' ?
+                { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 } :
+                { fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
+
+            headerSeriesDescription: Platform.OS === 'web' ?
+                { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 } :
+                { fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
+
+            headerEpisodeTitle: Platform.OS === 'web' ?
+                { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 } :
+                { fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
+
+            headerEpisodeDescription: Platform.OS === 'web' ?
+                { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 } :
+                { fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
+
+            resourceContentEpisodesDescription: Platform.OS === 'web' ?
+                { wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 } :
+                { fontFamily: "Graphik-Regular-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
+
+            resourceContentEpisodesText: Platform.OS === 'web' ?
+                { wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 18, lineHeight: 28, color: "#333333", paddingBottom: 0 } :
+                { fontFamily: "Graphik-Regular-App", fontSize: 18, lineHeight: 28, color: "#333333", paddingBottom: 0 },
+
+            resourceContentEpisodesDownloadInfo: Platform.OS === 'web' ?
+                { wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 18, lineHeight: 28, color: "#333333", paddingBottom: 25 } :
+                { fontFamily: "Graphik-Regular-App", fontSize: 18, lineHeight: 28, color: "#333333", paddingBottom: 25 },
+
+            whoIsThisForText: Platform.OS === 'web' ?
+                { alignSelf: 'flex-start', wordBreak: "break-word", fontFamily: "Graphik-Regular-App", fontSize: 26, lineHeight: 33, color: "#333333", paddingBottom: 20 } :
+                { alignSelf: 'flex-start', fontFamily: "Graphik-Regular-App", fontSize: 26, lineHeight: 33, color: "#333333", paddingBottom: 20 },
+
+            resourceContentEpisodesEpisodeTitle: Platform.OS === 'web' ?
+                { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 28, lineHeight: 33, color: "#333333", paddingBottom: 0 } :
+                { fontFamily: "Graphik-Bold-App", fontSize: 28, lineHeight: 33, color: "#333333", paddingBottom: 0 },
+
+            resourceContentEpisodesVideoText: Platform.OS === 'web' ?
+                { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 } :
+                { fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
+
+            courseHomeFileCard: { width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, shadowOffset: { width: 0, height: 6 }, shadowColor: "rgba(0, 0, 0, 0.19)", shadowRadius: 20, marginTop: 30, paddingTop: 30, paddingBottom: 30 },
+            courseHomeUserEditCard: { width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, shadowOffset: { width: 0, height: 6 }, shadowColor: "rgba(0, 0, 0, 0.19)", shadowRadius: 20, marginTop: 30, paddingTop: 30, paddingBottom: 30 },
+            courseHomeCoachingCard: { width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, shadowOffset: { width: 0, height: 6 }, shadowColor: "rgba(0, 0, 0, 0.19)", shadowRadius: 20, marginTop: 15, paddingTop: 20, paddingBottom: 20 },
+            courseHomeDeleteTriad: { backgroundColor: '#F0493E', width: '20px', marginTop: 10, borderRadius: 5, height: 30, justifyContent: 'center', alignItems: 'center', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0 },
+            courseCoachingCard: { width: '100%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, shadowOffset: { width: 0, height: 6 }, shadowColor: "rgba(0, 0, 0, 0.19)", shadowRadius: 20, marginTop: 100, paddingTop: 30, paddingBottom: 30, height: 400 },
+            courseDetailLessonCardEdit: { minHeight: "40px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 30, paddingRight: 30, paddingBottom: 30, paddingLeft: 30, shadowOffset: { width: 0, height: 6 }, shadowColor: "rgba(0, 0, 0, 0.19)", shadowRadius: 20, marginBottom: 10, marginTop: 10 },
+            courseDetailLessonCardNoEdit: { minHeight: "40px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 10, paddingRight: 30, paddingBottom: 10, paddingLeft: 30, shadowOffset: { width: 0, height: 6 }, shadowColor: "rgba(0, 0, 0, 0.19)", shadowRadius: 20, marginBottom: 10, marginTop: 10 },
+            courseDetailLessonCardCreate: { minHeight: "40px", maxHeight: "80px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 30, paddingRight: 30, paddingBottom: 50, paddingLeft: 30, shadowOffset: { width: 0, height: 6 }, shadowColor: "rgba(0, 0, 0, 0.19)", shadowRadius: 20, marginBottom: 30 },
             courseCard:
             {
                 minHeight: 330,
@@ -73,7 +119,7 @@ export default class MainStyles {
                 paddingLeft: '0.25rem',
                 paddingRight: '0.25rem',
                 borderRadius: 4,
-                boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+                shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30,
                 borderColor: "#ffffff"
             },
             orgCard: {
@@ -83,7 +129,7 @@ export default class MainStyles {
                 paddingLeft: '0.25rem',
                 paddingRight: '0.25rem',
                 borderRadius: 4,
-                boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)"
+                shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30
             },
             resourceCard: {
                 minHeight: 330,
@@ -92,7 +138,7 @@ export default class MainStyles {
                 paddingLeft: '0.25rem',
                 paddingRight: '0.25rem',
                 borderRadius: 4,
-                boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+                shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30,
                 borderStyle: "solid",
                 borderColor: "#FFFFFF",
             },
@@ -101,7 +147,7 @@ export default class MainStyles {
                 paddingLeft: '1.5rem',
                 paddingRight: '1.5rem',
                 borderRadius: 4,
-                boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+                shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30,
                 borderStyle: "solid",
                 borderColor: "#FFFFFF"
             },
@@ -112,7 +158,7 @@ export default class MainStyles {
                 paddingLeft: '0.25rem',
                 paddingRight: '0.25rem',
                 borderRadius: 4,
-                boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+                shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30,
                 borderStyle: "solid",
                 borderColor: "#FFFFFF"
             },
@@ -123,33 +169,53 @@ export default class MainStyles {
                 paddingLeft: '0.25rem',
                 paddingRight: '0.25rem',
                 borderRadius: 4,
-                boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+                shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 20,
                 borderStyle: "solid",
                 borderColor: "#FFFFFF"
             },
             conversationCard: {
                 minHeight: 50,
                 width: "92.5%",
-                boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)"
+                shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30
             },
-            messageBoardContainer: {
-                display: "inline",
-                overflow: "visible",
-                width: "100%",
-                paddingTop: 0,
-                paddingLeft: 0,
-                paddingRight: 0,
-                marginBottom: 60
-            },
-            messageBoardContainerFullSize: {
-                display: "inline",
-                overflow: "visible",
-                width: "100%",
-                paddingTop: 0,
-                paddingLeft: 30,
-                paddingRight: 30,
-                marginBottom: 60
-            },
+            messageBoardContainer: Platform.OS === 'web' ?
+                {
+                    display: "inline",
+                    overflow: "visible",
+                    width: "100%",
+                    paddingTop: 0,
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    marginBottom: 60
+                } :
+                {
+                    display: "flex",
+                    overflow: "visible",
+                    width: "100%",
+                    paddingTop: 0,
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    marginBottom: 60
+                },
+            messageBoardContainerFullSize: Platform.OS === 'web' ?
+                {
+                    display: "inline",
+                    overflow: "visible",
+                    width: "100%",
+                    paddingTop: 0,
+                    paddingLeft: 30,
+                    paddingRight: 30,
+                    marginBottom: 60
+                } :
+                {
+                    display: "flex",
+                    overflow: "visible",
+                    width: "100%",
+                    paddingTop: 0,
+                    paddingLeft: 30,
+                    paddingRight: 30,
+                    marginBottom: 60
+                },
             groupNameInput: {
                 borderColor: 'white',
                 borderWidth: 1,
@@ -457,7 +523,7 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 26, lineHeight: 30, height: 60, color: '#333333', opacity: 0.6, marginLeft: 20
             },
             loadingFontTitle: {
-                fontFamily: 'Graphik-Regular-App', fontWeight: 'regular', fontSize: 16, lineHeight: 30, height: 60, color: '#333333', marginLeft: 20
+                fontFamily: 'Graphik-Regular-App', fontWeight: 'normal', fontSize: 16, lineHeight: 30, height: 60, color: '#333333', marginLeft: 20
             },
             myMapFontTitle: {
                 fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24, lineHeight: 30, height: 60, color: '#333333'
@@ -682,7 +748,7 @@ export default class MainStyles {
             myMapConversationCardRole: {
                 fontFamily: "Graphik-Regular-App",
                 textTransform: "uppercase",
-                fontWeight: "650",
+                fontWeight: "600",
                 fontSize: 12,
                 lineHeight: 16,
                 color: "#333333",
@@ -691,7 +757,7 @@ export default class MainStyles {
             },
             myMapConversationCardAboutMe: {
                 fontFamily: "Graphik-Regular-App",
-                fontWeight: "650",
+                fontWeight: "600",
                 fontSize: 16,
                 lineHeight: 23,
                 color: "#333333",
@@ -788,30 +854,32 @@ export default class MainStyles {
             rightCardWidth: {
                 minWidth: "100%"
             },
-            conversationScreenLeftCard: {
-                flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", height: "80vh", width: 446, paddingBottom: 40, overflowY: 'scroll'
-            },
-            courseAssignmentScreenLeftCard: {
-                flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 30, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", height: "80vh", width: 446, paddingBottom: 40, overflowY: 'scroll'
-            },
+            conversationScreenLeftCard: Platform.OS === 'web' ?
+                { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30, height: "80vh", width: 446, paddingBottom: 40, overflowY: 'scroll' } :
+                { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30, height: "80vh", width: 446, paddingBottom: 40 },
+
+            courseAssignmentScreenLeftCard: Platform.OS === 'web' ?
+                { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 30, marginRight: 32, marginTop: 30, borderRadius: 4, shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30, height: "80vh", width: 446, paddingBottom: 40, overflowY: 'scroll' } :
+                { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 30, marginRight: 32, marginTop: 30, borderRadius: 4, shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30, height: "80vh", width: 446, paddingBottom: 40 },
+
             detailScreenLeftCard: Platform.OS === 'web' ?
-                { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", width: 446, paddingBottom: 40, height: "auto" } :
+                { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30, width: 446, paddingBottom: 40, height: "auto" } :
                 { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, width: 446, paddingBottom: 40, height: "auto" }
             ,
             detailScreenRightCard: Platform.OS === 'web' ?
-                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", height: "auto", width: 446, } :
+                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30, height: "auto", width: 446, } :
                 { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, height: "auto", width: 446, }
             ,
             courseAssignmentScreenRightCard: Platform.OS === 'web' ?
-                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", height: 'auto', width: 446 } :
+                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30, height: 'auto', width: 446 } :
                 { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, height: "auto", width: 446 }
             ,
             profileScreenLeftCard: Platform.OS === 'web' ?
-                { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 0, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: 700, width: 446 } :
+                { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 0, borderRadius: 4, shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30, minHeight: 700, width: 446 } :
                 { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 0, borderRadius: 4, minHeight: 700, width: 446 }
             ,
             profileScreenRightCard: Platform.OS === 'web' ?
-                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 0, borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)", minHeight: 1500, width: 446, paddingTop: 30, paddingRight: 30, paddingBottom: 30, paddingLeft: 30 } :
+                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 0, borderRadius: 4, shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30, minHeight: 1500, width: 446, paddingTop: 30, paddingRight: 30, paddingBottom: 30, paddingLeft: 30 } :
                 { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 0, borderRadius: 4, minHeight: 1500, width: 446, paddingTop: 30, paddingRight: 30, paddingBottom: 30, paddingLeft: 30 }
             ,
             myProfileTopButtons: {
@@ -896,15 +964,25 @@ export default class MainStyles {
             myProfileTopButtonsExternalContainer: {
                 flexDirection: "column"
             },
-            myProfileMapSelectorContainer: {
-                position: "fixed",
-                left: 0,
-                top: 0,
-                width: "100%",
-                height: 1955,
-                zIndex: 100,
-                backgroundColor: "#33333366"
-            },
+            myProfileMapSelectorContainer: Platform.OS === 'web' ?
+                {
+                    position: "fixed",
+                    left: 0,
+                    top: 0,
+                    width: "100%",
+                    height: 1955,
+                    zIndex: 100,
+                    backgroundColor: "#33333366"
+                } :
+                {
+                    position: "relative",
+                    left: 0,
+                    top: 0,
+                    width: "100%",
+                    height: 1955,
+                    zIndex: 100,
+                    backgroundColor: "#33333366"
+                },
             myProfileMapSelectorInnerContainer: {
                 backgroundColor: "#ffffff",
                 borderRadius: 10,
@@ -920,7 +998,7 @@ export default class MainStyles {
                 alignContent: "space-between",
                 alignItems: "center",
                 justifyContent: "center",
-                zIndex: "1000",
+                zIndex: 1000,
                 backgroundColor: "#FFFFFF",
                 paddingLeft: 20,
                 paddingRight: 20,
@@ -955,16 +1033,26 @@ export default class MainStyles {
                 backgroundColor: "#F9FAFC",
                 height: "100%"
             },
-            courseAssignmentMainContainer: {
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: 'flex-start',
-                backgroundColor: "#F9FAFC",
-                width: '96%',
-                flex: 'none',
-                height: 'auto',
-                paddingBottom: 30,
-            },
+            courseAssignmentMainContainer: Platform.OS === 'web' ?
+                {
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: 'flex-start',
+                    backgroundColor: "#F9FAFC",
+                    width: '96%',
+                    flex: 'none',
+                    height: 'auto',
+                    paddingBottom: 30,
+                } :
+                {
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: 'flex-start',
+                    backgroundColor: "#F9FAFC",
+                    width: '96%',
+                    height: 'auto',
+                    paddingBottom: 30,
+                },
             groupScreenMainContainer: {
                 display: "flex",
                 flexDirection: "row",
@@ -994,7 +1082,7 @@ export default class MainStyles {
                 borderTopRightRadius: 10,
                 backgroundColor: "#F9FAFC",
             },
-            eventPageMessageBoardInnerCard: {
+            eventPageMessageBoardInnerCard: Platform.OS === 'web' ? {
                 wordBreak: "break-word",
                 marginTop: 0,
                 paddingTop: 0,
@@ -1007,7 +1095,21 @@ export default class MainStyles {
                 fontFamily: "Graphik-Regular-App",
                 fontSize: 16,
                 lineHeight: 22,
-            },
+            } :
+                {
+
+                    marginTop: 0,
+                    paddingTop: 0,
+                    paddingBottom: 0,
+                    borderTopLeftRadius: 0,
+                    borderTopRightRadius: 0,
+                    borderBottomLeftRadius: 10,
+                    borderBottomRightRadius: 10,
+                    backgroundColor: "#ffffff",
+                    fontFamily: "Graphik-Regular-App",
+                    fontSize: 16,
+                    lineHeight: 22,
+                },
             eventPageMessageBoardLeft: {
                 alignSelf: "center"
             },
@@ -1066,31 +1168,55 @@ export default class MainStyles {
                 alignItems: 'flex-start',
                 justifyContent: 'flex-start',
             },
-            ResourcesMyGroupsNoWrap: {
-                overflow: "scroll",
-                overflowY: "hidden",
-                minHeight: 375,
-                flexWrap: "nowrap",
-                // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
-                flexGrow: 1,
-                width: "100%",
-                flexDirection: "row",
-                justifyContent: "flex-start",
-                alignItems: "flex-start"
-            },
-            ResourcesMyGroupsWrap: {
-                overflow: "scroll",
-                overflowY: "hidden",
-                minHeight: "calc(100vw + 100vh + 10rem)",
-                flexWrap: "wrap",
-                // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
-                flexGrow: 1,
-                width: "100%",
-                flexDirection: "row",
-                justifyContent: "flex-start",
-                alignItems: "flex-start",
-                alignContent: "flex-start"
-            },
+            ResourcesMyGroupsNoWrap: Platform.OS === 'web' ?
+                {
+                    overflow: "scroll",
+                    overflowY: "hidden",
+                    minHeight: 375,
+                    flexWrap: "nowrap",
+                    // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
+                    flexGrow: 1,
+                    width: "100%",
+                    flexDirection: "row",
+                    justifyContent: "flex-start",
+                    alignItems: "flex-start"
+                } :
+                {
+                    overflow: "scroll",
+                    minHeight: 375,
+                    flexWrap: "nowrap",
+                    // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
+                    flexGrow: 1,
+                    width: "100%",
+                    flexDirection: "row",
+                    justifyContent: "flex-start",
+                    alignItems: "flex-start"
+                },
+            ResourcesMyGroupsWrap: Platform.OS === 'web' ?
+                {
+                    overflow: "scroll",
+                    minHeight: "calc(100vw + 100vh + 10rem)",
+                    flexWrap: "wrap",
+                    // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
+                    flexGrow: 1,
+                    width: "100%",
+                    flexDirection: "row",
+                    justifyContent: "flex-start",
+                    alignItems: "flex-start",
+                    alignContent: "flex-start"
+                } :
+                {
+                    overflow: "scroll",
+                    minHeight: "calc(100vw + 100vh + 10rem)",
+                    flexWrap: "wrap",
+                    // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
+                    flexGrow: 1,
+                    width: "100%",
+                    flexDirection: "row",
+                    justifyContent: "flex-start",
+                    alignItems: "flex-start",
+                    alignContent: "flex-start"
+                },
             profileMyGroupsWrap: {
                 // overflowX: "scroll",
                 // overflowY: "hidden",
@@ -1142,7 +1268,7 @@ export default class MainStyles {
                 marginLeft: 30,
                 marginTop: 30,
                 backgroundColor: "#ffffff",
-                borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+                borderRadius: 4, shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.19)", shadowRadius: 30,
                 height: '100%',
             },
             resourceContentRightContainer: {
@@ -1155,7 +1281,7 @@ export default class MainStyles {
                 marginTop: 30,
                 backgroundColor: "#ffffff",
                 borderRadius: 4,
-                boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+                shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30,
                 height: 900
             },
             resourceContentCurrentSeriesContainer: {
@@ -1174,7 +1300,7 @@ export default class MainStyles {
                 marginRight: "10px",
                 flex: 1,
                 borderRadius: 4,
-                boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+                shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30,
                 borderColor: "#F9FAFC"
             },
             resourceContentCurrentSeriesIframeContainer: {
@@ -1211,7 +1337,7 @@ export default class MainStyles {
                 marginBottom: 53,
                 flex: 1,
                 borderRadius: 4,
-                boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+                shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30,
                 borderColor: "#F9FAFC",
                 backgroundColor: "#F9FAFC",
                 minHeight: 250
@@ -1252,7 +1378,7 @@ export default class MainStyles {
                 marginTop: 30,
                 backgroundColor: "#ffffff",
                 borderRadius: 4,
-                boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+                shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30,
             },
             resourceContentEpisodeRightContainer: {
                 flex: 30,
@@ -1265,7 +1391,7 @@ export default class MainStyles {
                 marginTop: 30,
                 backgroundColor: "#ffffff",
                 borderRadius: 4,
-                boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+                shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30,
                 height: 900
             },
             resourceContentEpisodesContainer: {
@@ -1281,7 +1407,7 @@ export default class MainStyles {
                 marginBottom: "25px",
                 borderRadius: 4,
                 width: '100%',
-                boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+                shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30,
                 borderColor: "#ffffff",
                 height: Dimensions.get('window').width * 0.18
             },
@@ -1328,13 +1454,21 @@ export default class MainStyles {
                 overflow: "hidden",
                 position: "absolute"
             },
-            resourcefileFieldWrapper: {
-                alignSelf: "center",
-                top: "5vw",
-                width: "50%",
-                overflow: "none",
-                position: "absolute"
-            },
+            resourcefileFieldWrapper: Platform.OS === 'web' ?
+                {
+                    alignSelf: "center",
+                    top: "5vw",
+                    width: "50%",
+                    overflow: "none",
+                    position: "absolute"
+                } :
+                {
+                    alignSelf: "center",
+                    top: "5vw",
+                    width: "50%",
+                    overflow: "hidden",
+                    position: "absolute"
+                },
             resourceImageIcon: {
                 color: "#aaaaaa"
             },
@@ -1346,7 +1480,9 @@ export default class MainStyles {
                 width: "100%",
                 paddingRight: 30,
                 paddingLeft: 30,
-                boxShadow: "0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                shadowOffset: { height: 0, width: 6 },
+                shadowRadius: 20,
+                shadowColor: "rgba(0,0,0,0.19)",
                 marginTop: 30
             },
             courseConversationCard: {
@@ -1357,7 +1493,9 @@ export default class MainStyles {
                 width: 200,
                 paddingRight: 0,
                 paddingLeft: 0,
-                boxShadow: "0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+                shadowOffset: { height: 0, width: 6 },
+                shadowRadius: 20,
+                shadowColor: "rgba(0,0,0,0.19)",
                 marginTop: 30,
                 marginRight: 20,
             },
@@ -1392,16 +1530,27 @@ export default class MainStyles {
                 marginTop: 30,
                 paddingRight: 12
             },
-            resourcesOverviewRightCard: {
-                display: "inline",
-                marginTop: 30,
-                overflow: "visible",
-                width: "100%",
-                paddingTop: 40,
-                paddingLeft: 30,
-                paddingRight: 30,
+            resourcesOverviewRightCard: Platform.OS === 'web' ?
+                {
+                    display: "inline",
+                    marginTop: 30,
+                    overflow: "visible",
+                    width: "100%",
+                    paddingTop: 40,
+                    paddingLeft: 30,
+                    paddingRight: 30,
 
-            },
+                } :
+                {
+                    display: "flex",
+                    marginTop: 30,
+                    overflow: "visible",
+                    width: "100%",
+                    paddingTop: 40,
+                    paddingLeft: 30,
+                    paddingRight: 30,
+
+                },
             myProfileErrorValidation: {
                 color: "red",
                 fontWeight: "bold",
@@ -1428,13 +1577,21 @@ export default class MainStyles {
                 //    backgroundColor: "#000000", 
                 maxHeight: "450px"
             },
-            resourceHeaderImg: {
-                position: "relative",
-                width: "100%",
-                height: "100%",
-                opacity: 0.5,
-                filter: "grayscale(1)",
-            },
+            resourceHeaderImg: Platform.OS === 'web' ?
+                {
+                    position: "relative",
+                    width: "100%",
+                    height: "100%",
+                    opacity: 0.5,
+                    filter: "grayscale(1)",
+                } :
+                {
+                    position: "relative",
+                    width: "100%",
+                    height: "100%",
+                    opacity: 0.5,
+
+                },
             resourceHeaderImgView: {
                 backgroundColor: "#000000",
                 position: "relative",
@@ -1586,22 +1743,33 @@ export default class MainStyles {
             courseHomeSyllabusContainer: {
                 flexDirection: 'row',
             },
-            CourseHomeActivityContainer: {
-                flex: 5,
-                flexDirection: "row",
-                marginTop: 30,
-                width: '90%',
-                paddingBottom: 50,
-                borderBottomWidth: "1px",
-                borderBottomStyle: "solid",
-                borderBottomColor: "#333333",
-            },
+            CourseHomeActivityContainer: Platform.OS === 'web' ?
+                {
+                    flex: 5,
+                    flexDirection: "row",
+                    marginTop: 30,
+                    width: '90%',
+                    paddingBottom: 50,
+                    borderBottomWidth: 1,
+                    borderBottomStyle: "solid",
+                    borderBottomColor: "#333333",
+                } :
+                {
+                    flex: 5,
+                    flexDirection: "row",
+                    marginTop: 30,
+                    width: '90%',
+                    paddingBottom: 50,
+                    borderBottomWidth: 1,
+
+                    borderBottomColor: "#333333",
+                },
             courseHomeCalendar: {
                 width: '90%',
                 borderColor: '#FFFFFF',
                 paddingLeft: 60,
                 paddingRight: 60,
-                boxShadow: '0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+                shadowOffset: { width: 0, height: 6 }, shadowColor: "rgba(0, 0, 0, 0.19)", shadowRadius: 20,
                 marginTop: 15,
                 paddingTop: 20,
                 paddingBottom: 20
@@ -1649,16 +1817,26 @@ export default class MainStyles {
                 fontSize: 20,
                 lineHeight: 30
             },
-            courseDetailButtonTrio: {
-                flex: 5,
-                flexDirection: "row",
-                marginTop: 30,
-                borderBottomWidth: "1px",
-                borderBottomStyle: "solid",
-                borderBottomColor: "#333333",
-                width: '95%',
-                paddingBottom: 20
-            },
+            courseDetailButtonTrio: Platform.OS === 'web' ?
+                {
+                    flex: 5,
+                    flexDirection: "row",
+                    marginTop: 30,
+                    borderBottomWidth: 1,
+                    borderBottomStyle: "solid",
+                    borderBottomColor: "#333333",
+                    width: '95%',
+                    paddingBottom: 20
+                } :
+                {
+                    flex: 5,
+                    flexDirection: "row",
+                    marginTop: 30,
+                    borderBottomWidth: 1,
+                    borderBottomColor: "#333333",
+                    width: '95%',
+                    paddingBottom: 20
+                },
             courseMessageBoardButtonsView: {
                 marginRight: 10
             },
@@ -1718,8 +1896,8 @@ export default class MainStyles {
             },
             courseDetailLongDescriptionText: {
                 fontFamily: 'Graphik-Regular-App',
-                fontSize: '16px',
-                lineHeight: '26px',
+                fontSize: 16,
+                lineHeight: 26,
                 color: "#333333",
                 marginTop: 0,
                 paddingTop: 0,
@@ -2015,7 +2193,7 @@ export default class MainStyles {
                     marginTop: 0,
                     width: '100%',
                     backgroundColor: "#ffffff",
-                    borderRadius: 4, boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+                    borderRadius: 4, shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30,
                 },
                 resourceContentRightContainer: {
                     flexDirection: "column",
@@ -2027,7 +2205,7 @@ export default class MainStyles {
                     backgroundColor: "#ffffff",
                     borderRadius: 4,
                     width: '100%',
-                    boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+                    shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30,
                 },
                 resourceContentMoreSeriesIframeContainer: {
                     width: '100%',
@@ -2062,7 +2240,7 @@ export default class MainStyles {
                     marginBottom: 20,
                     flex: 1,
                     borderRadius: 4,
-                    boxShadow: "0px 5px 30px rgba(0, 0, 0, 0.05)",
+                    shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30,
                     borderColor: "#F9FAFC",
                     backgroundColor: "#F9FAFC"
                 },
@@ -2079,14 +2257,22 @@ export default class MainStyles {
                     paddingTop: 0,
                     backgroundColor: '#F9FAFC'
                 },
-                resourceContentEpisodesEpisodeTitle: {
-                    wordBreak: "break-word",
-                    fontFamily: "Graphik-Bold-App",
-                    fontSize: 18,
-                    lineHeight: 25,
-                    color: "#333333",
-                    paddingBottom: 0
-                },
+                resourceContentEpisodesEpisodeTitle: Platform.OS === 'web' ?
+                    {
+                        wordBreak: "break-word",
+                        fontFamily: "Graphik-Bold-App",
+                        fontSize: 18,
+                        lineHeight: 25,
+                        color: "#333333",
+                        paddingBottom: 0
+                    } :
+                    {
+                        fontFamily: "Graphik-Bold-App",
+                        fontSize: 18,
+                        lineHeight: 25,
+                        color: "#333333",
+                        paddingBottom: 0
+                    },
                 resourceContentEpisodeMainContainer: {
                     display: "flex",
                     flexDirection: "column",
@@ -2221,7 +2407,7 @@ export default class MainStyles {
                 courseDetailButtonTrio: {
                     flexDirection: "column",
                     paddingBottom: 90,
-                    borderBottomWidth: "0px",
+                    borderBottomWidth: 0,
                     borderBottomColor: "#ffffff",
                 },
                 courseDetailJCButtonMini: {
@@ -2298,14 +2484,23 @@ export default class MainStyles {
                 courseAssignmentMainContainer: {
                     flexDirection: "column",
                 },
-                courseAssignmentScreenLeftCard: {
-                    width: 'auto',
-                    overflowY: 'none',
-                    paddingTop: 30,
-                    paddingBottom: 80,
-                    marginRight: 30,
-                    height: 'auto'
-                },
+                courseAssignmentScreenLeftCard: Platform.OS === 'web' ?
+                    {
+                        width: 'auto',
+                        overflowY: 'none',
+                        paddingTop: 30,
+                        paddingBottom: 80,
+                        marginRight: 30,
+                        height: 'auto'
+                    } :
+                    {
+                        width: 'auto',
+
+                        paddingTop: 30,
+                        paddingBottom: 80,
+                        marginRight: 30,
+                        height: 'auto'
+                    },
                 pickerDropDown: {
                     width: "100%",
                 },
@@ -2432,7 +2627,7 @@ export default class MainStyles {
                     flex: 2,
                     marginBottom: 100,
                     flexDirection: 'column',
-                    borderBottomWidth: "0px",
+                    borderBottomWidth: 0,
                     borderBottomColor: "#ffffff",
                 },
                 coursePageMessageBoard: {
@@ -2807,9 +3002,13 @@ export default class MainStyles {
                 courseDetailActivityInnerCard: {
                     alignSelf: 'flex-start',
                 },
-                courseDetailHeading: {
-                    textAlign: 'flex-start',
-                },
+                courseDetailHeading: Platform.OS === 'web' ?
+                    {
+                        textAlign: 'flex-start'
+                    } :
+                    {
+                        textAlign: 'left'
+                    },
                 courseActivityDetails: {
                     alignSelf: 'flex-start'
                 },

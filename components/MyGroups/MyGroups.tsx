@@ -586,6 +586,7 @@ export default class MyGroups extends JCComponent<Props, State> {
   renderGroup(item: any): React.ReactNode {
 
     return (
+
       <Tooltip title={item.name}>
         <Card style={[this.styles.style.groupCard, { width: this.state.cardWidth }]} >
           <CardItem style={{ paddingLeft: 0, paddingRight: 0, paddingTop: 10, height: 50, paddingBottom: 0 }} >

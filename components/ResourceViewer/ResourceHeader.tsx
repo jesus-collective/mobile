@@ -68,7 +68,7 @@ class ResourceHeader extends JCComponent<EmptyProps, State> {
                             {state.currentSeries == null && state.isEditable ?
                                 <View style={this.styles.style.resourcefileInputWrapper}>
                                     <JCButton buttonType={ButtonTypes.Transparent} onPress={() => { null }}><Ionicons size={32} name="ios-image" style={this.styles.style.resourceImageIcon} /></JCButton>
-                                    <input style={{ fontSize: "200px", position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='image/*' onChange={(e) => actions.updateResourceImage(state.currentResource, e)} />
+                                    <input style={{ fontSize: 200, position: "absolute", top: "0px", right: "0px", opacity: "0" }} type="file" accept='image/*' onChange={(e) => actions.updateResourceImage(state.currentResource, e)} />
                                 </View>
                                 : null
                             }
