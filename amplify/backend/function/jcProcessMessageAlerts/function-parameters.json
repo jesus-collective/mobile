@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "api": {
+      "jcmobile": [
+        "read"
+      ]
+    },
+    "analytics": {
+      "jcmobile": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

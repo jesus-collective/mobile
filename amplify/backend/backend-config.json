@@ -73,6 +73,29 @@
           ]
         }
       ]
+    },
+    "jcProcessMessageAlerts": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "jcmobile",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ]
+        },
+        {
+          "category": "analytics",
+          "resourceName": "jcmobile",
+          "attributes": [
+            "Id",
+            "Region"
+          ]
+        }
+      ]
     }
   },
   "auth": {

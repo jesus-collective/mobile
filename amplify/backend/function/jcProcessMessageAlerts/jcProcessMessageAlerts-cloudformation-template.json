@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "Lambda resource stack creation using Amplify CLI",
+  "Description": "Lambda Function resource stack creation using Amplify CLI",
   "Parameters": {
     "CloudWatchRule": {
       "Type": "String",
@@ -65,12 +65,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "jcProcessDMAlerts",
+            "jcProcessMessageAlerts",
             {
               "Fn::Join": [
                 "",
                 [
-                  "jcProcessDMAlerts",
+                  "jcProcessMessageAlerts",
                   "-",
                   {
                     "Ref": "env"
@@ -121,12 +121,12 @@
           ]
         },
         "Runtime": "nodejs12.x",
+        "Layers": [],
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-jc-mobile-beta-155138-deployment",
-          "S3Key": "amplify-builds/jcProcessDMAlerts-6e487768714f32425935-build.zip"
-        },
-        "Layers": []
+          "S3Key": "amplify-builds/jcProcessMessageAlerts-4c444c424e5a6c674b6c-build.zip"
+        }
       }
     },
     "LambdaExecutionRole": {
@@ -135,12 +135,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "jcmobileLambdaRole93f16ea8",
+            "jcmobileLambdaRole0611a16b",
             {
               "Fn::Join": [
                 "",
                 [
-                  "jcmobileLambdaRole93f16ea8",
+                  "jcmobileLambdaRole0611a16b",
                   "-",
                   {
                     "Ref": "env"
@@ -233,13 +233,13 @@
         }
       }
     },
-    "LambdaTriggerPolicyDirectMessage": {
+    "LambdaTriggerPolicyMessage": {
       "DependsOn": [
         "LambdaExecutionRole"
       ],
       "Type": "AWS::IAM::Policy",
       "Properties": {
-        "PolicyName": "amplify-lambda-execution-policy-DirectMessage",
+        "PolicyName": "amplify-lambda-execution-policy-Message",
         "Roles": [
           {
             "Ref": "LambdaExecutionRole"
@@ -258,7 +258,7 @@
               ],
               "Resource": {
                 "Fn::ImportValue": {
-                  "Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:DirectMessageTable:StreamArn"
+                  "Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:MessageTable:StreamArn"
                 }
               }
             }
@@ -266,10 +266,10 @@
         }
       }
     },
-    "LambdaEventSourceMappingDirectMessage": {
+    "LambdaEventSourceMappingMessage": {
       "Type": "AWS::Lambda::EventSourceMapping",
       "DependsOn": [
-        "LambdaTriggerPolicyDirectMessage",
+        "LambdaTriggerPolicyMessage",
         "LambdaExecutionRole"
       ],
       "Properties": {
@@ -277,7 +277,7 @@
         "Enabled": true,
         "EventSourceArn": {
           "Fn::ImportValue": {
-            "Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:DirectMessageTable:StreamArn"
+            "Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:MessageTable:StreamArn"
           }
         },
         "FunctionName": {
