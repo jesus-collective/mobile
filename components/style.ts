@@ -394,10 +394,19 @@ export default class MainStyles {
                 color: '#000000',
                 paddingLeft: 10,
             },
-            adminCRMModal: {
-                fontFamily: "Graphik-Bold-App",
+            adminCRMTableEmailStatus: {
+                fontFamily: "Graphik-Regular-App",
                 color: '#000000',
                 paddingLeft: 10,
+            },
+            adminCRMModal: {
+                fontFamily: "Graphik-Regular-App",
+                color: '#000000',
+            },
+            adminCRMModalHeading: {
+                fontFamily: "Graphik-Bold-App",
+                color: '#000000',
+                fontSize: 24,
             },
             editableURLText: {
                 fontFamily: "Graphik-Bold-App",
@@ -2045,6 +2054,34 @@ export default class MainStyles {
                 marginTop: 30,
                 minHeight: 'auto'
             },
+            adminCRMTableRow: {
+                flex: 3, 
+                alignSelf: 'stretch', 
+                justifyContent: 'center'
+            },
+            adminCRMTableHeader: {
+                flex: 3, 
+                alignSelf: 'stretch', 
+            },
+            adminSubNav: {
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start', 
+                right: 15
+            },
+            adminSubNavMainContainer: {
+                display: 'flex', 
+                flexDirection: 'row', 
+                justifyContent: 'center', 
+                alignItems: 'center', 
+                width: '100%', 
+                marginTop: 25, 
+                marginBottom: 25
+            },
+            adminSubNavTogglesView: {
+                flexDirection: 'row'
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2504,6 +2541,20 @@ export default class MainStyles {
                 pickerDropDown: {
                     width: "100%",
                 },
+                adminSubNav: {
+                    flex: 3,
+                    justifyContent: 'flex-end',
+                    right: 0,
+                },
+                adminSubNavTogglesView: {
+                    flexDirection: 'column',
+                    marginLeft: 15,
+                    marginRight: 15,
+                },
+                adminInviteButton: {
+                    alignItems: 'center', 
+                    marginLeft: 20
+                }
             },
 
             // Media Query Desktop Large Tablet
@@ -2667,6 +2718,19 @@ export default class MainStyles {
                 },
                 courseZoomMainContainer: {
                     flexDirection: 'column',
+                },
+                adminCRMTableParagraph: {
+                    fontSize: 14,
+                },
+                adminCRMTableEmailStatus: {
+                    fontSize: 14,
+                    paddingLeft: 0,
+                },
+                adminCRMTableRow: {
+                    flex: 2.5,
+                },
+                adminCRMTableHeader: {
+                    flex: 2.5,
                 },
             },
 

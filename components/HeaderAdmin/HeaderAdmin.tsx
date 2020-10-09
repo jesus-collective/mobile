@@ -87,13 +87,7 @@ export default class HeaderJC extends JCComponent<Props> {
             <Ionicons name="md-menu" style={this.headerStyles.style.icon} />
           </Button>
         </Left>
-        <Body style={{
-          flex: 1,
-          flexDirection: 'row',
-          justifyContent: 'flex-start',
-          alignItems: 'flex-start', 
-          right: 15
-        }}>
+        <Body style={this.styles.style.adminSubNav}>
           <Button
             transparent
             data-testId="header-events"

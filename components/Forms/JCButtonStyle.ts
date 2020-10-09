@@ -106,6 +106,42 @@ export default EStyleSheet.create({
         fontSize: 16,
         padding: 5
     },
+    AdminAddButton: {
+        paddingTop: 7,
+        paddingBottom: 7,
+        paddingLeft: 7,
+        paddingRight: 7,
+        backgroundColor: "#F0493E",
+        boxShadow: "unset",
+        width: '100%',
+        marginTop: 10,
+    },
+    AdminAddText: {
+        color: "#FFFFFF",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        padding: 5, 
+        textAlign: 'center',
+        width: '100%'
+    },
+    AdminModalButton: {
+        backgroundColor: "#FFFFFF",
+    },
+    AdminModalText: {
+        color: "#000000",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        padding: 5
+    },
+    AdminModalOrangeButton: {
+        backgroundColor: "#FFFFFF",
+    },
+    AdminModalOrangeText: {
+        color: "#F0493E",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        padding: 5,
+    },
     courseAssignmentButton: {
         paddingTop: 6,
         paddingBottom: 6,
@@ -1173,6 +1209,9 @@ export default EStyleSheet.create({
         courseActivityTransparentRegularBlackButton: {
             marginRight: 13,
             marginBottom: 5,
+        },
+        AdminSmallOutlineButton: {
+            marginLeft: 0,
         },
     }
 })
