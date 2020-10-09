@@ -5,12 +5,12 @@ import { Text, TouchableOpacity } from 'react-native'
 import Accordion from './Accordion'
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
-
+ 
 import getTheme from '../../native-base-theme/components';
 import EditableText from '../../components/Forms/EditableText'
 import Validate from '../../components/Validate/Validate'
 import JCSwitch from '../../components/JCSwitch/JCSwitch';
-import { EditorState, convertToRaw } from 'draft-js';
+//import { EditorState, convertToRaw } from 'draft-js';
 
 import { API, graphqlOperation, Auth, Analytics } from 'aws-amplify';
 import { CreateGroupInput, CreateCourseInfoInput } from '../../src/API'
@@ -153,14 +153,14 @@ export default class CourseScreen extends JCComponent<Props, State>{
           effort: "",
           cost: "",
           ownerOrgID: "0000000000000",
-          promotionalText: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent()))
+         // promotionalText: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent()))
           //   organizerUser: { name: "" },
           //   instructors: [],
           //   course: []
         }
         const course: CreateCourseInfoInput = {
           id: z.id,
-          introduction: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent()))
+        //  introduction: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent()))
         }
         const isEditable = true
         this.setState({

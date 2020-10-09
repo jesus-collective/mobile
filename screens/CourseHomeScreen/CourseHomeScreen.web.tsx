@@ -19,7 +19,7 @@ import { CourseContext, CourseState } from '../../components/CourseViewer/Course
 import { CreateCourseWeekInput, CreateCourseLessonInput, CreateCourseTriadsInput } from 'src/API';
 import { EditorState, convertToRaw } from 'draft-js';
 
-
+ 
 interface Props {
   navigation: any
   route: any

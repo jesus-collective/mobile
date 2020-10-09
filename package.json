@@ -55,6 +55,7 @@
     "react-google-maps": "^9.4.5",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.0.tar.gz",
     "react-native-calendars": "^1.300.0",
+    "react-native-dev-menu": "^4.0.2",
     "react-native-extended-stylesheet": "^0.12.0",
     "react-native-gesture-handler": "^1.8.0",
     "react-native-maps": "0.27.1",

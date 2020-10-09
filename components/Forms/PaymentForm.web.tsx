@@ -5,7 +5,7 @@ import { ViewStyle, StyleSheet } from 'react-native';
 import { GetProductQuery } from '../../src/API';
 import { stateToHTML } from 'draft-js-export-html';
 import { convertFromRaw } from 'draft-js';
-
+ 
 
 interface Params {
     product: NonNullable<GetProductQuery>['getProduct'];
@@ -15,7 +15,7 @@ interface Params {
     onFailureCallback(details: any): void;
     onErrorCallback?(err: any): void;
 }
-
+ 
 export default function PaymentForm({ product, containerStyle, payPalWrapperStyle, onSuccessCallback, onFailureCallback, onErrorCallback }: Params): JSX.Element {
 
     const styles = StyleSheet.create({

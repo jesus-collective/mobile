@@ -2,7 +2,7 @@ import React from 'react';
 //import { Editor } from 'react-draft-wysiwyg';
 //import { Storage } from 'aws-amplify';
 
-import './react-draft-wysiwyg.css';
+//import './react-draft-wysiwyg.css';
 import * as customQueries from '../../src/graphql-custom/queries';
 //import * as queries from '../../src/graphql/queries';
 import * as mutations from '../../src/graphql/mutations';

@@ -2,7 +2,6 @@ import { Content, Left, Right, Body, StyleProvider, Container, Card, CardItem, B
 import * as React from 'react';
 import { Text, View, TextInput } from 'react-native'
 import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
-import ReactTooltip from "react-tooltip";
 import getTheme from '../../native-base-theme/components';
 import { TouchableOpacity } from 'react-native'
 import { CreateMessageInput, CreateDirectMessageInput } from '../../src/API'

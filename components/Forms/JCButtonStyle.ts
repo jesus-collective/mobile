@@ -14,7 +14,8 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset"
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0
     },
     PostOutlineText: {
         color: "#F0493E",
@@ -36,7 +37,8 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset"
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0
     },
     OutlineText: {
         color: "#F0493E",
@@ -55,7 +57,8 @@ export default EStyleSheet.create({
         backgroundColor: "#4A8AF7",
         borderWidth: 1,
         borderColor: "#4A8AF7",
-        boxShadow: "unset"
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0
     },
     CourseZoomText: {
         color: "#FFFFFF",
@@ -74,7 +77,8 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
     },
     AdminOutlineText: {
         color: "#F0493E",
@@ -93,7 +97,8 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
     },
     AdminSmallOutlineText: {
         color: "#F0493E",
@@ -113,7 +118,8 @@ export default EStyleSheet.create({
         backgroundColor: "#F0493E",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
         borderRadius: 4,
         justifyContent: 'center',
     },
@@ -135,7 +141,8 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset"
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0
     },
     OutlineBoldText: {
         color: "#F0493E",
@@ -156,7 +163,8 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
         height: 36,
     },
     OutlineSmallText: {
@@ -173,7 +181,8 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
         borderRadius: 4,
         display: 'flex',
         flexDirection: 'row',
@@ -199,7 +208,8 @@ export default EStyleSheet.create({
         backgroundColor: "#F0493E",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
         borderRadius: 4,
         display: 'flex',
         flexDirection: 'row',
@@ -224,7 +234,8 @@ export default EStyleSheet.create({
         backgroundColor: "#33333370",
         borderWidth: 1,
         borderColor: "#33333370",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
         borderRadius: 4,
         display: 'flex',
         flexDirection: 'row',
@@ -249,7 +260,8 @@ export default EStyleSheet.create({
         backgroundColor: "#F0493E",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
         borderRadius: 4,
         display: 'flex',
         flexDirection: 'row',
@@ -276,7 +288,8 @@ export default EStyleSheet.create({
         backgroundColor: "#F0493E",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
         borderRadius: 4,
     },
     SolidText: {
@@ -298,7 +311,8 @@ export default EStyleSheet.create({
         backgroundColor: "#F0493E",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
         borderRadius: 4,
     },
     courseCardSolidText: {
@@ -320,7 +334,8 @@ export default EStyleSheet.create({
         backgroundColor: "#F0493E",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
         borderRadius: 4
     },
     SolidProfileDeleteText: {
@@ -342,7 +357,8 @@ export default EStyleSheet.create({
         backgroundColor: "#F0493E",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
         borderRadius: 4,
         justifyContent: 'center',
     },
@@ -365,7 +381,8 @@ export default EStyleSheet.create({
         backgroundColor: "#F0493E",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
         borderRadius: 4,
         justifyContent: 'center',
     },
@@ -389,7 +406,8 @@ export default EStyleSheet.create({
         backgroundColor: "#F0493E",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
         borderRadius: 4,
     },
     SolidAboutMeText: {
@@ -410,7 +428,8 @@ export default EStyleSheet.create({
         backgroundColor: "#F0493E",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
         borderRadius: 4,
         zIndex: 1000,
     },
@@ -432,7 +451,8 @@ export default EStyleSheet.create({
         backgroundColor: "#F0493E",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
         borderRadius: 4,
         zIndex: 1000,
     },
@@ -455,7 +475,8 @@ export default EStyleSheet.create({
         backgroundColor: "#F0493E",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
         borderRadius: 4,
     },
     SolidRightMarginButtonDisabled: {
@@ -481,7 +502,8 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff00",
         borderWidth: 0,
         borderColor: "#ffffff00",
-        boxShadow: "unset"
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0
     },
     TransparentText: {
         color: "#ffffff",
@@ -498,7 +520,8 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff00",
         borderWidth: 0,
         borderColor: "#ffffff00",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
     },
     CourseSideBarText: {
         color: "#ffffff",
@@ -520,7 +543,8 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff00",
         borderWidth: 0,
         borderColor: "#ffffff00",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
     },
     CourseSideBarFirstText: {
         color: "#ffffff",
@@ -544,7 +568,8 @@ export default EStyleSheet.create({
         backgroundColor: "#F0493E",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
         borderRadius: 4,
         justifyContent: 'center',
     },
@@ -567,7 +592,8 @@ export default EStyleSheet.create({
         backgroundColor: "#F0493E",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
         borderRadius: 4,
         justifyContent: 'center',
     },
@@ -589,8 +615,9 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff00",
         borderWidth: 0,
         borderColor: "#ffffff",
-        boxShadow: "unset",
-        width: '100%', 
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
+        width: '100%',
         textAlign: 'center'
     },
     CourseTransparentBoldOrangeText: {
@@ -609,7 +636,8 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff00",
         borderWidth: 0,
         borderColor: "#ffffff00",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
         alignSelf: "flex-start"
     },
     TransparentNoPaddingText: {
@@ -627,7 +655,8 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff00",
         borderWidth: 0,
         borderColor: "#ffffff00",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
         alignSelf: "flex-start"
     },
     TransparentCourseText: {
@@ -647,7 +676,8 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff00",
         borderWidth: 0,
         borderColor: "#ffffff00",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
         alignSelf: "flex-start"
     },
     TransparentActivityCourseText: {
@@ -667,7 +697,8 @@ export default EStyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         borderColor: "#C4CDD5",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
         alignSelf: "center",
         height: 32,
         marginBottom: 50,
@@ -692,7 +723,8 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff",
         borderWidth: 0,
         borderColor: "#ffffff",
-        boxShadow: "unset"
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0
     },
     courseTransparentRegularBlackText: {
         color: "#000000",
@@ -713,7 +745,8 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff",
         borderWidth: 0,
         borderColor: "#ffffff",
-        boxShadow: "unset"
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0
     },
     courseActivityTransparentRegularBlackText: {
         color: "#000000",
@@ -734,7 +767,8 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff",
         borderWidth: 0,
         borderColor: "#ffffff",
-        boxShadow: "unset"
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0
     },
     TransparentBoldBlackText: {
         color: "#000000",
@@ -751,7 +785,8 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff",
         borderWidth: 0,
         borderColor: "#ffffff",
-        boxShadow: "unset"
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0
     },
     TransparentBoldBlackNoMarginText: {
         color: "#000000",
@@ -768,7 +803,8 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff",
         borderWidth: 0,
         borderColor: "#ffffff",
-        boxShadow: "unset"
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0
     },
     TransparentBoldGreyNoMarginText: {
         color: "#333333",
@@ -790,7 +826,8 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff00",
         borderWidth: 0,
         borderColor: "#ffffff",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
     },
     TransparentBoldOrangeText: {
         color: "#F0493E",
@@ -810,7 +847,8 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff00",
         borderWidth: 0,
         borderColor: "#ffffff",
-        boxShadow: "unset"
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0
     },
     TransparentRegularOrangeText: {
         color: "#F0493E",
@@ -833,7 +871,8 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset"
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0
     },
     OutlineBoldNoMarginText: {
         color: "#F0493E",
@@ -856,7 +895,8 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset"
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0
     },
     courseMktOutlineBoldNoMarginText: {
         color: "#F0493E",
@@ -879,7 +919,8 @@ export default EStyleSheet.create({
         backgroundColor: "#ffffff00",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
         height: 25,
         borderRadius: 4
     },
@@ -902,7 +943,8 @@ export default EStyleSheet.create({
         backgroundColor: "#F0493E",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
         borderRadius: 4,
         alignSelf: "flex-end"
     },
@@ -925,7 +967,8 @@ export default EStyleSheet.create({
         backgroundColor: "#F0493E",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
         borderRadius: 4,
         alignSelf: "flex-end"
     },
@@ -948,7 +991,8 @@ export default EStyleSheet.create({
         backgroundColor: "#F0493E",
         borderWidth: 1,
         borderColor: "#F0493E",
-        boxShadow: "unset",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
         borderRadius: 4,
         alignSelf: "flex-end"
     },
