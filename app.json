@@ -32,10 +32,10 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.jesuscollective.iosapp",
-      "buildNumber": "8"
+      "buildNumber": "9"
     },
     "android": {
-      "versionCode": 8,
+      "versionCode": 9,
       "package": "com.jesuscollective.androidapp"
     },
     "web": {
