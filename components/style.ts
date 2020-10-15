@@ -1504,7 +1504,7 @@ export default class MainStyles {
                 paddingLeft: 0,
                 shadowOffset: { height: 0, width: 6 },
                 shadowRadius: 20,
-                shadowColor: "rgba(0,0,0,0.19)",
+                shadowColor: "rgba(0,0,0,1)",
                 marginTop: 30,
                 marginRight: 20,
             },
