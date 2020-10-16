@@ -238,7 +238,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                                 inputStyle={state.isEditable && state.editMode ? { borderWidth: 1, borderColor: "#dddddd", marginTop: 0, marginBottom: 0, width: "100%", paddingTop: 5, paddingRight: 5, paddingBottom: 5, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, height: 30 } : { borderWidth: 1, borderColor: "#dddddd", marginTop: 5, marginBottom: 5, width: "100%", paddingTop: 5, paddingRight: 5, paddingBottom: 5, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, height: 30 }}
                                 value={item.duration} isEditable={state.isEditable && state.editMode}></EditableText>
                             </Text>
-
+                              
                             {state.isEditable && state.editMode ?
                               <Picker
 
