@@ -2082,6 +2082,25 @@ export default class MainStyles {
             adminSubNavTogglesView: {
                 flexDirection: 'row'
             },
+            courseDetailTime: {
+                flex: 0.4, 
+                height: 'auto', 
+                flexDirection: 'row', 
+                marginLeft: 20,
+            },
+            courseDetailHR: {
+                borderBottomColor: '#333333', 
+                opacity: 0.2, 
+                borderBottomWidth: 1, 
+                width: '95%', 
+                marginBottom: 30, 
+                marginTop: 50
+            },
+            courseHomeCalendarLabels: {
+                flexDirection: 'row', 
+                width: '100%', 
+                justifyContent: 'flex-start'
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2676,7 +2695,7 @@ export default class MainStyles {
                 },
                 courseDetailButtonTrio: {
                     flex: 2,
-                    marginBottom: 100,
+                    marginBottom: 70,
                     flexDirection: 'column',
                     borderBottomWidth: 0,
                     borderBottomColor: "#ffffff",
@@ -2731,6 +2750,17 @@ export default class MainStyles {
                 },
                 adminCRMTableHeader: {
                     flex: 2.5,
+                },
+                courseDetailTime: {
+                    flex: 0.6,
+                    marginLeft: 0
+                },
+                courseDetailHR: {
+                    flex: 0,
+                },
+                courseHomeCalendarLabels: {
+                    flexDirection: 'column',
+                    marginTop: 15,
                 },
             },
 
