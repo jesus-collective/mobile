@@ -263,7 +263,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                               </Picker>
                               :
                               {
-                                'assignment': (<Text style={{ alignSelf: 'flex-start' }}>
+                                'assignment': (<Text style={{ alignSelf: 'flex-start', marginTop: 3 }}>
                                   <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
                                     source={require('../../assets/svg/document.svg')} />Assignment</Text>),
                                 'respond': (<Text style={{ alignSelf: 'center' }}>
