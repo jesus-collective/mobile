@@ -227,9 +227,9 @@ class CourseDetailImpl extends JCComponent<Props, State>{
 
                           <Container style={this.styles.style.courseActivityDetails}>
                             <Text style={state.isEditable && state.editMode ? { marginRight: 10, paddingTop: 0 } : { marginRight: 0, paddingTop: 4 }}>
-                              {state.isEditable ?
+                              {state.isEditable && state.editMode ?
                                 null
-                                : <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5, marginRight: 3 }} source={require('../../assets/svg/time.svg')} />
+                                : <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 4, marginRight: 3 }} source={require('../../assets/svg/time.svg')} />
                               }
                               <EditableText onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "duration", e) }}
                                 placeholder="Duration" multiline={false}
@@ -275,7 +275,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                                 'youtube': (<Text style={{ alignSelf: 'flex-start' }}>
                                   <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
                                     source={require('../../assets/svg/document.svg')} />Youtube</Text>)
-                              }[item.lessonType] || (<Text style={{ alignSelf: 'flex-start' }}>
+                              }[item.lessonType] || (<Text style={{ alignSelf: 'flex-start', marginTop: 3 }}>
                                 <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
                                   source={require('../../assets/svg/document.svg')} />Zoom</Text>)
                             }

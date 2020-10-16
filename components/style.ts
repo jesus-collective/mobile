@@ -2762,6 +2762,10 @@ export default class MainStyles {
                     flexDirection: 'column',
                     marginTop: 15,
                 },
+                courseTimeNonEditable: {
+                    marginTop: 0,
+                    paddingTop: 0,
+                },
             },
 
             '@media (min-width: 769px) and (max-width: 1279px)': {
