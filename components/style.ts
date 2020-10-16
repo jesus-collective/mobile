@@ -2462,7 +2462,7 @@ export default class MainStyles {
                 },
                 courseDetailButtonTrio: {
                     flexDirection: "column",
-                    paddingBottom: 90,
+                    paddingBottom: 60,
                     borderBottomWidth: 0,
                     borderBottomColor: "#ffffff",
                 },
