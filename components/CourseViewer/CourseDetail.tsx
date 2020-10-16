@@ -272,7 +272,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                                 'zoom': (<Text style={{ alignSelf: 'flex-start' }}>
                                   <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
                                     source={require('../../assets/svg/document.svg')} />Zoom</Text>),
-                                'youtube': (<Text style={{ alignSelf: 'flex-start' }}>
+                                'youtube': (<Text style={{ alignSelf: 'flex-start', marginTop: 3 }}>
                                   <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
                                     source={require('../../assets/svg/document.svg')} />Youtube</Text>)
                               }[item.lessonType] || (<Text style={{ alignSelf: 'flex-start', marginTop: 3 }}>
