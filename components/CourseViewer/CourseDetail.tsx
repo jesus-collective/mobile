@@ -396,7 +396,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
             <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.date}</Text>
             <Text style={this.styles.style.courseDetailLessonText}>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
           </Container>
-          <Container style={{ flex: 0.4, height: 'auto', flexDirection: 'row', marginLeft: 20 }}>
+          <Container style={this.styles.style.courseDetailAssignmentTime2}>
             <Image style={{ width: "22px", height: "22px", marginRight: 5, marginTop: 43 }} source={require('../../assets/svg/calendar.svg')}></Image>
             <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Regular-App', color: '#333333', marginTop: 45 }}>{lesson.time}</Text>
           </Container>
@@ -417,7 +417,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
       <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
         <JCButton buttonType={ButtonTypes.courseAssignment} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
         <Container style={this.styles.style.courseZoomMainContainer}>
-          <Container style={{ flex: 0.6, height: 'auto' }}>
+          <Container style={this.styles.style.courseDetailMainHeading}>
             <Text style={{ fontSize: 20, lineHeight: 30, fontFamily: 'Graphik-Regular-App', color: '#333333', textTransform: 'uppercase' }}>{week.name}</Text>
             <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.date}</Text>
             <Text style={this.styles.style.courseDetailLessonText}>Lesson {state.activeLesson + 1} - {lesson.name}</Text>

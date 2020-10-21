@@ -2119,6 +2119,16 @@ export default class MainStyles {
                 flexDirection: 'row', 
                 marginLeft: 20
             },
+            courseDetailAssignmentTime2: {
+                flex: 0.4, 
+                height: 'auto', 
+                flexDirection: 'row', 
+                marginLeft: 20
+            },
+            courseDetailMainHeading: {
+                flex: 0.6, 
+                height: 'auto'
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2612,6 +2622,12 @@ export default class MainStyles {
                 courseDetailAssignmentTime: {
                     flex: 0.1, 
                     marginLeft: 0,
+                },
+                courseDetailAssignmentTime2: {
+                    marginLeft: 0,
+                },
+                courseDetailMainHeading: {
+                    flex: 0.75, 
                 },
             },
 
