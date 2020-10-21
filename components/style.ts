@@ -2573,7 +2573,17 @@ export default class MainStyles {
                 adminInviteButton: {
                     alignItems: 'center', 
                     marginLeft: 20
-                }
+                },
+                courseZoomMainContainer: {
+                    flexDirection: 'column',
+                    flex: 1,
+                },
+                courseDetailTime: {
+                    flex: 0.4, 
+                    height: 'auto', 
+                    marginLeft: 0,
+                    top: 50,
+                },
             },
 
             // Media Query Desktop Large Tablet
