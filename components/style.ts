@@ -2101,6 +2101,24 @@ export default class MainStyles {
                 width: '100%', 
                 justifyContent: 'flex-start'
             },
+            courseDetailYoutube: {
+                flexDirection: 'row', 
+                marginTop: 30, 
+                flex: 0.5
+            },
+            courseDetailHr: {
+                borderBottomColor: '#333333', 
+                opacity: 0.2, 
+                borderBottomWidth: 1, 
+                width: '95%', 
+                marginBottom: 30, 
+            },
+            courseDetailAssignmentTime: {
+                flex: 0.4, 
+                height: 'auto', 
+                flexDirection: 'row', 
+                marginLeft: 20
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2518,6 +2536,7 @@ export default class MainStyles {
                 },
                 courseDetailLessonText: {
                     width: '95%',
+                    marginBottom: 0,
                 },
                 courseDetailCoureInfoContainer: {
                     //maxHeight: 225,
@@ -2576,13 +2595,23 @@ export default class MainStyles {
                 },
                 courseZoomMainContainer: {
                     flexDirection: 'column',
-                    flex: 1,
+                    flex: 0.6,
                 },
                 courseDetailTime: {
                     flex: 0.4, 
                     height: 'auto', 
                     marginLeft: 0,
                     top: 50,
+                },
+                courseDetailYoutube: {
+                    flexDirection: 'column', 
+                },
+                courseDetailHr: {
+                    flex: 0.1
+                },
+                courseDetailAssignmentTime: {
+                    flex: 0.1, 
+                    marginLeft: 0,
                 },
             },
 

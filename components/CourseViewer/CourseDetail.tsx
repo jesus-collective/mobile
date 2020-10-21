@@ -335,7 +335,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
     return (
       <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
         <JCButton buttonType={ButtonTypes.CourseHomeSidebarTop} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
-        <Container style={{ flexDirection: 'row', marginTop: 30, flex: 0.5 }}>
+        <Container style={this.styles.style.courseDetailYoutube}>
           <Container style={{ flex: 0.9, height: 'auto' }}>
             <Text style={{ fontSize: 20, lineHeight: 30, fontFamily: 'Graphik-Regular-App', color: '#333333', textTransform: 'uppercase' }}>{week.name}</Text>
             <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.date}</Text>
@@ -345,7 +345,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
           <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Regular-App', color: '#333333', marginTop: 45 }}>{lesson.time}</Text>
         </Container>
         <Container>
-          <Container style={{ borderBottomColor: '#333333', opacity: 0.2, borderBottomWidth: 1, width: '95%', marginBottom: 30 }}></Container>
+          <Container style={this.styles.style.courseDetailHr}></Container>
           {lesson.zoomRecording && lesson.zoomRecording != "" ?
             <iframe title="Youtube" src={"https://www.youtube.com/embed/" + lesson.zoomRecording}
               style={{ width: "40vw", height: "30vw", marginBottom: 20 }}
@@ -422,7 +422,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
             <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.date}</Text>
             <Text style={this.styles.style.courseDetailLessonText}>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
           </Container>
-          <Container style={{ flex: 0.4, height: 'auto', flexDirection: 'row', marginLeft: 20 }}>
+          <Container style={this.styles.style.courseDetailAssignmentTime}>
             <Image style={{ width: "22px", height: "22px", marginRight: 5, marginTop: 43 }} source={require('../../assets/svg/calendar.svg')}></Image>
             <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Regular-App', color: '#333333', marginTop: 45 }}>{lesson.time}</Text>
           </Container>
