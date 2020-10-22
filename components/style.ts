@@ -3147,7 +3147,7 @@ export default class MainStyles {
                     width: '100%'
                 },
                 courseDetailRightContainer: {
-                    top: 750,
+                    top: '420vh',
                 },
                 courseDetailMessageBoardContainer: {
                     marginTop: 100,
@@ -3173,9 +3173,10 @@ export default class MainStyles {
                 },
                 courseDetailLeftContainer: {
                     flex: 10,
+                    minHeight: 'auto',
                 },
                 courseDetailCoureInfoContainer: {
-                    marginBottom: 200,
+                    marginBottom: 30,
                 },
                 courseHomeCourseActivityText: {
                     marginTop: 75
