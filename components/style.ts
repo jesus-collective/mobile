@@ -2672,6 +2672,9 @@ export default class MainStyles {
                     flexDirection: 'column',
                     marginTop: 15,
                 },
+                courseDetailMessageBoardContainer: {
+                    marginTop: 40,
+                },
             },
 
             // Media Query Desktop Large Tablet
