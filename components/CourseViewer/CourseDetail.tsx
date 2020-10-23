@@ -373,8 +373,8 @@ class CourseDetailImpl extends JCComponent<Props, State>{
             {lesson.zoomRecording && lesson.zoomRecording != "" ? <JCButton buttonType={ButtonTypes.CourseZoom} onPress={() => { this.navigate(lesson.zoomRecording) }}>Watch Zoom Recording</JCButton> : null}
           </Container>
           <Container style={this.styles.style.courseDetailTime}>
-            <Image style={{ width: "22px", height: "22px", marginRight: 5, marginTop: 43 }} source={require('../../assets/svg/calendar.svg')}></Image>
-            <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Regular-App', color: '#333333', marginTop: 45 }}>{lesson.time}</Text>
+            <Image style={this.styles.style.courseDetailCalendarImage2} source={require('../../assets/svg/calendar.svg')}></Image>
+            <Text style={this.styles.style.courseDetailCalendarText2}>{lesson.time}</Text>
           </Container>
         </Container>
         <Container>

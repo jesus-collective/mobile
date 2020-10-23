@@ -2148,6 +2148,19 @@ export default class MainStyles {
                 color: '#333333', 
                 marginTop: 45
             },
+            courseDetailCalendarImage2: {
+                width: "22px", 
+                height: "22px", 
+                marginRight: 5, 
+                marginTop: 43
+            },
+            courseDetailCalendarText2: {
+                fontSize: 16, 
+                lineHeight: 21, 
+                fontFamily: 'Graphik-Regular-App', 
+                color: '#333333', 
+                marginTop: 45
+            },
             courseDetailLeftSide: {
                 flex: 70, 
                 flexDirection: "column", 
@@ -3263,6 +3276,12 @@ export default class MainStyles {
                 },
                 courseDetailCalendarText: {
                     marginTop: 3,
+                },
+                courseDetailCalendarImage2: {
+                    marginTop: 15,
+                },
+                courseDetailCalendarText2: {
+                    marginTop: 18,
                 },
                 courseDetailLeftSide: {
                     flex: 'none',
