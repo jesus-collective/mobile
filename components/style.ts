@@ -2668,6 +2668,10 @@ export default class MainStyles {
                 courseDetailMainHeading: {
                     flex: 0.75, 
                 },
+                courseHomeCalendarLabels: {
+                    flexDirection: 'column',
+                    marginTop: 15,
+                },
             },
 
             // Media Query Desktop Large Tablet
@@ -3186,7 +3190,7 @@ export default class MainStyles {
                     width: '100%'
                 },
                 courseDetailRightContainer: {
-                    top: '420vh',
+                    flex: '420vh',
                 },
                 courseDetailMessageBoardContainer: {
                     marginTop: 100,
