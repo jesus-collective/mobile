@@ -397,8 +397,8 @@ class CourseDetailImpl extends JCComponent<Props, State>{
             <Text style={this.styles.style.courseDetailLessonText}>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
           </Container>
           <Container style={this.styles.style.courseDetailAssignmentTime2}>
-            <Image style={{ width: "22px", height: "22px", marginRight: 5, marginTop: 43 }} source={require('../../assets/svg/calendar.svg')}></Image>
-            <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Regular-App', color: '#333333', marginTop: 45 }}>{lesson.time}</Text>
+            <Image style={this.styles.style.courseDetailCalendarImage} source={require('../../assets/svg/calendar.svg')}></Image>
+            <Text style={this.styles.style.courseDetailCalendarText}>{lesson.time}</Text>
           </Container>
         </Container>
         <Container>
@@ -423,8 +423,8 @@ class CourseDetailImpl extends JCComponent<Props, State>{
             <Text style={this.styles.style.courseDetailLessonText}>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
           </Container>
           <Container style={this.styles.style.courseDetailAssignmentTime}>
-            <Image style={{ width: "22px", height: "22px", marginRight: 5, marginTop: 43 }} source={require('../../assets/svg/calendar.svg')}></Image>
-            <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Regular-App', color: '#333333', marginTop: 45 }}>{lesson.time}</Text>
+            <Image style={this.styles.style.courseDetailCalendarImage} source={require('../../assets/svg/calendar.svg')}></Image>
+            <Text style={this.styles.style.courseDetailCalendarText}>{lesson.time}</Text>
           </Container>
         </Container>
         <Container>

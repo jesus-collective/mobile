@@ -2141,6 +2141,13 @@ export default class MainStyles {
                 marginRight: 5, 
                 marginTop: 43
             },
+            courseDetailCalendarText: {
+                fontSize: 16, 
+                lineHeight: 21, 
+                fontFamily: 'Graphik-Regular-App', 
+                color: '#333333', 
+                marginTop: 45
+            },
             courseDetailLeftSide: {
                 flex: 70, 
                 flexDirection: "column", 
@@ -3253,6 +3260,9 @@ export default class MainStyles {
                 },
                 courseDetailCalendarImage: {
                     marginTop: 0,
+                },
+                courseDetailCalendarText: {
+                    marginTop: 3,
                 },
                 courseDetailLeftSide: {
                     flex: 'none',
