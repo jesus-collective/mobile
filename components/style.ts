@@ -2135,6 +2135,12 @@ export default class MainStyles {
                 flex: 0.6, 
                 height: 'auto'
             },
+            courseDetailCalendarImage: {
+                width: "22px", 
+                height: "22px", 
+                marginRight: 5, 
+                marginTop: 43
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -3233,6 +3239,13 @@ export default class MainStyles {
                 },
                 courseDetailTime: {
                     top: 0,
+                },
+                courseDetailYoutube: {
+                    flex: 'none',
+                    height: 'auto'
+                },
+                courseDetailCalendarImage: {
+                    marginTop: 0,
                 },
             },
 
