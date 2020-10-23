@@ -2141,6 +2141,13 @@ export default class MainStyles {
                 marginRight: 5, 
                 marginTop: 43
             },
+            courseDetailLeftSide: {
+                flex: 70, 
+                flexDirection: "column", 
+                alignContent: 'flex-start', 
+                alignItems: 'flex-start', 
+                justifyContent: 'flex-start'
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -3246,6 +3253,10 @@ export default class MainStyles {
                 },
                 courseDetailCalendarImage: {
                     marginTop: 0,
+                },
+                courseDetailLeftSide: {
+                    flex: 'none',
+                    height: 'auto', 
                 },
             },
 

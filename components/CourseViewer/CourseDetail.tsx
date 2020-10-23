@@ -333,7 +333,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
   }
   renderYoutube(state: CourseState, actions: any, week, lesson) {
     return (
-      <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+      <Container style={this.styles.style.courseDetailLeftSide}>
         <JCButton buttonType={ButtonTypes.CourseHomeSidebarTop} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
         <Container style={this.styles.style.courseDetailYoutube}>
           <Container style={{ flex: 0.9, height: 'auto' }}>
@@ -344,11 +344,11 @@ class CourseDetailImpl extends JCComponent<Props, State>{
           <Image style={this.styles.style.courseDetailCalendarImage} source={require('../../assets/svg/calendar.svg')}></Image>
           <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Regular-App', color: '#333333', marginTop: 45 }}>{lesson.time}</Text>
         </Container>
-        <Container>
+        <Container style={{ width: '100%'}}>
           <Container style={this.styles.style.courseDetailHr}></Container>
           {lesson.zoomRecording && lesson.zoomRecording != "" ?
             <iframe title="Youtube" src={"https://www.youtube.com/embed/" + lesson.zoomRecording}
-              style={{ width: "40vw", height: "30vw", marginBottom: 20 }}
+              style={{ width: "80vw", height: "60vw", marginBottom: 20 }}
               frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen></iframe>
 
