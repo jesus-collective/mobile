@@ -365,7 +365,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
       <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
         <JCButton buttonType={ButtonTypes.CourseHomeSidebarTop} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
         <Container style={this.styles.style.courseZoomMainContainer}>
-          <Container style={{ flex: 0.6, height: 'auto' }}>
+          <Container style={this.styles.style.courseDetailSidebarTop}>
             <Text style={{ fontSize: 20, lineHeight: 30, fontFamily: 'Graphik-Regular-App', color: '#333333', textTransform: 'uppercase' }}>{week.name}</Text>
             <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.date}</Text>
             <Text style={this.styles.style.courseDetailLessonText}>Lesson {state.activeLesson + 1} - {lesson.name}</Text>

@@ -1828,23 +1828,25 @@ export default class MainStyles {
             },
             courseDetailButtonTrio: Platform.OS === 'web' ?
                 {
-                    flex: 5,
+                    flex: 'auto',
                     flexDirection: "row",
                     marginTop: 30,
                     borderBottomWidth: 1,
                     borderBottomStyle: "solid",
                     borderBottomColor: "#333333",
                     width: '95%',
-                    paddingBottom: 20
+                    paddingBottom: 20,
+                    height: 50
                 } :
                 {
-                    flex: 5,
+                    flex: 'auto',
                     flexDirection: "row",
                     marginTop: 30,
                     borderBottomWidth: 1,
                     borderBottomColor: "#333333",
                     width: '95%',
-                    paddingBottom: 20
+                    paddingBottom: 20,
+                    height: 50
                 },
             courseMessageBoardButtonsView: {
                 marginRight: 10
@@ -2126,6 +2128,10 @@ export default class MainStyles {
                 marginLeft: 20
             },
             courseDetailMainHeading: {
+                flex: 0.6, 
+                height: 'auto'
+            },
+            courseDetailSidebarTop: {
                 flex: 0.6, 
                 height: 'auto'
             },
@@ -3214,6 +3220,19 @@ export default class MainStyles {
                 courseMktDescriptionInput: {
                     width: '110%',
                     minHeight: 300,
+                },
+                courseZoomMainContainer: {
+                    flex: 'none',
+                    height: 'auto'
+                },
+                courseDetailSidebarTop: {
+                    flex: 0.4, 
+                },
+                courseDetailLessonText: {
+                    marginBottom: 20
+                },
+                courseDetailTime: {
+                    top: 0,
                 },
             },
 
