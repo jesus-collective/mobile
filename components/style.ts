@@ -103,14 +103,14 @@ export default class MainStyles {
                 { wordBreak: "break-word", fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 } :
                 { fontFamily: "Graphik-Bold-App", fontSize: 20, lineHeight: 25, color: "#333333", paddingBottom: 0 },
 
-            courseHomeFileCard: { width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, shadowOffset: { width: 0, height: 6 }, shadowColor: "rgba(0, 0, 0, 0.19)", shadowRadius: 20, marginTop: 30, paddingTop: 30, paddingBottom: 30 },
-            courseHomeUserEditCard: { width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, shadowOffset: { width: 0, height: 6 }, shadowColor: "rgba(0, 0, 0, 0.19)", shadowRadius: 20, marginTop: 30, paddingTop: 30, paddingBottom: 30 },
-            courseHomeCoachingCard: { width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, shadowOffset: { width: 0, height: 6 }, shadowColor: "rgba(0, 0, 0, 0.19)", shadowRadius: 20, marginTop: 15, paddingTop: 20, paddingBottom: 20 },
+            courseHomeFileCard: { width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, shadowOffset: { width: 0, height: 6 }, shadowColor: "rgba(0, 0, 0, 1)", shadowRadius: 20, marginTop: 30, paddingTop: 30, paddingBottom: 30 },
+            courseHomeUserEditCard: { width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, shadowOffset: { width: 0, height: 6 }, shadowColor: "rgba(0, 0, 0, 1)", shadowRadius: 20, marginTop: 30, paddingTop: 30, paddingBottom: 30 },
+            courseHomeCoachingCard: { width: '90%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, shadowOffset: { width: 0, height: 6 }, shadowColor: "rgba(0, 0, 0, 1)", shadowRadius: 20, marginTop: 15, paddingTop: 20, paddingBottom: 20 },
             courseHomeDeleteTriad: { backgroundColor: '#F0493E', width: '20px', marginTop: 10, borderRadius: 5, height: 30, justifyContent: 'center', alignItems: 'center', shadowOffset: { width: 0, height: 0 }, shadowOpacity: 0 },
-            courseCoachingCard: { width: '100%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, shadowOffset: { width: 0, height: 6 }, shadowColor: "rgba(0, 0, 0, 0.19)", shadowRadius: 20, marginTop: 100, paddingTop: 30, paddingBottom: 30, height: 400 },
-            courseDetailLessonCardEdit: { minHeight: "40px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 30, paddingRight: 30, paddingBottom: 30, paddingLeft: 30, shadowOffset: { width: 0, height: 6 }, shadowColor: "rgba(0, 0, 0, 0.19)", shadowRadius: 20, marginBottom: 10, marginTop: 10 },
-            courseDetailLessonCardNoEdit: { minHeight: "40px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 10, paddingRight: 30, paddingBottom: 10, paddingLeft: 30, shadowOffset: { width: 0, height: 6 }, shadowColor: "rgba(0, 0, 0, 0.19)", shadowRadius: 20, marginBottom: 10, marginTop: 10 },
-            courseDetailLessonCardCreate: { minHeight: "40px", maxHeight: "80px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 30, paddingRight: 30, paddingBottom: 50, paddingLeft: 30, shadowOffset: { width: 0, height: 6 }, shadowColor: "rgba(0, 0, 0, 0.19)", shadowRadius: 20, marginBottom: 30 },
+            courseCoachingCard: { width: '100%', borderColor: '#FFFFFF', paddingLeft: 30, paddingRight: 30, shadowOffset: { width: 0, height: 6 }, shadowColor: "rgba(0, 0, 0, 1)", shadowRadius: 20, marginTop: 100, paddingTop: 30, paddingBottom: 30, height: 400 },
+            courseDetailLessonCardEdit: { minHeight: "40px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 30, paddingRight: 30, paddingBottom: 30, paddingLeft: 30, shadowOffset: { width: 0, height: 6 }, shadowColor: "rgba(0, 0, 0, 1)", shadowRadius: 20, marginBottom: 10, marginTop: 10 },
+            courseDetailLessonCardNoEdit: { minHeight: "40px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 10, paddingRight: 30, paddingBottom: 10, paddingLeft: 30, shadowOffset: { width: 0, height: 6 }, shadowColor: "rgba(0, 0, 0, 1)", shadowRadius: 20, marginBottom: 10, marginTop: 10 },
+            courseDetailLessonCardCreate: { minHeight: "40px", maxHeight: "80px", width: "50.5vw", borderColor: '#FFFFFF', paddingTop: 30, paddingRight: 30, paddingBottom: 50, paddingLeft: 30, shadowOffset: { width: 0, height: 6 }, shadowColor: "rgba(0, 0, 0, 1)", shadowRadius: 20, marginBottom: 30 },
             courseCard:
             {
                 minHeight: 330,
@@ -1504,7 +1504,7 @@ export default class MainStyles {
                 paddingLeft: 0,
                 shadowOffset: { height: 0, width: 6 },
                 shadowRadius: 20,
-                shadowColor: "rgba(0,0,0,0.19)",
+                shadowColor: "rgba(0,0,0,1)",
                 marginTop: 30,
                 marginRight: 20,
             },
@@ -1828,23 +1828,25 @@ export default class MainStyles {
             },
             courseDetailButtonTrio: Platform.OS === 'web' ?
                 {
-                    flex: 5,
+                    flex: 'auto',
                     flexDirection: "row",
                     marginTop: 30,
                     borderBottomWidth: 1,
                     borderBottomStyle: "solid",
                     borderBottomColor: "#333333",
                     width: '95%',
-                    paddingBottom: 20
+                    paddingBottom: 20,
+                    height: 50
                 } :
                 {
-                    flex: 5,
+                    flex: 'auto',
                     flexDirection: "row",
                     marginTop: 30,
                     borderBottomWidth: 1,
                     borderBottomColor: "#333333",
                     width: '95%',
-                    paddingBottom: 20
+                    paddingBottom: 20,
+                    height: 50
                 },
             courseMessageBoardButtonsView: {
                 marginRight: 10
@@ -2081,6 +2083,90 @@ export default class MainStyles {
             },
             adminSubNavTogglesView: {
                 flexDirection: 'row'
+            },
+            courseDetailTime: {
+                flex: 0.4, 
+                height: 'auto', 
+                flexDirection: 'row', 
+                marginLeft: 20,
+            },
+            courseDetailHR: {
+                borderBottomColor: '#333333', 
+                opacity: 0.2, 
+                borderBottomWidth: 1, 
+                width: '95%', 
+                marginBottom: 30, 
+                marginTop: 50
+            },
+            courseHomeCalendarLabels: {
+                flexDirection: 'row', 
+                width: '100%', 
+                justifyContent: 'flex-start'
+            },
+            courseDetailYoutube: {
+                flexDirection: 'row', 
+                marginTop: 30, 
+                flex: 0.5
+            },
+            courseDetailHr: {
+                borderBottomColor: '#333333', 
+                opacity: 0.2, 
+                borderBottomWidth: 1, 
+                width: '95%', 
+                marginBottom: 30, 
+            },
+            courseDetailAssignmentTime: {
+                flex: 0.4, 
+                height: 'auto', 
+                flexDirection: 'row', 
+                marginLeft: 20
+            },
+            courseDetailAssignmentTime2: {
+                flex: 0.4, 
+                height: 'auto', 
+                flexDirection: 'row', 
+                marginLeft: 20
+            },
+            courseDetailMainHeading: {
+                flex: 0.6, 
+                height: 'auto'
+            },
+            courseDetailSidebarTop: {
+                flex: 0.6, 
+                height: 'auto'
+            },
+            courseDetailCalendarImage: {
+                width: "22px", 
+                height: "22px", 
+                marginRight: 5, 
+                marginTop: 43
+            },
+            courseDetailCalendarText: {
+                fontSize: 16, 
+                lineHeight: 21, 
+                fontFamily: 'Graphik-Regular-App', 
+                color: '#333333', 
+                marginTop: 45
+            },
+            courseDetailCalendarImage2: {
+                width: "22px", 
+                height: "22px", 
+                marginRight: 5, 
+                marginTop: 43
+            },
+            courseDetailCalendarText2: {
+                fontSize: 16, 
+                lineHeight: 21, 
+                fontFamily: 'Graphik-Regular-App', 
+                color: '#333333', 
+                marginTop: 45
+            },
+            courseDetailLeftSide: {
+                flex: 70, 
+                flexDirection: "column", 
+                alignContent: 'flex-start', 
+                alignItems: 'flex-start', 
+                justifyContent: 'flex-start'
             },
 
             // Media Query Desktop Tablet
@@ -2443,7 +2529,7 @@ export default class MainStyles {
                 },
                 courseDetailButtonTrio: {
                     flexDirection: "column",
-                    paddingBottom: 90,
+                    paddingBottom: 60,
                     borderBottomWidth: 0,
                     borderBottomColor: "#ffffff",
                 },
@@ -2499,6 +2585,7 @@ export default class MainStyles {
                 },
                 courseDetailLessonText: {
                     width: '95%',
+                    marginBottom: 0,
                 },
                 courseDetailCoureInfoContainer: {
                     //maxHeight: 225,
@@ -2554,7 +2641,40 @@ export default class MainStyles {
                 adminInviteButton: {
                     alignItems: 'center', 
                     marginLeft: 20
-                }
+                },
+                courseZoomMainContainer: {
+                    flexDirection: 'column',
+                    flex: 0.6,
+                },
+                courseDetailTime: {
+                    flex: 0.4, 
+                    height: 'auto', 
+                    marginLeft: 0,
+                    top: 50,
+                },
+                courseDetailYoutube: {
+                    flexDirection: 'column', 
+                },
+                courseDetailHr: {
+                    flex: 0.1
+                },
+                courseDetailAssignmentTime: {
+                    flex: 0.1, 
+                    marginLeft: 0,
+                },
+                courseDetailAssignmentTime2: {
+                    marginLeft: 0,
+                },
+                courseDetailMainHeading: {
+                    flex: 0.75, 
+                },
+                courseHomeCalendarLabels: {
+                    flexDirection: 'column',
+                    marginTop: 15,
+                },
+                courseDetailMessageBoardContainer: {
+                    marginTop: 40,
+                },
             },
 
             // Media Query Desktop Large Tablet
@@ -2676,7 +2796,7 @@ export default class MainStyles {
                 },
                 courseDetailButtonTrio: {
                     flex: 2,
-                    marginBottom: 100,
+                    marginBottom: 70,
                     flexDirection: 'column',
                     borderBottomWidth: 0,
                     borderBottomColor: "#ffffff",
@@ -2731,6 +2851,21 @@ export default class MainStyles {
                 },
                 adminCRMTableHeader: {
                     flex: 2.5,
+                },
+                courseDetailTime: {
+                    flex: 0.6,
+                    marginLeft: 0
+                },
+                courseDetailHR: {
+                    flex: 0,
+                },
+                courseHomeCalendarLabels: {
+                    flexDirection: 'column',
+                    marginTop: 15,
+                },
+                courseTimeNonEditable: {
+                    marginTop: 0,
+                    paddingTop: 0,
                 },
             },
 
@@ -3058,7 +3193,7 @@ export default class MainStyles {
                     width: '100%'
                 },
                 courseDetailRightContainer: {
-                    top: 750,
+                    flex: '420vh',
                 },
                 courseDetailMessageBoardContainer: {
                     marginTop: 100,
@@ -3084,9 +3219,10 @@ export default class MainStyles {
                 },
                 courseDetailLeftContainer: {
                     flex: 10,
+                    minHeight: 'auto',
                 },
                 courseDetailCoureInfoContainer: {
-                    marginBottom: 200,
+                    marginBottom: 30,
                 },
                 courseHomeCourseActivityText: {
                     marginTop: 75
@@ -3124,6 +3260,39 @@ export default class MainStyles {
                 courseMktDescriptionInput: {
                     width: '110%',
                     minHeight: 300,
+                },
+                courseZoomMainContainer: {
+                    flex: 'none',
+                    height: 'auto'
+                },
+                courseDetailSidebarTop: {
+                    flex: 0.4, 
+                },
+                courseDetailLessonText: {
+                    marginBottom: 20
+                },
+                courseDetailTime: {
+                    top: 0,
+                },
+                courseDetailYoutube: {
+                    flex: 'none',
+                    height: 'auto'
+                },
+                courseDetailCalendarImage: {
+                    marginTop: 0,
+                },
+                courseDetailCalendarText: {
+                    marginTop: 3,
+                },
+                courseDetailCalendarImage2: {
+                    marginTop: 15,
+                },
+                courseDetailCalendarText2: {
+                    marginTop: 18,
+                },
+                courseDetailLeftSide: {
+                    flex: 'none',
+                    height: 'auto', 
                 },
             },
 
