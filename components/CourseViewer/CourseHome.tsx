@@ -343,7 +343,7 @@ class CourseHomeImpl extends JCComponent<Props>{
                             current={moment().format("YYYY-MM-DD")}
                             markedDates={markedDates}
                           />
-                          <Container style={{ flexDirection: 'row', width: '100%', justifyContent: 'flex-start' }}>
+                          <Container style={this.styles.style.courseHomeCalendarLabels}>
                             <Text style={{ fontSize: 25, color: "#ff0000", fontFamily: 'Graphik-Bold-App', marginTop: 10, marginRight: 25 }}>• <span style={{ fontFamily: 'Graphik-Regular-App', color: '#000000', fontSize: 13 }}>Zoom</span></Text>
                             <Text style={{ fontSize: 25, color: "#71C209", fontFamily: 'Graphik-Bold-App', marginTop: 10, marginRight: 25 }}>• <span style={{ fontFamily: 'Graphik-Regular-App', color: '#000000', fontSize: 13 }}>Assignment</span></Text>
                             <Text style={{ fontSize: 25, color: "#0000ff", fontFamily: 'Graphik-Bold-App', marginTop: 10, marginRight: 25 }}>• <span style={{ fontFamily: 'Graphik-Regular-App', color: '#000000', fontSize: 13 }}>Response</span></Text>

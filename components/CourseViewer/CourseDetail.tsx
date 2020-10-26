@@ -226,10 +226,10 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                             value={item.name} isEditable={state.isEditable && state.editMode}></EditableText>
 
                           <Container style={this.styles.style.courseActivityDetails}>
-                            <Text style={state.isEditable && state.editMode ? { marginRight: 10, paddingTop: 0 } : { marginRight: 0, paddingTop: 0 }}>
-                              {state.isEditable ?
+                            <Text style={state.isEditable && state.editMode ? { marginRight: 10, paddingTop: 0 } : { marginRight: 0, paddingTop: 4 }}>
+                              {state.isEditable && state.editMode ?
                                 null
-                                : <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5, marginRight: 3 }} source={require('../../assets/svg/time.svg')} />
+                                : <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 4, marginRight: 3 }} source={require('../../assets/svg/time.svg')} />
                               }
                               <EditableText onChange={(e) => { actions.updateLesson(state.activeWeek, lesson, "duration", e) }}
                                 placeholder="Duration" multiline={false}
@@ -238,7 +238,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                                 inputStyle={state.isEditable && state.editMode ? { borderWidth: 1, borderColor: "#dddddd", marginTop: 0, marginBottom: 0, width: "100%", paddingTop: 5, paddingRight: 5, paddingBottom: 5, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, height: 30 } : { borderWidth: 1, borderColor: "#dddddd", marginTop: 5, marginBottom: 5, width: "100%", paddingTop: 5, paddingRight: 5, paddingBottom: 5, paddingLeft: 5, fontFamily: 'Graphik-Regular-App', fontSize: 16, lineHeight: 21, height: 30 }}
                                 value={item.duration} isEditable={state.isEditable && state.editMode}></EditableText>
                             </Text>
-
+                              
                             {state.isEditable && state.editMode ?
                               <Picker
 
@@ -263,7 +263,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                               </Picker>
                               :
                               {
-                                'assignment': (<Text style={{ alignSelf: 'flex-start' }}>
+                                'assignment': (<Text style={{ alignSelf: 'flex-start', marginTop: 3 }}>
                                   <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
                                     source={require('../../assets/svg/document.svg')} />Assignment</Text>),
                                 'respond': (<Text style={{ alignSelf: 'center' }}>
@@ -272,10 +272,10 @@ class CourseDetailImpl extends JCComponent<Props, State>{
                                 'zoom': (<Text style={{ alignSelf: 'flex-start' }}>
                                   <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
                                     source={require('../../assets/svg/document.svg')} />Zoom</Text>),
-                                'youtube': (<Text style={{ alignSelf: 'flex-start' }}>
+                                'youtube': (<Text style={{ alignSelf: 'flex-start', marginTop: 3 }}>
                                   <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
                                     source={require('../../assets/svg/document.svg')} />Youtube</Text>)
-                              }[item.lessonType] || (<Text style={{ alignSelf: 'flex-start' }}>
+                              }[item.lessonType] || (<Text style={{ alignSelf: 'flex-start', marginTop: 3 }}>
                                 <Image style={{ width: "22px", height: "22px", alignSelf: 'center', top: 5 }}
                                   source={require('../../assets/svg/document.svg')} />Zoom</Text>)
                             }
@@ -333,22 +333,22 @@ class CourseDetailImpl extends JCComponent<Props, State>{
   }
   renderYoutube(state: CourseState, actions: any, week, lesson) {
     return (
-      <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
+      <Container style={this.styles.style.courseDetailLeftSide}>
         <JCButton buttonType={ButtonTypes.CourseHomeSidebarTop} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
-        <Container style={{ flexDirection: 'row', marginTop: 30, flex: 0.5 }}>
+        <Container style={this.styles.style.courseDetailYoutube}>
           <Container style={{ flex: 0.9, height: 'auto' }}>
             <Text style={{ fontSize: 20, lineHeight: 30, fontFamily: 'Graphik-Regular-App', color: '#333333', textTransform: 'uppercase' }}>{week.name}</Text>
             <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.date}</Text>
             <Text style={this.styles.style.courseDetailLessonText}>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
           </Container>
-          <Image style={{ width: "22px", height: "22px", marginRight: 5, marginTop: 43 }} source={require('../../assets/svg/calendar.svg')}></Image>
+          <Image style={this.styles.style.courseDetailCalendarImage} source={require('../../assets/svg/calendar.svg')}></Image>
           <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Regular-App', color: '#333333', marginTop: 45 }}>{lesson.time}</Text>
         </Container>
-        <Container>
-          <Container style={{ borderBottomColor: '#333333', opacity: 0.2, borderBottomWidth: 1, width: '95%', marginBottom: 30 }}></Container>
+        <Container style={{ width: '100%'}}>
+          <Container style={this.styles.style.courseDetailHr}></Container>
           {lesson.zoomRecording && lesson.zoomRecording != "" ?
             <iframe title="Youtube" src={"https://www.youtube.com/embed/" + lesson.zoomRecording}
-              style={{ width: "40vw", height: "30vw", marginBottom: 20 }}
+              style={{ width: "80vw", height: "60vw", marginBottom: 20 }}
               frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen></iframe>
 
@@ -365,20 +365,20 @@ class CourseDetailImpl extends JCComponent<Props, State>{
       <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
         <JCButton buttonType={ButtonTypes.CourseHomeSidebarTop} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
         <Container style={this.styles.style.courseZoomMainContainer}>
-          <Container style={{ flex: 0.6, height: 'auto' }}>
+          <Container style={this.styles.style.courseDetailSidebarTop}>
             <Text style={{ fontSize: 20, lineHeight: 30, fontFamily: 'Graphik-Regular-App', color: '#333333', textTransform: 'uppercase' }}>{week.name}</Text>
             <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.date}</Text>
             <Text style={this.styles.style.courseDetailLessonText}>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
             {lesson.zoomURL && lesson.zoomURL != "" ? <JCButton buttonType={ButtonTypes.CourseZoom} onPress={() => { this.navigate(lesson.zoomURL) }}>Join Zoom Meeting</JCButton> : null}
             {lesson.zoomRecording && lesson.zoomRecording != "" ? <JCButton buttonType={ButtonTypes.CourseZoom} onPress={() => { this.navigate(lesson.zoomRecording) }}>Watch Zoom Recording</JCButton> : null}
           </Container>
-          <Container style={{ flex: 0.4, height: 'auto', flexDirection: 'row', marginLeft: 20 }}>
-            <Image style={{ width: "22px", height: "22px", marginRight: 5, marginTop: 43 }} source={require('../../assets/svg/calendar.svg')}></Image>
-            <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Regular-App', color: '#333333', marginTop: 45 }}>{lesson.time}</Text>
+          <Container style={this.styles.style.courseDetailTime}>
+            <Image style={this.styles.style.courseDetailCalendarImage2} source={require('../../assets/svg/calendar.svg')}></Image>
+            <Text style={this.styles.style.courseDetailCalendarText2}>{lesson.time}</Text>
           </Container>
         </Container>
         <Container>
-          <Container style={{ borderBottomColor: '#333333', opacity: 0.2, borderBottomWidth: 1, width: '95%', marginBottom: 30, marginTop: 50 }}></Container>
+          <Container style={this.styles.style.courseDetailHR}></Container>
           <EditableRichText onChange={(val) => { actions.updateLesson(state.activeWeek, state.activeLesson, "description", val) }}
             value={lesson.description}
             isEditable={state.isEditable && state.editMode}
@@ -396,9 +396,9 @@ class CourseDetailImpl extends JCComponent<Props, State>{
             <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.date}</Text>
             <Text style={this.styles.style.courseDetailLessonText}>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
           </Container>
-          <Container style={{ flex: 0.4, height: 'auto', flexDirection: 'row', marginLeft: 20 }}>
-            <Image style={{ width: "22px", height: "22px", marginRight: 5, marginTop: 43 }} source={require('../../assets/svg/calendar.svg')}></Image>
-            <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Regular-App', color: '#333333', marginTop: 45 }}>{lesson.time}</Text>
+          <Container style={this.styles.style.courseDetailAssignmentTime2}>
+            <Image style={this.styles.style.courseDetailCalendarImage} source={require('../../assets/svg/calendar.svg')}></Image>
+            <Text style={this.styles.style.courseDetailCalendarText}>{lesson.time}</Text>
           </Container>
         </Container>
         <Container>
@@ -417,14 +417,14 @@ class CourseDetailImpl extends JCComponent<Props, State>{
       <Container style={{ flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
         <JCButton buttonType={ButtonTypes.courseAssignment} onPress={() => { actions.setActiveWeek(state.activeWeek) }}>Return</JCButton>
         <Container style={this.styles.style.courseZoomMainContainer}>
-          <Container style={{ flex: 0.6, height: 'auto' }}>
+          <Container style={this.styles.style.courseDetailMainHeading}>
             <Text style={{ fontSize: 20, lineHeight: 30, fontFamily: 'Graphik-Regular-App', color: '#333333', textTransform: 'uppercase' }}>{week.name}</Text>
             <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Bold-App', color: '#333333' }}>{lesson.date}</Text>
             <Text style={this.styles.style.courseDetailLessonText}>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
           </Container>
-          <Container style={{ flex: 0.4, height: 'auto', flexDirection: 'row', marginLeft: 20 }}>
-            <Image style={{ width: "22px", height: "22px", marginRight: 5, marginTop: 43 }} source={require('../../assets/svg/calendar.svg')}></Image>
-            <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Regular-App', color: '#333333', marginTop: 45 }}>{lesson.time}</Text>
+          <Container style={this.styles.style.courseDetailAssignmentTime}>
+            <Image style={this.styles.style.courseDetailCalendarImage} source={require('../../assets/svg/calendar.svg')}></Image>
+            <Text style={this.styles.style.courseDetailCalendarText}>{lesson.time}</Text>
           </Container>
         </Container>
         <Container>
