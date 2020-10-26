@@ -8,6 +8,24 @@ input batchCreateDirectMessageUsersInput {
   roomId: ID!
 }
 
+type Tier
+@model
+{
+  id:ID!
+  name:String
+  isOrgTier:String
+  isIndividualTier:String
+  marketingDescription:String
+  productsIncluded:[String]
+  groupsIncluded:[String]
+  applicationProcess:ApplicationProcess
+  waitForApproval:String
+}
+type ApplicationProcess
+@model
+{
+  id:ID!
+}
 type User
   @searchable
   @model
@@ -590,6 +608,7 @@ type Product
     description: String
     confirmationMsg: String
     payments: [Payment] @connection(name:"paymentProduct",keyField: "productID")
+    isTier: String
   }
 
 

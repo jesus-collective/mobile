@@ -134,6 +134,12 @@ class AwesomeApp extends JCComponent<Props, State> {
   renderFallback(): React.ReactNode {
     return null
   }
+  updateState(state: string) {
+    this.setState({ authState: state })
+    if (state == "signUp" && window.location.href != "/")
+      window.history.pushState({ page: 'Sign Up' }, "Sign Up", "/")
+    //RootNavigation.navigate("/", null)
+  }
   render(): React.ReactNode {
 
     if (this.state.fontLoaded) {
@@ -155,14 +161,14 @@ class AwesomeApp extends JCComponent<Props, State> {
               : null
           }
 
-          <Authenticator hideDefault={true} federated={federated} usernameAttributes='email'>
-            <HomeScreen onStateChange={(item1, item2) => { console.log(item1); this.setState({ authState: item1 }) }} authState={this.state.authState} />
-            <MySignIn onSetUser={(user) => { this.setState({ username: user }) }} onStateChange={(authState) => { this.setState({ authState: authState }) }} authState={this.state.authState} />
-            <MySignUp onStateChange={(authState) => { this.setState({ authState: authState }) }} authState={this.state.authState} />
-            <MyConfirmSignUp onStateChange={(authState) => { this.setState({ authState: authState }) }} authState={this.state.authState} />
-            <MyForgotPassword onStateChange={(authState) => { this.setState({ authState: authState }) }} authState={this.state.authState} />
+          <Authenticator onStateChange={(item1, item2) => { this.updateState(item1) }} hideDefault={true} federated={federated} usernameAttributes='email'>
+            <HomeScreen onStateChange={(item1, item2) => { this.updateState(item1) }} authState={this.state.authState} />
+            <MySignIn onSetUser={(user) => { this.setState({ username: user }) }} onStateChange={(authState) => { this.updateState(authState) }} authState={this.state.authState} />
+            <MySignUp onStateChange={(authState) => { this.updateState(authState) }} authState={this.state.authState} />
+            <MyConfirmSignUp onStateChange={(authState) => { this.updateState(authState) }} authState={this.state.authState} />
+            <MyForgotPassword onStateChange={(authState) => { this.updateState(authState) }} authState={this.state.authState} />
             <MyConfirmSignIn />
-            <MyRequireNewPassword onStateChange={(authState) => { this.setState({ authState: authState }) }} username={this.state.username} authState={this.state.authState} />
+            <MyRequireNewPassword onStateChange={(authState) => { this.updateState(authState) }} username={this.state.username} authState={this.state.authState} />
             <MyVerifyContact />
             <MyLoading authState={this.state.authState} />
           </Authenticator>

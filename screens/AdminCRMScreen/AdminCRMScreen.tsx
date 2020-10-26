@@ -13,6 +13,7 @@ import * as customQueries from '../../src/graphql-custom/queries';
 import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import * as mutations from '../../src/graphql/mutations';
 import { GetProductQuery } from 'src/API';
+import JCModal from '../../components/Forms/JCModal';
 
 interface Props {
   navigation: any
@@ -371,88 +372,75 @@ export default class AdminScreen extends JCComponent<Props, State>{
 
   }
   renderGroupsModal(): React.ReactNode {
-    return (this.state.showGroups ?
-      <Modal animationType="slide" visible={this.state.showGroups}
-        transparent={true} presentationStyle="pageSheet" style={{ width: '100%', height: '100%', borderWidth: 0 }}>
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: 'rgba(0,0,0,0.5)' }}>
-          <View style={{ margin: 20, backgroundColor: "white",borderRadius: 10, paddingTop: 10, paddingBottom: 25, paddingLeft: 20, paddingRight: 20, alignItems: "center", shadowColor: "#000", shadowOffset: { width: 0, height: 2 },shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5 }}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-              <Text style={this.styles.style.adminCRMModalHeading}>Groups</Text>
-              <JCButton buttonType={ButtonTypes.AdminModal} onPress={() => { this.closeGroups() }}>X</JCButton>
-          </View>
-          <View style={{ borderBottomColor: '#333333', opacity: 0.2, borderBottomWidth: 1, width: '100%', marginBottom: 15 }}>
-          </View>
-          {
-            this.state.groupData ?
-              this.state.groupData.map((item: any, index: number) => {
-                return (<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' }} key={index} >
-                  <Text style={this.styles.style.adminCRMModal} key={index}>{item.GroupName}</Text>
-                  <JCButton buttonType={ButtonTypes.AdminModalOrange}
-                    onPress={() => { if (window.confirm('Are you sure you wish to delete this group?')) this.removeGroup(this.state.showGroupsId, item.GroupName) }}>X</JCButton>
-                </View>)
-              })
-              : null
-          }
-          <Container style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            <Picker style={{ height: 45, paddingLeft: 10, paddingRight: 10, marginTop: 10 }}
-              selectedValue={this.state.groupToAdd}
-              onValueChange={val => { this.setState({ groupToAdd: val }) }}
-            >       <Picker.Item value={null} label="pick a group to add" />
-              {this.state.groupList.map((item, index: number) => {
-                return <Picker.Item key={index} value={item} label={item} />
-              })}
-            </Picker>
-            <JCButton buttonType={ButtonTypes.AdminAdd} onPress={() => {
-              this.addGroup(this.state.showGroupsId, this.state.groupToAdd)
-            }}>Add Group</JCButton>
-          </Container>
-          </View>
-        </View>
-      </Modal > : null
+    return (<JCModal visible={this.state.showGroups}
+      title="Groups"
+      onHide={() => { this.closeGroups() }}>
+      <>
+        {
+          this.state.groupData ?
+            this.state.groupData.map((item: any, index: number) => {
+              return (<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' }} key={index} >
+                <Text style={this.styles.style.adminCRMModal} key={index}>{item.GroupName}</Text>
+                <JCButton buttonType={ButtonTypes.AdminModalOrange}
+                  onPress={() => { if (window.confirm('Are you sure you wish to delete this group?')) this.removeGroup(this.state.showGroupsId, item.GroupName) }}>X</JCButton>
+              </View>)
+            })
+            : null
+        }
+        <Container style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <Picker style={{ height: 45, paddingLeft: 10, paddingRight: 10, marginTop: 10 }}
+            selectedValue={this.state.groupToAdd}
+            onValueChange={val => { this.setState({ groupToAdd: val }) }}
+          >       <Picker.Item value={null} label="pick a group to add" />
+            {this.state.groupList.map((item, index: number) => {
+              return <Picker.Item key={index} value={item} label={item} />
+            })}
+          </Picker>
+          <JCButton buttonType={ButtonTypes.AdminAdd} onPress={() => {
+            this.addGroup(this.state.showGroupsId, this.state.groupToAdd)
+          }}>Add Group</JCButton>
+        </Container>
+      </>
+    </JCModal >
     )
   }
   renderPaymentsModal(): React.ReactNode {
-    return (this.state.showPayments ?
-      <Modal animationType="slide" visible={this.state.showPayments} transparent={true} presentationStyle="pageSheet" style={{ width: '100%', height: '100%', borderWidth: 0 }}>
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: 'rgba(0,0,0,0.5)' }}>
-          <View style={{ margin: 20, backgroundColor: "white",borderRadius: 10, paddingTop: 10, paddingBottom: 25, paddingLeft: 20, paddingRight: 20, alignItems: "center", shadowColor: "#000", shadowOffset: { width: 0, height: 2 },shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5 }}>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-              <Text style={this.styles.style.adminCRMModalHeading}>Payments</Text>
-              <JCButton buttonType={ButtonTypes.AdminModal} onPress={() => { this.closePayments() }}>X</JCButton>
-            </View>
-            <View style={{ borderBottomColor: '#333333', opacity: 0.2, borderBottomWidth: 1, width: '100%', marginBottom: 15 }}>
-            </View>
-          {
-            this.state.paymentsData ?
-              this.state.paymentsData.map((item: any, index: number) => {
-                return (<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' }} key={index} >
-                  <Text style={this.styles.style.adminCRMModal} key={index}>{item.product.name}</Text>
-                  <JCButton buttonType={ButtonTypes.AdminModalOrange}
-                    onPress={() => { if (window.confirm('Are you sure you wish to delete this payment?')) this.removePayment(this.state.showPaymentsId, item.id) }}>X</JCButton>
-                </View>)
+    return (<JCModal visible={this.state.showPayments}
+      title="Payments"
+      onHide={() => { this.closePayments() }}>
+      <>
+        {
+          this.state.paymentsData ?
+            this.state.paymentsData.map((item: any, index: number) => {
+              return (<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' }} key={index} >
+                <Text style={this.styles.style.adminCRMModal} key={index}>{item.product.name}</Text>
+                <JCButton buttonType={ButtonTypes.AdminModalOrange}
+                  onPress={() => { if (window.confirm('Are you sure you wish to delete this payment?')) this.removePayment(this.state.showPaymentsId, item.id) }}>X</JCButton>
+              </View>)
+            })
+            : null
+        }
+        < Container style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }
+        }>
+          <Picker style={{ height: 45, paddingLeft: 10, paddingRight: 10, marginTop: 10 }}
+            selectedValue={this.state.groupToAdd}
+            onValueChange={val => { this.setState({ groupToAdd: val }) }}
+          >       <Picker.Item value={null} label="pick a group to add" />
+            {
+              this.state.productList?.map((item: any, index) => {
+                console.log(item)
+                return <Picker.Item key={index} value={item.id} label={item.name} />
               })
-              : null
-          }
-          <Container style={{ flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-            <Picker style={{ height: 45, paddingLeft: 10, paddingRight: 10, marginTop: 10 }}
-              selectedValue={this.state.groupToAdd}
-              onValueChange={val => { this.setState({ groupToAdd: val }) }}
-            >       <Picker.Item value={null} label="pick a group to add" />
-              {
-                this.state.productList.map((item: any, index) => {
-                  console.log(item)
-                  return <Picker.Item key={index} value={item.id} label={item.name} />
-                })
-              }
-            </Picker>
-            <JCButton buttonType={ButtonTypes.AdminAdd} onPress={() => {
-              this.addPayment(this.state.showPaymentsId, this.state.groupToAdd)
+            }
+          </Picker>
+          <JCButton buttonType={ButtonTypes.AdminAdd} onPress={() => {
+            this.addPayment(this.state.showPaymentsId, this.state.groupToAdd)
 
-            }}>Add Payment</JCButton>
-          </Container>
-          </View>
-        </View>
-      </Modal> : null
+          }}>Add Payment</JCButton>
+        </Container >
+
+      </>
+    </JCModal >
     )
   }
   async updateInviteDataList(nextToken: any) {
@@ -465,55 +453,56 @@ export default class AdminScreen extends JCComponent<Props, State>{
     this.setState({ inviteDataList: listGroup.data.groupByType.items })
   }
   renderInviteModal(): React.ReactNode {
-    return (this.state.showInvite ?
-      <Modal visible={this.state.showInvite}>
-        <View>
-          <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.closeInvite() }}>X</JCButton>
-          <Text>Invite: </Text>
-          <TextInput
-            onChange={(val: any) => { this.setState({ invite: val.target.value }) }}
-            placeholder="Enter Email Address"
-            multiline={false}
-            value={this.state.invite}></TextInput>
-          <Picker
-            selectedValue={this.state.inviteType}
-            onValueChange={val => { this.setState({ inviteType: val, inviteData: null, inviteDataList: [] }, () => { this.updateInviteDataList(null) }) }}
-          >
-            <Picker.Item value={null} label="pick a group to add" />
-            <Picker.Item value="JC" label="Invite to Jesus Collective" />
-            <Picker.Item value="course" label="Invite to Course" />
-            <Picker.Item value="group" label="Invite to Group" />
-            <Picker.Item value="event" label="Invite to Event" />
-            <Picker.Item value="resource" label="Invite to Resource" />
+    return (<JCModal visible={this.state.showInvite}
+      title="Invite"
+      onHide={() => { this.closeInvite() }}>
+      <>
 
+        <Text>Invite: </Text>
+        <TextInput
+          onChange={(val: any) => { this.setState({ invite: val.target.value }) }}
+          placeholder="Enter Email Address"
+          multiline={false}
+          value={this.state.invite}></TextInput>
+        <Picker
+          selectedValue={this.state.inviteType}
+          onValueChange={val => { this.setState({ inviteType: val, inviteData: null, inviteDataList: [] }, () => { this.updateInviteDataList(null) }) }}
+        >
+          <Picker.Item value={null} label="pick a group to add" />
+          <Picker.Item value="JC" label="Invite to Jesus Collective" />
+          <Picker.Item value="course" label="Invite to Course" />
+          <Picker.Item value="group" label="Invite to Group" />
+          <Picker.Item value="event" label="Invite to Event" />
+          <Picker.Item value="resource" label="Invite to Resource" />
+
+        </Picker>
+
+        {this.state.inviteType != null && this.state.inviteType != "JC" ?
+          <Picker
+            selectedValue={this.state.inviteData}
+            onValueChange={val => { this.setState({ inviteData: val }) }}
+          >
+
+            <Picker.Item value={null} label="pick a group to add" />
+            {this.state.inviteDataList.map((item, index: number) => {
+              return (<Picker.Item key={index} value={item.value} label={item.name} />)
+            })
+            }
           </Picker>
 
-          {this.state.inviteType != null && this.state.inviteType != "JC" ?
-            <Picker
-              selectedValue={this.state.inviteData}
-              onValueChange={val => { this.setState({ inviteData: val }) }}
-            >
 
-              <Picker.Item value={null} label="pick a group to add" />
-              {this.state.inviteDataList.map((item, index: number) => {
-                return (<Picker.Item key={index} value={item.value} label={item.name} />)
-              })
-              }
-            </Picker>
+          : null
+        }
 
 
-            : null
-          }
-
-
-          < JCButton buttonType={ButtonTypes.Outline}
-            onPress={() => {
-              this.sendInvite(this.state.invite, this.state.inviteType);
-              this.closeInvite();
-              this.setInitialData()
-            }}>Send Invite</JCButton>
-        </View>
-      </Modal > : null
+        < JCButton buttonType={ButtonTypes.Outline}
+          onPress={() => {
+            this.sendInvite(this.state.invite, this.state.inviteType);
+            this.closeInvite();
+            this.setInitialData()
+          }}>Send Invite</JCButton>
+      </>
+    </JCModal>
     )
   }
   render(): React.ReactNode {
@@ -531,7 +520,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
                 <View style={this.styles.style.adminSubNavMainContainer} >
                   <View style={this.styles.style.adminSubNavTogglesView}>
                     <JCSwitch toggleSpacing={'space-between'} containerWidth={150} toggleMargin={5} switchLabel='show user id' initState={false} onPress={() => this.setState({ showUid: !this.state.showUid })} />
-                    <JCSwitch toggleSpacing={'space-between'} containerWidth={150} toggleMargin={5}  switchLabel='show email' initState={true} onPress={() => this.setState({ showEmail: !this.state.showEmail })} />
+                    <JCSwitch toggleSpacing={'space-between'} containerWidth={150} toggleMargin={5} switchLabel='show email' initState={true} onPress={() => this.setState({ showEmail: !this.state.showEmail })} />
                   </View>
                   <View style={this.styles.style.adminSubNavTogglesView}>
                     <JCSwitch toggleSpacing={'space-between'} containerWidth={160} toggleMargin={5} switchLabel='show phone #' initState={true} onPress={() => this.setState({ showPhone: !this.state.showPhone })} />
@@ -541,7 +530,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
                     <JCButton buttonType={ButtonTypes.AdminOutline} onPress={() => { this.showInvite() }}>Invite</JCButton>
                   </View>
                 </View>
-     
+
                 <Content style={{ width: '100%' }}>
                   {this.renderHeader()}
                   {

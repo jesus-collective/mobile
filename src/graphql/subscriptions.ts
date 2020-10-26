@@ -208,6 +208,96 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
     }
   }
 `;
+export const onCreateTier = /* GraphQL */ `
+  subscription OnCreateTier {
+    onCreateTier {
+      id
+      name
+      isOrgTier
+      isIndividualTier
+      marketingDescription
+      productsIncluded
+      groupsIncluded
+      applicationProcess {
+        id
+        createdAt
+        updatedAt
+      }
+      waitForApproval
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateTier = /* GraphQL */ `
+  subscription OnUpdateTier {
+    onUpdateTier {
+      id
+      name
+      isOrgTier
+      isIndividualTier
+      marketingDescription
+      productsIncluded
+      groupsIncluded
+      applicationProcess {
+        id
+        createdAt
+        updatedAt
+      }
+      waitForApproval
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteTier = /* GraphQL */ `
+  subscription OnDeleteTier {
+    onDeleteTier {
+      id
+      name
+      isOrgTier
+      isIndividualTier
+      marketingDescription
+      productsIncluded
+      groupsIncluded
+      applicationProcess {
+        id
+        createdAt
+        updatedAt
+      }
+      waitForApproval
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateApplicationProcess = /* GraphQL */ `
+  subscription OnCreateApplicationProcess {
+    onCreateApplicationProcess {
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateApplicationProcess = /* GraphQL */ `
+  subscription OnUpdateApplicationProcess {
+    onUpdateApplicationProcess {
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteApplicationProcess = /* GraphQL */ `
+  subscription OnDeleteApplicationProcess {
+    onDeleteApplicationProcess {
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateGroupMember = /* GraphQL */ `
   subscription OnCreateGroupMember {
     onCreateGroupMember {
@@ -2724,6 +2814,7 @@ export const onCreatePayment = /* GraphQL */ `
         payments {
           nextToken
         }
+        isTier
         createdAt
         updatedAt
       }
@@ -2839,6 +2930,7 @@ export const onUpdatePayment = /* GraphQL */ `
         payments {
           nextToken
         }
+        isTier
         createdAt
         updatedAt
       }
@@ -2954,6 +3046,7 @@ export const onDeletePayment = /* GraphQL */ `
         payments {
           nextToken
         }
+        isTier
         createdAt
         updatedAt
       }
@@ -7627,6 +7720,7 @@ export const onCreateProduct = /* GraphQL */ `
         }
         nextToken
       }
+      isTier
       createdAt
       updatedAt
     }
@@ -7653,6 +7747,7 @@ export const onUpdateProduct = /* GraphQL */ `
         }
         nextToken
       }
+      isTier
       createdAt
       updatedAt
     }
@@ -7679,6 +7774,7 @@ export const onDeleteProduct = /* GraphQL */ `
         }
         nextToken
       }
+      isTier
       createdAt
       updatedAt
     }

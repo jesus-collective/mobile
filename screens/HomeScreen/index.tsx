@@ -46,6 +46,7 @@ const ProfilesScreen = lazy(() => import('../ProfilesScreen/ProfilesScreen'));
 const SearchScreen = lazy(() => import('../SearchScreen/SearchScreen'));
 const AdminScreen = lazy(() => import('../AdminScreen/AdminScreen'));
 const AdminCRMScreen = lazy(() => import('../AdminCRMScreen/AdminCRMScreen'));
+const AdminTierScreen = lazy(() => import('../AdminTierScreen/AdminTierScreen'));
 const CoursePaymentScreen = lazy(() => import('../CoursePaymentScreen/CoursePaymentScreen'));
 const PurchaseConfirmationScreen = lazy(() => import('../PurchaseConfirmationScreen/PurchaseConfirmationScreen'));
 const AdminCreateProductScreen = lazy(() => import('../AdminCreateProductScreen/AdminCreateProductScreen'))
@@ -82,8 +83,9 @@ const linking = {
               ProfileScreen: 'profile',
               ProfilesScreen: 'profiles',
               AdminScreen: 'admin',
-              AdminCRMScreen: 'crm',
-              AdminCreateProductScreen: 'products',
+              AdminCRMScreen: 'admin-crm',
+              AdminTierScreen: 'admin-tiers',
+              AdminCreateProductScreen: 'admin-products',
               CoursePaymentScreen: 'coursepayment',
               PurchaseConfirmationScreen: 'success'
             }
@@ -294,6 +296,11 @@ class MainAppRouter extends JCComponent {
                     options={{ title: 'Jesus Collective' }}
                   />
                   <Stack.Screen
+                    name="AdminTierScreen"
+                    component={AdminTierScreen}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
                     name="CoursePaymentScreen"
                     component={CoursePaymentScreen}
                     options={{ title: 'Jesus Collective' }}
@@ -406,6 +413,11 @@ class MainAppRouter extends JCComponent {
                   />
                   <Stack.Screen
                     name="AdminCRMScreen"
+                    component={Nothing}
+                    options={{ title: 'Jesus Collective' }}
+                  />
+                  <Stack.Screen
+                    name="AdminTierScreen"
                     component={Nothing}
                     options={{ title: 'Jesus Collective' }}
                   />
