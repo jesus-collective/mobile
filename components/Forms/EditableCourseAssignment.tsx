@@ -33,7 +33,7 @@ interface State extends JCState {
     selectedRoom: any
     data: any
     currentUser: any
-    currentRoomId: string
+    currentRoomId: string | null
     newToList: any
     userList: any
 
@@ -63,7 +63,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
             this.getInitialData(null);
         }
     }
-    async getInitialData(next: string): Promise<void> {
+    async getInitialData(next: string | null): Promise<void> {
         if (this.props.assignmentId)
             try {
                 this.setState({ currentRoomId: "course-" + this.props.assignmentId + "-" + this.state.currentUser })
@@ -106,7 +106,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
                 variables: { input: { id: "course-" + this.props.assignmentId + "-" + user['username'], roomType: "assignment", name: user.attributes['given_name'] + ' ' + user.attributes['family_name'] + "'s assignment" } },
                 authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
             });
-            createDirectMessageRoom.then((json) => {
+            createDirectMessageRoom.then((json: any) => {
                 console.log({ createDirectMessageRoom: json })
                 console.log("createDMUser")
                 const userList = this.state.userList
@@ -116,10 +116,10 @@ export default class EditableRichText extends JCComponent<Props, State> {
                         variables: { input: { roomID: "course-" + this.props.assignmentId + "-" + user['username'], userID: item.id, userName: item.name } },
                         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
                     });
-                    createDirectMessageUser2.then((json2) => {
+                    createDirectMessageUser2.then((json2: any) => {
                         console.log({ createDirectMessageUser: json2 });
                     }
-                    ).catch((json2) => {
+                    ).catch((json2: any) => {
                         console.log({ Error: json2 });
                     })
                 })
@@ -153,8 +153,8 @@ export default class EditableRichText extends JCComponent<Props, State> {
             return initialPostState.Unknown
     }
     getOtherUsers(data: any): { ids: string[], names: string[] } {
-        const ids = [];
-        const names = [];
+        const ids: string[] = [];
+        const names: string[] = [];
         data.messageUsers.items.forEach(user => {
             if (user.userID !== this.state.currentUser) {
                 ids.push(user.userID)
@@ -171,7 +171,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
         console.log(this.state.data[index])
     }
     getCurrentRoomRecipients(): string[] {
-        const ids = [];
+        const ids: string[] = [];
         this.state.userList.forEach(user => {
             ids.push(user.id)
         })

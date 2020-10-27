@@ -16,7 +16,7 @@ interface Props {
 
 type SubMenuItem = {
   name: string
-  linkTo?: string
+  linkTo?: string | null
   webLink?: string
   navProps?: { mine?: boolean, create?: boolean, id?: string }
 }
@@ -24,7 +24,7 @@ type SubMenuItem = {
 type MenuItem = {
   name: string
   subMenu?: SubMenuItem[]
-}
+} | null
 export default class FooterJC extends JCComponent<Props> {
 
   constructor(props: Props) {
@@ -116,7 +116,7 @@ export default class FooterJC extends JCComponent<Props> {
               return (
                 <Body key={item.name} style={{ display: "flex", flexDirection: 'column', alignSelf: "flex-start", alignItems: "flex-start", justifyContent: 'flex-start' }}>
                   <Text style={footerStyles.footerCenterMenuButtonsTextWhite}>{item.name}</Text>
-                  {item.subMenu.map((item2) => {
+                  {item.subMenu?.map((item2) => {
                     if (item2.linkTo || item2.webLink)
                       return (<Button key={item2.name}
                         transparent

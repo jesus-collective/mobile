@@ -14,7 +14,7 @@ interface Props {
     multiline: boolean,
     placeholder?: string,
     citiesOnly?: boolean
-    onChange?(string, any)
+    onChange?(string, any): void
 }
 interface State extends JCState {
     value: string,
@@ -41,14 +41,16 @@ export default class EditableLocation extends JCComponent<Props, State> {
 
     onChanged = (address: string): void => {
         this.setState({ value: address })
-        this.props.onChange(address, null)//this.setState({ value:address });
+        if (this.props.onChange)
+            this.props.onChange(address, null)//this.setState({ value:address });
     };
 
     handleSelect = (address: string): void => {
         geocodeByAddress(address)
             .then(results => getLatLng(results[0]))
             .then(latLng => console.log('Success', this.setState({ value: address }, () => {
-                this.props.onChange(address, latLng)
+                if (this.props.onChange)
+                    this.props.onChange(address, latLng)
 
             })))
             .catch(error => console.error('Error', error));

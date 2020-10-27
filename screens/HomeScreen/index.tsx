@@ -646,8 +646,8 @@ class HomeScreenRouter extends JCComponent<Props, UserState> {
         if (response.result && this.state.hasCompletedPersonalProfile != "Completed")
           this.setState({ hasCompletedPersonalProfile: "Completed" }, () => {
             //TODO THIS IS WRONG ONLY DO THIS FROM 
-            console.log(RootNavigation.navigationRef.current.getRootState())
-            if (RootNavigation.navigationRef.current.getCurrentRoute().name == "Payment3") {
+            console.log(RootNavigation.navigationRef.current?.getRootState())
+            if (RootNavigation.navigationRef.current?.getCurrentRoute()?.name == "Payment3") {
               console.log("Navigate to Homescreen")
               RootNavigation.navigate('mainApp', { screen: 'mainDrawer', params: { screen: 'HomeScreen' } });
             }
@@ -717,9 +717,9 @@ class HomeScreenRouter extends JCComponent<Props, UserState> {
 }
 
 
-const mapObj = f => obj =>
+const mapObj = (f: any) => (obj: any) =>
   Object.keys(obj).reduce((acc, key) => ({ ...acc, [key]: f(obj[key]) }), {});
-const toArrayOfStrings = value => [`${value}`];
+const toArrayOfStrings = (value: any) => [`${value}`];
 const mapToArrayOfStrings = mapObj(toArrayOfStrings);
 async function trackUserId() {
   try {
@@ -751,7 +751,7 @@ export default class App extends JCComponent<Props, AppState>{
     }
 
   }
-  renderFallback(): React.ReactNode {
+  renderFallback(): {} {
     return <Text>loading...</Text>
   }
   render(): React.ReactNode {
@@ -761,7 +761,7 @@ export default class App extends JCComponent<Props, AppState>{
         <Suspense fallback={this.renderFallback()}>
           <View style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1 }}>
             <MuiPickersUtilsProvider utils={MomentUtils}>
-              <Main onStateChange={(e, e2) => { console.log(e); this.props.onStateChange(e, e2) }} authState={this.props.authState} />
+              <Main onStateChange={(e: any, e2: any) => { console.log(e); this.props.onStateChange(e, e2) }} authState={this.props.authState} />
             </MuiPickersUtilsProvider>
 
           </View>

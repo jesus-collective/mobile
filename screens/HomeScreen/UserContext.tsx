@@ -21,5 +21,5 @@ export const UserContext = React.createContext<UserContextType>({
         onPaidStateChanged: null,
         updateHasCompletedOrganizationProfile: null,
         onStateChange: null
-    }, state: null
+    }, state: undefined
 })

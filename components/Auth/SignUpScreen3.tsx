@@ -5,7 +5,7 @@ import MyProfile from '../../components/MyProfile/MyProfile'
 import SignUpSidebar from '../../components/SignUpSidebar/SignUpSidebar'
 Amplify.configure(awsConfig);
 import { View, Content } from 'native-base';
-import JCComponent from '../../components/JCComponent/JCComponent';
+import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { UserContext } from '../../screens/HomeScreen/UserContext';
 import OrganizationViewer from '../../components/OrganizationViewer/OrganizationViewer';
@@ -17,7 +17,7 @@ interface Props {
   authState?: string
 }
 
-interface State {
+interface State extends JCState {
   groups: unknown;
   selected: 'profile' | 'organization';
   profileComplete: boolean;
@@ -29,6 +29,7 @@ class SignUpScreen3Impl extends JCComponent<Props, State>{
   constructor(props: Props) {
     super(props);
     this.state = {
+      ...super.getInitialState(),
       groups: null,
       selected: 'profile',
       profileComplete: false,
@@ -37,7 +38,7 @@ class SignUpScreen3Impl extends JCComponent<Props, State>{
   }
 
   static Consumer = UserContext.Consumer
-  onFinalizeProfile(actions:any): void {
+  onFinalizeProfile(actions: any): void {
     actions.updateHasCompletedPersonalProfile()
   }
   render(): React.ReactNode {
