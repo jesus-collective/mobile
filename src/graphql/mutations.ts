@@ -134,6 +134,7 @@ export const createTier = /* GraphQL */ `
         updatedAt
       }
       waitForApproval
+      enabled
       createdAt
       updatedAt
     }
@@ -155,6 +156,7 @@ export const updateTier = /* GraphQL */ `
         updatedAt
       }
       waitForApproval
+      enabled
       createdAt
       updatedAt
     }
@@ -176,6 +178,7 @@ export const deleteTier = /* GraphQL */ `
         updatedAt
       }
       waitForApproval
+      enabled
       createdAt
       updatedAt
     }

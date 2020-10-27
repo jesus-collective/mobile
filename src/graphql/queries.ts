@@ -18,6 +18,7 @@ export const getTier = /* GraphQL */ `
         updatedAt
       }
       waitForApproval
+      enabled
       createdAt
       updatedAt
     }
@@ -44,6 +45,7 @@ export const listTiers = /* GraphQL */ `
           updatedAt
         }
         waitForApproval
+        enabled
         createdAt
         updatedAt
       }

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Editor } from 'react-draft-wysiwyg';
 import { Storage } from 'aws-amplify';
 
 //import './react-draft-wysiwyg.css';
@@ -9,7 +8,6 @@ import { Storage } from 'aws-amplify';
 //import '../MessageBoard.css';
 //import { EditorState } from 'draft-js';
 
-import { v1 as uuidv1 } from 'uuid';
 import { TouchableOpacity } from 'react-native';
 import JCComponent, { JCState } from '../JCComponent/JCComponent';
 import { ContentState, convertFromRaw, convertToRaw } from 'draft-js';

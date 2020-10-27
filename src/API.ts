@@ -17,6 +17,7 @@ export type CreateTierInput = {
   productsIncluded?: Array< string | null > | null,
   groupsIncluded?: Array< string | null > | null,
   waitForApproval?: string | null,
+  enabled?: string | null,
 };
 
 export type UpdateTierInput = {
@@ -28,6 +29,7 @@ export type UpdateTierInput = {
   productsIncluded?: Array< string | null > | null,
   groupsIncluded?: Array< string | null > | null,
   waitForApproval?: string | null,
+  enabled?: string | null,
 };
 
 export type DeleteTierInput = {
@@ -759,6 +761,7 @@ export type ModelTierFilterInput = {
   productsIncluded?: ModelStringFilterInput | null,
   groupsIncluded?: ModelStringFilterInput | null,
   waitForApproval?: ModelStringFilterInput | null,
+  enabled?: ModelStringFilterInput | null,
   and?: Array< ModelTierFilterInput | null > | null,
   or?: Array< ModelTierFilterInput | null > | null,
   not?: ModelTierFilterInput | null,
@@ -1519,6 +1522,7 @@ export type CreateTierMutation = {
       updatedAt: string,
     } | null,
     waitForApproval: string | null,
+    enabled: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1545,6 +1549,7 @@ export type UpdateTierMutation = {
       updatedAt: string,
     } | null,
     waitForApproval: string | null,
+    enabled: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -1571,6 +1576,7 @@ export type DeleteTierMutation = {
       updatedAt: string,
     } | null,
     waitForApproval: string | null,
+    enabled: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -11017,6 +11023,7 @@ export type GetTierQuery = {
       updatedAt: string,
     } | null,
     waitForApproval: string | null,
+    enabled: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -11047,6 +11054,7 @@ export type ListTiersQuery = {
         updatedAt: string,
       } | null,
       waitForApproval: string | null,
+      enabled: string | null,
       createdAt: string,
       updatedAt: string,
     } | null > | null,
@@ -16290,6 +16298,7 @@ export type OnCreateTierSubscription = {
       updatedAt: string,
     } | null,
     waitForApproval: string | null,
+    enabled: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -16312,6 +16321,7 @@ export type OnUpdateTierSubscription = {
       updatedAt: string,
     } | null,
     waitForApproval: string | null,
+    enabled: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -16334,6 +16344,7 @@ export type OnDeleteTierSubscription = {
       updatedAt: string,
     } | null,
     waitForApproval: string | null,
+    enabled: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
