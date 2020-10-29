@@ -420,7 +420,8 @@ export default class MainStyles {
             fontMyMapOptions: {
                 //font family is Helvetica Neue on Figma
                 fontSize: 14,
-                paddingRight: 10
+                paddingRight: 10,
+                marginLeft: 10,
             },
             fontMyMapLegend: {
                 //font family is Helvetica Neue on Figma

@@ -519,12 +519,12 @@ export default class AdminScreen extends JCComponent<Props, State>{
               <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
                 <View style={this.styles.style.adminSubNavMainContainer} >
                   <View style={this.styles.style.adminSubNavTogglesView}>
-                    <JCSwitch toggleSpacing={'space-between'} containerWidth={150} toggleMargin={5} switchLabel='show user id' initState={false} onPress={() => this.setState({ showUid: !this.state.showUid })} />
-                    <JCSwitch toggleSpacing={'space-between'} containerWidth={150} toggleMargin={5} switchLabel='show email' initState={true} onPress={() => this.setState({ showEmail: !this.state.showEmail })} />
+                    <JCSwitch toggleSpacing={'space-between'} containerWidth={155} toggleMargin={5} switchLabel='show user id' initState={false} onPress={() => this.setState({ showUid: !this.state.showUid })} />
+                    <JCSwitch toggleSpacing={'space-between'} containerWidth={145} toggleMargin={5} switchLabel='show email' initState={true} onPress={() => this.setState({ showEmail: !this.state.showEmail })} />
                   </View>
                   <View style={this.styles.style.adminSubNavTogglesView}>
-                    <JCSwitch toggleSpacing={'space-between'} containerWidth={160} toggleMargin={5} switchLabel='show phone #' initState={true} onPress={() => this.setState({ showPhone: !this.state.showPhone })} />
-                    <JCSwitch toggleSpacing={'space-between'} containerWidth={160} toggleMargin={5} switchLabel='show status' initState={true} onPress={() => this.setState({ showStatus: !this.state.showStatus })} />
+                    <JCSwitch toggleSpacing={'space-between'} containerWidth={165} toggleMargin={5} switchLabel='show phone #' initState={true} onPress={() => this.setState({ showPhone: !this.state.showPhone })} />
+                    <JCSwitch toggleSpacing={'space-between'} containerWidth={150} toggleMargin={5} switchLabel='show status' initState={true} onPress={() => this.setState({ showStatus: !this.state.showStatus })} />
                   </View>
                   <View style={this.styles.style.adminInviteButton}>
                     <JCButton buttonType={ButtonTypes.AdminOutline} onPress={() => { this.showInvite() }}>Invite</JCButton>
