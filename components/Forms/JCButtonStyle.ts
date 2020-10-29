@@ -124,6 +124,24 @@ export default EStyleSheet.create({
         textAlign: 'center',
         width: '100%'
     },
+    AdminInviteButton: {
+        paddingTop: 7,
+        paddingBottom: 7,
+        paddingLeft: 7,
+        paddingRight: 7,
+        backgroundColor: "#F0493E",
+        boxShadow: "unset",
+        width: '100%',
+        marginTop: 10,
+    },
+    AdminInviteText: {
+        color: "#FFFFFF",
+        fontFamily: 'Graphik-Regular-App',
+        fontSize: 16,
+        padding: 5, 
+        textAlign: 'center',
+        width: '100%'
+    },
     AdminModalButton: {
         backgroundColor: "#FFFFFF",
     },

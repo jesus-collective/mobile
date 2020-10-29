@@ -458,13 +458,15 @@ export default class AdminScreen extends JCComponent<Props, State>{
       onHide={() => { this.closeInvite() }}>
       <>
 
-        <Text>Invite: </Text>
+        <Text style={this.styles.style.adminCRMModalInvite}>Invite: </Text>
         <TextInput
           onChange={(val: any) => { this.setState({ invite: val.target.value }) }}
           placeholder="Enter Email Address"
           multiline={false}
-          value={this.state.invite}></TextInput>
+          value={this.state.invite}
+          style={this.styles.style.adminCRMModalInviteEmail}></TextInput>
         <Picker
+          style={{ height: 45, paddingLeft: 10, paddingRight: 10, marginTop: 10 }}
           selectedValue={this.state.inviteType}
           onValueChange={val => { this.setState({ inviteType: val, inviteData: null, inviteDataList: [] }, () => { this.updateInviteDataList(null) }) }}
         >
@@ -495,7 +497,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
         }
 
 
-        < JCButton buttonType={ButtonTypes.Outline}
+        < JCButton buttonType={ButtonTypes.AdminInvite}
           onPress={() => {
             this.sendInvite(this.state.invite, this.state.inviteType);
             this.closeInvite();
