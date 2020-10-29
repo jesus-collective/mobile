@@ -342,7 +342,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
             <Text style={this.styles.style.courseDetailLessonText}>Lesson {state.activeLesson + 1} - {lesson.name}</Text>
           </Container>
           <Image style={this.styles.style.courseDetailCalendarImage} source={require('../../assets/svg/calendar.svg')}></Image>
-          <Text style={{ fontSize: 16, lineHeight: 21, fontFamily: 'Graphik-Regular-App', color: '#333333', marginTop: 45 }}>{lesson.time}</Text>
+          <Text style={this.styles.style.detailsYoutubeDateText}>{lesson.time}</Text>
         </Container>
         <Container style={{ width: '100%'}}>
           <Container style={this.styles.style.courseDetailHr}></Container>

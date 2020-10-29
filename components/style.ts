@@ -2168,6 +2168,13 @@ export default class MainStyles {
                 alignItems: 'flex-start', 
                 justifyContent: 'flex-start'
             },
+            detailsYoutubeDateText: {
+                fontSize: 16, 
+                lineHeight: 21, 
+                fontFamily: 'Graphik-Regular-App', 
+                color: '#333333', 
+                marginTop: 45
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2644,7 +2651,7 @@ export default class MainStyles {
                 },
                 courseZoomMainContainer: {
                     flexDirection: 'column',
-                    flex: 0.6,
+                    flex: 0.4,
                 },
                 courseDetailTime: {
                     flex: 0.4, 
@@ -2654,6 +2661,7 @@ export default class MainStyles {
                 },
                 courseDetailYoutube: {
                     flexDirection: 'column', 
+                    flex: 0.4
                 },
                 courseDetailHr: {
                     flex: 0.1
@@ -2674,6 +2682,15 @@ export default class MainStyles {
                 },
                 courseDetailMessageBoardContainer: {
                     marginTop: 40,
+                },
+                // courseDetailCalendarImage: {
+                //     top: 30
+                // },
+                // detailsYoutubeDateText: {
+                //     top: 30,
+                // },
+                courseDetailCalendarText: {
+                    marginTop: 23,
                 },
             },
 
