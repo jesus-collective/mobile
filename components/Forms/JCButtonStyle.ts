@@ -91,7 +91,7 @@ export default EStyleSheet.create({
         paddingBottom: 7,
         paddingLeft: 7,
         paddingRight: 7,
-        marginLeft: 10,
+        marginLeft: 0,
         marginRight: 0,
         //    color:"#F0493E",
         backgroundColor: "#ffffff",
