@@ -130,14 +130,14 @@ class AwesomeApp extends JCComponent<Props, State> {
   renderFallback(): React.ReactNode {
     return null
   }
-  updateState(state: string) {
+  updateState(state: string, data: any) {
     this.setState({ authState: state })
     const params = RootNavigation.getRoot()?.params as { joinedAs: 'individual' | 'organization' | null }
 
     if (state == "signUp")
       RootNavigation.navigate("signup", { joinedAs: null })
     else if (state == "signIn")
-      RootNavigation.navigate("signin", {})
+      RootNavigation.navigate("signin", { email: data?.email, fromVerified: data?.fromVerified })
     else if (state == "forgotPassword")
       RootNavigation.navigate("forgotpassword", {})
     else if (state == "requireNewPassword")
@@ -147,7 +147,7 @@ class AwesomeApp extends JCComponent<Props, State> {
     else if (state == "confirmSignIn")
       RootNavigation.navigate("confirmsignin", {})
     else if (state == "confirmSignUp")
-      RootNavigation.navigate("confirmsignup", {})
+      RootNavigation.navigate("confirmsignup", { email: data?.email })
     else if (state == "signedIn")
       RootNavigation.navigate("mainApp", { screen: "home" })
   }
@@ -180,11 +180,11 @@ class AwesomeApp extends JCComponent<Props, State> {
           }
 
           <Authenticator
-            onStateChange={(item1, item2) => { this.updateState(item1) }}
+            onStateChange={(item1, data) => { this.updateState(item1, data) }}
             hideDefault={true}
             authState={this.state.authState}
             federated={federated} usernameAttributes='email'>
-            <HomeScreen onStateChange={(item1, item2) => { this.updateState(item1) }} authState={this.state.authState} />
+            <HomeScreen onStateChange={(item1, data) => { this.updateState(item1, data) }} authState={this.state.authState} />
           </Authenticator>
         </View >
       )

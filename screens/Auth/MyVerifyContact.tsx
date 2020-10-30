@@ -9,6 +9,7 @@ import MainStyles from '../../components/style';
 import { UserContext } from '../../screens/HomeScreen/UserContext';
 
 interface Props {
+
 }
 class MyVerifyContact extends VerifyContact<Props> {
     constructor(props: Props) {

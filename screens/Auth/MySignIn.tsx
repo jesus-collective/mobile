@@ -9,8 +9,11 @@ import MainStyles from '../../components/style';
 import { Entypo } from '@expo/vector-icons';
 import { Copyright } from '../../components/Auth/Copyright';
 import { UserContext } from '../../screens/HomeScreen/UserContext';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 interface Props {
+    navigation?: any
+    route?: any
 
 }
 
@@ -18,18 +21,39 @@ interface State {
     pass: string;
     user: string;
     authError: string;
+    fromVerified: boolean
 }
 
-class MySignIn extends React.Component<Props, State> {
+class MySignInImpl extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
+        console.log(props.route)
         this.state = {
             pass: '',
-            user: '',
+            user: props.route?.params?.email ?? '',
             authError: '',
+            fromVerified: props.route?.params?.fromVerified ?? false
         }
     }
     static Consumer = UserContext.Consumer
+    componentWillMount(): void {
+        console.log(this.props.route)
+        this.setState({
+            user: this.props.route?.params?.email ?? '',
+            fromVerified: this.props.route?.params?.fromVerified ?? false
+        })
+    }
+    componentDidUpdate(prevProps: Props, prevState: State): void {
+        console.log({ CompUpdate: this.props.route })
+        if (this.props.route?.params?.email !== prevProps.route?.params?.email) {
+            console.log("UPDATE1")
+            this.setState({ user: this.props.route?.params?.email })
+        }
+        if (this.props.route?.params?.fromVerified !== prevProps.route?.params?.fromVerified) {
+            console.log("UPDATE2")
+            this.setState({ fromVerified: this.props.route?.params?.fromVerified })
+        }
+    }
 
     changeAuthState(action: any, state: string, user?: string): void {
         this.setState({
@@ -76,7 +100,7 @@ class MySignIn extends React.Component<Props, State> {
     }
     render(): React.ReactNode {
         return (
-            <MySignIn.Consumer>
+            <MySignInImpl.Consumer>
                 {({ state, actions }) => {
                     if (state)
                         return (
@@ -94,6 +118,7 @@ class MySignIn extends React.Component<Props, State> {
                                             <Text style={{ alignSelf: 'flex-end', marginRight: 30, fontSize: 14, fontFamily: 'Graphik-Regular-App', lineHeight: 22, color: '#333333', opacity: 0.7, marginTop: 20 }}>Forgot password?</Text>
                                         </TouchableOpacity>
                                         <Text style={{ alignSelf: 'center', alignItems: 'center', fontSize: 14, fontFamily: 'Graphik-Regular-App', lineHeight: 22, marginTop: 20 }} >{this.state.authError ? <Entypo name="warning" size={18} color="#F0493E" /> : null} {this.state.authError}</Text>
+                                        <Text style={{ alignSelf: 'center', alignItems: 'center', fontSize: 14, fontFamily: 'Graphik-Regular-App', lineHeight: 22, marginTop: 20 }} >{this.state.fromVerified ? "User Verified. Please Login." : null}</Text>
                                         <Copyright />
                                     </View>
                                     {Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
@@ -108,10 +133,16 @@ class MySignIn extends React.Component<Props, State> {
                     else
                         return null
                 }}
-            </MySignIn.Consumer>
+            </MySignInImpl.Consumer>
         );
 
 
     }
 }
-export default MySignIn 
+
+
+export default function MySignIn(props: Props): JSX.Element {
+    const route = useRoute();
+    const navigation = useNavigation()
+    return <MySignInImpl {...props} navigation={navigation} route={route} />;
+}

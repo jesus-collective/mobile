@@ -11,7 +11,6 @@ export function getRoot(): Route<string, object | undefined> | undefined {
 export function navigate(name: string, params: object): void {
     navigationRef.current?.navigate(name, params);
 }
-
 export function dispatch(a: any): any {
     return navigationRef.current?.dispatch(a)
 }

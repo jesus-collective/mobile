@@ -53,14 +53,14 @@ class MySignUpImpl extends React.Component<Props, State> {
             },
             authError: '',
             enabled: false,
-            joinedAs: props.route?.joinedAs,
+            joinedAs: props.route?.params.joinedAs,
             sendingData: false,
         }
         console.log({ PARAMS: props.route })
     }
     static Consumer = UserContext.Consumer
 
-    changeAuthState(actions: any, state: string): void {
+    changeAuthState(actions: any, state: string, data: any): void {
         this.setState({
             user: {
                 first: '',
@@ -78,7 +78,7 @@ class MySignUpImpl extends React.Component<Props, State> {
             sendingData: false,
         })
         if (actions.onStateChange)
-            actions.onStateChange(state);
+            actions.onStateChange(state, data);
     }
 
     validate(): boolean {
@@ -138,7 +138,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                     'custom:orgName': this.state.user.orgName,
                     'custom:isOrg': Boolean(this.state.joinedAs === 'organization').toString()
                 }
-            }).then(() => this.changeAuthState(actions, 'confirmSignUp'));
+            }).then(() => this.changeAuthState(actions, 'confirmSignUp', { email: this.state.user.email.toLowerCase() }));
         } catch (e) {
             this.setState({ authError: e.message, sendingData: false })
         }

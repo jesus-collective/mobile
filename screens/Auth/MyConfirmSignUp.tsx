@@ -9,8 +9,12 @@ import { Auth } from 'aws-amplify'
 import { Entypo } from '@expo/vector-icons';
 import { Copyright } from '../../components/Auth/Copyright';
 import { UserContext } from '../../screens/HomeScreen/UserContext';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 interface Props {
+    navigation?: any
+    route?: any
+
 }
 
 interface State {
@@ -19,11 +23,12 @@ interface State {
     authError: string;
     sendingData: boolean;
 }
-class MyConfirmSignUp extends React.Component<Props, State> {
+class MyConfirmSignUpImpl extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
+        console.log({ MYConfirmSignupImpl: props.route })
         this.state = {
-            email: '',
+            email: props.route?.params.email ?? '',
             code: '',
             authError: '',
             sendingData: false
@@ -31,7 +36,7 @@ class MyConfirmSignUp extends React.Component<Props, State> {
     }
     static Consumer = UserContext.Consumer
 
-    changeAuthState(actions: any, state: string): void {
+    changeAuthState(actions: any, state: string, data: any): void {
         this.setState({
             email: '',
             code: '',
@@ -39,13 +44,13 @@ class MyConfirmSignUp extends React.Component<Props, State> {
             sendingData: false
         })
         if (actions.onStateChange)
-            actions.onStateChange(state);
+            actions.onStateChange(state, data);
     }
 
     async handleConfirmSignUp(actions: any): Promise<void> {
         try {
             this.setState({ sendingData: true })
-            await Auth.confirmSignUp(this.state.email.toLowerCase(), this.state.code).then(() => { this.changeAuthState(actions, 'signIn') })
+            await Auth.confirmSignUp(this.state.email.toLowerCase(), this.state.code).then(() => { this.changeAuthState(actions, 'signIn', { email: this.state.email.toLowerCase(), fromVerified: true }) })
         } catch (e) {
             this.setState({ authError: e.message, sendingData: false })
         }
@@ -65,7 +70,7 @@ class MyConfirmSignUp extends React.Component<Props, State> {
     }
     render(): React.ReactNode {
         return (
-            <MyConfirmSignUp.Consumer>
+            <MyConfirmSignUpImpl.Consumer>
                 {({ state, actions }) => {
                     if (state)
                         return (
@@ -95,10 +100,17 @@ class MyConfirmSignUp extends React.Component<Props, State> {
                     else
                         return null
                 }}
-            </MyConfirmSignUp.Consumer>
+            </MyConfirmSignUpImpl.Consumer>
         );
 
 
     }
 }
-export default MyConfirmSignUp 
+
+
+
+export default function MyConfirmSignUp(props: Props): JSX.Element {
+    const route = useRoute();
+    const navigation = useNavigation()
+    return <MyConfirmSignUpImpl {...props} navigation={navigation} route={route} />;
+}

@@ -106,9 +106,9 @@ const linking = {
       auth: {
         path: "auth",
         screens: {
-          MySignIn: 'signin',
+          MySignIn: 'signin/:email/:fromVerified',
           MySignUp: 'signup/:joinedAs',
-          MyConfirmSignUp: 'confirmsignup',
+          MyConfirmSignUp: 'confirmsignup/:email',
           MyForgotPassword: 'forgotpassword',
           MyRequireNewPassword: 'requirenewpassword',
           MyLoading: 'loading',
