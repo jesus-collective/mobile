@@ -10,6 +10,8 @@ export interface UserState extends JCState {
     hasCompletedOrganizationProfile: string;
     orgId: string;
     isOrg: boolean;
+    initialAuthType: string | null
+    initialParams: {}
 }
 type UserContextType = {
     actions: any

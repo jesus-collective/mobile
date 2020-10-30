@@ -18,7 +18,7 @@ export default class AdminScreen extends JCComponent<Props>{
     render() {
         return (
             this.props.visible ?
-                <Modal animationType="slide" transparent={true} presentationStyle="pageSheet" style={{ backgroundColor: 'rgba(0,0,0,0.5)', width: '100%', height: '100%', borderWidth: 0 }} visible={this.state.showAddTierModal}>
+                <Modal animationType="slide" transparent={true} presentationStyle="pageSheet" style={{ backgroundColor: 'rgba(0,0,0,0.5)', width: '100%', height: '100%', borderWidth: 0 }} visible={this.props.visible}>
                     <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: 'rgba(0,0,0,0.5)' }}>
                         <View style={{ margin: 20, backgroundColor: "white", borderRadius: 10, paddingTop: 10, paddingBottom: 25, paddingLeft: 20, paddingRight: 20, alignItems: "center", shadowColor: "#000", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.25, shadowRadius: 3.84, elevation: 5 }}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>

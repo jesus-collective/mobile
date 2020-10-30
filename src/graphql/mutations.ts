@@ -118,72 +118,6 @@ export const batchCreateDirectMessageUsers = /* GraphQL */ `
     }
   }
 `;
-export const createTier = /* GraphQL */ `
-  mutation CreateTier($input: CreateTierInput!) {
-    createTier(input: $input) {
-      id
-      name
-      isOrgTier
-      isIndividualTier
-      marketingDescription
-      productsIncluded
-      groupsIncluded
-      applicationProcess {
-        id
-        createdAt
-        updatedAt
-      }
-      waitForApproval
-      enabled
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateTier = /* GraphQL */ `
-  mutation UpdateTier($input: UpdateTierInput!) {
-    updateTier(input: $input) {
-      id
-      name
-      isOrgTier
-      isIndividualTier
-      marketingDescription
-      productsIncluded
-      groupsIncluded
-      applicationProcess {
-        id
-        createdAt
-        updatedAt
-      }
-      waitForApproval
-      enabled
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteTier = /* GraphQL */ `
-  mutation DeleteTier($input: DeleteTierInput!) {
-    deleteTier(input: $input) {
-      id
-      name
-      isOrgTier
-      isIndividualTier
-      marketingDescription
-      productsIncluded
-      groupsIncluded
-      applicationProcess {
-        id
-        createdAt
-        updatedAt
-      }
-      waitForApproval
-      enabled
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const createApplicationProcess = /* GraphQL */ `
   mutation CreateApplicationProcess($input: CreateApplicationProcessInput!) {
     createApplicationProcess(input: $input) {
@@ -3312,7 +3246,11 @@ export const createPayment = /* GraphQL */ `
         payments {
           nextToken
         }
-        isTier
+        isOrgTier
+        isIndividualTier
+        marketingDescription
+        groupsIncluded
+        enabled
         createdAt
         updatedAt
       }
@@ -3428,7 +3366,11 @@ export const updatePayment = /* GraphQL */ `
         payments {
           nextToken
         }
-        isTier
+        isOrgTier
+        isIndividualTier
+        marketingDescription
+        groupsIncluded
+        enabled
         createdAt
         updatedAt
       }
@@ -3544,7 +3486,11 @@ export const deletePayment = /* GraphQL */ `
         payments {
           nextToken
         }
-        isTier
+        isOrgTier
+        isIndividualTier
+        marketingDescription
+        groupsIncluded
+        enabled
         createdAt
         updatedAt
       }
@@ -8224,7 +8170,11 @@ export const createProduct = /* GraphQL */ `
         }
         nextToken
       }
-      isTier
+      isOrgTier
+      isIndividualTier
+      marketingDescription
+      groupsIncluded
+      enabled
       createdAt
       updatedAt
     }
@@ -8251,7 +8201,11 @@ export const updateProduct = /* GraphQL */ `
         }
         nextToken
       }
-      isTier
+      isOrgTier
+      isIndividualTier
+      marketingDescription
+      groupsIncluded
+      enabled
       createdAt
       updatedAt
     }
@@ -8278,7 +8232,11 @@ export const deleteProduct = /* GraphQL */ `
         }
         nextToken
       }
-      isTier
+      isOrgTier
+      isIndividualTier
+      marketingDescription
+      groupsIncluded
+      enabled
       createdAt
       updatedAt
     }
