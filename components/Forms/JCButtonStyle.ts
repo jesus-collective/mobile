@@ -1125,6 +1125,10 @@ export default EStyleSheet.create({
             paddingRight: 0,
             paddingLeft: 0,
         },
+        AdminSmallOutlineButton: {
+            paddingLeft: 3,
+            paddingRight: 3,
+        },
     },
     // Media Query Mobile
     '@media (min-width: 320px) and (max-width: 480px)': {

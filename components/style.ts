@@ -2280,6 +2280,11 @@ export default class MainStyles {
                 flex: 1, 
                 alignSelf: 'stretch'
             },
+            AdminEnabledTableRow: {
+                flex: 1, 
+                alignSelf: 'stretch', 
+                justifyContent: 'center'
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2813,6 +2818,12 @@ export default class MainStyles {
                     width: 768,
                     marginTop: 30,
                     marginBottom: 30,
+                },
+                adminCRMTableRow: {
+                    flex: 1,
+                },
+                AdminEnabledTableRow: {
+                    paddingLeft: 10,
                 },
 
             },

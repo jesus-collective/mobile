@@ -347,7 +347,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
         {this.state.showStatus ? <View style={this.styles.style.AdminStatusTableRow}>
           <Text style={this.styles.style.adminCRMTableEmailStatus}>{item.UserStatus}</Text>
         </View> : null}
-        <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center' }}>
+        <View style={this.styles.style.AdminEnabledTableRow}>
           <Text style={this.styles.style.fontRegular}>{item.Enabled.toString()}</Text>
         </View>
         <View style={this.styles.style.AdminGroupBTTableRow}>
