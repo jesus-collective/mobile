@@ -2746,7 +2746,7 @@ export default class MainStyles {
                     width: "100%",
                 },
                 adminSubNav: {
-                    flex: 3,
+                    flex: 4,
                     justifyContent: 'flex-end',
                     right: 0,
                 },
