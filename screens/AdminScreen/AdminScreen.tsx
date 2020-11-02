@@ -40,7 +40,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
           <Content>
             <Container style={this.styles.style.eventsScreenMainContainer}>
               <Container style={this.styles.style.eventsScreenLeftContainer}>
-                <Text>Admin</Text>
+                <Text style={this.styles.style.adminText}>Admin</Text>
               </Container>
               { /*
             <Container style={style.eventsScreenRightContainer}>

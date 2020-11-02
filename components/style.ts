@@ -403,6 +403,13 @@ export default class MainStyles {
                 fontFamily: "Graphik-Regular-App",
                 color: '#000000',
             },
+            adminText: {
+                fontFamily: "Graphik-Regular-App",
+                color: '#000000',
+                width: '100%',
+                paddingLeft: '3%', 
+                paddingTop: 30,
+            },
             adminCRMModalInvite: {
                 fontFamily: "Graphik-Regular-App",
                 color: '#000000',
