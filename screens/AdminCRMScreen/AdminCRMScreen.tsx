@@ -329,32 +329,32 @@ export default class AdminScreen extends JCComponent<Props, State>{
 
     return (
       <View key={index} style={this.styles.style.AdminTableRowContainer}>
-        <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center' }}>
+        <View style={this.styles.style.AdminFirstNameTableRow}>
           <Text style={this.styles.style.adminCRMTableParagraph}>{item.Attributes.find(e => e.Name == "given_name")?.Value}</Text>
         </View>
-        <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center' }}>
+        <View style={this.styles.style.AdminLastNameTableRow}>
           <Text style={this.styles.style.adminCRMTableParagraph}>{item.Attributes.find(e => e.Name == "family_name")?.Value}</Text>
         </View>
-        {this.state.showUid ? <View style={{ flex: 3, alignSelf: 'stretch', justifyContent: 'center' }}>
+        {this.state.showUid ? <View style={this.styles.style.AdminUserIdTableRow}>
           <Text style={this.styles.style.fontRegular}>{item.Username}</Text>
         </View> : null}
         {this.state.showEmail ? <View style={this.styles.style.adminCRMTableRow}>
           <Text style={this.styles.style.adminCRMTableParagraph}>{item.Attributes.find(e => e.Name == "email")?.Value}</Text>
         </View> : null}
-        {this.state.showPhone ? <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center' }}>
+        {this.state.showPhone ? <View style={this.styles.style.AdminPhoneTableRow}>
           <Text style={this.styles.style.adminCRMTableEmailStatus}>{item.Attributes.find(e => e.Name == "phone_number")?.Value}</Text>
         </View> : null}
-        {this.state.showStatus ? <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center' }}>
+        {this.state.showStatus ? <View style={this.styles.style.AdminStatusTableRow}>
           <Text style={this.styles.style.adminCRMTableEmailStatus}>{item.UserStatus}</Text>
         </View> : null}
         <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center' }}>
           <Text style={this.styles.style.fontRegular}>{item.Enabled.toString()}</Text>
         </View>
-        <View style={{ flex: 1, alignSelf: 'stretch' }}>
+        <View style={this.styles.style.AdminGroupBTTableRow}>
           <JCButton buttonType={ButtonTypes.AdminSmallOutline}
             onPress={() => { this.showGroups(item.Username) }}>Groups</JCButton>
         </View>
-        <View style={{ flex: 1, alignSelf: 'stretch' }}>
+        <View style={this.styles.style.AdminPaymentBTTableRow}>
           <JCButton buttonType={ButtonTypes.AdminSmallOutline}
             onPress={() => { this.showPayments(item.Username) }}>Payments</JCButton>
         </View>

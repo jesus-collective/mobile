@@ -2247,6 +2247,39 @@ export default class MainStyles {
                 marginBottom: 10, 
                 alignContent: 'center'
             },
+            AdminFirstNameTableRow: {
+                flex: 1, 
+                alignSelf: 'stretch', 
+                justifyContent: 'center'
+            },
+            AdminLastNameTableRow: {
+                flex: 1, 
+                alignSelf: 'stretch', 
+                justifyContent: 'center'
+            },
+            AdminUserIdTableRow: {
+                flex: 3, 
+                alignSelf: 'stretch', 
+                justifyContent: 'center'
+            },
+            AdminPhoneTableRow: {
+                flex: 1, 
+                alignSelf: 'stretch', 
+                justifyContent: 'center'
+            },
+            AdminStatusTableRow: {
+                flex: 1, 
+                alignSelf: 'stretch', 
+                justifyContent: 'center'
+            },
+            AdminGroupBTTableRow: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminPaymentBTTableRow: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2778,6 +2811,8 @@ export default class MainStyles {
                 AdminTableRowContainer: {
                     alignSelf: 'center', 
                     width: 768,
+                    marginTop: 30,
+                    marginBottom: 30,
                 },
 
             },
