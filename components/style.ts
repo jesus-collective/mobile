@@ -2203,6 +2203,41 @@ export default class MainStyles {
                 color: '#333333', 
                 marginTop: 45
             },
+            AdminFirstNameTableHeader: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminLastNameTableHeader: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminUserIdTableHeader: {
+                flex: 3, 
+                alignSelf: 'stretch'
+            },
+            AdminPhoneTableHeader: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminStatusTableHeader: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminEnabledTableHeader: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminGroupsTableHeader: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminPaymentsTableHeader: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminTableMainContainer: {
+                width: '100%',
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2719,6 +2754,13 @@ export default class MainStyles {
                 // },
                 courseDetailCalendarText: {
                     marginTop: 23,
+                },
+                AdminTableMainContainer: {
+                    overscrollX: 'auto',
+                },
+                adminCRMTableContainer: {
+                    width: 768,
+                    alignSelf: 'center',
                 },
             },
 
