@@ -328,7 +328,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
   renderRow(item: any, index: number): React.ReactNode {
 
     return (
-      <View key={index} style={{ flex: 1, maxHeight: 40, alignSelf: 'stretch', flexDirection: 'row', marginTop: 10, marginBottom: 10, alignContent: 'center' }}>
+      <View key={index} style={this.styles.style.AdminTableRowContainer}>
         <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center' }}>
           <Text style={this.styles.style.adminCRMTableParagraph}>{item.Attributes.find(e => e.Name == "given_name")?.Value}</Text>
         </View>

@@ -2238,6 +2238,15 @@ export default class MainStyles {
             AdminTableMainContainer: {
                 width: '100%',
             },
+            AdminTableRowContainer: {
+                flex: 1, 
+                maxHeight: 40, 
+                alignSelf: 'stretch', 
+                flexDirection: 'row', 
+                marginTop: 10, 
+                marginBottom: 10, 
+                alignContent: 'center'
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2761,7 +2770,16 @@ export default class MainStyles {
                 adminCRMTableContainer: {
                     width: 768,
                     alignSelf: 'center',
+                    height: 'auto',
                 },
+                adminCRMTableHeader: {
+                    flex: 1, 
+                },
+                AdminTableRowContainer: {
+                    alignSelf: 'center', 
+                    width: 768,
+                },
+
             },
 
             // Media Query Desktop Large Tablet
