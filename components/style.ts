@@ -3456,6 +3456,9 @@ export default class MainStyles {
                     flex: 'none',
                     height: 'auto', 
                 },
+                adminSubNavTogglesView: {
+                    flexDirection: 'column',
+                },
             },
 
             dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
