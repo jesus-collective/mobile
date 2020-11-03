@@ -2751,7 +2751,7 @@ export default class MainStyles {
                     right: 0,
                 },
                 adminSubNavTogglesView: {
-                    flexDirection: 'column',
+                    flexDirection: 'row',
                     marginLeft: 15,
                     marginRight: 15,
                 },

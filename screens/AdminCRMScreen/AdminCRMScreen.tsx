@@ -14,6 +14,9 @@ import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import * as mutations from '../../src/graphql/mutations';
 import { GetProductQuery } from 'src/API';
 import JCModal from '../../components/Forms/JCModal';
+import {
+  isMobile
+} from "react-device-detect";
 
 interface Props {
   navigation: any
@@ -213,15 +216,15 @@ export default class AdminScreen extends JCComponent<Props, State>{
         {this.state.showEmail ? <View style={this.styles.style.adminCRMTableHeader}>
           <Text style={this.styles.style.adminCRMTableHeading}>Email</Text>
         </View> : null}
-        {this.state.showPhone ? <View style={this.styles.style.AdminPhoneTableHeader}>
+        {this.state.showPhone && !isMobile ? <View style={this.styles.style.AdminPhoneTableHeader}>
           <Text style={this.styles.style.adminCRMTableHeading}>Phone</Text>
         </View> : null}
-        {this.state.showStatus ? <View style={this.styles.style.AdminStatusTableHeader}>
+        {this.state.showStatus && !isMobile ? <View style={this.styles.style.AdminStatusTableHeader}>
           <Text style={this.styles.style.adminCRMTableHeading}>Status</Text>
         </View> : null}
-        <View style={this.styles.style.AdminEnabledTableHeader}>
+        { !isMobile ? <View style={this.styles.style.AdminEnabledTableHeader}>
           <Text style={this.styles.style.adminCRMTableHeading}>Enabled</Text>
-        </View>
+        </View> : null}
         <View style={this.styles.style.AdminGroupsTableHeader}>
           <Text style={this.styles.style.adminCRMTableHeading}>Groups</Text>
         </View>
@@ -341,15 +344,15 @@ export default class AdminScreen extends JCComponent<Props, State>{
         {this.state.showEmail ? <View style={this.styles.style.adminCRMTableRow}>
           <Text style={this.styles.style.adminCRMTableParagraph}>{item.Attributes.find(e => e.Name == "email")?.Value}</Text>
         </View> : null}
-        {this.state.showPhone ? <View style={this.styles.style.AdminPhoneTableRow}>
+        {this.state.showPhone && !isMobile ? <View style={this.styles.style.AdminPhoneTableRow}>
           <Text style={this.styles.style.adminCRMTableEmailStatus}>{item.Attributes.find(e => e.Name == "phone_number")?.Value}</Text>
         </View> : null}
-        {this.state.showStatus ? <View style={this.styles.style.AdminStatusTableRow}>
+        {this.state.showStatus && !isMobile ? <View style={this.styles.style.AdminStatusTableRow}>
           <Text style={this.styles.style.adminCRMTableEmailStatus}>{item.UserStatus}</Text>
         </View> : null}
-        <View style={this.styles.style.AdminEnabledTableRow}>
+        { !isMobile ? <View style={this.styles.style.AdminEnabledTableRow}>
           <Text style={this.styles.style.fontRegular}>{item.Enabled.toString()}</Text>
-        </View>
+        </View> : null}
         <View style={this.styles.style.AdminGroupBTTableRow}>
           <JCButton buttonType={ButtonTypes.AdminSmallOutline}
             onPress={() => { this.showGroups(item.Username) }}>Groups</JCButton>
@@ -525,8 +528,8 @@ export default class AdminScreen extends JCComponent<Props, State>{
                     <JCSwitch toggleSpacing={'space-between'} containerWidth={145} toggleMargin={5} switchLabel='show email' initState={true} onPress={() => this.setState({ showEmail: !this.state.showEmail })} />
                   </View>
                   <View style={this.styles.style.adminSubNavTogglesView}>
-                    <JCSwitch toggleSpacing={'space-between'} containerWidth={165} toggleMargin={5} switchLabel='show phone #' initState={true} onPress={() => this.setState({ showPhone: !this.state.showPhone })} />
-                    <JCSwitch toggleSpacing={'space-between'} containerWidth={150} toggleMargin={5} switchLabel='show status' initState={true} onPress={() => this.setState({ showStatus: !this.state.showStatus })} />
+                    { !isMobile ? <JCSwitch toggleSpacing={'space-between'} containerWidth={165} toggleMargin={5} switchLabel='show phone #' initState={true} onPress={() => this.setState({ showPhone: !this.state.showPhone })} /> : null}
+                    { !isMobile ? <JCSwitch toggleSpacing={'space-between'} containerWidth={150} toggleMargin={5} switchLabel='show status' initState={true} onPress={() => this.setState({ showStatus: !this.state.showStatus })} /> : null}
                   </View>
                   <View style={this.styles.style.adminInviteButton}>
                     <JCButton buttonType={ButtonTypes.AdminOutline} onPress={() => { this.showInvite() }}>Invite</JCButton>
