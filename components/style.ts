@@ -2831,6 +2831,12 @@ export default class MainStyles {
                 adminCRMTableParagraph: {
                     paddingRight: 10,
                 },
+                AdminUserIdTableHeader: {
+                    flex: 1, 
+                },
+                AdminUserIdTableRow: {
+                    flex: 1, 
+                },
             },
 
             // Media Query Desktop Large Tablet
