@@ -2809,6 +2809,8 @@ export default class MainStyles {
                     width: 768,
                     alignSelf: 'center',
                     height: 'auto',
+                    paddingLeft: 50,
+                    paddingRight: 0,
                 },
                 adminCRMTableHeader: {
                     flex: 1, 
@@ -2818,6 +2820,7 @@ export default class MainStyles {
                     width: 768,
                     marginTop: 30,
                     marginBottom: 30,
+                    paddingLeft: 40,
                 },
                 adminCRMTableRow: {
                     flex: 1,
@@ -2825,7 +2828,9 @@ export default class MainStyles {
                 AdminEnabledTableRow: {
                     paddingLeft: 10,
                 },
-
+                adminCRMTableParagraph: {
+                    paddingRight: 10,
+                },
             },
 
             // Media Query Desktop Large Tablet
