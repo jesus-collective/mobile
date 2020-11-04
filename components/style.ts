@@ -3474,6 +3474,7 @@ export default class MainStyles {
                 AdminTableRowContainer: {
                     width: '100vw',
                     paddingLeft: 0,
+                    maxHeight: 60,
                 },
                 icon: {
                     color: '#aaaaaa',
@@ -3481,6 +3482,18 @@ export default class MainStyles {
                 },
                 adminCRMTableHeading: {
                     fontSize: 14,
+                },
+                adminCRMTableParagraph: {
+                    paddingRight: 10,
+                },
+                adminCRMTableHeader: {
+                    alignSelf:'center',
+                },
+                AdminGroupsTableHeader: {
+                    alignSelf: 'center'
+                },
+                AdminPaymentsTableHeader: {
+                    alignSelf: 'center'
                 },
             },
 
