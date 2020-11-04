@@ -2829,7 +2829,7 @@ export default class MainStyles {
                     paddingLeft: 10,
                 },
                 adminCRMTableParagraph: {
-                    paddingRight: 10,
+                    paddingRight: 20,
                 },
                 AdminUserIdTableHeader: {
                     flex: 1, 
@@ -2839,7 +2839,7 @@ export default class MainStyles {
                 },
                 icon: {
                     color: '#aaaaaa',
-                    fontSize: 40,
+                    fontSize: 38,
                 },
             },
 
