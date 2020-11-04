@@ -2837,6 +2837,10 @@ export default class MainStyles {
                 AdminUserIdTableRow: {
                     flex: 1, 
                 },
+                icon: {
+                    color: '#aaaaaa',
+                    fontSize: 40,
+                },
             },
 
             // Media Query Desktop Large Tablet

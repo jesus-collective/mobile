@@ -216,7 +216,7 @@ export default class HeaderJC extends JCComponent<Props, State> {
                 transparent
                 data-testid="header-map"
                 onPress={this.openAdmin}>
-                <Ionicons name="ios-people" style={this.headerStyles.style.icon} />
+                <Ionicons name="ios-rocket" style={this.headerStyles.style.icon} />
               </Button> : null
 
           }
