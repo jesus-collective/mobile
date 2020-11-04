@@ -3459,6 +3459,25 @@ export default class MainStyles {
                 adminSubNavTogglesView: {
                     flexDirection: 'column',
                 },
+                adminCRMTableContainer: {
+                    width: '100vw',
+                    paddingRight: 10,
+                    paddingLeft: 10,
+                },
+                adminInviteButton: {
+                    marginLeft: 0,
+                },
+                AdminTableRowContainer: {
+                    width: '100vw',
+                    paddingLeft: 0,
+                },
+                icon: {
+                    color: '#aaaaaa',
+                    fontSize: 30,
+                },
+                adminCRMTableHeading: {
+                    fontSize: 14,
+                },
             },
 
             dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?

@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import { Container, Content, Text } from 'native-base';
+import { Container, Content, Text, Button } from 'native-base';
 import Header from '../../components/Header/Header'
 import HeaderAdmin from '../../components/HeaderAdmin/HeaderAdmin';
 import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
@@ -17,6 +17,8 @@ import JCModal from '../../components/Forms/JCModal';
 import {
   isMobile
 } from "react-device-detect";
+import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons'; 
 
 interface Props {
   navigation: any
@@ -354,12 +356,18 @@ export default class AdminScreen extends JCComponent<Props, State>{
           <Text style={this.styles.style.fontRegular}>{item.Enabled.toString()}</Text>
         </View> : null}
         <View style={this.styles.style.AdminGroupBTTableRow}>
-          <JCButton buttonType={ButtonTypes.AdminSmallOutline}
-            onPress={() => { this.showGroups(item.Username) }}>Groups</JCButton>
+          { !isMobile ? <JCButton buttonType={ButtonTypes.AdminSmallOutline}
+            onPress={() => { this.showGroups(item.Username) }}>Groups</JCButton> : <Button transparent
+            onPress={() => { this.showGroups(item.Username) }}>
+            <Ionicons name="ios-people" style={this.styles.style.icon} />
+          </Button>}
         </View>
         <View style={this.styles.style.AdminPaymentBTTableRow}>
-          <JCButton buttonType={ButtonTypes.AdminSmallOutline}
-            onPress={() => { this.showPayments(item.Username) }}>Payments</JCButton>
+        { !isMobile ? <JCButton buttonType={ButtonTypes.AdminSmallOutline}
+            onPress={() => { this.showPayments(item.Username) }}>Payments</JCButton> : <Button transparent
+            onPress={() => { this.showPayments(item.Username) }}>
+            <MaterialIcons name="payment" style={this.styles.style.icon} />
+          </Button>}
         </View>
       </View>
     )
