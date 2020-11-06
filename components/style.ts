@@ -3520,6 +3520,9 @@ export default class MainStyles {
                     justifyContent: 'flex-start',
                     marginLeft: 10,
                 },
+                AdminUserIdTableHeader: {
+                    alignSelf: 'center', 
+                },
             },
 
             dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
