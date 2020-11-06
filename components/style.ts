@@ -3495,6 +3495,11 @@ export default class MainStyles {
                 AdminPaymentsTableHeader: {
                     alignSelf: 'center'
                 },
+                adminSubNav: {
+                    overflowX: 'scroll',
+                    justifyContent: 'flex-start',
+                    marginLeft: 10,
+                },
             },
 
             dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?

@@ -136,10 +136,10 @@ export default class HeaderJC extends JCComponent<Props> {
           </Button>
 
         </Body>
-        <Right>
+        {/* <Right>
 
 
-        </Right>
+        </Right> */}
       </Header>
     )
   }
