@@ -84,54 +84,54 @@ export default class HeaderJC extends JCComponent<Props> {
     return (
 
       <Header style={this.headerStyles.style.adminContainer}>
-        <Left>
-          <Button style={this.headerStyles.style.leftButtons}
+        {/* <Left>
+          <Button style={this.headerStyles.style.leftButtonsSubNav}
             transparent
             onPress={this.openDrawer}>
             <Ionicons name="md-menu" style={this.headerStyles.style.icon} />
           </Button>
-        </Left>
+        </Left> */}
         <Body style={this.styles.style.adminSubNav}>
           <Button
             transparent
             data-testId="header-events"
             onPress={this.openAdmin}
-            style={this.headerStyles.style.centerMenuButtons}>
+            style={this.headerStyles.style.centerMenuButtonsSubNav}>
             <Text style={this.headerStyles.style.centerMenuButtonsText}>Admin</Text>
           </Button>
           <Button
             transparent
             data-testid="header-events"
             onPress={this.openAdminCRM}
-            style={this.headerStyles.style.centerMenuButtons}>
+            style={this.headerStyles.style.centerMenuButtonsSubNav}>
             <Text style={this.headerStyles.style.centerMenuButtonsText}>CRM</Text>
           </Button>
           <Button
             transparent
             data-testid="header-events"
             onPress={this.openAdminTier}
-            style={this.headerStyles.style.centerMenuButtons}>
+            style={this.headerStyles.style.centerMenuButtonsSubNav}>
             <Text style={this.headerStyles.style.centerMenuButtonsText}>Tiers</Text>
           </Button>
           <Button
             transparent
             data-testid="header-events"
             onPress={this.openProducts}
-            style={this.headerStyles.style.centerMenuButtons}>
+            style={this.headerStyles.style.centerMenuButtonsSubNav}>
             <Text style={this.headerStyles.style.centerMenuButtonsText}>Products</Text>
           </Button>
           <Button
             transparent
             data-testId="header-events"
             onPress={this.openEvents}
-            style={this.headerStyles.style.centerMenuButtons}>
+            style={this.headerStyles.style.centerMenuButtonsSubNav}>
             <Text style={this.headerStyles.style.centerMenuButtonsText}>Stats</Text>
           </Button>
           <Button
             transparent
             data-testId="header-events"
             onPress={this.openEvents}
-            style={this.headerStyles.style.centerMenuButtons}>
+            style={this.headerStyles.style.centerMenuButtonsSubNav}>
             <Text style={this.headerStyles.style.centerMenuButtonsText}>Config</Text>
           </Button>
 
