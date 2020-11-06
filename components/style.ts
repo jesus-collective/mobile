@@ -2839,7 +2839,7 @@ export default class MainStyles {
                 },
                 icon: {
                     color: '#aaaaaa',
-                    fontSize: 38,
+                    fontSize: 34,
                 },
                 AdminGroupBTTableRow: {
                     left: 15,
