@@ -2096,7 +2096,7 @@ export default class MainStyles {
             adminSubNav: {
                 flex: 1,
                 flexDirection: 'row',
-                justifyContent: 'flex-start',
+                justifyContent: 'center',
                 alignItems: 'flex-start', 
                 right: 15
             },
@@ -2747,7 +2747,7 @@ export default class MainStyles {
                 },
                 adminSubNav: {
                     flex: 4,
-                    justifyContent: 'flex-end',
+                    justifyContent: 'center',
                     right: 0,
                 },
                 adminSubNavTogglesView: {
@@ -3032,6 +3032,10 @@ export default class MainStyles {
                 courseTimeNonEditable: {
                     marginTop: 0,
                     paddingTop: 0,
+                },
+                adminSubNav: {
+                    justifyContent: 'center',
+                    right: 0,
                 },
             },
 
