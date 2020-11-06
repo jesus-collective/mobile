@@ -3494,7 +3494,7 @@ export default class MainStyles {
                 AdminTableRowContainer: {
                     width: '100vw',
                     paddingLeft: 0,
-                    maxHeight: 60,
+                    maxHeight: 80,
                 },
                 icon: {
                     color: '#aaaaaa',
