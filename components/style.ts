@@ -3043,6 +3043,16 @@ export default class MainStyles {
                     justifyContent: 'center',
                     right: 0,
                 },
+                AdminGroupBTTableRow: {
+                    left: 15,
+                },
+                AdminPaymentBTTableRow: {
+                    left: 25,
+                },
+                icon: {
+                    color: '#aaaaaa',
+                    fontSize: 28,
+                },
             },
 
             '@media (min-width: 769px) and (max-width: 1279px)': {
