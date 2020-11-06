@@ -2841,6 +2841,12 @@ export default class MainStyles {
                     color: '#aaaaaa',
                     fontSize: 38,
                 },
+                AdminGroupBTTableRow: {
+                    left: 15,
+                },
+                AdminPaymentBTTableRow: {
+                    left: 25,
+                },
             },
 
             // Media Query Desktop Large Tablet
