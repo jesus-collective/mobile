@@ -3523,6 +3523,12 @@ export default class MainStyles {
                 AdminUserIdTableHeader: {
                     alignSelf: 'center', 
                 },
+                AdminGroupBTTableRow: {
+                    alignSelf: 'center',
+                },
+                AdminPaymentBTTableRow: {
+                    alignSelf: 'center',
+                },
             },
 
             dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
