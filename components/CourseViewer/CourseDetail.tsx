@@ -330,7 +330,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
   }
   navigate(id) {
     window.location.href = id
-    
+
   }
   renderYoutube(state: CourseState, actions: any, week, lesson) {
     return (
@@ -349,7 +349,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
           <Container style={this.styles.style.courseDetailHr}></Container>
           {lesson.zoomRecording && lesson.zoomRecording != "" ?
             <iframe title="Youtube" src={"https://www.youtube.com/embed/" + lesson.zoomRecording}
-              style={{ width: "80vw", height: "60vw", marginBottom: 20 }}
+              style={{ width: "95%", height: "95%", marginBottom: 20 }}
               frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen></iframe>
 
