@@ -169,7 +169,7 @@ export default class MainStyles {
                 paddingLeft: '0.25rem',
                 paddingRight: '0.25rem',
                 borderRadius: 4,
-                shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 20,
+                shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30,
                 borderStyle: "solid",
                 borderColor: "#FFFFFF"
             },
