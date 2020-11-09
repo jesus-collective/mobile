@@ -20,7 +20,7 @@ import SignUpScreen3 from '../../components/Auth/SignUpScreen3'
 import { CreateOrganizationInput, CreateOrganizationMemberInput, CreateUserInput } from '../../src/API';
 
 import moment from "moment";
-import { NavigationContainer, DefaultTheme } from "@react-navigation/native"
+import { NavigationContainer, DefaultTheme, useRoute, useNavigation } from "@react-navigation/native"
 import { Linking } from "expo";
 import { navigationRef } from './NavigationRoot';
 import * as RootNavigation from './NavigationRoot';
@@ -46,10 +46,22 @@ const ProfilesScreen = lazy(() => import('../ProfilesScreen/ProfilesScreen'));
 const SearchScreen = lazy(() => import('../SearchScreen/SearchScreen'));
 const AdminScreen = lazy(() => import('../AdminScreen/AdminScreen'));
 const AdminCRMScreen = lazy(() => import('../AdminCRMScreen/AdminCRMScreen'));
-const AdminTierScreen = lazy(() => import('../AdminTierScreen/AdminTierScreen'));
 const CoursePaymentScreen = lazy(() => import('../CoursePaymentScreen/CoursePaymentScreen'));
 const PurchaseConfirmationScreen = lazy(() => import('../PurchaseConfirmationScreen/PurchaseConfirmationScreen'));
 const AdminCreateProductScreen = lazy(() => import('../AdminCreateProductScreen/AdminCreateProductScreen'))
+
+const MySignIn = lazy(() => import('../Auth/MySignIn'))
+const MySignUp = lazy(() => import('../Auth/MySignUp'))
+const MyConfirmSignUp = lazy(() => import('../Auth/MyConfirmSignUp'))
+const MyForgotPassword = lazy(() => import('../Auth/MyForgotPassword'))
+const MyRequireNewPassword = lazy(() => import('../Auth/MyRequireNewPassword'))
+const MyLoading = lazy(() => import('../Auth/MyLoading'))
+const MyConfirmSignIn = lazy(() => import('../Auth/MyConfirmSignIn'))
+const MyVerifyContact = lazy(() => import('../Auth/MyVerifyContact'))
+
+
+
+
 Amplify.configure(awsconfig);
 
 const prefix = Linking.makeUrl('/');
@@ -84,7 +96,6 @@ const linking = {
               ProfilesScreen: 'profiles',
               AdminScreen: 'admin',
               AdminCRMScreen: 'admin-crm',
-              AdminTierScreen: 'admin-tiers',
               AdminCreateProductScreen: 'admin-products',
               CoursePaymentScreen: 'coursepayment',
               PurchaseConfirmationScreen: 'success'
@@ -95,6 +106,14 @@ const linking = {
       auth: {
         path: "auth",
         screens: {
+          MySignIn: 'signin/:email/:fromVerified',
+          MySignUp: 'signup/:joinedAs',
+          MyConfirmSignUp: 'confirmsignup/:email',
+          MyForgotPassword: 'forgotpassword',
+          MyRequireNewPassword: 'requirenewpassword',
+          MyLoading: 'loading',
+          MyConfirmSignIn: 'confirmsignin',
+          MyVerifyContact: 'verifycontact',
           Payment1: 'payment1',
           Payment2: 'payment2',
           Payment3: 'payment3'
@@ -108,19 +127,37 @@ const AuthStack = createStackNavigator();
 const Stack = createStackNavigator();
 const MainStack = createStackNavigator();
 
+interface MARState extends JCState {
+}
+interface MARProp {
+  navigation?: any
+  route?: any
 
+}
 
-class MainAuthRouter extends JCComponent {
+function MainAuthRouter(props: MARProp): JSX.Element {
+  const route = useRoute();
+  const navigation = useNavigation()
+  return <MainAuthRouterImpl {...props} navigation={navigation} route={route} />;
+}
+class MainAuthRouterImpl extends JCComponent<MARProp, MARState> {
+  constructor(props: MARProp) {
+    super(props)
+    this.state = {
+      ...super.getInitialState()
+    }
+
+  }
   static Consumer = UserContext.Consumer
 
   render() {
     console.log("MainAuthRouter")
     return (
-      <MainAuthRouter.Consumer>
+      <MainAuthRouterImpl.Consumer>
         {({ state, actions }) => {
           return (
             <AuthStack.Navigator
-              initialRouteName='Payment3'
+
               headerMode='none'
               mode='card'
               screenOptions={{
@@ -128,12 +165,43 @@ class MainAuthRouter extends JCComponent {
                 gestureEnabled: false,
                 cardOverlayEnabled: false
               }}>
-              {/*
-   switch (state.hasPaidState) {
-                        case "Not Started":
-                          return  case "In Progress":
-                    return case "Complete":
-   return */}
+
+
+              <AuthStack.Screen
+                name="signin"
+                component={MySignIn}
+                options={{ title: 'Jesus Collective' }} />
+              <AuthStack.Screen
+                name="signup"
+                component={MySignUp}
+                options={{ title: 'Jesus Collective' }} />
+
+              <AuthStack.Screen
+                name="confirmsignup"
+                component={MyConfirmSignUp}
+                options={{ title: 'Jesus Collective' }} />
+
+              <AuthStack.Screen
+                name="forgotpassword"
+                component={MyForgotPassword}
+                options={{ title: 'Jesus Collective' }} />
+
+              <AuthStack.Screen
+                name="requirenewpassword"
+                component={MyRequireNewPassword}
+                options={{ title: 'Jesus Collective' }} />
+              <AuthStack.Screen
+                name="loading"
+                component={MyLoading}
+                options={{ title: 'Jesus Collective' }} />
+              <AuthStack.Screen
+                name="confirmsignin"
+                component={MyConfirmSignIn}
+                options={{ title: 'Jesus Collective' }} />
+              <AuthStack.Screen
+                name="verifycontact"
+                component={MyVerifyContact}
+                options={{ title: 'Jesus Collective' }} />
               <AuthStack.Screen
                 name="Payment1"
                 component={SignUpScreen1}
@@ -151,9 +219,11 @@ class MainAuthRouter extends JCComponent {
           )
         }
         }
-      </MainAuthRouter.Consumer>
+      </MainAuthRouterImpl.Consumer >
     )
+
   }
+
 }
 class Nothing extends Component {
   render() {
@@ -295,11 +365,7 @@ class MainAppRouter extends JCComponent {
                     component={AdminCRMScreen}
                     options={{ title: 'Jesus Collective' }}
                   />
-                  <Stack.Screen
-                    name="AdminTierScreen"
-                    component={AdminTierScreen}
-                    options={{ title: 'Jesus Collective' }}
-                  />
+
                   <Stack.Screen
                     name="CoursePaymentScreen"
                     component={CoursePaymentScreen}
@@ -416,11 +482,7 @@ class MainAppRouter extends JCComponent {
                     component={Nothing}
                     options={{ title: 'Jesus Collective' }}
                   />
-                  <Stack.Screen
-                    name="AdminTierScreen"
-                    component={Nothing}
-                    options={{ title: 'Jesus Collective' }}
-                  />
+
                   <Stack.Screen
                     name="CoursePaymentScreen"
                     component={Nothing}
@@ -464,10 +526,12 @@ class HomeScreenRouter extends JCComponent<Props, UserState> {
       authState: props.authState,
       hasCompletedOrganizationProfile: "Unknown",
       orgId: '',
-      isOrg: false
+      isOrg: false,
+      initialAuthType: null
     }
   }
   componentDidMount(): void {
+    this.getAuthInitialState()
     this.performStartup()
 
   }
@@ -670,49 +734,70 @@ class HomeScreenRouter extends JCComponent<Props, UserState> {
   renderFallback(): React.ReactNode {
     return <Text>loading...</Text>
   }
+
+  async getAuthInitialState() {
+    const initialUrl: string = await Linking.getInitialURL();
+    const initialParams = Linking.parse(initialUrl).queryParams
+
+    //const initialParams = 
+    console.log({ INITIALURL: initialUrl })
+    console.log({ initialParams: initialParams })
+    if (initialUrl.toLowerCase().includes("/auth/signup"))
+      this.setState({ initialAuthType: "signup", initialParams: initialParams })
+    this.setState({ initialAuthType: "signin" })
+
+  }
   static Provider = UserContext.Provider;
   render() {
     console.log({
       UserState: [
         "User has signed in",
+        { "Home Screen Router AuthState": this.props.authState },
         { "Paid state": this.state.hasPaidState },
         { "Profile state": this.state.hasCompletedPersonalProfile }]
     })
 
     trackUserId();
-    return (
-      <HomeScreenRouter.Provider value={{
-        state: {
-          ...this.state
-        }, actions: {
-          updateHasCompletedPersonalProfile: this.updateHasCompletedPersonalProfile,
-          onPaidStateChanged: this.onPaidStateChanged,
-          onStateChange: this.props.onStateChange
-        }
+    if (this.state.initialAuthType)
+      return (
+        <HomeScreenRouter.Provider value={{
+          state: {
+            ...this.state
+          }, actions: {
+            updateHasCompletedPersonalProfile: this.updateHasCompletedPersonalProfile,
+            onPaidStateChanged: this.onPaidStateChanged,
+            onStateChange: this.props.onStateChange
+          }
 
-      }}>
-        <MainStack.Navigator
-          initialRouteName='auth'
-          headerMode='none'
-          mode='card'
-          screenOptions={{
-            animationEnabled: false,
-            gestureEnabled: false,
-            cardOverlayEnabled: false
-          }} >
+        }}>
+          <MainStack.Navigator
+            initialRouteName='auth'
+            headerMode='none'
+            mode='card'
+            screenOptions={{
+              animationEnabled: false,
+              gestureEnabled: false,
+              cardOverlayEnabled: false
+            }} >
 
-          <MainStack.Screen
-            name="auth"
-            component={MainAuthRouter}
-            options={{ title: 'Jesus Collective' }} />
-          <MainStack.Screen
-            name="mainApp"
-            component={MainDrawerRouter}
-            options={{ title: 'Jesus Collective' }} />
+            <MainStack.Screen
+              name="auth"
+              component={MainAuthRouter}
+              initialParams={{
+                screen: this.state.initialAuthType,
+                params: this.state.initialParams
+              }}
+              options={{ title: 'Jesus Collective' }} />
+            <MainStack.Screen
+              name="mainApp"
+              component={MainDrawerRouter}
+              options={{ title: 'Jesus Collective' }} />
 
-        </MainStack.Navigator >
-      </HomeScreenRouter.Provider>
-    )
+          </MainStack.Navigator >
+        </HomeScreenRouter.Provider>
+      )
+    else
+      return null
   }
 }
 
@@ -737,39 +822,31 @@ async function trackUserId() {
   }
 }
 
-interface AppState extends JCState {
 
-  authState: any
-}
 
-export default class App extends JCComponent<Props, AppState>{
+export default class App extends JCComponent<Props>{
   constructor(props: Props) {
     super(props);
-    this.state = {
-      ...super.getInitialState(),
-      authState: props.authState
-    }
+
 
   }
+
   renderFallback(): {} {
     return <Text>loading...</Text>
   }
   render(): React.ReactNode {
-    // console.log(this.state.authState)
-    if (this.props.authState == 'signedIn') {
-      return (
-        <Suspense fallback={this.renderFallback()}>
-          <View style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1 }}>
-            <MuiPickersUtilsProvider utils={MomentUtils}>
-              <Main onStateChange={(e: any, e2: any) => { console.log(e); this.props.onStateChange(e, e2) }} authState={this.props.authState} />
-            </MuiPickersUtilsProvider>
+    console.log({ AppAuthState: this.props.authState })
 
-          </View>
-        </Suspense>
-      )
-    }
-    else
-      return null
+    return (
+      <Suspense fallback={this.renderFallback()}>
+        <View style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, flex: 1 }}>
+          <MuiPickersUtilsProvider utils={MomentUtils}>
+            <Main onStateChange={(e: any, e2: any) => { console.log(e); this.props.onStateChange(e, e2) }} authState={this.props.authState} />
+          </MuiPickersUtilsProvider>
+        </View>
+      </Suspense>
+    )
+
   }
 }
 

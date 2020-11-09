@@ -8,32 +8,6 @@ export type batchCreateDirectMessageUsersInput = {
   roomId: string,
 };
 
-export type CreateTierInput = {
-  id?: string | null,
-  name?: string | null,
-  isOrgTier?: string | null,
-  isIndividualTier?: string | null,
-  marketingDescription?: string | null,
-  productsIncluded?: Array< string | null > | null,
-  groupsIncluded?: Array< string | null > | null,
-  waitForApproval?: string | null,
-};
-
-export type UpdateTierInput = {
-  id: string,
-  name?: string | null,
-  isOrgTier?: string | null,
-  isIndividualTier?: string | null,
-  marketingDescription?: string | null,
-  productsIncluded?: Array< string | null > | null,
-  groupsIncluded?: Array< string | null > | null,
-  waitForApproval?: string | null,
-};
-
-export type DeleteTierInput = {
-  id?: string | null,
-};
-
 export type CreateApplicationProcessInput = {
   id?: string | null,
 };
@@ -704,7 +678,11 @@ export type CreateProductInput = {
   name?: string | null,
   description?: string | null,
   confirmationMsg?: string | null,
-  isTier?: string | null,
+  isOrgTier?: string | null,
+  isIndividualTier?: string | null,
+  marketingDescription?: string | null,
+  groupsIncluded?: Array< string | null > | null,
+  enabled?: string | null,
 };
 
 export type UpdateProductInput = {
@@ -713,7 +691,11 @@ export type UpdateProductInput = {
   name?: string | null,
   description?: string | null,
   confirmationMsg?: string | null,
-  isTier?: string | null,
+  isOrgTier?: string | null,
+  isIndividualTier?: string | null,
+  marketingDescription?: string | null,
+  groupsIncluded?: Array< string | null > | null,
+  enabled?: string | null,
 };
 
 export type DeleteProductInput = {
@@ -750,18 +732,11 @@ export type DeleteVideoObjectInput = {
   id?: string | null,
 };
 
-export type ModelTierFilterInput = {
+export type ModelApplicationProcessFilterInput = {
   id?: ModelIDFilterInput | null,
-  name?: ModelStringFilterInput | null,
-  isOrgTier?: ModelStringFilterInput | null,
-  isIndividualTier?: ModelStringFilterInput | null,
-  marketingDescription?: ModelStringFilterInput | null,
-  productsIncluded?: ModelStringFilterInput | null,
-  groupsIncluded?: ModelStringFilterInput | null,
-  waitForApproval?: ModelStringFilterInput | null,
-  and?: Array< ModelTierFilterInput | null > | null,
-  or?: Array< ModelTierFilterInput | null > | null,
-  not?: ModelTierFilterInput | null,
+  and?: Array< ModelApplicationProcessFilterInput | null > | null,
+  or?: Array< ModelApplicationProcessFilterInput | null > | null,
+  not?: ModelApplicationProcessFilterInput | null,
 };
 
 export type ModelIDFilterInput = {
@@ -775,26 +750,6 @@ export type ModelIDFilterInput = {
   notContains?: string | null,
   between?: Array< string | null > | null,
   beginsWith?: string | null,
-};
-
-export type ModelStringFilterInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-};
-
-export type ModelApplicationProcessFilterInput = {
-  id?: ModelIDFilterInput | null,
-  and?: Array< ModelApplicationProcessFilterInput | null > | null,
-  or?: Array< ModelApplicationProcessFilterInput | null > | null,
-  not?: ModelApplicationProcessFilterInput | null,
 };
 
 export type ModelGroupFilterInput = {
@@ -820,6 +775,19 @@ export type ModelGroupFilterInput = {
   and?: Array< ModelGroupFilterInput | null > | null,
   or?: Array< ModelGroupFilterInput | null > | null,
   not?: ModelGroupFilterInput | null,
+};
+
+export type ModelStringFilterInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
 };
 
 export type ModelIntFilterInput = {
@@ -1090,7 +1058,11 @@ export type ModelProductFilterInput = {
   name?: ModelStringFilterInput | null,
   description?: ModelStringFilterInput | null,
   confirmationMsg?: ModelStringFilterInput | null,
-  isTier?: ModelStringFilterInput | null,
+  isOrgTier?: ModelStringFilterInput | null,
+  isIndividualTier?: ModelStringFilterInput | null,
+  marketingDescription?: ModelStringFilterInput | null,
+  groupsIncluded?: ModelStringFilterInput | null,
+  enabled?: ModelStringFilterInput | null,
   and?: Array< ModelProductFilterInput | null > | null,
   or?: Array< ModelProductFilterInput | null > | null,
   not?: ModelProductFilterInput | null,
@@ -1496,84 +1468,6 @@ export type BatchCreateDirectMessageUsersMutation = {
       updatedAt: string,
     } | null,
   } | null > | null,
-};
-
-export type CreateTierMutationVariables = {
-  input: CreateTierInput,
-};
-
-export type CreateTierMutation = {
-  createTier:  {
-    __typename: "Tier",
-    id: string,
-    name: string | null,
-    isOrgTier: string | null,
-    isIndividualTier: string | null,
-    marketingDescription: string | null,
-    productsIncluded: Array< string | null > | null,
-    groupsIncluded: Array< string | null > | null,
-    applicationProcess:  {
-      __typename: "ApplicationProcess",
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
-    waitForApproval: string | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type UpdateTierMutationVariables = {
-  input: UpdateTierInput,
-};
-
-export type UpdateTierMutation = {
-  updateTier:  {
-    __typename: "Tier",
-    id: string,
-    name: string | null,
-    isOrgTier: string | null,
-    isIndividualTier: string | null,
-    marketingDescription: string | null,
-    productsIncluded: Array< string | null > | null,
-    groupsIncluded: Array< string | null > | null,
-    applicationProcess:  {
-      __typename: "ApplicationProcess",
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
-    waitForApproval: string | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type DeleteTierMutationVariables = {
-  input: DeleteTierInput,
-};
-
-export type DeleteTierMutation = {
-  deleteTier:  {
-    __typename: "Tier",
-    id: string,
-    name: string | null,
-    isOrgTier: string | null,
-    isIndividualTier: string | null,
-    marketingDescription: string | null,
-    productsIncluded: Array< string | null > | null,
-    groupsIncluded: Array< string | null > | null,
-    applicationProcess:  {
-      __typename: "ApplicationProcess",
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
-    waitForApproval: string | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
 };
 
 export type CreateApplicationProcessMutationVariables = {
@@ -5112,7 +5006,11 @@ export type CreatePaymentMutation = {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
-      isTier: string | null,
+      isOrgTier: string | null,
+      isIndividualTier: string | null,
+      marketingDescription: string | null,
+      groupsIncluded: Array< string | null > | null,
+      enabled: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -5248,7 +5146,11 @@ export type UpdatePaymentMutation = {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
-      isTier: string | null,
+      isOrgTier: string | null,
+      isIndividualTier: string | null,
+      marketingDescription: string | null,
+      groupsIncluded: Array< string | null > | null,
+      enabled: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -5384,7 +5286,11 @@ export type DeletePaymentMutation = {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
-      isTier: string | null,
+      isOrgTier: string | null,
+      isIndividualTier: string | null,
+      marketingDescription: string | null,
+      groupsIncluded: Array< string | null > | null,
+      enabled: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -10822,7 +10728,11 @@ export type CreateProductMutation = {
       } | null > | null,
       nextToken: string | null,
     } | null,
-    isTier: string | null,
+    isOrgTier: string | null,
+    isIndividualTier: string | null,
+    marketingDescription: string | null,
+    groupsIncluded: Array< string | null > | null,
+    enabled: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -10855,7 +10765,11 @@ export type UpdateProductMutation = {
       } | null > | null,
       nextToken: string | null,
     } | null,
-    isTier: string | null,
+    isOrgTier: string | null,
+    isIndividualTier: string | null,
+    marketingDescription: string | null,
+    groupsIncluded: Array< string | null > | null,
+    enabled: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -10888,7 +10802,11 @@ export type DeleteProductMutation = {
       } | null > | null,
       nextToken: string | null,
     } | null,
-    isTier: string | null,
+    isOrgTier: string | null,
+    isIndividualTier: string | null,
+    marketingDescription: string | null,
+    groupsIncluded: Array< string | null > | null,
+    enabled: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -10993,64 +10911,6 @@ export type DeleteVideoObjectMutation = {
     id: string,
     createdAt: string,
     updatedAt: string,
-  } | null,
-};
-
-export type GetTierQueryVariables = {
-  id: string,
-};
-
-export type GetTierQuery = {
-  getTier:  {
-    __typename: "Tier",
-    id: string,
-    name: string | null,
-    isOrgTier: string | null,
-    isIndividualTier: string | null,
-    marketingDescription: string | null,
-    productsIncluded: Array< string | null > | null,
-    groupsIncluded: Array< string | null > | null,
-    applicationProcess:  {
-      __typename: "ApplicationProcess",
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
-    waitForApproval: string | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type ListTiersQueryVariables = {
-  filter?: ModelTierFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListTiersQuery = {
-  listTiers:  {
-    __typename: "ModelTierConnection",
-    items:  Array< {
-      __typename: "Tier",
-      id: string,
-      name: string | null,
-      isOrgTier: string | null,
-      isIndividualTier: string | null,
-      marketingDescription: string | null,
-      productsIncluded: Array< string | null > | null,
-      groupsIncluded: Array< string | null > | null,
-      applicationProcess:  {
-        __typename: "ApplicationProcess",
-        id: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
-      waitForApproval: string | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null > | null,
-    nextToken: string | null,
   } | null,
 };
 
@@ -11831,7 +11691,11 @@ export type GetPaymentQuery = {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
-      isTier: string | null,
+      isOrgTier: string | null,
+      isIndividualTier: string | null,
+      marketingDescription: string | null,
+      groupsIncluded: Array< string | null > | null,
+      enabled: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -11969,7 +11833,11 @@ export type ListPaymentsQuery = {
         name: string | null,
         description: string | null,
         confirmationMsg: string | null,
-        isTier: string | null,
+        isOrgTier: string | null,
+        isIndividualTier: string | null,
+        marketingDescription: string | null,
+        groupsIncluded: Array< string | null > | null,
+        enabled: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -14698,7 +14566,11 @@ export type GetProductQuery = {
       } | null > | null,
       nextToken: string | null,
     } | null,
-    isTier: string | null,
+    isOrgTier: string | null,
+    isIndividualTier: string | null,
+    marketingDescription: string | null,
+    groupsIncluded: Array< string | null > | null,
+    enabled: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -14724,7 +14596,11 @@ export type ListProductsQuery = {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
-      isTier: string | null,
+      isOrgTier: string | null,
+      isIndividualTier: string | null,
+      marketingDescription: string | null,
+      groupsIncluded: Array< string | null > | null,
+      enabled: string | null,
       createdAt: string,
       updatedAt: string,
     } | null > | null,
@@ -15122,7 +14998,11 @@ export type PaymentByUserQuery = {
         name: string | null,
         description: string | null,
         confirmationMsg: string | null,
-        isTier: string | null,
+        isOrgTier: string | null,
+        isIndividualTier: string | null,
+        marketingDescription: string | null,
+        groupsIncluded: Array< string | null > | null,
+        enabled: string | null,
         createdAt: string,
         updatedAt: string,
       } | null,
@@ -16270,72 +16150,6 @@ export type OnCreateMessageByRoomIdSubscription = {
       createdAt: string,
       updatedAt: string,
     } | null,
-  } | null,
-};
-
-export type OnCreateTierSubscription = {
-  onCreateTier:  {
-    __typename: "Tier",
-    id: string,
-    name: string | null,
-    isOrgTier: string | null,
-    isIndividualTier: string | null,
-    marketingDescription: string | null,
-    productsIncluded: Array< string | null > | null,
-    groupsIncluded: Array< string | null > | null,
-    applicationProcess:  {
-      __typename: "ApplicationProcess",
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
-    waitForApproval: string | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateTierSubscription = {
-  onUpdateTier:  {
-    __typename: "Tier",
-    id: string,
-    name: string | null,
-    isOrgTier: string | null,
-    isIndividualTier: string | null,
-    marketingDescription: string | null,
-    productsIncluded: Array< string | null > | null,
-    groupsIncluded: Array< string | null > | null,
-    applicationProcess:  {
-      __typename: "ApplicationProcess",
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
-    waitForApproval: string | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteTierSubscription = {
-  onDeleteTier:  {
-    __typename: "Tier",
-    id: string,
-    name: string | null,
-    isOrgTier: string | null,
-    isIndividualTier: string | null,
-    marketingDescription: string | null,
-    productsIncluded: Array< string | null > | null,
-    groupsIncluded: Array< string | null > | null,
-    applicationProcess:  {
-      __typename: "ApplicationProcess",
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
-    waitForApproval: string | null,
-    createdAt: string,
-    updatedAt: string,
   } | null,
 };
 
@@ -19145,7 +18959,11 @@ export type OnCreatePaymentSubscription = {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
-      isTier: string | null,
+      isOrgTier: string | null,
+      isIndividualTier: string | null,
+      marketingDescription: string | null,
+      groupsIncluded: Array< string | null > | null,
+      enabled: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -19277,7 +19095,11 @@ export type OnUpdatePaymentSubscription = {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
-      isTier: string | null,
+      isOrgTier: string | null,
+      isIndividualTier: string | null,
+      marketingDescription: string | null,
+      groupsIncluded: Array< string | null > | null,
+      enabled: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -19409,7 +19231,11 @@ export type OnDeletePaymentSubscription = {
         __typename: "ModelPaymentConnection",
         nextToken: string | null,
       } | null,
-      isTier: string | null,
+      isOrgTier: string | null,
+      isIndividualTier: string | null,
+      marketingDescription: string | null,
+      groupsIncluded: Array< string | null > | null,
+      enabled: string | null,
       createdAt: string,
       updatedAt: string,
     } | null,
@@ -24723,7 +24549,11 @@ export type OnCreateProductSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
-    isTier: string | null,
+    isOrgTier: string | null,
+    isIndividualTier: string | null,
+    marketingDescription: string | null,
+    groupsIncluded: Array< string | null > | null,
+    enabled: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -24752,7 +24582,11 @@ export type OnUpdateProductSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
-    isTier: string | null,
+    isOrgTier: string | null,
+    isIndividualTier: string | null,
+    marketingDescription: string | null,
+    groupsIncluded: Array< string | null > | null,
+    enabled: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -24781,7 +24615,11 @@ export type OnDeleteProductSubscription = {
       } | null > | null,
       nextToken: string | null,
     } | null,
-    isTier: string | null,
+    isOrgTier: string | null,
+    isIndividualTier: string | null,
+    marketingDescription: string | null,
+    groupsIncluded: Array< string | null > | null,
+    enabled: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,

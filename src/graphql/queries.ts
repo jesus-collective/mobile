@@ -2,55 +2,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getTier = /* GraphQL */ `
-  query GetTier($id: ID!) {
-    getTier(id: $id) {
-      id
-      name
-      isOrgTier
-      isIndividualTier
-      marketingDescription
-      productsIncluded
-      groupsIncluded
-      applicationProcess {
-        id
-        createdAt
-        updatedAt
-      }
-      waitForApproval
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listTiers = /* GraphQL */ `
-  query ListTiers(
-    $filter: ModelTierFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listTiers(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        name
-        isOrgTier
-        isIndividualTier
-        marketingDescription
-        productsIncluded
-        groupsIncluded
-        applicationProcess {
-          id
-          createdAt
-          updatedAt
-        }
-        waitForApproval
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
 export const getApplicationProcess = /* GraphQL */ `
   query GetApplicationProcess($id: ID!) {
     getApplicationProcess(id: $id) {
@@ -748,7 +699,11 @@ export const getPayment = /* GraphQL */ `
         payments {
           nextToken
         }
-        isTier
+        isOrgTier
+        isIndividualTier
+        marketingDescription
+        groupsIncluded
+        enabled
         createdAt
         updatedAt
       }
@@ -874,7 +829,11 @@ export const listPayments = /* GraphQL */ `
           name
           description
           confirmationMsg
-          isTier
+          isOrgTier
+          isIndividualTier
+          marketingDescription
+          groupsIncluded
+          enabled
           createdAt
           updatedAt
         }
@@ -3296,7 +3255,11 @@ export const getProduct = /* GraphQL */ `
         }
         nextToken
       }
-      isTier
+      isOrgTier
+      isIndividualTier
+      marketingDescription
+      groupsIncluded
+      enabled
       createdAt
       updatedAt
     }
@@ -3318,7 +3281,11 @@ export const listProducts = /* GraphQL */ `
         payments {
           nextToken
         }
-        isTier
+        isOrgTier
+        isIndividualTier
+        marketingDescription
+        groupsIncluded
+        enabled
         createdAt
         updatedAt
       }
@@ -3705,7 +3672,11 @@ export const paymentByUser = /* GraphQL */ `
           name
           description
           confirmationMsg
-          isTier
+          isOrgTier
+          isIndividualTier
+          marketingDescription
+          groupsIncluded
+          enabled
           createdAt
           updatedAt
         }

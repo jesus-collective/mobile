@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import Amplify from 'aws-amplify';
 import awsConfig from './src/aws-exports';
-import { AppLoading } from 'expo';
+import { AppLoading, Linking } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import EStyleSheet from 'react-native-extended-stylesheet';
@@ -11,15 +11,10 @@ import { Dimensions } from 'react-native'
 import { Platform } from 'react-native';
 import { I18n } from 'aws-amplify';
 import { Ionicons } from '@expo/vector-icons';
-import MyLoading from './components/Auth/MyLoading';
 import HomeScreen from './screens/HomeScreen/index';
-import MySignIn from './components/Auth/MySignIn';
-import MySignUp from './components/Auth/MySignUp';
-import MyConfirmSignIn from './components/Auth/MyConfirmSignIn';
-import MyRequireNewPassword from './components/Auth/MyRequireNewPassword';
-import MyConfirmSignUp from './components/Auth/MyConfirmSignUp';
-import MyVerifyContact from './components/Auth/MyVerifyContact';
-import MyForgotPassword from './components/Auth/MyForgotPassword';
+import { navigationRef } from './screens/HomeScreen/NavigationRoot';
+import * as RootNavigation from './screens/HomeScreen//NavigationRoot';
+
 import Sentry from './components/Sentry';
 import { version } from './src/version'
 import JCComponent, { JCState } from './components/JCComponent/JCComponent';
@@ -104,6 +99,7 @@ class AwesomeApp extends JCComponent<Props, State> {
   }
 
   async UNSAFE_componentWillMount(): Promise<void> {
+    this.setState({ authState: await this.getAuthInitialState() })
     // console.log("test")
     try {
       await Font.loadAsync({
@@ -134,15 +130,37 @@ class AwesomeApp extends JCComponent<Props, State> {
   renderFallback(): React.ReactNode {
     return null
   }
-  updateState(state: string) {
+  updateState(state: string, data: any) {
     this.setState({ authState: state })
-    if (state == "signUp" && window.location.href != "/")
-      window.history.pushState({ page: 'Sign Up' }, "Sign Up", "/")
-    //RootNavigation.navigate("/", null)
+    const params = RootNavigation.getRoot()?.params as { joinedAs: 'individual' | 'organization' | null }
+
+    if (state == "signUp")
+      RootNavigation.navigate("signup", { joinedAs: null })
+    else if (state == "signIn")
+      RootNavigation.navigate("signin", { email: data?.email, fromVerified: data?.fromVerified })
+    else if (state == "forgotPassword")
+      RootNavigation.navigate("forgotpassword", {})
+    else if (state == "requireNewPassword")
+      RootNavigation.navigate("requirenewpassword", {})
+    else if (state == "verifyContact")
+      RootNavigation.navigate("verifycontact", {})
+    else if (state == "confirmSignIn")
+      RootNavigation.navigate("confirmsignin", {})
+    else if (state == "confirmSignUp")
+      RootNavigation.navigate("confirmsignup", { email: data?.email })
+    else if (state == "signedIn")
+      RootNavigation.navigate("mainApp", { screen: "home" })
+  }
+  async getAuthInitialState() {
+    const initialUrl: string = await Linking.getInitialURL();
+    console.log({ INITIALURL: initialUrl })
+    if (initialUrl.toLowerCase().includes("/auth/signup"))
+      return "signUp"
+    return "signIn"
   }
   render(): React.ReactNode {
-
-    if (this.state.fontLoaded) {
+    console.log({ AwesomeApp: this.state.authState })
+    if (this.state.fontLoaded && this.state.authState != "") {
 
       return (
         <View style={{
@@ -161,21 +179,17 @@ class AwesomeApp extends JCComponent<Props, State> {
               : null
           }
 
-          <Authenticator onStateChange={(item1, item2) => { this.updateState(item1) }} hideDefault={true} federated={federated} usernameAttributes='email'>
-            <HomeScreen onStateChange={(item1, item2) => { this.updateState(item1) }} authState={this.state.authState} />
-            <MySignIn onSetUser={(user) => { this.setState({ username: user }) }} onStateChange={(authState) => { this.updateState(authState) }} authState={this.state.authState} />
-            <MySignUp onStateChange={(authState) => { this.updateState(authState) }} authState={this.state.authState} />
-            <MyConfirmSignUp onStateChange={(authState) => { this.updateState(authState) }} authState={this.state.authState} />
-            <MyForgotPassword onStateChange={(authState) => { this.updateState(authState) }} authState={this.state.authState} />
-            <MyConfirmSignIn />
-            <MyRequireNewPassword onStateChange={(authState) => { this.updateState(authState) }} username={this.state.username} authState={this.state.authState} />
-            <MyVerifyContact />
-            <MyLoading authState={this.state.authState} />
+          <Authenticator
+            onStateChange={(item1, data) => { this.updateState(item1, data) }}
+            hideDefault={true}
+            authState={this.state.authState}
+            federated={federated} usernameAttributes='email'>
+            <HomeScreen onStateChange={(item1, data) => { this.updateState(item1, data) }} authState={this.state.authState} />
           </Authenticator>
         </View >
       )
     } else {
-      return <AppLoading />
+      return null
     }
   }
 }

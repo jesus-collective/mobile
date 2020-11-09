@@ -14,6 +14,8 @@ import * as queries from '../../src/graphql/queries';
 import { CreateProductInput, ListProductsQuery, UpdateProductInput } from '../../src/API';
 import { GraphQLResult } from '@aws-amplify/api/lib/types';
 import { AntDesign } from '@expo/vector-icons';
+import JCSwitch from '../../components/JCSwitch/JCSwitch';
+import JCModal from '../../components/Forms/JCModal';
 
 interface Props {
     navigation: any
@@ -27,6 +29,14 @@ interface State extends JCState {
     confirmationMsg: string;
     price: string;
     mode: 'save' | 'edit';
+    isOrgTier: string
+    isIndividualTier: string
+    marketingDescription: string
+    groupsIncluded: string[]
+    enabled: string
+    groupList: string[]
+    showAddProductModal: boolean
+
 }
 
 const toolBar = {
@@ -50,7 +60,14 @@ export default class AdminScreen extends JCComponent<Props, State>{
             productId: `JC-${Date.now()}`,
             confirmationMsg: '',
             price: '',
-            mode: 'save'
+            mode: 'save',
+            isOrgTier: "false",
+            isIndividualTier: "false",
+            marketingDescription: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
+            groupsIncluded: [],
+            enabled: "true",
+            groupList: ["admin", "verifiedUsers", "partners", "friends", "courseUser", "courseAdmin", "courseCoach"],
+            showAddProductModal: false
         }
         this.setInitialData()
     }
@@ -74,7 +91,14 @@ export default class AdminScreen extends JCComponent<Props, State>{
             description: product.description,
             confirmationMsg: product.confirmationMsg,
             price: product.price.toFixed(2),
-            mode: 'edit'
+            mode: 'edit',
+            isOrgTier: product.isOrgTier,
+            isIndividualTier: product.isIndividualTier,
+            marketingDescription: product.marketingDescription,
+            groupsIncluded: product.groupsIncluded,
+            enabled: product.enabled,
+            showAddProductModal: true
+
         })
     }
 
@@ -107,7 +131,12 @@ export default class AdminScreen extends JCComponent<Props, State>{
                         price: parseFloat(this.state.price),
                         description: this.state.description,
                         name: this.state.name,
-                        confirmationMsg: this.state.confirmationMsg
+                        confirmationMsg: this.state.confirmationMsg,
+                        isOrgTier: this.state.isOrgTier,
+                        isIndividualTier: this.state.isIndividualTier,
+                        marketingDescription: this.state.marketingDescription,
+                        groupsIncluded: this.state.groupsIncluded,
+                        enabled: this.state.enabled
                     }
                     const createProduct = await API.graphql({
                         query: mutations.createProduct,
@@ -122,6 +151,12 @@ export default class AdminScreen extends JCComponent<Props, State>{
                         productId: `JC-${Date.now()}`,
                         confirmationMsg: '',
                         price: '',
+                        isOrgTier: "false",
+                        isIndividualTier: "false",
+                        marketingDescription: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
+                        groupsIncluded: [],
+                        enabled: "true",
+                        showAddProductModal: false
                     });
                     break;
                 case 'edit':
@@ -130,7 +165,12 @@ export default class AdminScreen extends JCComponent<Props, State>{
                         price: parseFloat(this.state.price),
                         description: this.state.description,
                         name: this.state.name,
-                        confirmationMsg: this.state.confirmationMsg
+                        confirmationMsg: this.state.confirmationMsg,
+                        isOrgTier: this.state.isOrgTier,
+                        isIndividualTier: this.state.isIndividualTier,
+                        marketingDescription: this.state.marketingDescription,
+                        groupsIncluded: this.state.groupsIncluded,
+                        enabled: this.state.enabled
                     }
                     const updateProduct = await API.graphql({
                         query: mutations.updateProduct,
@@ -145,6 +185,12 @@ export default class AdminScreen extends JCComponent<Props, State>{
                         productId: `JC-${Date.now()}`,
                         confirmationMsg: '',
                         price: '',
+                        isOrgTier: "false",
+                        isIndividualTier: "false",
+                        marketingDescription: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
+                        groupsIncluded: [],
+                        enabled: "true",
+                        showAddProductModal: false
 
                     });
                     break;
@@ -153,6 +199,78 @@ export default class AdminScreen extends JCComponent<Props, State>{
             console.error(err)
         }
     }
+    updateTierList(val: any) {
+        const tmp = this.state.groupsIncluded
+        var index = tmp.indexOf(val)
+        if (index !== -1)
+            tmp.splice(index, 1);
+        else
+            tmp.push(val)
+        this.setState({ groupsIncluded: tmp })
+    }
+    renderAddProductModal(): React.ReactNode {
+        return (
+            <JCModal visible={this.state.showAddProductModal}
+                title="Add Tier"
+                onHide={() => { this.setState({ showAddProductModal: false }) }}>
+                <>
+                    <View>
+                        <Text>Id: </Text>
+                        <TextInput
+                            onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => { this.setState({ productId: val.nativeEvent.text }) }}
+                            placeholder="productId"
+                            multiline={false}
+                            value={this.state.productId}></TextInput>
+                        <Text>Product name: </Text>
+                        <TextInput
+                            onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => { this.setState({ name: val.nativeEvent.text }) }}
+                            placeholder="Name"
+                            multiline={false}
+                            value={this.state.name}></TextInput>
+                        <Text>Price: </Text>
+                        <TextInput
+                            onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => { this.setState({ price: val.nativeEvent.text }) }}
+                            placeholder="Price in CAD"
+                            multiline={false}
+                            value={this.state.price}></TextInput>
+                        <Text>Purchase confirmation message</Text>
+                        <TextInput
+                            onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => { this.setState({ confirmationMsg: val.nativeEvent.text }) }}
+                            placeholder="optional: 1-2 sentences"
+                            multiline={false}
+                            value={this.state.confirmationMsg}></TextInput>
+                        <JCSwitch switchLabel="Is Org Tier" initState={this.state.isOrgTier == "true"}
+                            onPress={(val) => { this.setState({ isOrgTier: val }) }}></JCSwitch>
+                        <JCSwitch switchLabel="Is Individual Tier" initState={this.state.isIndividualTier == "true"}
+                            onPress={(val) => { this.setState({ isIndividualTier: val }) }}></JCSwitch>
+                        <JCSwitch switchLabel="Enabled" initState={this.state.enabled == "true"}
+                            onPress={(val) => { this.setState({ enabled: val }) }}></JCSwitch>
+                        <EditableRichText onChange={(val: any) => {
+                            this.setState({ marketingDescription: val })
+                        }}
+                            value={this.state.marketingDescription}
+                            isEditable={true}
+                            textStyle=""></EditableRichText>
+                        <Text>Groups: </Text>
+                        {this.state.groupList.map((item) => {
+                            return (
+                                <JCSwitch switchLabel={item} initState={this.state.groupsIncluded?.includes(item)}
+                                    onPress={(val) => { this.updateTierList(item) }}></JCSwitch>
+                            )
+                        })
+                        }
+                    </View>
+                    <Text>Description</Text>
+
+                    <EditableRichText toolBar={toolBar} onChange={(description: any) => this.setState({ description })} value={this.state.description} isEditable={true} textStyle={{}} />
+
+                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => this.saveProduct()}>save product</JCButton>
+                </>
+            </JCModal>
+        )
+    }
+
+
 
     render(): React.ReactNode {
         return (
@@ -162,37 +280,8 @@ export default class AdminScreen extends JCComponent<Props, State>{
                 <HeaderAdmin title="Jesus Collective" navigation={this.props.navigation} />
                 {this.isMemberOf("admin") ?
                     <Content>
-                        <View>
-                            <Text>Id: </Text>
-                            <TextInput
-                                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => { this.setState({ productId: val.nativeEvent.text }) }}
-                                placeholder="productId"
-                                multiline={false}
-                                value={this.state.productId}></TextInput>
-                            <Text>Product name: </Text>
-                            <TextInput
-                                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => { this.setState({ name: val.nativeEvent.text }) }}
-                                placeholder="Name"
-                                multiline={false}
-                                value={this.state.name}></TextInput>
-                            <Text>Price: </Text>
-                            <TextInput
-                                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => { this.setState({ price: val.nativeEvent.text }) }}
-                                placeholder="Price in CAD"
-                                multiline={false}
-                                value={this.state.price}></TextInput>
-                            <Text>Purchase confirmation message</Text>
-                            <TextInput
-                                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => { this.setState({ confirmationMsg: val.nativeEvent.text }) }}
-                                placeholder="optional: 1-2 sentences"
-                                multiline={false}
-                                value={this.state.confirmationMsg}></TextInput>
-                        </View>
-                        <Text>Description</Text>
+                        <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.setState({ showAddProductModal: true }) }}>Add product</JCButton>
 
-                        <EditableRichText toolBar={toolBar} onChange={(description) => this.setState({ description })} value={this.state.description} isEditable={true} textStyle={{}} />
-
-                        <JCButton buttonType={ButtonTypes.Outline} onPress={() => this.saveProduct()}>save product</JCButton>
                         <Container style={this.styles.style.fontRegular}>
                             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', width: 750 }} >
                                 <View style={{ borderColor: 'black', borderWidth: 1, width: 250, margin: 0, borderRadius: 0 }}>
@@ -205,7 +294,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
                                     <Text style={{ alignSelf: 'center' }} >Price (CAD)</Text>
                                 </View>
                             </View>
-                            {this.state.products.map(product => {
+                            {this.state.products.map((product: any) => {
                                 return <View key={product.id} style={{ display: 'flex', flexDirection: 'row' }} >
                                     <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', width: 750 }} >
                                         <View style={{ borderColor: 'black', borderWidth: 1, width: 250, margin: 0, borderRadius: 0 }}>
@@ -223,6 +312,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
                                 </View>
                             })}
                         </Container>
+
                     </Content>
                     : <Content>
                         <Container style={this.styles.style.eventsScreenMainContainer}>
@@ -232,7 +322,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
                         </Container>
                     </Content>
                 }
-
+                {this.renderAddProductModal()}
             </Container>
 
 
