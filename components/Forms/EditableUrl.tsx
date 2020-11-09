@@ -23,7 +23,8 @@ class EditableUrlImpl extends JCComponent<Props> {
             this.props.onChange(val.target.value)
     }
     navigate(id: string) {
-        window.location.href = id
+        // window.location.href = id
+        window.open(this.props.value, '_blank');
     }
     render() {
 

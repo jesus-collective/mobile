@@ -330,6 +330,7 @@ class CourseDetailImpl extends JCComponent<Props, State>{
   }
   navigate(id) {
     window.location.href = id
+    
   }
   renderYoutube(state: CourseState, actions: any, week, lesson) {
     return (
