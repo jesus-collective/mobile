@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import { Container, Content, Text } from 'native-base';
+import { Container, Content, Text, Button } from 'native-base';
 import Header from '../../components/Header/Header'
 import HeaderAdmin from '../../components/HeaderAdmin/HeaderAdmin';
 import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
@@ -14,6 +14,11 @@ import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
 import * as mutations from '../../src/graphql/mutations';
 import { GetProductQuery } from 'src/API';
 import JCModal from '../../components/Forms/JCModal';
+import {
+  isMobile
+} from "react-device-detect";
+import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons'; 
 
 interface Props {
   navigation: any
@@ -201,31 +206,31 @@ export default class AdminScreen extends JCComponent<Props, State>{
   renderHeader(): React.ReactNode {
     return (
       <View style={this.styles.style.adminCRMTableContainer}>
-        <View style={{ flex: 1, alignSelf: 'stretch' }}>
+        <View style={this.styles.style.AdminFirstNameTableHeader}>
           <Text style={this.styles.style.adminCRMTableHeading}>First Name</Text>
         </View>
-        <View style={{ flex: 1, alignSelf: 'stretch' }}>
+        <View style={this.styles.style.AdminLastNameTableHeader}>
           <Text style={this.styles.style.adminCRMTableHeading}>Last Name</Text>
         </View>
-        {this.state.showUid ? <View style={{ flex: 3, alignSelf: 'stretch' }}>
+        {this.state.showUid ? <View style={this.styles.style.AdminUserIdTableHeader}>
           <Text style={this.styles.style.adminCRMTableHeading}>User id</Text>
         </View> : null}
         {this.state.showEmail ? <View style={this.styles.style.adminCRMTableHeader}>
           <Text style={this.styles.style.adminCRMTableHeading}>Email</Text>
         </View> : null}
-        {this.state.showPhone ? <View style={{ flex: 1, alignSelf: 'stretch' }}>
+        {this.state.showPhone && !isMobile ? <View style={this.styles.style.AdminPhoneTableHeader}>
           <Text style={this.styles.style.adminCRMTableHeading}>Phone</Text>
         </View> : null}
-        {this.state.showStatus ? <View style={{ flex: 1, alignSelf: 'stretch' }}>
+        {this.state.showStatus && !isMobile ? <View style={this.styles.style.AdminStatusTableHeader}>
           <Text style={this.styles.style.adminCRMTableHeading}>Status</Text>
         </View> : null}
-        <View style={{ flex: 1, alignSelf: 'stretch' }}>
+        { !isMobile ? <View style={this.styles.style.AdminEnabledTableHeader}>
           <Text style={this.styles.style.adminCRMTableHeading}>Enabled</Text>
-        </View>
-        <View style={{ flex: 1, alignSelf: 'stretch' }}>
+        </View> : null}
+        <View style={this.styles.style.AdminGroupsTableHeader}>
           <Text style={this.styles.style.adminCRMTableHeading}>Groups</Text>
         </View>
-        <View style={{ flex: 1, alignSelf: 'stretch' }}>
+        <View style={this.styles.style.AdminPaymentsTableHeader}>
           <Text style={this.styles.style.adminCRMTableHeading}>Payments</Text>
         </View>
       </View>
@@ -328,35 +333,41 @@ export default class AdminScreen extends JCComponent<Props, State>{
   renderRow(item: any, index: number): React.ReactNode {
 
     return (
-      <View key={index} style={{ flex: 1, maxHeight: 40, alignSelf: 'stretch', flexDirection: 'row', marginTop: 10, marginBottom: 10, alignContent: 'center' }}>
-        <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center' }}>
+      <View key={index} style={this.styles.style.AdminTableRowContainer}>
+        <View style={this.styles.style.AdminFirstNameTableRow}>
           <Text style={this.styles.style.adminCRMTableParagraph}>{item.Attributes.find(e => e.Name == "given_name")?.Value}</Text>
         </View>
-        <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center' }}>
+        <View style={this.styles.style.AdminLastNameTableRow}>
           <Text style={this.styles.style.adminCRMTableParagraph}>{item.Attributes.find(e => e.Name == "family_name")?.Value}</Text>
         </View>
-        {this.state.showUid ? <View style={{ flex: 3, alignSelf: 'stretch', justifyContent: 'center' }}>
+        {this.state.showUid ? <View style={this.styles.style.AdminUserIdTableRow}>
           <Text style={this.styles.style.fontRegular}>{item.Username}</Text>
         </View> : null}
         {this.state.showEmail ? <View style={this.styles.style.adminCRMTableRow}>
           <Text style={this.styles.style.adminCRMTableParagraph}>{item.Attributes.find(e => e.Name == "email")?.Value}</Text>
         </View> : null}
-        {this.state.showPhone ? <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center' }}>
+        {this.state.showPhone && !isMobile ? <View style={this.styles.style.AdminPhoneTableRow}>
           <Text style={this.styles.style.adminCRMTableEmailStatus}>{item.Attributes.find(e => e.Name == "phone_number")?.Value}</Text>
         </View> : null}
-        {this.state.showStatus ? <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center' }}>
+        {this.state.showStatus && !isMobile ? <View style={this.styles.style.AdminStatusTableRow}>
           <Text style={this.styles.style.adminCRMTableEmailStatus}>{item.UserStatus}</Text>
         </View> : null}
-        <View style={{ flex: 1, alignSelf: 'stretch', justifyContent: 'center' }}>
+        { !isMobile ? <View style={this.styles.style.AdminEnabledTableRow}>
           <Text style={this.styles.style.fontRegular}>{item.Enabled.toString()}</Text>
+        </View> : null}
+        <View style={this.styles.style.AdminGroupBTTableRow}>
+          { !isMobile ? <JCButton buttonType={ButtonTypes.AdminSmallOutline}
+            onPress={() => { this.showGroups(item.Username) }}>Groups</JCButton> : <Button transparent
+            onPress={() => { this.showGroups(item.Username) }}>
+            <Ionicons name="ios-people" style={this.styles.style.icon} />
+          </Button>}
         </View>
-        <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <JCButton buttonType={ButtonTypes.AdminSmallOutline}
-            onPress={() => { this.showGroups(item.Username) }}>Groups</JCButton>
-        </View>
-        <View style={{ flex: 1, alignSelf: 'stretch' }}>
-          <JCButton buttonType={ButtonTypes.AdminSmallOutline}
-            onPress={() => { this.showPayments(item.Username) }}>Payments</JCButton>
+        <View style={this.styles.style.AdminPaymentBTTableRow}>
+        { !isMobile ? <JCButton buttonType={ButtonTypes.AdminSmallOutline}
+            onPress={() => { this.showPayments(item.Username) }}>Payments</JCButton> : <Button transparent
+            onPress={() => { this.showPayments(item.Username) }}>
+            <MaterialIcons name="payment" style={this.styles.style.icon} />
+          </Button>}
         </View>
       </View>
     )
@@ -458,13 +469,15 @@ export default class AdminScreen extends JCComponent<Props, State>{
       onHide={() => { this.closeInvite() }}>
       <>
 
-        <Text>Invite: </Text>
+        <Text style={this.styles.style.adminCRMModalInvite}>Invite: </Text>
         <TextInput
           onChange={(val: any) => { this.setState({ invite: val.target.value }) }}
           placeholder="Enter Email Address"
           multiline={false}
-          value={this.state.invite}></TextInput>
+          value={this.state.invite}
+          style={this.styles.style.adminCRMModalInviteEmail}></TextInput>
         <Picker
+          style={{ height: 45, paddingLeft: 10, paddingRight: 10, marginTop: 10 }}
           selectedValue={this.state.inviteType}
           onValueChange={val => { this.setState({ inviteType: val, inviteData: null, inviteDataList: [] }, () => { this.updateInviteDataList(null) }) }}
         >
@@ -495,7 +508,7 @@ export default class AdminScreen extends JCComponent<Props, State>{
         }
 
 
-        < JCButton buttonType={ButtonTypes.Outline}
+        < JCButton buttonType={ButtonTypes.AdminInvite}
           onPress={() => {
             this.sendInvite(this.state.invite, this.state.inviteType);
             this.closeInvite();
@@ -519,19 +532,19 @@ export default class AdminScreen extends JCComponent<Props, State>{
               <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-start' }}>
                 <View style={this.styles.style.adminSubNavMainContainer} >
                   <View style={this.styles.style.adminSubNavTogglesView}>
-                    <JCSwitch toggleSpacing={'space-between'} containerWidth={150} toggleMargin={5} switchLabel='show user id' initState={false} onPress={() => this.setState({ showUid: !this.state.showUid })} />
-                    <JCSwitch toggleSpacing={'space-between'} containerWidth={150} toggleMargin={5} switchLabel='show email' initState={true} onPress={() => this.setState({ showEmail: !this.state.showEmail })} />
+                    <JCSwitch toggleSpacing={'space-between'} containerWidth={155} toggleMargin={5} switchLabel='show user id' initState={false} onPress={() => this.setState({ showUid: !this.state.showUid })} />
+                    <JCSwitch toggleSpacing={'space-between'} containerWidth={145} toggleMargin={5} switchLabel='show email' initState={true} onPress={() => this.setState({ showEmail: !this.state.showEmail })} />
                   </View>
                   <View style={this.styles.style.adminSubNavTogglesView}>
-                    <JCSwitch toggleSpacing={'space-between'} containerWidth={160} toggleMargin={5} switchLabel='show phone #' initState={true} onPress={() => this.setState({ showPhone: !this.state.showPhone })} />
-                    <JCSwitch toggleSpacing={'space-between'} containerWidth={160} toggleMargin={5} switchLabel='show status' initState={true} onPress={() => this.setState({ showStatus: !this.state.showStatus })} />
+                    { !isMobile ? <JCSwitch toggleSpacing={'space-between'} containerWidth={165} toggleMargin={5} switchLabel='show phone #' initState={true} onPress={() => this.setState({ showPhone: !this.state.showPhone })} /> : null}
+                    { !isMobile ? <JCSwitch toggleSpacing={'space-between'} containerWidth={150} toggleMargin={5} switchLabel='show status' initState={true} onPress={() => this.setState({ showStatus: !this.state.showStatus })} /> : null}
                   </View>
                   <View style={this.styles.style.adminInviteButton}>
                     <JCButton buttonType={ButtonTypes.AdminOutline} onPress={() => { this.showInvite() }}>Invite</JCButton>
                   </View>
                 </View>
 
-                <Content style={{ width: '100%' }}>
+                <Content style={this.styles.style.AdminTableMainContainer}>
                   {this.renderHeader()}
                   {
                     this.state.data ?

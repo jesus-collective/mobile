@@ -10,6 +10,7 @@ export enum ButtonTypes {
     AdminOutline,
     AdminSmallOutline,
     AdminAdd,
+    AdminInvite,
     CourseSideBar,
     CourseSideBarFirst,
     CourseHome,

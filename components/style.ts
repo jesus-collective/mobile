@@ -403,6 +403,33 @@ export default class MainStyles {
                 fontFamily: "Graphik-Regular-App",
                 color: '#000000',
             },
+            adminText: {
+                fontFamily: "Graphik-Regular-App",
+                color: '#000000',
+                width: '100%',
+                paddingLeft: '3%', 
+                paddingTop: 30,
+            },
+            adminCRMModalInvite: {
+                fontFamily: "Graphik-Regular-App",
+                color: '#000000',
+                textAlign: 'left',
+                width: '100%',
+            },
+            adminCRMModalInviteEmail: {
+                fontFamily: "Graphik-Regular-App",
+                color: '#000000',
+                textAlign: 'left',
+                width: '100%',
+                marginTop: 8,
+                marginBottom: 8,
+                paddingLeft: 10,
+                borderWidth: 1,
+                borderColor: "#767676",
+                borderRadius: 3,
+                height: 45, 
+                fontSize: 15,
+            },
             adminCRMModalHeading: {
                 fontFamily: "Graphik-Bold-App",
                 color: '#000000',
@@ -420,7 +447,8 @@ export default class MainStyles {
             fontMyMapOptions: {
                 //font family is Helvetica Neue on Figma
                 fontSize: 14,
-                paddingRight: 10
+                paddingRight: 10,
+                marginLeft: 10,
             },
             fontMyMapLegend: {
                 //font family is Helvetica Neue on Figma
@@ -2068,7 +2096,7 @@ export default class MainStyles {
             adminSubNav: {
                 flex: 1,
                 flexDirection: 'row',
-                justifyContent: 'flex-start',
+                justifyContent: 'center',
                 alignItems: 'flex-start', 
                 right: 15
             },
@@ -2167,6 +2195,95 @@ export default class MainStyles {
                 alignContent: 'flex-start', 
                 alignItems: 'flex-start', 
                 justifyContent: 'flex-start'
+            },
+            detailsYoutubeDateText: {
+                fontSize: 16, 
+                lineHeight: 21, 
+                fontFamily: 'Graphik-Regular-App', 
+                color: '#333333', 
+                marginTop: 45
+            },
+            AdminFirstNameTableHeader: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminLastNameTableHeader: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminUserIdTableHeader: {
+                flex: 3, 
+                alignSelf: 'stretch'
+            },
+            AdminPhoneTableHeader: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminStatusTableHeader: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminEnabledTableHeader: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminGroupsTableHeader: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminPaymentsTableHeader: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminTableMainContainer: {
+                width: '100%',
+            },
+            AdminTableRowContainer: {
+                flex: 1, 
+                maxHeight: 40, 
+                alignSelf: 'stretch', 
+                flexDirection: 'row', 
+                marginTop: 10, 
+                marginBottom: 10, 
+                alignContent: 'center'
+            },
+            AdminFirstNameTableRow: {
+                flex: 1, 
+                alignSelf: 'stretch', 
+                justifyContent: 'center'
+            },
+            AdminLastNameTableRow: {
+                flex: 1, 
+                alignSelf: 'stretch', 
+                justifyContent: 'center'
+            },
+            AdminUserIdTableRow: {
+                flex: 3, 
+                alignSelf: 'stretch', 
+                justifyContent: 'center'
+            },
+            AdminPhoneTableRow: {
+                flex: 1, 
+                alignSelf: 'stretch', 
+                justifyContent: 'center'
+            },
+            AdminStatusTableRow: {
+                flex: 1, 
+                alignSelf: 'stretch', 
+                justifyContent: 'center'
+            },
+            AdminGroupBTTableRow: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminPaymentBTTableRow: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminEnabledTableRow: {
+                flex: 1, 
+                alignSelf: 'stretch', 
+                justifyContent: 'center'
             },
 
             // Media Query Desktop Tablet
@@ -2629,12 +2746,12 @@ export default class MainStyles {
                     width: "100%",
                 },
                 adminSubNav: {
-                    flex: 3,
-                    justifyContent: 'flex-end',
+                    flex: 4,
+                    justifyContent: 'center',
                     right: 0,
                 },
                 adminSubNavTogglesView: {
-                    flexDirection: 'column',
+                    flexDirection: 'row',
                     marginLeft: 15,
                     marginRight: 15,
                 },
@@ -2644,7 +2761,7 @@ export default class MainStyles {
                 },
                 courseZoomMainContainer: {
                     flexDirection: 'column',
-                    flex: 0.6,
+                    flex: 0.4,
                 },
                 courseDetailTime: {
                     flex: 0.4, 
@@ -2654,6 +2771,7 @@ export default class MainStyles {
                 },
                 courseDetailYoutube: {
                     flexDirection: 'column', 
+                    flex: 0.4
                 },
                 courseDetailHr: {
                     flex: 0.1
@@ -2674,6 +2792,60 @@ export default class MainStyles {
                 },
                 courseDetailMessageBoardContainer: {
                     marginTop: 40,
+                },
+                // courseDetailCalendarImage: {
+                //     top: 30
+                // },
+                // detailsYoutubeDateText: {
+                //     top: 30,
+                // },
+                courseDetailCalendarText: {
+                    marginTop: 23,
+                },
+                AdminTableMainContainer: {
+                    overscrollX: 'auto',
+                },
+                adminCRMTableContainer: {
+                    width: 768,
+                    alignSelf: 'center',
+                    height: 'auto',
+                    paddingLeft: 50,
+                    paddingRight: 0,
+                },
+                adminCRMTableHeader: {
+                    flex: 1, 
+                },
+                AdminTableRowContainer: {
+                    alignSelf: 'center', 
+                    width: 768,
+                    marginTop: 30,
+                    marginBottom: 30,
+                    paddingLeft: 40,
+                },
+                adminCRMTableRow: {
+                    flex: 1,
+                },
+                AdminEnabledTableRow: {
+                    paddingLeft: 10,
+                },
+                adminCRMTableParagraph: {
+                    paddingRight: 20,
+                },
+                AdminUserIdTableHeader: {
+                    flex: 1, 
+                },
+                AdminUserIdTableRow: {
+                    flex: 1, 
+                },
+                icon: {
+                    color: '#aaaaaa',
+                    fontSize: 34,
+                },
+                AdminGroupBTTableRow: {
+                    left: 15,
+                },
+                AdminPaymentBTTableRow: {
+                    left: 25,
                 },
             },
 
@@ -2866,6 +3038,20 @@ export default class MainStyles {
                 courseTimeNonEditable: {
                     marginTop: 0,
                     paddingTop: 0,
+                },
+                adminSubNav: {
+                    justifyContent: 'center',
+                    right: 0,
+                },
+                AdminGroupBTTableRow: {
+                    left: 15,
+                },
+                AdminPaymentBTTableRow: {
+                    left: 25,
+                },
+                icon: {
+                    color: '#aaaaaa',
+                    fontSize: 28,
                 },
             },
 
@@ -3293,6 +3479,49 @@ export default class MainStyles {
                 courseDetailLeftSide: {
                     flex: 'none',
                     height: 'auto', 
+                },
+                adminSubNavTogglesView: {
+                    flexDirection: 'column',
+                },
+                adminCRMTableContainer: {
+                    width: '100vw',
+                    paddingRight: 10,
+                    paddingLeft: 10,
+                },
+                adminInviteButton: {
+                    marginLeft: 0,
+                },
+                AdminTableRowContainer: {
+                    width: '100vw',
+                    paddingLeft: 0,
+                    maxHeight: 80,
+                },
+                icon: {
+                    color: '#aaaaaa',
+                    fontSize: 30,
+                },
+                adminCRMTableHeading: {
+                    fontSize: 14,
+                },
+                adminCRMTableParagraph: {
+                    paddingRight: 10,
+                },
+                adminCRMTableHeader: {
+                    alignSelf:'center',
+                },
+                AdminGroupsTableHeader: {
+                    alignSelf: 'center'
+                },
+                AdminPaymentsTableHeader: {
+                    alignSelf: 'center'
+                },
+                adminSubNav: {
+                    overflowX: 'scroll',
+                    justifyContent: 'flex-start',
+                    marginLeft: 10,
+                },
+                AdminUserIdTableHeader: {
+                    alignSelf: 'center', 
                 },
             },
 

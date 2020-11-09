@@ -39,8 +39,16 @@ export default class HeaderStyles {
 
                 display: Platform.OS === 'web' && Dimensions.get('window').width > 720 ? 'none' : 'flex',
             },
+            // leftButtonsSubNav: {
+
+            //     display: Platform.OS === 'web' && Dimensions.get('window').width > 720 ? 'none' : 'flex',
+            // },
             centerMenuButtons: {
                 display: Platform.OS === 'web' && Dimensions.get('window').width > 720 ? 'flex' : 'none',
+                paddingBottom: 12
+            },
+            centerMenuButtonsSubNav: {
+                display: 'flex',
                 paddingBottom: 12
             },
             centerMenuButtonsText: {
@@ -101,6 +109,9 @@ export default class HeaderStyles {
             '@media (min-width: 320px) and (max-width: 480px)': {
                 resourceContainer: {
                     overflowX: 'scroll'
+                },
+                centerMenuButtonsSubNav: {
+                    overflowX: 'scroll',
                 },
             },
 
