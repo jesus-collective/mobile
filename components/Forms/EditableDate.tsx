@@ -90,7 +90,7 @@ export default class EditableDate extends JCComponent<Props> {
                             />
                             <Picker
                                 mode="dropdown"
-                                style={{ width: "75%", marginBottom: 15, marginTop: 15, fontSize: 16, height: 30, flexGrow: 0, paddingTop: 3, paddingBottom: 3 }}
+                                style={{ width: "100%", marginBottom: 15, marginTop: 15, fontSize: 16, height: 30, flexGrow: 0, paddingTop: 3, paddingBottom: 3 }}
                                 selectedValue={this.props.tz}
                                 placeholder="Timezone"
                                 placeholderStyle={{ color: "#bfc6ea" }}
