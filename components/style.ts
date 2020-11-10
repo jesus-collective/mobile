@@ -3566,6 +3566,9 @@ export default class MainStyles {
                     marginLeft: 0,
                     marginRight: 0,
                 },
+                courseDetailJCButtonRegular: {
+                    marginTop: 20,
+                },
             },
 
             dashboardMainContainer: Platform.OS === 'web' && Dimensions.get('window').width > 720 ?
