@@ -892,8 +892,8 @@ export default class MainStyles {
                 minWidth: "100%"
             },
             conversationScreenLeftCard: Platform.OS === 'web' ?
-                { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30, height: "80vh", width: 446, paddingBottom: 40, overflowY: 'scroll' } :
-                { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30, height: "80vh", width: 446, paddingBottom: 40 },
+                { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30, height: "auto", width: 446, paddingBottom: 40, overflowY: 'scroll' } :
+                { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30, height: "auto", width: 446, paddingBottom: 40 },
 
             courseAssignmentScreenLeftCard: Platform.OS === 'web' ?
                 { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 30, marginRight: 32, marginTop: 30, borderRadius: 4, shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30, height: "80vh", width: 446, paddingBottom: 40, overflowY: 'scroll' } :
@@ -904,6 +904,10 @@ export default class MainStyles {
                 { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, width: 446, paddingBottom: 40, height: "auto" }
             ,
             detailScreenRightCard: Platform.OS === 'web' ?
+                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30, height: "auto", width: 446, } :
+                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, height: "auto", width: 446, }
+            ,
+            conversationsScreenRightCard: Platform.OS === 'web' ?
                 { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30, height: "auto", width: 446, } :
                 { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, height: "auto", width: 446, }
             ,
@@ -2330,6 +2334,10 @@ export default class MainStyles {
                     marginLeft: 10,
                     flex: 65,
                 },
+                conversationsScreenRightCard: {
+                    marginLeft: 10,
+                    flex: 65,
+                },
                 courseAssignmentScreenRightCard: {
                     marginLeft: 30,
                     flex: 65,
@@ -2880,6 +2888,9 @@ export default class MainStyles {
                 detailScreenRightCard: {
                     marginLeft: 10,
                 },
+                conversationsScreenRightCard: {
+                    marginLeft: 10,
+                },
                 courseAssignmentScreenRightCard: {
                     marginLeft: 10,
                 },
@@ -3174,7 +3185,16 @@ export default class MainStyles {
                 detailScreenRightCard: {
                     width: "auto",
                     marginLeft: 0,
-                    marginRight: 0
+                    marginRight: 0,
+                },
+                conversationsScreenRightCard: {
+                    width: "auto",
+                    marginLeft: 0,
+                    marginRight: 0,
+                    marginTop: 0,
+                    shadowOffset: 'none', 
+                    shadowColor: "none", 
+                    shadowRadius: 0,
                 },
                 courseAssignmentScreenRightCard: {
                     width: "auto",
@@ -3537,6 +3557,14 @@ export default class MainStyles {
                 },
                 AdminPaymentBTTableRow: {
                     alignSelf: 'center',
+                },
+                conversationScreenMainContainer: {
+                    flexDirection: "column",
+                },
+                conversationScreenLeftCard: {
+                    marginTop: 0,
+                    marginLeft: 0,
+                    marginRight: 0,
                 },
             },
 
