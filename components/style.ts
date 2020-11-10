@@ -1516,7 +1516,7 @@ export default class MainStyles {
                 borderColor: "#FFFFFF",
                 width: "100%",
                 paddingRight: 30,
-                paddingLeft: 30,
+                paddingLeft: 0,
                 shadowOffset: { height: 0, width: 6 },
                 shadowRadius: 20,
                 shadowColor: "rgba(0,0,0,0.19)",
@@ -2033,6 +2033,15 @@ export default class MainStyles {
             smallProfileImageConversations: {
                 width: "50px",
                 height: "66px",
+                borderRadius: 120,
+                marginRight: 10,
+                marginBottom: 15,
+                marginLeft: 10,
+                top: 0
+            },
+            small4ProfileImageConversations: {
+                width: "30px",
+                height: "40px",
                 borderRadius: 120,
                 marginRight: 10,
                 marginBottom: 15,
