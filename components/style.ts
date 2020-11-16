@@ -2298,6 +2298,22 @@ export default class MainStyles {
                 alignSelf: 'stretch', 
                 justifyContent: 'center'
             },
+            partnerFriendsLegend: {
+                flex: 1, 
+                flexDirection: 'row', 
+                justifyContent: 'flex-end', 
+                paddingRight: '2%' 
+            },
+            partnerLegend: {
+                flexDirection: 'row', 
+                alignItems: 'center', 
+                paddingLeft: 20
+            },
+            friendsLegend: {
+                flexDirection: 'row', 
+                alignItems: 'center', 
+                paddingLeft: 20
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2321,6 +2337,8 @@ export default class MainStyles {
                 fontConnectWithName: {
                     fontSize: 18,
                     lineHeight: 23,
+                    alignSelf: 'center',
+                    marginTop: 10,
                 },
                 rightCardWidth: {
                     minWidth: "100%"
@@ -2863,6 +2881,15 @@ export default class MainStyles {
                 },
                 AdminPaymentBTTableRow: {
                     left: 25,
+                },
+                partnerFriendsLegend: {
+                    flexDirection: 'column', 
+                },
+                partnerLegend: {
+                    paddingLeft: 40,
+                },
+                friendsLegend: {
+                    paddingLeft: 40,
                 },
             },
 
