@@ -242,10 +242,16 @@ class MyMapImpl extends JCComponent<Props, State> {
                           mapItem={mapItem}
                           onClick={this.onMarkerClick}
                           position={{ lat: mapItem.latitude, lng: mapItem.longitude }}
-                          icon={{
+                          icon={this.state.eventsEnabled ? {
                             url: require("../../assets/svg/map-icon-red.svg"),
                             scaledSize: new google.maps.Size(32, 32)
-                          }}>
+                          } : this.state.organizationsEnabled ? {
+                            url: require("../../assets/svg/business-and-trade.svg"),
+                            scaledSize: new google.maps.Size(32, 32)
+                          } : {
+                            url: require("../../assets/svg/person-silhouette.svg"),
+                            scaledSize: new google.maps.Size(32, 32)
+                          } }>
                         </Marker>
                       }
 
