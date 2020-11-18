@@ -197,12 +197,12 @@ class MyMapImpl extends JCComponent<Props, State> {
                 <JCSwitch switchLabel="Show Events" initState={false} onPress={() => this.setState({ eventsEnabled: !this.state.eventsEnabled })}></JCSwitch>
                 <JCSwitch switchLabel="Show Profiles" initState={true} onPress={() => this.setState({ profilesEnabled: !this.state.profilesEnabled })}></JCSwitch>
                 <JCSwitch switchLabel="Show Organizations" initState={true} containerWidth={200} onPress={() => this.setState({ organizationsEnabled: !this.state.organizationsEnabled })}></JCSwitch>
-                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', paddingRight: '2%' }}>
-                  <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 20 }}>
+                <View style={this.styles.style.partnerFriendsLegend}>
+                  <View style={this.styles.style.partnerLegend}>
                     <View style={{ backgroundColor: '#f0493e', borderRadius: 25, width: 25, height: 13, }}></View>
                     <Text style={this.styles.style.fontMyMapLegend}>Partners</Text>
                   </View>
-                  <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: 20 }}>
+                  <View style={this.styles.style.friendsLegend}>
                     <View style={{ backgroundColor: '#ffb931', borderRadius: 25, width: 25, height: 13 }}></View>
                     <Text style={this.styles.style.fontMyMapLegend}>Friends</Text>
                   </View>
@@ -242,10 +242,16 @@ class MyMapImpl extends JCComponent<Props, State> {
                           mapItem={mapItem}
                           onClick={this.onMarkerClick}
                           position={{ lat: mapItem.latitude, lng: mapItem.longitude }}
-                          icon={{
+                          icon={this.state.eventsEnabled ? {
                             url: require("../../assets/svg/map-icon-red.svg"),
                             scaledSize: new google.maps.Size(32, 32)
-                          }}>
+                          } : this.state.organizationsEnabled ? {
+                            url: require("../../assets/svg/business-and-trade.svg"),
+                            scaledSize: new google.maps.Size(32, 32)
+                          } : {
+                            url: require("../../assets/svg/person-silhouette.svg"),
+                            scaledSize: new google.maps.Size(32, 32)
+                          } }>
                         </Marker>
                       }
 
