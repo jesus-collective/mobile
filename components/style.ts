@@ -169,7 +169,7 @@ export default class MainStyles {
                 paddingLeft: '0.25rem',
                 paddingRight: '0.25rem',
                 borderRadius: 4,
-                shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 20,
+                shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30,
                 borderStyle: "solid",
                 borderColor: "#FFFFFF"
             },
@@ -403,6 +403,33 @@ export default class MainStyles {
                 fontFamily: "Graphik-Regular-App",
                 color: '#000000',
             },
+            adminText: {
+                fontFamily: "Graphik-Regular-App",
+                color: '#000000',
+                width: '100%',
+                paddingLeft: '3%', 
+                paddingTop: 30,
+            },
+            adminCRMModalInvite: {
+                fontFamily: "Graphik-Regular-App",
+                color: '#000000',
+                textAlign: 'left',
+                width: '100%',
+            },
+            adminCRMModalInviteEmail: {
+                fontFamily: "Graphik-Regular-App",
+                color: '#000000',
+                textAlign: 'left',
+                width: '100%',
+                marginTop: 8,
+                marginBottom: 8,
+                paddingLeft: 10,
+                borderWidth: 1,
+                borderColor: "#767676",
+                borderRadius: 3,
+                height: 45, 
+                fontSize: 15,
+            },
             adminCRMModalHeading: {
                 fontFamily: "Graphik-Bold-App",
                 color: '#000000',
@@ -420,7 +447,8 @@ export default class MainStyles {
             fontMyMapOptions: {
                 //font family is Helvetica Neue on Figma
                 fontSize: 14,
-                paddingRight: 10
+                paddingRight: 10,
+                marginLeft: 10,
             },
             fontMyMapLegend: {
                 //font family is Helvetica Neue on Figma
@@ -864,8 +892,8 @@ export default class MainStyles {
                 minWidth: "100%"
             },
             conversationScreenLeftCard: Platform.OS === 'web' ?
-                { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30, height: "80vh", width: 446, paddingBottom: 40, overflowY: 'scroll' } :
-                { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30, height: "80vh", width: 446, paddingBottom: 40 },
+                { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30, height: "auto", width: 446, paddingBottom: 40, overflowY: 'scroll' } :
+                { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30, height: "auto", width: 446, paddingBottom: 40 },
 
             courseAssignmentScreenLeftCard: Platform.OS === 'web' ?
                 { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 30, marginRight: 32, marginTop: 30, borderRadius: 4, shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30, height: "80vh", width: 446, paddingBottom: 40, overflowY: 'scroll' } :
@@ -876,6 +904,10 @@ export default class MainStyles {
                 { flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', paddingLeft: 30, paddingRight: 30, paddingTop: 40, marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, width: 446, paddingBottom: 40, height: "auto" }
             ,
             detailScreenRightCard: Platform.OS === 'web' ?
+                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30, height: "auto", width: 446, } :
+                { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, height: "auto", width: 446, }
+            ,
+            conversationsScreenRightCard: Platform.OS === 'web' ?
                 { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30, height: "auto", width: 446, } :
                 { flex: 70, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start', marginLeft: 32, marginRight: 32, marginTop: 30, borderRadius: 4, height: "auto", width: 446, }
             ,
@@ -1488,7 +1520,7 @@ export default class MainStyles {
                 borderColor: "#FFFFFF",
                 width: "100%",
                 paddingRight: 30,
-                paddingLeft: 30,
+                paddingLeft: 0,
                 shadowOffset: { height: 0, width: 6 },
                 shadowRadius: 20,
                 shadowColor: "rgba(0,0,0,0.19)",
@@ -2011,6 +2043,15 @@ export default class MainStyles {
                 marginLeft: 10,
                 top: 0
             },
+            small4ProfileImageConversations: {
+                width: "30px",
+                height: "40px",
+                borderRadius: 120,
+                marginRight: 10,
+                marginBottom: 15,
+                marginLeft: 10,
+                top: 0
+            },
             eventCreationScreenCreateContainer: {
                 flexDirection: "column",
                 flexGrow: 0,
@@ -2068,7 +2109,7 @@ export default class MainStyles {
             adminSubNav: {
                 flex: 1,
                 flexDirection: 'row',
-                justifyContent: 'flex-start',
+                justifyContent: 'center',
                 alignItems: 'flex-start', 
                 right: 15
             },
@@ -2168,6 +2209,111 @@ export default class MainStyles {
                 alignItems: 'flex-start', 
                 justifyContent: 'flex-start'
             },
+            detailsYoutubeDateText: {
+                fontSize: 16, 
+                lineHeight: 21, 
+                fontFamily: 'Graphik-Regular-App', 
+                color: '#333333', 
+                marginTop: 45
+            },
+            AdminFirstNameTableHeader: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminLastNameTableHeader: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminUserIdTableHeader: {
+                flex: 3, 
+                alignSelf: 'stretch'
+            },
+            AdminPhoneTableHeader: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminStatusTableHeader: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminEnabledTableHeader: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminGroupsTableHeader: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminPaymentsTableHeader: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminTableMainContainer: {
+                width: '100%',
+            },
+            AdminTableRowContainer: {
+                flex: 1, 
+                maxHeight: 40, 
+                alignSelf: 'stretch', 
+                flexDirection: 'row', 
+                marginTop: 10, 
+                marginBottom: 10, 
+                alignContent: 'center'
+            },
+            AdminFirstNameTableRow: {
+                flex: 1, 
+                alignSelf: 'stretch', 
+                justifyContent: 'center'
+            },
+            AdminLastNameTableRow: {
+                flex: 1, 
+                alignSelf: 'stretch', 
+                justifyContent: 'center'
+            },
+            AdminUserIdTableRow: {
+                flex: 3, 
+                alignSelf: 'stretch', 
+                justifyContent: 'center'
+            },
+            AdminPhoneTableRow: {
+                flex: 1, 
+                alignSelf: 'stretch', 
+                justifyContent: 'center'
+            },
+            AdminStatusTableRow: {
+                flex: 1, 
+                alignSelf: 'stretch', 
+                justifyContent: 'center'
+            },
+            AdminGroupBTTableRow: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminPaymentBTTableRow: {
+                flex: 1, 
+                alignSelf: 'stretch'
+            },
+            AdminEnabledTableRow: {
+                flex: 1, 
+                alignSelf: 'stretch', 
+                justifyContent: 'center'
+            },
+            partnerFriendsLegend: {
+                flex: 1, 
+                flexDirection: 'row', 
+                justifyContent: 'flex-end', 
+                paddingRight: '2%' 
+            },
+            partnerLegend: {
+                flexDirection: 'row', 
+                alignItems: 'center', 
+                paddingLeft: 20
+            },
+            friendsLegend: {
+                flexDirection: 'row', 
+                alignItems: 'center', 
+                paddingLeft: 20
+            },
 
             // Media Query Desktop Tablet
             '@media (min-width: 350) and (max-width: 768)': {
@@ -2191,6 +2337,8 @@ export default class MainStyles {
                 fontConnectWithName: {
                     fontSize: 18,
                     lineHeight: 23,
+                    alignSelf: 'center',
+                    marginTop: 10,
                 },
                 rightCardWidth: {
                     minWidth: "100%"
@@ -2201,6 +2349,10 @@ export default class MainStyles {
                     minHeight: "50%",
                 },
                 detailScreenRightCard: {
+                    marginLeft: 10,
+                    flex: 65,
+                },
+                conversationsScreenRightCard: {
                     marginLeft: 10,
                     flex: 65,
                 },
@@ -2629,12 +2781,12 @@ export default class MainStyles {
                     width: "100%",
                 },
                 adminSubNav: {
-                    flex: 3,
-                    justifyContent: 'flex-end',
+                    flex: 4,
+                    justifyContent: 'center',
                     right: 0,
                 },
                 adminSubNavTogglesView: {
-                    flexDirection: 'column',
+                    flexDirection: 'row',
                     marginLeft: 15,
                     marginRight: 15,
                 },
@@ -2644,7 +2796,7 @@ export default class MainStyles {
                 },
                 courseZoomMainContainer: {
                     flexDirection: 'column',
-                    flex: 0.6,
+                    flex: 0.4,
                 },
                 courseDetailTime: {
                     flex: 0.4, 
@@ -2654,6 +2806,7 @@ export default class MainStyles {
                 },
                 courseDetailYoutube: {
                     flexDirection: 'column', 
+                    flex: 0.4
                 },
                 courseDetailHr: {
                     flex: 0.1
@@ -2674,6 +2827,69 @@ export default class MainStyles {
                 },
                 courseDetailMessageBoardContainer: {
                     marginTop: 40,
+                },
+                // courseDetailCalendarImage: {
+                //     top: 30
+                // },
+                // detailsYoutubeDateText: {
+                //     top: 30,
+                // },
+                courseDetailCalendarText: {
+                    marginTop: 23,
+                },
+                AdminTableMainContainer: {
+                    overscrollX: 'auto',
+                },
+                adminCRMTableContainer: {
+                    width: 768,
+                    alignSelf: 'center',
+                    height: 'auto',
+                    paddingLeft: 50,
+                    paddingRight: 0,
+                },
+                adminCRMTableHeader: {
+                    flex: 1, 
+                },
+                AdminTableRowContainer: {
+                    alignSelf: 'center', 
+                    width: 768,
+                    marginTop: 30,
+                    marginBottom: 30,
+                    paddingLeft: 40,
+                },
+                adminCRMTableRow: {
+                    flex: 1,
+                },
+                AdminEnabledTableRow: {
+                    paddingLeft: 10,
+                },
+                adminCRMTableParagraph: {
+                    paddingRight: 20,
+                },
+                AdminUserIdTableHeader: {
+                    flex: 1, 
+                },
+                AdminUserIdTableRow: {
+                    flex: 1, 
+                },
+                icon: {
+                    color: '#aaaaaa',
+                    fontSize: 34,
+                },
+                AdminGroupBTTableRow: {
+                    left: 15,
+                },
+                AdminPaymentBTTableRow: {
+                    left: 25,
+                },
+                partnerFriendsLegend: {
+                    flexDirection: 'column', 
+                },
+                partnerLegend: {
+                    paddingLeft: 40,
+                },
+                friendsLegend: {
+                    paddingLeft: 40,
                 },
             },
 
@@ -2697,6 +2913,9 @@ export default class MainStyles {
                     flex: 40,
                 },
                 detailScreenRightCard: {
+                    marginLeft: 10,
+                },
+                conversationsScreenRightCard: {
                     marginLeft: 10,
                 },
                 courseAssignmentScreenRightCard: {
@@ -2867,6 +3086,20 @@ export default class MainStyles {
                     marginTop: 0,
                     paddingTop: 0,
                 },
+                adminSubNav: {
+                    justifyContent: 'center',
+                    right: 0,
+                },
+                AdminGroupBTTableRow: {
+                    left: 15,
+                },
+                AdminPaymentBTTableRow: {
+                    left: 25,
+                },
+                icon: {
+                    color: '#aaaaaa',
+                    fontSize: 28,
+                },
             },
 
             '@media (min-width: 769px) and (max-width: 1279px)': {
@@ -2979,7 +3212,16 @@ export default class MainStyles {
                 detailScreenRightCard: {
                     width: "auto",
                     marginLeft: 0,
-                    marginRight: 0
+                    marginRight: 0,
+                },
+                conversationsScreenRightCard: {
+                    width: "auto",
+                    marginLeft: 0,
+                    marginRight: 0,
+                    marginTop: 0,
+                    shadowOffset: 'none', 
+                    shadowColor: "none", 
+                    shadowRadius: 0,
                 },
                 courseAssignmentScreenRightCard: {
                     width: "auto",
@@ -3293,6 +3535,66 @@ export default class MainStyles {
                 courseDetailLeftSide: {
                     flex: 'none',
                     height: 'auto', 
+                },
+                adminSubNavTogglesView: {
+                    flexDirection: 'column',
+                },
+                adminCRMTableContainer: {
+                    width: '100vw',
+                    paddingRight: 10,
+                    paddingLeft: 10,
+                },
+                adminInviteButton: {
+                    marginLeft: 0,
+                },
+                AdminTableRowContainer: {
+                    width: '100vw',
+                    paddingLeft: 0,
+                    maxHeight: 80,
+                },
+                icon: {
+                    color: '#aaaaaa',
+                    fontSize: 30,
+                },
+                adminCRMTableHeading: {
+                    fontSize: 14,
+                },
+                adminCRMTableParagraph: {
+                    paddingRight: 10,
+                },
+                adminCRMTableHeader: {
+                    alignSelf:'center',
+                },
+                AdminGroupsTableHeader: {
+                    alignSelf: 'center'
+                },
+                AdminPaymentsTableHeader: {
+                    alignSelf: 'center'
+                },
+                adminSubNav: {
+                    overflowX: 'scroll',
+                    justifyContent: 'flex-start',
+                    marginLeft: 10,
+                },
+                AdminUserIdTableHeader: {
+                    alignSelf: 'center', 
+                },
+                AdminGroupBTTableRow: {
+                    alignSelf: 'center',
+                },
+                AdminPaymentBTTableRow: {
+                    alignSelf: 'center',
+                },
+                conversationScreenMainContainer: {
+                    flexDirection: "column",
+                },
+                conversationScreenLeftCard: {
+                    marginTop: 0,
+                    marginLeft: 0,
+                    marginRight: 0,
+                },
+                courseDetailJCButtonRegular: {
+                    marginTop: 20,
                 },
             },
 

@@ -232,7 +232,7 @@ export default class ConversationScreen extends JCComponent<Props, State>{
                     </TouchableOpacity>)
                 }) : null}
             </Container>
-            <Container style={this.styles.style.detailScreenRightCard}>
+            <Container style={this.styles.style.conversationsScreenRightCard}>
               <MessageBoard style="regular" roomId={this.state.currentRoomId} recipients={this.getCurrentRoomRecipients()}></MessageBoard>
             </Container>
           </Container>

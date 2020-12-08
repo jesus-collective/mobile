@@ -56,6 +56,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                       <Text>Admin</Text>
                     </Container>
                     {/*
+
             <Container style={style.eventsScreenRightContainer}>
               <MyPeople wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyPeople>
               <MyConversations navigation={this.props.navigation}> </MyConversations>

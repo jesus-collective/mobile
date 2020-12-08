@@ -113,7 +113,7 @@ export default class MyPeople extends JCComponent<Props, State> {
                       <Card style={this.styles.style.dashboardConversationCard}>
                         <CardItem>
                           <Left style={this.styles.style.dashboardConversationCardLeft}>
-                            <ProfileImage user={item} size='medium' style='my-people' />
+                            <ProfileImage user={item} size='small2' style='my-people' />
 
                             <Body style={this.styles.style.dashboardConversationBody}>
                               <Text style={this.styles.style.fontConnectWithName}>{item.given_name} {item.family_name}</Text>
