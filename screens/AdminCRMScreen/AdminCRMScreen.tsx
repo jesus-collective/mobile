@@ -1,55 +1,56 @@
-import React from "react";
-import { Container, Content, Text, Button } from "native-base";
-import Header from "../../components/Header/Header";
-import HeaderAdmin from "../../components/HeaderAdmin/HeaderAdmin";
-import JCComponent, { JCState } from "../../components/JCComponent/JCComponent";
-import { MapData } from "components/MyGroups/MyGroups";
-import { Auth, API, graphqlOperation } from "aws-amplify";
-import { View, TextInput, Modal, Picker } from "react-native";
-import JCButton, { ButtonTypes } from "../../components/Forms/JCButton";
-import JCSwitch from "../../components/JCSwitch/JCSwitch";
-import * as queries from "../../src/graphql/queries";
-import * as customQueries from "../../src/graphql-custom/queries";
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native";
-import * as mutations from "../../src/graphql/mutations";
-import { GetProductQuery } from "src/API";
-import JCModal from "../../components/Forms/JCModal";
-import { isMobile } from "react-device-detect";
-import { Ionicons } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
+import React from "react"
+import { Container, Content, Text, Button } from "native-base"
+import Header from "../../components/Header/Header"
+import HeaderAdmin from "../../components/HeaderAdmin/HeaderAdmin"
+import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
+import { MapData } from "components/MyGroups/MyGroups"
+import { Auth, API, graphqlOperation } from "aws-amplify"
+import { View, TextInput, Modal, Picker } from "react-native"
+import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
+import JCSwitch from "../../components/JCSwitch/JCSwitch"
+import * as queries from "../../src/graphql/queries"
+import * as customQueries from "../../src/graphql-custom/queries"
+import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import * as mutations from "../../src/graphql/mutations"
+import { GetProductQuery } from "src/API"
+import JCModal from "../../components/Forms/JCModal"
+import { isMobile } from "react-device-detect"
+import { Ionicons } from "@expo/vector-icons"
+import { MaterialIcons } from "@expo/vector-icons"
+import { UserContext } from "screens/HomeScreen/UserContext"
 
 interface Props {
-  navigation: any;
-  route: any;
+  navigation: any
+  route: any
 }
 interface State extends JCState {
-  showMap: boolean;
-  mapData: MapData[];
-  showMy: boolean;
-  data: any;
-  invite: string;
-  showGroups: boolean;
-  showGroupsId: string;
-  groupData: [];
-  showUid: boolean;
-  showEmail: boolean;
-  showPhone: boolean;
-  showStatus: boolean;
-  groupToAdd: string;
-  groupList: any;
-  paymentsData: [];
-  showPayments: boolean;
-  showPaymentsId: string;
-  productList: [];
-  showInvite: boolean;
-  inviteType: string;
-  inviteData: string;
-  inviteDataList: any;
+  showMap: boolean
+  mapData: MapData[]
+  showMy: boolean
+  data: any
+  invite: string
+  showGroups: boolean
+  showGroupsId: string
+  groupData: []
+  showUid: boolean
+  showEmail: boolean
+  showPhone: boolean
+  showStatus: boolean
+  groupToAdd: string
+  groupList: any
+  paymentsData: []
+  showPayments: boolean
+  showPaymentsId: string
+  productList: []
+  showInvite: boolean
+  inviteType: string
+  inviteData: string
+  inviteDataList: any
 }
 
 export default class AdminScreen extends JCComponent<Props, State> {
   constructor(props: Props) {
-    super(props);
+    super(props)
     this.state = {
       ...super.getInitialState(),
       mapData: [],
@@ -76,29 +77,29 @@ export default class AdminScreen extends JCComponent<Props, State> {
         "courseAdmin",
         "courseCoach",
       ],
-    };
-    this.setInitialData();
+    }
+    this.setInitialData()
   }
   async getUsers(nextToken: string) {
-    console.log("getUsers");
-    const data = await this.listUsers(40, nextToken);
-    console.log({ data: data });
-    this.setState({ data: this.state.data.concat(data.Users) });
-    if (data.nextToken) this.getUsers(data.nextToken);
+    console.log("getUsers")
+    const data = await this.listUsers(40, nextToken)
+    console.log({ data: data })
+    this.setState({ data: this.state.data.concat(data.Users) })
+    if (data.nextToken) this.getUsers(data.nextToken)
   }
   async setInitialData(): Promise<void> {
-    this.getUsers(null);
+    this.getUsers(null)
 
     const listProducts: any = await API.graphql({
       query: queries.listProducts,
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    });
-    console.log(listProducts);
-    this.setState({ productList: listProducts.data.listProducts.items });
+    })
+    console.log(listProducts)
+    this.setState({ productList: listProducts.data.listProducts.items })
   }
   async listUsers(limit: number, nextToken: string): Promise<any> {
-    const apiName = "AdminQueries";
-    const path = "/listUsers";
+    const apiName = "AdminQueries"
+    const path = "/listUsers"
     const myInit = {
       queryStringParameters: {
         limit: limit,
@@ -106,23 +107,21 @@ export default class AdminScreen extends JCComponent<Props, State> {
       },
       headers: {
         "Content-Type": "application/json",
-        Authorization: `${(await Auth.currentSession())
-          .getAccessToken()
-          .getJwtToken()}`,
+        Authorization: `${(await Auth.currentSession()).getAccessToken().getJwtToken()}`,
       },
-    };
-    const z = await API.get(apiName, path, myInit);
-    console.log(z);
-    const { NextToken, ...rest } = z;
-    nextToken = NextToken;
-    return { nextToken, ...rest };
+    }
+    const z = await API.get(apiName, path, myInit)
+    console.log(z)
+    const { NextToken, ...rest } = z
+    nextToken = NextToken
+    return { nextToken, ...rest }
   }
 
   async removeUserFromGroup(user: string, groupname: string) {
-    console.log(user);
-    console.log(groupname);
-    const apiName = "AdminQueries";
-    const path = "/removeUserFromGroup";
+    console.log(user)
+    console.log(groupname)
+    const apiName = "AdminQueries"
+    const path = "/removeUserFromGroup"
     const myInit = {
       body: {
         username: user,
@@ -130,19 +129,17 @@ export default class AdminScreen extends JCComponent<Props, State> {
       },
       headers: {
         "Content-Type": "application/json",
-        Authorization: `${(await Auth.currentSession())
-          .getAccessToken()
-          .getJwtToken()}`,
+        Authorization: `${(await Auth.currentSession()).getAccessToken().getJwtToken()}`,
       },
-    };
-    const { ...rest } = await API.post(apiName, path, myInit);
-    return rest;
+    }
+    const { ...rest } = await API.post(apiName, path, myInit)
+    return rest
   }
   async addUserToGroup(user: string, groupname: string) {
-    console.log(user);
-    console.log(groupname);
-    const apiName = "AdminQueries";
-    const path = "/addUserToGroup";
+    console.log(user)
+    console.log(groupname)
+    const apiName = "AdminQueries"
+    const path = "/addUserToGroup"
     const myInit = {
       body: {
         username: user,
@@ -150,19 +147,17 @@ export default class AdminScreen extends JCComponent<Props, State> {
       },
       headers: {
         "Content-Type": "application/json",
-        Authorization: `${(await Auth.currentSession())
-          .getAccessToken()
-          .getJwtToken()}`,
+        Authorization: `${(await Auth.currentSession()).getAccessToken().getJwtToken()}`,
       },
-    };
-    const { ...rest } = await API.post(apiName, path, myInit);
-    return rest;
+    }
+    const { ...rest } = await API.post(apiName, path, myInit)
+    return rest
   }
   async adminUpdateUserAttributes(user: string, email: string) {
-    console.log(user);
-    console.log(email);
-    const apiName = "AdminQueries";
-    const path = "/adminUpdateUserAttributes";
+    console.log(user)
+    console.log(email)
+    const apiName = "AdminQueries"
+    const path = "/adminUpdateUserAttributes"
     const myInit = {
       body: {
         username: user,
@@ -170,23 +165,17 @@ export default class AdminScreen extends JCComponent<Props, State> {
       },
       headers: {
         "Content-Type": "application/json",
-        Authorization: `${(await Auth.currentSession())
-          .getAccessToken()
-          .getJwtToken()}`,
+        Authorization: `${(await Auth.currentSession()).getAccessToken().getJwtToken()}`,
       },
-    };
-    const z = await API.post(apiName, path, myInit);
-    console.log({ adminUpdateUserAttributes: z });
-    return z;
+    }
+    const z = await API.post(apiName, path, myInit)
+    console.log({ adminUpdateUserAttributes: z })
+    return z
   }
 
-  async listGroupsForUser(
-    user: string,
-    limit: number,
-    nextToken: string
-  ): Promise<any> {
-    const apiName = "AdminQueries";
-    const path = "/listGroupsForUser";
+  async listGroupsForUser(user: string, limit: number, nextToken: string): Promise<any> {
+    const apiName = "AdminQueries"
+    const path = "/listGroupsForUser"
     const myInit = {
       queryStringParameters: {
         username: user,
@@ -195,33 +184,29 @@ export default class AdminScreen extends JCComponent<Props, State> {
       },
       headers: {
         "Content-Type": "application/json",
-        Authorization: `${(await Auth.currentSession())
-          .getAccessToken()
-          .getJwtToken()}`,
+        Authorization: `${(await Auth.currentSession()).getAccessToken().getJwtToken()}`,
       },
-    };
-    const { NextToken, ...rest } = await API.get(apiName, path, myInit);
-    nextToken = NextToken;
-    return rest;
+    }
+    const { NextToken, ...rest } = await API.get(apiName, path, myInit)
+    nextToken = NextToken
+    return rest
   }
 
   async adminCreateUser(email: string): Promise<any> {
-    const apiName = "AdminQueries";
-    const path = "/adminCreateUser";
+    const apiName = "AdminQueries"
+    const path = "/adminCreateUser"
     const myInit = {
       queryStringParameters: {
         email: email,
       },
       headers: {
         "Content-Type": "application/json",
-        Authorization: `${(await Auth.currentSession())
-          .getAccessToken()
-          .getJwtToken()}`,
+        Authorization: `${(await Auth.currentSession()).getAccessToken().getJwtToken()}`,
       },
-    };
-    const { ...rest } = await API.get(apiName, path, myInit);
+    }
+    const { ...rest } = await API.get(apiName, path, myInit)
     // nextToken = NextToken;
-    return rest;
+    return rest
   }
   renderHeader(): React.ReactNode {
     return (
@@ -264,7 +249,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
           <Text style={this.styles.style.adminCRMTableHeading}>Payments</Text>
         </View>
       </View>
-    );
+    )
   }
 
   async showPayments(id: string): Promise<void> {
@@ -279,43 +264,43 @@ export default class AdminScreen extends JCComponent<Props, State> {
             query: queries.paymentByUser,
             variables: { userID: id },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          });
-          console.log(payments);
-          this.setState({ paymentsData: payments.data.paymentByUser.items });
+          })
+          console.log(payments)
+          this.setState({ paymentsData: payments.data.paymentByUser.items })
         } catch (e: any) {
-          console.log(e);
-          this.setState({ paymentsData: e.data.paymentByUser.items });
+          console.log(e)
+          this.setState({ paymentsData: e.data.paymentByUser.items })
         }
       }
-    );
+    )
   }
   closePayments(): void {
     this.setState({
       showPayments: false,
       showPaymentsId: null,
-    });
+    })
   }
   async removePayment(user: string, group: string): Promise<void> {
-    console.log(user);
-    console.log(group);
+    console.log(user)
+    console.log(group)
 
     try {
       const saveResult = await API.graphql(
         graphqlOperation(mutations.deletePayment, { input: { id: group } })
-      );
-      console.log(saveResult);
+      )
+      console.log(saveResult)
     } catch (e) {
-      console.error(e);
+      console.error(e)
     }
     this.setState({
       paymentsData: [],
       showPaymentsId: null,
       showPayments: null,
-    });
+    })
   }
   async addPayment(user: string, group: string): Promise<void> {
-    console.log(user);
-    console.log(group);
+    console.log(user)
+    console.log(group)
 
     try {
       const saveResult = (await API.graphql(
@@ -329,16 +314,16 @@ export default class AdminScreen extends JCComponent<Props, State> {
             paymentInfo: "By: ",
           },
         })
-      )) as GraphQLResult<GetProductQuery>;
-      console.log(saveResult);
+      )) as GraphQLResult<GetProductQuery>
+      console.log(saveResult)
     } catch (e) {
-      console.error(e);
+      console.error(e)
     }
     this.setState({
       paymentsData: [],
       showPaymentsId: null,
       showPayments: null,
-    });
+    })
 
     //await this.//addUserToGroup(user, group)
     //this.showPayments(this.state.showPaymentsId)
@@ -346,26 +331,26 @@ export default class AdminScreen extends JCComponent<Props, State> {
   closeInvite(): void {
     this.setState({
       showInvite: false,
-    });
+    })
   }
   showInvite(): void {
     this.setState({
       showInvite: true,
-    });
+    })
   }
   closeGroups(): void {
     this.setState({
       showGroups: false,
       showGroupsId: null,
-    });
+    })
   }
   async removeGroup(user, group): Promise<void> {
-    await this.removeUserFromGroup(user, group);
-    this.showGroups(this.state.showGroupsId);
+    await this.removeUserFromGroup(user, group)
+    this.showGroups(this.state.showGroupsId)
   }
   async addGroup(user, group): Promise<void> {
-    await this.addUserToGroup(user, group);
-    this.showGroups(this.state.showGroupsId);
+    await this.addUserToGroup(user, group)
+    this.showGroups(this.state.showGroupsId)
   }
   async showGroups(id: string): Promise<void> {
     this.setState(
@@ -374,11 +359,11 @@ export default class AdminScreen extends JCComponent<Props, State> {
         showGroupsId: id,
       },
       async () => {
-        const groups = await this.listGroupsForUser(id, 20, null);
-        console.log(groups);
-        this.setState({ groupData: groups.Groups });
+        const groups = await this.listGroupsForUser(id, 20, null)
+        console.log(groups)
+        this.setState({ groupData: groups.Groups })
       }
-    );
+    )
   }
 
   renderRow(item: any, index: number): React.ReactNode {
@@ -415,16 +400,12 @@ export default class AdminScreen extends JCComponent<Props, State> {
         ) : null}
         {this.state.showStatus && !isMobile ? (
           <View style={this.styles.style.AdminStatusTableRow}>
-            <Text style={this.styles.style.adminCRMTableEmailStatus}>
-              {item.UserStatus}
-            </Text>
+            <Text style={this.styles.style.adminCRMTableEmailStatus}>{item.UserStatus}</Text>
           </View>
         ) : null}
         {!isMobile ? (
           <View style={this.styles.style.AdminEnabledTableRow}>
-            <Text style={this.styles.style.fontRegular}>
-              {item.Enabled.toString()}
-            </Text>
+            <Text style={this.styles.style.fontRegular}>{item.Enabled.toString()}</Text>
           </View>
         ) : null}
         <View style={this.styles.style.AdminGroupBTTableRow}>
@@ -432,7 +413,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             <JCButton
               buttonType={ButtonTypes.AdminSmallOutline}
               onPress={() => {
-                this.showGroups(item.Username);
+                this.showGroups(item.Username)
               }}
             >
               Groups
@@ -441,7 +422,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             <Button
               transparent
               onPress={() => {
-                this.showGroups(item.Username);
+                this.showGroups(item.Username)
               }}
             >
               <Ionicons name="ios-people" style={this.styles.style.icon} />
@@ -453,7 +434,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             <JCButton
               buttonType={ButtonTypes.AdminSmallOutline}
               onPress={() => {
-                this.showPayments(item.Username);
+                this.showPayments(item.Username)
               }}
             >
               Payments
@@ -462,7 +443,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             <Button
               transparent
               onPress={() => {
-                this.showPayments(item.Username);
+                this.showPayments(item.Username)
               }}
             >
               <MaterialIcons name="payment" style={this.styles.style.icon} />
@@ -470,14 +451,14 @@ export default class AdminScreen extends JCComponent<Props, State> {
           )}
         </View>
       </View>
-    );
+    )
   }
   async sendInvite(email: string, inviteType: string): Promise<void> {
-    console.log({ "inviting:": email });
-    let z = await this.adminCreateUser(email.toLowerCase());
-    await this.addUserToGroup(z.User.Username, "verifiedUsers");
+    console.log({ "inviting:": email })
+    let z = await this.adminCreateUser(email.toLowerCase())
+    await this.addUserToGroup(z.User.Username, "verifiedUsers")
     if (inviteType == "course") {
-      await this.addUserToGroup(z.User.Username, "courseUser");
+      await this.addUserToGroup(z.User.Username, "courseUser")
     }
   }
   renderGroupsModal(): React.ReactNode {
@@ -486,7 +467,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
         visible={this.state.showGroups}
         title="Groups"
         onHide={() => {
-          this.closeGroups();
+          this.closeGroups()
         }}
       >
         <>
@@ -508,21 +489,14 @@ export default class AdminScreen extends JCComponent<Props, State> {
                     <JCButton
                       buttonType={ButtonTypes.AdminModalOrange}
                       onPress={() => {
-                        if (
-                          window.confirm(
-                            "Are you sure you wish to delete this group?"
-                          )
-                        )
-                          this.removeGroup(
-                            this.state.showGroupsId,
-                            item.GroupName
-                          );
+                        if (window.confirm("Are you sure you wish to delete this group?"))
+                          this.removeGroup(this.state.showGroupsId, item.GroupName)
                       }}
                     >
                       X
                     </JCButton>
                   </View>
-                );
+                )
               })
             : null}
           <Container
@@ -541,19 +515,19 @@ export default class AdminScreen extends JCComponent<Props, State> {
               }}
               selectedValue={this.state.groupToAdd}
               onValueChange={(val) => {
-                this.setState({ groupToAdd: val });
+                this.setState({ groupToAdd: val })
               }}
             >
               {" "}
               <Picker.Item value={null} label="pick a group to add" />
               {this.state.groupList.map((item, index: number) => {
-                return <Picker.Item key={index} value={item} label={item} />;
+                return <Picker.Item key={index} value={item} label={item} />
               })}
             </Picker>
             <JCButton
               buttonType={ButtonTypes.AdminAdd}
               onPress={() => {
-                this.addGroup(this.state.showGroupsId, this.state.groupToAdd);
+                this.addGroup(this.state.showGroupsId, this.state.groupToAdd)
               }}
             >
               Add Group
@@ -561,7 +535,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
           </Container>
         </>
       </JCModal>
-    );
+    )
   }
   renderPaymentsModal(): React.ReactNode {
     return (
@@ -569,7 +543,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
         visible={this.state.showPayments}
         title="Payments"
         onHide={() => {
-          this.closePayments();
+          this.closePayments()
         }}
       >
         <>
@@ -591,21 +565,14 @@ export default class AdminScreen extends JCComponent<Props, State> {
                     <JCButton
                       buttonType={ButtonTypes.AdminModalOrange}
                       onPress={() => {
-                        if (
-                          window.confirm(
-                            "Are you sure you wish to delete this payment?"
-                          )
-                        )
-                          this.removePayment(
-                            this.state.showPaymentsId,
-                            item.id
-                          );
+                        if (window.confirm("Are you sure you wish to delete this payment?"))
+                          this.removePayment(this.state.showPaymentsId, item.id)
                       }}
                     >
                       X
                     </JCButton>
                   </View>
-                );
+                )
               })
             : null}
           <Container
@@ -624,25 +591,20 @@ export default class AdminScreen extends JCComponent<Props, State> {
               }}
               selectedValue={this.state.groupToAdd}
               onValueChange={(val) => {
-                this.setState({ groupToAdd: val });
+                this.setState({ groupToAdd: val })
               }}
             >
               {" "}
               <Picker.Item value={null} label="pick a group to add" />
               {this.state.productList?.map((item: any, index) => {
-                console.log(item);
-                return (
-                  <Picker.Item key={index} value={item.id} label={item.name} />
-                );
+                console.log(item)
+                return <Picker.Item key={index} value={item.id} label={item.name} />
               })}
             </Picker>
             <JCButton
               buttonType={ButtonTypes.AdminAdd}
               onPress={() => {
-                this.addPayment(
-                  this.state.showPaymentsId,
-                  this.state.groupToAdd
-                );
+                this.addPayment(this.state.showPaymentsId, this.state.groupToAdd)
               }}
             >
               Add Payment
@@ -650,7 +612,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
           </Container>
         </>
       </JCModal>
-    );
+    )
   }
   async updateInviteDataList(nextToken: any) {
     const listGroup: any = await API.graphql({
@@ -661,9 +623,9 @@ export default class AdminScreen extends JCComponent<Props, State> {
         nextToken: nextToken,
       },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    });
-    console.log(listGroup);
-    this.setState({ inviteDataList: listGroup.data.groupByType.items });
+    })
+    console.log(listGroup)
+    this.setState({ inviteDataList: listGroup.data.groupByType.items })
   }
   renderInviteModal(): React.ReactNode {
     return (
@@ -671,14 +633,14 @@ export default class AdminScreen extends JCComponent<Props, State> {
         visible={this.state.showInvite}
         title="Invite"
         onHide={() => {
-          this.closeInvite();
+          this.closeInvite()
         }}
       >
         <>
           <Text style={this.styles.style.adminCRMModalInvite}>Invite: </Text>
           <TextInput
             onChange={(val: any) => {
-              this.setState({ invite: val.target.value });
+              this.setState({ invite: val.target.value })
             }}
             placeholder="Enter Email Address"
             multiline={false}
@@ -694,12 +656,9 @@ export default class AdminScreen extends JCComponent<Props, State> {
             }}
             selectedValue={this.state.inviteType}
             onValueChange={(val) => {
-              this.setState(
-                { inviteType: val, inviteData: null, inviteDataList: [] },
-                () => {
-                  this.updateInviteDataList(null);
-                }
-              );
+              this.setState({ inviteType: val, inviteData: null, inviteDataList: [] }, () => {
+                this.updateInviteDataList(null)
+              })
             }}
           >
             <Picker.Item value={null} label="pick a group to add" />
@@ -714,18 +673,12 @@ export default class AdminScreen extends JCComponent<Props, State> {
             <Picker
               selectedValue={this.state.inviteData}
               onValueChange={(val) => {
-                this.setState({ inviteData: val });
+                this.setState({ inviteData: val })
               }}
             >
               <Picker.Item value={null} label="pick a group to add" />
               {this.state.inviteDataList.map((item, index: number) => {
-                return (
-                  <Picker.Item
-                    key={index}
-                    value={item.value}
-                    label={item.name}
-                  />
-                );
+                return <Picker.Item key={index} value={item.value} label={item.name} />
               })}
             </Picker>
           ) : null}
@@ -733,36 +686,30 @@ export default class AdminScreen extends JCComponent<Props, State> {
           <JCButton
             buttonType={ButtonTypes.Outline}
             onPress={() => {
-              this.sendInvite(this.state.invite, this.state.inviteType);
-              this.closeInvite();
-              this.setInitialData();
+              this.sendInvite(this.state.invite, this.state.inviteType)
+              this.closeInvite()
+              this.setInitialData()
             }}
           >
             Send Invite
           </JCButton>
         </>
       </JCModal>
-    );
+    )
   }
-  static UserConsumer = UserContext.Consumer;
+  static UserConsumer = UserContext.Consumer
 
   render(): React.ReactNode {
     return (
       <AdminScreen.UserConsumer>
         {({ userState, userActions }) => {
-          if (!userState) return null;
-          console.log("AdminScreen");
+          if (!userState) return null
+          console.log("AdminScreen")
           return (
             <Container data-testid="events">
-              <Header
-                title="Jesus Collective"
-                navigation={this.props.navigation}
-              />
+              <Header title="Jesus Collective" navigation={this.props.navigation} />
 
-              <HeaderAdmin
-                title="Jesus Collective"
-                navigation={this.props.navigation}
-              />
+              <HeaderAdmin title="Jesus Collective" navigation={this.props.navigation} />
               {userActions.isMemberOf("admin") ? (
                 <Content>
                   <Container style={this.styles.style.fontRegular}>
@@ -781,9 +728,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                             toggleMargin={5}
                             switchLabel="show user id"
                             initState={false}
-                            onPress={() =>
-                              this.setState({ showUid: !this.state.showUid })
-                            }
+                            onPress={() => this.setState({ showUid: !this.state.showUid })}
                           />
                           <JCSwitch
                             toggleSpacing={"space-between"}
@@ -828,7 +773,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                           <JCButton
                             buttonType={ButtonTypes.AdminOutline}
                             onPress={() => {
-                              this.showInvite();
+                              this.showInvite()
                             }}
                           >
                             Invite
@@ -841,7 +786,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                         {this.state.data
                           ? this.state.data.map((item: any, index: number) => {
                               // This will render a row for each data element.
-                              return this.renderRow(item, index);
+                              return this.renderRow(item, index)
                             })
                           : null}
                       </Content>
@@ -850,12 +795,8 @@ export default class AdminScreen extends JCComponent<Props, State> {
                 </Content>
               ) : (
                 <Content>
-                  <Container
-                    style={this.styles.style.eventsScreenMainContainer}
-                  >
-                    <Container
-                      style={this.styles.style.eventsScreenLeftContainer}
-                    >
+                  <Container style={this.styles.style.eventsScreenMainContainer}>
+                    <Container style={this.styles.style.eventsScreenLeftContainer}>
                       <Text>You must be an admin to see this screen</Text>
                     </Container>
                   </Container>
@@ -865,9 +806,9 @@ export default class AdminScreen extends JCComponent<Props, State> {
               {this.renderPaymentsModal()}
               {this.renderInviteModal()}
             </Container>
-          );
+          )
         }}
       </AdminScreen.UserConsumer>
-    );
+    )
   }
 }

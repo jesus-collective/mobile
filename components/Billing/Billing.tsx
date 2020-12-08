@@ -1,45 +1,37 @@
-import React, { useState } from "react";
-import Amplify from "aws-amplify";
-import awsConfig from "../../src/aws-exports";
-Amplify.configure(awsConfig);
-import { ActivityIndicator, View } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe, Stripe, StripeElements } from "@stripe/stripe-js";
-import HandleStripePayment from "./HandleStripePayment";
-import { ElementsConsumer } from "@stripe/react-stripe-js";
+import React, { useState } from "react"
+import Amplify from "aws-amplify"
+import awsConfig from "../../src/aws-exports"
+Amplify.configure(awsConfig)
+import { ActivityIndicator, View } from "react-native"
+import { AntDesign } from "@expo/vector-icons"
+import { Elements } from "@stripe/react-stripe-js"
+import { loadStripe, Stripe, StripeElements } from "@stripe/stripe-js"
+import HandleStripePayment from "./HandleStripePayment"
+import { ElementsConsumer } from "@stripe/react-stripe-js"
 
-import {
-  CardNumberElement,
-  CardExpiryElement,
-  CardCvcElement,
-} from "@stripe/react-stripe-js";
-import "./CardSectionStyles.css";
+import { CardNumberElement, CardExpiryElement, CardCvcElement } from "@stripe/react-stripe-js"
+import "./CardSectionStyles.css"
 
-import { Label, Content, Card, CardItem, Body } from "native-base";
-import { Text } from "react-native";
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native";
-import * as customMutations from "../../src/graphql-custom/mutations";
-import * as mutations from "../../src/graphql/mutations";
-import { API, graphqlOperation } from "aws-amplify";
-import { Auth } from "aws-amplify";
-import JCComponent, { JCState } from "../../components/JCComponent/JCComponent";
-import { UserContext, UserState } from "../../screens/HomeScreen/UserContext";
-import JCButton, { ButtonTypes } from "../../components/Forms/JCButton";
-import JCModal from "../../components/Forms/JCModal";
-import { TouchableOpacity } from "react-native";
-import * as queries from "../../src/graphql/queries";
-import { v4 as uuidv4 } from "uuid";
-import {
-  GetProductQuery,
-  GetUserQuery,
-  ListProductsQuery,
-} from "../../src/API";
-import { GraphQLResult } from "@aws-amplify/api/lib/types";
-import EditableText from "../../components/Forms/EditableText";
+import { Label, Content, Card, CardItem, Body } from "native-base"
+import { Text } from "react-native"
+import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import * as customMutations from "../../src/graphql-custom/mutations"
+import * as mutations from "../../src/graphql/mutations"
+import { API, graphqlOperation } from "aws-amplify"
+import { Auth } from "aws-amplify"
+import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
+import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/UserContext"
+import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
+import JCModal from "../../components/Forms/JCModal"
+import { TouchableOpacity } from "react-native"
+import * as queries from "../../src/graphql/queries"
+import { v4 as uuidv4 } from "uuid"
+import { GetProductQuery, GetUserQuery, ListProductsQuery } from "../../src/API"
+import { GraphQLResult } from "@aws-amplify/api/lib/types"
+import EditableText from "../../components/Forms/EditableText"
 
-import EditableRichText from "../../components/Forms/EditableRichText";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import EditableRichText from "../../components/Forms/EditableRichText"
+import { useNavigation, useRoute } from "@react-navigation/native"
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -57,27 +49,27 @@ const CARD_ELEMENT_OPTIONS = {
       iconColor: "#fa755a",
     },
   },
-};
+}
 
 interface Props {
-  navigation?: any;
-  route?: any;
-  authState?: string;
+  navigation?: any
+  route?: any
+  authState?: string
 }
 interface State extends JCState {
-  showSubscriptionSelector: boolean;
-  products: NonNullable<ListProductsQuery["listProducts"]>["items"];
-  userData: NonNullable<GetUserQuery>["getUser"];
-  currentProduct: NonNullable<ListProductsQuery["listProducts"]>["items"];
-  joinedProduct: string[];
-  idempotency: string;
-  quantities: number[][];
-  invoice: any;
-  processing: "entry" | "processing" | "complete";
+  showSubscriptionSelector: boolean
+  products: NonNullable<ListProductsQuery["listProducts"]>["items"]
+  userData: NonNullable<GetUserQuery>["getUser"]
+  currentProduct: NonNullable<ListProductsQuery["listProducts"]>["items"]
+  joinedProduct: string[]
+  idempotency: string
+  quantities: number[][]
+  invoice: any
+  processing: "entry" | "processing" | "complete"
 }
 class BillingImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
-    super(props);
+    super(props)
     this.state = {
       ...super.getInitialState(),
       showSubscriptionSelector: false,
@@ -90,34 +82,34 @@ class BillingImpl extends JCComponent<Props, State> {
           ? []
           : props.route?.params?.joinedProduct.split(",")
         : [],
-    };
-    console.log({ joinedProduct: this.state.joinedProduct });
-    this.setInitialData();
+    }
+    console.log({ joinedProduct: this.state.joinedProduct })
+    this.setInitialData()
   }
 
   async setInitialData(): Promise<void> {
     try {
-      const user = await Auth.currentAuthenticatedUser();
+      const user = await Auth.currentAuthenticatedUser()
       const getUser = (await API.graphql({
         query: queries.getUser,
         variables: { id: user["username"] },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<GetUserQuery>;
+      })) as GraphQLResult<GetUserQuery>
       if (getUser.data) {
-        this.setState({ userData: getUser.data.getUser });
-        console.log({ USER: getUser.data?.getUser });
+        this.setState({ userData: getUser.data.getUser })
+        console.log({ USER: getUser.data?.getUser })
       }
     } catch (e) {
-      console.log({ UserError: e });
+      console.log({ UserError: e })
     }
     try {
       const listProducts = (await API.graphql({
         query: queries.listProducts,
         variables: { limit: 50 },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<ListProductsQuery>;
+      })) as GraphQLResult<ListProductsQuery>
       if (listProducts.data?.listProducts)
-        this.setState({ products: listProducts.data.listProducts.items });
+        this.setState({ products: listProducts.data.listProducts.items })
       if (this.state.currentProduct?.length == 0)
         if (this.state.joinedProduct.length == 0) {
           if (listProducts.data?.listProducts?.items) {
@@ -125,19 +117,17 @@ class BillingImpl extends JCComponent<Props, State> {
               {
                 currentProduct: [listProducts.data.listProducts.items[0]],
                 quantities: [
-                  Array(
-                    listProducts.data.listProducts.items[0]?.tiered?.length
-                  ).fill(1),
+                  Array(listProducts.data.listProducts.items[0]?.tiered?.length).fill(1),
                 ],
               },
               () => {
-                this.createInvoice();
+                this.createInvoice()
               }
-            );
-            console.log(listProducts.data.listProducts.items[0]);
+            )
+            console.log(listProducts.data.listProducts.items[0])
           }
         } else {
-          console.log("Bad");
+          console.log("Bad")
           /* const products = listProducts.data?.listProducts?.items?.filter(
             (item) => this.state.joinedProduct?.includes(item?.stripePaymentID)
           );
@@ -152,13 +142,13 @@ class BillingImpl extends JCComponent<Props, State> {
           );*/
         }
     } catch (err) {
-      console.error(err);
+      console.error(err)
     }
   }
   async createStripeUser() {
     try {
-      const user = await Auth.currentAuthenticatedUser();
-      console.log(user);
+      const user = await Auth.currentAuthenticatedUser()
+      console.log(user)
       const customer: any = await API.graphql({
         query: mutations.createCustomer,
         variables: {
@@ -170,11 +160,11 @@ class BillingImpl extends JCComponent<Props, State> {
           billingAddress: this.state.userData?.billingAddress,
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      });
-      console.log({ customer: customer });
+      })
+      console.log({ customer: customer })
       //customerId = customer.data.createCustomer.customer.id;
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
   }
   getPriceItems() {
@@ -184,16 +174,16 @@ class BillingImpl extends JCComponent<Props, State> {
           return {
             price: item2?.stripePaymentID,
             quantity: this.state.quantities[index][index2],
-          };
-        });
-        return priceItems2;
+          }
+        })
+        return priceItems2
       })
-      .flat();
-    console.log(priceItems);
-    return priceItems;
+      .flat()
+    console.log(priceItems)
+    return priceItems
   }
   async createInvoice() {
-    let priceItems = this.getPriceItems();
+    let priceItems = this.getPriceItems()
 
     try {
       const invoice: any = await API.graphql({
@@ -205,11 +195,11 @@ class BillingImpl extends JCComponent<Props, State> {
           },
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      });
-      console.log({ invoice: invoice.data.previewInvoice.invoice });
-      this.setState({ invoice: invoice.data.previewInvoice.invoice });
+      })
+      console.log({ invoice: invoice.data.previewInvoice.invoice })
+      this.setState({ invoice: invoice.data.previewInvoice.invoice })
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
   }
   selectProduct(product: any) {
@@ -221,33 +211,30 @@ class BillingImpl extends JCComponent<Props, State> {
         invoice: null,
       },
       () => {
-        this.createInvoice();
+        this.createInvoice()
       }
-    );
+    )
   }
 
-  static UserConsumer = UserContext.Consumer;
+  static UserConsumer = UserContext.Consumer
   renderAddProductModal(): React.ReactNode {
     return (
       <JCModal
         visible={this.state.showSubscriptionSelector}
         title="Select a Subscription"
         onHide={() => {
-          this.setState({ showSubscriptionSelector: false });
+          this.setState({ showSubscriptionSelector: false })
         }}
       >
         <>
           <Content>
             {this.state.products?.map(
-              (
-                product: NonNullable<GetProductQuery>["getProduct"],
-                index: number
-              ) => {
+              (product: NonNullable<GetProductQuery>["getProduct"], index: number) => {
                 return (
                   <TouchableOpacity
                     key={index}
                     onPress={() => {
-                      this.selectProduct(product);
+                      this.selectProduct(product)
                     }}
                   >
                     <Card>
@@ -279,22 +266,19 @@ class BillingImpl extends JCComponent<Props, State> {
                       </CardItem>
                     </Card>
                   </TouchableOpacity>
-                );
+                )
               }
             )}
           </Content>
         </>
       </JCModal>
-    );
+    )
   }
 
-  async makePayment(
-    stripe: Stripe | null,
-    elements: StripeElements | null
-  ): Promise<void> {
+  async makePayment(stripe: Stripe | null, elements: StripeElements | null): Promise<void> {
     this.setState({ processing: "processing" }, async () => {
-      await this.createStripeUser();
-      let priceItems = this.getPriceItems();
+      await this.createStripeUser()
+      let priceItems = this.getPriceItems()
       try {
         const status = await new HandleStripePayment().handleSubmit(
           stripe,
@@ -302,20 +286,20 @@ class BillingImpl extends JCComponent<Props, State> {
           this.state.idempotency,
           priceItems,
           () => {
-            this.setState({ processing: "complete" });
+            this.setState({ processing: "complete" })
           }
-        );
-        console.log(status);
+        )
+        console.log(status)
       } catch (e) {
-        console.log({ "Payment Error": e });
+        console.log({ "Payment Error": e })
       }
-    });
+    })
   }
   removeProduct(index: number) {
-    const temp = this.state.currentProduct;
-    const temp2 = this.state.quantities;
-    temp?.splice(index);
-    temp2.splice(index);
+    const temp = this.state.currentProduct
+    const temp2 = this.state.quantities
+    temp?.splice(index)
+    temp2.splice(index)
     this.setState(
       {
         currentProduct: temp,
@@ -323,22 +307,22 @@ class BillingImpl extends JCComponent<Props, State> {
         invoice: null,
       },
       () => {
-        this.createInvoice();
+        this.createInvoice()
       }
-    );
+    )
   }
   updateQuantity(index: number, index2: number, value) {
-    const temp = this.state.quantities;
-    temp[index][index2] = value;
+    const temp = this.state.quantities
+    temp[index][index2] = value
     this.setState(
       {
         quantities: temp,
         invoice: null,
       },
       () => {
-        this.createInvoice();
+        this.createInvoice()
       }
-    );
+    )
   }
   renderProduct(item, index: number) {
     return (
@@ -368,7 +352,7 @@ class BillingImpl extends JCComponent<Props, State> {
         <TouchableOpacity
           style={{ alignSelf: "flex-end" }}
           onPress={() => {
-            this.removeProduct(index);
+            this.removeProduct(index)
           }}
         >
           <AntDesign name="close" size={20} color="black" />
@@ -391,9 +375,7 @@ class BillingImpl extends JCComponent<Props, State> {
                     placeholder="Quantity"
                     multiline={false}
                     data-testid="course-weekTitle"
-                    textStyle={
-                      this.styles.style.fontFormSmallDarkGreyCourseTopEditable
-                    }
+                    textStyle={this.styles.style.fontFormSmallDarkGreyCourseTopEditable}
                     inputStyle={{
                       borderWidth: 1,
                       borderColor: "#dddddd",
@@ -409,13 +391,13 @@ class BillingImpl extends JCComponent<Props, State> {
                       lineHeight: 15,
                     }}
                     onChange={(value) => {
-                      this.updateQuantity(index, index2, value);
+                      this.updateQuantity(index, index2, value)
                     }}
                     value={this.state.quantities[index][index2].toString()}
                     isEditable={true}
                   ></EditableText>
                 </>
-              );
+              )
             })
           : null}
         {/*
@@ -426,14 +408,14 @@ class BillingImpl extends JCComponent<Props, State> {
             ></EditableRichText>
             */}
       </View>
-    );
+    )
   }
   showSubscriptionSelector() {
-    this.setState({ showSubscriptionSelector: true });
+    this.setState({ showSubscriptionSelector: true })
   }
   async handleInputChange(value: string, field: string) {
-    console.log({ field: value });
-    console.log(this.state.userData);
+    console.log({ field: value })
+    console.log(this.state.userData)
     try {
       if (this.state.userData.billingAddress == null) {
         const user = await API.graphql(
@@ -450,13 +432,13 @@ class BillingImpl extends JCComponent<Props, State> {
               },
             },
           })
-        );
+        )
         this.setState({ userData: user.data.updateUser }, async () => {
-          await this.handleInputChange(value, field);
-        });
+          await this.handleInputChange(value, field)
+        })
       } else {
-        let temp = this.state.userData;
-        temp.billingAddress[field] = value;
+        let temp = this.state.userData
+        temp.billingAddress[field] = value
         const user = await API.graphql(
           graphqlOperation(mutations.updateUser, {
             input: {
@@ -464,23 +446,23 @@ class BillingImpl extends JCComponent<Props, State> {
               billingAddress: temp.billingAddress,
             },
           })
-        );
+        )
 
-        this.setState({ userData: temp });
+        this.setState({ userData: temp })
       }
     } catch (e) {
-      console.log({ errorupdating: e });
+      console.log({ errorupdating: e })
     }
   }
   isMakePaymentEnabled(): boolean {
-    const billingAddress = this.state.userData?.billingAddress;
-    if (!billingAddress) return false;
-    if (!billingAddress.line1) return false;
-    if (!billingAddress.line2) return false;
-    if (!billingAddress.state) return false;
-    if (!billingAddress.country) return false;
-    if (!billingAddress.city) return false;
-    if (!billingAddress.postal_code) return false;
+    const billingAddress = this.state.userData?.billingAddress
+    if (!billingAddress) return false
+    if (!billingAddress.line1) return false
+    if (!billingAddress.line2) return false
+    if (!billingAddress.state) return false
+    if (!billingAddress.country) return false
+    if (!billingAddress.city) return false
+    if (!billingAddress.postal_code) return false
     return (
       this.state.currentProduct.length > 0 &&
       billingAddress.line1.length > 0 &&
@@ -489,12 +471,12 @@ class BillingImpl extends JCComponent<Props, State> {
       billingAddress.country?.length > 0 &&
       billingAddress.city?.length > 0 &&
       billingAddress.postal_code?.length > 0
-    );
+    )
   }
-  async completePaymentProcess(actions, state: UserState) {
-    await actions.updateGroups();
-    console.log({ Groups: state.groups });
-    actions.updatePaidState();
+  async completePaymentProcess(actions: UserActions, state: UserState) {
+    await actions.updateGroups()
+    console.log({ Groups: state.groups })
+    actions.updatePaidState()
   }
   render() {
     return (
@@ -502,7 +484,7 @@ class BillingImpl extends JCComponent<Props, State> {
         {({ stripe, elements }) => (
           <BillingImpl.UserConsumer>
             {({ userState, userActions }) => {
-              if (!userState) return null;
+              if (!userState) return null
               return this.state.processing == "complete" ? (
                 <Content>
                   <View style={this.styles.style.signUpScreen1PaymentColumn1}>
@@ -514,7 +496,7 @@ class BillingImpl extends JCComponent<Props, State> {
                       Payment Successful
                       <JCButton
                         onPress={() => {
-                          this.completePaymentProcess(userActions, userState);
+                          this.completePaymentProcess(userActions, userState)
                         }}
                         buttonType={ButtonTypes.TransparentNoPadding}
                       >
@@ -527,9 +509,7 @@ class BillingImpl extends JCComponent<Props, State> {
                 <>
                   {this.state.processing == "processing" ? (
                     <Content>
-                      <View
-                        style={this.styles.style.signUpScreen1PaymentColumn1}
-                      >
+                      <View style={this.styles.style.signUpScreen1PaymentColumn1}>
                         <Text
                           style={{
                             fontFamily: "Graphik-Bold-App",
@@ -544,8 +524,7 @@ class BillingImpl extends JCComponent<Props, State> {
 
                   <Content
                     style={{
-                      display:
-                        this.state.processing == "entry" ? "flex" : "none",
+                      display: this.state.processing == "entry" ? "flex" : "none",
                     }}
                   >
                     <View style={this.styles.style.signUpScreen1PaymentColumn1}>
@@ -559,15 +538,13 @@ class BillingImpl extends JCComponent<Props, State> {
                       {this.state.userData && (
                         <>
                           <Label style={this.styles.style.fontFormSmall}>
-                            <Text style={this.styles.style.fontFormMandatory}>
-                              *
-                            </Text>
+                            <Text style={this.styles.style.fontFormMandatory}>*</Text>
                             Billing Line 1
                           </Label>
 
                           <EditableText
                             onChange={(e) => {
-                              this.handleInputChange(e, "line1");
+                              this.handleInputChange(e, "line1")
                             }}
                             multiline={false}
                             data-testid="profile-currentRole"
@@ -593,15 +570,13 @@ class BillingImpl extends JCComponent<Props, State> {
                             isEditable={true}
                           ></EditableText>
                           <Label style={this.styles.style.fontFormSmall}>
-                            <Text style={this.styles.style.fontFormMandatory}>
-                              *
-                            </Text>
+                            <Text style={this.styles.style.fontFormMandatory}>*</Text>
                             Billing Line 2
                           </Label>
 
                           <EditableText
                             onChange={(e) => {
-                              this.handleInputChange(e, "line2");
+                              this.handleInputChange(e, "line2")
                             }}
                             multiline={false}
                             data-testid="profile-currentRole"
@@ -627,15 +602,13 @@ class BillingImpl extends JCComponent<Props, State> {
                             isEditable={true}
                           ></EditableText>
                           <Label style={this.styles.style.fontFormSmall}>
-                            <Text style={this.styles.style.fontFormMandatory}>
-                              *
-                            </Text>
+                            <Text style={this.styles.style.fontFormMandatory}>*</Text>
                             City
                           </Label>
 
                           <EditableText
                             onChange={(e) => {
-                              this.handleInputChange(e, "city");
+                              this.handleInputChange(e, "city")
                             }}
                             multiline={false}
                             data-testid="profile-currentRole"
@@ -661,15 +634,13 @@ class BillingImpl extends JCComponent<Props, State> {
                             isEditable={true}
                           ></EditableText>
                           <Label style={this.styles.style.fontFormSmall}>
-                            <Text style={this.styles.style.fontFormMandatory}>
-                              *
-                            </Text>
+                            <Text style={this.styles.style.fontFormMandatory}>*</Text>
                             State/Province
                           </Label>
 
                           <EditableText
                             onChange={(e) => {
-                              this.handleInputChange(e, "state");
+                              this.handleInputChange(e, "state")
                             }}
                             multiline={false}
                             data-testid="profile-currentRole"
@@ -695,15 +666,13 @@ class BillingImpl extends JCComponent<Props, State> {
                             isEditable={true}
                           ></EditableText>
                           <Label style={this.styles.style.fontFormSmall}>
-                            <Text style={this.styles.style.fontFormMandatory}>
-                              *
-                            </Text>
+                            <Text style={this.styles.style.fontFormMandatory}>*</Text>
                             Country
                           </Label>
 
                           <EditableText
                             onChange={(e) => {
-                              this.handleInputChange(e, "country");
+                              this.handleInputChange(e, "country")
                             }}
                             multiline={false}
                             data-testid="profile-currentRole"
@@ -729,15 +698,13 @@ class BillingImpl extends JCComponent<Props, State> {
                             isEditable={true}
                           ></EditableText>
                           <Label style={this.styles.style.fontFormSmall}>
-                            <Text style={this.styles.style.fontFormMandatory}>
-                              *
-                            </Text>
+                            <Text style={this.styles.style.fontFormMandatory}>*</Text>
                             Zip/Postal Code
                           </Label>
 
                           <EditableText
                             onChange={(e) => {
-                              this.handleInputChange(e, "postal_code");
+                              this.handleInputChange(e, "postal_code")
                             }}
                             multiline={false}
                             data-testid="profile-currentRole"
@@ -757,8 +724,7 @@ class BillingImpl extends JCComponent<Props, State> {
                             }}
                             value={
                               this.state.userData.billingAddress?.postal_code
-                                ? this.state.userData.billingAddress
-                                    ?.postal_code
+                                ? this.state.userData.billingAddress?.postal_code
                                 : ""
                             }
                             isEditable={true}
@@ -780,13 +746,13 @@ class BillingImpl extends JCComponent<Props, State> {
                       <JCButton
                         buttonType={ButtonTypes.TransparentNoPadding}
                         onPress={() => {
-                          this.showSubscriptionSelector();
+                          this.showSubscriptionSelector()
                         }}
                       >
                         Add another product
                       </JCButton>
                       {this.state.currentProduct?.map((item, index: number) => {
-                        return this.renderProduct(item, index);
+                        return this.renderProduct(item, index)
                       })}
 
                       <View style={this.styles.style.flexRow}>
@@ -817,7 +783,7 @@ class BillingImpl extends JCComponent<Props, State> {
                       <JCButton
                         buttonType={ButtonTypes.Solid}
                         onPress={() => {
-                          this.makePayment(stripe, elements);
+                          this.makePayment(stripe, elements)
                         }}
                         enabled={this.isMakePaymentEnabled()}
                       >
@@ -827,26 +793,26 @@ class BillingImpl extends JCComponent<Props, State> {
                   </Content>
                   {this.renderAddProductModal()}
                 </>
-              );
+              )
             }}
           </BillingImpl.UserConsumer>
         )}
       </ElementsConsumer>
-    );
+    )
   }
 }
 
 export default function Billing(props: Props): JSX.Element {
-  const route = useRoute();
-  const navigation = useNavigation();
+  const route = useRoute()
+  const navigation = useNavigation()
   const [stripePromise, setStripePromise] = useState(() =>
     loadStripe(
       "pk_test_51HlyrYLTzrDhiQ921sERNUY2GQBDgpHDOUYMiNZ0lTeTsse9u8oQoBfLg6UzWaxcNkYhek4tkNWILTlAiajet27k00FFv6z0RB"
     )
-  );
+  )
   return (
     <Elements stripe={stripePromise}>
       <BillingImpl {...props} navigation={navigation} route={route} />
     </Elements>
-  );
+  )
 }
