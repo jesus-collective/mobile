@@ -35,7 +35,7 @@ interface State {
   authError: string
   newPass: string
   newPass2: string
-  reseting: boolean
+  resetting: boolean
   username: string
   authState: any
 }
@@ -52,7 +52,7 @@ class MyForgotPassword extends React.Component<Props, State> {
       authError: "",
       newPass: "",
       newPass2: "",
-      reseting: false,
+      resetting: false,
       username: props.username,
       authState: null,
     }
@@ -69,7 +69,7 @@ class MyForgotPassword extends React.Component<Props, State> {
       code: "+1",
       newPass: "",
       newPass2: "",
-      reseting: false,
+      resetting: false,
     })
     if (actions.onStateChange) actions.onStateChange(state, null)
   }
@@ -93,7 +93,7 @@ class MyForgotPassword extends React.Component<Props, State> {
           console.log({ Error: e })
         })
     } catch (e) {
-      this.setState({ authError: e.message, reseting: false })
+      this.setState({ authError: e.message, resetting: false })
     }
   }
 
@@ -308,7 +308,7 @@ class MyForgotPassword extends React.Component<Props, State> {
                         this.save(userActions)
                       }}
                     >
-                      {this.state.reseting ? (
+                      {this.state.resetting ? (
                         <ActivityIndicator animating color="#333333" />
                       ) : (
                         "Submit"

@@ -122,7 +122,7 @@ export default function Main(props: Props) {
         colors: { ...DefaultTheme.colors, background: "rgb(255, 255, 255)" },
       }}
       onStateChange={(state) => {
-        console.log({ persistencestate: state })
+        console.log({ "Persistence State": state })
         AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))
       }}
     >

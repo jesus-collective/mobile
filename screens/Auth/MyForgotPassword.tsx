@@ -29,7 +29,7 @@ interface State {
   newPass: string
   newPass2: string
   sendingCode: boolean
-  reseting: boolean
+  resetting: boolean
 }
 
 class MyForgotPassword extends React.Component<Props, State> {
@@ -43,7 +43,7 @@ class MyForgotPassword extends React.Component<Props, State> {
       newPass: "",
       newPass2: "",
       sendingCode: false,
-      reseting: false,
+      resetting: false,
     }
   }
   static UserConsumer = UserContext.Consumer
@@ -57,7 +57,7 @@ class MyForgotPassword extends React.Component<Props, State> {
       newPass: "",
       newPass2: "",
       sendingCode: false,
-      reseting: false,
+      resetting: false,
     })
     if (actions.onStateChange) actions.onStateChange(state, null)
   }
@@ -79,7 +79,7 @@ class MyForgotPassword extends React.Component<Props, State> {
         this.setState({ authError: "Passwords do not match" })
         return
       }
-      this.setState({ reseting: true })
+      this.setState({ resetting: true })
       await Auth.forgotPasswordSubmit(
         this.state.email.toLowerCase(),
         this.state.code,
@@ -88,7 +88,7 @@ class MyForgotPassword extends React.Component<Props, State> {
         this.changeAuthState(actions, "signIn")
       })
     } catch (e) {
-      this.setState({ authError: e.message, reseting: false })
+      this.setState({ authError: e.message, resetting: false })
     }
   }
 
@@ -335,7 +335,7 @@ class MyForgotPassword extends React.Component<Props, State> {
                         buttonType={ButtonTypes.SolidSignIn}
                         onPress={() => this.resetPass(userActions)}
                       >
-                        {this.state.reseting ? (
+                        {this.state.resetting ? (
                           <ActivityIndicator animating color="#333333" />
                         ) : (
                           "Submit"

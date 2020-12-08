@@ -72,7 +72,7 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
       const currentUser = await Auth.currentAuthenticatedUser()
       const userSession = currentUser.getSignInUserSession()
       const refreshToken = userSession.getRefreshToken()
-      await currentUser.refreshSession(refreshToken, (err, session) => {
+      await currentUser.refreshSession(refreshToken, (err: any, session: any) => {
         console.log("UPDATED GROUPS!")
         currentUser.setSignInUserSession(session)
       })
@@ -100,7 +100,7 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
   async ensureUserExists(): Promise<void> {
     let userExists = false
     this.user = await Auth.currentAuthenticatedUser().catch(() => {
-      console.log("No currrent authenticated user")
+      console.log("No current authenticated user")
     })
     if (this.user != null) {
       const { attributes } = this.user
@@ -150,7 +150,7 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
         if (attributes["custom:isOrg"] === "true" && getUser) {
           this.setState({ isOrg: true })
           if (getUser?.data.getUser.organizations.items.length === 0) {
-            console.log("creating organziation")
+            console.log("creating Organization")
             const id = `organization-${Date.now()}`
             const orgInput: CreateOrganizationInput = {
               id: id,
@@ -205,12 +205,12 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
             getUser?.data?.getUser?.organizations?.items[0]?.organizationId &&
             getUser?.data.getUser.organizations.items.length === 1
           ) {
-            console.log("organzation exists: setting organization id")
+            console.log("Organization exists: setting organization id")
             this.setState({
               orgId: getUser.data.getUser.organizations.items[0].organizationId,
             })
           } else {
-            console.error("error finding or creating user's organziation")
+            console.error("error finding or creating user's organization")
           }
         }
       }
@@ -224,7 +224,7 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
     }
   }
 
-  async createStripeUser(billingAddress) {
+  async createStripeUser(billingAddress: any) {
     try {
       const user = await Auth.currentAuthenticatedUser()
       console.log(user)
@@ -348,7 +348,7 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
           this.setState({ hasCompletedPersonalProfile: "Completed" }, () => {
             //TODO THIS IS WRONG ONLY DO THIS FROM
 
-            console.log("Navigate to Homescreen")
+            console.log("Navigate to HomeScreen")
             RootNavigation.navigate("mainApp", {
               screen: "home",
             })
@@ -378,7 +378,7 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
     const initialParams = Linking.parse(initialUrl).queryParams
 
     //const initialParams =
-    console.log({ INITIALURL: initialUrl })
+    console.log({ "INITIAL URL": initialUrl })
     console.log({ initialParams: initialParams })
     if (initialUrl.toLowerCase().includes("/auth/signup"))
       this.setState({

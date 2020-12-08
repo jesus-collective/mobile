@@ -18,6 +18,7 @@ import { AuthStateData } from "src/types"
 import Sentry from "./components/Sentry"
 import { version } from "./src/version"
 import JCComponent, { JCState } from "./components/JCComponent/JCComponent"
+import { NavigationProp } from "@react-navigation/native"
 
 let env = "unknown"
 if (window.location === undefined) env = "mobile"
@@ -58,7 +59,7 @@ I18n.setLanguage("en")
 I18n.putVocabularies(authScreenLabels)
 
 interface Props {
-  navigation: any
+  navigation: NavigationProp<any, any>
   onStateChange(state: string, data: AuthStateData): any
 }
 interface State extends JCState {
@@ -121,8 +122,8 @@ class AwesomeApp extends JCComponent<Props, State> {
     Asset.fromModule(require("./assets/SignUp/progress-3.png")).downloadAsync()
     Asset.fromModule(require("./assets/SignUp/progress-4.png")).downloadAsync()
   }
-  renderFallback(): React.ReactNode {
-    return null
+  renderFallback(): string {
+    return ""
   }
 
   updateState(state: string, data: AuthStateData) {
@@ -152,7 +153,7 @@ class AwesomeApp extends JCComponent<Props, State> {
   }
   async getAuthInitialState() {
     const initialUrl: string = await Linking.getInitialURL()
-    console.log({ INITIALURL: initialUrl })
+    console.log({ "INITIAL URL": initialUrl })
     if (initialUrl.toLowerCase().includes("/auth/signup")) return "signUp"
     return "signIn"
   }

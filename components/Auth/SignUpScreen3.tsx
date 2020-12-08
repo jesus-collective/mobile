@@ -1,50 +1,50 @@
-﻿import React from "react";
-import Amplify from "aws-amplify";
-import awsConfig from "../../src/aws-exports";
-import MyProfile from "../../components/MyProfile/MyProfile";
-import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar";
-Amplify.configure(awsConfig);
-import { View, Content } from "native-base";
-import JCComponent, { JCState } from "../../components/JCComponent/JCComponent";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { UserContext } from "../../screens/HomeScreen/UserContext";
-import OrganizationViewer from "../../components/OrganizationViewer/OrganizationViewer";
-import JCButton, { ButtonTypes } from "../../components/Forms/JCButton";
+﻿import React from "react"
+import Amplify from "aws-amplify"
+import awsConfig from "../../src/aws-exports"
+import MyProfile from "../../components/MyProfile/MyProfile"
+import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
+Amplify.configure(awsConfig)
+import { View, Content } from "native-base"
+import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
+import { useNavigation, useRoute } from "@react-navigation/native"
+import { UserContext } from "../../screens/HomeScreen/UserContext"
+import OrganizationViewer from "../../components/OrganizationViewer/OrganizationViewer"
+import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 
 interface Props {
-  navigation?: any;
-  route?: any;
-  authState?: string;
+  navigation?: any
+  route?: any
+  authState?: string
 }
 
 interface State extends JCState {
-  groups: unknown;
-  selected: "profile" | "organization";
-  profileComplete: boolean;
-  orgComplete: boolean;
+  groups: unknown
+  selected: "profile" | "organization"
+  profileComplete: boolean
+  orgComplete: boolean
 }
 
 class SignUpScreen3Impl extends JCComponent<Props, State> {
   constructor(props: Props) {
-    super(props);
+    super(props)
     this.state = {
       ...super.getInitialState(),
       groups: null,
       selected: "profile",
       profileComplete: false,
       orgComplete: false,
-    };
+    }
   }
 
-  static UserConsumer = UserContext.Consumer;
+  static UserConsumer = UserContext.Consumer
   onFinalizeProfile(actions: any): void {
-    actions.updateHasCompletedPersonalProfile();
+    actions.updateHasCompletedPersonalProfile()
   }
   render(): React.ReactNode {
     return (
       <SignUpScreen3Impl.UserConsumer>
         {({ userState, userActions }) => {
-          if (!userState) return null;
+          if (!userState) return null
 
           if (
             userState.hasPaidState == "Success" &&
@@ -69,8 +69,7 @@ class SignUpScreen3Impl extends JCComponent<Props, State> {
                           style={{
                             marginRight: 15,
                             paddingVertical: 5,
-                            borderBottomWidth:
-                              this.state.selected === "profile" ? 7 : 0,
+                            borderBottomWidth: this.state.selected === "profile" ? 7 : 0,
                             borderBottomColor: "#F0493E",
                           }}
                         >
@@ -80,9 +79,7 @@ class SignUpScreen3Impl extends JCComponent<Props, State> {
                                 ? ButtonTypes.TransparentBoldBlackNoMargin
                                 : ButtonTypes.TransparentBoldGreyNoMargin
                             }
-                            onPress={() =>
-                              this.setState({ selected: "profile" })
-                            }
+                            onPress={() => this.setState({ selected: "profile" })}
                           >
                             Individual Profile
                           </JCButton>
@@ -90,8 +87,7 @@ class SignUpScreen3Impl extends JCComponent<Props, State> {
                         <View
                           style={{
                             paddingVertical: 5,
-                            borderBottomWidth:
-                              this.state.selected === "organization" ? 7 : 0,
+                            borderBottomWidth: this.state.selected === "organization" ? 7 : 0,
                             borderBottomColor: "#F0493E",
                           }}
                         >
@@ -101,9 +97,7 @@ class SignUpScreen3Impl extends JCComponent<Props, State> {
                                 ? ButtonTypes.TransparentBoldBlackNoMargin
                                 : ButtonTypes.TransparentBoldGreyNoMargin
                             }
-                            onPress={() =>
-                              this.setState({ selected: "organization" })
-                            }
+                            onPress={() => this.setState({ selected: "organization" })}
                           >
                             Organization Profile
                           </JCButton>
@@ -113,13 +107,13 @@ class SignUpScreen3Impl extends JCComponent<Props, State> {
                         <MyProfile
                           hideOrg
                           finalizeProfile={() => {
-                            this.setState({ selected: "organization" });
+                            this.setState({ selected: "organization" })
                           }}
                         />
                       ) : (
                         <OrganizationViewer
                           finalizeProfile={() => {
-                            this.onFinalizeProfile(userActions);
+                            this.onFinalizeProfile(userActions)
                           }}
                           create={false}
                           loadId={userState.orgId}
@@ -130,23 +124,23 @@ class SignUpScreen3Impl extends JCComponent<Props, State> {
                     <View style={this.styles.style.signUpProfile}>
                       <MyProfile
                         finalizeProfile={() => {
-                          this.onFinalizeProfile(userActions);
+                          this.onFinalizeProfile(userActions)
                         }}
                       />
                     </View>
                   )}
                 </Content>
               </View>
-            );
-          } else return null;
+            )
+          } else return null
         }}
       </SignUpScreen3Impl.UserConsumer>
-    );
+    )
   }
 }
 
 export default function SignUpScreen3(props: Props): JSX.Element {
-  const route = useRoute();
-  const navigation = useNavigation();
-  return <SignUpScreen3Impl {...props} navigation={navigation} route={route} />;
+  const route = useRoute()
+  const navigation = useNavigation()
+  return <SignUpScreen3Impl {...props} navigation={navigation} route={route} />
 }
