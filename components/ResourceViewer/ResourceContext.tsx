@@ -3,9 +3,9 @@ import * as React from "react"
 export interface ResourceState extends JCState {
   groupData: any
   resourceData: any
-  currentResource: number
-  currentSeries: number
-  currentEpisode: number
+  currentResource: number | null
+  currentSeries: number | null
+  currentEpisode: number | null
   showMap: boolean
   loadId: string
   createNew: boolean

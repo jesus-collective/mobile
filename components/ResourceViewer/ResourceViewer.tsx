@@ -77,7 +77,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
             }
           )
         })
-        .catch((e) => {
+        .catch((e: any) => {
           console.log({
             "Error Loading User": e,
           })
@@ -198,14 +198,14 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
 
               this.setState({ resourceData: json.data.getResourceRoot, currentResource: 0 })
             })
-            .catch((e) => {
+            .catch((e: any) => {
               console.log(e)
             })
 
           //   console.log(getResourceRoot2)
         }
       })
-      .catch((e) => {
+      .catch((e: any) => {
         console.log(e)
       })
 
@@ -599,7 +599,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     try {
       this.state.resourceData.resources.items[resourceIndex].series.items.forEach(
         (item, index: number) => {
-          this.updateSeries(resourceIndex, index, "order", index)
+          this.updateSeries(resourceIndex, index, "order", index.toString())
         }
       )
     } catch (e) {
@@ -661,7 +661,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       this.state.resourceData.resources.items[resourceIndex].series.items[
         seriesIndex
       ].episodes.items.forEach((item, index: number) => {
-        this.updateEpisode(resourceIndex, seriesIndex, index, "order", index)
+        this.updateEpisode(resourceIndex, seriesIndex, index, "order", index.toString())
       })
     } catch (e) {
       console.log(e)
