@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, View, Text } from 'native-base';
-import PayPal from './PayPal';
+import PayPal from './Paypal/PayPal';
+import Stripe from './Stripe/Stripe'
 import { ViewStyle, StyleSheet } from 'react-native';
 import { GetProductQuery } from '../../src/API';
 import { stateToHTML } from 'draft-js-export-html';
@@ -72,8 +73,10 @@ export default function PaymentForm({ product, containerStyle, payPalWrapperStyl
             <Text style={[styles.totalPrice, { marginLeft: 24 }]} >Total</Text>
             <Text style={styles.totalPrice} >${product.price.toFixed(2)}</Text>
         </View>
+      
         <View style={payPalWrapperStyle} >
-            <PayPal cost={product.price} productId={product.id} onSuccessCallback={onSuccessCallback} onFailureCallback={onFailureCallback} onErrorCallback={onErrorCallback} />
+            {product.isPaypal=="true"?<PayPal cost={product.price} productId={product.id} onSuccessCallback={onSuccessCallback} onFailureCallback={onFailureCallback} onErrorCallback={onErrorCallback} />:null}
+            {product.isStripe=="true"?<Stripe></Stripe>:null}
         </View>
     </View>
 }

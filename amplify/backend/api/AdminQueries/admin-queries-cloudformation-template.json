@@ -304,6 +304,10 @@
         "ApiName": {
           "Description": "API Friendly name",
           "Value": "AdminQueries"
+        },
+        "ApiId": {
+          "Description": "API ID (prefix of API URL)",
+          "Value": {"Ref": "AdminQueries"}
         }
     }
   }

@@ -58,11 +58,14 @@ export const getUserForGroupOrEvent = /* GraphQL */ `
       mainUserGroup
       hasPaidState
       profileState
-      address
-      city
-      province
-      postalCode
-      country
+      billingAddress{
+        city
+        country
+        line1
+        line2
+        postal_code
+        state
+      }
       location {
         latitude
         longitude
@@ -226,11 +229,14 @@ query GetCourseInfo($id: ID!) {
         mainUserGroup
         hasPaidState
         profileState
-        address
-        city
-        province
-        postalCode
-        country
+        billingAddress{
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
         location {
           latitude
           longitude
@@ -312,11 +318,14 @@ query GetCourseInfo($id: ID!) {
         mainUserGroup
         hasPaidState
         profileState
-        address
-        city
-        province
-        postalCode
-        country
+        billingAddress{
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
         location {
           latitude
           longitude
@@ -435,12 +444,12 @@ query GetCourseInfo($id: ID!) {
                 phone
                 owner
                 profileImage {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
+                  userId
+                  filenameSmall
+                  filenameMedium
+                  filenameLarge
+                  filenameUpload
+                }
               }
               createdAt
               updatedAt
@@ -460,12 +469,12 @@ query GetCourseInfo($id: ID!) {
                 phone
                 owner
                 profileImage {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
+                  userId
+                  filenameSmall
+                  filenameMedium
+                  filenameLarge
+                  filenameUpload
+                }
               }
               createdAt
               updatedAt
@@ -497,11 +506,14 @@ export const getDirectMessageUser = /* GraphQL */ `
          mainUserGroup
          hasPaidState
          profileState
-         address
-         city
-         province
-         postalCode
-         country
+         billingAddress{
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
          location {
            latitude
            longitude
@@ -704,11 +716,14 @@ export const listDirectMessageUsers = /* GraphQL */ `
           owner
           hasPaidState
           profileState
-          address
-          city
-          province
-          postalCode
-          country
+          billingAddress{
+            city
+            country
+            line1
+            line2
+            postal_code
+            state
+          }
           aboutMeShort
           aboutMeLong
           interests

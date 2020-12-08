@@ -10,6 +10,28 @@
     },
     "typescript.tsserver.experimental.enableProjectDiagnostics": true,
     "python.pythonPath": "/usr/local/opt/python@2/bin/python2.7",
-    "typescript.tsdk": "node_modules/typescript/lib"
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "cSpell.words": [
+      "Graphik",
+      "Paypal",
+      "awsconfig",
+      "dmusers",
+      "geocode",
+      "idempotency",
+      "jcmobile",
+      "livemode",
+      "sylabus",
+      "uncollectible",
+      "uuidv"
+    ],
+    "cSpell.ignorePaths": [
+      "**/package-lock.json",
+      "**/node_modules/**",
+      "**/vscode-extension/**",
+      "**/.git/objects/**",
+      ".vscode",
+      ".vscode-insiders",
+      "amplify"
+    ]
   }
 }

@@ -1,0 +1,27 @@
+{
+  "name": "jcmobileStripWebhook",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "aws-serverless-express": "^3.3.5",
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "aws-amplify": "3.3.10-unstable.3",
+    "aws-sdk": "^2.734.0",
+    "draft-js": "^0.11.7",
+    "draft-js-export-html": "^1.4.1",
+    "graphql-tag": "^2.11.0",
+    "html-to-text": "^5.1.1",
+    "node-fetch": "^2.6.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "stripe": "^8.125.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

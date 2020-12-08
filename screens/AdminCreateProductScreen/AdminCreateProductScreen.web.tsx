@@ -1,331 +1,652 @@
-import React from 'react';
-import { Container, Content, Text } from 'native-base';
-import Header from '../../components/Header/Header'
-import HeaderAdmin from '../../components/HeaderAdmin/HeaderAdmin';
-import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
-import { API } from 'aws-amplify';
-import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
-import { View, TextInput, NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
-import JCButton, { ButtonTypes } from '../../components/Forms/JCButton';
-import EditableRichText from '../../components/Forms/EditableRichText';
-import { EditorState, convertToRaw } from 'draft-js';
-import * as mutations from '../../src/graphql/mutations';
-import * as queries from '../../src/graphql/queries';
-import { CreateProductInput, ListProductsQuery, UpdateProductInput } from '../../src/API';
-import { GraphQLResult } from '@aws-amplify/api/lib/types';
-import { AntDesign } from '@expo/vector-icons';
-import JCSwitch from '../../components/JCSwitch/JCSwitch';
-import JCModal from '../../components/Forms/JCModal';
+import React from "react";
+import { Container, Content, Icon, Picker, Text } from "native-base";
+import Header from "../../components/Header/Header";
+import HeaderAdmin from "../../components/HeaderAdmin/HeaderAdmin";
+import JCComponent, { JCState } from "../../components/JCComponent/JCComponent";
+import { API } from "aws-amplify";
+import GRAPHQL_AUTH_MODE from "aws-amplify-react-native";
+import {
+  View,
+  TextInput,
+  NativeSyntheticEvent,
+  TextInputChangeEventData,
+} from "react-native";
+import JCButton, { ButtonTypes } from "../../components/Forms/JCButton";
+import EditableRichText from "../../components/Forms/EditableRichText";
+import { EditorState, convertToRaw } from "draft-js";
+import * as mutations from "../../src/graphql/mutations";
+import * as queries from "../../src/graphql/queries";
+import {
+  CreateProductInput,
+  ListProductsQuery,
+  TieredProductInput,
+  UpdateProductInput,
+} from "../../src/API";
+import { GraphQLResult } from "@aws-amplify/api/lib/types";
+import { AntDesign } from "@expo/vector-icons";
+import JCSwitch from "../../components/JCSwitch/JCSwitch";
+import JCModal from "../../components/Forms/JCModal";
+import { UserContext } from "../../screens/HomeScreen/UserContext";
 
 interface Props {
-    navigation: any
-    route: any
+  navigation: any;
+  route: any;
 }
 interface State extends JCState {
-    products: NonNullable<ListProductsQuery>['listProducts']['items'];
-    name: string;
-    description: string;
-    productId: string;
-    confirmationMsg: string;
-    price: string;
-    mode: 'save' | 'edit';
-    isOrgTier: string
-    isIndividualTier: string
-    marketingDescription: string
-    groupsIncluded: string[]
-    enabled: string
-    groupList: string[]
-    showAddProductModal: boolean
-
+  products: NonNullable<ListProductsQuery>["listProducts"]["items"];
+  name: string;
+  description: string;
+  productId: string;
+  confirmationMsg: string;
+  price: string;
+  pricePer: string;
+  tiered: TieredProductInput[];
+  mode: "save" | "edit";
+  isOrgTier: string;
+  isIndividualTier: string;
+  marketingDescription: string;
+  groupsIncluded: string[];
+  enabled: string;
+  isStripe: string;
+  isPaypal: string;
+  groupList: string[];
+  showAddProductModal: boolean;
 }
 
 const toolBar = {
-    options: ['inline', 'list'],
-    inline: {
-        options: ['bold', 'italic', 'underline']
-    },
-    list: {
-        options: ['unordered', 'ordered']
-    },
-}
+  options: ["inline", "list"],
+  inline: {
+    options: ["bold", "italic", "underline"],
+  },
+  list: {
+    options: ["unordered", "ordered"],
+  },
+};
 
-export default class AdminScreen extends JCComponent<Props, State>{
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            ...super.getInitialState(),
-            products: [],
-            name: '',
-            description: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
+export default class AdminScreen extends JCComponent<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      ...super.getInitialState(),
+      products: [],
+      name: "",
+      description: JSON.stringify(
+        convertToRaw(EditorState.createEmpty().getCurrentContent())
+      ),
+      productId: `JC-${Date.now()}`,
+      confirmationMsg: "",
+      price: "",
+      pricePer: "One-Time",
+      mode: "save",
+      isOrgTier: "false",
+      isIndividualTier: "false",
+      marketingDescription: JSON.stringify(
+        convertToRaw(EditorState.createEmpty().getCurrentContent())
+      ),
+      tiered: [{ name: "", stripePaymentID: "", stripeIsTiered: "false" }],
+      groupsIncluded: [],
+      enabled: "true",
+      isStripe: "true",
+      isPaypal: "false",
+      groupList: [
+        "admin",
+        "verifiedUsers",
+        "partners",
+        "friends",
+        "courseUser",
+        "courseAdmin",
+        "courseCoach",
+      ],
+      showAddProductModal: false,
+    };
+    this.setInitialData();
+  }
+  async setInitialData(): Promise<void> {
+    try {
+      const listProducts = (await API.graphql({
+        query: queries.listProducts,
+        variables: { limit: 50 },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+      })) as GraphQLResult<ListProductsQuery>;
+      this.setState({ products: listProducts.data.listProducts.items });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  handlePress(product: any): void {
+    this.setState({
+      name: product.name,
+      productId: product.id,
+      description: product.description,
+      confirmationMsg: product.confirmationMsg,
+      price: product.price.toFixed(2),
+      pricePer: product.pricePer,
+      mode: "edit",
+      isOrgTier: product.isOrgTier,
+      isIndividualTier: product.isIndividualTier,
+      marketingDescription: product.marketingDescription,
+      groupsIncluded: product.groupsIncluded,
+      enabled: product.enabled,
+      isStripe: product.isStripe,
+      isPaypal: product.isPaypal,
+      tiered: product.tiered,
+      showAddProductModal: true,
+    });
+  }
+
+  async deleteProduct(id: string): Promise<void> {
+    if (window.confirm(`Delete ${id}?`)) {
+      try {
+        const deleteProduct = await API.graphql({
+          query: mutations.deleteProduct,
+          variables: { input: { id } },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        });
+        console.log(deleteProduct);
+        this.setInitialData();
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
+      return;
+    }
+  }
+
+  async saveProduct(): Promise<void> {
+    if (isNaN(parseInt(this.state.price))) return;
+    try {
+      switch (this.state.mode) {
+        case "save":
+          const newProduct: CreateProductInput = {
+            id: this.state.productId,
+            price: parseFloat(this.state.price),
+            pricePer: this.state.pricePer,
+            description: this.state.description,
+            name: this.state.name,
+            confirmationMsg: this.state.confirmationMsg,
+            isOrgTier: this.state.isOrgTier,
+            isIndividualTier: this.state.isIndividualTier,
+            marketingDescription: this.state.marketingDescription,
+            groupsIncluded: this.state.groupsIncluded,
+            enabled: this.state.enabled,
+            isStripe: this.state.isStripe,
+            isPaypal: this.state.isPaypal,
+            tiered: this.state.tiered,
+          };
+          const createProduct = await API.graphql({
+            query: mutations.createProduct,
+            variables: { input: newProduct },
+            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+          });
+          console.log(createProduct);
+          this.setInitialData();
+          this.setState({
+            name: "",
+            description: JSON.stringify(
+              convertToRaw(EditorState.createEmpty().getCurrentContent())
+            ),
             productId: `JC-${Date.now()}`,
-            confirmationMsg: '',
-            price: '',
-            mode: 'save',
+            confirmationMsg: "",
+            price: "",
+            pricePer: "One-Time",
             isOrgTier: "false",
             isIndividualTier: "false",
-            marketingDescription: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
+            marketingDescription: JSON.stringify(
+              convertToRaw(EditorState.createEmpty().getCurrentContent())
+            ),
             groupsIncluded: [],
             enabled: "true",
-            groupList: ["admin", "verifiedUsers", "partners", "friends", "courseUser", "courseAdmin", "courseCoach"],
-            showAddProductModal: false
-        }
-        this.setInitialData()
+            isStripe: "true",
+            isPaypal: "false",
+            tierd: [{ name: "", stripePaymentID: "", stripeIsTiered: "false" }],
+            showAddProductModal: false,
+          });
+          break;
+        case "edit":
+          const editProduct: UpdateProductInput = {
+            id: this.state.productId,
+            price: parseFloat(this.state.price),
+            pricePer: this.state.pricePer,
+            description: this.state.description,
+            name: this.state.name,
+            confirmationMsg: this.state.confirmationMsg,
+            isOrgTier: this.state.isOrgTier,
+            isIndividualTier: this.state.isIndividualTier,
+            marketingDescription: this.state.marketingDescription,
+            groupsIncluded: this.state.groupsIncluded,
+            enabled: this.state.enabled,
+            isStripe: this.state.isStripe,
+            tiered: this.state.tiered,
+            isPaypal: this.state.isPaypal,
+          };
+          const updateProduct = await API.graphql({
+            query: mutations.updateProduct,
+            variables: { input: editProduct },
+            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+          });
+          console.log(updateProduct);
+          this.setInitialData();
+          this.setState({
+            name: "",
+            description: JSON.stringify(
+              convertToRaw(EditorState.createEmpty().getCurrentContent())
+            ),
+            productId: `JC-${Date.now()}`,
+            confirmationMsg: "",
+            price: "",
+            pricePer: "One-Time",
+            isOrgTier: "false",
+            isIndividualTier: "false",
+            marketingDescription: JSON.stringify(
+              convertToRaw(EditorState.createEmpty().getCurrentContent())
+            ),
+            groupsIncluded: [],
+            enabled: "true",
+            isStripe: "true",
+            isPaypal: "false",
+            tiered: [
+              { name: "", stripePaymentID: "", stripeIsTiered: "false" },
+            ],
+            showAddProductModal: false,
+          });
+          break;
+      }
+    } catch (err) {
+      console.error(err);
     }
-    async setInitialData(): Promise<void> {
-        try {
-            const listProducts = await API.graphql({
-                query: queries.listProducts,
-                variables: { limit: 50 },
-                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-            }) as GraphQLResult<ListProductsQuery>
-            this.setState({ products: listProducts.data.listProducts.items })
-        } catch (err) {
-            console.error(err)
-        }
-    }
-
-    handlePress(product: any): void {
-        this.setState({
-            name: product.name,
-            productId: product.id,
-            description: product.description,
-            confirmationMsg: product.confirmationMsg,
-            price: product.price.toFixed(2),
-            mode: 'edit',
-            isOrgTier: product.isOrgTier,
-            isIndividualTier: product.isIndividualTier,
-            marketingDescription: product.marketingDescription,
-            groupsIncluded: product.groupsIncluded,
-            enabled: product.enabled,
-            showAddProductModal: true
-
-        })
-    }
-
-    async deleteProduct(id: string): Promise<void> {
-        if (window.confirm(`Delete ${id}?`)) {
-            try {
-                const deleteProduct = await API.graphql({
-                    query: mutations.deleteProduct,
-                    variables: { input: { id } },
-                    authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-                });
-                console.log(deleteProduct)
-                this.setInitialData();
-            } catch (e) {
-                console.error(e)
-            }
-        } else {
-            return;
-        }
-    }
-
-    async saveProduct(): Promise<void> {
-        if (isNaN(parseInt(this.state.price)))
-            return;
-        try {
-            switch (this.state.mode) {
-                case 'save':
-                    const newProduct: CreateProductInput = {
-                        id: this.state.productId,
-                        price: parseFloat(this.state.price),
-                        description: this.state.description,
-                        name: this.state.name,
-                        confirmationMsg: this.state.confirmationMsg,
-                        isOrgTier: this.state.isOrgTier,
-                        isIndividualTier: this.state.isIndividualTier,
-                        marketingDescription: this.state.marketingDescription,
-                        groupsIncluded: this.state.groupsIncluded,
-                        enabled: this.state.enabled
-                    }
-                    const createProduct = await API.graphql({
-                        query: mutations.createProduct,
-                        variables: { input: newProduct },
-                        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-                    });
-                    console.log(createProduct)
-                    this.setInitialData();
-                    this.setState({
-                        name: '',
-                        description: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
-                        productId: `JC-${Date.now()}`,
-                        confirmationMsg: '',
-                        price: '',
-                        isOrgTier: "false",
-                        isIndividualTier: "false",
-                        marketingDescription: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
-                        groupsIncluded: [],
-                        enabled: "true",
-                        showAddProductModal: false
-                    });
-                    break;
-                case 'edit':
-                    const editProduct: UpdateProductInput = {
-                        id: this.state.productId,
-                        price: parseFloat(this.state.price),
-                        description: this.state.description,
-                        name: this.state.name,
-                        confirmationMsg: this.state.confirmationMsg,
-                        isOrgTier: this.state.isOrgTier,
-                        isIndividualTier: this.state.isIndividualTier,
-                        marketingDescription: this.state.marketingDescription,
-                        groupsIncluded: this.state.groupsIncluded,
-                        enabled: this.state.enabled
-                    }
-                    const updateProduct = await API.graphql({
-                        query: mutations.updateProduct,
-                        variables: { input: editProduct },
-                        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-                    });
-                    console.log(updateProduct)
-                    this.setInitialData();
-                    this.setState({
-                        name: '',
-                        description: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
-                        productId: `JC-${Date.now()}`,
-                        confirmationMsg: '',
-                        price: '',
-                        isOrgTier: "false",
-                        isIndividualTier: "false",
-                        marketingDescription: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
-                        groupsIncluded: [],
-                        enabled: "true",
-                        showAddProductModal: false
-
-                    });
-                    break;
-            }
-        } catch (err) {
-            console.error(err)
-        }
-    }
-    updateTierList(val: any) {
-        const tmp = this.state.groupsIncluded
-        var index = tmp.indexOf(val)
-        if (index !== -1)
-            tmp.splice(index, 1);
-        else
-            tmp.push(val)
-        this.setState({ groupsIncluded: tmp })
-    }
-    renderAddProductModal(): React.ReactNode {
-        return (
-            <JCModal visible={this.state.showAddProductModal}
-                title="Add Tier"
-                onHide={() => { this.setState({ showAddProductModal: false }) }}>
+  }
+  updateTierList(val: any) {
+    const tmp = this.state.groupsIncluded;
+    var index = tmp.indexOf(val);
+    if (index !== -1) tmp.splice(index, 1);
+    else tmp.push(val);
+    this.setState({ groupsIncluded: tmp });
+  }
+  addTier() {
+    let temp = this.state.tiered ? this.state.tiered : [];
+    temp.push({ name: "", stripeIsTiered: "false", stripePaymentID: "" });
+    this.setState({ tiered: temp });
+  }
+  deleteTier(index) {
+    let temp = this.state.tiered;
+    temp.splice(index, 1);
+    this.setState({ tiered: temp });
+  }
+  updateTier(index: number, field: string, value) {
+    let temp = this.state.tiered;
+    temp[index][field] = value;
+    this.setState({ tiered: temp });
+  }
+  renderAddProductModal(): React.ReactNode {
+    return (
+      <JCModal
+        visible={this.state.showAddProductModal}
+        title="Add Tier"
+        onHide={() => {
+          this.setState({ showAddProductModal: false });
+        }}
+      >
+        <>
+          <View>
+            <Text>Id: </Text>
+            <TextInput
+              onChange={(
+                val: NativeSyntheticEvent<TextInputChangeEventData>
+              ) => {
+                this.setState({ productId: val.nativeEvent.text });
+              }}
+              placeholder="productId"
+              multiline={false}
+              value={this.state.productId}
+            ></TextInput>
+            <Text>Product name: </Text>
+            <TextInput
+              onChange={(
+                val: NativeSyntheticEvent<TextInputChangeEventData>
+              ) => {
+                this.setState({ name: val.nativeEvent.text });
+              }}
+              placeholder="Name"
+              multiline={false}
+              value={this.state.name}
+            ></TextInput>
+            <Text>Price: </Text>
+            <TextInput
+              onChange={(
+                val: NativeSyntheticEvent<TextInputChangeEventData>
+              ) => {
+                this.setState({ price: val.nativeEvent.text });
+              }}
+              placeholder="Price in CAD"
+              multiline={false}
+              value={this.state.price}
+            ></TextInput>
+            <Picker
+              onStartShouldSetResponder={() => true}
+              onMoveShouldSetResponderCapture={() => true}
+              onStartShouldSetResponderCapture={() => true}
+              onMoveShouldSetResponder={() => true}
+              mode="dropdown"
+              iosIcon={<Icon name="arrow-down" />}
+              style={{
+                width: "30%",
+                marginBottom: 0,
+                marginTop: 0,
+                fontSize: 16,
+                height: 30,
+                flexGrow: 0,
+                marginRight: 0,
+                borderColor: "#dddddd",
+              }}
+              placeholder="Event type"
+              placeholderStyle={{ color: "#bfc6ea" }}
+              placeholderIconColor="#007aff"
+              selectedValue={this.state.pricePer}
+            >
+              <Picker.Item label="One-Time" value="One-Time" />
+              <Picker.Item label="Monthly" value="Monthly" />
+              <Picker.Item label="Yearly" value="Yearly" />
+            </Picker>
+            <Text>Purchase confirmation message</Text>
+            <TextInput
+              onChange={(
+                val: NativeSyntheticEvent<TextInputChangeEventData>
+              ) => {
+                this.setState({ confirmationMsg: val.nativeEvent.text });
+              }}
+              placeholder="optional: 1-2 sentences"
+              multiline={false}
+              value={this.state.confirmationMsg}
+            ></TextInput>
+            <JCSwitch
+              switchLabel="Is Org Tier"
+              initState={this.state.isOrgTier == "true"}
+              onPress={(val) => {
+                this.setState({ isOrgTier: val });
+              }}
+            ></JCSwitch>
+            <JCSwitch
+              switchLabel="Is Individual Tier"
+              initState={this.state.isIndividualTier == "true"}
+              onPress={(val) => {
+                this.setState({ isIndividualTier: val });
+              }}
+            ></JCSwitch>
+            <JCSwitch
+              switchLabel="Enabled"
+              initState={this.state.enabled == "true"}
+              onPress={(val) => {
+                this.setState({ enabled: val });
+              }}
+            ></JCSwitch>
+            <JCSwitch
+              switchLabel="Is Paypal"
+              initState={this.state.isPaypal == "true"}
+              onPress={(val) => {
+                this.setState({ isPaypal: val });
+              }}
+            ></JCSwitch>
+            <JCSwitch
+              switchLabel="Is Stripe"
+              initState={this.state.isStripe == "true"}
+              onPress={(val) => {
+                this.setState({ isStripe: val });
+              }}
+            ></JCSwitch>
+            {this.state.tiered?.map((item, index) => {
+              return (
                 <>
-                    <View>
-                        <Text>Id: </Text>
-                        <TextInput
-                            onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => { this.setState({ productId: val.nativeEvent.text }) }}
-                            placeholder="productId"
-                            multiline={false}
-                            value={this.state.productId}></TextInput>
-                        <Text>Product name: </Text>
-                        <TextInput
-                            onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => { this.setState({ name: val.nativeEvent.text }) }}
-                            placeholder="Name"
-                            multiline={false}
-                            value={this.state.name}></TextInput>
-                        <Text>Price: </Text>
-                        <TextInput
-                            onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => { this.setState({ price: val.nativeEvent.text }) }}
-                            placeholder="Price in CAD"
-                            multiline={false}
-                            value={this.state.price}></TextInput>
-                        <Text>Purchase confirmation message</Text>
-                        <TextInput
-                            onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => { this.setState({ confirmationMsg: val.nativeEvent.text }) }}
-                            placeholder="optional: 1-2 sentences"
-                            multiline={false}
-                            value={this.state.confirmationMsg}></TextInput>
-                        <JCSwitch switchLabel="Is Org Tier" initState={this.state.isOrgTier == "true"}
-                            onPress={(val) => { this.setState({ isOrgTier: val }) }}></JCSwitch>
-                        <JCSwitch switchLabel="Is Individual Tier" initState={this.state.isIndividualTier == "true"}
-                            onPress={(val) => { this.setState({ isIndividualTier: val }) }}></JCSwitch>
-                        <JCSwitch switchLabel="Enabled" initState={this.state.enabled == "true"}
-                            onPress={(val) => { this.setState({ enabled: val }) }}></JCSwitch>
-                        <EditableRichText onChange={(val: any) => {
-                            this.setState({ marketingDescription: val })
-                        }}
-                            value={this.state.marketingDescription}
-                            isEditable={true}
-                            textStyle=""></EditableRichText>
-                        <Text>Groups: </Text>
-                        {this.state.groupList.map((item) => {
-                            return (
-                                <JCSwitch switchLabel={item} initState={this.state.groupsIncluded?.includes(item)}
-                                    onPress={(val) => { this.updateTierList(item) }}></JCSwitch>
-                            )
-                        })
-                        }
-                    </View>
-                    <Text>Description</Text>
-
-                    <EditableRichText toolBar={toolBar} onChange={(description: any) => this.setState({ description })} value={this.state.description} isEditable={true} textStyle={{}} />
-
-                    <JCButton buttonType={ButtonTypes.Outline} onPress={() => this.saveProduct()}>save product</JCButton>
+                  <TextInput
+                    onChange={(
+                      val: NativeSyntheticEvent<TextInputChangeEventData>
+                    ) => {
+                      this.updateTier(index, "name", val.nativeEvent.text);
+                    }}
+                    placeholder="Tier Name"
+                    multiline={false}
+                    value={item.name}
+                  ></TextInput>
+                  <TextInput
+                    onChange={(
+                      val: NativeSyntheticEvent<TextInputChangeEventData>
+                    ) => {
+                      this.updateTier(
+                        index,
+                        "stripePaymentID",
+                        val.nativeEvent.text
+                      );
+                    }}
+                    placeholder="Tier StripePaymentID"
+                    multiline={false}
+                    value={item.stripePaymentID}
+                  ></TextInput>
+                  <JCSwitch
+                    switchLabel="Is Tier"
+                    initState={item.stripeIsTiered == "true"}
+                    onPress={(val) => {
+                      this.updateTier(index, "stripeIsTiered", val);
+                    }}
+                  ></JCSwitch>
+                  <AntDesign
+                    name="delete"
+                    size={20}
+                    color="black"
+                    onPress={() => this.deleteTier(index)}
+                  />
                 </>
-            </JCModal>
-        )
-    }
+              );
+            })}
+            <AntDesign
+              name="add"
+              size={20}
+              color="black"
+              onPress={() => this.addTier()}
+            />
+            <EditableRichText
+              onChange={(val: any) => {
+                this.setState({ marketingDescription: val });
+              }}
+              value={this.state.marketingDescription}
+              isEditable={true}
+              textStyle=""
+            ></EditableRichText>
+            <Text>Groups: </Text>
+            {this.state.groupList.map((item) => {
+              return (
+                <JCSwitch
+                  switchLabel={item}
+                  initState={this.state.groupsIncluded?.includes(item)}
+                  onPress={(val) => {
+                    this.updateTierList(item);
+                  }}
+                ></JCSwitch>
+              );
+            })}
+          </View>
+          <Text>Description</Text>
 
+          <EditableRichText
+            toolBar={toolBar}
+            onChange={(description: any) => this.setState({ description })}
+            value={this.state.description}
+            isEditable={true}
+            textStyle={{}}
+          />
 
+          <JCButton
+            buttonType={ButtonTypes.Outline}
+            onPress={() => this.saveProduct()}
+          >
+            save product
+          </JCButton>
+        </>
+      </JCModal>
+    );
+  }
+  static UserConsumer = UserContext.Consumer;
 
-    render(): React.ReactNode {
-        return (
+  render(): React.ReactNode {
+    return (
+      <AdminScreen.UserConsumer>
+        {({ userState, userActions }) => {
+          if (!userState) return null;
+          return (
             <Container>
-                <Header title="Jesus Collective" navigation={this.props.navigation} />
+              <Header
+                title="Jesus Collective"
+                navigation={this.props.navigation}
+              />
 
-                <HeaderAdmin title="Jesus Collective" navigation={this.props.navigation} />
-                {this.isMemberOf("admin") ?
-                    <Content>
-                        <JCButton buttonType={ButtonTypes.Outline} onPress={() => { this.setState({ showAddProductModal: true }) }}>Add product</JCButton>
+              <HeaderAdmin
+                title="Jesus Collective"
+                navigation={this.props.navigation}
+              />
+              {userActions.isMemberOf("admin") ? (
+                <Content>
+                  <JCButton
+                    buttonType={ButtonTypes.Outline}
+                    onPress={() => {
+                      this.setState({ showAddProductModal: true });
+                    }}
+                  >
+                    Add product
+                  </JCButton>
 
-                        <Container style={this.styles.style.fontRegular}>
-                            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', width: 750 }} >
-                                <View style={{ borderColor: 'black', borderWidth: 1, width: 250, margin: 0, borderRadius: 0 }}>
-                                    <Text style={{ alignSelf: 'center' }} >Name</Text>
-                                </View>
-                                <View style={{ borderColor: 'black', borderWidth: 1, width: 250, margin: 0, borderRadius: 0 }}>
-                                    <Text style={{ alignSelf: 'center' }} >Id</Text>
-                                </View>
-                                <View style={{ borderColor: 'black', borderWidth: 1, width: 250, margin: 0, borderRadius: 0 }}>
-                                    <Text style={{ alignSelf: 'center' }} >Price (CAD)</Text>
-                                </View>
+                  <Container style={this.styles.style.fontRegular}>
+                    <View
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-evenly",
+                        width: 750,
+                      }}
+                    >
+                      <View
+                        style={{
+                          borderColor: "black",
+                          borderWidth: 1,
+                          width: 250,
+                          margin: 0,
+                          borderRadius: 0,
+                        }}
+                      >
+                        <Text style={{ alignSelf: "center" }}>Name</Text>
+                      </View>
+                      <View
+                        style={{
+                          borderColor: "black",
+                          borderWidth: 1,
+                          width: 250,
+                          margin: 0,
+                          borderRadius: 0,
+                        }}
+                      >
+                        <Text style={{ alignSelf: "center" }}>Id</Text>
+                      </View>
+                      <View
+                        style={{
+                          borderColor: "black",
+                          borderWidth: 1,
+                          width: 250,
+                          margin: 0,
+                          borderRadius: 0,
+                        }}
+                      >
+                        <Text style={{ alignSelf: "center" }}>Price (CAD)</Text>
+                      </View>
+                    </View>
+                    {this.state.products.map((product: any) => {
+                      return (
+                        <View
+                          key={product.id}
+                          style={{ display: "flex", flexDirection: "row" }}
+                        >
+                          <View
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              justifyContent: "space-evenly",
+                              width: 750,
+                            }}
+                          >
+                            <View
+                              style={{
+                                borderColor: "black",
+                                borderWidth: 1,
+                                width: 250,
+                                margin: 0,
+                                borderRadius: 0,
+                              }}
+                            >
+                              <Text style={{ alignSelf: "center" }}>
+                                {product.name}
+                              </Text>
                             </View>
-                            {this.state.products.map((product: any) => {
-                                return <View key={product.id} style={{ display: 'flex', flexDirection: 'row' }} >
-                                    <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', width: 750 }} >
-                                        <View style={{ borderColor: 'black', borderWidth: 1, width: 250, margin: 0, borderRadius: 0 }}>
-                                            <Text style={{ alignSelf: 'center' }} >{product.name}</Text>
-                                        </View>
-                                        <View style={{ borderColor: 'black', borderWidth: 1, width: 250, margin: 0, borderRadius: 0 }}>
-                                            <Text style={{ alignSelf: 'center' }}>{product.id}</Text>
-                                        </View>
-                                        <View style={{ borderColor: 'black', borderWidth: 1, width: 250, margin: 0, borderRadius: 0 }}>
-                                            <Text style={{ alignSelf: 'center' }}>{typeof (product.price) == "number" ? product.price.toFixed(2) : "NaN"}</Text>
-                                        </View>
-                                    </View>
-                                    <AntDesign name="delete" size={20} color="black" onPress={() => this.deleteProduct(product.id)} />
-                                    <AntDesign name="edit" size={20} color="black" onPress={() => this.handlePress(product)} />
-                                </View>
-                            })}
-                        </Container>
-
-                    </Content>
-                    : <Content>
-                        <Container style={this.styles.style.eventsScreenMainContainer}>
-                            <Container style={this.styles.style.eventsScreenLeftContainer}>
-                                <Text>You must be an admin to see this screen</Text>
-                            </Container>
-                        </Container>
-                    </Content>
-                }
-                {this.renderAddProductModal()}
+                            <View
+                              style={{
+                                borderColor: "black",
+                                borderWidth: 1,
+                                width: 250,
+                                margin: 0,
+                                borderRadius: 0,
+                              }}
+                            >
+                              <Text style={{ alignSelf: "center" }}>
+                                {product.id}
+                              </Text>
+                            </View>
+                            <View
+                              style={{
+                                borderColor: "black",
+                                borderWidth: 1,
+                                width: 250,
+                                margin: 0,
+                                borderRadius: 0,
+                              }}
+                            >
+                              <Text style={{ alignSelf: "center" }}>
+                                {typeof product.price == "number"
+                                  ? product.price.toFixed(2)
+                                  : "NaN"}
+                              </Text>
+                            </View>
+                          </View>
+                          <AntDesign
+                            name="delete"
+                            size={20}
+                            color="black"
+                            onPress={() => this.deleteProduct(product.id)}
+                          />
+                          <AntDesign
+                            name="edit"
+                            size={20}
+                            color="black"
+                            onPress={() => this.handlePress(product)}
+                          />
+                        </View>
+                      );
+                    })}
+                  </Container>
+                </Content>
+              ) : (
+                <Content>
+                  <Container
+                    style={this.styles.style.eventsScreenMainContainer}
+                  >
+                    <Container
+                      style={this.styles.style.eventsScreenLeftContainer}
+                    >
+                      <Text>You must be an admin to see this screen</Text>
+                    </Container>
+                  </Container>
+                </Content>
+              )}
+              {this.renderAddProductModal()}
             </Container>
-
-
-        );
-    }
+          );
+        }}
+      </AdminScreen.UserConsumer>
+    );
+  }
 }

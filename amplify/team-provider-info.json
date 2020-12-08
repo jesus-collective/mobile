@@ -20,7 +20,27 @@
         "S3Trigger839efa13": {},
         "AdminQueries7403b6cf": {},
         "jcmobilePreSignup": {},
+        "jcmobileStripPreviewInvoice": {
+          "userPoolId": "us-east-1_fe30GuOOt",
+          "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
+          "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca"
+        },
         "jcUpdateMainUserGroup": {
+          "userPoolId": "us-east-1_fe30GuOOt",
+          "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
+          "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca"
+        },
+        "jcmobileStripWebhook":{
+          "userPoolId": "us-east-1_fe30GuOOt",
+          "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
+          "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca"
+        },
+        "jcmobileStripCreateSubscription":{
+          "userPoolId": "us-east-1_fe30GuOOt",
+          "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
+          "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca"
+        },
+        "jcmobileStripCreateCustomer":{
           "userPoolId": "us-east-1_fe30GuOOt",
           "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
           "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca"
@@ -79,7 +99,27 @@
         "S3Trigger839efa13": {},
         "AdminQueries7403b6cf": {},
         "jcmobilePreSignup": {},
+        "jcmobileStripPreviewInvoice": {
+          "userPoolId": "us-east-1_Bq1YZMmzA",
+          "userPoolWebClientId": "3jrk6b5qnnper8p4osnaptfa65",
+          "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653"
+        },
         "jcUpdateMainUserGroup": {
+          "userPoolId": "us-east-1_Bq1YZMmzA",
+          "userPoolWebClientId": "3jrk6b5qnnper8p4osnaptfa65",
+          "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653"
+        },
+        "jcmobileStripCreateSubscription":{
+          "userPoolId": "us-east-1_Bq1YZMmzA",
+          "userPoolWebClientId": "3jrk6b5qnnper8p4osnaptfa65",
+          "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653"
+        },
+        "jcmobileStripWebhook":{
+          "userPoolId": "us-east-1_Bq1YZMmzA",
+          "userPoolWebClientId": "3jrk6b5qnnper8p4osnaptfa65",
+          "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653"
+        },
+        "jcmobileStripCreateCustomer":{
           "userPoolId": "us-east-1_Bq1YZMmzA",
           "userPoolWebClientId": "3jrk6b5qnnper8p4osnaptfa65",
           "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653"
@@ -94,7 +134,8 @@
           "userPoolWebClientId": "3jrk6b5qnnper8p4osnaptfa65",
           "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653"
         },
-        "jcmobile": {}
+        "jcmobile": {},
+        "jcmobilePreTokenGeneration": {}
       },
       "video": {
         "jesuscollectiveCourses": {

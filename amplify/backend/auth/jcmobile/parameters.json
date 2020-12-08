@@ -79,7 +79,7 @@
     "usernameAttributes": [
         "email"
     ],
-    "triggers": "{\"PostConfirmation\":[\"add-to-group\"],\"PreSignup\":[\"custom\"]}",
+    "triggers": "{\n  \"PostConfirmation\": [\n    \"add-to-group\"\n  ],\n  \"PreSignup\": [\n    \"custom\"\n  ],\n  \"PreTokenGeneration\": [\n    \"custom\"\n  ]\n}",
     "hostedUI": false,
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -97,7 +97,7 @@
         "Ref": "AWS::StackId"
     },
     "permissions": [
-        "{\"policyName\":\"AddToGroupCognito\",\"trigger\":\"PostConfirmation\",\"effect\":\"Allow\",\"actions\":[\"cognito-idp:AdminAddUserToGroup\",\"cognito-idp:GetGroup\",\"cognito-idp:CreateGroup\"],\"resource\":{\"paramType\":\"!GetAtt\",\"keys\":[\"UserPool\",\"Arn\"]}}"
+        "{\n  \"policyName\": \"AddToGroupCognito\",\n  \"trigger\": \"PostConfirmation\",\n  \"effect\": \"Allow\",\n  \"actions\": [\n    \"cognito-idp:AdminAddUserToGroup\",\n    \"cognito-idp:GetGroup\",\n    \"cognito-idp:CreateGroup\"\n  ],\n  \"resource\": {\n    \"paramType\": \"!GetAtt\",\n    \"keys\": [\n      \"UserPool\",\n      \"Arn\"\n    ]\n  }\n}"
     ],
     "dependsOn": [
         {
@@ -117,6 +117,15 @@
                 "Arn",
                 "Name"
             ]
+        },
+        {
+            "category": "function",
+            "resourceName": "jcmobilePreTokenGeneration",
+            "triggerProvider": "Cognito",
+            "attributes": [
+                "Arn",
+                "Name"
+            ]
         }
     ],
     "userPoolGroups": true,
@@ -128,5 +137,6 @@
     "authProviders": [
         "graph.facebook.com",
         "accounts.google.com"
-    ]
+    ],
+    "serviceName": "Cognito"
 }

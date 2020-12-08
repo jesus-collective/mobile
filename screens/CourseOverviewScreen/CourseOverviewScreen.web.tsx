@@ -5,7 +5,8 @@ import { Text, TouchableOpacity } from 'react-native'
 import Accordion from './Accordion'
 import Header from '../../components/Header/Header'
 import MyMap from '../../components/MyMap/MyMap';
- 
+import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext";
+
 import getTheme from '../../native-base-theme/components';
 import EditableText from '../../components/Forms/EditableText'
 import Validate from '../../components/Validate/Validate'
@@ -328,7 +329,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
 
   }
 
-  leave(): void {
+  leave(userActions:UserActions): void {
     Analytics.record({
       name: 'leftCourse',
       // Attribute values must be strings
@@ -358,13 +359,13 @@ export default class CourseScreen extends JCComponent<Props, State>{
 
       const remainingUsers = this.state.memberIDs.filter(user => user !== this.state.currentUser)
       this.setState({ canJoin: true, canLeave: false, memberIDs: remainingUsers })
-      this.renderButtons()
+      this.renderButtons(userActions)
 
     }).catch((err: any) => {
       console.log({ "Error queries.groupMemberByUser": err });
     });
   }
-  join(): void {
+  join(userActions:UserActions): void {
     Analytics.record({
       name: 'joinedCourse',
       // Attribute values must be strings
@@ -383,7 +384,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
     });
 
     this.setState({ canJoin: false, canLeave: true, memberIDs: this.state.memberIDs.concat(this.state.currentUser) })
-    this.renderButtons()
+    this.renderButtons(userActions)
   }
   gotoActiveCourse(): void {
     //console.log(this.props.navigation)
@@ -415,13 +416,13 @@ export default class CourseScreen extends JCComponent<Props, State>{
     console.log("Navigate to profileScreen")
     this.props.navigation.push("ProfileScreen", { id: id, create: false });
   }
-  canPurchase() {
+  canPurchase(userActions:UserActions) {
     const id = this.state.data.id
     if (this.isOwner(id))
       return (false)
-    else if (this.isCourseCoach(id))
+    else if (this.isCourseCoach(userActions,id))
       return (false)
-    else if (this.isCourseAdmin(id))
+    else if (this.isCourseAdmin(userActions,id))
       return (false)
     else if (this.canCoursePay(id))
       return (true)
@@ -432,11 +433,11 @@ export default class CourseScreen extends JCComponent<Props, State>{
     else
       return (false)
   }
-  isCourseCoach(id: string) {
-    return this.isMemberOf("courseCoach")
+  isCourseCoach(userActions:UserActions,id: string) {
+    return userActions.isMemberOf("courseCoach")
   }
-  isCourseAdmin(id: string) {
-    return this.isMemberOf("courseAdmin")
+  isCourseAdmin(userActions:UserActions,id: string) {
+    return userActions.isMemberOf("courseAdmin")
   }
   canCourseApply(id: string) {
     return this
@@ -486,13 +487,13 @@ export default class CourseScreen extends JCComponent<Props, State>{
       console.log({ "Error query.getPayment": err });
     });
   }
-  canGotoCourse() {
+  canGotoCourse(userActions:UserActions) {
     const id = this.state.data.id
     if (this.isOwner(id))
       return (true)
-    else if (this.isCourseCoach(id))
+    else if (this.isCourseCoach(userActions,id))
       return (true)
-    else if (this.isCourseAdmin(id))
+    else if (this.isCourseAdmin(userActions,id))
       return (true)
     else if (this.canCoursePay(id))
       return (false)
@@ -503,13 +504,13 @@ export default class CourseScreen extends JCComponent<Props, State>{
     else
       return (false)
   }
-  isCourseClosed() {
+  isCourseClosed(userActions:UserActions) {
     const id = this.state.data.id
     if (this.isOwner(id))
       return (false)
-    else if (this.isCourseCoach(id))
+    else if (this.isCourseCoach(userActions,id))
       return (false)
-    else if (this.isCourseAdmin(id))
+    else if (this.isCourseAdmin(userActions,id))
       return (false)
     else if (this.canCoursePay(id))
       return (false)
@@ -526,18 +527,18 @@ export default class CourseScreen extends JCComponent<Props, State>{
   isCoursePaid(id: string) {
     return this.state.isPaid
   }
-  renderButtons(): React.ReactNode {
+  renderButtons(userActions:UserActions): React.ReactNode {
     return (
       <Container style={{ minHeight: 30 }}>
-        {this.isCourseClosed() ?
+        {this.isCourseClosed(userActions) ?
           <Text>Course Closed</Text> :
           null
         }
-        {this.canPurchase() ?
+        {this.canPurchase(userActions) ?
           <JCButton buttonType={ButtonTypes.courseMktOutlineBoldNoMargin} onPress={() => { this.purchase() }} >Purchase</JCButton> :
           null
         }
-        {this.canGotoCourse() ?
+        {this.canGotoCourse(userActions) ?
           <JCButton buttonType={ButtonTypes.courseMktOutlineBoldNoMargin} onPress={() => this.gotoActiveCourse()} >Go to Course</JCButton>
           : null
         }
@@ -557,8 +558,13 @@ export default class CourseScreen extends JCComponent<Props, State>{
       </Container>
     )
   }
+  static UserConsumer = UserContext.Consumer;
   render(): React.ReactNode {
     console.log("CourseScreen")
+    return (
+      <CourseScreen.UserConsumer>
+        {({ userState, userActions }) => {
+           if (!userState) return null;
     return (
       this.state.data ?
         <StyleProvider style={getTheme()}>
@@ -620,7 +626,7 @@ export default class CourseScreen extends JCComponent<Props, State>{
                       })}
                   </View>
 
-                  {this.renderButtons()}
+                  {this.renderButtons(userActions)}
                 </Container>
                 <Container style={this.styles.style.detailScreenRightCard}>
                   <Container style={this.styles.style.coursesRightCard}>
@@ -665,3 +671,8 @@ export default class CourseScreen extends JCComponent<Props, State>{
     );
   }
 }
+</CourseScreen.UserConsumer>
+    )
+}
+}
+

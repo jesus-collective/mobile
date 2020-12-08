@@ -38,7 +38,6 @@ async function addUserToGroup(username, groupname) {
   }
 }
 
-
 async function removeUserFromGroup(username, groupname) {
   const params = {
     GroupName: groupname,
@@ -107,7 +106,6 @@ async function adminUpdateUserAttributes(username, email) {
   }
 }
 
-
 async function disableUser(username) {
   const params = {
     UserPoolId: userPoolId,
@@ -126,7 +124,6 @@ async function disableUser(username) {
   }
 }
 
-
 async function enableUser(username) {
   const params = {
     UserPoolId: userPoolId,
@@ -144,7 +141,6 @@ async function enableUser(username) {
     throw err;
   }
 }
-
 
 async function getUser(username) {
   const params = {
@@ -186,6 +182,28 @@ async function listUsers(Limit, PaginationToken) {
   }
 }
 
+async function listGroups(Limit, PaginationToken) {
+  const params = {
+    UserPoolId: userPoolId,
+    ...(Limit && { Limit }),
+    ...(PaginationToken && { PaginationToken }),
+  };
+
+  console.log('Attempting to list groups');
+
+  try {
+    const result = await cognitoIdentityServiceProvider.listGroups(params).promise();
+
+    // Rename to NextToken for consistency with other Cognito APIs
+    result.NextToken = result.PaginationToken;
+    delete result.PaginationToken;
+
+    return result;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
 
 async function listGroupsForUser(username, Limit, NextToken) {
   const params = {
@@ -203,12 +221,8 @@ async function listGroupsForUser(username, Limit, NextToken) {
      * We are filtering out the results that seem to be innapropriate for client applications
      * to prevent any informaiton disclosure. Customers can modify if they have the need.
      */
-    result.Groups.forEach((val) => {
-      delete val.UserPoolId,
-        delete val.LastModifiedDate,
-        delete val.CreationDate,
-        delete val.Precedence,
-        delete val.RoleArn;
+    result.Groups.forEach(val => {
+      delete val.UserPoolId, delete val.LastModifiedDate, delete val.CreationDate, delete val.Precedence, delete val.RoleArn;
     });
 
     return result;
@@ -300,9 +314,11 @@ module.exports = {
   enableUser,
   getUser,
   listUsers,
+  listGroups,
   listGroupsForUser,
   listUsersInGroup,
   adminCreateUser,
   signUserOut,
   adminUpdateUserAttributes,
+
 };

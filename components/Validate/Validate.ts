@@ -20,16 +20,18 @@ export default class Validate {
             return { result: false, validationError: "Profile must have - email" }
         if (data.phone == null || data.phone == "")
             return { result: false, validationError: "Profile must have - phone" }
-        if (data.address == null || data.address == "")
-            return { result: false, validationError: "Profile must have - address" }
-        if (data.city == null || data.city == "")
+/*        if (data.billingAddress.line1 == null || data.billingAddress.line1 == "")
+            return { result: false, validationError: "Profile must have - line 1" }
+        if (data.billingAddress.city == null || data.billingAddress.city == "")
             return { result: false, validationError: "Profile must have - city" }
-        if (data.province == null || data.province == "")
+        if (data.billingAddress.state == null || data.billingAddress.state == "")
             return { result: false, validationError: "Profile must have - province" }
-        if (data.postalCode == null || data.postalCode == "")
+        if (data.billingAddress.postal_code == null || data.billingAddress.postal_code == "")
             return { result: false, validationError: "Profile must have - postalcode" }
-        if (data.country == null || data.country == "")
+        if (data.billingAddress.country == null || data.billingAddress.country == "")
             return { result: false, validationError: "Profile must have - country" }
+
+            */
         if (data.interests == null)
             return { result: false, validationError: "Profile must have - interests" }
         if (data.currentRole == null || data.currentRole == "")

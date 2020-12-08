@@ -5,7 +5,7 @@
     },
     {
         "groupName": "Admin",
-        "precedence": 1,
+        "precedence": 2,
         "customPolicies": [
             {
                 "PolicyName": "jcmobile-admin-group-policy",

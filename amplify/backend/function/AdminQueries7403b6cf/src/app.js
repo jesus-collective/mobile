@@ -23,6 +23,7 @@ const {
   enableUser,
   getUser,
   listUsers,
+  listGroups,
   listGroupsForUser,
   adminUpdateUserAttributes,
   listUsersInGroup,
@@ -45,7 +46,7 @@ app.use((req, res, next) => {
 // Only perform tasks if the user is in a specific group
 const allowedGroup = process.env.GROUP;
 
-const checkGroup = function (req, res, next) {
+const checkGroup = function(req, res, next) {
   if (req.path == '/signUserOut') {
     return next();
   }
@@ -191,6 +192,22 @@ app.get('/listUsers', async (req, res, next) => {
   }
 });
 
+app.get('/listGroups', async (req, res, next) => {
+  try {
+    let response;
+    if (req.query.token) {
+      response = await listGroups(req.query.limit || 25, req.query.token);
+    } else if (req.query.limit) {
+      response = await listGroups((Limit = req.query.limit));
+    } else {
+      response = await listGroups();
+    }
+    res.status(200).json(response);
+  } catch (err) {
+    next(err);
+  }
+});
+
 app.get('/listGroupsForUser', async (req, res, next) => {
   if (!req.query.username) {
     const err = new Error('username is required');
@@ -254,7 +271,7 @@ app.get('/adminCreateUser', async (req, res, next) => {
 app.post('/signUserOut', async (req, res, next) => {
   /**
    * To prevent rogue actions of users with escalated privilege signing
-   * other users out, we ensure it's the same user maning the call
+   * other users out, we ensure it's the same user making the call
    * Note that this only impacts actions the user can do in User Pools
    * such as updating an attribute, not services consuming the JWT
    */

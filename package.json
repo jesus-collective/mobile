@@ -30,6 +30,8 @@
     "@react-navigation/stack": "^5.6.2",
     "@react-navigation/web": "^1.0.0-alpha.9",
     "@sentry/react-native": "^1.7.2",
+    "@stripe/react-stripe-js": "^1.1.2",
+    "@stripe/stripe-js": "^1.11.0",
     "@types/draft-js": "^0.10.44",
     "@types/react-dom": "^16.9.8",
     "@types/react-native-calendars": "^1.20.10",

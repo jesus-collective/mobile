@@ -99,7 +99,7 @@
           "Type" : "AWS::Cognito::UserPoolGroup",
           "Properties" : {
               "GroupName" : "Admin",
-              "Precedence" : 1,
+              "Precedence" : 2,
               
               "RoleArn" : {
                 "Fn::GetAtt": [

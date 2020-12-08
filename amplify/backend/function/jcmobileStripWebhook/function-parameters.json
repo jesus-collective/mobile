@@ -1,0 +1,16 @@
+{
+  "lambdaLayers": [],
+  "permissions": {
+    "api": {
+      "jcmobile": [
+        "read"
+      ],
+      "AdminQueries": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  }
+}

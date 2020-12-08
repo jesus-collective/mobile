@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, View, Text } from 'native-base';
-import PayPal from './PayPal';
+import PayPal from './Paypal/PayPal';
 import { ViewStyle, StyleSheet } from 'react-native';
 import { GetProductQuery } from '../../src/API';
 import { stateToHTML } from 'draft-js-export-html';

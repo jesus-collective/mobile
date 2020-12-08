@@ -182,13 +182,18 @@ export const getGroup = /* GraphQL */ `
         phone
         owner
         mainUserGroup
+        stripeCustomerID
+        stripeSubscriptionID
         hasPaidState
         profileState
-        address
-        city
-        province
-        postalCode
-        country
+        billingAddress {
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
         location {
           latitude
           longitude
@@ -346,13 +351,10 @@ export const listGroups = /* GraphQL */ `
           phone
           owner
           mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
           hasPaidState
           profileState
-          address
-          city
-          province
-          postalCode
-          country
           aboutMeShort
           aboutMeLong
           interests
@@ -693,6 +695,7 @@ export const getPayment = /* GraphQL */ `
       product {
         id
         price
+        pricePer
         name
         description
         confirmationMsg
@@ -704,6 +707,13 @@ export const getPayment = /* GraphQL */ `
         marketingDescription
         groupsIncluded
         enabled
+        isStripe
+        isPaypal
+        tiered {
+          name
+          stripePaymentID
+          stripeIsTiered
+        }
         createdAt
         updatedAt
       }
@@ -721,13 +731,18 @@ export const getPayment = /* GraphQL */ `
         phone
         owner
         mainUserGroup
+        stripeCustomerID
+        stripeSubscriptionID
         hasPaidState
         profileState
-        address
-        city
-        province
-        postalCode
-        country
+        billingAddress {
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
         location {
           latitude
           longitude
@@ -826,6 +841,7 @@ export const listPayments = /* GraphQL */ `
         product {
           id
           price
+          pricePer
           name
           description
           confirmationMsg
@@ -834,6 +850,8 @@ export const listPayments = /* GraphQL */ `
           marketingDescription
           groupsIncluded
           enabled
+          isStripe
+          isPaypal
           createdAt
           updatedAt
         }
@@ -851,13 +869,10 @@ export const listPayments = /* GraphQL */ `
           phone
           owner
           mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
           hasPaidState
           profileState
-          address
-          city
-          province
-          postalCode
-          country
           aboutMeShort
           aboutMeLong
           interests
@@ -1101,13 +1116,18 @@ export const getCourseBackOfficeStaff = /* GraphQL */ `
         phone
         owner
         mainUserGroup
+        stripeCustomerID
+        stripeSubscriptionID
         hasPaidState
         profileState
-        address
-        city
-        province
-        postalCode
-        country
+        billingAddress {
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
         location {
           latitude
           longitude
@@ -1221,13 +1241,10 @@ export const listCourseBackOfficeStaffs = /* GraphQL */ `
           phone
           owner
           mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
           hasPaidState
           profileState
-          address
-          city
-          province
-          postalCode
-          country
           aboutMeShort
           aboutMeLong
           interests
@@ -1291,13 +1308,18 @@ export const getCourseInstructors = /* GraphQL */ `
         phone
         owner
         mainUserGroup
+        stripeCustomerID
+        stripeSubscriptionID
         hasPaidState
         profileState
-        address
-        city
-        province
-        postalCode
-        country
+        billingAddress {
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
         location {
           latitude
           longitude
@@ -1411,13 +1433,10 @@ export const listCourseInstructorss = /* GraphQL */ `
           phone
           owner
           mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
           hasPaidState
           profileState
-          address
-          city
-          province
-          postalCode
-          country
           aboutMeShort
           aboutMeLong
           interests
@@ -1481,13 +1500,18 @@ export const getCourseTriadCoaches = /* GraphQL */ `
         phone
         owner
         mainUserGroup
+        stripeCustomerID
+        stripeSubscriptionID
         hasPaidState
         profileState
-        address
-        city
-        province
-        postalCode
-        country
+        billingAddress {
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
         location {
           latitude
           longitude
@@ -1596,13 +1620,10 @@ export const listCourseTriadCoachess = /* GraphQL */ `
           phone
           owner
           mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
           hasPaidState
           profileState
-          address
-          city
-          province
-          postalCode
-          country
           aboutMeShort
           aboutMeLong
           interests
@@ -1666,13 +1687,18 @@ export const getCourseTriadUsers = /* GraphQL */ `
         phone
         owner
         mainUserGroup
+        stripeCustomerID
+        stripeSubscriptionID
         hasPaidState
         profileState
-        address
-        city
-        province
-        postalCode
-        country
+        billingAddress {
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
         location {
           latitude
           longitude
@@ -1785,13 +1811,10 @@ export const listCourseTriadUserss = /* GraphQL */ `
           phone
           owner
           mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
           hasPaidState
           profileState
-          address
-          city
-          province
-          postalCode
-          country
           aboutMeShort
           aboutMeLong
           interests
@@ -2029,13 +2052,18 @@ export const getDirectMessageUser = /* GraphQL */ `
         phone
         owner
         mainUserGroup
+        stripeCustomerID
+        stripeSubscriptionID
         hasPaidState
         profileState
-        address
-        city
-        province
-        postalCode
-        country
+        billingAddress {
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
         location {
           latitude
           longitude
@@ -2146,13 +2174,10 @@ export const listDirectMessageUsers = /* GraphQL */ `
           phone
           owner
           mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
           hasPaidState
           profileState
-          address
-          city
-          province
-          postalCode
-          country
           aboutMeShort
           aboutMeLong
           interests
@@ -2276,13 +2301,18 @@ export const getDirectMessage = /* GraphQL */ `
         phone
         owner
         mainUserGroup
+        stripeCustomerID
+        stripeSubscriptionID
         hasPaidState
         profileState
-        address
-        city
-        province
-        postalCode
-        country
+        billingAddress {
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
         location {
           latitude
           longitude
@@ -2393,13 +2423,10 @@ export const listDirectMessages = /* GraphQL */ `
           phone
           owner
           mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
           hasPaidState
           profileState
-          address
-          city
-          province
-          postalCode
-          country
           aboutMeShort
           aboutMeLong
           interests
@@ -2509,13 +2536,10 @@ export const getMessage = /* GraphQL */ `
           phone
           owner
           mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
           hasPaidState
           profileState
-          address
-          city
-          province
-          postalCode
-          country
           aboutMeShort
           aboutMeLong
           interests
@@ -2546,13 +2570,18 @@ export const getMessage = /* GraphQL */ `
         phone
         owner
         mainUserGroup
+        stripeCustomerID
+        stripeSubscriptionID
         hasPaidState
         profileState
-        address
-        city
-        province
-        postalCode
-        country
+        billingAddress {
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
         location {
           latitude
           longitude
@@ -2680,13 +2709,10 @@ export const listMessages = /* GraphQL */ `
           phone
           owner
           mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
           hasPaidState
           profileState
-          address
-          city
-          province
-          postalCode
-          country
           aboutMeShort
           aboutMeLong
           interests
@@ -3239,6 +3265,7 @@ export const getProduct = /* GraphQL */ `
     getProduct(id: $id) {
       id
       price
+      pricePer
       name
       description
       confirmationMsg
@@ -3260,6 +3287,13 @@ export const getProduct = /* GraphQL */ `
       marketingDescription
       groupsIncluded
       enabled
+      isStripe
+      isPaypal
+      tiered {
+        name
+        stripePaymentID
+        stripeIsTiered
+      }
       createdAt
       updatedAt
     }
@@ -3275,6 +3309,7 @@ export const listProducts = /* GraphQL */ `
       items {
         id
         price
+        pricePer
         name
         description
         confirmationMsg
@@ -3286,6 +3321,13 @@ export const listProducts = /* GraphQL */ `
         marketingDescription
         groupsIncluded
         enabled
+        isStripe
+        isPaypal
+        tiered {
+          name
+          stripePaymentID
+          stripeIsTiered
+        }
         createdAt
         updatedAt
       }
@@ -3411,13 +3453,10 @@ export const groupMemberByGroup = /* GraphQL */ `
           phone
           owner
           mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
           hasPaidState
           profileState
-          address
-          city
-          province
-          postalCode
-          country
           aboutMeShort
           aboutMeLong
           interests
@@ -3496,13 +3535,10 @@ export const groupMemberByUser = /* GraphQL */ `
           phone
           owner
           mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
           hasPaidState
           profileState
-          address
-          city
-          province
-          postalCode
-          country
           aboutMeShort
           aboutMeLong
           interests
@@ -3617,13 +3653,10 @@ export const groupByType = /* GraphQL */ `
           phone
           owner
           mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
           hasPaidState
           profileState
-          address
-          city
-          province
-          postalCode
-          country
           aboutMeShort
           aboutMeLong
           interests
@@ -3669,6 +3702,7 @@ export const paymentByUser = /* GraphQL */ `
         product {
           id
           price
+          pricePer
           name
           description
           confirmationMsg
@@ -3677,6 +3711,8 @@ export const paymentByUser = /* GraphQL */ `
           marketingDescription
           groupsIncluded
           enabled
+          isStripe
+          isPaypal
           createdAt
           updatedAt
         }
@@ -3694,13 +3730,10 @@ export const paymentByUser = /* GraphQL */ `
           phone
           owner
           mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
           hasPaidState
           profileState
-          address
-          city
-          province
-          postalCode
-          country
           aboutMeShort
           aboutMeLong
           interests
@@ -3760,13 +3793,10 @@ export const courseTriadUserByUser = /* GraphQL */ `
           phone
           owner
           mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
           hasPaidState
           profileState
-          address
-          city
-          province
-          postalCode
-          country
           aboutMeShort
           aboutMeLong
           interests
@@ -3830,13 +3860,10 @@ export const dmUsersByUser = /* GraphQL */ `
           phone
           owner
           mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
           hasPaidState
           profileState
-          address
-          city
-          province
-          postalCode
-          country
           aboutMeShort
           aboutMeLong
           interests
@@ -3904,13 +3931,10 @@ export const directMessagesByRoom = /* GraphQL */ `
           phone
           owner
           mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
           hasPaidState
           profileState
-          address
-          city
-          province
-          postalCode
-          country
           aboutMeShort
           aboutMeLong
           interests
@@ -3995,13 +4019,10 @@ export const messagesByRoom = /* GraphQL */ `
           phone
           owner
           mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
           hasPaidState
           profileState
-          address
-          city
-          province
-          postalCode
-          country
           aboutMeShort
           aboutMeLong
           interests
@@ -4032,12 +4053,14 @@ export const searchGroups = /* GraphQL */ `
     $sort: SearchableGroupSortInput
     $limit: Int
     $nextToken: String
+    $from: Int
   ) {
     searchGroups(
       filter: $filter
       sort: $sort
       limit: $limit
       nextToken: $nextToken
+      from: $from
     ) {
       items {
         id
@@ -4112,13 +4135,10 @@ export const searchGroups = /* GraphQL */ `
           phone
           owner
           mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
           hasPaidState
           profileState
-          address
-          city
-          province
-          postalCode
-          country
           aboutMeShort
           aboutMeLong
           interests
@@ -4159,13 +4179,18 @@ export const listUsers = /* GraphQL */ `
         phone
         owner
         mainUserGroup
+        stripeCustomerID
+        stripeSubscriptionID
         hasPaidState
         profileState
-        address
-        city
-        province
-        postalCode
-        country
+        billingAddress {
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
         location {
           latitude
           longitude
@@ -4254,13 +4279,18 @@ export const getUser = /* GraphQL */ `
       phone
       owner
       mainUserGroup
+      stripeCustomerID
+      stripeSubscriptionID
       hasPaidState
       profileState
-      address
-      city
-      province
-      postalCode
-      country
+      billingAddress {
+        city
+        country
+        line1
+        line2
+        postal_code
+        state
+      }
       location {
         latitude
         longitude
@@ -4445,12 +4475,14 @@ export const searchUsers = /* GraphQL */ `
     $sort: SearchableUserSortInput
     $limit: Int
     $nextToken: String
+    $from: Int
   ) {
     searchUsers(
       filter: $filter
       sort: $sort
       limit: $limit
       nextToken: $nextToken
+      from: $from
     ) {
       items {
         id
@@ -4460,13 +4492,18 @@ export const searchUsers = /* GraphQL */ `
         phone
         owner
         mainUserGroup
+        stripeCustomerID
+        stripeSubscriptionID
         hasPaidState
         profileState
-        address
-        city
-        province
-        postalCode
-        country
+        billingAddress {
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
         location {
           latitude
           longitude

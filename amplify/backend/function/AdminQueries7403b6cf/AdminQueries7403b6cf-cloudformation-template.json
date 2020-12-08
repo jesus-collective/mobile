@@ -68,7 +68,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-jc-mobile-beta-155138-deployment",
-          "S3Key": "amplify-builds/AdminQueries7403b6cf-72704968777277764575-build.zip"
+          "S3Key": "amplify-builds/AdminQueries7403b6cf-322b696958486b766a46-build.zip"
         }
       }
     },
@@ -164,6 +164,7 @@
                 "cognito-idp:AdminGetUser",
                 "cognito-idp:AdminConfirmSignUp",
                 "cognito-idp:ListUsers",
+                "cognito-idp:ListGroups",
                 "cognito-idp:AdminUpdateUserAttributes"
               ],
               "Resource": {
