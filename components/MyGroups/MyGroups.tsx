@@ -1,74 +1,65 @@
-import {
-  Left,
-  Body,
-  StyleProvider,
-  Card,
-  CardItem,
-  ListItem,
-  Right,
-  Container,
-} from "native-base";
-import JCButton, { ButtonTypes } from "../../components/Forms/JCButton";
-import * as React from "react";
-import { Text, Dimensions, View, Modal } from "react-native";
-import getTheme from "../../native-base-theme/components";
-import { Image } from "react-native";
-import * as customQueries from "../../src/graphql-custom/queries";
-import * as queries from "../../src/graphql/queries";
-import * as mutations from "../../src/graphql/mutations";
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native";
-import { API, Auth, Analytics } from "aws-amplify";
-import ProfileImage from "../../components/ProfileImage/ProfileImage";
-import { TouchableOpacity } from "react-native";
-import { constants } from "../../src/constants";
-import ErrorBoundry from "../../components/ErrorBoundry";
-import moment from "moment-timezone";
-import JCComponent, { JCState } from "../JCComponent/JCComponent";
-import { Tooltip } from "@material-ui/core";
-import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext";
+import { Left, Body, StyleProvider, Card, CardItem, ListItem, Right, Container } from "native-base"
+import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
+import * as React from "react"
+import { Text, Dimensions, View, Modal } from "react-native"
+import getTheme from "../../native-base-theme/components"
+import { Image } from "react-native"
+import * as customQueries from "../../src/graphql-custom/queries"
+import * as queries from "../../src/graphql/queries"
+import * as mutations from "../../src/graphql/mutations"
+import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import { API, Auth, Analytics } from "aws-amplify"
+import ProfileImage from "../../components/ProfileImage/ProfileImage"
+import { TouchableOpacity } from "react-native"
+import { constants } from "../../src/constants"
+import ErrorBoundry from "../../components/ErrorBoundry"
+import moment from "moment-timezone"
+import JCComponent, { JCState } from "../JCComponent/JCComponent"
+import { Tooltip } from "@material-ui/core"
+import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 
 interface Props {
-  navigation: any;
-  wrap: boolean;
-  type: string;
-  showMore: boolean;
-  onDataload(mapData: MapData[]): void;
-  showMy?: boolean;
+  navigation: any
+  wrap: boolean
+  type: string
+  showMore: boolean
+  onDataload(mapData: MapData[]): void
+  showMy?: boolean
 }
 interface State extends JCState {
-  myFilter: boolean;
-  eventFilter: boolean;
-  myTitleScreen: string;
-  openSingle: string;
-  openMultiple: string;
-  type: string;
-  cardWidth: any;
-  createString: string;
-  titleString: string;
-  data: any;
-  showCreateButton: boolean;
-  currentUser: string;
-  nextToken: string | null;
-  canLeave: any;
-  isOwner: any;
-  canPay: any;
-  isPaid: any;
+  myFilter: boolean
+  eventFilter: boolean
+  myTitleScreen: string
+  openSingle: string
+  openMultiple: string
+  type: string
+  cardWidth: any
+  createString: string
+  titleString: string
+  data: any
+  showCreateButton: boolean
+  currentUser: string
+  nextToken: string | null
+  canLeave: any
+  isOwner: any
+  canPay: any
+  isPaid: any
 
-  joinCourse: any;
+  joinCourse: any
 }
 export interface MapData {
-  latitude: any;
-  longitude: any;
-  name: string;
-  user?: any;
-  event?: any;
-  link: string;
-  type: any;
+  latitude: any
+  longitude: any
+  name: string
+  user?: any
+  event?: any
+  link: string
+  type: any
 }
 
 export default class MyGroups extends JCComponent<Props, State> {
   constructor(props: Props) {
-    super(props);
+    super(props)
     if (props.type == "event") {
       this.state = {
         ...super.getInitialState(),
@@ -90,7 +81,7 @@ export default class MyGroups extends JCComponent<Props, State> {
         joinCourse: null,
         canPay: [],
         isPaid: [],
-      };
+      }
     } else if (props.type == "group") {
       this.state = {
         ...super.getInitialState(),
@@ -112,7 +103,7 @@ export default class MyGroups extends JCComponent<Props, State> {
         joinCourse: null,
         canPay: [],
         isPaid: [],
-      };
+      }
     } else if (props.type == "resource") {
       this.state = {
         ...super.getInitialState(),
@@ -134,7 +125,7 @@ export default class MyGroups extends JCComponent<Props, State> {
         joinCourse: null,
         canPay: [],
         isPaid: [],
-      };
+      }
     } else if (props.type == "organization") {
       this.state = {
         ...super.getInitialState(),
@@ -156,7 +147,7 @@ export default class MyGroups extends JCComponent<Props, State> {
         joinCourse: null,
         canPay: [],
         isPaid: [],
-      };
+      }
     } else if (props.type == "course") {
       this.state = {
         ...super.getInitialState(),
@@ -178,7 +169,7 @@ export default class MyGroups extends JCComponent<Props, State> {
         joinCourse: null,
         canPay: [],
         isPaid: [],
-      };
+      }
     } else if (props.type == "profile") {
       this.state = {
         ...super.getInitialState(),
@@ -200,7 +191,7 @@ export default class MyGroups extends JCComponent<Props, State> {
         joinCourse: null,
         canPay: [],
         isPaid: [],
-      };
+      }
     } else {
       this.state = {
         ...super.getInitialState(),
@@ -222,91 +213,69 @@ export default class MyGroups extends JCComponent<Props, State> {
         joinCourse: null,
         canPay: [],
         isPaid: [],
-      };
+      }
     }
   }
   componentDidMount(): void {
-    this.setInitialData(this.props);
+    this.setInitialData(this.props)
 
-    const user = Auth.currentAuthenticatedUser();
+    const user = Auth.currentAuthenticatedUser()
     user.then((user: any) => {
-      this.setState({ currentUser: user.username });
+      this.setState({ currentUser: user.username })
       if (this.props.type != "profile")
         this.setState({
           showCreateButton:
             this.props.type == "resource"
-              ? user
-                  .getSignInUserSession()
-                  .accessToken.payload["cognito:groups"]?.includes("admin")
+              ? user.getSignInUserSession().accessToken.payload["cognito:groups"]?.includes("admin")
               : this.props.type == "course"
               ? user
                   .getSignInUserSession()
-                  .accessToken.payload["cognito:groups"]?.includes(
-                    "courseAdmin"
-                  ) ||
-                user.signInUserSession.accessToken.payload[
-                  "cognito:groups"
-                ]?.includes("admin")
+                  .accessToken.payload["cognito:groups"]?.includes("courseAdmin") ||
+                user.signInUserSession.accessToken.payload["cognito:groups"]?.includes("admin")
               : this.props.type == "organization"
-              ? user
-                  .getSignInUserSession()
-                  .accessToken.payload["cognito:groups"]?.includes("admin")
+              ? user.getSignInUserSession().accessToken.payload["cognito:groups"]?.includes("admin")
               : user
                   .getSignInUserSession()
-                  .accessToken.payload["cognito:groups"]?.includes(
-                    "verifiedUsers"
-                  ),
-        });
-    });
+                  .accessToken.payload["cognito:groups"]?.includes("verifiedUsers"),
+        })
+    })
   }
 
   convertProfileToMapData(data: any, isOrg?: boolean): MapData[] {
     if (isOrg) {
       return data
         .map((dataItem) => {
-          if (
-            dataItem.location &&
-            dataItem.location.latitude &&
-            dataItem.location.longitude
-          )
+          if (dataItem.location && dataItem.location.latitude && dataItem.location.longitude)
             return {
               latitude:
-                Number(dataItem.location.latitude) +
-                Number(dataItem.location.randomLatitude),
+                Number(dataItem.location.latitude) + Number(dataItem.location.randomLatitude),
               longitude:
-                Number(dataItem.location.longitude) +
-                Number(dataItem.location.randomLongitude),
+                Number(dataItem.location.longitude) + Number(dataItem.location.randomLongitude),
               name: dataItem.orgName,
               user: dataItem,
               link: "",
               type: "organization",
-            } as MapData;
-          else return null;
+            } as MapData
+          else return null
         })
-        .filter((o) => o);
+        .filter((o) => o)
     } else {
       return data
         .map((dataItem) => {
-          if (
-            dataItem.location &&
-            dataItem.location.latitude &&
-            dataItem.location.longitude
-          )
+          if (dataItem.location && dataItem.location.latitude && dataItem.location.longitude)
             return {
               latitude:
-                Number(dataItem.location.latitude) +
-                Number(dataItem.location.randomLatitude),
+                Number(dataItem.location.latitude) + Number(dataItem.location.randomLatitude),
               longitude:
-                Number(dataItem.location.longitude) +
-                Number(dataItem.location.randomLongitude),
+                Number(dataItem.location.longitude) + Number(dataItem.location.randomLongitude),
               name: dataItem.given_name + " " + dataItem.family_name,
               user: dataItem,
               link: "",
               type: "profile",
-            } as MapData;
-          else return null;
+            } as MapData
+          else return null
         })
-        .filter((o) => o);
+        .filter((o) => o)
     }
   }
 
@@ -327,25 +296,25 @@ export default class MyGroups extends JCComponent<Props, State> {
             event: dataItem,
             link: "",
             type: "event",
-          } as MapData;
-        else return null;
+          } as MapData
+        else return null
       })
-      .filter((o) => o);
+      .filter((o) => o)
   }
   convertToMapData(data: any): MapData[] {
     switch (this.state.type) {
       case "group":
-        return [];
+        return []
       case "event":
-        return this.convertEventToMapData(data);
+        return this.convertEventToMapData(data)
       case "resource":
-        return [];
+        return []
       case "organization":
-        return this.convertProfileToMapData(data, true);
+        return this.convertProfileToMapData(data, true)
       case "course":
-        return [];
+        return []
       case "profile":
-        return this.convertProfileToMapData(data);
+        return this.convertProfileToMapData(data)
     }
   }
   setInitialData(props: Props): void {
@@ -358,23 +327,22 @@ export default class MyGroups extends JCComponent<Props, State> {
           nextToken: this.state.nextToken,
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      });
+      })
       const processList = (json: any) => {
-        let temp: any[];
-        if (this.state.data)
-          temp = [...this.state.data, ...json.data.listUsers.items];
-        else temp = [...json.data.listUsers.items];
+        let temp: any[]
+        if (this.state.data) temp = [...this.state.data, ...json.data.listUsers.items]
+        else temp = [...json.data.listUsers.items]
         this.setState(
           {
             data: temp,
             nextToken: json.data.listUsers.nextToken,
           },
           () => {
-            this.props.onDataload(this.convertToMapData(this.state.data));
+            this.props.onDataload(this.convertToMapData(this.state.data))
           }
-        );
-      };
-      listUsers.then(processList).catch(processList);
+        )
+      }
+      listUsers.then(processList).catch(processList)
     } else if (props.type == "organization") {
       const listOrgs: any = API.graphql({
         query: queries.listOrganizations,
@@ -384,22 +352,22 @@ export default class MyGroups extends JCComponent<Props, State> {
           nextToken: this.state.nextToken,
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      });
+      })
 
       const processList = (json) => {
-        console.log({ profile: json });
-        const temp = [...this.state.data, ...json.data.listOrganizations.items];
+        console.log({ profile: json })
+        const temp = [...this.state.data, ...json.data.listOrganizations.items]
         this.setState(
           {
             data: temp,
             nextToken: json.data.listOrganizations.nextToken,
           },
           () => {
-            this.props.onDataload(this.convertToMapData(this.state.data));
+            this.props.onDataload(this.convertToMapData(this.state.data))
           }
-        );
-      };
-      listOrgs.then(processList).catch(processList);
+        )
+      }
+      listOrgs.then(processList).catch(processList)
     } else {
       const listGroup: any = API.graphql({
         query: customQueries.groupByTypeForMyGroups,
@@ -409,80 +377,76 @@ export default class MyGroups extends JCComponent<Props, State> {
           nextToken: this.state.nextToken,
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      });
+      })
 
       const processList = (json: any) => {
-        this.setCanPay(json.data.groupByType.items);
-        this.setIsPaid(json.data.groupByType.items);
-        this.setCanLeave(json.data.groupByType.items);
-        this.setIsOwner(json.data.groupByType.items);
-        let temp: any[];
-        if (this.state.data)
-          temp = [...this.state.data, ...json.data.groupByType.items];
-        else temp = [...json.data.groupByType.items];
+        this.setCanPay(json.data.groupByType.items)
+        this.setIsPaid(json.data.groupByType.items)
+        this.setCanLeave(json.data.groupByType.items)
+        this.setIsOwner(json.data.groupByType.items)
+        let temp: any[]
+        if (this.state.data) temp = [...this.state.data, ...json.data.groupByType.items]
+        else temp = [...json.data.groupByType.items]
         this.setState(
           {
             data: temp,
             nextToken: json.data.groupByType.nextToken,
           },
           async () => {
-            this.props.onDataload(this.convertToMapData(this.state.data));
+            this.props.onDataload(this.convertToMapData(this.state.data))
           }
-        );
-      };
-      listGroup.then(processList).catch(processList);
+        )
+      }
+      listGroup.then(processList).catch(processList)
     }
   }
 
   canCourseQuickOpen(userActions: UserActions, id: string) {
-    if (this.isOwner(id)) return false;
-    else if (this.isCourseCoach(userActions, id)) return false;
-    else if (this.isCourseAdmin(userActions, id)) return false;
-    else if (this.canCoursePay(id)) return false;
-    else if (this.isCoursePaid(id)) return true;
-    else if (this.canCourseApply(id)) return false;
-    else return false;
+    if (this.isOwner(id)) return false
+    else if (this.isCourseCoach(userActions, id)) return false
+    else if (this.isCourseAdmin(userActions, id)) return false
+    else if (this.canCoursePay(id)) return false
+    else if (this.isCoursePaid(id)) return true
+    else if (this.canCourseApply(id)) return false
+    else return false
   }
   openSingle(userActions: UserActions, id: string): void {
-    console.log({ "Navigate to": this.state.openSingle });
-    if (
-      this.state.openSingle == "CourseOverviewScreen" &&
-      this.canCourseQuickOpen(userActions, id)
-    )
-      this.props.navigation.push("CourseHomeScreen", { id: id, create: false });
+    console.log({ "Navigate to": this.state.openSingle })
+    if (this.state.openSingle == "CourseOverviewScreen" && this.canCourseQuickOpen(userActions, id))
+      this.props.navigation.push("CourseHomeScreen", { id: id, create: false })
     else
       this.props.navigation.push(this.state.openSingle, {
         id: id,
         create: false,
-      });
+      })
   }
   createSingle(): void {
-    console.log({ "Navigate to": this.state.openSingle });
-    this.props.navigation.push(this.state.openSingle, { create: true });
+    console.log({ "Navigate to": this.state.openSingle })
+    this.props.navigation.push(this.state.openSingle, { create: true })
   }
   openMultiple(): void {
-    console.log({ "Navigate to": this.state.openMultiple });
-    this.props.navigation.push(this.state.openMultiple);
+    console.log({ "Navigate to": this.state.openMultiple })
+    this.props.navigation.push(this.state.openMultiple)
   }
   async setCanPay(data: any): Promise<void> {
     const courseTriadUserByUser: any = API.graphql({
       query: queries.courseTriadUserByUser,
       variables: { userID: this.state.currentUser },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    });
+    })
     courseTriadUserByUser
       .then((json: any) => {
-        console.log(json);
+        console.log(json)
         json.data.courseTriadUserByUser.items.map((item: any) => {
-          console.log(item.triad.courseInfoID);
+          console.log(item.triad.courseInfoID)
           this.setState({
             canPay: this.state.canPay.concat([item.triad.courseInfoID]),
-          });
-        });
+          })
+        })
       })
       .catch((err: any) => {
-        console.log({ "Error query.getPayment": err });
-      });
+        console.log({ "Error query.getPayment": err })
+      })
   }
   async setIsPaid(data: any): Promise<void> {
     data.forEach((item: any) => {
@@ -490,18 +454,18 @@ export default class MyGroups extends JCComponent<Props, State> {
         query: queries.getPayment,
         variables: { id: item.id + "-" + this.state.currentUser },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      });
+      })
       getPayment
         .then((json: any) => {
-          console.log(json);
+          console.log(json)
           if (json.data.getPayment != null) {
-            this.setState({ isPaid: this.state.isPaid.concat([item.id]) });
+            this.setState({ isPaid: this.state.isPaid.concat([item.id]) })
           }
         })
         .catch((err: any) => {
-          console.log({ "Error query.getPayment": err });
-        });
-    });
+          console.log({ "Error query.getPayment": err })
+        })
+    })
     //console.log({ isPaid: this.state.isPaid })
   }
   async setCanLeave(data: any): Promise<void> {
@@ -510,17 +474,17 @@ export default class MyGroups extends JCComponent<Props, State> {
         query: queries.groupMemberByUser,
         variables: { userID: this.state.currentUser, groupID: { eq: item.id } },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      });
+      })
       groupMemberByUser
         .then((json: any) => {
           if (json.data.groupMemberByUser.items.length > 0) {
-            this.setState({ canLeave: this.state.canLeave.concat([item.id]) });
+            this.setState({ canLeave: this.state.canLeave.concat([item.id]) })
           }
         })
         .catch((err: any) => {
-          console.log({ "Error query.groupMemberByUser": err });
-        });
-    });
+          console.log({ "Error query.groupMemberByUser": err })
+        })
+    })
   }
 
   async setIsOwner(data: any): Promise<void> {
@@ -529,32 +493,32 @@ export default class MyGroups extends JCComponent<Props, State> {
         query: customQueries.getGroupForOwner,
         variables: { id: item.id },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      });
+      })
       getGroup
         .then((json: any) => {
           if (json.data.getGroup.owner === this.state.currentUser) {
-            this.setState({ isOwner: this.state.isOwner.concat([item.id]) });
+            this.setState({ isOwner: this.state.isOwner.concat([item.id]) })
           }
         })
         .catch((err: any) => {
-          console.log({ "Error query.getGroup": err });
-        });
-    });
+          console.log({ "Error query.getGroup": err })
+        })
+    })
   }
   canLeave(id: string): boolean {
-    const test = this.state.canLeave.filter((elem: any) => elem === id);
-    if (test.length > 0) return true;
-    else return false;
+    const test = this.state.canLeave.filter((elem: any) => elem === id)
+    if (test.length > 0) return true
+    else return false
   }
   canJoin(id: string): boolean {
-    const test = this.state.canLeave.filter((elem: any) => elem === id);
-    if (test.length > 0) return false;
-    else return true;
+    const test = this.state.canLeave.filter((elem: any) => elem === id)
+    if (test.length > 0) return false
+    else return true
   }
   isOwner(id: string): boolean {
-    const test = this.state.isOwner.filter((elem: any) => elem === id);
-    if (test.length > 0) return true;
-    else return false;
+    const test = this.state.isOwner.filter((elem: any) => elem === id)
+    if (test.length > 0) return true
+    else return false
   }
 
   join(userActions: UserActions, group: any, groupType: string): void {
@@ -562,7 +526,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       name: "joined" + groupType,
       // Attribute values must be strings
       attributes: { id: group.id, name: group.name },
-    });
+    })
 
     const createGroupMember: any = API.graphql({
       query: mutations.createGroupMember,
@@ -570,93 +534,87 @@ export default class MyGroups extends JCComponent<Props, State> {
         input: { groupID: group.id, userID: this.state.currentUser },
       },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    });
+    })
     createGroupMember
       .then((json: any) => {
-        console.log({ "Success mutations.createGroupMember": json });
+        console.log({ "Success mutations.createGroupMember": json })
       })
       .catch((err: any) => {
-        console.log({ "Error mutations.createGroupMember": err });
-      });
+        console.log({ "Error mutations.createGroupMember": err })
+      })
 
-    this.setState({ canLeave: this.state.canLeave.concat([group.id]) });
-    this.renderByType(userActions, group, groupType);
+    this.setState({ canLeave: this.state.canLeave.concat([group.id]) })
+    this.renderByType(userActions, group, groupType)
   }
   openConversation(initialUser: string, name: string): void {
-    console.log("Navigate to conversationScreen");
+    console.log("Navigate to conversationScreen")
     this.props.navigation.push("ConversationScreen", {
       initialUserID: initialUser,
       initialUserName: name,
-    });
+    })
   }
   leave(userActions: UserActions, group: any, groupType: string): void {
     Analytics.record({
       name: "left" + groupType,
       // Attribute values must be strings
       attributes: { id: group.id, name: group.name },
-    });
+    })
     const groupMemberByUser: any = API.graphql({
       query: queries.groupMemberByUser,
       variables: { userID: this.state.currentUser, groupID: { eq: group.id } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    });
+    })
     groupMemberByUser
       .then((json: any) => {
-        console.log({ "Success queries.groupMemberByUser": json });
+        console.log({ "Success queries.groupMemberByUser": json })
 
         json.data.groupMemberByUser.items.map((item: any) => {
           const deleteGroupMember: any = API.graphql({
             query: mutations.deleteGroupMember,
             variables: { input: { id: item.id } },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          });
+          })
           deleteGroupMember
             .then((json: any) => {
-              console.log({ "Success mutations.deleteGroupMember": json });
+              console.log({ "Success mutations.deleteGroupMember": json })
             })
             .catch((err: Error) => {
-              console.log({ "Error mutations.deleteGroupMember": err });
-            });
-        });
+              console.log({ "Error mutations.deleteGroupMember": err })
+            })
+        })
 
-        const index = this.state.canLeave.indexOf(group.id);
-        const canLeave = this.state.canLeave;
-        canLeave.splice(index, 1);
-        this.setState({ canLeave: canLeave });
-        this.renderByType(userActions, group, groupType);
+        const index = this.state.canLeave.indexOf(group.id)
+        const canLeave = this.state.canLeave
+        canLeave.splice(index, 1)
+        this.setState({ canLeave: canLeave })
+        this.renderByType(userActions, group, groupType)
       })
       .catch((err: Error) => {
-        console.log({ "Error queries.groupMemberByUser": err });
-      });
+        console.log({ "Error queries.groupMemberByUser": err })
+      })
   }
 
-  renderByType(
-    userActions: UserActions,
-    item: any,
-    type: string
-  ): React.ReactNode {
+  renderByType(userActions: UserActions, item: any, type: string): React.ReactNode {
     switch (type) {
       case "group":
-        return this.renderGroup(userActions, item);
+        return this.renderGroup(userActions, item)
       case "event":
-        return this.renderEvent(userActions, item);
+        return this.renderEvent(userActions, item)
       case "resource":
-        return this.renderResource(userActions, item);
+        return this.renderResource(userActions, item)
       case "organization":
-        return this.renderOrganization(item);
+        return this.renderOrganization(item)
       case "course":
-        return this.renderCourse(userActions, item);
+        return this.renderCourse(userActions, item)
       case "profile":
-        return this.renderProfile(item);
+        return this.renderProfile(item)
     }
   }
 
   renderGroup(userActions: UserActions, item: any): React.ReactNode {
     return (
       <Tooltip title={item.name}>
-        <Card
-          style={[this.styles.style.groupCard, { width: this.state.cardWidth }]}
-        >
+        <Card style={[this.styles.style.groupCard, { width: this.state.cardWidth }]}>
           <CardItem
             style={{
               paddingLeft: 0,
@@ -677,11 +635,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                   justifyContent: "flex-end",
                 }}
               >
-                <Text
-                  ellipsizeMode="tail"
-                  numberOfLines={1}
-                  style={this.styles.style.sponsoredTag}
-                >
+                <Text ellipsizeMode="tail" numberOfLines={1} style={this.styles.style.sponsoredTag}>
                   sponsored
                 </Text>
                 <Image
@@ -733,11 +687,7 @@ export default class MyGroups extends JCComponent<Props, State> {
             </CardItem>
           )}
           <CardItem style={{ height: 100 }}>
-            <Text
-              ellipsizeMode="tail"
-              numberOfLines={3}
-              style={this.styles.style.fontDetailMiddle}
-            >
+            <Text ellipsizeMode="tail" numberOfLines={3} style={this.styles.style.fontDetailMiddle}>
               {item.description}
             </Text>
           </CardItem>
@@ -761,7 +711,7 @@ export default class MyGroups extends JCComponent<Props, State> {
               <JCButton
                 buttonType={ButtonTypes.Solid}
                 onPress={() => {
-                  this.join(userActions, item, "Group");
+                  this.join(userActions, item, "Group")
                 }}
               >
                 Join
@@ -774,7 +724,7 @@ export default class MyGroups extends JCComponent<Props, State> {
               <JCButton
                 buttonType={ButtonTypes.Solid}
                 onPress={() => {
-                  this.leave(userActions, item, "Group");
+                  this.leave(userActions, item, "Group")
                 }}
               >
                 Leave
@@ -792,7 +742,7 @@ export default class MyGroups extends JCComponent<Props, State> {
           ) : null}
         </Card>
       </Tooltip>
-    );
+    )
   }
   renderProfile(item: any): React.ReactNode {
     return (
@@ -804,16 +754,11 @@ export default class MyGroups extends JCComponent<Props, State> {
               <Text style={this.styles.style.fontConnectWithName}>
                 {item.given_name} {item.family_name}
               </Text>
-              <Text style={this.styles.style.fontConnectWithRole}>
-                {item.currentRole}
-              </Text>
+              <Text style={this.styles.style.fontConnectWithRole}>{item.currentRole}</Text>
               <JCButton
                 buttonType={ButtonTypes.OutlineSmall}
                 onPress={() => {
-                  this.openConversation(
-                    item.id,
-                    item.user.given_name + " " + item.user.family_name
-                  );
+                  this.openConversation(item.id, item.user.given_name + " " + item.user.family_name)
                 }}
               >
                 Start Conversation
@@ -822,15 +767,13 @@ export default class MyGroups extends JCComponent<Props, State> {
           </Left>
         </CardItem>
       </Card>
-    );
+    )
   }
   renderEvent(userActions: UserActions, item: any): React.ReactNode {
-    const zone = moment.tz.guess();
+    const zone = moment.tz.guess()
     return (
       <Tooltip title={item.name}>
-        <Card
-          style={[this.styles.style.eventCard, { width: this.state.cardWidth }]}
-        >
+        <Card style={[this.styles.style.eventCard, { width: this.state.cardWidth }]}>
           <CardItem
             style={{
               paddingLeft: 0,
@@ -851,11 +794,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                   justifyContent: "flex-end",
                 }}
               >
-                <Text
-                  ellipsizeMode="tail"
-                  numberOfLines={1}
-                  style={this.styles.style.sponsoredTag}
-                >
+                <Text ellipsizeMode="tail" numberOfLines={1} style={this.styles.style.sponsoredTag}>
                   sponsored
                 </Text>
                 <Image
@@ -874,30 +813,19 @@ export default class MyGroups extends JCComponent<Props, State> {
             ) : null}
           </CardItem>
           <CardItem style={{ paddingTop: 0 }}>
-            <Text
-              numberOfLines={1}
-              style={[this.styles.style.fontDetailTop, { paddingTop: 0 }]}
-            >
+            <Text numberOfLines={1} style={[this.styles.style.fontDetailTop, { paddingTop: 0 }]}>
               {moment.tz(item.time, zone).format("ddd, MMM D, h:mm a")}{" "}
               {moment.tz.zone(zone).abbr(+moment(item.time).format("x"))}
             </Text>
           </CardItem>
           <CardItem style={{ height: 60, marginTop: 8 }}>
-            <Text
-              ellipsizeMode="tail"
-              numberOfLines={3}
-              style={this.styles.style.fontTitle}
-            >
+            <Text ellipsizeMode="tail" numberOfLines={3} style={this.styles.style.fontTitle}>
               {item.name}
             </Text>
           </CardItem>
 
           <CardItem style={{ height: 80 }}>
-            <Text
-              ellipsizeMode="tail"
-              numberOfLines={3}
-              style={this.styles.style.fontDetailMiddle}
-            >
+            <Text ellipsizeMode="tail" numberOfLines={3} style={this.styles.style.fontDetailMiddle}>
               {item.description}
             </Text>
           </CardItem>
@@ -917,8 +845,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                   target="_blank"
                   rel="noreferrer"
                   href={
-                    "https://www.google.com/maps/dir/?api=1&destination=" +
-                    escape(item.location)
+                    "https://www.google.com/maps/dir/?api=1&destination=" + escape(item.location)
                   }
                 >
                   {item.location}
@@ -951,7 +878,7 @@ export default class MyGroups extends JCComponent<Props, State> {
               <JCButton
                 buttonType={ButtonTypes.Solid}
                 onPress={() => {
-                  this.join(userActions, item, "Event");
+                  this.join(userActions, item, "Event")
                 }}
               >
                 Attend
@@ -964,7 +891,7 @@ export default class MyGroups extends JCComponent<Props, State> {
               <JCButton
                 buttonType={ButtonTypes.Solid}
                 onPress={() => {
-                  this.leave(userActions, item, "Event");
+                  this.leave(userActions, item, "Event")
                 }}
               >
                 Don&apos;t Attend
@@ -982,17 +909,12 @@ export default class MyGroups extends JCComponent<Props, State> {
           ) : null}
         </Card>
       </Tooltip>
-    );
+    )
   }
   renderResource(userActions: UserActions, item: any): React.ReactNode {
     return (
       <Tooltip title={item.name}>
-        <Card
-          style={[
-            this.styles.style.resourceCard,
-            { width: this.state.cardWidth },
-          ]}
-        >
+        <Card style={[this.styles.style.resourceCard, { width: this.state.cardWidth }]}>
           <CardItem
             bordered
             style={{
@@ -1015,20 +937,12 @@ export default class MyGroups extends JCComponent<Props, State> {
             ></Image>
           </CardItem>
           <CardItem>
-            <Text
-              ellipsizeMode="tail"
-              numberOfLines={3}
-              style={this.styles.style.fontTitleGroup}
-            >
+            <Text ellipsizeMode="tail" numberOfLines={3} style={this.styles.style.fontTitleGroup}>
               {item.name}
             </Text>
           </CardItem>
           <CardItem>
-            <Text
-              ellipsizeMode="tail"
-              numberOfLines={1}
-              style={this.styles.style.fontDetailMiddle}
-            >
+            <Text ellipsizeMode="tail" numberOfLines={1} style={this.styles.style.fontDetailMiddle}>
               Last Updated: {item.lastupdated}
             </Text>
           </CardItem>
@@ -1037,7 +951,7 @@ export default class MyGroups extends JCComponent<Props, State> {
               <JCButton
                 buttonType={ButtonTypes.Solid}
                 onPress={() => {
-                  this.join(userActions, item, "Resource");
+                  this.join(userActions, item, "Resource")
                 }}
               >
                 Join
@@ -1050,7 +964,7 @@ export default class MyGroups extends JCComponent<Props, State> {
               <JCButton
                 buttonType={ButtonTypes.Solid}
                 onPress={() => {
-                  this.leave(userActions, item, "Resource");
+                  this.leave(userActions, item, "Resource")
                 }}
               >
                 Leave
@@ -1068,26 +982,17 @@ export default class MyGroups extends JCComponent<Props, State> {
           ) : null}
         </Card>
       </Tooltip>
-    );
+    )
   }
   renderOrganization(item: any): React.ReactNode {
     return (
       <Tooltip title={item.orgName}>
-        <Card
-          style={[
-            this.styles.style.resourceCard,
-            { width: this.state.cardWidth },
-          ]}
-        >
+        <Card style={[this.styles.style.resourceCard, { width: this.state.cardWidth }]}>
           <CardItem>
             <ProfileImage size="small" user={item}></ProfileImage>
           </CardItem>
           <CardItem>
-            <Text
-              ellipsizeMode="tail"
-              numberOfLines={3}
-              style={this.styles.style.fontTitle}
-            >
+            <Text ellipsizeMode="tail" numberOfLines={3} style={this.styles.style.fontTitle}>
               {item.orgName}
             </Text>
           </CardItem>
@@ -1099,120 +1004,105 @@ export default class MyGroups extends JCComponent<Props, State> {
           </CardItem>
         </Card>
       </Tooltip>
-    );
+    )
   }
   isCourseCoach(userActions: UserActions, id) {
-    return userActions.isMemberOf("courseCoach");
+    return userActions.isMemberOf("courseCoach")
   }
   isCourseAdmin(userActions: UserActions, id) {
-    return userActions.isMemberOf("courseAdmin");
+    return userActions.isMemberOf("courseAdmin")
   }
   canCourseApply(id) {
-    return false;
+    return false
   }
 
   canCoursePay(id) {
-    const test = this.state.canPay.filter((elem: any) => elem === id);
-    if (test.length > 0) return true && !this.isCoursePaid(id);
-    else return false;
+    const test = this.state.canPay.filter((elem: any) => elem === id)
+    if (test.length > 0) return true && !this.isCoursePaid(id)
+    else return false
   }
   isCoursePaid(id: string) {
-    const test = this.state.isPaid.filter((elem: any) => elem === id);
-    if (test.length > 0) return true;
-    else return false;
+    const test = this.state.isPaid.filter((elem: any) => elem === id)
+    if (test.length > 0) return true
+    else return false
   }
 
   purchase(id: string) {
-    this.props.navigation.push("CoursePaymentScreen", { id: id });
+    this.props.navigation.push("CoursePaymentScreen", { id: id })
   }
 
   applyCourse(item, type) {
-    this.setState({ applyCourse: item });
+    this.setState({ applyCourse: item })
   }
   renderCourseStatus(userActions: UserActions, item: any): React.ReactNode {
     if (this.isOwner(item.id))
       return (
         <CardItem>
-          <Text style={{ fontFamily: "Graphik-Bold-App", color: "#333333" }}>
-            Owner
-          </Text>
+          <Text style={{ fontFamily: "Graphik-Bold-App", color: "#333333" }}>Owner</Text>
           <Right></Right>
         </CardItem>
-      );
+      )
     else if (this.isCourseCoach(userActions, item.id))
       return (
         <CardItem>
-          <Text style={{ fontFamily: "Graphik-Bold-App", color: "#333333" }}>
-            Coach
-          </Text>
+          <Text style={{ fontFamily: "Graphik-Bold-App", color: "#333333" }}>Coach</Text>
           <Right></Right>
         </CardItem>
-      );
+      )
     else if (this.isCourseAdmin(userActions, item.id))
       return (
         <CardItem>
-          <Text style={{ fontFamily: "Graphik-Bold-App", color: "#333333" }}>
-            Admin
-          </Text>
+          <Text style={{ fontFamily: "Graphik-Bold-App", color: "#333333" }}>Admin</Text>
           <Right></Right>
         </CardItem>
-      );
+      )
     else if (this.canCoursePay(item.id))
       return (
         <CardItem>
           <JCButton
             buttonType={ButtonTypes.Solid}
             onPress={() => {
-              this.purchase(item.id);
+              this.purchase(item.id)
             }}
           >
             Pay
           </JCButton>
           <Right></Right>
         </CardItem>
-      );
+      )
     else if (this.isCoursePaid(item.id))
       return (
         <CardItem>
-          <Text style={{ fontFamily: "Graphik-Bold-App", color: "#333333" }}>
-            Purchased
-          </Text>
+          <Text style={{ fontFamily: "Graphik-Bold-App", color: "#333333" }}>Purchased</Text>
           <Right></Right>
         </CardItem>
-      );
+      )
     else if (this.canCourseApply(item.id))
       return (
         <CardItem>
           <JCButton
             buttonType={ButtonTypes.Solid}
             onPress={() => {
-              this.applyCourse(item, "Course");
+              this.applyCourse(item, "Course")
             }}
           >
             Apply
           </JCButton>
           <Right></Right>
         </CardItem>
-      );
+      )
     else
       return (
         <CardItem>
-          <Text style={{ fontFamily: "Graphik-Bold-App", color: "#333333" }}>
-            Closed
-          </Text>
+          <Text style={{ fontFamily: "Graphik-Bold-App", color: "#333333" }}>Closed</Text>
           <Right></Right>
         </CardItem>
-      );
+      )
   }
   renderCourse(userActions: UserActions, item: any): React.ReactNode {
     return (
       <Tooltip title={item.name}>
-        <Card
-          style={[
-            this.styles.style.courseCard,
-            { width: this.state.cardWidth },
-          ]}
-        >
+        <Card style={[this.styles.style.courseCard, { width: this.state.cardWidth }]}>
           <CardItem
             bordered
             style={{
@@ -1245,32 +1135,25 @@ export default class MyGroups extends JCComponent<Props, State> {
             </Text>
           </CardItem>
           <CardItem>
-            <Text
-              ellipsizeMode="tail"
-              numberOfLines={1}
-              style={this.styles.style.fontDetail}
-            >
+            <Text ellipsizeMode="tail" numberOfLines={1} style={this.styles.style.fontDetail}>
               Last Updated: {item.lastupdated}
             </Text>
           </CardItem>
           {this.renderCourseStatus(userActions, item)}
         </Card>
       </Tooltip>
-    );
+    )
   }
   filterMy = (item: any): boolean => {
-    return (
-      !this.state.myFilter || this.canLeave(item.id) || this.isOwner(item.id)
-    );
-  };
+    return !this.state.myFilter || this.canLeave(item.id) || this.isOwner(item.id)
+  }
   filterEvent = (item: any): boolean => {
     return (
       !(this.props.type === "event") ||
-      (this.state.eventFilter &&
-        !moment(item.time).isSameOrAfter(moment.now())) ||
+      (this.state.eventFilter && !moment(item.time).isSameOrAfter(moment.now())) ||
       (!this.state.eventFilter && moment(item.time).isSameOrAfter(moment.now()))
-    );
-  };
+    )
+  }
 
   renderJoinCourseModal() {
     return this.state.joinCourse ? (
@@ -1284,11 +1167,7 @@ export default class MyGroups extends JCComponent<Props, State> {
           left: "0px",
         }}
       >
-        <Modal
-          style={{ overflow: "hidden" }}
-          transparent={true}
-          visible={this.state.joinCourse}
-        >
+        <Modal style={{ overflow: "hidden" }} transparent={true} visible={this.state.joinCourse}>
           <View
             style={{
               backgroundColor: "white",
@@ -1305,37 +1184,35 @@ export default class MyGroups extends JCComponent<Props, State> {
             <JCButton
               buttonType={ButtonTypes.Outline}
               onPress={() => {
-                this.setState({ joinCourse: null });
+                this.setState({ joinCourse: null })
               }}
             >
               X
             </JCButton>
-            <Text>
-              Applications are currently closed, please check back later.
-            </Text>
+            <Text>Applications are currently closed, please check back later.</Text>
           </View>
         </Modal>
       </View>
-    ) : null;
+    ) : null
   }
-  static UserConsumer = UserContext.Consumer;
+  static UserConsumer = UserContext.Consumer
   render(): React.ReactNode {
     return (
       <MyGroups.UserConsumer>
         {({ userState, userActions }) => {
-          if (!userState) return null;
+          if (!userState) return null
 
-          const deviceWidth = Dimensions.get("window").width;
+          const deviceWidth = Dimensions.get("window").width
 
-          if (!constants["SETTING_ISVISIBLE_" + this.state.type]) return null;
+          if (!constants["SETTING_ISVISIBLE_" + this.state.type]) return null
           else if (
             this.state.type == "course" &&
             !userActions.isMemberOf("courseUser") &&
             !userActions.isMemberOf("courseCoach") &&
             !userActions.isMemberOf("courseAdmin")
           ) {
-            return null;
-          } else if (this.state.titleString == null) return null;
+            return null
+          } else if (this.state.titleString == null) return null
           else
             return (
               <ErrorBoundry>
@@ -1350,13 +1227,11 @@ export default class MyGroups extends JCComponent<Props, State> {
                         justifyContent: "flex-start",
                       }}
                     >
-                      <Container
-                        style={this.styles.style.sectionHeadingDashboard}
-                      >
+                      <Container style={this.styles.style.sectionHeadingDashboard}>
                         <JCButton
                           buttonType={ButtonTypes.TransparentBoldBlack}
                           onPress={() => {
-                            this.openMultiple();
+                            this.openMultiple()
                           }}
                         >
                           {this.state.titleString}
@@ -1371,11 +1246,9 @@ export default class MyGroups extends JCComponent<Props, State> {
                         >
                           <JCButton
                             buttonType={ButtonTypes.TransparentBoldOrange}
-                            data-testid={
-                              "mygroup-showall-" + this.state.titleString
-                            }
+                            data-testid={"mygroup-showall-" + this.state.titleString}
                             onPress={() => {
-                              this.openMultiple();
+                              this.openMultiple()
                             }}
                           >
                             Show All
@@ -1383,11 +1256,9 @@ export default class MyGroups extends JCComponent<Props, State> {
                           {constants["SETTING_ISVISIBLE_SHOWRECOMMENDED"] ? (
                             <JCButton
                               buttonType={ButtonTypes.TransparentBoldOrange}
-                              data-testid={
-                                "mygroup-recommmended-" + this.state.titleString
-                              }
+                              data-testid={"mygroup-recommmended-" + this.state.titleString}
                               onPress={() => {
-                                this.openMultiple();
+                                this.openMultiple()
                               }}
                             >
                               Show Recommended
@@ -1396,13 +1267,11 @@ export default class MyGroups extends JCComponent<Props, State> {
                           {constants["SETTING_ISVISIBLE_SHOWMYFILTER"] ? (
                             <JCButton
                               buttonType={ButtonTypes.TransparentBoldOrange}
-                              data-testid={
-                                "mygroup-showmyfilter-" + this.state.titleString
-                              }
+                              data-testid={"mygroup-showmyfilter-" + this.state.titleString}
                               onPress={() => {
                                 this.setState({
                                   myFilter: !this.state.myFilter,
-                                });
+                                })
                               }}
                             >
                               {this.state.myTitleScreen}
@@ -1413,32 +1282,23 @@ export default class MyGroups extends JCComponent<Props, State> {
                           (deviceWidth >= 950 || this.props.wrap) ? (
                             <JCButton
                               buttonType={ButtonTypes.TransparentBoldOrange}
-                              data-testid={
-                                "mygroup-showeventfilter-" +
-                                this.state.titleString
-                              }
+                              data-testid={"mygroup-showeventfilter-" + this.state.titleString}
                               onPress={() => {
                                 this.setState({
                                   eventFilter: !this.state.eventFilter,
-                                });
+                                })
                               }}
                             >
-                              {this.state.eventFilter
-                                ? "Upcoming Events"
-                                : "Previous Events"}
+                              {this.state.eventFilter ? "Upcoming Events" : "Previous Events"}
                             </JCButton>
                           ) : null}
                           {this.state.showCreateButton &&
-                          constants[
-                            "SETTING_ISVISIBLE_CREATE_" + this.state.type
-                          ] ? (
+                          constants["SETTING_ISVISIBLE_CREATE_" + this.state.type] ? (
                             <JCButton
                               buttonType={ButtonTypes.OutlineBold}
-                              data-testid={
-                                "mygroup-create-" + this.state.titleString
-                              }
+                              data-testid={"mygroup-create-" + this.state.titleString}
                               onPress={() => {
-                                this.createSingle();
+                                this.createSingle()
                               }}
                             >
                               {deviceWidth < 950 && !this.props.wrap
@@ -1459,9 +1319,8 @@ export default class MyGroups extends JCComponent<Props, State> {
                         }
                       >
                         {this.state.data ? (
-                          this.state.data
-                            .filter(this.filterMy)
-                            .filter(this.filterEvent).length > 0 ? (
+                          this.state.data.filter(this.filterMy).filter(this.filterEvent).length >
+                          0 ? (
                             this.state.data
                               .filter(this.filterMy)
                               .filter(this.filterEvent)
@@ -1470,22 +1329,16 @@ export default class MyGroups extends JCComponent<Props, State> {
                                   <ErrorBoundry key={index}>
                                     <ListItem
                                       noBorder
-                                      style={
-                                        this.styles.style.conversationsCard
-                                      }
+                                      style={this.styles.style.conversationsCard}
                                       button
                                       onPress={() => {
-                                        this.openSingle(userActions, item.id);
+                                        this.openSingle(userActions, item.id)
                                       }}
                                     >
-                                      {this.renderByType(
-                                        userActions,
-                                        item,
-                                        this.state.type
-                                      )}
+                                      {this.renderByType(userActions, item, this.state.type)}
                                     </ListItem>
                                   </ErrorBoundry>
-                                );
+                                )
                               })
                           ) : (
                             <Text style={this.styles.style.noCardFontTitle}>
@@ -1511,7 +1364,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                                 style={this.styles.style.conversationsCard}
                                 button
                                 onPress={() => {
-                                  this.setInitialData(this.props);
+                                  this.setInitialData(this.props)
                                 }}
                               >
                                 <Card
@@ -1520,15 +1373,11 @@ export default class MyGroups extends JCComponent<Props, State> {
                                     { width: this.state.cardWidth },
                                   ]}
                                 >
-                                  <CardItem
-                                    style={this.styles.style.profileCard}
-                                  >
+                                  <CardItem style={this.styles.style.profileCard}>
                                     <Text
                                       ellipsizeMode="tail"
                                       numberOfLines={3}
-                                      style={
-                                        this.styles.style.groupsLoadMoreFont
-                                      }
+                                      style={this.styles.style.groupsLoadMoreFont}
                                     >
                                       Load more...
                                     </Text>
@@ -1539,7 +1388,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                               <TouchableOpacity
                                 style={{ top: 15, height: 80 }}
                                 onPress={() => {
-                                  this.setInitialData(this.props);
+                                  this.setInitialData(this.props)
                                 }}
                               >
                                 <Card
@@ -1557,9 +1406,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                                     <Text
                                       ellipsizeMode="tail"
                                       numberOfLines={3}
-                                      style={
-                                        this.styles.style.groupsLoadMoreFont
-                                      }
+                                      style={this.styles.style.groupsLoadMoreFont}
                                     >
                                       Load more...
                                     </Text>
@@ -1575,9 +1422,9 @@ export default class MyGroups extends JCComponent<Props, State> {
                   </>
                 </StyleProvider>
               </ErrorBoundry>
-            );
+            )
         }}
       </MyGroups.UserConsumer>
-    );
+    )
   }
 }

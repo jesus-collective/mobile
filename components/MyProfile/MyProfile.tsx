@@ -9,75 +9,75 @@ import {
   Picker,
   Badge,
   Container,
-} from "native-base";
-import { Text, Image, TouchableOpacity } from "react-native";
-import * as React from "react";
-import * as queries from "../../src/graphql/queries";
-import * as mutations from "../../src/graphql/mutations";
-import { API, graphqlOperation, Storage } from "aws-amplify";
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native";
-import { UserContext } from "../../screens/HomeScreen/UserContext";
+} from "native-base"
+import { Text, Image, TouchableOpacity } from "react-native"
+import * as React from "react"
+import * as queries from "../../src/graphql/queries"
+import * as mutations from "../../src/graphql/mutations"
+import { API, graphqlOperation, Storage } from "aws-amplify"
+import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 
-import { Auth } from "aws-amplify";
-import { GetUserQuery } from "../../src/API";
-import Amplify from "aws-amplify";
-import awsconfig from "../../src/aws-exports";
-import Validate from "../Validate/Validate";
-import moment from "moment";
-import JCButton, { ButtonTypes } from "../../components/Forms/JCButton";
-import EditableLocation from "../../components/Forms/EditableLocation";
-import MyMap from "../../components/MyMap/MyMap";
-import EditableText from "../Forms/EditableText";
-import { AntDesign } from "@expo/vector-icons";
-import { AlertConfigInput } from "../../src/API";
+import { Auth } from "aws-amplify"
+import { GetUserQuery } from "../../src/API"
+import Amplify from "aws-amplify"
+import awsconfig from "../../src/aws-exports"
+import Validate from "../Validate/Validate"
+import moment from "moment"
+import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
+import EditableLocation from "../../components/Forms/EditableLocation"
+import MyMap from "../../components/MyMap/MyMap"
+import EditableText from "../Forms/EditableText"
+import { AntDesign } from "@expo/vector-icons"
+import { AlertConfigInput } from "../../src/API"
 import {
   interests,
   numberOfEmployees,
   sundayAttendance,
   orgTypesChurches,
   orgTypesNonChurch,
-} from "./dropdown";
-import { constants } from "../../src/constants";
-import JCComponent, { JCState } from "../JCComponent/JCComponent";
-import { useRoute, useNavigation } from "@react-navigation/native";
-import { MapData } from "../MyGroups/MyGroups";
-import { TextInput } from "react-native";
-import JCSwitch from "../../components/JCSwitch/JCSwitch";
-const orgTypes = orgTypesChurches.concat(orgTypesNonChurch);
+} from "./dropdown"
+import { constants } from "../../src/constants"
+import JCComponent, { JCState } from "../JCComponent/JCComponent"
+import { useRoute, useNavigation } from "@react-navigation/native"
+import { MapData } from "../MyGroups/MyGroups"
+import { TextInput } from "react-native"
+import JCSwitch from "../../components/JCSwitch/JCSwitch"
+const orgTypes = orgTypesChurches.concat(orgTypesNonChurch)
 
-Amplify.configure(awsconfig);
+Amplify.configure(awsconfig)
 
 interface Props {
-  finalizeProfile?(): void;
-  navigation?: any;
-  route?: any;
-  loadId?: any;
-  hideOrg?: boolean;
+  finalizeProfile?(): void
+  navigation?: any
+  route?: any
+  loadId?: any
+  hideOrg?: boolean
 }
-export type UserData = NonNullable<GetUserQuery["getUser"]>;
+export type UserData = NonNullable<GetUserQuery["getUser"]>
 
 interface State extends JCState {
-  UserDetails: UserData;
-  interest: string;
-  interestsArray: string[];
-  profileImage: string;
-  validationText: string;
-  mapVisible: boolean;
+  UserDetails: UserData
+  interest: string
+  interestsArray: string[]
+  profileImage: string
+  validationText: string
+  mapVisible: boolean
   // mapCoord: any
-  isEditable: boolean;
-  showAccountSettings: boolean;
-  editMode: boolean;
-  mapData: MapData[];
-  initCenter: any;
-  dirty: boolean;
-  oldPass: string;
-  newPass: string;
-  passError: string;
-  noUserFound: boolean;
+  isEditable: boolean
+  showAccountSettings: boolean
+  editMode: boolean
+  mapData: MapData[]
+  initCenter: any
+  dirty: boolean
+  oldPass: string
+  newPass: string
+  passError: string
+  noUserFound: boolean
 }
 class MyProfileImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
-    super(props);
+    super(props)
     this.state = {
       ...super.getInitialState(),
       UserDetails: null,
@@ -97,8 +97,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
       newPass: "",
       passError: "",
       noUserFound: false,
-    };
-    this.getUserDetails();
+    }
+    this.getUserDetails()
   }
 
   convertProfileToMapData() {
@@ -116,10 +116,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
             longitude:
               Number(this.state.UserDetails.location.longitude) +
               Number(this.state.UserDetails.location.randomLatitude),
-            name:
-              this.state.UserDetails.given_name +
-              " " +
-              this.state.UserDetails.family_name,
+            name: this.state.UserDetails.given_name + " " + this.state.UserDetails.family_name,
             user: this.state.UserDetails,
             link: "",
             type: "profile",
@@ -133,17 +130,17 @@ class MyProfileImpl extends JCComponent<Props, State> {
             Number(this.state.UserDetails.location.longitude) +
             Number(this.state.UserDetails.location.randomLatitude),
         },
-      });
+      })
   }
   async getUserDetails(): Promise<void> {
-    console.log("getUserDetails");
+    console.log("getUserDetails")
     try {
-      const user = await Auth.currentAuthenticatedUser();
+      const user = await Auth.currentAuthenticatedUser()
       if (this.props.loadId) {
         try {
           const getUser: any = await API.graphql(
             graphqlOperation(queries.getUser, { id: this.props.loadId })
-          );
+          )
           if (getUser.data.getUser != null)
             this.setState(
               {
@@ -152,11 +149,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 interestsArray: getUser.data.getUser.interests,
               },
               () => {
-                this.getProfileImage();
-                this.convertProfileToMapData();
+                this.getProfileImage()
+                this.convertProfileToMapData()
               }
-            );
-          else this.setState({ noUserFound: true });
+            )
+          else this.setState({ noUserFound: true })
           //console.log(this.state.UserDetails)
         } catch (e) {
           if (e.data.getUser != null)
@@ -166,17 +163,17 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 interestsArray: e.data.getUser.interests,
               },
               () => {
-                this.getProfileImage();
-                this.convertProfileToMapData();
+                this.getProfileImage()
+                this.convertProfileToMapData()
               }
-            );
-          else this.setState({ noUserFound: true });
+            )
+          else this.setState({ noUserFound: true })
         }
       } else {
         try {
           const getUser: any = await API.graphql(
             graphqlOperation(queries.getUser, { id: user["username"] })
-          );
+          )
           this.setState(
             {
               UserDetails: getUser.data.getUser,
@@ -185,18 +182,18 @@ class MyProfileImpl extends JCComponent<Props, State> {
               interestsArray: getUser.data.getUser.interests,
             },
             () => {
-              this.getProfileImage();
-              this.convertProfileToMapData();
+              this.getProfileImage()
+              this.convertProfileToMapData()
             }
-          );
+          )
 
-          console.log(this.state.UserDetails);
+          console.log(this.state.UserDetails)
         } catch (e) {
-          console.log(e);
+          console.log(e)
         }
       }
     } catch (e) {
-      console.log(e);
+      console.log(e)
     }
   }
   handleAlertInputChange(event: any, name: string): void {
@@ -205,20 +202,20 @@ class MyProfileImpl extends JCComponent<Props, State> {
         ? event
         : event.target.type === "checkbox"
         ? event.target.checked
-        : event.target.value;
+        : event.target.value
     // const name = target.name;
-    console.log(value);
-    const updateData = { ...this.state.UserDetails };
+    console.log(value)
+    const updateData = { ...this.state.UserDetails }
     if (updateData.alertConfig == null) {
       const z: {
-        __typename: "AlertConfig";
-        emailDirectMessage: string;
-        emailGroupMessage: string;
-        emailEventMessage: string;
-        emailOrgMessage: string;
-        emailResourceMessage: string;
-        emailCourseMessage: string;
-        emailPromotions: string;
+        __typename: "AlertConfig"
+        emailDirectMessage: string
+        emailGroupMessage: string
+        emailEventMessage: string
+        emailOrgMessage: string
+        emailResourceMessage: string
+        emailCourseMessage: string
+        emailPromotions: string
       } = {
         __typename: "AlertConfig",
         emailDirectMessage: "false",
@@ -228,11 +225,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
         emailResourceMessage: "false",
         emailCourseMessage: "false",
         emailPromotions: "false",
-      };
-      updateData.alertConfig = z;
-      delete updateData.alertConfig.__typename;
+      }
+      updateData.alertConfig = z
+      delete updateData.alertConfig.__typename
     }
-    updateData.alertConfig[name] = value.toString();
+    updateData.alertConfig[name] = value.toString()
     this.setState(
       {
         UserDetails: updateData,
@@ -247,13 +244,13 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 alertConfig: this.state.UserDetails.alertConfig,
               },
             })
-          );
-          console.log(updateUser);
+          )
+          console.log(updateUser)
         } catch (e) {
-          console.log(e);
+          console.log(e)
         }
       }
-    );
+    )
   }
   handleInputChange(event: any, name: string): void {
     const value =
@@ -261,69 +258,69 @@ class MyProfileImpl extends JCComponent<Props, State> {
         ? event
         : event.target.type === "checkbox"
         ? event.target.checked
-        : event.target.value;
+        : event.target.value
     // const name = target.name;
-    console.log(value);
-    const updateData = { ...this.state.UserDetails };
-    updateData[name] = value;
+    console.log(value)
+    const updateData = { ...this.state.UserDetails }
+    updateData[name] = value
     this.setState(
       {
         UserDetails: updateData,
         dirty: true,
       },
       () => {
-        if (name === "location") this.convertProfileToMapData();
+        if (name === "location") this.convertProfileToMapData()
       }
-    );
+    )
   }
   clean(item): void {
-    delete item.organizations;
-    delete item.groups;
-    delete item.messages;
-    delete item.owns;
-    delete item._deleted;
-    delete item._lastChangedAt;
-    delete item.createdAt;
-    delete item.updatedAt;
-    delete item.coachingTriad;
-    delete item.userTriad;
-    delete item.courseInstructing;
-    delete item.payments;
-    delete item.courseBackOfficeStaff;
-    if (item.profileImage) delete item.profileImage["__typename"];
-    delete item.directMessages;
-    return item;
+    delete item.organizations
+    delete item.groups
+    delete item.messages
+    delete item.owns
+    delete item._deleted
+    delete item._lastChangedAt
+    delete item.createdAt
+    delete item.updatedAt
+    delete item.coachingTriad
+    delete item.userTriad
+    delete item.courseInstructing
+    delete item.payments
+    delete item.courseBackOfficeStaff
+    if (item.profileImage) delete item.profileImage["__typename"]
+    delete item.directMessages
+    return item
   }
   async finalizeProfile(): Promise<void> {
-    const validation = Validate.Profile(this.state.UserDetails);
+    const validation = Validate.Profile(this.state.UserDetails)
     if (validation.result) {
       try {
-        const toSave = this.clean(this.state.UserDetails);
-        toSave["profileState"] = "Complete";
+        const toSave = this.clean(this.state.UserDetails)
+        toSave["profileState"] = "Complete"
         const updateUser = await API.graphql(
           graphqlOperation(mutations.updateUser, { input: toSave })
-        );
-        this.setState({ dirty: false });
-        console.log({ "updateUser:": updateUser });
-        if (this.props.finalizeProfile) this.props.finalizeProfile();
-        else this.setState({ editMode: false });
+        )
+        this.setState({ dirty: false })
+        console.log({ "updateUser:": updateUser })
+        if (this.props.finalizeProfile) this.props.finalizeProfile()
+        else this.setState({ editMode: false })
       } catch (e) {
-        console.log(e);
+        console.log(e)
       }
     }
-    this.setState({ validationText: validation.validationError });
+    this.setState({ validationText: validation.validationError })
   }
   async onProfileImageChange(e: any): Promise<void> {
-    const file = e.target.files[0];
-    const user = await Auth.currentCredentials();
-    const userId = user.identityId;
-    const lastDot = file.name.lastIndexOf(".");
-    const ext = file.name.substring(lastDot + 1);
-    const fn = "profile/upload/profile-" + new Date().getTime() + "." + ext;
+    const file = e.target.files[0]
+    const user = await Auth.currentCredentials()
+    const userId = user.identityId
+    const lastDot = file.name.lastIndexOf(".")
+    const ext = file.name.substring(lastDot + 1)
+    const fn = "profile/upload/profile-" + new Date().getTime() + "." + ext
     const fnSave = fn
       .replace("/upload", "")
       .replace(".", "-[size].")
-      .replace("." + ext, ".png");
+      .replace("." + ext, ".png")
 
     Storage.put(fn, file, {
       level: "protected",
@@ -331,7 +328,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       identityId: userId,
     })
       .then(() => {
-        const updateData = { ...this.state.UserDetails };
+        const updateData = { ...this.state.UserDetails }
         updateData["profileImage"] = {
           __typename: "Image",
           userId: userId,
@@ -339,7 +336,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
           filenameLarge: fnSave.replace("[size]", "large"),
           filenameMedium: fnSave.replace("[size]", "medium"),
           filenameSmall: fnSave.replace("[size]", "small"),
-        };
+        }
 
         this.setState(
           {
@@ -347,15 +344,15 @@ class MyProfileImpl extends JCComponent<Props, State> {
             dirty: true,
           },
           () => {
-            this.getProfileImage();
+            this.getProfileImage()
           }
-        );
+        )
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
   }
 
   getProfileImage(): void {
-    console.log("get profile image");
+    console.log("get profile image")
     //console.log(this.state.UserDetails.profileImage)
     if (this.state.UserDetails.profileImage)
       Storage.get(this.state.UserDetails.profileImage.filenameUpload, {
@@ -364,28 +361,28 @@ class MyProfileImpl extends JCComponent<Props, State> {
       })
         .then((result) => this.setState({ profileImage: result as string }))
         .catch((err) => {
-          console.log(err);
-        });
+          console.log(err)
+        })
   }
   getValueFromKey(myObject: unknown, string: string) {
-    const key = Object.keys(myObject).filter((k) => k.includes(string));
-    return key.length ? myObject[key[0]] : "";
+    const key = Object.keys(myObject).filter((k) => k.includes(string))
+    return key.length ? myObject[key[0]] : ""
   }
-  logout(actions): void {
+  logout(actions: UserActions): void {
     //this.props.navigation.navigate("", null)
     Auth.signOut()
       .then((data) => {
-        console.log("SIGNED OUT");
-        actions.onStateChange("signedOut", null);
+        console.log("SIGNED OUT")
+        actions.onStateChange("signedOut", null)
       })
       .catch((err) => {
-        console.log("SIGNED OUT CATCH");
-        actions.onStateChange("signedOut", null);
-      });
+        console.log("SIGNED OUT CATCH")
+        actions.onStateChange("signedOut", null)
+      })
   }
   showMap(): void {
-    console.log("showMap");
-    this.setState({ mapVisible: true });
+    console.log("showMap")
+    this.setState({ mapVisible: true })
   }
   renderMap() {
     return this.state.UserDetails.location?.geocodeFull ? (
@@ -395,22 +392,21 @@ class MyProfileImpl extends JCComponent<Props, State> {
         mapData={this.state.mapData}
         type={"profile"}
       ></MyMap>
-    ) : null;
+    ) : null
   }
   handleAddInterest(): void {
     if (this.state.interest && this.state.interestsArray === null) {
       this.setState({ interestsArray: [this.state.interest] }, () => {
-        const updateData = { ...this.state.UserDetails };
-        updateData["interests"] = this.state.interestsArray;
+        const updateData = { ...this.state.UserDetails }
+        updateData["interests"] = this.state.interestsArray
         this.setState({
           UserDetails: updateData,
           dirty: true,
-        });
-      });
+        })
+      })
     } else if (
       this.state.interest &&
-      this.state.interestsArray.filter((item) => item === this.state.interest)
-        .length === 0 &&
+      this.state.interestsArray.filter((item) => item === this.state.interest).length === 0 &&
       this.state.interestsArray.length < 7
     ) {
       this.setState(
@@ -418,14 +414,14 @@ class MyProfileImpl extends JCComponent<Props, State> {
           interestsArray: this.state.interestsArray.concat(this.state.interest),
         },
         () => {
-          const updateData = { ...this.state.UserDetails };
-          updateData["interests"] = this.state.interestsArray;
+          const updateData = { ...this.state.UserDetails }
+          updateData["interests"] = this.state.interestsArray
           this.setState({
             UserDetails: updateData,
             dirty: true,
-          });
+          })
         }
-      );
+      )
     }
   }
   deleteUser(): void {
@@ -436,70 +432,62 @@ class MyProfileImpl extends JCComponent<Props, State> {
           input: { id: user["username"] },
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      });
+      })
       deleteUser
         .then((c: any) => {
-          console.log(c);
-          const delStat = user.deleteUser();
-          console.log(delStat);
-          this.props.navigation.push("", null);
+          console.log(c)
+          const delStat = user.deleteUser()
+          console.log(delStat)
+          this.props.navigation.push("", null)
           // return delStat
         })
         .catch((e: any) => {
-          console.log(e);
-          const delStat = user.deleteUser();
-          console.log(delStat);
-          this.props.navigation.push("", null);
+          console.log(e)
+          const delStat = user.deleteUser()
+          console.log(delStat)
+          this.props.navigation.push("", null)
           //        this.props.navigation.navigate("/")
           // return delStat
-        });
-    });
+        })
+    })
   }
   handleDeleteInterest(event): void {
-    const remainingInterests = this.state.interestsArray.filter(
-      (item) => item !== event
-    );
+    const remainingInterests = this.state.interestsArray.filter((item) => item !== event)
     this.setState(
       {
-        interestsArray:
-          remainingInterests.length === 0 ? null : remainingInterests,
+        interestsArray: remainingInterests.length === 0 ? null : remainingInterests,
       },
       () => {
-        const updateData = { ...this.state.UserDetails };
-        updateData["interests"] = this.state.interestsArray;
+        const updateData = { ...this.state.UserDetails }
+        updateData["interests"] = this.state.interestsArray
         this.setState({
           UserDetails: updateData,
           dirty: true,
-        });
+        })
       }
-    );
+    )
   }
 
   checkForValidOrgInfo(): boolean {
-    const user = this.state.UserDetails;
+    const user = this.state.UserDetails
 
     if (user.orgName || user.orgDescription) {
-      return true;
+      return true
     }
 
     if (orgTypesChurches.includes(user.orgType)) {
-      if (
-        user.orgSize ||
-        user.sundayAttendance ||
-        user.numberVolunteers ||
-        user.denomination
-      ) {
-        return true;
+      if (user.orgSize || user.sundayAttendance || user.numberVolunteers || user.denomination) {
+        return true
       }
     }
 
     if (orgTypesNonChurch.includes(user.orgType)) {
       if (user.orgSize || user.numberVolunteers || user.pplServed) {
-        return true;
+        return true
       }
     }
 
-    return false;
+    return false
   }
 
   handleEditMode() {
@@ -507,68 +495,61 @@ class MyProfileImpl extends JCComponent<Props, State> {
       this.setState({
         editMode: !this.state.editMode,
         showAccountSettings: false,
-      });
+      })
     else if (!this.state.dirty)
       this.setState({
         editMode: !this.state.editMode,
         showAccountSettings: false,
-      });
+      })
   }
 
   async handlePasswordChange(): Promise<void> {
     if (!this.state.oldPass || !this.state.newPass) {
-      this.setState({ passError: "Required: Current password, New password" });
-      return;
+      this.setState({ passError: "Required: Current password, New password" })
+      return
     }
     try {
-      const user = await Auth.currentAuthenticatedUser();
-      const result = await Auth.changePassword(
-        user,
-        this.state.oldPass,
-        this.state.newPass
-      );
-      this.setState({ passError: result });
+      const user = await Auth.currentAuthenticatedUser()
+      const result = await Auth.changePassword(user, this.state.oldPass, this.state.newPass)
+      this.setState({ passError: result })
     } catch (e) {
-      console.error(e);
-      if (e.message.includes("validation"))
-        this.setState({ passError: e.message.split(":")[0] });
-      else this.setState({ passError: e.message });
+      console.error(e)
+      if (e.message.includes("validation")) this.setState({ passError: e.message.split(":")[0] })
+      else this.setState({ passError: e.message })
     }
-    this.setState({ oldPass: "", newPass: "" });
+    this.setState({ oldPass: "", newPass: "" })
   }
 
   renderMainUserGroup(group) {
     switch (group) {
       case "verifiedUser":
-        return <Text style={this.styles.style.fontFormUserType}>Verified</Text>;
+        return <Text style={this.styles.style.fontFormUserType}>Verified</Text>
       case "friend":
-        return <Text style={this.styles.style.fontFormUserType}>Friend</Text>;
+        return <Text style={this.styles.style.fontFormUserType}>Friend</Text>
       case "partner":
-        return <Text style={this.styles.style.fontFormUserType}>Partner</Text>;
+        return <Text style={this.styles.style.fontFormUserType}>Partner</Text>
       case "admin":
-        return <Text style={this.styles.style.fontFormUserType}>Admin</Text>;
+        return <Text style={this.styles.style.fontFormUserType}>Admin</Text>
       default:
-        return (
-          <Text style={this.styles.style.fontFormUserType}>Un-Verified</Text>
-        );
+        return <Text style={this.styles.style.fontFormUserType}>Un-Verified</Text>
     }
   }
   openConversation(initialUser, name): void {
-    console.log("Navigate to conversationScreen");
+    console.log("Navigate to conversationScreen")
     this.props.navigation.push("ConversationScreen", {
       initialUserID: initialUser,
       initialUserName: name,
-    });
+    })
   }
-  static UserConsumer = UserContext.Consumer;
+  static UserConsumer = UserContext.Consumer
 
   render(): React.ReactNode {
     return (
       <MyProfileImpl.UserConsumer>
         {({ userState, userActions }) => {
-          if (!userState) return null;
+          if (!userState) return null
 
-          if (this.state.noUserFound) return <Text>No User Found</Text>;
+          if (this.state.noUserFound) return <Text>No User Found</Text>
 
           return this.state.UserDetails != null ? (
             <Content>
@@ -576,31 +557,23 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 {this.state.isEditable &&
                 (this.state.editMode || this.state.showAccountSettings) ? (
                   <Text style={this.styles.style.profileFontTitle}>
-                    {this.props.hideOrg
-                      ? "Create Administrator's Profile"
-                      : "Setup your profile"}
+                    {this.props.hideOrg ? "Create Administrator's Profile" : "Setup your profile"}
                   </Text>
                 ) : (
                   <Text style={this.styles.style.profileFontTitle}>
                     {this.state.UserDetails.given_name}&apos;s profile
                   </Text>
                 )}
-                <View
-                  style={this.styles.style.myProfileTopButtonsExternalContainer}
-                >
+                <View style={this.styles.style.myProfileTopButtonsExternalContainer}>
                   {this.state.isEditable ? (
-                    <View
-                      style={
-                        this.styles.style.myProfileTopButtonsInternalContainer
-                      }
-                    >
+                    <View style={this.styles.style.myProfileTopButtonsInternalContainer}>
                       {this.state.editMode ? (
                         <JCButton
                           enabled={this.state.dirty}
                           data-testid="profile-save"
                           buttonType={ButtonTypes.SolidRightMargin}
                           onPress={() => {
-                            this.finalizeProfile();
+                            this.finalizeProfile()
                           }}
                         >
                           Save Profile
@@ -642,7 +615,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                           : this.state.profileImage
                       }
                       onError={() => {
-                        this.getProfileImage();
+                        this.getProfileImage()
                       }}
                     ></Image>
                     {this.state.isEditable && this.state.editMode ? (
@@ -650,7 +623,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                         <JCButton
                           buttonType={ButtonTypes.SolidProfile}
                           onPress={() => {
-                            null;
+                            null
                           }}
                         >
                           Set Profile Picture
@@ -675,26 +648,21 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   </View>
                   <View style={this.styles.style.myProfilePersonalInfoWrapper}>
                     <Text style={this.styles.style.fontFormName}>
-                      {this.state.UserDetails.given_name}{" "}
-                      {this.state.UserDetails.family_name}
+                      {this.state.UserDetails.given_name} {this.state.UserDetails.family_name}
                     </Text>
                     <Text style={this.styles.style.fontFormRole}>
                       {this.state.UserDetails.currentRole
                         ? this.state.UserDetails.currentRole
                         : "My Current Role not defined"}
                     </Text>
-                    {this.renderMainUserGroup(
-                      this.state.UserDetails.mainUserGroup
-                    )}
+                    {this.renderMainUserGroup(this.state.UserDetails.mainUserGroup)}
 
                     {this.state.isEditable && this.state.editMode ? (
-                      <Text style={this.styles.style.fontFormSmall}>
-                        One sentence about me
-                      </Text>
+                      <Text style={this.styles.style.fontFormSmall}>One sentence about me</Text>
                     ) : null}
                     <EditableText
                       onChange={(e) => {
-                        this.handleInputChange(e, "aboutMeShort");
+                        this.handleInputChange(e, "aboutMeShort")
                       }}
                       placeholder="Short sentence about me"
                       multiline={true}
@@ -707,11 +675,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                     ></EditableText>
 
                     <View style={this.styles.style.myProfileCoordinates}>
-                      <Text
-                        style={
-                          this.styles.style.fontFormSmallDarkGreyCoordinates
-                        }
-                      >
+                      <Text style={this.styles.style.fontFormSmallDarkGreyCoordinates}>
                         <Image
                           style={{
                             width: "22px",
@@ -731,9 +695,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                           buttonType={ButtonTypes.EditButton}
                           onPress={() => this.handleEditMode()}
                         >
-                          {this.state.editMode
-                            ? "View Profile"
-                            : "Edit Profile"}
+                          {this.state.editMode ? "View Profile" : "Edit Profile"}
                         </JCButton>
                       ) : null}
                     </View>
@@ -749,9 +711,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       ></Image>
                       Joined:{" "}
                       {this.state.UserDetails.joined
-                        ? moment(this.state.UserDetails.joined).format(
-                            "MMMM Do YYYY"
-                          )
+                        ? moment(this.state.UserDetails.joined).format("MMMM Do YYYY")
                         : "Join date unknown"}
                     </Text>
                     {!this.state.isEditable ? (
@@ -764,7 +724,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                             this.state.UserDetails.given_name +
                               " " +
                               this.state.UserDetails.family_name
-                          );
+                          )
                         }}
                       >
                         <Text style={this.styles.style.fontStartConversation}>
@@ -791,7 +751,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                             this.props.navigation.push("ConversationScreen", {
                               initialUserID: null,
                               initialUserName: null,
-                            });
+                            })
                           }}
                         >
                           Messages
@@ -806,9 +766,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                           borderBottomWidth: 1,
                           borderBottomColor: "#33333320",
                           paddingVertical: 10,
-                          borderRightWidth: this.state.showAccountSettings
-                            ? 7
-                            : 0,
+                          borderRightWidth: this.state.showAccountSettings ? 7 : 0,
                           borderRightColor: "#F0493E",
                         }}
                       >
@@ -817,8 +775,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                           buttonType={ButtonTypes.TransparentBoldBlackNoMargin}
                           onPress={() =>
                             this.setState({
-                              showAccountSettings: !this.state
-                                .showAccountSettings,
+                              showAccountSettings: !this.state.showAccountSettings,
                               editMode: false,
                             })
                           }
@@ -830,9 +787,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   </View>
 
                   {this.state.isEditable && this.state.editMode ? (
-                    <Text style={this.styles.style.fontFormSmallHeader}>
-                      Public Location
-                    </Text>
+                    <Text style={this.styles.style.fontFormSmallHeader}>Public Location</Text>
                   ) : null}
                   {this.state.isEditable && this.state.editMode ? (
                     <EditableLocation
@@ -843,18 +798,15 @@ class MyProfileImpl extends JCComponent<Props, State> {
                               latitude: location.lat,
                               longitude: location.lng,
                               geocodeFull: value,
-                              randomLatitude: this.state.UserDetails.location
-                                ?.randomLatitude
+                              randomLatitude: this.state.UserDetails.location?.randomLatitude
                                 ? this.state.UserDetails.location.randomLatitude
                                 : Math.random() * 0.04 - 0.02,
-                              randomLongitude: this.state.UserDetails.location
-                                ?.randomLongitude
-                                ? this.state.UserDetails.location
-                                    .randomLongitude
+                              randomLongitude: this.state.UserDetails.location?.randomLongitude
+                                ? this.state.UserDetails.location.randomLongitude
                                 : Math.random() * 0.04 - 0.02,
                             },
                             "location"
-                          );
+                          )
                         }
                       }}
                       multiline={false}
@@ -881,9 +833,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                     >
                       <Item stackedLabel>
                         <Label style={this.styles.style.fontFormSmall}>
-                          <Text style={this.styles.style.fontFormMandatory}>
-                            *
-                          </Text>
+                          <Text style={this.styles.style.fontFormMandatory}>*</Text>
                           Address
                         </Label>
                         <Input
@@ -891,15 +841,13 @@ class MyProfileImpl extends JCComponent<Props, State> {
                           style={this.styles.style.fontFormMediumInput}
                           value={this.state.UserDetails.address}
                           onChange={(e) => {
-                            this.handleInputChange(e, "address");
+                            this.handleInputChange(e, "address")
                           }}
                         />
                       </Item>
                       <Item stackedLabel>
                         <Label style={this.styles.style.fontFormSmall}>
-                          <Text style={this.styles.style.fontFormMandatory}>
-                            *
-                          </Text>
+                          <Text style={this.styles.style.fontFormMandatory}>*</Text>
                           City
                         </Label>
                         <Input
@@ -907,15 +855,13 @@ class MyProfileImpl extends JCComponent<Props, State> {
                           style={this.styles.style.fontFormMediumInput}
                           value={this.state.UserDetails.city}
                           onChange={(e) => {
-                            this.handleInputChange(e, "city");
+                            this.handleInputChange(e, "city")
                           }}
                         />
                       </Item>
                       <Item stackedLabel>
                         <Label style={this.styles.style.fontFormSmall}>
-                          <Text style={this.styles.style.fontFormMandatory}>
-                            *
-                          </Text>
+                          <Text style={this.styles.style.fontFormMandatory}>*</Text>
                           Province/State
                         </Label>
                         <Input
@@ -923,15 +869,13 @@ class MyProfileImpl extends JCComponent<Props, State> {
                           style={this.styles.style.fontFormMediumInput}
                           value={this.state.UserDetails.province}
                           onChange={(e) => {
-                            this.handleInputChange(e, "province");
+                            this.handleInputChange(e, "province")
                           }}
                         />
                       </Item>
                       <Item stackedLabel>
                         <Label style={this.styles.style.fontFormSmall}>
-                          <Text style={this.styles.style.fontFormMandatory}>
-                            *
-                          </Text>
+                          <Text style={this.styles.style.fontFormMandatory}>*</Text>
                           Postal/Zip Code
                         </Label>
                         <Input
@@ -939,15 +883,13 @@ class MyProfileImpl extends JCComponent<Props, State> {
                           style={this.styles.style.fontFormMediumInput}
                           value={this.state.UserDetails.postalCode}
                           onChange={(e) => {
-                            this.handleInputChange(e, "postalCode");
+                            this.handleInputChange(e, "postalCode")
                           }}
                         />
                       </Item>
                       <Item stackedLabel>
                         <Label style={this.styles.style.fontFormSmall}>
-                          <Text style={this.styles.style.fontFormMandatory}>
-                            *
-                          </Text>
+                          <Text style={this.styles.style.fontFormMandatory}>*</Text>
                           Country
                         </Label>
                         <Input
@@ -955,15 +897,13 @@ class MyProfileImpl extends JCComponent<Props, State> {
                           style={this.styles.style.fontFormMediumInput}
                           value={this.state.UserDetails.country}
                           onChange={(e) => {
-                            this.handleInputChange(e, "country");
+                            this.handleInputChange(e, "country")
                           }}
                         />
                       </Item>
                       <Item stackedLabel>
                         <Label style={this.styles.style.fontFormSmall}>
-                          <Text style={this.styles.style.fontFormMandatory}>
-                            *
-                          </Text>
+                          <Text style={this.styles.style.fontFormMandatory}>*</Text>
                           Email Address
                         </Label>
                         <Input
@@ -971,15 +911,13 @@ class MyProfileImpl extends JCComponent<Props, State> {
                           style={this.styles.style.fontFormMediumInput}
                           value={this.state.UserDetails.email}
                           onChange={(e) => {
-                            this.handleInputChange(e, "email");
+                            this.handleInputChange(e, "email")
                           }}
                         />
                       </Item>
                       <Item stackedLabel>
                         <Label style={this.styles.style.fontFormSmall}>
-                          <Text style={this.styles.style.fontFormMandatory}>
-                            *
-                          </Text>
+                          <Text style={this.styles.style.fontFormMandatory}>*</Text>
                           Phone #
                         </Label>
                         <Input
@@ -987,7 +925,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                           style={this.styles.style.fontFormMediumInput}
                           value={this.state.UserDetails.phone}
                           onChange={(e) => {
-                            this.handleInputChange(e, "phone");
+                            this.handleInputChange(e, "phone")
                           }}
                         />
                       </Item>
@@ -1006,20 +944,16 @@ class MyProfileImpl extends JCComponent<Props, State> {
 
                     {this.state.isEditable && this.state.editMode ? (
                       <Text style={this.styles.style.myprofileAboutMe}>
-                        <Text style={this.styles.style.fontFormMandatory}>
-                          *
-                        </Text>
+                        <Text style={this.styles.style.fontFormMandatory}>*</Text>
                         About me
                       </Text>
                     ) : (
-                      <Text style={this.styles.style.myprofileAboutMe}>
-                        About me
-                      </Text>
+                      <Text style={this.styles.style.myprofileAboutMe}>About me</Text>
                     )}
 
                     <EditableText
                       onChange={(e) => {
-                        this.handleInputChange(e, "aboutMeLong");
+                        this.handleInputChange(e, "aboutMeLong")
                       }}
                       placeholder="type here"
                       multiline={true}
@@ -1046,45 +980,25 @@ class MyProfileImpl extends JCComponent<Props, State> {
 
                     {this.state.isEditable && this.state.editMode ? (
                       <Text style={this.styles.style.fontBold}>
-                        <Text style={this.styles.style.fontFormMandatory}>
-                          *
-                        </Text>
+                        <Text style={this.styles.style.fontFormMandatory}>*</Text>
                         My Interests
                       </Text>
                     ) : (
-                      <Text style={this.styles.style.myprofileAboutMe}>
-                        Interests
-                      </Text>
+                      <Text style={this.styles.style.myprofileAboutMe}>Interests</Text>
                     )}
 
                     {this.state.isEditable && this.state.editMode ? (
-                      <Container
-                        style={this.styles.style.myprofilePickerMainContainer}
-                      >
-                        <View
-                          style={this.styles.style.myprofilePickerContainer}
-                        >
-                          <View
-                            style={
-                              this.styles.style.myprofilePickerContainerView
-                            }
-                          >
+                      <Container style={this.styles.style.myprofilePickerMainContainer}>
+                        <View style={this.styles.style.myprofilePickerContainer}>
+                          <View style={this.styles.style.myprofilePickerContainerView}>
                             <Picker
                               style={this.styles.style.myprofilePicker}
-                              onValueChange={(itemValue) =>
-                                this.setState({ interest: itemValue })
-                              }
+                              onValueChange={(itemValue) => this.setState({ interest: itemValue })}
                               selectedValue={this.state.interest}
                             >
                               <Picker.Item label={"None Selected"} value={""} />
                               {interests.map((item, index) => {
-                                return (
-                                  <Picker.Item
-                                    key={index}
-                                    label={item}
-                                    value={item}
-                                  />
-                                );
+                                return <Picker.Item key={index} label={item} value={item} />
                               })}
                             </Picker>
                             <JCButton
@@ -1097,9 +1011,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                           {this.state.isEditable && this.state.editMode ? (
                             <Text style={{ width: "100%", marginTop: 8 }}>
                               You can select{" "}
-                              {this.state.interestsArray
-                                ? 7 - this.state.interestsArray.length
-                                : 7}{" "}
+                              {this.state.interestsArray ? 7 - this.state.interestsArray.length : 7}{" "}
                               more key interests
                             </Text>
                           ) : null}
@@ -1133,19 +1045,13 @@ class MyProfileImpl extends JCComponent<Props, State> {
                                         {item}
                                       </Text>
                                       <TouchableOpacity
-                                        onPress={() =>
-                                          this.handleDeleteInterest(item)
-                                        }
+                                        onPress={() => this.handleDeleteInterest(item)}
                                       >
-                                        <AntDesign
-                                          name="close"
-                                          size={20}
-                                          color="#979797"
-                                        />
+                                        <AntDesign name="close" size={20} color="#979797" />
                                       </TouchableOpacity>
                                     </View>
                                   </Badge>
-                                );
+                                )
                               })
                             : null}
                         </View>
@@ -1163,53 +1069,49 @@ class MyProfileImpl extends JCComponent<Props, State> {
                         }}
                       >
                         {this.state.UserDetails.interests
-                          ? this.state.UserDetails.interests.map(
-                              (item, index) => {
-                                return (
-                                  <Badge
-                                    key={index}
+                          ? this.state.UserDetails.interests.map((item, index) => {
+                              return (
+                                <Badge
+                                  key={index}
+                                  style={{
+                                    backgroundColor: "#EFF1F5",
+                                    marginRight: 10,
+                                    marginBottom: 10,
+                                    height: 30,
+                                  }}
+                                >
+                                  <View
                                     style={{
-                                      backgroundColor: "#EFF1F5",
-                                      marginRight: 10,
-                                      marginBottom: 10,
-                                      height: 30,
+                                      flex: 1,
+                                      flexDirection: "row",
+                                      alignItems: "center",
                                     }}
                                   >
-                                    <View
+                                    <Text
                                       style={{
-                                        flex: 1,
-                                        flexDirection: "row",
-                                        alignItems: "center",
+                                        fontSize: 18,
+                                        paddingHorizontal: 10,
                                       }}
                                     >
-                                      <Text
-                                        style={{
-                                          fontSize: 18,
-                                          paddingHorizontal: 10,
-                                        }}
-                                      >
-                                        {item}
-                                      </Text>
-                                    </View>
-                                  </Badge>
-                                );
-                              }
-                            )
+                                      {item}
+                                    </Text>
+                                  </View>
+                                </Badge>
+                              )
+                            })
                           : null}
                       </View>
                     )}
                     <View style={{ width: "100%" }}>
                       <Label style={this.styles.style.fontFormSmall}>
                         <Text style={this.styles.style.fontFormMandatory}>
-                          {this.state.isEditable && this.state.editMode
-                            ? "*"
-                            : ""}
+                          {this.state.isEditable && this.state.editMode ? "*" : ""}
                         </Text>
                         Current Role
                       </Label>
                       <EditableText
                         onChange={(e) => {
-                          this.handleInputChange(e, "currentRole");
+                          this.handleInputChange(e, "currentRole")
                         }}
                         multiline={false}
                         data-testid="profile-currentRole"
@@ -1228,27 +1130,21 @@ class MyProfileImpl extends JCComponent<Props, State> {
                           lineHeight: 28,
                         }}
                         value={this.state.UserDetails.currentRole}
-                        isEditable={
-                          this.state.isEditable && this.state.editMode
-                        }
+                        isEditable={this.state.isEditable && this.state.editMode}
                       ></EditableText>
                     </View>
                     <Text style={this.styles.style.fontFormSmall}>&nbsp;</Text>
                     {this.state.isEditable && this.state.editMode ? (
                       <Text style={this.styles.style.fontFormSmall}>
-                        <Text style={this.styles.style.fontFormMandatory}>
-                          *
-                        </Text>
+                        <Text style={this.styles.style.fontFormMandatory}>*</Text>
                         Describe your current scope
                       </Text>
                     ) : (
-                      <Text style={this.styles.style.fontFormSmall}>
-                        Current scope
-                      </Text>
+                      <Text style={this.styles.style.fontFormSmall}>Current scope</Text>
                     )}
                     <EditableText
                       onChange={(e) => {
-                        this.handleInputChange(e, "currentScope");
+                        this.handleInputChange(e, "currentScope")
                       }}
                       multiline={true}
                       placeholder="Type here."
@@ -1283,7 +1179,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                     ) : null}
                     <EditableText
                       onChange={(e) => {
-                        this.handleInputChange(e, "personality");
+                        this.handleInputChange(e, "personality")
                       }}
                       multiline={true}
                       data-testid="profile-personality"
@@ -1316,9 +1212,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                               Tell us about your organization
                             </Text>
                           ) : (
-                            <Text style={this.styles.style.fontBold}>
-                              Organization Info
-                            </Text>
+                            <Text style={this.styles.style.fontBold}>Organization Info</Text>
                           )}
 
                           {(this.state.isEditable && this.state.editMode) ||
@@ -1329,20 +1223,14 @@ class MyProfileImpl extends JCComponent<Props, State> {
                               </Label>
                               <EditableText
                                 onChange={(e) => {
-                                  this.handleInputChange(e, "orgName");
+                                  this.handleInputChange(e, "orgName")
                                 }}
                                 multiline={false}
                                 data-testid="profile-orgName"
-                                textStyle={
-                                  this.styles.style.fontFormSmallDarkGrey
-                                }
-                                inputStyle={
-                                  this.styles.style.myProfileOrgTypeInput
-                                }
+                                textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                inputStyle={this.styles.style.myProfileOrgTypeInput}
                                 value={this.state.UserDetails.orgName}
-                                isEditable={
-                                  this.state.isEditable && this.state.editMode
-                                }
+                                isEditable={this.state.isEditable && this.state.editMode}
                               ></EditableText>
                             </View>
                           ) : null}
@@ -1355,67 +1243,40 @@ class MyProfileImpl extends JCComponent<Props, State> {
                                 Type of Organization
                               </Label>
                               {this.state.isEditable && this.state.editMode ? (
-                                <View
-                                  style={this.styles.style.myProfileOrgView}
-                                >
+                                <View style={this.styles.style.myProfileOrgView}>
                                   <Picker
                                     style={this.styles.style.myprofilePicker}
                                     onValueChange={(itemValue) => {
-                                      this.handleInputChange(
-                                        itemValue,
-                                        "orgType"
-                                      );
+                                      this.handleInputChange(itemValue, "orgType")
                                     }}
                                     selectedValue={
-                                      orgTypes.includes(
-                                        this.state.UserDetails.orgType
-                                      )
+                                      orgTypes.includes(this.state.UserDetails.orgType)
                                         ? this.state.UserDetails.orgType
-                                        : this.state.UserDetails.orgType ===
-                                            null ||
-                                          this.state.UserDetails.orgType ===
-                                            "None"
+                                        : this.state.UserDetails.orgType === null ||
+                                          this.state.UserDetails.orgType === "None"
                                         ? "None"
                                         : ""
                                     }
                                   >
-                                    <Picker.Item
-                                      label={"None Selected"}
-                                      value={"None"}
-                                    />
+                                    <Picker.Item label={"None Selected"} value={"None"} />
                                     {orgTypes.map((item, index) => {
-                                      return (
-                                        <Picker.Item
-                                          key={index}
-                                          label={item}
-                                          value={item}
-                                        />
-                                      );
+                                      return <Picker.Item key={index} label={item} value={item} />
                                     })}
                                     <Picker.Item label={"Other"} value={""} />
                                   </Picker>
                                   {this.state.UserDetails.orgType === "" ||
-                                  (!orgTypes.includes(
-                                    this.state.UserDetails.orgType
-                                  ) &&
+                                  (!orgTypes.includes(this.state.UserDetails.orgType) &&
                                     this.state.UserDetails.orgType !== "None" &&
                                     this.state.UserDetails.orgType !== null) ? (
                                     <EditableText
                                       onChange={(e) => {
-                                        this.handleInputChange(e, "orgType");
+                                        this.handleInputChange(e, "orgType")
                                       }}
                                       multiline={false}
-                                      textStyle={
-                                        this.styles.style.fontFormSmallDarkGrey
-                                      }
-                                      inputStyle={
-                                        this.styles.style.myProfileOrgTypeInput
-                                      }
+                                      textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                      inputStyle={this.styles.style.myProfileOrgTypeInput}
                                       value={this.state.UserDetails.orgType}
-                                      isEditable={
-                                        this.state.isEditable &&
-                                        this.state.editMode
-                                      }
+                                      isEditable={this.state.isEditable && this.state.editMode}
                                     ></EditableText>
                                   ) : null}
                                 </View>
@@ -1423,9 +1284,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                                 this.state.UserDetails.orgType !== "None" ? (
                                 <EditableText
                                   multiline={true}
-                                  textStyle={
-                                    this.styles.style.fontFormSmallDarkGrey
-                                  }
+                                  textStyle={this.styles.style.fontFormSmallDarkGrey}
                                   value={this.state.UserDetails.orgType}
                                   isEditable={false}
                                 />
@@ -1434,57 +1293,33 @@ class MyProfileImpl extends JCComponent<Props, State> {
                           ) : null}
 
                           {orgTypes.includes(this.state.UserDetails.orgType) &&
-                          (this.state.UserDetails.orgSize ||
-                            this.state.editMode) ? (
+                          (this.state.UserDetails.orgSize || this.state.editMode) ? (
                             <View style={{ marginTop: 15 }}>
                               {this.state.isEditable && this.state.editMode ? (
                                 <View>
-                                  <Label
-                                    style={this.styles.style.fontFormSmall}
-                                  >
-                                    How many employees are there in the
-                                    organization?
+                                  <Label style={this.styles.style.fontFormSmall}>
+                                    How many employees are there in the organization?
                                   </Label>
                                   <Picker
                                     style={this.styles.style.myprofilePicker}
                                     onValueChange={(itemValue) => {
-                                      this.handleInputChange(
-                                        itemValue,
-                                        "orgSize"
-                                      );
+                                      this.handleInputChange(itemValue, "orgSize")
                                     }}
-                                    selectedValue={
-                                      this.state.UserDetails.orgSize
-                                    }
+                                    selectedValue={this.state.UserDetails.orgSize}
                                   >
-                                    <Picker.Item
-                                      label={"None Selected"}
-                                      value={""}
-                                    />
+                                    <Picker.Item label={"None Selected"} value={""} />
                                     {numberOfEmployees.map((item, index) => {
-                                      return (
-                                        <Picker.Item
-                                          key={index}
-                                          label={item}
-                                          value={item}
-                                        />
-                                      );
+                                      return <Picker.Item key={index} label={item} value={item} />
                                     })}
                                   </Picker>
                                 </View>
                               ) : this.state.UserDetails.orgSize ? (
                                 <View>
-                                  <Label
-                                    style={this.styles.style.fontFormSmall}
-                                  >
-                                    Employees
-                                  </Label>
+                                  <Label style={this.styles.style.fontFormSmall}>Employees</Label>
 
                                   <EditableText
                                     multiline={true}
-                                    textStyle={
-                                      this.styles.style.fontFormSmallDarkGrey
-                                    }
+                                    textStyle={this.styles.style.fontFormSmallDarkGrey}
                                     value={this.state.UserDetails.orgSize}
                                     isEditable={false}
                                   />
@@ -1493,61 +1328,36 @@ class MyProfileImpl extends JCComponent<Props, State> {
                             </View>
                           ) : null}
 
-                          {orgTypesChurches.includes(
-                            this.state.UserDetails.orgType
-                          ) &&
-                          (this.state.UserDetails.sundayAttendance ||
-                            this.state.editMode) ? (
+                          {orgTypesChurches.includes(this.state.UserDetails.orgType) &&
+                          (this.state.UserDetails.sundayAttendance || this.state.editMode) ? (
                             <View style={{ marginTop: 15 }}>
                               {this.state.isEditable && this.state.editMode ? (
                                 <View>
-                                  <Label
-                                    style={this.styles.style.fontFormSmall}
-                                  >
+                                  <Label style={this.styles.style.fontFormSmall}>
                                     Average Sunday morning attendance
                                   </Label>
                                   <Picker
                                     style={this.styles.style.myprofilePicker}
                                     onValueChange={(itemValue) => {
-                                      this.handleInputChange(
-                                        itemValue,
-                                        "sundayAttendance"
-                                      );
+                                      this.handleInputChange(itemValue, "sundayAttendance")
                                     }}
-                                    selectedValue={
-                                      this.state.UserDetails.sundayAttendance
-                                    }
+                                    selectedValue={this.state.UserDetails.sundayAttendance}
                                   >
-                                    <Picker.Item
-                                      label={"None Selected"}
-                                      value={""}
-                                    />
+                                    <Picker.Item label={"None Selected"} value={""} />
                                     {sundayAttendance.map((item, index) => {
-                                      return (
-                                        <Picker.Item
-                                          key={index}
-                                          label={item}
-                                          value={item}
-                                        />
-                                      );
+                                      return <Picker.Item key={index} label={item} value={item} />
                                     })}
                                   </Picker>
                                 </View>
                               ) : this.state.UserDetails.sundayAttendance ? (
                                 <View>
-                                  <Label
-                                    style={this.styles.style.fontFormSmall}
-                                  >
+                                  <Label style={this.styles.style.fontFormSmall}>
                                     Average Sunday morning attendance
                                   </Label>
                                   <EditableText
                                     multiline={true}
-                                    textStyle={
-                                      this.styles.style.fontFormSmallDarkGrey
-                                    }
-                                    value={
-                                      this.state.UserDetails.sundayAttendance
-                                    }
+                                    textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                    value={this.state.UserDetails.sundayAttendance}
                                     isEditable={false}
                                   />
                                 </View>
@@ -1556,58 +1366,35 @@ class MyProfileImpl extends JCComponent<Props, State> {
                           ) : null}
 
                           {orgTypes.includes(this.state.UserDetails.orgType) &&
-                          (this.state.UserDetails.numberVolunteers ||
-                            this.state.editMode) ? (
+                          (this.state.UserDetails.numberVolunteers || this.state.editMode) ? (
                             <View style={{ marginTop: 15 }}>
                               {this.state.isEditable && this.state.editMode ? (
                                 <View>
-                                  <Label
-                                    style={this.styles.style.fontFormSmall}
-                                  >
+                                  <Label style={this.styles.style.fontFormSmall}>
                                     Number of volunteers
                                   </Label>
                                   <Picker
                                     style={this.styles.style.myprofilePicker}
                                     onValueChange={(itemValue) => {
-                                      this.handleInputChange(
-                                        itemValue,
-                                        "numberVolunteers"
-                                      );
+                                      this.handleInputChange(itemValue, "numberVolunteers")
                                     }}
-                                    selectedValue={
-                                      this.state.UserDetails.numberVolunteers
-                                    }
+                                    selectedValue={this.state.UserDetails.numberVolunteers}
                                   >
-                                    <Picker.Item
-                                      label={"None Selected"}
-                                      value={""}
-                                    />
+                                    <Picker.Item label={"None Selected"} value={""} />
                                     {numberOfEmployees.map((item, index) => {
-                                      return (
-                                        <Picker.Item
-                                          key={index}
-                                          label={item}
-                                          value={item}
-                                        />
-                                      );
+                                      return <Picker.Item key={index} label={item} value={item} />
                                     })}
                                   </Picker>
                                 </View>
                               ) : this.state.UserDetails.numberVolunteers ? (
                                 <View>
-                                  <Label
-                                    style={this.styles.style.fontFormSmall}
-                                  >
+                                  <Label style={this.styles.style.fontFormSmall}>
                                     Number of volunteers
                                   </Label>
                                   <EditableText
                                     multiline={true}
-                                    textStyle={
-                                      this.styles.style.fontFormSmallDarkGrey
-                                    }
-                                    value={
-                                      this.state.UserDetails.numberVolunteers
-                                    }
+                                    textStyle={this.styles.style.fontFormSmallDarkGrey}
+                                    value={this.state.UserDetails.numberVolunteers}
                                     isEditable={false}
                                   />
                                 </View>
@@ -1615,24 +1402,17 @@ class MyProfileImpl extends JCComponent<Props, State> {
                             </View>
                           ) : null}
 
-                          {orgTypesChurches.includes(
-                            this.state.UserDetails.orgType
-                          ) &&
-                          (this.state.UserDetails.denomination ||
-                            this.state.editMode) ? (
+                          {orgTypesChurches.includes(this.state.UserDetails.orgType) &&
+                          (this.state.UserDetails.denomination || this.state.editMode) ? (
                             <View style={{ marginTop: 15 }}>
-                              <Text style={this.styles.style.fontFormSmall}>
-                                Denomination
-                              </Text>
+                              <Text style={this.styles.style.fontFormSmall}>Denomination</Text>
                               <EditableText
                                 onChange={(e) => {
-                                  this.handleInputChange(e, "denomination");
+                                  this.handleInputChange(e, "denomination")
                                 }}
                                 multiline={true}
                                 data-testid="profile-denomination"
-                                textStyle={
-                                  this.styles.style.fontFormSmallDarkGrey
-                                }
+                                textStyle={this.styles.style.fontFormSmallDarkGrey}
                                 placeholder="Type here."
                                 inputStyle={{
                                   borderWidth: 1,
@@ -1648,18 +1428,13 @@ class MyProfileImpl extends JCComponent<Props, State> {
                                   lineHeight: 28,
                                 }}
                                 value={this.state.UserDetails.denomination}
-                                isEditable={
-                                  this.state.isEditable && this.state.editMode
-                                }
+                                isEditable={this.state.isEditable && this.state.editMode}
                               ></EditableText>
                             </View>
                           ) : null}
 
-                          {orgTypesNonChurch.includes(
-                            this.state.UserDetails.orgType
-                          ) &&
-                          (this.state.UserDetails.pplServed ||
-                            this.state.editMode) ? (
+                          {orgTypesNonChurch.includes(this.state.UserDetails.orgType) &&
+                          (this.state.UserDetails.pplServed || this.state.editMode) ? (
                             <View style={{ marginTop: 15 }}>
                               <Text style={this.styles.style.fontFormSmall}>
                                 {this.state.editMode
@@ -1668,13 +1443,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
                               </Text>
                               <EditableText
                                 onChange={(e) => {
-                                  this.handleInputChange(e, "pplServed");
+                                  this.handleInputChange(e, "pplServed")
                                 }}
                                 multiline={true}
                                 data-testid="profile-pplServed"
-                                textStyle={
-                                  this.styles.style.fontFormSmallDarkGrey
-                                }
+                                textStyle={this.styles.style.fontFormSmallDarkGrey}
                                 placeholder="Type here."
                                 inputStyle={{
                                   borderWidth: 1,
@@ -1690,28 +1463,23 @@ class MyProfileImpl extends JCComponent<Props, State> {
                                   lineHeight: 28,
                                 }}
                                 value={this.state.UserDetails.pplServed}
-                                isEditable={
-                                  this.state.isEditable && this.state.editMode
-                                }
+                                isEditable={this.state.isEditable && this.state.editMode}
                               ></EditableText>
                             </View>
                           ) : null}
 
-                          {this.state.UserDetails.orgDescription ||
-                          this.state.editMode ? (
+                          {this.state.UserDetails.orgDescription || this.state.editMode ? (
                             <View style={{ marginTop: 15 }}>
                               <Text style={this.styles.style.fontFormSmall}>
                                 Description of church or ministry organization
                               </Text>
                               <EditableText
                                 onChange={(e) => {
-                                  this.handleInputChange(e, "orgDescription");
+                                  this.handleInputChange(e, "orgDescription")
                                 }}
                                 multiline={true}
                                 data-testid="profile-orgDescription"
-                                textStyle={
-                                  this.styles.style.fontFormSmallDarkGrey
-                                }
+                                textStyle={this.styles.style.fontFormSmallDarkGrey}
                                 placeholder="Type here."
                                 inputStyle={{
                                   borderWidth: 1,
@@ -1727,9 +1495,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                                   lineHeight: 28,
                                 }}
                                 value={this.state.UserDetails.orgDescription}
-                                isEditable={
-                                  this.state.isEditable && this.state.editMode
-                                }
+                                isEditable={this.state.isEditable && this.state.editMode}
                               ></EditableText>
                             </View>
                           ) : null}
@@ -1739,9 +1505,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   </View>
                 ) : (
                   <View style={this.styles.style.profileScreenRightCard}>
-                    <Text style={this.styles.style.myprofileAboutMe}>
-                      Account Settings
-                    </Text>
+                    <Text style={this.styles.style.myprofileAboutMe}>Account Settings</Text>
                     <View style={{ marginTop: 40 }}>
                       <Label
                         style={{
@@ -1754,9 +1518,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       <TextInput
                         placeholder="Current password"
                         value={this.state.oldPass}
-                        onChange={(e) =>
-                          this.setState({ oldPass: e.nativeEvent.text })
-                        }
+                        onChange={(e) => this.setState({ oldPass: e.nativeEvent.text })}
                         secureTextEntry={true}
                         style={{
                           borderWidth: 1,
@@ -1775,9 +1537,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       <TextInput
                         placeholder="New password"
                         value={this.state.newPass}
-                        onChange={(e) =>
-                          this.setState({ newPass: e.nativeEvent.text })
-                        }
+                        onChange={(e) => this.setState({ newPass: e.nativeEvent.text })}
                         secureTextEntry={true}
                         style={{
                           borderWidth: 1,
@@ -1820,81 +1580,59 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       <JCSwitch
                         containerWidth={500}
                         switchLabel="Receive Email Alerts for Direct Messages"
-                        initState={
-                          this.state.UserDetails.alertConfig
-                            ?.emailDirectMessage == "true"
-                        }
+                        initState={this.state.UserDetails.alertConfig?.emailDirectMessage == "true"}
                         onPress={(e) => {
-                          this.handleAlertInputChange(e, "emailDirectMessage");
+                          this.handleAlertInputChange(e, "emailDirectMessage")
                         }}
                       ></JCSwitch>
                       <JCSwitch
                         containerWidth={500}
                         switchLabel="Receive Email Alerts for Group Messages"
-                        initState={
-                          this.state.UserDetails.alertConfig
-                            ?.emailGroupMessage == "true"
-                        }
+                        initState={this.state.UserDetails.alertConfig?.emailGroupMessage == "true"}
                         onPress={(e) => {
-                          this.handleAlertInputChange(e, "emailGroupMessage");
+                          this.handleAlertInputChange(e, "emailGroupMessage")
                         }}
                       ></JCSwitch>
                       <JCSwitch
                         containerWidth={500}
                         switchLabel="Receive Email Alerts for Event Messages"
-                        initState={
-                          this.state.UserDetails.alertConfig
-                            ?.emailEventMessage == "true"
-                        }
+                        initState={this.state.UserDetails.alertConfig?.emailEventMessage == "true"}
                         onPress={(e) => {
-                          this.handleAlertInputChange(e, "emailEventMessage");
+                          this.handleAlertInputChange(e, "emailEventMessage")
                         }}
                       ></JCSwitch>
                       <JCSwitch
                         containerWidth={500}
                         switchLabel="Receive Email Alerts for Resource Messages"
                         initState={
-                          this.state.UserDetails.alertConfig
-                            ?.emailResourceMessage == "true"
+                          this.state.UserDetails.alertConfig?.emailResourceMessage == "true"
                         }
                         onPress={(e) => {
-                          this.handleAlertInputChange(
-                            e,
-                            "emailResourceMessage"
-                          );
+                          this.handleAlertInputChange(e, "emailResourceMessage")
                         }}
                       ></JCSwitch>
                       <JCSwitch
                         containerWidth={500}
                         switchLabel="Receive Email Alerts for Course Messages"
-                        initState={
-                          this.state.UserDetails.alertConfig
-                            ?.emailCourseMessage == "true"
-                        }
+                        initState={this.state.UserDetails.alertConfig?.emailCourseMessage == "true"}
                         onPress={(e) => {
-                          this.handleAlertInputChange(e, "emailCourseMessage");
+                          this.handleAlertInputChange(e, "emailCourseMessage")
                         }}
                       ></JCSwitch>
                       <JCSwitch
                         containerWidth={500}
                         switchLabel="Receive Email Alerts for Organization Messages"
-                        initState={
-                          this.state.UserDetails.alertConfig?.emailOrgMessage ==
-                          "true"
-                        }
+                        initState={this.state.UserDetails.alertConfig?.emailOrgMessage == "true"}
                         onPress={(e) => {
-                          this.handleAlertInputChange(e, "emailOrgMessage");
+                          this.handleAlertInputChange(e, "emailOrgMessage")
                         }}
                       ></JCSwitch>
                       <JCSwitch
                         containerWidth={500}
                         switchLabel="Receive Email Alerts for Org Messages"
-                        initState={
-                          this.state.UserDetails.alertConfig?.emailPromotions ==
-                          "true"
-                        }
+                        initState={this.state.UserDetails.alertConfig?.emailPromotions == "true"}
                         onPress={(e) => {
-                          this.handleAlertInputChange(e, "emailPromotions");
+                          this.handleAlertInputChange(e, "emailPromotions")
                         }}
                       ></JCSwitch>
                     </View>
@@ -1902,15 +1640,15 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 )}
               </Form>
             </Content>
-          ) : null;
+          ) : null
         }}
       </MyProfileImpl.UserConsumer>
-    );
+    )
   }
 }
 
 export default function MyProfile(props: Props): JSX.Element {
-  const route = useRoute();
-  const navigation = useNavigation();
-  return <MyProfileImpl {...props} navigation={navigation} route={route} />;
+  const route = useRoute()
+  const navigation = useNavigation()
+  return <MyProfileImpl {...props} navigation={navigation} route={route} />
 }

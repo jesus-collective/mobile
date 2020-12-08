@@ -1,6 +1,6 @@
-import React from "react";
+import React from "react"
 
-import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar";
+import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
 import {
   Platform,
   TextInput,
@@ -9,32 +9,32 @@ import {
   TextInputKeyPressEventData,
   TouchableOpacity,
   ActivityIndicator,
-} from "react-native";
-import { View } from "native-base";
-import JCButton, { ButtonTypes } from "../../components/Forms/JCButton";
-import { Dimensions } from "react-native";
-import MainStyles from "../../components/style";
-import { Auth } from "aws-amplify";
-import { Entypo } from "@expo/vector-icons";
-import { Copyright } from "../../components/Auth/Copyright";
-import { UserContext } from "../../screens/HomeScreen/UserContext";
+} from "react-native"
+import { View } from "native-base"
+import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
+import { Dimensions } from "react-native"
+import MainStyles from "../../components/style"
+import { Auth } from "aws-amplify"
+import { Entypo } from "@expo/vector-icons"
+import { Copyright } from "../../components/Auth/Copyright"
+import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 
 interface Props {}
 
 interface State {
-  email: string;
-  authError: string;
-  codeSent: boolean;
-  code: string;
-  newPass: string;
-  newPass2: string;
-  sendingCode: boolean;
-  reseting: boolean;
+  email: string
+  authError: string
+  codeSent: boolean
+  code: string
+  newPass: string
+  newPass2: string
+  sendingCode: boolean
+  reseting: boolean
 }
 
 class MyForgotPassword extends React.Component<Props, State> {
   constructor(props: Props) {
-    super(props);
+    super(props)
     this.state = {
       email: "",
       authError: "",
@@ -44,11 +44,11 @@ class MyForgotPassword extends React.Component<Props, State> {
       newPass2: "",
       sendingCode: false,
       reseting: false,
-    };
+    }
   }
-  static UserConsumer = UserContext.Consumer;
+  static UserConsumer = UserContext.Consumer
 
-  changeAuthState(actions: any, state: string): void {
+  changeAuthState(actions: UserActions, state: string): void {
     this.setState({
       email: "",
       authError: "",
@@ -58,79 +58,74 @@ class MyForgotPassword extends React.Component<Props, State> {
       newPass2: "",
       sendingCode: false,
       reseting: false,
-    });
-    if (actions.onStateChange) actions.onStateChange(state);
+    })
+    if (actions.onStateChange) actions.onStateChange(state, null)
   }
 
   async sendCode(): Promise<void> {
     try {
-      this.setState({ sendingCode: true });
+      this.setState({ sendingCode: true })
       await Auth.forgotPassword(this.state.email.toLowerCase()).then(() =>
         this.setState({ codeSent: true })
-      );
+      )
     } catch (e) {
-      this.setState({ authError: e.message, sendingCode: false });
+      this.setState({ authError: e.message, sendingCode: false })
     }
   }
 
   async resetPass(actions: any): Promise<void> {
     try {
       if (this.state.newPass !== this.state.newPass2) {
-        this.setState({ authError: "Passwords do not match" });
-        return;
+        this.setState({ authError: "Passwords do not match" })
+        return
       }
-      this.setState({ reseting: true });
+      this.setState({ reseting: true })
       await Auth.forgotPasswordSubmit(
         this.state.email.toLowerCase(),
         this.state.code,
         this.state.newPass
       ).then(() => {
-        this.changeAuthState(actions, "signIn");
-      });
+        this.changeAuthState(actions, "signIn")
+      })
     } catch (e) {
-      this.setState({ authError: e.message, reseting: false });
+      this.setState({ authError: e.message, reseting: false })
     }
   }
 
-  handleEnter(
-    actions: any,
-    keyEvent: NativeSyntheticEvent<TextInputKeyPressEventData>
-  ): void {
+  handleEnter(actions: any, keyEvent: NativeSyntheticEvent<TextInputKeyPressEventData>): void {
     if (keyEvent.nativeEvent.key === "Enter") {
       if (this.state.codeSent) {
-        this.resetPass(actions);
+        this.resetPass(actions)
       } else {
-        this.sendCode();
+        this.sendCode()
       }
     }
   }
 
-  styles: MainStyles = MainStyles.getInstance();
+  styles: MainStyles = MainStyles.getInstance()
   componentDidMount(): void {
     Dimensions.addEventListener("change", () => {
-      this.styles.updateStyles(this);
-    });
+      this.styles.updateStyles(this)
+    })
   }
   componentWillUnmount(): void {
     Dimensions.removeEventListener("change", () => {
-      this.styles.updateStyles(this);
-    });
+      this.styles.updateStyles(this)
+    })
   }
   render(): React.ReactNode {
     return (
       <MyForgotPassword.UserConsumer>
         {({ userState, userActions }) => {
-          if (!userState) return null;
+          if (!userState) return null
           return (
             <>
               {userState.authState === "forgotPassword" ? (
-                <View
-                  style={{ width: "100%", left: 0, top: 0, height: "100%" }}
-                >
+                <View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>
                   <View style={this.styles.style.signUpBackButtonWrapper}>
                     <TouchableOpacity
                       onPress={() => {
-                        this.changeAuthState(userActions, "signIn");
+                        this.changeAuthState(userActions, "signIn")
                       }}
                     >
                       <Text
@@ -169,9 +164,7 @@ class MyForgotPassword extends React.Component<Props, State> {
                         onKeyPress={(e) => this.handleEnter(userActions, e)}
                         placeholder="Enter your email"
                         value={this.state.email}
-                        onChange={(e) =>
-                          this.setState({ email: e.nativeEvent.text })
-                        }
+                        onChange={(e) => this.setState({ email: e.nativeEvent.text })}
                         secureTextEntry={false}
                         style={{
                           borderBottomWidth: 1,
@@ -198,9 +191,7 @@ class MyForgotPassword extends React.Component<Props, State> {
                         )}
                       </JCButton>
                       <TouchableOpacity
-                        onPress={() =>
-                          this.setState({ codeSent: true, authError: "" })
-                        }
+                        onPress={() => this.setState({ codeSent: true, authError: "" })}
                       >
                         <Text
                           style={{
@@ -254,9 +245,7 @@ class MyForgotPassword extends React.Component<Props, State> {
                         keyboardType="email-address"
                         placeholder="Enter your email"
                         value={this.state.email}
-                        onChange={(e) =>
-                          this.setState({ email: e.nativeEvent.text })
-                        }
+                        onChange={(e) => this.setState({ email: e.nativeEvent.text })}
                         secureTextEntry={false}
                         style={{
                           borderBottomWidth: 1,
@@ -277,9 +266,7 @@ class MyForgotPassword extends React.Component<Props, State> {
                         keyboardType="number-pad"
                         placeholder="One-time security code"
                         value={this.state.code}
-                        onChange={(e) =>
-                          this.setState({ code: e.nativeEvent.text })
-                        }
+                        onChange={(e) => this.setState({ code: e.nativeEvent.text })}
                         secureTextEntry={false}
                         style={{
                           borderBottomWidth: 1,
@@ -307,9 +294,7 @@ class MyForgotPassword extends React.Component<Props, State> {
                           onKeyPress={(e) => this.handleEnter(userActions, e)}
                           placeholder="New password"
                           value={this.state.newPass}
-                          onChange={(e) =>
-                            this.setState({ newPass: e.nativeEvent.text })
-                          }
+                          onChange={(e) => this.setState({ newPass: e.nativeEvent.text })}
                           secureTextEntry={true}
                           style={{
                             borderBottomWidth: 1,
@@ -330,9 +315,7 @@ class MyForgotPassword extends React.Component<Props, State> {
                           onKeyPress={(e) => this.handleEnter(userActions, e)}
                           placeholder="Confirm new password"
                           value={this.state.newPass2}
-                          onChange={(e) =>
-                            this.setState({ newPass2: e.nativeEvent.text })
-                          }
+                          onChange={(e) => this.setState({ newPass2: e.nativeEvent.text })}
                           secureTextEntry={true}
                           style={{
                             borderBottomWidth: 1,
@@ -376,17 +359,16 @@ class MyForgotPassword extends React.Component<Props, State> {
                       <Copyright />
                     </View>
                   )}
-                  {Platform.OS === "web" &&
-                  Dimensions.get("window").width > 720 ? (
+                  {Platform.OS === "web" && Dimensions.get("window").width > 720 ? (
                     <SignUpSidebar text="It’s time to unite, equip, and amplify a Jesus-centred movement." />
                   ) : null}
                 </View>
               ) : null}
             </>
-          );
+          )
         }}
       </MyForgotPassword.UserConsumer>
-    );
+    )
   }
 }
-export default MyForgotPassword;
+export default MyForgotPassword

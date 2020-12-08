@@ -1,13 +1,14 @@
-import HomeScreenRouter from "./HomeScreenRouter";
-import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
-import { navigationRef } from "./NavigationRoot";
-import AsyncStorage from "@react-native-community/async-storage";
-import React, { Suspense } from "react";
-import { Platform } from "react-native";
-import { Linking } from "expo";
+import HomeScreenRouter from "./HomeScreenRouter"
+import { NavigationContainer, DefaultTheme } from "@react-navigation/native"
+import { navigationRef } from "./NavigationRoot"
+import AsyncStorage from "@react-native-community/async-storage"
+import React, { Suspense } from "react"
+import { Platform } from "react-native"
+import { Linking } from "expo"
+import { AuthStateData } from "src/types"
 
-const prefix = Linking.makeUrl("/");
-console.log({ prefix: prefix });
+const prefix = Linking.makeUrl("/")
+console.log({ prefix: prefix })
 const linking = {
   prefixes: [
     prefix,
@@ -71,44 +72,46 @@ const linking = {
       },
     },
   },
-};
-export default function Main(props: any) {
+}
+interface Props {
+  authState?: any
+  onStateChange(state: string, data: AuthStateData): void
+}
+export default function Main(props: Props) {
   // console.log(props)
-  console.log("Main");
-  const PERSISTENCE_KEY = "NAVIGATION_STATE";
-  const [isReady, setIsReady] = React.useState(false);
-  const [initialState, setInitialState] = React.useState();
+  console.log("Main")
+  const PERSISTENCE_KEY = "NAVIGATION_STATE"
+  const [isReady, setIsReady] = React.useState(false)
+  const [initialState, setInitialState] = React.useState()
 
   React.useEffect(() => {
     const restoreState = async () => {
       try {
-        const initialUrl = await Linking.getInitialURL();
-        console.log({ initialUrl: initialUrl });
+        const initialUrl = await Linking.getInitialURL()
+        console.log({ initialUrl: initialUrl })
         if (Platform.OS !== "web" && initialUrl == null) {
           // Only restore state if there's no deep link and we're not on web
-          const savedStateString = await AsyncStorage.getItem(PERSISTENCE_KEY);
-          const state = savedStateString
-            ? JSON.parse(savedStateString)
-            : undefined;
+          const savedStateString = await AsyncStorage.getItem(PERSISTENCE_KEY)
+          const state = savedStateString ? JSON.parse(savedStateString) : undefined
 
           if (state !== undefined) {
-            setInitialState(state);
+            setInitialState(state)
           }
         }
       } finally {
-        setIsReady(true);
+        setIsReady(true)
       }
-    };
+    }
 
     if (!isReady) {
-      restoreState();
+      restoreState()
     }
-  }, [isReady]);
+  }, [isReady])
 
   if (!isReady) {
-    return null;
+    return null
   }
-  console.log({ initialState: initialState });
+  console.log({ initialState: initialState })
   return (
     <NavigationContainer
       ref={navigationRef}
@@ -119,8 +122,8 @@ export default function Main(props: any) {
         colors: { ...DefaultTheme.colors, background: "rgb(255, 255, 255)" },
       }}
       onStateChange={(state) => {
-        console.log({ persistencestate: state });
-        AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state));
+        console.log({ persistencestate: state })
+        AsyncStorage.setItem(PERSISTENCE_KEY, JSON.stringify(state))
       }}
     >
       <HomeScreenRouter
@@ -128,5 +131,5 @@ export default function Main(props: any) {
         authState={props.authState}
       ></HomeScreenRouter>
     </NavigationContainer>
-  );
+  )
 }

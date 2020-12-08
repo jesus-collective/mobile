@@ -1,22 +1,24 @@
-import React, { Suspense } from "react";
-import { MuiPickersUtilsProvider } from "@material-ui/pickers";
-import MomentUtils from "@date-io/moment";
-import { View, Platform } from "react-native";
-import { Text } from "react-native";
-import JCComponent from "../../components/JCComponent/JCComponent";
-import Main from "./Main";
+import React, { Suspense } from "react"
+import { MuiPickersUtilsProvider } from "@material-ui/pickers"
+import MomentUtils from "@date-io/moment"
+import { View, Platform } from "react-native"
+import { Text } from "react-native"
+import JCComponent from "../../components/JCComponent/JCComponent"
+import Main from "./Main"
+import { AuthStateData } from "src/types"
+
 interface Props {
-  authState?: any;
-  onStateChange(state: string, data: string): void;
+  authState?: any
+  onStateChange(state: string, data: AuthStateData): void
 }
 
 export default class App extends JCComponent<Props> {
   constructor(props: Props) {
-    super(props);
+    super(props)
   }
 
   renderFallback(): {} {
-    return <Text>loading...</Text>;
+    return <Text>loading...</Text>
   }
   render(): React.ReactNode {
     //    console.log({ AppAuthState: this.props.authState });
@@ -35,15 +37,15 @@ export default class App extends JCComponent<Props> {
         >
           <MuiPickersUtilsProvider utils={MomentUtils}>
             <Main
-              onStateChange={(e: any, e2: any) => {
-                console.log(e);
-                this.props.onStateChange(e, e2);
+              onStateChange={(e: string, e2: AuthStateData) => {
+                console.log(e)
+                this.props.onStateChange(e, e2)
               }}
               authState={this.props.authState}
             />
           </MuiPickersUtilsProvider>
         </View>
       </Suspense>
-    );
+    )
   }
 }

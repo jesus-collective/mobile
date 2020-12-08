@@ -1,6 +1,6 @@
-import React from "react";
-import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar";
-import { View } from "native-base";
+import React from "react"
+import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
+import { View } from "native-base"
 import {
   Platform,
   TextInput,
@@ -9,45 +9,46 @@ import {
   TextInputKeyPressEventData,
   Picker,
   TouchableOpacity,
-} from "react-native";
-import JCButton, { ButtonTypes } from "../../components/Forms/JCButton";
-import { Entypo } from "@expo/vector-icons";
-import { Dimensions, ActivityIndicator } from "react-native";
-import MainStyles from "../../components/style";
-import countryDialCodes from "aws-amplify-react-native/src/CountryDialCodes";
-import { Auth } from "aws-amplify";
-import { Copyright } from "../../components/Auth/Copyright";
-import { navigationRef } from "../../screens/HomeScreen/NavigationRoot";
-import * as RootNavigation from "../../screens/HomeScreen/NavigationRoot";
-import { UserContext } from "../../screens/HomeScreen/UserContext";
-import { useNavigation, useRoute } from "@react-navigation/native";
+} from "react-native"
+import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
+import { Entypo } from "@expo/vector-icons"
+import { Dimensions, ActivityIndicator } from "react-native"
+import MainStyles from "../../components/style"
+import countryDialCodes from "aws-amplify-react-native/src/CountryDialCodes"
+import { Auth } from "aws-amplify"
+import { Copyright } from "../../components/Auth/Copyright"
+import { navigationRef } from "../../screens/HomeScreen/NavigationRoot"
+import * as RootNavigation from "../../screens/HomeScreen/NavigationRoot"
+import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
+import { useNavigation, useRoute } from "@react-navigation/native"
+import { AuthStateData } from "src/types"
 
 interface Props {
-  navigation?: any;
-  route?: any;
+  navigation?: any
+  route?: any
 }
 
 interface State {
   user: {
-    first: string;
-    last: string;
-    pass: string;
-    pass2: string;
-    email: string;
-    phone: string;
-    code: string;
-    orgName: string;
-  };
-  authError: string;
-  enabled: boolean;
-  joinedAs: "individual" | "organization" | null;
-  joinedProduct: string | null;
-  sendingData: boolean;
+    first: string
+    last: string
+    pass: string
+    pass2: string
+    email: string
+    phone: string
+    code: string
+    orgName: string
+  }
+  authError: string
+  enabled: boolean
+  joinedAs: "individual" | "organization" | null
+  joinedProduct: string
+  sendingData: boolean
 }
 
 class MySignUpImpl extends React.Component<Props, State> {
   constructor(props: Props) {
-    super(props);
+    super(props)
 
     this.state = {
       user: {
@@ -65,12 +66,12 @@ class MySignUpImpl extends React.Component<Props, State> {
       joinedAs: props.route?.params.joinedAs,
       joinedProduct: props.route?.params.joinedProduct,
       sendingData: false,
-    };
-    console.log({ PARAMS: props.route });
+    }
+    console.log({ PARAMS: props.route })
   }
-  static UserConsumer = UserContext.Consumer;
+  static UserConsumer = UserContext.Consumer
 
-  changeAuthState(actions: any, state: string, data: any): void {
+  changeAuthState(actions: UserActions, state: string, data: AuthStateData): void {
     this.setState({
       user: {
         first: "",
@@ -85,56 +86,56 @@ class MySignUpImpl extends React.Component<Props, State> {
       authError: "",
       enabled: false,
       joinedAs: null,
-      joinedProduct: null,
+      joinedProduct: this.props.route?.params.joinedProduct,
       sendingData: false,
-    });
-    if (actions.onStateChange) actions.onStateChange(state, data);
+    })
+    if (actions.onStateChange) actions.onStateChange(state, data)
   }
 
   validate(): boolean {
-    let val = true;
+    let val = true
     if (!this.state.user.first) {
-      val = false;
+      val = false
     }
 
     if (!this.state.user.last) {
-      val = false;
+      val = false
     }
 
     if (!this.state.user.pass || !this.state.user.pass) {
-      val = false;
+      val = false
     }
 
     if (!this.state.user.email || !this.state.user.email.includes("@")) {
-      val = false;
+      val = false
     }
 
     if (!this.state.user.phone) {
-      val = false;
+      val = false
     }
 
     if (!this.state.user.orgName && this.state.joinedAs === "organization") {
-      val = false;
+      val = false
     }
 
-    return val;
+    return val
   }
 
   componentDidUpdate(_prevProps: Props, prevState: State): void {
     if (prevState.user !== this.state.user) {
-      this.setState({ enabled: this.validate() });
+      this.setState({ enabled: this.validate() })
     }
   }
 
   async signUp(actions: any): Promise<void> {
     try {
       if (this.state.user.pass !== this.state.user.pass2) {
-        this.setState({ authError: "Passwords do not match" });
-        return;
+        this.setState({ authError: "Passwords do not match" })
+        return
       }
-      if (!this.validate()) return;
+      if (!this.validate()) return
 
-      this.setState({ sendingData: true });
+      this.setState({ sendingData: true })
       await Auth.signUp({
         username: this.state.user.email.toLowerCase(),
         password: this.state.user.pass,
@@ -144,26 +145,21 @@ class MySignUpImpl extends React.Component<Props, State> {
           phone_number: this.state.user.code + this.state.user.phone,
           email: this.state.user.email.toLowerCase(),
           "custom:orgName": this.state.user.orgName,
-          "custom:isOrg": Boolean(
-            this.state.joinedAs === "organization"
-          ).toString(),
+          "custom:isOrg": Boolean(this.state.joinedAs === "organization").toString(),
         },
       }).then(() =>
         this.changeAuthState(actions, "confirmSignUp", {
           joinedProduct: this.state.joinedProduct,
           email: this.state.user.email.toLowerCase(),
         })
-      );
+      )
     } catch (e) {
-      this.setState({ authError: e.message, sendingData: false });
+      this.setState({ authError: e.message, sendingData: false })
     }
   }
 
-  handleEnter(
-    actions: any,
-    keyEvent: NativeSyntheticEvent<TextInputKeyPressEventData>
-  ): void {
-    if (keyEvent.nativeEvent.key === "Enter") this.signUp(actions);
+  handleEnter(actions: any, keyEvent: NativeSyntheticEvent<TextInputKeyPressEventData>): void {
+    if (keyEvent.nativeEvent.key === "Enter") this.signUp(actions)
   }
 
   handleChange(field: keyof State["user"], input: string): void {
@@ -172,43 +168,41 @@ class MySignUpImpl extends React.Component<Props, State> {
         ...prevState.user,
         [field]: input,
       },
-    }));
+    }))
   }
 
-  styles = MainStyles.getInstance();
+  styles = MainStyles.getInstance()
   componentWillMount(): void {
     const params = RootNavigation.getRoot()?.params as {
-      joinedAs: "individual" | "organization" | null;
-    };
-    this.setState({ joinedAs: params?.joinedAs ? params.joinedAs : null });
+      joinedAs: "individual" | "organization" | null
+    }
+    this.setState({ joinedAs: params?.joinedAs ? params.joinedAs : null })
   }
   componentDidMount(): void {
     Dimensions.addEventListener("change", () => {
-      this.styles.updateStyles(this);
-    });
+      this.styles.updateStyles(this)
+    })
   }
   componentWillUnmount(): void {
     Dimensions.removeEventListener("change", () => {
-      this.styles.updateStyles(this);
-    });
+      this.styles.updateStyles(this)
+    })
   }
   render(): React.ReactNode {
     return (
       <MySignUpImpl.UserConsumer>
         {({ userState, userActions }) => {
-          if (!userState) return null;
+          if (!userState) return null
           return (
             <>
               {userState.authState === "signUp" ? (
-                <View
-                  style={{ width: "100%", left: 0, top: 0, height: "100%" }}
-                >
+                <View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>
                   <View style={this.styles.style.signUpBackButtonWrapper}>
                     <TouchableOpacity
                       onPress={() => {
                         this.changeAuthState(userActions, "signIn", {
                           joinedProduct: this.state.joinedProduct,
-                        });
+                        })
                       }}
                     >
                       <Text
@@ -261,9 +255,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             textContentType="name"
                             placeholder="First Name"
                             value={this.state.user.first}
-                            onChange={(e) =>
-                              this.handleChange("first", e.nativeEvent.text)
-                            }
+                            onChange={(e) => this.handleChange("first", e.nativeEvent.text)}
                             style={{
                               borderBottomWidth: 1,
                               borderColor: "#00000020",
@@ -292,9 +284,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             textContentType="familyName"
                             placeholder="Last Name"
                             value={this.state.user.last}
-                            onChange={(e) =>
-                              this.handleChange("last", e.nativeEvent.text)
-                            }
+                            onChange={(e) => this.handleChange("last", e.nativeEvent.text)}
                             style={{
                               borderBottomWidth: 1,
                               borderColor: "#00000020",
@@ -332,9 +322,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             keyboardType="email-address"
                             placeholder="Email address"
                             value={this.state.user.email}
-                            onChange={(e) =>
-                              this.handleChange("email", e.nativeEvent.text)
-                            }
+                            onChange={(e) => this.handleChange("email", e.nativeEvent.text)}
                             style={{
                               borderBottomWidth: 1,
                               borderColor: "#00000020",
@@ -369,9 +357,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             textContentType="newPassword"
                             placeholder="Create Password"
                             value={this.state.user.pass}
-                            onChange={(e) =>
-                              this.handleChange("pass", e.nativeEvent.text)
-                            }
+                            onChange={(e) => this.handleChange("pass", e.nativeEvent.text)}
                             secureTextEntry={true}
                             style={{
                               borderBottomWidth: 1,
@@ -401,9 +387,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             textContentType="newPassword"
                             placeholder="Confirm Password"
                             value={this.state.user.pass2}
-                            onChange={(e) =>
-                              this.handleChange("pass2", e.nativeEvent.text)
-                            }
+                            onChange={(e) => this.handleChange("pass2", e.nativeEvent.text)}
                             secureTextEntry={true}
                             style={{
                               borderBottomWidth: 1,
@@ -429,20 +413,14 @@ class MySignUpImpl extends React.Component<Props, State> {
                         >
                           <Picker
                             selectedValue={this.state.user.code}
-                            onValueChange={(val) =>
-                              this.handleChange("code", val)
-                            }
+                            onValueChange={(val) => this.handleChange("code", val)}
                             style={{
                               marginRight: 5,
                               borderColor: "#00000070",
                             }}
                           >
                             {countryDialCodes.map((dialCode) => (
-                              <Picker.Item
-                                key={dialCode}
-                                value={dialCode}
-                                label={dialCode}
-                              />
+                              <Picker.Item key={dialCode} value={dialCode} label={dialCode} />
                             ))}
                           </Picker>
                           <Text
@@ -461,9 +439,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             keyboardType="phone-pad"
                             placeholder="Phone number"
                             value={this.state.user.phone}
-                            onChange={(e) =>
-                              this.handleChange("phone", e.nativeEvent.text)
-                            }
+                            onChange={(e) => this.handleChange("phone", e.nativeEvent.text)}
                             style={{
                               borderBottomWidth: 1,
                               borderColor: "#00000020",
@@ -544,8 +520,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             lineHeight: 30,
                           }}
                         >
-                          Set up the account for the administrator of your
-                          organization first
+                          Set up the account for the administrator of your organization first
                         </Text>
                         <View
                           style={{
@@ -567,9 +542,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             textContentType="name"
                             placeholder="First Name"
                             value={this.state.user.first}
-                            onChange={(e) =>
-                              this.handleChange("first", e.nativeEvent.text)
-                            }
+                            onChange={(e) => this.handleChange("first", e.nativeEvent.text)}
                             style={{
                               borderBottomWidth: 1,
                               borderColor: "#00000020",
@@ -598,9 +571,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             textContentType="familyName"
                             placeholder="Last Name"
                             value={this.state.user.last}
-                            onChange={(e) =>
-                              this.handleChange("last", e.nativeEvent.text)
-                            }
+                            onChange={(e) => this.handleChange("last", e.nativeEvent.text)}
                             style={{
                               borderBottomWidth: 1,
                               borderColor: "#00000020",
@@ -638,9 +609,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             keyboardType="email-address"
                             placeholder="Email Address"
                             value={this.state.user.email}
-                            onChange={(e) =>
-                              this.handleChange("email", e.nativeEvent.text)
-                            }
+                            onChange={(e) => this.handleChange("email", e.nativeEvent.text)}
                             style={{
                               borderBottomWidth: 1,
                               marginRight: 30,
@@ -667,9 +636,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                           <TextInput
                             placeholder="Organization Name"
                             value={this.state.user.orgName}
-                            onChange={(e) =>
-                              this.handleChange("orgName", e.nativeEvent.text)
-                            }
+                            onChange={(e) => this.handleChange("orgName", e.nativeEvent.text)}
                             style={{
                               borderBottomWidth: 1,
                               borderColor: "#00000020",
@@ -704,9 +671,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             textContentType="newPassword"
                             placeholder="Create Password"
                             value={this.state.user.pass}
-                            onChange={(e) =>
-                              this.handleChange("pass", e.nativeEvent.text)
-                            }
+                            onChange={(e) => this.handleChange("pass", e.nativeEvent.text)}
                             secureTextEntry={true}
                             style={{
                               borderBottomWidth: 1,
@@ -736,9 +701,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             textContentType="newPassword"
                             placeholder="Confirm Password"
                             value={this.state.user.pass2}
-                            onChange={(e) =>
-                              this.handleChange("pass2", e.nativeEvent.text)
-                            }
+                            onChange={(e) => this.handleChange("pass2", e.nativeEvent.text)}
                             secureTextEntry={true}
                             style={{
                               borderBottomWidth: 1,
@@ -764,20 +727,14 @@ class MySignUpImpl extends React.Component<Props, State> {
                         >
                           <Picker
                             selectedValue={this.state.user.code}
-                            onValueChange={(val) =>
-                              this.handleChange("code", val)
-                            }
+                            onValueChange={(val) => this.handleChange("code", val)}
                             style={{
                               marginRight: 5,
                               borderColor: "#00000070",
                             }}
                           >
                             {countryDialCodes.map((dialCode) => (
-                              <Picker.Item
-                                key={dialCode}
-                                value={dialCode}
-                                label={dialCode}
-                              />
+                              <Picker.Item key={dialCode} value={dialCode} label={dialCode} />
                             ))}
                           </Picker>
                           <Text
@@ -796,9 +753,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             keyboardType="phone-pad"
                             placeholder="Phone number"
                             value={this.state.user.phone}
-                            onChange={(e) =>
-                              this.handleChange("phone", e.nativeEvent.text)
-                            }
+                            onChange={(e) => this.handleChange("phone", e.nativeEvent.text)}
                             style={{
                               borderBottomWidth: 1,
                               borderColor: "#00000020",
@@ -893,9 +848,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                       >
                         <JCButton
                           buttonType={ButtonTypes.SolidSignIn2}
-                          onPress={() =>
-                            this.setState({ joinedAs: "individual" })
-                          }
+                          onPress={() => this.setState({ joinedAs: "individual" })}
                         >
                           Individual
                         </JCButton>
@@ -911,9 +864,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                         </Text>
                         <JCButton
                           buttonType={ButtonTypes.SolidSignIn2}
-                          onPress={() =>
-                            this.setState({ joinedAs: "organization" })
-                          }
+                          onPress={() => this.setState({ joinedAs: "organization" })}
                         >
                           Organization
                         </JCButton>
@@ -921,23 +872,22 @@ class MySignUpImpl extends React.Component<Props, State> {
                       <Copyright marginTop={90} />
                     </View>
                   )}
-                  {Platform.OS === "web" &&
-                  Dimensions.get("window").width > 720 ? (
+                  {Platform.OS === "web" && Dimensions.get("window").width > 720 ? (
                     <SignUpSidebar position="1" />
                   ) : null}
                 </View>
               ) : null}
             </>
-          );
+          )
         }}
       </MySignUpImpl.UserConsumer>
-    );
+    )
   }
 }
 //export default MySignUp
 
 export default function MySignUp(props: Props): JSX.Element {
-  const route = useRoute();
-  const navigation = useNavigation();
-  return <MySignUpImpl {...props} navigation={navigation} route={route} />;
+  const route = useRoute()
+  const navigation = useNavigation()
+  return <MySignUpImpl {...props} navigation={navigation} route={route} />
 }

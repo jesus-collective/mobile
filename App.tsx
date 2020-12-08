@@ -1,41 +1,38 @@
-import React, { lazy, Suspense } from "react";
-import Amplify from "aws-amplify";
-import awsConfig from "./src/aws-exports";
-import { AppLoading, Linking } from "expo";
-import { Asset } from "expo-asset";
-import * as Font from "expo-font";
-import EStyleSheet from "react-native-extended-stylesheet";
-import { Authenticator } from "aws-amplify-react-native";
-import { View } from "native-base";
-import { Dimensions } from "react-native";
-import { Platform } from "react-native";
-import { I18n } from "aws-amplify";
-import { Ionicons } from "@expo/vector-icons";
-import HomeScreen from "./screens/HomeScreen/index";
-import { navigationRef } from "./screens/HomeScreen/NavigationRoot";
-import * as RootNavigation from "./screens/HomeScreen//NavigationRoot";
+import React, { lazy, Suspense } from "react"
+import Amplify from "aws-amplify"
+import awsConfig from "./src/aws-exports"
+import { AppLoading, Linking } from "expo"
+import { Asset } from "expo-asset"
+import * as Font from "expo-font"
+import EStyleSheet from "react-native-extended-stylesheet"
+import { Authenticator } from "aws-amplify-react-native"
+import { View } from "native-base"
+import { Dimensions } from "react-native"
+import { Platform } from "react-native"
+import { I18n } from "aws-amplify"
+import { Ionicons } from "@expo/vector-icons"
+import HomeScreen from "./screens/HomeScreen/index"
+import { navigationRef } from "./screens/HomeScreen/NavigationRoot"
+import * as RootNavigation from "./screens/HomeScreen//NavigationRoot"
+import { AuthStateData } from "src/types"
+import Sentry from "./components/Sentry"
+import { version } from "./src/version"
+import JCComponent, { JCState } from "./components/JCComponent/JCComponent"
 
-import Sentry from "./components/Sentry";
-import { version } from "./src/version";
-import JCComponent, { JCState } from "./components/JCComponent/JCComponent";
-
-let env = "unknown";
-if (window.location === undefined) env = "mobile";
-else if (window.location.hostname === "localhost") env = "dev";
-else if (window.location.hostname.includes("beta")) env = "beta";
-else env = "prod";
+let env = "unknown"
+if (window.location === undefined) env = "mobile"
+else if (window.location.hostname === "localhost") env = "dev"
+else if (window.location.hostname.includes("beta")) env = "beta"
+else env = "prod"
 Sentry.init({
-  dsn:
-    "https://8c8703a620444c97ba6e8bb4a60c17d0@o390245.ingest.sentry.io/5231908",
+  dsn: "https://8c8703a620444c97ba6e8bb4a60c17d0@o390245.ingest.sentry.io/5231908",
   environment: env,
   release: version.git,
-});
+})
 
-const SignUpSidebar = lazy(
-  () => import("./components/SignUpSidebar/SignUpSidebar")
-);
+const SignUpSidebar = lazy(() => import("./components/SignUpSidebar/SignUpSidebar"))
 
-Amplify.configure(awsConfig);
+Amplify.configure(awsConfig)
 
 /*const MyDisabledButton = Object.assign({}, AmplifyTheme.button, { backgroundColor: '#979797', alignItems: 'center', padding: 16 });
 const MyButton = Object.assign({}, AmplifyTheme.button, { backgroundColor: '#F0493E', alignItems: 'center', padding: 16 });
@@ -55,49 +52,49 @@ const authScreenLabels = {
     "Sign in with Google": "Use Google Account",
     "Forgot Password": "Forgot password?",
   },
-};
+}
 
-I18n.setLanguage("en");
-I18n.putVocabularies(authScreenLabels);
+I18n.setLanguage("en")
+I18n.putVocabularies(authScreenLabels)
 
 interface Props {
-  navigation: any;
-  onStateChange(state: string, data: any): any;
+  navigation: any
+  onStateChange(state: string, data: AuthStateData): any
 }
 interface State extends JCState {
-  isLoggedIn: boolean;
-  fontLoaded: boolean;
-  authState: any;
-  joinedAs: "individual" | "organization";
-  username: any;
+  isLoggedIn: boolean
+  fontLoaded: boolean
+  authState: any
+  joinedAs: "individual" | "organization"
+  username: any
 }
 const federated = {
   google_client_id: "",
   facebook_app_id: "579712102531269",
   amazon_client_id: "",
-};
+}
 
 EStyleSheet.build({
   // always call EStyleSheet.build() even if you don't use global variables!
   $textColor: "#0275d8",
-});
+})
 
 //export default App;
 class AwesomeApp extends JCComponent<Props, State> {
   constructor(props: Props) {
-    super(props);
+    super(props)
     this.state = {
       ...super.getInitialState(),
       fontLoaded: false,
       isLoggedIn: false,
       authState: "",
       username: "",
-    };
+    }
     //  this.ionViewCanEnter();
   }
 
   async UNSAFE_componentWillMount(): Promise<void> {
-    this.setState({ authState: await this.getAuthInitialState() });
+    this.setState({ authState: await this.getAuthInitialState() })
     // console.log("test")
     try {
       await Font.loadAsync({
@@ -109,62 +106,55 @@ class AwesomeApp extends JCComponent<Props, State> {
 
         // 'Helvetica Neue': require('native-base/Fonts/Roboto_medium.ttf')
         ...Ionicons.font,
-      });
+      })
     } catch (e) {
-      console.error(e);
+      console.error(e)
     }
 
-    this.setState({ fontLoaded: true });
-    Asset.fromModule(require("./assets/header/icon.png")).downloadAsync();
-    Asset.fromModule(require("./assets/JC-Logo-RGB-KO2.png")).downloadAsync();
-    Asset.fromModule(require("./assets/leftPanel.png")).downloadAsync();
-    Asset.fromModule(
-      require("./assets/profile-placeholder.png")
-    ).downloadAsync();
-    Asset.fromModule(require("./assets/SignUp/progress-1.png")).downloadAsync();
-    Asset.fromModule(require("./assets/SignUp/progress-2.png")).downloadAsync();
-    Asset.fromModule(require("./assets/SignUp/progress-3.png")).downloadAsync();
-    Asset.fromModule(require("./assets/SignUp/progress-4.png")).downloadAsync();
+    this.setState({ fontLoaded: true })
+    Asset.fromModule(require("./assets/header/icon.png")).downloadAsync()
+    Asset.fromModule(require("./assets/JC-Logo-RGB-KO2.png")).downloadAsync()
+    Asset.fromModule(require("./assets/leftPanel.png")).downloadAsync()
+    Asset.fromModule(require("./assets/profile-placeholder.png")).downloadAsync()
+    Asset.fromModule(require("./assets/SignUp/progress-1.png")).downloadAsync()
+    Asset.fromModule(require("./assets/SignUp/progress-2.png")).downloadAsync()
+    Asset.fromModule(require("./assets/SignUp/progress-3.png")).downloadAsync()
+    Asset.fromModule(require("./assets/SignUp/progress-4.png")).downloadAsync()
   }
   renderFallback(): React.ReactNode {
-    return null;
+    return null
   }
-  updateState(state: string, data: any) {
-    this.setState({ authState: state });
-    const params = RootNavigation.getRoot()?.params as {
-      joinedAs: "individual" | "organization" | null;
-    };
 
-    if (state == "signUp")
-      RootNavigation.navigate("signup", { joinedAs: null });
+  updateState(state: string, data: AuthStateData) {
+    this.setState({ authState: state })
+    const params = RootNavigation.getRoot()?.params as {
+      joinedAs: "individual" | "organization" | null
+    }
+    if (state == "signUp") RootNavigation.navigate("signup", { joinedAs: null })
     else if (state == "signIn")
       RootNavigation.navigate("signin", {
         email: data?.email,
         fromVerified: data?.fromVerified,
-      });
-    else if (state == "forgotPassword")
-      RootNavigation.navigate("forgotpassword", {});
-    else if (state == "requireNewPassword")
-      RootNavigation.navigate("requirenewpassword", {});
-    else if (state == "verifyContact")
-      RootNavigation.navigate("verifycontact", {});
-    else if (state == "confirmSignIn")
-      RootNavigation.navigate("confirmsignin", {});
+      })
+    else if (state == "forgotPassword") RootNavigation.navigate("forgotpassword", {})
+    else if (state == "requireNewPassword") RootNavigation.navigate("requirenewpassword", {})
+    else if (state == "verifyContact") RootNavigation.navigate("verifycontact", {})
+    else if (state == "confirmSignIn") RootNavigation.navigate("confirmsignin", {})
     else if (state == "confirmSignUp")
-      RootNavigation.navigate("confirmsignup", { email: data?.email });
+      RootNavigation.navigate("confirmsignup", { email: data?.email })
     else if (state == "signedIn")
       RootNavigation.navigate("auth", {
         screen: "Payment1",
         params: {
           joinedProduct: data?.joinedProduct,
         },
-      });
+      })
   }
   async getAuthInitialState() {
-    const initialUrl: string = await Linking.getInitialURL();
-    console.log({ INITIALURL: initialUrl });
-    if (initialUrl.toLowerCase().includes("/auth/signup")) return "signUp";
-    return "signIn";
+    const initialUrl: string = await Linking.getInitialURL()
+    console.log({ INITIALURL: initialUrl })
+    if (initialUrl.toLowerCase().includes("/auth/signup")) return "signUp"
+    return "signIn"
   }
   render(): React.ReactNode {
     //    console.log({ AwesomeApp: this.state.authState })
@@ -189,9 +179,9 @@ class AwesomeApp extends JCComponent<Props, State> {
           ) : null}
 
           <Authenticator
-            onStateChange={(item1, data) => {
-              console.log("AUTHENTICATOR STATE CHANGE");
-              this.updateState(item1, data);
+            onStateChange={(item1: string, data: any) => {
+              console.log("AUTHENTICATOR STATE CHANGE")
+              this.updateState(item1, data)
             }}
             hideDefault={true}
             authState={this.state.authState}
@@ -200,17 +190,17 @@ class AwesomeApp extends JCComponent<Props, State> {
           >
             <HomeScreen
               onStateChange={(item1, data) => {
-                console.log("AUTHENTICATOR STATE CHANGE");
-                this.updateState(item1, data);
+                console.log("AUTHENTICATOR STATE CHANGE")
+                this.updateState(item1, data)
               }}
               authState={this.state.authState}
             />
           </Authenticator>
         </View>
-      );
+      )
     } else {
-      return null;
+      return null
     }
   }
 }
-export default AwesomeApp;
+export default AwesomeApp

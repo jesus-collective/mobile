@@ -1,6 +1,6 @@
-import React from "react";
-import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar";
-import { View } from "native-base";
+import React from "react"
+import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
+import { View } from "native-base"
 import {
   Platform,
   TextInput,
@@ -9,100 +9,93 @@ import {
   NativeSyntheticEvent,
   TextInputKeyPressEventData,
   ActivityIndicator,
-} from "react-native";
-import JCButton, { ButtonTypes } from "../../components/Forms/JCButton";
-import { Dimensions } from "react-native";
-import MainStyles from "../../components/style";
-import { Auth } from "aws-amplify";
-import { Entypo } from "@expo/vector-icons";
-import { Copyright } from "../../components/Auth/Copyright";
-import { UserContext } from "../../screens/HomeScreen/UserContext";
-import { useNavigation, useRoute } from "@react-navigation/native";
+} from "react-native"
+import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
+import { Dimensions } from "react-native"
+import MainStyles from "../../components/style"
+import { Auth } from "aws-amplify"
+import { Entypo } from "@expo/vector-icons"
+import { Copyright } from "../../components/Auth/Copyright"
+import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
+import { useNavigation, useRoute } from "@react-navigation/native"
+import { AuthStateData } from "src/types"
 
 interface Props {
-  navigation?: any;
-  route?: any;
+  navigation?: any
+  route?: any
 }
 
 interface State {
-  email: string;
-  code: string;
-  authError: string;
-  sendingData: boolean;
+  email: string
+  code: string
+  authError: string
+  sendingData: boolean
 }
 class MyConfirmSignUpImpl extends React.Component<Props, State> {
   constructor(props: Props) {
-    super(props);
-    console.log({ MYConfirmSignupImpl: props.route });
+    super(props)
+    console.log({ MYConfirmSignupImpl: props.route })
     this.state = {
       email: props.route?.params.email ?? "",
       code: "",
       authError: "",
       sendingData: false,
-    };
+    }
   }
-  static UserConsumer = UserContext.Consumer;
+  static UserConsumer = UserContext.Consumer
 
-  changeAuthState(actions: any, state: string, data: any): void {
+  changeAuthState(actions: UserActions, state: string, data: AuthStateData): void {
     this.setState({
       email: "",
       code: "",
       authError: "",
       sendingData: false,
-    });
-    if (actions.onStateChange) actions.onStateChange(state, data);
+    })
+    if (actions.onStateChange) actions.onStateChange(state, data)
   }
 
-  async handleConfirmSignUp(actions: any): Promise<void> {
+  async handleConfirmSignUp(actions: UserActions): Promise<void> {
     try {
-      this.setState({ sendingData: true });
-      await Auth.confirmSignUp(
-        this.state.email.toLowerCase(),
-        this.state.code
-      ).then(() => {
+      this.setState({ sendingData: true })
+      await Auth.confirmSignUp(this.state.email.toLowerCase(), this.state.code).then(() => {
         this.changeAuthState(actions, "signIn", {
           email: this.state.email.toLowerCase(),
           fromVerified: true,
-        });
-      });
+        })
+      })
     } catch (e) {
-      this.setState({ authError: e.message, sendingData: false });
+      this.setState({ authError: e.message, sendingData: false })
     }
   }
 
-  handleEnter(
-    actions: any,
-    keyEvent: NativeSyntheticEvent<TextInputKeyPressEventData>
-  ): void {
-    if (keyEvent.nativeEvent.key === "Enter") this.handleConfirmSignUp(actions);
+  handleEnter(actions: any, keyEvent: NativeSyntheticEvent<TextInputKeyPressEventData>): void {
+    if (keyEvent.nativeEvent.key === "Enter") this.handleConfirmSignUp(actions)
   }
 
-  styles = MainStyles.getInstance();
+  styles = MainStyles.getInstance()
   componentDidMount(): void {
     Dimensions.addEventListener("change", () => {
-      this.styles.updateStyles(this);
-    });
+      this.styles.updateStyles(this)
+    })
   }
   componentWillUnmount(): void {
     Dimensions.removeEventListener("change", () => {
-      this.styles.updateStyles(this);
-    });
+      this.styles.updateStyles(this)
+    })
   }
   render(): React.ReactNode {
     return (
       <MyConfirmSignUpImpl.UserConsumer>
         {({ userState, userActions }) => {
-          if (!userState) return null;
+          if (!userState) return null
           return (
             <>
               {userState.authState === "confirmSignUp" ? (
-                <View
-                  style={{ width: "100%", left: 0, top: 0, height: "100%" }}
-                >
+                <View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>
                   <View style={this.styles.style.signUpBackButtonWrapper}>
                     <TouchableOpacity
                       onPress={() => {
-                        this.changeAuthState(userActions, "signIn");
+                        this.changeAuthState(userActions, "signIn", null)
                       }}
                     >
                       <Text
@@ -139,9 +132,7 @@ class MyConfirmSignUpImpl extends React.Component<Props, State> {
                       keyboardType="email-address"
                       placeholder="Email address"
                       value={this.state.email}
-                      onChange={(e) =>
-                        this.setState({ email: e.nativeEvent.text })
-                      }
+                      onChange={(e) => this.setState({ email: e.nativeEvent.text })}
                       style={{
                         borderBottomWidth: 1,
                         borderColor: "#00000020",
@@ -163,9 +154,7 @@ class MyConfirmSignUpImpl extends React.Component<Props, State> {
                         onKeyPress={(e) => this.handleEnter(userActions, e)}
                         placeholder="One-time security code"
                         value={this.state.code}
-                        onChange={(e) =>
-                          this.setState({ code: e.nativeEvent.text })
-                        }
+                        onChange={(e) => this.setState({ code: e.nativeEvent.text })}
                         style={{
                           borderBottomWidth: 1,
                           borderColor: "#00000020",
@@ -209,24 +198,21 @@ class MyConfirmSignUpImpl extends React.Component<Props, State> {
                     </Text>
                     <Copyright />
                   </View>
-                  {Platform.OS === "web" &&
-                  Dimensions.get("window").width > 720 ? (
+                  {Platform.OS === "web" && Dimensions.get("window").width > 720 ? (
                     <SignUpSidebar text="It’s time to unite, equip, and amplify a Jesus-centred movement." />
                   ) : null}
                 </View>
               ) : null}
             </>
-          );
+          )
         }}
       </MyConfirmSignUpImpl.UserConsumer>
-    );
+    )
   }
 }
 
 export default function MyConfirmSignUp(props: Props): JSX.Element {
-  const route = useRoute();
-  const navigation = useNavigation();
-  return (
-    <MyConfirmSignUpImpl {...props} navigation={navigation} route={route} />
-  );
+  const route = useRoute()
+  const navigation = useNavigation()
+  return <MyConfirmSignUpImpl {...props} navigation={navigation} route={route} />
 }
