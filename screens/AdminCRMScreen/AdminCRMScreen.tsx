@@ -17,7 +17,7 @@ import JCModal from "../../components/Forms/JCModal"
 import { isMobile } from "react-device-detect"
 import { Ionicons } from "@expo/vector-icons"
 import { MaterialIcons } from "@expo/vector-icons"
-import { UserContext } from "screens/HomeScreen/UserContext"
+import { UserContext } from "../../screens/HomeScreen/UserContext"
 
 interface Props {
   navigation: any
