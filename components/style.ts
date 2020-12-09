@@ -1326,7 +1326,8 @@ export default class MainStyles {
                 height: 900
             },
             resourceContentCurrentSeriesContainer: {
-                minHeight: 500,
+              //  minHeight: 200,
+              height:150,
                 flexWrap: "nowrap",
                 // flexWrap: this.props.wrap ? "wrap" : "nowrap", 
                 flexGrow: 0,
@@ -1339,7 +1340,7 @@ export default class MainStyles {
                 padding: "0px",
                 marginLeft: "10px",
                 marginRight: "10px",
-                flex: 1,
+                //flex: 1,
                 borderRadius: 4,
                 shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30,
                 borderColor: "#F9FAFC"
@@ -2502,7 +2503,8 @@ export default class MainStyles {
                 },
                 resourceContentCurrentSeriesContainer: {
                     width: "100%",
-                    minHeight: 3 * (200 + Dimensions.get('window').width * 0.55),
+                    height:150,
+                   // minHeight: 3 * (200 + Dimensions.get('window').width * 0.55),
                     flexGrow: 0,
                     flexDirection: 'column',
                     justifyContent: "space-between",
@@ -2513,7 +2515,7 @@ export default class MainStyles {
                     marginLeft: "10px",
                     marginRight: "10px",
                     marginBottom: 20,
-                    flex: 1,
+                  //  flex: 1,
                     borderRadius: 4,
                     shadowOffset: { width: 0, height: 5 }, shadowColor: "rgba(0, 0, 0, 0.45)", shadowRadius: 30,
                     borderColor: "#F9FAFC",
