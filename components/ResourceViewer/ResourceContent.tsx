@@ -9,6 +9,7 @@ import { AntDesign } from "@expo/vector-icons"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import EditableText from "../Forms/EditableText"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
+import ResourceMenu from "./ResourceMenu"
 
 interface Props {
   currentResource: number
@@ -465,6 +466,9 @@ class ResourceContent extends JCComponent<Props, State> {
           backgroundColor: "#F9FAFC",
         }}
       >
+        <Container style={this.styles.style.resourceContentRightContainer}>
+          <ResourceMenu></ResourceMenu>
+        </Container>
         <Container style={this.styles.style.resourceContentLeftContainer}>
           <Container
             style={{
@@ -1107,7 +1111,6 @@ class ResourceContent extends JCComponent<Props, State> {
             ) : null}
           </Container>
         </Container>
-        <Container style={this.styles.style.resourceContentRightContainer}></Container>
       </Container>
     )
   }
@@ -1736,6 +1739,9 @@ class ResourceContent extends JCComponent<Props, State> {
       const seriesTitle = series.title
       return (
         <Container style={this.styles.style.resourceContentEpisodeMainContainer}>
+          <Container style={this.styles.style.resourceContentEpisodeRightContainer}>
+            <ResourceMenu />
+          </Container>
           <Container style={this.styles.style.resourceContentEpisodeLeftContainer}>
             {state.isEditable ? (
               <EditableText
@@ -1971,35 +1977,29 @@ class ResourceContent extends JCComponent<Props, State> {
                   </Card>
                 </TouchableOpacity>
               ) : null}
+              <Text style={this.styles.style.resourceContentEpisodesDownloadInfo}>
+                Download all documentation that you’ll need for this package. Lessons overview and
+                templates for whole curriculum is available as well.
+              </Text>
+              {series.allFiles ? (
+                <JCButton
+                  buttonType={ButtonTypes.Solid}
+                  onPress={() => (window.location.href = series.allFiles)}
+                >
+                  <AntDesign name="download" size={24} color="white" style={{ marginRight: 12 }} />
+                  Download Documents
+                </JCButton>
+              ) : null}
             </Container>
-          </Container>
-
-          <Container style={this.styles.style.resourceContentEpisodeRightContainer}>
-            <JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>
-              + Add to my Favourites
-            </JCButton>
-            <JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>
-              Share with Others
-            </JCButton>
-            <Text style={this.styles.style.resourceContentEpisodesDownloadInfo}>
-              Download all documantation that you’ll need for this package. Lessons overview and
-              templates for whole cirruculum is available as well.
-            </Text>
-            {series.allFiles ? (
-              <JCButton
-                buttonType={ButtonTypes.Solid}
-                onPress={() => (window.location.href = series.allFiles)}
-              >
-                <AntDesign name="download" size={24} color="white" style={{ marginRight: 12 }} />
-                Download Documents
-              </JCButton>
-            ) : null}
           </Container>
         </Container>
       )
     } else {
       return (
         <Container style={this.styles.style.resourceContentEpisodeMainContainer}>
+          <Container style={this.styles.style.resourceContentEpisodeRightContainer}>
+            <ResourceMenu />
+          </Container>
           <Container style={this.styles.style.resourceContentEpisodeLeftContainer}>
             {state.isEditable ? (
               <EditableText
@@ -2261,29 +2261,20 @@ class ResourceContent extends JCComponent<Props, State> {
                   </Card>
                 </TouchableOpacity>
               ) : null}
+              <Text style={this.styles.style.resourceContentEpisodesDownloadInfo}>
+                Download all documantation that you’ll need for this package. Lessons overview and
+                templates for whole cirruculum is available as well.
+              </Text>
+              {series.allFiles ? (
+                <JCButton
+                  buttonType={ButtonTypes.Solid}
+                  onPress={() => (window.location.href = series.allFiles)}
+                >
+                  <AntDesign name="download" size={24} color="white" style={{ marginRight: 12 }} />
+                  Download Documents
+                </JCButton>
+              ) : null}
             </Container>
-          </Container>
-
-          <Container style={this.styles.style.resourceContentEpisodeRightContainer}>
-            <JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>
-              + Add to my Favourites
-            </JCButton>
-            <JCButton buttonType={ButtonTypes.Solid} onPress={() => null}>
-              Share with Others
-            </JCButton>
-            <Text style={this.styles.style.resourceContentEpisodesDownloadInfo}>
-              Download all documantation that you’ll need for this package. Lessons overview and
-              templates for whole cirruculum is available as well.
-            </Text>
-            {series.allFiles ? (
-              <JCButton
-                buttonType={ButtonTypes.Solid}
-                onPress={() => (window.location.href = series.allFiles)}
-              >
-                <AntDesign name="download" size={24} color="white" style={{ marginRight: 12 }} />
-                Download Documents
-              </JCButton>
-            ) : null}
           </Container>
         </Container>
       )

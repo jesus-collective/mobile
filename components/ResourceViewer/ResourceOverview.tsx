@@ -12,6 +12,7 @@ import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
 import { useRoute, useNavigation } from "@react-navigation/native"
 import JCComponent from "../JCComponent/JCComponent"
+import ResourceMenu from "./ResourceMenu"
 
 interface Props {
   navigation?: any
@@ -96,6 +97,16 @@ class ResourceOverviewImpl extends JCComponent<Props> {
             return (
               <Container style={this.styles.style.resourcesOverviewScreenMainContainer}>
                 <Container style={this.styles.style.detailScreenLeftCard}>
+                  <ResourceMenu></ResourceMenu>
+                  <View
+                    style={{
+                      borderBottomColor: "black",
+                      borderBottomWidth: 1,
+                      width: 100,
+                      marginTop: 20,
+                      marginBottom: 40,
+                    }}
+                  />
                   <Container
                     style={{
                       flexDirection: "row",

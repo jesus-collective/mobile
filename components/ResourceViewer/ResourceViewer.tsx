@@ -26,6 +26,7 @@ import { CreateGroupInput } from "src/API"
 import Validate from "../Validate/Validate"
 import { useRoute, useNavigation } from "@react-navigation/native"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
+import { convertToRaw, EditorState } from "draft-js"
 Amplify.configure(awsconfig)
 
 interface Props {
@@ -236,7 +237,9 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         title: "Overview",
         image: null,
         description: "...",
-        extendedDescription: "123",
+        extendedDescription: JSON.stringify(
+          convertToRaw(EditorState.createEmpty().getCurrentContent())
+        ),
         order: "0",
         resourceID: createResourceRoot.data.createResourceRoot.id,
       }
@@ -451,7 +454,9 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       title: "New Title",
       image: null,
       description: "Enter description",
-      extendedDescription: "Enter extended description",
+      extendedDescription: JSON.stringify(
+        convertToRaw(EditorState.createEmpty().getCurrentContent())
+      ),
       resourceID: this.state.resourceData.id,
       order: this.state.resourceData.resources.items.length + 1,
     }
@@ -826,12 +831,13 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
           }}
         >
           <Container style={{ padding: 0, margin: 0 }}>
-            <ResourceMenu></ResourceMenu>
             <ErrorBoundary>
               <Content>
                 <ResourceHeader></ResourceHeader>
                 {this.state.currentResource == 0 ? (
-                  <ResourceOverview></ResourceOverview>
+                  <>
+                    <ResourceOverview></ResourceOverview>
+                  </>
                 ) : (
                   <ResourceContent currentResource={this.state.currentResource}></ResourceContent>
                 )}
