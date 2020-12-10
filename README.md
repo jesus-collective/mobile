@@ -16,3 +16,5 @@ expo build:android
 
 1. Download the resulting files.
 2. Upload the files to the Apple or Google Play store.
+
+test
