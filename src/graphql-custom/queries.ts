@@ -782,11 +782,41 @@ export const getResourceRoot = /* GraphQL */ `
       id
       type
       groupId
+      menuItems {
+        items {
+          id
+          owner
+          type
+          menuTitle
+          order
+          depth
+          resourceRootID
+          pageItems {
+            type
+            style
+            size
+            title1
+            title2
+            description1
+            description2
+            color
+            image {
+              userId
+              filenameSmall
+              filenameMedium
+              filenameLarge
+              filenameUpload
+            }
+          }
+          createdAt
+          updatedAt
+        }
+      }
       resources {
         items {
           id
           type
-          menuTitle
+        
           image {
             userId
             filenameSmall

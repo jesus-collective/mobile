@@ -11,14 +11,15 @@ import EditableText from "../Forms/EditableText"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import ResourceMenu from "./ResourceMenu"
 import JCModal from "../../components/Forms/JCModal"
+import { ResourcePageItemInput, ResourcePageItemType } from "../../src/API"
+import ResourceHeader from "./ResourceHeader"
+import ResourceRichText from "./ResourceRichText"
+
 interface Props {
   currentResource: number
 }
 
 interface State extends JCState {
-  numberOfVideos: number
-  rowLength: number
-  cardHeight: number
   showEditorModal: boolean
 }
 
@@ -28,29 +29,12 @@ class ResourceContent extends JCComponent<Props, State> {
     super(props)
     this.state = {
       ...super.getInitialState(),
-      numberOfVideos: 0,
-      rowLength: 4,
-      cardHeight: 0,
+
       showEditorModal: false,
     }
   }
 
-  componentDidMount(): void {
-    const w = Dimensions.get("window").width
-
-    if (w >= 1280) this.setState({ rowLength: 4, numberOfVideos: 8, cardHeight: 200 + w * 0.09 })
-    else if (w < 769) this.setState({ rowLength: 1, numberOfVideos: 4 })
-    else this.setState({ rowLength: 3, numberOfVideos: 6, cardHeight: 200 + w * 0.12 })
-  }
-
-  componentDidUpdate(prevProps: Props): void {
-    if (prevProps.currentResource !== this.props.currentResource) {
-      this.state.rowLength === 3
-        ? this.setState({ numberOfVideos: 6 })
-        : this.setState({ numberOfVideos: 8 })
-    }
-  }
-  renderAddSeriesCard(state, actions) {
+  renderAddSeriesCard(state: ResourceState, actions: ResourceActions) {
     return state.isEditable ? (
       <TouchableOpacity onPress={actions.createSeries}>
         <Card style={this.styles.style.resourceContentCurrentSeriesCard}>
@@ -86,150 +70,11 @@ class ResourceContent extends JCComponent<Props, State> {
       </TouchableOpacity>
     ) : null
   }
-  renderSeriesCardAdmin(state, actions, series, index) {
-    return state.isEditable ? (
-      <CardItem>
-        <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}>
-          {" "}
-          <Ionicons size={16} name="ios-arrow-back" style={this.styles.style.icon} />
-        </JCButton>
-        <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}>
-          {" "}
-          <Ionicons size={16} name="ios-attach" style={this.styles.style.icon} />
-        </JCButton>
-        <JCButton
-          buttonType={ButtonTypes.TransparentNoPadding}
-          onPress={() => {
-            actions.changeSeries(index)
-          }}
-        >
-          {" "}
-          <Ionicons size={16} name="ios-open" style={this.styles.style.icon} />
-        </JCButton>
-        <JCButton
-          buttonType={ButtonTypes.TransparentNoPadding}
-          onPress={() => {
-            actions.deleteSeries(state.currentResource, index)
-          }}
-        >
-          <Ionicons size={16} name="ios-trash" style={this.styles.style.icon} />
-        </JCButton>
-        <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}>
-          {" "}
-          <Ionicons size={16} name="ios-arrow-forward" style={this.styles.style.icon} />
-        </JCButton>
-      </CardItem>
-    ) : null
-  }
-  renderSeriesCard(
-    state: ResourceState,
-    actions: ResourceActions,
-    series,
-    index: number
-  ): React.ReactNode {
-    const thumbnailIndex = this.findFirstEpisode(series.episodes.items)
-
-    return (
-      <Card style={this.styles.style.resourceContentCurrentSeriesCard}>
-        <TouchableOpacity
-          accessible={true}
-          accessibilityLabel={series.title}
-          accessibilityHint={"Navigate to series " + series.title}
-          onPress={() => {
-            !state.isEditable ? actions.changeSeries(index) : null
-          }}
-        >
-          <CardItem style={this.styles.style.resourceContentCurrentSeriesIframeContainer}>
-            {series.type === "ky-preschool" ? (
-              <Image
-                accessible={true}
-                accessibilityLabel={series.title + " thumbnail"}
-                style={{
-                  padding: 0,
-                  width: "100%",
-                  height: "100%",
-                  borderTopRightRadius: 4,
-                  borderTopLeftRadius: 4,
-                }}
-                resizeMode="contain"
-                source={{ uri: series.playlistImage }}
-              />
-            ) : (
-              <Image
-                accessible={true}
-                accessibilityLabel={series.title + " thumbnail"}
-                style={{
-                  padding: 0,
-                  width: "100%",
-                  height: "100%",
-                  borderTopRightRadius: 4,
-                  borderTopLeftRadius: 4,
-                }}
-                resizeMode="contain"
-                source={{
-                  uri:
-                    "https://img.youtube.com/vi/" +
-                    series.episodes.items[thumbnailIndex]?.videoPreview.replace(
-                      "https://youtu.be/",
-                      ""
-                    ) +
-                    "/maxresdefault.jpg",
-                }}
-              />
-            )}
-          </CardItem>
-
-          <CardItem
-            style={{
-              width: "100%",
-              padding: 0,
-              margin: 0,
-              paddingBottom: 0,
-              backgroundColor: "#F9FAFC",
-            }}
-          >
-            <EditableText
-              onChange={(val) => {
-                actions.updateSeries(state.currentResource, index, "title", val)
-              }}
-              multiline={false}
-              inputStyle={this.styles.style.seriesTitle}
-              textStyle={this.styles.style.seriesTitle}
-              value={series.title}
-              isEditable={state.isEditable}
-            ></EditableText>
-          </CardItem>
-          <CardItem
-            style={{
-              width: "100%",
-              padding: 0,
-              margin: 0,
-              backgroundColor: "#F9FAFC",
-            }}
-          >
-            <EditableText
-              onChange={(val) => {
-                actions.updateSeries(state.currentResource, index, "description", val)
-              }}
-              multiline={true}
-              inputStyle={this.styles.style.seriesDescription}
-              textStyle={this.styles.style.seriesDescription}
-              value={this.stripHTMLTags(series.description)}
-              isEditable={state.isEditable}
-              ellipsizeMode="tail"
-              numberOfLines={3}
-            ></EditableText>
-          </CardItem>
-        </TouchableOpacity>
-        {this.renderSeriesCardAdmin(state, actions, series, index)}
-      </Card>
-    )
-  }
 
   renderSeries(state: ResourceState, actions: ResourceActions): React.ReactNode {
+    if (!state.currentResource) return null
     let temp = []
-    const moreVideosLength =
-      state.resourceData.resources.items[state.currentResource].series.items.length - 3
+
     return (
       <Container
         style={{
@@ -242,352 +87,21 @@ class ResourceContent extends JCComponent<Props, State> {
         <Container style={this.styles.style.resourceContentRightContainer}>
           <ResourceMenu></ResourceMenu>
         </Container>
-        <Container style={this.styles.style.resourceContentLeftContainer}>
-          <Container
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              width: "100%",
-              justifyContent: "space-between",
-              flexGrow: 0,
-              marginBottom: 40,
-              marginTop: 30,
-              paddingLeft: 10,
-              paddingRight: 20,
-              height: 30,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 20,
-                lineHeight: 25,
-                fontFamily: "Graphik-Bold-App",
-                color: "#333333",
-              }}
-            >
-              Current Series
-            </Text>
-          </Container>
-          <Container style={{ overflow: "scroll" }}>
-            <Container style={this.styles.style.resourceContentCurrentSeriesContainer}>
-              {state.resourceData.resources.items[state.currentResource].series.items.length > 3
-                ? state.resourceData.resources.items[state.currentResource].series.items
-                    .slice(0, 3)
-                    .map((series, index: number) => {
-                      return this.renderSeriesCard(state, actions, series, index)
-                    })
-                : null}
-            </Container>
-          </Container>
-          <Container
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              width: "100%",
-              justifyContent: "space-between",
-              flexGrow: 0,
-              marginBottom: 40,
-              marginTop: 30,
-              paddingLeft: 10,
-              paddingRight: 20,
-              height: 30,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 20,
-                lineHeight: 25,
-                fontFamily: "Graphik-Bold-App",
-                color: "#333333",
-              }}
-            >
-              More Series
-            </Text>
-          </Container>
-          <Container
-            style={{
-              width: "100%",
-            }}
-          >
-            {state.resourceData.resources.items[state.currentResource].series.items
-              .slice(3, this.state.numberOfVideos + 4)
-              .map((series, index: number) => {
-                temp.push(series)
-                if (
-                  index + 1 === moreVideosLength &&
-                  this.state.numberOfVideos - moreVideosLength > 0
-                ) {
-                  const offset = 4 - temp.length
-
-                  for (let val = 0; val < offset - 4 + this.state.rowLength; val++) {
-                    temp.push("dummy")
-                  }
-                  return (
-                    <Container style={{ overflow: "scroll" }}>
-                      <Container style={this.styles.style.resourceContentMoreSeriesRowContainer}>
-                        {temp.map((series2, index2) => {
-                          if (series2 === "dummy") {
-                            return (
-                              <Card
-                                key={series2 + index2}
-                                style={this.styles.style.resourceContentMoreSeriesCardDummy}
-                              ></Card>
-                            )
-                          }
-                          return this.renderSeriesCard(
-                            state,
-                            actions,
-                            series2,
-                            index + index2 + offset
-                          )
-                        })}
-                        {this.renderAddSeriesCard(state, actions)}
-                      </Container>
-                    </Container>
-                  )
-                } else if ((index + 1) % this.state.rowLength === 0) {
-                  const tempCopy = temp
-                  temp = []
-                  return (
-                    <Container style={{ overflow: "scroll" }}>
-                      <Container style={this.styles.style.resourceContentMoreSeriesRowContainer}>
-                        {tempCopy.map((series2, index2) => {
-                          const firstEpisodeIndex = this.findFirstEpisode(series2.episodes.items)
-                          return this.renderSeriesCard(
-                            state,
-                            actions,
-                            series2,
-                            index + index2 + 4 - this.state.rowLength
-                          )
-                        })}
-                        {this.renderAddSeriesCard(state, actions)}
-
-                        {moreVideosLength - this.state.numberOfVideos > 0 ? (
-                          <Container
-                            style={this.styles.style.resourceContentLoadMoreButtonContainer}
-                          >
-                            <JCButton
-                              buttonType={ButtonTypes.Solid}
-                              onPress={() => this.handleMoreVideos(moreVideosLength)}
-                            >
-                              Load More Videos
-                            </JCButton>
-                          </Container>
-                        ) : null}
-                      </Container>
-                    </Container>
-                  )
-                }
-              })}
-          </Container>
-        </Container>
       </Container>
     )
   }
   generateKey(state: ResourceState): string {
     return state.currentResource + "-" + state.currentSeries + "-" + state.currentEpisode
   }
-  renderEpisodeCardAdmin(state, actions, series, episode, index) {
-    return state.isEditable ? (
-      <CardItem>
-        <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}>
-          {" "}
-          <Ionicons size={16} name="ios-arrow-back" style={this.styles.style.icon} />
-        </JCButton>
-        <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}>
-          {" "}
-          <Ionicons size={16} name="ios-attach" style={this.styles.style.icon} />
-        </JCButton>
-        <JCButton
-          buttonType={ButtonTypes.TransparentNoPadding}
-          onPress={() => {
-            actions.changeEpisode(index)
-          }}
-        >
-          {" "}
-          <Ionicons size={16} name="ios-open" style={this.styles.style.icon} />
-        </JCButton>
-
-        <JCButton
-          buttonType={ButtonTypes.TransparentNoPadding}
-          onPress={() => {
-            actions.deleteEpisode(state.currentResource, state.currentSeries, index)
-          }}
-        >
-          <Ionicons size={16} name="ios-trash" style={this.styles.style.icon} />
-        </JCButton>
-        <JCButton buttonType={ButtonTypes.TransparentNoPadding} onPress={null}>
-          {" "}
-          <Ionicons size={16} name="ios-arrow-forward" style={this.styles.style.icon} />
-        </JCButton>
-      </CardItem>
-    ) : null
-  }
-  renderEpisodeCard(state, actions, series, episode, index) {
-    const img = series.playlistImage
-    const seriesTitle = series.title
-    return (
-      <Card
-        key={episode.id}
-        style={{
-          padding: 0,
-          marginLeft: 0,
-          marginRight: 0,
-          borderRadius: 4,
-          width: "100%",
-          borderColor: "#ffffff",
-          height:
-            (episode.lessonPlan || episode.activityPage) &&
-            (episode.videoLowRes || episode.videoHiRes)
-              ? index === 0
-                ? Dimensions.get("window").width * (9 / 16) + 175 + 25
-                : 175 + 25
-              : index === 0
-              ? Dimensions.get("window").width * (9 / 16) + 112 + 25
-              : 112 + 25,
-        }}
-      >
-        <CardItem style={{ width: "100%", paddingRight: 0, paddingLeft: 0 }}>
-          <Container style={this.styles.style.resourceContentEpisodesCardInnerContainer}>
-            {index === 0 ? (
-              <Image
-                accessible={true}
-                accessibilityLabel={seriesTitle + " series graphic"}
-                style={this.styles.style.resourceContentEpisodesIframe}
-                source={{ uri: img }}
-              />
-            ) : null}
-            <CardItem>
-              <EditableText
-                onChange={(val) => {
-                  actions.updateEpisode(
-                    state.currentResource,
-                    state.currentSeries,
-                    index,
-                    "title",
-                    val
-                  )
-                }}
-                multiline={false}
-                inputStyle={this.styles.style.resourceContentEpisodesEpisodeTitle}
-                textStyle={this.styles.style.resourceContentEpisodesEpisodeTitle}
-                value={episode.title}
-                isEditable={state.isEditable}
-              ></EditableText>
-            </CardItem>
-            {episode.videoLowRes || episode.videoHiRes ? (
-              <CardItem style={this.styles.style.resourceContentEpisodesButtonsContainer}>
-                <Text style={this.styles.style.resourceContentEpisodesEpisodeTitle}>Video</Text>
-                <CardItem
-                  style={{
-                    flex: 1,
-                    flexDirection: "row",
-                    justifyContent: "flex-end",
-                    paddingTop: 8,
-                    paddingBottom: 8,
-                  }}
-                >
-                  {episode.videoLowRes ? (
-                    <JCButton
-                      buttonType={ButtonTypes.TransparentRegularOrange}
-                      onPress={() => (window.location.href = episode.videoLowRes)}
-                    >
-                      <AntDesign
-                        name="download"
-                        size={24}
-                        color="F0493E"
-                        style={{ marginRight: 12 }}
-                      />
-                      Low
-                    </JCButton>
-                  ) : null}
-                  {episode.videoHiRes ? (
-                    <JCButton
-                      buttonType={ButtonTypes.SolidResources}
-                      onPress={() => (window.location.href = episode.videoHiRes)}
-                    >
-                      <AntDesign
-                        name="download"
-                        size={24}
-                        color="white"
-                        style={{ marginRight: 12 }}
-                      />
-                      High Quality
-                    </JCButton>
-                  ) : null}
-                </CardItem>
-              </CardItem>
-            ) : null}
-
-            {episode.lessonPlan || episode.activityPage ? (
-              <CardItem style={this.styles.style.resourceContentEpisodesButtonsContainer2}>
-                <CardItem
-                  style={{
-                    flex: 1,
-                    flexDirection: "row",
-                    justifyContent: "flex-end",
-                    paddingTop: 8,
-                    paddingBottom: 8,
-                  }}
-                >
-                  {episode.lessonPlan ? (
-                    <JCButton
-                      buttonType={ButtonTypes.TransparentRegularOrange}
-                      onPress={() => (window.location.href = episode.lessonPlan)}
-                    >
-                      <AntDesign
-                        name="download"
-                        size={24}
-                        color="F0493E"
-                        style={{ marginRight: 12 }}
-                      />
-                      Lesson Plan
-                    </JCButton>
-                  ) : null}
-                  {episode.activityPage ? (
-                    <JCButton
-                      buttonType={ButtonTypes.SolidResources}
-                      onPress={() => (window.location.href = episode.activityPage)}
-                    >
-                      <AntDesign
-                        name="download"
-                        size={24}
-                        color="white"
-                        style={{ marginRight: 12 }}
-                      />
-                      Activity Page
-                    </JCButton>
-                  ) : null}
-                </CardItem>
-              </CardItem>
-            ) : null}
-          </Container>
-        </CardItem>
-        {this.renderEpisodeCardAdmin(state, actions, series, episode, index)}
-      </Card>
-    )
-  }
-  renderEditor(state: ResourceState, actions: ResourceActions): React.ReactNode {
-    return (
-      <JCModal
-        visible={this.state.showEditorModal}
-        title="Configure Episode"
-        onHide={() => {
-          this.setState({ showEditorModal: false })
-        }}
-      >
-        <>
-          <Text>test</Text>
-        </>
-      </JCModal>
-    )
-  }
-  showEditorModal(): void {
+  showEditorModal(index: number): void {
     this.setState({
       showEditorModal: true,
     })
   }
   renderEpisodes(state: ResourceState, actions: ResourceActions): React.ReactNode {
+    if (!state.currentResource) return null
+    if (!state.currentSeries) return null
+
     const series =
       state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries]
     if (series.type === "ky-preschool") {
@@ -603,7 +117,12 @@ class ResourceContent extends JCComponent<Props, State> {
               <EditableText
                 key={this.generateKey(state) + "1"}
                 onChange={(val) => {
-                  actions.updateSeries(state.currentResource, state.currentSeries, "title", val)
+                  actions.updateSeries(
+                    state.currentResource as number,
+                    state.currentSeries as number,
+                    "title",
+                    val
+                  )
                 }}
                 multiline={false}
                 inputStyle={this.styles.style.headerSeriesTitle}
@@ -616,7 +135,12 @@ class ResourceContent extends JCComponent<Props, State> {
             <EditableText
               key={this.generateKey(state) + "2"}
               onChange={(val) => {
-                actions.updateSeries(state.currentResource, state.currentSeries, "description", val)
+                actions.updateSeries(
+                  state.currentResource as number,
+                  state.currentSeries as number,
+                  "description",
+                  val
+                )
               }}
               multiline={true}
               inputStyle={this.styles.style.resourceContentEpisodesDescription}
@@ -680,7 +204,11 @@ class ResourceContent extends JCComponent<Props, State> {
                     <JCButton
                       buttonType={ButtonTypes.TransparentNoPadding}
                       onPress={() => {
-                        actions.deleteEpisode(state.currentResource, state.currentSeries, index)
+                        actions.deleteEpisode(
+                          state.currentResource as number,
+                          state.currentSeries as number,
+                          index
+                        )
                       }}
                     >
                       <Ionicons size={24} name="ios-trash" style={this.styles.style.icon} />
@@ -709,8 +237,8 @@ class ResourceContent extends JCComponent<Props, State> {
                                 <EditableText
                                   onChange={(val) => {
                                     actions.updateEpisode(
-                                      state.currentResource,
-                                      state.currentSeries,
+                                      state.currentResource as number,
+                                      state.currentSeries as number,
                                       index,
                                       "title",
                                       val
@@ -866,7 +394,12 @@ class ResourceContent extends JCComponent<Props, State> {
               <EditableText
                 key={this.generateKey(state) + "1"}
                 onChange={(val) => {
-                  actions.updateSeries(state.currentResource, state.currentSeries, "title", val)
+                  actions.updateSeries(
+                    state.currentResource as number,
+                    state.currentSeries as number,
+                    "title",
+                    val
+                  )
                 }}
                 multiline={false}
                 inputStyle={this.styles.style.headerSeriesTitle}
@@ -879,7 +412,12 @@ class ResourceContent extends JCComponent<Props, State> {
             <EditableText
               key={this.generateKey(state) + "2"}
               onChange={(val) => {
-                actions.updateSeries(state.currentResource, state.currentSeries, "description", val)
+                actions.updateSeries(
+                  state.currentResource as number,
+                  state.currentSeries as number,
+                  "description",
+                  val
+                )
               }}
               multiline={true}
               inputStyle={this.styles.style.resourceContentEpisodesDescription}
@@ -935,8 +473,8 @@ class ResourceContent extends JCComponent<Props, State> {
                 </TouchableOpacity>
               ) : null}
               <Text style={this.styles.style.resourceContentEpisodesDownloadInfo}>
-                Download all documantation that you’ll need for this package. Lessons overview and
-                templates for whole cirruculum is available as well.
+                Download all documentation that you’ll need for this package. Lessons overview and
+                templates for whole curriculum is available as well.
               </Text>
               {series.allFiles ? (
                 <JCButton
@@ -954,102 +492,6 @@ class ResourceContent extends JCComponent<Props, State> {
       )
     }
   }
-  renderEpisode(state: ResourceState, actions: ResourceActions): React.ReactNode {
-    const series =
-      state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries]
-    const episode =
-      state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries]
-        .episodes.items[state.currentEpisode]
-    return (
-      <Container style={this.styles.style.resourceContentEpisodeMainContainer}>
-        <Container style={this.styles.style.resourceContentEpisodeLeftContainer}>
-          <EditableText
-            key={this.generateKey(state) + "a"}
-            onChange={(val) => {
-              actions.updateEpisode(
-                state.currentResource,
-                state.currentSeries,
-                state.currentEpisode,
-                "title",
-                val
-              )
-            }}
-            multiline={false}
-            inputStyle={this.styles.style.headerEpisodeTitle}
-            textStyle={this.styles.style.headerEpisodeTitle}
-            value={episode.title}
-            isEditable={state.isEditable}
-          ></EditableText>
-
-          <iframe
-            style={{ padding: 0, border: 0, width: 600, height: 336 }}
-            src={
-              "https://www.youtube.com/embed/" +
-              episode.videoPreview.replace("https://youtu.be/", "")
-            }
-          />
-
-          <EditableText
-            key={this.generateKey(state) + "b"}
-            onChange={(val) => {
-              actions.updateEpisode(
-                state.currentResource,
-                state.currentSeries,
-                state.currentEpisode,
-                "description",
-                val
-              )
-            }}
-            multiline={true}
-            inputStyle={this.styles.style.headerEpisodeDescription}
-            textStyle={this.styles.style.headerEpisodeDescription}
-            value={episode.description}
-            isEditable={state.isEditable}
-          ></EditableText>
-
-          {/*}  <Text style={{ wordBreak: "break-word", fontSize: 14, lineHeight: 22, fontFamily: "Graphik-Regular-App", color: '#333333' }}>{state.resourceData.resources.items[state.currentResource].series.items[state.currentSeries].episodes.items[state.currentEpisode].category}</Text>*/}
-
-          {series.allFiles ? (
-            <a href={series.allFiles}>
-              <Text>All series files</Text>
-            </a>
-          ) : null}
-          {series.playlist ? (
-            <a href={series.playlist}>
-              <Text>Series Playlist</Text>
-            </a>
-          ) : null}
-          {episode.videoPreview ? (
-            <a href={episode.videoPreview}>
-              <Text>View Preview</Text>
-            </a>
-          ) : null}
-          {episode.videoLowRes ? (
-            <a href={episode.videoLowRes}>
-              <Text>Lo Res Video</Text>
-            </a>
-          ) : null}
-          {episode.videoHiRes ? (
-            <a href={episode.videoHiRes}>
-              <Text>Hi Res Video</Text>
-            </a>
-          ) : null}
-          {episode.lessonPlan ? (
-            <a href={episode.lessonPlan}>
-              <Text>Lesson Plan</Text>
-            </a>
-          ) : null}
-          {episode.activityPage ? (
-            <a href={episode.activityPage}>
-              <Text>Activity Page</Text>
-            </a>
-          ) : null}
-        </Container>
-
-        <Container style={this.styles.style.resourceContentEpisodeRightContainer}></Container>
-      </Container>
-    )
-  }
 
   stripHTMLTags(data: string): string {
     return data
@@ -1065,28 +507,97 @@ class ResourceContent extends JCComponent<Props, State> {
     })
     return firstEpisodeIndex
   }
-
-  handleMoreVideos(moreVideosLength: number): void {
-    if (this.state.rowLength === 1 || this.state.rowLength === 4) {
-      if (moreVideosLength - this.state.numberOfVideos >= 8) {
-        this.setState({ numberOfVideos: this.state.numberOfVideos + 8 })
-      } else {
-        this.setState({ numberOfVideos: this.state.numberOfVideos + 4 })
-      }
-    } else {
-      if (moreVideosLength - this.state.numberOfVideos >= 6) {
-        this.setState({ numberOfVideos: this.state.numberOfVideos + 6 })
-      } else {
-        this.setState({ numberOfVideos: this.state.numberOfVideos + 3 })
-      }
+  renderAddPageItem(resourceState: ResourceState, resourceActions: ResourceActions) {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          const pageItem: ResourcePageItemInput = {
+            type: ResourcePageItemType.Header,
+          }
+          resourceActions.createPageItem(resourceState.currentResource, pageItem)
+        }}
+      >
+        <Card>
+          <CardItem>
+            <Text>Add Page Item</Text>
+          </CardItem>
+        </Card>
+      </TouchableOpacity>
+    )
+  }
+  save(
+    resourceActions: ResourceActions,
+    resourceState: ResourceState,
+    index: number,
+    value: ResourcePageItemInput
+  ) {
+    resourceActions.updatePageItem(resourceState.currentResource, index, value)
+  }
+  delete(resourceActions: ResourceActions, resourceState: ResourceState, index: number) {
+    resourceActions.deletePageItem(resourceState.currentResource, index)
+  }
+  renderRouter(
+    resourceActions: ResourceActions,
+    resourceState: ResourceState,
+    pageItemIndex: number,
+    item: ResourcePageItemInput
+  ): React.ReactNode {
+    switch (item.type) {
+      case ResourcePageItemType.Header:
+        return (
+          <ResourceHeader
+            resourceActions={resourceActions}
+            resourceState={resourceState}
+            pageItemIndex={pageItemIndex}
+            save={this.save}
+            delete={this.delete}
+            pageItem={item}
+          ></ResourceHeader>
+        )
+      case ResourcePageItemType.Menu:
+        return (
+          <ResourceMenu
+            resourceActions={resourceActions}
+            resourceState={resourceState}
+            pageItemIndex={pageItemIndex}
+            save={this.save}
+            delete={this.delete}
+            pageItem={item}
+          ></ResourceMenu>
+        )
+      case ResourcePageItemType.RichText:
+        return (
+          <ResourceRichText
+            resourceActions={resourceActions}
+            resourceState={resourceState}
+            pageItemIndex={pageItemIndex}
+            save={this.save}
+            delete={this.delete}
+            pageItem={item}
+          ></ResourceRichText>
+        )
     }
   }
-
   render(): React.ReactNode {
     return (
       <ResourceContent.Consumer>
         {({ resourceState, resourceActions }) => {
           if (!resourceState) return null
+          if (!resourceState.currentResource) return null
+          return (
+            <>
+              {resourceState?.resourceData?.menuItems?.items[
+                resourceState.currentResource
+              ]?.pageItems?.map((item, index) => {
+                return this.renderRouter(resourceActions, resourceState, index, item)
+              })}
+
+              {resourceState?.isEditable
+                ? this.renderAddPageItem(resourceState, resourceActions)
+                : null}
+            </>
+          )
+          /*
           if (resourceState.currentEpisode != null)
             return this.renderEpisode(resourceState, resourceActions)
           if (resourceState.currentSeries != null)
@@ -1095,7 +606,7 @@ class ResourceContent extends JCComponent<Props, State> {
             return this.renderEpisodes(resourceState, resourceActions)
           //  else if (this.state.rowLength === 1)
           //    return this.renderSeriesMobile(resourceState, resourceActions)
-          else return this.renderSeries(resourceState, resourceActions)
+          else return this.renderSeries(resourceState, resourceActions)*/
         }}
       </ResourceContent.Consumer>
     )

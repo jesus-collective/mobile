@@ -1,8 +1,10 @@
 import { JCState } from "components/JCComponent/JCComponent"
 import * as React from "react"
+import { CreateGroupInput, ResourcePageItemInput } from "src/API"
+import { GetResourceRootData, GroupData, UserData } from "src/types"
 export interface ResourceState extends JCState {
-  groupData: any
-  resourceData: any
+  groupData: CreateGroupInput | GroupData | null | undefined
+  resourceData: GetResourceRootData
   currentResource: number | null
   currentSeries: number | null
   currentEpisode: number | null
@@ -16,10 +18,19 @@ export interface ResourceState extends JCState {
   canDelete: boolean
   validationError: string
   currentUser: string
-  currentUserProfile: any
+  currentUserProfile: UserData | null | undefined
   memberIDs: string[]
 }
 export type ResourceActions = {
+  createPageItem(menuItemIndex: number, pageItem: ResourcePageItemInput): Promise<void>
+  updatePageItem(menuItemIndex: number, pageItemIndex: number, value: any): Promise<void>
+  deletePageItem(menuItemIndex: number, pageItemIndex: number): Promise<void>
+
+  createMenuItem(): Promise<void>
+  changeMenuItem(index: number): void
+  updateMenuItem(index: number, item: string, value: any): Promise<void>
+  deleteMenuItem(index: number): Promise<void>
+
   createResource(): Promise<void>
   changeResource(index: number): void
   updateResource(index: number, item: string, value: any): Promise<void>
@@ -62,6 +73,14 @@ type ResourceContextType = {
 }
 export const ResourceContext = React.createContext<ResourceContextType>({
   resourceActions: {
+    createPageItem: async () => {},
+    updatePageItem: async () => {},
+    deletePageItem: async () => {},
+
+    createMenuItem: async () => {},
+    changeMenuItem: () => {},
+    updateMenuItem: async () => {},
+    deleteMenuItem: async () => {},
     createResource: async () => {},
     changeResource: () => {},
     updateResource: async () => {},

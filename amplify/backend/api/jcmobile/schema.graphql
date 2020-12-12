@@ -805,6 +805,48 @@ type ResourceRoot
   owner:String
   resources: [Resource] @connection(name:"r1",keyField: "resourceID",sortField:"order")
   organization: Organization @connection(fields: ["organizationId"])
+  menuItems: [ResourceMenuItem] @connection(name:"r2",keyField: "resourceRootID",sortField:"order")
+}
+type ResourceMenuItem
+@model 
+@auth(rules: [
+   {allow: owner, ownerField: "owner", operations: [create, read, update, delete]}
+  { allow: groups, groups: ["verifiedUsers"], operations: [read] }
+   { allow: groups, groups: ["admin"]}
+  ])
+ @key(name: "byResourceRoot", fields: ["resourceRootID"])
+{
+  id: ID!
+  owner:String
+  type: String
+  menuTitle: String
+  order:String
+  depth:String
+  pageItems:[ResourcePageItem]
+  resourceRootID:ID!
+  resourceRoot: ResourceRoot! @connection(name:"r2",keyField:"resourceRootID")
+}
+enum ResourcePageItemType{
+  Menu
+  Header
+  RichText
+  List
+  Grid
+}
+enum ResourcePageItemStyle{
+  MenuTop
+  MenuLeft
+}
+type ResourcePageItem{
+  type:ResourcePageItemType
+  style:ResourcePageItemStyle
+  size:String
+  title1:String
+  title2:String
+  description1:String
+  description2:String
+  color:String
+  image:Image
 
 }
 type Resource 
@@ -819,7 +861,6 @@ type Resource
   id: ID!
   owner:String
   type: String
-  menuTitle: String
   order:String
   title: String
   subtitle:String

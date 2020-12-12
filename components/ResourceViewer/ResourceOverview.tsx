@@ -266,24 +266,10 @@ class ResourceOverviewImpl extends JCComponent<Props> {
                     height: "100%",
                   }}
                 >
-                  {resourceState.resourceData.resources.items[resourceState.currentResource] ? (
-                    <Container style={this.styles.style.resourcesOverviewRightCard}>
-                      <EditableRichText
-                        onChange={(val) => {
-                          resourceActions.updateResource(
-                            resourceState.currentResource,
-                            "extendedDescription",
-                            val
-                          )
-                        }}
-                        value={
-                          resourceState.resourceData.resources.items[resourceState.currentResource]
-                            .extendedDescription
-                        }
-                        isEditable={resourceState.isEditable}
-                        textStyle=""
-                      ></EditableRichText>
-                    </Container>
+                  {resourceState.resourceData.resources.items[
+                    resourceState.currentResource as number
+                  ] ? (
+                    <Container style={this.styles.style.resourcesOverviewRightCard}></Container>
                   ) : null}
                 </Container>
               </Container>

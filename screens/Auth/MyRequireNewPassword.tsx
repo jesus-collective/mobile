@@ -234,7 +234,9 @@ class MyForgotPassword extends React.Component<Props, State> {
                       <TextInput
                         autoCompleteType="tel"
                         textContentType="telephoneNumber"
-                        onKeyPress={(e) => this.handleEnter(userActions, e)}
+                        onKeyPress={(e) => {
+                          this.handleEnter(userActions, e)
+                        }}
                         keyboardType="phone-pad"
                         placeholder="Phone number"
                         value={this.state.phone}
@@ -262,7 +264,9 @@ class MyForgotPassword extends React.Component<Props, State> {
                     >
                       <TextInput
                         textContentType="newPassword"
-                        onKeyPress={(e) => this.handleEnter(userActions, e)}
+                        onKeyPress={(e) => {
+                          this.handleEnter(userActions, e)
+                        }}
                         placeholder="New password"
                         value={this.state.newPass}
                         onChange={(e) => this.setState({ newPass: e.nativeEvent.text })}
@@ -283,7 +287,9 @@ class MyForgotPassword extends React.Component<Props, State> {
                       ></TextInput>
                       <TextInput
                         textContentType="newPassword"
-                        onKeyPress={(e) => this.handleEnter(userActions, e)}
+                        onKeyPress={(e) => {
+                          this.handleEnter(userActions, e)
+                        }}
                         placeholder="Confirm new password"
                         value={this.state.newPass2}
                         onChange={(e) => this.setState({ newPass2: e.nativeEvent.text })}

@@ -7625,7 +7625,6 @@ export const createResourceRoot = /* GraphQL */ `
           id
           owner
           type
-          menuTitle
           order
           title
           subtitle
@@ -7721,6 +7720,20 @@ export const createResourceRoot = /* GraphQL */ `
         }
         createdAt
         updatedAt
+      }
+      menuItems {
+        items {
+          id
+          owner
+          type
+          menuTitle
+          order
+          depth
+          resourceRootID
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       createdAt
       updatedAt
@@ -7740,7 +7753,6 @@ export const updateResourceRoot = /* GraphQL */ `
           id
           owner
           type
-          menuTitle
           order
           title
           subtitle
@@ -7836,6 +7848,20 @@ export const updateResourceRoot = /* GraphQL */ `
         }
         createdAt
         updatedAt
+      }
+      menuItems {
+        items {
+          id
+          owner
+          type
+          menuTitle
+          order
+          depth
+          resourceRootID
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       createdAt
       updatedAt
@@ -7855,7 +7881,6 @@ export const deleteResourceRoot = /* GraphQL */ `
           id
           owner
           type
-          menuTitle
           order
           title
           subtitle
@@ -7952,6 +7977,245 @@ export const deleteResourceRoot = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      menuItems {
+        items {
+          id
+          owner
+          type
+          menuTitle
+          order
+          depth
+          resourceRootID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createResourceMenuItem = /* GraphQL */ `
+  mutation CreateResourceMenuItem($input: CreateResourceMenuItemInput!) {
+    createResourceMenuItem(input: $input) {
+      id
+      owner
+      type
+      menuTitle
+      order
+      depth
+      pageItems {
+        type
+        style
+        size
+        title1
+        title2
+        description1
+        description2
+        color
+        image {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+      }
+      resourceRootID
+      resourceRoot {
+        id
+        type
+        groupId
+        organizationId
+        owner
+        resources {
+          nextToken
+        }
+        organization {
+          id
+          orgName
+          adminEmail
+          phone
+          admins
+          superAdmin
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          parentOrganizationId
+          createdAt
+          updatedAt
+        }
+        menuItems {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateResourceMenuItem = /* GraphQL */ `
+  mutation UpdateResourceMenuItem($input: UpdateResourceMenuItemInput!) {
+    updateResourceMenuItem(input: $input) {
+      id
+      owner
+      type
+      menuTitle
+      order
+      depth
+      pageItems {
+        type
+        style
+        size
+        title1
+        title2
+        description1
+        description2
+        color
+        image {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+      }
+      resourceRootID
+      resourceRoot {
+        id
+        type
+        groupId
+        organizationId
+        owner
+        resources {
+          nextToken
+        }
+        organization {
+          id
+          orgName
+          adminEmail
+          phone
+          admins
+          superAdmin
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          parentOrganizationId
+          createdAt
+          updatedAt
+        }
+        menuItems {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteResourceMenuItem = /* GraphQL */ `
+  mutation DeleteResourceMenuItem($input: DeleteResourceMenuItemInput!) {
+    deleteResourceMenuItem(input: $input) {
+      id
+      owner
+      type
+      menuTitle
+      order
+      depth
+      pageItems {
+        type
+        style
+        size
+        title1
+        title2
+        description1
+        description2
+        color
+        image {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+      }
+      resourceRootID
+      resourceRoot {
+        id
+        type
+        groupId
+        organizationId
+        owner
+        resources {
+          nextToken
+        }
+        organization {
+          id
+          orgName
+          adminEmail
+          phone
+          admins
+          superAdmin
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          parentOrganizationId
+          createdAt
+          updatedAt
+        }
+        menuItems {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -7963,7 +8227,6 @@ export const createResource = /* GraphQL */ `
       id
       owner
       type
-      menuTitle
       order
       title
       subtitle
@@ -8034,6 +8297,9 @@ export const createResource = /* GraphQL */ `
           parentOrganizationId
           createdAt
           updatedAt
+        }
+        menuItems {
+          nextToken
         }
         createdAt
         updatedAt
@@ -8049,7 +8315,6 @@ export const updateResource = /* GraphQL */ `
       id
       owner
       type
-      menuTitle
       order
       title
       subtitle
@@ -8120,6 +8385,9 @@ export const updateResource = /* GraphQL */ `
           parentOrganizationId
           createdAt
           updatedAt
+        }
+        menuItems {
+          nextToken
         }
         createdAt
         updatedAt
@@ -8135,7 +8403,6 @@ export const deleteResource = /* GraphQL */ `
       id
       owner
       type
-      menuTitle
       order
       title
       subtitle
@@ -8206,6 +8473,9 @@ export const deleteResource = /* GraphQL */ `
           parentOrganizationId
           createdAt
           updatedAt
+        }
+        menuItems {
+          nextToken
         }
         createdAt
         updatedAt
@@ -8255,7 +8525,6 @@ export const createResourceSeries = /* GraphQL */ `
         id
         owner
         type
-        menuTitle
         order
         title
         subtitle
@@ -8330,7 +8599,6 @@ export const updateResourceSeries = /* GraphQL */ `
         id
         owner
         type
-        menuTitle
         order
         title
         subtitle
@@ -8405,7 +8673,6 @@ export const deleteResourceSeries = /* GraphQL */ `
         id
         owner
         type
-        menuTitle
         order
         title
         subtitle
@@ -8477,7 +8744,6 @@ export const createResourceEpisode = /* GraphQL */ `
           id
           owner
           type
-          menuTitle
           order
           title
           subtitle
@@ -8533,7 +8799,6 @@ export const updateResourceEpisode = /* GraphQL */ `
           id
           owner
           type
-          menuTitle
           order
           title
           subtitle
@@ -8589,7 +8854,6 @@ export const deleteResourceEpisode = /* GraphQL */ `
           id
           owner
           type
-          menuTitle
           order
           title
           subtitle

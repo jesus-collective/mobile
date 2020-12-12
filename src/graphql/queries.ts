@@ -2750,7 +2750,6 @@ export const getResourceRoot = /* GraphQL */ `
           id
           owner
           type
-          menuTitle
           order
           title
           subtitle
@@ -2847,6 +2846,20 @@ export const getResourceRoot = /* GraphQL */ `
         createdAt
         updatedAt
       }
+      menuItems {
+        items {
+          id
+          owner
+          type
+          menuTitle
+          order
+          depth
+          resourceRootID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -2896,6 +2909,129 @@ export const listResourceRoots = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        menuItems {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getResourceMenuItem = /* GraphQL */ `
+  query GetResourceMenuItem($id: ID!) {
+    getResourceMenuItem(id: $id) {
+      id
+      owner
+      type
+      menuTitle
+      order
+      depth
+      pageItems {
+        type
+        style
+        size
+        title1
+        title2
+        description1
+        description2
+        color
+        image {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+      }
+      resourceRootID
+      resourceRoot {
+        id
+        type
+        groupId
+        organizationId
+        owner
+        resources {
+          nextToken
+        }
+        organization {
+          id
+          orgName
+          adminEmail
+          phone
+          admins
+          superAdmin
+          hasPaidState
+          profileState
+          address
+          city
+          province
+          postalCode
+          country
+          aboutMeShort
+          aboutMeLong
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          parentOrganizationId
+          createdAt
+          updatedAt
+        }
+        menuItems {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listResourceMenuItems = /* GraphQL */ `
+  query ListResourceMenuItems(
+    $filter: ModelResourceMenuItemFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listResourceMenuItems(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        owner
+        type
+        menuTitle
+        order
+        depth
+        pageItems {
+          type
+          style
+          size
+          title1
+          title2
+          description1
+          description2
+          color
+        }
+        resourceRootID
+        resourceRoot {
+          id
+          type
+          groupId
+          organizationId
+          owner
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -2909,7 +3045,6 @@ export const getResource = /* GraphQL */ `
       id
       owner
       type
-      menuTitle
       order
       title
       subtitle
@@ -2981,6 +3116,9 @@ export const getResource = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        menuItems {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -3000,7 +3138,6 @@ export const listResources = /* GraphQL */ `
         id
         owner
         type
-        menuTitle
         order
         title
         subtitle
@@ -3074,7 +3211,6 @@ export const getResourceSeries = /* GraphQL */ `
         id
         owner
         type
-        menuTitle
         order
         title
         subtitle
@@ -3137,7 +3273,6 @@ export const listResourceSeriess = /* GraphQL */ `
           id
           owner
           type
-          menuTitle
           order
           title
           subtitle
@@ -3192,7 +3327,6 @@ export const getResourceEpisode = /* GraphQL */ `
           id
           owner
           type
-          menuTitle
           order
           title
           subtitle
