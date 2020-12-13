@@ -28,6 +28,8 @@ interface Props {
 interface State extends JCState {
   showEditorModal: boolean
   showJCResourceConfigModal: boolean
+  showPageConfigModal: boolean
+  showResourceConfigModal: boolean
 }
 
 class ResourceContentImpl extends JCComponent<Props, State> {
@@ -38,6 +40,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     console.log(props.route.params.create)
     this.state = {
       ...super.getInitialState(),
+      showPageConfigModal: false,
+      showResourceConfigModal: false,
       showJCResourceConfigModal:
         props.route.params.create === "true" || props.route.params.create === true ? true : false,
       showEditorModal: false,
@@ -81,25 +85,6 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     ) : null
   }
 
-  renderSeries(state: ResourceState, actions: ResourceActions): React.ReactNode {
-    if (!state.currentResource) return null
-    let temp = []
-
-    return (
-      <Container
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "flex-start",
-          backgroundColor: "#F9FAFC",
-        }}
-      >
-        <Container style={this.styles.style.resourceContentRightContainer}>
-          <ResourceMenu></ResourceMenu>
-        </Container>
-      </Container>
-    )
-  }
   generateKey(state: ResourceState): string {
     return state.currentResource + "-" + state.currentSeries + "-" + state.currentEpisode
   }
@@ -543,10 +528,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     return (
       <TouchableOpacity
         onPress={() => {
-          const pageItem: ResourcePageItemInput = {
-            type: ResourcePageItemType.Header,
-          }
-          resourceActions.createPageItem(resourceState.currentResource, pageItem)
+          this.setState({ showPageConfigModal: true })
         }}
       >
         <Card>
@@ -576,10 +558,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     return (
       <TouchableOpacity
         onPress={() => {
-          const pageItem: ResourcePageItemInput = {
-            type: ResourcePageItemType.Header,
-          }
-          resourceActions.createPageItem(resourceState.currentResource, pageItem)
+          this.setState({ showResourceConfigModal: true })
         }}
       >
         <Card>
