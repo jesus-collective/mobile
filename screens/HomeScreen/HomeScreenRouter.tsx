@@ -54,6 +54,9 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
       idempotency: uuidv4(),
     }
   }
+  onSetUser = (user: any): void => {
+    this.setState({ user: user })
+  }
   async componentDidMount(): Promise<void> {
     try {
       await this.updateGroups()
@@ -410,6 +413,7 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
               ...this.state,
             },
             userActions: {
+              onSetUser: this.onSetUser,
               updateHasCompletedPersonalProfile: this.updateHasCompletedPersonalProfile,
               updateHasCompletedOrganizationProfile: this.updateHasCompletedOrganizationProfile,
               updatePaidState: this.updatePaidState,

@@ -1,7 +1,7 @@
 import { Header, Left, Body, Right, Button, Picker } from "native-base"
-
+import { Ionicons } from "@expo/vector-icons"
 import React from "react"
-import { Text, Dimensions } from "react-native"
+import { Text, Dimensions, View } from "react-native"
 import HeaderStyles from "../Header/style"
 
 import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
@@ -94,19 +94,49 @@ class ResourceMenu extends JCComponent<Props> {
               {resourceState.resourceData?.menuItems?.items?.map((item, index: number) => {
                 if (item != null)
                   return (
-                    <EditableButton
-                      onDelete={() => resourceActions.deleteMenuItem(index)}
-                      onChange={(value) =>
-                        resourceActions.updateMenuItem(index, "menuTitle", value)
-                      }
-                      key={index}
-                      placeholder="temp"
-                      isEditable={resourceState.isEditable}
-                      onPress={() => resourceActions.changeMenuItem(index)}
-                      inputStyle={this.headerStyles.style.centerMenuButtonsText}
-                      textStyle={this.headerStyles.style.centerMenuButtonsText}
-                      value={item.menuTitle}
-                    ></EditableButton>
+                    <View style={{ flexDirection: "row" }}>
+                      {item.depth == "2" && <View style={{ width: 10 }} />}
+                      <EditableButton
+                        onDelete={() => resourceActions.deleteMenuItem(index)}
+                        onChange={(value) =>
+                          resourceActions.updateMenuItem(index, "menuTitle", value)
+                        }
+                        key={index}
+                        placeholder="temp"
+                        isEditable={resourceState.isEditable}
+                        onPress={() => resourceActions.changeMenuItem(index)}
+                        inputStyle={this.headerStyles.style.centerMenuButtonsText}
+                        textStyle={this.headerStyles.style.centerMenuButtonsText}
+                        value={item.menuTitle ?? ""}
+                      ></EditableButton>
+                      {resourceState.isEditable ? (
+                        item.depth == "1" ? (
+                          <Button
+                            transparent
+                            onPress={async () => {
+                              await resourceActions.updateMenuItem(index, "depth", "2")
+                            }}
+                          >
+                            <Ionicons
+                              name="ios-arrow-round-forward"
+                              style={this.headerStyles.style.icon}
+                            />
+                          </Button>
+                        ) : (
+                          <Button
+                            transparent
+                            onPress={async () => {
+                              await resourceActions.updateMenuItem(index, "depth", "1")
+                            }}
+                          >
+                            <Ionicons
+                              name="ios-arrow-round-back"
+                              style={this.headerStyles.style.icon}
+                            />
+                          </Button>
+                        )
+                      ) : null}
+                    </View>
                   )
                 else return null
               })}

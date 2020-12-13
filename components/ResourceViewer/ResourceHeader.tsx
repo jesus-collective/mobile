@@ -63,7 +63,7 @@ class ResourceHeader extends JCComponent<Props, State> {
           multiline={false}
           inputStyle={page.styles.style.resourceContentEpisodesEpisodeTitle}
           textStyle={page.styles.style.fontCourseHeaderBold}
-          value={page.state.settings.title1}
+          value={page.state.settings.title1 ?? ""}
           isEditable={true}
         ></EditableText>
         <EditableText
@@ -76,7 +76,7 @@ class ResourceHeader extends JCComponent<Props, State> {
           multiline={false}
           inputStyle={page.styles.style.resourceContentEpisodesEpisodeTitle}
           textStyle={page.styles.style.fontCourseHeaderBold}
-          value={page.state.settings.title2}
+          value={page.state.settings.title2 ?? ""}
           isEditable={true}
         ></EditableText>
         <View>
@@ -163,7 +163,7 @@ class ResourceHeader extends JCComponent<Props, State> {
                   placeholder="Title"
                   inputStyle={this.styles.style.fontResourceHeaderBold}
                   textStyle={this.styles.style.fontCourseHeaderBold}
-                  value={this.props.pageItem.title1}
+                  value={this.props.pageItem.title1 ?? ""}
                   isEditable={false}
                 ></EditableText>
                 <EditableText
@@ -171,7 +171,7 @@ class ResourceHeader extends JCComponent<Props, State> {
                   placeholder="Subtitle"
                   inputStyle={this.styles.style.fontResourceHeaderBold}
                   textStyle={this.styles.style.fontResourceHeaderDescription}
-                  value={this.props.pageItem.title2}
+                  value={this.props.pageItem.title2 ?? ""}
                   isEditable={false}
                 ></EditableText>
               </View>

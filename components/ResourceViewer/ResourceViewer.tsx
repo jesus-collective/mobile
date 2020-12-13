@@ -595,7 +595,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         query: mutations.updateResourceMenuItem,
         variables: {
           input: {
-            id: this.state.resourceData.menuItem.items[index].id,
+            id: this.state.resourceData?.menuItems?.items[index].id,
             [item]: value,
           },
         },
@@ -603,7 +603,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       })) as UpdateResourceMenuItemMutationResult
       console.log(updateMenuItem)
       const temp = this.state.resourceData
-      temp.menuItem.items[index][item] = value
+      temp.menuItems.items[index][item] = value
       this.setState({ resourceData: temp })
     } catch (e) {
       console.log(e)

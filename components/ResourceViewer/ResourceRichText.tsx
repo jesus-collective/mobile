@@ -55,7 +55,7 @@ class ResourceRichText extends JCComponent<Props, State> {
     return (
       <>
         <EditableRichText
-          onChange={(val) => {
+          onChange={(val: string) => {
             const tmp = page.state.settings
             tmp.title1 = val
             page.setState({ settings: tmp })

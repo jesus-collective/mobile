@@ -61,7 +61,7 @@ class MySignInImpl extends React.Component<Props, State> {
     }
   }
 
-  changeAuthState(action: UserActions, state: string, user?: string): void {
+  changeAuthState(action: UserActions, state: string, user?: any): void {
     this.setState({
       pass: "",
       user: "",

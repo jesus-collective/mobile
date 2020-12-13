@@ -17,7 +17,7 @@ import { Dimensions } from "react-native"
 import MainStyles from "../../components/style"
 import { Auth } from "aws-amplify"
 import countryDialCodes from "aws-amplify-react-native/src/CountryDialCodes"
-import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
+import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/UserContext"
 
 import { Entypo } from "@expo/vector-icons"
 import { Copyright } from "../../components/Auth/Copyright"
@@ -74,14 +74,14 @@ class MyForgotPassword extends React.Component<Props, State> {
     if (actions.onStateChange) actions.onStateChange(state, null)
   }
 
-  async save(actions: any): Promise<void> {
+  async save(actions: UserActions, userState: UserState): Promise<void> {
     console.log("Saving")
     try {
       if (this.state.newPass !== this.state.newPass2) {
         this.setState({ authError: "Passwords do not match" })
         return
       }
-      await Auth.completeNewPassword(this.state.username, this.state.newPass, {
+      await Auth.completeNewPassword(userState.user, this.state.newPass, {
         family_name: this.state.last,
         given_name: this.state.first,
         phone_number: this.state.code + this.state.phone,
@@ -97,9 +97,13 @@ class MyForgotPassword extends React.Component<Props, State> {
     }
   }
 
-  handleEnter(actions: any, keyEvent: NativeSyntheticEvent<TextInputKeyPressEventData>): void {
+  handleEnter(
+    actions: UserActions,
+    userState: UserState,
+    keyEvent: NativeSyntheticEvent<TextInputKeyPressEventData>
+  ): void {
     if (keyEvent.nativeEvent.key === "Enter") {
-      this.save(actions)
+      this.save(actions, userState)
     }
   }
 
@@ -235,7 +239,7 @@ class MyForgotPassword extends React.Component<Props, State> {
                         autoCompleteType="tel"
                         textContentType="telephoneNumber"
                         onKeyPress={(e) => {
-                          this.handleEnter(userActions, e)
+                          this.handleEnter(userActions, userState, e)
                         }}
                         keyboardType="phone-pad"
                         placeholder="Phone number"
@@ -265,7 +269,7 @@ class MyForgotPassword extends React.Component<Props, State> {
                       <TextInput
                         textContentType="newPassword"
                         onKeyPress={(e) => {
-                          this.handleEnter(userActions, e)
+                          this.handleEnter(userActions, userState, e)
                         }}
                         placeholder="New password"
                         value={this.state.newPass}
@@ -288,7 +292,7 @@ class MyForgotPassword extends React.Component<Props, State> {
                       <TextInput
                         textContentType="newPassword"
                         onKeyPress={(e) => {
-                          this.handleEnter(userActions, e)
+                          this.handleEnter(userActions, userState, e)
                         }}
                         placeholder="Confirm new password"
                         value={this.state.newPass2}
@@ -311,7 +315,7 @@ class MyForgotPassword extends React.Component<Props, State> {
                     <JCButton
                       buttonType={ButtonTypes.SolidSignIn}
                       onPress={() => {
-                        this.save(userActions)
+                        this.save(userActions, userState)
                       }}
                     >
                       {this.state.resetting ? (
