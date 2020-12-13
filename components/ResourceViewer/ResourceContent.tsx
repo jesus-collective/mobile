@@ -1,7 +1,7 @@
 import React from "react"
 import { Container, Card, CardItem, ListItem, List } from "native-base"
 
-import { Text, Image, Dimensions } from "react-native"
+import { Text, Image, Dimensions, View } from "react-native"
 import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
 import { TouchableOpacity } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
@@ -10,26 +10,32 @@ import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import EditableText from "../Forms/EditableText"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import ResourceMenu from "./ResourceMenu"
-import JCModal from "../../components/Forms/JCModal"
 import { ResourcePageItemInput, ResourcePageItemType } from "../../src/API"
 import ResourceHeader from "./ResourceHeader"
 import ResourceRichText from "./ResourceRichText"
-
+import JCResourceConfigModal from "./JCResourceConfigModal"
+import { useNavigation, useRoute } from "@react-navigation/native"
 interface Props {
   currentResource: number
+  navigation: any
+  route: any
 }
 
 interface State extends JCState {
   showEditorModal: boolean
+  showJCResourceConfigModal: boolean
 }
 
-class ResourceContent extends JCComponent<Props, State> {
+class ResourceContentImpl extends JCComponent<Props, State> {
   static Consumer = ResourceContext.Consumer
+
   constructor(props: Props) {
     super(props)
+    console.log(props.route.params.create)
     this.state = {
       ...super.getInitialState(),
-
+      showJCResourceConfigModal:
+        props.route.params.create === "true" || props.route.params.create === true ? true : false,
       showEditorModal: false,
     }
   }
@@ -507,7 +513,7 @@ class ResourceContent extends JCComponent<Props, State> {
     })
     return firstEpisodeIndex
   }
-  renderAddPageItem(resourceState: ResourceState, resourceActions: ResourceActions) {
+  renderAddPageItemButton(resourceState: ResourceState, resourceActions: ResourceActions) {
     return (
       <TouchableOpacity
         onPress={() => {
@@ -520,6 +526,57 @@ class ResourceContent extends JCComponent<Props, State> {
         <Card>
           <CardItem>
             <Text>Add Page Item</Text>
+          </CardItem>
+        </Card>
+      </TouchableOpacity>
+    )
+  }
+  renderPageConfigButton(resourceState: ResourceState, resourceActions: ResourceActions) {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          const pageItem: ResourcePageItemInput = {
+            type: ResourcePageItemType.Header,
+          }
+          resourceActions.createPageItem(resourceState.currentResource, pageItem)
+        }}
+      >
+        <Card>
+          <CardItem>
+            <Text>Configure Page</Text>
+          </CardItem>
+        </Card>
+      </TouchableOpacity>
+    )
+  }
+  renderJCResourceConfigButton(resourceState: ResourceState, resourceActions: ResourceActions) {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          this.setState({ showJCResourceConfigModal: true })
+        }}
+      >
+        <Card>
+          <CardItem>
+            <Text>Configure JC Group</Text>
+          </CardItem>
+        </Card>
+      </TouchableOpacity>
+    )
+  }
+  renderResourceConfigButton(resourceState: ResourceState, resourceActions: ResourceActions) {
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          const pageItem: ResourcePageItemInput = {
+            type: ResourcePageItemType.Header,
+          }
+          resourceActions.createPageItem(resourceState.currentResource, pageItem)
+        }}
+      >
+        <Card>
+          <CardItem>
+            <Text>Configure Resources</Text>
           </CardItem>
         </Card>
       </TouchableOpacity>
@@ -578,12 +635,32 @@ class ResourceContent extends JCComponent<Props, State> {
         )
     }
   }
+  renderPageConfig(
+    resourceState: ResourceState,
+    resourceActions: ResourceActions
+  ): React.ReactNode {
+    console.log({ showJCResourceConfigModal: this.state.showJCResourceConfigModal })
+    return resourceState?.isEditable ? (
+      <View style={{ flexDirection: "row" }}>
+        {this.renderAddPageItemButton(resourceState, resourceActions)}
+        {this.renderPageConfigButton(resourceState, resourceActions)}
+        {this.renderResourceConfigButton(resourceState, resourceActions)}
+        {this.renderJCResourceConfigButton(resourceState, resourceActions)}
+        <JCResourceConfigModal
+          visible={this.state.showJCResourceConfigModal}
+          onClose={() => {
+            this.setState({ showJCResourceConfigModal: false })
+          }}
+        ></JCResourceConfigModal>
+      </View>
+    ) : null
+  }
   render(): React.ReactNode {
     return (
-      <ResourceContent.Consumer>
+      <ResourceContentImpl.Consumer>
         {({ resourceState, resourceActions }) => {
           if (!resourceState) return null
-          if (!resourceState.currentResource) return null
+          if (resourceState.currentResource == null) return null
           return (
             <>
               {resourceState?.resourceData?.menuItems?.items[
@@ -592,24 +669,17 @@ class ResourceContent extends JCComponent<Props, State> {
                 return this.renderRouter(resourceActions, resourceState, index, item)
               })}
 
-              {resourceState?.isEditable
-                ? this.renderAddPageItem(resourceState, resourceActions)
-                : null}
+              {this.renderPageConfig(resourceState, resourceActions)}
             </>
           )
-          /*
-          if (resourceState.currentEpisode != null)
-            return this.renderEpisode(resourceState, resourceActions)
-          if (resourceState.currentSeries != null)
-            // if (this.state.rowLength === 1)
-            //   return this.renderEpisodesMobile(resourceState, resourceActions)
-            return this.renderEpisodes(resourceState, resourceActions)
-          //  else if (this.state.rowLength === 1)
-          //    return this.renderSeriesMobile(resourceState, resourceActions)
-          else return this.renderSeries(resourceState, resourceActions)*/
         }}
-      </ResourceContent.Consumer>
+      </ResourceContentImpl.Consumer>
     )
   }
 }
-export default ResourceContent
+
+export default function ResourceContent(props: Props): JSX.Element {
+  const route = useRoute()
+  const navigation = useNavigation()
+  return <ResourceContentImpl {...props} navigation={navigation} route={route} />
+}

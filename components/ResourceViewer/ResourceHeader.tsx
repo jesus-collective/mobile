@@ -99,7 +99,7 @@ class ResourceHeader extends JCComponent<Props, State> {
             type="file"
             accept="image/*"
             onChange={(e) => {
-              if (!resourceState.currentResource) return null
+              if (resourceState.currentResource == null) return null
               resourceActions.updateResourceImage(resourceState.currentResource, e)
             }}
           />
@@ -113,7 +113,7 @@ class ResourceHeader extends JCComponent<Props, State> {
       <ResourceHeader.Consumer>
         {({ resourceState, resourceActions }) => {
           if (!resourceState) return null
-          if (!resourceState.currentResource) return null
+          if (resourceState.currentResource == null) return null
           if (this.state.imageUrl == null || this.state.image != this.props.pageItem.image)
             this.getImage(this.props.pageItem)
           return (

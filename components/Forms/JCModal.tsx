@@ -10,7 +10,7 @@ interface Props {
   title: string
 }
 
-export default class AdminScreen extends JCComponent<Props> {
+export default class JCModal extends JCComponent<Props> {
   constructor(props: Props) {
     super(props)
   }

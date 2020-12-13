@@ -1000,7 +1000,17 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
               <Content>
                 {this.state.currentResource == 0 ? (
                   <>
-                    <ResourceOverview></ResourceOverview>
+                    <ResourceContent currentResource={this.state.currentResource}></ResourceContent>
+                    <div
+                      id="modal"
+                      style={{
+                        position: "fixed",
+                        top: 0,
+                        left: 0,
+                        width: 0,
+                        height: 0,
+                      }}
+                    ></div>
                   </>
                 ) : (
                   <>
