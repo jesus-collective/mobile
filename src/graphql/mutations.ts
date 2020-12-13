@@ -8021,6 +8021,26 @@ export const createResourceMenuItem = /* GraphQL */ `
           filenameLarge
           filenameUpload
         }
+        pageItemsLeft {
+          type
+          style
+          size
+          title1
+          title2
+          description1
+          description2
+          color
+        }
+        pageItemsRight {
+          type
+          style
+          size
+          title1
+          title2
+          description1
+          description2
+          color
+        }
       }
       resourceRootID
       resourceRoot {
@@ -8096,6 +8116,26 @@ export const updateResourceMenuItem = /* GraphQL */ `
           filenameLarge
           filenameUpload
         }
+        pageItemsLeft {
+          type
+          style
+          size
+          title1
+          title2
+          description1
+          description2
+          color
+        }
+        pageItemsRight {
+          type
+          style
+          size
+          title1
+          title2
+          description1
+          description2
+          color
+        }
       }
       resourceRootID
       resourceRoot {
@@ -8170,6 +8210,26 @@ export const deleteResourceMenuItem = /* GraphQL */ `
           filenameMedium
           filenameLarge
           filenameUpload
+        }
+        pageItemsLeft {
+          type
+          style
+          size
+          title1
+          title2
+          description1
+          description2
+          color
+        }
+        pageItemsRight {
+          type
+          style
+          size
+          title1
+          title2
+          description1
+          description2
+          color
         }
       }
       resourceRootID

@@ -2944,6 +2944,26 @@ export const getResourceMenuItem = /* GraphQL */ `
           filenameLarge
           filenameUpload
         }
+        pageItemsLeft {
+          type
+          style
+          size
+          title1
+          title2
+          description1
+          description2
+          color
+        }
+        pageItemsRight {
+          type
+          style
+          size
+          title1
+          title2
+          description1
+          description2
+          color
+        }
       }
       resourceRootID
       resourceRoot {

@@ -35,11 +35,13 @@ export type CreateResourceRootMutationResult=GraphQLResult<CreateResourceRootMut
 export type CreateResourceMenuItemMutationResult=GraphQLResult<CreateResourceMenuItemMutation>
 export type UpdateResourceMenuItemMutationResult=GraphQLResult<UpdateResourceMenuItemMutation>
 export type DeleteResourceMenuItemMutationResult=GraphQLResult<DeleteResourceMenuItemMutation>
+export type PageItemIndex=(number | "pageItemsLeft" | "pageItemsRight")[]
 export interface ResourceSetupProp {
   resourceActions: ResourceActions
   resourceState: ResourceState
-  pageItemIndex: number
+  pageItemIndex: PageItemIndex
   pageItem: ResourcePageItemInput
+  
   save(
     resourceActions: ResourceActions,
     resourceState: ResourceState,

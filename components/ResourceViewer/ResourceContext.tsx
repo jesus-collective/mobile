@@ -1,7 +1,7 @@
 import { JCState } from "components/JCComponent/JCComponent"
 import * as React from "react"
 import { CreateGroupInput, ResourcePageItemInput } from "src/API"
-import { GetResourceRootData, GroupData, UserData } from "src/types"
+import { GetResourceRootData, GroupData, PageItemIndex, UserData } from "src/types"
 export interface ResourceState extends JCState {
   groupData: CreateGroupInput | GroupData | null | undefined
   resourceData: GetResourceRootData
@@ -22,9 +22,13 @@ export interface ResourceState extends JCState {
   memberIDs: string[]
 }
 export type ResourceActions = {
-  createPageItem(menuItemIndex: number, pageItem: ResourcePageItemInput): Promise<void>
-  updatePageItem(menuItemIndex: number, pageItemIndex: number, value: any): Promise<void>
-  deletePageItem(menuItemIndex: number, pageItemIndex: number): Promise<void>
+  createPageItem(
+    menuItemIndex: number,
+    pageItemIndex: PageItemIndex,
+    pageItem: ResourcePageItemInput
+  ): Promise<void>
+  updatePageItem(menuItemIndex: number, pageItemIndex: PageItemIndex, value: any): Promise<void>
+  deletePageItem(menuItemIndex: number, pageItemIndex: PageItemIndex): Promise<void>
 
   createMenuItem(): Promise<void>
   changeMenuItem(index: number): void

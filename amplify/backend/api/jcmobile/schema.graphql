@@ -832,10 +832,14 @@ enum ResourcePageItemType{
   RichText
   List
   Grid
+  Column
 }
 enum ResourcePageItemStyle{
   MenuTop
   MenuLeft
+  Column3070
+  Column7030
+  Column5050
 }
 type ResourcePageItem{
   type:ResourcePageItemType
@@ -847,7 +851,8 @@ type ResourcePageItem{
   description2:String
   color:String
   image:Image
-
+  pageItemsLeft:[ResourcePageItem]
+  pageItemsRight:[ResourcePageItem]
 }
 type Resource 
 @model 
@@ -872,6 +877,7 @@ type Resource
   resourceID:ID!
   resourceRoot: ResourceRoot! @connection(name:"r1",keyField:"resourceID")
 }
+
 type ResourceSeries 
 @model 
 @auth(rules: [

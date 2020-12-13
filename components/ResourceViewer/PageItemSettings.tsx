@@ -2,7 +2,7 @@ import React from "react"
 import JCComponent from "../../components/JCComponent/JCComponent"
 import { TouchableOpacity } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
-import { EmptyProps } from "src/types"
+import { EmptyProps, PageItemIndex } from "src/types"
 import JCModal from "../../components/Forms/JCModal"
 import { Container, Card, CardItem, ListItem, List, Picker } from "native-base"
 import { Text, Image, Dimensions } from "react-native"
@@ -12,11 +12,12 @@ import ResourceHeader from "./ResourceHeader"
 import { ResourceActions, ResourceState } from "./ResourceContext"
 import ResourceMenu from "./ResourceMenu"
 import ResourceRichText from "./ResourceRichText"
+import ResourceColumn from "./ResourceColumn"
 
 interface Props {
   resourceActions: ResourceActions
   resourceState: ResourceState
-  pageItemIndex: number
+  pageItemIndex: PageItemIndex
   pageItem: ResourcePageItemInput
   save(
     resourceActions: ResourceActions,
@@ -61,6 +62,8 @@ export default class PageItemSettings extends JCComponent<Props, State> {
         return ResourceMenu.renderAdmin(this)
       case ResourcePageItemType.RichText:
         return ResourceRichText.renderAdmin(this)
+      case ResourcePageItemType.Column:
+        return ResourceColumn.renderAdmin(this)
     }
   }
   render() {

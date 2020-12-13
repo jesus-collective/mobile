@@ -9,6 +9,8 @@ import {
   GetUserQuery,
   CreateResourceMenuItemInput,
   ResourcePageItemInput,
+  ResourcePageItemType,
+  CreateGroupInput,
 } from "../../src/API"
 import * as queries from "../../src/graphql/queries"
 import * as customQueries from "../../src/graphql-custom/queries"
@@ -25,7 +27,7 @@ import ResourceContent from "./ResourceContent"
 //import { DataStore, Predicates } from '@aws-amplify/datastore'
 import { ResourceContext, ResourceState } from "./ResourceContext"
 import ErrorBoundary from "../ErrorBoundry"
-import { CreateGroupInput } from "src/API"
+
 import Validate from "../Validate/Validate"
 import { useRoute, useNavigation } from "@react-navigation/native"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
@@ -44,6 +46,7 @@ import {
   GroupMemberByUserQueryResultPromise,
   ListResourceRootsQueryResult,
   ListResourceRootsQueryResultPromise,
+  PageItemIndex,
   UpdateResourceMenuItemMutationResult,
 } from "src/types"
 Amplify.configure(awsconfig)
@@ -249,6 +252,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         type: "resource",
         menuTitle: "Overview",
         order: "0",
+        depth: "1",
         resourceRootID: createResourceRoot.data.createResourceRoot.id,
       }
 
@@ -609,29 +613,60 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       console.log(e)
     }
   }
-
+  addToRoot(rootPageItems, pageItem, pageItemIndex: PageItemIndex): any {
+    let rootPageItems2 = rootPageItems
+    console.log({ rootPageItems2, pageItem, pageItemIndex })
+    if (pageItemIndex.length == 0) {
+      rootPageItems2.push(pageItem)
+      console.log(rootPageItems)
+      return rootPageItems2
+    } else {
+      if (rootPageItems2.pageItems == null) rootPageItems2.pageItems = []
+      console.log({ pageItemIndexA: pageItemIndex })
+      let z = this.addToRoot(
+        rootPageItems2[pageItemIndex[0]][pageItemIndex[1]]
+          ? rootPageItems2[pageItemIndex[0]][pageItemIndex[1]]
+          : [],
+        pageItem,
+        pageItemIndex.slice(2)
+      )
+      console.log({ pageItemIndexB: pageItemIndex })
+      console.log({ z: z })
+      rootPageItems2[pageItemIndex[0]][pageItemIndex[1]] = z
+      console.log({ rootPageItems2222: rootPageItems2 })
+      return rootPageItems2
+    }
+  }
   createPageItem = async (
     menuItemIndex: number,
+    pageItemIndex: PageItemIndex,
     pageItem: ResourcePageItemInput
   ): Promise<void> => {
     try {
-      console.log({ "Updating MenuItem": menuItemIndex })
-      let tempPageItems = this.state.resourceData.menuItems.items[menuItemIndex].pageItems
-      if (!tempPageItems) tempPageItems = []
-      tempPageItems.push(pageItem)
+      console.log({
+        "Creating PageItem": menuItemIndex,
+        PageIndex: pageItemIndex,
+        pageItem: pageItem,
+      })
+      let rootPageItems: any[] = this.state.resourceData.menuItems.items[menuItemIndex].pageItems
+      console.log(rootPageItems)
+      if (!rootPageItems) rootPageItems = []
+      rootPageItems = this.addToRoot(rootPageItems, pageItem, pageItemIndex)
+      console.log({ rootPageItems: rootPageItems })
       const updateMenuItem: UpdateResourceMenuItemMutationResult = (await API.graphql({
         query: mutations.updateResourceMenuItem,
         variables: {
           input: {
             id: this.state.resourceData.menuItems.items[menuItemIndex].id,
-            pageItems: tempPageItems,
+            pageItems: rootPageItems,
           },
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })) as UpdateResourceMenuItemMutationResult
       console.log(updateMenuItem)
       const temp = this.state.resourceData
-      temp.menuItems.items[menuItemIndex].pageItems = tempPageItems
+      console.log({ Root: rootPageItems })
+      temp.menuItems.items[menuItemIndex].pageItems = rootPageItems
       this.setState({ resourceData: temp })
     } catch (e) {
       console.log(e)
@@ -639,7 +674,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
   }
   updatePageItem = async (
     menuItemIndex: number,
-    pageItemIndex: number,
+    pageItemIndex: PageItemIndex,
     value: ResourcePageItemInput
   ): Promise<void> => {
     try {
@@ -664,7 +699,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       console.log(e)
     }
   }
-  deletePageItem = async (menuItemIndex: number, pageItemIndex: number): Promise<void> => {
+  deletePageItem = async (menuItemIndex: number, pageItemIndex: PageItemIndex): Promise<void> => {
     try {
       console.log({ "Updating MenuItem": menuItemIndex })
       const tempPageItems = this.state.resourceData.menuItems.items[menuItemIndex].pageItems
@@ -1000,7 +1035,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
               <Content>
                 {this.state.currentResource == 0 ? (
                   <>
-                    <ResourceContent currentResource={this.state.currentResource}></ResourceContent>
+                    <ResourceContent pageItemIndex={[]} isBase={true}></ResourceContent>
                     <div
                       id="modal"
                       style={{
@@ -1014,7 +1049,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
                   </>
                 ) : (
                   <>
-                    <ResourceContent currentResource={this.state.currentResource}></ResourceContent>
+                    <ResourceContent pageItemIndex={[]} isBase={true}></ResourceContent>
                     <div
                       id="modal"
                       style={{

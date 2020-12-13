@@ -800,6 +800,108 @@ export const getResourceRoot = /* GraphQL */ `
             description1
             description2
             color
+            pageItemsLeft {
+              type
+              style
+              size
+              title1
+              title2
+              description1
+              description2
+              color
+              pageItemsLeft {
+                type
+                style
+                size
+                title1
+                title2
+                description1
+                description2
+                color
+                image {
+                  userId
+                  filenameSmall
+                  filenameMedium
+                  filenameLarge
+                  filenameUpload
+                }
+              }
+              pageItemsRight {
+                type
+                style
+                size
+                title1
+                title2
+                description1
+                description2
+                color
+                image {
+                  userId
+                  filenameSmall
+                  filenameMedium
+                  filenameLarge
+                  filenameUpload
+                }
+              }
+              image {
+                userId
+                filenameSmall
+                filenameMedium
+                filenameLarge
+                filenameUpload
+              }
+            }
+            pageItemsRight {
+              type
+              style
+              size
+              title1
+              title2
+              description1
+              description2
+              color
+              pageItemsLeft {
+                type
+                style
+                size
+                title1
+                title2
+                description1
+                description2
+                color
+                image {
+                  userId
+                  filenameSmall
+                  filenameMedium
+                  filenameLarge
+                  filenameUpload
+                }
+              }
+              pageItemsRight {
+                type
+                style
+                size
+                title1
+                title2
+                description1
+                description2
+                color
+                image {
+                  userId
+                  filenameSmall
+                  filenameMedium
+                  filenameLarge
+                  filenameUpload
+                }
+              }
+              image {
+                userId
+                filenameSmall
+                filenameMedium
+                filenameLarge
+                filenameUpload
+              }
+            }
             image {
               userId
               filenameSmall

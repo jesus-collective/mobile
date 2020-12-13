@@ -15,10 +15,14 @@ import ResourceHeader from "./ResourceHeader"
 import ResourceRichText from "./ResourceRichText"
 import JCResourceConfigModal from "./JCResourceConfigModal"
 import { useNavigation, useRoute } from "@react-navigation/native"
+import ResourceColumn from "./ResourceColumn"
+import { PageItemIndex } from "src/types"
 interface Props {
-  currentResource: number
-  navigation: any
-  route: any
+  navigation?: any
+  route?: any
+  pageItems?: (ResourcePageItemInput | null)[] | null | undefined
+  pageItemIndex: PageItemIndex
+  isBase?: boolean
 }
 
 interface State extends JCState {
@@ -513,14 +517,18 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     })
     return firstEpisodeIndex
   }
-  renderAddPageItemButton(resourceState: ResourceState, resourceActions: ResourceActions) {
+  renderAddPageItemButton(
+    resourceState: ResourceState,
+    resourceActions: ResourceActions,
+    pageItemIndex: PageItemIndex
+  ) {
     return (
       <TouchableOpacity
         onPress={() => {
           const pageItem: ResourcePageItemInput = {
             type: ResourcePageItemType.Header,
           }
-          resourceActions.createPageItem(resourceState.currentResource, pageItem)
+          resourceActions.createPageItem(resourceState.currentResource, pageItemIndex, pageItem)
         }}
       >
         <Card>
@@ -600,12 +608,23 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     item: ResourcePageItemInput
   ): React.ReactNode {
     switch (item.type) {
+      case ResourcePageItemType.Column:
+        return (
+          <ResourceColumn
+            resourceActions={resourceActions}
+            resourceState={resourceState}
+            pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
+            save={this.save}
+            delete={this.delete}
+            pageItem={item}
+          ></ResourceColumn>
+        )
       case ResourcePageItemType.Header:
         return (
           <ResourceHeader
             resourceActions={resourceActions}
             resourceState={resourceState}
-            pageItemIndex={pageItemIndex}
+            pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
             save={this.save}
             delete={this.delete}
             pageItem={item}
@@ -616,7 +635,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           <ResourceMenu
             resourceActions={resourceActions}
             resourceState={resourceState}
-            pageItemIndex={pageItemIndex}
+            pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
             save={this.save}
             delete={this.delete}
             pageItem={item}
@@ -627,7 +646,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           <ResourceRichText
             resourceActions={resourceActions}
             resourceState={resourceState}
-            pageItemIndex={pageItemIndex}
+            pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
             save={this.save}
             delete={this.delete}
             pageItem={item}
@@ -635,14 +654,24 @@ class ResourceContentImpl extends JCComponent<Props, State> {
         )
     }
   }
+  renderColumnConfig(
+    resourceState: ResourceState,
+    resourceActions: ResourceActions
+  ): React.ReactNode {
+    console.log({ ColumnConfig: this.props.pageItemIndex })
+    return resourceState?.isEditable ? (
+      <View style={{ flexDirection: "row" }}>
+        {this.renderAddPageItemButton(resourceState, resourceActions, this.props.pageItemIndex)}
+      </View>
+    ) : null
+  }
   renderPageConfig(
     resourceState: ResourceState,
     resourceActions: ResourceActions
   ): React.ReactNode {
-    console.log({ showJCResourceConfigModal: this.state.showJCResourceConfigModal })
     return resourceState?.isEditable ? (
       <View style={{ flexDirection: "row" }}>
-        {this.renderAddPageItemButton(resourceState, resourceActions)}
+        {this.renderAddPageItemButton(resourceState, resourceActions, [])}
         {this.renderPageConfigButton(resourceState, resourceActions)}
         {this.renderResourceConfigButton(resourceState, resourceActions)}
         {this.renderJCResourceConfigButton(resourceState, resourceActions)}
@@ -655,21 +684,33 @@ class ResourceContentImpl extends JCComponent<Props, State> {
       </View>
     ) : null
   }
+  renderItems(
+    resourceActions: ResourceActions,
+    resourceState: ResourceState,
+    pageItems: ResourcePageItemInput[]
+  ) {
+    return pageItems?.map((item: ResourcePageItemInput, index: number) => {
+      return this.renderRouter(resourceActions, resourceState, index, item)
+    })
+  }
+
   render(): React.ReactNode {
     return (
       <ResourceContentImpl.Consumer>
         {({ resourceState, resourceActions }) => {
           if (!resourceState) return null
           if (resourceState.currentResource == null) return null
+          let pageItems: ResourcePageItemInput[] =
+            resourceState?.resourceData?.menuItems?.items[resourceState.currentResource]?.pageItems
+          if (!this.props.isBase) pageItems = this.props.pageItems
+          console.log({ pageItems: pageItems })
           return (
             <>
-              {resourceState?.resourceData?.menuItems?.items[
-                resourceState.currentResource
-              ]?.pageItems?.map((item, index) => {
-                return this.renderRouter(resourceActions, resourceState, index, item)
-              })}
+              {this.renderItems(resourceActions, resourceState, pageItems)}
 
-              {this.renderPageConfig(resourceState, resourceActions)}
+              {this.props.isBase
+                ? this.renderPageConfig(resourceState, resourceActions)
+                : this.renderColumnConfig(resourceState, resourceActions)}
             </>
           )
         }}
