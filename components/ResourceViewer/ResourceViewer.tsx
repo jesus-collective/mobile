@@ -1,37 +1,10 @@
-import { Content, Container } from "native-base"
-import * as React from "react"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
-import {
-  CreateResourceRootInput,
-  CreateResourceInput,
-  CreateResourceSeriesInput,
-  CreateResourceEpisodeInput,
-  GetUserQuery,
-  CreateResourceMenuItemInput,
-  ResourcePageItemInput,
-  ResourcePageItemType,
-  CreateGroupInput,
-} from "../../src/API"
-import * as queries from "../../src/graphql/queries"
-import * as customQueries from "../../src/graphql-custom/queries"
-import * as mutations from "../../src/graphql/mutations"
-import { API, Storage, graphqlOperation, Analytics } from "aws-amplify"
-import { Auth } from "aws-amplify"
-import Amplify from "aws-amplify"
-import awsconfig from "../../src/aws-exports"
 import {} from "@material-ui/core"
-import ResourceMenu from "./ResourceMenu"
-import ResourceHeader from "./ResourceHeader"
-import ResourceOverview from "./ResourceOverview"
-import ResourceContent from "./ResourceContent"
-//import { DataStore, Predicates } from '@aws-amplify/datastore'
-import { ResourceContext, ResourceState } from "./ResourceContext"
-import ErrorBoundary from "../ErrorBoundry"
-
-import Validate from "../Validate/Validate"
-import { useRoute, useNavigation } from "@react-navigation/native"
-import JCComponent, { JCState } from "../JCComponent/JCComponent"
+import { useNavigation, useRoute } from "@react-navigation/native"
+import Amplify, { Analytics, API, Auth, graphqlOperation, Storage } from "aws-amplify"
+import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { convertToRaw, EditorState } from "draft-js"
+import { Container, Content } from "native-base"
+import * as React from "react"
 import {
   CreateResourceMenuItemMutationResult,
   CreateResourceRootMutationResult,
@@ -49,6 +22,26 @@ import {
   PageItemIndex,
   UpdateResourceMenuItemMutationResult,
 } from "src/types"
+import {
+  CreateGroupInput,
+  CreateResourceEpisodeInput,
+  CreateResourceInput,
+  CreateResourceMenuItemInput,
+  CreateResourceRootInput,
+  CreateResourceSeriesInput,
+  ResourcePageItemInput,
+} from "../../src/API"
+import awsconfig from "../../src/aws-exports"
+import * as customQueries from "../../src/graphql-custom/queries"
+import * as mutations from "../../src/graphql/mutations"
+import * as queries from "../../src/graphql/queries"
+import ErrorBoundary from "../ErrorBoundry"
+import JCComponent from "../JCComponent/JCComponent"
+import Validate from "../Validate/Validate"
+import ResourceContent from "./ResourceContent"
+//import { DataStore, Predicates } from '@aws-amplify/datastore'
+import { ResourceContext, ResourceState } from "./ResourceContext"
+
 Amplify.configure(awsconfig)
 
 interface Props {

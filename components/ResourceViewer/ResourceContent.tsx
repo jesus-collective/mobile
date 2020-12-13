@@ -1,22 +1,20 @@
+import { AntDesign, Ionicons } from "@expo/vector-icons"
+import { useNavigation, useRoute } from "@react-navigation/native"
+import { Card, CardItem, Container } from "native-base"
 import React from "react"
-import { Container, Card, CardItem, ListItem, List } from "native-base"
-
-import { Text, Image, Dimensions, View } from "react-native"
-import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
-import { TouchableOpacity } from "react-native"
-import { Ionicons } from "@expo/vector-icons"
-import { AntDesign } from "@expo/vector-icons"
+import { Image, Text, TouchableOpacity, View } from "react-native"
+import { PageItemIndex } from "src/types"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
+import { ResourcePageItemInput, ResourcePageItemType } from "../../src/API"
 import EditableText from "../Forms/EditableText"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
-import ResourceMenu from "./ResourceMenu"
-import { ResourcePageItemInput, ResourcePageItemType } from "../../src/API"
-import ResourceHeader from "./ResourceHeader"
-import ResourceRichText from "./ResourceRichText"
 import JCResourceConfigModal from "./JCResourceConfigModal"
-import { useNavigation, useRoute } from "@react-navigation/native"
 import ResourceColumn from "./ResourceColumn"
-import { PageItemIndex } from "src/types"
+import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
+import ResourceHeader from "./ResourceHeader"
+import ResourceMenu from "./ResourceMenu"
+import ResourceRichText from "./ResourceRichText"
+
 interface Props {
   navigation?: any
   route?: any

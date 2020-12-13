@@ -1,15 +1,15 @@
-import { Header, Left, Body, Right, Button, Picker } from "native-base"
 import { Ionicons } from "@expo/vector-icons"
+import { Body, Button, Header, Left, Picker, Right } from "native-base"
 import React from "react"
-import { Text, Dimensions, View } from "react-native"
-import HeaderStyles from "../Header/style"
-
-import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
+import { Dimensions, Text, View } from "react-native"
+import { ResourcePageItemStyle } from "../../src/API"
+import { ResourceSetupProp } from "../../src/types"
 import EditableButton from "../Forms/EditableButton"
+import HeaderStyles from "../Header/style"
 import JCComponent from "../JCComponent/JCComponent"
-import { EmptyProps, ResourceSetupProp } from "../../src/types"
 import PageItemSettings from "./PageItemSettings"
-import { ResourcePageItemStyle, ResourcePageItemType } from "../../src/API"
+import { ResourceContext } from "./ResourceContext"
+
 interface Props extends ResourceSetupProp {}
 
 class ResourceMenu extends JCComponent<Props> {

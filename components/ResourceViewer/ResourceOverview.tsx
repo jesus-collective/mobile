@@ -1,17 +1,13 @@
-import React from "react"
+import { useNavigation, useRoute } from "@react-navigation/native"
 import { Container, View } from "native-base"
-import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
-
+import React from "react"
 import { Text, TouchableOpacity } from "react-native"
-
 import EditableText from "../../components/Forms/EditableText"
-import EditableRichText from "../../components/Forms/EditableRichText"
+import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
-
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
-import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
-import { useRoute, useNavigation } from "@react-navigation/native"
 import JCComponent from "../JCComponent/JCComponent"
+import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
 import ResourceMenu from "./ResourceMenu"
 
 interface Props {

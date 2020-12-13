@@ -1,15 +1,12 @@
+import { AntDesign, Ionicons } from "@expo/vector-icons"
+import { Card, CardItem, Container } from "native-base"
 import React from "react"
-import { Container, Card, CardItem, ListItem, List } from "native-base"
-
-import { Text, Image, Dimensions } from "react-native"
-import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
-import { TouchableOpacity } from "react-native"
-import { Ionicons } from "@expo/vector-icons"
-import { AntDesign } from "@expo/vector-icons"
+import { Dimensions, Image, Text } from "react-native"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
+import JCModal from "../../components/Forms/JCModal"
 import EditableText from "../Forms/EditableText"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
-import JCModal from "../../components/Forms/JCModal"
+import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
 
 interface Props {
   currentResource: number

@@ -1,15 +1,13 @@
 import React from "react"
-import { Container, Card, CardItem, ListItem, List } from "native-base"
-import ProfileImage from "../../components/ProfileImage/ProfileImage"
-
-import { Text, Image, Dimensions, View } from "react-native"
-import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
-import { TouchableOpacity } from "react-native"
+import { Text, TouchableOpacity, View } from "react-native"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
-import EditableText from "../Forms/EditableText"
-import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import JCModal from "../../components/Forms/JCModal"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
+import ProfileImage from "../../components/ProfileImage/ProfileImage"
+import EditableText from "../Forms/EditableText"
+import JCComponent from "../JCComponent/JCComponent"
+import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
+
 interface Props {
   visible: boolean
   onClose(): void
