@@ -1,7 +1,7 @@
 import { View } from "native-base"
 import { Ionicons } from "@expo/vector-icons"
 import React from "react"
-import { Image, Text, Animated, Picker } from "react-native"
+import { Image, Text, Animated, Picker, ViewStyle } from "react-native"
 import EditableText from "../Forms/EditableText"
 import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
 import { Storage } from "aws-amplify"
@@ -70,11 +70,13 @@ class ResourceColumn extends JCComponent<Props, State> {
         return 50
     }
   }
+
   render(): React.ReactNode {
+    const border: ViewStyle = { borderWidth: 1, borderStyle: "dashed" }
     console.log({ COLUMns: this.props.pageItemIndex })
     return (
-      <View style={{ flexDirection: "row" }}>
-        <View style={{ borderWidth: 1, flexGrow: this.getLeftColumnSize() }}>
+      <View style={[{ flexDirection: "row" }, this.props.resourceState.isEditable && border]}>
+        <View style={{ flexGrow: this.getLeftColumnSize() }}>
           <ResourceContent
             pageItems={this.props.pageItem.pageItemsLeft}
             isBase={false}
@@ -89,7 +91,12 @@ class ResourceColumn extends JCComponent<Props, State> {
             pageItem={this.props.pageItem}
           ></PageItemSettings>
         </View>
-        <View style={{ borderWidth: 1, flexGrow: 100 - this.getLeftColumnSize() }}>
+        <View
+          style={[
+            { borderWidth: 1, flexGrow: 100 - this.getLeftColumnSize() },
+            this.props.resourceState.isEditable && border,
+          ]}
+        >
           <ResourceContent
             pageItems={this.props.pageItem.pageItemsRight}
             isBase={false}
