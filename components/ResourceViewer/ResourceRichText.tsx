@@ -71,7 +71,7 @@ class ResourceRichText extends JCComponent<Props, State> {
 
   render(): React.ReactNode {
     return (
-      <Container>
+      <View>
         <PageItemSettings
           resourceActions={this.props.resourceActions}
           resourceState={this.props.resourceState}
@@ -88,7 +88,7 @@ class ResourceRichText extends JCComponent<Props, State> {
           value={this.props.pageItem.title1}
           isEditable={false}
         ></EditableRichText>
-      </Container>
+      </View>
     )
   }
 }

@@ -1,3 +1,4 @@
+
 import EStyleSheet from 'react-native-extended-stylesheet';
 
 export default EStyleSheet.create({
@@ -144,12 +145,14 @@ export default EStyleSheet.create({
     },
     AdminModalButton: {
         backgroundColor: "#FFFFFF",
+       
     },
     AdminModalText: {
         color: "#000000",
         fontFamily: 'Graphik-Regular-App',
         fontSize: 16,
-        padding: 5
+        padding: 5,
+       
     },
     AdminModalOrangeButton: {
         backgroundColor: "#FFFFFF",

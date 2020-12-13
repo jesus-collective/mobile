@@ -1,4 +1,4 @@
-import { Container, View } from "native-base"
+import { View } from "native-base"
 import { Ionicons } from "@expo/vector-icons"
 import React from "react"
 import { Image, Text, Animated, Picker } from "react-native"

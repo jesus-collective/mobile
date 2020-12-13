@@ -4,7 +4,7 @@ import { TouchableOpacity } from "react-native"
 import { Ionicons } from "@expo/vector-icons"
 import { EmptyProps, PageItemIndex } from "src/types"
 import JCModal from "../../components/Forms/JCModal"
-import { Container, Card, CardItem, ListItem, List, Picker } from "native-base"
+import { Picker } from "native-base"
 import { Text, Image, Dimensions } from "react-native"
 import { ResourcePageItemInput, ResourcePageItemType } from "../../src/API"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
@@ -69,13 +69,14 @@ export default class PageItemSettings extends JCComponent<Props, State> {
   render() {
     return (
       <>
-        <TouchableOpacity
+        <JCButton
+          buttonType={ButtonTypes.AdminModal}
           onPress={() => {
             this.setState({ showSettingsModal: true })
           }}
         >
           <Ionicons name="ios-settings" style={this.styles.style.icon} size={32} />
-        </TouchableOpacity>
+        </JCButton>
         {this.state.showSettingsModal ? (
           <JCModal
             visible={this.state.showSettingsModal}

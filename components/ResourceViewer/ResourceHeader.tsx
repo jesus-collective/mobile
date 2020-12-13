@@ -1,7 +1,7 @@
-import { Container, View } from "native-base"
+import { Container } from "native-base"
 import { Ionicons } from "@expo/vector-icons"
 import React from "react"
-import { Image, Text, Animated } from "react-native"
+import { View, Image, Text, Animated } from "react-native"
 import EditableText from "../Forms/EditableText"
 import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
 import { Storage } from "aws-amplify"
@@ -135,19 +135,6 @@ class ResourceHeader extends JCComponent<Props, State> {
                   ></Image>
                 </Animated.View>
               ) : null}
-
-              <View style={this.styles.style.resourcefileInputWrapper}>
-                <PageItemSettings
-                  resourceActions={this.props.resourceActions}
-                  resourceState={this.props.resourceState}
-                  pageItemIndex={this.props.pageItemIndex}
-                  save={this.props.save}
-                  delete={this.props.delete}
-                  pageItem={this.props.pageItem}
-                ></PageItemSettings>
-                {/* */}
-              </View>
-
               <View style={this.styles.style.resourcefileFieldWrapper}>
                 <JCButton
                   buttonType={ButtonTypes.Transparent}
@@ -174,6 +161,17 @@ class ResourceHeader extends JCComponent<Props, State> {
                   value={this.props.pageItem.title2 ?? ""}
                   isEditable={false}
                 ></EditableText>
+              </View>
+              <View style={this.styles.style.resourcefileInputWrapper}>
+                <PageItemSettings
+                  resourceActions={this.props.resourceActions}
+                  resourceState={this.props.resourceState}
+                  pageItemIndex={this.props.pageItemIndex}
+                  save={this.props.save}
+                  delete={this.props.delete}
+                  pageItem={this.props.pageItem}
+                ></PageItemSettings>
+                {/* */}
               </View>
             </Container>
           )

@@ -1493,7 +1493,7 @@ export default class MainStyles {
 
             resourcefileInputWrapper: {
                 width: "100%",
-                overflow: "hidden",
+                
                 position: "absolute"
             },
             resourcefileFieldWrapper: Platform.OS === 'web' ?

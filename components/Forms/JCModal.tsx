@@ -3,7 +3,7 @@ import React from "react"
 import { View, TextInput, Modal, Picker } from "react-native"
 import { Container, Content, Text } from "native-base"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
-
+import { Ionicons } from "@expo/vector-icons"
 interface Props {
   visible: boolean
   onHide(): void
@@ -71,7 +71,7 @@ export default class JCModal extends JCComponent<Props> {
                   this.props.onHide()
                 }}
               >
-                X
+                <Ionicons size={32} name="ios-close" style={this.styles.style.icon} />
               </JCButton>
             </View>
             <View
