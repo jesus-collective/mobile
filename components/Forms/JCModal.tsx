@@ -1,9 +1,10 @@
-import JCComponent from "../JCComponent/JCComponent"
-import React from "react"
-import { View, TextInput, Modal, Picker } from "react-native"
-import { Container, Content, Text } from "native-base"
-import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import { Ionicons } from "@expo/vector-icons"
+import { Text } from "native-base"
+import React from "react"
+import ReactDOM from "react-dom"
+import { Modal, View } from "react-native"
+import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
+import JCComponent from "../JCComponent/JCComponent"
 interface Props {
   visible: boolean
   onHide(): void
@@ -13,8 +14,20 @@ interface Props {
 export default class JCModal extends JCComponent<Props> {
   constructor(props: Props) {
     super(props)
+    this.el = document.createElement("div")
+  }
+  el: any
+  modalRoot = document.getElementById("modal")
+  componentDidMount() {
+    this.modalRoot?.appendChild(this.el)
+  }
+  componentWillUnmount() {
+    this.modalRoot?.removeChild(this.el)
   }
   render() {
+    return ReactDOM.createPortal(this.renderModal(), this.el)
+  }
+  renderModal() {
     return this.props.visible ? (
       <Modal
         animationType="slide"

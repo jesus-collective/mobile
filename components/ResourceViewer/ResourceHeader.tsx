@@ -2,7 +2,7 @@ import { Ionicons } from "@expo/vector-icons"
 import Amplify, { Storage } from "aws-amplify"
 import { Container } from "native-base"
 import React from "react"
-import { Animated, Image, Text, View } from "react-native"
+import { Animated, Image, View } from "react-native"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import awsconfig from "../../src/aws-exports"
 import { ResourceSetupProp } from "../../src/types"
@@ -134,15 +134,6 @@ class ResourceHeader extends JCComponent<Props, State> {
                 </Animated.View>
               ) : null}
               <View style={this.styles.style.resourcefileFieldWrapper}>
-                <JCButton
-                  buttonType={ButtonTypes.Transparent}
-                  onPress={() => {
-                    resourceActions.clearEpisode()
-                  }}
-                >
-                  <Ionicons size={24} name="ios-arrow-back" style={this.styles.style.icon} />
-                  <Text>Back</Text>
-                </JCButton>
                 <EditableText
                   multiline={false}
                   placeholder="Title"

@@ -165,7 +165,10 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
             }) as GroupMemberByUserQueryResultPromise
             groupMemberByUser.then((json: GroupMemberByUserQueryResult) => {
               console.log({ groupMemberByUser: json })
-              if (json.data.groupMemberByUser.items.length > 0)
+              if (
+                json.data?.groupMemberByUser?.items &&
+                json.data.groupMemberByUser.items.length > 0
+              )
                 this.setState({ canJoin: false, canLeave: true && !this.state.isEditable })
               else this.setState({ canJoin: true && !this.state.isEditable, canLeave: false })
             })
@@ -196,23 +199,24 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         } else {
           console.log("existing data")
           console.log({ json: json })
-          console.log({ id: json.data?.listResourceRoots?.items[0].id })
-          const getResourceRoot: GetResourceRootQueryResultPromise = API.graphql({
-            query: customQueries.getResourceRoot,
-            variables: { id: json.data?.listResourceRoots?.items[0].id },
-            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          }) as GetResourceRootQueryResultPromise
+          if (json.data?.listResourceRoots?.items && json.data?.listResourceRoots?.items[0]) {
+            console.log({ id: json.data?.listResourceRoots?.items[0].id })
+            const getResourceRoot: GetResourceRootQueryResultPromise = API.graphql({
+              query: customQueries.getResourceRoot,
+              variables: { id: json.data?.listResourceRoots?.items[0].id },
+              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+            }) as GetResourceRootQueryResultPromise
 
-          getResourceRoot
-            .then((json) => {
-              console.log(json)
-
-              this.setState({ resourceData: json.data?.getResourceRoot, currentResource: 0 })
-            })
-            .catch((e: any) => {
-              console.log(e)
-            })
-
+            getResourceRoot
+              .then((json) => {
+                console.log(json)
+                if (json.data?.getResourceRoot)
+                  this.setState({ resourceData: json.data.getResourceRoot, currentResource: 0 })
+              })
+              .catch((e: any) => {
+                console.log(e)
+              })
+          }
           //   console.log(getResourceRoot2)
         }
       })
@@ -240,36 +244,38 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })) as CreateResourceRootMutationResult
       console.log(createResourceRoot)
+      if (createResourceRoot.data?.createResourceRoot) {
+        const menuItem: CreateResourceMenuItemInput = {
+          type: "resource",
+          menuTitle: "Overview",
+          order: "0",
+          depth: "1",
+          resourceRootID: createResourceRoot.data.createResourceRoot.id,
+        }
 
-      const menuItem: CreateResourceMenuItemInput = {
-        type: "resource",
-        menuTitle: "Overview",
-        order: "0",
-        depth: "1",
-        resourceRootID: createResourceRoot.data.createResourceRoot.id,
+        const createMenuItem: CreateResourceMenuItemMutationResult = (await API.graphql({
+          query: mutations.createResourceMenuItem,
+          variables: { input: menuItem },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })) as CreateResourceMenuItemMutationResult
+        console.log(createMenuItem)
+
+        const getResourceRoot: GetResourceRootQueryResult = (await API.graphql({
+          query: customQueries.getResourceRoot,
+          variables: { id: createResourceRoot.data.createResourceRoot.id },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })) as GetResourceRootQueryResult
+
+        console.log(createResourceRoot)
+        console.log({ resourceRoot: getResourceRoot })
+        if (getResourceRoot.data?.getResourceRoot)
+          this.setState({
+            resourceData: getResourceRoot.data.getResourceRoot,
+            currentResource: 0,
+            currentEpisode: null,
+            currentSeries: null,
+          })
       }
-
-      const createMenuItem: CreateResourceMenuItemMutationResult = (await API.graphql({
-        query: mutations.createResourceMenuItem,
-        variables: { input: menuItem },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as CreateResourceMenuItemMutationResult
-      console.log(createMenuItem)
-
-      const getResourceRoot: GetResourceRootQueryResult = (await API.graphql({
-        query: customQueries.getResourceRoot,
-        variables: { id: createResourceRoot.data.createResourceRoot.id },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GetResourceRootQueryResult
-
-      console.log(createResourceRoot)
-      console.log({ resourceRoot: getResourceRoot })
-      this.setState({
-        resourceData: getResourceRoot.data.getResourceRoot,
-        currentResource: 0,
-        currentEpisode: null,
-        currentSeries: null,
-      })
     } catch (e) {
       console.log(e)
     }
@@ -1029,30 +1035,10 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
                 {this.state.currentResource == 0 ? (
                   <>
                     <ResourceContent pageItemIndex={[]} isBase={true}></ResourceContent>
-                    <div
-                      id="modal"
-                      style={{
-                        position: "fixed",
-                        top: 0,
-                        left: 0,
-                        width: 0,
-                        height: 0,
-                      }}
-                    ></div>
                   </>
                 ) : (
                   <>
                     <ResourceContent pageItemIndex={[]} isBase={true}></ResourceContent>
-                    <div
-                      id="modal"
-                      style={{
-                        position: "fixed",
-                        top: 0,
-                        left: 0,
-                        width: 0,
-                        height: 0,
-                      }}
-                    ></div>
                   </>
                 )}
               </Content>
