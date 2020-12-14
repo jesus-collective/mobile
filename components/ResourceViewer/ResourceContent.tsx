@@ -556,7 +556,9 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     return (
       <TouchableOpacity
         onPress={() => {
-          this.setState({ showResourceConfigModal: true })
+          this.props.navigation.navigate("ResourceConfigureScreen", {
+            id: resourceState.loadId,
+          })
         }}
       >
         <Card>

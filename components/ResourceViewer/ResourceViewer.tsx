@@ -38,6 +38,7 @@ import * as queries from "../../src/graphql/queries"
 import ErrorBoundary from "../ErrorBoundry"
 import JCComponent from "../JCComponent/JCComponent"
 import Validate from "../Validate/Validate"
+import ResourceConfig from "./ResourceConfig"
 import ResourceContent from "./ResourceContent"
 //import { DataStore, Predicates } from '@aws-amplify/datastore'
 import { ResourceContext, ResourceState } from "./ResourceContext"
@@ -48,6 +49,7 @@ interface Props {
   navigation?: any
   groupId: any
   route?: any
+  showConfig?: boolean
   // isEditable: boolean
 }
 
@@ -513,7 +515,8 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     }
   }
   createSeries = async (): Promise<void> => {
-    if (!this.state.currentResource) throw new Error("Current Resource Not Set")
+    if (this.state.currentResource == null || this.state.currentResource == undefined)
+      throw new Error("Current Resource Not Set")
 
     const series: CreateResourceSeriesInput = {
       type: "curriculum",
@@ -542,8 +545,10 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     }
   }
   createEpisode = async (): Promise<void> => {
-    if (!this.state.currentResource) throw new Error("Current Resource Not Set")
-    if (!this.state.currentSeries) throw new Error("Current Series Not Set")
+    if (this.state.currentResource == null || this.state.currentResource == undefined)
+      throw new Error("Current Resource Not Set")
+    if (this.state.currentSeries == null || this.state.currentSeries == undefined)
+      throw new Error("Current Series Not Set")
 
     const episode: CreateResourceEpisodeInput = {
       type: "curriculum",
@@ -777,6 +782,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     }
   }
   deleteResource = async (index: number) => {
+    console.log({ "Deleting resource": index })
     try {
       console.log({ "Deleting Resource": index })
       const deleteResource: any = await API.graphql({
@@ -787,7 +793,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       console.log(deleteResource)
       const temp = this.state.resourceData
       temp.resources.items.splice(index, 1)
-      this.setState({ resourceData: temp }, this.updateResourceOrder)
+      this.setState({ resourceData: temp, currentResource: 0 }, this.updateResourceOrder)
     } catch (e) {
       console.log(e)
     }
@@ -1032,7 +1038,9 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
           <Container style={{ padding: 0, margin: 0 }}>
             <ErrorBoundary>
               <Content>
-                {this.state.currentResource == 0 ? (
+                {this.props.showConfig ? (
+                  <ResourceConfig></ResourceConfig>
+                ) : this.state.currentResource == 0 ? (
                   <>
                     <ResourceContent pageItemIndex={[]} isBase={true}></ResourceContent>
                   </>

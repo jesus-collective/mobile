@@ -1,61 +1,48 @@
-import React, { lazy, Component } from "react";
-import JCComponent from "../../components/JCComponent/JCComponent";
-import { UserContext } from "./UserContext";
-import { createStackNavigator } from "@react-navigation/stack";
-const Stack = createStackNavigator();
+import { createStackNavigator } from "@react-navigation/stack"
+import React, { Component, lazy } from "react"
+import JCComponent from "../../components/JCComponent/JCComponent"
+import { UserContext } from "./UserContext"
+const Stack = createStackNavigator()
 
-const HomeScreen = lazy(() => import("./HomeScreen"));
-const ConversationScreen = lazy(
-  () => import("../ConversationScreen/ConversationScreen")
-);
-const OrganizationsScreen = lazy(
-  () => import("../OrganizationsScreen/OrganizationsScreen")
-);
-const OrganizationScreen = lazy(
-  () => import("../OrganizationScreen/OrganizationScreen")
-);
-const GroupScreen = lazy(() => import("../GroupScreen/GroupScreen"));
-const CoursesScreen = lazy(() => import("../CoursesScreen/CoursesScreen"));
-const CourseOverviewScreen = lazy(
-  () => import("../CourseOverviewScreen/CourseOverviewScreen")
-);
-const CourseHomeScreen = lazy(
-  () => import("../CourseHomeScreen/CourseHomeScreen")
-);
-const EventScreen = lazy(() => import("../EventScreen/EventScreen"));
-const GroupsScreen = lazy(() => import("../GroupsScreen/GroupsScreen"));
-const EventsScreen = lazy(() => import("../EventsScreen/EventsScreen"));
-const ResourceScreen = lazy(() => import("../ResourceScreen/ResourceScreen"));
-const ResourcesScreen = lazy(
-  () => import("../ResourcesScreen/ResourcesScreen")
-);
-const ProfileScreen = lazy(() => import("../ProfileScreen/ProfileScreen"));
-const ProfilesScreen = lazy(() => import("../ProfilesScreen/ProfilesScreen"));
-const SearchScreen = lazy(() => import("../SearchScreen/SearchScreen"));
-const AdminScreen = lazy(() => import("../AdminScreen/AdminScreen"));
-const AdminCRMScreen = lazy(() => import("../AdminCRMScreen/AdminCRMScreen"));
-const CoursePaymentScreen = lazy(
-  () => import("../CoursePaymentScreen/CoursePaymentScreen")
-);
+const HomeScreen = lazy(() => import("./HomeScreen"))
+const ConversationScreen = lazy(() => import("../ConversationScreen/ConversationScreen"))
+const OrganizationsScreen = lazy(() => import("../OrganizationsScreen/OrganizationsScreen"))
+const OrganizationScreen = lazy(() => import("../OrganizationScreen/OrganizationScreen"))
+const GroupScreen = lazy(() => import("../GroupScreen/GroupScreen"))
+const CoursesScreen = lazy(() => import("../CoursesScreen/CoursesScreen"))
+const CourseOverviewScreen = lazy(() => import("../CourseOverviewScreen/CourseOverviewScreen"))
+const CourseHomeScreen = lazy(() => import("../CourseHomeScreen/CourseHomeScreen"))
+const EventScreen = lazy(() => import("../EventScreen/EventScreen"))
+const GroupsScreen = lazy(() => import("../GroupsScreen/GroupsScreen"))
+const EventsScreen = lazy(() => import("../EventsScreen/EventsScreen"))
+const ResourceScreen = lazy(() => import("../ResourceScreen/ResourceScreen"))
+const ResourceConfigureScreen = lazy(() => import("../ResourceScreen/ResourceConfigureScreen"))
+const ResourcesScreen = lazy(() => import("../ResourcesScreen/ResourcesScreen"))
+const ProfileScreen = lazy(() => import("../ProfileScreen/ProfileScreen"))
+const ProfilesScreen = lazy(() => import("../ProfilesScreen/ProfilesScreen"))
+const SearchScreen = lazy(() => import("../SearchScreen/SearchScreen"))
+const AdminScreen = lazy(() => import("../AdminScreen/AdminScreen"))
+const AdminCRMScreen = lazy(() => import("../AdminCRMScreen/AdminCRMScreen"))
+const CoursePaymentScreen = lazy(() => import("../CoursePaymentScreen/CoursePaymentScreen"))
 const PurchaseConfirmationScreen = lazy(
   () => import("../PurchaseConfirmationScreen/PurchaseConfirmationScreen")
-);
+)
 const AdminCreateProductScreen = lazy(
   () => import("../AdminCreateProductScreen/AdminCreateProductScreen")
-);
+)
 
 class Nothing extends Component {
   render() {
-    return null;
+    return null
   }
 }
 export default class MainAppRouter extends JCComponent {
-  static UserConsumer = UserContext.Consumer;
+  static UserConsumer = UserContext.Consumer
   render() {
     return (
       <MainAppRouter.UserConsumer>
         {({ userState, userActions }) => {
-          if (!userState) return null;
+          if (!userState) return null
           return (
             <Stack.Navigator
               initialRouteName="HomeScreen"
@@ -103,6 +90,11 @@ export default class MainAppRouter extends JCComponent {
                   <Stack.Screen
                     name="ResourceScreen"
                     component={ResourceScreen}
+                    options={{ title: "Jesus Collective" }}
+                  />
+                  <Stack.Screen
+                    name="ResourceConfigureScreen"
+                    component={ResourceConfigureScreen}
                     options={{ title: "Jesus Collective" }}
                   />
                   <Stack.Screen
@@ -220,6 +212,11 @@ export default class MainAppRouter extends JCComponent {
                     options={{ title: "Jesus Collective" }}
                   />
                   <Stack.Screen
+                    name="ResourceConfigureScreen"
+                    component={Nothing}
+                    options={{ title: "Jesus Collective" }}
+                  />
+                  <Stack.Screen
                     name="OrganizationsScreen"
                     component={Nothing}
                     options={{ title: "Jesus Collective" }}
@@ -298,9 +295,9 @@ export default class MainAppRouter extends JCComponent {
                 </>
               )}
             </Stack.Navigator>
-          );
+          )
         }}
       </MainAppRouter.UserConsumer>
-    );
+    )
   }
 }

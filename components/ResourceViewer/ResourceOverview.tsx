@@ -84,7 +84,6 @@ class ResourceOverviewImpl extends JCComponent<Props> {
     )
   }
   render(): React.ReactNode {
-    console.log("ResourceScreen")
     return (
       <ResourceOverviewImpl.Consumer>
         {({ resourceState, resourceActions }) => {

@@ -20,6 +20,7 @@ interface State extends JCState {
 class ResourceScreenImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props)
+
     this.state = {
       ...super.getInitialState(),
       showMap: false,
@@ -28,7 +29,7 @@ class ResourceScreenImpl extends JCComponent<Props, State> {
 
   render(): React.ReactNode {
     //console.log(this.state)
-    console.log("ResourceScreen")
+    console.log("ResourceConfigureScreen")
 
     return (
       <StyleProvider style={getTheme(material)}>
@@ -38,6 +39,7 @@ class ResourceScreenImpl extends JCComponent<Props, State> {
           <ResourceViewer
             navigation={this.props.navigation}
             groupId={this.props.route.params.id}
+            showConfig={true}
           ></ResourceViewer>
         </Container>
       </StyleProvider>

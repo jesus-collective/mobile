@@ -1,11 +1,11 @@
-import HomeScreenRouter from "./HomeScreenRouter"
-import { NavigationContainer, DefaultTheme } from "@react-navigation/native"
-import { navigationRef } from "./NavigationRoot"
 import AsyncStorage from "@react-native-community/async-storage"
-import React, { Suspense } from "react"
-import { Platform } from "react-native"
+import { DefaultTheme, NavigationContainer } from "@react-navigation/native"
 import { Linking } from "expo"
+import React from "react"
+import { Platform } from "react-native"
 import { AuthStateData } from "src/types"
+import HomeScreenRouter from "./HomeScreenRouter"
+import { navigationRef } from "./NavigationRoot"
 
 const prefix = Linking.makeUrl("/")
 console.log({ prefix: prefix })
@@ -33,6 +33,7 @@ const linking = {
               EventScreen: "event",
               EventsScreen: "events",
               ResourceScreen: "resource",
+              ResourceConfigureScreen: "resourceconfig/:id",
               ResourcesScreen: "resources",
               OrganizationScreen: "organization",
               OrganizationsScreen: "organizations",
