@@ -1,6 +1,9 @@
 {
   "react-native.packager.port": 19001,
   "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  },
   "[graphql]": {
     "editor.formatOnSave": false
   }

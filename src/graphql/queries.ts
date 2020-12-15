@@ -2936,6 +2936,9 @@ export const getResourceMenuItem = /* GraphQL */ `
         title2
         description1
         description2
+        resourceID
+        seriesID
+        episodeID
         color
         image {
           userId
@@ -2944,6 +2947,7 @@ export const getResourceMenuItem = /* GraphQL */ `
           filenameLarge
           filenameUpload
         }
+        url
         pageItemsLeft {
           type
           style
@@ -2952,7 +2956,11 @@ export const getResourceMenuItem = /* GraphQL */ `
           title2
           description1
           description2
+          resourceID
+          seriesID
+          episodeID
           color
+          url
         }
         pageItemsRight {
           type
@@ -2962,7 +2970,11 @@ export const getResourceMenuItem = /* GraphQL */ `
           title2
           description1
           description2
+          resourceID
+          seriesID
+          episodeID
           color
+          url
         }
       }
       resourceRootID
@@ -3040,7 +3052,11 @@ export const listResourceMenuItems = /* GraphQL */ `
           title2
           description1
           description2
+          resourceID
+          seriesID
+          episodeID
           color
+          url
         }
         resourceRootID
         resourceRoot {

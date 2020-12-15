@@ -7226,6 +7226,9 @@ export const onCreateResourceMenuItem = /* GraphQL */ `
         title2
         description1
         description2
+        resourceID
+        seriesID
+        episodeID
         color
         image {
           userId
@@ -7234,6 +7237,7 @@ export const onCreateResourceMenuItem = /* GraphQL */ `
           filenameLarge
           filenameUpload
         }
+        url
         pageItemsLeft {
           type
           style
@@ -7242,7 +7246,11 @@ export const onCreateResourceMenuItem = /* GraphQL */ `
           title2
           description1
           description2
+          resourceID
+          seriesID
+          episodeID
           color
+          url
         }
         pageItemsRight {
           type
@@ -7252,7 +7260,11 @@ export const onCreateResourceMenuItem = /* GraphQL */ `
           title2
           description1
           description2
+          resourceID
+          seriesID
+          episodeID
           color
+          url
         }
       }
       resourceRootID
@@ -7321,6 +7333,9 @@ export const onUpdateResourceMenuItem = /* GraphQL */ `
         title2
         description1
         description2
+        resourceID
+        seriesID
+        episodeID
         color
         image {
           userId
@@ -7329,6 +7344,7 @@ export const onUpdateResourceMenuItem = /* GraphQL */ `
           filenameLarge
           filenameUpload
         }
+        url
         pageItemsLeft {
           type
           style
@@ -7337,7 +7353,11 @@ export const onUpdateResourceMenuItem = /* GraphQL */ `
           title2
           description1
           description2
+          resourceID
+          seriesID
+          episodeID
           color
+          url
         }
         pageItemsRight {
           type
@@ -7347,7 +7367,11 @@ export const onUpdateResourceMenuItem = /* GraphQL */ `
           title2
           description1
           description2
+          resourceID
+          seriesID
+          episodeID
           color
+          url
         }
       }
       resourceRootID
@@ -7416,6 +7440,9 @@ export const onDeleteResourceMenuItem = /* GraphQL */ `
         title2
         description1
         description2
+        resourceID
+        seriesID
+        episodeID
         color
         image {
           userId
@@ -7424,6 +7451,7 @@ export const onDeleteResourceMenuItem = /* GraphQL */ `
           filenameLarge
           filenameUpload
         }
+        url
         pageItemsLeft {
           type
           style
@@ -7432,7 +7460,11 @@ export const onDeleteResourceMenuItem = /* GraphQL */ `
           title2
           description1
           description2
+          resourceID
+          seriesID
+          episodeID
           color
+          url
         }
         pageItemsRight {
           type
@@ -7442,7 +7474,11 @@ export const onDeleteResourceMenuItem = /* GraphQL */ `
           title2
           description1
           description2
+          resourceID
+          seriesID
+          episodeID
           color
+          url
         }
       }
       resourceRootID

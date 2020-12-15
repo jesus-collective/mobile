@@ -48,6 +48,7 @@ export default class JCResourceConfigModal extends JCComponent<Props> {
             buttonType={ButtonTypes.OutlineBoldNoMargin}
             onPress={() => {
               actions.createGroup()
+              this.props.onClose()
             }}
           >
             Create Resource
@@ -58,6 +59,7 @@ export default class JCResourceConfigModal extends JCComponent<Props> {
             buttonType={ButtonTypes.OutlineBoldNoMargin}
             onPress={() => {
               actions.saveGroup()
+              this.props.onClose()
             }}
           >
             Save Resource
@@ -67,8 +69,10 @@ export default class JCResourceConfigModal extends JCComponent<Props> {
           <JCButton
             buttonType={ButtonTypes.OutlineBoldNoMargin}
             onPress={() => {
-              if (window.confirm("Are you sure you wish to delete this group?"))
+              if (window.confirm("Are you sure you wish to delete this group?")) {
                 actions.deleteGroup()
+                this.props.onClose()
+              }
             }}
           >
             Delete Resource

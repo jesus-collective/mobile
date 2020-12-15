@@ -833,6 +833,7 @@ enum ResourcePageItemType{
   List
   Grid
   Column
+  Card
 }
 enum ResourcePageItemStyle{
   MenuTop
@@ -840,6 +841,8 @@ enum ResourcePageItemStyle{
   Column3070
   Column7030
   Column5050
+  CardManual
+  CardAuto
 }
 type ResourcePageItem{
   type:ResourcePageItemType
@@ -849,8 +852,12 @@ type ResourcePageItem{
   title2:String
   description1:String
   description2:String
+  resourceID:Int
+  seriesID:Int
+  episodeID:Int
   color:String
   image:Image
+  url:String
   pageItemsLeft:[ResourcePageItem]
   pageItemsRight:[ResourcePageItem]
 }

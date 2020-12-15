@@ -800,6 +800,10 @@ export const getResourceRoot = /* GraphQL */ `
             description1
             description2
             color
+            resourceID
+            seriesID
+            episodeID
+            url
             pageItemsLeft {
               type
               style
@@ -809,6 +813,10 @@ export const getResourceRoot = /* GraphQL */ `
               description1
               description2
               color
+              resourceID
+              seriesID
+              episodeID
+              url
               pageItemsLeft {
                 type
                 style
@@ -818,6 +826,10 @@ export const getResourceRoot = /* GraphQL */ `
                 description1
                 description2
                 color
+                resourceID
+                seriesID
+                episodeID
+                url
                 image {
                   userId
                   filenameSmall
@@ -835,6 +847,10 @@ export const getResourceRoot = /* GraphQL */ `
                 description1
                 description2
                 color
+                resourceID
+                seriesID
+                episodeID
+                url
                 image {
                   userId
                   filenameSmall
@@ -860,6 +876,10 @@ export const getResourceRoot = /* GraphQL */ `
               description1
               description2
               color
+              resourceID
+              seriesID
+              episodeID
+              url
               pageItemsLeft {
                 type
                 style
@@ -886,6 +906,10 @@ export const getResourceRoot = /* GraphQL */ `
                 description1
                 description2
                 color
+                resourceID
+                seriesID
+                episodeID
+                url
                 image {
                   userId
                   filenameSmall

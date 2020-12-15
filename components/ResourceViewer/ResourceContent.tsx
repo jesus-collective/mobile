@@ -9,6 +9,7 @@ import { ResourcePageItemInput, ResourcePageItemType } from "../../src/API"
 import EditableText from "../Forms/EditableText"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import JCResourceConfigModal from "./JCResourceConfigModal"
+import ResourceCard from "./ResourceCard"
 import ResourceColumn from "./ResourceColumn"
 import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
 import ResourceHeader from "./ResourceHeader"
@@ -630,6 +631,17 @@ class ResourceContentImpl extends JCComponent<Props, State> {
             delete={this.delete}
             pageItem={item}
           ></ResourceRichText>
+        )
+      case ResourcePageItemType.Card:
+        return (
+          <ResourceCard
+            resourceActions={resourceActions}
+            resourceState={resourceState}
+            pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
+            save={this.save}
+            delete={this.delete}
+            pageItem={item}
+          ></ResourceCard>
         )
     }
   }

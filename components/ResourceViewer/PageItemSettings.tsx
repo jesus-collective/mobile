@@ -6,6 +6,7 @@ import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
 import JCComponent from "../../components/JCComponent/JCComponent"
 import { ResourcePageItemInput, ResourcePageItemType } from "../../src/API"
+import ResourceCard from "./ResourceCard"
 import ResourceColumn from "./ResourceColumn"
 import { ResourceActions, ResourceState } from "./ResourceContext"
 import ResourceHeader from "./ResourceHeader"
@@ -62,6 +63,8 @@ export default class PageItemSettings extends JCComponent<Props, State> {
         return ResourceRichText.renderAdmin(this)
       case ResourcePageItemType.Column:
         return ResourceColumn.renderAdmin(this)
+      case ResourcePageItemType.Card:
+        return ResourceCard.renderAdmin(this)
     }
   }
   render() {
@@ -112,6 +115,7 @@ export default class PageItemSettings extends JCComponent<Props, State> {
                 buttonType={ButtonTypes.Solid}
                 onPress={() => {
                   this.save()
+                  this.setState({ showSettingsModal: false })
                 }}
               >
                 Save
@@ -120,6 +124,7 @@ export default class PageItemSettings extends JCComponent<Props, State> {
                 buttonType={ButtonTypes.Solid}
                 onPress={() => {
                   this.delete()
+                  this.setState({ showSettingsModal: false })
                 }}
               >
                 Delete
