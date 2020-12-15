@@ -949,15 +949,21 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     const key = Object.keys(myObject).filter((k) => k.includes(string))
     return key.length ? myObject[key[0]] : ""
   }
-  updateResourceImage = async (index1: number, e): Promise<void> => {
+  updateResourceImage = async (
+    menuItemIndex: number,
+    pageItemIndex: PageItemIndex,
+    e
+  ): Promise<void> => {
     const file = e.target.files[0]
     const lastDot = file.name.lastIndexOf(".")
     const ext = file.name.substring(lastDot + 1)
     const user = await Auth.currentCredentials()
     const userId = user.identityId
+    const tempPageItems = this.state.resourceData.menuItems.items[menuItemIndex].pageItems
+
     const fn =
       "resources/upload/group-" +
-      this.state.resourceData.resources.items[index1].id +
+      tempPageItems[pageItemIndex].id +
       "-" +
       new Date().getTime() +
       "-upload." +
@@ -978,13 +984,14 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
           identityId: userId,
         }).then((result2) => {
           console.log(result2)
-          this.updateResource(index1, "image", {
+          tempPageItems[pageItemIndex].image = {
             userId: userId,
             filenameUpload: fn,
             filenameLarge: fnSave.replace("[size]", "large"),
             filenameMedium: fnSave.replace("[size]", "medium"),
             filenameSmall: fnSave.replace("[size]", "small"),
-          })
+          }
+          this.updatePageItem(menuItemIndex, pageItemIndex, tempPageItems)
         })
 
         // console.log(result)

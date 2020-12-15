@@ -792,6 +792,7 @@ export const getResourceRoot = /* GraphQL */ `
           depth
           resourceRootID
           pageItems {
+            id
             type
             style
             size
@@ -805,6 +806,7 @@ export const getResourceRoot = /* GraphQL */ `
             episodeID
             url
             pageItemsLeft {
+              id
               type
               style
               size
@@ -818,6 +820,7 @@ export const getResourceRoot = /* GraphQL */ `
               episodeID
               url
               pageItemsLeft {
+                id
                 type
                 style
                 size
@@ -839,6 +842,7 @@ export const getResourceRoot = /* GraphQL */ `
                 }
               }
               pageItemsRight {
+                id
                 type
                 style
                 size
@@ -868,6 +872,7 @@ export const getResourceRoot = /* GraphQL */ `
               }
             }
             pageItemsRight {
+              id
               type
               style
               size
@@ -881,6 +886,7 @@ export const getResourceRoot = /* GraphQL */ `
               episodeID
               url
               pageItemsLeft {
+                id
                 type
                 style
                 size
@@ -898,6 +904,7 @@ export const getResourceRoot = /* GraphQL */ `
                 }
               }
               pageItemsRight {
+                id
                 type
                 style
                 size

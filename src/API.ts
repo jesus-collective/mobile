@@ -609,6 +609,7 @@ export type CreateResourceMenuItemInput = {
 };
 
 export type ResourcePageItemInput = {
+  id?: string | null,
   type?: ResourcePageItemType | null,
   style?: ResourcePageItemStyle | null,
   size?: string | null,
@@ -10650,6 +10651,7 @@ export type CreateResourceMenuItemMutation = {
     depth: string | null,
     pageItems:  Array< {
       __typename: "ResourcePageItem",
+      id: string | null,
       type: ResourcePageItemType | null,
       style: ResourcePageItemStyle | null,
       size: string | null,
@@ -10672,6 +10674,7 @@ export type CreateResourceMenuItemMutation = {
       url: string | null,
       pageItemsLeft:  Array< {
         __typename: "ResourcePageItem",
+        id: string | null,
         type: ResourcePageItemType | null,
         style: ResourcePageItemStyle | null,
         size: string | null,
@@ -10687,6 +10690,7 @@ export type CreateResourceMenuItemMutation = {
       } | null > | null,
       pageItemsRight:  Array< {
         __typename: "ResourcePageItem",
+        id: string | null,
         type: ResourcePageItemType | null,
         style: ResourcePageItemStyle | null,
         size: string | null,
@@ -10769,6 +10773,7 @@ export type UpdateResourceMenuItemMutation = {
     depth: string | null,
     pageItems:  Array< {
       __typename: "ResourcePageItem",
+      id: string | null,
       type: ResourcePageItemType | null,
       style: ResourcePageItemStyle | null,
       size: string | null,
@@ -10791,6 +10796,7 @@ export type UpdateResourceMenuItemMutation = {
       url: string | null,
       pageItemsLeft:  Array< {
         __typename: "ResourcePageItem",
+        id: string | null,
         type: ResourcePageItemType | null,
         style: ResourcePageItemStyle | null,
         size: string | null,
@@ -10806,6 +10812,7 @@ export type UpdateResourceMenuItemMutation = {
       } | null > | null,
       pageItemsRight:  Array< {
         __typename: "ResourcePageItem",
+        id: string | null,
         type: ResourcePageItemType | null,
         style: ResourcePageItemStyle | null,
         size: string | null,
@@ -10888,6 +10895,7 @@ export type DeleteResourceMenuItemMutation = {
     depth: string | null,
     pageItems:  Array< {
       __typename: "ResourcePageItem",
+      id: string | null,
       type: ResourcePageItemType | null,
       style: ResourcePageItemStyle | null,
       size: string | null,
@@ -10910,6 +10918,7 @@ export type DeleteResourceMenuItemMutation = {
       url: string | null,
       pageItemsLeft:  Array< {
         __typename: "ResourcePageItem",
+        id: string | null,
         type: ResourcePageItemType | null,
         style: ResourcePageItemStyle | null,
         size: string | null,
@@ -10925,6 +10934,7 @@ export type DeleteResourceMenuItemMutation = {
       } | null > | null,
       pageItemsRight:  Array< {
         __typename: "ResourcePageItem",
+        id: string | null,
         type: ResourcePageItemType | null,
         style: ResourcePageItemStyle | null,
         size: string | null,
@@ -15267,6 +15277,7 @@ export type GetResourceMenuItemQuery = {
     depth: string | null,
     pageItems:  Array< {
       __typename: "ResourcePageItem",
+      id: string | null,
       type: ResourcePageItemType | null,
       style: ResourcePageItemStyle | null,
       size: string | null,
@@ -15289,6 +15300,7 @@ export type GetResourceMenuItemQuery = {
       url: string | null,
       pageItemsLeft:  Array< {
         __typename: "ResourcePageItem",
+        id: string | null,
         type: ResourcePageItemType | null,
         style: ResourcePageItemStyle | null,
         size: string | null,
@@ -15304,6 +15316,7 @@ export type GetResourceMenuItemQuery = {
       } | null > | null,
       pageItemsRight:  Array< {
         __typename: "ResourcePageItem",
+        id: string | null,
         type: ResourcePageItemType | null,
         style: ResourcePageItemStyle | null,
         size: string | null,
@@ -15390,6 +15403,7 @@ export type ListResourceMenuItemsQuery = {
       depth: string | null,
       pageItems:  Array< {
         __typename: "ResourcePageItem",
+        id: string | null,
         type: ResourcePageItemType | null,
         style: ResourcePageItemStyle | null,
         size: string | null,
@@ -25354,6 +25368,7 @@ export type OnCreateResourceMenuItemSubscription = {
     depth: string | null,
     pageItems:  Array< {
       __typename: "ResourcePageItem",
+      id: string | null,
       type: ResourcePageItemType | null,
       style: ResourcePageItemStyle | null,
       size: string | null,
@@ -25376,6 +25391,7 @@ export type OnCreateResourceMenuItemSubscription = {
       url: string | null,
       pageItemsLeft:  Array< {
         __typename: "ResourcePageItem",
+        id: string | null,
         type: ResourcePageItemType | null,
         style: ResourcePageItemStyle | null,
         size: string | null,
@@ -25391,6 +25407,7 @@ export type OnCreateResourceMenuItemSubscription = {
       } | null > | null,
       pageItemsRight:  Array< {
         __typename: "ResourcePageItem",
+        id: string | null,
         type: ResourcePageItemType | null,
         style: ResourcePageItemStyle | null,
         size: string | null,
@@ -25473,6 +25490,7 @@ export type OnUpdateResourceMenuItemSubscription = {
     depth: string | null,
     pageItems:  Array< {
       __typename: "ResourcePageItem",
+      id: string | null,
       type: ResourcePageItemType | null,
       style: ResourcePageItemStyle | null,
       size: string | null,
@@ -25495,6 +25513,7 @@ export type OnUpdateResourceMenuItemSubscription = {
       url: string | null,
       pageItemsLeft:  Array< {
         __typename: "ResourcePageItem",
+        id: string | null,
         type: ResourcePageItemType | null,
         style: ResourcePageItemStyle | null,
         size: string | null,
@@ -25510,6 +25529,7 @@ export type OnUpdateResourceMenuItemSubscription = {
       } | null > | null,
       pageItemsRight:  Array< {
         __typename: "ResourcePageItem",
+        id: string | null,
         type: ResourcePageItemType | null,
         style: ResourcePageItemStyle | null,
         size: string | null,
@@ -25592,6 +25612,7 @@ export type OnDeleteResourceMenuItemSubscription = {
     depth: string | null,
     pageItems:  Array< {
       __typename: "ResourcePageItem",
+      id: string | null,
       type: ResourcePageItemType | null,
       style: ResourcePageItemStyle | null,
       size: string | null,
@@ -25614,6 +25635,7 @@ export type OnDeleteResourceMenuItemSubscription = {
       url: string | null,
       pageItemsLeft:  Array< {
         __typename: "ResourcePageItem",
+        id: string | null,
         type: ResourcePageItemType | null,
         style: ResourcePageItemStyle | null,
         size: string | null,
@@ -25629,6 +25651,7 @@ export type OnDeleteResourceMenuItemSubscription = {
       } | null > | null,
       pageItemsRight:  Array< {
         __typename: "ResourcePageItem",
+        id: string | null,
         type: ResourcePageItemType | null,
         style: ResourcePageItemStyle | null,
         size: string | null,

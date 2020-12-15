@@ -4,6 +4,7 @@ import { Card, CardItem, Container } from "native-base"
 import React from "react"
 import { Image, Text, TouchableOpacity, View } from "react-native"
 import { PageItemIndex } from "src/types"
+import { v4 as uuidv4 } from "uuid"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import { ResourcePageItemInput, ResourcePageItemType } from "../../src/API"
 import EditableText from "../Forms/EditableText"
@@ -510,6 +511,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
       <TouchableOpacity
         onPress={() => {
           const pageItem: ResourcePageItemInput = {
+            id: uuidv4(),
             type: ResourcePageItemType.Header,
           }
           resourceActions.createPageItem(resourceState.currentResource, pageItemIndex, pageItem)

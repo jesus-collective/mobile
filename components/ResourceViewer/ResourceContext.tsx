@@ -39,7 +39,7 @@ export type ResourceActions = {
   changeResource(index: number): void
   updateResource(index: number, item: string, value: any): Promise<void>
   deleteResource(index: number): Promise<void>
-  updateResourceImage(index1: number, e: any): Promise<void>
+  updateResourceImage(menuItemIndex: number, pageItemIndex: PageItemIndex, e: any): Promise<void>
   changeSeries(index: number): void
   createSeries(): Promise<void>
   deleteSeries(resourceIndex: number, seriesIndex: number): Promise<void>

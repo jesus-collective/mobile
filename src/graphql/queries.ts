@@ -2929,6 +2929,7 @@ export const getResourceMenuItem = /* GraphQL */ `
       order
       depth
       pageItems {
+        id
         type
         style
         size
@@ -2949,6 +2950,7 @@ export const getResourceMenuItem = /* GraphQL */ `
         }
         url
         pageItemsLeft {
+          id
           type
           style
           size
@@ -2963,6 +2965,7 @@ export const getResourceMenuItem = /* GraphQL */ `
           url
         }
         pageItemsRight {
+          id
           type
           style
           size
@@ -3045,6 +3048,7 @@ export const listResourceMenuItems = /* GraphQL */ `
         order
         depth
         pageItems {
+          id
           type
           style
           size

@@ -8006,6 +8006,7 @@ export const createResourceMenuItem = /* GraphQL */ `
       order
       depth
       pageItems {
+        id
         type
         style
         size
@@ -8026,6 +8027,7 @@ export const createResourceMenuItem = /* GraphQL */ `
         }
         url
         pageItemsLeft {
+          id
           type
           style
           size
@@ -8040,6 +8042,7 @@ export const createResourceMenuItem = /* GraphQL */ `
           url
         }
         pageItemsRight {
+          id
           type
           style
           size
@@ -8113,6 +8116,7 @@ export const updateResourceMenuItem = /* GraphQL */ `
       order
       depth
       pageItems {
+        id
         type
         style
         size
@@ -8133,6 +8137,7 @@ export const updateResourceMenuItem = /* GraphQL */ `
         }
         url
         pageItemsLeft {
+          id
           type
           style
           size
@@ -8147,6 +8152,7 @@ export const updateResourceMenuItem = /* GraphQL */ `
           url
         }
         pageItemsRight {
+          id
           type
           style
           size
@@ -8220,6 +8226,7 @@ export const deleteResourceMenuItem = /* GraphQL */ `
       order
       depth
       pageItems {
+        id
         type
         style
         size
@@ -8240,6 +8247,7 @@ export const deleteResourceMenuItem = /* GraphQL */ `
         }
         url
         pageItemsLeft {
+          id
           type
           style
           size
@@ -8254,6 +8262,7 @@ export const deleteResourceMenuItem = /* GraphQL */ `
           url
         }
         pageItemsRight {
+          id
           type
           style
           size
