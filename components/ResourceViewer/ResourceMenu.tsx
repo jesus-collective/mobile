@@ -1,15 +1,15 @@
 import { Ionicons } from "@expo/vector-icons"
 import { Body, Button, Header, Left, Picker, Right } from "native-base"
 import React from "react"
-import { Dimensions, Text, View } from "react-native"
-import { ResourcePageItemStyle } from "../../src/API"
+import { Dimensions, View } from "react-native"
+import DropDownPicker from "react-native-dropdown-picker"
+import { ResourceMenuItemType, ResourcePageItemStyle } from "../../src/API"
 import { ResourceSetupProp } from "../../src/types"
 import EditableButton from "../Forms/EditableButton"
 import HeaderStyles from "../Header/style"
 import JCComponent from "../JCComponent/JCComponent"
 import PageItemSettings from "./PageItemSettings"
 import { ResourceContext } from "./ResourceContext"
-
 interface Props extends ResourceSetupProp {}
 
 class ResourceMenu extends JCComponent<Props> {
@@ -93,7 +93,9 @@ class ResourceMenu extends JCComponent<Props> {
               ></PageItemSettings>
               {resourceState.resourceData?.menuItems?.items?.map((item, index: number) => {
                 if (item != null)
-                  return (
+                  return item.type == ResourceMenuItemType.break ? (
+                    <View style={{ flexDirection: "row", borderBottomWidth: 1, width: 100 }}></View>
+                  ) : (
                     <View style={{ flexDirection: "row" }}>
                       {item.depth == "2" && <View style={{ width: 10 }} />}
                       <EditableButton
@@ -142,9 +144,46 @@ class ResourceMenu extends JCComponent<Props> {
               })}
 
               {resourceState.isEditable ? (
-                <Button transparent onPress={resourceActions.createMenuItem}>
-                  <Text style={this.headerStyles.style.centerMenuButtonsText}>+</Text>
-                </Button>
+                <DropDownPicker
+                  items={[
+                    {
+                      label: "Menu Item",
+                      value: "menuitem",
+                      icon: () => <Ionicons name="md-menu" style={this.headerStyles.style.icon} />,
+                      hidden: true,
+                    },
+                    {
+                      label: "Break",
+                      value: "break",
+                      icon: () => <Ionicons name="md-menu" style={this.headerStyles.style.icon} />,
+                    },
+                    {
+                      label: "Schedule",
+                      value: "schedule",
+                      icon: () => <Ionicons name="md-menu" style={this.headerStyles.style.icon} />,
+                    },
+                  ]}
+                  placeholder="+"
+                  defaultValue={this.state.country}
+                  containerStyle={{ height: 40, width: 60 }}
+                  dropDownStyle={{ backgroundColor: "#fafafa", width: 150 }}
+                  style={{ backgroundColor: "#fafafa" }}
+                  itemStyle={{
+                    justifyContent: "flex-start",
+                    width: 100,
+                  }}
+                  labelStyle={{
+                    fontSize: 14,
+                    textAlign: "left",
+                    color: "#000",
+                  }}
+                  onChangeItem={(item) => {
+                    if (item.value == "menuitem")
+                      resourceActions.createMenuItem(ResourceMenuItemType.menuItem)
+                    else if (item.value == "break")
+                      resourceActions.createMenuItem(ResourceMenuItemType.break)
+                  }}
+                />
               ) : null}
             </>
           )

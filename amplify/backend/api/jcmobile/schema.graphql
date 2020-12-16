@@ -807,6 +807,14 @@ type ResourceRoot
   organization: Organization @connection(fields: ["organizationId"])
   menuItems: [ResourceMenuItem] @connection(name:"r2",keyField: "resourceRootID",sortField:"order")
 }
+enum ResourceMenuItemType{
+  resource
+  menuItem
+  break
+  schedule
+  curriculum
+  
+}
 type ResourceMenuItem
 @model 
 @auth(rules: [
@@ -818,7 +826,7 @@ type ResourceMenuItem
 {
   id: ID!
   owner:String
-  type: String
+  type: ResourceMenuItemType
   menuTitle: String
   order:String
   depth:String

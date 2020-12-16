@@ -29,6 +29,7 @@ import {
   CreateResourceMenuItemInput,
   CreateResourceRootInput,
   CreateResourceSeriesInput,
+  ResourceMenuItemType,
   ResourcePageItemInput,
 } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
@@ -248,7 +249,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       console.log(createResourceRoot)
       if (createResourceRoot.data?.createResourceRoot) {
         const menuItem: CreateResourceMenuItemInput = {
-          type: "resource",
+          type: ResourceMenuItemType.menuItem,
           menuTitle: "Overview",
           order: "0",
           depth: "1",
@@ -461,12 +462,12 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
   setIsEditable = (val: boolean): void => {
     this.setState({ isEditable: val })
   }
-  createMenuItem = async (): Promise<void> => {
+  createMenuItem = async (menuItemType: ResourceMenuItemType): Promise<void> => {
     const menuItem: CreateResourceMenuItemInput = {
-      type: "curriculum",
+      type: menuItemType,
       menuTitle: "New Menu Title",
       resourceRootID: this.state.resourceData.id,
-      order: this.state.resourceData.resources.items.length + 1,
+      order: this.state.resourceData?.menuItems.items.length + 1,
     }
     try {
       console.log("Creating Resource")
