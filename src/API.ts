@@ -590,6 +590,7 @@ export enum ResourceMenuItemType {
   menuItem = "menuItem",
   break = "break",
   schedule = "schedule",
+  curriculum = "curriculum",
 }
 
 
