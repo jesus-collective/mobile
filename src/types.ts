@@ -1,4 +1,4 @@
-import { GraphQLResult } from "@aws-amplify/api/lib/types"
+import { GraphQLResult } from "@aws-amplify/api/lib/types";
 import { ResourceActions, ResourceState } from "components/ResourceViewer/ResourceContext";
 import { CreateResourceMenuItemMutation, CreateResourceRootMutation, DeleteResourceMenuItemMutation, GetGroupQuery, GetResourceRootQuery, GetUserQuery, GroupMemberByUserQuery, ListResourceRootsQuery, ResourcePageItemInput, UpdateResourceMenuItemMutation } from "./API";
 
@@ -45,8 +45,9 @@ export interface ResourceSetupProp {
   save(
     resourceActions: ResourceActions,
     resourceState: ResourceState,
-    index: number,
+    menuItemIndex: number,
+    pageItemIndex: PageItemIndex,
     value: ResourcePageItemInput
   ): void
-  delete(resourceActions: ResourceActions, resourceState: ResourceState, index: number): void
+  delete(resourceActions: ResourceActions, resourceState: ResourceState, index: number, pageItemIndex: PageItemIndex): void
 }

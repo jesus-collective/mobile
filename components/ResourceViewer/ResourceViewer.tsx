@@ -51,6 +51,7 @@ interface Props {
   groupId: any
   route?: any
   showConfig?: boolean
+
   // isEditable: boolean
 }
 
@@ -62,6 +63,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       ...super.getInitialState(),
       resourceData: null,
       groupData: null,
+      currentMenuItem: 0,
       currentResource: null,
       currentSeries: null,
       currentEpisode: null,
@@ -594,17 +596,17 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
   }
   changeMenuItem = (index: number): void => {
     console.log({ changeResource: index })
-    this.setState({ currentSeries: null, currentResource: index, currentEpisode: null })
+    this.setState({ currentMenuItem: index })
   }
-  updateMenuItem = async (index: number, item: string, value: any): Promise<void> => {
+  updateMenuItem = async (menuItemIndex: number, item: string, value: any): Promise<void> => {
     try {
-      console.log({ "Updating MenuItem": index })
+      console.log({ "Updating MenuItem": menuItemIndex })
 
       const updateMenuItem: UpdateResourceMenuItemMutationResult = (await API.graphql({
         query: mutations.updateResourceMenuItem,
         variables: {
           input: {
-            id: this.state.resourceData?.menuItems?.items[index].id,
+            id: this.state.resourceData?.menuItems?.items[menuItemIndex].id,
             [item]: value,
           },
         },
@@ -612,13 +614,44 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       })) as UpdateResourceMenuItemMutationResult
       console.log(updateMenuItem)
       const temp = this.state.resourceData
-      temp.menuItems.items[index][item] = value
+      temp.menuItems.items[menuItemIndex][item] = value
       this.setState({ resourceData: temp })
     } catch (e) {
       console.log(e)
     }
   }
-  addToRoot(rootPageItems, pageItem, pageItemIndex: PageItemIndex): any {
+  updateToRoot(
+    rootPageItems: ResourcePageItemInput[],
+    pageItemIndex: PageItemIndex,
+    value: ResourcePageItemInput
+  ): any {
+    let rootPageItems2 = rootPageItems
+    console.log({ rootPageItems2, pageItemIndex, value })
+    if (pageItemIndex.length == 1) {
+      return rootPageItems2
+    } else {
+      //      if (rootPageItems2.pageItems == null) rootPageItems2.pageItems = []
+      console.log({ pageItemIndexA: pageItemIndex })
+      let z = this.updateToRoot(
+        rootPageItems2[pageItemIndex[0]][pageItemIndex[1]]
+          ? rootPageItems2[pageItemIndex[0]][pageItemIndex[1]]
+          : [],
+
+        pageItemIndex.slice(2),
+        value
+      )
+      console.log({ pageItemIndexB: pageItemIndex })
+
+      rootPageItems2[pageItemIndex[0]][pageItemIndex[1]] = z
+
+      return rootPageItems2
+    }
+  }
+  addToRoot(
+    rootPageItems: ResourcePageItemInput[],
+    pageItem: ResourcePageItemInput,
+    pageItemIndex: PageItemIndex
+  ): any {
     let rootPageItems2 = rootPageItems
     console.log({ rootPageItems2, pageItem, pageItemIndex })
     if (pageItemIndex.length == 0) {
@@ -626,13 +659,40 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       console.log(rootPageItems)
       return rootPageItems2
     } else {
-      if (rootPageItems2.pageItems == null) rootPageItems2.pageItems = []
+      //      if (rootPageItems2.pageItems == null) rootPageItems2.pageItems = []
       console.log({ pageItemIndexA: pageItemIndex })
       let z = this.addToRoot(
         rootPageItems2[pageItemIndex[0]][pageItemIndex[1]]
           ? rootPageItems2[pageItemIndex[0]][pageItemIndex[1]]
           : [],
         pageItem,
+        pageItemIndex.slice(2)
+      )
+      console.log({ pageItemIndexB: pageItemIndex })
+      console.log({ z: z })
+      rootPageItems2[pageItemIndex[0]][pageItemIndex[1]] = z
+      console.log({ rootPageItems2222: rootPageItems2 })
+      return rootPageItems2
+    }
+  }
+  deleteToRoot(
+    rootPageItems: ResourcePageItemInput[],
+
+    pageItemIndex: PageItemIndex
+  ): any {
+    let rootPageItems2 = rootPageItems
+    console.log({ rootPageItems2, pageItemIndex })
+    if (pageItemIndex.length == 1) {
+      rootPageItems2.splice(pageItemIndex[0] as number, 1)
+      console.log(rootPageItems)
+      return rootPageItems2
+    } else {
+      //      if (rootPageItems2.pageItems == null) rootPageItems2.pageItems = []
+      console.log({ pageItemIndexA: pageItemIndex })
+      let z = this.deleteToRoot(
+        rootPageItems2[pageItemIndex[0]][pageItemIndex[1]]
+          ? rootPageItems2[pageItemIndex[0]][pageItemIndex[1]]
+          : [],
         pageItemIndex.slice(2)
       )
       console.log({ pageItemIndexB: pageItemIndex })
@@ -653,7 +713,9 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         PageIndex: pageItemIndex,
         pageItem: pageItem,
       })
-      let rootPageItems: any[] = this.state.resourceData.menuItems.items[menuItemIndex].pageItems
+      let rootPageItems: ResourcePageItemInput[] = this.state.resourceData.menuItems.items[
+        menuItemIndex
+      ].pageItems
       console.log(rootPageItems)
       if (!rootPageItems) rootPageItems = []
       rootPageItems = this.addToRoot(rootPageItems, pageItem, pageItemIndex)
@@ -683,22 +745,25 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     value: ResourcePageItemInput
   ): Promise<void> => {
     try {
-      console.log({ "Updating MenuItem": menuItemIndex })
-      const tempPageItems = this.state.resourceData.menuItems.items[menuItemIndex].pageItems
-      tempPageItems[pageItemIndex] = value
+      console.log({ "Updating MenuItem": menuItemIndex, value: value })
+      let rootPageItems: ResourcePageItemInput[] = this.state.resourceData.menuItems.items[
+        menuItemIndex
+      ].pageItems
+      rootPageItems = this.updateToRoot(rootPageItems, pageItemIndex, value)
+
       const updateMenuItem: UpdateResourceMenuItemMutationResult = (await API.graphql({
         query: mutations.updateResourceMenuItem,
         variables: {
           input: {
             id: this.state.resourceData.menuItems.items[menuItemIndex].id,
-            pageItems: tempPageItems,
+            pageItems: rootPageItems,
           },
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })) as UpdateResourceMenuItemMutationResult
       console.log(updateMenuItem)
       const temp = this.state.resourceData
-      temp.menuItems.items[menuItemIndex].pageItems = tempPageItems
+      temp.menuItems.items[menuItemIndex].pageItems = rootPageItems
       this.setState({ resourceData: temp })
     } catch (e) {
       console.log(e)
@@ -707,21 +772,23 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
   deletePageItem = async (menuItemIndex: number, pageItemIndex: PageItemIndex): Promise<void> => {
     try {
       console.log({ "Updating MenuItem": menuItemIndex })
-      const tempPageItems = this.state.resourceData.menuItems.items[menuItemIndex].pageItems
-      tempPageItems.splice(pageItemIndex, 1)
+      let rootPageItems: ResourcePageItemInput[] = this.state.resourceData.menuItems.items[
+        menuItemIndex
+      ].pageItems
+      rootPageItems = this.deleteToRoot(rootPageItems, pageItemIndex)
       const updateMenuItem: UpdateResourceMenuItemMutationResult = (await API.graphql({
         query: mutations.updateResourceMenuItem,
         variables: {
           input: {
             id: this.state.resourceData.menuItems.items[menuItemIndex].id,
-            pageItems: tempPageItems,
+            pageItems: rootPageItems,
           },
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })) as UpdateResourceMenuItemMutationResult
       console.log(updateMenuItem)
       const temp = this.state.resourceData
-      temp.menuItems.items[menuItemIndex].pageItems = tempPageItems
+      temp.menuItems.items[menuItemIndex].pageItems = rootPageItems
       this.setState({ resourceData: temp })
     } catch (e) {
       console.log(e)
@@ -766,17 +833,17 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     }
   }
 
-  deleteMenuItem = async (index: number) => {
+  deleteMenuItem = async (menuItemIndex: number) => {
     try {
-      console.log({ "Deleting MenuItem": index })
+      console.log({ "Deleting MenuItem": menuItemIndex })
       const deleteMenuItem: DeleteResourceMenuItemMutationResult = (await API.graphql({
         query: mutations.deleteResourceMenuItem,
-        variables: { input: { id: this.state.resourceData.menuItem.items[index].id } },
+        variables: { input: { id: this.state.resourceData.menuItems.items[menuItemIndex].id } },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })) as DeleteResourceMenuItemMutationResult
       console.log(deleteMenuItem)
       const temp = this.state.resourceData
-      temp.menuItem.items.splice(index, 1)
+      temp.menuItems.items.splice(menuItemIndex, 1)
       this.setState({ resourceData: temp }, this.updateResourceOrder)
     } catch (e) {
       console.log(e)

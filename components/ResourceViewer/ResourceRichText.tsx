@@ -1,51 +1,23 @@
-import Amplify, { Storage } from "aws-amplify"
+import Amplify from "aws-amplify"
 import { View } from "native-base"
 import React from "react"
-import { Animated } from "react-native"
 import EditableRichText from "../../components/Forms/EditableRichText"
 import awsconfig from "../../src/aws-exports"
 import { ResourceSetupProp } from "../../src/types"
-import JCComponent, { JCState } from "../JCComponent/JCComponent"
+import JCComponent from "../JCComponent/JCComponent"
 import PageItemSettings from "./PageItemSettings"
 import { ResourceContext } from "./ResourceContext"
 
 Amplify.configure(awsconfig)
 
 interface Props extends ResourceSetupProp {}
-interface State extends JCState {
-  imageUrl: any
-  image: any
-  fadeValue: any
-}
-class ResourceRichText extends JCComponent<Props, State> {
+
+class ResourceRichText extends JCComponent<Props> {
   static Consumer = ResourceContext.Consumer
   constructor(props: Props) {
     super(props)
-    this.state = {
-      ...super.getInitialState(),
-      imageUrl: null,
-      image: null,
-      fadeValue: new Animated.Value(0),
-    }
   }
-  fadeAnimation = (): void => {
-    Animated.timing(this.state.fadeValue, {
-      toValue: 1,
-      duration: 3250,
-      useNativeDriver: true,
-    }).start()
-  }
-  async getImage(img: any): Promise<void> {
-    if (img == null) return
-    if (img != null) {
-      const z = await Storage.get(img.filenameLarge, {
-        level: "protected",
-        contentType: "image/png",
-        identityId: img.userId,
-      })
-      this.setState({ imageUrl: z, image: img })
-    }
-  }
+
   static renderAdmin(page: PageItemSettings): React.ReactNode {
     return (
       <>

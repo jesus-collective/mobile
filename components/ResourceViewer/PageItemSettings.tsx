@@ -21,10 +21,16 @@ interface Props {
   save(
     resourceActions: ResourceActions,
     resourceState: ResourceState,
-    index: number,
+    menuItemIndex: number,
+    pageItemIndex: PageItemIndex,
     value: ResourcePageItemInput
   ): void
-  delete(resourceActions: ResourceActions, resourceState: ResourceState, index: number): void
+  delete(
+    resourceActions: ResourceActions,
+    resourceState: ResourceState,
+    menuItemIndex: number,
+    pageItemIndex: PageItemIndex
+  ): void
 }
 interface State {
   showSettingsModal: boolean
@@ -39,17 +45,20 @@ export default class PageItemSettings extends JCComponent<Props, State> {
     }
   }
   save() {
-    this.props.save(
-      this.props.resourceActions,
-      this.props.resourceState,
-      this.props.pageItemIndex,
-      this.state.settings
-    )
+    if (this.props.save)
+      this.props.save(
+        this.props.resourceActions,
+        this.props.resourceState,
+        this.props.resourceState.currentMenuItem,
+        this.props.pageItemIndex,
+        this.state.settings
+      )
   }
   delete() {
     this.props.delete(
       this.props.resourceActions,
       this.props.resourceState,
+      this.props.resourceState.currentMenuItem,
       this.props.pageItemIndex
     )
   }

@@ -146,7 +146,7 @@ class ResourceHeader extends JCComponent<Props, State> {
                           level: "protected",
                           identityId: userId,
                         }).then((result2) => {
-                          console.log({ fileinfo: result2 })
+                          console.log({ fileInfo: result2 })
                           let tmp = page.state.settings
                           tmp.image = {
                             userId: userId,

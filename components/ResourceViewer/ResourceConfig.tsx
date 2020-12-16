@@ -35,6 +35,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     super(props)
   }
   saveResource(resourceState: ResourceState, resourceActions: ResourceActions) {
+    if (resourceState.currentResource == null) return
     resourceActions.updateResource(
       resourceState.currentResource,
       "title",
@@ -72,6 +73,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     )
   }
   saveSeries(resourceState: ResourceState, resourceActions: ResourceActions) {
+    if (resourceState.currentResource == null) return
+    if (resourceState.currentSeries == null) return
     resourceActions.updateSeries(
       resourceState.currentResource,
       resourceState.currentSeries,
@@ -134,6 +137,9 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     )
   }
   saveEpisode(resourceState: ResourceState, resourceActions: ResourceActions) {
+    if (resourceState.currentResource == null) return
+    if (resourceState.currentSeries == null) return
+    if (resourceState.currentEpisode == null) return
     resourceActions.updateEpisode(
       resourceState.currentResource,
       resourceState.currentSeries,
@@ -679,7 +685,10 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           }
           buttonType={ButtonTypes.Solid}
           onPress={() => {
-            if (window.confirm("Are you sure you wish to delete this Resource?"))
+            if (
+              window.confirm("Are you sure you wish to delete this Resource?") &&
+              resourceState.currentResource != null
+            )
               resourceActions.deleteResource(resourceState.currentResource)
           }}
         >

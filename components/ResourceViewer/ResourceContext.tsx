@@ -5,6 +5,7 @@ import { GetResourceRootData, GroupData, PageItemIndex, UserData } from "src/typ
 export interface ResourceState extends JCState {
   groupData: CreateGroupInput | GroupData | null | undefined
   resourceData: GetResourceRootData
+  currentMenuItem: number
   currentResource: number | null
   currentSeries: number | null
   currentEpisode: number | null
@@ -27,13 +28,17 @@ export type ResourceActions = {
     pageItemIndex: PageItemIndex,
     pageItem: ResourcePageItemInput
   ): Promise<void>
-  updatePageItem(menuItemIndex: number, pageItemIndex: PageItemIndex, value: any): Promise<void>
+  updatePageItem(
+    menuItemIndex: number,
+    pageItemIndex: PageItemIndex,
+    value: ResourcePageItemInput
+  ): Promise<void>
   deletePageItem(menuItemIndex: number, pageItemIndex: PageItemIndex): Promise<void>
 
   createMenuItem(menuItemType: ResourceMenuItemType): Promise<void>
-  changeMenuItem(index: number): void
-  updateMenuItem(index: number, item: string, value: any): Promise<void>
-  deleteMenuItem(index: number): Promise<void>
+  changeMenuItem(menuItemIndex: number): void
+  updateMenuItem(menuItemIndex: number, item: string, value: any): Promise<void>
+  deleteMenuItem(menuItemIndex: number): Promise<void>
 
   createResource(): Promise<void>
   changeResource(index: number): void

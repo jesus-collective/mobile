@@ -2,7 +2,6 @@ import Amplify, { Storage } from "aws-amplify"
 import { Card, CardItem, View } from "native-base"
 import React from "react"
 import { Animated, Image, Picker } from "react-native"
-import EditableRichText from "../../components/Forms/EditableRichText"
 import EditableText from "../../components/Forms/EditableText"
 import { ResourcePageItemStyle } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
@@ -89,9 +88,10 @@ class ResourceCard extends JCComponent<Props, State> {
                       tmp.title1 = val
                       page.setState({ settings: tmp })
                     }}
+                    multiline={false}
                     textStyle={{ margin: 10 }}
                     inputStyle={{ margin: 10 }}
-                    value={page.state.settings.title1}
+                    value={page.state.settings.title1 ?? ""}
                     isEditable={true}
                   ></EditableText>
                   <EditableText
@@ -100,9 +100,10 @@ class ResourceCard extends JCComponent<Props, State> {
                       tmp.title2 = val
                       page.setState({ settings: tmp })
                     }}
+                    multiline={false}
                     textStyle={{ margin: 10 }}
                     inputStyle={{ margin: 10 }}
-                    value={page.state.settings.title2}
+                    value={page.state.settings.title2 ?? ""}
                     isEditable={true}
                   ></EditableText>
                   <EditableText
@@ -111,9 +112,10 @@ class ResourceCard extends JCComponent<Props, State> {
                       tmp.description1 = val
                       page.setState({ settings: tmp })
                     }}
+                    multiline={false}
                     textStyle={{ margin: 10 }}
                     inputStyle={{ margin: 10 }}
-                    value={page.state.settings.description1}
+                    value={page.state.settings.description1 ?? ""}
                     isEditable={true}
                   ></EditableText>
                 </>
@@ -139,7 +141,7 @@ class ResourceCard extends JCComponent<Props, State> {
                     }}
                   >
                     <Picker.Item key={"null"} label={"None"} value={null} />
-                    {resourceState.resourceData.resources.items.map((org, index) => {
+                    {resourceState.resourceData.resources.items.map((org, index: number) => {
                       return <Picker.Item key={index} label={org.title} value={index} />
                     })}
                   </Picker>
@@ -167,7 +169,7 @@ class ResourceCard extends JCComponent<Props, State> {
                         <Picker.Item key={"null"} label={"None"} value={null} />
                         {resourceState.resourceData.resources.items[
                           page.state.settings.resourceID
-                        ].series.items.map((org, index) => {
+                        ].series.items.map((org, index: number) => {
                           return <Picker.Item key={index} label={org.title} value={index} />
                         })}
                       </Picker>
@@ -199,7 +201,7 @@ class ResourceCard extends JCComponent<Props, State> {
                         {resourceState.resourceData.resources.items[
                           page.state.settings.resourceID
                         ].series.items[page.state.settings.seriesID].episodes.items.map(
-                          (org, index) => {
+                          (org, index: number) => {
                             return <Picker.Item key={index} label={org.title} value={index} />
                           }
                         )}
@@ -236,27 +238,30 @@ class ResourceCard extends JCComponent<Props, State> {
 
         <CardItem>
           <EditableText
+            multiline={false}
             textStyle={{ margin: 10 }}
             inputStyle={{ margin: 10 }}
-            value={this.props.pageItem.title1}
+            value={this.props.pageItem.title1 ?? ""}
             isEditable={false}
           ></EditableText>
         </CardItem>
         <CardItem>
           <EditableText
+            multiline={false}
             textStyle={{ margin: 10 }}
             inputStyle={{ margin: 10 }}
-            value={this.props.pageItem.title2}
+            value={this.props.pageItem.title2 ?? ""}
             isEditable={false}
           ></EditableText>
         </CardItem>
         <CardItem>
-          <EditableRichText
+          <EditableText
+            multiline={false}
             textStyle={{ margin: 10 }}
             inputStyle={{ margin: 10 }}
-            value={this.props.pageItem.description1}
+            value={this.props.pageItem.description1 ?? ""}
             isEditable={false}
-          ></EditableRichText>
+          ></EditableText>
         </CardItem>
         <CardItem>
           <PageItemSettings
@@ -313,27 +318,30 @@ class ResourceCard extends JCComponent<Props, State> {
 
               <CardItem>
                 <EditableText
+                  multiline={true}
                   textStyle={{ margin: 10 }}
                   inputStyle={{ margin: 10 }}
-                  value={this.props.pageItem.title1}
+                  value={this.props.pageItem.title1 ?? ""}
                   isEditable={false}
                 ></EditableText>
               </CardItem>
               <CardItem>
                 <EditableText
+                  multiline={true}
                   textStyle={{ margin: 10 }}
                   inputStyle={{ margin: 10 }}
-                  value={this.props.pageItem.title2}
+                  value={this.props.pageItem.title2 ?? ""}
                   isEditable={false}
                 ></EditableText>
               </CardItem>
               <CardItem>
-                <EditableRichText
+                <EditableText
+                  multiline={true}
                   textStyle={{ margin: 10 }}
                   inputStyle={{ margin: 10 }}
-                  value={this.props.pageItem.description1}
+                  value={this.props.pageItem.description1 ?? ""}
                   isEditable={false}
-                ></EditableRichText>
+                ></EditableText>
               </CardItem>
               <CardItem>
                 <PageItemSettings
@@ -357,7 +365,7 @@ class ResourceCard extends JCComponent<Props, State> {
       this.getImage(this.props.pageItem)
     return (
       <View>
-        {this.props.pageItem.type == ResourcePageItemStyle.CardManual
+        {this.props.pageItem.style == ResourcePageItemStyle.CardManual
           ? this.renderManualCard()
           : this.renderAutoCard()}
       </View>
