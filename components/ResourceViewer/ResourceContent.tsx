@@ -3,6 +3,7 @@ import { useNavigation, useRoute } from "@react-navigation/native"
 import { Card, CardItem, Container } from "native-base"
 import React from "react"
 import { Image, Text, TouchableOpacity, View } from "react-native"
+import DropDownPicker from "react-native-dropdown-picker"
 import { PageItemIndex } from "src/types"
 import { v4 as uuidv4 } from "uuid"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
@@ -508,21 +509,68 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     pageItemIndex: PageItemIndex
   ) {
     return (
-      <TouchableOpacity
-        onPress={() => {
+      <DropDownPicker
+        items={[
+          {
+            label: "Menu",
+            value: ResourcePageItemType.Menu,
+            icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
+            hidden: true,
+          },
+          {
+            label: "Header",
+            value: ResourcePageItemType.Header,
+            icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
+          },
+          {
+            label: "Rich Text",
+            value: ResourcePageItemType.RichText,
+            icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
+          },
+          {
+            label: "List",
+            value: ResourcePageItemType.List,
+            icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
+          },
+          {
+            label: "Grid",
+            value: ResourcePageItemType.Grid,
+            icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
+          },
+          {
+            label: "Column",
+            value: ResourcePageItemType.Column,
+            icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
+          },
+          {
+            label: "Card",
+            value: ResourcePageItemType.Card,
+            icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
+          },
+        ]}
+        placeholder="Add Page Item"
+        defaultValue={this.state.country}
+        containerStyle={{ height: 40, width: 160 }}
+        dropDownStyle={{ backgroundColor: "#fafafa", width: 150 }}
+        style={{ backgroundColor: "#fafafa" }}
+        itemStyle={{
+          justifyContent: "flex-start",
+          width: 100,
+        }}
+        labelStyle={{
+          fontSize: 14,
+          textAlign: "left",
+          color: "#000",
+        }}
+        onChangeItem={(item) => {
           const pageItem: ResourcePageItemInput = {
             id: uuidv4(),
-            type: ResourcePageItemType.Header,
+            type: item.value,
           }
           resourceActions.createPageItem(resourceState.currentResource, pageItemIndex, pageItem)
+          item.value = null
         }}
-      >
-        <Card>
-          <CardItem>
-            <Text>Add Page Item</Text>
-          </CardItem>
-        </Card>
-      </TouchableOpacity>
+      />
     )
   }
   renderPageConfigButton(resourceState: ResourceState, resourceActions: ResourceActions) {
