@@ -164,7 +164,6 @@ class ResourceMenu extends JCComponent<Props> {
                     },
                   ]}
                   placeholder="+"
-                  defaultValue={this.state.country}
                   containerStyle={{ height: 40, width: 60 }}
                   dropDownStyle={{ backgroundColor: "#fafafa", width: 150 }}
                   style={{ backgroundColor: "#fafafa" }}

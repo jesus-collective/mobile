@@ -549,7 +549,6 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           },
         ]}
         placeholder="Add Page Item"
-        defaultValue={this.state.country}
         containerStyle={{ height: 40, width: 160 }}
         dropDownStyle={{ backgroundColor: "#fafafa", width: 150 }}
         style={{ backgroundColor: "#fafafa" }}
