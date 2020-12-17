@@ -205,7 +205,7 @@ class ResourceHeader extends JCComponent<Props, State> {
                   multiline={false}
                   placeholder="Title"
                   inputStyle={this.styles.style.fontResourceHeaderBold}
-                  textStyle={this.styles.style.fontResourceHeaderBoldNew}
+                  textStyle={this.styles.style.fontResourceHeaderBold}
                   value={this.props.pageItem.title1 ?? ""}
                   isEditable={false}
                 ></EditableText>

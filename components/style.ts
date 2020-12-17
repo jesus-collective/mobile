@@ -624,16 +624,6 @@ export default class MainStyles {
                 marginBottom: 15,
                 marginLeft: "5%",
             },
-            fontResourceHeaderBoldNew: {
-                fontFamily: 'Graphik-Bold-App',
-                fontWeight: "400",
-                fontSize: 45,
-                lineHeight: 45,
-                textAlign: "left",
-                color: "#000000",
-                marginBottom: 15,
-                marginLeft: "5%",
-            },
             fontResourceHeaderBold: {
                 fontFamily: 'Graphik-Regular-App',
                 fontWeight: "400",
@@ -641,7 +631,7 @@ export default class MainStyles {
                 lineHeight: 45,
                 alignSelf: "center",
                 textAlign: "center",
-                color: "#FFFFFF",
+                color: "#000",
                 width: "100%",
                 height: 85,
                 paddingTop: 25
@@ -704,7 +694,7 @@ export default class MainStyles {
                 fontSize: 20,
                 lineHeight: 30,
                 textAlign: "center",
-                color: "#FFFFFF",
+                color: "#000",
                 width: "100%",
                 alignSelf: "center",
                 height: 85
@@ -1510,10 +1500,15 @@ export default class MainStyles {
                 {
                     alignSelf: "center",
                     top: "5vw",
-                    width: "50%",
+                    width: "75%",
                     overflow: "none",
                     position: "absolute",
                     backgroundColor: "#ffffff",
+                    height: 195,
+                    borderRadius: 8,
+                    shadowOffset: {"width":0,"height":0},
+                    shadowColor: "rgba(0, 0, 0, 0.19)",
+                    shadowRadius: 30,
                 } :
                 {
                     alignSelf: "center",
