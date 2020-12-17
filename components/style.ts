@@ -624,6 +624,16 @@ export default class MainStyles {
                 marginBottom: 15,
                 marginLeft: "5%",
             },
+            fontResourceHeaderBoldNew: {
+                fontFamily: 'Graphik-Bold-App',
+                fontWeight: "400",
+                fontSize: 45,
+                lineHeight: 45,
+                textAlign: "left",
+                color: "#000000",
+                marginBottom: 15,
+                marginLeft: "5%",
+            },
             fontResourceHeaderBold: {
                 fontFamily: 'Graphik-Regular-App',
                 fontWeight: "400",
@@ -1502,7 +1512,8 @@ export default class MainStyles {
                     top: "5vw",
                     width: "50%",
                     overflow: "none",
-                    position: "absolute"
+                    position: "absolute",
+                    backgroundColor: "#ffffff",
                 } :
                 {
                     alignSelf: "center",
