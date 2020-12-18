@@ -31,6 +31,7 @@ import {
   CreateResourceSeriesInput,
   ResourceMenuItemType,
   ResourcePageItemInput,
+  UserGroupType,
 } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
 import * as customQueries from "../../src/graphql-custom/queries"
@@ -276,6 +277,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       if (createResourceRoot.data?.createResourceRoot) {
         const menuItem: CreateResourceMenuItemInput = {
           type: ResourceMenuItemType.menuItem,
+          readGroups: [UserGroupType.verifiedUsers],
           menuTitle: "Overview",
           order: "0",
           depth: "1",
@@ -493,6 +495,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     const menuItem: CreateResourceMenuItemInput = {
       type: menuItemType,
       menuTitle: "New Menu Title",
+      readGroups: [UserGroupType.verifiedUsers],
       resourceRootID: this.state.resourceData.id,
       order: this.state.resourceData?.menuItems.items.length + 1,
     }

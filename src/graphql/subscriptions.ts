@@ -6938,6 +6938,7 @@ export const onCreateResourceRoot = /* GraphQL */ `
         items {
           id
           owner
+          readGroups
           type
           menuTitle
           order
@@ -7066,6 +7067,7 @@ export const onUpdateResourceRoot = /* GraphQL */ `
         items {
           id
           owner
+          readGroups
           type
           menuTitle
           order
@@ -7194,6 +7196,7 @@ export const onDeleteResourceRoot = /* GraphQL */ `
         items {
           id
           owner
+          readGroups
           type
           menuTitle
           order
@@ -7214,6 +7217,7 @@ export const onCreateResourceMenuItem = /* GraphQL */ `
     onCreateResourceMenuItem(owner: $owner) {
       id
       owner
+      readGroups
       type
       menuTitle
       order
@@ -7324,6 +7328,7 @@ export const onUpdateResourceMenuItem = /* GraphQL */ `
     onUpdateResourceMenuItem(owner: $owner) {
       id
       owner
+      readGroups
       type
       menuTitle
       order
@@ -7434,6 +7439,7 @@ export const onDeleteResourceMenuItem = /* GraphQL */ `
     onDeleteResourceMenuItem(owner: $owner) {
       id
       owner
+      readGroups
       type
       menuTitle
       order

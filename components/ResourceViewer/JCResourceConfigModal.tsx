@@ -105,7 +105,7 @@ class JCResourceConfigModalImpl extends JCComponent<Props> {
           return (
             <JCModal
               visible={this.props.visible}
-              title="Configure Page Item"
+              title="Configure JC Group"
               onHide={() => {
                 this.props.onClose()
               }}

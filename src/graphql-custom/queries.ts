@@ -790,6 +790,7 @@ export const getResourceRoot = /* GraphQL */ `
           menuTitle
           order
           depth
+          readGroups
           resourceRootID
           pageItems {
             id

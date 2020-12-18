@@ -815,17 +815,32 @@ enum ResourceMenuItemType{
   curriculum
   
 }
+enum UserGroupType{
+  verifiedUsers
+  admin
+  courseAdmin	
+  courseCoach	
+  courseUser
+  friends
+  partners
+  subscriptionkyearlyyears	
+  subscriptionkykids
+  subscriptionkyyouth	
+  subscriptionValid	
+  userpool
+}
 type ResourceMenuItem
 @model 
 @auth(rules: [
    {allow: owner, ownerField: "owner", operations: [create, read, update, delete]}
-  { allow: groups, groups: ["verifiedUsers"], operations: [read] }
+   {allow: groups, groupsField: "groups", operations: [read] }
    { allow: groups, groups: ["admin"]}
   ])
  @key(name: "byResourceRoot", fields: ["resourceRootID"])
 {
   id: ID!
   owner:String
+  readGroups:[UserGroupType]
   type: ResourceMenuItemType
   menuTitle: String
   order:String

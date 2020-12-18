@@ -2850,6 +2850,7 @@ export const getResourceRoot = /* GraphQL */ `
         items {
           id
           owner
+          readGroups
           type
           menuTitle
           order
@@ -2924,6 +2925,7 @@ export const getResourceMenuItem = /* GraphQL */ `
     getResourceMenuItem(id: $id) {
       id
       owner
+      readGroups
       type
       menuTitle
       order
@@ -3043,6 +3045,7 @@ export const listResourceMenuItems = /* GraphQL */ `
       items {
         id
         owner
+        readGroups
         type
         menuTitle
         order

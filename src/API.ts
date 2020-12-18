@@ -585,6 +585,22 @@ export type CreateResourceRootInput = {
   owner?: string | null,
 };
 
+export enum UserGroupType {
+  verifiedUsers = "verifiedUsers",
+  admin = "admin",
+  courseAdmin = "courseAdmin",
+  courseCoach = "courseCoach",
+  courseUser = "courseUser",
+  friends = "friends",
+  partners = "partners",
+  subscriptionkyearlyyears = "subscriptionkyearlyyears",
+  subscriptionkykids = "subscriptionkykids",
+  subscriptionkyyouth = "subscriptionkyyouth",
+  subscriptionValid = "subscriptionValid",
+  userpool = "userpool",
+}
+
+
 export enum ResourceMenuItemType {
   resource = "resource",
   menuItem = "menuItem",
@@ -609,6 +625,7 @@ export type DeleteResourceRootInput = {
 export type CreateResourceMenuItemInput = {
   id?: string | null,
   owner?: string | null,
+  readGroups?: Array< UserGroupType | null > | null,
   type?: ResourceMenuItemType | null,
   menuTitle?: string | null,
   order?: string | null,
@@ -661,6 +678,7 @@ export enum ResourcePageItemStyle {
 export type UpdateResourceMenuItemInput = {
   id: string,
   owner?: string | null,
+  readGroups?: Array< UserGroupType | null > | null,
   type?: ResourceMenuItemType | null,
   menuTitle?: string | null,
   order?: string | null,
@@ -1119,6 +1137,7 @@ export type ModelResourceRootFilterInput = {
 export type ModelResourceMenuItemFilterInput = {
   id?: ModelIDFilterInput | null,
   owner?: ModelStringFilterInput | null,
+  readGroups?: ModelUserGroupTypeListFilterInput | null,
   type?: ModelResourceMenuItemTypeFilterInput | null,
   menuTitle?: ModelStringFilterInput | null,
   order?: ModelStringFilterInput | null,
@@ -1127,6 +1146,13 @@ export type ModelResourceMenuItemFilterInput = {
   and?: Array< ModelResourceMenuItemFilterInput | null > | null,
   or?: Array< ModelResourceMenuItemFilterInput | null > | null,
   not?: ModelResourceMenuItemFilterInput | null,
+};
+
+export type ModelUserGroupTypeListFilterInput = {
+  eq?: Array< UserGroupType | null > | null,
+  ne?: Array< UserGroupType | null > | null,
+  contains?: UserGroupType | null,
+  notContains?: UserGroupType | null,
 };
 
 export type ModelResourceMenuItemTypeFilterInput = {
@@ -10347,6 +10373,7 @@ export type CreateResourceRootMutation = {
         __typename: "ResourceMenuItem",
         id: string,
         owner: string | null,
+        readGroups: Array< UserGroupType | null > | null,
         type: ResourceMenuItemType | null,
         menuTitle: string | null,
         order: string | null,
@@ -10491,6 +10518,7 @@ export type UpdateResourceRootMutation = {
         __typename: "ResourceMenuItem",
         id: string,
         owner: string | null,
+        readGroups: Array< UserGroupType | null > | null,
         type: ResourceMenuItemType | null,
         menuTitle: string | null,
         order: string | null,
@@ -10635,6 +10663,7 @@ export type DeleteResourceRootMutation = {
         __typename: "ResourceMenuItem",
         id: string,
         owner: string | null,
+        readGroups: Array< UserGroupType | null > | null,
         type: ResourceMenuItemType | null,
         menuTitle: string | null,
         order: string | null,
@@ -10659,6 +10688,7 @@ export type CreateResourceMenuItemMutation = {
     __typename: "ResourceMenuItem",
     id: string,
     owner: string | null,
+    readGroups: Array< UserGroupType | null > | null,
     type: ResourceMenuItemType | null,
     menuTitle: string | null,
     order: string | null,
@@ -10781,6 +10811,7 @@ export type UpdateResourceMenuItemMutation = {
     __typename: "ResourceMenuItem",
     id: string,
     owner: string | null,
+    readGroups: Array< UserGroupType | null > | null,
     type: ResourceMenuItemType | null,
     menuTitle: string | null,
     order: string | null,
@@ -10903,6 +10934,7 @@ export type DeleteResourceMenuItemMutation = {
     __typename: "ResourceMenuItem",
     id: string,
     owner: string | null,
+    readGroups: Array< UserGroupType | null > | null,
     type: ResourceMenuItemType | null,
     menuTitle: string | null,
     order: string | null,
@@ -15201,6 +15233,7 @@ export type GetResourceRootQuery = {
         __typename: "ResourceMenuItem",
         id: string,
         owner: string | null,
+        readGroups: Array< UserGroupType | null > | null,
         type: ResourceMenuItemType | null,
         menuTitle: string | null,
         order: string | null,
@@ -15285,6 +15318,7 @@ export type GetResourceMenuItemQuery = {
     __typename: "ResourceMenuItem",
     id: string,
     owner: string | null,
+    readGroups: Array< UserGroupType | null > | null,
     type: ResourceMenuItemType | null,
     menuTitle: string | null,
     order: string | null,
@@ -15411,6 +15445,7 @@ export type ListResourceMenuItemsQuery = {
       __typename: "ResourceMenuItem",
       id: string,
       owner: string | null,
+      readGroups: Array< UserGroupType | null > | null,
       type: ResourceMenuItemType | null,
       menuTitle: string | null,
       order: string | null,
@@ -25072,6 +25107,7 @@ export type OnCreateResourceRootSubscription = {
         __typename: "ResourceMenuItem",
         id: string,
         owner: string | null,
+        readGroups: Array< UserGroupType | null > | null,
         type: ResourceMenuItemType | null,
         menuTitle: string | null,
         order: string | null,
@@ -25212,6 +25248,7 @@ export type OnUpdateResourceRootSubscription = {
         __typename: "ResourceMenuItem",
         id: string,
         owner: string | null,
+        readGroups: Array< UserGroupType | null > | null,
         type: ResourceMenuItemType | null,
         menuTitle: string | null,
         order: string | null,
@@ -25352,6 +25389,7 @@ export type OnDeleteResourceRootSubscription = {
         __typename: "ResourceMenuItem",
         id: string,
         owner: string | null,
+        readGroups: Array< UserGroupType | null > | null,
         type: ResourceMenuItemType | null,
         menuTitle: string | null,
         order: string | null,
@@ -25376,6 +25414,7 @@ export type OnCreateResourceMenuItemSubscription = {
     __typename: "ResourceMenuItem",
     id: string,
     owner: string | null,
+    readGroups: Array< UserGroupType | null > | null,
     type: ResourceMenuItemType | null,
     menuTitle: string | null,
     order: string | null,
@@ -25498,6 +25537,7 @@ export type OnUpdateResourceMenuItemSubscription = {
     __typename: "ResourceMenuItem",
     id: string,
     owner: string | null,
+    readGroups: Array< UserGroupType | null > | null,
     type: ResourceMenuItemType | null,
     menuTitle: string | null,
     order: string | null,
@@ -25620,6 +25660,7 @@ export type OnDeleteResourceMenuItemSubscription = {
     __typename: "ResourceMenuItem",
     id: string,
     owner: string | null,
+    readGroups: Array< UserGroupType | null > | null,
     type: ResourceMenuItemType | null,
     menuTitle: string | null,
     order: string | null,

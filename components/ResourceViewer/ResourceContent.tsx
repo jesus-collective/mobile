@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from "uuid"
 import { ResourcePageItemInput, ResourcePageItemType } from "../../src/API"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import JCResourceConfigModal from "./JCResourceConfigModal"
+import PageConfigModal from "./PageConfigModal"
 import ResourceCard from "./ResourceCard"
 import ResourceColumn from "./ResourceColumn"
 import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
@@ -177,7 +178,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
             id: uuidv4(),
             type: item.value,
           }
-          resourceActions.createPageItem(resourceState.currentResource, pageItemIndex, pageItem)
+          resourceActions.createPageItem(resourceState.currentMenuItem, pageItemIndex, pageItem)
           item.value = null
         }}
       />
@@ -338,6 +339,12 @@ class ResourceContentImpl extends JCComponent<Props, State> {
             this.setState({ showJCResourceConfigModal: false })
           }}
         ></JCResourceConfigModal>
+        <PageConfigModal
+          visible={this.state.showPageConfigModal}
+          onClose={() => {
+            this.setState({ showPageConfigModal: false })
+          }}
+        ></PageConfigModal>
       </View>
     ) : null
   }
@@ -358,7 +365,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           if (!resourceState) return null
           if (resourceState.currentResource == null) return null
           let pageItems: ResourcePageItemInput[] =
-            resourceState?.resourceData?.menuItems?.items[resourceState.currentResource]?.pageItems
+            resourceState?.resourceData?.menuItems?.items[resourceState.currentMenuItem]?.pageItems
           if (!this.props.isBase) pageItems = this.props.pageItems
           console.log({ pageItems: pageItems })
           return (
