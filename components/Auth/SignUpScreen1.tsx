@@ -1,15 +1,13 @@
-﻿import React from "react"
+﻿import { useNavigation, useRoute } from "@react-navigation/native"
 import Amplify from "aws-amplify"
-import awsConfig from "../../src/aws-exports"
-import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
-Amplify.configure(awsConfig)
-import { View } from "react-native"
-
-import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
-
-import { useNavigation, useRoute } from "@react-navigation/native"
+import React from "react"
+import { ActivityIndicator, View } from "react-native"
 import Billing from "../../components/Billing/Billing"
+import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
+import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
+import awsConfig from "../../src/aws-exports"
+Amplify.configure(awsConfig)
 
 interface Props {
   navigation?: any
@@ -29,7 +27,7 @@ class SignUpScreen1Impl extends JCComponent<Props, State> {
       <SignUpScreen1Impl.UserConsumer>
         {({ userState, userActions }) => {
           if (!userState) return null
-
+          if (userState.hasPaidState == "Unknown") return <ActivityIndicator />
           if (userState.hasPaidState == "InProgress") {
             return (
               <View style={this.styles.style.signUpScreen1PaymentBody}>

@@ -1,30 +1,26 @@
+import { createStackNavigator } from "@react-navigation/stack"
+import Amplify, { Analytics, API, Auth, graphqlOperation } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
-import * as queries from "../../src/graphql/queries"
-import * as mutations from "../../src/graphql/mutations"
-import { Auth } from "aws-amplify"
+import { Linking } from "expo"
+import moment from "moment"
+import React from "react"
+import { Text } from "react-native"
+import { AuthStateData } from "src/types"
 import { v4 as uuidv4 } from "uuid"
+import JCComponent from "../../components/JCComponent/JCComponent"
+import Validate from "../../components/Validate/Validate"
 import {
   CreateOrganizationInput,
   CreateOrganizationMemberInput,
   CreateUserInput,
 } from "../../src/API"
-import { createStackNavigator } from "@react-navigation/stack"
-
-import moment from "moment"
-import { Analytics } from "aws-amplify"
-import { API, graphqlOperation } from "aws-amplify"
-import Validate from "../../components/Validate/Validate"
-import * as RootNavigation from "./NavigationRoot"
-import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
-import { UserContext, UserState } from "./UserContext"
-import { Text } from "react-native"
-import { Linking } from "expo"
-import React from "react"
+import awsconfig from "../../src/aws-exports"
+import * as mutations from "../../src/graphql/mutations"
+import * as queries from "../../src/graphql/queries"
 import MainAuthRouter from "./MainAuthRouter"
 import MainDrawerRouter from "./MainDrawerRouter"
-import Amplify from "aws-amplify"
-import awsconfig from "../../src/aws-exports"
-import { AuthStateData } from "src/types"
+import * as RootNavigation from "./NavigationRoot"
+import { UserContext, UserState } from "./UserContext"
 
 Amplify.configure(awsconfig)
 
@@ -272,10 +268,10 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
               else {
                 this.setState(
                   {
-                    hasPaidState: "Problem",
+                    hasPaidState: "Problem1",
                   },
                   () => {
-                    this.onPaidStateChange("Problem")
+                    this.onPaidStateChange("Problem1")
                   }
                 )
               }
@@ -286,22 +282,28 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
             else {
               this.setState(
                 {
-                  hasPaidState: "Problem",
+                  hasPaidState: "Problem2",
                 },
                 () => {
-                  this.onPaidStateChange("Problem")
+                  this.onPaidStateChange("Problem2")
                 }
               )
             }
           else {
-            this.setState(
-              {
-                hasPaidState: "Problem",
-              },
-              () => {
-                this.onPaidStateChange("Problem")
-              }
-            )
+            if (getUser.data.getUser.stripeSubscriptionID == null)
+              this.setState({ hasPaidState: "InProgress" }, () => {
+                this.onPaidStateChange("InProgress")
+              })
+            else {
+              this.setState(
+                {
+                  hasPaidState: "Problem1",
+                },
+                () => {
+                  this.onPaidStateChange("Problem1")
+                }
+              )
+            }
           }
         }
       }
