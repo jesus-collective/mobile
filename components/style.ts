@@ -1,12 +1,10 @@
-import { Platform } from 'react-native';
-import EStyleSheet from 'react-native-extended-stylesheet';
 import Constants from 'expo-constants';
-import { Dimensions } from 'react-native'
-const mainColor = '#ffffff';
 import {
-    isSafari,
     isChrome
 } from "react-device-detect";
+import { Dimensions, Platform } from 'react-native';
+import EStyleSheet from 'react-native-extended-stylesheet';
+const mainColor = '#ffffff';
 
 export default class MainStyles {
 
@@ -1631,7 +1629,7 @@ export default class MainStyles {
                     width: "100%",
                     height: "100%",
                     opacity: 0.5,
-                    filter: "grayscale(1)",
+                   
                 } :
                 {
                     position: "relative",

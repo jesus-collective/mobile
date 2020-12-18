@@ -70,7 +70,12 @@ class ResourceColumn extends JCComponent<Props, State> {
     const border: ViewStyle = { borderWidth: 1, borderStyle: "dashed" }
     console.log({ COLUMns: this.props.pageItemIndex })
     return (
-      <View style={[{ flexDirection: "row" }, this.props.resourceState.isEditable && border]}>
+      <View
+        style={[
+          { flexDirection: "row", zIndex: 5000 + this.props.pageItemIndex.length },
+          this.props.resourceState.isEditable && border,
+        ]}
+      >
         <View style={{ flexGrow: this.getLeftColumnSize() }}>
           <ResourceContent
             pageItems={this.props.pageItem.pageItemsLeft}

@@ -114,6 +114,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
   ) {
     return (
       <DropDownPicker
+        zIndex={5000 + pageItemIndex.length}
         items={[
           {
             label: "Menu",
@@ -153,17 +154,23 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           },
         ]}
         placeholder="Add Page Item"
-        containerStyle={{ height: 40, width: 160 }}
-        dropDownStyle={{ backgroundColor: "#fafafa", width: 150 }}
-        style={{ backgroundColor: "#fafafa" }}
+        containerStyle={{ height: 40, width: 160, zIndex: 5000 + pageItemIndex.length }}
+        dropDownStyle={{
+          backgroundColor: "#fafafa",
+          width: 150,
+          zIndex: 5000 + pageItemIndex.length,
+        }}
+        style={{ backgroundColor: "#fafafa", zIndex: 5000 + pageItemIndex.length }}
         itemStyle={{
           justifyContent: "flex-start",
           width: 100,
+          zIndex: 5000 + pageItemIndex.length,
         }}
         labelStyle={{
           fontSize: 14,
           textAlign: "left",
           color: "#000",
+          zIndex: 5000 + pageItemIndex.length,
         }}
         onChangeItem={(item) => {
           const pageItem: ResourcePageItemInput = {
@@ -310,7 +317,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
   ): React.ReactNode {
     console.log({ ColumnConfig: this.props.pageItemIndex })
     return resourceState?.isEditable ? (
-      <View style={{ flexDirection: "row" }}>
+      <View style={{ flexDirection: "row", zIndex: 5000 + this.props.pageItemIndex.length }}>
         {this.renderAddPageItemButton(resourceState, resourceActions, this.props.pageItemIndex)}
       </View>
     ) : null
@@ -320,7 +327,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     resourceActions: ResourceActions
   ): React.ReactNode {
     return resourceState?.isEditable ? (
-      <View style={{ flexDirection: "row" }}>
+      <View style={{ flexDirection: "row", zIndex: 5000 + this.props.pageItemIndex.length }}>
         {this.renderAddPageItemButton(resourceState, resourceActions, [])}
         {this.renderPageConfigButton(resourceState, resourceActions)}
         {this.renderResourceConfigButton(resourceState, resourceActions)}

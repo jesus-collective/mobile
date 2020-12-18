@@ -12,8 +12,8 @@ import { ResourceActions, ResourceContext, ResourceState } from "./ResourceConte
 interface Props {
   visible: boolean
   onClose(): void
-  navigation: any
-  route: any
+  navigation?: any
+  route?: any
 }
 
 class JCResourceConfigModalImpl extends JCComponent<Props> {
