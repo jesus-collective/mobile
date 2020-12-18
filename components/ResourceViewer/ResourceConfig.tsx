@@ -714,13 +714,15 @@ class ResourceContentImpl extends JCComponent<Props, State> {
   }
 
   renderSeries(resourceState: ResourceState, resourceActions: ResourceActions) {
+    if (resourceState.currentResource == null || resourceState.currentResource == undefined)
+      return null
     return (
       <View style={{ flexGrow: 1, flexDirection: "column" }}>
         <Text>Series</Text>
         <View style={{ borderWidth: 1, height: "500px" }}>
-          {resourceState.resourceData?.resources?.items[
+          {resourceState?.resourceData?.resources?.items[
             resourceState.currentResource
-          ].series.items.map((item, index: number) => {
+          ]?.series?.items?.map((item, index: number) => {
             return (
               <TouchableOpacity
                 onPress={() => {
@@ -794,6 +796,9 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     )
   }
   renderEpisodes(resourceState: ResourceState, resourceActions: ResourceActions) {
+    if (resourceState.currentResource == null || resourceState.currentResource == undefined)
+      return null
+    if (resourceState.currentSeries == null || resourceState.currentSeries == undefined) return null
     return (
       <View style={{ flexGrow: 1, flexDirection: "column" }}>
         <Text>Episodes</Text>

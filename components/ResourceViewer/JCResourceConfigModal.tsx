@@ -1,3 +1,4 @@
+import { useNavigation, useRoute } from "@react-navigation/native"
 import React from "react"
 import { Text, TouchableOpacity, View } from "react-native"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
@@ -11,9 +12,11 @@ import { ResourceActions, ResourceContext, ResourceState } from "./ResourceConte
 interface Props {
   visible: boolean
   onClose(): void
+  navigation: any
+  route: any
 }
 
-export default class JCResourceConfigModal extends JCComponent<Props> {
+class JCResourceConfigModalImpl extends JCComponent<Props> {
   static Consumer = ResourceContext.Consumer
   constructor(props: Props) {
     super(props)
@@ -48,6 +51,16 @@ export default class JCResourceConfigModal extends JCComponent<Props> {
             buttonType={ButtonTypes.OutlineBoldNoMargin}
             onPress={() => {
               actions.createGroup()
+
+              if (
+                this.props.route.params.create === "true" || this.props.route.params.create === true
+                  ? true
+                  : false
+              )
+                this.props.navigation.navigate("ResourceScreen", {
+                  create: false,
+                  id: state.groupData.id,
+                })
               this.props.onClose()
             }}
           >
@@ -85,7 +98,7 @@ export default class JCResourceConfigModal extends JCComponent<Props> {
 
   render() {
     return (
-      <JCResourceConfigModal.Consumer>
+      <JCResourceConfigModalImpl.Consumer>
         {({ resourceState, resourceActions }) => {
           if (!resourceState) return null
           if (resourceState.currentResource == null) return null
@@ -244,7 +257,13 @@ export default class JCResourceConfigModal extends JCComponent<Props> {
             </JCModal>
           )
         }}
-      </JCResourceConfigModal.Consumer>
+      </JCResourceConfigModalImpl.Consumer>
     )
   }
+}
+
+export default function JCResourceConfigModal(props: Props): JSX.Element {
+  const route = useRoute()
+  const navigation = useNavigation()
+  return <JCResourceConfigModalImpl {...props} navigation={navigation} route={route} />
 }

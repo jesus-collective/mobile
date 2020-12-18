@@ -81,7 +81,31 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       currentUserProfile: null,
       memberIDs: [],
     }
-
+  }
+  componentDidMount() {
+    this.setState({
+      resourceData: null,
+      groupData: null,
+      currentMenuItem: 0,
+      currentResource: null,
+      currentSeries: null,
+      currentEpisode: null,
+      isEditable: false,
+      showMap: false,
+      loadId: this.props.route.params.id,
+      createNew:
+        this.props.route.params.create === "true" || this.props.route.params.create === true
+          ? true
+          : false,
+      canSave: false,
+      canLeave: false,
+      canJoin: false,
+      canDelete: false,
+      validationError: "",
+      currentUser: null,
+      currentUserProfile: null,
+      memberIDs: [],
+    })
     Auth.currentAuthenticatedUser().then((user: any) => {
       this.setState({
         currentUser: user.username,
@@ -96,7 +120,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
               currentUserProfile: json.data?.getUser,
             },
             () => {
-              this.setInitialData(props)
+              this.setInitialData(this.props)
             }
           )
         })
@@ -321,6 +345,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
           this.setState(
             {
               createNew: false,
+              loadId: json.data.createGroup.id,
             },
             () => {
               this.setState({
