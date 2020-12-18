@@ -2,6 +2,7 @@ import { Ionicons } from "@expo/vector-icons"
 import Amplify, { Auth, Storage } from "aws-amplify"
 import { Container } from "native-base"
 import React from "react"
+import InputColor from "react-input-color"
 import { Animated, Image, View } from "react-native"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import awsconfig from "../../src/aws-exports"
@@ -10,7 +11,6 @@ import EditableText from "../Forms/EditableText"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import PageItemSettings from "./PageItemSettings"
 import { ResourceContext } from "./ResourceContext"
-
 Amplify.configure(awsconfig)
 
 interface Props extends ResourceSetupProp {}
@@ -86,6 +86,15 @@ class ResourceHeader extends JCComponent<Props, State> {
                 value={page.state.settings.title2 ?? ""}
                 isEditable={true}
               ></EditableText>
+              <InputColor
+                initialValue={page.state.settings.color ?? "#aa0000"}
+                onChange={(c) => {
+                  const tmp = page.state.settings
+                  tmp.color = c.hex
+                  page.setState({ settings: tmp })
+                }}
+                placement="right"
+              />
               <View>
                 <JCButton
                   buttonType={ButtonTypes.Transparent}
@@ -205,7 +214,10 @@ class ResourceHeader extends JCComponent<Props, State> {
                   multiline={false}
                   placeholder="Title"
                   inputStyle={this.styles.style.fontResourceHeaderBold}
-                  textStyle={this.styles.style.fontResourceHeaderBold}
+                  textStyle={[
+                    this.styles.style.fontResourceHeaderBold,
+                    { color: this.props.pageItem.color ?? "#000000" },
+                  ]}
                   value={this.props.pageItem.title1 ?? ""}
                   isEditable={false}
                 ></EditableText>
@@ -213,7 +225,10 @@ class ResourceHeader extends JCComponent<Props, State> {
                   multiline={false}
                   placeholder="Subtitle"
                   inputStyle={this.styles.style.fontResourceHeaderBold}
-                  textStyle={this.styles.style.fontResourceHeaderDescription}
+                  textStyle={[
+                    this.styles.style.fontResourceHeaderDescription,
+                    { color: this.props.pageItem.color ?? "#000000" },
+                  ]}
                   value={this.props.pageItem.title2 ?? ""}
                   isEditable={false}
                 ></EditableText>

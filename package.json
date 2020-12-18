@@ -61,6 +61,7 @@
     "react-dom": "16.13.1",
     "react-draft-wysiwyg": "^1.14.4",
     "react-google-maps": "^9.4.5",
+    "react-input-color": "^3.0.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.3.tar.gz",
     "react-native-calendars": "^1.300.0",
     "react-native-dev-menu": "^4.0.2",
