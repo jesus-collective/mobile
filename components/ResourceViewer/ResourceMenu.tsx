@@ -96,7 +96,7 @@ class ResourceMenu extends JCComponent<Props> {
                   return item.type == ResourceMenuItemType.break ? (
                     <View style={{ flexDirection: "row", borderBottomWidth: 1, width: 100 }}></View>
                   ) : (
-                    <View style={{ flexDirection: "row" }}>
+                    <View style={{ flexDirection: "row", height: 32 }}>
                       {item.depth == "2" && <View style={{ width: 10 }} />}
                       <EditableButton
                         onDelete={() => resourceActions.deleteMenuItem(index)}
