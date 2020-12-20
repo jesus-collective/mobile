@@ -22,6 +22,7 @@ import {
   PageItemIndex,
   UpdateResourceMenuItemMutationResult,
 } from "src/types"
+import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/UserContext"
 import {
   CreateGroupInput,
   CreateResourceEpisodeInput,
@@ -52,7 +53,8 @@ interface Props {
   groupId: any
   route?: any
   showConfig?: boolean
-
+  userAction: UserActions
+  userState: UserState
   // isEditable: boolean
 }
 
@@ -83,6 +85,8 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       memberIDs: [],
     }
   }
+  static UserConsumer = UserContext.Consumer
+
   componentDidMount() {
     this.setState({
       resourceData: null,
@@ -170,7 +174,9 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       }) as GetGroupQueryResultPromise
       const processResults = (json: GetGroupQueryResult) => {
-        const isEditable = json.data.getGroup.owner == this.state.currentUser
+        const isEditable =
+          json.data.getGroup.owner == this.state.currentUser ||
+          this.props.userAction.isMemberOf("admin")
 
         this.setState(
           {
@@ -1164,5 +1170,16 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
 export default function ResourceViewer(props: Props): JSX.Element {
   const route = useRoute()
   const navigation = useNavigation()
-  return <ResourceViewerImpl {...props} navigation={navigation} route={route} />
+  return (
+    <UserContext.Consumer>
+      {({ userActions, userState }) => (
+        <ResourceViewerImpl
+          userAction={userActions}
+          userState={userState}
+          navigation={navigation}
+          route={route}
+        />
+      )}
+    </UserContext.Consumer>
+  )
 }
