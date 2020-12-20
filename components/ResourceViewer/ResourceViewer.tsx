@@ -50,11 +50,11 @@ Amplify.configure(awsconfig)
 
 interface Props {
   navigation?: any
-  groupId: any
+  groupId?: any
   route?: any
   showConfig?: boolean
-  userAction: UserActions
-  userState: UserState
+  userAction?: UserActions
+  userState?: UserState
   // isEditable: boolean
 }
 
@@ -1174,6 +1174,7 @@ export default function ResourceViewer(props: Props): JSX.Element {
     <UserContext.Consumer>
       {({ userActions, userState }) => (
         <ResourceViewerImpl
+          {...props}
           userAction={userActions}
           userState={userState}
           navigation={navigation}

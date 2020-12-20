@@ -913,7 +913,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     return (
       <ResourceContentImpl.Consumer>
         {({ resourceState, resourceActions }) => {
-          console.log(resourceState)
+          console.log({ resourceState: resourceState })
           if (!resourceState) return null
           if (resourceState.currentResource == null) return null
           return (
