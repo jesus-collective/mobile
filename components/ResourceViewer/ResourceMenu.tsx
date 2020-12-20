@@ -107,8 +107,8 @@ class ResourceMenu extends JCComponent<Props> {
                         placeholder="temp"
                         isEditable={resourceState.isEditable}
                         onPress={() => resourceActions.changeMenuItem(index)}
-                        inputStyle={this.headerStyles.style.centerMenuButtonsText}
-                        textStyle={this.headerStyles.style.centerMenuButtonsText}
+                        inputStyle={this.headerStyles.style.resourcesMenuButtonsText}
+                        textStyle={this.headerStyles.style.resourcesMenuButtonsText}
                         value={item.menuTitle ?? ""}
                       ></EditableButton>
                       {resourceState.isEditable ? (
