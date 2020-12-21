@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "function": {
+      "jcmobileGetOrgStripeSubs": [
+        "create",
+        "read",
+        "update"
+      ]
+    },
+    "auth": {
+      "jcmobile": [
+        "create",
+        "read",
+        "update"
+      ]
+    },
+    "api": {
+      "jcmobile": [
+        "read"
+      ],
+      "jcmobileAPI": [
+        "read"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}
