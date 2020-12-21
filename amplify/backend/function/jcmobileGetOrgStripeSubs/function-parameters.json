@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "api": {
+      "jcmobile": [
+        "read"
+      ],
+      "jcmobileAPI": [
+        "read"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "function": {
+      "jcmobileCreateCognitoOrgUser": [
+        "create",
+        "read",
+        "update"
+      ]
+    },
+    "auth": {
+      "jcmobile": [
+        "read"
+      ]
+    },
+    "api": {
+      "jcmobile": [
+        "read"
+      ],
+      "jcmobileAPI": [
+        "read"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

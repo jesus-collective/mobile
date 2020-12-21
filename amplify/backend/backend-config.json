@@ -175,6 +175,87 @@
           ]
         }
       ]
+    },
+    "jcmobileGetOrgStripeSubs": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "jcmobile",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ]
+        },
+        {
+          "category": "api",
+          "resourceName": "jcmobileAPI",
+          "attributes": [
+            "ApiName",
+            "ApiId"
+          ]
+        }
+      ]
+    },
+    "jcmobileCreateCognitoOrgUser": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileGetOrgStripeSubs",
+          "attributes": [
+            "Name"
+          ]
+        },
+        {
+          "category": "auth",
+          "resourceName": "jcmobile",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
+        {
+          "category": "api",
+          "resourceName": "jcmobileAPI",
+          "attributes": [
+            "ApiName",
+            "ApiId"
+          ]
+        }
+      ]
+    },
+    "jcmobileSendInviteToOrgUser": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "jcmobileCreateCognitoOrgUser",
+          "attributes": [
+            "Name"
+          ]
+        },
+        {
+          "category": "auth",
+          "resourceName": "jcmobile",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
+        {
+          "category": "api",
+          "resourceName": "jcmobileAPI",
+          "attributes": [
+            "ApiName",
+            "ApiId"
+          ]
+        }
+      ]
     }
   },
   "auth": {
