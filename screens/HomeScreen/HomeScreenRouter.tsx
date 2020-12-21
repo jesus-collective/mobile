@@ -54,31 +54,13 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
     this.setState({ user: user })
   }
   async componentDidMount(): Promise<void> {
-    this.setState(
-      {
-        groups: [],
-        hasCompletedPersonalProfile: "Unknown",
-        hasPaidState: "Unknown",
-        userExists: false,
-        user: null,
-        authState: this.props.authState,
-        hasCompletedOrganizationProfile: "Unknown",
-        orgId: "",
-        isOrg: false,
-        groupsLoaded: false,
-        initialAuthType: null,
-        idempotency: uuidv4(),
-      },
-      async () => {
-        try {
-          await this.updateGroups()
-        } catch (e) {
-          console.log(e)
-        }
-        this.getAuthInitialState()
-        this.performStartup()
-      }
-    )
+    try {
+      await this.updateGroups()
+    } catch (e) {
+      console.log(e)
+    }
+    this.getAuthInitialState()
+    this.performStartup()
   }
   isMemberOf = (group: string): boolean => {
     if (this.state.groups) return this.state.groups.includes(group)
