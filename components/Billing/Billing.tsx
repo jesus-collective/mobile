@@ -1,37 +1,35 @@
-import React, { useState } from "react"
-import Amplify from "aws-amplify"
-import awsConfig from "../../src/aws-exports"
-Amplify.configure(awsConfig)
-import { ActivityIndicator, View } from "react-native"
+import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { AntDesign } from "@expo/vector-icons"
-import { Elements } from "@stripe/react-stripe-js"
+import { useNavigation, useRoute } from "@react-navigation/native"
+import {
+  CardCvcElement,
+  CardExpiryElement,
+  CardNumberElement,
+  Elements,
+  ElementsConsumer,
+} from "@stripe/react-stripe-js"
 import { loadStripe, Stripe, StripeElements } from "@stripe/stripe-js"
-import HandleStripePayment from "./HandleStripePayment"
-import { ElementsConsumer } from "@stripe/react-stripe-js"
-
-import { CardNumberElement, CardExpiryElement, CardCvcElement } from "@stripe/react-stripe-js"
-import "./CardSectionStyles.css"
-
-import { Label, Content, Card, CardItem, Body } from "native-base"
-import { Text } from "react-native"
+import Amplify, { API, Auth } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
-import * as customMutations from "../../src/graphql-custom/mutations"
-import * as mutations from "../../src/graphql/mutations"
-import { API, graphqlOperation } from "aws-amplify"
-import { Auth } from "aws-amplify"
-import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
-import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/UserContext"
+import { Body, Card, CardItem, Content, Label } from "native-base"
+import React, { useState } from "react"
+import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native"
+import { v4 as uuidv4 } from "uuid"
+import EditableRichText from "../../components/Forms/EditableRichText"
+import EditableText from "../../components/Forms/EditableText"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
-import { TouchableOpacity } from "react-native"
-import * as queries from "../../src/graphql/queries"
-import { v4 as uuidv4 } from "uuid"
+import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
+import JCSwitch from "../../components/JCSwitch/JCSwitch"
+import { UserContext } from "../../screens/HomeScreen/UserContext"
 import { GetProductQuery, GetUserQuery, ListProductsQuery } from "../../src/API"
-import { GraphQLResult } from "@aws-amplify/api/lib/types"
-import EditableText from "../../components/Forms/EditableText"
-
-import EditableRichText from "../../components/Forms/EditableRichText"
-import { useNavigation, useRoute } from "@react-navigation/native"
+import awsConfig from "../../src/aws-exports"
+import * as customMutations from "../../src/graphql-custom/mutations"
+import * as mutations from "../../src/graphql/mutations"
+import * as queries from "../../src/graphql/queries"
+import "./CardSectionStyles.css"
+import HandleStripePayment from "./HandleStripePayment"
+Amplify.configure(awsConfig)
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -63,6 +61,8 @@ interface State extends JCState {
   currentProduct: NonNullable<ListProductsQuery["listProducts"]>["items"]
   joinedProduct: string[]
   idempotency: string
+  eula: boolean
+  showEULA: boolean
   quantities: number[][]
   invoice: any
   processing: "entry" | "processing" | "complete"
@@ -74,9 +74,11 @@ class BillingImpl extends JCComponent<Props, State> {
       ...super.getInitialState(),
       showSubscriptionSelector: false,
       products: [],
+      showEULA: false,
       currentProduct: [],
       idempotency: uuidv4(),
       processing: "entry",
+      eula: false,
       joinedProduct: props.route?.params?.joinedProduct
         ? props.route?.params?.joinedProduct == "null"
           ? []
@@ -207,7 +209,7 @@ class BillingImpl extends JCComponent<Props, State> {
       {
         showSubscriptionSelector: false,
         currentProduct: this.state.currentProduct?.concat(product),
-        quantities: this.state.quantities.concat(1),
+        quantities: [Array(product.tiered?.length).fill(1)],
         invoice: null,
       },
       () => {
@@ -324,6 +326,19 @@ class BillingImpl extends JCComponent<Props, State> {
       }
     )
   }
+  renderEULA() {
+    return (
+      <JCModal
+        visible={this.state.showEULA}
+        title="EULA"
+        onHide={() => {
+          this.setState({ showEULA: false })
+        }}
+      >
+        <Text>EULA</Text>
+      </JCModal>
+    )
+  }
   renderProduct(item, index: number) {
     return (
       <View
@@ -357,20 +372,33 @@ class BillingImpl extends JCComponent<Props, State> {
         >
           <AntDesign name="close" size={20} color="black" />
         </TouchableOpacity>
+        {item.stripeIsTiered && (
+          <Text
+            style={{
+              fontFamily: "Graphik-Bold-App",
+              color: "#F0493E",
+            }}
+          >
+            ${item.price.toFixed(2)}/{item.pricePer}
+          </Text>
+        )}
 
-        <Text
-          style={{
-            fontFamily: "Graphik-Bold-App",
-            color: "#F0493E",
-          }}
-        >
-          ${item.price.toFixed(2)}/{item.pricePer}
-        </Text>
         {!item.stripeIsTiered
           ? item.tiered.map((item, index2: number) => {
               return (
-                <>
-                  <Text>{item.name}</Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Text
+                    style={{
+                      marginTop: 5,
+                      marginBottom: 5,
+                      paddingTop: 5,
+                      paddingBottom: 5,
+                      paddingRight: 10,
+                      paddingLeft: 5,
+                    }}
+                  >
+                    {item.name}
+                  </Text>
                   <EditableText
                     placeholder="Quantity"
                     multiline={false}
@@ -396,10 +424,27 @@ class BillingImpl extends JCComponent<Props, State> {
                     value={this.state.quantities[index][index2].toString()}
                     isEditable={true}
                   ></EditableText>
-                </>
+                </View>
               )
             })
           : null}
+        <JCSwitch
+          containerWidth={500}
+          switchLabel="I accept the EULA"
+          initState={this.state.eula}
+          onPress={(e) => {
+            this.setState({ eula: e })
+          }}
+        ></JCSwitch>
+        <JCButton
+          buttonType={ButtonTypes.TransparentNoPadding}
+          onPress={() => {
+            this.setState({ showEULA: true })
+          }}
+        >
+          Read EULA
+        </JCButton>
+        {this.renderEULA()}
         {/*
             <EditableRichText
               value={item.marketingDescription}
@@ -470,7 +515,8 @@ class BillingImpl extends JCComponent<Props, State> {
       billingAddress.state?.length > 0 &&
       billingAddress.country?.length > 0 &&
       billingAddress.city?.length > 0 &&
-      billingAddress.postal_code?.length > 0
+      billingAddress.postal_code?.length > 0 &&
+      this.state.eula == true
     )
   }
   async completePaymentProcess(actions: UserActions, state: UserState) {
@@ -755,6 +801,32 @@ class BillingImpl extends JCComponent<Props, State> {
                         return this.renderProduct(item, index)
                       })}
 
+                      {this.state.invoice?.lines?.data.map((line) => {
+                        return (
+                          <View style={this.styles.style.flexRow}>
+                            <Text
+                              style={{
+                                fontFamily: "Graphik-Regular-App",
+                                paddingTop: 10,
+                                paddingBottom: 10,
+                                paddingLeft: 45,
+                                paddingRight: 45,
+                              }}
+                            >
+                              {line.description}
+                            </Text>
+                            <Text
+                              style={{
+                                fontFamily: "Graphik-Bold-App",
+                                paddingTop: 10,
+                                paddingBottom: 10,
+                              }}
+                            >
+                              ${(line.amount / 100).toFixed(2)}
+                            </Text>
+                          </View>
+                        )
+                      })}
                       <View style={this.styles.style.flexRow}>
                         <Text
                           style={{
@@ -762,7 +834,7 @@ class BillingImpl extends JCComponent<Props, State> {
                             paddingTop: 10,
                             paddingBottom: 10,
                             paddingLeft: 45,
-                            paddingRight: 145,
+                            paddingRight: 45,
                           }}
                         >
                           Total
