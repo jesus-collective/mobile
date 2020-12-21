@@ -83,6 +83,17 @@ export default class HeaderStyles {
 
                 },
             },
+            resourcesMenuButtonsText: {
+                color: '#666666',
+                fontSize: 14,
+                lineHeight: 21,
+                fontWeight: 'normal',
+                marginLeft: "6rem",
+
+                '@media only screen and (max-width: 600px)': {
+                    display: "none",
+                },
+            },
             dropdownText: {
                 fontFamily: 'Graphik-Regular-App',
                 fontSize: 16,

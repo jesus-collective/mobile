@@ -27,7 +27,8 @@ class ResourceRichText extends JCComponent<Props> {
             tmp.title1 = val
             page.setState({ settings: tmp })
           }}
-          textStyle={{ margin: 10 }}
+          textStyle={{ margin: 10, fontSize: 18, fontStyle: 'normal', fontWeight: 400, lineHeight: 27, letterSpacing: 0, textAlign: 'left', color: '#404040',
+             }}
           inputStyle={{ margin: 10 }}
           value={page.state.settings.title1}
           isEditable={true}
@@ -50,8 +51,8 @@ class ResourceRichText extends JCComponent<Props> {
         {/* */}
 
         <EditableRichText
-          textStyle={{ margin: 10 }}
-          inputStyle={{ margin: 10 }}
+          textStyle={{ margin: 10, fontSize: 18, lineHeight: 27, fontWeight: 400, color: '#404040' }}
+          inputStyle={{ margin: 10, fontSize: 18, lineHeight: 27, fontWeight: 400, color: '#404040' }}
           value={this.props.pageItem.title1}
           isEditable={false}
         ></EditableRichText>

@@ -224,7 +224,7 @@ class ResourceHeader extends JCComponent<Props, State> {
                 <EditableText
                   multiline={false}
                   placeholder="Subtitle"
-                  inputStyle={this.styles.style.fontResourceHeaderBold}
+                  inputStyle={this.styles.style.fontResourceHeaderDescription}
                   textStyle={[
                     this.styles.style.fontResourceHeaderDescription,
                     { color: this.props.pageItem.color ?? "#000000" },

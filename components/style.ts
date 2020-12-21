@@ -564,7 +564,7 @@ export default class MainStyles {
                 fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 24, lineHeight: 30, height: 60, color: '#333333'
             },
             groupsLoadMoreFont: {
-                fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 16, lineHeight: 24, height: '100%', color: '#333333'
+                fontFamily: 'Graphik-Bold-App', fontWeight: 'bold', fontSize: 16, lineHeight: 24, height: '100%', color: '#000000'
 
             },
             conversationsLoadMoreFont: {
@@ -624,15 +624,14 @@ export default class MainStyles {
             },
             fontResourceHeaderBold: {
                 fontFamily: 'Graphik-Regular-App',
-                fontWeight: "400",
-                fontSize: 45,
-                lineHeight: 45,
+                fontWeight: "600",
+                fontSize: 54,
+                lineHeight: 54,
                 alignSelf: "center",
                 textAlign: "center",
                 color: "#000",
                 width: "100%",
-                height: 85,
-                paddingTop: 25
+                marginBottom: 5,
             },
             resourceHeaderAgeGroupBox: {
                 height: "58px",
@@ -689,13 +688,12 @@ export default class MainStyles {
             fontResourceHeaderDescription: {
                 fontFamily: 'Graphik-Regular-App',
                 fontWeight: "normal",
-                fontSize: 20,
-                lineHeight: 30,
+                fontSize: 18,
+                lineHeight: 27,
                 textAlign: "center",
                 color: "#000",
                 width: "100%",
                 alignSelf: "center",
-                height: 85
             },
             fontConnectWith: {
                 fontFamily: 'Graphik-Bold-App',
@@ -1507,6 +1505,7 @@ export default class MainStyles {
                     shadowOffset: {"width":0,"height":0},
                     shadowColor: "rgba(0, 0, 0, 0.19)",
                     shadowRadius: 30,
+                    justifyContent: 'center',
                 } :
                 {
                     alignSelf: "center",
