@@ -9,6 +9,7 @@ export type AuthStateData = {
     fromVerified?: boolean;
     email?: string;
     joinedProduct?: string;
+    productType:"Partner"|"OneStory"|null
   }|null;
 
 export type GetUserQueryResult = GraphQLResult<GetUserQuery>

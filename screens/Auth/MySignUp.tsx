@@ -1,27 +1,27 @@
-import React from "react"
-import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
+import { Entypo } from "@expo/vector-icons"
+import { useNavigation, useRoute } from "@react-navigation/native"
+import { Auth } from "aws-amplify"
+import countryDialCodes from "aws-amplify-react-native/src/CountryDialCodes"
 import { View } from "native-base"
+import React from "react"
 import {
-  Platform,
-  TextInput,
-  Text,
+  ActivityIndicator,
+  Dimensions,
   NativeSyntheticEvent,
-  TextInputKeyPressEventData,
   Picker,
+  Platform,
+  Text,
+  TextInput,
+  TextInputKeyPressEventData,
   TouchableOpacity,
 } from "react-native"
-import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
-import { Entypo } from "@expo/vector-icons"
-import { Dimensions, ActivityIndicator } from "react-native"
-import MainStyles from "../../components/style"
-import countryDialCodes from "aws-amplify-react-native/src/CountryDialCodes"
-import { Auth } from "aws-amplify"
+import { AuthStateData } from "src/types"
 import { Copyright } from "../../components/Auth/Copyright"
-import { navigationRef } from "../../screens/HomeScreen/NavigationRoot"
+import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
+import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
+import MainStyles from "../../components/style"
 import * as RootNavigation from "../../screens/HomeScreen/NavigationRoot"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
-import { useNavigation, useRoute } from "@react-navigation/native"
-import { AuthStateData } from "src/types"
 
 interface Props {
   navigation?: any
@@ -43,6 +43,7 @@ interface State {
   enabled: boolean
   joinedAs: "individual" | "organization" | null
   joinedProduct: string
+  productType: "Partner" | "OneStory" | null
   sendingData: boolean
 }
 
@@ -65,6 +66,7 @@ class MySignUpImpl extends React.Component<Props, State> {
       enabled: false,
       joinedAs: props.route?.params.joinedAs,
       joinedProduct: props.route?.params.joinedProduct,
+      productType: props.route?.params.productType,
       sendingData: false,
     }
     console.log({ PARAMS: props.route })
@@ -87,6 +89,7 @@ class MySignUpImpl extends React.Component<Props, State> {
       enabled: false,
       joinedAs: null,
       joinedProduct: this.props.route?.params.joinedProduct,
+      productType: this.props.route?.params.productType,
       sendingData: false,
     })
     if (actions.onStateChange) actions.onStateChange(state, data)
@@ -150,6 +153,7 @@ class MySignUpImpl extends React.Component<Props, State> {
       }).then(() =>
         this.changeAuthState(actions, "confirmSignUp", {
           joinedProduct: this.state.joinedProduct,
+          productType: this.state.productType,
           email: this.state.user.email.toLowerCase(),
         })
       )
@@ -202,6 +206,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                       onPress={() => {
                         this.changeAuthState(userActions, "signIn", {
                           joinedProduct: this.state.joinedProduct,
+                          productType: this.state.productType,
                         })
                       }}
                     >
@@ -473,6 +478,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                           onPress={() =>
                             this.changeAuthState(userActions, "confirmSignUp", {
                               joinedProduct: this.state.joinedProduct,
+                              productType: this.state.productType,
                             })
                           }
                         >
@@ -787,6 +793,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                           onPress={() =>
                             this.changeAuthState(userActions, "confirmSignUp", {
                               joinedProduct: this.state.joinedProduct,
+                              productType: this.state.productType,
                             })
                           }
                         >

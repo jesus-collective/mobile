@@ -21,7 +21,7 @@ import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
-import { UserContext } from "../../screens/HomeScreen/UserContext"
+import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/UserContext"
 import { GetProductQuery, GetUserQuery, ListProductsQuery } from "../../src/API"
 import awsConfig from "../../src/aws-exports"
 import * as customMutations from "../../src/graphql-custom/mutations"
@@ -60,6 +60,7 @@ interface State extends JCState {
   userData: NonNullable<GetUserQuery>["getUser"]
   currentProduct: NonNullable<ListProductsQuery["listProducts"]>["items"]
   joinedProduct: string[]
+  productType: "Partner" | "OneStory" | null
   idempotency: string
   eula: boolean
   showEULA: boolean
@@ -79,12 +80,14 @@ class BillingImpl extends JCComponent<Props, State> {
       idempotency: uuidv4(),
       processing: "entry",
       eula: false,
+      productType: props.route?.params?.productType,
       joinedProduct: props.route?.params?.joinedProduct
         ? props.route?.params?.joinedProduct == "null"
           ? []
           : props.route?.params?.joinedProduct.split(",")
         : [],
     }
+    console.log({ productType: props.route?.params?.productType })
     console.log({ joinedProduct: this.state.joinedProduct })
     this.setInitialData()
   }
@@ -219,7 +222,7 @@ class BillingImpl extends JCComponent<Props, State> {
   }
 
   static UserConsumer = UserContext.Consumer
-  renderAddProductModal(): React.ReactNode {
+  renderAddProductModal(userState: UserState): React.ReactNode {
     return (
       <JCModal
         visible={this.state.showSubscriptionSelector}
@@ -232,7 +235,10 @@ class BillingImpl extends JCComponent<Props, State> {
           <Content>
             {this.state.products?.map(
               (product: NonNullable<GetProductQuery>["getProduct"], index: number) => {
-                return (
+                const showProduct =
+                  (userState.isOrg && product?.isOrgTier) ||
+                  (!userState.isOrg && product?.isIndividualTier)
+                return showProduct ? (
                   <TouchableOpacity
                     key={index}
                     onPress={() => {
@@ -268,7 +274,7 @@ class BillingImpl extends JCComponent<Props, State> {
                       </CardItem>
                     </Card>
                   </TouchableOpacity>
-                )
+                ) : null
               }
             )}
           </Content>
@@ -445,13 +451,6 @@ class BillingImpl extends JCComponent<Props, State> {
           Read EULA
         </JCButton>
         {this.renderEULA()}
-        {/*
-            <EditableRichText
-              value={item.marketingDescription}
-              isEditable={false}
-              textStyle=""
-            ></EditableRichText>
-            */}
       </View>
     )
   }
@@ -574,6 +573,38 @@ class BillingImpl extends JCComponent<Props, State> {
                     }}
                   >
                     <View style={this.styles.style.signUpScreen1PaymentColumn1}>
+                      {this.state.productType == "OneStory" && (
+                        <Text>
+                          You are in the right place to sign up for One Story Curriculum! One Story
+                          is excited to partner with Jesus Collective in this tangible way and
+                          provide our curriculum through the Jesus Collective platform. Through this
+                          platform, you not only access these great discipleship resources for kids
+                          and youth in a super easy to use way, but you also get the benefit of
+                          having meaningful interaction and engagement with other One Story users to
+                          give feedback, share ideas and more.
+                          <br />
+                          <br />
+                          What is Jesus Collective, you ask? Jesus Collective is a relational
+                          Jesus-centred network that provides a place of belonging, learning and
+                          resourcing for like-minded churches and leaders, develops and supports
+                          future ready leaders, and equips churches to make more disciples in a
+                          post-Christian context. Jesus Collective wants to give greater voice and
+                          visibility to this Jesus-centred, third-way movement God is raising up
+                          around the world. Isn’t that exciting?
+                          <br />
+                          <br />
+                          Learn more here:{" "}
+                          <a href="https://jesuscollective.com">jesuscollective.com.</a>
+                          <br />
+                          <br />
+                          <a href="https://jesuscollective.com/get-involved">
+                            Apply for Partnerships
+                          </a>
+                          <br />
+                          <br />
+                          <br />
+                        </Text>
+                      )}
                       <Text
                         style={{
                           fontFamily: "Graphik-Bold-App",
@@ -863,7 +894,7 @@ class BillingImpl extends JCComponent<Props, State> {
                       </JCButton>
                     </View>
                   </Content>
-                  {this.renderAddProductModal()}
+                  {this.renderAddProductModal(userState)}
                 </>
               )
             }}

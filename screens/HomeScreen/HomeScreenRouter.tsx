@@ -447,6 +447,10 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
             <MainStack.Screen
               name="mainApp"
               component={MainDrawerRouter}
+              initialParams={{
+                screen: this.state.initialAuthType,
+                params: this.state.initialParams,
+              }}
               options={{ title: "Jesus Collective" }}
             />
           </MainStack.Navigator>

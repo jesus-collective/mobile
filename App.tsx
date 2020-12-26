@@ -1,24 +1,21 @@
-import React, { lazy, Suspense } from "react"
-import Amplify from "aws-amplify"
-import awsConfig from "./src/aws-exports"
-import { AppLoading, Linking } from "expo"
+import { Ionicons } from "@expo/vector-icons"
+import { NavigationProp } from "@react-navigation/native"
+import Amplify, { I18n } from "aws-amplify"
+import { Authenticator } from "aws-amplify-react-native"
+import { Linking } from "expo"
 import { Asset } from "expo-asset"
 import * as Font from "expo-font"
-import EStyleSheet from "react-native-extended-stylesheet"
-import { Authenticator } from "aws-amplify-react-native"
 import { View } from "native-base"
-import { Dimensions } from "react-native"
-import { Platform } from "react-native"
-import { I18n } from "aws-amplify"
-import { Ionicons } from "@expo/vector-icons"
-import HomeScreen from "./screens/HomeScreen/index"
-import { navigationRef } from "./screens/HomeScreen/NavigationRoot"
-import * as RootNavigation from "./screens/HomeScreen//NavigationRoot"
+import React, { lazy, Suspense } from "react"
+import { Dimensions, Platform } from "react-native"
+import EStyleSheet from "react-native-extended-stylesheet"
 import { AuthStateData } from "src/types"
-import Sentry from "./components/Sentry"
-import { version } from "./src/version"
 import JCComponent, { JCState } from "./components/JCComponent/JCComponent"
-import { NavigationProp } from "@react-navigation/native"
+import Sentry from "./components/Sentry"
+import * as RootNavigation from "./screens/HomeScreen//NavigationRoot"
+import HomeScreen from "./screens/HomeScreen/index"
+import awsConfig from "./src/aws-exports"
+import { version } from "./src/version"
 
 let env = "unknown"
 if (window.location === undefined) env = "mobile"
@@ -148,6 +145,7 @@ class AwesomeApp extends JCComponent<Props, State> {
         screen: "Payment1",
         params: {
           joinedProduct: data?.joinedProduct,
+          productType: data?.productType,
         },
       })
   }
