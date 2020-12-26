@@ -672,6 +672,13 @@ export enum ResourcePageItemStyle {
   Column5050 = "Column5050",
   CardManual = "CardManual",
   CardAuto = "CardAuto",
+  RichTextH1 = "RichTextH1",
+  RichTextH2 = "RichTextH2",
+  RichTextH3 = "RichTextH3",
+  RichTextH4 = "RichTextH4",
+  RichTextBody1 = "RichTextBody1",
+  RichTextBody2 = "RichTextBody2",
+  RichTextBody3 = "RichTextBody3",
 }
 
 

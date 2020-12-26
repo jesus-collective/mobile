@@ -1,6 +1,7 @@
 import Amplify from "aws-amplify"
-import { View } from "native-base"
+import { Picker, View } from "native-base"
 import React from "react"
+import { ResourcePageItemStyle } from "src/API"
 import EditableRichText from "../../components/Forms/EditableRichText"
 import awsconfig from "../../src/aws-exports"
 import { ResourceSetupProp } from "../../src/types"
@@ -21,14 +22,47 @@ class ResourceRichText extends JCComponent<Props> {
   static renderAdmin(page: PageItemSettings): React.ReactNode {
     return (
       <>
+        <Picker
+          mode="dropdown"
+          style={{
+            width: "100%",
+            marginTop: 10,
+            marginBottom: 30,
+            fontSize: 16,
+            height: 30,
+            flexGrow: 0,
+            paddingTop: 3,
+            paddingBottom: 3,
+          }}
+          selectedValue={page.state.settings.style}
+          onValueChange={(value: any) => {
+            const tmp = page.state.settings
+            tmp.style = value
+            page.setState({ settings: tmp })
+          }}
+        >
+          {Object.keys(ResourcePageItemStyle)
+            .filter((z) => z.startsWith("RichText"))
+            .map((org) => {
+              return <Picker.Item key={org} label={org} value={org} />
+            })}
+        </Picker>
         <EditableRichText
           onChange={(val: string) => {
             const tmp = page.state.settings
             tmp.title1 = val
             page.setState({ settings: tmp })
           }}
-          textStyle={{ margin: 10, fontSize: 18, fontStyle: 'normal', fontWeight: 400, lineHeight: 27, letterSpacing: 0, textAlign: 'left', color: '#404040',
-             }}
+          textStyle={{
+            margin: 10,
+            fontSize: 18,
+            fontStyle: "normal",
+            fontWeight: 400,
+            lineHeight: 27,
+            letterSpacing: 0,
+            textAlign: "left",
+            color: "#404040",
+          }}
           inputStyle={{ margin: 10 }}
           value={page.state.settings.title1}
           isEditable={true}
@@ -38,6 +72,25 @@ class ResourceRichText extends JCComponent<Props> {
   }
 
   render(): React.ReactNode {
+    let textStyle
+    switch (this.props.pageItem.style) {
+      case ResourcePageItemStyle.RichTextH1:
+        textStyle = this.styles.style.resourceRichTextH1
+      case ResourcePageItemStyle.RichTextH2:
+        textStyle = this.styles.style.resourceRichTextH2
+      case ResourcePageItemStyle.RichTextH3:
+        textStyle = this.styles.style.resourceRichTextH3
+      case ResourcePageItemStyle.RichTextH4:
+        textStyle = this.styles.style.resourceRichTextH4
+      case ResourcePageItemStyle.RichTextBody1:
+        textStyle = this.styles.style.resourceRichTextBody1
+      case ResourcePageItemStyle.RichTextBody2:
+        textStyle = this.styles.style.resourceRichTextBody2
+      case ResourcePageItemStyle.RichTextBody3:
+        textStyle = this.styles.style.resourceRichTextBody3
+      default:
+        textStyle = this.styles.style.resourceRichTextBody1
+    }
     return (
       <View>
         <PageItemSettings
@@ -51,8 +104,8 @@ class ResourceRichText extends JCComponent<Props> {
         {/* */}
 
         <EditableRichText
-          textStyle={{ margin: 10, fontSize: 18, lineHeight: 27, fontWeight: 400, color: '#404040' }}
-          inputStyle={{ margin: 10, fontSize: 18, lineHeight: 27, fontWeight: 400, color: '#404040' }}
+          textStyle={textStyle}
+          inputStyle={textStyle}
           value={this.props.pageItem.title1}
           isEditable={false}
         ></EditableRichText>

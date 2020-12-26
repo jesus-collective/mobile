@@ -866,6 +866,15 @@ enum ResourcePageItemStyle{
   Column5050
   CardManual
   CardAuto
+  RichTextH1
+  RichTextH2
+  RichTextH3
+  RichTextH4
+  RichTextBody1
+  RichTextBody2
+  RichTextBody3
+
+
 }
 type ResourcePageItem{
   id:ID
