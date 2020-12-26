@@ -1544,7 +1544,7 @@ export default class MainStyles {
             resourcefileFieldWrapper: Platform.OS === 'web' ?
                 {
                     alignSelf: "center",
-                    top: "5vw",
+                    top: "24vw",
                     width: "75%",
                     overflow: "none",
                     position: "absolute",
