@@ -1,23 +1,31 @@
+import { GraphQLResult } from "@aws-amplify/api/lib/types"
+import { Ionicons, MaterialIcons } from "@expo/vector-icons"
+import { API, Auth, graphqlOperation } from "aws-amplify"
+import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import { MapData } from "components/MyGroups/MyGroups"
+import moment from "moment"
+import { Button, Container, Content, Text } from "native-base"
 import React from "react"
-import { Container, Content, Text, Button } from "native-base"
+import { isMobile } from "react-device-detect"
+import { Picker, TextInput, View } from "react-native"
+import {
+  CreateOrganizationInput,
+  CreateOrganizationMemberInput,
+  CreateUserInput,
+  GetProductQuery,
+} from "src/API"
+import { v4 as uuidv4 } from "uuid"
+import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
+import JCModal from "../../components/Forms/JCModal"
 import Header from "../../components/Header/Header"
 import HeaderAdmin from "../../components/HeaderAdmin/HeaderAdmin"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
-import { MapData } from "components/MyGroups/MyGroups"
-import { Auth, API, graphqlOperation } from "aws-amplify"
-import { View, TextInput, Modal, Picker } from "react-native"
-import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
-import * as queries from "../../src/graphql/queries"
-import * as customQueries from "../../src/graphql-custom/queries"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
-import * as mutations from "../../src/graphql/mutations"
-import { GetProductQuery } from "src/API"
-import JCModal from "../../components/Forms/JCModal"
-import { isMobile } from "react-device-detect"
-import { Ionicons } from "@expo/vector-icons"
-import { MaterialIcons } from "@expo/vector-icons"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
+import * as customQueries from "../../src/graphql-custom/queries"
+import * as mutations from "../../src/graphql/mutations"
+import * as queries from "../../src/graphql/queries"
+import { InviteType } from "../../src/types"
 
 interface Props {
   navigation: any
@@ -30,21 +38,21 @@ interface State extends JCState {
   data: any
   invite: string
   showGroups: boolean
-  showGroupsId: string
+  showGroupsId: string | null
   groupData: []
   showUid: boolean
   showEmail: boolean
   showPhone: boolean
   showStatus: boolean
-  groupToAdd: string
+  groupToAdd: string | null
   groupList: any
   paymentsData: []
   showPayments: boolean
-  showPaymentsId: string
+  showPaymentsId: string | null
   productList: []
   showInvite: boolean
-  inviteType: string
-  inviteData: string
+  inviteType: InviteType | null
+  inviteData: string | null
   inviteDataList: any
 }
 
@@ -65,7 +73,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
       showStatus: true,
       groupToAdd: null,
       showInvite: false,
-      inviteType: null,
+      inviteType: InviteType.JC,
       inviteData: null,
       inviteDataList: [],
       groupList: [
@@ -80,7 +88,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
     }
     this.setInitialData()
   }
-  async getUsers(nextToken: string) {
+  async getUsers(nextToken: string | null) {
     console.log("getUsers")
     const data = await this.listUsers(40, nextToken)
     console.log({ data: data })
@@ -97,7 +105,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
     console.log(listProducts)
     this.setState({ productList: listProducts.data.listProducts.items })
   }
-  async listUsers(limit: number, nextToken: string): Promise<any> {
+  async listUsers(limit: number, nextToken: string | null): Promise<any> {
     const apiName = "AdminQueries"
     const path = "/listUsers"
     const myInit = {
@@ -117,15 +125,15 @@ export default class AdminScreen extends JCComponent<Props, State> {
     return { nextToken, ...rest }
   }
 
-  async removeUserFromGroup(user: string, groupname: string) {
+  async removeUserFromGroup(user: string, groupName: string) {
     console.log(user)
-    console.log(groupname)
+    console.log(groupName)
     const apiName = "AdminQueries"
     const path = "/removeUserFromGroup"
     const myInit = {
       body: {
         username: user,
-        groupname: groupname,
+        groupname: groupName,
       },
       headers: {
         "Content-Type": "application/json",
@@ -135,15 +143,15 @@ export default class AdminScreen extends JCComponent<Props, State> {
     const { ...rest } = await API.post(apiName, path, myInit)
     return rest
   }
-  async addUserToGroup(user: string, groupname: string) {
+  async addUserToGroup(user: string, groupName: string) {
     console.log(user)
-    console.log(groupname)
+    console.log(groupName)
     const apiName = "AdminQueries"
     const path = "/addUserToGroup"
     const myInit = {
       body: {
         username: user,
-        groupname: groupname,
+        groupname: groupName,
       },
       headers: {
         "Content-Type": "application/json",
@@ -173,7 +181,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
     return z
   }
 
-  async listGroupsForUser(user: string, limit: number, nextToken: string): Promise<any> {
+  async listGroupsForUser(user: string, limit: number, nextToken: string | null): Promise<any> {
     const apiName = "AdminQueries"
     const path = "/listGroupsForUser"
     const myInit = {
@@ -295,7 +303,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
     this.setState({
       paymentsData: [],
       showPaymentsId: null,
-      showPayments: null,
+      showPayments: false,
     })
   }
   async addPayment(user: string, group: string): Promise<void> {
@@ -322,7 +330,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
     this.setState({
       paymentsData: [],
       showPaymentsId: null,
-      showPayments: null,
+      showPayments: false,
     })
 
     //await this.//addUserToGroup(user, group)
@@ -344,11 +352,11 @@ export default class AdminScreen extends JCComponent<Props, State> {
       showGroupsId: null,
     })
   }
-  async removeGroup(user, group): Promise<void> {
+  async removeGroup(user: string, group: string): Promise<void> {
     await this.removeUserFromGroup(user, group)
     this.showGroups(this.state.showGroupsId)
   }
-  async addGroup(user, group): Promise<void> {
+  async addGroup(user: string, group: string): Promise<void> {
     await this.addUserToGroup(user, group)
     this.showGroups(this.state.showGroupsId)
   }
@@ -453,12 +461,151 @@ export default class AdminScreen extends JCComponent<Props, State> {
       </View>
     )
   }
-  async sendInvite(email: string, inviteType: string): Promise<void> {
+  async createUser(user): Promise<void> {
+    let userExists = false
+
+    if (user != null) {
+      const { attributes } = user
+      const handleUser = async (getUser: any) => {
+        if (getUser.data.getUser === null) {
+          console.log("Trying to create")
+          const inputData: CreateUserInput = {
+            id: user["username"],
+            given_name: attributes["given_name"],
+            family_name: attributes["family_name"],
+            email: attributes["email"],
+            phone: attributes["phone_number"],
+            profileState: "Incomplete",
+            orgName: attributes["custom:orgName"],
+            billingAddress: {},
+            alertConfig: {
+              emailDirectMessage: "true",
+              emailGroupMessage: "true",
+              emailEventMessage: "true",
+              emailOrgMessage: "true",
+              emailResourceMessage: "true",
+              emailCourseMessage: "true",
+              emailPromotions: "true",
+            },
+            joined: moment().format(),
+          }
+
+          try {
+            const createUser: any = await API.graphql({
+              query: mutations.createUser,
+              variables: {
+                input: inputData,
+              },
+              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+            })
+
+            userExists = true
+            console.log({ createUser: createUser })
+          } catch (e) {
+            console.log({ error: e })
+          }
+        } else {
+          userExists = true
+          console.log("User exists")
+        }
+
+        if (attributes["custom:isOrg"] === "true" && getUser) {
+          if (getUser?.data.getUser.organizations.items.length === 0) {
+            console.log("creating Organization")
+            const id = `organization-${Date.now()}`
+            const orgInput: CreateOrganizationInput = {
+              id: id,
+              orgName: attributes["custom:orgName"],
+              adminEmail: attributes["email"],
+              phone: attributes["phone_number"],
+              profileState: "Incomplete",
+              admins: [user["username"]],
+              superAdmin: user["username"],
+              parentOrganizationId: id,
+              joined: moment().format(),
+            }
+
+            let orgId = ""
+
+            try {
+              const createOrg: any = await API.graphql({
+                query: mutations.createOrganization,
+                variables: {
+                  input: orgInput,
+                },
+                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+              })
+              console.log({ createOrg: createOrg })
+              orgId = createOrg.data.createOrganization.id
+            } catch (e) {
+              if (e?.data?.createOrganization) orgId = e.data.createOrganization.id
+              console.error({ error: e })
+            }
+
+            const orgMember: CreateOrganizationMemberInput = {
+              userRole: "superAdmin",
+              userId: user["username"],
+              organizationId: orgId,
+            }
+
+            try {
+              const createOrgMember: any = await API.graphql({
+                query: mutations.createOrganizationMember,
+                variables: {
+                  input: orgMember,
+                },
+                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+              })
+              console.log({ createOrgMember: createOrgMember })
+            } catch (e) {
+              console.log({ error: e })
+            }
+          } else if (
+            getUser?.data?.getUser?.organizations?.items[0]?.organizationId &&
+            getUser?.data.getUser.organizations.items.length === 1
+          ) {
+            console.log("Organization exists: setting organization id")
+          } else {
+            console.error("error finding or creating user's organization")
+          }
+        }
+      }
+      const z: any = API.graphql(graphqlOperation(queries.getUser, { id: user["username"] }))
+      await z.then(handleUser).catch(handleUser)
+
+      console.log({ userExists: userExists })
+    }
+  }
+  async sendInvite(email: string, inviteType: InviteType): Promise<void> {
     console.log({ "inviting:": email })
     let z = await this.adminCreateUser(email.toLowerCase())
     await this.addUserToGroup(z.User.Username, "verifiedUsers")
-    if (inviteType == "course") {
+    if (inviteType == InviteType.course) {
       await this.addUserToGroup(z.User.Username, "courseUser")
+    }
+    await this.createUser(z.User)
+    await this.createStripeUser(z.User)
+  }
+  async createStripeUser(user) {
+    try {
+      console.log(user)
+      const customer: any = await API.graphql({
+        query: mutations.createCustomer,
+        variables: {
+          idempotency: uuidv4(),
+          firstName: user.attributes.given_name,
+          lastName: user.attributes.family_name,
+          email: user.attributes.email,
+          phone: user.attributes.phone_number,
+        },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+      })
+      console.log({ customer: customer })
+      return true
+      //customerId = customer.data.createCustomer.customer.id;
+    } catch (e) {
+      console.log(e)
+      return false
     }
   }
   renderGroupsModal(): React.ReactNode {
@@ -662,14 +809,14 @@ export default class AdminScreen extends JCComponent<Props, State> {
             }}
           >
             <Picker.Item value={null} label="pick a group to add" />
-            <Picker.Item value="JC" label="Invite to Jesus Collective" />
-            <Picker.Item value="course" label="Invite to Course" />
-            <Picker.Item value="group" label="Invite to Group" />
-            <Picker.Item value="event" label="Invite to Event" />
-            <Picker.Item value="resource" label="Invite to Resource" />
+            <Picker.Item value={InviteType.JC} label="Invite to Jesus Collective" />
+            <Picker.Item value={InviteType.course} label="Invite to Course" />
+            <Picker.Item value={InviteType.group} label="Invite to Group" />
+            <Picker.Item value={InviteType.event} label="Invite to Event" />
+            <Picker.Item value={InviteType.resource} label="Invite to Resource" />
           </Picker>
 
-          {this.state.inviteType != null && this.state.inviteType != "JC" ? (
+          {this.state.inviteType != null && this.state.inviteType != InviteType.JC ? (
             <Picker
               selectedValue={this.state.inviteData}
               onValueChange={(val) => {
@@ -685,10 +832,13 @@ export default class AdminScreen extends JCComponent<Props, State> {
 
           <JCButton
             buttonType={ButtonTypes.Outline}
+            enabled={this.state.inviteType != null}
             onPress={() => {
-              this.sendInvite(this.state.invite, this.state.inviteType)
-              this.closeInvite()
-              this.setInitialData()
+              if (this.state.inviteType != null) {
+                this.sendInvite(this.state.invite, this.state.inviteType)
+                this.closeInvite()
+                this.setInitialData()
+              }
             }}
           >
             Send Invite

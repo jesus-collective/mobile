@@ -30,6 +30,7 @@
       "dmusers",
       "forgotpassword",
       "geocode",
+      "groupname",
       "idempotency",
       "jcmobile",
       "jesuscollective",
@@ -39,6 +40,7 @@
       "signin",
       "signup",
       "sylabus",
+      "testid",
       "uncollectible",
       "uuidv",
       "verifycontact"

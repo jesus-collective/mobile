@@ -11,7 +11,13 @@ export type AuthStateData = {
     joinedProduct?: string;
     productType:"Partner"|"OneStory"|null
   }|null;
-
+export enum InviteType  {
+  course,
+  JC,
+  group,
+  event,
+  resource
+}
 export type GetUserQueryResult = GraphQLResult<GetUserQuery>
 export type GetUserQueryResultPromise = Promise< GraphQLResult<GetUserQuery>>
 export type UserData= NonNullable<GetUserQuery>["getUser"]
