@@ -1,6 +1,6 @@
-import isAbsoluteUrl from 'is-absolute-url'
-import { OrganizationData } from '../OrganizationViewer/OrganizationViewer';
+import isAbsoluteUrl from 'is-absolute-url';
 import { orgTypesChurches, orgTypesNonChurch } from '../MyProfile/dropdown';
+import { OrganizationData } from '../OrganizationViewer/OrganizationViewer';
 
 type ValidationResult = {
     result: boolean,
@@ -16,10 +16,10 @@ export default class Validate {
             return { result: false, validationError: "Profile must have - given name" }
         if (data.family_name == null || data.family_name == "")
             return { result: false, validationError: "Profile must have - family name" }
-        if (data.email == null || data.email == "")
-            return { result: false, validationError: "Profile must have - email" }
-        if (data.phone == null || data.phone == "")
-            return { result: false, validationError: "Profile must have - phone" }
+      //  if (data.email == null || data.email == "")
+      //      return { result: false, validationError: "Profile must have - email" }
+      //  if (data.phone == null || data.phone == "")
+      //      return { result: false, validationError: "Profile must have - phone" }
 /*        if (data.billingAddress.line1 == null || data.billingAddress.line1 == "")
             return { result: false, validationError: "Profile must have - line 1" }
         if (data.billingAddress.city == null || data.billingAddress.city == "")

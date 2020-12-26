@@ -1,48 +1,33 @@
-import {
-  Button,
-  View,
-  Input,
-  Form,
-  Item,
-  Label,
-  Content,
-  Picker,
-  Badge,
-  Container,
-} from "native-base"
-import { Text, Image, TouchableOpacity } from "react-native"
-import * as React from "react"
-import * as queries from "../../src/graphql/queries"
-import * as mutations from "../../src/graphql/mutations"
-import { API, graphqlOperation, Storage } from "aws-amplify"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
-import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
-
-import { Auth } from "aws-amplify"
-import { GetUserQuery } from "../../src/API"
-import Amplify from "aws-amplify"
-import awsconfig from "../../src/aws-exports"
-import Validate from "../Validate/Validate"
-import moment from "moment"
-import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
-import EditableLocation from "../../components/Forms/EditableLocation"
-import MyMap from "../../components/MyMap/MyMap"
-import EditableText from "../Forms/EditableText"
 import { AntDesign } from "@expo/vector-icons"
-import { AlertConfigInput } from "../../src/API"
+import { useNavigation, useRoute } from "@react-navigation/native"
+import Amplify, { API, Auth, graphqlOperation, Storage } from "aws-amplify"
+import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import moment from "moment"
+import { Badge, Button, Container, Content, Form, Label, Picker, View } from "native-base"
+import * as React from "react"
+import { Image, Text, TextInput, TouchableOpacity } from "react-native"
+import EditableLocation from "../../components/Forms/EditableLocation"
+import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
+import JCSwitch from "../../components/JCSwitch/JCSwitch"
+import MyMap from "../../components/MyMap/MyMap"
+import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
+import { GetUserQuery } from "../../src/API"
+import awsconfig from "../../src/aws-exports"
+import { constants } from "../../src/constants"
+import * as mutations from "../../src/graphql/mutations"
+import * as queries from "../../src/graphql/queries"
+import EditableText from "../Forms/EditableText"
+import JCComponent, { JCState } from "../JCComponent/JCComponent"
+import { MapData } from "../MyGroups/MyGroups"
+import Validate from "../Validate/Validate"
 import {
   interests,
   numberOfEmployees,
-  sundayAttendance,
   orgTypesChurches,
   orgTypesNonChurch,
+  sundayAttendance,
 } from "./dropdown"
-import { constants } from "../../src/constants"
-import JCComponent, { JCState } from "../JCComponent/JCComponent"
-import { useRoute, useNavigation } from "@react-navigation/native"
-import { MapData } from "../MyGroups/MyGroups"
-import { TextInput } from "react-native"
-import JCSwitch from "../../components/JCSwitch/JCSwitch"
+
 const orgTypes = orgTypesChurches.concat(orgTypesNonChurch)
 
 Amplify.configure(awsconfig)
@@ -57,13 +42,13 @@ interface Props {
 export type UserData = NonNullable<GetUserQuery["getUser"]>
 
 interface State extends JCState {
-  UserDetails: UserData
-  interest: string
+  UserDetails: UserData | null
+  interest: string | null
   interestsArray: string[]
   profileImage: string
   validationText: string
   mapVisible: boolean
-  // mapCoord: any
+
   isEditable: boolean
   showAccountSettings: boolean
   editMode: boolean
@@ -84,10 +69,10 @@ class MyProfileImpl extends JCComponent<Props, State> {
       interest: null,
       interestsArray: [],
       profileImage: "",
-      validationText: null,
+      validationText: "",
       showAccountSettings: false,
       mapVisible: false,
-      //  mapCoord: { latitude: 0, longitude: 0 },
+
       isEditable: false,
       editMode: false,
       mapData: [],
@@ -103,9 +88,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
 
   convertProfileToMapData() {
     if (
-      this.state.UserDetails.location &&
-      this.state.UserDetails.location.latitude &&
-      this.state.UserDetails.location.longitude
+      this.state.UserDetails?.location &&
+      this.state.UserDetails?.location.latitude &&
+      this.state.UserDetails?.location.longitude
     )
       this.setState({
         mapData: [
@@ -354,7 +339,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
   getProfileImage(): void {
     console.log("get profile image")
     //console.log(this.state.UserDetails.profileImage)
-    if (this.state.UserDetails.profileImage)
+    if (this.state.UserDetails?.profileImage)
       Storage.get(this.state.UserDetails.profileImage.filenameUpload, {
         level: "protected",
         identityId: this.state.UserDetails.profileImage.userId,
@@ -385,7 +370,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
     this.setState({ mapVisible: true })
   }
   renderMap() {
-    return this.state.UserDetails.location?.geocodeFull ? (
+    return this.state.UserDetails?.location?.geocodeFull ? (
       <MyMap
         initCenter={this.state.initCenter}
         visible={true}
@@ -451,7 +436,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
         })
     })
   }
-  handleDeleteInterest(event): void {
+  handleDeleteInterest(event: string): void {
     const remainingInterests = this.state.interestsArray.filter((item) => item !== event)
     this.setState(
       {
@@ -471,18 +456,18 @@ class MyProfileImpl extends JCComponent<Props, State> {
   checkForValidOrgInfo(): boolean {
     const user = this.state.UserDetails
 
-    if (user.orgName || user.orgDescription) {
+    if (user?.orgName || user?.orgDescription) {
       return true
     }
 
-    if (orgTypesChurches.includes(user.orgType)) {
-      if (user.orgSize || user.sundayAttendance || user.numberVolunteers || user.denomination) {
+    if (orgTypesChurches.includes(user?.orgType)) {
+      if (user?.orgSize || user?.sundayAttendance || user?.numberVolunteers || user?.denomination) {
         return true
       }
     }
 
-    if (orgTypesNonChurch.includes(user.orgType)) {
-      if (user.orgSize || user.numberVolunteers || user.pplServed) {
+    if (orgTypesNonChurch.includes(user?.orgType)) {
+      if (user?.orgSize || user?.numberVolunteers || user?.pplServed) {
         return true
       }
     }
@@ -520,7 +505,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
     this.setState({ oldPass: "", newPass: "" })
   }
 
-  renderMainUserGroup(group) {
+  renderMainUserGroup(group: string) {
     switch (group) {
       case "verifiedUser":
         return <Text style={this.styles.style.fontFormUserType}>Verified</Text>
@@ -534,7 +519,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
         return <Text style={this.styles.style.fontFormUserType}>Un-Verified</Text>
     }
   }
-  openConversation(initialUser, name): void {
+  openConversation(initialUser: string, name: string): void {
     console.log("Navigate to conversationScreen")
     this.props.navigation.push("ConversationScreen", {
       initialUserID: initialUser,
@@ -655,7 +640,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
                         ? this.state.UserDetails.currentRole
                         : "My Current Role not defined"}
                     </Text>
-                    {this.renderMainUserGroup(this.state.UserDetails.mainUserGroup)}
+                    {this.renderMainUserGroup(
+                      this.state.UserDetails?.mainUserGroup ?? "unverified"
+                    )}
 
                     {this.state.isEditable && this.state.editMode ? (
                       <Text style={this.styles.style.fontFormSmall}>One sentence about me</Text>
@@ -670,7 +657,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       textStyle={this.styles.style.fontFormSmallDarkGrey}
                       inputStyle={this.styles.style.fontFormAboutMe}
                       data-testid="profile-aboutMeShort"
-                      value={this.state.UserDetails.aboutMeShort}
+                      value={this.state.UserDetails.aboutMeShort ?? ""}
                       isEditable={this.state.isEditable && this.state.editMode}
                     ></EditableText>
 
@@ -720,10 +707,10 @@ class MyProfileImpl extends JCComponent<Props, State> {
                         style={this.styles.style.connectWithSliderButton}
                         onPress={() => {
                           this.openConversation(
-                            this.state.UserDetails.id,
-                            this.state.UserDetails.given_name +
+                            this.state.UserDetails?.id,
+                            this.state.UserDetails?.given_name +
                               " " +
-                              this.state.UserDetails.family_name
+                              this.state.UserDetails?.family_name
                           )
                         }}
                       >
@@ -798,10 +785,10 @@ class MyProfileImpl extends JCComponent<Props, State> {
                               latitude: location.lat,
                               longitude: location.lng,
                               geocodeFull: value,
-                              randomLatitude: this.state.UserDetails.location?.randomLatitude
-                                ? this.state.UserDetails.location.randomLatitude
+                              randomLatitude: this.state.UserDetails?.location?.randomLatitude
+                                ? this.state.UserDetails?.location.randomLatitude
                                 : Math.random() * 0.04 - 0.02,
-                              randomLongitude: this.state.UserDetails.location?.randomLongitude
+                              randomLongitude: this.state.UserDetails?.location?.randomLongitude
                                 ? this.state.UserDetails.location.randomLongitude
                                 : Math.random() * 0.04 - 0.02,
                             },
@@ -812,17 +799,18 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       multiline={false}
                       textStyle={this.styles.style.fontRegular}
                       inputStyle={this.styles.style.groupNameInput}
-                      value={this.state.UserDetails.location?.geocodeFull}
+                      value={this.state.UserDetails.location?.geocodeFull ?? ""}
                       isEditable={this.state.isEditable && this.state.editMode}
                       citiesOnly={true}
                     ></EditableLocation>
                   ) : null}
-
+                  {/*
                   {this.state.isEditable && this.state.editMode ? (
                     <Text style={this.styles.style.profilePrivateInformation}>
                       Private Information
                     </Text>
                   ) : null}
+                 
                   {this.state.isEditable && this.state.editMode ? (
                     <View
                       style={{
@@ -931,6 +919,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       </Item>
                     </View>
                   ) : null}
+                        */}
                 </View>
 
                 {!this.state.showAccountSettings ? (
@@ -974,7 +963,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                         lineHeight: 28,
                         height: 150,
                       }}
-                      value={this.state.UserDetails.aboutMeLong}
+                      value={this.state.UserDetails.aboutMeLong ?? ""}
                       isEditable={this.state.isEditable && this.state.editMode}
                     ></EditableText>
 
@@ -1129,7 +1118,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                           fontSize: 16,
                           lineHeight: 28,
                         }}
-                        value={this.state.UserDetails.currentRole}
+                        value={this.state.UserDetails.currentRole ?? ""}
                         isEditable={this.state.isEditable && this.state.editMode}
                       ></EditableText>
                     </View>
@@ -1163,7 +1152,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                         fontSize: 16,
                         lineHeight: 28,
                       }}
-                      value={this.state.UserDetails.currentScope}
+                      value={this.state.UserDetails.currentScope ?? ""}
                       isEditable={this.state.isEditable && this.state.editMode}
                     ></EditableText>
 
@@ -1198,7 +1187,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                         fontSize: 16,
                         lineHeight: 28,
                       }}
-                      value={this.state.UserDetails.personality}
+                      value={this.state.UserDetails.personality ?? ""}
                       isEditable={this.state.isEditable && this.state.editMode}
                     ></EditableText>
 
@@ -1229,7 +1218,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                                 data-testid="profile-orgName"
                                 textStyle={this.styles.style.fontFormSmallDarkGrey}
                                 inputStyle={this.styles.style.myProfileOrgTypeInput}
-                                value={this.state.UserDetails.orgName}
+                                value={this.state.UserDetails.orgName ?? ""}
                                 isEditable={this.state.isEditable && this.state.editMode}
                               ></EditableText>
                             </View>
@@ -1250,7 +1239,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                                       this.handleInputChange(itemValue, "orgType")
                                     }}
                                     selectedValue={
-                                      orgTypes.includes(this.state.UserDetails.orgType)
+                                      orgTypes.includes(this.state.UserDetails?.orgType)
                                         ? this.state.UserDetails.orgType
                                         : this.state.UserDetails.orgType === null ||
                                           this.state.UserDetails.orgType === "None"
@@ -1265,7 +1254,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                                     <Picker.Item label={"Other"} value={""} />
                                   </Picker>
                                   {this.state.UserDetails.orgType === "" ||
-                                  (!orgTypes.includes(this.state.UserDetails.orgType) &&
+                                  (!orgTypes.includes(this.state.UserDetails?.orgType) &&
                                     this.state.UserDetails.orgType !== "None" &&
                                     this.state.UserDetails.orgType !== null) ? (
                                     <EditableText
@@ -1292,7 +1281,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                             </View>
                           ) : null}
 
-                          {orgTypes.includes(this.state.UserDetails.orgType) &&
+                          {orgTypes.includes(this.state.UserDetails?.orgType) &&
                           (this.state.UserDetails.orgSize || this.state.editMode) ? (
                             <View style={{ marginTop: 15 }}>
                               {this.state.isEditable && this.state.editMode ? (
@@ -1328,7 +1317,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                             </View>
                           ) : null}
 
-                          {orgTypesChurches.includes(this.state.UserDetails.orgType) &&
+                          {orgTypesChurches.includes(this.state.UserDetails?.orgType) &&
                           (this.state.UserDetails.sundayAttendance || this.state.editMode) ? (
                             <View style={{ marginTop: 15 }}>
                               {this.state.isEditable && this.state.editMode ? (
@@ -1365,7 +1354,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                             </View>
                           ) : null}
 
-                          {orgTypes.includes(this.state.UserDetails.orgType) &&
+                          {orgTypes.includes(this.state.UserDetails?.orgType) &&
                           (this.state.UserDetails.numberVolunteers || this.state.editMode) ? (
                             <View style={{ marginTop: 15 }}>
                               {this.state.isEditable && this.state.editMode ? (
@@ -1402,7 +1391,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                             </View>
                           ) : null}
 
-                          {orgTypesChurches.includes(this.state.UserDetails.orgType) &&
+                          {orgTypesChurches.includes(this.state.UserDetails?.orgType) &&
                           (this.state.UserDetails.denomination || this.state.editMode) ? (
                             <View style={{ marginTop: 15 }}>
                               <Text style={this.styles.style.fontFormSmall}>Denomination</Text>
@@ -1427,13 +1416,13 @@ class MyProfileImpl extends JCComponent<Props, State> {
                                   fontSize: 16,
                                   lineHeight: 28,
                                 }}
-                                value={this.state.UserDetails.denomination}
+                                value={this.state.UserDetails.denomination ?? ""}
                                 isEditable={this.state.isEditable && this.state.editMode}
                               ></EditableText>
                             </View>
                           ) : null}
 
-                          {orgTypesNonChurch.includes(this.state.UserDetails.orgType) &&
+                          {orgTypesNonChurch.includes(this.state.UserDetails?.orgType) &&
                           (this.state.UserDetails.pplServed || this.state.editMode) ? (
                             <View style={{ marginTop: 15 }}>
                               <Text style={this.styles.style.fontFormSmall}>
@@ -1462,7 +1451,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                                   fontSize: 16,
                                   lineHeight: 28,
                                 }}
-                                value={this.state.UserDetails.pplServed}
+                                value={this.state.UserDetails.pplServed ?? ""}
                                 isEditable={this.state.isEditable && this.state.editMode}
                               ></EditableText>
                             </View>
@@ -1494,7 +1483,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                                   fontSize: 16,
                                   lineHeight: 28,
                                 }}
-                                value={this.state.UserDetails.orgDescription}
+                                value={this.state.UserDetails.orgDescription ?? ""}
                                 isEditable={this.state.isEditable && this.state.editMode}
                               ></EditableText>
                             </View>
