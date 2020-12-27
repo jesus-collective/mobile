@@ -48,7 +48,7 @@ export type OrganizationData = NonNullable<GetOrganizationQuery["getOrganization
 
 interface State extends JCState {
   OrganizationDetails: OrganizationData
-  interest: string
+  interest: string | null
   interestsArray: any
   profileImage: any
   validationText: any
@@ -63,7 +63,7 @@ interface State extends JCState {
   oldPass: string
   newPass: string
   passError: string
-  currentUser: string
+  currentUser: string | null
   newAdmins: any[]
   toAddAdmin: any
   removeAdmins: any[]
@@ -98,9 +98,9 @@ class OrganizationImpl extends JCComponent<Props, State> {
 
   convertProfileToMapData() {
     if (
-      this.state.OrganizationDetails.location &&
-      this.state.OrganizationDetails.location.latitude &&
-      this.state.OrganizationDetails.location.longitude
+      this.state.OrganizationDetails?.location &&
+      this.state.OrganizationDetails?.location.latitude &&
+      this.state.OrganizationDetails?.location.longitude
     )
       this.setState({
         mapData: [
@@ -361,14 +361,15 @@ class OrganizationImpl extends JCComponent<Props, State> {
     console.log("get profile image")
     //console.log(this.state.OrganizationDetails.profileImage)
     if (this.state.OrganizationDetails.profileImage != null)
-      Storage.get(this.state.OrganizationDetails.profileImage.filenameUpload, {
-        level: "protected",
-        identityId: this.state.OrganizationDetails.profileImage.userId,
-      })
-        .then((result) => this.setState({ profileImage: result }))
-        .catch((err) => {
-          console.log(err)
+      if (this.state.OrganizationDetails.profileImage.filenameUpload)
+        Storage.get(this.state.OrganizationDetails.profileImage.filenameUpload, {
+          level: "protected",
+          identityId: this.state.OrganizationDetails.profileImage.userId,
         })
+          .then((result) => this.setState({ profileImage: result }))
+          .catch((err) => {
+            console.log(err)
+          })
   }
 
   async addAdmins(): Promise<void> {
@@ -621,7 +622,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                 textStyle={this.styles.style.fontFormSmallDarkGrey}
                 inputStyle={this.styles.style.fontFormAboutMe}
                 data-testid="org-aboutMeShort"
-                value={this.state.OrganizationDetails.aboutMeShort}
+                value={this.state.OrganizationDetails.aboutMeShort ?? ""}
                 isEditable={this.state.isEditable && this.state.editMode}
               ></EditableText>
 
@@ -742,7 +743,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                 multiline={false}
                 textStyle={this.styles.style.fontRegular}
                 inputStyle={this.styles.style.groupNameInput}
-                value={this.state.OrganizationDetails.location?.geocodeFull}
+                value={this.state.OrganizationDetails.location?.geocodeFull ?? ""}
                 isEditable={this.state.isEditable && this.state.editMode}
                 citiesOnly={true}
               ></EditableLocation>
@@ -815,7 +816,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   <Input
                     data-testid="org-Address"
                     style={this.styles.style.fontFormMediumInput}
-                    value={this.state.OrganizationDetails.address}
+                    value={this.state.OrganizationDetails.address ?? ""}
                     onChange={(e) => {
                       this.handleInputChange(e, "address")
                     }}
@@ -828,7 +829,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   <Input
                     data-testid="org-City"
                     style={this.styles.style.fontFormMediumInput}
-                    value={this.state.OrganizationDetails.city}
+                    value={this.state.OrganizationDetails.city ?? ""}
                     onChange={(e) => {
                       this.handleInputChange(e, "city")
                     }}
@@ -841,7 +842,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   <Input
                     data-testid="org-Province"
                     style={this.styles.style.fontFormMediumInput}
-                    value={this.state.OrganizationDetails.province}
+                    value={this.state.OrganizationDetails.province ?? ""}
                     onChange={(e) => {
                       this.handleInputChange(e, "province")
                     }}
@@ -854,7 +855,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   <Input
                     data-testid="org-PostalCode"
                     style={this.styles.style.fontFormMediumInput}
-                    value={this.state.OrganizationDetails.postalCode}
+                    value={this.state.OrganizationDetails.postalCode ?? ""}
                     onChange={(e) => {
                       this.handleInputChange(e, "postalCode")
                     }}
@@ -867,7 +868,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   <Input
                     data-testid="org-Country"
                     style={this.styles.style.fontFormMediumInput}
-                    value={this.state.OrganizationDetails.country}
+                    value={this.state.OrganizationDetails.country ?? ""}
                     onChange={(e) => {
                       this.handleInputChange(e, "country")
                     }}
@@ -880,7 +881,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   <Input
                     data-testid="org-Email"
                     style={this.styles.style.fontFormMediumInput}
-                    value={this.state.OrganizationDetails.adminEmail}
+                    value={this.state.OrganizationDetails.adminEmail ?? ""}
                     onChange={(e) => {
                       this.handleInputChange(e, "adminEmail")
                     }}
@@ -893,7 +894,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   <Input
                     data-testid="org-Phone"
                     style={this.styles.style.fontFormMediumInput}
-                    value={this.state.OrganizationDetails.phone}
+                    value={this.state.OrganizationDetails.phone ?? ""}
                     onChange={(e) => {
                       this.handleInputChange(e, "phone")
                     }}
@@ -938,7 +939,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   fontSize: 16,
                   lineHeight: 28,
                 }}
-                value={this.state.OrganizationDetails.aboutMeLong}
+                value={this.state.OrganizationDetails.aboutMeLong ?? ""}
                 isEditable={this.state.isEditable && this.state.editMode}
               ></EditableText>
 
@@ -1157,7 +1158,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                           fontSize: 16,
                           lineHeight: 28,
                         }}
-                        value={this.state.OrganizationDetails.denomination}
+                        value={this.state.OrganizationDetails.denomination ?? ""}
                         isEditable={this.state.isEditable && this.state.editMode}
                       ></EditableText>
                     </View>
@@ -1192,7 +1193,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                           fontSize: 16,
                           lineHeight: 28,
                         }}
-                        value={this.state.OrganizationDetails.pplServed}
+                        value={this.state.OrganizationDetails.pplServed ?? ""}
                         isEditable={this.state.isEditable && this.state.editMode}
                       ></EditableText>
                     </View>
@@ -1224,7 +1225,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                           fontSize: 16,
                           lineHeight: 28,
                         }}
-                        value={this.state.OrganizationDetails.orgDescription}
+                        value={this.state.OrganizationDetails.orgDescription ?? ""}
                         isEditable={this.state.isEditable && this.state.editMode}
                       ></EditableText>
                     </View>
