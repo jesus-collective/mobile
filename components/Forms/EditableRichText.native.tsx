@@ -4,7 +4,7 @@ import React from "react"
 //import './react-draft-wysiwyg.css';
 //import './EditableRichText.css';
 //import './react-draft-wysiwyg.css';
-//TODO FIGURE OUT WHY THIS DOESN"T WORK
+//TODO FIGURE OUT WHY THIS DOESN'T WORK
 //import '../MessageBoard.css';
 //import { EditorState } from 'draft-js';
 import { TouchableOpacity } from "react-native"

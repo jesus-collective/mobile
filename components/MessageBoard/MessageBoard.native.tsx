@@ -1,26 +1,23 @@
-import { Content, Left, Right, Body, StyleProvider, Container, Card, CardItem } from 'native-base';
-import * as React from 'react';
-import { Text } from 'react-native'
-import JCButton, { ButtonTypes } from '../../components/Forms/JCButton'
-
-import getTheme from '../../native-base-theme/components';
-import material from '../../native-base-theme/variables/material';
-import { TouchableOpacity } from 'react-native'
-import { CreateMessageInput } from '../../src/API'
-import * as mutations from '../../src/graphql/mutations';
-import * as queries from '../../src/graphql/queries';
-import * as subscriptions from '../../src/graphql/subscriptions';
-import GRAPHQL_AUTH_MODE from 'aws-amplify-react-native'
-import { API, graphqlOperation, Auth } from 'aws-amplify';
-import ProfileImage from '../../components/ProfileImage/ProfileImage'
-import { Editor } from 'react-draft-wysiwyg';
+import { useNavigation, useRoute } from "@react-navigation/native"
+import { API, Auth, graphqlOperation } from "aws-amplify"
+import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import { Body, Card, CardItem, Container, Content, Left, Right, StyleProvider } from "native-base"
+import * as React from "react"
+import { Editor } from "react-draft-wysiwyg"
+import { Text, TouchableOpacity } from "react-native"
+import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
+import ProfileImage from "../../components/ProfileImage/ProfileImage"
+import getTheme from "../../native-base-theme/components"
+import material from "../../native-base-theme/variables/material"
+import { CreateMessageInput } from "../../src/API"
+import * as mutations from "../../src/graphql/mutations"
+import * as queries from "../../src/graphql/queries"
+import * as subscriptions from "../../src/graphql/subscriptions"
 //import './react-draft-wysiwyg.css';
-//TODO FIGURE OUT WHY THIS DOESN"T WORK
+//TODO FIGURE OUT WHY THIS DOESN'T WORK
 //import './MessageBoard.css';
-import ErrorBoundary from '../ErrorBoundry';
-import { useRoute, useNavigation } from '@react-navigation/native';
-import JCComponent, { JCState } from '../JCComponent/JCComponent';
-
+import ErrorBoundary from "../ErrorBoundry"
+import JCComponent, { JCState } from "../JCComponent/JCComponent"
 
 interface Props {
   groupId: string
@@ -28,16 +25,16 @@ interface Props {
   route?: any
 }
 interface State extends JCState {
-  data: any,
-  created: boolean,
-  message: string,
-  UserDetails: any,
-  textHeight: any,
+  data: any
+  created: boolean
+  message: string
+  UserDetails: any
+  textHeight: any
   editorState: any
 }
 class MessageBoardImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
-    super(props);
+    super(props)
     this.state = {
       ...super.getInitialState(),
       data: null,
@@ -45,57 +42,52 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       message: "",
       UserDetails: null,
       textHeight: 10,
-      editorState: null
+      editorState: null,
     }
     this.setInitialData(props)
     const subscription: any = API.graphql(
       graphqlOperation(subscriptions.onCreateMessage, { roomId: this.props.groupId })
     )
-    subscription.subscribe(
-      {
-        next: (todoData) => {
-          let temp: any = this.state.data
-          if (temp === null)
-            temp = { items: [] }
-          if (temp.items == null)
-            temp.items = [todoData.value.data.onCreateMessage]
-          else
-            temp.items = [todoData.value.data.onCreateMessage, ...temp.items]
-          this.setState({ data: temp })
-        }
-      });
+    subscription.subscribe({
+      next: (todoData) => {
+        let temp: any = this.state.data
+        if (temp === null) temp = { items: [] }
+        if (temp.items == null) temp.items = [todoData.value.data.onCreateMessage]
+        else temp.items = [todoData.value.data.onCreateMessage, ...temp.items]
+        this.setState({ data: temp })
+      },
+    })
   }
 
   async setInitialData(props) {
-    const user = await Auth.currentAuthenticatedUser();
+    const user = await Auth.currentAuthenticatedUser()
     try {
-      const getUser: any = await API.graphql(graphqlOperation(queries.getUser, { id: user['username'] }));
+      const getUser: any = await API.graphql(
+        graphqlOperation(queries.getUser, { id: user["username"] })
+      )
       this.setState({
-        UserDetails: getUser.data.getUser
+        UserDetails: getUser.data.getUser,
       })
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e)
     }
 
     if (props.route.params.create === "true" || props.route.params.create === true)
       this.setState({ created: false })
     else {
-
       const messagesByRoom: any = API.graphql({
         query: queries.messagesByRoom,
         variables: { roomId: this.props.groupId, sortDirection: "DESC" },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-      });
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+      })
       const processMessages = (json) => {
         this.setState({
           created: true,
           data: json.data.messagesByRoom,
-          message: ""
+          message: "",
         })
       }
       messagesByRoom.then(processMessages).catch(processMessages)
-
     }
   }
   updateEditorInput(value: any) {
@@ -113,113 +105,149 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         roomId: this.props.groupId,
         userId: user.username,
         owner: user.username,
-        authorOrgId: "0"
+        authorOrgId: "0",
       }
       const createMessage: any = API.graphql({
         query: mutations.createMessage,
         variables: { input: z },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS
-      });
-
-      createMessage.then((json: any) => {
-        console.log({ "Success mutations.createMessage": json });
-        this.setState({ message: "" })
-      }).catch((err: any) => {
-        console.log({ "Error mutations.createMessage": err });
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })
+
+      createMessage
+        .then((json: any) => {
+          console.log({ "Success mutations.createMessage": json })
+          this.setState({ message: "" })
+        })
+        .catch((err: any) => {
+          console.log({ "Error mutations.createMessage": err })
+        })
     })
   }
   showProfile(id) {
     console.log("Navigate to profileScreen")
-    this.props.navigation.push("ProfileScreen", { id: id, create: false });
+    this.props.navigation.push("ProfileScreen", { id: id, create: false })
   }
   render() {
+    return this.state.message != null && this.state.created ? (
+      <ErrorBoundary>
+        <StyleProvider style={getTheme(material)}>
+          <Container style={this.styles.style.nativeMessageBoardContainer}>
+            <Content style={{ marginBottom: 40 }}>
+              {this.state.UserDetails != null ? (
+                <ProfileImage size="small" user={this.state.UserDetails}></ProfileImage>
+              ) : null}
+              <Editor
+                placeholder="Write a message..."
+                editorState={this.state.editorState}
+                toolbarClassName="customToolbar"
+                wrapperClassName="customWrapperSendmessage"
+                editorClassName="customEditorSendmessage"
+                onEditorStateChange={(z) => {
+                  this.updateEditorInput(z)
+                }}
+                onContentStateChange={(z) => {
+                  this.updateInput(z)
+                }}
+                toolbar={{
+                  options: ["inline", "list"],
+                  inline: {
+                    options: ["bold", "italic", "underline"],
+                  },
+                  list: {
+                    options: ["unordered", "ordered"],
+                  },
+                }}
+              />
+              <JCButton
+                buttonType={ButtonTypes.SolidRightJustified}
+                onPress={() => {
+                  this.saveMessage()
+                }}
+              >
+                Post
+              </JCButton>
+            </Content>
 
-    return (
-      (this.state.message != null && this.state.created) ?
-        <ErrorBoundary>
-          <StyleProvider style={getTheme(material)}>
-            <Container style={this.styles.style.nativeMessageBoardContainer} >
-              <Content style={{ marginBottom: 40 }}>
-
-                {
-                  this.state.UserDetails != null ?
-                    <ProfileImage size="small" user={this.state.UserDetails}></ProfileImage>
-                    : null
-                }
-                <Editor
-                  placeholder="Write a message..."
-                  editorState={this.state.editorState}
-                  toolbarClassName="customToolbar"
-                  wrapperClassName="customWrapperSendmessage"
-                  editorClassName="customEditorSendmessage"
-                  onEditorStateChange={(z) => { this.updateEditorInput(z) }}
-                  onContentStateChange={(z) => { this.updateInput(z) }}
-                  toolbar={{
-                    options: ['inline', 'list'],
-                    inline: {
-                      options: ['bold', 'italic', 'underline']
-                    },
-                    list: {
-                      options: ['unordered', 'ordered']
-                    }
+            {this.state.data.items.map((item: any) => {
+              return (
+                <TouchableOpacity
+                  key={item.id}
+                  onPress={() => {
+                    this.showProfile(item.author.id)
                   }}
-
-                />
-                <JCButton buttonType={ButtonTypes.SolidRightJustified} onPress={() => { this.saveMessage() }} >Post</JCButton>
-
-              </Content>
-
-
-
-
-
-              {this.state.data.items.map((item: any) => {
-                return (
-                  <TouchableOpacity key={item.id} onPress={() => { this.showProfile(item.author.id) }}>
-                    <Card key={item.id} style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }}>
-                      <CardItem style={{ borderBottomLeftRadius: 0, borderBottomRightRadius: 0, borderTopLeftRadius: 10, borderTopRightRadius: 10, backgroundColor: "#F9FAFC" }}>
-                        <Left>
-                          <ProfileImage size="small" user={item.owner ? item.owner : null}></ProfileImage>
-                          <Body>
-                            <Text style={this.styles.style.groupFormName}>
-                              {item.author != null ? item.author.given_name : null} {item.author != null ? item.author.family_name : null}
-                            </Text>
-                            <Text style={this.styles.style.groupFormRole}>
-                              {item.author != null ? item.author.currentRole : null}
-                            </Text>
-                          </Body>
-                        </Left>
-                        <Right>
-                          <Text style={this.styles.style.groupFormDate}>{(new Date(parseInt(item.when, 10))).toLocaleString()}</Text>
-                        </Right>
-                      </CardItem>
-                      <CardItem style={{ marginTop: 0, paddingTop: 0, paddingBottom: 0, borderTopLeftRadius: 0, borderTopRightRadius: 0, borderBottomLeftRadius: 10, borderBottomRightRadius: 10, backgroundColor: "#ffffff" }}>
-
-                        <Editor
-                          readOnly
-                          toolbarHidden
-                          initialContentState={JSON.parse(item.content)}
-                          toolbarClassName="customToolbar"
-                          wrapperClassName="customWrapper"
-                          editorClassName="customEditor"
-                        />
-                      </CardItem>
-                    </Card>
-                  </TouchableOpacity>)
-              })}
-
-
-            </Container>
-          </StyleProvider >
-        </ErrorBoundary>
-        : null
-
-    )
+                >
+                  <Card
+                    key={item.id}
+                    style={{
+                      borderRadius: 10,
+                      minHeight: 50,
+                      marginBottom: 35,
+                      borderColor: "#ffffff",
+                    }}
+                  >
+                    <CardItem
+                      style={{
+                        borderBottomLeftRadius: 0,
+                        borderBottomRightRadius: 0,
+                        borderTopLeftRadius: 10,
+                        borderTopRightRadius: 10,
+                        backgroundColor: "#F9FAFC",
+                      }}
+                    >
+                      <Left>
+                        <ProfileImage
+                          size="small"
+                          user={item.owner ? item.owner : null}
+                        ></ProfileImage>
+                        <Body>
+                          <Text style={this.styles.style.groupFormName}>
+                            {item.author != null ? item.author.given_name : null}{" "}
+                            {item.author != null ? item.author.family_name : null}
+                          </Text>
+                          <Text style={this.styles.style.groupFormRole}>
+                            {item.author != null ? item.author.currentRole : null}
+                          </Text>
+                        </Body>
+                      </Left>
+                      <Right>
+                        <Text style={this.styles.style.groupFormDate}>
+                          {new Date(parseInt(item.when, 10)).toLocaleString()}
+                        </Text>
+                      </Right>
+                    </CardItem>
+                    <CardItem
+                      style={{
+                        marginTop: 0,
+                        paddingTop: 0,
+                        paddingBottom: 0,
+                        borderTopLeftRadius: 0,
+                        borderTopRightRadius: 0,
+                        borderBottomLeftRadius: 10,
+                        borderBottomRightRadius: 10,
+                        backgroundColor: "#ffffff",
+                      }}
+                    >
+                      <Editor
+                        readOnly
+                        toolbarHidden
+                        initialContentState={JSON.parse(item.content)}
+                        toolbarClassName="customToolbar"
+                        wrapperClassName="customWrapper"
+                        editorClassName="customEditor"
+                      />
+                    </CardItem>
+                  </Card>
+                </TouchableOpacity>
+              )
+            })}
+          </Container>
+        </StyleProvider>
+      </ErrorBoundary>
+    ) : null
   }
 }
 export default function MessageBoard(props: Props): JSX.Element {
-  const route = useRoute();
+  const route = useRoute()
   const navigation = useNavigation()
-  return <MessageBoardImpl {...props} navigation={navigation} route={route} />;
+  return <MessageBoardImpl {...props} navigation={navigation} route={route} />
 }
