@@ -3,3 +3,5 @@ amplify
 cypress
 native-base-theme
 native-base-theme/components
+node_modules
+**/*.d.ts

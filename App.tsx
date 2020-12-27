@@ -43,7 +43,6 @@ const MyTheme = Object.assign({}, AmplifyTheme, { container: myContainer, navBar
 const authScreenLabels = {
   en: {
     "Sign in to your account": "Sign in to Jesus Collective",
-
     "Sign Up": "Create an Account",
     "Sign Up Account": "Create an Account",
     "Sign in with Facebook": "Use Facebook Account",

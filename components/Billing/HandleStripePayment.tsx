@@ -1,21 +1,10 @@
-import React from "react";
-import {
-  ElementsConsumer,
-  CardElement,
-  CardNumberElement,
-} from "@stripe/react-stripe-js";
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native";
-import { API, graphqlOperation, Auth, Storage } from "aws-amplify";
-import * as mutations from "../../src/graphql/mutations";
+import { CardNumberElement } from "@stripe/react-stripe-js"
+import { API } from "aws-amplify"
+import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import * as mutations from "../../src/graphql/mutations"
 
 export default class HandleStripePayment {
-  handleSubmit = async (
-    stripe,
-    elements,
-    idempotency,
-    priceItems,
-    handleComplete
-  ) => {
+  handleSubmit = async (stripe, elements, idempotency, priceItems, handleComplete) => {
     // We don't want to let default form submission happen here,
     // which would refresh the page.
     // event.preventDefault();
@@ -25,14 +14,14 @@ export default class HandleStripePayment {
     if (!stripe || !elements) {
       // Stripe.js has not yet loaded.
       // Make  sure to disable form submission until Stripe.js has loaded.
-      return;
+      return
     }
 
-    const cardElement = elements.getElement(CardNumberElement);
+    const cardElement = elements.getElement(CardNumberElement)
     // If a previous payment was attempted, get the latest invoice
     const latestInvoicePaymentIntentStatus = localStorage.getItem(
       "latestInvoicePaymentIntentStatus"
-    );
+    )
     const { error, paymentMethod } = await stripe.createPaymentMethod(
       {
         type: "card",
@@ -41,17 +30,17 @@ export default class HandleStripePayment {
       {
         idempotency_key: idempotency + "CPM",
       }
-    );
+    )
     //let priceItems = [{ price: "price_1HoU9MLTzrDhiQ927NZpKQjX", quantity: 5 }];
 
     if (error) {
-      console.log("[createPaymentMethod error]", error);
+      console.log("[createPaymentMethod error]", error)
     } else {
-      console.log("[PaymentMethod]", paymentMethod);
-      const paymentMethodId = paymentMethod.id;
+      console.log("[PaymentMethod]", paymentMethod)
+      const paymentMethodId = paymentMethod.id
       if (latestInvoicePaymentIntentStatus === "requires_payment_method") {
         // Update the payment method and retry invoice payment
-        const invoiceId = localStorage.getItem("latestInvoiceId");
+        const invoiceId = localStorage.getItem("latestInvoiceId")
         this.retryInvoiceWithNewPaymentMethod(
           {
             paymentMethodId,
@@ -59,44 +48,34 @@ export default class HandleStripePayment {
             priceItems,
           },
           handleComplete
-        );
+        )
       } else {
         // Create the subscription
-        this.createSubscription(
-          { paymentMethodId, priceItems, idempotency },
-          handleComplete
-        );
+        this.createSubscription({ paymentMethodId, priceItems, idempotency }, handleComplete)
       }
     }
-  };
+  }
   handleRequiresPaymentMethod({ subscription, paymentMethodId, priceItems }) {
     if (subscription.status === "active") {
       // subscription is active, no customer actions required.
-      return { subscription, priceItems, paymentMethodId };
+      return { subscription, priceItems, paymentMethodId }
     } else if (
-      subscription.subscription.latest_invoice.payment_intent.status ===
-      "requires_payment_method"
+      subscription.subscription.latest_invoice.payment_intent.status === "requires_payment_method"
     ) {
       // Using localStorage to manage the state of the retry here,
       // feel free to replace with what you prefer.
       // Store the latest invoice ID and status.
-      localStorage.setItem(
-        "latestInvoiceId",
-        subscription.subscription.latest_invoice.id
-      );
+      localStorage.setItem("latestInvoiceId", subscription.subscription.latest_invoice.id)
       localStorage.setItem(
         "latestInvoicePaymentIntentStatus",
         subscription.subscription.latest_invoice.payment_intent.status
-      );
-      throw { error: { message: "Your card was declined." } };
+      )
+      throw { error: { message: "Your card was declined." } }
     } else {
-      return { subscription, priceItems, paymentMethodId };
+      return { subscription, priceItems, paymentMethodId }
     }
   }
-  retryInvoiceWithNewPaymentMethod(
-    { paymentMethodId, invoiceId, priceItems },
-    handleComplete
-  ) {
+  retryInvoiceWithNewPaymentMethod({ paymentMethodId, invoiceId, priceItems }, handleComplete) {
     return (
       fetch("/retry-invoice", {
         method: "post",
@@ -109,15 +88,15 @@ export default class HandleStripePayment {
         }),
       })
         .then((response) => {
-          return response;
+          return response
         })
         // If the card is declined, display an error to the user.
         .then((result) => {
           if (result.error) {
             // The card had an error when trying to attach it to a customer.
-            throw result;
+            throw result
           }
-          return result;
+          return result
         })
         // Normalize the result to contain the object returned by Stripe.
         // Add the additional details we need.
@@ -129,7 +108,7 @@ export default class HandleStripePayment {
             paymentMethodId: paymentMethodId,
             priceItems: priceItems,
             isRetry: true,
-          };
+          }
         })
         // Some payment methods require a customer to be on session
         // to complete the payment process. Check the status of the
@@ -140,17 +119,14 @@ export default class HandleStripePayment {
         .catch((error) => {
           // An error has happened. Display the failure to the user here.
           // We utilize the HTML element we created.
-          this.displayError(error);
+          this.displayError(error)
         })
-    );
+    )
   }
   displayError(error) {
-    console.log({ error: error });
+    console.log({ error: error })
   }
-  createSubscription(
-    { paymentMethodId, priceItems, idempotency },
-    handleComplete
-  ) {
+  createSubscription({ paymentMethodId, priceItems, idempotency }, handleComplete) {
     return (
       API.graphql({
         query: mutations.createSubscription,
@@ -162,25 +138,25 @@ export default class HandleStripePayment {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })
         .then((response) => {
-          return response;
+          return response
         })
         // If the card is declined, display an error to the user.
         .then((result) => {
           if (result.error) {
             // The card had an error when trying to attach it to a customer.
-            throw result;
+            throw result
           }
-          return result;
+          return result
         })
         // Normalize the result to contain the object returned by Stripe.
         // Add the additional details we need.
         .then((result) => {
-          console.log({ result: result });
+          console.log({ result: result })
           return {
             paymentMethodId: paymentMethodId,
             priceItems: priceItems,
             subscription: result.data.createSubscription.subscription,
-          };
+          }
         })
         // Some payment methods require a customer to be on session
         // to complete the payment process. Check the status of the
@@ -193,27 +169,27 @@ export default class HandleStripePayment {
         // No more actions required. Provision your service for the user.
         .then((result) => this.onSubscriptionComplete(result, handleComplete))
         .catch((error) => {
-          console.log(error);
+          console.log(error)
           // An error has happened. Display the failure to the user here.
           // We utilize the HTML element we created.
           // showCardError(error);
         })
-    );
+    )
   }
   static convertToJSONObj(convertToJson: any) {
     var convertToJson1 = convertToJson.substring(
       convertToJson.indexOf("{") + 1,
       convertToJson.lastIndexOf("}")
-    );
-    var split1 = convertToJson1.split(",");
-    const obj: any = {};
+    )
+    var split1 = convertToJson1.split(",")
+    const obj: any = {}
     var map = split1.map((row) => {
-      row = row.toLowerCase().replaceAll("[\\[\\]\\{\\}]", "");
-      var key = row.split("=", 2)[0].trim();
-      var value = row.split("=", 2)[1].trim();
-      obj[key] = value;
-    });
-    return obj;
+      row = row.toLowerCase().replaceAll("[\\[\\]\\{\\}]", "")
+      var key = row.split("=", 2)[0].trim()
+      var value = row.split("=", 2)[1].trim()
+      obj[key] = value
+    })
+    return obj
   }
   handlePaymentThatRequiresCustomerAction({
     subscription,
@@ -224,17 +200,17 @@ export default class HandleStripePayment {
   }) {
     if (subscription && subscription.status === "active") {
       // Subscription is active, no customer actions required.
-      return { subscription, priceItems, paymentMethodId };
+      return { subscription, priceItems, paymentMethodId }
     }
-    console.log({ invoice: invoice });
-    console.log({ subscription: subscription });
+    console.log({ invoice: invoice })
+    console.log({ subscription: subscription })
     // If it's a first payment attempt, the payment intent is on the subscription latest invoice.
     // If it's a retry, the payment intent will be on the invoice itself.
     let paymentIntent = invoice
       ? invoice.payment_intent
-      : subscription.subscription.latest_invoice.payment_intent;
+      : subscription.subscription.latest_invoice.payment_intent
 
-    console.log(paymentIntent.status);
+    console.log(paymentIntent.status)
     if (
       paymentIntent.status === "requires_action" ||
       (isRetry === true && paymentIntent.status === "requires_payment_method")
@@ -248,7 +224,7 @@ export default class HandleStripePayment {
             // Start code flow to handle updating the payment details.
             // Display error message in your UI.
             // The card was declined (i.e. insufficient funds, card has expired, etc).
-            throw result;
+            throw result
           } else {
             if (result.paymentIntent.status === "succeeded") {
               // Show a success message to your customer.
@@ -259,23 +235,23 @@ export default class HandleStripePayment {
                 subscription: subscription,
                 invoice: invoice,
                 paymentMethodId: paymentMethodId,
-              };
+              }
             }
           }
         })
         .catch((error) => {
-          this.displayError(error);
-        });
+          this.displayError(error)
+        })
     } else {
       // No customer action needed.
-      return { subscription, priceItems, paymentMethodId };
+      return { subscription, priceItems, paymentMethodId }
     }
   }
   async onSubscriptionComplete(result, handleComplete) {
     // Payment was successful.
-    console.log({ onSubscriptionComplete: result });
+    console.log({ onSubscriptionComplete: result })
     if (result.subscription.status === "active") {
-      handleComplete();
+      handleComplete()
 
       // Change your UI to show a success message to your customer.
       // Call your backend to grant access to your service based on

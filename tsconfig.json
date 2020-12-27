@@ -12,17 +12,25 @@
     "allowJs": true,
     "checkJs": true,
     "strict": true,
+    "lib": ["es6"],
+    "typeRoots": ["node_modules/@types"],
     "types": [
+     
       "cypress"
     ],
     "resolveJsonModule": true
   },
   "exclude": [
+    "amplify",
     "babel.config.js",
     "web-build",
     "coverage",
+    "cypress",
     "amplify",
     "node_modules",
+    "**/node_modules/*",
+    "**/native-base-theme/*",
+    "native-base-theme",
     "native-base-theme/components/index.js"
   ]
 }

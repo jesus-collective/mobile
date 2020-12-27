@@ -18,7 +18,7 @@ export interface ResourceState extends JCState {
   isEditable: boolean
   canDelete: boolean
   validationError: string
-  currentUser: string
+  currentUser: string | null
   currentUserProfile: UserData | null | undefined
   memberIDs: string[]
 }

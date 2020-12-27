@@ -403,86 +403,92 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     }
   }
   leaveGroup = (): void => {
-    Analytics.record({
-      name: "leftResource",
-      // Attribute values must be strings
-      attributes: { id: this.state.groupData.id, name: this.state.groupData.name },
-    })
-    const groupMemberByUser: any = API.graphql({
-      query: queries.groupMemberByUser,
-      variables: { userID: this.state.currentUser, groupID: { eq: this.state.groupData.id } },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })
-    groupMemberByUser
-      .then((json: any) => {
-        console.log({ "Success queries.groupMemberByUser": json })
+    if (this.state.currentUser && this.state.groupData) {
+      Analytics.record({
+        name: "leftResource",
+        // Attribute values must be strings
+        attributes: { id: this.state.groupData.id, name: this.state.groupData.name },
+      })
+      const groupMemberByUser: any = API.graphql({
+        query: queries.groupMemberByUser,
+        variables: { userID: this.state.currentUser, groupID: { eq: this.state.groupData.id } },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+      })
+      groupMemberByUser
+        .then((json: any) => {
+          console.log({ "Success queries.groupMemberByUser": json })
 
-        json.data.groupMemberByUser.items.map((item) => {
-          const deleteGroupMember: any = API.graphql({
-            query: mutations.deleteGroupMember,
-            variables: { input: { id: item.id } },
-            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+          json.data.groupMemberByUser.items.map((item) => {
+            const deleteGroupMember: any = API.graphql({
+              query: mutations.deleteGroupMember,
+              variables: { input: { id: item.id } },
+              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+            })
+            deleteGroupMember
+              .then((json: any) => {
+                console.log({ "Success mutations.deleteGroupMember": json })
+              })
+              .catch((err: any) => {
+                console.log({ "Error mutations.deleteGroupMember": err })
+              })
           })
-          deleteGroupMember
-            .then((json: any) => {
-              console.log({ "Success mutations.deleteGroupMember": json })
-            })
-            .catch((err: any) => {
-              console.log({ "Error mutations.deleteGroupMember": err })
-            })
-        })
 
-        const remainingUsers = this.state.memberIDs.filter(
-          (user) => user !== this.state.currentUser
-        )
-        this.setState({ canJoin: true, canLeave: false, memberIDs: remainingUsers })
-        // this.renderButtons()
-      })
-      .catch((err: any) => {
-        console.log({ "Error queries.groupMemberByUser": err })
-      })
+          const remainingUsers = this.state.memberIDs.filter(
+            (user) => user !== this.state.currentUser
+          )
+          this.setState({ canJoin: true, canLeave: false, memberIDs: remainingUsers })
+          // this.renderButtons()
+        })
+        .catch((err: any) => {
+          console.log({ "Error queries.groupMemberByUser": err })
+        })
+    }
   }
   joinGroup = (): void => {
-    Analytics.record({
-      name: "joinedResource",
-      // Attribute values must be strings
-      attributes: { id: this.state.groupData.id, name: this.state.groupData.name },
-    })
-    const createGroupMember: any = API.graphql({
-      query: mutations.createGroupMember,
-      variables: { input: { groupID: this.state.groupData.id, userID: this.state.currentUser } },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })
-    createGroupMember
-      .then((json: any) => {
-        console.log({ "Success mutations.createGroupMember": json })
+    if (this.state.currentUser && this.state.groupData) {
+      Analytics.record({
+        name: "joinedResource",
+        // Attribute values must be strings
+        attributes: { id: this.state.groupData.id, name: this.state.groupData.name },
       })
-      .catch((err: any) => {
-        console.log({ "Error mutations.createGroupMember": err })
+      const createGroupMember: any = API.graphql({
+        query: mutations.createGroupMember,
+        variables: { input: { groupID: this.state.groupData.id, userID: this.state.currentUser } },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })
+      createGroupMember
+        .then((json: any) => {
+          console.log({ "Success mutations.createGroupMember": json })
+        })
+        .catch((err: any) => {
+          console.log({ "Error mutations.createGroupMember": err })
+        })
 
-    this.setState({
-      canJoin: false,
-      canLeave: true,
-      memberIDs: this.state.memberIDs.concat(this.state.currentUser),
-    })
-    // this.renderButtons()
-    console.log(this.state.memberIDs)
+      this.setState({
+        canJoin: false,
+        canLeave: true,
+        memberIDs: this.state.memberIDs.concat(this.state.currentUser),
+      })
+      // this.renderButtons()
+      console.log(this.state.memberIDs)
+    }
   }
   deleteGroup = (): void => {
-    const deleteGroup: any = API.graphql({
-      query: mutations.deleteGroup,
-      variables: { input: { id: this.state.groupData.id } },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })
-    deleteGroup
-      .then((json: any) => {
-        console.log({ "Success mutations.deleteGroup": json })
-        this.props.navigation.push("HomeScreen")
+    if (this.state.groupData) {
+      const deleteGroup: any = API.graphql({
+        query: mutations.deleteGroup,
+        variables: { input: { id: this.state.groupData.id } },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })
-      .catch((err: any) => {
-        console.log({ "Error mutations.deleteGroup": err })
-      })
+      deleteGroup
+        .then((json: any) => {
+          console.log({ "Success mutations.deleteGroup": json })
+          this.props.navigation.push("HomeScreen")
+        })
+        .catch((err: any) => {
+          console.log({ "Error mutations.deleteGroup": err })
+        })
+    }
   }
   showProfile = (id: string): void => {
     console.log("Navigate to profileScreen")
@@ -498,57 +504,62 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     this.setState({ isEditable: val })
   }
   createMenuItem = async (menuItemType: ResourceMenuItemType): Promise<void> => {
-    const menuItem: CreateResourceMenuItemInput = {
-      type: menuItemType,
-      menuTitle: "New Menu Title",
-      readGroups: [UserGroupType.verifiedUsers],
-      resourceRootID: this.state.resourceData.id,
-      order: this.state.resourceData?.menuItems.items.length + 1,
-    }
-    try {
-      console.log("Creating Resource")
+    if (this.state.resourceData && this.state.resourceData?.menuItems?.items) {
+      const menuItem: CreateResourceMenuItemInput = {
+        type: menuItemType,
+        menuTitle: "New Menu Title",
+        readGroups: [UserGroupType.verifiedUsers],
+        resourceRootID: this.state.resourceData.id,
+        order: this.state.resourceData?.menuItems.items.length + 1,
+      }
+      try {
+        console.log("Creating Resource")
 
-      const createMenuItem: CreateResourceMenuItemMutationResult = (await API.graphql({
-        query: mutations.createResourceMenuItem,
-        variables: { input: menuItem },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as CreateResourceMenuItemMutationResult
-      console.log(createMenuItem)
-      const temp = this.state.resourceData
-      temp.menuItems.items.push(createMenuItem.data?.createResourceMenuItem)
-      console.log(temp)
-      this.setState({ resourceData: temp }, () => this.forceUpdate())
-    } catch (e) {
-      console.log(e)
+        const createMenuItem: CreateResourceMenuItemMutationResult = (await API.graphql({
+          query: mutations.createResourceMenuItem,
+          variables: { input: menuItem },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })) as CreateResourceMenuItemMutationResult
+        console.log(createMenuItem)
+        const temp = this.state.resourceData
+        if (createMenuItem.data?.createResourceMenuItem)
+          temp.menuItems?.items?.push(createMenuItem.data?.createResourceMenuItem)
+        console.log(temp)
+        this.setState({ resourceData: temp }, () => this.forceUpdate())
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
   createResource = async (): Promise<void> => {
-    const resource: CreateResourceInput = {
-      type: "curriculum",
-      title: "New Title",
-      image: null,
-      description: "Enter description",
-      extendedDescription: JSON.stringify(
-        convertToRaw(EditorState.createEmpty().getCurrentContent())
-      ),
-      resourceID: this.state.resourceData.id,
-      order: this.state.resourceData.resources.items.length + 1,
-    }
-    try {
-      console.log("Creating Resource")
+    if (this.state.resourceData && this.state.resourceData.resources?.items) {
+      const resource: CreateResourceInput = {
+        type: "curriculum",
+        title: "New Title",
+        image: null,
+        description: "Enter description",
+        extendedDescription: JSON.stringify(
+          convertToRaw(EditorState.createEmpty().getCurrentContent())
+        ),
+        resourceID: this.state.resourceData.id,
+        order: this.state.resourceData.resources.items.length + 1,
+      }
+      try {
+        console.log("Creating Resource")
 
-      const createResource: any = await API.graphql({
-        query: mutations.createResource,
-        variables: { input: resource },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
-      console.log(createResource)
-      const temp = this.state.resourceData
-      temp.resources.items.push(createResource.data.createResource)
-      console.log(temp)
-      this.setState({ resourceData: temp }, () => this.forceUpdate())
-    } catch (e) {
-      console.log(e)
+        const createResource: any = await API.graphql({
+          query: mutations.createResource,
+          variables: { input: resource },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })
+        console.log(createResource)
+        const temp = this.state.resourceData
+        temp.resources?.items?.push(createResource.data.createResource)
+        console.log(temp)
+        this.setState({ resourceData: temp }, () => this.forceUpdate())
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
   createSeries = async (): Promise<void> => {
