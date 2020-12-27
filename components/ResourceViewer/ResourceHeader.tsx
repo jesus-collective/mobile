@@ -1,6 +1,5 @@
 import { Ionicons } from "@expo/vector-icons"
 import Amplify, { Auth, Storage } from "aws-amplify"
-import { Container } from "native-base"
 import React from "react"
 import InputColor from "react-input-color"
 import { Animated, Image, View } from "react-native"
@@ -191,60 +190,63 @@ class ResourceHeader extends JCComponent<Props, State> {
           if (this.state.imageUrl == null || this.state.image != this.props.pageItem.image)
             this.getImage(this.props.pageItem.image)
           return (
-            <Container style={this.styles.style.resourceHeaderImgContainer}>
-              {this.state.imageUrl ? (
-                <Animated.View
-                  onLayout={this.fadeAnimation}
-                  style={[
-                    this.styles.style.resourceHeaderImgView,
-                    { opacity: this.state.fadeValue },
-                  ]}
-                >
-                  <Image
-                    style={this.styles.style.resourceHeaderImg}
-                    source={this.state.imageUrl}
-                    onError={() => {
-                      this.getImage(this.props.pageItem.image)
-                    }}
-                  ></Image>
-                </Animated.View>
-              ) : null}
-              <View style={this.styles.style.resourcefileFieldWrapper}>
-                <EditableText
-                  multiline={false}
-                  placeholder="Title"
-                  inputStyle={this.styles.style.fontResourceHeaderBold}
-                  textStyle={[
-                    this.styles.style.fontResourceHeaderBold,
-                    { color: this.props.pageItem.color ?? "#000000" },
-                  ]}
-                  value={this.props.pageItem.title1 ?? ""}
-                  isEditable={false}
-                ></EditableText>
-                <EditableText
-                  multiline={false}
-                  placeholder="Subtitle"
-                  inputStyle={this.styles.style.fontResourceHeaderDescription}
-                  textStyle={[
-                    this.styles.style.fontResourceHeaderDescription,
-                    { color: this.props.pageItem.color ?? "#000000" },
-                  ]}
-                  value={this.props.pageItem.title2 ?? ""}
-                  isEditable={false}
-                ></EditableText>
+            <View style={this.styles.style.resourceHeaderContainer}>
+              <View style={this.styles.style.resourceHeaderImgContainer}>
+                {this.state.imageUrl ? (
+                  <Animated.View
+                    onLayout={this.fadeAnimation}
+                    style={[
+                      this.styles.style.resourceHeaderImgView,
+                      { opacity: this.state.fadeValue },
+                    ]}
+                  >
+                    <Image
+                      style={this.styles.style.resourceHeaderImg}
+                      source={this.state.imageUrl}
+                      onError={() => {
+                        this.getImage(this.props.pageItem.image)
+                      }}
+                    ></Image>
+                  </Animated.View>
+                ) : null}
+                <View style={this.styles.style.resourcefileFieldWrapper}>
+                  <EditableText
+                    multiline={false}
+                    placeholder="Title"
+                    inputStyle={this.styles.style.fontResourceHeaderBold}
+                    textStyle={[
+                      this.styles.style.fontResourceHeaderBold,
+                      { color: this.props.pageItem.color ?? "#000000" },
+                    ]}
+                    value={this.props.pageItem.title1 ?? ""}
+                    isEditable={false}
+                  ></EditableText>
+                  <EditableText
+                    multiline={false}
+                    placeholder="Subtitle"
+                    inputStyle={this.styles.style.fontResourceHeaderDescription}
+                    textStyle={[
+                      this.styles.style.fontResourceHeaderDescription,
+                      { color: this.props.pageItem.color ?? "#000000" },
+                    ]}
+                    value={this.props.pageItem.title2 ?? ""}
+                    isEditable={false}
+                  ></EditableText>
+                </View>
+                <View style={this.styles.style.resourcefileInputWrapper}>
+                  <PageItemSettings
+                    resourceActions={this.props.resourceActions}
+                    resourceState={this.props.resourceState}
+                    pageItemIndex={this.props.pageItemIndex}
+                    save={this.props.save}
+                    delete={this.props.delete}
+                    pageItem={this.props.pageItem}
+                  ></PageItemSettings>
+                  {/* */}
+                </View>
               </View>
-              <View style={this.styles.style.resourcefileInputWrapper}>
-                <PageItemSettings
-                  resourceActions={this.props.resourceActions}
-                  resourceState={this.props.resourceState}
-                  pageItemIndex={this.props.pageItemIndex}
-                  save={this.props.save}
-                  delete={this.props.delete}
-                  pageItem={this.props.pageItem}
-                ></PageItemSettings>
-                {/* */}
-              </View>
-            </Container>
+              <View style={this.styles.style.resourceHeaderImgContainer2}></View>
+            </View>
           )
         }}
       </ResourceHeader.Consumer>

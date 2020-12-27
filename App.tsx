@@ -129,12 +129,15 @@ class AwesomeApp extends JCComponent<Props, State> {
       joinedAs: "individual" | "organization" | null
     }
     if (state == "signUp") RootNavigation.navigate("signup", { joinedAs: null })
-    else if (state == "signIn")
-      RootNavigation.navigate("signin", {
-        email: data?.email,
-        fromVerified: data?.fromVerified,
+    else if (state == "signIn") {
+      RootNavigation.navigate("auth", {
+        screen: "signin",
+        params: {
+          email: data?.email,
+          fromVerified: data?.fromVerified,
+        },
       })
-    else if (state == "forgotPassword") RootNavigation.navigate("forgotpassword", {})
+    } else if (state == "forgotPassword") RootNavigation.navigate("forgotpassword", {})
     else if (state == "requireNewPassword") RootNavigation.navigate("requirenewpassword", {})
     else if (state == "verifyContact") RootNavigation.navigate("verifycontact", {})
     else if (state == "confirmSignIn") RootNavigation.navigate("confirmsignin", {})

@@ -1667,9 +1667,16 @@ export default class MainStyles {
             myMapCalloutEventDescription: {
                 height: 50
             },
+            resourceHeaderContainer: {
+                //    backgroundColor: "#000000", 
+                height: Dimensions.get('window').width*(24/100)+" + 200px"
+            },
             resourceHeaderImgContainer: {
                 //    backgroundColor: "#000000", 
-                maxHeight: "450px"
+                height: Dimensions.get('window').width*(24/100)+" + 100px"
+            },
+            resourceHeaderImgContainer2:{
+                height: "100px"
             },
             resourceHeaderImg: Platform.OS === 'web' ?
                 {
@@ -3434,9 +3441,12 @@ export default class MainStyles {
                 resourceHeaderAgeGroupBox: {
                     width: "70%"
                 },
-                resourceHeaderImgContainer: {
-                    maxHeight: "550px"
-                },
+             //   resourceHeaderImgContainer: {
+             //       maxHeight: "550px"
+              //  },
+//                resourceHeaderContainer: {
+  //                  maxHeight: "650px"
+    //            },
                 courseHeaderContainer: {
                     flex: 95,
                 },

@@ -59,8 +59,8 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
     } catch (e) {
       console.log(e)
     }
-    this.getAuthInitialState()
-    this.performStartup()
+    await this.getAuthInitialState()
+    await this.performStartup()
   }
   isMemberOf = (group: string): boolean => {
     if (this.state.groups) return this.state.groups.includes(group)
@@ -92,7 +92,7 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
       await this.ensureUserExists()
       await this.checkIfPaid()
       await this.checkIfCompletedProfile()
-    }
+    } else if (this.state.authState == "signIn") this.props.onStateChange("signIn", null)
   }
   private user: any
 
