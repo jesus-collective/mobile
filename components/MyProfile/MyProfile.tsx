@@ -339,7 +339,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
   getProfileImage(): void {
     console.log("get profile image")
     //console.log(this.state.UserDetails.profileImage)
-    if (this.state.UserDetails?.profileImage)
+    if (this.state.UserDetails?.profileImage?.filenameUpload)
       Storage.get(this.state.UserDetails.profileImage.filenameUpload, {
         level: "protected",
         identityId: this.state.UserDetails.profileImage.userId,
