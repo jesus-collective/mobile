@@ -192,7 +192,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             enabled: "true",
             isStripe: "true",
             isPaypal: "false",
-            tierd: [{ name: "", stripePaymentID: "", stripeIsTiered: "false" }],
+            tiered: [{ name: "", stripePaymentID: "", stripeIsTiered: "false" }],
             showAddProductModal: false,
           })
           break

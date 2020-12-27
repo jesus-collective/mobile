@@ -75,7 +75,7 @@ export default function CoursePayment({ navigation, route }: Params): JSX.Elemen
             <PaymentFrom
               product={product}
               onSuccessCallback={success}
-              onFailureCallback={(e) => console.error(e)}
+              onFailureCallback={(e: any) => console.error(e)}
             />
           </Container>
         </Content>

@@ -96,7 +96,7 @@ export default class ConversationScreen extends JCComponent<Props, State> {
 
             createDirectMessageUser1.then(addDM2).catch(addDM2)
           })
-          .catch((e) => {
+          .catch((e: any) => {
             console.log(e)
           })
       })

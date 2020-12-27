@@ -103,7 +103,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       .then((json) => {
         this.getProfileImage(json.data.getUser.profileImage)
       })
-      .catch((e) => {
+      .catch((e: any) => {
         if (e.data) {
           this.getProfileImage(e.data.getUser.profileImage)
         }
@@ -116,7 +116,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       .then((json) => {
         this.getProfileImage(json.data.getUser.profileImage)
       })
-      .catch((e) => {
+      .catch((e: any) => {
         if (e.data) {
           this.getProfileImage(e.data.getUser.profileImage)
         }

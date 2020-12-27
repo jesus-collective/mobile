@@ -168,7 +168,7 @@ export default class HandleStripePayment {
         .then(this.handleRequiresPaymentMethod)
         // No more actions required. Provision your service for the user.
         .then((result) => this.onSubscriptionComplete(result, handleComplete))
-        .catch((error) => {
+        .catch((error: any) => {
           console.log(error)
           // An error has happened. Display the failure to the user here.
           // We utilize the HTML element we created.
@@ -239,7 +239,7 @@ export default class HandleStripePayment {
             }
           }
         })
-        .catch((error) => {
+        .catch((error: any) => {
           this.displayError(error)
         })
     } else {

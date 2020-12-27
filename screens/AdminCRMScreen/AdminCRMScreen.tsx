@@ -354,11 +354,11 @@ export default class AdminScreen extends JCComponent<Props, State> {
   }
   async removeGroup(user: string, group: string): Promise<void> {
     await this.removeUserFromGroup(user, group)
-    this.showGroups(this.state.showGroupsId)
+    if (this.state.showGroupsId) this.showGroups(this.state.showGroupsId)
   }
   async addGroup(user: string, group: string): Promise<void> {
     await this.addUserToGroup(user, group)
-    this.showGroups(this.state.showGroupsId)
+    if (this.state.showGroupsId) this.showGroups(this.state.showGroupsId)
   }
   async showGroups(id: string): Promise<void> {
     this.setState(
@@ -637,7 +637,8 @@ export default class AdminScreen extends JCComponent<Props, State> {
                       buttonType={ButtonTypes.AdminModalOrange}
                       onPress={() => {
                         if (window.confirm("Are you sure you wish to delete this group?"))
-                          this.removeGroup(this.state.showGroupsId, item.GroupName)
+                          if (this.state.showGroupsId)
+                            this.removeGroup(this.state.showGroupsId, item.GroupName)
                       }}
                     >
                       X
@@ -674,7 +675,8 @@ export default class AdminScreen extends JCComponent<Props, State> {
             <JCButton
               buttonType={ButtonTypes.AdminAdd}
               onPress={() => {
-                this.addGroup(this.state.showGroupsId, this.state.groupToAdd)
+                if (this.state.showGroupsId && this.state.groupToAdd)
+                  this.addGroup(this.state.showGroupsId, this.state.groupToAdd)
               }}
             >
               Add Group
@@ -713,7 +715,8 @@ export default class AdminScreen extends JCComponent<Props, State> {
                       buttonType={ButtonTypes.AdminModalOrange}
                       onPress={() => {
                         if (window.confirm("Are you sure you wish to delete this payment?"))
-                          this.removePayment(this.state.showPaymentsId, item.id)
+                          if (this.state.showPaymentsId)
+                            this.removePayment(this.state.showPaymentsId, item.id)
                       }}
                     >
                       X
@@ -751,7 +754,8 @@ export default class AdminScreen extends JCComponent<Props, State> {
             <JCButton
               buttonType={ButtonTypes.AdminAdd}
               onPress={() => {
-                this.addPayment(this.state.showPaymentsId, this.state.groupToAdd)
+                if (this.state.showPaymentsId && this.state.groupToAdd)
+                  this.addPayment(this.state.showPaymentsId, this.state.groupToAdd)
               }}
             >
               Add Payment

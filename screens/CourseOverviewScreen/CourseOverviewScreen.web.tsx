@@ -95,7 +95,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
             }
           )
         })
-        .catch((e) => {
+        .catch((e: any) => {
           console.log({
             "Error Loading User": e,
           })

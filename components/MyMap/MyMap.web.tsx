@@ -66,7 +66,7 @@ class MyMapImpl extends JCComponent<Props, State> {
             },
           })
         })
-        .catch((e) => {
+        .catch((e: any) => {
           console.error({
             "Error Loading User": e,
           })
