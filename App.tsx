@@ -18,6 +18,7 @@ import awsConfig from "./src/aws-exports"
 import { version } from "./src/version"
 
 let env = "unknown"
+
 if (window.location === undefined) env = "mobile"
 else if (window.location.hostname === "localhost") env = "dev"
 else if (window.location.hostname.includes("beta")) env = "beta"

@@ -14,10 +14,7 @@
     "strict": true,
     "lib": ["es6"],
     "typeRoots": ["node_modules/@types"],
-    "types": [
-     
-      "cypress"
-    ],
+    "types": ["node", "react","react-native"],
     "resolveJsonModule": true
   },
   "exclude": [
