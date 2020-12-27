@@ -1,22 +1,20 @@
-import { Left, Body, StyleProvider, Card, CardItem, ListItem, Right, Container } from "native-base"
-import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
-import * as React from "react"
-import { Text, Dimensions, View, Modal } from "react-native"
-import getTheme from "../../native-base-theme/components"
-import { Image } from "react-native"
-import * as customQueries from "../../src/graphql-custom/queries"
-import * as queries from "../../src/graphql/queries"
-import * as mutations from "../../src/graphql/mutations"
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
-import { API, Auth, Analytics } from "aws-amplify"
-import ProfileImage from "../../components/ProfileImage/ProfileImage"
-import { TouchableOpacity } from "react-native"
-import { constants } from "../../src/constants"
-import ErrorBoundry from "../../components/ErrorBoundry"
-import moment from "moment-timezone"
-import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import { Tooltip } from "@material-ui/core"
+import { Analytics, API, Auth } from "aws-amplify"
+import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import moment from "moment-timezone"
+import { Body, Card, CardItem, Container, Left, ListItem, Right, StyleProvider } from "native-base"
+import * as React from "react"
+import { Dimensions, Image, Modal, Text, TouchableOpacity, View } from "react-native"
+import ErrorBoundry from "../../components/ErrorBoundry"
+import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
+import ProfileImage from "../../components/ProfileImage/ProfileImage"
+import getTheme from "../../native-base-theme/components"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
+import { constants } from "../../src/constants"
+import * as customQueries from "../../src/graphql-custom/queries"
+import * as mutations from "../../src/graphql/mutations"
+import * as queries from "../../src/graphql/queries"
+import JCComponent, { JCState } from "../JCComponent/JCComponent"
 
 interface Props {
   navigation: any
@@ -38,7 +36,7 @@ interface State extends JCState {
   titleString: string
   data: any
   showCreateButton: boolean
-  currentUser: string
+  currentUser: string | null
   nextToken: string | null
   canLeave: any
   isOwner: any
@@ -315,6 +313,8 @@ export default class MyGroups extends JCComponent<Props, State> {
         return []
       case "profile":
         return this.convertProfileToMapData(data)
+      default:
+        return []
     }
   }
   setInitialData(props: Props): void {
@@ -815,7 +815,7 @@ export default class MyGroups extends JCComponent<Props, State> {
           <CardItem style={{ paddingTop: 0 }}>
             <Text numberOfLines={1} style={[this.styles.style.fontDetailTop, { paddingTop: 0 }]}>
               {moment.tz(item.time, zone).format("ddd, MMM D, h:mm a")}{" "}
-              {moment.tz.zone(zone).abbr(+moment(item.time).format("x"))}
+              {moment.tz.zone(zone)?.abbr(+moment(item.time).format("x"))}
             </Text>
           </CardItem>
           <CardItem style={{ height: 60, marginTop: 8 }}>
@@ -1006,17 +1006,17 @@ export default class MyGroups extends JCComponent<Props, State> {
       </Tooltip>
     )
   }
-  isCourseCoach(userActions: UserActions, id) {
+  isCourseCoach(userActions: UserActions, id: string) {
     return userActions.isMemberOf("courseCoach")
   }
-  isCourseAdmin(userActions: UserActions, id) {
+  isCourseAdmin(userActions: UserActions, id: string) {
     return userActions.isMemberOf("courseAdmin")
   }
-  canCourseApply(id) {
+  canCourseApply(id: string) {
     return false
   }
 
-  canCoursePay(id) {
+  canCoursePay(id: string) {
     const test = this.state.canPay.filter((elem: any) => elem === id)
     if (test.length > 0) return true && !this.isCoursePaid(id)
     else return false
@@ -1256,7 +1256,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                           {constants["SETTING_ISVISIBLE_SHOWRECOMMENDED"] ? (
                             <JCButton
                               buttonType={ButtonTypes.TransparentBoldOrange}
-                              data-testid={"mygroup-recommmended-" + this.state.titleString}
+                              data-testid={"mygroup-recommended-" + this.state.titleString}
                               onPress={() => {
                                 this.openMultiple()
                               }}

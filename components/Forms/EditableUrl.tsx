@@ -12,7 +12,7 @@ interface Props {
   inputStyle?: any
   multiline: boolean
   placeholder?: string
-  onChange?(string): void
+  onChange?(value: string): void
   navigation?: any
   route?: any
 }

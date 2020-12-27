@@ -10,7 +10,7 @@ interface Props {
   multiline: boolean
   placeholder?: string
   placeholderTextColor?: string
-  onChange?(string): void
+  onChange?(value: string): void
   "data-testid"?: any
   ellipsizeMode?: "head" | "middle" | "tail" | "clip"
   numberOfLines?: number

@@ -6,7 +6,7 @@ import JCComponent, { JCState } from "../JCComponent/JCComponent"
 interface Props {
   switchLabel: string
   initState: boolean
-  onPress(status): any
+  onPress(status: boolean): any
   /**
    * Set a larger value if switchLabel does not fit on a single line.
    * @default 170

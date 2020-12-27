@@ -20,7 +20,7 @@ interface Props {
 }
 
 interface State extends JCState {
-  resourcesDropdown: HTMLElement
+  resourcesDropdown: HTMLElement | null
   resourcesStyle: HTMLAttributes<HTMLButtonElement>["style"]
   chevronStyle: HTMLAttributes<HTMLImageElement>["style"]
 }

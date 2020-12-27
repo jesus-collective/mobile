@@ -1,5 +1,5 @@
 import { Storage } from "aws-amplify"
-//TODO FIGURE OUT WHY THIS DOESN"T WORK
+//TODO FIGURE OUT WHY THIS DOESN'T WORK
 //import '../MessageBoard.css';
 import { ContentState, convertFromRaw, convertToRaw, EditorState } from "draft-js"
 import { stateToHTML } from "draft-js-export-html"
@@ -18,7 +18,7 @@ interface Props {
   textStyle: any
   inputStyle?: any
   placeholder?: string
-  onChange?(string): void
+  onChange?(value: string): void
   toolBar?: any
 }
 interface State extends JCState {
@@ -84,7 +84,6 @@ export default class EditableRichText extends JCComponent<Props, State> {
     try {
       return stateToHTML(convertFromRaw(JSON.parse(text)))
     } catch (e) {
-      console.log("ACCKK")
       console.log({ Error: e })
       return "<div>Message Can't Be Displayed</div>"
     }
