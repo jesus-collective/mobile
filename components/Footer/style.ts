@@ -1,10 +1,5 @@
-import { Platform } from 'react-native';
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {
-    isSafari,
-    isChrome
-} from "react-device-detect";
 
 export default EStyleSheet.create({
     footerContainer: {
@@ -83,7 +78,7 @@ export default EStyleSheet.create({
         marginTop: 5,
         marginBottom: 10
     },
-    copywriteText: {
+    copyRightText: {
         fontFamily: "Graphik-Regular-App",
         color: '#ffffff',
         fontSize: 13
