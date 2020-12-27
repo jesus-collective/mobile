@@ -47,10 +47,15 @@ export default class EditableFileUpload extends JCComponent<Props> {
               placeholder="custom filename (optional)"
               style={{ fontSize: 14, paddingHorizontal: 10, width: 200 }}
               value={this.props.attachmentName}
-              onChange={(e) => this.props.onChange({ attachmentName: e.nativeEvent.text })}
+              onChange={(e) => {
+                if (this.props.onChange) this.props.onChange({ attachmentName: e.nativeEvent.text })
+              }}
             ></TextInput>
             <TouchableOpacity
-              onPress={() => this.props.onChange({ attachmentName: null, attachment: null })}
+              onPress={() => {
+                if (this.props.onChange)
+                  this.props.onChange({ attachmentName: null, attachment: null })
+              }}
             >
               <AntDesign name="close" size={20} color="black" />
             </TouchableOpacity>
@@ -111,19 +116,22 @@ export default class EditableFileUpload extends JCComponent<Props> {
   }
 
   async handleUpload(e: React.ChangeEvent<HTMLInputElement>): Promise<void> {
-    const file = e.target.files[0]
-    try {
-      const user = await Auth.currentCredentials()
-      const userId = user.identityId
-      const fn = "course/uploads/" + "jc-upload-" + new Date().getTime() + "-" + file.name
-      const upload = await Storage.put(fn, file, {
-        level: "protected",
-        contentType: file.type,
-        identityId: userId,
-      })
-      if (upload) this.props.onChange({ attachment: fn, attachmentName: null })
-    } catch (e) {
-      console.error(e)
+    if (e.target.files) {
+      const file = e.target.files[0]
+      try {
+        const user = await Auth.currentCredentials()
+        const userId = user.identityId
+        const fn = "course/uploads/" + "jc-upload-" + new Date().getTime() + "-" + file.name
+        const upload = await Storage.put(fn, file, {
+          level: "protected",
+          contentType: file.type,
+          identityId: userId,
+        })
+        if (upload && this.props.onChange)
+          this.props.onChange({ attachment: fn, attachmentName: null })
+      } catch (e) {
+        console.error(e)
+      }
     }
   }
   render(): React.ReactNode {

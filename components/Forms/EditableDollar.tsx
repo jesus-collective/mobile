@@ -13,7 +13,7 @@ interface Props {
   inputStyle?: any
   multiline: boolean
   placeholder?: string
-  onChange?(string): void
+  onChange?(value: string): void
 }
 interface State extends JCState {
   // value: string,
@@ -33,7 +33,7 @@ export default class EditableDollar extends JCComponent<Props, State> {
       textStyle: props.textStyle,
       inputStyle: props.inputStyle,
       multiline: props.multiline,
-      placeholder: props.placeholder,
+      placeholder: props.placeholder ?? "",
     }
   }
 

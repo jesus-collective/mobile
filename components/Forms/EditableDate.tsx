@@ -1,6 +1,7 @@
 import { createMuiTheme } from "@material-ui/core"
 import lightBlue from "@material-ui/core/colors/lightBlue"
 import { KeyboardDatePicker, KeyboardDateTimePicker } from "@material-ui/pickers"
+import { MaterialUiPickersDate } from "@material-ui/pickers/typings/date"
 import { ThemeProvider } from "@material-ui/styles"
 import moment from "moment-timezone"
 import { Container, Picker } from "native-base"
@@ -50,7 +51,7 @@ interface Props {
   textStyle: any
   inputStyle?: any
   placeholder?: string
-  onChange?(arg1, arg2)
+  onChange?(time: string, timezone: string): void
   type: string
   tz: string
 }
@@ -59,8 +60,8 @@ export default class EditableDate extends JCComponent<Props> {
     super(props)
   }
 
-  onChanged(dateTime: moment.Moment, tz: string): void {
-    this.props.onChange(dateTime.tz(this.props.tz).format(), tz)
+  onChanged(dateTime: MaterialUiPickersDate, tz: string): void {
+    if (this.props.onChange) this.props.onChange(dateTime?.tz(this.props.tz).format() ?? "", tz)
   }
 
   onTzChanged(tz: string): void {
@@ -83,7 +84,7 @@ export default class EditableDate extends JCComponent<Props> {
                     : moment(this.props.value).tz(this.props.tz)
                 }
                 format="MMMM Do YYYY, h:mm a "
-                onChange={(value) => {
+                onChange={(value: MaterialUiPickersDate) => {
                   this.onChanged(value, this.props.tz)
                 }}
                 onError={(e) => {
@@ -176,7 +177,7 @@ export default class EditableDate extends JCComponent<Props> {
         >
           {moment.tz(this.props.value, this.props.tz).format("dddd, MMMM D, YYYY @ h:mm a")}
           &nbsp;
-          {moment.tz.zone(this.props.tz).abbr(+moment(this.props.value).format("x"))}
+          {moment.tz.zone(this.props.tz)?.abbr(+moment(this.props.value).format("x"))}
         </Text>
       )
     else
@@ -193,7 +194,7 @@ export default class EditableDate extends JCComponent<Props> {
         >
           {moment.tz(this.props.value, this.props.tz).format("dddd, MMMM D")}
           &nbsp;
-          {moment.tz.zone(this.props.tz).abbr(+moment(this.props.value).format("x"))}
+          {moment.tz.zone(this.props.tz)?.abbr(+moment(this.props.value).format("x"))}
         </Text>
       )
   }

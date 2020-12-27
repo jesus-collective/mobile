@@ -11,7 +11,7 @@ interface Props {
   multiline: boolean
   placeholder?: string
   citiesOnly?: boolean
-  onChange?(string, any): void
+  onChange?(address: string, latLng: any): void
 }
 interface State extends JCState {
   value: string
@@ -32,7 +32,7 @@ export default class EditableLocation extends JCComponent<Props, State> {
       textStyle: props.textStyle,
       inputStyle: props.inputStyle,
       multiline: props.multiline,
-      placeholder: props.placeholder,
+      placeholder: props.placeholder ?? "",
     }
   }
 
@@ -130,11 +130,11 @@ export default class EditableLocation extends JCComponent<Props, State> {
                       }
                   return (
                     <div
-                      key={index}
                       {...getSuggestionItemProps(suggestion, {
                         className,
                         style,
                       })}
+                      key={index}
                     >
                       <span
                         style={{

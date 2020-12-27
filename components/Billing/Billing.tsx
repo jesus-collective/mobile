@@ -9,7 +9,7 @@ import {
   ElementsConsumer,
 } from "@stripe/react-stripe-js"
 import { loadStripe, Stripe, StripeElements } from "@stripe/stripe-js"
-import Amplify, { API, Auth } from "aws-amplify"
+import Amplify, { API, Auth, graphqlOperation } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { Body, Card, CardItem, Content, Label } from "native-base"
 import React, { useState } from "react"
@@ -495,7 +495,7 @@ class BillingImpl extends JCComponent<Props, State> {
         this.setState({ userData: temp })
       }
     } catch (e) {
-      console.log({ errorupdating: e })
+      console.log({ errorUpdating: e })
     }
   }
   isMakePaymentEnabled(): boolean {
