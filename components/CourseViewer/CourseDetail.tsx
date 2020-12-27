@@ -140,7 +140,7 @@ class CourseDetailImpl extends JCComponent<Props, State> {
                 actions.updateLesson(state.activeWeek, lesson, "courseLessonResponseId", value)
               }}
             >
-              <Picker.Item label="Pick an assigment to Review" />
+              <Picker.Item label="Pick an assignment to Review" />
               {actions.getAssignmentList()?.map((item) => {
                 if (item) return <Picker.Item key={item.id} label={item.name} value={item.id} />
               })}
@@ -333,7 +333,7 @@ class CourseDetailImpl extends JCComponent<Props, State> {
               value={week.leader}
               isEditable={state.isEditable && state.editMode}
               textStyle={{ marginLeft: 10 }}
-              inputStyle={{ margintop: 20, marginLeft: 20 }}
+              inputStyle={{ marginTop: 20, marginLeft: 20 }}
             ></EditableRichText>
           </Container>
           <Container style={this.styles.style.courseLessonContainer}>
@@ -725,7 +725,7 @@ class CourseDetailImpl extends JCComponent<Props, State> {
             value={lesson.description}
             isEditable={state.isEditable && state.editMode}
             textStyle={{ marginLeft: 10 }}
-            inputStyle={{ margintop: 20, marginLeft: 20 }}
+            inputStyle={{ marginTop: 20, marginLeft: 20 }}
           ></EditableRichText>
         </Container>
       </Container>
@@ -814,7 +814,7 @@ class CourseDetailImpl extends JCComponent<Props, State> {
             value={lesson.description}
             isEditable={state.isEditable && state.editMode}
             textStyle={{ marginLeft: 10 }}
-            inputStyle={{ margintop: 20, marginLeft: 20 }}
+            inputStyle={{ marginTop: 20, marginLeft: 20 }}
           ></EditableRichText>
         </Container>
       </Container>
