@@ -1,24 +1,14 @@
-import React from "react";
-//import { Editor } from 'react-draft-wysiwyg';
-//import { Storage } from 'aws-amplify';
-
-//import './react-draft-wysiwyg.css';
-import * as customQueries from "../../src/graphql-custom/queries";
-//import * as queries from '../../src/graphql/queries';
-import * as mutations from "../../src/graphql/mutations";
-//import { EditorState } from 'draft-js';
-import { Pressable, Text } from "react-native";
-//import { v1 as uuidv1 } from 'uuid';
-import { TouchableOpacity } from "react-native";
-import JCComponent, { JCState } from "../JCComponent/JCComponent";
-//import { ContentState, convertFromRaw, convertToRaw } from 'draft-js';
-//import { stateToHTML } from 'draft-js-export-html';
-import MessageBoard from "../MessageBoard/MessageBoard";
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native";
-import { API, Auth } from "aws-amplify";
-import { Container } from "native-base";
-import ProfileImage from "../../components/ProfileImage/ProfileImage";
-import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext";
+import { API, Auth } from "aws-amplify"
+import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import { Container } from "native-base"
+import React from "react"
+import { Text, TouchableOpacity } from "react-native"
+import ProfileImage from "../../components/ProfileImage/ProfileImage"
+import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
+import * as customQueries from "../../src/graphql-custom/queries"
+import * as mutations from "../../src/graphql/mutations"
+import JCComponent, { JCState } from "../JCComponent/JCComponent"
+import MessageBoard from "../MessageBoard/MessageBoard"
 
 enum initialPostState {
   Yes,
@@ -26,23 +16,23 @@ enum initialPostState {
   Unknown,
 }
 interface Props {
-  wordCount: number;
-  assignmentId: String;
-  actions: any;
+  wordCount: number
+  assignmentId: String
+  actions: any
 }
 interface State extends JCState {
-  assignmentComplete: boolean;
-  selectedRoom: any;
-  data: any;
-  currentUser: any;
-  currentRoomId: string | null;
-  newToList: any;
-  userList: any;
+  assignmentComplete: boolean
+  selectedRoom: any
+  data: any
+  currentUser: any
+  currentRoomId: string | null
+  newToList: any
+  userList: any
 }
 export default class EditableRichText extends JCComponent<Props, State> {
   constructor(props: Props) {
-    super(props);
-    const z = this.props.actions?.myCourseGroups();
+    super(props)
+    const z = this.props.actions?.myCourseGroups()
     this.state = {
       ...super.getInitialState(),
       selectedRoom: null,
@@ -52,28 +42,27 @@ export default class EditableRichText extends JCComponent<Props, State> {
       newToList: [],
       assignmentComplete: false,
       userList: [...z.all],
-    };
-    console.log({ userList: this.state.userList });
+    }
+    console.log({ userList: this.state.userList })
 
     Auth.currentAuthenticatedUser().then((user: any) => {
-      this.setState({ currentRoomId: null, currentUser: user.username });
-    });
-    this.getInitialData(null);
+      this.setState({ currentRoomId: null, currentUser: user.username })
+    })
+    this.getInitialData(null)
   }
   componentDidUpdate(prevProps: Props) {
     if (prevProps.assignmentId !== this.props.assignmentId) {
-      this.getInitialData(null);
+      this.getInitialData(null)
     }
   }
   async getInitialData(next: string | null): Promise<void> {
     if (this.props.assignmentId)
       try {
         this.setState({
-          currentRoomId:
-            "course-" + this.props.assignmentId + "-" + this.state.currentUser,
-        });
-        console.log({ Assignment: this.props.assignmentId });
-        const user = await Auth.currentAuthenticatedUser();
+          currentRoomId: "course-" + this.props.assignmentId + "-" + this.state.currentUser,
+        })
+        console.log({ Assignment: this.props.assignmentId })
+        const user = await Auth.currentAuthenticatedUser()
         try {
           const query = {
             limit: 20,
@@ -81,67 +70,55 @@ export default class EditableRichText extends JCComponent<Props, State> {
               id: { contains: "course-" + this.props.assignmentId + "-" },
             },
             nextToken: next,
-          };
+          }
 
           const json: any = await API.graphql({
             query: customQueries.listDirectMessageRooms,
             variables: query,
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          });
+          })
 
           if (json.data.listDirectMessageRooms.nextToken !== null) {
             this.setState({
-              data: [
-                ...this.state.data,
-                ...json.data.listDirectMessageRooms.items,
-              ],
-            });
-            this.getInitialData(json.data.listDirectMessageRooms.nextToken);
+              data: [...this.state.data, ...json.data.listDirectMessageRooms.items],
+            })
+            this.getInitialData(json.data.listDirectMessageRooms.nextToken)
           } else if (json.data.listDirectMessageRooms) {
             this.setState(
               {
-                data: [
-                  ...this.state.data,
-                  ...json.data.listDirectMessageRooms.items,
-                ],
+                data: [...this.state.data, ...json.data.listDirectMessageRooms.items],
               },
               () => {
                 //TODO FIX
-                this.shouldCreateRoom(userActions);
+                this.shouldCreateRoom(userActions)
               }
-            );
+            )
           }
         } catch (json2: any) {
-          console.error({ Error: json2 });
+          console.error({ Error: json2 })
           if (json2.data.listDirectMessageRooms.nextToken !== null) {
             this.setState({
-              data: [
-                ...this.state.data,
-                ...json2.data.listDirectMessageRooms.items,
-              ],
-            });
-            this.getInitialData(json2.data.listDirectMessageRooms.nextToken);
+              data: [...this.state.data, ...json2.data.listDirectMessageRooms.items],
+            })
+            this.getInitialData(json2.data.listDirectMessageRooms.nextToken)
           } else if (json2.data.listDirectMessageRooms) {
             this.setState(
               {
-                data: [
-                  ...this.state.data,
-                  ...json2.data.listDirectMessageRooms.items,
-                ],
+                data: [...this.state.data, ...json2.data.listDirectMessageRooms.items],
               },
               () => {
                 //TODO FIX
-                this.shouldCreateRoom(shouldCreateRoom);
+                this.shouldCreateRoom(shouldCreateRoom)
               }
-            );
+            )
           }
         }
       } catch (err) {
-        console.error(err);
+        console.error(err)
       }
   }
   createRoom = (): void => {
-    console.log("CreateRoom");
+    console.log("CreateRoom")
     Auth.currentAuthenticatedUser()
       .then((user: any) => {
         const createDirectMessageRoom: any = API.graphql({
@@ -158,126 +135,111 @@ export default class EditableRichText extends JCComponent<Props, State> {
             },
           },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        });
+        })
         createDirectMessageRoom.then((json: any) => {
-          console.log({ createDirectMessageRoom: json });
-          console.log("createDMUser");
-          const userList = this.state.userList;
+          console.log({ createDirectMessageRoom: json })
+          console.log("createDMUser")
+          const userList = this.state.userList
           userList.map((item) => {
             const createDirectMessageUser2: any = API.graphql({
               query: mutations.createDirectMessageUser,
               variables: {
                 input: {
-                  roomID:
-                    "course-" +
-                    this.props.assignmentId +
-                    "-" +
-                    user["username"],
+                  roomID: "course-" + this.props.assignmentId + "-" + user["username"],
                   userID: item.id,
                   userName: item.name,
                 },
               },
               authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-            });
+            })
             createDirectMessageUser2
               .then((json2: any) => {
-                console.log({ createDirectMessageUser: json2 });
+                console.log({ createDirectMessageUser: json2 })
               })
               .catch((json2: any) => {
-                console.log({ Error: json2 });
-              });
-          });
-        });
+                console.log({ Error: json2 })
+              })
+          })
+        })
       })
       .catch((e) => {
-        console.log({ Error: e });
-      });
-  };
+        console.log({ Error: e })
+      })
+  }
   shouldCreateRoom = async (userActions: UserActions): Promise<void> => {
-    console.log({ "Number of rooms": this.state.data.length });
-    const user = await Auth.currentAuthenticatedUser();
+    console.log({ "Number of rooms": this.state.data.length })
+    const user = await Auth.currentAuthenticatedUser()
     if (
       this.state.data.filter(
-        (item) =>
-          item.id ==
-          "course-" + this.props.assignmentId + "-" + user["username"]
+        (item) => item.id == "course-" + this.props.assignmentId + "-" + user["username"]
       ).length <= 0
     )
-      if (
-        !userActions.isMemberOf("courseAdmin") &&
-        !userActions.isMemberOf("courseCoach")
-      )
-        this.createRoom();
-  };
+      if (!userActions.isMemberOf("courseAdmin") && !userActions.isMemberOf("courseCoach"))
+        this.createRoom()
+  }
 
   hasInitialPost = (): initialPostState => {
     if (this.props.assignmentId)
       if (
         this.state.data.filter(
-          (item) =>
-            item.id ==
-            "course-" + this.props.assignmentId + "-" + this.state.currentUser
+          (item) => item.id == "course-" + this.props.assignmentId + "-" + this.state.currentUser
         )[0]?.directMessage.items.length > 0
       ) {
-        console.log({ "Assignment has initial post": this.props.assignmentId });
-        return initialPostState.Yes;
+        console.log({ "Assignment has initial post": this.props.assignmentId })
+        return initialPostState.Yes
       } else {
         console.log({
           "Assignment does not have initial post": this.props.assignmentId,
-        });
-        return initialPostState.No;
+        })
+        return initialPostState.No
       }
-    else return initialPostState.Unknown;
-  };
+    else return initialPostState.Unknown
+  }
   getOtherUsers(data: any): { ids: string[]; names: string[] } {
-    const ids: string[] = [];
-    const names: string[] = [];
+    const ids: string[] = []
+    const names: string[] = []
     data.messageUsers.items.forEach((user) => {
       if (user.userID !== this.state.currentUser) {
-        ids.push(user.userID);
-        names.push(user.userName);
+        ids.push(user.userID)
+        names.push(user.userName)
       }
-    });
+    })
 
-    return { ids, names };
+    return { ids, names }
   }
   switchRoom(index: number): void {
-    this.setState({ selectedRoom: index });
+    this.setState({ selectedRoom: index })
 
-    this.setState({ currentRoomId: this.state.data[index].id });
-    console.log(this.state.data[index]);
+    this.setState({ currentRoomId: this.state.data[index].id })
+    console.log(this.state.data[index])
   }
   getCurrentRoomRecipients(): string[] {
-    const ids: string[] = [];
+    const ids: string[] = []
     this.state.userList.forEach((user) => {
-      ids.push(user.id);
-    });
-    console.log(ids);
-    return ids;
+      ids.push(user.id)
+    })
+    console.log(ids)
+    return ids
   }
   renderCourseReview() {
     return (
       <Container style={this.styles.style.courseAssignmentMainContainer}>
         <Container style={this.styles.style.courseAssignmentScreenLeftCard}>
-          <Text style={this.styles.style.eventNameInput}>
-            Review Assignments
-          </Text>
+          <Text style={this.styles.style.eventNameInput}>Review Assignments</Text>
 
           {this.state.data != null && this.state.data.length != 0 ? (
             this.state.data.map((item, index: number) => {
-              const otherUsers = this.getOtherUsers(item);
-              let stringOfNames = "";
+              const otherUsers = this.getOtherUsers(item)
+              let stringOfNames = ""
               otherUsers.names.forEach((name, index) => {
-                if (otherUsers.names.length === index + 1)
-                  stringOfNames += name;
-                else stringOfNames += name + ", ";
-              });
+                if (otherUsers.names.length === index + 1) stringOfNames += name
+                else stringOfNames += name + ", "
+              })
               if (item.directMessage.items.length > 0)
                 return (
                   <TouchableOpacity
                     style={{
-                      backgroundColor:
-                        this.state.selectedRoom == index ? "#eeeeee" : "unset",
+                      backgroundColor: this.state.selectedRoom == index ? "#eeeeee" : "unset",
                       borderRadius: 10,
                       width: "100%",
                       paddingTop: 8,
@@ -287,7 +249,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
                     }}
                     key={item.id}
                     onPress={() => {
-                      this.switchRoom(index);
+                      this.switchRoom(index)
                     }}
                   >
                     <Text
@@ -302,15 +264,13 @@ export default class EditableRichText extends JCComponent<Props, State> {
                       }}
                     >
                       <ProfileImage
-                        user={
-                          otherUsers.ids.length === 1 ? otherUsers.ids[0] : null
-                        }
+                        user={otherUsers.ids.length === 1 ? otherUsers.ids[0] : null}
                         size="small2"
                       ></ProfileImage>
                       {item.name ? item.name : stringOfNames}
                     </Text>
                   </TouchableOpacity>
-                );
+                )
             })
           ) : (
             <Text>Nothing to review</Text>
@@ -330,18 +290,17 @@ export default class EditableRichText extends JCComponent<Props, State> {
           </Container>
         ) : null}
       </Container>
-    );
+    )
   }
-  static UserConsumer = UserContext.Consumer;
+  static UserConsumer = UserContext.Consumer
 
   render(): React.ReactNode {
     return (
       <EditableRichText.UserConsumer>
         {({ userState, userActions }) => {
-          if (!userState) return null;
+          if (!userState) return null
 
-          return userActions.isMemberOf("courseAdmin") ||
-            userActions.isMemberOf("courseCoach") ? (
+          return userActions.isMemberOf("courseAdmin") || userActions.isMemberOf("courseCoach") ? (
             <>
               <div
                 style={{
@@ -377,9 +336,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
                   width: "95%",
                   marginTop: 20,
                   backgroundColor:
-                    this.hasInitialPost() == initialPostState.Yes
-                      ? "#71C209"
-                      : "#71C209",
+                    this.hasInitialPost() == initialPostState.Yes ? "#71C209" : "#71C209",
                   borderRadius: 4,
                 }}
               >
@@ -408,9 +365,9 @@ export default class EditableRichText extends JCComponent<Props, State> {
                 ></MessageBoard>
               ) : null}
             </>
-          );
+          )
         }}
       </EditableRichText.UserConsumer>
-    );
+    )
   }
 }

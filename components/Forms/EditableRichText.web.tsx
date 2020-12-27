@@ -1,19 +1,16 @@
+import { Storage } from "aws-amplify"
+//TODO FIGURE OUT WHY THIS DOESN"T WORK
+//import '../MessageBoard.css';
+import { ContentState, convertFromRaw, convertToRaw, EditorState } from "draft-js"
+import { stateToHTML } from "draft-js-export-html"
 import React from "react"
 import { Editor } from "react-draft-wysiwyg"
-import { Storage } from "aws-amplify"
-
+import { TouchableOpacity } from "react-native"
+import { v1 as uuidv1 } from "uuid"
+import JCComponent, { JCState } from "../JCComponent/JCComponent"
 //import './react-draft-wysiwyg.css';
 //import './EditableRichText.css';
 import "./react-draft-wysiwyg.css"
-//TODO FIGURE OUT WHY THIS DOESN"T WORK
-//import '../MessageBoard.css';
-import { EditorState } from "draft-js"
-
-import { v1 as uuidv1 } from "uuid"
-import { TouchableOpacity } from "react-native"
-import JCComponent, { JCState } from "../JCComponent/JCComponent"
-import { ContentState, convertFromRaw, convertToRaw } from "draft-js"
-import { stateToHTML } from "draft-js-export-html"
 
 interface Props {
   value: string

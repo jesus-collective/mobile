@@ -1,42 +1,33 @@
-import React from "react";
-import { Container, Content, Text } from "native-base";
-import Header from "../../components/Header/Header";
-import HeaderAdmin from "../../components/HeaderAdmin/HeaderAdmin";
-import JCComponent, { JCState } from "../../components/JCComponent/JCComponent";
-import { API } from "aws-amplify";
-import GRAPHQL_AUTH_MODE from "aws-amplify-react-native";
-import {
-  View,
-  TextInput,
-  NativeSyntheticEvent,
-  TextInputChangeEventData,
-} from "react-native";
-import JCButton, { ButtonTypes } from "../../components/Forms/JCButton";
-import EditableRichText from "../../components/Forms/EditableRichText";
+import { GraphQLResult } from "@aws-amplify/api/lib/types"
+import { AntDesign } from "@expo/vector-icons"
+import { API } from "aws-amplify"
+import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import { Container, Content, Text } from "native-base"
+import React from "react"
+import { NativeSyntheticEvent, TextInput, TextInputChangeEventData, View } from "react-native"
+import EditableRichText from "../../components/Forms/EditableRichText"
+import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
+import Header from "../../components/Header/Header"
+import HeaderAdmin from "../../components/HeaderAdmin/HeaderAdmin"
+import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
+import { UserContext } from "../../screens/HomeScreen/UserContext"
+import { CreateProductInput, ListProductsQuery, UpdateProductInput } from "../../src/API"
 //import { EditorState, convertToRaw } from 'draft-js';
-import * as mutations from "../../src/graphql/mutations";
-import * as queries from "../../src/graphql/queries";
-import {
-  CreateProductInput,
-  ListProductsQuery,
-  UpdateProductInput,
-} from "../../src/API";
-import { GraphQLResult } from "@aws-amplify/api/lib/types";
-import { AntDesign } from "@expo/vector-icons";
-import { UserContext } from "../../screens/HomeScreen/UserContext";
+import * as mutations from "../../src/graphql/mutations"
+import * as queries from "../../src/graphql/queries"
 
 interface Props {
-  navigation: any;
-  route: any;
+  navigation: any
+  route: any
 }
 interface State extends JCState {
-  products: NonNullable<ListProductsQuery>["listProducts"]["items"];
-  name: string;
-  description: string;
-  productId: string;
-  confirmationMsg: string;
-  price: string;
-  mode: "save" | "edit";
+  products: NonNullable<ListProductsQuery>["listProducts"]["items"]
+  name: string
+  description: string
+  productId: string
+  confirmationMsg: string
+  price: string
+  mode: "save" | "edit"
 }
 
 const toolBar = {
@@ -47,11 +38,11 @@ const toolBar = {
   list: {
     options: ["unordered", "ordered"],
   },
-};
+}
 
 export default class AdminScreen extends JCComponent<Props, State> {
   constructor(props: Props) {
-    super(props);
+    super(props)
     this.state = {
       ...super.getInitialState(),
       products: [],
@@ -61,8 +52,8 @@ export default class AdminScreen extends JCComponent<Props, State> {
       confirmationMsg: "",
       price: "",
       mode: "save",
-    };
-    this.setInitialData();
+    }
+    this.setInitialData()
   }
   async setInitialData(): Promise<void> {
     try {
@@ -70,10 +61,10 @@ export default class AdminScreen extends JCComponent<Props, State> {
         query: queries.listProducts,
         variables: { limit: 50 },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<ListProductsQuery>;
-      this.setState({ products: listProducts.data.listProducts.items });
+      })) as GraphQLResult<ListProductsQuery>
+      this.setState({ products: listProducts.data.listProducts.items })
     } catch (err) {
-      console.error(err);
+      console.error(err)
     }
   }
 
@@ -85,7 +76,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
       confirmationMsg: product.confirmationMsg,
       price: product.price.toFixed(2),
       mode: "edit",
-    });
+    })
   }
 
   async deleteProduct(id: string): Promise<void> {
@@ -95,19 +86,19 @@ export default class AdminScreen extends JCComponent<Props, State> {
           query: mutations.deleteProduct,
           variables: { input: { id } },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        });
-        console.log(deleteProduct);
-        this.setInitialData();
+        })
+        console.log(deleteProduct)
+        this.setInitialData()
       } catch (e) {
-        console.error(e);
+        console.error(e)
       }
     } else {
-      return;
+      return
     }
   }
 
   async saveProduct(): Promise<void> {
-    if (isNaN(parseInt(this.state.price))) return;
+    if (isNaN(parseInt(this.state.price))) return
     try {
       switch (this.state.mode) {
         case "save":
@@ -117,22 +108,22 @@ export default class AdminScreen extends JCComponent<Props, State> {
             description: this.state.description,
             name: this.state.name,
             confirmationMsg: this.state.confirmationMsg,
-          };
+          }
           const createProduct = await API.graphql({
             query: mutations.createProduct,
             variables: { input: newProduct },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          });
-          console.log(createProduct);
-          this.setInitialData();
+          })
+          console.log(createProduct)
+          this.setInitialData()
           this.setState({
             name: "",
             // description: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
             productId: `JC-${Date.now()}`,
             confirmationMsg: "",
             price: "",
-          });
-          break;
+          })
+          break
         case "edit":
           const editProduct: UpdateProductInput = {
             id: this.state.productId,
@@ -140,53 +131,45 @@ export default class AdminScreen extends JCComponent<Props, State> {
             description: this.state.description,
             name: this.state.name,
             confirmationMsg: this.state.confirmationMsg,
-          };
+          }
           const updateProduct = await API.graphql({
             query: mutations.updateProduct,
             variables: { input: editProduct },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-          });
-          console.log(updateProduct);
-          this.setInitialData();
+          })
+          console.log(updateProduct)
+          this.setInitialData()
           this.setState({
             name: "",
             //    description: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
             productId: `JC-${Date.now()}`,
             confirmationMsg: "",
             price: "",
-          });
-          break;
+          })
+          break
       }
     } catch (err) {
-      console.error(err);
+      console.error(err)
     }
   }
-  static UserConsumer = UserContext.Consumer;
+  static UserConsumer = UserContext.Consumer
   render(): React.ReactNode {
     return (
       <AdminScreen.UserConsumer>
         {({ userState, userActions }) => {
-          if (!userState) return null;
+          if (!userState) return null
           return (
             <Container>
-              <Header
-                title="Jesus Collective"
-                navigation={this.props.navigation}
-              />
+              <Header title="Jesus Collective" navigation={this.props.navigation} />
 
-              <HeaderAdmin
-                title="Jesus Collective"
-                navigation={this.props.navigation}
-              />
+              <HeaderAdmin title="Jesus Collective" navigation={this.props.navigation} />
               {userActions.isMemberOf("admin") ? (
                 <Content>
                   <View>
                     <Text>Id: </Text>
                     <TextInput
-                      onChange={(
-                        val: NativeSyntheticEvent<TextInputChangeEventData>
-                      ) => {
-                        this.setState({ productId: val.nativeEvent.text });
+                      onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
+                        this.setState({ productId: val.nativeEvent.text })
                       }}
                       placeholder="productId"
                       multiline={false}
@@ -194,10 +177,8 @@ export default class AdminScreen extends JCComponent<Props, State> {
                     ></TextInput>
                     <Text>Product name: </Text>
                     <TextInput
-                      onChange={(
-                        val: NativeSyntheticEvent<TextInputChangeEventData>
-                      ) => {
-                        this.setState({ name: val.nativeEvent.text });
+                      onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
+                        this.setState({ name: val.nativeEvent.text })
                       }}
                       placeholder="Name"
                       multiline={false}
@@ -205,10 +186,8 @@ export default class AdminScreen extends JCComponent<Props, State> {
                     ></TextInput>
                     <Text>Price: </Text>
                     <TextInput
-                      onChange={(
-                        val: NativeSyntheticEvent<TextInputChangeEventData>
-                      ) => {
-                        this.setState({ price: val.nativeEvent.text });
+                      onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
+                        this.setState({ price: val.nativeEvent.text })
                       }}
                       placeholder="Price in CAD"
                       multiline={false}
@@ -216,12 +195,10 @@ export default class AdminScreen extends JCComponent<Props, State> {
                     ></TextInput>
                     <Text>Purchase confirmation message</Text>
                     <TextInput
-                      onChange={(
-                        val: NativeSyntheticEvent<TextInputChangeEventData>
-                      ) => {
+                      onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
                         this.setState({
                           confirmationMsg: val.nativeEvent.text,
-                        });
+                        })
                       }}
                       placeholder="optional: 1-2 sentences"
                       multiline={false}
@@ -238,10 +215,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                     textStyle={{}}
                   />
 
-                  <JCButton
-                    buttonType={ButtonTypes.Outline}
-                    onPress={() => this.saveProduct()}
-                  >
+                  <JCButton buttonType={ButtonTypes.Outline} onPress={() => this.saveProduct()}>
                     save product
                   </JCButton>
                   <Container style={this.styles.style.fontRegular}>
@@ -289,10 +263,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                     </View>
                     {this.state.products.map((product) => {
                       return (
-                        <View
-                          key={product.id}
-                          style={{ display: "flex", flexDirection: "row" }}
-                        >
+                        <View key={product.id} style={{ display: "flex", flexDirection: "row" }}>
                           <View
                             style={{
                               display: "flex",
@@ -310,9 +281,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                                 borderRadius: 0,
                               }}
                             >
-                              <Text style={{ alignSelf: "center" }}>
-                                {product.name}
-                              </Text>
+                              <Text style={{ alignSelf: "center" }}>{product.name}</Text>
                             </View>
                             <View
                               style={{
@@ -323,9 +292,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                                 borderRadius: 0,
                               }}
                             >
-                              <Text style={{ alignSelf: "center" }}>
-                                {product.id}
-                              </Text>
+                              <Text style={{ alignSelf: "center" }}>{product.id}</Text>
                             </View>
                             <View
                               style={{
@@ -356,27 +323,23 @@ export default class AdminScreen extends JCComponent<Props, State> {
                             onPress={() => this.handlePress(product)}
                           />
                         </View>
-                      );
+                      )
                     })}
                   </Container>
                 </Content>
               ) : (
                 <Content>
-                  <Container
-                    style={this.styles.style.eventsScreenMainContainer}
-                  >
-                    <Container
-                      style={this.styles.style.eventsScreenLeftContainer}
-                    >
+                  <Container style={this.styles.style.eventsScreenMainContainer}>
+                    <Container style={this.styles.style.eventsScreenLeftContainer}>
                       <Text>You must be an admin to see this screen</Text>
                     </Container>
                   </Container>
                 </Content>
               )}
             </Container>
-          );
+          )
         }}
       </AdminScreen.UserConsumer>
-    );
+    )
   }
 }

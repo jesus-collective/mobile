@@ -1,24 +1,24 @@
-import React from "react"
-import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
-import { View } from "native-base"
-import {
-  Platform,
-  TextInput,
-  Text,
-  TouchableOpacity,
-  NativeSyntheticEvent,
-  TextInputKeyPressEventData,
-  ActivityIndicator,
-} from "react-native"
-import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
-import { Dimensions } from "react-native"
-import MainStyles from "../../components/style"
-import { Auth } from "aws-amplify"
 import { Entypo } from "@expo/vector-icons"
-import { Copyright } from "../../components/Auth/Copyright"
-import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 import { useNavigation, useRoute } from "@react-navigation/native"
+import { Auth } from "aws-amplify"
+import { View } from "native-base"
+import React from "react"
+import {
+  ActivityIndicator,
+  Dimensions,
+  NativeSyntheticEvent,
+  Platform,
+  Text,
+  TextInput,
+  TextInputKeyPressEventData,
+  TouchableOpacity,
+} from "react-native"
 import { AuthStateData } from "src/types"
+import { Copyright } from "../../components/Auth/Copyright"
+import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
+import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
+import MainStyles from "../../components/style"
+import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 
 interface Props {
   navigation?: any
