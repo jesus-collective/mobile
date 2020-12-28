@@ -1,6 +1,6 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types";
 import { ResourceActions, ResourceState } from "components/ResourceViewer/ResourceContext";
-import { CreateResourceMenuItemMutation, CreateResourceRootMutation, DeleteResourceMenuItemMutation, GetGroupQuery, GetResourceRootQuery, GetUserQuery, GroupMemberByUserQuery, ListResourceRootsQuery, ResourcePageItemInput, UpdateResourceMenuItemMutation } from "./API";
+import { CreateResourceMenuItemMutation, CreateResourceRootMutation, DeleteResourceMenuItemMutation, GetGroupQuery, GetResourceQuery, GetResourceRootQuery, GetResourceSeriesQuery, GetUserQuery, GroupMemberByUserQuery, ListResourceRootsQuery, ResourcePageItemInput, UpdateResourceMenuItemMutation } from "./API";
 
 type WithoutKeys<T> = Omit<T, keyof T>;
 
@@ -37,6 +37,27 @@ export type ListResourceRootsData= NonNullable<NonNullable<ListResourceRootsQuer
 export type GetResourceRootQueryResult = GraphQLResult<GetResourceRootQuery>
 export type GetResourceRootQueryResultPromise = Promise< GraphQLResult<GetResourceRootQuery>>
 export type GetResourceRootData= NonNullable<GetResourceRootQuery>["getResourceRoot"]
+
+export type GetResourceRootDataCustom= NonNullable<GetResourceRootQuery>["getResourceRoot"] &{
+  resources:
+ {
+   items:[
+    {series:
+      {items:
+        [NonNullable<GetResourceSeriesQuery>["getResourceSeries"]]
+      }
+    }
+   ]
+}
+}
+
+export type GetResourceQueryResult = GraphQLResult<GetResourceQuery>
+export type GetResourceQueryResultPromise = Promise< GraphQLResult<GetResourceQuery>>
+export type GetResourceData= NonNullable<GetResourceQuery>["getResource"]
+
+export type GetResourceSeriesQueryResult = GraphQLResult<GetResourceSeriesQuery>
+export type GetResourceSeriesQueryResultPromise = Promise< GraphQLResult<GetResourceSeriesQuery>>
+export type GetResourceSeriesData= NonNullable<GetResourceSeriesQuery>["getResourceSeries"]
 
 export type CreateResourceRootMutationResult=GraphQLResult<CreateResourceRootMutation>
 export type CreateResourceMenuItemMutationResult=GraphQLResult<CreateResourceMenuItemMutation>

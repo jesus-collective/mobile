@@ -1,10 +1,10 @@
 import { JCState } from "components/JCComponent/JCComponent"
 import * as React from "react"
 import { CreateGroupInput, ResourceMenuItemType, ResourcePageItemInput } from "src/API"
-import { GetResourceRootData, GroupData, PageItemIndex, UserData } from "src/types"
+import { GetResourceRootDataCustom, GroupData, PageItemIndex, UserData } from "src/types"
 export interface ResourceState extends JCState {
   groupData: CreateGroupInput | GroupData | null | undefined
-  resourceData: GetResourceRootData
+  resourceData: GetResourceRootDataCustom | null
   currentMenuItem: number
   currentResource: number | null
   currentSeries: number | null

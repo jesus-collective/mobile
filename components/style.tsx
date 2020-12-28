@@ -34,7 +34,23 @@ export default class MainStyles {
         alignItems: "center",
         backgroundColor: mainColor,
       },
-
+      groupsJoinCourseModalContainer: {
+        overflow: "none",
+        height: "100vh",
+        width: "100vw",
+        position: "absolute",
+        top: "0px",
+        left: "0px",
+      },
+      jcModal: {
+        position: "fixed",
+        backgroundColor: "rgba(0,0,0,0.5)",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        borderWidth: 0,
+      },
       groupMoreCard: {
         minHeight: 43,
         alignSelf: "flex-start",

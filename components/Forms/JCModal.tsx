@@ -33,15 +33,7 @@ export default class JCModal extends JCComponent<Props> {
         animationType="slide"
         transparent={true}
         presentationStyle="pageSheet"
-        style={{
-          position: "fixed",
-          backgroundColor: "rgba(0,0,0,0.5)",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          borderWidth: 0,
-        }}
+        style={this.styles.style.jcModal}
         visible={this.props.visible}
       >
         <View

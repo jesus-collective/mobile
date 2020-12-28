@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native"
+import { GetResourceData, GetResourceSeriesData } from "src/types"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
@@ -700,11 +701,16 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           }
           buttonType={ButtonTypes.Solid}
           onPress={() => {
-            this.setState({
-              showResourceEditModal: true,
-              currentResource:
-                resourceState.resourceData?.resources.items[resourceState.currentResource],
-            })
+            if (
+              resourceState.currentResource &&
+              resourceState.resourceData?.resources?.items &&
+              resourceState.resourceData?.resources?.items[resourceState.currentResource]
+            )
+              this.setState({
+                showResourceEditModal: true,
+                currentResource:
+                  resourceState.resourceData?.resources?.items[resourceState.currentResource],
+              })
           }}
         >
           Edit Resource
@@ -716,13 +722,15 @@ class ResourceContentImpl extends JCComponent<Props, State> {
   renderSeries(resourceState: ResourceState, resourceActions: ResourceActions) {
     if (resourceState.currentResource == null || resourceState.currentResource == undefined)
       return null
+    if (!resourceState?.resourceData?.resources?.items) return null
+    const resource: GetResourceData | null = resourceState?.resourceData?.resources?.items[
+      resourceState.currentResource
+    ] as GetResourceData
     return (
       <View style={{ flexGrow: 1, flexDirection: "column" }}>
         <Text>Series</Text>
         <View style={{ borderWidth: 1, height: "500px" }}>
-          {resourceState?.resourceData?.resources?.items[
-            resourceState.currentResource
-          ]?.series?.items?.map((item, index: number) => {
+          {resource?.series?.items?.map((item, index: number) => {
             return (
               <TouchableOpacity
                 onPress={() => {
@@ -763,10 +771,11 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           buttonType={ButtonTypes.Solid}
           onPress={() => {
             if (window.confirm("Are you sure you wish to delete this Series?"))
-              resourceActions.deleteSeries(
-                resourceState.currentResource,
-                resourceState.currentSeries
-              )
+              if (resourceState.currentResource && resourceState.currentSeries)
+                resourceActions.deleteSeries(
+                  resourceState.currentResource,
+                  resourceState.currentSeries
+                )
           }}
         >
           Delete Series
@@ -782,12 +791,11 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           }
           buttonType={ButtonTypes.Solid}
           onPress={() => {
-            this.setState({
-              showSeriesEditModal: true,
-              currentSeries:
-                resourceState.resourceData?.resources.items[resourceState.currentResource].series
-                  .items[resourceState.currentSeries],
-            })
+            if (resourceState.currentSeries && resource?.series?.items)
+              this.setState({
+                showSeriesEditModal: true,
+                currentSeries: resource?.series?.items[resourceState.currentSeries],
+              })
           }}
         >
           Edit Series
@@ -799,32 +807,35 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     if (resourceState.currentResource == null || resourceState.currentResource == undefined)
       return null
     if (resourceState.currentSeries == null || resourceState.currentSeries == undefined) return null
+    if (!resourceState?.resourceData?.resources?.items) return null
+    const resource: GetResourceData | null = resourceState?.resourceData?.resources?.items[
+      resourceState.currentResource
+    ] as GetResourceData
+    if (!resource?.series?.items) return null
+    const series: GetResourceSeriesData = resource.series?.items[
+      resourceState.currentSeries
+    ] as GetResourceSeriesData
     return (
       <View style={{ flexGrow: 1, flexDirection: "column" }}>
         <Text>Episodes</Text>
         <View style={{ borderWidth: 1, height: "500px" }}>
-          {resourceState.resourceData?.resources?.items[
-            resourceState.currentResource
-          ].series?.items[resourceState.currentSeries]?.episodes?.items?.map(
-            (item, index: number) => {
-              return (
-                <TouchableOpacity
-                  onPress={() => {
-                    resourceActions.changeEpisode(index)
+          {series?.episodes?.items?.map((item, index: number) => {
+            return (
+              <TouchableOpacity
+                onPress={() => {
+                  resourceActions.changeEpisode(index)
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: resourceState.currentEpisode == index ? "#aaaaaa" : "#ffffff",
                   }}
                 >
-                  <View
-                    style={{
-                      backgroundColor:
-                        resourceState.currentEpisode == index ? "#aaaaaa" : "#ffffff",
-                    }}
-                  >
-                    <Text>{item?.title}</Text>
-                  </View>
-                </TouchableOpacity>
-              )
-            }
-          )}
+                  <Text>{item?.title}</Text>
+                </View>
+              </TouchableOpacity>
+            )
+          })}
         </View>
         <JCButton
           enabled={
@@ -856,11 +867,12 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           buttonType={ButtonTypes.Solid}
           onPress={() => {
             if (window.confirm("Are you sure you wish to delete this Episode?"))
-              resourceActions.deleteEpisode(
-                resourceState.currentResource,
-                resourceState.currentSeries,
-                resourceState.currentResource
-              )
+              if (resourceState.currentResource && resourceState.currentSeries)
+                resourceActions.deleteEpisode(
+                  resourceState.currentResource,
+                  resourceState.currentSeries,
+                  resourceState.currentResource
+                )
           }}
         >
           Delete Episode
@@ -878,12 +890,15 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           }
           buttonType={ButtonTypes.Solid}
           onPress={() => {
-            this.setState({
-              showEpisodeEditModal: true,
-              currentEpisode:
-                resourceState.resourceData?.resources.items[resourceState.currentResource].series
-                  .items[resourceState.currentSeries].episodes.items[resourceState.currentEpisode],
-            })
+            if (
+              resourceState.currentEpisode &&
+              series?.episodes?.items &&
+              series.episodes.items[resourceState.currentEpisode]
+            )
+              this.setState({
+                showEpisodeEditModal: true,
+                currentEpisode: series.episodes.items[resourceState.currentEpisode],
+              })
           }}
         >
           Edit Episode

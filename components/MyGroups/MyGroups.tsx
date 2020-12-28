@@ -1157,16 +1157,7 @@ export default class MyGroups extends JCComponent<Props, State> {
 
   renderJoinCourseModal() {
     return this.state.joinCourse ? (
-      <View
-        style={{
-          overflow: "none",
-          height: "100vh",
-          width: "100vw",
-          position: "absolute",
-          top: "0px",
-          left: "0px",
-        }}
-      >
+      <View style={this.styles.style.groupsJoinCourseModalContainer}>
         <Modal style={{ overflow: "hidden" }} transparent={true} visible={this.state.joinCourse}>
           <View
             style={{

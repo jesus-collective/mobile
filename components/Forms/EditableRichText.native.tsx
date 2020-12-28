@@ -16,7 +16,7 @@ interface Props {
   textStyle: any
   inputStyle?: any
   placeholder?: string
-  onChange?(string): void
+  onChange?(value: string): void
   toolBar?: any
 }
 interface State extends JCState {
@@ -38,7 +38,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
 
       //textStyle: props.textStyle,
       //inputStyle: props.inputStyle,
-      placeholder: props.placeholder,
+      // placeholder: props.placeholder??"",
       // editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(props.value)))
     }
   }

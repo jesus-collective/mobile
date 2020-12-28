@@ -15,6 +15,7 @@ const courseStyles = EStyleSheet.create({
     paddingTop: 30,
     paddingBottom: 30,
   },
+  courseHomeTouchableContainer: { zIndex: -1 },
   courseHomeUserEditCard: {
     width: "90%",
     borderColor: "#FFFFFF",

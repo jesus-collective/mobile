@@ -11,6 +11,7 @@ import {
   DeleteResourceMenuItemMutationResult,
   GetGroupQueryResult,
   GetGroupQueryResultPromise,
+  GetResourceRootDataCustom,
   GetResourceRootQueryResult,
   GetResourceRootQueryResultPromise,
   GetUserQueryResult,
@@ -247,7 +248,10 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
               .then((json) => {
                 console.log(json)
                 if (json.data?.getResourceRoot)
-                  this.setState({ resourceData: json.data.getResourceRoot, currentResource: 0 })
+                  this.setState({
+                    resourceData: json.data.getResourceRoot as GetResourceRootDataCustom,
+                    currentResource: 0,
+                  })
               })
               .catch((e: any) => {
                 console.log(e)
@@ -307,7 +311,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         console.log({ resourceRoot: getResourceRoot })
         if (getResourceRoot.data?.getResourceRoot)
           this.setState({
-            resourceData: getResourceRoot.data.getResourceRoot,
+            resourceData: getResourceRoot.data.getResourceRoot as GetResourceRootDataCustom,
             currentResource: 0,
             currentEpisode: null,
             currentSeries: null,
@@ -510,7 +514,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         menuTitle: "New Menu Title",
         readGroups: [UserGroupType.verifiedUsers],
         resourceRootID: this.state.resourceData.id,
-        order: this.state.resourceData?.menuItems.items.length + 1,
+        order: (this.state.resourceData?.menuItems.items.length + 1).toString(),
       }
       try {
         console.log("Creating Resource")
@@ -522,10 +526,11 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         })) as CreateResourceMenuItemMutationResult
         console.log(createMenuItem)
         const temp = this.state.resourceData
-        if (createMenuItem.data?.createResourceMenuItem)
+        if (createMenuItem.data?.createResourceMenuItem) {
           temp.menuItems?.items?.push(createMenuItem.data?.createResourceMenuItem)
-        console.log(temp)
-        this.setState({ resourceData: temp }, () => this.forceUpdate())
+          console.log(temp)
+          this.setState({ resourceData: temp }, () => this.forceUpdate())
+        }
       } catch (e) {
         console.log(e)
       }
@@ -542,7 +547,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
           convertToRaw(EditorState.createEmpty().getCurrentContent())
         ),
         resourceID: this.state.resourceData.id,
-        order: this.state.resourceData.resources.items.length + 1,
+        order: (this.state.resourceData.resources.items.length + 1).toString(),
       }
       try {
         console.log("Creating Resource")
@@ -562,69 +567,92 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       }
     }
   }
+  getResource(index: number | null) {
+    if (index) {
+      return this.state.resourceData?.resources.items[index]
+    } else return null
+  }
   createSeries = async (): Promise<void> => {
-    if (this.state.currentResource == null || this.state.currentResource == undefined)
-      throw new Error("Current Resource Not Set")
+    const resource = this.getResource(this.state.currentResource)
+    if (resource) {
+      const series: CreateResourceSeriesInput = {
+        type: "curriculum",
+        title: "New Title",
+        image: null,
+        description: "Enter description",
+        seriesID: resource.id,
+        //order: this.state.resourceData.resources.items[this.state.currentResource].series.items.length + 1
+      }
+      try {
+        console.log("Creating Resource")
 
-    const series: CreateResourceSeriesInput = {
-      type: "curriculum",
-      title: "New Title",
-      image: null,
-      description: "Enter description",
-      seriesID: this.state.resourceData.resources.items[this.state.currentResource].id,
-      //order: this.state.resourceData.resources.items[this.state.currentResource].series.items.length + 1
-    }
-    try {
-      console.log("Creating Resource")
-
-      const createResource: any = await API.graphql({
-        query: mutations.createResourceSeries,
-        variables: { input: series },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
-      console.log(createResource)
-      const temp = this.state.resourceData
-      temp.resources.items[this.state.currentResource].series.items.push(
-        createResource.data.createResourceSeries
-      )
-      this.setState({ resourceData: temp })
-    } catch (e) {
-      console.log(e)
+        const createResource: any = await API.graphql({
+          query: mutations.createResourceSeries,
+          variables: { input: series },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })
+        console.log(createResource)
+        const temp = this.state.resourceData
+        if (this.state.currentResource && temp) {
+          temp.resources.items[this.state.currentResource].series.items.push(
+            createResource.data.createResourceSeries
+          )
+          this.setState({ resourceData: temp })
+        }
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
+  getSeries(resourceIndex: number | null, seriesIndex: number | null) {
+    if (resourceIndex == null) return null
+    if (seriesIndex == null) return null
+    const series = this.state.resourceData?.resources.items[resourceIndex].series.items[seriesIndex]
+    return series
+  }
+  getEpisode(
+    resourceIndex: number | null,
+    seriesIndex: number | null,
+    episodeIndex: number | null
+  ) {
+    if (episodeIndex == null) return null
+    const series = this.getSeries(resourceIndex, seriesIndex)
+    if (series && series?.episodes?.items) {
+      const episode = series.episodes.items[episodeIndex]
+      return episode
+    } else return null
+  }
   createEpisode = async (): Promise<void> => {
-    if (this.state.currentResource == null || this.state.currentResource == undefined)
-      throw new Error("Current Resource Not Set")
-    if (this.state.currentSeries == null || this.state.currentSeries == undefined)
-      throw new Error("Current Series Not Set")
+    const series = this.getSeries(this.state.currentResource, this.state.currentSeries)
+    if (series) {
+      const episode: CreateResourceEpisodeInput = {
+        type: "curriculum",
+        title: "New Title",
+        //image: null,
+        description: "Enter description",
+        videoPreview: "Enter Url",
+        episodeID: series.id,
+        //order: this.state.resourceData.resources.items[this.state.currentResource].series.items.length + 1
+      }
+      try {
+        console.log("Creating Resource")
 
-    const episode: CreateResourceEpisodeInput = {
-      type: "curriculum",
-      title: "New Title",
-      //image: null,
-      description: "Enter description",
-      videoPreview: "Enter Url",
-      episodeID: this.state.resourceData.resources.items[this.state.currentResource].series.items[
-        this.state.currentSeries
-      ].id,
-      //order: this.state.resourceData.resources.items[this.state.currentResource].series.items.length + 1
-    }
-    try {
-      console.log("Creating Resource")
-
-      const createResource: any = await API.graphql({
-        query: mutations.createResourceEpisode,
-        variables: { input: episode },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
-      console.log(createResource)
-      const temp = this.state.resourceData
-      temp.resources.items[this.state.currentResource].series.items[
-        this.state.currentSeries
-      ].episodes.items.push(createResource.data.createResourceEpisode)
-      this.setState({ resourceData: temp })
-    } catch (e) {
-      console.log(e)
+        const createResource: any = await API.graphql({
+          query: mutations.createResourceEpisode,
+          variables: { input: episode },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })
+        console.log(createResource)
+        const temp = this.state.resourceData
+        if (temp && this.state.currentResource && this.state.currentSeries) {
+          temp.resources.items[this.state.currentResource].series.items[
+            this.state.currentSeries
+          ]?.episodes?.items?.push(createResource.data.createResourceEpisode)
+          this.setState({ resourceData: temp })
+        }
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
   changeEpisode = (index: number): void => {
@@ -643,24 +671,31 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     console.log({ changeResource: index })
     this.setState({ currentMenuItem: index })
   }
+  getMenuItem(menuItemIndex: number | null) {
+    if (menuItemIndex && this.state.resourceData?.menuItems?.items)
+      return this.state.resourceData?.menuItems?.items[menuItemIndex]
+    else return null
+  }
   updateMenuItem = async (menuItemIndex: number, item: string, value: any): Promise<void> => {
     try {
       console.log({ "Updating MenuItem": menuItemIndex })
-
-      const updateMenuItem: UpdateResourceMenuItemMutationResult = (await API.graphql({
-        query: mutations.updateResourceMenuItem,
-        variables: {
-          input: {
-            id: this.state.resourceData?.menuItems?.items[menuItemIndex].id,
-            [item]: value,
+      const menuItem = this.getMenuItem(menuItemIndex)
+      if (menuItem) {
+        const updateMenuItem: UpdateResourceMenuItemMutationResult = (await API.graphql({
+          query: mutations.updateResourceMenuItem,
+          variables: {
+            input: {
+              id: menuItem.id,
+              [item]: value,
+            },
           },
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as UpdateResourceMenuItemMutationResult
-      console.log(updateMenuItem)
-      const temp = this.state.resourceData
-      temp.menuItems.items[menuItemIndex][item] = value
-      this.setState({ resourceData: temp })
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })) as UpdateResourceMenuItemMutationResult
+        console.log(updateMenuItem)
+        const temp = this.state.resourceData
+        temp.menuItems.items[menuItemIndex][item] = value
+        this.setState({ resourceData: temp })
+      }
     } catch (e) {
       console.log(e)
     }
@@ -758,28 +793,29 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         PageIndex: pageItemIndex,
         pageItem: pageItem,
       })
-      let rootPageItems: ResourcePageItemInput[] = this.state.resourceData.menuItems.items[
-        menuItemIndex
-      ].pageItems
-      console.log(rootPageItems)
-      if (!rootPageItems) rootPageItems = []
-      rootPageItems = this.addToRoot(rootPageItems, pageItem, pageItemIndex)
-      console.log({ rootPageItems: rootPageItems })
-      const updateMenuItem: UpdateResourceMenuItemMutationResult = (await API.graphql({
-        query: mutations.updateResourceMenuItem,
-        variables: {
-          input: {
-            id: this.state.resourceData.menuItems.items[menuItemIndex].id,
-            pageItems: rootPageItems,
+      const menuItem = this.getMenuItem(menuItemIndex)
+      if (menuItem) {
+        let rootPageItems: ResourcePageItemInput[] = menuItem?.pageItems
+        console.log(rootPageItems)
+        if (!rootPageItems) rootPageItems = []
+        rootPageItems = this.addToRoot(rootPageItems, pageItem, pageItemIndex)
+        console.log({ rootPageItems: rootPageItems })
+        const updateMenuItem: UpdateResourceMenuItemMutationResult = (await API.graphql({
+          query: mutations.updateResourceMenuItem,
+          variables: {
+            input: {
+              id: menuItem.id,
+              pageItems: rootPageItems,
+            },
           },
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as UpdateResourceMenuItemMutationResult
-      console.log(updateMenuItem)
-      const temp = this.state.resourceData
-      console.log({ Root: rootPageItems })
-      temp.menuItems.items[menuItemIndex].pageItems = rootPageItems
-      this.setState({ resourceData: temp })
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })) as UpdateResourceMenuItemMutationResult
+        console.log(updateMenuItem)
+        const temp = this.state.resourceData
+        console.log({ Root: rootPageItems })
+        temp.menuItems.items[menuItemIndex].pageItems = rootPageItems
+        this.setState({ resourceData: temp })
+      }
     } catch (e) {
       console.log(e)
     }
@@ -791,25 +827,26 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
   ): Promise<void> => {
     try {
       console.log({ "Updating MenuItem": menuItemIndex, value: value })
-      let rootPageItems: ResourcePageItemInput[] = this.state.resourceData.menuItems.items[
-        menuItemIndex
-      ].pageItems
-      rootPageItems = this.updateToRoot(rootPageItems, pageItemIndex, value)
+      const menuItem = this.getMenuItem(menuItemIndex)
+      if (menuItem) {
+        let rootPageItems: ResourcePageItemInput[] = menuItem.pageItems
+        rootPageItems = this.updateToRoot(rootPageItems, pageItemIndex, value)
 
-      const updateMenuItem: UpdateResourceMenuItemMutationResult = (await API.graphql({
-        query: mutations.updateResourceMenuItem,
-        variables: {
-          input: {
-            id: this.state.resourceData.menuItems.items[menuItemIndex].id,
-            pageItems: rootPageItems,
+        const updateMenuItem: UpdateResourceMenuItemMutationResult = (await API.graphql({
+          query: mutations.updateResourceMenuItem,
+          variables: {
+            input: {
+              id: menuItem.id,
+              pageItems: rootPageItems,
+            },
           },
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as UpdateResourceMenuItemMutationResult
-      console.log(updateMenuItem)
-      const temp = this.state.resourceData
-      temp.menuItems.items[menuItemIndex].pageItems = rootPageItems
-      this.setState({ resourceData: temp })
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })) as UpdateResourceMenuItemMutationResult
+        console.log(updateMenuItem)
+        const temp = this.state.resourceData
+        temp.menuItems.items[menuItemIndex].pageItems = rootPageItems
+        this.setState({ resourceData: temp })
+      }
     } catch (e) {
       console.log(e)
     }
@@ -817,24 +854,25 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
   deletePageItem = async (menuItemIndex: number, pageItemIndex: PageItemIndex): Promise<void> => {
     try {
       console.log({ "Updating MenuItem": menuItemIndex })
-      let rootPageItems: ResourcePageItemInput[] = this.state.resourceData.menuItems.items[
-        menuItemIndex
-      ].pageItems
-      rootPageItems = this.deleteToRoot(rootPageItems, pageItemIndex)
-      const updateMenuItem: UpdateResourceMenuItemMutationResult = (await API.graphql({
-        query: mutations.updateResourceMenuItem,
-        variables: {
-          input: {
-            id: this.state.resourceData.menuItems.items[menuItemIndex].id,
-            pageItems: rootPageItems,
+      const menuItem = this.getMenuItem(menuItemIndex)
+      if (menuItem) {
+        let rootPageItems: ResourcePageItemInput[] = menuItem.pageItems
+        rootPageItems = this.deleteToRoot(rootPageItems, pageItemIndex)
+        const updateMenuItem: UpdateResourceMenuItemMutationResult = (await API.graphql({
+          query: mutations.updateResourceMenuItem,
+          variables: {
+            input: {
+              id: menuItem.id,
+              pageItems: rootPageItems,
+            },
           },
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as UpdateResourceMenuItemMutationResult
-      console.log(updateMenuItem)
-      const temp = this.state.resourceData
-      temp.menuItems.items[menuItemIndex].pageItems = rootPageItems
-      this.setState({ resourceData: temp })
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })) as UpdateResourceMenuItemMutationResult
+        console.log(updateMenuItem)
+        const temp = this.state.resourceData
+        temp.menuItems.items[menuItemIndex].pageItems = rootPageItems
+        this.setState({ resourceData: temp })
+      }
     } catch (e) {
       console.log(e)
     }
@@ -842,28 +880,30 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
   updateResource = async (index: number, item: string, value: any): Promise<void> => {
     try {
       console.log({ "Updating Resource": index })
-
-      const updateResource: any = await API.graphql({
-        query: mutations.updateResource,
-        variables: {
-          input: {
-            id: this.state.resourceData.resources.items[index].id,
-            [item]: value,
+      const resource = this.getResource(index)
+      if (resource) {
+        const updateResource: any = await API.graphql({
+          query: mutations.updateResource,
+          variables: {
+            input: {
+              id: resource.id,
+              [item]: value,
+            },
           },
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
-      console.log(updateResource)
-      const temp = this.state.resourceData
-      temp.resources.items[index][item] = value
-      this.setState({ resourceData: temp })
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })
+        console.log(updateResource)
+        const temp = this.state.resourceData
+        temp.resources.items[index][item] = value
+        this.setState({ resourceData: temp })
+      }
     } catch (e) {
       console.log(e)
     }
   }
   updateResourceOrder = (): void => {
     try {
-      this.state.resourceData.resources.items.forEach((item, index: number) => {
+      this.state.resourceData?.resources.items.forEach((item, index: number) => {
         this.updateResource(index, "order", index)
       })
 
@@ -881,15 +921,18 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
   deleteMenuItem = async (menuItemIndex: number) => {
     try {
       console.log({ "Deleting MenuItem": menuItemIndex })
-      const deleteMenuItem: DeleteResourceMenuItemMutationResult = (await API.graphql({
-        query: mutations.deleteResourceMenuItem,
-        variables: { input: { id: this.state.resourceData.menuItems.items[menuItemIndex].id } },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as DeleteResourceMenuItemMutationResult
-      console.log(deleteMenuItem)
-      const temp = this.state.resourceData
-      temp.menuItems.items.splice(menuItemIndex, 1)
-      this.setState({ resourceData: temp }, this.updateResourceOrder)
+      const menuItem = this.getMenuItem(menuItemIndex)
+      if (menuItem) {
+        const deleteMenuItem: DeleteResourceMenuItemMutationResult = (await API.graphql({
+          query: mutations.deleteResourceMenuItem,
+          variables: { input: { id: menuItem.id } },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })) as DeleteResourceMenuItemMutationResult
+        console.log(deleteMenuItem)
+        const temp = this.state.resourceData
+        temp.menuItems.items.splice(menuItemIndex, 1)
+        this.setState({ resourceData: temp }, this.updateResourceOrder)
+      }
     } catch (e) {
       console.log(e)
     }
@@ -897,23 +940,25 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
   deleteResource = async (index: number) => {
     console.log({ "Deleting resource": index })
     try {
-      console.log({ "Deleting Resource": index })
-      const deleteResource: any = await API.graphql({
-        query: mutations.deleteResource,
-        variables: { input: { id: this.state.resourceData.resources.items[index].id } },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
-      console.log(deleteResource)
-      const temp = this.state.resourceData
-      temp.resources.items.splice(index, 1)
-      this.setState({ resourceData: temp, currentResource: 0 }, this.updateResourceOrder)
+      const resource = this.getResource(index)
+      if (resource) {
+        const deleteResource: any = await API.graphql({
+          query: mutations.deleteResource,
+          variables: { input: { id: resource.id } },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })
+        console.log(deleteResource)
+        const temp = this.state.resourceData
+        temp?.resources.items.splice(index, 1)
+        this.setState({ resourceData: temp, currentResource: 0 }, this.updateResourceOrder)
+      }
     } catch (e) {
       console.log(e)
     }
   }
   updateSeriesOrder = (resourceIndex: number) => {
     try {
-      this.state.resourceData.resources.items[resourceIndex].series.items.forEach(
+      this.state.resourceData?.resources.items[resourceIndex].series.items.forEach(
         (item, index: number) => {
           this.updateSeries(resourceIndex, index, "order", index.toString())
         }
@@ -929,22 +974,24 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     value: string
   ): Promise<void> => {
     try {
-      console.log({ "Updating Resource": { resource: resourceIndex, series: seriesIndex } })
-
-      const updateResource: any = await API.graphql({
-        query: mutations.updateResourceSeries,
-        variables: {
-          input: {
-            id: this.state.resourceData.resources.items[resourceIndex].series.items[seriesIndex].id,
-            [item]: value,
+      console.log({ "Updating Series": { resource: resourceIndex, series: seriesIndex } })
+      const series = this.getSeries(resourceIndex, seriesIndex)
+      if (series) {
+        const updateResource: any = await API.graphql({
+          query: mutations.updateResourceSeries,
+          variables: {
+            input: {
+              id: series.id,
+              [item]: value,
+            },
           },
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
-      console.log(updateResource)
-      const temp = this.state.resourceData
-      temp.resources.items[resourceIndex].series.items[seriesIndex][item] = value
-      this.setState({ resourceData: temp })
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })
+        console.log(updateResource)
+        const temp = this.state.resourceData
+        temp.resources.items[resourceIndex].series.items[seriesIndex][item] = value
+        this.setState({ resourceData: temp })
+      }
     } catch (e) {
       console.log(e)
     }
@@ -952,37 +999,40 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
   deleteSeries = async (resourceIndex: number, seriesIndex: number): Promise<void> => {
     try {
       console.log({ "Deleting Series": { resource: resourceIndex, series: seriesIndex } })
-      const deleteResource: any = await API.graphql({
-        query: mutations.deleteResourceSeries,
-        variables: {
-          input: {
-            id: this.state.resourceData.resources.items[resourceIndex].series.items[seriesIndex].id,
+      const series = this.getSeries(resourceIndex, seriesIndex)
+      if (series) {
+        const deleteResource: any = await API.graphql({
+          query: mutations.deleteResourceSeries,
+          variables: {
+            input: {
+              id: series.id,
+            },
           },
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
-      console.log(deleteResource)
-      const temp = this.state.resourceData
-      temp.resources.items[resourceIndex].series.items.splice(seriesIndex, 1)
-      console.log(temp.resources.items[resourceIndex])
-      this.setState({ resourceData: temp }, () => {
-        this.updateSeriesOrder(resourceIndex)
-      })
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })
+        console.log(deleteResource)
+        const temp = this.state.resourceData
+        temp?.resources.items[resourceIndex].series.items.splice(seriesIndex, 1)
+        console.log(temp?.resources.items[resourceIndex])
+        this.setState({ resourceData: temp }, () => {
+          this.updateSeriesOrder(resourceIndex)
+        })
+      }
     } catch (e) {
       console.log(e)
     }
   }
   updateEpisodesOrder = (resourceIndex: number, seriesIndex: number): void => {
     try {
-      this.state.resourceData.resources.items[resourceIndex].series.items[
-        seriesIndex
-      ].episodes.items.forEach((item, index: number) => {
+      const series = this.getSeries(resourceIndex, seriesIndex)
+      series?.episodes?.items?.forEach((item, index: number) => {
         this.updateEpisode(resourceIndex, seriesIndex, index, "order", index.toString())
       })
     } catch (e) {
       console.log(e)
     }
   }
+
   updateEpisode = async (
     resourceIndex: number,
     seriesIndex: number,
@@ -998,24 +1048,25 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
           episode: episodeIndex,
         },
       })
-
-      const updateResourceEpisode: any = await API.graphql({
-        query: mutations.updateResourceEpisode,
-        variables: {
-          input: {
-            id: this.state.resourceData.resources.items[resourceIndex].series.items[seriesIndex]
-              .episodes.items[episodeIndex].id,
-            [item]: value,
+      const episode = this.getEpisode(resourceIndex, seriesIndex, episodeIndex)
+      if (episode) {
+        const updateResourceEpisode: any = await API.graphql({
+          query: mutations.updateResourceEpisode,
+          variables: {
+            input: {
+              id: episode.id,
+              [item]: value,
+            },
           },
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
-      console.log(updateResourceEpisode)
-      const temp = this.state.resourceData
-      temp.resources.items[resourceIndex].series.items[seriesIndex].episodes.items[episodeIndex][
-        item
-      ] = value
-      this.setState({ resourceData: temp })
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })
+        console.log(updateResourceEpisode)
+        const temp = this.state.resourceData
+        temp.resources.items[resourceIndex].series.items[seriesIndex].episodes.items[episodeIndex][
+          item
+        ] = value
+        this.setState({ resourceData: temp })
+      }
     } catch (e) {
       console.log(e)
     }
@@ -1035,25 +1086,27 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       console.log({
         "Deleting Episode": { resource: resourceIndex, series: seriesIndex, episode: episodeIndex },
       })
-      const deleteResource: any = await API.graphql({
-        query: mutations.deleteResourceEpisode,
-        variables: {
-          input: {
-            id: this.state.resourceData.resources.items[resourceIndex].series.items[seriesIndex]
-              .episodes.items[episodeIndex].id,
+      const episode = this.getEpisode(resourceIndex, seriesIndex, episodeIndex)
+      if (episode) {
+        const deleteResource: any = await API.graphql({
+          query: mutations.deleteResourceEpisode,
+          variables: {
+            input: {
+              id: episode.id,
+            },
           },
-        },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
-      console.log(deleteResource)
-      const temp = this.state.resourceData
-      temp.resources.items[resourceIndex].series.items[seriesIndex].episodes.items.splice(
-        episodeIndex,
-        1
-      )
-      this.setState({ resourceData: temp }, () => {
-        this.updateEpisodesOrder(resourceIndex, seriesIndex)
-      })
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })
+        console.log(deleteResource)
+        const temp = this.state.resourceData
+        temp.resources.items[resourceIndex].series.items[seriesIndex].episodes.items.splice(
+          episodeIndex,
+          1
+        )
+        this.setState({ resourceData: temp }, () => {
+          this.updateEpisodesOrder(resourceIndex, seriesIndex)
+        })
+      }
     } catch (e) {
       console.log(e)
     }
@@ -1072,44 +1125,47 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     const ext = file.name.substring(lastDot + 1)
     const user = await Auth.currentCredentials()
     const userId = user.identityId
-    const tempPageItems = this.state.resourceData.menuItems.items[menuItemIndex].pageItems
+    const menuItem = this.getMenuItem(menuItemIndex)
+    if (menuItem) {
+      const tempPageItems = menuItem.pageItems
 
-    const fn =
-      "resources/upload/group-" +
-      tempPageItems[pageItemIndex].id +
-      "-" +
-      new Date().getTime() +
-      "-upload." +
-      ext
-    const fnSave = fn
-      .replace("/upload", "")
-      .replace("-upload.", "-[size].")
-      .replace("." + ext, ".png")
+      const fn =
+        "resources/upload/group-" +
+        tempPageItems[pageItemIndex].id +
+        "-" +
+        new Date().getTime() +
+        "-upload." +
+        ext
+      const fnSave = fn
+        .replace("/upload", "")
+        .replace("-upload.", "-[size].")
+        .replace("." + ext, ".png")
 
-    Storage.put(fn, file, {
-      level: "protected",
-      contentType: file.type,
-      identityId: userId,
-    })
-      .then(() => {
-        Storage.get(fn, {
-          level: "protected",
-          identityId: userId,
-        }).then((result2) => {
-          console.log(result2)
-          tempPageItems[pageItemIndex].image = {
-            userId: userId,
-            filenameUpload: fn,
-            filenameLarge: fnSave.replace("[size]", "large"),
-            filenameMedium: fnSave.replace("[size]", "medium"),
-            filenameSmall: fnSave.replace("[size]", "small"),
-          }
-          this.updatePageItem(menuItemIndex, pageItemIndex, tempPageItems)
-        })
-
-        // console.log(result)
+      Storage.put(fn, file, {
+        level: "protected",
+        contentType: file.type,
+        identityId: userId,
       })
-      .catch((err) => console.log(err))
+        .then(() => {
+          Storage.get(fn, {
+            level: "protected",
+            identityId: userId,
+          }).then((result2) => {
+            console.log(result2)
+            tempPageItems[pageItemIndex].image = {
+              userId: userId,
+              filenameUpload: fn,
+              filenameLarge: fnSave.replace("[size]", "large"),
+              filenameMedium: fnSave.replace("[size]", "medium"),
+              filenameSmall: fnSave.replace("[size]", "small"),
+            }
+            this.updatePageItem(menuItemIndex, pageItemIndex, tempPageItems)
+          })
+
+          // console.log(result)
+        })
+        .catch((err) => console.log(err))
+    }
   }
 
   render(): React.ReactNode {

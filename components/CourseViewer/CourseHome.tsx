@@ -362,7 +362,6 @@ class CourseHomeImpl extends JCComponent<Props> {
                                       )
                                     })}
                                     <TouchableOpacity
-                                      containerStyle={{ zIndex: -1 }}
                                       style={{ marginTop: 30, zIndex: -1 }}
                                       onPress={() => {
                                         actions.createTriad()

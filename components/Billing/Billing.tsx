@@ -461,7 +461,7 @@ class BillingImpl extends JCComponent<Props, State> {
     console.log({ field: value })
     console.log(this.state.userData)
     try {
-      if (this.state.userData.billingAddress == null) {
+      if (this.state.userData && this.state.userData.billingAddress == null) {
         const user = await API.graphql(
           graphqlOperation(mutations.updateUser, {
             input: {

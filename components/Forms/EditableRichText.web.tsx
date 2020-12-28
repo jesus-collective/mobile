@@ -53,7 +53,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
 
       //textStyle: props.textStyle,
       //inputStyle: props.inputStyle,
-      placeholder: props.placeholder,
+      // placeholder: props.placeholder,
       editorState: initial,
     }
   }
@@ -93,7 +93,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
       if (this.state.isEditMode)
         return (
           <Editor
-            placeholder="Empty Content"
+            placeholder={this.props.placeholder ?? "Empty Content"}
             initialContentState={ContentState.createFromText(this.state.value)}
             editorState={this.state.editorState}
             toolbarClassName="customToolbarRichText"
