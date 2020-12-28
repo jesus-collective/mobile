@@ -52,8 +52,9 @@ class JCResourceConfigModalImpl extends JCComponent<Props, State> {
                   selectedValue={null}
                   onValueChange={(value: string) => {
                     console.log({ value: value })
-                    const tmp: UpdateResourceMenuItemInput =
-                      resourceState?.resourceData?.menuItems?.items[resourceState.currentMenuItem]
+                    const tmp: UpdateResourceMenuItemInput = resourceActions.getMenuItem(
+                      resourceState.currentMenuItem
+                    )
 
                     if (!tmp.readGroups) tmp.readGroups = []
                     tmp.readGroups.push(value as UserGroupType)
@@ -69,33 +70,30 @@ class JCResourceConfigModalImpl extends JCComponent<Props, State> {
                     return <Picker.Item key={org} label={org} value={org} />
                   })}
                 </Picker>
-                {resourceState.resourceData?.menuItems.items[
-                  resourceState.currentMenuItem
-                ].readGroups?.map((item, index: number) => {
-                  return (
-                    <>
-                      <Text>{item}</Text>
-                      <TouchableOpacity
-                        style={{ alignSelf: "center", marginLeft: 15 }}
-                        onPress={() => {
-                          const tmp =
-                            resourceState.resourceData?.menuItems.items[
-                              resourceState.currentMenuItem
-                            ]
-                          if (!tmp.readGroups) tmp.readGroups = []
-                          tmp.readGroups.splice(index, 1)
-                          resourceActions.updateMenuItem(
-                            resourceState.currentMenuItem,
-                            "readGroups",
-                            tmp.readGroups
-                          )
-                        }}
-                      >
-                        <AntDesign name="close" size={20} color="black" />
-                      </TouchableOpacity>
-                    </>
-                  )
-                })}
+                {resourceActions
+                  .getMenuItem(resourceState.currentMenuItem)
+                  .readGroups?.map((item, index: number) => {
+                    return (
+                      <>
+                        <Text>{item}</Text>
+                        <TouchableOpacity
+                          style={{ alignSelf: "center", marginLeft: 15 }}
+                          onPress={() => {
+                            const tmp = resourceActions.getMenuItem(resourceState.currentMenuItem)
+                            if (!tmp.readGroups) tmp.readGroups = []
+                            tmp.readGroups.splice(index, 1)
+                            resourceActions.updateMenuItem(
+                              resourceState.currentMenuItem,
+                              "readGroups",
+                              tmp.readGroups
+                            )
+                          }}
+                        >
+                          <AntDesign name="close" size={20} color="black" />
+                        </TouchableOpacity>
+                      </>
+                    )
+                  })}
               </View>
             </JCModal>
           )

@@ -75,6 +75,14 @@ export type ResourceActions = {
   deleteGroup(): void
   showProfile(id: string): void
   updateValueGroup(field: string, value: any): void
+  getResource(resourceIndex: number | null | undefined): any
+  getSeries(resourceIndex: number | null | undefined, seriesIndex: number | null): any
+  getEpisode(
+    resourceIndex: number | null | undefined,
+    seriesIndex: number | null | undefined,
+    episodeIndex: number | null
+  ): any
+  getMenuItem(menuIndex: number | null): any
 }
 type ResourceContextType = {
   resourceActions: ResourceActions
@@ -116,6 +124,10 @@ export const ResourceContext = React.createContext<ResourceContextType>({
     deleteGroup: () => {},
     showProfile: () => {},
     updateValueGroup: () => {},
+    getResource: () => {},
+    getSeries: () => {},
+    getEpisode: () => {},
+    getMenuItem: () => {},
   },
   resourceState: undefined,
 })

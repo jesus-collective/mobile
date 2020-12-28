@@ -351,10 +351,10 @@ class ResourceContentImpl extends JCComponent<Props, State> {
   renderItems(
     resourceActions: ResourceActions,
     resourceState: ResourceState,
-    pageItems: ResourcePageItemInput[]
+    pageItems: (ResourcePageItemInput | null)[] | null | undefined
   ) {
-    return pageItems?.map((item: ResourcePageItemInput, index: number) => {
-      return this.renderRouter(resourceActions, resourceState, index, item)
+    return pageItems?.map((item: ResourcePageItemInput | null, index: number) => {
+      if (item) return this.renderRouter(resourceActions, resourceState, index, item)
     })
   }
 
@@ -364,8 +364,10 @@ class ResourceContentImpl extends JCComponent<Props, State> {
         {({ resourceState, resourceActions }) => {
           if (!resourceState) return null
           if (resourceState.currentResource == null) return null
-          let pageItems: ResourcePageItemInput[] =
-            resourceState?.resourceData?.menuItems?.items[resourceState.currentMenuItem]?.pageItems
+          let pageItems:
+            | (ResourcePageItemInput | null)[]
+            | null
+            | undefined = resourceActions.getMenuItem(resourceState.currentMenuItem).pageItems
           if (!this.props.isBase) pageItems = this.props.pageItems
           console.log({ pageItems: pageItems })
           return (

@@ -141,8 +141,8 @@ class ResourceCard extends JCComponent<Props, State> {
                     }}
                   >
                     <Picker.Item key={"null"} label={"None"} value={null} />
-                    {resourceState.resourceData.resources.items.map((org, index: number) => {
-                      return <Picker.Item key={index} label={org.title} value={index} />
+                    {resourceState.resourceData?.resources.items.map((org, index: number) => {
+                      return <Picker.Item key={index} label={org?.title ?? ""} value={index} />
                     })}
                   </Picker>
                   {page.state.settings.resourceID != null &&
@@ -167,10 +167,10 @@ class ResourceCard extends JCComponent<Props, State> {
                         }}
                       >
                         <Picker.Item key={"null"} label={"None"} value={null} />
-                        {resourceState.resourceData.resources.items[
+                        {resourceState.resourceData?.resources.items[
                           page.state.settings.resourceID
                         ].series.items.map((org, index: number) => {
-                          return <Picker.Item key={index} label={org.title} value={index} />
+                          return <Picker.Item key={index} label={org?.title ?? ""} value={index} />
                         })}
                       </Picker>
                     )}
@@ -198,13 +198,13 @@ class ResourceCard extends JCComponent<Props, State> {
                         }}
                       >
                         <Picker.Item key={"null"} label={"None"} value={null} />
-                        {resourceState.resourceData.resources.items[
-                          page.state.settings.resourceID
-                        ].series.items[page.state.settings.seriesID].episodes.items.map(
-                          (org, index: number) => {
-                            return <Picker.Item key={index} label={org.title} value={index} />
-                          }
-                        )}
+                        {resourceActions
+                          .getSeries(page.state.settings.resourceID, page.state.settings.seriesID)
+                          .episodes.items.map((org, index: number) => {
+                            return (
+                              <Picker.Item key={index} label={org?.title ?? ""} value={index} />
+                            )
+                          })}
                       </Picker>
                     )}
                 </>
@@ -285,15 +285,19 @@ class ResourceCard extends JCComponent<Props, State> {
           if (resourceState.currentResource == null) return null
           let item
           if (this.props.pageItem.episodeID != null && this.props.pageItem.episodeID != undefined)
-            item =
-              resourceState.resourceData.resources.items[this.props.pageItem.resourceID].series
-                .items[this.props.pageItem.seriesID].episodes.items[this.props.pageItem.episodeID]
+            item = resourceActions.getEpisode(
+              this.props.pageItem.resourceID,
+              this.props.pageItem.seriesID,
+              this.props.pageItem.episodeID
+            )
+
           if (this.props.pageItem.seriesID != null && this.props.pageItem.seriesID != undefined)
-            item =
-              resourceState.resourceData.resources.items[this.props.pageItem.resourceID].series
-                .items[this.props.pageItem.seriesID]
+            item = resourceActions.getSeries(
+              this.props.pageItem.resourceID,
+              this.props.pageItem.seriesID
+            )
           if (this.props.pageItem.resourceID != null && this.props.pageItem.resourceID != undefined)
-            item = resourceState.resourceData.resources.items[this.props.pageItem.resourceID]
+            item = resourceActions.getResource(this.props.pageItem.resourceID)
           return (
             <Card>
               <CardItem>

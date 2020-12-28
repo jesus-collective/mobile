@@ -567,9 +567,9 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       }
     }
   }
-  getResource(index: number | null) {
-    if (index) {
-      return this.state.resourceData?.resources.items[index]
+  getResource = (resourceIndex: number | null | undefined) => {
+    if (resourceIndex) {
+      return this.state.resourceData?.resources.items[resourceIndex]
     } else return null
   }
   createSeries = async (): Promise<void> => {
@@ -604,18 +604,18 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       }
     }
   }
-  getSeries(resourceIndex: number | null, seriesIndex: number | null) {
+  getSeries = (resourceIndex: number | null | undefined, seriesIndex: number | null) => {
     if (resourceIndex == null) return null
     if (seriesIndex == null) return null
     const series = this.state.resourceData?.resources.items[resourceIndex].series.items[seriesIndex]
     return series
   }
-  getEpisode(
-    resourceIndex: number | null,
-    seriesIndex: number | null,
+  getEpisode = (
+    resourceIndex: number | null | undefined,
+    seriesIndex: number | null | undefined,
     episodeIndex: number | null
-  ) {
-    if (episodeIndex == null) return null
+  ) => {
+    if (episodeIndex == null || seriesIndex == undefined) return null
     const series = this.getSeries(resourceIndex, seriesIndex)
     if (series && series?.episodes?.items) {
       const episode = series.episodes.items[episodeIndex]
@@ -671,7 +671,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     console.log({ changeResource: index })
     this.setState({ currentMenuItem: index })
   }
-  getMenuItem(menuItemIndex: number | null) {
+  getMenuItem = (menuItemIndex: number | null) => {
     if (menuItemIndex && this.state.resourceData?.menuItems?.items)
       return this.state.resourceData?.menuItems?.items[menuItemIndex]
     else return null
@@ -1208,6 +1208,10 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
               deleteGroup: this.deleteGroup,
               showProfile: this.showProfile,
               updateValueGroup: this.updateValueGroup,
+              getResource: this.getResource,
+              getSeries: this.getSeries,
+              getEpisode: this.getEpisode,
+              getMenuItem: this.getMenuItem,
             },
           }}
         >

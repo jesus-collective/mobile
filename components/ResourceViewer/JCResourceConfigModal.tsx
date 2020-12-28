@@ -59,7 +59,7 @@ class JCResourceConfigModalImpl extends JCComponent<Props> {
               )
                 this.props.navigation.navigate("ResourceScreen", {
                   create: false,
-                  id: state.groupData.id,
+                  id: state.groupData?.id,
                 })
               this.props.onClose()
             }}
@@ -133,7 +133,7 @@ class JCResourceConfigModalImpl extends JCComponent<Props> {
                     <JCSwitch
                       switchLabel="Sponsored"
                       initState={
-                        resourceState.groupData.isSponsored
+                        resourceState.groupData?.isSponsored
                           ? resourceState.groupData.isSponsored === "true"
                           : false
                       }
@@ -141,7 +141,7 @@ class JCResourceConfigModalImpl extends JCComponent<Props> {
                         resourceActions.updateValueGroup("isSponsored", status ? "true" : "false")
                       }}
                     ></JCSwitch>
-                  ) : resourceState.groupData.isSponsored == "true" ? (
+                  ) : resourceState.groupData?.isSponsored == "true" ? (
                     <Text
                       style={{
                         fontSize: 12,
@@ -164,7 +164,7 @@ class JCResourceConfigModalImpl extends JCComponent<Props> {
                   multiline={false}
                   textStyle={this.styles.style.groupNameInput}
                   inputStyle={this.styles.style.groupNameInput}
-                  value={resourceState.groupData.name}
+                  value={resourceState.groupData?.name ?? ""}
                   isEditable={resourceState.isEditable}
                 ></EditableText>
                 <EditableText
@@ -175,7 +175,7 @@ class JCResourceConfigModalImpl extends JCComponent<Props> {
                   multiline={true}
                   textStyle={this.styles.style.groupDescriptionInput}
                   inputStyle={this.styles.style.groupDescriptionInput}
-                  value={resourceState.groupData.description}
+                  value={resourceState.groupData?.description ?? ""}
                   isEditable={resourceState.isEditable}
                 ></EditableText>
 

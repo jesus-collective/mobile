@@ -720,12 +720,9 @@ class ResourceContentImpl extends JCComponent<Props, State> {
   }
 
   renderSeries(resourceState: ResourceState, resourceActions: ResourceActions) {
-    if (resourceState.currentResource == null || resourceState.currentResource == undefined)
-      return null
-    if (!resourceState?.resourceData?.resources?.items) return null
-    const resource: GetResourceData | null = resourceState?.resourceData?.resources?.items[
+    const resource: GetResourceData | null = resourceActions.getResource(
       resourceState.currentResource
-    ] as GetResourceData
+    )
     return (
       <View style={{ flexGrow: 1, flexDirection: "column" }}>
         <Text>Series</Text>
@@ -804,17 +801,14 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     )
   }
   renderEpisodes(resourceState: ResourceState, resourceActions: ResourceActions) {
-    if (resourceState.currentResource == null || resourceState.currentResource == undefined)
-      return null
-    if (resourceState.currentSeries == null || resourceState.currentSeries == undefined) return null
-    if (!resourceState?.resourceData?.resources?.items) return null
-    const resource: GetResourceData | null = resourceState?.resourceData?.resources?.items[
+    const resource: GetResourceData | null = resourceActions.getResource(
       resourceState.currentResource
-    ] as GetResourceData
-    if (!resource?.series?.items) return null
-    const series: GetResourceSeriesData = resource.series?.items[
+    )
+    const series: GetResourceSeriesData = resourceActions.getSeries(
+      resourceState.currentResource,
       resourceState.currentSeries
-    ] as GetResourceSeriesData
+    )
+
     return (
       <View style={{ flexGrow: 1, flexDirection: "column" }}>
         <Text>Episodes</Text>
