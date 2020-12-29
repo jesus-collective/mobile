@@ -93,7 +93,11 @@ class ResourceColumn extends JCComponent<Props, State> {
         </View>
         <View
           style={[
-            { borderWidth: 1, flexGrow: 100 - this.getLeftColumnSize(), paddingLeft: 100, paddingRight: '10rem', width: "90%", paddingTop: 100 },
+            {
+              borderWidth: 1,
+              flexGrow: 100 - this.getLeftColumnSize(),
+              paddingTop: 100,
+            },
             this.props.resourceState.isEditable && border,
           ]}
         >
