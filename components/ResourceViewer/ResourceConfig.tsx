@@ -314,7 +314,6 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                 value={this.state.currentResource.extendedDescription}
               ></TextInput>
             </View>
-
             <JCButton
               buttonType={ButtonTypes.Solid}
               onPress={() => {
@@ -652,11 +651,12 @@ class ResourceContentImpl extends JCComponent<Props, State> {
   renderResources(resourceState: ResourceState, resourceActions: ResourceActions) {
     return (
       <View style={{ flexGrow: 1, flexDirection: "column" }}>
-        <Text>Resources</Text>{" "}
+        <Text>Resources</Text>
         <View style={{ borderWidth: 1, height: "500px" }}>
           {resourceState.resourceData?.resources?.items?.map((item, index: number) => {
             return (
               <TouchableOpacity
+                key={index}
                 onPress={() => {
                   resourceActions.changeResource(index)
                 }}
@@ -702,7 +702,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           buttonType={ButtonTypes.Solid}
           onPress={() => {
             if (
-              resourceState.currentResource &&
+              resourceState.currentResource != null &&
               resourceState.resourceData?.resources?.items &&
               resourceState.resourceData?.resources?.items[resourceState.currentResource]
             )
@@ -730,6 +730,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           {resource?.series?.items?.map((item, index: number) => {
             return (
               <TouchableOpacity
+                key={index}
                 onPress={() => {
                   resourceActions.changeSeries(index)
                 }}
@@ -768,7 +769,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           buttonType={ButtonTypes.Solid}
           onPress={() => {
             if (window.confirm("Are you sure you wish to delete this Series?"))
-              if (resourceState.currentResource && resourceState.currentSeries)
+              if (resourceState.currentResource != null && resourceState.currentSeries != null)
                 resourceActions.deleteSeries(
                   resourceState.currentResource,
                   resourceState.currentSeries
@@ -788,7 +789,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           }
           buttonType={ButtonTypes.Solid}
           onPress={() => {
-            if (resourceState.currentSeries && resource?.series?.items)
+            if (resourceState.currentSeries != null && resource?.series?.items)
               this.setState({
                 showSeriesEditModal: true,
                 currentSeries: resource?.series?.items[resourceState.currentSeries],
@@ -816,6 +817,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           {series?.episodes?.items?.map((item, index: number) => {
             return (
               <TouchableOpacity
+                key={index}
                 onPress={() => {
                   resourceActions.changeEpisode(index)
                 }}
@@ -861,7 +863,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           buttonType={ButtonTypes.Solid}
           onPress={() => {
             if (window.confirm("Are you sure you wish to delete this Episode?"))
-              if (resourceState.currentResource && resourceState.currentSeries)
+              if (resourceState.currentResource != null && resourceState.currentSeries != null)
                 resourceActions.deleteEpisode(
                   resourceState.currentResource,
                   resourceState.currentSeries,
@@ -885,7 +887,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           buttonType={ButtonTypes.Solid}
           onPress={() => {
             if (
-              resourceState.currentEpisode &&
+              resourceState.currentEpisode != null &&
               series?.episodes?.items &&
               series.episodes.items[resourceState.currentEpisode]
             )

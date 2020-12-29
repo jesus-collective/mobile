@@ -568,7 +568,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     }
   }
   getResource = (resourceIndex: number | null | undefined) => {
-    if (resourceIndex) {
+    if (resourceIndex != null) {
       return this.state.resourceData?.resources.items[resourceIndex]
     } else return null
   }
@@ -593,7 +593,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         })
         console.log(createResource)
         const temp = this.state.resourceData
-        if (this.state.currentResource && temp) {
+        if (this.state.currentResource != null && temp) {
           temp.resources.items[this.state.currentResource].series.items.push(
             createResource.data.createResourceSeries
           )
@@ -607,7 +607,9 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
   getSeries = (resourceIndex: number | null | undefined, seriesIndex: number | null) => {
     if (resourceIndex == null) return null
     if (seriesIndex == null) return null
-    const series = this.state.resourceData?.resources.items[resourceIndex].series.items[seriesIndex]
+    const series = this.state.resourceData?.resources?.items[resourceIndex].series?.items[
+      seriesIndex
+    ]
     return series
   }
   getEpisode = (
@@ -644,7 +646,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         })
         console.log(createResource)
         const temp = this.state.resourceData
-        if (temp && this.state.currentResource && this.state.currentSeries) {
+        if (temp && this.state.currentResource != null && this.state.currentSeries != null) {
           temp.resources.items[this.state.currentResource].series.items[
             this.state.currentSeries
           ]?.episodes?.items?.push(createResource.data.createResourceEpisode)
