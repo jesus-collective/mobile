@@ -392,7 +392,7 @@ class BillingImpl extends JCComponent<Props, State> {
         {!item.stripeIsTiered
           ? item.tiered.map((item, index2: number) => {
               return (
-                <View style={{ flexDirection: "row" }}>
+                <View key={index2} style={{ flexDirection: "row" }}>
                   <Text
                     style={{
                       marginTop: 5,
@@ -832,9 +832,9 @@ class BillingImpl extends JCComponent<Props, State> {
                         return this.renderProduct(item, index)
                       })}
 
-                      {this.state.invoice?.lines?.data.map((line) => {
+                      {this.state.invoice?.lines?.data.map((line, index: number) => {
                         return (
-                          <View style={this.styles.style.flexRow}>
+                          <View key={index} style={this.styles.style.flexRow}>
                             <Text
                               style={{
                                 fontFamily: "Graphik-Regular-App",

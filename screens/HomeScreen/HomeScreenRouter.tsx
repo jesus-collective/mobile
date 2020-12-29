@@ -261,11 +261,12 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
         else {
           if (getUser.data.getUser.stripeCustomerID == null)
             if (await this.createStripeUser(getUser.data.getUser.billingAddress)) {
-              if (getUser.data.getUser.stripeSubscriptionID == null)
+              if (getUser.data.getUser.stripeSubscriptionID == null) {
+                console.log("No Stripe Subscription, No Stripe Customer")
                 this.setState({ hasPaidState: "InProgress" }, () => {
                   this.onPaidStateChange("InProgress")
                 })
-              else {
+              } else {
                 this.setState(
                   {
                     hasPaidState: "Problem1",
@@ -275,11 +276,13 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
                   }
                 )
               }
-            } else if (getUser.data.getUser.stripeSubscriptionID == null)
+            } else if (getUser.data.getUser.stripeSubscriptionID == null) {
+              console.log("No Stripe Subscription")
+
               this.setState({ hasPaidState: "InProgress" }, () => {
                 this.onPaidStateChange("InProgress")
               })
-            else {
+            } else {
               this.setState(
                 {
                   hasPaidState: "Problem2",
@@ -290,11 +293,12 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
               )
             }
           else {
-            if (getUser.data.getUser.stripeSubscriptionID == null)
+            if (getUser.data.getUser.stripeSubscriptionID == null) {
+              console.log("No Stripe Subscription")
               this.setState({ hasPaidState: "InProgress" }, () => {
                 this.onPaidStateChange("InProgress")
               })
-            else {
+            } else {
               this.setState(
                 {
                   hasPaidState: "Problem1",

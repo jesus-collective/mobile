@@ -672,7 +672,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     this.setState({ currentMenuItem: index })
   }
   getMenuItem = (menuItemIndex: number | null) => {
-    if (menuItemIndex && this.state.resourceData?.menuItems?.items)
+    if (menuItemIndex != null && this.state.resourceData?.menuItems?.items)
       return this.state.resourceData?.menuItems?.items[menuItemIndex]
     else return null
   }
