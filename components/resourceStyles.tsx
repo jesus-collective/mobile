@@ -32,8 +32,8 @@ const resourceStyles = EStyleSheet.create({
   },
   resourceRichTextBody1: {
     margin: 10,
-    fontSize: 18,
-    lineHeight: 27,
+    fontSize: 27,
+    lineHeight: 38,
     fontWeight: 400,
     color: "#404040",
   },
@@ -46,8 +46,8 @@ const resourceStyles = EStyleSheet.create({
   },
   resourceRichTextBody3: {
     margin: 10,
-    fontSize: 18,
-    lineHeight: 27,
+    fontSize: 16,
+    lineHeight: 24,
     fontWeight: 400,
     color: "#404040",
   },
