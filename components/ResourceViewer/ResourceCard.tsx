@@ -353,16 +353,16 @@ class ResourceCard extends JCComponent<Props, State> {
               ) : null}
             </CardItem>
 
-            <CardItem style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27, paddingBottom: 9 }}>
+            <CardItem style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27, paddingBottom: 3 }}>
               <EditableText
                 multiline={false}
-                textStyle={{ margin: 0, fontFamily: "Graphik-Regular-App", fontSize: 12,fontStyle: 'normal', fontWeight: 600, lineHeight: 18,letterSpacing: 0.5, textAlign: 'left', color: '#F0493E' }}
-                inputStyle={{ margin: 0, fontFamily: "Graphik-Regular-App", fontSize: 12,fontStyle: 'normal', fontWeight: 600, lineHeight: 18,letterSpacing: 0.5, textAlign: 'left', color: '#F0493E' }}
+                textStyle={{ margin: 0, fontFamily: "Graphik-Bold-App", fontSize: 12, fontStyle: 'bold', fontWeight: 800, lineHeight: 18,letterSpacing: 0.5, textAlign: 'left', color: '#F0493E', textTransform: 'uppercase' }}
+                inputStyle={{ margin: 0, fontFamily: "Graphik-Bold-App", fontSize: 12, fontStyle: 'bold', fontWeight: 800, lineHeight: 18,letterSpacing: 0.5, textAlign: 'left', color: '#F0493E', textTransform: 'uppercase' }}
                 value={this.props.pageItem.title1 ?? ""}
                 isEditable={false}
               ></EditableText>
             </CardItem>
-            <CardItem style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27, paddingBottom: 9 }}>
+            <CardItem style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27, paddingBottom: 10 }}>
               <EditableText
                 multiline={false}
                 textStyle={{ margin: 0, fontFamily: "Graphik-Bold-App", fontSize: 24,fontStyle: 'normal', fontWeight: 800, lineHeight: 36,letterSpacing: 0.5, textAlign: 'left', color: '#404040' }}
