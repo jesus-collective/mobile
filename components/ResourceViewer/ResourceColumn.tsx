@@ -96,7 +96,7 @@ class ResourceColumn extends JCComponent<Props, State> {
             {
               borderWidth: 1,
               flexGrow: 100 - this.getLeftColumnSize(),
-              paddingTop: 100,
+              paddingTop: 100, width: '75%', marginRight: 100,
             },
             this.props.resourceState.isEditable && border,
           ]}
