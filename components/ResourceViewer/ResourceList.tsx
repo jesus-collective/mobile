@@ -90,9 +90,9 @@ class ResourceColumn extends JCComponent<Props, State> {
           this.props.resourceState.isEditable && border,
         ]}
       >
-        <View>
-          <Text>{this.props.pageItem.title1}</Text>
-          <Text>{this.props.pageItem.title2}</Text>
+        <View style={{ paddingLeft: 34, paddingBottom: 9, paddingTop: 30 }}>
+          <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 14,fontStyle: 'normal', fontWeight: 800, lineHeight: 21, textTransform: 'uppercase', letterSpacing: 0.5, textAlign: 'left', color: '#404040' }}>{this.props.pageItem.title1}</Text>
+          <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 14,fontStyle: 'normal', fontWeight: 800, lineHeight: 21, textTransform: 'uppercase', letterSpacing: 0.5, textAlign: 'left', color: '#404040' }}>{this.props.pageItem.title2}</Text>
         </View>
         <View style={{ height: "100%", overflow: "scroll" }}>
           <View style={{ flexDirection: "row" }}>
