@@ -102,7 +102,7 @@ class ResourceColumn extends JCComponent<Props, State> {
           <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 14,fontStyle: 'normal', fontWeight: 800, lineHeight: 21, textTransform: 'uppercase', letterSpacing: 0.5, textAlign: 'left', color: '#404040' }}>{this.props.pageItem.title1}</Text>
           <Text style={{ fontFamily: "Graphik-Bold-App", fontSize: 14,fontStyle: 'normal', fontWeight: 800, lineHeight: 21, textTransform: 'uppercase', letterSpacing: 0.5, textAlign: 'left', color: '#404040' }}>{this.props.pageItem.title2}</Text>
         </View>
-        <View style={{ height: "100%", overflow: "scroll" }}>
+        <View style={{ overflow: "scroll" }}>
           <View style={{ flexDirection: "row" }}>
             <ResourceCard
               resourceActions={this.props.resourceActions}
