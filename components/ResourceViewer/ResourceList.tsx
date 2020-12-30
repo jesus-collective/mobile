@@ -94,7 +94,7 @@ class ResourceColumn extends JCComponent<Props, State> {
           <Text>{this.props.pageItem.title1}</Text>
           <Text>{this.props.pageItem.title2}</Text>
         </View>
-        <View style={{ height: "300px", overflow: "scroll" }}>
+        <View style={{ height: "100%", overflow: "scroll" }}>
           <View style={{ flexDirection: "row" }}>
             <PageItemSettings
               resourceActions={this.props.resourceActions}

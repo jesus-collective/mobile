@@ -333,7 +333,7 @@ class ResourceCard extends JCComponent<Props, State> {
           }}
         >
           <Card style={this.styles.style.resourceGroupCard}>
-            <CardItem>
+            <CardItem style={{ paddingLeft: 0, paddingTop: 0, paddingRight: 0, }}>
               {this.state.imageUrl ? (
                 <Animated.View
                   onLayout={this.fadeAnimation}
@@ -343,7 +343,7 @@ class ResourceCard extends JCComponent<Props, State> {
                   ]}
                 >
                   <Image
-                    style={{ width: 100, height: 100 }}
+                    style={{ width: 425, height: 211, borderTopLeftRadius: 8, borderTopRightRadius: 8 }}
                     source={this.state.imageUrl}
                     onError={() => {
                       this.getImage(this.props.pageItem.image)
