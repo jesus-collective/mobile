@@ -76,7 +76,7 @@ class ResourceColumn extends JCComponent<Props, State> {
           this.props.resourceState.isEditable && border,
         ]}
       >
-        <View style={{ flexGrow: this.getLeftColumnSize(), paddingTop: 110 }}>
+        <View style={{ flexGrow: this.getLeftColumnSize(), marginRight: 106 }}>
           <ResourceContent
             pageItems={this.props.pageItem.pageItemsLeft}
             isBase={false}
@@ -95,8 +95,7 @@ class ResourceColumn extends JCComponent<Props, State> {
           style={[
             {
               borderWidth: 1,
-              flexGrow: 100 - this.getLeftColumnSize(),
-              paddingTop: 100,
+              flexGrow: 100 - this.getLeftColumnSize()
             },
             this.props.resourceState.isEditable && border,
           ]}
