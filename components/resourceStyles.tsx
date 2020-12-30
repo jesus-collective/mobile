@@ -740,6 +740,35 @@ const resourceStyles = EStyleSheet.create({
           color: "#333333",
           paddingBottom: 20,
         },
+    resourceGroupCard: 
+      Platform.OS === "web" 
+      ? {
+          height: 463,
+          alignSelf: "flex-start",
+          padding: "0%",
+          paddingLeft: "0.25rem",
+          paddingRight: "0.25rem",
+          borderRadius: 8,
+          shadowOffset: { width: 0, height: 5 },
+          shadowColor: "rgba(0, 0, 0, 0.45)",
+          shadowRadius: 30,
+          borderStyle: "solid",
+          borderColor: "#FFFFFF",
+        }
+        : {
+          height: 463,
+          alignSelf: "flex-start",
+          padding: "0%",
+          paddingLeft: "0.25rem",
+          paddingRight: "0.25rem",
+          borderRadius: 8,
+          shadowOffset: { width: 0, height: 5 },
+          shadowColor: "rgba(0, 0, 0, 0.45)",
+          shadowRadius: 30,
+          borderStyle: "solid",
+          borderColor: "#FFFFFF",
+        },
+
   "@media (min-width: 350) and (max-width: 768)": {
     resourcefileFieldWrapper: {
       top: "10vw",

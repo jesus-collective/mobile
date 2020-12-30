@@ -299,7 +299,7 @@ class ResourceCard extends JCComponent<Props, State> {
           if (this.props.pageItem.resourceID != null && this.props.pageItem.resourceID != undefined)
             item = resourceActions.getResource(this.props.pageItem.resourceID)
           return (
-            <Card>
+            <Card style={this.styles.style.resourceGroupCard}>
               <CardItem>
                 {this.state.imageUrl ? (
                   <Animated.View
