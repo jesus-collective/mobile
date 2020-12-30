@@ -3,6 +3,7 @@ import Amplify, { Auth, Storage } from "aws-amplify"
 import { Card, CardItem, View } from "native-base"
 import React from "react"
 import { Animated, Image, Picker, Text } from "react-native"
+import { TouchableOpacity } from "react-native-gesture-handler"
 import EditableText from "../../components/Forms/EditableText"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import { ResourcePageItemStyle } from "../../src/API"
@@ -128,6 +129,21 @@ class ResourceCard extends JCComponent<Props, State> {
                     textStyle={{ margin: 10 }}
                     inputStyle={{ margin: 10 }}
                     value={page.state.settings.description1 ?? ""}
+                    isEditable={true}
+                  ></EditableText>
+                  <Text>Navigate To:</Text>
+                  <EditableText
+                    onChange={(val: string) => {
+                      const tmp = page.state.settings
+                      tmp.url = val
+                      page.setState({ settings: tmp })
+                    }}
+                    placeholder="target URL"
+                    numberOfLines={4}
+                    multiline={false}
+                    textStyle={{ margin: 10 }}
+                    inputStyle={{ margin: 10 }}
+                    value={page.state.settings.url ?? ""}
                     isEditable={true}
                   ></EditableText>
                   <View>
@@ -310,63 +326,69 @@ class ResourceCard extends JCComponent<Props, State> {
 
   renderManualCard() {
     return (
-      <Card>
-        <CardItem>
-          {this.state.imageUrl ? (
-            <Animated.View
-              onLayout={this.fadeAnimation}
-              style={[this.styles.style.resourceHeaderImgView, { opacity: this.state.fadeValue }]}
-            >
-              <Image
-                style={{ width: 100, height: 100 }}
-                source={this.state.imageUrl}
-                onError={() => {
-                  this.getImage(this.props.pageItem.image)
-                }}
-              ></Image>
-            </Animated.View>
-          ) : null}
-        </CardItem>
+      <TouchableOpacity
+        onPress={() => {
+          window.location = this.props.pageItem.url
+        }}
+      >
+        <Card>
+          <CardItem>
+            {this.state.imageUrl ? (
+              <Animated.View
+                onLayout={this.fadeAnimation}
+                style={[this.styles.style.resourceHeaderImgView, { opacity: this.state.fadeValue }]}
+              >
+                <Image
+                  style={{ width: 100, height: 100 }}
+                  source={this.state.imageUrl}
+                  onError={() => {
+                    this.getImage(this.props.pageItem.image)
+                  }}
+                ></Image>
+              </Animated.View>
+            ) : null}
+          </CardItem>
 
-        <CardItem>
-          <EditableText
-            multiline={false}
-            textStyle={{ margin: 10 }}
-            inputStyle={{ margin: 10 }}
-            value={this.props.pageItem.title1 ?? ""}
-            isEditable={false}
-          ></EditableText>
-        </CardItem>
-        <CardItem>
-          <EditableText
-            multiline={false}
-            textStyle={{ margin: 10 }}
-            inputStyle={{ margin: 10 }}
-            value={this.props.pageItem.title2 ?? ""}
-            isEditable={false}
-          ></EditableText>
-        </CardItem>
-        <CardItem>
-          <EditableText
-            multiline={false}
-            textStyle={{ margin: 10 }}
-            inputStyle={{ margin: 10 }}
-            value={this.props.pageItem.description1 ?? ""}
-            isEditable={false}
-          ></EditableText>
-        </CardItem>
-        <CardItem>
-          <PageItemSettings
-            resourceActions={this.props.resourceActions}
-            resourceState={this.props.resourceState}
-            pageItemIndex={this.props.pageItemIndex}
-            save={this.props.save}
-            delete={this.props.delete}
-            pageItem={this.props.pageItem}
-          ></PageItemSettings>
-          {/* */}
-        </CardItem>
-      </Card>
+          <CardItem>
+            <EditableText
+              multiline={false}
+              textStyle={{ margin: 10 }}
+              inputStyle={{ margin: 10 }}
+              value={this.props.pageItem.title1 ?? ""}
+              isEditable={false}
+            ></EditableText>
+          </CardItem>
+          <CardItem>
+            <EditableText
+              multiline={false}
+              textStyle={{ margin: 10 }}
+              inputStyle={{ margin: 10 }}
+              value={this.props.pageItem.title2 ?? ""}
+              isEditable={false}
+            ></EditableText>
+          </CardItem>
+          <CardItem>
+            <EditableText
+              multiline={false}
+              textStyle={{ margin: 10 }}
+              inputStyle={{ margin: 10 }}
+              value={this.props.pageItem.description1 ?? ""}
+              isEditable={false}
+            ></EditableText>
+          </CardItem>
+          <CardItem>
+            <PageItemSettings
+              resourceActions={this.props.resourceActions}
+              resourceState={this.props.resourceState}
+              pageItemIndex={this.props.pageItemIndex}
+              save={this.props.save}
+              delete={this.props.delete}
+              pageItem={this.props.pageItem}
+            ></PageItemSettings>
+            {/* */}
+          </CardItem>
+        </Card>
+      </TouchableOpacity>
     )
   }
   renderAutoCard() {
