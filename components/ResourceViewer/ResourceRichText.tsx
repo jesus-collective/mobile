@@ -92,7 +92,7 @@ class ResourceRichText extends JCComponent<Props> {
         textStyle = this.styles.style.resourceRichTextBody1
     }
     return (
-      <View>
+      <View style={{ width: '80%' }}>
         <PageItemSettings
           resourceActions={this.props.resourceActions}
           resourceState={this.props.resourceState}
