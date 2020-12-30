@@ -87,7 +87,7 @@ class ResourceColumn extends JCComponent<Props, State> {
           this.props.resourceState.isEditable && border,
         ]}
       >
-        <View style={{ width: this.getLeftColumnSize(), paddingLeft: 80 }}>
+        <View style={{ width: this.getLeftColumnSize() }}>
           <ResourceContent
             pageItems={this.props.pageItem.pageItemsLeft}
             isBase={false}
