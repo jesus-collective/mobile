@@ -332,7 +332,7 @@ class ResourceCard extends JCComponent<Props, State> {
             window.location = this.props.pageItem.url ?? ""
           }}
         >
-          <Card>
+          <Card style={this.styles.style.resourceGroupCard}>
             <CardItem>
               {this.state.imageUrl ? (
                 <Animated.View
