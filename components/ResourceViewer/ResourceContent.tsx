@@ -14,6 +14,7 @@ import ResourceCard from "./ResourceCard"
 import ResourceColumn from "./ResourceColumn"
 import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
 import ResourceHeader from "./ResourceHeader"
+import ResourceList from "./ResourceList"
 import ResourceMenu from "./ResourceMenu"
 import ResourceRichText from "./ResourceRichText"
 
@@ -314,6 +315,18 @@ class ResourceContentImpl extends JCComponent<Props, State> {
             delete={this.delete}
             pageItem={item}
           ></ResourceCard>
+        )
+      case ResourcePageItemType.List:
+        return (
+          <ResourceList
+            key={pageItemIndex}
+            resourceActions={resourceActions}
+            resourceState={resourceState}
+            pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
+            save={this.save}
+            delete={this.delete}
+            pageItem={item}
+          ></ResourceList>
         )
     }
   }

@@ -53,19 +53,30 @@ class ResourceColumn extends JCComponent<Props, State> {
       </>
     )
   }
-  getLeftColumnSize(): number {
+  getLeftColumnSize(): string {
     switch (this.props.pageItem.style) {
       case ResourcePageItemStyle.Column3070:
-        return 33
+        return "33%"
       case ResourcePageItemStyle.Column5050:
-        return 50
+        return "50%"
       case ResourcePageItemStyle.Column7030:
-        return 77
+        return "67%"
       default:
-        return 50
+        return "50%"
     }
   }
-
+  getRightColumnSize(): string {
+    switch (this.props.pageItem.style) {
+      case ResourcePageItemStyle.Column3070:
+        return "67%"
+      case ResourcePageItemStyle.Column5050:
+        return "50%"
+      case ResourcePageItemStyle.Column7030:
+        return "33%"
+      default:
+        return "50%"
+    }
+  }
   render(): React.ReactNode {
     const border: ViewStyle = { borderWidth: 1, borderStyle: "dashed" }
     console.log({ COLUMns: this.props.pageItemIndex })
@@ -76,7 +87,7 @@ class ResourceColumn extends JCComponent<Props, State> {
           this.props.resourceState.isEditable && border,
         ]}
       >
-        <View style={{ flexGrow: this.getLeftColumnSize(), paddingTop: 110 }}>
+        <View style={{ width: this.getLeftColumnSize(), paddingTop: 110 }}>
           <ResourceContent
             pageItems={this.props.pageItem.pageItemsLeft}
             isBase={false}
@@ -95,7 +106,7 @@ class ResourceColumn extends JCComponent<Props, State> {
           style={[
             {
               borderWidth: 1,
-              flexGrow: 100 - this.getLeftColumnSize(),
+              width: this.getRightColumnSize(),
               paddingTop: 100,
             },
             this.props.resourceState.isEditable && border,

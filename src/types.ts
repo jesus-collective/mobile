@@ -69,13 +69,13 @@ export interface ResourceSetupProp {
   resourceState: ResourceState
   pageItemIndex: PageItemIndex
   pageItem: ResourcePageItemInput
-  
-  save(
+  hideEditButton?:boolean
+  save?(
     resourceActions: ResourceActions,
     resourceState: ResourceState,
     menuItemIndex: number,
     pageItemIndex: PageItemIndex,
     value: ResourcePageItemInput
   ): void
-  delete(resourceActions: ResourceActions, resourceState: ResourceState, index: number, pageItemIndex: PageItemIndex): void
+  delete?(resourceActions: ResourceActions, resourceState: ResourceState, index: number, pageItemIndex: PageItemIndex): void
 }

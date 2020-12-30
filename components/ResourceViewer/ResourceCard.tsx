@@ -326,69 +326,72 @@ class ResourceCard extends JCComponent<Props, State> {
 
   renderManualCard() {
     return (
-      <TouchableOpacity
-        onPress={() => {
-          window.location = this.props.pageItem.url ?? ""
-        }}
-      >
-        <Card>
-          <CardItem>
-            {this.state.imageUrl ? (
-              <Animated.View
-                onLayout={this.fadeAnimation}
-                style={[this.styles.style.resourceHeaderImgView, { opacity: this.state.fadeValue }]}
-              >
-                <Image
-                  style={{ width: 100, height: 100 }}
-                  source={this.state.imageUrl}
-                  onError={() => {
-                    this.getImage(this.props.pageItem.image)
-                  }}
-                ></Image>
-              </Animated.View>
-            ) : null}
-          </CardItem>
+      <>
+        <TouchableOpacity
+          onPress={() => {
+            window.location = this.props.pageItem.url ?? ""
+          }}
+        >
+          <Card>
+            <CardItem>
+              {this.state.imageUrl ? (
+                <Animated.View
+                  onLayout={this.fadeAnimation}
+                  style={[
+                    this.styles.style.resourceHeaderImgView,
+                    { opacity: this.state.fadeValue },
+                  ]}
+                >
+                  <Image
+                    style={{ width: 100, height: 100 }}
+                    source={this.state.imageUrl}
+                    onError={() => {
+                      this.getImage(this.props.pageItem.image)
+                    }}
+                  ></Image>
+                </Animated.View>
+              ) : null}
+            </CardItem>
 
-          <CardItem>
-            <EditableText
-              multiline={false}
-              textStyle={{ margin: 10 }}
-              inputStyle={{ margin: 10 }}
-              value={this.props.pageItem.title1 ?? ""}
-              isEditable={false}
-            ></EditableText>
-          </CardItem>
-          <CardItem>
-            <EditableText
-              multiline={false}
-              textStyle={{ margin: 10 }}
-              inputStyle={{ margin: 10 }}
-              value={this.props.pageItem.title2 ?? ""}
-              isEditable={false}
-            ></EditableText>
-          </CardItem>
-          <CardItem>
-            <EditableText
-              multiline={false}
-              textStyle={{ margin: 10 }}
-              inputStyle={{ margin: 10 }}
-              value={this.props.pageItem.description1 ?? ""}
-              isEditable={false}
-            ></EditableText>
-          </CardItem>
-          <CardItem>
-            <PageItemSettings
-              resourceActions={this.props.resourceActions}
-              resourceState={this.props.resourceState}
-              pageItemIndex={this.props.pageItemIndex}
-              save={this.props.save}
-              delete={this.props.delete}
-              pageItem={this.props.pageItem}
-            ></PageItemSettings>
-            {/* */}
-          </CardItem>
-        </Card>
-      </TouchableOpacity>
+            <CardItem>
+              <EditableText
+                multiline={false}
+                textStyle={{ margin: 10 }}
+                inputStyle={{ margin: 10 }}
+                value={this.props.pageItem.title1 ?? ""}
+                isEditable={false}
+              ></EditableText>
+            </CardItem>
+            <CardItem>
+              <EditableText
+                multiline={false}
+                textStyle={{ margin: 10 }}
+                inputStyle={{ margin: 10 }}
+                value={this.props.pageItem.title2 ?? ""}
+                isEditable={false}
+              ></EditableText>
+            </CardItem>
+            <CardItem>
+              <EditableText
+                multiline={false}
+                textStyle={{ margin: 10 }}
+                inputStyle={{ margin: 10 }}
+                value={this.props.pageItem.description1 ?? ""}
+                isEditable={false}
+              ></EditableText>
+            </CardItem>
+          </Card>
+        </TouchableOpacity>
+        <PageItemSettings
+          resourceActions={this.props.resourceActions}
+          resourceState={this.props.resourceState}
+          pageItemIndex={this.props.pageItemIndex}
+          save={this.props.save}
+          delete={this.props.delete}
+          pageItem={this.props.pageItem}
+          hideEditButton={this.props.hideEditButton}
+        ></PageItemSettings>
+      </>
     )
   }
   renderAutoCard() {
@@ -469,8 +472,8 @@ class ResourceCard extends JCComponent<Props, State> {
                   save={this.props.save}
                   delete={this.props.delete}
                   pageItem={this.props.pageItem}
+                  hideEditButton={this.props.hideEditButton}
                 ></PageItemSettings>
-                {/* */}
               </CardItem>
             </Card>
           )
@@ -479,7 +482,10 @@ class ResourceCard extends JCComponent<Props, State> {
     )
   }
   render(): React.ReactNode {
-    if (this.state.imageUrl == null || this.state.image != this.props.pageItem.image)
+    if (
+      this.props.pageItem &&
+      (this.state.imageUrl == null || this.state.image != this.props.pageItem.image)
+    )
       this.getImage(this.props.pageItem.image)
     return (
       <View>
