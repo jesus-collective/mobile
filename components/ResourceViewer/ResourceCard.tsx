@@ -1,8 +1,10 @@
-import Amplify, { Storage } from "aws-amplify"
+import { Ionicons } from "@expo/vector-icons"
+import Amplify, { Auth, Storage } from "aws-amplify"
 import { Card, CardItem, View } from "native-base"
 import React from "react"
-import { Animated, Image, Picker } from "react-native"
+import { Animated, Image, Picker, Text } from "react-native"
 import EditableText from "../../components/Forms/EditableText"
+import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import { ResourcePageItemStyle } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
 import { ResourceSetupProp } from "../../src/types"
@@ -17,6 +19,7 @@ interface State extends JCState {
   imageUrl: any
   image: any
   fadeValue: any
+  retry: number
 }
 class ResourceCard extends JCComponent<Props, State> {
   static Consumer = ResourceContext.Consumer
@@ -27,6 +30,7 @@ class ResourceCard extends JCComponent<Props, State> {
       imageUrl: null,
       image: null,
       fadeValue: new Animated.Value(0),
+      retry: 5,
     }
   }
   fadeAnimation = (): void => {
@@ -38,13 +42,13 @@ class ResourceCard extends JCComponent<Props, State> {
   }
   async getImage(img: any): Promise<void> {
     if (img == null) return
-    if (img != null) {
+    if (img != null && this.state.retry > 0) {
       const z = await Storage.get(img.filenameLarge, {
         level: "protected",
         contentType: "image/png",
         identityId: img.userId,
       })
-      this.setState({ imageUrl: z, image: img })
+      this.setState({ imageUrl: z, image: img, retry: this.state.retry - 1 })
     }
   }
   static renderAdmin(page: PageItemSettings): React.ReactNode {
@@ -67,8 +71,8 @@ class ResourceCard extends JCComponent<Props, State> {
                   paddingTop: 3,
                   paddingBottom: 3,
                 }}
-                selectedValue={page.state.settings.style}
-                onValueChange={(value: any) => {
+                selectedValue={page.state.settings.style ?? undefined}
+                onValueChange={(value: ResourcePageItemStyle) => {
                   const tmp = page.state.settings
                   tmp.style = value
                   page.setState({ settings: tmp })
@@ -82,42 +86,130 @@ class ResourceCard extends JCComponent<Props, State> {
               </Picker>
               {page.state.settings.style == ResourcePageItemStyle.CardManual ? (
                 <>
+                  <Text>Title 1:</Text>
                   <EditableText
                     onChange={(val: string) => {
                       const tmp = page.state.settings
                       tmp.title1 = val
                       page.setState({ settings: tmp })
                     }}
+                    placeholder="Title 1"
                     multiline={false}
                     textStyle={{ margin: 10 }}
                     inputStyle={{ margin: 10 }}
                     value={page.state.settings.title1 ?? ""}
                     isEditable={true}
                   ></EditableText>
+                  <Text>Title 2:</Text>
+
                   <EditableText
                     onChange={(val: string) => {
                       const tmp = page.state.settings
                       tmp.title2 = val
                       page.setState({ settings: tmp })
                     }}
+                    placeholder="Title 2"
                     multiline={false}
                     textStyle={{ margin: 10 }}
                     inputStyle={{ margin: 10 }}
                     value={page.state.settings.title2 ?? ""}
                     isEditable={true}
                   ></EditableText>
+                  <Text>Description:</Text>
                   <EditableText
                     onChange={(val: string) => {
                       const tmp = page.state.settings
                       tmp.description1 = val
                       page.setState({ settings: tmp })
                     }}
+                    placeholder="Description 1"
+                    numberOfLines={4}
                     multiline={false}
                     textStyle={{ margin: 10 }}
                     inputStyle={{ margin: 10 }}
                     value={page.state.settings.description1 ?? ""}
                     isEditable={true}
                   ></EditableText>
+                  <View>
+                    <JCButton
+                      buttonType={ButtonTypes.Transparent}
+                      onPress={() => {
+                        null
+                      }}
+                    >
+                      <Ionicons
+                        size={32}
+                        name="ios-image"
+                        style={page.styles.style.resourceImageIcon}
+                      />
+                    </JCButton>
+                    <input
+                      style={{
+                        fontSize: 200,
+                        position: "absolute",
+                        top: "0px",
+                        right: "0px",
+                        opacity: "0",
+                      }}
+                      type="file"
+                      accept="image/*"
+                      onChange={async (e) => {
+                        if (resourceState.currentResource == null) return null
+                        console.log("Uploading")
+                        const file = e.target.files[0]
+                        const lastDot = file.name.lastIndexOf(".")
+                        const ext = file.name.substring(lastDot + 1)
+                        const user = await Auth.currentCredentials()
+                        const userId = user.identityId
+
+                        const fn =
+                          "resources/upload/group-" +
+                          resourceState.resourceData.id +
+                          "-pageId-" +
+                          page.state.settings.id +
+                          "-card-" +
+                          new Date().getTime() +
+                          "-upload." +
+                          ext
+                        console.log({ filename: fn })
+
+                        const fnSave = fn
+                          .replace("/upload", "")
+                          .replace("-upload.", "-[size].")
+                          .replace("." + ext, ".png")
+
+                        console.log("putting")
+                        await Storage.put(fn, file, {
+                          level: "protected",
+                          contentType: file.type,
+                          identityId: userId,
+                        })
+                          .then(() => {
+                            console.log("getting")
+                            return Storage.get(fn, {
+                              level: "protected",
+                              identityId: userId,
+                            }).then((result2) => {
+                              console.log({ fileInfo: result2 })
+                              let tmp = page.state.settings
+                              tmp.image = {
+                                userId: userId,
+                                filenameUpload: fn,
+                                filenameLarge: fnSave.replace("[size]", "large"),
+                                filenameMedium: fnSave.replace("[size]", "medium"),
+                                filenameSmall: fnSave.replace("[size]", "small"),
+                              }
+                              console.log({ settings: tmp })
+                              page.setState({ settings: tmp })
+                              //this.updatePageItem(menuItemIndex, pageItemIndex, tempPageItems)
+                            })
+
+                            // console.log(result)
+                          })
+                          .catch((err) => console.log(err))
+                      }}
+                    />
+                  </View>
                 </>
               ) : (
                 <>
@@ -133,7 +225,7 @@ class ResourceCard extends JCComponent<Props, State> {
                       paddingTop: 3,
                       paddingBottom: 3,
                     }}
-                    selectedValue={page.state.settings.resourceID}
+                    selectedValue={page.state.settings.resourceID ?? undefined}
                     onValueChange={(value: any) => {
                       const tmp = page.state.settings
                       tmp.resourceID = value
@@ -226,7 +318,7 @@ class ResourceCard extends JCComponent<Props, State> {
               style={[this.styles.style.resourceHeaderImgView, { opacity: this.state.fadeValue }]}
             >
               <Image
-                style={this.styles.style.resourceHeaderImg}
+                style={{ width: 100, height: 100 }}
                 source={this.state.imageUrl}
                 onError={() => {
                   this.getImage(this.props.pageItem.image)
@@ -366,7 +458,7 @@ class ResourceCard extends JCComponent<Props, State> {
   }
   render(): React.ReactNode {
     if (this.state.imageUrl == null || this.state.image != this.props.pageItem.image)
-      this.getImage(this.props.pageItem)
+      this.getImage(this.props.pageItem.image)
     return (
       <View>
         {this.props.pageItem.style == ResourcePageItemStyle.CardManual

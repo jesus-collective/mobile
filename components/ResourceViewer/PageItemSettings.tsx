@@ -108,7 +108,7 @@ export default class PageItemSettings extends JCComponent<Props, State> {
                   paddingTop: 3,
                   paddingBottom: 3,
                 }}
-                selectedValue={this.state.settings.type}
+                selectedValue={this.state.settings.type ?? undefined}
                 onValueChange={(value: any) => {
                   const tmp = this.state.settings
                   tmp.type = value

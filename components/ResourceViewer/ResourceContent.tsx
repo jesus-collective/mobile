@@ -258,6 +258,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
       case ResourcePageItemType.Column:
         return (
           <ResourceColumn
+            key={pageItemIndex}
             resourceActions={resourceActions}
             resourceState={resourceState}
             pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
@@ -269,6 +270,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
       case ResourcePageItemType.Header:
         return (
           <ResourceHeader
+            key={pageItemIndex}
             resourceActions={resourceActions}
             resourceState={resourceState}
             pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
@@ -280,6 +282,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
       case ResourcePageItemType.Menu:
         return (
           <ResourceMenu
+            key={pageItemIndex}
             resourceActions={resourceActions}
             resourceState={resourceState}
             pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
@@ -291,6 +294,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
       case ResourcePageItemType.RichText:
         return (
           <ResourceRichText
+            key={pageItemIndex}
             resourceActions={resourceActions}
             resourceState={resourceState}
             pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
@@ -302,6 +306,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
       case ResourcePageItemType.Card:
         return (
           <ResourceCard
+            key={pageItemIndex}
             resourceActions={resourceActions}
             resourceState={resourceState}
             pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
