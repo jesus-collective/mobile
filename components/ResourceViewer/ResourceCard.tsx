@@ -328,7 +328,7 @@ class ResourceCard extends JCComponent<Props, State> {
     return (
       <TouchableOpacity
         onPress={() => {
-          window.location = this.props.pageItem.url
+          window.location = this.props.pageItem.url ?? ""
         }}
       >
         <Card>
