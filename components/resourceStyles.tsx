@@ -744,6 +744,7 @@ const resourceStyles = EStyleSheet.create({
       Platform.OS === "web" 
       ? {
           height: 463,
+          width: 425,
           alignSelf: "flex-start",
           padding: "0%",
           paddingLeft: "0.25rem",
@@ -754,6 +755,7 @@ const resourceStyles = EStyleSheet.create({
           shadowRadius: 30,
           borderStyle: "solid",
           borderColor: "#FFFFFF",
+          marginRight: 36,
         }
         : {
           height: 463,
