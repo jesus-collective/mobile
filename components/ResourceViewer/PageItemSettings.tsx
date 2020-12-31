@@ -8,6 +8,7 @@ import JCComponent from "../../components/JCComponent/JCComponent"
 import { ResourcePageItemInput, ResourcePageItemType } from "../../src/API"
 import ResourceCard from "./ResourceCard"
 import ResourceColumn from "./ResourceColumn"
+import ResourceGrid from "./ResourceGrid"
 import ResourceHeader from "./ResourceHeader"
 import ResourceList from "./ResourceList"
 import ResourceMenu from "./ResourceMenu"
@@ -58,6 +59,8 @@ export default class PageItemSettings extends JCComponent<ResourceSetupProp, Sta
         return ResourceCard.renderAdmin(this)
       case ResourcePageItemType.List:
         return ResourceList.renderAdmin(this)
+      case ResourcePageItemType.Grid:
+        return ResourceGrid.renderAdmin(this)
     }
   }
   render() {

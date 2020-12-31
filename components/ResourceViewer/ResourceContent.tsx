@@ -13,6 +13,7 @@ import PageConfigModal from "./PageConfigModal"
 import ResourceCard from "./ResourceCard"
 import ResourceColumn from "./ResourceColumn"
 import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
+import ResourceGrid from "./ResourceGrid"
 import ResourceHeader from "./ResourceHeader"
 import ResourceList from "./ResourceList"
 import ResourceMenu from "./ResourceMenu"
@@ -327,6 +328,18 @@ class ResourceContentImpl extends JCComponent<Props, State> {
             delete={this.delete}
             pageItem={item}
           ></ResourceList>
+        )
+      case ResourcePageItemType.Grid:
+        return (
+          <ResourceGrid
+            key={pageItemIndex}
+            resourceActions={resourceActions}
+            resourceState={resourceState}
+            pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
+            save={this.save}
+            delete={this.delete}
+            pageItem={item}
+          ></ResourceGrid>
         )
     }
   }

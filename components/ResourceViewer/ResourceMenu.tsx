@@ -82,7 +82,7 @@ class ResourceMenu extends JCComponent<Props> {
         {({ resourceState, resourceActions }) => {
           if (!resourceState) return null
           return (
-            <>
+            <View style={{ zIndex: 5000 + this.props.pageItemIndex.length }}>
               <PageItemSettings
                 resourceActions={this.props.resourceActions}
                 resourceState={this.props.resourceState}
@@ -184,7 +184,7 @@ class ResourceMenu extends JCComponent<Props> {
                   }}
                 />
               ) : null}
-            </>
+            </View>
           )
         }}
       </ResourceMenu.Consumer>
