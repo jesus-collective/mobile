@@ -40,8 +40,3 @@ jobs:
       run: npm ci
     - name: Test
       run: npm test
-    - name: Archive code coverage results
-      uses: actions/upload-artifact@v1
-      with:
-        name: code-coverage-report
-        path: coverage/lcov-report/index.html
