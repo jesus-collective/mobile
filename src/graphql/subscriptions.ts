@@ -111,6 +111,21 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
           updatedAt
         }
       }
+      replies {
+        items {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       author {
@@ -178,6 +193,9 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        messageReplies {
           nextToken
         }
         coachingTriad {
@@ -409,6 +427,9 @@ export const onCreateGroupMember = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        messageReplies {
+          nextToken
+        }
         coachingTriad {
           nextToken
         }
@@ -611,6 +632,9 @@ export const onUpdateGroupMember = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        messageReplies {
+          nextToken
+        }
         coachingTriad {
           nextToken
         }
@@ -811,6 +835,9 @@ export const onDeleteGroupMember = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        messageReplies {
           nextToken
         }
         coachingTriad {
@@ -1053,6 +1080,9 @@ export const onCreateGroup = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        messageReplies {
+          nextToken
+        }
         coachingTriad {
           nextToken
         }
@@ -1291,6 +1321,9 @@ export const onUpdateGroup = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        messageReplies {
           nextToken
         }
         coachingTriad {
@@ -1533,6 +1566,9 @@ export const onDeleteGroup = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        messageReplies {
+          nextToken
+        }
         coachingTriad {
           nextToken
         }
@@ -1722,6 +1758,9 @@ export const onCreateOrganizationMember = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        messageReplies {
           nextToken
         }
         coachingTriad {
@@ -1915,6 +1954,9 @@ export const onUpdateOrganizationMember = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        messageReplies {
+          nextToken
+        }
         coachingTriad {
           nextToken
         }
@@ -2104,6 +2146,9 @@ export const onDeleteOrganizationMember = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        messageReplies {
           nextToken
         }
         coachingTriad {
@@ -2878,6 +2923,9 @@ export const onCreatePayment = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        messageReplies {
+          nextToken
+        }
         coachingTriad {
           nextToken
         }
@@ -3011,6 +3059,9 @@ export const onUpdatePayment = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        messageReplies {
+          nextToken
+        }
         coachingTriad {
           nextToken
         }
@@ -3142,6 +3193,9 @@ export const onDeletePayment = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        messageReplies {
           nextToken
         }
         coachingTriad {
@@ -3608,6 +3662,9 @@ export const onCreateCourseBackOfficeStaff = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        messageReplies {
+          nextToken
+        }
         coachingTriad {
           nextToken
         }
@@ -3734,6 +3791,9 @@ export const onUpdateCourseBackOfficeStaff = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        messageReplies {
           nextToken
         }
         coachingTriad {
@@ -3864,6 +3924,9 @@ export const onDeleteCourseBackOfficeStaff = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        messageReplies {
+          nextToken
+        }
         coachingTriad {
           nextToken
         }
@@ -3990,6 +4053,9 @@ export const onCreateCourseInstructors = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        messageReplies {
           nextToken
         }
         coachingTriad {
@@ -4120,6 +4186,9 @@ export const onUpdateCourseInstructors = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        messageReplies {
+          nextToken
+        }
         coachingTriad {
           nextToken
         }
@@ -4246,6 +4315,9 @@ export const onDeleteCourseInstructors = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        messageReplies {
           nextToken
         }
         coachingTriad {
@@ -4376,6 +4448,9 @@ export const onCreateCourseTriadCoaches = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        messageReplies {
+          nextToken
+        }
         coachingTriad {
           nextToken
         }
@@ -4502,6 +4577,9 @@ export const onUpdateCourseTriadCoaches = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        messageReplies {
           nextToken
         }
         coachingTriad {
@@ -4632,6 +4710,9 @@ export const onDeleteCourseTriadCoaches = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        messageReplies {
+          nextToken
+        }
         coachingTriad {
           nextToken
         }
@@ -4758,6 +4839,9 @@ export const onCreateCourseTriadUsers = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        messageReplies {
           nextToken
         }
         coachingTriad {
@@ -4888,6 +4972,9 @@ export const onUpdateCourseTriadUsers = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        messageReplies {
+          nextToken
+        }
         coachingTriad {
           nextToken
         }
@@ -5014,6 +5101,9 @@ export const onDeleteCourseTriadUsers = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        messageReplies {
           nextToken
         }
         coachingTriad {
@@ -5453,6 +5543,9 @@ export const onCreateDirectMessageUser = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        messageReplies {
+          nextToken
+        }
         coachingTriad {
           nextToken
         }
@@ -5572,6 +5665,9 @@ export const onUpdateDirectMessageUser = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        messageReplies {
+          nextToken
+        }
         coachingTriad {
           nextToken
         }
@@ -5689,6 +5785,9 @@ export const onDeleteDirectMessageUser = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        messageReplies {
           nextToken
         }
         coachingTriad {
@@ -5925,6 +6024,9 @@ export const onCreateDirectMessage = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        messageReplies {
+          nextToken
+        }
         coachingTriad {
           nextToken
         }
@@ -6048,6 +6150,9 @@ export const onUpdateDirectMessage = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        messageReplies {
+          nextToken
+        }
         coachingTriad {
           nextToken
         }
@@ -6169,6 +6274,9 @@ export const onDeleteDirectMessage = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        messageReplies {
           nextToken
         }
         coachingTriad {
@@ -6310,6 +6418,21 @@ export const onCreateMessage = /* GraphQL */ `
           updatedAt
         }
       }
+      replies {
+        items {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       author {
@@ -6377,6 +6500,9 @@ export const onCreateMessage = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        messageReplies {
           nextToken
         }
         coachingTriad {
@@ -6518,6 +6644,21 @@ export const onUpdateMessage = /* GraphQL */ `
           updatedAt
         }
       }
+      replies {
+        items {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       author {
@@ -6585,6 +6726,9 @@ export const onUpdateMessage = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        messageReplies {
           nextToken
         }
         coachingTriad {
@@ -6726,6 +6870,21 @@ export const onDeleteMessage = /* GraphQL */ `
           updatedAt
         }
       }
+      replies {
+        items {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       author {
@@ -6793,6 +6952,816 @@ export const onDeleteMessage = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        messageReplies {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
+          nextToken
+        }
+        payments {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+export const onCreateReply = /* GraphQL */ `
+  subscription OnCreateReply {
+    onCreateReply {
+      id
+      content
+      when
+      attachment
+      attachmentName
+      userId
+      messageId
+      parentMessage {
+        id
+        content
+        when
+        attachment
+        attachmentName
+        roomId
+        userId
+        postingAs
+        owner
+        room {
+          id
+          owner
+          ownerOrgID
+          type
+          name
+          description
+          memberCount
+          image
+          time
+          lastUpdated
+          location
+          length
+          effort
+          cost
+          promotionalText
+          eventType
+          eventUrl
+          tz
+          isSponsored
+          createdAt
+          updatedAt
+        }
+        replies {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        author {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
+          hasPaidState
+          profileState
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+      }
+      parentReplyId
+      parentReply {
+        id
+        content
+        when
+        attachment
+        attachmentName
+        userId
+        messageId
+        parentMessage {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          roomId
+          userId
+          postingAs
+          owner
+          createdAt
+          updatedAt
+        }
+        parentReplyId
+        parentReply {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        subReplies {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        author {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
+          hasPaidState
+          profileState
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+      }
+      subReplies {
+        items {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      author {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        stripeCustomerID
+        stripeSubscriptionID
+        hasPaidState
+        profileState
+        billingAddress {
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        messageReplies {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
+          nextToken
+        }
+        payments {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+export const onUpdateReply = /* GraphQL */ `
+  subscription OnUpdateReply {
+    onUpdateReply {
+      id
+      content
+      when
+      attachment
+      attachmentName
+      userId
+      messageId
+      parentMessage {
+        id
+        content
+        when
+        attachment
+        attachmentName
+        roomId
+        userId
+        postingAs
+        owner
+        room {
+          id
+          owner
+          ownerOrgID
+          type
+          name
+          description
+          memberCount
+          image
+          time
+          lastUpdated
+          location
+          length
+          effort
+          cost
+          promotionalText
+          eventType
+          eventUrl
+          tz
+          isSponsored
+          createdAt
+          updatedAt
+        }
+        replies {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        author {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
+          hasPaidState
+          profileState
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+      }
+      parentReplyId
+      parentReply {
+        id
+        content
+        when
+        attachment
+        attachmentName
+        userId
+        messageId
+        parentMessage {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          roomId
+          userId
+          postingAs
+          owner
+          createdAt
+          updatedAt
+        }
+        parentReplyId
+        parentReply {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        subReplies {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        author {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
+          hasPaidState
+          profileState
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+      }
+      subReplies {
+        items {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      author {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        stripeCustomerID
+        stripeSubscriptionID
+        hasPaidState
+        profileState
+        billingAddress {
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        messageReplies {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
+          nextToken
+        }
+        payments {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+export const onDeleteReply = /* GraphQL */ `
+  subscription OnDeleteReply {
+    onDeleteReply {
+      id
+      content
+      when
+      attachment
+      attachmentName
+      userId
+      messageId
+      parentMessage {
+        id
+        content
+        when
+        attachment
+        attachmentName
+        roomId
+        userId
+        postingAs
+        owner
+        room {
+          id
+          owner
+          ownerOrgID
+          type
+          name
+          description
+          memberCount
+          image
+          time
+          lastUpdated
+          location
+          length
+          effort
+          cost
+          promotionalText
+          eventType
+          eventUrl
+          tz
+          isSponsored
+          createdAt
+          updatedAt
+        }
+        replies {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        author {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
+          hasPaidState
+          profileState
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+      }
+      parentReplyId
+      parentReply {
+        id
+        content
+        when
+        attachment
+        attachmentName
+        userId
+        messageId
+        parentMessage {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          roomId
+          userId
+          postingAs
+          owner
+          createdAt
+          updatedAt
+        }
+        parentReplyId
+        parentReply {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        subReplies {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        author {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
+          hasPaidState
+          profileState
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+      }
+      subReplies {
+        items {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      author {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        stripeCustomerID
+        stripeSubscriptionID
+        hasPaidState
+        profileState
+        billingAddress {
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        messageReplies {
           nextToken
         }
         coachingTriad {
@@ -8521,6 +9490,21 @@ export const onCreateUser = /* GraphQL */ `
         }
         nextToken
       }
+      messageReplies {
+        items {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       coachingTriad {
         items {
           id
@@ -8721,6 +9705,21 @@ export const onUpdateUser = /* GraphQL */ `
         }
         nextToken
       }
+      messageReplies {
+        items {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       coachingTriad {
         items {
           id
@@ -8916,6 +9915,21 @@ export const onDeleteUser = /* GraphQL */ `
           recipients
           userId
           messageRoomID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messageReplies {
+        items {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          parentReplyId
           createdAt
           updatedAt
         }

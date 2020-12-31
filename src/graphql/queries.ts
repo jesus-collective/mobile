@@ -241,6 +241,9 @@ export const getGroup = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        messageReplies {
+          nextToken
+        }
         coachingTriad {
           nextToken
         }
@@ -790,6 +793,9 @@ export const getPayment = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        messageReplies {
+          nextToken
+        }
         coachingTriad {
           nextToken
         }
@@ -1175,6 +1181,9 @@ export const getCourseBackOfficeStaff = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        messageReplies {
+          nextToken
+        }
         coachingTriad {
           nextToken
         }
@@ -1365,6 +1374,9 @@ export const getCourseInstructors = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        messageReplies {
           nextToken
         }
         coachingTriad {
@@ -1559,6 +1571,9 @@ export const getCourseTriadCoaches = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        messageReplies {
+          nextToken
+        }
         coachingTriad {
           nextToken
         }
@@ -1744,6 +1759,9 @@ export const getCourseTriadUsers = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        messageReplies {
           nextToken
         }
         coachingTriad {
@@ -2111,6 +2129,9 @@ export const getDirectMessageUser = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        messageReplies {
+          nextToken
+        }
         coachingTriad {
           nextToken
         }
@@ -2360,6 +2381,9 @@ export const getDirectMessage = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        messageReplies {
+          nextToken
+        }
         coachingTriad {
           nextToken
         }
@@ -2560,6 +2584,21 @@ export const getMessage = /* GraphQL */ `
           updatedAt
         }
       }
+      replies {
+        items {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
       author {
@@ -2627,6 +2666,9 @@ export const getMessage = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        messageReplies {
           nextToken
         }
         coachingTriad {
@@ -2698,6 +2740,9 @@ export const listMessages = /* GraphQL */ `
           isSponsored
           createdAt
           updatedAt
+        }
+        replies {
+          nextToken
         }
         createdAt
         updatedAt
@@ -4186,6 +4231,9 @@ export const messagesByRoom = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        replies {
+          nextToken
+        }
         createdAt
         updatedAt
         author {
@@ -4415,6 +4463,9 @@ export const listUsers = /* GraphQL */ `
         directMessages {
           nextToken
         }
+        messageReplies {
+          nextToken
+        }
         coachingTriad {
           nextToken
         }
@@ -4579,6 +4630,21 @@ export const getUser = /* GraphQL */ `
         }
         nextToken
       }
+      messageReplies {
+        items {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       coachingTriad {
         items {
           id
@@ -4726,6 +4792,9 @@ export const searchUsers = /* GraphQL */ `
           nextToken
         }
         directMessages {
+          nextToken
+        }
+        messageReplies {
           nextToken
         }
         coachingTriad {

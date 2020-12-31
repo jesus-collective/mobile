@@ -102,7 +102,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-jc-mobile-beta-155138-deployment",
-          "S3Key": "amplify-builds/jcmobilePostConfirmation-2b2b484e326d58785930-build.zip"
+          "S3Key": "amplify-builds/jcmobilePostConfirmation-4633437a616f5434666f-build.zip"
         },
         "Layers": []
       }
