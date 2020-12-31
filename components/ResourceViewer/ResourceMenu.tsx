@@ -94,7 +94,7 @@ class ResourceMenu extends JCComponent<Props> {
               {resourceState.resourceData?.menuItems?.items?.map((item, index: number) => {
                 if (item != null)
                   return item.type == ResourceMenuItemType.break ? (
-                    <>
+                    <View key={index}>
                       <View
                         style={{ flexDirection: "row", borderBottomWidth: 1, width: 100 }}
                       ></View>
@@ -108,9 +108,9 @@ class ResourceMenu extends JCComponent<Props> {
                           <Ionicons name="ios-close" style={this.headerStyles.style.icon} />
                         </Button>
                       )}
-                    </>
+                    </View>
                   ) : (
-                    <View style={{ flexDirection: "row", height: 32 }}>
+                    <View key={index} style={{ flexDirection: "row", height: 32 }}>
                       {item.depth == "2" && <View style={{ width: 10 }} />}
                       <EditableButton
                         onDelete={() => resourceActions.deleteMenuItem(index)}

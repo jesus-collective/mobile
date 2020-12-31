@@ -23,6 +23,7 @@ import {
   PageItemIndex,
   UpdateResourceMenuItemMutationResult,
 } from "src/types"
+import { v4 as uuidv4 } from "uuid"
 import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/UserContext"
 import {
   CreateGroupInput,
@@ -33,6 +34,8 @@ import {
   CreateResourceSeriesInput,
   ResourceMenuItemType,
   ResourcePageItemInput,
+  ResourcePageItemStyle,
+  ResourcePageItemType,
   UserGroupType,
 } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
@@ -515,6 +518,15 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         readGroups: [UserGroupType.verifiedUsers],
         resourceRootID: this.state.resourceData.id,
         order: (this.state.resourceData?.menuItems.items.length + 1).toString(),
+        pageItems: [
+          { id: uuidv4(), type: ResourcePageItemType.Header },
+          {
+            id: uuidv4(),
+            type: ResourcePageItemType.Column,
+            style: ResourcePageItemStyle.Column3070,
+            pageItemsLeft: [{ id: uuidv4(), type: ResourcePageItemType.Menu }],
+          },
+        ],
       }
       try {
         console.log("Creating Resource")
