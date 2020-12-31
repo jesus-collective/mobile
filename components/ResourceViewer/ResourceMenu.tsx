@@ -94,7 +94,21 @@ class ResourceMenu extends JCComponent<Props> {
               {resourceState.resourceData?.menuItems?.items?.map((item, index: number) => {
                 if (item != null)
                   return item.type == ResourceMenuItemType.break ? (
-                    <View style={{ flexDirection: "row", borderBottomWidth: 1, width: 100 }}></View>
+                    <>
+                      <View
+                        style={{ flexDirection: "row", borderBottomWidth: 1, width: 100 }}
+                      ></View>
+                      {resourceState.isEditable && (
+                        <Button
+                          transparent
+                          onPress={async () => {
+                            await resourceActions.deleteMenuItem(index)
+                          }}
+                        >
+                          <Ionicons name="ios-close" style={this.headerStyles.style.icon} />
+                        </Button>
+                      )}
+                    </>
                   ) : (
                     <View style={{ flexDirection: "row", height: 32 }}>
                       {item.depth == "2" && <View style={{ width: 10 }} />}
@@ -112,31 +126,46 @@ class ResourceMenu extends JCComponent<Props> {
                         value={item.menuTitle ?? ""}
                       ></EditableButton>
                       {resourceState.isEditable ? (
-                        item.depth == "1" ? (
-                          <Button
-                            transparent
-                            onPress={async () => {
-                              await resourceActions.updateMenuItem(index, "depth", "2")
-                            }}
-                          >
-                            <Ionicons
-                              name="ios-arrow-round-forward"
-                              style={this.headerStyles.style.icon}
-                            />
-                          </Button>
-                        ) : (
-                          <Button
-                            transparent
-                            onPress={async () => {
-                              await resourceActions.updateMenuItem(index, "depth", "1")
-                            }}
-                          >
-                            <Ionicons
-                              name="ios-arrow-round-back"
-                              style={this.headerStyles.style.icon}
-                            />
-                          </Button>
-                        )
+                        <>
+                          {item.depth == "1" || item.depth == null ? (
+                            <Button
+                              transparent
+                              onPress={async () => {
+                                await resourceActions.updateMenuItem(index, "depth", "2")
+                              }}
+                            >
+                              <Ionicons
+                                name="ios-arrow-round-forward"
+                                style={this.headerStyles.style.icon}
+                              />
+                            </Button>
+                          ) : (
+                            <Button
+                              transparent
+                              onPress={async () => {
+                                await resourceActions.updateMenuItem(index, "depth", "1")
+                              }}
+                            >
+                              <Ionicons
+                                name="ios-arrow-round-back"
+                                style={this.headerStyles.style.icon}
+                              />
+                            </Button>
+                          )}
+                          {index >= 1 && (
+                            <Button
+                              transparent
+                              onPress={async () => {
+                                await resourceActions.moveMenuItemUp(index)
+                              }}
+                            >
+                              <Ionicons
+                                name="ios-arrow-round-up"
+                                style={this.headerStyles.style.icon}
+                              />
+                            </Button>
+                          )}
+                        </>
                       ) : null}
                     </View>
                   )

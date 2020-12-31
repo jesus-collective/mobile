@@ -83,6 +83,7 @@ export type ResourceActions = {
     episodeIndex: number | null
   ): any
   getMenuItem(menuIndex: number | null): any
+  moveMenuItemUp(index: number): void
 }
 type ResourceContextType = {
   resourceActions: ResourceActions
@@ -93,7 +94,7 @@ export const ResourceContext = React.createContext<ResourceContextType>({
     createPageItem: async () => {},
     updatePageItem: async () => {},
     deletePageItem: async () => {},
-
+    moveMenuItemUp: async () => {},
     createMenuItem: async () => {},
     changeMenuItem: () => {},
     updateMenuItem: async () => {},

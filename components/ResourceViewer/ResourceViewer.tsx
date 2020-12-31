@@ -903,6 +903,35 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       console.log(e)
     }
   }
+  reorderMenu() {
+    const temp = this.state.resourceData
+    if (temp && temp.menuItems && temp.menuItems.items) {
+      console.log(temp.menuItems.items)
+      temp.menuItems.items = temp?.menuItems.items.sort((a, b) => {
+        return (a?.order ?? "0").localeCompare(b?.order ?? "0")
+      })
+      console.log(temp.menuItems.items)
+    }
+    this.setState({ resourceData: temp })
+  }
+  moveMenuItemUp = async (index: number): Promise<void> => {
+    try {
+      await this.updateMenuItem(index - 1, "order", index.toString())
+      await this.updateMenuItem(index, "order", (index - 1).toString())
+      this.reorderMenu()
+    } catch (e) {
+      console.log(e)
+    }
+  }
+  updateMenuItemOrder = (): void => {
+    try {
+      this.state.resourceData?.menuItems?.items?.forEach((item, index: number) => {
+        this.updateMenuItem(index, "order", index)
+      })
+    } catch (e) {
+      console.log(e)
+    }
+  }
   updateResourceOrder = (): void => {
     try {
       this.state.resourceData?.resources.items.forEach((item, index: number) => {
@@ -933,7 +962,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         console.log(deleteMenuItem)
         const temp = this.state.resourceData
         temp.menuItems.items.splice(menuItemIndex, 1)
-        this.setState({ resourceData: temp }, this.updateResourceOrder)
+        this.setState({ resourceData: temp }, this.updateMenuItemOrder)
       }
     } catch (e) {
       console.log(e)
@@ -1214,6 +1243,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
               getSeries: this.getSeries,
               getEpisode: this.getEpisode,
               getMenuItem: this.getMenuItem,
+              moveMenuItemUp: this.moveMenuItemUp,
             },
           }}
         >
