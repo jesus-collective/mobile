@@ -367,6 +367,7 @@ type User
   groups: [GroupMember] @connection(name: "UserMembers", keyField: "userID")
   messages: [Message] @connection(name: "UserMessages", keyField: "userId", sortField: "when")
   directMessages: [DirectMessage] @connection(keyName: "dmsByUser", fields: ["id"])
+  messageReplies: [Reply] @connection(keyName: "repliesByUser", fields: ["id"])
   
   coachingTriad:[CourseTriadCoaches] @connection(name:"courseCoachTriad",keyField: "userID")
   userTriad:[CourseTriadUsers] @connection(name:"courseUserTriad",keyField: "userID")
@@ -784,7 +785,35 @@ type Message
   author: User @connection(name: "UserMessages", keyField: "userId")
 #  authorOrg: Organization @connection(fields: ["authorOrgId"])
   room: Group @connection(name: "RoomMessages", keyField: "roomId")
+  replies: [Reply] @connection(keyName: "repliesByMessage", fields: ["id"])
 }
+
+type Reply @model(queries: null)
+  @key(name: "repliesByMessage", fields: ["messageId", "when"])
+  @key(name: "subRepliesByReply", fields: ["parentReplyId", "when"])
+  @key(name: "repliesByUser", fields: ["userId"])
+  @auth(rules: [
+      { allow: owner, ownerField: "userId", operations: [create, update, delete] },
+      { allow: private, operations: [read] }
+  ]) {
+    id: ID!
+    content: String!
+    when: String!
+    attachment: String
+    attachmentName: String
+    userId: ID!
+    author: User @connection(fields: ["userId"])
+
+    # reply to top-level message
+    messageId: ID!
+    parentMessage: Message @connection(fields: ["messageId"])
+
+    # replies to reply (recursive definition)
+    parentReplyId: ID!
+    parentReply: Reply @connection(fields: ["parentReplyId"])
+    subReplies: [Reply] @connection(keyName: "subRepliesByReply", fields: ["id"])
+  }
+
 type Subscription {
   onCreateMessageByRoomId(roomId: ID!): Message
     @aws_subscribe(mutations: ["createMessage"])
