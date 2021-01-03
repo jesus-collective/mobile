@@ -927,6 +927,12 @@ const resourceStyles = EStyleSheet.create({
     resourceHeaderAgeGroupBox: {
       width: "35%",
     },
+    resourceGridContainer: {
+      flexDirection: "row",
+    },
+    resourcesRichTextContainer: {
+      width: '90%',
+    },
   },
   "@media (min-width: 769) and (max-width: 1024)": {
     resourcefileFieldWrapper: {
