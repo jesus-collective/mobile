@@ -923,13 +923,14 @@ const resourceStyles = EStyleSheet.create({
   },
   "@media (min-width: 769) and (max-width: 1024)": {
     resourcefileFieldWrapper: {
-      top: "7vw",
+      top: "26vw",
+      height: 150,
     },
     fontResourceHeaderBold: {
-      fontSize: 75,
+      fontSize: 62,
       width: 700,
-      height: 80,
-      paddingTop: 20,
+      height: 70,
+      paddingTop: 10,
     },
   },
   "@media (min-width: 769px) and (max-width: 1279px)": {
