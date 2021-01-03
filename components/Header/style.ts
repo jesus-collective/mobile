@@ -90,9 +90,14 @@ export default class HeaderStyles {
                 fontWeight: 'normal',
                 marginLeft: "11rem",
 
+                '@media (min-width: 769) and (max-width: 1024)': {
+                    marginLeft: "8rem",
+                },
+
                 '@media only screen and (max-width: 600px)': {
                     display: "none",
                 },
+                
             },
             dropdownText: {
                 fontFamily: 'Graphik-Regular-App',
