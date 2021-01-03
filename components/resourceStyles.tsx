@@ -943,7 +943,7 @@ const resourceStyles = EStyleSheet.create({
       flexDirection: 'row'
     },
     resourcesRichTextContainer: {
-      width: '87%',
+      width: '90%',
     },
   },
   "@media (min-width: 769px) and (max-width: 1279px)": {
