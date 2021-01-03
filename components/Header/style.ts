@@ -94,6 +94,10 @@ export default class HeaderStyles {
                     marginLeft: "8rem",
                 },
 
+                '@media (min-width: 350) and (max-width: 768)': {
+                    marginLeft: "2.5rem",
+                },
+
                 '@media only screen and (max-width: 600px)': {
                     display: "none",
                 },
