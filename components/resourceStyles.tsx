@@ -564,7 +564,7 @@ const resourceStyles = EStyleSheet.create({
     position: "relative",
     width: "100%",
     height: "100%",
-    borderRadius: 8,
+    borderRadius: 0,
   },
   resourcesSubMenu: {
     flex: 1,
@@ -759,7 +759,7 @@ const resourceStyles = EStyleSheet.create({
           marginRight: 36,
           marginTop: 0,
           marginLeft: 0,
-          marginBottom: 0,
+          marginBottom: 36,
         }
         : {
           height: 463,
@@ -779,11 +779,18 @@ const resourceStyles = EStyleSheet.create({
           marginLeft: 0,
           marginBottom: 0,
         },
+    resourceGridContainer: {
+      overflow: "scroll",
+    },
+    resourcesRichTextContainer: {
+      width: '80%',
+    },
 
   "@media (min-width: 350) and (max-width: 768)": {
     resourcefileFieldWrapper: {
-      top: "10vw",
-      width: "100%",
+      top: "30vw",
+      width: "90%",
+      height: 110,
     },
     resourceContentLeftContainer: {
       flexDirection: "column",
@@ -909,10 +916,10 @@ const resourceStyles = EStyleSheet.create({
       marginRight: 15,
     },
     fontResourceHeaderBold: {
-      fontSize: 70,
+      fontSize: 50,
       width: 650,
-      height: 80,
-      paddingTop: 20,
+      height: 50,
+      paddingTop: 0,
     },
     fontResourceHeaderDescription: {
       width: "75%",
@@ -920,16 +927,30 @@ const resourceStyles = EStyleSheet.create({
     resourceHeaderAgeGroupBox: {
       width: "35%",
     },
+    resourceGridContainer: {
+      flexDirection: "row",
+    },
+    resourcesRichTextContainer: {
+      width: '90%',
+    },
   },
   "@media (min-width: 769) and (max-width: 1024)": {
     resourcefileFieldWrapper: {
-      top: "7vw",
+      top: "26vw",
+      height: 150,
     },
     fontResourceHeaderBold: {
-      fontSize: 75,
+      fontSize: 62,
       width: 700,
-      height: 80,
-      paddingTop: 20,
+      height: 70,
+      paddingTop: 5,
+      marginBottom: 0,
+    },
+    resourceGridContainer: {
+      flexDirection: 'row'
+    },
+    resourcesRichTextContainer: {
+      width: '90%',
     },
   },
   "@media (min-width: 769px) and (max-width: 1279px)": {
@@ -955,7 +976,10 @@ const resourceStyles = EStyleSheet.create({
       flexWrap: "wrap",
     },
     resourcefileFieldWrapper: {
-      top: "17vw",
+      top: "61vw",
+      borderRadius: 0,
+      height: 164, 
+      width: '100%',
     },
     resourcesOverviewScreenMainContainer: {
       flexDirection: "column",
@@ -988,16 +1012,19 @@ const resourceStyles = EStyleSheet.create({
       top: 200,
     },
     fontResourceHeaderBold: {
-      fontSize: 50,
-      width: 300,
-      height: 140,
-      lineHeight: 60,
+      fontSize: 45,
+      lineHeight: 54,
+      paddingTop: 26,
+      height: 70,
     },
     fontResourceHeaderDescription: {
       height: 155,
     },
     resourceHeaderAgeGroupBox: {
       width: "70%",
+    },
+    resourceHeaderImgContainer: {
+      height: 229,
     },
   },
 })

@@ -88,11 +88,20 @@ export default class HeaderStyles {
                 fontSize: 14,
                 lineHeight: 21,
                 fontWeight: 'normal',
-                marginLeft: "6rem",
+                marginLeft: "11rem",
+
+                '@media (min-width: 769) and (max-width: 1024)': {
+                    marginLeft: "8rem",
+                },
+
+                '@media (min-width: 350) and (max-width: 768)': {
+                    marginLeft: "2.5rem",
+                },
 
                 '@media only screen and (max-width: 600px)': {
                     display: "none",
                 },
+                
             },
             dropdownText: {
                 fontFamily: 'Graphik-Regular-App',
