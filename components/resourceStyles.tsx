@@ -779,6 +779,12 @@ const resourceStyles = EStyleSheet.create({
           marginLeft: 0,
           marginBottom: 0,
         },
+    resourceGridContainer: {
+      overflow: "scroll",
+    },
+    resourcesRichTextContainer: {
+      width: '80%',
+    },
 
   "@media (min-width: 350) and (max-width: 768)": {
     resourcefileFieldWrapper: {
@@ -932,6 +938,9 @@ const resourceStyles = EStyleSheet.create({
       height: 70,
       paddingTop: 5,
       marginBottom: 0,
+    },
+    resourceGridContainer: {
+      flexDirection: 'row'
     },
   },
   "@media (min-width: 769px) and (max-width: 1279px)": {

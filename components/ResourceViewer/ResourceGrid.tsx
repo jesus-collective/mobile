@@ -130,7 +130,7 @@ class ResourceColumn extends JCComponent<Props, State> {
             {this.props.pageItem.title2}
           </Text>
         </View>
-        <View style={{ overflow: "scroll" }}>
+        <View style={this.styles.style.resourceGridContainer}>
           <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
             <ResourceCard
               resourceActions={this.props.resourceActions}
