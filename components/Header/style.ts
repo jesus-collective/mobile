@@ -88,7 +88,7 @@ export default class HeaderStyles {
                 fontSize: 14,
                 lineHeight: 21,
                 fontWeight: 'normal',
-                marginLeft: "6rem",
+                marginLeft: "11rem",
 
                 '@media only screen and (max-width: 600px)': {
                     display: "none",
