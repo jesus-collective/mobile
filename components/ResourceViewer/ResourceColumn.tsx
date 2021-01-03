@@ -9,7 +9,7 @@ import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import PageItemSettings from "./PageItemSettings"
 import ResourceContent from "./ResourceContent"
 import { ResourceContext } from "./ResourceContext"
-import { isTablet, isBrowser } from "react-device-detect"
+import { isTablet, isBrowser, isMobile } from "react-device-detect"
 
 Amplify.configure(awsconfig)
 
@@ -107,7 +107,7 @@ class ResourceColumn extends JCComponent<Props, State> {
           style={[
             {
               borderWidth: 1,
-              width: this.getRightColumnSize()
+              width: isMobile ? '100%' : this.getRightColumnSize(),
             },
             this.props.resourceState.isEditable && border,
           ]}

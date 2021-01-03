@@ -1026,6 +1026,22 @@ const resourceStyles = EStyleSheet.create({
     resourceHeaderImgContainer: {
       height: 229,
     },
+    resourceGroupCard: {
+      height: 487,
+      width: '90vw',
+      alignSelf: "center",
+      padding: "0%",
+      borderRadius: 8,
+      shadowOffset: { width: 0, height: 7 },
+      shadowColor: "rgba(0, 0, 0, 0.5)",
+      shadowRadius: 30,
+      borderStyle: "solid",
+      borderColor: "#FFFFFF",
+      marginRight: 21,
+      marginTop: 0,
+      marginLeft: 21,
+      marginBottom: 36,
+      },
   },
 })
 export default resourceStyles
