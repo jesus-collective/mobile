@@ -942,6 +942,9 @@ const resourceStyles = EStyleSheet.create({
     resourceGridContainer: {
       flexDirection: 'row'
     },
+    resourcesRichTextContainer: {
+      width: '87%',
+    },
   },
   "@media (min-width: 769px) and (max-width: 1279px)": {
     resourceContentMoreSeriesIframeContainer: {
