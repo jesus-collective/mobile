@@ -930,7 +930,8 @@ const resourceStyles = EStyleSheet.create({
       fontSize: 62,
       width: 700,
       height: 70,
-      paddingTop: 10,
+      paddingTop: 5,
+      marginBottom: 0,
     },
   },
   "@media (min-width: 769px) and (max-width: 1279px)": {
