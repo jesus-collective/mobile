@@ -902,7 +902,10 @@ enum ResourcePageItemStyle{
   RichTextBody1
   RichTextBody2
   RichTextBody3
-
+  GridManual
+  GridAuto
+  ListManual
+  ListAuto
 
 }
 type ResourcePageItem{

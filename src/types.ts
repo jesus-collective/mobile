@@ -1,6 +1,6 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types";
 import { ResourceActions, ResourceState } from "components/ResourceViewer/ResourceContext";
-import { CreateResourceMenuItemMutation, CreateResourceRootMutation, DeleteResourceMenuItemMutation, GetGroupQuery, GetResourceQuery, GetResourceRootQuery, GetResourceSeriesQuery, GetUserQuery, GroupMemberByUserQuery, ListResourceRootsQuery, ResourcePageItemInput, UpdateResourceMenuItemMutation } from "./API";
+import { CreateResourceMenuItemMutation, CreateResourceRootMutation, DeleteResourceMenuItemMutation, GetGroupQuery, GetResourceQuery, GetResourceRootQuery, GetResourceSeriesQuery, GetUserQuery, GroupMemberByUserQuery, ImageInput, ListResourceRootsQuery, ResourcePageItemInput, UpdateResourceMenuItemMutation } from "./API";
 
 type WithoutKeys<T> = Omit<T, keyof T>;
 
@@ -40,13 +40,17 @@ export type GetResourceRootData= NonNullable<GetResourceRootQuery>["getResourceR
 
 export type GetResourceRootDataCustom= NonNullable<GetResourceRootQuery>["getResourceRoot"] &{
   resources:
- {
-   items:[
-    {series:
-      {items:
-        [NonNullable<GetResourceSeriesQuery>["getResourceSeries"]]
+ {items:
+  [
+   {
+     series:
+    {items:
+        [
+          NonNullable<GetResourceSeriesQuery>["getResourceSeries"]
+        ]
       }
-    }
+    }|NonNullable<GetResourceQuery>["getResource"]
+    |{image:ImageInput}
    ]
 }
 }

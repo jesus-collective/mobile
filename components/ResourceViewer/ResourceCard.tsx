@@ -12,7 +12,7 @@ import { ResourceSetupProp } from "../../src/types"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import PageItemSettings from "./PageItemSettings"
 import { ResourceContext } from "./ResourceContext"
-
+import ResourceSelector from "./ResourceSelector"
 Amplify.configure(awsconfig)
 
 interface Props extends ResourceSetupProp {}
@@ -228,94 +228,7 @@ class ResourceCard extends JCComponent<Props, State> {
                   </View>
                 </>
               ) : (
-                <>
-                  <Picker
-                    mode="dropdown"
-                    style={{
-                      width: "100%",
-                      marginTop: 10,
-                      marginBottom: 30,
-                      fontSize: 16,
-                      height: 30,
-                      flexGrow: 0,
-                      paddingTop: 3,
-                      paddingBottom: 3,
-                    }}
-                    selectedValue={page.state.settings.resourceID ?? undefined}
-                    onValueChange={(value: any) => {
-                      const tmp = page.state.settings
-                      tmp.resourceID = value
-                      page.setState({ settings: tmp })
-                    }}
-                  >
-                    <Picker.Item key={"null"} label={"None"} value={null} />
-                    {resourceState.resourceData?.resources.items.map((org, index: number) => {
-                      return <Picker.Item key={index} label={org?.title ?? ""} value={index} />
-                    })}
-                  </Picker>
-                  {page.state.settings.resourceID != null &&
-                    page.state.settings.resourceID != undefined && (
-                      <Picker
-                        mode="dropdown"
-                        style={{
-                          width: "100%",
-                          marginTop: 10,
-                          marginBottom: 30,
-                          fontSize: 16,
-                          height: 30,
-                          flexGrow: 0,
-                          paddingTop: 3,
-                          paddingBottom: 3,
-                        }}
-                        selectedValue={page.state.settings.seriesID}
-                        onValueChange={(value: any) => {
-                          const tmp = page.state.settings
-                          tmp.seriesID = value
-                          page.setState({ settings: tmp })
-                        }}
-                      >
-                        <Picker.Item key={"null"} label={"None"} value={null} />
-                        {resourceState.resourceData?.resources.items[
-                          page.state.settings.resourceID
-                        ].series.items.map((org, index: number) => {
-                          return <Picker.Item key={index} label={org?.title ?? ""} value={index} />
-                        })}
-                      </Picker>
-                    )}
-                  {page.state.settings.resourceID != null &&
-                    page.state.settings.resourceID != undefined &&
-                    page.state.settings.seriesID != null &&
-                    page.state.settings.seriesID != undefined && (
-                      <Picker
-                        mode="dropdown"
-                        style={{
-                          width: "100%",
-                          marginTop: 10,
-                          marginBottom: 30,
-                          fontSize: 16,
-                          height: 30,
-                          flexGrow: 0,
-                          paddingTop: 3,
-                          paddingBottom: 3,
-                        }}
-                        selectedValue={page.state.settings.episodeID}
-                        onValueChange={(value: any) => {
-                          const tmp = page.state.settings
-                          tmp.episodeID = value
-                          page.setState({ settings: tmp })
-                        }}
-                      >
-                        <Picker.Item key={"null"} label={"None"} value={null} />
-                        {resourceActions
-                          .getSeries(page.state.settings.resourceID, page.state.settings.seriesID)
-                          .episodes.items.map((org, index: number) => {
-                            return (
-                              <Picker.Item key={index} label={org?.title ?? ""} value={index} />
-                            )
-                          })}
-                      </Picker>
-                    )}
-                </>
+                ResourceSelector.render(page, resourceState, resourceActions)
               )}
             </>
           )
@@ -343,7 +256,12 @@ class ResourceCard extends JCComponent<Props, State> {
                   ]}
                 >
                   <Image
-                    style={{ width: 425, height: 211, borderTopLeftRadius: 8, borderTopRightRadius: 8 }}
+                    style={{
+                      width: 425,
+                      height: 211,
+                      borderTopLeftRadius: 8,
+                      borderTopRightRadius: 8,
+                    }}
                     source={this.state.imageUrl}
                     onError={() => {
                       this.getImage(this.props.pageItem.image)
@@ -353,29 +271,97 @@ class ResourceCard extends JCComponent<Props, State> {
               ) : null}
             </CardItem>
 
-            <CardItem style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27, paddingBottom: 3 }}>
+            <CardItem
+              style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27, paddingBottom: 3 }}
+            >
               <EditableText
                 multiline={false}
-                textStyle={{ margin: 0, fontFamily: "Graphik-Bold-App", fontSize: 12, fontStyle: 'bold', fontWeight: 800, lineHeight: 18,letterSpacing: 0.5, textAlign: 'left', color: '#F0493E', textTransform: 'uppercase' }}
-                inputStyle={{ margin: 0, fontFamily: "Graphik-Bold-App", fontSize: 12, fontStyle: 'bold', fontWeight: 800, lineHeight: 18,letterSpacing: 0.5, textAlign: 'left', color: '#F0493E', textTransform: 'uppercase' }}
+                textStyle={{
+                  margin: 0,
+                  fontFamily: "Graphik-Bold-App",
+                  fontSize: 12,
+                  fontStyle: "bold",
+                  fontWeight: 800,
+                  lineHeight: 18,
+                  letterSpacing: 0.5,
+                  textAlign: "left",
+                  color: "#F0493E",
+                  textTransform: "uppercase",
+                }}
+                inputStyle={{
+                  margin: 0,
+                  fontFamily: "Graphik-Bold-App",
+                  fontSize: 12,
+                  fontStyle: "bold",
+                  fontWeight: 800,
+                  lineHeight: 18,
+                  letterSpacing: 0.5,
+                  textAlign: "left",
+                  color: "#F0493E",
+                  textTransform: "uppercase",
+                }}
                 value={this.props.pageItem.title1 ?? ""}
                 isEditable={false}
               ></EditableText>
             </CardItem>
-            <CardItem style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27, paddingBottom: 10 }}>
+            <CardItem
+              style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27, paddingBottom: 10 }}
+            >
               <EditableText
                 multiline={false}
-                textStyle={{ margin: 0, fontFamily: "Graphik-Bold-App", fontSize: 24,fontStyle: 'normal', fontWeight: 800, lineHeight: 36,letterSpacing: 0.5, textAlign: 'left', color: '#404040' }}
-                inputStyle={{ margin: 0, fontFamily: "Graphik-Bold-App", fontSize: 24,fontStyle: 'normal', fontWeight: 800, lineHeight: 36,letterSpacing: 0.5, textAlign: 'left', color: '#404040' }}
+                textStyle={{
+                  margin: 0,
+                  fontFamily: "Graphik-Bold-App",
+                  fontSize: 24,
+                  fontStyle: "normal",
+                  fontWeight: 800,
+                  lineHeight: 36,
+                  letterSpacing: 0.5,
+                  textAlign: "left",
+                  color: "#404040",
+                }}
+                inputStyle={{
+                  margin: 0,
+                  fontFamily: "Graphik-Bold-App",
+                  fontSize: 24,
+                  fontStyle: "normal",
+                  fontWeight: 800,
+                  lineHeight: 36,
+                  letterSpacing: 0.5,
+                  textAlign: "left",
+                  color: "#404040",
+                }}
                 value={this.props.pageItem.title2 ?? ""}
                 isEditable={false}
               ></EditableText>
             </CardItem>
-            <CardItem style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27, paddingBottom: 0 }}>
+            <CardItem
+              style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27, paddingBottom: 0 }}
+            >
               <EditableText
                 multiline={false}
-                textStyle={{ margin: 0, fontFamily: "Graphik-Regular-App", fontSize: 16,fontStyle: 'normal', fontWeight: 400, lineHeight: 24,letterSpacing: 0.5, textAlign: 'left', color: '#333333' }}
-                inputStyle={{ margin: 0, fontFamily: "Graphik-Regular-App", fontSize: 16,fontStyle: 'normal', fontWeight: 400, lineHeight: 24,letterSpacing: 0.5, textAlign: 'left', color: '#333333' }}
+                textStyle={{
+                  margin: 0,
+                  fontFamily: "Graphik-Regular-App",
+                  fontSize: 16,
+                  fontStyle: "normal",
+                  fontWeight: 400,
+                  lineHeight: 24,
+                  letterSpacing: 0.5,
+                  textAlign: "left",
+                  color: "#333333",
+                }}
+                inputStyle={{
+                  margin: 0,
+                  fontFamily: "Graphik-Regular-App",
+                  fontSize: 16,
+                  fontStyle: "normal",
+                  fontWeight: 400,
+                  lineHeight: 24,
+                  letterSpacing: 0.5,
+                  textAlign: "left",
+                  color: "#333333",
+                }}
                 value={this.props.pageItem.description1 ?? ""}
                 isEditable={false}
               ></EditableText>

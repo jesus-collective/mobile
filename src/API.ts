@@ -705,6 +705,10 @@ export enum ResourcePageItemStyle {
   RichTextBody1 = "RichTextBody1",
   RichTextBody2 = "RichTextBody2",
   RichTextBody3 = "RichTextBody3",
+  GridManual = "GridManual",
+  GridAuto = "GridAuto",
+  ListManual = "ListManual",
+  ListAuto = "ListAuto",
 }
 
 
