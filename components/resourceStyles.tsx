@@ -788,8 +788,9 @@ const resourceStyles = EStyleSheet.create({
 
   "@media (min-width: 350) and (max-width: 768)": {
     resourcefileFieldWrapper: {
-      top: "10vw",
-      width: "100%",
+      top: "30vw",
+      width: "90%",
+      height: 110,
     },
     resourceContentLeftContainer: {
       flexDirection: "column",
@@ -915,10 +916,10 @@ const resourceStyles = EStyleSheet.create({
       marginRight: 15,
     },
     fontResourceHeaderBold: {
-      fontSize: 70,
+      fontSize: 50,
       width: 650,
-      height: 80,
-      paddingTop: 20,
+      height: 50,
+      paddingTop: 0,
     },
     fontResourceHeaderDescription: {
       width: "75%",
