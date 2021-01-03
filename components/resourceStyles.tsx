@@ -759,7 +759,7 @@ const resourceStyles = EStyleSheet.create({
           marginRight: 36,
           marginTop: 0,
           marginLeft: 0,
-          marginBottom: 72,
+          marginBottom: 36,
         }
         : {
           height: 463,

@@ -98,7 +98,7 @@ class ResourceColumn extends JCComponent<Props, State> {
           delete={this.props.delete}
           pageItem={this.props.pageItem}
         ></PageItemSettings>
-        <View style={{ paddingBottom: 9, paddingTop: 50 }}>
+        <View style={{ paddingBottom: 9, paddingTop: 0 }}>
           <Text
             style={{
               fontFamily: "Graphik-Bold-App",
