@@ -1028,7 +1028,7 @@ const resourceStyles = EStyleSheet.create({
     },
     resourceGroupCard: {
       height: 487,
-      width: '90vw',
+      width: '87vw',
       alignSelf: "center",
       padding: "0%",
       borderRadius: 8,
