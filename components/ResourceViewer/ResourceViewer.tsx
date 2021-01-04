@@ -980,7 +980,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         })) as DeleteResourceMenuItemMutationResult
         console.log(deleteMenuItem)
         const temp = this.state.resourceData
-        temp.menuItems.items.splice(menuItemIndex, 1)
+        temp?.menuItems?.items?.splice(menuItemIndex, 1)
         this.setState({ resourceData: temp }, this.updateMenuItemOrder)
       }
     } catch (e) {
@@ -1168,7 +1168,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
   updateResourceImage = async (
     menuItemIndex: number,
     pageItemIndex: PageItemIndex,
-    e
+    e: any
   ): Promise<void> => {
     const file = e.target.files[0]
     const lastDot = file.name.lastIndexOf(".")
