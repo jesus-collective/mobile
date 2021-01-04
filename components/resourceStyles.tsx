@@ -785,6 +785,28 @@ const resourceStyles = EStyleSheet.create({
     resourcesRichTextContainer: {
       width: '80%',
     },
+    resourcesListText: {
+      fontFamily: "Graphik-Bold-App",
+      fontSize: 14,
+      fontStyle: "normal",
+      fontWeight: 800,
+      lineHeight: 21,
+      textTransform: "uppercase",
+      letterSpacing: 0.5,
+      textAlign: "left",
+      color: "#404040",
+    },
+    resourcesListText2: {
+      fontFamily: "Graphik-Bold-App",
+      fontSize: 14,
+      fontStyle: "normal",
+      fontWeight: 800,
+      lineHeight: 21,
+      textTransform: "uppercase",
+      letterSpacing: 0.5,
+      textAlign: "left",
+      color: "#404040",
+    },
 
   "@media (min-width: 350) and (max-width: 768)": {
     resourcefileFieldWrapper: {
@@ -1028,7 +1050,7 @@ const resourceStyles = EStyleSheet.create({
     },
     resourceGroupCard: {
       height: 487,
-      width: '90vw',
+      width: '87vw',
       alignSelf: "center",
       padding: "0%",
       borderRadius: 8,
@@ -1042,6 +1064,33 @@ const resourceStyles = EStyleSheet.create({
       marginLeft: 21,
       marginBottom: 36,
       },
+    resourceRichTextH1: {
+      marginLeft: 21,
+      },
+    resourceRichTextH2: {
+      marginLeft: 21,
+      },
+    resourceRichTextH3: {
+      marginLeft: 21,
+      },
+    resourceRichTextH4: {
+      marginLeft: 21,
+      },
+    resourceRichTextBody1: {
+      marginLeft: 21,
+      },
+    resourceRichTextBody2: {
+      marginLeft: 21,
+      },
+    resourceRichTextBody3: {
+      marginLeft: 21,
+      },
+    resourcesListText: {
+      marginLeft: 21,
+    },
+    resourcesListText2: {
+      marginLeft: 21,
+    },
   },
 })
 export default resourceStyles

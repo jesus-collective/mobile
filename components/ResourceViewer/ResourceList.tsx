@@ -438,32 +438,12 @@ class ResourceList extends JCComponent<Props, State> {
         ></PageItemSettings>
         <View style={{ paddingBottom: 9, paddingTop: 50 }}>
           <Text
-            style={{
-              fontFamily: "Graphik-Bold-App",
-              fontSize: 14,
-              fontStyle: "normal",
-              fontWeight: 800,
-              lineHeight: 21,
-              textTransform: "uppercase",
-              letterSpacing: 0.5,
-              textAlign: "left",
-              color: "#404040",
-            }}
+            style={this.styles.style.resourcesListText}
           >
             {this.props.pageItem.title1}
           </Text>
           <Text
-            style={{
-              fontFamily: "Graphik-Bold-App",
-              fontSize: 14,
-              fontStyle: "normal",
-              fontWeight: 800,
-              lineHeight: 21,
-              textTransform: "uppercase",
-              letterSpacing: 0.5,
-              textAlign: "left",
-              color: "#404040",
-            }}
+            style={this.styles.style.resourcesListText2}
           >
             {this.props.pageItem.title2}
           </Text>
