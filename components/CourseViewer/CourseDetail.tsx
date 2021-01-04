@@ -2,7 +2,7 @@
 import { useNavigation, useRoute } from "@react-navigation/native"
 import moment from "moment-timezone"
 import { Card, Container, Content, Icon, Picker, StyleProvider } from "native-base"
-import React, { lazy } from "react"
+import React from "react"
 import { Image, Text, TouchableOpacity } from "react-native"
 import getTheme from "../../native-base-theme/components"
 import CourseHeader from "../CourseHeader/CourseHeader"
@@ -16,14 +16,13 @@ import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import { CourseContext, CourseState } from "./CourseContext"
 import CourseDetailMenu from "./CourseDetailMenu"
 
-const MessageBoard = lazy(() => import("../MessageBoard/MessageBoard"))
-
 interface Props {
   navigation?: any
   route?: any
 }
 interface State extends JCState {
   triadSelection: number
+  showChat: boolean
 }
 class CourseDetailImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
@@ -31,6 +30,7 @@ class CourseDetailImpl extends JCComponent<Props, State> {
     this.state = {
       ...super.getInitialState(),
       triadSelection: 0,
+      showChat: false,
     }
   }
   static Consumer = CourseContext.Consumer
@@ -1004,6 +1004,7 @@ class CourseDetailImpl extends JCComponent<Props, State> {
       return null
     }
   }
+
   render(): React.ReactNode {
     console.log("CourseDetail")
     return (
@@ -1011,125 +1012,16 @@ class CourseDetailImpl extends JCComponent<Props, State> {
         {({ state, actions }) => {
           if (!state) return null
           const week = state.courseData?.courseWeeks.items[state.activeWeek]
-          const lesson = week?.lessons.items[state.activeLesson]
           return state.data && state.currentScreen == "Details" ? (
             <StyleProvider style={getTheme()}>
               <Container style={{ flex: 85 }}>
                 <CourseHeader groupData={state.data}></CourseHeader>
-                <CourseDetailMenu></CourseDetailMenu>
+                <CourseDetailMenu />
                 <Container style={{ flex: 80 }}>
                   <Content style={{ flex: 85 }}>
                     <Container style={this.styles.style.courseDetailMainContainer}>
                       {this.renderWeekDetails(state, actions, week)}
                       {this.renderLessonDetails(state, actions, week)}
-                      {!(lesson?.lessonType == "respond" || lesson?.lessonType == "assignment") ? (
-                        <Container style={this.styles.style.courseDetailRightContainer}>
-                          <Container style={this.styles.style.courseDetailButtonTrio}>
-                            <JCButton
-                              buttonType={
-                                state.activeMessageBoard == "cohort"
-                                  ? ButtonTypes.TransparentActivityCourse
-                                  : ButtonTypes.courseActivityTransparentRegularBlack
-                              }
-                              onPress={() => {
-                                actions.setActiveMessageBoard("cohort")
-                              }}
-                            >
-                              {" "}
-                              Learning Collective
-                            </JCButton>
-                            <JCButton
-                              buttonType={
-                                state.activeMessageBoard == "triad"
-                                  ? ButtonTypes.TransparentActivityCourse
-                                  : ButtonTypes.courseActivityTransparentRegularBlack
-                              }
-                              onPress={() => {
-                                actions.setActiveMessageBoard("triad")
-                              }}
-                            >
-                              Cohort
-                            </JCButton>
-                            {/*   <JCButton buttonType={state.activeMessageBoard == "instructor" ? ButtonTypes.TransparentActivityCourse : ButtonTypes.courseActivityTransparentRegularBlack} onPress={() => { actions.setActiveMessageBoard("instructor") }}>Facilitator</JCButton>*/}
-                          </Container>
-                          <Container style={this.styles.style.courseDetailMessageBoardContainer}>
-                            {state.activeMessageBoard == "cohort" ? (
-                              <MessageBoard style="mini" groupId={state.data.id}></MessageBoard>
-                            ) : null}
-                            {state.activeMessageBoard == "triad" ? (
-                              actions.myCourseGroups().completeTriad.length == 0 ? (
-                                <Text>You have not been added to a cohort</Text>
-                              ) : actions.myCourseGroups().completeTriad.length == 1 ? (
-                                <>
-                                  <MessageBoard
-                                    style="mini"
-                                    groupId={
-                                      state.data.id +
-                                      "-" +
-                                      actions.myCourseGroups().completeTriad[0].id
-                                    }
-                                  ></MessageBoard>
-                                </>
-                              ) : (
-                                <>
-                                  <Picker
-                                    onStartShouldSetResponder={() => true}
-                                    onMoveShouldSetResponderCapture={() => true}
-                                    onStartShouldSetResponderCapture={() => true}
-                                    onMoveShouldSetResponder={() => true}
-                                    mode="dropdown"
-                                    iosIcon={<Icon name="arrow-down" />}
-                                    style={{
-                                      width: "50%",
-                                      marginBottom: 0,
-                                      marginTop: 0,
-                                      fontSize: 16,
-                                      height: 30,
-                                      flexGrow: 0,
-                                      marginRight: 0,
-                                      borderColor: "#dddddd",
-                                    }}
-                                    placeholder="Triad"
-                                    placeholderStyle={{ color: "#bfc6ea" }}
-                                    placeholderIconColor="#007aff"
-                                    selectedValue={this.state.triadSelection}
-                                    onValueChange={(value: any) => {
-                                      this.setState({ triadSelection: value })
-                                    }}
-                                  >
-                                    {actions
-                                      .myCourseGroups()
-                                      .completeTriad?.map((item: any, index: any) => {
-                                        if (item) {
-                                          const name = item.triad
-                                            .map((item) => {
-                                              return item.given_name
-                                            })
-                                            .join(", ")
-                                          return (
-                                            <Picker.Item key={index} label={name} value={index} />
-                                          )
-                                        }
-                                      })}
-                                  </Picker>
-                                  <MessageBoard
-                                    style="mini"
-                                    groupId={
-                                      state.data.id +
-                                      "-" +
-                                      actions.myCourseGroups().completeTriad[
-                                        this.state.triadSelection
-                                      ]?.id
-                                    }
-                                  ></MessageBoard>
-                                </>
-                              )
-                            ) : null}
-
-                            {/*state.activeMessageBoard == "instructor" ? <MessageBoard style="mini" groupId={state.data.id}></MessageBoard> : null*/}
-                          </Container>
-                        </Container>
-                      ) : null}
                     </Container>
                   </Content>
                 </Container>

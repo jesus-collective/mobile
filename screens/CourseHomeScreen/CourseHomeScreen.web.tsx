@@ -2,10 +2,13 @@
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { convertToRaw, EditorState } from "draft-js"
 import moment from "moment-timezone"
-import { Container, StyleProvider } from "native-base"
+import { Container, Drawer, StyleProvider } from "native-base"
 import React from "react"
+import { Dimensions } from "react-native"
 import { CreateCourseLessonInput, CreateCourseTriadsInput, CreateCourseWeekInput } from "src/API"
 import CourseSidebar from "../../components/CourseSidebar/CourseSidebar"
+import ChatButton from "../../components/CourseViewer/ChatButton"
+import CourseChat from "../../components/CourseViewer/CourseChat"
 import CourseCoaching from "../../components/CourseViewer/CourseCoaching"
 import { CourseContext, CourseState } from "../../components/CourseViewer/CourseContext"
 import CourseDetail from "../../components/CourseViewer/CourseDetail"
@@ -41,6 +44,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       activeLesson: null,
       activeMessageBoard: "cohort",
       activeCourseActivity: "today",
+      showChat: false,
     }
     Auth.currentAuthenticatedUser().then((user: any) => {
       this.setState({ currentUser: user.username }, () => {
@@ -870,8 +874,10 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     }
   }
   render(): React.ReactNode {
-    //console.log(acc)
     console.log("CourseScreen")
+
+    const { width } = Dimensions.get("window")
+
     return this.state.data ? (
       <CourseHomeScreenImpl.Provider
         value={{
@@ -908,16 +914,38 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
             getLessonById: this.getLessonById,
             myCourseDates: this.myCourseDates,
             myCourseTodo: this.myCourseTodo,
+            setShowChat: () => this.setState({ showChat: !this.state.showChat }),
           },
         }}
       >
         <StyleProvider style={getTheme()}>
-          <Container style={this.styles.style.courseHomeScreenMainContainer}>
-            <CourseSidebar courseId={this.state.data.id}></CourseSidebar>
-            <CourseHome></CourseHome>
-            <CourseDetail></CourseDetail>
-            <CourseCoaching></CourseCoaching>
-          </Container>
+          <>
+            {this.state.currentScreen == "Details" && !this.state.showChat ? (
+              <ChatButton setShowChat={() => this.setState({ showChat: true })} />
+            ) : null}
+
+            <Drawer
+              content={<CourseChat />}
+              open={this.state.showChat}
+              openDrawerOffset={width - 563}
+              side="right"
+              styles={{}}
+              tweenHandler={undefined}
+              onClose={() => this.setState({ showChat: false })}
+            >
+              <Container
+                style={[
+                  this.styles.style.courseHomeScreenMainContainer,
+                  { opacity: this.state.showChat ? 0.5 : 1 },
+                ]}
+              >
+                <CourseSidebar courseId={this.state.data.id} />
+                <CourseHome />
+                <CourseDetail />
+                <CourseCoaching />
+              </Container>
+            </Drawer>
+          </>
         </StyleProvider>
       </CourseHomeScreenImpl.Provider>
     ) : null

@@ -1,139 +1,133 @@
 .customWrapper {
-    background-color: #ffffff;
-    font-family: 'Graphik-Regular-App';
-    border-radius: 10px;
-    border: 1px;
-    width: 100%;
-
+  background-color: #ffffff;
+  font-family: "Graphik-Regular-App";
+  border-radius: 10px;
+  border: 1px;
+  width: 100%;
 }
 
 .customWrapperSendmessage {
-    position: relative;
-    background-color: #eeeeee;
-    font-family: 'Graphik-Regular-App';
-    border-radius: 10px;
-    border: 1px;
-    margin-left: 10px;
-    height: unset;
-    width: 90%;
-    left: 50px;
-    /* top: 0px; */
-    margin-left: 30px;
-    /* margin-top: 30px; */
-    /* margin-bottom: 30px; */
-    bottom: 50px;
+  position: relative;
+  background-color: #eeeeee;
+  font-family: "Graphik-Regular-App";
+  border-radius: 10px;
+  border: 1px;
+  margin-left: 10px;
+  height: unset;
+  width: 90%;
+  left: 50px;
+  margin-left: 30px;
+  bottom: 50px;
 }
 
 .customWrapperSendmessageMini {
-    position: relative;
-    background-color: #eeeeee;
-    font-family: 'Graphik-Regular-App';
-    border-radius: 10px;
-    border: 1px;
-    margin-left: 0px;
-    margin-bottom: 80px;
-    height: unset;
-    width: 95%;
-    left: 0px;
-    top: 0px;
-    height: 205px;
+  background-color: #f9fafc;
+  font-family: "Graphik-Regular-App";
+  border-radius: 10px;
+  border: 1px;
+  padding: 5px 12px 5px 0;
+  margin-bottom: 12px;
+  height: 102px;
 }
 
 .customWrapperSendmessageCourse {
-    position: relative;
-    background-color: #eeeeee;
-    font-family: 'Graphik-Regular-App';
-    border-radius: 10px;
-    border: 1px;
-    margin-left: 10px;
-    height: unset;
-    width: 85%;
-    left: 50px;
-    margin-left: 30px;
-    bottom: 50px;
+  position: relative;
+  background-color: #eeeeee;
+  font-family: "Graphik-Regular-App";
+  border-radius: 10px;
+  border: 1px;
+  margin-left: 10px;
+  height: unset;
+  width: 85%;
+  left: 50px;
+  margin-left: 30px;
+  bottom: 50px;
 }
 
 .customToolbar {
-    background-color: #eeeeee;
-    font-family: 'Graphik-Regular-App';
-    border-radius: 10px;
-    border: 1px;
-    height: unset;
-    width: 90%;
-    padding-top: 10px;
-    padding-bottom: 2px;
+  background-color: #eeeeee;
+  font-family: "Graphik-Regular-App";
+  border-radius: 10px;
+  border: 1px;
+  height: unset;
+  width: 90%;
+  padding-top: 10px;
+  padding-bottom: 2px;
 }
 
 .customEditor {
-    height: unset;
-    padding-left: 0px;
-    padding-right: 10px;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    border-radius: 10px;
+  height: unset;
+  padding-left: 0px;
+  padding-right: 10px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  border-radius: 10px;
+  max-height: 100px;
 }
 
 .customEditorSendmessage {
-    position: relative;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    border: 2px;
-    border-style: solid;
-    border-color: #eeeeee;
-    background-color: #ffffff;
-    border-radius: 0 0 10px 10px;
-    min-height: 200px;
-    max-height: 500px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  border: 2px;
+  border-style: solid;
+  border-color: #f9fafc;
+  background-color: #f9fafc;
+}
+
+.no-toolbar {
+  border-radius: 10px;
+}
+
+.has-toolbar {
+  border-radius: 0 0 10px 10px;
 }
 
 .customEmojiModal {
-    height: 130px;
-    left: -95px;
+  height: 130px;
+  left: -95px;
 }
 
 .MuiFormControl-root {
-    width: 100%;
+  width: 100%;
 }
 
 @media screen and (max-width: 1024px) {
-    .customWrapperSendmessageCourse {
-        width: 77%;
-    }
-    .customWrapperSendmessage {
-        width: 88%;
-    }
+  .customWrapperSendmessageCourse {
+    width: 77%;
+  }
+  .customWrapperSendmessage {
+    width: 88%;
+  }
 }
 
 @media screen and (max-width: 768px) {
-    .customWrapperSendmessageCourse {
-        width: 81%;
-    }
+  .customWrapperSendmessageCourse {
+    width: 81%;
+  }
 
-    .customWrapperSendmessage {
-        width: 79%;
-    }
+  .customWrapperSendmessage {
+    width: 79%;
+  }
 }
 
 @media screen and (max-width: 480px) {
-    .MuiFormControl-root {
-        width: 100%;
-    }
-    .customWrapperSendmessageCourse {
-        width: 100%;
-        margin-left: 0px;
-        top: 30px;
-        left: 0px;
-    }
+  .MuiFormControl-root {
+    width: 100%;
+  }
+  .customWrapperSendmessageCourse {
+    width: 100%;
+    margin-left: 0px;
+    top: 30px;
+    left: 0px;
+  }
 
-    .customWrapperSendmessage {
-        width: 100%;
-        bottom: 0px;
-        left: 0px;
-        margin-left: 0px;
-        margin-top: 20px;
-
-
-    }
+  .customWrapperSendmessage {
+    width: 100%;
+    bottom: 0px;
+    left: 0px;
+    margin-left: 0px;
+    margin-top: 20px;
+  }
 }

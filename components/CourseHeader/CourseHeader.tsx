@@ -1,11 +1,11 @@
+import { useNavigation, useRoute } from "@react-navigation/native"
+import moment from "moment"
 import { Container } from "native-base"
 import React from "react"
 import { Text } from "react-native"
-
 import EditableText from "../Forms/EditableText"
-import moment from "moment"
 import JCComponent from "../JCComponent/JCComponent"
-import { useRoute, useNavigation } from "@react-navigation/native"
+
 interface Props {
   groupData: any
   navigation?: any
@@ -17,7 +17,6 @@ class CourseHeaderImpl extends JCComponent<Props> {
   }
 
   render(): React.ReactNode {
-    //const { navigate } = this.props.navigation;
     return this.props.groupData ? (
       <Container style={this.styles.style.courseHeaderContainer}>
         <Text style={this.styles.style.fontCourseHeaderTime}>

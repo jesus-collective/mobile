@@ -1,14 +1,12 @@
-import { Container, Button } from "native-base"
-
 import { DrawerActions, useNavigation, useRoute } from "@react-navigation/native"
-import HeaderStyles from "../CourseSidebar/style"
-
+import { Button, Container } from "native-base"
 import React from "react"
-import { Image, Text, Dimensions } from "react-native"
+import { Dimensions, Image, Text } from "react-native"
+import HeaderStyles from "../CourseSidebar/style"
+import { CourseContext } from "../CourseViewer/CourseContext"
+import JCButton, { ButtonTypes } from "../Forms/JCButton"
 //import AnimatedProgressWheel from 'react-native-progress-wheel';
 import JCComponent from "../JCComponent/JCComponent"
-import JCButton, { ButtonTypes } from "../Forms/JCButton"
-import { CourseContext } from "../CourseViewer/CourseContext"
 
 interface Props {
   navigation?: any
@@ -71,7 +69,6 @@ class CourseSidebarImpl extends JCComponent<Props> {
     })
   }
   render(): React.ReactNode {
-    //const { navigate } = this.props.navigation;
     return (
       <CourseSidebarImpl.Consumer>
         {({ state, actions }) => {
