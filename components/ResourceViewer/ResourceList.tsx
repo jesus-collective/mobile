@@ -437,16 +437,8 @@ class ResourceList extends JCComponent<Props, State> {
           pageItem={this.props.pageItem}
         ></PageItemSettings>
         <View style={{ paddingBottom: 9, paddingTop: 50 }}>
-          <Text
-            style={this.styles.style.resourcesListText}
-          >
-            {this.props.pageItem.title1}
-          </Text>
-          <Text
-            style={this.styles.style.resourcesListText2}
-          >
-            {this.props.pageItem.title2}
-          </Text>
+          <Text style={this.styles.style.resourcesListText}>{this.props.pageItem.title1}</Text>
+          <Text style={this.styles.style.resourcesListText2}>{this.props.pageItem.title2}</Text>
         </View>
         <View style={{ overflow: "scroll" }}>
           <View style={{ flexDirection: "row" }}>
