@@ -9,6 +9,7 @@ import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import PageItemSettings from "./PageItemSettings"
 import ResourceContent from "./ResourceContent"
 import { ResourceContext } from "./ResourceContext"
+import { isTablet, isBrowser, isMobile } from "react-device-detect"
 
 Amplify.configure(awsconfig)
 
@@ -83,7 +84,7 @@ class ResourceColumn extends JCComponent<Props, State> {
     return (
       <View
         style={[
-          { flexDirection: "row", zIndex: 5000 + this.props.pageItemIndex.length },
+          { flexDirection: isBrowser ? "row" : isTablet ? "row" : 'column', zIndex: 5000 + this.props.pageItemIndex.length },
           this.props.resourceState.isEditable && border,
         ]}
       >
@@ -106,7 +107,7 @@ class ResourceColumn extends JCComponent<Props, State> {
           style={[
             {
               borderWidth: 1,
-              width: this.getRightColumnSize()
+              width: isMobile ? '100%' : this.getRightColumnSize(),
             },
             this.props.resourceState.isEditable && border,
           ]}
