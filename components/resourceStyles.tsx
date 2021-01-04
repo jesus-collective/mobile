@@ -1042,6 +1042,27 @@ const resourceStyles = EStyleSheet.create({
       marginLeft: 21,
       marginBottom: 36,
       },
+    resourceRichTextH1: {
+      marginLeft: 21,
+      },
+    resourceRichTextH2: {
+      marginLeft: 21,
+      },
+    resourceRichTextH3: {
+      marginLeft: 21,
+      },
+    resourceRichTextH4: {
+      marginLeft: 21,
+      },
+    resourceRichTextBody1: {
+      marginLeft: 21,
+      },
+    resourceRichTextBody2: {
+      marginLeft: 21,
+      },
+    resourceRichTextBody3: {
+      marginLeft: 21,
+      },
   },
 })
 export default resourceStyles
