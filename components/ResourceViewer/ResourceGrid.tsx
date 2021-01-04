@@ -9,7 +9,7 @@ import { ResourceSetupProp } from "../../src/types"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import PageItemSettings from "./PageItemSettings"
 import ResourceCard from "./ResourceCard"
-import { ResourceContext } from "./ResourceContext"
+import { ResourceActions, ResourceContext } from "./ResourceContext"
 import ResourceSelector from "./ResourceSelector"
 
 Amplify.configure(awsconfig)
@@ -297,77 +297,98 @@ class ResourceGrid extends JCComponent<Props, State> {
       </>
     )
   }
-  renderEpisodes(items) {
-    return items.map((item) => {
-      if (item) {
-        const z: ResourcePageItemInput = {
-          id: item.id,
-          type: ResourcePageItemType.Card,
-          title1: item.title,
-          title2: item.subtitle,
-          style: ResourcePageItemStyle.CardManual,
-          description1: item.description,
-          image: item.image,
-        }
-        return (
-          <ResourceCard
-            resourceActions={this.props.resourceActions}
-            resourceState={this.props.resourceState}
-            pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-            pageItem={z}
-            hideEditButton={true}
-          ></ResourceCard>
-        )
-      } else return null
-    })
+  renderEpisodes(
+    resourceActions: ResourceActions,
+    resourceID: number | null | undefined,
+    seriesID: number | null | undefined
+  ) {
+    if (this.props.pageItem.episodeID == null || this.props.pageItem.episodeID == undefined) {
+      const resource = resourceActions.getResource(resourceID)
+      const series = resourceActions.getSeries(resourceID, seriesID)
+      const items = series?.episodes?.items
+      return items?.map((item) => {
+        if (item) {
+          const z: ResourcePageItemInput = {
+            id: item.id,
+            type: ResourcePageItemType.Card,
+            title1: item.title,
+            title2: item.subtitle,
+            style: ResourcePageItemStyle.CardManual,
+            description1: item.description,
+            image: item.image,
+            resourceID: resource.id,
+            seriesID: series.id,
+            episodeID: item.id,
+          }
+          return (
+            <ResourceCard
+              resourceActions={this.props.resourceActions}
+              resourceState={this.props.resourceState}
+              pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
+              pageItem={z}
+              hideEditButton={true}
+            ></ResourceCard>
+          )
+        } else return null
+      })
+    } else return null
   }
-  renderSeries(items) {
-    return items.map((item) => {
-      if (item) {
-        const z: ResourcePageItemInput = {
-          id: item.id,
-          type: ResourcePageItemType.Card,
-          title1: item.title,
-          title2: item.subtitle,
-          style: ResourcePageItemStyle.CardManual,
-          description1: item.description,
-          image: item.image,
-        }
-        return (
-          <ResourceCard
-            resourceActions={this.props.resourceActions}
-            resourceState={this.props.resourceState}
-            pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-            pageItem={z}
-            hideEditButton={true}
-          ></ResourceCard>
-        )
-      } else return null
-    })
+  renderSeries(resourceActions: ResourceActions, resourceID: number | null | undefined) {
+    if (this.props.pageItem.seriesID == null || this.props.pageItem.seriesID == undefined) {
+      const resource = resourceActions.getResource(resourceID)
+      const items = resource?.series?.items
+      return items?.map((item) => {
+        if (item) {
+          const z: ResourcePageItemInput = {
+            id: item.id,
+            type: ResourcePageItemType.Card,
+            title1: item.title,
+            title2: item.subtitle,
+            style: ResourcePageItemStyle.CardManual,
+            description1: item.description,
+            image: item.image,
+            resourceID: resource.id,
+            seriesID: item.id,
+          }
+          return (
+            <ResourceCard
+              resourceActions={this.props.resourceActions}
+              resourceState={this.props.resourceState}
+              pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
+              pageItem={z}
+              hideEditButton={true}
+            ></ResourceCard>
+          )
+        } else return null
+      })
+    } else return null
   }
   renderResources(items) {
-    return items.map((item) => {
-      if (item) {
-        const z: ResourcePageItemInput = {
-          id: item.id,
-          type: ResourcePageItemType.Card,
-          title1: item.title,
-          title2: item.subtitle,
-          style: ResourcePageItemStyle.CardManual,
-          description1: item.description,
-          image: item.image,
-        }
-        return (
-          <ResourceCard
-            resourceActions={this.props.resourceActions}
-            resourceState={this.props.resourceState}
-            pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-            pageItem={z}
-            hideEditButton={true}
-          ></ResourceCard>
-        )
-      } else return null
-    })
+    if (this.props.pageItem.resourceID == null || this.props.pageItem.resourceID == undefined) {
+      return items.map((item) => {
+        if (item) {
+          const z: ResourcePageItemInput = {
+            id: item.id,
+            type: ResourcePageItemType.Card,
+            title1: item.title,
+            title2: item.subtitle,
+            style: ResourcePageItemStyle.CardManual,
+            description1: item.description,
+            image: item.image,
+            resourceID: item.id,
+          }
+          return (
+            <ResourceCard
+              resourceActions={this.props.resourceActions}
+              resourceState={this.props.resourceState}
+              pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
+              pageItem={z}
+              hideEditButton={true}
+            ></ResourceCard>
+          )
+        } else return null
+      })
+    } else return null
   }
   renderAutoCards() {
     return (
@@ -375,19 +396,19 @@ class ResourceGrid extends JCComponent<Props, State> {
         {({ resourceState, resourceActions }) => {
           if (!resourceState) return null
           if (resourceState.currentResource == null) return null
-          if (this.props.pageItem.resourceID == null || this.props.pageItem.resourceID == undefined)
-            return this.renderResources(resourceState.resourceData?.resources.items)
-          if (this.props.pageItem.seriesID == null || this.props.pageItem.seriesID == undefined)
-            return this.renderSeries(
-              resourceActions.getResource(this.props.pageItem.resourceID).series.items
-            )
-          if (this.props.pageItem.episodeID == null || this.props.pageItem.episodeID == undefined)
-            return this.renderEpisodes(
-              resourceActions.getSeries(
+
+          return (
+            <>
+              {this.renderResources(resourceState.resourceData?.resources.items)}
+
+              {this.renderSeries(resourceActions, this.props.pageItem.resourceID)}
+              {this.renderEpisodes(
+                resourceActions,
                 this.props.pageItem.resourceID,
                 this.props.pageItem.seriesID
-              ).episodes.items
-            )
+              )}
+            </>
+          )
         }}
       </ResourceGrid.Consumer>
     )

@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons"
+import { useNavigation, useRoute } from "@react-navigation/native"
 import Amplify, { Auth, Storage } from "aws-amplify"
 import { Card, CardItem, View } from "native-base"
 import React from "react"
@@ -15,14 +16,17 @@ import { ResourceContext } from "./ResourceContext"
 import ResourceSelector from "./ResourceSelector"
 Amplify.configure(awsconfig)
 
-interface Props extends ResourceSetupProp {}
+interface Props extends ResourceSetupProp {
+  navigation?: any
+  route?: any
+}
 interface State extends JCState {
   imageUrl: any
   image: any
   fadeValue: any
   retry: number
 }
-class ResourceCard extends JCComponent<Props, State> {
+class ResourceCardImpl extends JCComponent<Props, State> {
   static Consumer = ResourceContext.Consumer
   constructor(props: Props) {
     super(props)
@@ -54,7 +58,7 @@ class ResourceCard extends JCComponent<Props, State> {
   }
   static renderAdmin(page: PageItemSettings): React.ReactNode {
     return (
-      <ResourceCard.Consumer>
+      <ResourceCardImpl.Consumer>
         {({ resourceState, resourceActions }) => {
           if (!resourceState) return null
           if (resourceState.currentResource == null) return null
@@ -233,7 +237,7 @@ class ResourceCard extends JCComponent<Props, State> {
             </>
           )
         }}
-      </ResourceCard.Consumer>
+      </ResourceCardImpl.Consumer>
     )
   }
 
@@ -242,7 +246,16 @@ class ResourceCard extends JCComponent<Props, State> {
       <>
         <TouchableOpacity
           onPress={() => {
-            window.location = this.props.pageItem.url ?? ""
+            if (this.props.pageItem.url) {
+              window.location = this.props.pageItem.url ?? ""
+            } else {
+              this.props.navigation.navigate("ResourceDisplayScreen", {
+                id: this.props.resourceState.groupData?.id,
+                resource: this.props.pageItem.resourceID,
+                series: this.props.pageItem.seriesID,
+                episode: this.props.pageItem.episodeID,
+              })
+            }
           }}
         >
           <Card style={this.styles.style.resourceGroupCard}>
@@ -382,7 +395,7 @@ class ResourceCard extends JCComponent<Props, State> {
   }
   renderAutoCard() {
     return (
-      <ResourceCard.Consumer>
+      <ResourceCardImpl.Consumer>
         {({ resourceState, resourceActions }) => {
           if (!resourceState) return null
           if (resourceState.currentResource == null) return null
@@ -402,69 +415,85 @@ class ResourceCard extends JCComponent<Props, State> {
           if (this.props.pageItem.resourceID != null && this.props.pageItem.resourceID != undefined)
             item = resourceActions.getResource(this.props.pageItem.resourceID)
           return (
-            <Card style={this.styles.style.resourceGroupCard}>
-              <CardItem>
-                {this.state.imageUrl ? (
-                  <Animated.View
-                    onLayout={this.fadeAnimation}
-                    style={[
-                      this.styles.style.resourceHeaderImgView,
-                      { opacity: this.state.fadeValue },
-                    ]}
-                  >
-                    <Image
-                      style={this.styles.style.resourceHeaderImg}
-                      source={this.state.imageUrl}
-                      onError={() => {
-                        this.getImage(this.props.pageItem.image)
-                      }}
-                    ></Image>
-                  </Animated.View>
-                ) : null}
-              </CardItem>
+            <TouchableOpacity
+              onPress={() => {
+                if (this.props.pageItem.url) {
+                  window.location = this.props.pageItem.url ?? ""
+                } else {
+                  console.log("NAVIGATE")
+                  this.props.navigation.navigate("ResourceDisplayScreen", {
+                    id: this.props.resourceState.groupData?.id,
+                    resource: this.props.pageItem.resourceID,
+                    series: this.props.pageItem.seriesID,
+                    episode: this.props.pageItem.episodeID,
+                  })
+                }
+              }}
+            >
+              <Card style={this.styles.style.resourceGroupCard}>
+                <CardItem>
+                  {this.state.imageUrl ? (
+                    <Animated.View
+                      onLayout={this.fadeAnimation}
+                      style={[
+                        this.styles.style.resourceHeaderImgView,
+                        { opacity: this.state.fadeValue },
+                      ]}
+                    >
+                      <Image
+                        style={this.styles.style.resourceHeaderImg}
+                        source={this.state.imageUrl}
+                        onError={() => {
+                          this.getImage(this.props.pageItem.image)
+                        }}
+                      ></Image>
+                    </Animated.View>
+                  ) : null}
+                </CardItem>
 
-              <CardItem>
-                <EditableText
-                  multiline={true}
-                  textStyle={{ margin: 10 }}
-                  inputStyle={{ margin: 10 }}
-                  value={this.props.pageItem.title1 ?? ""}
-                  isEditable={false}
-                ></EditableText>
-              </CardItem>
-              <CardItem>
-                <EditableText
-                  multiline={true}
-                  textStyle={{ margin: 10 }}
-                  inputStyle={{ margin: 10 }}
-                  value={this.props.pageItem.title2 ?? ""}
-                  isEditable={false}
-                ></EditableText>
-              </CardItem>
-              <CardItem>
-                <EditableText
-                  multiline={true}
-                  textStyle={{ margin: 10 }}
-                  inputStyle={{ margin: 10 }}
-                  value={this.props.pageItem.description1 ?? ""}
-                  isEditable={false}
-                ></EditableText>
-              </CardItem>
-              <CardItem>
-                <PageItemSettings
-                  resourceActions={this.props.resourceActions}
-                  resourceState={this.props.resourceState}
-                  pageItemIndex={this.props.pageItemIndex}
-                  save={this.props.save}
-                  delete={this.props.delete}
-                  pageItem={this.props.pageItem}
-                  hideEditButton={this.props.hideEditButton}
-                ></PageItemSettings>
-              </CardItem>
-            </Card>
+                <CardItem>
+                  <EditableText
+                    multiline={true}
+                    textStyle={{ margin: 10 }}
+                    inputStyle={{ margin: 10 }}
+                    value={this.props.pageItem.title1 ?? ""}
+                    isEditable={false}
+                  ></EditableText>
+                </CardItem>
+                <CardItem>
+                  <EditableText
+                    multiline={true}
+                    textStyle={{ margin: 10 }}
+                    inputStyle={{ margin: 10 }}
+                    value={this.props.pageItem.title2 ?? ""}
+                    isEditable={false}
+                  ></EditableText>
+                </CardItem>
+                <CardItem>
+                  <EditableText
+                    multiline={true}
+                    textStyle={{ margin: 10 }}
+                    inputStyle={{ margin: 10 }}
+                    value={this.props.pageItem.description1 ?? ""}
+                    isEditable={false}
+                  ></EditableText>
+                </CardItem>
+                <CardItem>
+                  <PageItemSettings
+                    resourceActions={this.props.resourceActions}
+                    resourceState={this.props.resourceState}
+                    pageItemIndex={this.props.pageItemIndex}
+                    save={this.props.save}
+                    delete={this.props.delete}
+                    pageItem={this.props.pageItem}
+                    hideEditButton={this.props.hideEditButton}
+                  ></PageItemSettings>
+                </CardItem>
+              </Card>
+            </TouchableOpacity>
           )
         }}
-      </ResourceCard.Consumer>
+      </ResourceCardImpl.Consumer>
     )
   }
   render(): React.ReactNode {
@@ -482,4 +511,9 @@ class ResourceCard extends JCComponent<Props, State> {
     )
   }
 }
-export default ResourceCard
+
+export default function ResourceCard(props: Props): JSX.Element {
+  const route = useRoute()
+  const navigation = useNavigation()
+  return <ResourceCardImpl {...props} navigation={navigation} route={route} />
+}

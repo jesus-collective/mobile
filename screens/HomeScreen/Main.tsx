@@ -34,6 +34,7 @@ const linking = {
               EventsScreen: "events",
               ResourceScreen: "resource",
               ResourceConfigureScreen: "resourceconfig/:id",
+              ResourceDisplayScreen: "resourcedisplay/:id",
               ResourcesScreen: "resources",
               OrganizationScreen: "organization",
               OrganizationsScreen: "organizations",

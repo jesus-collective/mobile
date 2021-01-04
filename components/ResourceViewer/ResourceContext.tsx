@@ -82,6 +82,14 @@ export type ResourceActions = {
     seriesIndex: number | null | undefined,
     episodeIndex: number | null
   ): any
+  getResourceByID(resourceID: string | null | undefined): any
+  getSeriesByID(resourceID: string | null | undefined, seriesID: string | null): any
+  getEpisodeByID(
+    resourceID: string | null | undefined,
+    seriesID: string | null | undefined,
+    episodeID: string | null
+  ): any
+
   getMenuItem(menuIndex: number | null): any
   moveMenuItemUp(index: number): void
 }
@@ -129,6 +137,9 @@ export const ResourceContext = React.createContext<ResourceContextType>({
     getSeries: () => {},
     getEpisode: () => {},
     getMenuItem: () => {},
+    getResourceByID: () => {},
+    getSeriesByID: () => {},
+    getEpisodeByID: () => {},
   },
   resourceState: undefined,
 })

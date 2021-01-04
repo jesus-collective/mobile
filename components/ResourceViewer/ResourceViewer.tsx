@@ -56,7 +56,10 @@ interface Props {
   navigation?: any
   groupId?: any
   route?: any
-  showConfig?: boolean
+  showConfig?: "config" | "detail" | "regular"
+  displayResource?: string
+  displaySeries?: string
+  displayEpisode?: string
   userAction?: UserActions
   userState?: UserState
   // isEditable: boolean
@@ -683,6 +686,10 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
   }
   changeMenuItem = (index: number): void => {
     console.log({ changeResource: index })
+    this.props.navigation.navigate("ResourceScreen", {
+      create: false,
+      id: this.state.groupData?.id,
+    })
     this.setState({ currentMenuItem: index })
   }
   getMenuItem = (menuItemIndex: number | null) => {
@@ -1210,6 +1217,107 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         .catch((err) => console.log(err))
     }
   }
+  findResourceByID(resource: string | undefined): number | undefined {
+    console.log({ resource: resource })
+    if (resource == undefined) return undefined
+    return this.state.resourceData?.resources.items.map((item) => item?.id).indexOf(resource)
+  }
+  findSeriesByID(resource: string | undefined, series: string | undefined) {
+    const resourceID = this.findResourceByID(resource)
+    if (resource == undefined || resourceID == undefined) return undefined
+    if (series == undefined) return undefined
+    return this.state.resourceData?.resources.items[resourceID]?.series?.items
+      ?.map((item) => item?.id)
+      .indexOf(series)
+  }
+  findEpisodeByID(resource: string | undefined, series: string | undefined, episode: string) {
+    const resourceID = this.findResourceByID(resource)
+    const seriesID = this.findSeriesByID(resource, series)
+    if (resource == undefined || resourceID == undefined) return undefined
+    if (series == undefined || seriesID == undefined) return undefined
+    if (episode == undefined) return undefined
+    return this.state.resourceData?.resources.items[resourceID]?.series?.items[
+      seriesID
+    ].episodes.items
+      ?.map((item) => item?.id)
+      .indexOf(episode)
+  }
+  getResourceByID = (resourceID: string | undefined): any => {
+    return this.getResource(this.findResourceByID(resourceID))
+  }
+  getSeriesByID = (resourceID: string | undefined, seriesID: string | undefined): any => {
+    return this.getSeries(
+      this.findResourceByID(resourceID),
+      this.findSeriesByID(resourceID, seriesID)
+    )
+  }
+  getEpisodeByID = (
+    resourceID: string | undefined,
+    seriesID: string | undefined,
+    episodeID: string
+  ): any => {
+    return this.getEpisode(
+      this.findResourceByID(resourceID),
+      this.findSeriesByID(resourceID, seriesID),
+      this.findEpisodeByID(resourceID, seriesID, episodeID)
+    )
+  }
+  renderRouter() {
+    if (this.props.showConfig == "config") return <ResourceConfig></ResourceConfig>
+    else if (this.props.showConfig == "detail") {
+      return (
+        <ResourceContent
+          pageItemIndex={[]}
+          isBase={false}
+          pageItems={[
+            {
+              type: ResourcePageItemType.Column,
+              style: ResourcePageItemStyle.Column3070,
+              pageItemsLeft: [
+                {
+                  type: ResourcePageItemType.Menu,
+                  style: ResourcePageItemStyle.MenuLeft,
+                },
+              ],
+              pageItemsRight: [
+                {
+                  type: ResourcePageItemType.RichText,
+                },
+                {
+                  type: ResourcePageItemType.RichText,
+                },
+                {
+                  type: ResourcePageItemType.RichText,
+                },
+                {
+                  type: ResourcePageItemType.Grid,
+                  resourceID: this.findResourceByID(this.props.displayResource),
+                  seriesID: this.findSeriesByID(
+                    this.props.displayResource,
+                    this.props.displaySeries
+                  ),
+                  episodeID: this.findEpisodeByID(
+                    this.props.displayResource,
+                    this.props.displaySeries,
+                    this.props.displayEpisode
+                  ),
+                },
+              ],
+            },
+          ]}
+        ></ResourceContent>
+      )
+    } else
+      return this.state.currentResource == 0 ? (
+        <>
+          <ResourceContent pageItemIndex={[]} isBase={true}></ResourceContent>
+        </>
+      ) : (
+        <>
+          <ResourceContent pageItemIndex={[]} isBase={true}></ResourceContent>
+        </>
+      )
+  }
 
   render(): React.ReactNode {
     return this.state.resourceData != null ? (
@@ -1254,6 +1362,9 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
               getResource: this.getResource,
               getSeries: this.getSeries,
               getEpisode: this.getEpisode,
+              getResourceByID: this.getResourceByID,
+              getSeriesByID: this.getSeriesByID,
+              getEpisodeByID: this.getEpisodeByID,
               getMenuItem: this.getMenuItem,
               moveMenuItemUp: this.moveMenuItemUp,
             },
@@ -1261,19 +1372,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         >
           <Container style={{ padding: 0, margin: 0 }}>
             <ErrorBoundary>
-              <Content>
-                {this.props.showConfig ? (
-                  <ResourceConfig></ResourceConfig>
-                ) : this.state.currentResource == 0 ? (
-                  <>
-                    <ResourceContent pageItemIndex={[]} isBase={true}></ResourceContent>
-                  </>
-                ) : (
-                  <>
-                    <ResourceContent pageItemIndex={[]} isBase={true}></ResourceContent>
-                  </>
-                )}
-              </Content>
+              <Content>{this.renderRouter()}</Content>
             </ErrorBoundary>
           </Container>
         </ResourceViewerImpl.Provider>
