@@ -1,7 +1,7 @@
 import Amplify from "aws-amplify"
 import { Picker } from "native-base"
 import React from "react"
-import { Text, View } from "react-native"
+import { Text, View, ViewStyle } from "react-native"
 import EditableText from "../../components/Forms/EditableText"
 import { ResourcePageItemInput, ResourcePageItemStyle, ResourcePageItemType } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
@@ -299,14 +299,14 @@ class ResourceGrid extends JCComponent<Props, State> {
   }
   renderEpisodes(
     resourceActions: ResourceActions,
-    resourceID: number | null | undefined,
-    seriesID: number | null | undefined
+    resourceID: string | null | undefined,
+    seriesID: string | null | undefined
   ) {
     if (this.props.pageItem.episodeID == null || this.props.pageItem.episodeID == undefined) {
-      const resource = resourceActions.getResource(resourceID)
-      const series = resourceActions.getSeries(resourceID, seriesID)
+      const resource = resourceActions.getResourceByID(resourceID)
+      const series = resourceActions.getSeriesByID(resourceID, seriesID)
       const items = series?.episodes?.items
-      return items?.map((item) => {
+      return items?.map((item, index: number) => {
         if (item) {
           const z: ResourcePageItemInput = {
             id: item.id,
@@ -322,6 +322,7 @@ class ResourceGrid extends JCComponent<Props, State> {
           }
           return (
             <ResourceCard
+              key={index}
               resourceActions={this.props.resourceActions}
               resourceState={this.props.resourceState}
               pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
@@ -333,9 +334,9 @@ class ResourceGrid extends JCComponent<Props, State> {
       })
     } else return null
   }
-  renderSeries(resourceActions: ResourceActions, resourceID: number | null | undefined) {
+  renderSeries(resourceActions: ResourceActions, resourceID: string | null | undefined) {
     if (this.props.pageItem.seriesID == null || this.props.pageItem.seriesID == undefined) {
-      const resource = resourceActions.getResource(resourceID)
+      const resource = resourceActions.getResourceByID(resourceID)
       const items = resource?.series?.items
       return items?.map((item) => {
         if (item) {

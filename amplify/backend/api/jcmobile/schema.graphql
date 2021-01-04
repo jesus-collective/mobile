@@ -917,9 +917,9 @@ type ResourcePageItem{
   title2:String
   description1:String
   description2:String
-  resourceID:Int
-  seriesID:Int
-  episodeID:Int
+  resourceID:String
+  seriesID:String
+  episodeID:String
   color:String
   image:Image
   url:String

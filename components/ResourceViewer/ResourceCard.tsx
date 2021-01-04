@@ -26,7 +26,7 @@ interface State extends JCState {
   fadeValue: any
   retry: number
 }
-class ResourceCardImpl extends JCComponent<Props, State> {
+export class ResourceCardImpl extends JCComponent<Props, State> {
   static Consumer = ResourceContext.Consumer
   constructor(props: Props) {
     super(props)
@@ -37,6 +37,14 @@ class ResourceCardImpl extends JCComponent<Props, State> {
       fadeValue: new Animated.Value(0),
       retry: 5,
     }
+  }
+  componentDidMount() {
+    this.setState({
+      imageUrl: null,
+      image: null,
+      fadeValue: new Animated.Value(0),
+      retry: 5,
+    })
   }
   fadeAnimation = (): void => {
     Animated.timing(this.state.fadeValue, {

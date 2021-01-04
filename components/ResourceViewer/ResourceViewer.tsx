@@ -1230,7 +1230,11 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       ?.map((item) => item?.id)
       .indexOf(series)
   }
-  findEpisodeByID(resource: string | undefined, series: string | undefined, episode: string) {
+  findEpisodeByID(
+    resource: string | undefined,
+    series: string | undefined,
+    episode: string | undefined
+  ) {
     const resourceID = this.findResourceByID(resource)
     const seriesID = this.findSeriesByID(resource, series)
     if (resource == undefined || resourceID == undefined) return undefined

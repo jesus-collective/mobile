@@ -6,7 +6,7 @@ import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
 import JCComponent from "../../components/JCComponent/JCComponent"
 import { ResourcePageItemInput, ResourcePageItemType } from "../../src/API"
-import ResourceCard from "./ResourceCard"
+import { ResourceCardImpl } from "./ResourceCard"
 import ResourceColumn from "./ResourceColumn"
 import ResourceGrid from "./ResourceGrid"
 import ResourceHeader from "./ResourceHeader"
@@ -56,7 +56,7 @@ export default class PageItemSettings extends JCComponent<ResourceSetupProp, Sta
       case ResourcePageItemType.Column:
         return ResourceColumn.renderAdmin(this)
       case ResourcePageItemType.Card:
-        return ResourceCard.renderAdmin(this)
+        return ResourceCardImpl.renderAdmin(this)
       case ResourcePageItemType.List:
         return ResourceList.renderAdmin(this)
       case ResourcePageItemType.Grid:

@@ -72,7 +72,7 @@ class JCResourceConfigModalImpl extends JCComponent<Props, State> {
                 </Picker>
                 {resourceActions
                   .getMenuItem(resourceState.currentMenuItem)
-                  .readGroups?.map((item, index: number) => {
+                  .readGroups?.map((item: UserGroupType, index: number) => {
                     return (
                       <>
                         <Text>{item}</Text>

@@ -76,14 +76,14 @@ export type ResourceActions = {
   showProfile(id: string): void
   updateValueGroup(field: string, value: any): void
   getResource(resourceIndex: number | null | undefined): any
-  getSeries(resourceIndex: number | null | undefined, seriesIndex: number | null): any
+  getSeries(resourceIndex: number | null | undefined, seriesIndex: number | null | undefined): any
   getEpisode(
     resourceIndex: number | null | undefined,
     seriesIndex: number | null | undefined,
     episodeIndex: number | null
   ): any
-  getResourceByID(resourceID: string | null | undefined): any
-  getSeriesByID(resourceID: string | null | undefined, seriesID: string | null): any
+  getResourceByID(resourceID: string | undefined | null): any
+  getSeriesByID(resourceID: string | undefined | null, seriesID: string | undefined | null): any
   getEpisodeByID(
     resourceID: string | null | undefined,
     seriesID: string | null | undefined,
