@@ -1295,16 +1295,9 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
                 },
                 {
                   type: ResourcePageItemType.Grid,
-                  resourceID: this.findResourceByID(this.props.displayResource),
-                  seriesID: this.findSeriesByID(
-                    this.props.displayResource,
-                    this.props.displaySeries
-                  ),
-                  episodeID: this.findEpisodeByID(
-                    this.props.displayResource,
-                    this.props.displaySeries,
-                    this.props.displayEpisode
-                  ),
+                  resourceID: this.props.displayResource,
+                  seriesID: this.props.displaySeries,
+                  episodeID: this.props.displayEpisode,
                 },
               ],
             },

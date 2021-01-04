@@ -409,19 +409,19 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
           if (resourceState.currentResource == null) return null
           let item
           if (this.props.pageItem.episodeID != null && this.props.pageItem.episodeID != undefined)
-            item = resourceActions.getEpisode(
+            item = resourceActions.getEpisodeByID(
               this.props.pageItem.resourceID,
               this.props.pageItem.seriesID,
               this.props.pageItem.episodeID
             )
 
           if (this.props.pageItem.seriesID != null && this.props.pageItem.seriesID != undefined)
-            item = resourceActions.getSeries(
+            item = resourceActions.getSeriesByID(
               this.props.pageItem.resourceID,
               this.props.pageItem.seriesID
             )
           if (this.props.pageItem.resourceID != null && this.props.pageItem.resourceID != undefined)
-            item = resourceActions.getResource(this.props.pageItem.resourceID)
+            item = resourceActions.getResourceByID(this.props.pageItem.resourceID)
           return (
             <TouchableOpacity
               onPress={() => {

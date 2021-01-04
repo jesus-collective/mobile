@@ -192,18 +192,17 @@ class JCResourceConfigModalImpl extends JCComponent<Props> {
                 </Text>
                 <TouchableOpacity
                   onPress={() => {
-                    resourceActions.showProfile(
-                      resourceState.groupData.ownerUser
-                        ? resourceState.groupData.ownerUser.id
-                        : resourceState.currentUserProfile.id
-                    )
+                    if (resourceState.groupData?.owner)
+                      resourceActions.showProfile(resourceState.groupData?.owner)
+                    else if (resourceState.currentUserProfile?.id)
+                      resourceActions.showProfile(resourceState.currentUserProfile?.id)
                   }}
                 >
                   <ProfileImage
                     user={
-                      resourceState.groupData.ownerUser
-                        ? resourceState.groupData.ownerUser
-                        : resourceState.currentUserProfile
+                      resourceState.groupData?.owner
+                        ? resourceState.groupData.owner
+                        : resourceState.currentUserProfile?.id
                     }
                     size="small"
                   />
