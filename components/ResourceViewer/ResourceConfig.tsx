@@ -287,57 +287,59 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                   if (resourceState.resourceData == null) return null
                   if (resourceState.currentResource == null) return null
                   console.log("Uploading")
-                  const file = e.target.files[0]
-                  const lastDot = file.name.lastIndexOf(".")
-                  const ext = file.name.substring(lastDot + 1)
-                  const user = await Auth.currentCredentials()
-                  const userId = user.identityId
+                  if (e.target.files) {
+                    const file = e.target.files[0]
+                    const lastDot = file.name.lastIndexOf(".")
+                    const ext = file.name.substring(lastDot + 1)
+                    const user = await Auth.currentCredentials()
+                    const userId = user.identityId
 
-                  const fn =
-                    "resources/upload/group-" +
-                    resourceState.resourceData.id +
-                    "-resource-" +
-                    this.state.currentResource.id +
-                    "-" +
-                    new Date().getTime() +
-                    "-upload." +
-                    ext
-                  console.log({ filename: fn })
+                    const fn =
+                      "resources/upload/group-" +
+                      resourceState.resourceData.id +
+                      "-resource-" +
+                      this.state.currentResource.id +
+                      "-" +
+                      new Date().getTime() +
+                      "-upload." +
+                      ext
+                    console.log({ filename: fn })
 
-                  const fnSave = fn
-                    .replace("/upload", "")
-                    .replace("-upload.", "-[size].")
-                    .replace("." + ext, ".png")
+                    const fnSave = fn
+                      .replace("/upload", "")
+                      .replace("-upload.", "-[size].")
+                      .replace("." + ext, ".png")
 
-                  console.log("putting")
-                  await Storage.put(fn, file, {
-                    level: "protected",
-                    contentType: file.type,
-                    identityId: userId,
-                  })
-                    .then(() => {
-                      console.log("getting")
-                      return Storage.get(fn, {
-                        level: "protected",
-                        identityId: userId,
-                      }).then((result2) => {
-                        console.log({ fileInfo: result2 })
-                        let tmp = this.state.currentResource
-                        tmp.image = {
-                          userId: userId,
-                          filenameUpload: fn,
-                          filenameLarge: fnSave.replace("[size]", "large"),
-                          filenameMedium: fnSave.replace("[size]", "medium"),
-                          filenameSmall: fnSave.replace("[size]", "small"),
-                        }
-                        console.log({ settings: tmp })
-                        this.setState({ currentResource: tmp })
-                        //this.updatePageItem(menuItemIndex, pageItemIndex, tempPageItems)
-                      })
-
-                      // console.log(result)
+                    console.log("putting")
+                    await Storage.put(fn, file, {
+                      level: "protected",
+                      contentType: file.type,
+                      identityId: userId,
                     })
-                    .catch((err: any) => console.log(err))
+                      .then(() => {
+                        console.log("getting")
+                        return Storage.get(fn, {
+                          level: "protected",
+                          identityId: userId,
+                        }).then((result2) => {
+                          console.log({ fileInfo: result2 })
+                          let tmp = this.state.currentResource
+                          tmp.image = {
+                            userId: userId,
+                            filenameUpload: fn,
+                            filenameLarge: fnSave.replace("[size]", "large"),
+                            filenameMedium: fnSave.replace("[size]", "medium"),
+                            filenameSmall: fnSave.replace("[size]", "small"),
+                          }
+                          console.log({ settings: tmp })
+                          this.setState({ currentResource: tmp })
+                          //this.updatePageItem(menuItemIndex, pageItemIndex, tempPageItems)
+                        })
+
+                        // console.log(result)
+                      })
+                      .catch((err: any) => console.log(err))
+                  }
                 }}
               />
             </View>
@@ -469,59 +471,61 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                   if (resourceState.resourceData == null) return null
                   if (resourceState.currentResource == null) return null
                   console.log("Uploading")
-                  const file = e.target.files[0]
-                  const lastDot = file.name.lastIndexOf(".")
-                  const ext = file.name.substring(lastDot + 1)
-                  const user = await Auth.currentCredentials()
-                  const userId = user.identityId
+                  if (e.target.files) {
+                    const file = e.target.files[0]
+                    const lastDot = file.name.lastIndexOf(".")
+                    const ext = file.name.substring(lastDot + 1)
+                    const user = await Auth.currentCredentials()
+                    const userId = user.identityId
 
-                  const fn =
-                    "resources/upload/group-" +
-                    resourceState.resourceData.id +
-                    "-resource-" +
-                    this.state.currentResource.id +
-                    "-series-" +
-                    this.state.currentSeries.id +
-                    "-" +
-                    new Date().getTime() +
-                    "-upload." +
-                    ext
-                  console.log({ filename: fn })
+                    const fn =
+                      "resources/upload/group-" +
+                      resourceState.resourceData.id +
+                      "-resource-" +
+                      this.state.currentResource.id +
+                      "-series-" +
+                      this.state.currentSeries.id +
+                      "-" +
+                      new Date().getTime() +
+                      "-upload." +
+                      ext
+                    console.log({ filename: fn })
 
-                  const fnSave = fn
-                    .replace("/upload", "")
-                    .replace("-upload.", "-[size].")
-                    .replace("." + ext, ".png")
+                    const fnSave = fn
+                      .replace("/upload", "")
+                      .replace("-upload.", "-[size].")
+                      .replace("." + ext, ".png")
 
-                  console.log("putting")
-                  await Storage.put(fn, file, {
-                    level: "protected",
-                    contentType: file.type,
-                    identityId: userId,
-                  })
-                    .then(() => {
-                      console.log("getting")
-                      return Storage.get(fn, {
-                        level: "protected",
-                        identityId: userId,
-                      }).then((result2) => {
-                        console.log({ fileInfo: result2 })
-                        let tmp = this.state.currentSeries
-                        tmp.image = {
-                          userId: userId,
-                          filenameUpload: fn,
-                          filenameLarge: fnSave.replace("[size]", "large"),
-                          filenameMedium: fnSave.replace("[size]", "medium"),
-                          filenameSmall: fnSave.replace("[size]", "small"),
-                        }
-                        console.log({ settings: tmp })
-                        this.setState({ currentSeries: tmp })
-                        //this.updatePageItem(menuItemIndex, pageItemIndex, tempPageItems)
-                      })
-
-                      // console.log(result)
+                    console.log("putting")
+                    await Storage.put(fn, file, {
+                      level: "protected",
+                      contentType: file.type,
+                      identityId: userId,
                     })
-                    .catch((err: any) => console.log(err))
+                      .then(() => {
+                        console.log("getting")
+                        return Storage.get(fn, {
+                          level: "protected",
+                          identityId: userId,
+                        }).then((result2) => {
+                          console.log({ fileInfo: result2 })
+                          let tmp = this.state.currentSeries
+                          tmp.image = {
+                            userId: userId,
+                            filenameUpload: fn,
+                            filenameLarge: fnSave.replace("[size]", "large"),
+                            filenameMedium: fnSave.replace("[size]", "medium"),
+                            filenameSmall: fnSave.replace("[size]", "small"),
+                          }
+                          console.log({ settings: tmp })
+                          this.setState({ currentSeries: tmp })
+                          //this.updatePageItem(menuItemIndex, pageItemIndex, tempPageItems)
+                        })
+
+                        // console.log(result)
+                      })
+                      .catch((err: any) => console.log(err))
+                  }
                 }}
               />
             </View>
