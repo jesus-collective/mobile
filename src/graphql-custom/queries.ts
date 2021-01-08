@@ -1,14 +1,121 @@
+export const messagesByRoom = /* GraphQL */ `
+  query MessagesByRoom(
+    $roomId: ID
+    $when: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelMessageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    messagesByRoom(
+      roomId: $roomId
+      when: $when
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      nextToken
+      items {
+        attachment
+        attachmentName
+        author {
+          aboutMeLong
+          aboutMeShort
+          createdAt
+          currentRole
+          currentScope
+          denomination
+          email
+          family_name
+          given_name
+          hasPaidState
+          id
+          interests
+          joined
+          mainUserGroup
+          numberVolunteers
+          orgDescription
+          orgName
+          orgSize
+          orgType
+          owner
+          phone
+          personality
+          pplServed
+          primaryOrganization
+          profileState
+          stripeCustomerID
+          stripeSubscriptionID
+          sundayAttendance
+          updatedAt
+        }
+        content
+        createdAt
+        id
+        owner
+        postingAs
+        roomId
+        updatedAt
+        userId
+        when
+        replies {
+          items {
+            attachment
+            attachmentName
+            author {
+              aboutMeLong
+              aboutMeShort
+              createdAt
+              currentRole
+              currentScope
+              denomination
+              email
+              family_name
+              given_name
+              hasPaidState
+              id
+              interests
+              joined
+              mainUserGroup
+              numberVolunteers
+              orgDescription
+              orgName
+              orgSize
+              orgType
+              owner
+              personality
+              phone
+              pplServed
+              primaryOrganization
+              updatedAt
+              sundayAttendance
+              stripeCustomerID
+              stripeSubscriptionID
+              profileState
+            }
+            content
+            createdAt
+            id
+            messageId
+            parentReplyId
+            updatedAt
+            userId
+            when
+          }
+        }
+      }
+    }
+  }
+`
+
 export const listDirectMessageRooms = /* GraphQL */ `
   query ListDirectMessageRooms(
     $filter: ModelDirectMessageRoomFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listDirectMessageRooms(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
+    listDirectMessageRooms(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         name
@@ -45,7 +152,7 @@ export const listDirectMessageRooms = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getUserForGroupOrEvent = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
@@ -58,7 +165,7 @@ export const getUserForGroupOrEvent = /* GraphQL */ `
       mainUserGroup
       hasPaidState
       profileState
-      billingAddress{
+      billingAddress {
         city
         country
         line1
@@ -159,275 +266,270 @@ export const getUserForGroupOrEvent = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const getCourseInfoForOverview = /* GraphQL */ `
-query GetCourseInfo($id: ID!) {
-  getCourseInfo(id: $id) {
-    id
-    designedBy
-    summary
-    sylabusAttachmentName
-    sylabusAttachment
-    
-   
-    courseWeeks {
-      items {
-        id
-        week
-        date
-        tz
-        name
-        title
-        leader
-        lessons {
-          items {
-            id
-            lesson
-            lessonType
-            name
-            time
-            tz
-            duration 
-            createdAt
-            updatedAt
+  query GetCourseInfo($id: ID!) {
+    getCourseInfo(id: $id) {
+      id
+      designedBy
+      summary
+      sylabusAttachmentName
+      sylabusAttachment
+
+      courseWeeks {
+        items {
+          id
+          week
+          date
+          tz
+          name
+          title
+          leader
+          lessons {
+            items {
+              id
+              lesson
+              lessonType
+              name
+              time
+              tz
+              duration
+              createdAt
+              updatedAt
+            }
+            nextToken
           }
-          nextToken
+          createdAt
+          updatedAt
         }
-        createdAt
-        updatedAt
+        nextToken
       }
-      nextToken
+      subTitle
+      introduction
+      createdAt
+      updatedAt
     }
-    subTitle
-    introduction
-    createdAt
-    updatedAt
   }
-}
 `
 export const getCourseInfo = /* GraphQL */ `
-query GetCourseInfo($id: ID!) {
-  getCourseInfo(id: $id) {
-    id
-    designedBy
-    summary
-    sylabusAttachmentName
-    sylabusAttachment
-    backOfficeStaff 
-    {
-      items {
+  query GetCourseInfo($id: ID!) {
+    getCourseInfo(id: $id) {
+      id
+      designedBy
+      summary
+      sylabusAttachmentName
+      sylabusAttachment
+      backOfficeStaff {
+        items {
           id
           courseInfoID
           userID
           user {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        mainUserGroup
-        hasPaidState
-        profileState
-        billingAddress{
-          city
-          country
-          line1
-          line2
-          postal_code
-          state
-        }
-        location {
-          latitude
-          longitude
-          geocodeFull
-          geocodeCity
-          geocodeRegion
-          randomLatitude
-          randomLongitude
-        }
-        profileImage {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        denomination
-        pplServed
-        sundayAttendance
-        numberVolunteers
-        orgDescription
-        joined
-        primaryOrganization
-        organizations {
-          nextToken
-        }
-        owns {
-          nextToken
-        }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        directMessages {
-          nextToken
-        }
-        alertConfig {
-          emailDirectMessage
-          emailGroupMessage
-          emailEventMessage
-          emailOrgMessage
-          emailResourceMessage
-          emailCourseMessage
-          emailPromotions
-        }
-        createdAt
-        updatedAt
-      }
-            
-          
-          createdAt
-          updatedAt
-        }
-    }
-    instructors 
-    {
-      items {
-          id
-          courseInfoID
-          userID
-          user {
-        id
-        given_name
-        family_name
-        email
-        phone
-        owner
-        mainUserGroup
-        hasPaidState
-        profileState
-        billingAddress{
-          city
-          country
-          line1
-          line2
-          postal_code
-          state
-        }
-        location {
-          latitude
-          longitude
-          geocodeFull
-          geocodeCity
-          geocodeRegion
-          randomLatitude
-          randomLongitude
-        }
-        profileImage {
-          userId
-          filenameSmall
-          filenameMedium
-          filenameLarge
-          filenameUpload
-        }
-        aboutMeShort
-        aboutMeLong
-        interests
-        currentRole
-        currentScope
-        personality
-        orgName
-        orgType
-        orgSize
-        denomination
-        pplServed
-        sundayAttendance
-        numberVolunteers
-        orgDescription
-        joined
-        primaryOrganization
-        organizations {
-          nextToken
-        }
-        owns {
-          nextToken
-        }
-        groups {
-          nextToken
-        }
-        messages {
-          nextToken
-        }
-        directMessages {
-          nextToken
-        }
-        alertConfig {
-          emailDirectMessage
-          emailGroupMessage
-          emailEventMessage
-          emailOrgMessage
-          emailResourceMessage
-          emailCourseMessage
-          emailPromotions
-        }
-        createdAt
-        updatedAt
-      }
-            
-          
-          createdAt
-          updatedAt
-        }
-    }
-   
-    courseWeeks {
-      items {
-        id
-        week
-        date
-        tz
-        name
-        title
-        leader
-        lessons {
-          items {
             id
-            lesson
-            lessonType
-            wordCount
-            courseLessonResponseId
-            zoomUrl
-            zoomRecording
-            name
-            time
-            tz
-            duration 
-            description
+            given_name
+            family_name
+            email
+            phone
+            owner
+            mainUserGroup
+            hasPaidState
+            profileState
+            billingAddress {
+              city
+              country
+              line1
+              line2
+              postal_code
+              state
+            }
+            location {
+              latitude
+              longitude
+              geocodeFull
+              geocodeCity
+              geocodeRegion
+              randomLatitude
+              randomLongitude
+            }
+            profileImage {
+              userId
+              filenameSmall
+              filenameMedium
+              filenameLarge
+              filenameUpload
+            }
+            aboutMeShort
+            aboutMeLong
+            interests
+            currentRole
+            currentScope
+            personality
+            orgName
+            orgType
+            orgSize
+            denomination
+            pplServed
+            sundayAttendance
+            numberVolunteers
+            orgDescription
+            joined
+            primaryOrganization
+            organizations {
+              nextToken
+            }
+            owns {
+              nextToken
+            }
+            groups {
+              nextToken
+            }
+            messages {
+              nextToken
+            }
+            directMessages {
+              nextToken
+            }
+            alertConfig {
+              emailDirectMessage
+              emailGroupMessage
+              emailEventMessage
+              emailOrgMessage
+              emailResourceMessage
+              emailCourseMessage
+              emailPromotions
+            }
             createdAt
             updatedAt
           }
-          nextToken
+
+          createdAt
+          updatedAt
         }
-        createdAt
-        updatedAt
       }
-      nextToken
-    }
-    subTitle
-    introduction
-    triads {
+      instructors {
+        items {
+          id
+          courseInfoID
+          userID
+          user {
+            id
+            given_name
+            family_name
+            email
+            phone
+            owner
+            mainUserGroup
+            hasPaidState
+            profileState
+            billingAddress {
+              city
+              country
+              line1
+              line2
+              postal_code
+              state
+            }
+            location {
+              latitude
+              longitude
+              geocodeFull
+              geocodeCity
+              geocodeRegion
+              randomLatitude
+              randomLongitude
+            }
+            profileImage {
+              userId
+              filenameSmall
+              filenameMedium
+              filenameLarge
+              filenameUpload
+            }
+            aboutMeShort
+            aboutMeLong
+            interests
+            currentRole
+            currentScope
+            personality
+            orgName
+            orgType
+            orgSize
+            denomination
+            pplServed
+            sundayAttendance
+            numberVolunteers
+            orgDescription
+            joined
+            primaryOrganization
+            organizations {
+              nextToken
+            }
+            owns {
+              nextToken
+            }
+            groups {
+              nextToken
+            }
+            messages {
+              nextToken
+            }
+            directMessages {
+              nextToken
+            }
+            alertConfig {
+              emailDirectMessage
+              emailGroupMessage
+              emailEventMessage
+              emailOrgMessage
+              emailResourceMessage
+              emailCourseMessage
+              emailPromotions
+            }
+            createdAt
+            updatedAt
+          }
+
+          createdAt
+          updatedAt
+        }
+      }
+
+      courseWeeks {
+        items {
+          id
+          week
+          date
+          tz
+          name
+          title
+          leader
+          lessons {
+            items {
+              id
+              lesson
+              lessonType
+              wordCount
+              courseLessonResponseId
+              zoomUrl
+              zoomRecording
+              name
+              time
+              tz
+              duration
+              description
+              createdAt
+              updatedAt
+            }
+            nextToken
+          }
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      subTitle
+      introduction
+      triads {
         items {
           id
           courseInfoID
@@ -486,27 +588,27 @@ query GetCourseInfo($id: ID!) {
         }
         nextToken
       }
-    createdAt
-    updatedAt
+      createdAt
+      updatedAt
+    }
   }
-}
 `
 export const getDirectMessageUser = /* GraphQL */ `
-   query GetDirectMessageUser($id: ID!) {
-     getDirectMessageUser(id: $id) {
-       id
-       userID
-       user {
-         id
-         given_name
-         family_name
-         email
-         phone
-         owner
-         mainUserGroup
-         hasPaidState
-         profileState
-         billingAddress{
+  query GetDirectMessageUser($id: ID!) {
+    getDirectMessageUser(id: $id) {
+      id
+      userID
+      user {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        hasPaidState
+        profileState
+        billingAddress {
           city
           country
           line1
@@ -514,82 +616,82 @@ export const getDirectMessageUser = /* GraphQL */ `
           postal_code
           state
         }
-         location {
-           latitude
-           longitude
-           geocodeFull
-           geocodeCity
-           geocodeRegion
-         }
-         profileImage {
-           userId
-           filenameSmall
-           filenameMedium
-           filenameLarge
-           filenameUpload
-         }
-         aboutMeShort
-         aboutMeLong
-         interests
-         currentRole
-         currentScope
-         personality
-         orgName
-         orgType
-         orgSize
-         orgDescription
-         joined
-         primaryOrganization
-         owns {
-           nextToken
-         }
-         groups {
-           nextToken
-         }
-         messages {
-           nextToken
-         }
-         directMessages {
-           nextToken
-         }
-         createdAt
-         updatedAt
-       }
-       roomID
-       room {
-         id
-         name
-         roomType
-         messageUsers {
-           items {
-             id
-             userName
-             userID
-             roomID
-             createdAt
-             updatedAt
-           }
-           nextToken
-         }
-         directMessage {
-           items {
-             id
-             content
-             when
-             messageRoomID
-             createdAt
-             updatedAt
-           }
-           nextToken
-         }
-         createdAt
-         updatedAt
-       }
-       createdAt
-       updatedAt
-     }
-   }
- `;
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        orgDescription
+        joined
+        primaryOrganization
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      roomID
+      room {
+        id
+        name
+        roomType
+        messageUsers {
+          items {
+            id
+            userName
+            userID
+            roomID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        directMessage {
+          items {
+            id
+            content
+            when
+            messageRoomID
+            createdAt
+            updatedAt
+          }
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
 export const getGroupForOwner = /* GraphQL */ `
   query GetGroup($id: ID!) {
     getGroup(id: $id) {
@@ -597,7 +699,7 @@ export const getGroupForOwner = /* GraphQL */ `
       owner
     }
   }
-`;
+`
 export const groupByTypeForMyGroups = /* GraphQL */ `
   query GroupByType(
     $type: String
@@ -651,7 +753,7 @@ export const groupByTypeForMyGroups = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 
 export const getOrgForImage = /* GraphQL */ `
   query getOrganization($id: ID!) {
@@ -666,7 +768,7 @@ export const getOrgForImage = /* GraphQL */ `
       }
     }
   }
-`;
+`
 
 export const getUserForProfile = /* GraphQL */ `
   query GetUser($id: ID!) {
@@ -692,18 +794,14 @@ export const getUserForProfile = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const listDirectMessageUsers = /* GraphQL */ `
   query ListDirectMessageUsers(
     $filter: ModelDirectMessageUserFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listDirectMessageUsers(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
+    listDirectMessageUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         userID
@@ -716,7 +814,7 @@ export const listDirectMessageUsers = /* GraphQL */ `
           owner
           hasPaidState
           profileState
-          billingAddress{
+          billingAddress {
             city
             country
             line1
@@ -774,7 +872,7 @@ export const listDirectMessageUsers = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 
 export const getResourceRoot = /* GraphQL */ `
   query GetResourceRoot($id: ID!) {
@@ -950,7 +1048,7 @@ export const getResourceRoot = /* GraphQL */ `
         items {
           id
           type
-        
+
           image {
             userId
             filenameSmall
@@ -963,40 +1061,40 @@ export const getResourceRoot = /* GraphQL */ `
           extendedDescription
           series {
             items {
-                id
-                type
-                title
-                description
-                image
-                category
-                status
-                allFiles
-                playlist
-                playlistImage
-                episodes {
-                    items {
-                    id
-                    episodeNumber
-                    type
-                    title
-                    description
-                    videoPreview
-                    videoLowRes
-                    videoHiRes
-                    lessonPlan
-                    activityPage
-                    episodeID
-                    createdAt
-                    updatedAt
-                    }
-                    nextToken
-                }
-                seriesID
-                createdAt
-                updatedAt
+              id
+              type
+              title
+              description
+              image
+              category
+              status
+              allFiles
+              playlist
+              playlistImage
+              episodes {
+                items {
+                  id
+                  episodeNumber
+                  type
+                  title
+                  description
+                  videoPreview
+                  videoLowRes
+                  videoHiRes
+                  lessonPlan
+                  activityPage
+                  episodeID
+                  createdAt
+                  updatedAt
                 }
                 nextToken
+              }
+              seriesID
+              createdAt
+              updatedAt
             }
+            nextToken
+          }
           resourceID
           createdAt
           updatedAt
@@ -1007,4 +1105,4 @@ export const getResourceRoot = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`

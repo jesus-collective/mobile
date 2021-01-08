@@ -76,20 +76,24 @@ class CourseChatImpl extends JCComponent<Props, State> {
                   </Container>
                   <Container style={{ marginTop: 38, marginHorizontal: 24 }}>
                     {state.activeMessageBoard == "cohort" ? (
-                      <MessageBoard style="mini" groupId={state.data.id}></MessageBoard>
+                      <MessageBoard
+                        style="mini"
+                        groupId={state.data.id}
+                        inputAt="bottom"
+                      ></MessageBoard>
                     ) : null}
                     {state.activeMessageBoard == "triad" ? (
                       actions.myCourseGroups().completeTriad.length == 0 ? (
                         <Text>You have not been added to a cohort</Text>
                       ) : actions.myCourseGroups().completeTriad.length == 1 ? (
-                        <>
-                          <MessageBoard
-                            style="mini"
-                            groupId={
-                              state.data.id + "-" + actions.myCourseGroups().completeTriad[0].id
-                            }
-                          ></MessageBoard>
-                        </>
+                        <MessageBoard
+                          style="mini"
+                          inputAt="bottom"
+                          groupId={
+                            state.data.id + "-" + actions.myCourseGroups().completeTriad[0].id
+                          }
+                          replies
+                        ></MessageBoard>
                       ) : (
                         <>
                           <Picker
@@ -132,6 +136,7 @@ class CourseChatImpl extends JCComponent<Props, State> {
                           </Picker>
                           <MessageBoard
                             style="mini"
+                            inputAt="bottom"
                             groupId={
                               state.data.id +
                               "-" +
