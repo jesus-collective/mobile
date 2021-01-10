@@ -32,6 +32,7 @@ import { v4 as uuidv4 } from "uuid"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import getTheme from "../../native-base-theme/components"
+import { Observable } from "../../node_modules/zen-observable-ts"
 import {
   CreateDirectMessageInput,
   CreateDirectMessageMutation,
@@ -40,12 +41,25 @@ import {
   CreateReplyInput,
   CreateReplyMutation,
   DirectMessagesByRoomQuery,
+  GetDirectMessageQuery,
   GetUserQuery,
+  OnCreateDirectMessageSubscription,
 } from "../../src/API"
-import { MessagesByRoomQuery } from "../../src/API-custom"
-import * as customQueries from "../../src/graphql-custom/queries"
+import {
+  GetMessageQuery,
+  MessagesByRoomQuery,
+  OnCreateMessageByRoomIdSubscription,
+  OnCreateReplySubscription,
+} from "../../src/API-messages"
+import {
+  getMessage,
+  messagesByRoom,
+  onCreateMessageByRoomId,
+  onCreateReply,
+} from "../../src/graphql-custom/messages"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
+import { onCreateDirectMessage } from "../../src/graphql/subscriptions"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import CameraRecorder from "./CameraRecorder"
 import FileUpload from "./FileUpload"
@@ -91,7 +105,6 @@ interface State extends JCState {
   nextToken: string | null
   replyToWho: string[]
   replyToId: string
-  isReplying: boolean
   fetchingData: boolean
 }
 class MessageBoardImpl extends JCComponent<Props, State> {
@@ -114,48 +127,129 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       nextToken: null,
       replyToWho: [],
       replyToId: "",
-      isReplying: false,
       fetchingData: false,
     }
     this.setInitialData(props)
-    // const subscription: any = API.graphql({
-    //   query: subscriptions.onCreateMessage,
-    //   variables: { roomId: this.props.groupId },
-    //   authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    // })
-    // subscription.subscribe({
-    //   next: async (todoData) => {
-    //     this.getMessages()
-    //     console.log({ onCreateMessage: todoData })
-    //     let temp: any = this.state.data
-    //     if (temp === null) temp = { items: [] }
-    //     if (temp.items == null) temp.items = [todoData.value.data.onCreateMessage]
-    //     else temp.items = [todoData.value.data.onCreateMessage, ...temp.items]
-    //     this.setState({ data: temp })
-    //   },
-    // })
-    // const subscription2: any = API.graphql({
-    //   query: subscriptions.onCreateDirectMessage,
-    //   variables: { messageRoomID: this.props.roomId },
-    //   authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    // })
-    // subscription2.subscribe({
-    //   next: async (todoData) => {
-    //     this.getDirectMessages()
-    //     this.getCourseAssignment()
-    //     console.log({ onCreateDirectMessage2: todoData })
-
-    //     let temp: any = this.state.data
-    //     if (temp === null) temp = { items: [] }
-    //     if (temp.items == null) temp.items = [todoData.value.data.onCreateDirectMessage]
-    //     else temp.items = [todoData.value.data.onCreateDirectMessage, ...temp.items]
-    //     this.setState({ data: temp })
-    //   },
-    // })
+    this.connectSubscriptions()
   }
-
   static defaultProps = {
     inputAt: "top",
+  }
+
+  async connectSubscriptions() {
+    const messageSub = API.graphql({
+      query: onCreateMessageByRoomId,
+      variables: { roomId: this.props.groupId },
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Observable<object>
+    messageSub.subscribe({
+      next: (incoming: {
+        provider: any
+        value: GraphQLResult<OnCreateMessageByRoomIdSubscription>
+      }) => {
+        console.debug(incoming)
+        if (incoming.value.data?.onCreateMessageByRoomId) {
+          this.setState({
+            messages: [
+              ...[incoming.value.data.onCreateMessageByRoomId],
+              ...(this.state.messages ?? []),
+            ],
+          })
+        }
+      },
+    })
+
+    const replySub = API.graphql({
+      query: onCreateReply,
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    }) as Observable<object>
+    replySub.subscribe({
+      next: async (incoming: {
+        provider: any
+        value: GraphQLResult<OnCreateReplySubscription>
+      }) => {
+        console.debug(incoming)
+        if (
+          incoming.value?.data?.onCreateReply?.parentMessage &&
+          incoming.value?.data.onCreateReply?.parentMessage?.roomId === this.props.groupId
+        ) {
+          const { messages } = this.state
+          // find incoming reply's parent message in current state
+          const index = messages?.findIndex(
+            (m) => m?.id === incoming.value?.data?.onCreateReply?.messageId
+          )
+
+          try {
+            const updatedMessage = (await API.graphql({
+              query: getMessage,
+              variables: {
+                id: incoming.value.data.onCreateReply.messageId,
+              },
+              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+            })) as GraphQLResult<GetMessageQuery>
+
+            if (
+              updatedMessage.data?.getMessage &&
+              index !== undefined &&
+              messages &&
+              messages[index]
+            ) {
+              // replace old message/replies with incoming data
+              messages[index] = updatedMessage.data.getMessage
+              this.setState({ messages })
+            }
+          } catch (e) {
+            console.debug(e)
+            if (e.data?.getMessage && index !== undefined && messages && messages[index]) {
+              // replace old message/replies with incoming data
+              messages[index] = e.data.getMessage
+              this.setState({ messages })
+            }
+          }
+        }
+      },
+    })
+
+    const dmSub = (await API.graphql({
+      query: onCreateDirectMessage,
+      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+    })) as Observable<object>
+    dmSub.subscribe({
+      next: async (incoming: {
+        provider: any
+        value: GraphQLResult<OnCreateDirectMessageSubscription>
+      }) => {
+        console.debug(incoming)
+        if (
+          incoming.value?.data?.onCreateDirectMessage &&
+          incoming.value?.data?.onCreateDirectMessage?.messageRoomID === this.props.roomId
+        ) {
+          try {
+            const directMessage = (await API.graphql({
+              query: queries.getDirectMessage,
+              variables: {
+                id: incoming.value.data.onCreateDirectMessage.id,
+              },
+              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+            })) as GraphQLResult<GetDirectMessageQuery>
+
+            console.debug(directMessage)
+            if (directMessage.data?.getDirectMessage) {
+              this.setState({
+                dms: [...[directMessage.data.getDirectMessage], ...(this.state.dms ?? [])],
+              })
+            }
+          } catch (e) {
+            console.debug(e)
+            if (e.data?.getDirectMessage) {
+              this.setState({
+                dms: [...[e.data.getDirectMessage], ...(this.state.dms ?? [])],
+              })
+            }
+          }
+        }
+      },
+    })
   }
 
   async handleUpload(e: React.ChangeEvent<HTMLInputElement>): Promise<void> {
@@ -180,8 +274,8 @@ class MessageBoardImpl extends JCComponent<Props, State> {
 
   async getMessages() {
     try {
-      const messagesByRoom = (await API.graphql({
-        query: customQueries.messagesByRoom,
+      const messages = (await API.graphql({
+        query: messagesByRoom,
         variables: {
           roomId: this.props.groupId,
           sortDirection: "DESC",
@@ -190,17 +284,17 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })) as GraphQLResult<MessagesByRoomQuery>
 
-      console.log(messagesByRoom)
+      console.debug(messages)
 
-      if (messagesByRoom.data?.messagesByRoom?.items) {
+      if (messages.data?.messagesByRoom?.items) {
         this.setState({
           created: true,
-          messages: messagesByRoom.data.messagesByRoom.items,
-          nextToken: messagesByRoom.data.messagesByRoom.nextToken,
+          messages: messages.data.messagesByRoom.items,
+          nextToken: messages.data.messagesByRoom.nextToken,
         })
       }
     } catch (e) {
-      console.log(e)
+      console.debug(e)
       if (e.data?.messagesByRoom) {
         this.setState({
           created: true,
@@ -223,7 +317,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })) as GraphQLResult<DirectMessagesByRoomQuery>
 
-      console.log(directMessagesByRoom)
+      console.debug(directMessagesByRoom)
 
       if (directMessagesByRoom.data?.directMessagesByRoom?.items) {
         this.setState({
@@ -233,7 +327,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         })
       }
     } catch (e) {
-      console.log(e)
+      console.debug(e)
       if (e.data?.directMessagesByRoom?.items) {
         this.setState({
           created: true,
@@ -270,16 +364,14 @@ class MessageBoardImpl extends JCComponent<Props, State> {
   /* hack to get natural scrolling in an inverted flatlist
    https://github.com/necolas/react-native-web/issues/995#issuecomment-511242048 
 
-   on desktop: 
    natural scroll occurs by default on firefox
-   chromium-based browsers require the hack
-   safari behaviour unknown
+   chromium-based browsers require this hack
    */
   componentDidMount() {
     if (this.props.inputAt !== "bottom" && !isFirefox) {
-      const scrollNode = this.flatListRef.current && this.flatListRef.current.getScrollableNode()
-      if (!scrollNode)
-        scrollNode.addEventListener("wheel", (e) => {
+      const scrollNode = this.flatListRef.current && this.flatListRef.current?.getScrollableNode()
+      if (!!scrollNode)
+        scrollNode.addEventListener("wheel", (e: any) => {
           scrollNode.scrollTop -= e.deltaY
           e.preventDefault()
         })
@@ -289,11 +381,12 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     }
   }
 
+  /* remove event listener on unmount */
   componentWillUnmount() {
     if (this.props.inputAt !== "bottom" && !isFirefox) {
-      const scrollNode = this.flatListRef.current && this.flatListRef.current.getScrollableNode()
-      if (!scrollNode)
-        scrollNode.removeEventListener("wheel", (e) => {
+      const scrollNode = this.flatListRef.current && this.flatListRef.current?.getScrollableNode()
+      if (!!scrollNode)
+        scrollNode.removeEventListener("wheel", (e: any) => {
           scrollNode.scrollTop -= e.deltaY
           e.preventDefault()
         })
@@ -310,7 +403,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         UserDetails: getUser.data?.getUser ?? null,
       })
     } catch (e) {
-      console.log({ Error: e })
+      console.log(e)
     }
     if (props.route?.params?.create === "true" || props.route?.params?.create === true) {
       this.setState({ created: false })
@@ -431,7 +524,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     try {
       return stateToHTML(convertFromRaw(JSON.parse(text)))
     } catch (e) {
-      console.log({ Error: e })
+      console.error(e)
       return errorMarkdown
     }
   }
@@ -473,7 +566,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             })
           })
           .catch((err) => {
-            console.log({ "Error mutations.createMessage": err })
+            console.error({ "Error mutations.createMessage": err })
             if (err.data.createMessage) {
               this.setState({
                 editorState: EditorState.createEmpty(),
@@ -483,7 +576,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             }
           })
       } else if (this.props.roomId) {
-        const dm: CreateDirectMessageInput = {
+        const input: CreateDirectMessageInput = {
           id: uuidv4(),
           userId: user.username,
           content: message,
@@ -495,7 +588,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         }
         const createDirectMessage = API.graphql({
           query: mutations.createDirectMessage,
-          variables: { input: dm },
+          variables: { input },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
         }) as Promise<GraphQLResult<CreateDirectMessageMutation>>
 
@@ -509,7 +602,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             })
           })
           .catch((err) => {
-            console.log({ "Error mutations.createDirectMessage ": err })
+            console.error({ "Error mutations.createDirectMessage ": err })
             if (err.data.createDirectMessage) {
               this.setState({
                 editorState: EditorState.createEmpty(),
@@ -548,13 +641,13 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     let replyToText = ""
 
     if (this.state.replyToWho.length > 0) {
-      replyToText = `Replying to ${this.state.replyToWho[0]}`
+      replyToText = this.state.replyToWho[0]
     }
     if (this.state.replyToWho.length > 1) {
-      replyToText = `Replying to ${this.state.replyToWho[0]} and ${this.state.replyToWho[1]}`
+      replyToText = `${this.state.replyToWho[0]} and ${this.state.replyToWho[1]}`
     }
     if (this.state.replyToWho.length > 2) {
-      replyToText = `Replying to ${this.state.replyToWho[0]} and others`
+      replyToText = `${this.state.replyToWho[0]} and others`
     }
 
     return (
@@ -575,7 +668,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
               ) : null}
               <View style={{ flex: 1 }}>
                 <Editor
-                  placeholder={this.state.isReplying ? replyToText : "Type your comments here..."}
+                  placeholder="Write a message..."
                   editorState={this.state.editorState}
                   toolbarClassName="customToolbar"
                   wrapperClassName="customWrapperSendmessageMini"
@@ -616,11 +709,9 @@ class MessageBoardImpl extends JCComponent<Props, State> {
               <>
                 <Editor
                   placeholder={
-                    this.state.isReplying
-                      ? replyToText
-                      : style == "course"
+                    style === "course"
                       ? "Write Assignment..."
-                      : style == "courseResponse"
+                      : style === "courseResponse"
                       ? "Write a response...."
                       : "Write a message..."
                   }
@@ -683,19 +774,35 @@ class MessageBoardImpl extends JCComponent<Props, State> {
               {style === "course" || this.state.showVideo ? "Text" : "Video"}
             </JCButton>
           ) : null}
-          {this.state.isReplying && (
-            <JCButton
-              buttonType={
-                style == "regular" || style == "course" || style == "courseResponse"
-                  ? ButtonTypes.SolidRightJustified
-                  : ButtonTypes.SolidRightJustifiedMini
-              }
-              onPress={() => {
-                this.setState({ isReplying: false, replyToId: "", replyToWho: [] })
+          {this.state.replyToId && (
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                marginLeft: 60,
+                marginRight: "auto",
+                alignItems: "center",
               }}
             >
-              Cancel Reply
-            </JCButton>
+              <Text
+                style={{
+                  color: "#333333",
+                  fontFamily: "Graphik-Regular-App",
+                  fontSize: 16,
+                  fontWeight: "bold",
+                  marginRight: 12,
+                }}
+              >
+                Replying to {replyToText}
+              </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  this.setState({ replyToId: "", replyToWho: [] })
+                }}
+              >
+                <AntDesign name="closecircleo" size={24} color="#333333" />
+              </TouchableOpacity>
+            </View>
           )}
           <JCButton
             buttonType={
@@ -704,7 +811,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                 : ButtonTypes.SolidRightJustifiedMini
             }
             onPress={() => {
-              this.state.isReplying ? this.sendReply() : this.saveMessage()
+              this.state.replyToId ? this.sendReply() : this.saveMessage()
             }}
           >
             {style == "course" || style == "courseResponse" ? "Save" : "Post"}
@@ -784,10 +891,11 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             renderItem={({ item, index }) => this.renderMessageWithReplies(item, index)}
             data={this.state.messages}
             inverted={this.props.inputAt === "bottom"}
-            onEndReached={() => this.getMoreMessages()}
+            onEndReached={!this.state.fetchingData ? () => this.getMoreMessages() : undefined}
             style={{ height: 0.5 * height }}
             ListFooterComponent={() => this.messagesLoader()}
             refreshing={this.state.fetchingData}
+            onEndReachedThreshold={0.1}
           />
         ) : this.props.roomId ? (
           <FlatList
@@ -795,10 +903,11 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             renderItem={({ item, index }) => this.renderDirectMessage(item, index)}
             data={this.state.dms}
             inverted={this.props.inputAt === "bottom"}
-            onEndReached={() => this.getMoreDirectMessages()}
+            onEndReached={!this.state.fetchingData ? () => this.getMoreDirectMessages() : undefined}
             style={{ height: 0.5 * height }}
             ListFooterComponent={() => this.messagesLoader()}
             refreshing={this.state.fetchingData}
+            onEndReachedThreshold={0.1}
           />
         ) : null}
       </>
@@ -809,8 +918,8 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     this.setState({ fetchingData: true })
     if (this.state.nextToken) {
       try {
-        const messagesByRoom = (await API.graphql({
-          query: customQueries.messagesByRoom,
+        const messages = (await API.graphql({
+          query: messagesByRoom,
           variables: {
             roomId: this.props.groupId,
             sortDirection: "DESC",
@@ -820,10 +929,10 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
         })) as GraphQLResult<MessagesByRoomQuery>
 
-        if (messagesByRoom.data?.messagesByRoom?.items) {
+        if (messages.data?.messagesByRoom?.items) {
           this.setState({
-            messages: [...(this.state.messages ?? []), ...messagesByRoom.data.messagesByRoom.items],
-            nextToken: messagesByRoom.data.messagesByRoom.nextToken,
+            messages: [...(this.state.messages ?? []), ...messages.data.messagesByRoom.items],
+            nextToken: messages.data.messagesByRoom.nextToken,
           })
         }
       } catch (e) {
@@ -893,8 +1002,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         attachmentName: attachmentName,
         userId: user.username,
         messageId: replyToId,
-        // void value
-        parentReplyId: "0000-0000-0000-0000",
+        parentReplyId: "0000-0000-0000-0000", // void value
       }
       const createReply = API.graphql({
         query: mutations.createReply,
@@ -906,35 +1014,39 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         editorState: EditorState.createEmpty(),
         attachmentName: "",
         attachment: "",
-        isReplying: false,
+        replyToId: "",
+        replyToWho: [],
       })
-    } catch (err) {
-      console.log({ "Error mutations.createReply": err })
-      if (err.data.createReply) {
+    } catch (e) {
+      if (e.data?.createReply) {
+        console.log({ "Success mutations.createReply": e.data })
         this.setState({
           editorState: EditorState.createEmpty(),
           attachmentName: "",
           attachment: "",
-          isReplying: false,
+          replyToId: "",
+          replyToWho: [],
         })
+      } else {
+        console.error({ "Error mutations.createReply": e })
       }
     }
   }
 
   handlePressReply(item: Message) {
-    const ppl: string[] = []
+    const peopleInThread: string[] = []
 
     if (item?.author?.given_name) {
-      ppl.push(item?.author?.given_name)
+      peopleInThread.push(item?.author?.given_name)
     }
 
-    item?.replies?.items?.forEach((reply) => {
-      if (reply?.author?.given_name && !ppl.includes(reply?.author?.given_name)) {
-        ppl.push(reply?.author?.given_name)
+    item?.replies?.items?.slice(10).forEach((reply) => {
+      if (reply?.author?.given_name && !peopleInThread.includes(reply?.author?.given_name)) {
+        peopleInThread.push(reply?.author?.given_name)
       }
     })
 
-    this.setState({ replyToId: item?.id ?? "", replyToWho: ppl, isReplying: true })
+    this.setState({ replyToId: item?.id ?? "", replyToWho: peopleInThread })
   }
 
   renderMessageWithReplies(item: Message, index: number) {
@@ -1056,8 +1168,6 @@ class MessageBoardImpl extends JCComponent<Props, State> {
 
   render() {
     const { groupId, roomId, style, inputAt } = this.props
-
-    console.log("/// props ///", this.props)
 
     if (groupId && roomId) {
       console.error("groupId and roomId cannot be used together")

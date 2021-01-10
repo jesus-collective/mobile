@@ -78,6 +78,7 @@ class CourseChatImpl extends JCComponent<Props, State> {
                     {state.activeMessageBoard == "cohort" ? (
                       <MessageBoard
                         style="mini"
+                        replies
                         groupId={state.data.id}
                         inputAt="bottom"
                       ></MessageBoard>
@@ -89,6 +90,7 @@ class CourseChatImpl extends JCComponent<Props, State> {
                         <MessageBoard
                           style="mini"
                           inputAt="bottom"
+                          replies
                           groupId={
                             state.data.id + "-" + actions.myCourseGroups().completeTriad[0].id
                           }
@@ -137,6 +139,7 @@ class CourseChatImpl extends JCComponent<Props, State> {
                           <MessageBoard
                             style="mini"
                             inputAt="bottom"
+                            replies
                             groupId={
                               state.data.id +
                               "-" +

@@ -493,7 +493,7 @@ const courseStyles = EStyleSheet.create({
     justifyContent: "flex-end",
   },
   courseDetailJCButtonMini: {
-    flexDirection: "column",
+    flexDirection: "row",
     justifyContent: "flex-end",
   },
   courseDetailJCButtonAssignments: {
