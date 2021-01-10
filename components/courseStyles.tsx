@@ -491,6 +491,7 @@ const courseStyles = EStyleSheet.create({
   courseDetailJCButtonRegular: {
     flexDirection: "row",
     justifyContent: "flex-end",
+    alignItems: "center",
   },
   courseDetailJCButtonMini: {
     flexDirection: "row",

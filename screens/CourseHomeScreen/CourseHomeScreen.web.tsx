@@ -877,6 +877,8 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     console.log("CourseScreen")
 
     const { width } = Dimensions.get("window")
+    const chatWidth = Math.min(width, 563)
+    const smallScreen = width < 563
 
     return this.state.data ? (
       <CourseHomeScreenImpl.Provider
@@ -921,13 +923,16 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         <StyleProvider style={getTheme()}>
           <>
             {this.state.currentScreen == "Details" && !this.state.showChat ? (
-              <ChatButton setShowChat={() => this.setState({ showChat: true })} />
+              <ChatButton
+                setShowChat={() => this.setState({ showChat: true })}
+                floating={smallScreen}
+              />
             ) : null}
 
             <Drawer
               content={<CourseChat />}
               open={this.state.showChat}
-              openDrawerOffset={width - 563}
+              openDrawerOffset={width - chatWidth}
               side="right"
               styles={{}}
               tweenHandler={undefined}

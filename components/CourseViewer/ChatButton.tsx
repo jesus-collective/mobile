@@ -1,13 +1,37 @@
-import { AntDesign } from "@expo/vector-icons"
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons"
 import React from "react"
 import { Dimensions, Text, TouchableOpacity } from "react-native"
 
 interface Props {
   setShowChat: () => void
+  floating?: boolean
 }
 
-export default function ChatButton({ setShowChat }: Props) {
+export default function ChatButton({ setShowChat, floating }: Props) {
   const { height } = Dimensions.get("window")
+
+  if (floating) {
+    return (
+      <TouchableOpacity
+        style={{
+          position: "absolute",
+          zIndex: 9999,
+          bottom: 25,
+          right: 25,
+          width: 50,
+          height: 50,
+          borderRadius: 50,
+          backgroundColor: "#F0493E",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+        onPress={() => setShowChat()}
+      >
+        <MaterialCommunityIcons name="chat" size={24} color="white" />
+      </TouchableOpacity>
+    )
+  }
 
   return (
     <TouchableOpacity

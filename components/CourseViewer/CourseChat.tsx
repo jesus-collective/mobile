@@ -2,7 +2,7 @@
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { Button, Container, Icon, Picker, StyleProvider } from "native-base"
 import React from "react"
-import { Text } from "react-native"
+import { Dimensions, Text } from "react-native"
 import getTheme from "../../native-base-theme/components"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
@@ -32,6 +32,10 @@ class CourseChatImpl extends JCComponent<Props, State> {
 
   render(): React.ReactNode {
     console.log("CourseDetail")
+
+    const { width } = Dimensions.get("window")
+    const chatWidth = Math.min(width, 563)
+
     return (
       <CourseChatImpl.Consumer>
         {({ state, actions }) => {
@@ -41,7 +45,7 @@ class CourseChatImpl extends JCComponent<Props, State> {
           return state.data && state.currentScreen == "Details" ? (
             <StyleProvider style={getTheme()}>
               {!(lesson?.lessonType == "respond" || lesson?.lessonType == "assignment") ? (
-                <Container style={{ width: 563 }}>
+                <Container style={{ width: chatWidth }}>
                   <Container style={this.styles.style.courseDetailButtonTrio}>
                     <JCButton
                       buttonType={
@@ -94,7 +98,6 @@ class CourseChatImpl extends JCComponent<Props, State> {
                           groupId={
                             state.data.id + "-" + actions.myCourseGroups().completeTriad[0].id
                           }
-                          replies
                         ></MessageBoard>
                       ) : (
                         <>
