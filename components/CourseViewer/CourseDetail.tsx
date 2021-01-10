@@ -20,17 +20,12 @@ interface Props {
   navigation?: any
   route?: any
 }
-interface State extends JCState {
-  triadSelection: number
-  showChat: boolean
-}
-class CourseDetailImpl extends JCComponent<Props, State> {
+
+class CourseDetailImpl extends JCComponent<Props, JCState> {
   constructor(props: Props) {
     super(props)
     this.state = {
       ...super.getInitialState(),
-      triadSelection: 0,
-      showChat: false,
     }
   }
   static Consumer = CourseContext.Consumer
