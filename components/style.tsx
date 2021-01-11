@@ -428,7 +428,7 @@ export default class MainStyles {
         fontSize: 16,
         lineHeight: 26,
         color: "#333333",
-        paddingTop: 12,
+        paddingTop: 6,
         width: "100%",
       },
 
