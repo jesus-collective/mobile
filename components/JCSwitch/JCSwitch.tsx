@@ -33,6 +33,10 @@ interface Props {
 
   toggleSpacing?: string
   toggleMargin?: number
+  flexDirection?: string
+  toggleMarginLeft?: number
+  toggleMarginTop?: number
+  toggleMarginBottom?: number
 }
 interface State extends JCState {
   enabled: boolean
@@ -71,7 +75,7 @@ export default class JCSwitch extends JCComponent<Props, State> {
       <View
         style={{
           width: this.props.containerWidth ? this.props.containerWidth : 175,
-          flexDirection: "row",
+          flexDirection: this.props.flexDirection ? this.props.flexDirection :"row",
           justifyContent: this.props.toggleSpacing ? "space-between" : null,
           marginTop: this.props.toggleMargin ? 10 : null,
           marginBottom: this.props.toggleMargin ? 10 : null,
@@ -87,6 +91,9 @@ export default class JCSwitch extends JCComponent<Props, State> {
               borderRadius: 25,
               width: 50,
               height: 20,
+              marginLeft: this.props.toggleMarginLeft ? this.props.toggleMarginLeft : null ,
+              marginTop: this.props.toggleMarginTop ? this.props.toggleMarginTop : null ,
+              marginBottom: this.props.toggleMarginBottom ? this.props.toggleMarginBottom : null ,
             }}
           >
             <Animated.View
