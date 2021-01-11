@@ -1867,10 +1867,14 @@ export default class MainStyles {
           marginBottom: 20,
         },
         profileScreenLeftCard: {
-          marginRight: 32,
+          marginRight: 0,
+          marginLeft: 0,
           flex: 0,
           paddingBottom: 100,
           width: "auto",
+          shadowOffset: {"width": 0, "height": 0},
+          shadowRadius: 0, 
+          shadowColor: "rgba(0, 0, 0, 0)"
         },
         profileScreenRightCard: {
           width: "auto",
@@ -2046,6 +2050,9 @@ export default class MainStyles {
         connectWithSliderButton: {
           width: "80%",
           alignSelf: 'center',
+        },
+        myProfilePersonalInfoWrapper: {
+          top: 0,
         },
       },
 
