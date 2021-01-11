@@ -25,6 +25,7 @@ interface Props {
   pageItems?: (ResourcePageItemInput | null)[] | null | undefined
   pageItemIndex: PageItemIndex
   isBase?: boolean
+  hideEditButton?: boolean
 }
 
 interface State extends JCState {
@@ -266,6 +267,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
             pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
             save={this.save}
             delete={this.delete}
+            hideEditButton={this.props.hideEditButton}
             pageItem={item}
           ></ResourceColumn>
         )
@@ -278,6 +280,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
             pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
             save={this.save}
             delete={this.delete}
+            hideEditButton={this.props.hideEditButton}
             pageItem={item}
           ></ResourceHeader>
         )
@@ -290,6 +293,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
             pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
             save={this.save}
             delete={this.delete}
+            hideEditButton={this.props.hideEditButton}
             pageItem={item}
           ></ResourceMenu>
         )
@@ -302,6 +306,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
             pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
             save={this.save}
             delete={this.delete}
+            hideEditButton={this.props.hideEditButton}
             pageItem={item}
           ></ResourceRichText>
         )
@@ -314,6 +319,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
             pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
             save={this.save}
             delete={this.delete}
+            hideEditButton={this.props.hideEditButton}
             pageItem={item}
           ></ResourceCard>
         )
@@ -326,6 +332,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
             pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
             save={this.save}
             delete={this.delete}
+            hideEditButton={this.props.hideEditButton}
             pageItem={item}
           ></ResourceList>
         )
@@ -338,6 +345,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
             pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
             save={this.save}
             delete={this.delete}
+            hideEditButton={this.props.hideEditButton}
             pageItem={item}
           ></ResourceGrid>
         )

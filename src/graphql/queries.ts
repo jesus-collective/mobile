@@ -2996,6 +2996,7 @@ export const getResourceMenuItem = /* GraphQL */ `
           filenameUpload
         }
         url
+        order
         pageItemsLeft {
           id
           type
@@ -3010,6 +3011,7 @@ export const getResourceMenuItem = /* GraphQL */ `
           episodeID
           color
           url
+          order
         }
         pageItemsRight {
           id
@@ -3025,6 +3027,7 @@ export const getResourceMenuItem = /* GraphQL */ `
           episodeID
           color
           url
+          order
         }
       }
       resourceRootID
@@ -3109,6 +3112,7 @@ export const listResourceMenuItems = /* GraphQL */ `
           episodeID
           color
           url
+          order
         }
         resourceRootID
         resourceRoot {
@@ -3146,20 +3150,30 @@ export const getResource = /* GraphQL */ `
       description
       whoIsThisFor
       extendedDescription
+      details {
+        type
+        name
+        text
+        value
+        image {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+      }
       series {
         items {
           id
           owner
           type
           title
+          order
           description
           whoIsThisFor
-          image
           category
           status
-          allFiles
-          playlist
-          playlistImage
           seriesID
           createdAt
           updatedAt
@@ -3239,6 +3253,12 @@ export const listResources = /* GraphQL */ `
         description
         whoIsThisFor
         extendedDescription
+        details {
+          type
+          name
+          text
+          value
+        }
         series {
           nextToken
         }
@@ -3266,14 +3286,31 @@ export const getResourceSeries = /* GraphQL */ `
       owner
       type
       title
+      order
       description
       whoIsThisFor
-      image
+      imageFile {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
       category
       status
-      allFiles
-      playlist
-      playlistImage
+      details {
+        type
+        name
+        text
+        value
+        image {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+      }
       episodes {
         items {
           id
@@ -3283,11 +3320,6 @@ export const getResourceSeries = /* GraphQL */ `
           title
           description
           whoIsThisFor
-          videoPreview
-          videoLowRes
-          videoHiRes
-          lessonPlan
-          activityPage
           episodeID
           createdAt
           updatedAt
@@ -3312,6 +3344,12 @@ export const getResourceSeries = /* GraphQL */ `
         description
         whoIsThisFor
         extendedDescription
+        details {
+          type
+          name
+          text
+          value
+        }
         series {
           nextToken
         }
@@ -3345,14 +3383,24 @@ export const listResourceSeriess = /* GraphQL */ `
         owner
         type
         title
+        order
         description
         whoIsThisFor
-        image
+        imageFile {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         category
         status
-        allFiles
-        playlist
-        playlistImage
+        details {
+          type
+          name
+          text
+          value
+        }
         episodes {
           nextToken
         }
@@ -3387,26 +3435,51 @@ export const getResourceEpisode = /* GraphQL */ `
       type
       title
       description
+      imageFile {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
       whoIsThisFor
-      videoPreview
-      videoLowRes
-      videoHiRes
-      lessonPlan
-      activityPage
+      details {
+        type
+        name
+        text
+        value
+        image {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+      }
       episodeID
       parentSeries {
         id
         owner
         type
         title
+        order
         description
         whoIsThisFor
-        image
+        imageFile {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         category
         status
-        allFiles
-        playlist
-        playlistImage
+        details {
+          type
+          name
+          text
+          value
+        }
         episodes {
           nextToken
         }
@@ -3451,26 +3524,31 @@ export const listResourceEpisodes = /* GraphQL */ `
         type
         title
         description
+        imageFile {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         whoIsThisFor
-        videoPreview
-        videoLowRes
-        videoHiRes
-        lessonPlan
-        activityPage
+        details {
+          type
+          name
+          text
+          value
+        }
         episodeID
         parentSeries {
           id
           owner
           type
           title
+          order
           description
           whoIsThisFor
-          image
           category
           status
-          allFiles
-          playlist
-          playlistImage
           seriesID
           createdAt
           updatedAt

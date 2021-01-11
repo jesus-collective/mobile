@@ -950,7 +950,19 @@ export const getResourceRoot = /* GraphQL */ `
         items {
           id
           type
-        
+          details {
+            type
+            name
+            text
+            value
+            image {
+              userId
+              filenameSmall
+              filenameMedium
+              filenameLarge
+              filenameUpload
+            }
+          }
           image {
             userId
             filenameSmall
@@ -967,12 +979,31 @@ export const getResourceRoot = /* GraphQL */ `
                 type
                 title
                 description
-                image
+                imageFile {
+                  userId
+                  filenameSmall
+                  filenameMedium
+                  filenameLarge
+                  filenameUpload
+                }
+                details {
+                  type
+                  name
+                  text
+                  value
+                  image {
+                    userId
+                    filenameSmall
+                    filenameMedium
+                    filenameLarge
+                    filenameUpload
+                  }
+                }
                 category
                 status
-                allFiles
-                playlist
-                playlistImage
+               
+              
+              
                 episodes {
                     items {
                     id
@@ -980,11 +1011,19 @@ export const getResourceRoot = /* GraphQL */ `
                     type
                     title
                     description
-                    videoPreview
-                    videoLowRes
-                    videoHiRes
-                    lessonPlan
-                    activityPage
+                    details {
+                      type
+                      name
+                      text
+                      value
+                      image {
+                        userId
+                        filenameSmall
+                        filenameMedium
+                        filenameLarge
+                        filenameUpload
+                      }
+                    }
                     episodeID
                     createdAt
                     updatedAt

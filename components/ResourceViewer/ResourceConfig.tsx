@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import { Auth, Storage } from "aws-amplify"
-import { Card, CardItem } from "native-base"
+import { Card, CardItem, Picker } from "native-base"
 import React from "react"
 import {
   NativeSyntheticEvent,
@@ -14,6 +14,13 @@ import {
 import { GetResourceData, GetResourceSeriesData } from "src/types"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
+import {
+  ResourceDetailInput,
+  ResourceDetailType,
+  UpdateResourceEpisodeInput,
+  UpdateResourceInput,
+  UpdateResourceSeriesInput,
+} from "../../src/API"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
 
@@ -26,9 +33,9 @@ interface State extends JCState {
   showResourceEditModal: boolean
   showSeriesEditModal: boolean
   showEpisodeEditModal: boolean
-  currentResource: any
-  currentSeries: any
-  currentEpisode: any
+  currentResource: UpdateResourceInput
+  currentSeries: UpdateResourceSeriesInput
+  currentEpisode: UpdateResourceEpisodeInput
 }
 
 class ResourceContentImpl extends JCComponent<Props, State> {
@@ -41,38 +48,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     if (resourceState.currentResource == null) return
     resourceActions.updateResource(
       resourceState.currentResource,
-      "title",
-      this.state.currentResource.title
-    )
-    resourceActions.updateResource(
-      resourceState.currentResource,
-      "subtitle",
-      this.state.currentResource.subtitle
-    )
-    resourceActions.updateResource(
-      resourceState.currentResource,
-      "type",
-      this.state.currentResource.type
-    )
-    resourceActions.updateResource(
-      resourceState.currentResource,
-      "image",
-      this.state.currentResource.image
-    )
-    resourceActions.updateResource(
-      resourceState.currentResource,
-      "description",
-      this.state.currentResource.description
-    )
-    resourceActions.updateResource(
-      resourceState.currentResource,
-      "whoIsThisFor",
-      this.state.currentResource.whoIsThisFor
-    )
-    resourceActions.updateResource(
-      resourceState.currentResource,
-      "extendedDescription",
-      this.state.currentResource.extendedDescription
+
+      this.state.currentResource
     )
   }
   saveSeries(resourceState: ResourceState, resourceActions: ResourceActions) {
@@ -81,62 +58,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     resourceActions.updateSeries(
       resourceState.currentResource,
       resourceState.currentSeries,
-      "title",
-      this.state.currentSeries.title
-    )
-    resourceActions.updateSeries(
-      resourceState.currentResource,
-      resourceState.currentSeries,
-      "description",
-      this.state.currentSeries.description
-    )
-    resourceActions.updateSeries(
-      resourceState.currentResource,
-      resourceState.currentSeries,
-      "type",
-      this.state.currentSeries.type
-    )
-    resourceActions.updateSeries(
-      resourceState.currentResource,
-      resourceState.currentSeries,
-      "whoIsThisFor",
-      this.state.currentSeries.whoIsThisFor
-    )
-    resourceActions.updateSeries(
-      resourceState.currentResource,
-      resourceState.currentSeries,
-      "image",
-      this.state.currentSeries.image
-    )
-    resourceActions.updateSeries(
-      resourceState.currentResource,
-      resourceState.currentSeries,
-      "category",
-      this.state.currentSeries.category
-    )
-    resourceActions.updateSeries(
-      resourceState.currentResource,
-      resourceState.currentSeries,
-      "status",
-      this.state.currentSeries.status
-    )
-    resourceActions.updateSeries(
-      resourceState.currentResource,
-      resourceState.currentSeries,
-      "allFiles",
-      this.state.currentSeries.allFiles
-    )
-    resourceActions.updateSeries(
-      resourceState.currentResource,
-      resourceState.currentSeries,
-      "playlist",
-      this.state.currentSeries.playlist
-    )
-    resourceActions.updateSeries(
-      resourceState.currentResource,
-      resourceState.currentSeries,
-      "playlistImage",
-      this.state.currentSeries.playlistImage
+
+      this.state.currentSeries
     )
   }
   saveEpisode(resourceState: ResourceState, resourceActions: ResourceActions) {
@@ -147,74 +70,534 @@ class ResourceContentImpl extends JCComponent<Props, State> {
       resourceState.currentResource,
       resourceState.currentSeries,
       resourceState.currentEpisode,
-      "title",
-      this.state.currentEpisode.title
-    )
-    resourceActions.updateEpisode(
-      resourceState.currentResource,
-      resourceState.currentSeries,
-      resourceState.currentEpisode,
-      "episodeNumber",
-      this.state.currentEpisode.episodeNumber
-    )
-    resourceActions.updateEpisode(
-      resourceState.currentResource,
-      resourceState.currentSeries,
-      resourceState.currentEpisode,
-      "type",
-      this.state.currentEpisode.type
-    )
-    resourceActions.updateEpisode(
-      resourceState.currentResource,
-      resourceState.currentSeries,
-      resourceState.currentEpisode,
-      "description",
-      this.state.currentEpisode.description
-    )
-    resourceActions.updateEpisode(
-      resourceState.currentResource,
-      resourceState.currentSeries,
-      resourceState.currentEpisode,
-      "whoIsThisFor",
-      this.state.currentEpisode.whoIsThisFor
-    )
-    resourceActions.updateEpisode(
-      resourceState.currentResource,
-      resourceState.currentSeries,
-      resourceState.currentEpisode,
-      "videoPreview",
-      this.state.currentEpisode.videoPreview
-    )
-    resourceActions.updateEpisode(
-      resourceState.currentResource,
-      resourceState.currentSeries,
-      resourceState.currentEpisode,
-      "videoLowRes",
-      this.state.currentEpisode.videoLowRes
-    )
-    resourceActions.updateEpisode(
-      resourceState.currentResource,
-      resourceState.currentSeries,
-      resourceState.currentEpisode,
-      "videoHiRes",
-      this.state.currentEpisode.videoHiRes
-    )
-    resourceActions.updateEpisode(
-      resourceState.currentResource,
-      resourceState.currentSeries,
-      resourceState.currentEpisode,
-      "lessonPlan",
-      this.state.currentEpisode.lessonPlan
-    )
-    resourceActions.updateEpisode(
-      resourceState.currentResource,
-      resourceState.currentSeries,
-      resourceState.currentEpisode,
-      "activityPage",
-      this.state.currentEpisode.activityPage
+
+      this.state.currentEpisode
     )
   }
-  renderResourceEditModal(resourceState: ResourceState, resourceActions: ResourceActions) {
+  renderDetailsResource(
+    resourceState: ResourceState,
+    resourceActions: ResourceActions
+  ): React.ReactNode {
+    return (
+      <View>
+        {this.state.currentResource.details?.map(
+          (item: ResourceDetailInput | null, index: number) => {
+            return (
+              <>
+                <Picker
+                  mode="dropdown"
+                  style={{
+                    width: "100%",
+                    marginTop: 10,
+                    marginBottom: 30,
+                    fontSize: 16,
+                    height: 30,
+                    flexGrow: 0,
+                    paddingTop: 3,
+                    paddingBottom: 3,
+                  }}
+                  selectedValue={item?.type ?? undefined}
+                  onValueChange={(value: any) => {
+                    const tmp = this.state.currentResource
+                    tmp.details![index]!.type = value
+                    this.setState({ currentResource: tmp })
+                  }}
+                >
+                  {Object.keys(ResourceDetailType).map((org) => {
+                    return <Picker.Item key={org} label={org} value={org} />
+                  })}
+                </Picker>
+                <View style={{ flexDirection: "row" }}>
+                  <Text>Name: </Text>
+                  <TextInput
+                    onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
+                      const tmp = this.state.currentResource
+                      tmp.details![index]!.name = val.nativeEvent.text
+                      this.setState({ currentResource: tmp })
+                    }}
+                    placeholder="name"
+                    multiline={false}
+                    value={item?.name ?? ""}
+                  ></TextInput>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text>Text: </Text>
+                  <TextInput
+                    onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
+                      const tmp = this.state.currentResource
+                      tmp.details![index]!.text = val.nativeEvent.text
+                      this.setState({ currentResource: tmp })
+                    }}
+                    placeholder="text"
+                    multiline={false}
+                    value={item?.text ?? ""}
+                  ></TextInput>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text>Value: </Text>
+                  <TextInput
+                    onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
+                      const tmp = this.state.currentResource
+                      tmp.details![index]!.value = val.nativeEvent.text
+                      this.setState({ currentResource: tmp })
+                    }}
+                    placeholder="value"
+                    multiline={false}
+                    value={item?.value ?? ""}
+                  ></TextInput>
+                </View>
+                <View>
+                  <JCButton
+                    buttonType={ButtonTypes.Transparent}
+                    onPress={() => {
+                      null
+                    }}
+                  >
+                    <Ionicons
+                      size={32}
+                      name="ios-image"
+                      style={this.styles.style.resourceImageIcon}
+                    />
+                  </JCButton>
+                  <input
+                    style={{
+                      fontSize: 200,
+                      position: "absolute",
+                      top: "0px",
+                      right: "0px",
+                      opacity: "0",
+                    }}
+                    type="file"
+                    accept="image/*"
+                    onChange={async (e) => {
+                      if (resourceState.resourceData == null) return null
+                      if (resourceState.currentResource == null) return null
+                      console.log("Uploading")
+                      if (e.target.files) {
+                        const file = e.target.files[0]
+                        const lastDot = file.name.lastIndexOf(".")
+                        const ext = file.name.substring(lastDot + 1)
+                        const user = await Auth.currentCredentials()
+                        const userId = user.identityId
+
+                        const fn =
+                          "resources/upload/group-" +
+                          resourceState.resourceData.id +
+                          "-resource-" +
+                          this.state.currentResource.id +
+                          "-details-" +
+                          new Date().getTime() +
+                          "-upload." +
+                          ext
+                        console.log({ filename: fn })
+
+                        const fnSave = fn
+                          .replace("/upload", "")
+                          .replace("-upload.", "-[size].")
+                          .replace("." + ext, ".png")
+
+                        console.log("putting")
+                        await Storage.put(fn, file, {
+                          level: "protected",
+                          contentType: file.type,
+                          identityId: userId,
+                        })
+                          .then(() => {
+                            console.log("getting")
+                            return Storage.get(fn, {
+                              level: "protected",
+                              identityId: userId,
+                            }).then((result2) => {
+                              console.log({ fileInfo: result2 })
+                              let tmp = this.state.currentResource
+                              tmp.details![index]!.image = {
+                                userId: userId,
+                                filenameUpload: fn,
+                                filenameLarge: fnSave.replace("[size]", "large"),
+                                filenameMedium: fnSave.replace("[size]", "medium"),
+                                filenameSmall: fnSave.replace("[size]", "small"),
+                              }
+                              console.log({ settings: tmp })
+                              this.setState({ currentResource: tmp })
+                              //this.updatePageItem(menuItemIndex, pageItemIndex, tempPageItems)
+                            })
+
+                            // console.log(result)
+                          })
+                          .catch((err: any) => console.log(err))
+                      }
+                    }}
+                  />
+                </View>
+              </>
+            )
+          }
+        )}
+        <Text>Test</Text>
+        <JCButton
+          buttonType={ButtonTypes.AdminAdd}
+          onPress={() => {
+            const z = this.state.currentResource
+            if (z.details == null) z.details = []
+            z.details?.push({ type: ResourceDetailType.DefaultYoutube })
+            this.setState({ currentResource: z })
+          }}
+        >
+          +
+        </JCButton>
+      </View>
+    )
+  }
+  renderDetailsEpisode(
+    resourceState: ResourceState,
+    resourceActions: ResourceActions
+  ): React.ReactNode {
+    return (
+      <>
+        {this.state.currentEpisode.details?.map(
+          (item: ResourceDetailInput | null, index: number) => {
+            return (
+              <>
+                <Picker
+                  mode="dropdown"
+                  style={{
+                    width: "100%",
+                    marginTop: 10,
+                    marginBottom: 30,
+                    fontSize: 16,
+                    height: 30,
+                    flexGrow: 0,
+                    paddingTop: 3,
+                    paddingBottom: 3,
+                  }}
+                  selectedValue={item?.type ?? undefined}
+                  onValueChange={(value: any) => {
+                    const tmp = this.state.currentEpisode
+                    tmp.details[index].type = value
+                    this.setState({ currentEpisode: tmp })
+                  }}
+                >
+                  {Object.keys(ResourceDetailType).map((org) => {
+                    return <Picker.Item key={org} label={org} value={org} />
+                  })}
+                </Picker>
+                <View style={{ flexDirection: "row" }}>
+                  <Text>Name: </Text>
+                  <TextInput
+                    onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
+                      const tmp = this.state.currentEpisode
+                      tmp.details![index]!.name = val.nativeEvent.text
+                      this.setState({ currentEpisode: tmp })
+                    }}
+                    placeholder="name"
+                    multiline={false}
+                    value={item?.name ?? ""}
+                  ></TextInput>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text>Text: </Text>
+                  <TextInput
+                    onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
+                      const tmp = this.state.currentEpisode
+                      tmp.details![index]!.text = val.nativeEvent.text
+                      this.setState({ currentEpisode: tmp })
+                    }}
+                    placeholder="text"
+                    multiline={false}
+                    value={item?.text ?? ""}
+                  ></TextInput>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text>Value: </Text>
+                  <TextInput
+                    onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
+                      const tmp = this.state.currentEpisode
+                      tmp.details![index]!.value = val.nativeEvent.text
+                      this.setState({ currentEpisode: tmp })
+                    }}
+                    placeholder="value"
+                    multiline={false}
+                    value={item?.value ?? ""}
+                  ></TextInput>
+                </View>
+                <View>
+                  <JCButton
+                    buttonType={ButtonTypes.Transparent}
+                    onPress={() => {
+                      null
+                    }}
+                  >
+                    <Ionicons
+                      size={32}
+                      name="ios-image"
+                      style={this.styles.style.resourceImageIcon}
+                    />
+                  </JCButton>
+                  <input
+                    style={{
+                      fontSize: 200,
+                      position: "absolute",
+                      top: "0px",
+                      right: "0px",
+                      opacity: "0",
+                    }}
+                    type="file"
+                    accept="image/*"
+                    onChange={async (e) => {
+                      if (resourceState.resourceData == null) return null
+                      if (resourceState.currentEpisode == null) return null
+                      console.log("Uploading")
+                      if (e.target.files) {
+                        const file = e.target.files[0]
+                        const lastDot = file.name.lastIndexOf(".")
+                        const ext = file.name.substring(lastDot + 1)
+                        const user = await Auth.currentCredentials()
+                        const userId = user.identityId
+
+                        const fn =
+                          "resources/upload/group-" +
+                          resourceState.resourceData.id +
+                          "-resource-" +
+                          this.state.currentEpisode.id +
+                          "-details-" +
+                          new Date().getTime() +
+                          "-upload." +
+                          ext
+                        console.log({ filename: fn })
+
+                        const fnSave = fn
+                          .replace("/upload", "")
+                          .replace("-upload.", "-[size].")
+                          .replace("." + ext, ".png")
+
+                        console.log("putting")
+                        await Storage.put(fn, file, {
+                          level: "protected",
+                          contentType: file.type,
+                          identityId: userId,
+                        })
+                          .then(() => {
+                            console.log("getting")
+                            return Storage.get(fn, {
+                              level: "protected",
+                              identityId: userId,
+                            }).then((result2) => {
+                              console.log({ fileInfo: result2 })
+                              let tmp = this.state.currentEpisode
+                              tmp.details![index]!.image = {
+                                userId: userId,
+                                filenameUpload: fn,
+                                filenameLarge: fnSave.replace("[size]", "large"),
+                                filenameMedium: fnSave.replace("[size]", "medium"),
+                                filenameSmall: fnSave.replace("[size]", "small"),
+                              }
+                              console.log({ settings: tmp })
+                              this.setState({ currentEpisode: tmp })
+                              //this.updatePageItem(menuItemIndex, pageItemIndex, tempPageItems)
+                            })
+
+                            // console.log(result)
+                          })
+                          .catch((err: any) => console.log(err))
+                      }
+                    }}
+                  />
+                </View>
+              </>
+            )
+          }
+        )}
+        <JCButton
+          buttonType={ButtonTypes.AdminAdd}
+          onPress={() => {
+            const z = this.state.currentEpisode
+            if (z.details == null) z.details = []
+            z.details?.push({ type: ResourceDetailType.DefaultYoutube })
+            this.setState({ currentEpisode: z })
+          }}
+        >
+          +
+        </JCButton>
+      </>
+    )
+  }
+  renderDetailsSeries(
+    resourceState: ResourceState,
+    resourceActions: ResourceActions
+  ): React.ReactNode {
+    return (
+      <>
+        {this.state.currentSeries.details?.map(
+          (item: ResourceDetailInput | null, index: number) => {
+            return (
+              <>
+                <Picker
+                  mode="dropdown"
+                  style={{
+                    width: "100%",
+                    marginTop: 10,
+                    marginBottom: 30,
+                    fontSize: 16,
+                    height: 30,
+                    flexGrow: 0,
+                    paddingTop: 3,
+                    paddingBottom: 3,
+                  }}
+                  selectedValue={item?.type ?? undefined}
+                  onValueChange={(value: any) => {
+                    const tmp = this.state.currentSeries
+                    tmp.details[index].type = value
+                    this.setState({ currentSeries: tmp })
+                  }}
+                >
+                  {Object.keys(ResourceDetailType).map((org) => {
+                    return <Picker.Item key={org} label={org} value={org} />
+                  })}
+                </Picker>
+                <View style={{ flexDirection: "row" }}>
+                  <Text>Name: </Text>
+                  <TextInput
+                    onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
+                      const tmp = this.state.currentSeries
+                      tmp.details![index]!.name = val.nativeEvent.text
+                      this.setState({ currentSeries: tmp })
+                    }}
+                    placeholder="name"
+                    multiline={false}
+                    value={item?.name ?? ""}
+                  ></TextInput>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text>Text: </Text>
+                  <TextInput
+                    onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
+                      const tmp = this.state.currentSeries
+                      tmp.details![index]!.text = val.nativeEvent.text
+                      this.setState({ currentSeries: tmp })
+                    }}
+                    placeholder="text"
+                    multiline={false}
+                    value={item?.text ?? ""}
+                  ></TextInput>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <Text>Value: </Text>
+                  <TextInput
+                    onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
+                      const tmp = this.state.currentSeries
+                      tmp.details![index]!.value = val.nativeEvent.text
+                      this.setState({ currentSeries: tmp })
+                    }}
+                    placeholder="value"
+                    multiline={false}
+                    value={item?.value ?? ""}
+                  ></TextInput>
+                </View>
+                <View>
+                  <JCButton
+                    buttonType={ButtonTypes.Transparent}
+                    onPress={() => {
+                      null
+                    }}
+                  >
+                    <Ionicons
+                      size={32}
+                      name="ios-image"
+                      style={this.styles.style.resourceImageIcon}
+                    />
+                  </JCButton>
+                  <input
+                    style={{
+                      fontSize: 200,
+                      position: "absolute",
+                      top: "0px",
+                      right: "0px",
+                      opacity: "0",
+                    }}
+                    type="file"
+                    accept="image/*"
+                    onChange={async (e) => {
+                      if (resourceState.resourceData == null) return null
+                      if (resourceState.currentSeries == null) return null
+                      console.log("Uploading")
+                      if (e.target.files) {
+                        const file = e.target.files[0]
+                        const lastDot = file.name.lastIndexOf(".")
+                        const ext = file.name.substring(lastDot + 1)
+                        const user = await Auth.currentCredentials()
+                        const userId = user.identityId
+
+                        const fn =
+                          "resources/upload/group-" +
+                          resourceState.resourceData.id +
+                          "-resource-" +
+                          this.state.currentSeries.id +
+                          "-details-" +
+                          new Date().getTime() +
+                          "-upload." +
+                          ext
+                        console.log({ filename: fn })
+
+                        const fnSave = fn
+                          .replace("/upload", "")
+                          .replace("-upload.", "-[size].")
+                          .replace("." + ext, ".png")
+
+                        console.log("putting")
+                        await Storage.put(fn, file, {
+                          level: "protected",
+                          contentType: file.type,
+                          identityId: userId,
+                        })
+                          .then(() => {
+                            console.log("getting")
+                            return Storage.get(fn, {
+                              level: "protected",
+                              identityId: userId,
+                            }).then((result2) => {
+                              console.log({ fileInfo: result2 })
+                              let tmp = this.state.currentSeries
+                              tmp.details![index]!.image = {
+                                userId: userId,
+                                filenameUpload: fn,
+                                filenameLarge: fnSave.replace("[size]", "large"),
+                                filenameMedium: fnSave.replace("[size]", "medium"),
+                                filenameSmall: fnSave.replace("[size]", "small"),
+                              }
+                              console.log({ settings: tmp })
+                              this.setState({ currentSeries: tmp })
+                              //this.updatePageItem(menuItemIndex, pageItemIndex, tempPageItems)
+                            })
+
+                            // console.log(result)
+                          })
+                          .catch((err: any) => console.log(err))
+                      }
+                    }}
+                  />
+                </View>
+              </>
+            )
+          }
+        )}
+        <JCButton
+          buttonType={ButtonTypes.AdminAdd}
+          onPress={() => {
+            const z = this.state.currentSeries
+            if (z.details == null) z.details = []
+            z?.details?.push({ type: ResourceDetailType.DefaultYoutube })
+            this.setState({ currentSeries: z })
+          }}
+        >
+          +
+        </JCButton>
+      </>
+    )
+  }
+  renderResourceEditModal(
+    resourceState: ResourceState,
+    resourceActions: ResourceActions
+  ): React.ReactNode {
     return (
       this.state.showResourceEditModal && (
         <JCModal
@@ -235,7 +618,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                 }}
                 placeholder="title"
                 multiline={false}
-                value={this.state.currentResource.title}
+                value={this.state.currentResource.title ?? ""}
               ></TextInput>
             </View>
             <View style={{ flexDirection: "row" }}>
@@ -248,22 +631,10 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                 }}
                 placeholder="subtitle"
                 multiline={false}
-                value={this.state.currentResource.subtitle}
+                value={this.state.currentResource.subtitle ?? ""}
               ></TextInput>
             </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text>type: </Text>
-              <TextInput
-                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
-                  const tmp = this.state.currentResource
-                  tmp.type = val.nativeEvent.text
-                  this.setState({ currentResource: tmp })
-                }}
-                placeholder="type"
-                multiline={false}
-                value={this.state.currentResource.type}
-              ></TextInput>
-            </View>
+
             <View>
               <JCButton
                 buttonType={ButtonTypes.Transparent}
@@ -353,23 +724,10 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                 }}
                 placeholder="description"
                 multiline={true}
-                value={this.state.currentResource.description}
+                value={this.state.currentResource.description ?? ""}
               ></TextInput>
             </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text>whoIsThisFor: </Text>
-              <TextInput
-                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
-                  const tmp = this.state.currentResource
-                  tmp.whoIsThisFor = val.nativeEvent.text
-                  this.setState({ currentResource: tmp })
-                }}
-                placeholder="whoIsThisFor"
-                multiline={false}
-                value={this.state.currentResource.whoIsThisFor}
-              ></TextInput>
-            </View>
-
+            {this.renderDetailsResource(resourceState, resourceActions)}
             <JCButton
               buttonType={ButtonTypes.Solid}
               onPress={() => {
@@ -384,7 +742,10 @@ class ResourceContentImpl extends JCComponent<Props, State> {
       )
     )
   }
-  renderSeriesEditModal(resourceState: ResourceState, resourceActions: ResourceActions) {
+  renderSeriesEditModal(
+    resourceState: ResourceState,
+    resourceActions: ResourceActions
+  ): React.ReactNode {
     return (
       this.state.showSeriesEditModal && (
         <JCModal
@@ -405,7 +766,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                 }}
                 placeholder="title"
                 multiline={false}
-                value={this.state.currentSeries.title}
+                value={this.state.currentSeries.title ?? ""}
               ></TextInput>
             </View>
 
@@ -419,33 +780,171 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                 }}
                 placeholder="description"
                 multiline={false}
-                value={this.state.currentSeries.description}
+                value={this.state.currentSeries.description ?? ""}
               ></TextInput>
             </View>
+
+            <View>
+              <JCButton
+                buttonType={ButtonTypes.Transparent}
+                onPress={() => {
+                  null
+                }}
+              >
+                <Ionicons size={32} name="ios-image" style={this.styles.style.resourceImageIcon} />
+              </JCButton>
+              <input
+                style={{
+                  fontSize: 200,
+                  position: "absolute",
+                  top: "0px",
+                  right: "0px",
+                  opacity: "0",
+                }}
+                type="file"
+                accept="image/*"
+                onChange={async (e) => {
+                  if (resourceState.resourceData == null) return null
+                  if (resourceState.currentResource == null) return null
+                  console.log("Uploading")
+                  if (e.target.files) {
+                    const file = e.target.files[0]
+                    const lastDot = file.name.lastIndexOf(".")
+                    const ext = file.name.substring(lastDot + 1)
+                    const user = await Auth.currentCredentials()
+                    const userId = user.identityId
+
+                    const fn =
+                      "resources/upload/group-" +
+                      resourceState.resourceData.id +
+                      "-series-" +
+                      this.state.currentSeries?.id +
+                      "-" +
+                      new Date().getTime() +
+                      "-upload." +
+                      ext
+                    console.log({ filename: fn })
+
+                    const fnSave = fn
+                      .replace("/upload", "")
+                      .replace("-upload.", "-[size].")
+                      .replace("." + ext, ".png")
+
+                    console.log("putting")
+                    await Storage.put(fn, file, {
+                      level: "protected",
+                      contentType: file.type,
+                      identityId: userId,
+                    })
+                      .then(() => {
+                        console.log("getting")
+                        return Storage.get(fn, {
+                          level: "protected",
+                          identityId: userId,
+                        }).then((result2) => {
+                          console.log({ fileInfo: result2 })
+                          let tmp = this.state.currentSeries
+                          tmp.imageFile = {
+                            userId: userId,
+                            filenameUpload: fn,
+                            filenameLarge: fnSave.replace("[size]", "large"),
+                            filenameMedium: fnSave.replace("[size]", "medium"),
+                            filenameSmall: fnSave.replace("[size]", "small"),
+                          }
+                          console.log({ settings: tmp })
+                          this.setState({ currentSeries: tmp })
+                          //this.updatePageItem(menuItemIndex, pageItemIndex, tempPageItems)
+                        })
+
+                        // console.log(result)
+                      })
+                      .catch((err: any) => console.log(err))
+                  }
+                }}
+              />
+            </View>
+
             <View style={{ flexDirection: "row" }}>
-              <Text>type: </Text>
+              <Text>status: </Text>
               <TextInput
                 onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
                   const tmp = this.state.currentSeries
-                  tmp.type = val.nativeEvent.text
+                  tmp.status = val.nativeEvent.text
                   this.setState({ currentSeries: tmp })
                 }}
-                placeholder="type"
+                placeholder="status"
                 multiline={false}
-                value={this.state.currentSeries.type}
+                value={this.state.currentSeries.status ?? ""}
               ></TextInput>
             </View>
+            {this.renderDetailsSeries(resourceState, resourceActions)}
+            <JCButton
+              buttonType={ButtonTypes.Solid}
+              onPress={() => {
+                this.saveSeries(resourceState, resourceActions)
+                this.setState({ showSeriesEditModal: false })
+              }}
+            >
+              Save
+            </JCButton>
+          </>
+        </JCModal>
+      )
+    )
+  }
+  renderEpisodeEditModal(
+    resourceState: ResourceState,
+    resourceActions: ResourceActions
+  ): React.ReactNode {
+    return (
+      this.state.showEpisodeEditModal && (
+        <JCModal
+          visible={this.state.showEpisodeEditModal}
+          title="Edit Episode"
+          onHide={() => {
+            this.setState({ showEpisodeEditModal: false })
+          }}
+        >
+          <>
             <View style={{ flexDirection: "row" }}>
-              <Text>whoIsThisFor: </Text>
+              <Text>Title: </Text>
               <TextInput
                 onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
-                  const tmp = this.state.currentSeries
-                  tmp.whoIsThisFor = val.nativeEvent.text
-                  this.setState({ currentSeries: tmp })
+                  const tmp = this.state.currentEpisode
+                  tmp.title = val.nativeEvent.text
+                  this.setState({ currentEpisode: tmp })
                 }}
-                placeholder="whoIsThisFor"
+                placeholder="title"
                 multiline={false}
-                value={this.state.currentSeries.whoIsThisFor}
+                value={this.state.currentEpisode.title ?? ""}
+              ></TextInput>
+            </View>
+
+            <View style={{ flexDirection: "row" }}>
+              <Text>episodeNumber: </Text>
+              <TextInput
+                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
+                  const tmp = this.state.currentEpisode
+                  tmp.episodeNumber = parseInt(val.nativeEvent.text)
+                  this.setState({ currentEpisode: tmp })
+                }}
+                placeholder="episodeNumber"
+                multiline={false}
+                value={this.state.currentEpisode.episodeNumber?.toString() ?? "0"}
+              ></TextInput>
+            </View>
+
+            <View style={{ flexDirection: "row" }}>
+              <Text>description: </Text>
+              <TextInput
+                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
+                  const tmp = this.state.currentEpisode
+                  tmp.description = val.nativeEvent.text
+                  this.setState({ currentEpisode: tmp })
+                }}
+                placeholder="description"
+                multiline={false}
+                value={this.state.currentEpisode.description ?? ""}
               ></TextInput>
             </View>
             <View>
@@ -481,10 +980,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                     const fn =
                       "resources/upload/group-" +
                       resourceState.resourceData.id +
-                      "-resource-" +
-                      this.state.currentResource.id +
-                      "-series-" +
-                      this.state.currentSeries.id +
+                      "-episode-" +
+                      this.state.currentEpisode.id +
                       "-" +
                       new Date().getTime() +
                       "-upload." +
@@ -509,8 +1006,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                           identityId: userId,
                         }).then((result2) => {
                           console.log({ fileInfo: result2 })
-                          let tmp = this.state.currentSeries
-                          tmp.image = {
+                          let tmp = this.state.currentEpisode
+                          tmp.imageFile = {
                             userId: userId,
                             filenameUpload: fn,
                             filenameLarge: fnSave.replace("[size]", "large"),
@@ -518,7 +1015,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                             filenameSmall: fnSave.replace("[size]", "small"),
                           }
                           console.log({ settings: tmp })
-                          this.setState({ currentSeries: tmp })
+                          this.setState({ currentEpisode: tmp })
                           //this.updatePageItem(menuItemIndex, pageItemIndex, tempPageItems)
                         })
 
@@ -529,235 +1026,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                 }}
               />
             </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text>category: </Text>
-              <TextInput
-                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
-                  const tmp = this.state.currentSeries
-                  tmp.category = val.nativeEvent.text
-                  this.setState({ currentSeries: tmp })
-                }}
-                placeholder="category"
-                multiline={false}
-                value={this.state.currentSeries.category}
-              ></TextInput>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text>status: </Text>
-              <TextInput
-                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
-                  const tmp = this.state.currentSeries
-                  tmp.status = val.nativeEvent.text
-                  this.setState({ currentSeries: tmp })
-                }}
-                placeholder="status"
-                multiline={false}
-                value={this.state.currentSeries.status}
-              ></TextInput>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text>allFiles: </Text>
-              <TextInput
-                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
-                  const tmp = this.state.currentSeries
-                  tmp.allFiles = val.nativeEvent.text
-                  this.setState({ currentSeries: tmp })
-                }}
-                placeholder="allFiles"
-                multiline={false}
-                value={this.state.currentSeries.allFiles}
-              ></TextInput>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text>playlist: </Text>
-              <TextInput
-                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
-                  const tmp = this.state.currentSeries
-                  tmp.playlist = val.nativeEvent.text
-                  this.setState({ currentSeries: tmp })
-                }}
-                placeholder="playlist"
-                multiline={false}
-                value={this.state.currentSeries.playlist}
-              ></TextInput>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text>playlistImage: </Text>
-              <TextInput
-                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
-                  const tmp = this.state.currentSeries
-                  tmp.playlistImage = val.nativeEvent.text
-                  this.setState({ currentSeries: tmp })
-                }}
-                placeholder="playlistImage"
-                multiline={false}
-                value={this.state.currentSeries.playlistImage}
-              ></TextInput>
-            </View>
-            <JCButton
-              buttonType={ButtonTypes.Solid}
-              onPress={() => {
-                this.saveSeries(resourceState, resourceActions)
-                this.setState({ showSeriesEditModal: false })
-              }}
-            >
-              Save
-            </JCButton>
-          </>
-        </JCModal>
-      )
-    )
-  }
-  renderEpisodeEditModal(resourceState: ResourceState, resourceActions: ResourceActions) {
-    return (
-      this.state.showEpisodeEditModal && (
-        <JCModal
-          visible={this.state.showEpisodeEditModal}
-          title="Edit Episode"
-          onHide={() => {
-            this.setState({ showEpisodeEditModal: false })
-          }}
-        >
-          <>
-            <View style={{ flexDirection: "row" }}>
-              <Text>Title: </Text>
-              <TextInput
-                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
-                  const tmp = this.state.currentEpisode
-                  tmp.title = val.nativeEvent.text
-                  this.setState({ currentEpisode: tmp })
-                }}
-                placeholder="title"
-                multiline={false}
-                value={this.state.currentEpisode.title}
-              ></TextInput>
-            </View>
-
-            <View style={{ flexDirection: "row" }}>
-              <Text>episodeNumber: </Text>
-              <TextInput
-                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
-                  const tmp = this.state.currentEpisode
-                  tmp.episodeNumber = val.nativeEvent.text
-                  this.setState({ currentEpisode: tmp })
-                }}
-                placeholder="episodeNumber"
-                multiline={false}
-                value={this.state.currentEpisode.episodeNumber}
-              ></TextInput>
-            </View>
-
-            <View style={{ flexDirection: "row" }}>
-              <Text>type: </Text>
-              <TextInput
-                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
-                  const tmp = this.state.currentEpisode
-                  tmp.type = val.nativeEvent.text
-                  this.setState({ currentEpisode: tmp })
-                }}
-                placeholder="type"
-                multiline={false}
-                value={this.state.currentEpisode.type}
-              ></TextInput>
-            </View>
-
-            <View style={{ flexDirection: "row" }}>
-              <Text>description: </Text>
-              <TextInput
-                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
-                  const tmp = this.state.currentEpisode
-                  tmp.description = val.nativeEvent.text
-                  this.setState({ currentEpisode: tmp })
-                }}
-                placeholder="description"
-                multiline={false}
-                value={this.state.currentEpisode.description}
-              ></TextInput>
-            </View>
-
-            <View style={{ flexDirection: "row" }}>
-              <Text>whoIsThisFor: </Text>
-              <TextInput
-                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
-                  const tmp = this.state.currentEpisode
-                  tmp.whoIsThisFor = val.nativeEvent.text
-                  this.setState({ currentEpisode: tmp })
-                }}
-                placeholder="whoIsThisFor"
-                multiline={false}
-                value={this.state.currentEpisode.whoIsThisFor}
-              ></TextInput>
-            </View>
-
-            <View style={{ flexDirection: "row" }}>
-              <Text>videoPreview: </Text>
-              <TextInput
-                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
-                  const tmp = this.state.currentEpisode
-                  tmp.videoPreview = val.nativeEvent.text
-                  this.setState({ currentEpisode: tmp })
-                }}
-                placeholder="videoPreview"
-                multiline={false}
-                value={this.state.currentEpisode.videoPreview}
-              ></TextInput>
-            </View>
-
-            <View style={{ flexDirection: "row" }}>
-              <Text>videoLowRes: </Text>
-              <TextInput
-                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
-                  const tmp = this.state.currentEpisode
-                  tmp.videoLowRes = val.nativeEvent.text
-                  this.setState({ currentEpisode: tmp })
-                }}
-                placeholder="videoLowRes"
-                multiline={false}
-                value={this.state.currentEpisode.videoLowRes}
-              ></TextInput>
-            </View>
-
-            <View style={{ flexDirection: "row" }}>
-              <Text>videoHiRes: </Text>
-              <TextInput
-                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
-                  const tmp = this.state.currentEpisode
-                  tmp.videoHiRes = val.nativeEvent.text
-                  this.setState({ currentEpisode: tmp })
-                }}
-                placeholder="videoHiRes"
-                multiline={false}
-                value={this.state.currentEpisode.videoHiRes}
-              ></TextInput>
-            </View>
-
-            <View style={{ flexDirection: "row" }}>
-              <Text>lessonPlan: </Text>
-              <TextInput
-                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
-                  const tmp = this.state.currentEpisode
-                  tmp.lessonPlan = val.nativeEvent.text
-                  this.setState({ currentEpisode: tmp })
-                }}
-                placeholder="lessonPlan"
-                multiline={false}
-                value={this.state.currentEpisode.lessonPlan}
-              ></TextInput>
-            </View>
-
-            <View style={{ flexDirection: "row" }}>
-              <Text>activityPage: </Text>
-              <TextInput
-                onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
-                  const tmp = this.state.currentEpisode
-                  tmp.activityPage = val.nativeEvent.text
-                  this.setState({ currentEpisode: tmp })
-                }}
-                placeholder="activityPage"
-                multiline={false}
-                value={this.state.currentEpisode.activityPage}
-              ></TextInput>
-            </View>
+            {this.renderDetailsEpisode(resourceState, resourceActions)}
             <JCButton
               buttonType={ButtonTypes.Solid}
               onPress={() => {
@@ -772,7 +1041,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
       )
     )
   }
-  renderResources(resourceState: ResourceState, resourceActions: ResourceActions) {
+  renderResources(resourceState: ResourceState, resourceActions: ResourceActions): React.ReactNode {
     return (
       <View style={{ flexGrow: 1, flexDirection: "column" }}>
         <Text>Resources</Text>
@@ -843,7 +1112,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     )
   }
 
-  renderSeries(resourceState: ResourceState, resourceActions: ResourceActions) {
+  renderSeries(resourceState: ResourceState, resourceActions: ResourceActions): React.ReactNode {
     const resource: GetResourceData | null = resourceActions.getResource(
       resourceState.currentResource
     )
@@ -925,7 +1194,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
       </View>
     )
   }
-  renderEpisodes(resourceState: ResourceState, resourceActions: ResourceActions) {
+  renderEpisodes(resourceState: ResourceState, resourceActions: ResourceActions): React.ReactNode {
     const resource: GetResourceData | null = resourceActions.getResource(
       resourceState.currentResource
     )

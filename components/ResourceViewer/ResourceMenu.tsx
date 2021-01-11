@@ -90,6 +90,7 @@ class ResourceMenu extends JCComponent<Props> {
                 save={this.props.save}
                 delete={this.props.delete}
                 pageItem={this.props.pageItem}
+                hideEditButton={this.props.hideEditButton}
               ></PageItemSettings>
               {resourceState.resourceData?.menuItems?.items?.map((item, index: number) => {
                 if (item != null)

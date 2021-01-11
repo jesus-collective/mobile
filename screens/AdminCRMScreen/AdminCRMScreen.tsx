@@ -8,12 +8,6 @@ import { Button, Container, Content, Text } from "native-base"
 import React from "react"
 import { isMobile } from "react-device-detect"
 import { Picker, TextInput, View } from "react-native"
-import {
-  CreateOrganizationInput,
-  CreateOrganizationMemberInput,
-  CreateUserInput,
-  GetProductQuery,
-} from "src/API"
 import { v4 as uuidv4 } from "uuid"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
@@ -22,6 +16,12 @@ import HeaderAdmin from "../../components/HeaderAdmin/HeaderAdmin"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
+import {
+  CreateOrganizationInput,
+  CreateOrganizationMemberInput,
+  CreateUserInput,
+  GetProductQuery,
+} from "../../src/API"
 import * as customQueries from "../../src/graphql-custom/queries"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"

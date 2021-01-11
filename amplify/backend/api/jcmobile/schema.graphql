@@ -895,6 +895,7 @@ enum ResourcePageItemStyle{
   Column5050
   CardManual
   CardAuto
+  CardLarge
   RichTextH1
   RichTextH2
   RichTextH3
@@ -923,6 +924,7 @@ type ResourcePageItem{
   color:String
   image:Image
   url:String
+  order:Int
   pageItemsLeft:[ResourcePageItem]
   pageItemsRight:[ResourcePageItem]
 }
@@ -945,6 +947,7 @@ type Resource
   description: String
   whoIsThisFor: String
   extendedDescription: String
+  details:[ResourceDetail]
   series: [ResourceSeries] @connection(name:"r2",keyField: "seriesID")
   resourceID:ID!
   resourceRoot: ResourceRoot! @connection(name:"r1",keyField:"resourceID")
@@ -964,19 +967,30 @@ type ResourceSeries
   owner:String
   type: String
   title: String
+  order:Int
   description: String
   whoIsThisFor: String
-  image: String
+  imageFile:Image
   category: [String]
   status: String
-  allFiles: String
-  playlist: String
-  playlistImage: String
+  details:[ResourceDetail]
   episodes: [ResourceEpisode] @connection(name:"r3",keyField: "episodeID")
   seriesID: ID!
   parentResource: Resource! @connection(name:"r2",keyField: "seriesID")
 }
-
+enum ResourceDetailType{
+  DefaultYoutube
+  Image
+  Button
+  Link
+}
+type ResourceDetail{
+  type:ResourceDetailType
+  name:String
+  text:String
+  value:String
+  image:Image
+}
 type ResourceEpisode 
 @model 
 @auth(rules: [
@@ -992,12 +1006,9 @@ type ResourceEpisode
   type: String
   title: String
   description: String
+  imageFile:Image
   whoIsThisFor: String
-  videoPreview: String
-  videoLowRes: String
-  videoHiRes: String
-  lessonPlan: String
-  activityPage: String
+  details:[ResourceDetail]
   episodeID:ID!
   parentSeries: ResourceSeries! @connection(name:"r3",keyField: "episodeID")
 }
