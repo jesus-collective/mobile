@@ -4,10 +4,11 @@ import Amplify, { Auth, Storage } from "aws-amplify"
 import { Card, CardItem, View } from "native-base"
 import React from "react"
 import { Animated, Image, Picker, Text } from "react-native"
+import DropDownPicker from "react-native-dropdown-picker"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import EditableText from "../../components/Forms/EditableText"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
-import { ResourceDetailType, ResourcePageItemStyle } from "../../src/API"
+import { ResourceDetailType, ResourcePageItemStyle, ResourcePageItemType } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
 import { ResourceSetupProp } from "../../src/types"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
@@ -442,12 +443,13 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                   window.location = this.props.pageItem.url ?? ""
                 } else {
                   console.log("NAVIGATE")
-                  this.props.navigation.navigate("ResourceDisplayScreen", {
-                    id: this.props.resourceState.groupData?.id,
-                    resource: this.props.pageItem.resourceID,
-                    series: this.props.pageItem.seriesID,
-                    episode: this.props.pageItem.episodeID,
-                  })
+                  if (this.props.pageItem.episodeID == null)
+                    this.props.navigation.navigate("ResourceDisplayScreen", {
+                      id: this.props.resourceState.groupData?.id,
+                      resource: this.props.pageItem.resourceID,
+                      series: this.props.pageItem.seriesID,
+                      episode: this.props.pageItem.episodeID,
+                    })
                 }
               }}
             >
@@ -509,6 +511,74 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                     value={this.props.pageItem.title1 ?? ""}
                     isEditable={false}
                   ></EditableText>
+                  <DropDownPicker
+                    zIndex={5000 + this.props.pageItemIndex.length}
+                    items={[
+                      {
+                        label: "Menu",
+                        value: ResourcePageItemType.Menu,
+                        icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
+                        hidden: true,
+                      },
+                      {
+                        label: "Header",
+                        value: ResourcePageItemType.Header,
+                        icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
+                      },
+                      {
+                        label: "Rich Text",
+                        value: ResourcePageItemType.RichText,
+                        icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
+                      },
+                      {
+                        label: "List",
+                        value: ResourcePageItemType.List,
+                        icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
+                      },
+                      {
+                        label: "Grid",
+                        value: ResourcePageItemType.Grid,
+                        icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
+                      },
+                      {
+                        label: "Column",
+                        value: ResourcePageItemType.Column,
+                        icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
+                      },
+                      {
+                        label: "Card",
+                        value: ResourcePageItemType.Card,
+                        icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
+                      },
+                    ]}
+                    placeholder="Download"
+                    containerStyle={{
+                      height: 40,
+                      width: 160,
+                      zIndex: 5000 + this.props.pageItemIndex.length,
+                    }}
+                    dropDownStyle={{
+                      backgroundColor: "#fafafa",
+                      width: 150,
+                      zIndex: 5000 + this.props.pageItemIndex.length,
+                    }}
+                    style={{
+                      backgroundColor: "#fafafa",
+                      zIndex: 5000 + this.props.pageItemIndex.length,
+                    }}
+                    itemStyle={{
+                      justifyContent: "flex-start",
+                      width: 100,
+                      zIndex: 5000 + this.props.pageItemIndex.length,
+                    }}
+                    labelStyle={{
+                      fontSize: 14,
+                      textAlign: "left",
+                      color: "#000",
+                      zIndex: 5000 + this.props.pageItemIndex.length,
+                    }}
+                    onChangeItem={(item) => {}}
+                  />
                 </CardItem>
                 <CardItem>
                   <EditableText

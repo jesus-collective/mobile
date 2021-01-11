@@ -13,6 +13,7 @@ import PageConfigModal from "./PageConfigModal"
 import ResourceCard from "./ResourceCard"
 import ResourceColumn from "./ResourceColumn"
 import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
+import ResourceDropDownPicker from "./ResourceDropDownPicker"
 import ResourceGrid from "./ResourceGrid"
 import ResourceHeader from "./ResourceHeader"
 import ResourceList from "./ResourceList"
@@ -322,6 +323,19 @@ class ResourceContentImpl extends JCComponent<Props, State> {
             hideEditButton={this.props.hideEditButton}
             pageItem={item}
           ></ResourceCard>
+        )
+      case ResourcePageItemType.DropDownPicker:
+        return (
+          <ResourceDropDownPicker
+            key={pageItemIndex}
+            resourceActions={resourceActions}
+            resourceState={resourceState}
+            pageItemIndex={this.props.pageItemIndex?.concat(pageItemIndex)}
+            save={this.save}
+            delete={this.delete}
+            hideEditButton={this.props.hideEditButton}
+            pageItem={item}
+          ></ResourceDropDownPicker>
         )
       case ResourcePageItemType.List:
         return (

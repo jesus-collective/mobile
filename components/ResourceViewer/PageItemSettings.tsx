@@ -8,6 +8,7 @@ import JCComponent from "../../components/JCComponent/JCComponent"
 import { ResourcePageItemInput, ResourcePageItemType } from "../../src/API"
 import { ResourceCardImpl } from "./ResourceCard"
 import ResourceColumn from "./ResourceColumn"
+import ResourceDropDownPicker from "./ResourceDropDownPicker"
 import ResourceGrid from "./ResourceGrid"
 import ResourceHeader from "./ResourceHeader"
 import ResourceList from "./ResourceList"
@@ -61,6 +62,8 @@ export default class PageItemSettings extends JCComponent<ResourceSetupProp, Sta
         return ResourceList.renderAdmin(this)
       case ResourcePageItemType.Grid:
         return ResourceGrid.renderAdmin(this)
+      case ResourcePageItemType.DropDownPicker:
+        return ResourceDropDownPicker.renderAdmin(this)
     }
   }
   render() {

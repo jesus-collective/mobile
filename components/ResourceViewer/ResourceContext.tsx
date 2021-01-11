@@ -105,7 +105,7 @@ export type ResourceActions = {
   getEpisodeByID(
     resourceID: string | null | undefined,
     seriesID: string | null | undefined,
-    episodeID: string | null
+    episodeID: string | null | undefined
   ): GetResourceEpisodeData | null
 
   getMenuItem(menuIndex: number | null): any
@@ -155,9 +155,9 @@ export const ResourceContext = React.createContext<ResourceContextType>({
     getSeries: () => {},
     getEpisode: () => {},
     getMenuItem: () => {},
-    getResourceByID: () => {},
-    getSeriesByID: () => {},
-    getEpisodeByID: () => {},
+    getResourceByID: () => null,
+    getSeriesByID: () => null,
+    getEpisodeByID: () => null,
   },
   resourceState: undefined,
 })

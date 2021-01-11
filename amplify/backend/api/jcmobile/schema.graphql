@@ -886,6 +886,7 @@ enum ResourcePageItemType{
   Grid
   Column
   Card
+  DropDownPicker
 }
 enum ResourcePageItemStyle{
   MenuTop

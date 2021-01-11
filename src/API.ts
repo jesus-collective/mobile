@@ -688,6 +688,7 @@ export enum ResourcePageItemType {
   Grid = "Grid",
   Column = "Column",
   Card = "Card",
+  DropDownPicker = "DropDownPicker",
 }
 
 

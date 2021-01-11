@@ -1,11 +1,10 @@
 import React from "react"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import { ResourcePageItemStyle, ResourcePageItemType } from "../../src/API"
-import { ResourceSetupProp } from "../../src/types"
 import ResourceContent from "./ResourceContent"
 import { ResourceContext } from "./ResourceContext"
 
-interface Props extends ResourceSetupProp {
+interface Props {
   displayResource?: string
   displaySeries?: string
   displayEpisode?: string
@@ -83,6 +82,11 @@ class ResourceDisplay extends JCComponent<Props, State> {
                     {
                       type: ResourcePageItemType.RichText,
                       title1: this.generateRichText(description),
+                      style: ResourcePageItemStyle.RichTextBody1,
+                    },
+                    {
+                      type: ResourcePageItemType.DropDownPicker,
+                      title1: "Options",
                       style: ResourcePageItemStyle.RichTextBody1,
                     },
                     {
