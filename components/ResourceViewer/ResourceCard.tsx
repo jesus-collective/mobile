@@ -98,7 +98,8 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                     return <Picker.Item key={org} label={org} value={org} />
                   })}
               </Picker>
-              {page.state.settings.style == ResourcePageItemStyle.CardManual ? (
+              {page.state.settings.style == ResourcePageItemStyle.CardManual ||
+              page.state.settings.style == null ? (
                 <>
                   <Text>Title 1:</Text>
                   <EditableText
@@ -642,99 +643,99 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
           }
           const youtubeID = this.getYoutubeId(item)
           return (
-            <TouchableOpacity
-              onPress={() => {
-                if (this.props.pageItem.url) {
-                  window.location = this.props.pageItem.url ?? ""
-                } else {
-                  console.log("NAVIGATE")
-                  this.props.navigation.navigate("ResourceDisplayScreen", {
-                    id: this.props.resourceState.groupData?.id,
-                    resource: this.props.pageItem.resourceID,
-                    series: this.props.pageItem.seriesID,
-                    episode: this.props.pageItem.episodeID,
-                  })
-                }
-              }}
-            >
-              <Card style={this.styles.style.resourceGroupCard}>
-                <CardItem>
-                  {youtubeID && (
-                    <div>
-                      <iframe
-                        title="Teaching Pre-roll"
-                        className="LiveVideoPlayerIframe"
-                        allowFullScreen
-                        src={
-                          "https://www.youtube.com/embed/" +
-                          youtubeID +
-                          "?color=white&autoplay=1&cc_load_policy=1&showTitle=0&controls=1&modestbranding=1&rel=0"
-                        }
-                        frameBorder="0"
-                        allow="speakers; fullscreen; accelerometer; encrypted-media; gyroscope; picture-in-picture"
-                      ></iframe>
-                      <br />
-                    </div>
-                  )}
-                  {this.state.imageUrl && !youtubeID ? (
-                    <Animated.View
-                      onLayout={this.fadeAnimation}
-                      style={[
-                        this.styles.style.resourceHeaderImgView,
-                        { opacity: this.state.fadeValue },
-                      ]}
-                    >
-                      <Image
-                        style={this.styles.style.resourceHeaderImg}
-                        source={this.state.imageUrl}
-                        onError={() => {
-                          this.getImage(this.props.pageItem.image)
-                        }}
-                      ></Image>
-                    </Animated.View>
-                  ) : null}
-                </CardItem>
+            <>
+              <TouchableOpacity
+                onPress={() => {
+                  if (this.props.pageItem.url) {
+                    window.location = this.props.pageItem.url ?? ""
+                  } else {
+                    console.log("NAVIGATE")
+                    this.props.navigation.navigate("ResourceDisplayScreen", {
+                      id: this.props.resourceState.groupData?.id,
+                      resource: this.props.pageItem.resourceID,
+                      series: this.props.pageItem.seriesID,
+                      episode: this.props.pageItem.episodeID,
+                    })
+                  }
+                }}
+              >
+                <Card style={this.styles.style.resourceGroupCard}>
+                  <CardItem>
+                    {youtubeID && (
+                      <div>
+                        <iframe
+                          title="Teaching Pre-roll"
+                          className="LiveVideoPlayerIframe"
+                          allowFullScreen
+                          src={
+                            "https://www.youtube.com/embed/" +
+                            youtubeID +
+                            "?color=white&autoplay=1&cc_load_policy=1&showTitle=0&controls=1&modestbranding=1&rel=0"
+                          }
+                          frameBorder="0"
+                          allow="speakers; fullscreen; accelerometer; encrypted-media; gyroscope; picture-in-picture"
+                        ></iframe>
+                        <br />
+                      </div>
+                    )}
+                    {this.state.imageUrl && !youtubeID ? (
+                      <Animated.View
+                        onLayout={this.fadeAnimation}
+                        style={[
+                          this.styles.style.resourceHeaderImgView,
+                          { opacity: this.state.fadeValue },
+                        ]}
+                      >
+                        <Image
+                          style={this.styles.style.resourceHeaderImg}
+                          source={this.state.imageUrl}
+                          onError={() => {
+                            this.getImage(this.props.pageItem.image)
+                          }}
+                        ></Image>
+                      </Animated.View>
+                    ) : null}
+                  </CardItem>
 
-                <CardItem>
-                  <EditableText
-                    multiline={true}
-                    textStyle={{ margin: 10 }}
-                    inputStyle={{ margin: 10 }}
-                    value={this.props.pageItem.title1 ?? ""}
-                    isEditable={false}
-                  ></EditableText>
-                </CardItem>
-                <CardItem>
-                  <EditableText
-                    multiline={true}
-                    textStyle={{ margin: 10 }}
-                    inputStyle={{ margin: 10 }}
-                    value={this.props.pageItem.title2 ?? ""}
-                    isEditable={false}
-                  ></EditableText>
-                </CardItem>
-                <CardItem>
-                  <EditableText
-                    multiline={true}
-                    textStyle={{ margin: 10 }}
-                    inputStyle={{ margin: 10 }}
-                    value={this.props.pageItem.description1 ?? ""}
-                    isEditable={false}
-                  ></EditableText>
-                </CardItem>
-                <CardItem>
-                  <PageItemSettings
-                    resourceActions={this.props.resourceActions}
-                    resourceState={this.props.resourceState}
-                    pageItemIndex={this.props.pageItemIndex}
-                    save={this.props.save}
-                    delete={this.props.delete}
-                    pageItem={this.props.pageItem}
-                    hideEditButton={this.props.hideEditButton}
-                  ></PageItemSettings>
-                </CardItem>
-              </Card>
-            </TouchableOpacity>
+                  <CardItem>
+                    <EditableText
+                      multiline={true}
+                      textStyle={{ margin: 10 }}
+                      inputStyle={{ margin: 10 }}
+                      value={this.props.pageItem.title1 ?? ""}
+                      isEditable={false}
+                    ></EditableText>
+                  </CardItem>
+                  <CardItem>
+                    <EditableText
+                      multiline={true}
+                      textStyle={{ margin: 10 }}
+                      inputStyle={{ margin: 10 }}
+                      value={this.props.pageItem.title2 ?? ""}
+                      isEditable={false}
+                    ></EditableText>
+                  </CardItem>
+                  <CardItem>
+                    <EditableText
+                      multiline={true}
+                      textStyle={{ margin: 10 }}
+                      inputStyle={{ margin: 10 }}
+                      value={this.props.pageItem.description1 ?? ""}
+                      isEditable={false}
+                    ></EditableText>
+                  </CardItem>
+                </Card>
+              </TouchableOpacity>
+              <PageItemSettings
+                resourceActions={this.props.resourceActions}
+                resourceState={this.props.resourceState}
+                pageItemIndex={this.props.pageItemIndex}
+                save={this.props.save}
+                delete={this.props.delete}
+                pageItem={this.props.pageItem}
+                hideEditButton={this.props.hideEditButton}
+              ></PageItemSettings>
+            </>
           )
         }}
       </ResourceCardImpl.Consumer>
@@ -749,6 +750,8 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
         return this.renderAutoCard()
       case ResourcePageItemStyle.CardLarge:
         return this.renderLargeCard()
+      default:
+        return this.renderManualCard()
     }
   }
   render(): React.ReactNode {
