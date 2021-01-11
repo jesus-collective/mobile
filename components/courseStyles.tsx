@@ -491,9 +491,10 @@ const courseStyles = EStyleSheet.create({
   courseDetailJCButtonRegular: {
     flexDirection: "row",
     justifyContent: "flex-end",
+    alignItems: "center",
   },
   courseDetailJCButtonMini: {
-    flexDirection: "column",
+    flexDirection: "row",
     justifyContent: "flex-end",
   },
   courseDetailJCButtonAssignments: {
@@ -595,23 +596,27 @@ const courseStyles = EStyleSheet.create({
       ? {
           flex: "auto",
           flexDirection: "row",
+          alignContent: "flex-end",
           marginTop: 30,
           borderBottomWidth: 1,
           borderBottomStyle: "solid",
           borderBottomColor: "#333333",
-          width: "95%",
-          paddingBottom: 20,
-          height: 50,
+          borderBottomOpacity: 0.5,
+          width: "100%",
+          height: 45,
+          paddingHorizontal: 25,
         }
       : {
           flex: "auto",
           flexDirection: "row",
+          alignItems: "flex-end",
           marginTop: 30,
           borderBottomWidth: 1,
           borderBottomColor: "#333333",
-          width: "95%",
-          paddingBottom: 20,
+          borderBottomOpacity: 0.5,
+          width: "100%",
           height: 50,
+          paddingHorizontal: 25,
         },
   courseMessageBoardButtonsView: {
     marginRight: 10,

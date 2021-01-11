@@ -730,7 +730,7 @@ export default class EventScreen extends JCComponent<Props, State> {
                 </Text>
               </Container>
               <Container style={this.styles.style.detailScreenRightCard}>
-                <MessageBoard style="regular" groupId={this.state.data.id}></MessageBoard>
+                <MessageBoard style="regular" groupId={this.state.data.id} replies></MessageBoard>
                 {/*  <Zoom></Zoom>*/}
               </Container>
             </Container>

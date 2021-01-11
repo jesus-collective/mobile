@@ -1,7 +1,7 @@
 import { useNavigation, useRoute } from "@react-navigation/native"
 import Amplify, { API, graphqlOperation, Storage } from "aws-amplify"
 import * as React from "react"
-import { Image, TouchableOpacity } from "react-native"
+import { Image, ImageStyle, TouchableOpacity } from "react-native"
 import awsconfig from "../../src/aws-exports"
 import * as customQueries from "../../src/graphql-custom/queries"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
@@ -12,6 +12,7 @@ interface Props {
   user: any
   size: "small" | "xsmall" | "medium" | "large" | "small2" | "small3" | "small4"
   style?: "map" | "my-people" | "courseProfile"
+  inlineStyle?: ImageStyle
   isOrg?: boolean
   linkToProfile?: boolean
   navigation?: any
@@ -124,10 +125,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
   }
 
   renderImage(): React.ReactNode {
-    return this.state.profileImage != null ? (
+    return this.state.profileImage ? (
       <Image
         style={
-          this.props.size == "xsmall"
+          this.props.inlineStyle ??
+          (this.props.size == "xsmall"
             ? { width: "20px", height: "20px", borderRadius: 18, marginRight: 5, marginBottom: 5 }
             : this.props.size == "small"
             ? this.styles.style.smallProfileImageMBoard
@@ -168,15 +170,16 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 borderRadius: 120,
                 marginRight: 10,
                 marginBottom: 15,
-              }
+              })
         }
         resizeMode={this.props.size == "xsmall" ? "contain" : "cover"}
         source={this.state.profileImage}
-      ></Image>
+      />
     ) : this.state.showEmpty || !this.state.profileImage ? (
       <Image
         style={
-          this.props.size == "xsmall"
+          this.props.inlineStyle ??
+          (this.props.size == "xsmall"
             ? { width: "20px", height: "20px", borderRadius: 18, marginRight: 5, marginBottom: 0 }
             : this.props.size == "small"
             ? {
@@ -214,11 +217,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 marginRight: 10,
                 marginLeft: 10,
                 marginBottom: 0,
-              }
+              })
         }
         resizeMode={this.props.size == "xsmall" ? "contain" : "cover"}
         source={require("../../assets/profile-placeholder.png")}
-      ></Image>
+      />
     ) : null
   }
   render(): React.ReactNode {

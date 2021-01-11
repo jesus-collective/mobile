@@ -80,7 +80,8 @@
     "request": "^2.88.2",
     "resize-observer-polyfill": "^1.5.1",
     "sentry-expo": "^2.1.2",
-    "universal-cookie": "^4.0.3"
+    "universal-cookie": "^4.0.3",
+    "zen-observable-ts": "^0.8.21"
   },
   "private": true,
   "devDependencies": {

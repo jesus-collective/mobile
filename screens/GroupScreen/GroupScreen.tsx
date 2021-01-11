@@ -655,7 +655,7 @@ export default class GroupScreen extends JCComponent<Props, State> {
                 {this.renderButtons()}
               </Container>
               <Container style={this.styles.style.detailScreenRightCard}>
-                <MessageBoard style="regular" groupId={this.state.data.id}></MessageBoard>
+                <MessageBoard replies style="regular" groupId={this.state.data.id}></MessageBoard>
               </Container>
             </Container>
           </Content>
