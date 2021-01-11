@@ -6,6 +6,7 @@ import { convertToRaw, EditorState } from "draft-js"
 import { Container, Content } from "native-base"
 import * as React from "react"
 import { v4 as uuidv4 } from "uuid"
+import Sentry from "../../components/Sentry"
 import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/UserContext"
 import {
   CreateGroupInput,
@@ -414,6 +415,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
           console.log({ "Success mutations.updateGroup": json })
         })
         .catch((err: any) => {
+          Sentry.captureException(err)
           console.log({ "Error mutations.updateGroup": err })
         })
     }
@@ -728,6 +730,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         }
       }
     } catch (e) {
+      Sentry.captureException(e)
       console.log(e)
     }
   }
@@ -827,7 +830,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       const menuItem = this.getMenuItem(menuItemIndex)
       if (menuItem) {
         let rootPageItems: ResourcePageItemInput[] = menuItem?.pageItems
-        console.log(rootPageItems)
+
         if (!rootPageItems) rootPageItems = []
         rootPageItems = this.addToRoot(rootPageItems, pageItem, pageItemIndex)
         console.log({ rootPageItems: rootPageItems })
@@ -841,15 +844,14 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
           },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
         })) as UpdateResourceMenuItemMutationResult
-        console.log(updateMenuItem)
         const temp = this.state.resourceData
-        console.log({ Root: rootPageItems })
         if (temp && temp.menuItems && temp.menuItems.items) {
           temp.menuItems.items[menuItemIndex]!.pageItems = rootPageItems
           this.setState({ resourceData: temp })
         }
       }
     } catch (e) {
+      Sentry.captureException(e)
       console.log(e)
     }
   }
@@ -875,7 +877,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
           },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
         })) as UpdateResourceMenuItemMutationResult
-        console.log(updateMenuItem)
+
         const temp = this.state.resourceData
         if (temp && temp.menuItems && temp.menuItems.items) {
           temp.menuItems.items[menuItemIndex]!.pageItems = rootPageItems
@@ -883,6 +885,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         }
       }
     } catch (e) {
+      Sentry.captureException(e)
       console.log(e)
     }
   }
@@ -903,7 +906,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
           },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
         })) as UpdateResourceMenuItemMutationResult
-        console.log(updateMenuItem)
+
         const temp = this.state.resourceData
         if (temp && temp.menuItems && temp.menuItems.items) {
           temp.menuItems.items[menuItemIndex]!.pageItems = rootPageItems
@@ -911,6 +914,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         }
       }
     } catch (e) {
+      Sentry.captureException(e)
       console.log(e)
     }
   }
@@ -937,6 +941,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         }
       }
     } catch (e) {
+      Sentry.captureException(e)
       console.log(e)
     }
   }
@@ -957,6 +962,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       await this.updateMenuItem(index, "order", (index - 1).toString())
       this.reorderMenu()
     } catch (e) {
+      Sentry.captureException(e)
       console.log(e)
     }
   }
@@ -966,6 +972,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         this.updateMenuItem(index, "order", index)
       })
     } catch (e) {
+      Sentry.captureException(e)
       console.log(e)
     }
   }
@@ -986,6 +993,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
              )
              this.setState({ data: temp })*/
     } catch (e) {
+      Sentry.captureException(e)
       console.log(e)
     }
   }
@@ -1006,6 +1014,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         this.setState({ resourceData: temp }, this.updateMenuItemOrder)
       }
     } catch (e) {
+      Sentry.captureException(e)
       console.log(e)
     }
   }
@@ -1025,6 +1034,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         this.setState({ resourceData: temp, currentResource: 0 }, this.updateResourceOrder)
       }
     } catch (e) {
+      Sentry.captureException(e)
       console.log(e)
     }
   }
@@ -1038,6 +1048,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         }
       )
     } catch (e) {
+      Sentry.captureException(e)
       console.log(e)
     }
   }
@@ -1068,6 +1079,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         }
       }
     } catch (e) {
+      Sentry.captureException(e)
       console.log(e)
     }
   }
@@ -1094,6 +1106,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         })
       }
     } catch (e) {
+      Sentry.captureException(e)
       console.log(e)
     }
   }
@@ -1104,6 +1117,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         this.updateEpisode(resourceIndex, seriesIndex, index, "order", index.toString())
       })
     } catch (e) {
+      Sentry.captureException(e)
       console.log(e)
     }
   }
@@ -1143,6 +1157,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         }
       }
     } catch (e) {
+      Sentry.captureException(e)
       console.log(e)
     }
   }
@@ -1185,6 +1200,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         }
       }
     } catch (e) {
+      Sentry.captureException(e)
       console.log(e)
     }
   }

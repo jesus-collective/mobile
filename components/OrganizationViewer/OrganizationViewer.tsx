@@ -6,6 +6,7 @@ import moment from "moment"
 import { Content, Form, Input, Item, Label, Picker, View } from "native-base"
 import * as React from "react"
 import { Image, Text, TouchableOpacity } from "react-native"
+import Sentry from "../../components/Sentry"
 import {
   CreateOrganizationInput,
   CreateOrganizationMemberInput,
@@ -313,6 +314,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
         if (this.props.finalizeProfile) this.props.finalizeProfile()
         else this.setState({ dirty: false, editMode: false })
       } catch (e) {
+        Sentry.captureException(e)
         console.log(e)
       }
     }
@@ -397,6 +399,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
       )
       console.log({ success: addAdmins })
     } catch (err) {
+      Sentry.captureException(err)
       console.error(err)
     }
     this.createGroupMembers(justNewAdmins)
@@ -443,6 +446,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
       )
       console.log({ success: addAdmins })
     } catch (err) {
+      Sentry.captureException(err)
       console.error(err)
     }
   }

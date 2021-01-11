@@ -233,6 +233,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
           )
           console.log(updateUser)
         } catch (e) {
+          Sentry.captureException(e)
           console.log(e)
         }
       }
