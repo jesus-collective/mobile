@@ -1537,6 +1537,18 @@ export default class MainStyles {
         alignItems: "center",
         paddingLeft: 20,
       },
+      mapCardBody: {
+        flex: 1, 
+        flexDirection: "row"
+      },
+      mapCardJCButtonContainer: {
+        flex: 1, 
+        flexDirection: "column", 
+        paddingTop: 10
+      },
+      mapCardImage: {
+        marginRight: 10 
+      },
 
       // Media Query Desktop Tablet
       "@media (min-width: 350) and (max-width: 768)": {
@@ -1890,7 +1902,7 @@ export default class MainStyles {
         myProfileCoordinates: {
           flexDirection: "column",
           alignSelf: 'flex-start',
-          marginBottom: 100,
+          marginBottom: 75,
         },
         myProfileMapSelectorContainer: {
           height: 3210,
@@ -2065,6 +2077,22 @@ export default class MainStyles {
           shadowOffset: { width: 0, height: 0 },
           shadowColor: "rgba(0, 0, 0, 0.0)",
           shadowRadius: 0,
+        },
+        mapCardBody: {
+          flexDirection: "column",
+          alignItems: 'center'
+        },
+        mapCardJCButtonContainer: {
+          alignContent: 'center',
+        },
+        myMapDashboardConversationCard: {
+          width: 'auto',
+        },
+        mapCardImage: {
+          marginRight: 0 
+        },
+        myMapConversationCardRole: {
+          textAlign: 'center'
         },
       },
 

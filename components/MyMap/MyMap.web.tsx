@@ -162,8 +162,8 @@ class MyMapImpl extends JCComponent<Props, State> {
     return (
       <Card style={this.styles.style.myMapDashboardConversationCard}>
         <CardItem>
-          <Body style={{ flex: 1, flexDirection: "row" }}>
-            <View style={{ marginRight: 10 }}>
+          <Body style={this.styles.style.mapCardBody}>
+            <View style={this.styles.style.mapCardImage}>
               <ProfileImage
                 user={this.state.selectedPlace.mapItem.user.id}
                 size="medium"
@@ -183,7 +183,7 @@ class MyMapImpl extends JCComponent<Props, State> {
                   {this.state.selectedPlace.mapItem.user.aboutMeShort}
                 </Text>
               ) : null}
-              <View style={{ flex: 1, flexDirection: "row", paddingTop: 10 }}>
+              <View style={this.styles.style.mapCardJCButtonContainer}>
                 <JCButton
                   buttonType={ButtonTypes.Solid}
                   onPress={() => {
@@ -198,7 +198,7 @@ class MyMapImpl extends JCComponent<Props, State> {
                   Start Conversation
                 </JCButton>
                 <JCButton
-                  buttonType={ButtonTypes.TransparentBoldOrange}
+                  buttonType={ButtonTypes.TransparentBoldOrangeMap}
                   onPress={() => {
                     this.showProfile(this.state.selectedPlace.mapItem.user.id)
                   }}

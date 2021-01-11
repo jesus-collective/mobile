@@ -50,6 +50,7 @@ export enum ButtonTypes {
   TransparentBoldBlackNoMargin,
   TransparentBoldGreyNoMargin,
   TransparentBoldOrange,
+  TransparentBoldOrangeMap,
   TransparentRegularOrange,
   MoreSeriesOutlineBold,
   EditButton,

@@ -894,6 +894,28 @@ export default EStyleSheet.create({
         fontWeight: "bold"
     },
 
+    TransparentBoldOrangeMapButton:
+    {
+        paddingTop: 10,
+        paddingBottom: 10,
+        marginBottom: 20,
+        marginLeft: 10,
+        marginRight: 10,
+        // color:"#ffffff",
+        backgroundColor: "#ffffff00",
+        borderWidth: 0,
+        borderColor: "#ffffff",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
+    },
+    TransparentBoldOrangeMapText: {
+        color: "#F0493E",
+        fontFamily: 'Graphik-Bold-App',
+        fontSize: 16,
+        padding: 10,
+        fontWeight: "bold"
+    },
+
     TransparentRegularOrangeButton:
     {
         paddingTop: 10,
@@ -1203,6 +1225,13 @@ export default EStyleSheet.create({
         },
         courseActivityTransparentRegularBlackButton: {
             marginBottom: 5,
+        },
+        TransparentBoldOrangeMapButton: {
+            marginBottom: 0,
+            marginLeft: 0,
+            marginRight: 0,
+            alignSelf: 'center',
+            paddingTop: 0,
         },
     },
     // Media Query Desktop Large Tablet
