@@ -10,6 +10,7 @@ import EditableLocation from "../../components/Forms/EditableLocation"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
 import MyMap from "../../components/MyMap/MyMap"
+import Sentry from "../../components/Sentry"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 import { GetUserQuery } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
@@ -272,6 +273,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
     delete item.courseInstructing
     delete item.payments
     delete item.courseBackOfficeStaff
+    delete item.messageReplies
     if (item.profileImage) delete item.profileImage["__typename"]
     delete item.directMessages
     return item
@@ -290,6 +292,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
         if (this.props.finalizeProfile) this.props.finalizeProfile()
         else this.setState({ editMode: false })
       } catch (e) {
+        Sentry.captureException(e)
         console.log(e)
       }
     }
@@ -1568,10 +1571,10 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       </Label>
                       <JCSwitch
                         containerWidth={500}
-                        flexDirection={'column'}
+                        flexDirection={"column"}
                         toggleMargin={20}
                         toggleMarginLeft={10}
-                        toggleMarginTop={10} 
+                        toggleMarginTop={10}
                         toggleMarginBottom={15}
                         switchLabel="Receive Email Alerts for Direct Messages"
                         initState={this.state.UserDetails.alertConfig?.emailDirectMessage == "true"}
@@ -1581,10 +1584,10 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       ></JCSwitch>
                       <JCSwitch
                         containerWidth={500}
-                        flexDirection={'column'}
+                        flexDirection={"column"}
                         toggleMargin={20}
                         toggleMarginLeft={10}
-                        toggleMarginTop={10} 
+                        toggleMarginTop={10}
                         toggleMarginBottom={15}
                         switchLabel="Receive Email Alerts for Group Messages"
                         initState={this.state.UserDetails.alertConfig?.emailGroupMessage == "true"}
@@ -1594,10 +1597,10 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       ></JCSwitch>
                       <JCSwitch
                         containerWidth={500}
-                        flexDirection={'column'}
+                        flexDirection={"column"}
                         toggleMargin={20}
                         toggleMarginLeft={10}
-                        toggleMarginTop={10} 
+                        toggleMarginTop={10}
                         toggleMarginBottom={15}
                         switchLabel="Receive Email Alerts for Event Messages"
                         initState={this.state.UserDetails.alertConfig?.emailEventMessage == "true"}
@@ -1607,10 +1610,10 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       ></JCSwitch>
                       <JCSwitch
                         containerWidth={500}
-                        flexDirection={'column'}
+                        flexDirection={"column"}
                         toggleMargin={20}
                         toggleMarginLeft={10}
-                        toggleMarginTop={10} 
+                        toggleMarginTop={10}
                         toggleMarginBottom={15}
                         switchLabel="Receive Email Alerts for Resource Messages"
                         initState={
@@ -1622,10 +1625,10 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       ></JCSwitch>
                       <JCSwitch
                         containerWidth={500}
-                        flexDirection={'column'}
+                        flexDirection={"column"}
                         toggleMargin={20}
                         toggleMarginLeft={10}
-                        toggleMarginTop={10} 
+                        toggleMarginTop={10}
                         toggleMarginBottom={15}
                         switchLabel="Receive Email Alerts for Course Messages"
                         initState={this.state.UserDetails.alertConfig?.emailCourseMessage == "true"}
@@ -1635,10 +1638,10 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       ></JCSwitch>
                       <JCSwitch
                         containerWidth={500}
-                        flexDirection={'column'}
+                        flexDirection={"column"}
                         toggleMargin={20}
                         toggleMarginLeft={10}
-                        toggleMarginTop={10} 
+                        toggleMarginTop={10}
                         toggleMarginBottom={15}
                         switchLabel="Receive Email Alerts for Organization Messages"
                         initState={this.state.UserDetails.alertConfig?.emailOrgMessage == "true"}
@@ -1648,10 +1651,10 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       ></JCSwitch>
                       <JCSwitch
                         containerWidth={500}
-                        flexDirection={'column'}
+                        flexDirection={"column"}
                         toggleMargin={20}
                         toggleMarginLeft={10}
-                        toggleMarginTop={10} 
+                        toggleMarginTop={10}
                         toggleMarginBottom={15}
                         switchLabel="Receive Email Alerts for Org Messages"
                         initState={this.state.UserDetails.alertConfig?.emailPromotions == "true"}
