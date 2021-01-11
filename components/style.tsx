@@ -1908,7 +1908,6 @@ export default class MainStyles {
         groupScreenMainContainer: {
           flexDirection: "column",
         },
-
         detailScreenLeftCard: {
           width: "auto",
           marginRight: 0,
@@ -1931,7 +1930,6 @@ export default class MainStyles {
           shadowColor: "none",
           shadowRadius: 0,
         },
-
         groupNameInput: {
           width: "100%",
         },
@@ -1950,7 +1948,6 @@ export default class MainStyles {
         eventPageMessageBoard: {
           flexDirection: "column",
         },
-
         eventPageMessageBoardLeft: {
           alignSelf: "flex-start",
         },
@@ -1960,15 +1957,17 @@ export default class MainStyles {
         groupsScreenMainContainer: {
           flexDirection: "column",
         },
-
         profilesScreenMainContainer: {
           flexDirection: "column",
         },
-
         dashboardConversationCard: {
           marginLeft: 0,
           width: "100vw",
           paddingRight: 10,
+          paddingTop: 0,
+          paddingBottom: 0,
+          marginTop: 0, 
+          marginBottom: 0,
         },
         dashboardConversationBody: {
           alignItems: "center",
@@ -2011,7 +2010,6 @@ export default class MainStyles {
         fontConnectConversation: {
           textAlign: "center",
         },
-
         myProfileOrgView: {
           flexDirection: "column",
         },
@@ -2027,16 +2025,13 @@ export default class MainStyles {
         jcDirectoryButton: {
           width: "90%",
         },
-
         smallProfileImageMBoard: {
           display: "none",
         },
-
         icon: {
           color: "#aaaaaa",
           fontSize: 30,
         },
-
         conversationScreenMainContainer: {
           flexDirection: "column",
         },
@@ -2044,6 +2039,9 @@ export default class MainStyles {
           marginTop: 0,
           marginLeft: 0,
           marginRight: 0,
+        },
+        dashboardConversationCardLeft: {
+          flexDirection: "row",
         },
       },
 
