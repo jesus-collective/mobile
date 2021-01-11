@@ -1,6 +1,6 @@
 import { GraphQLResult } from "@aws-amplify/api/lib/types";
 import { ResourceActions, ResourceState } from "components/ResourceViewer/ResourceContext";
-import { CreateResourceMenuItemMutation, CreateResourceRootMutation, DeleteResourceMenuItemMutation, GetGroupQuery, GetResourceQuery, GetResourceRootQuery, GetResourceSeriesQuery, GetUserQuery, GroupMemberByUserQuery, ImageInput, ListResourceRootsQuery, ResourcePageItemInput, UpdateResourceMenuItemMutation } from "./API";
+import { CreateResourceMenuItemMutation, CreateResourceRootMutation, DeleteResourceMenuItemMutation, GetGroupQuery, GetResourceEpisodeQuery, GetResourceQuery, GetResourceRootQuery, GetResourceSeriesQuery, GetUserQuery, GroupMemberByUserQuery, ImageInput, ListResourceEpisodesQuery, ListResourceRootsQuery, ListResourceSeriessQuery, ListResourcesQuery, ResourcePageItemInput, UpdateResourceMenuItemMutation } from "./API";
 
 type WithoutKeys<T> = Omit<T, keyof T>;
 
@@ -34,6 +34,10 @@ export type ListResourceRootsQueryResult = GraphQLResult<ListResourceRootsQuery>
 export type ListResourceRootsQueryResultPromise = Promise< GraphQLResult<ListResourceRootsQuery>>
 export type ListResourceRootsData= NonNullable<NonNullable<ListResourceRootsQuery>["listResourceRoots"]>["items"]
 
+export type ListResourcesData= NonNullable<NonNullable<ListResourcesQuery>["listResources"]>["items"]
+export type ListResourceEpisodesData= NonNullable<NonNullable<ListResourceEpisodesQuery>["listResourceEpisodes"]>["items"]
+export type ListResourceSeriessData= NonNullable<NonNullable<ListResourceSeriessQuery>["listResourceSeriess"]>["items"]
+
 export type GetResourceRootQueryResult = GraphQLResult<GetResourceRootQuery>
 export type GetResourceRootQueryResultPromise = Promise< GraphQLResult<GetResourceRootQuery>>
 export type GetResourceRootData= NonNullable<GetResourceRootQuery>["getResourceRoot"]
@@ -62,6 +66,11 @@ export type GetResourceData= NonNullable<GetResourceQuery>["getResource"]
 export type GetResourceSeriesQueryResult = GraphQLResult<GetResourceSeriesQuery>
 export type GetResourceSeriesQueryResultPromise = Promise< GraphQLResult<GetResourceSeriesQuery>>
 export type GetResourceSeriesData= NonNullable<GetResourceSeriesQuery>["getResourceSeries"]
+
+export type GetResourceEpisodeQueryResult = GraphQLResult<GetResourceEpisodeQuery>
+export type GetResourceEpisodeQueryResultPromise = Promise< GraphQLResult<GetResourceEpisodeQuery>>
+export type GetResourceEpisodeData= NonNullable<GetResourceEpisodeQuery>["getResourceEpisode"]
+
 
 export type CreateResourceRootMutationResult=GraphQLResult<CreateResourceRootMutation>
 export type CreateResourceMenuItemMutationResult=GraphQLResult<CreateResourceMenuItemMutation>

@@ -428,7 +428,7 @@ export default class MainStyles {
         fontSize: 16,
         lineHeight: 26,
         color: "#333333",
-        paddingTop: 12,
+        paddingTop: 6,
         width: "100%",
       },
 
@@ -1537,6 +1537,18 @@ export default class MainStyles {
         alignItems: "center",
         paddingLeft: 20,
       },
+      mapCardBody: {
+        flex: 1, 
+        flexDirection: "row"
+      },
+      mapCardJCButtonContainer: {
+        flex: 1, 
+        flexDirection: "column", 
+        paddingTop: 10
+      },
+      mapCardImage: {
+        marginRight: 10 
+      },
 
       // Media Query Desktop Tablet
       "@media (min-width: 350) and (max-width: 768)": {
@@ -1843,7 +1855,7 @@ export default class MainStyles {
         },
         dashboardRightCard: {
           flexBasis: "auto",
-          top: 2250,
+          top: 2150,
         },
         myProfileMainContainer: {
           flexDirection: "column",
@@ -1867,19 +1879,30 @@ export default class MainStyles {
           marginBottom: 20,
         },
         profileScreenLeftCard: {
-          marginRight: 32,
+          marginRight: 0,
+          marginLeft: 0,
           flex: 0,
-          paddingBottom: 100,
+          paddingBottom: 0,
           width: "auto",
+          shadowOffset: {"width": 0, "height": 0},
+          shadowRadius: 0, 
+          shadowColor: "rgba(0, 0, 0, 0)",
+          minHeight: 'auto'
         },
         profileScreenRightCard: {
           width: "auto",
           flex: 0,
-          top: 50,
-          marginLeft: 32,
+          top: 0,
+          marginLeft: 0,
+          marginRight: 0,
+          shadowOffset: {"width": 0, "height": 0},
+          shadowRadius: 0, 
+          shadowColor: "rgba(0, 0, 0, 0)"
         },
         myProfileCoordinates: {
-          flexDirection: "row",
+          flexDirection: "column",
+          alignSelf: 'flex-start',
+          marginBottom: 75,
         },
         myProfileMapSelectorContainer: {
           height: 3210,
@@ -1908,7 +1931,6 @@ export default class MainStyles {
         groupScreenMainContainer: {
           flexDirection: "column",
         },
-
         detailScreenLeftCard: {
           width: "auto",
           marginRight: 0,
@@ -1931,7 +1953,6 @@ export default class MainStyles {
           shadowColor: "none",
           shadowRadius: 0,
         },
-
         groupNameInput: {
           width: "100%",
         },
@@ -1950,7 +1971,6 @@ export default class MainStyles {
         eventPageMessageBoard: {
           flexDirection: "column",
         },
-
         eventPageMessageBoardLeft: {
           alignSelf: "flex-start",
         },
@@ -1960,15 +1980,17 @@ export default class MainStyles {
         groupsScreenMainContainer: {
           flexDirection: "column",
         },
-
         profilesScreenMainContainer: {
           flexDirection: "column",
         },
-
         dashboardConversationCard: {
           marginLeft: 0,
           width: "100vw",
           paddingRight: 10,
+          paddingTop: 0,
+          paddingBottom: 0,
+          marginTop: 0, 
+          marginBottom: 0,
         },
         dashboardConversationBody: {
           alignItems: "center",
@@ -1980,13 +2002,13 @@ export default class MainStyles {
           minHeight: 2000,
         },
         fontFormName: {
-          textAlign: "left",
+          textAlign: "center",
         },
         fontFormRole: {
-          textAlign: "left",
+          textAlign: "center",
         },
         fontFormUserType: {
-          textAlign: "left",
+          textAlign: "center",
         },
         myProfileErrorValidation: {
           textAlign: "center",
@@ -2011,7 +2033,6 @@ export default class MainStyles {
         fontConnectConversation: {
           textAlign: "center",
         },
-
         myProfileOrgView: {
           flexDirection: "column",
         },
@@ -2027,16 +2048,13 @@ export default class MainStyles {
         jcDirectoryButton: {
           width: "90%",
         },
-
         smallProfileImageMBoard: {
           display: "none",
         },
-
         icon: {
           color: "#aaaaaa",
           fontSize: 30,
         },
-
         conversationScreenMainContainer: {
           flexDirection: "column",
         },
@@ -2044,6 +2062,37 @@ export default class MainStyles {
           marginTop: 0,
           marginLeft: 0,
           marginRight: 0,
+        },
+        dashboardConversationCardLeft: {
+          flexDirection: "row",
+        },
+        connectWithSliderButton: {
+          width: "80%",
+          alignSelf: 'center',
+        },
+        myProfilePersonalInfoWrapper: {
+          top: 0,
+        },
+        peopleContainer: {
+          shadowOffset: { width: 0, height: 0 },
+          shadowColor: "rgba(0, 0, 0, 0.0)",
+          shadowRadius: 0,
+        },
+        mapCardBody: {
+          flexDirection: "column",
+          alignItems: 'center'
+        },
+        mapCardJCButtonContainer: {
+          alignContent: 'center',
+        },
+        myMapDashboardConversationCard: {
+          width: 'auto',
+        },
+        mapCardImage: {
+          marginRight: 0 
+        },
+        myMapConversationCardRole: {
+          textAlign: 'center'
         },
       },
 

@@ -5,7 +5,14 @@ import { Text, View, ViewStyle } from "react-native"
 import EditableText from "../../components/Forms/EditableText"
 import { ResourcePageItemInput, ResourcePageItemStyle, ResourcePageItemType } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
-import { ResourceSetupProp } from "../../src/types"
+import {
+  GetResourceData,
+  GetResourceSeriesData,
+  ListResourceEpisodesData,
+  ListResourcesData,
+  ListResourceSeriessData,
+  ResourceSetupProp,
+} from "../../src/types"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import PageItemSettings from "./PageItemSettings"
 import ResourceCard from "./ResourceCard"
@@ -97,7 +104,7 @@ class ResourceList extends JCComponent<Props, State> {
       </ResourceList.Consumer>
     )
   }
-  renderManualCards() {
+  renderManualCards(): React.ReactNode {
     const z: ResourcePageItemInput = {
       id: "z",
       type: ResourcePageItemType.Card,
@@ -301,23 +308,23 @@ class ResourceList extends JCComponent<Props, State> {
     resourceActions: ResourceActions,
     resourceID: string | null | undefined,
     seriesID: string | null | undefined
-  ) {
+  ): React.ReactNode {
     if (this.props.pageItem.episodeID == null || this.props.pageItem.episodeID == undefined) {
-      const resource = resourceActions.getResourceByID(resourceID)
-      const series = resourceActions.getSeriesByID(resourceID, seriesID)
-      const items = series?.episodes?.items
+      const resource: GetResourceData = resourceActions.getResourceByID(resourceID)
+      const series: GetResourceSeriesData = resourceActions.getSeriesByID(resourceID, seriesID)
+      const items: ListResourceEpisodesData | null | undefined = series?.episodes?.items
       return items?.map((item, index: number) => {
         if (item) {
           const z: ResourcePageItemInput = {
             id: item.id,
             type: ResourcePageItemType.Card,
             title1: item.title,
-            title2: item.subtitle,
+            //            title2: item.subtitle,
             style: ResourcePageItemStyle.CardManual,
             description1: item.description,
-            image: item.image,
-            resourceID: resource.id,
-            seriesID: series.id,
+            //           image: item.image,
+            resourceID: resource?.id,
+            seriesID: series?.id,
             episodeID: item.id,
           }
           return (
@@ -334,25 +341,30 @@ class ResourceList extends JCComponent<Props, State> {
       })
     } else return null
   }
-  renderSeries(resourceActions: ResourceActions, resourceID: string | null | undefined) {
+  renderSeries(
+    resourceActions: ResourceActions,
+    resourceID: string | null | undefined
+  ): React.ReactNode {
     if (this.props.pageItem.seriesID == null || this.props.pageItem.seriesID == undefined) {
-      const resource = resourceActions.getResourceByID(resourceID)
-      const items = resource?.series?.items
-      return items?.map((item) => {
+      const resource: GetResourceData = resourceActions.getResourceByID(resourceID)
+      const items: ListResourceSeriessData = resource?.series?.items
+      return items?.map((item, index: number) => {
         if (item) {
+          console.log({ IMAGE: item })
           const z: ResourcePageItemInput = {
             id: item.id,
             type: ResourcePageItemType.Card,
             title1: item.title,
-            title2: item.subtitle,
+            //  title2: item.subtitle,
             style: ResourcePageItemStyle.CardManual,
             description1: item.description,
-            image: item.image,
-            resourceID: resource.id,
+            image: item.imageFile,
+            resourceID: resource?.id,
             seriesID: item.id,
           }
           return (
             <ResourceCard
+              key={index}
               resourceActions={this.props.resourceActions}
               resourceState={this.props.resourceState}
               pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
@@ -364,9 +376,9 @@ class ResourceList extends JCComponent<Props, State> {
       })
     } else return null
   }
-  renderResources(items) {
+  renderResources(items: ListResourcesData): React.ReactNode {
     if (this.props.pageItem.resourceID == null || this.props.pageItem.resourceID == undefined) {
-      return items.map((item) => {
+      return items?.map((item, index: number) => {
         if (item) {
           const z: ResourcePageItemInput = {
             id: item.id,
@@ -380,6 +392,7 @@ class ResourceList extends JCComponent<Props, State> {
           }
           return (
             <ResourceCard
+              key={index}
               resourceActions={this.props.resourceActions}
               resourceState={this.props.resourceState}
               pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
@@ -391,7 +404,7 @@ class ResourceList extends JCComponent<Props, State> {
       })
     } else return null
   }
-  renderAutoCards() {
+  renderAutoCards(): React.ReactNode {
     return (
       <ResourceList.Consumer>
         {({ resourceState, resourceActions }) => {
@@ -416,7 +429,7 @@ class ResourceList extends JCComponent<Props, State> {
   render(): React.ReactNode {
     const border: ViewStyle = { borderWidth: 1, borderStyle: "dashed" }
 
-    console.log({ COLUMns: this.props.pageItemIndex })
+    //  console.log({ COLUMns: this.props.pageItemIndex })
     return (
       <View
         style={[
@@ -435,6 +448,7 @@ class ResourceList extends JCComponent<Props, State> {
           save={this.props.save}
           delete={this.props.delete}
           pageItem={this.props.pageItem}
+          hideEditButton={this.props.hideEditButton}
         ></PageItemSettings>
         <View style={{ paddingBottom: 9, paddingTop: 50 }}>
           <Text style={this.styles.style.resourcesListText}>{this.props.pageItem.title1}</Text>

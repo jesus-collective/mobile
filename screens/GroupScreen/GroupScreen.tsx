@@ -510,6 +510,7 @@ export default class GroupScreen extends JCComponent<Props, State> {
                     justifyContent: "space-between",
                     flexGrow: 0,
                     marginBottom: 20,
+                    height: '1rem',
                   }}
                 >
                   <Text

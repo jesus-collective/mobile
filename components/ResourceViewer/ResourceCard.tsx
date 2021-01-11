@@ -7,7 +7,7 @@ import { Animated, Image, Picker, Text } from "react-native"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import EditableText from "../../components/Forms/EditableText"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
-import { ResourcePageItemStyle } from "../../src/API"
+import { ResourceDetailType, ResourcePageItemStyle } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
 import { ResourceSetupProp } from "../../src/types"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
@@ -403,7 +403,13 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
       </>
     )
   }
-  renderAutoCard() {
+  getYoutubeId(item): string | null {
+    const youtube = item?.details?.filter((z) => z.type == ResourceDetailType.DefaultYoutube)
+    console.log(youtube)
+    if (youtube?.length > 0) return youtube[0].value
+    else return null
+  }
+  renderLargeCard() {
     return (
       <ResourceCardImpl.Consumer>
         {({ resourceState, resourceActions }) => {
@@ -416,14 +422,19 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
               this.props.pageItem.seriesID,
               this.props.pageItem.episodeID
             )
-
-          if (this.props.pageItem.seriesID != null && this.props.pageItem.seriesID != undefined)
+          else if (
+            this.props.pageItem.seriesID != null &&
+            this.props.pageItem.seriesID != undefined
+          )
             item = resourceActions.getSeriesByID(
               this.props.pageItem.resourceID,
               this.props.pageItem.seriesID
             )
-          if (this.props.pageItem.resourceID != null && this.props.pageItem.resourceID != undefined)
+          else {
             item = resourceActions.getResourceByID(this.props.pageItem.resourceID)
+          }
+
+          const youtubeID = this.getYoutubeId(item)
           return (
             <TouchableOpacity
               onPress={() => {
@@ -442,7 +453,160 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
             >
               <Card style={this.styles.style.resourceGroupCard}>
                 <CardItem>
-                  {this.state.imageUrl ? (
+                  <>
+                    {this.props.pageItem.order && (
+                      <EditableText
+                        multiline={true}
+                        textStyle={{ margin: 10 }}
+                        inputStyle={{ margin: 10 }}
+                        value={this.props.pageItem.order.toString().padStart(2, "0") ?? ""}
+                        isEditable={false}
+                      ></EditableText>
+                    )}
+                    {youtubeID && (
+                      <div>
+                        <iframe
+                          title="Teaching Pre-roll"
+                          className="LiveVideoPlayerIframe"
+                          allowFullScreen
+                          src={
+                            "https://www.youtube.com/embed/" +
+                            youtubeID +
+                            "?color=white&autoplay=1&cc_load_policy=1&showTitle=0&controls=1&modestbranding=1&rel=0"
+                          }
+                          frameBorder="0"
+                          allow="speakers; fullscreen; accelerometer; encrypted-media; gyroscope; picture-in-picture"
+                        ></iframe>
+                        <br />
+                      </div>
+                    )}
+
+                    {this.state.imageUrl && !youtubeID ? (
+                      <Animated.View
+                        onLayout={this.fadeAnimation}
+                        style={[
+                          this.styles.style.resourceHeaderImgView,
+                          { opacity: this.state.fadeValue },
+                        ]}
+                      >
+                        <Image
+                          style={this.styles.style.resourceHeaderImg}
+                          source={this.state.imageUrl}
+                          onError={() => {
+                            this.getImage(this.props.pageItem.image)
+                          }}
+                        ></Image>
+                      </Animated.View>
+                    ) : null}
+                  </>
+                </CardItem>
+
+                <CardItem>
+                  <EditableText
+                    multiline={true}
+                    textStyle={{ margin: 10 }}
+                    inputStyle={{ margin: 10 }}
+                    value={this.props.pageItem.title1 ?? ""}
+                    isEditable={false}
+                  ></EditableText>
+                </CardItem>
+                <CardItem>
+                  <EditableText
+                    multiline={true}
+                    textStyle={{ margin: 10 }}
+                    inputStyle={{ margin: 10 }}
+                    value={this.props.pageItem.title2 ?? ""}
+                    isEditable={false}
+                  ></EditableText>
+                </CardItem>
+                <CardItem>
+                  <EditableText
+                    multiline={true}
+                    textStyle={{ margin: 10 }}
+                    inputStyle={{ margin: 10 }}
+                    value={this.props.pageItem.description1 ?? ""}
+                    isEditable={false}
+                  ></EditableText>
+                </CardItem>
+                <CardItem>
+                  <PageItemSettings
+                    resourceActions={this.props.resourceActions}
+                    resourceState={this.props.resourceState}
+                    pageItemIndex={this.props.pageItemIndex}
+                    save={this.props.save}
+                    delete={this.props.delete}
+                    pageItem={this.props.pageItem}
+                    hideEditButton={this.props.hideEditButton}
+                  ></PageItemSettings>
+                </CardItem>
+              </Card>
+            </TouchableOpacity>
+          )
+        }}
+      </ResourceCardImpl.Consumer>
+    )
+  }
+  renderAutoCard() {
+    return (
+      <ResourceCardImpl.Consumer>
+        {({ resourceState, resourceActions }) => {
+          if (!resourceState) return null
+          if (resourceState.currentResource == null) return null
+          let item
+          if (this.props.pageItem.episodeID != null && this.props.pageItem.episodeID != undefined)
+            item = resourceActions.getEpisodeByID(
+              this.props.pageItem.resourceID,
+              this.props.pageItem.seriesID,
+              this.props.pageItem.episodeID
+            )
+          else if (
+            this.props.pageItem.seriesID != null &&
+            this.props.pageItem.seriesID != undefined
+          )
+            item = resourceActions.getSeriesByID(
+              this.props.pageItem.resourceID,
+              this.props.pageItem.seriesID
+            )
+          else {
+            item = resourceActions.getResourceByID(this.props.pageItem.resourceID)
+          }
+          const youtubeID = this.getYoutubeId(item)
+          return (
+            <TouchableOpacity
+              onPress={() => {
+                if (this.props.pageItem.url) {
+                  window.location = this.props.pageItem.url ?? ""
+                } else {
+                  console.log("NAVIGATE")
+                  this.props.navigation.navigate("ResourceDisplayScreen", {
+                    id: this.props.resourceState.groupData?.id,
+                    resource: this.props.pageItem.resourceID,
+                    series: this.props.pageItem.seriesID,
+                    episode: this.props.pageItem.episodeID,
+                  })
+                }
+              }}
+            >
+              <Card style={this.styles.style.resourceGroupCard}>
+                <CardItem>
+                  {youtubeID && (
+                    <div>
+                      <iframe
+                        title="Teaching Pre-roll"
+                        className="LiveVideoPlayerIframe"
+                        allowFullScreen
+                        src={
+                          "https://www.youtube.com/embed/" +
+                          youtubeID +
+                          "?color=white&autoplay=1&cc_load_policy=1&showTitle=0&controls=1&modestbranding=1&rel=0"
+                        }
+                        frameBorder="0"
+                        allow="speakers; fullscreen; accelerometer; encrypted-media; gyroscope; picture-in-picture"
+                      ></iframe>
+                      <br />
+                    </div>
+                  )}
+                  {this.state.imageUrl && !youtubeID ? (
                     <Animated.View
                       onLayout={this.fadeAnimation}
                       style={[
@@ -506,19 +670,24 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
       </ResourceCardImpl.Consumer>
     )
   }
+  renderRouter() {
+    console.log({ cardstyle: this.props.pageItem.style })
+    switch (this.props.pageItem.style) {
+      case ResourcePageItemStyle.CardManual:
+        return this.renderManualCard()
+      case ResourcePageItemStyle.CardAuto:
+        return this.renderAutoCard()
+      case ResourcePageItemStyle.CardLarge:
+        return this.renderLargeCard()
+    }
+  }
   render(): React.ReactNode {
     if (
       this.props.pageItem &&
       (this.state.imageUrl == null || this.state.image != this.props.pageItem.image)
     )
       this.getImage(this.props.pageItem.image)
-    return (
-      <View>
-        {this.props.pageItem.style == ResourcePageItemStyle.CardManual
-          ? this.renderManualCard()
-          : this.renderAutoCard()}
-      </View>
-    )
+    return <View>{this.renderRouter()}</View>
   }
 }
 

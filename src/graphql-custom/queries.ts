@@ -937,7 +937,19 @@ export const getResourceRoot = /* GraphQL */ `
         items {
           id
           type
-
+          details {
+            type
+            name
+            text
+            value
+            image {
+              userId
+              filenameSmall
+              filenameMedium
+              filenameLarge
+              filenameUpload
+            }
+          }
           image {
             userId
             filenameSmall
@@ -950,31 +962,65 @@ export const getResourceRoot = /* GraphQL */ `
           extendedDescription
           series {
             items {
-              id
-              type
-              title
-              description
-              image
-              category
-              status
-              allFiles
-              playlist
-              playlistImage
-              episodes {
-                items {
-                  id
-                  episodeNumber
+
+                id
+                type
+                title
+                description
+                imageFile {
+                  userId
+                  filenameSmall
+                  filenameMedium
+                  filenameLarge
+                  filenameUpload
+                }
+                details {
                   type
-                  title
-                  description
-                  videoPreview
-                  videoLowRes
-                  videoHiRes
-                  lessonPlan
-                  activityPage
-                  episodeID
-                  createdAt
-                  updatedAt
+                  name
+                  text
+                  value
+                  image {
+                    userId
+                    filenameSmall
+                    filenameMedium
+                    filenameLarge
+                    filenameUpload
+                  }
+                }
+                category
+                status
+               
+              
+              
+                episodes {
+                    items {
+                    id
+                    episodeNumber
+                    type
+                    title
+                    description
+                    details {
+                      type
+                      name
+                      text
+                      value
+                      image {
+                        userId
+                        filenameSmall
+                        filenameMedium
+                        filenameLarge
+                        filenameUpload
+                      }
+                    }
+                    episodeID
+                    createdAt
+                    updatedAt
+                    }
+                    nextToken
+                }
+                seriesID
+                createdAt
+                updatedAt
                 }
                 nextToken
               }

@@ -1,6 +1,7 @@
 import Amplify from "aws-amplify"
 import { View } from "native-base"
 import React from "react"
+import { isBrowser, isMobile, isTablet } from "react-device-detect"
 import { Picker, ViewStyle } from "react-native"
 import { ResourcePageItemStyle } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
@@ -9,7 +10,6 @@ import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import PageItemSettings from "./PageItemSettings"
 import ResourceContent from "./ResourceContent"
 import { ResourceContext } from "./ResourceContext"
-import { isTablet, isBrowser, isMobile } from "react-device-detect"
 
 Amplify.configure(awsconfig)
 
@@ -84,20 +84,34 @@ class ResourceColumn extends JCComponent<Props, State> {
     return (
       <View
         style={[
-          { flexDirection: isBrowser ? "row" : isTablet ? "row" : 'column', zIndex: 5000 + this.props.pageItemIndex.length },
+          {
+            flexDirection: isBrowser ? "row" : isTablet ? "row" : "column",
+            zIndex: 5000 + this.props.pageItemIndex.length,
+          },
           this.props.resourceState.isEditable && border,
         ]}
       >
-        <View style={{ width: isBrowser ? this.getLeftColumnSize() : isTablet ? this.getLeftColumnSize() : '100%', marginTop: isBrowser ? null : isTablet ? null : 100 }}>
+        <View
+          style={{
+            width: isBrowser
+              ? this.getLeftColumnSize()
+              : isTablet
+              ? this.getLeftColumnSize()
+              : "100%",
+            marginTop: isBrowser ? null : isTablet ? null : 100,
+          }}
+        >
           <ResourceContent
             pageItems={this.props.pageItem.pageItemsLeft}
             isBase={false}
+            hideEditButton={this.props.hideEditButton}
             pageItemIndex={this.props.pageItemIndex.concat("pageItemsLeft")}
           ></ResourceContent>
           <PageItemSettings
             resourceActions={this.props.resourceActions}
             resourceState={this.props.resourceState}
             pageItemIndex={this.props.pageItemIndex}
+            hideEditButton={this.props.hideEditButton}
             save={this.props.save}
             delete={this.props.delete}
             pageItem={this.props.pageItem}
@@ -107,7 +121,7 @@ class ResourceColumn extends JCComponent<Props, State> {
           style={[
             {
               borderWidth: 1,
-              width: isMobile ? '100%' : this.getRightColumnSize(),
+              width: isMobile ? "100%" : this.getRightColumnSize(),
             },
             this.props.resourceState.isEditable && border,
           ]}
@@ -115,6 +129,7 @@ class ResourceColumn extends JCComponent<Props, State> {
           <ResourceContent
             pageItems={this.props.pageItem.pageItemsRight}
             isBase={false}
+            hideEditButton={this.props.hideEditButton}
             pageItemIndex={this.props.pageItemIndex.concat("pageItemsRight")}
           ></ResourceContent>
         </View>

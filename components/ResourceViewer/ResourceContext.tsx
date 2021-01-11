@@ -1,7 +1,22 @@
 import { JCState } from "components/JCComponent/JCComponent"
 import * as React from "react"
-import { CreateGroupInput, ResourceMenuItemType, ResourcePageItemInput } from "src/API"
-import { GetResourceRootDataCustom, GroupData, PageItemIndex, UserData } from "src/types"
+import {
+  GetResourceData,
+  GetResourceEpisodeData,
+  GetResourceRootDataCustom,
+  GetResourceSeriesData,
+  GroupData,
+  PageItemIndex,
+  UserData,
+} from "src/types"
+import {
+  CreateGroupInput,
+  ResourceMenuItemType,
+  ResourcePageItemInput,
+  UpdateResourceEpisodeInput,
+  UpdateResourceInput,
+  UpdateResourceSeriesInput,
+} from "../../src/API"
 export interface ResourceState extends JCState {
   groupData: CreateGroupInput | GroupData | null | undefined
   resourceData: GetResourceRootDataCustom | null
@@ -42,17 +57,17 @@ export type ResourceActions = {
 
   createResource(): Promise<void>
   changeResource(index: number): void
-  updateResource(index: number, item: string, value: any): Promise<void>
+  updateResource(index: number, value: UpdateResourceInput): Promise<void>
   deleteResource(index: number): Promise<void>
-  updateResourceImage(menuItemIndex: number, pageItemIndex: PageItemIndex, e: any): Promise<void>
+
   changeSeries(index: number): void
   createSeries(): Promise<void>
   deleteSeries(resourceIndex: number, seriesIndex: number): Promise<void>
   updateSeries(
     resourceIndex: number,
     seriesIndex: number,
-    item: string,
-    value: string
+
+    value: UpdateResourceSeriesInput
   ): Promise<void>
   createEpisode(): Promise<void>
   deleteEpisode(resourceIndex: number, seriesIndex: number, episodeIndex: number): Promise<void>
@@ -60,8 +75,8 @@ export type ResourceActions = {
     resourceIndex: number,
     seriesIndex: number,
     episodeIndex: number,
-    item: string,
-    value: string
+
+    value: UpdateResourceEpisodeInput
   ): Promise<void>
   clearSeries(): void
   clearEpisode(): void
@@ -82,13 +97,16 @@ export type ResourceActions = {
     seriesIndex: number | null | undefined,
     episodeIndex: number | null
   ): any
-  getResourceByID(resourceID: string | undefined | null): any
-  getSeriesByID(resourceID: string | undefined | null, seriesID: string | undefined | null): any
+  getResourceByID(resourceID: string | undefined | null): GetResourceData | null
+  getSeriesByID(
+    resourceID: string | undefined | null,
+    seriesID: string | undefined | null
+  ): GetResourceSeriesData | null
   getEpisodeByID(
     resourceID: string | null | undefined,
     seriesID: string | null | undefined,
     episodeID: string | null
-  ): any
+  ): GetResourceEpisodeData | null
 
   getMenuItem(menuIndex: number | null): any
   moveMenuItemUp(index: number): void
@@ -111,7 +129,7 @@ export const ResourceContext = React.createContext<ResourceContextType>({
     changeResource: () => {},
     updateResource: async () => {},
     deleteResource: async () => {},
-    updateResourceImage: async () => {},
+
     changeSeries: () => {},
     createSeries: async () => {},
     deleteSeries: async () => {},

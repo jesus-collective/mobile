@@ -9029,6 +9029,7 @@ export const createResourceMenuItem = /* GraphQL */ `
           filenameUpload
         }
         url
+        order
         pageItemsLeft {
           id
           type
@@ -9043,6 +9044,7 @@ export const createResourceMenuItem = /* GraphQL */ `
           episodeID
           color
           url
+          order
         }
         pageItemsRight {
           id
@@ -9058,6 +9060,7 @@ export const createResourceMenuItem = /* GraphQL */ `
           episodeID
           color
           url
+          order
         }
       }
       resourceRootID
@@ -9140,6 +9143,7 @@ export const updateResourceMenuItem = /* GraphQL */ `
           filenameUpload
         }
         url
+        order
         pageItemsLeft {
           id
           type
@@ -9154,6 +9158,7 @@ export const updateResourceMenuItem = /* GraphQL */ `
           episodeID
           color
           url
+          order
         }
         pageItemsRight {
           id
@@ -9169,6 +9174,7 @@ export const updateResourceMenuItem = /* GraphQL */ `
           episodeID
           color
           url
+          order
         }
       }
       resourceRootID
@@ -9251,6 +9257,7 @@ export const deleteResourceMenuItem = /* GraphQL */ `
           filenameUpload
         }
         url
+        order
         pageItemsLeft {
           id
           type
@@ -9265,6 +9272,7 @@ export const deleteResourceMenuItem = /* GraphQL */ `
           episodeID
           color
           url
+          order
         }
         pageItemsRight {
           id
@@ -9280,6 +9288,7 @@ export const deleteResourceMenuItem = /* GraphQL */ `
           episodeID
           color
           url
+          order
         }
       }
       resourceRootID
@@ -9350,20 +9359,30 @@ export const createResource = /* GraphQL */ `
       description
       whoIsThisFor
       extendedDescription
+      details {
+        type
+        name
+        text
+        value
+        image {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+      }
       series {
         items {
           id
           owner
           type
           title
+          order
           description
           whoIsThisFor
-          image
           category
           status
-          allFiles
-          playlist
-          playlistImage
           seriesID
           createdAt
           updatedAt
@@ -9438,20 +9457,30 @@ export const updateResource = /* GraphQL */ `
       description
       whoIsThisFor
       extendedDescription
+      details {
+        type
+        name
+        text
+        value
+        image {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+      }
       series {
         items {
           id
           owner
           type
           title
+          order
           description
           whoIsThisFor
-          image
           category
           status
-          allFiles
-          playlist
-          playlistImage
           seriesID
           createdAt
           updatedAt
@@ -9526,20 +9555,30 @@ export const deleteResource = /* GraphQL */ `
       description
       whoIsThisFor
       extendedDescription
+      details {
+        type
+        name
+        text
+        value
+        image {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+      }
       series {
         items {
           id
           owner
           type
           title
+          order
           description
           whoIsThisFor
-          image
           category
           status
-          allFiles
-          playlist
-          playlistImage
           seriesID
           createdAt
           updatedAt
@@ -9602,14 +9641,31 @@ export const createResourceSeries = /* GraphQL */ `
       owner
       type
       title
+      order
       description
       whoIsThisFor
-      image
+      imageFile {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
       category
       status
-      allFiles
-      playlist
-      playlistImage
+      details {
+        type
+        name
+        text
+        value
+        image {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+      }
       episodes {
         items {
           id
@@ -9619,11 +9675,6 @@ export const createResourceSeries = /* GraphQL */ `
           title
           description
           whoIsThisFor
-          videoPreview
-          videoLowRes
-          videoHiRes
-          lessonPlan
-          activityPage
           episodeID
           createdAt
           updatedAt
@@ -9648,6 +9699,12 @@ export const createResourceSeries = /* GraphQL */ `
         description
         whoIsThisFor
         extendedDescription
+        details {
+          type
+          name
+          text
+          value
+        }
         series {
           nextToken
         }
@@ -9676,14 +9733,31 @@ export const updateResourceSeries = /* GraphQL */ `
       owner
       type
       title
+      order
       description
       whoIsThisFor
-      image
+      imageFile {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
       category
       status
-      allFiles
-      playlist
-      playlistImage
+      details {
+        type
+        name
+        text
+        value
+        image {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+      }
       episodes {
         items {
           id
@@ -9693,11 +9767,6 @@ export const updateResourceSeries = /* GraphQL */ `
           title
           description
           whoIsThisFor
-          videoPreview
-          videoLowRes
-          videoHiRes
-          lessonPlan
-          activityPage
           episodeID
           createdAt
           updatedAt
@@ -9722,6 +9791,12 @@ export const updateResourceSeries = /* GraphQL */ `
         description
         whoIsThisFor
         extendedDescription
+        details {
+          type
+          name
+          text
+          value
+        }
         series {
           nextToken
         }
@@ -9750,14 +9825,31 @@ export const deleteResourceSeries = /* GraphQL */ `
       owner
       type
       title
+      order
       description
       whoIsThisFor
-      image
+      imageFile {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
       category
       status
-      allFiles
-      playlist
-      playlistImage
+      details {
+        type
+        name
+        text
+        value
+        image {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+      }
       episodes {
         items {
           id
@@ -9767,11 +9859,6 @@ export const deleteResourceSeries = /* GraphQL */ `
           title
           description
           whoIsThisFor
-          videoPreview
-          videoLowRes
-          videoHiRes
-          lessonPlan
-          activityPage
           episodeID
           createdAt
           updatedAt
@@ -9796,6 +9883,12 @@ export const deleteResourceSeries = /* GraphQL */ `
         description
         whoIsThisFor
         extendedDescription
+        details {
+          type
+          name
+          text
+          value
+        }
         series {
           nextToken
         }
@@ -9826,26 +9919,51 @@ export const createResourceEpisode = /* GraphQL */ `
       type
       title
       description
+      imageFile {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
       whoIsThisFor
-      videoPreview
-      videoLowRes
-      videoHiRes
-      lessonPlan
-      activityPage
+      details {
+        type
+        name
+        text
+        value
+        image {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+      }
       episodeID
       parentSeries {
         id
         owner
         type
         title
+        order
         description
         whoIsThisFor
-        image
+        imageFile {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         category
         status
-        allFiles
-        playlist
-        playlistImage
+        details {
+          type
+          name
+          text
+          value
+        }
         episodes {
           nextToken
         }
@@ -9881,26 +9999,51 @@ export const updateResourceEpisode = /* GraphQL */ `
       type
       title
       description
+      imageFile {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
       whoIsThisFor
-      videoPreview
-      videoLowRes
-      videoHiRes
-      lessonPlan
-      activityPage
+      details {
+        type
+        name
+        text
+        value
+        image {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+      }
       episodeID
       parentSeries {
         id
         owner
         type
         title
+        order
         description
         whoIsThisFor
-        image
+        imageFile {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         category
         status
-        allFiles
-        playlist
-        playlistImage
+        details {
+          type
+          name
+          text
+          value
+        }
         episodes {
           nextToken
         }
@@ -9936,26 +10079,51 @@ export const deleteResourceEpisode = /* GraphQL */ `
       type
       title
       description
+      imageFile {
+        userId
+        filenameSmall
+        filenameMedium
+        filenameLarge
+        filenameUpload
+      }
       whoIsThisFor
-      videoPreview
-      videoLowRes
-      videoHiRes
-      lessonPlan
-      activityPage
+      details {
+        type
+        name
+        text
+        value
+        image {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+      }
       episodeID
       parentSeries {
         id
         owner
         type
         title
+        order
         description
         whoIsThisFor
-        image
+        imageFile {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
         category
         status
-        allFiles
-        playlist
-        playlistImage
+        details {
+          type
+          name
+          text
+          value
+        }
         episodes {
           nextToken
         }

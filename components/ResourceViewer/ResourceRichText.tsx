@@ -100,6 +100,7 @@ class ResourceRichText extends JCComponent<Props> {
           save={this.props.save}
           delete={this.props.delete}
           pageItem={this.props.pageItem}
+          hideEditButton={this.props.hideEditButton}
         ></PageItemSettings>
         {/* */}
 

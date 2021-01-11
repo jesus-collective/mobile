@@ -1141,6 +1141,42 @@ export default EStyleSheet.create({
     },
     SolidProfileText: {
       width: "100%",
+    
+  },
+    TransparentBoldOrangeMapButton:
+    {
+        paddingTop: 10,
+        paddingBottom: 10,
+        marginBottom: 20,
+        marginLeft: 10,
+        marginRight: 10,
+        // color:"#ffffff",
+        backgroundColor: "#ffffff00",
+        borderWidth: 0,
+        borderColor: "#ffffff",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0,
+    },
+    TransparentBoldOrangeMapText: {
+        color: "#F0493E",
+        fontFamily: 'Graphik-Bold-App',
+        fontSize: 16,
+        padding: 10,
+        fontWeight: "bold"
+    },
+
+    TransparentRegularOrangeButton:
+    {
+        paddingTop: 10,
+        paddingBottom: 10,
+        marginLeft: 10,
+        marginRight: 10,
+        // color:"#ffffff",
+        backgroundColor: "#ffffff00",
+        borderWidth: 0,
+        borderColor: "#ffffff",
+        shadowOffset: { height: 0, width: 0 },
+        shadowOpacity: 0
     },
     SolidRightJustifiedButton: {
       alignSelf: "center",
@@ -1202,6 +1238,85 @@ export default EStyleSheet.create({
     },
     AdminSmallOutlineButton: {
       marginLeft: 0,
+  },
+  // Media Query Mobile
+    '@media (min-width: 320px) and (max-width: 480px)': {
+        SolidRightMarginButton: {
+            paddingLeft: 0,
+            paddingRight: 0,
+            marginLeft: 0,
+            marginRight: 0,
+            textAlign: "center"
+        },
+        SolidRightMarginText: {
+            width: "100%"
+        },
+        SolidProfileDeleteButton: {
+            marginLeft: 0,
+            textAlign: 'center',
+            width: '100%',
+            paddingLeft: 0,
+            paddingRight: 0,
+            justifyContent: 'center'
+        },
+        SolidButton: {
+            textAlign: "center",
+            paddingLeft: 0,
+            paddingRight: 0,
+            width: "100%"
+        },
+        SolidText: {
+            width: "100%"
+        },
+        SolidProfileButton: {
+            textAlign: "center",
+            paddingLeft: 0,
+            paddingRight: 0,
+            width: "100%"
+        },
+        SolidProfileNameButton: {
+            textAlign: "center",
+            paddingLeft: 0,
+            paddingRight: 0,
+            width: "100%"
+        },
+        SolidProfileText: {
+            width: "100%"
+        },
+        SolidRightJustifiedButton: {
+            alignSelf: "center",
+            width: "100%"
+        },
+        SolidRightJustifiedText: {
+            width: "100%",
+            textAlign: "center"
+        },
+        OutlineSmallButton: {
+            marginLeft: 0,
+            marginBottom: 10,
+            justifyContent: "center",
+        },
+        SolidAboutMeButton: {
+            justifyContent: "center",
+        },
+        CourseTransparentBoldOrangeButton: {
+            justifyContent: "center",
+            marginRight: 0,
+            marginLeft: 0,
+        },
+        TransparentActivityCourseButton: {
+            marginBottom: 5,
+        },
+        courseActivityTransparentRegularBlackButton: {
+            marginBottom: 5,
+        },
+        TransparentBoldOrangeMapButton: {
+            marginBottom: 0,
+            marginLeft: 0,
+            marginRight: 0,
+            alignSelf: 'center',
+            paddingTop: 0,
+        },
     },
   },
 })
