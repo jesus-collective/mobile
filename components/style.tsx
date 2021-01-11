@@ -1870,20 +1870,27 @@ export default class MainStyles {
           marginRight: 0,
           marginLeft: 0,
           flex: 0,
-          paddingBottom: 100,
+          paddingBottom: 0,
           width: "auto",
           shadowOffset: {"width": 0, "height": 0},
           shadowRadius: 0, 
-          shadowColor: "rgba(0, 0, 0, 0)"
+          shadowColor: "rgba(0, 0, 0, 0)",
+          minHeight: 'auto'
         },
         profileScreenRightCard: {
           width: "auto",
           flex: 0,
-          top: 50,
-          marginLeft: 32,
+          top: 0,
+          marginLeft: 0,
+          marginRight: 0,
+          shadowOffset: {"width": 0, "height": 0},
+          shadowRadius: 0, 
+          shadowColor: "rgba(0, 0, 0, 0)"
         },
         myProfileCoordinates: {
-          flexDirection: "row",
+          flexDirection: "column",
+          alignSelf: 'flex-start',
+          marginBottom: 100,
         },
         myProfileMapSelectorContainer: {
           height: 3210,
@@ -1983,13 +1990,13 @@ export default class MainStyles {
           minHeight: 2000,
         },
         fontFormName: {
-          textAlign: "left",
+          textAlign: "center",
         },
         fontFormRole: {
-          textAlign: "left",
+          textAlign: "center",
         },
         fontFormUserType: {
-          textAlign: "left",
+          textAlign: "center",
         },
         myProfileErrorValidation: {
           textAlign: "center",
