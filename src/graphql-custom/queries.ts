@@ -989,40 +989,34 @@ export const getResourceRoot = /* GraphQL */ `
                 }
                 category
                 status
-               
-              
-              
                 episodes {
                     items {
-                    id
-                    episodeNumber
-                    type
-                    title
-                    description
-                    details {
+                      id
+                      episodeNumber
                       type
-                      name
-                      text
-                      value
-                      image {
-                        userId
-                        filenameSmall
-                        filenameMedium
-                        filenameLarge
-                        filenameUpload
+                      title
+                      description
+                      details {
+                        type
+                        name
+                        text
+                        value
+                        image {
+                          userId
+                          filenameSmall
+                          filenameMedium
+                          filenameLarge
+                          filenameUpload
+                        }
                       }
-                    }
-                    episodeID
-                    createdAt
-                    updatedAt
+                      episodeID
+                    
+                      createdAt
+                      updatedAt
                     }
                     nextToken
-                }
-                seriesID
-                createdAt
-                updatedAt
-                }
-                nextToken
+                
+                
               }
               seriesID
               createdAt
