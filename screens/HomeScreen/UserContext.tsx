@@ -22,7 +22,7 @@ export interface UserActions {
   updateHasCompletedPersonalProfile(): void | null
   updatePaidState(): void | null
   updateHasCompletedOrganizationProfile(): void | null
-  onStateChange(state: string, data: AuthStateData): any | null
+  onStateChange(state: string, data: AuthStateData): Promise<any> | null
   updateGroups(): Promise<void> | null
   isMemberOf(group: string): boolean
 }
@@ -36,7 +36,7 @@ export const UserContext = React.createContext<UserContextType>({
     updateHasCompletedPersonalProfile: () => {},
     updatePaidState: () => {},
     updateHasCompletedOrganizationProfile: () => {},
-    onStateChange: () => {},
+    onStateChange: async () => {},
     updateGroups: async () => {},
     isMemberOf: () => {
       return false

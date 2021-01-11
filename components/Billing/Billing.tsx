@@ -21,6 +21,7 @@ import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
+import Sentry from "../../components/Sentry"
 import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/UserContext"
 import { GetProductQuery, GetUserQuery, ListProductsQuery } from "../../src/API"
 import awsConfig from "../../src/aws-exports"
@@ -105,6 +106,7 @@ class BillingImpl extends JCComponent<Props, State> {
         console.log({ USER: getUser.data?.getUser })
       }
     } catch (e) {
+      Sentry.captureException(e)
       console.log({ UserError: e })
     }
     try {
@@ -147,6 +149,7 @@ class BillingImpl extends JCComponent<Props, State> {
           );*/
         }
     } catch (err) {
+      Sentry.captureException(err)
       console.error(err)
     }
   }
@@ -169,6 +172,7 @@ class BillingImpl extends JCComponent<Props, State> {
       console.log({ customer: customer })
       //customerId = customer.data.createCustomer.customer.id;
     } catch (e) {
+      Sentry.captureException(e)
       console.log(e)
     }
   }
@@ -204,6 +208,7 @@ class BillingImpl extends JCComponent<Props, State> {
       console.log({ invoice: invoice.data.previewInvoice.invoice })
       this.setState({ invoice: invoice.data.previewInvoice.invoice })
     } catch (e) {
+      Sentry.captureException(e)
       console.log(e)
     }
   }
@@ -299,6 +304,7 @@ class BillingImpl extends JCComponent<Props, State> {
         )
         console.log(status)
       } catch (e) {
+        Sentry.captureException(e)
         console.log({ "Payment Error": e })
       }
     })
@@ -495,6 +501,7 @@ class BillingImpl extends JCComponent<Props, State> {
         this.setState({ userData: temp })
       }
     } catch (e) {
+      Sentry.captureException(e)
       console.log({ errorUpdating: e })
     }
   }

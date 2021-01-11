@@ -1,22 +1,22 @@
-import React from "react"
-import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
+import { Entypo } from "@expo/vector-icons"
+import { useNavigation, useRoute } from "@react-navigation/native"
+import { Auth } from "aws-amplify"
 import { View } from "native-base"
+import React from "react"
 import {
+  Dimensions,
+  NativeSyntheticEvent,
   Platform,
   Text,
   TextInput,
-  TouchableOpacity,
-  NativeSyntheticEvent,
   TextInputKeyPressEventData,
+  TouchableOpacity,
 } from "react-native"
-import { Dimensions } from "react-native"
-import { Auth } from "aws-amplify"
-import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
-import MainStyles from "../../components/style"
-import { Entypo } from "@expo/vector-icons"
 import { Copyright } from "../../components/Auth/Copyright"
+import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
+import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
+import MainStyles from "../../components/style"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
-import { useNavigation, useRoute } from "@react-navigation/native"
 
 interface Props {
   navigation?: any
@@ -61,22 +61,22 @@ class MySignInImpl extends React.Component<Props, State> {
     }
   }
 
-  changeAuthState(action: UserActions, state: string, user?: any): void {
+  async changeAuthState(action: UserActions, state: string, user?: any): Promise<void> {
     this.setState({
       pass: "",
       user: "",
       authError: "",
     })
-    action.onStateChange(state, null)
+    await action.onStateChange(state, null)
     if (user) action.onSetUser(user)
   }
 
   async handleSignIn(actions: any): Promise<void> {
     try {
-      await Auth.signIn(this.state.user.toLowerCase(), this.state.pass).then((user) => {
+      await Auth.signIn(this.state.user.toLowerCase(), this.state.pass).then(async (user) => {
         if (user.challengeName == "NEW_PASSWORD_REQUIRED")
-          this.changeAuthState(actions, "requireNewPassword", user)
-        else this.changeAuthState(actions, "signedIn")
+          await this.changeAuthState(actions, "requireNewPassword", user)
+        else await this.changeAuthState(actions, "signedIn")
       })
     } catch (err) {
       if (!this.state.pass && this.state.user) {

@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons"
 import { NavigationProp } from "@react-navigation/native"
-import Amplify, { I18n } from "aws-amplify"
+import Amplify, { Auth, I18n } from "aws-amplify"
 import { Authenticator } from "aws-amplify-react-native"
 import { Linking } from "expo"
 import { Asset } from "expo-asset"
@@ -123,7 +123,7 @@ class AwesomeApp extends JCComponent<Props, State> {
     return ""
   }
 
-  updateState(state: string, data: AuthStateData) {
+  async updateState(state: string, data: AuthStateData) {
     this.setState({ authState: state })
     const params = RootNavigation.getRoot()?.params as {
       joinedAs: "individual" | "organization" | null
@@ -143,14 +143,31 @@ class AwesomeApp extends JCComponent<Props, State> {
     else if (state == "confirmSignIn") RootNavigation.navigate("confirmsignin", {})
     else if (state == "confirmSignUp")
       RootNavigation.navigate("confirmsignup", { email: data?.email })
-    else if (state == "signedIn")
-      RootNavigation.navigate("auth", {
-        screen: "Payment1",
-        params: {
-          joinedProduct: data?.joinedProduct,
-          productType: data?.productType,
-        },
-      })
+    else if (state == "signedIn") {
+      const user = await Auth.currentAuthenticatedUser()
+      if (
+        user.getSignInUserSession().accessToken.payload["cognito:groups"].includes("admin") ||
+        user
+          .getSignInUserSession()
+          .accessToken.payload["cognito:groups"].includes("subscriptionValid")
+      ) {
+        RootNavigation.navigate("app", {
+          screen: "Payment1",
+          params: {
+            joinedProduct: data?.joinedProduct,
+            productType: data?.productType,
+          },
+        })
+      } else {
+        RootNavigation.navigate("auth", {
+          screen: "Payment1",
+          params: {
+            joinedProduct: data?.joinedProduct,
+            productType: data?.productType,
+          },
+        })
+      }
+    }
   }
   async getAuthInitialState() {
     const initialUrl: string = await Linking.getInitialURL()
@@ -181,9 +198,9 @@ class AwesomeApp extends JCComponent<Props, State> {
           ) : null}
 
           <Authenticator
-            onStateChange={(item1: string, data: any) => {
+            onStateChange={async (item1: string, data: any) => {
               console.log("AUTHENTICATOR STATE CHANGE")
-              this.updateState(item1, data)
+              await this.updateState(item1, data)
             }}
             hideDefault={true}
             authState={this.state.authState}
@@ -191,9 +208,9 @@ class AwesomeApp extends JCComponent<Props, State> {
             usernameAttributes="email"
           >
             <HomeScreen
-              onStateChange={(item1, data) => {
+              onStateChange={async (item1, data) => {
                 console.log("AUTHENTICATOR STATE CHANGE")
-                this.updateState(item1, data)
+                await this.updateState(item1, data)
               }}
               authState={this.state.authState}
             />

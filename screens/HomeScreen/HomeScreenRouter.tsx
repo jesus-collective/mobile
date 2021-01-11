@@ -92,7 +92,7 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
       await this.ensureUserExists()
       await this.checkIfPaid()
       await this.checkIfCompletedProfile()
-    } else if (this.state.authState == "signIn") this.props.onStateChange("signIn", null)
+    } else if (this.state.authState == "signIn") await this.props.onStateChange("signIn", null)
   }
   private user: any
 
@@ -251,9 +251,12 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
     console.log("checkIfPaid")
     if (this.state.userExists) {
       const handleGetUser = async (getUser: any) => {
+        const user = await Auth.currentAuthenticatedUser()
         if (
-          this.state.groups.includes("subscriptionVerified") ||
-          this.state.groups.includes("admin")
+          user.getSignInUserSession().accessToken.payload["cognito:groups"].includes("admin") ||
+          user
+            .getSignInUserSession()
+            .accessToken.payload["cognito:groups"].includes("subscriptionVerified")
         )
           this.setState({ hasPaidState: "Success" }, () => {
             this.onPaidStateChange("Success")
@@ -423,7 +426,9 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
               updateHasCompletedPersonalProfile: this.updateHasCompletedPersonalProfile,
               updateHasCompletedOrganizationProfile: this.updateHasCompletedOrganizationProfile,
               updatePaidState: this.updatePaidState,
-              onStateChange: this.props.onStateChange,
+              onStateChange: async () => {
+                await this.props.onStateChange
+              },
               updateGroups: this.updateGroups,
               isMemberOf: this.isMemberOf,
             },

@@ -1,11 +1,10 @@
-import React, { Suspense } from "react"
-import { MuiPickersUtilsProvider } from "@material-ui/pickers"
 import MomentUtils from "@date-io/moment"
-import { View, Platform } from "react-native"
-import { Text } from "react-native"
+import { MuiPickersUtilsProvider } from "@material-ui/pickers"
+import React, { Suspense } from "react"
+import { Text, View } from "react-native"
+import { AuthStateData } from "src/types"
 import JCComponent from "../../components/JCComponent/JCComponent"
 import Main from "./Main"
-import { AuthStateData } from "src/types"
 
 interface Props {
   authState?: any
@@ -37,9 +36,9 @@ export default class App extends JCComponent<Props> {
         >
           <MuiPickersUtilsProvider utils={MomentUtils}>
             <Main
-              onStateChange={(e: string, e2: AuthStateData) => {
+              onStateChange={async (e: string, e2: AuthStateData) => {
                 console.log(e)
-                this.props.onStateChange(e, e2)
+                await this.props.onStateChange(e, e2)
               }}
               authState={this.props.authState}
             />

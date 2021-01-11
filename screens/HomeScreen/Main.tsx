@@ -129,7 +129,9 @@ export default function Main(props: Props) {
       }}
     >
       <HomeScreenRouter
-        onStateChange={props.onStateChange}
+        onStateChange={async () => {
+          await props.onStateChange
+        }}
         authState={props.authState}
       ></HomeScreenRouter>
     </NavigationContainer>
