@@ -1843,7 +1843,7 @@ export default class MainStyles {
         },
         dashboardRightCard: {
           flexBasis: "auto",
-          top: 2250,
+          top: 2150,
         },
         myProfileMainContainer: {
           flexDirection: "column",
@@ -2060,6 +2060,11 @@ export default class MainStyles {
         },
         myProfilePersonalInfoWrapper: {
           top: 0,
+        },
+        peopleContainer: {
+          shadowOffset: { width: 0, height: 0 },
+          shadowColor: "rgba(0, 0, 0, 0.0)",
+          shadowRadius: 0,
         },
       },
 
