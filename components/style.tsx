@@ -2043,6 +2043,10 @@ export default class MainStyles {
         dashboardConversationCardLeft: {
           flexDirection: "row",
         },
+        connectWithSliderButton: {
+          width: "80%",
+          alignSelf: 'center',
+        },
       },
 
       dashboardMainContainer:
