@@ -39,7 +39,7 @@ class ResourceList extends JCComponent<Props, State> {
           if (resourceState.currentResource == null) return null
           return (
             <>
-              <Text>Title 1:</Text>
+              <Text style={{ textAlign: 'left', width: '100%', fontWeight: '800', marginTop: 15 }}>Title 1:</Text>
               <EditableText
                 onChange={(val: string) => {
                   const tmp = page.state.settings
@@ -48,12 +48,12 @@ class ResourceList extends JCComponent<Props, State> {
                 }}
                 placeholder="Title 1"
                 multiline={false}
-                textStyle={{ margin: 10 }}
-                inputStyle={{ margin: 10 }}
+                textStyle={{ textAlign: 'left', width: '100%', fontWeight: '400' }}
+                inputStyle={{ textAlign: 'left', width: '100%', fontWeight: '400' }}
                 value={page.state.settings.title1 ?? ""}
                 isEditable={true}
               ></EditableText>
-              <Text>Title 2:</Text>
+              <Text style={{ textAlign: 'left', width: '100%', fontWeight: '800', marginTop: 15 }}>Title 2:</Text>
 
               <EditableText
                 onChange={(val: string) => {
@@ -63,8 +63,8 @@ class ResourceList extends JCComponent<Props, State> {
                 }}
                 placeholder="Title 2"
                 multiline={false}
-                textStyle={{ margin: 10 }}
-                inputStyle={{ margin: 10 }}
+                textStyle={{ textAlign: 'left', width: '100%', fontWeight: '400' }}
+                inputStyle={{ textAlign: 'left', width: '100%', fontWeight: '400', marginBottom: 15 }}
                 value={page.state.settings.title2 ?? ""}
                 isEditable={true}
               ></EditableText>

@@ -96,7 +96,7 @@ export default class PageItemSettings extends JCComponent<ResourceSetupProp, Sta
                 style={{
                   width: "100%",
                   marginTop: 10,
-                  marginBottom: 30,
+                  marginBottom: 15,
                   fontSize: 16,
                   height: 30,
                   flexGrow: 0,
@@ -116,7 +116,7 @@ export default class PageItemSettings extends JCComponent<ResourceSetupProp, Sta
               </Picker>
               {this.renderAdminRouter()}
               <JCButton
-                buttonType={ButtonTypes.Solid}
+                buttonType={ButtonTypes.ResourceModalSolid}
                 onPress={() => {
                   this.save()
                   this.setState({ showSettingsModal: false })
@@ -125,7 +125,7 @@ export default class PageItemSettings extends JCComponent<ResourceSetupProp, Sta
                 Save
               </JCButton>
               <JCButton
-                buttonType={ButtonTypes.Solid}
+                buttonType={ButtonTypes.ResourceModalSolid}
                 onPress={() => {
                   this.delete()
                   this.setState({ showSettingsModal: false })

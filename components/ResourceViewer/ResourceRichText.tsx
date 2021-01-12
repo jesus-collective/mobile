@@ -62,8 +62,18 @@ class ResourceRichText extends JCComponent<Props> {
             letterSpacing: 0,
             textAlign: "left",
             color: "#404040",
+            width: '100%'
           }}
-          inputStyle={{ margin: 10 }}
+          inputStyle={{ 
+            margin: 10,
+            fontSize: 18,
+            fontStyle: "normal",
+            fontWeight: 400,
+            lineHeight: 27,
+            letterSpacing: 0,
+            textAlign: "left",
+            color: "#404040",
+            width: '100%' }}
           value={page.state.settings.title1}
           isEditable={true}
         ></EditableRichText>
