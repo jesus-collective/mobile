@@ -1,6 +1,4 @@
-import { Ionicons } from "@expo/vector-icons"
 import { useNavigation, useRoute } from "@react-navigation/native"
-import { Auth, Storage } from "aws-amplify"
 import { Card, CardItem, Picker } from "native-base"
 import React from "react"
 import {
@@ -15,6 +13,7 @@ import { GetResourceData, GetResourceSeriesData } from "src/types"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
 import {
+  ImageInput,
   ResourceDetailInput,
   ResourceDetailType,
   UpdateResourceEpisodeInput,
@@ -23,6 +22,7 @@ import {
 } from "../../src/API"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
+import ResourceImage from "./ResourceImage"
 
 interface Props {
   navigation?: any
@@ -146,89 +146,22 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                     value={item?.value ?? ""}
                   ></TextInput>
                 </View>
-                <View>
-                  <JCButton
-                    buttonType={ButtonTypes.Transparent}
-                    onPress={() => {
-                      null
-                    }}
-                  >
-                    <Ionicons
-                      size={32}
-                      name="ios-image"
-                      style={this.styles.style.resourceImageIcon}
-                    />
-                  </JCButton>
-                  <input
-                    style={{
-                      fontSize: 200,
-                      position: "absolute",
-                      top: "0px",
-                      right: "0px",
-                      opacity: "0",
-                    }}
-                    type="file"
-                    accept="image/*"
-                    onChange={async (e) => {
-                      if (resourceState.resourceData == null) return null
-                      if (resourceState.currentResource == null) return null
-                      console.log("Uploading")
-                      if (e.target.files) {
-                        const file = e.target.files[0]
-                        const lastDot = file.name.lastIndexOf(".")
-                        const ext = file.name.substring(lastDot + 1)
-                        const user = await Auth.currentCredentials()
-                        const userId = user.identityId
-
-                        const fn =
-                          "resources/upload/group-" +
-                          resourceState.resourceData.id +
-                          "-resource-" +
-                          this.state.currentResource.id +
-                          "-details-" +
-                          new Date().getTime() +
-                          "-upload." +
-                          ext
-                        console.log({ filename: fn })
-
-                        const fnSave = fn
-                          .replace("/upload", "")
-                          .replace("-upload.", "-[size].")
-                          .replace("." + ext, ".png")
-
-                        console.log("putting")
-                        await Storage.put(fn, file, {
-                          level: "protected",
-                          contentType: file.type,
-                          identityId: userId,
-                        })
-                          .then(() => {
-                            console.log("getting")
-                            return Storage.get(fn, {
-                              level: "protected",
-                              identityId: userId,
-                            }).then((result2) => {
-                              console.log({ fileInfo: result2 })
-                              let tmp = this.state.currentResource
-                              tmp.details![index]!.image = {
-                                userId: userId,
-                                filenameUpload: fn,
-                                filenameLarge: fnSave.replace("[size]", "large"),
-                                filenameMedium: fnSave.replace("[size]", "medium"),
-                                filenameSmall: fnSave.replace("[size]", "small"),
-                              }
-                              console.log({ settings: tmp })
-                              this.setState({ currentResource: tmp })
-                              //this.updatePageItem(menuItemIndex, pageItemIndex, tempPageItems)
-                            })
-
-                            // console.log(result)
-                          })
-                          .catch((err: any) => console.log(err))
-                      }
-                    }}
-                  />
-                </View>
+                <ResourceImage
+                  onUpdate={(image: ImageInput) => {
+                    let tmp = this.state.currentResource
+                    tmp.image = image
+                    console.log({ currentResource: tmp })
+                    this.setState({ currentResource: tmp })
+                  }}
+                  fileName={
+                    "resources/upload/group-" +
+                    resourceState.resourceData?.id +
+                    "-resource-" +
+                    this.state.currentResource.id +
+                    "-details-"
+                  }
+                  currentImage={this.state.currentResource.image}
+                ></ResourceImage>
               </>
             )
           }
@@ -320,89 +253,22 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                     value={item?.value ?? ""}
                   ></TextInput>
                 </View>
-                <View>
-                  <JCButton
-                    buttonType={ButtonTypes.Transparent}
-                    onPress={() => {
-                      null
-                    }}
-                  >
-                    <Ionicons
-                      size={32}
-                      name="ios-image"
-                      style={this.styles.style.resourceImageIcon}
-                    />
-                  </JCButton>
-                  <input
-                    style={{
-                      fontSize: 200,
-                      position: "absolute",
-                      top: "0px",
-                      right: "0px",
-                      opacity: "0",
-                    }}
-                    type="file"
-                    accept="image/*"
-                    onChange={async (e) => {
-                      if (resourceState.resourceData == null) return null
-                      if (resourceState.currentEpisode == null) return null
-                      console.log("Uploading")
-                      if (e.target.files) {
-                        const file = e.target.files[0]
-                        const lastDot = file.name.lastIndexOf(".")
-                        const ext = file.name.substring(lastDot + 1)
-                        const user = await Auth.currentCredentials()
-                        const userId = user.identityId
-
-                        const fn =
-                          "resources/upload/group-" +
-                          resourceState.resourceData.id +
-                          "-resource-" +
-                          this.state.currentEpisode.id +
-                          "-details-" +
-                          new Date().getTime() +
-                          "-upload." +
-                          ext
-                        console.log({ filename: fn })
-
-                        const fnSave = fn
-                          .replace("/upload", "")
-                          .replace("-upload.", "-[size].")
-                          .replace("." + ext, ".png")
-
-                        console.log("putting")
-                        await Storage.put(fn, file, {
-                          level: "protected",
-                          contentType: file.type,
-                          identityId: userId,
-                        })
-                          .then(() => {
-                            console.log("getting")
-                            return Storage.get(fn, {
-                              level: "protected",
-                              identityId: userId,
-                            }).then((result2) => {
-                              console.log({ fileInfo: result2 })
-                              let tmp = this.state.currentEpisode
-                              tmp.details![index]!.image = {
-                                userId: userId,
-                                filenameUpload: fn,
-                                filenameLarge: fnSave.replace("[size]", "large"),
-                                filenameMedium: fnSave.replace("[size]", "medium"),
-                                filenameSmall: fnSave.replace("[size]", "small"),
-                              }
-                              console.log({ settings: tmp })
-                              this.setState({ currentEpisode: tmp })
-                              //this.updatePageItem(menuItemIndex, pageItemIndex, tempPageItems)
-                            })
-
-                            // console.log(result)
-                          })
-                          .catch((err: any) => console.log(err))
-                      }
-                    }}
-                  />
-                </View>
+                <ResourceImage
+                  onUpdate={(image: ImageInput) => {
+                    let tmp = this.state.currentEpisode
+                    tmp.imageFile = image
+                    console.log({ currentEpisode: tmp })
+                    this.setState({ currentEpisode: tmp })
+                  }}
+                  fileName={
+                    "resources/upload/group-" +
+                    resourceState.resourceData?.id +
+                    "-resource-" +
+                    this.state.currentEpisode.id +
+                    "-details-"
+                  }
+                  currentImage={this.state.currentEpisode.imageFile}
+                ></ResourceImage>
               </>
             )
           }
@@ -493,89 +359,22 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                     value={item?.value ?? ""}
                   ></TextInput>
                 </View>
-                <View>
-                  <JCButton
-                    buttonType={ButtonTypes.Transparent}
-                    onPress={() => {
-                      null
-                    }}
-                  >
-                    <Ionicons
-                      size={32}
-                      name="ios-image"
-                      style={this.styles.style.resourceImageIcon}
-                    />
-                  </JCButton>
-                  <input
-                    style={{
-                      fontSize: 200,
-                      position: "absolute",
-                      top: "0px",
-                      right: "0px",
-                      opacity: "0",
-                    }}
-                    type="file"
-                    accept="image/*"
-                    onChange={async (e) => {
-                      if (resourceState.resourceData == null) return null
-                      if (resourceState.currentSeries == null) return null
-                      console.log("Uploading")
-                      if (e.target.files) {
-                        const file = e.target.files[0]
-                        const lastDot = file.name.lastIndexOf(".")
-                        const ext = file.name.substring(lastDot + 1)
-                        const user = await Auth.currentCredentials()
-                        const userId = user.identityId
-
-                        const fn =
-                          "resources/upload/group-" +
-                          resourceState.resourceData.id +
-                          "-resource-" +
-                          this.state.currentSeries.id +
-                          "-details-" +
-                          new Date().getTime() +
-                          "-upload." +
-                          ext
-                        console.log({ filename: fn })
-
-                        const fnSave = fn
-                          .replace("/upload", "")
-                          .replace("-upload.", "-[size].")
-                          .replace("." + ext, ".png")
-
-                        console.log("putting")
-                        await Storage.put(fn, file, {
-                          level: "protected",
-                          contentType: file.type,
-                          identityId: userId,
-                        })
-                          .then(() => {
-                            console.log("getting")
-                            return Storage.get(fn, {
-                              level: "protected",
-                              identityId: userId,
-                            }).then((result2) => {
-                              console.log({ fileInfo: result2 })
-                              let tmp = this.state.currentSeries
-                              tmp.details![index]!.image = {
-                                userId: userId,
-                                filenameUpload: fn,
-                                filenameLarge: fnSave.replace("[size]", "large"),
-                                filenameMedium: fnSave.replace("[size]", "medium"),
-                                filenameSmall: fnSave.replace("[size]", "small"),
-                              }
-                              console.log({ settings: tmp })
-                              this.setState({ currentSeries: tmp })
-                              //this.updatePageItem(menuItemIndex, pageItemIndex, tempPageItems)
-                            })
-
-                            // console.log(result)
-                          })
-                          .catch((err: any) => console.log(err))
-                      }
-                    }}
-                  />
-                </View>
+                <ResourceImage
+                  onUpdate={(image: ImageInput) => {
+                    let tmp = this.state.currentSeries
+                    tmp.imageFile = image
+                    console.log({ currentSeries: tmp })
+                    this.setState({ currentSeries: tmp })
+                  }}
+                  fileName={
+                    "resources/upload/group-" +
+                    resourceState.resourceData?.id +
+                    "-resource-" +
+                    this.state.currentSeries.id +
+                    "-details-"
+                  }
+                  currentImage={this.state.currentSeries.imageFile}
+                ></ResourceImage>
               </>
             )
           }
@@ -634,86 +433,23 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                 value={this.state.currentResource.subtitle ?? ""}
               ></TextInput>
             </View>
+            <ResourceImage
+              onUpdate={(image: ImageInput) => {
+                let tmp = this.state.currentResource
+                tmp.image = image
+                console.log({ currentResource: tmp })
+                this.setState({ currentResource: tmp })
+              }}
+              fileName={
+                "resources/upload/group-" +
+                resourceState.resourceData?.id +
+                "-resource-" +
+                this.state.currentResource.id +
+                "-"
+              }
+              currentImage={this.state.currentResource.image}
+            ></ResourceImage>
 
-            <View>
-              <JCButton
-                buttonType={ButtonTypes.Transparent}
-                onPress={() => {
-                  null
-                }}
-              >
-                <Ionicons size={32} name="ios-image" style={this.styles.style.resourceImageIcon} />
-              </JCButton>
-              <input
-                style={{
-                  fontSize: 200,
-                  position: "absolute",
-                  top: "0px",
-                  right: "0px",
-                  opacity: "0",
-                }}
-                type="file"
-                accept="image/*"
-                onChange={async (e) => {
-                  if (resourceState.resourceData == null) return null
-                  if (resourceState.currentResource == null) return null
-                  console.log("Uploading")
-                  if (e.target.files) {
-                    const file = e.target.files[0]
-                    const lastDot = file.name.lastIndexOf(".")
-                    const ext = file.name.substring(lastDot + 1)
-                    const user = await Auth.currentCredentials()
-                    const userId = user.identityId
-
-                    const fn =
-                      "resources/upload/group-" +
-                      resourceState.resourceData.id +
-                      "-resource-" +
-                      this.state.currentResource.id +
-                      "-" +
-                      new Date().getTime() +
-                      "-upload." +
-                      ext
-                    console.log({ filename: fn })
-
-                    const fnSave = fn
-                      .replace("/upload", "")
-                      .replace("-upload.", "-[size].")
-                      .replace("." + ext, ".png")
-
-                    console.log("putting")
-                    await Storage.put(fn, file, {
-                      level: "protected",
-                      contentType: file.type,
-                      identityId: userId,
-                    })
-                      .then(() => {
-                        console.log("getting")
-                        return Storage.get(fn, {
-                          level: "protected",
-                          identityId: userId,
-                        }).then((result2) => {
-                          console.log({ fileInfo: result2 })
-                          let tmp = this.state.currentResource
-                          tmp.image = {
-                            userId: userId,
-                            filenameUpload: fn,
-                            filenameLarge: fnSave.replace("[size]", "large"),
-                            filenameMedium: fnSave.replace("[size]", "medium"),
-                            filenameSmall: fnSave.replace("[size]", "small"),
-                          }
-                          console.log({ settings: tmp })
-                          this.setState({ currentResource: tmp })
-                          //this.updatePageItem(menuItemIndex, pageItemIndex, tempPageItems)
-                        })
-
-                        // console.log(result)
-                      })
-                      .catch((err: any) => console.log(err))
-                  }
-                }}
-              />
-            </View>
             <View style={{ flexDirection: "row" }}>
               <Text>description: </Text>
               <TextInput
@@ -783,86 +519,22 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                 value={this.state.currentSeries.description ?? ""}
               ></TextInput>
             </View>
-
-            <View>
-              <JCButton
-                buttonType={ButtonTypes.Transparent}
-                onPress={() => {
-                  null
-                }}
-              >
-                <Ionicons size={32} name="ios-image" style={this.styles.style.resourceImageIcon} />
-              </JCButton>
-              <input
-                style={{
-                  fontSize: 200,
-                  position: "absolute",
-                  top: "0px",
-                  right: "0px",
-                  opacity: "0",
-                }}
-                type="file"
-                accept="image/*"
-                onChange={async (e) => {
-                  if (resourceState.resourceData == null) return null
-                  if (resourceState.currentResource == null) return null
-                  console.log("Uploading")
-                  if (e.target.files) {
-                    const file = e.target.files[0]
-                    const lastDot = file.name.lastIndexOf(".")
-                    const ext = file.name.substring(lastDot + 1)
-                    const user = await Auth.currentCredentials()
-                    const userId = user.identityId
-
-                    const fn =
-                      "resources/upload/group-" +
-                      resourceState.resourceData.id +
-                      "-series-" +
-                      this.state.currentSeries?.id +
-                      "-" +
-                      new Date().getTime() +
-                      "-upload." +
-                      ext
-                    console.log({ filename: fn })
-
-                    const fnSave = fn
-                      .replace("/upload", "")
-                      .replace("-upload.", "-[size].")
-                      .replace("." + ext, ".png")
-
-                    console.log("putting")
-                    await Storage.put(fn, file, {
-                      level: "protected",
-                      contentType: file.type,
-                      identityId: userId,
-                    })
-                      .then(() => {
-                        console.log("getting")
-                        return Storage.get(fn, {
-                          level: "protected",
-                          identityId: userId,
-                        }).then((result2) => {
-                          console.log({ fileInfo: result2 })
-                          let tmp = this.state.currentSeries
-                          tmp.imageFile = {
-                            userId: userId,
-                            filenameUpload: fn,
-                            filenameLarge: fnSave.replace("[size]", "large"),
-                            filenameMedium: fnSave.replace("[size]", "medium"),
-                            filenameSmall: fnSave.replace("[size]", "small"),
-                          }
-                          console.log({ settings: tmp })
-                          this.setState({ currentSeries: tmp })
-                          //this.updatePageItem(menuItemIndex, pageItemIndex, tempPageItems)
-                        })
-
-                        // console.log(result)
-                      })
-                      .catch((err: any) => console.log(err))
-                  }
-                }}
-              />
-            </View>
+            <ResourceImage
+              onUpdate={(image: ImageInput) => {
+                let tmp = this.state.currentSeries
+                tmp.imageFile = image
+                console.log({ currentSeries: tmp })
+                this.setState({ currentSeries: tmp })
+              }}
+              fileName={
+                "resources/upload/group-" +
+                resourceState.resourceData?.id +
+                "-series-" +
+                this.state.currentSeries?.id +
+                "-"
+              }
+              currentImage={this.state.currentSeries.imageFile}
+            ></ResourceImage>
 
             <View style={{ flexDirection: "row" }}>
               <Text>status: </Text>
@@ -947,85 +619,23 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                 value={this.state.currentEpisode.description ?? ""}
               ></TextInput>
             </View>
-            <View>
-              <JCButton
-                buttonType={ButtonTypes.Transparent}
-                onPress={() => {
-                  null
-                }}
-              >
-                <Ionicons size={32} name="ios-image" style={this.styles.style.resourceImageIcon} />
-              </JCButton>
-              <input
-                style={{
-                  fontSize: 200,
-                  position: "absolute",
-                  top: "0px",
-                  right: "0px",
-                  opacity: "0",
-                }}
-                type="file"
-                accept="image/*"
-                onChange={async (e) => {
-                  if (resourceState.resourceData == null) return null
-                  if (resourceState.currentResource == null) return null
-                  console.log("Uploading")
-                  if (e.target.files) {
-                    const file = e.target.files[0]
-                    const lastDot = file.name.lastIndexOf(".")
-                    const ext = file.name.substring(lastDot + 1)
-                    const user = await Auth.currentCredentials()
-                    const userId = user.identityId
+            <ResourceImage
+              onUpdate={(image: ImageInput) => {
+                let tmp = this.state.currentEpisode
+                tmp.imageFile = image
+                console.log({ currentEpisode: tmp })
+                this.setState({ currentEpisode: tmp })
+              }}
+              fileName={
+                "resources/upload/group-" +
+                resourceState.resourceData?.id +
+                "-episode-" +
+                this.state.currentEpisode.id +
+                "-"
+              }
+              currentImage={this.state.currentEpisode.image}
+            ></ResourceImage>
 
-                    const fn =
-                      "resources/upload/group-" +
-                      resourceState.resourceData.id +
-                      "-episode-" +
-                      this.state.currentEpisode.id +
-                      "-" +
-                      new Date().getTime() +
-                      "-upload." +
-                      ext
-                    console.log({ filename: fn })
-
-                    const fnSave = fn
-                      .replace("/upload", "")
-                      .replace("-upload.", "-[size].")
-                      .replace("." + ext, ".png")
-
-                    console.log("putting")
-                    await Storage.put(fn, file, {
-                      level: "protected",
-                      contentType: file.type,
-                      identityId: userId,
-                    })
-                      .then(() => {
-                        console.log("getting")
-                        return Storage.get(fn, {
-                          level: "protected",
-                          identityId: userId,
-                        }).then((result2) => {
-                          console.log({ fileInfo: result2 })
-                          let tmp = this.state.currentEpisode
-                          tmp.imageFile = {
-                            userId: userId,
-                            filenameUpload: fn,
-                            filenameLarge: fnSave.replace("[size]", "large"),
-                            filenameMedium: fnSave.replace("[size]", "medium"),
-                            filenameSmall: fnSave.replace("[size]", "small"),
-                          }
-                          console.log({ settings: tmp })
-                          this.setState({ currentEpisode: tmp })
-                          //this.updatePageItem(menuItemIndex, pageItemIndex, tempPageItems)
-                        })
-
-                        // console.log(result)
-                      })
-                      .catch((err: any) => console.log(err))
-                  }
-                }}
-              />
-            </View>
             {this.renderDetailsEpisode(resourceState, resourceActions)}
             <JCButton
               buttonType={ButtonTypes.Solid}
