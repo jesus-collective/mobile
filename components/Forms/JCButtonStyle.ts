@@ -186,6 +186,26 @@ export default EStyleSheet.create({
     width: '100%',
     textAlign: 'center'
   },
+  ResourceModalTransparentButton: {
+    paddingTop: 10,
+    paddingBottom: 10,
+
+    marginBottom: 20,
+    marginLeft: 10,
+    marginRight: 10,
+    //   color:"#ffffff",
+    backgroundColor: "#ffffff00",
+    borderWidth: 0,
+    borderColor: "#ffffff00",
+    shadowOffset: { height: 0, width: 0 },
+    shadowOpacity: 0,
+  },
+  ResourceModalTransparentText: {
+    color: "#ffffff",
+    fontFamily: "Graphik-Regular-App",
+    fontSize: 16,
+    padding: 5,
+  },
   AdminModalOrangeButton: {
     backgroundColor: "#FFFFFF",
   },

@@ -56,6 +56,7 @@ export enum ButtonTypes {
   EditButton,
   ResourceModal,
   ResourceModalSolid,
+  ResourceModalTransparent,
 }
 export interface Props {
   enabled?: boolean
