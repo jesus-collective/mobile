@@ -21,6 +21,9 @@ class ResourceImage extends JCComponent<Props, State> {
     super(props)
     this.getImage()
   }
+  componentDidMount() {
+    this.getImage()
+  }
   componentDidUpdate(prevProps: Props) {
     if (prevProps.currentImage?.filenameUpload != this.props.currentImage?.filenameUpload)
       this.getImage()

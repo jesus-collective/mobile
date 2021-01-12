@@ -681,7 +681,6 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
     )
   }
   renderRouter() {
-    console.log({ cardstyle: this.props.pageItem.style })
     switch (this.props.pageItem.style) {
       case ResourcePageItemStyle.CardManual:
         return this.renderManualCard()

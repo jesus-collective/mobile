@@ -152,7 +152,7 @@ class AwesomeApp extends JCComponent<Props, State> {
           .accessToken.payload["cognito:groups"].includes("subscriptionValid")
       ) {
         RootNavigation.navigate("app", {
-          screen: "Payment1",
+          screen: "home",
           params: {
             joinedProduct: data?.joinedProduct,
             productType: data?.productType,

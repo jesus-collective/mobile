@@ -31,6 +31,10 @@ class ResourceHeader extends JCComponent<Props, State> {
       retries: 0,
     }
   }
+
+  componentDidMount() {
+    this.setState({ imageUrl: null, image: null, fadeValue: new Animated.Value(0), retries: 0 })
+  }
   fadeAnimation = (): void => {
     Animated.timing(this.state.fadeValue, {
       toValue: 1,

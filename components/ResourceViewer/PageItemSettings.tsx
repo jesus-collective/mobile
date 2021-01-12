@@ -27,6 +27,9 @@ export default class PageItemSettings extends JCComponent<ResourceSetupProp, Sta
       settings: this.props.pageItem,
     }
   }
+  componentDidUpdate(prevProps: ResourceSetupProp) {
+    if (prevProps.pageItem != this.props.pageItem) this.setState({ settings: this.props.pageItem })
+  }
   save() {
     if (this.props.save)
       this.props.save(
@@ -69,7 +72,7 @@ export default class PageItemSettings extends JCComponent<ResourceSetupProp, Sta
   render() {
     return (
       <>
-        {!this.props.hideEditButton && (
+        {!this.props.hideEditButton && this.props.resourceState.isEditable && (
           <JCButton
             buttonType={ButtonTypes.AdminModal}
             onPress={() => {

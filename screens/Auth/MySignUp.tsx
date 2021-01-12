@@ -73,7 +73,7 @@ class MySignUpImpl extends React.Component<Props, State> {
   }
   static UserConsumer = UserContext.Consumer
 
-  changeAuthState(actions: UserActions, state: string, data: AuthStateData): void {
+  async changeAuthState(actions: UserActions, state: string, data: AuthStateData): Promise<void> {
     this.setState({
       user: {
         first: "",
@@ -92,7 +92,7 @@ class MySignUpImpl extends React.Component<Props, State> {
       productType: this.props.route?.params.productType,
       sendingData: false,
     })
-    if (actions.onStateChange) actions.onStateChange(state, data)
+    if (actions.onStateChange) await actions.onStateChange(state, data)
   }
 
   validate(): boolean {
@@ -150,12 +150,13 @@ class MySignUpImpl extends React.Component<Props, State> {
           "custom:orgName": this.state.user.orgName,
           "custom:isOrg": Boolean(this.state.joinedAs === "organization").toString(),
         },
-      }).then(() =>
-        this.changeAuthState(actions, "confirmSignUp", {
-          joinedProduct: this.state.joinedProduct,
-          productType: this.state.productType,
-          email: this.state.user.email.toLowerCase(),
-        })
+      }).then(
+        async () =>
+          await this.changeAuthState(actions, "confirmSignUp", {
+            joinedProduct: this.state.joinedProduct,
+            productType: this.state.productType,
+            email: this.state.user.email.toLowerCase(),
+          })
       )
     } catch (e) {
       this.setState({ authError: e.message, sendingData: false })
@@ -203,8 +204,8 @@ class MySignUpImpl extends React.Component<Props, State> {
                 <View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>
                   <View style={this.styles.style.signUpBackButtonWrapper}>
                     <TouchableOpacity
-                      onPress={() => {
-                        this.changeAuthState(userActions, "signIn", {
+                      onPress={async () => {
+                        await this.changeAuthState(userActions, "signIn", {
                           joinedProduct: this.state.joinedProduct,
                           productType: this.state.productType,
                         })
@@ -475,8 +476,8 @@ class MySignUpImpl extends React.Component<Props, State> {
                           )}
                         </JCButton>
                         <TouchableOpacity
-                          onPress={() =>
-                            this.changeAuthState(userActions, "confirmSignUp", {
+                          onPress={async () =>
+                            await this.changeAuthState(userActions, "confirmSignUp", {
                               joinedProduct: this.state.joinedProduct,
                               productType: this.state.productType,
                             })
@@ -790,8 +791,8 @@ class MySignUpImpl extends React.Component<Props, State> {
                           )}
                         </JCButton>
                         <TouchableOpacity
-                          onPress={() =>
-                            this.changeAuthState(userActions, "confirmSignUp", {
+                          onPress={async () =>
+                            await this.changeAuthState(userActions, "confirmSignUp", {
                               joinedProduct: this.state.joinedProduct,
                               productType: this.state.productType,
                             })

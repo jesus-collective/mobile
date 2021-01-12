@@ -8,7 +8,7 @@ import Main from "./Main"
 
 interface Props {
   authState?: any
-  onStateChange(state: string, data: AuthStateData): void
+  onStateChange(state: string, data: AuthStateData): Promise<void>
 }
 
 export default class App extends JCComponent<Props> {

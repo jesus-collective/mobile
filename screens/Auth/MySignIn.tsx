@@ -116,8 +116,8 @@ class MySignInImpl extends React.Component<Props, State> {
                   <View style={this.styles.style.createAccountButtonWrapper}>
                     <JCButton
                       buttonType={ButtonTypes.SolidCreateAccount}
-                      onPress={() => {
-                        this.changeAuthState(userActions, "signUp")
+                      onPress={async () => {
+                        await this.changeAuthState(userActions, "signUp")
                       }}
                     >
                       Create an Account
@@ -192,8 +192,8 @@ class MySignInImpl extends React.Component<Props, State> {
                       Sign In
                     </JCButton>
                     <TouchableOpacity
-                      onPress={() => {
-                        this.changeAuthState(userActions, "forgotPassword")
+                      onPress={async () => {
+                        await this.changeAuthState(userActions, "forgotPassword")
                       }}
                     >
                       <Text

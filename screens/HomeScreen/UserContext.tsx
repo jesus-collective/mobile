@@ -20,7 +20,7 @@ export interface UserState extends JCState {
 export interface UserActions {
   onSetUser(user: any): void
   updateHasCompletedPersonalProfile(): void | null
-  updatePaidState(): void | null
+  updatePaidState(): Promise<void>
   updateHasCompletedOrganizationProfile(): void | null
   onStateChange(state: string, data: AuthStateData): Promise<any> | null
   updateGroups(): Promise<void> | null
@@ -34,7 +34,7 @@ export const UserContext = React.createContext<UserContextType>({
   userActions: {
     onSetUser: () => {},
     updateHasCompletedPersonalProfile: () => {},
-    updatePaidState: () => {},
+    updatePaidState: async () => {},
     updateHasCompletedOrganizationProfile: () => {},
     onStateChange: async () => {},
     updateGroups: async () => {},

@@ -1,26 +1,24 @@
-import React from "react"
-
-import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
-import {
-  Platform,
-  TextInput,
-  Text,
-  NativeSyntheticEvent,
-  TextInputKeyPressEventData,
-  TouchableOpacity,
-  ActivityIndicator,
-  Picker,
-} from "react-native"
-import { View } from "native-base"
-import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
-import { Dimensions } from "react-native"
-import MainStyles from "../../components/style"
+import { Entypo } from "@expo/vector-icons"
 import { Auth } from "aws-amplify"
 import countryDialCodes from "aws-amplify-react-native/src/CountryDialCodes"
-import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/UserContext"
-
-import { Entypo } from "@expo/vector-icons"
+import { View } from "native-base"
+import React from "react"
+import {
+  ActivityIndicator,
+  Dimensions,
+  NativeSyntheticEvent,
+  Picker,
+  Platform,
+  Text,
+  TextInput,
+  TextInputKeyPressEventData,
+  TouchableOpacity,
+} from "react-native"
 import { Copyright } from "../../components/Auth/Copyright"
+import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
+import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
+import MainStyles from "../../components/style"
+import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/UserContext"
 
 interface Props {
   username: any
@@ -59,7 +57,7 @@ class MyForgotPassword extends React.Component<Props, State> {
   }
   static UserConsumer = UserContext.Consumer
 
-  changeAuthState(actions: UserActions, state: string): void {
+  async changeAuthState(actions: UserActions, state: string): Promise<void> {
     this.setState({
       phone: "",
       first: "",
@@ -71,7 +69,7 @@ class MyForgotPassword extends React.Component<Props, State> {
       newPass2: "",
       resetting: false,
     })
-    if (actions.onStateChange) actions.onStateChange(state, null)
+    if (actions.onStateChange) await actions.onStateChange(state, null)
   }
 
   async save(actions: UserActions, userState: UserState): Promise<void> {
@@ -86,8 +84,8 @@ class MyForgotPassword extends React.Component<Props, State> {
         given_name: this.state.first,
         phone_number: this.state.code + this.state.phone,
       })
-        .then(() => {
-          this.changeAuthState(actions, "signedIn")
+        .then(async () => {
+          await this.changeAuthState(actions, "signedIn")
         })
         .catch((e) => {
           console.log({ Error: e })
@@ -130,8 +128,8 @@ class MyForgotPassword extends React.Component<Props, State> {
                 <View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>
                   <View style={this.styles.style.signUpBackButtonWrapper}>
                     <TouchableOpacity
-                      onPress={() => {
-                        this.changeAuthState(userActions, "signIn")
+                      onPress={async () => {
+                        await this.changeAuthState(userActions, "signIn")
                       }}
                     >
                       <Text

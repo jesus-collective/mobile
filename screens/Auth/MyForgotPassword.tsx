@@ -1,22 +1,21 @@
+import { Entypo } from "@expo/vector-icons"
+import { Auth } from "aws-amplify"
+import { View } from "native-base"
 import React from "react"
-
-import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
 import {
-  Platform,
-  TextInput,
-  Text,
+  ActivityIndicator,
+  Dimensions,
   NativeSyntheticEvent,
+  Platform,
+  Text,
+  TextInput,
   TextInputKeyPressEventData,
   TouchableOpacity,
-  ActivityIndicator,
 } from "react-native"
-import { View } from "native-base"
-import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
-import { Dimensions } from "react-native"
-import MainStyles from "../../components/style"
-import { Auth } from "aws-amplify"
-import { Entypo } from "@expo/vector-icons"
 import { Copyright } from "../../components/Auth/Copyright"
+import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
+import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
+import MainStyles from "../../components/style"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 
 interface Props {}
@@ -48,7 +47,7 @@ class MyForgotPassword extends React.Component<Props, State> {
   }
   static UserConsumer = UserContext.Consumer
 
-  changeAuthState(actions: UserActions, state: string): void {
+  async changeAuthState(actions: UserActions, state: string): Promise<void> {
     this.setState({
       email: "",
       authError: "",
@@ -59,7 +58,7 @@ class MyForgotPassword extends React.Component<Props, State> {
       sendingCode: false,
       resetting: false,
     })
-    if (actions.onStateChange) actions.onStateChange(state, null)
+    if (actions.onStateChange) await actions.onStateChange(state, null)
   }
 
   async sendCode(): Promise<void> {
@@ -84,8 +83,8 @@ class MyForgotPassword extends React.Component<Props, State> {
         this.state.email.toLowerCase(),
         this.state.code,
         this.state.newPass
-      ).then(() => {
-        this.changeAuthState(actions, "signIn")
+      ).then(async () => {
+        await this.changeAuthState(actions, "signIn")
       })
     } catch (e) {
       this.setState({ authError: e.message, resetting: false })
@@ -124,8 +123,8 @@ class MyForgotPassword extends React.Component<Props, State> {
                 <View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>
                   <View style={this.styles.style.signUpBackButtonWrapper}>
                     <TouchableOpacity
-                      onPress={() => {
-                        this.changeAuthState(userActions, "signIn")
+                      onPress={async () => {
+                        await this.changeAuthState(userActions, "signIn")
                       }}
                     >
                       <Text

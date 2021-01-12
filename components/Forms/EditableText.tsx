@@ -15,6 +15,7 @@ interface Props {
   ellipsizeMode?: "head" | "middle" | "tail" | "clip"
   numberOfLines?: number
 }
+
 interface State extends JCState {
   // value: string,
   isEditable: boolean

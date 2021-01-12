@@ -27,7 +27,7 @@ Amplify.configure(awsconfig)
 const MainStack = createStackNavigator()
 
 interface Props {
-  authState?: any
+  authState?: string | undefined
   onStateChange(state: string, data: AuthStateData): void
 }
 
@@ -92,7 +92,9 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
       await this.ensureUserExists()
       await this.checkIfPaid()
       await this.checkIfCompletedProfile()
-    } else if (this.state.authState == "signIn") await this.props.onStateChange("signIn", null)
+    } else if (this.state.authState == "signIn") {
+      await this.props.onStateChange("signIn", null)
+    }
   }
   private user: any
 
@@ -335,11 +337,11 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
     }
   }
   onPaidStateChange(state: string): void {}
-  updatePaidState(): void {
+  async updatePaidState(): Promise<void> {
     console.debug("updatePaidState")
-    this.ensureUserExists()
-    this.checkIfPaid()
-    this.checkIfCompletedProfile()
+    await this.ensureUserExists()
+    await this.checkIfPaid()
+    await this.checkIfCompletedProfile()
   }
   //  onProfileComplete(): void {
   //    console.debug("onProfileComplete")

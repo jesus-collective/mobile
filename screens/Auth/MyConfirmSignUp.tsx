@@ -44,21 +44,21 @@ class MyConfirmSignUpImpl extends React.Component<Props, State> {
   }
   static UserConsumer = UserContext.Consumer
 
-  changeAuthState(actions: UserActions, state: string, data: AuthStateData): void {
+  async changeAuthState(actions: UserActions, state: string, data: AuthStateData): Promise<void> {
     this.setState({
       email: "",
       code: "",
       authError: "",
       sendingData: false,
     })
-    if (actions.onStateChange) actions.onStateChange(state, data)
+    if (actions.onStateChange) await actions.onStateChange(state, data)
   }
 
   async handleConfirmSignUp(actions: UserActions): Promise<void> {
     try {
       this.setState({ sendingData: true })
-      await Auth.confirmSignUp(this.state.email.toLowerCase(), this.state.code).then(() => {
-        this.changeAuthState(actions, "signIn", {
+      await Auth.confirmSignUp(this.state.email.toLowerCase(), this.state.code).then(async () => {
+        await this.changeAuthState(actions, "signIn", {
           email: this.state.email.toLowerCase(),
           fromVerified: true,
         })
@@ -94,8 +94,8 @@ class MyConfirmSignUpImpl extends React.Component<Props, State> {
                 <View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>
                   <View style={this.styles.style.signUpBackButtonWrapper}>
                     <TouchableOpacity
-                      onPress={() => {
-                        this.changeAuthState(userActions, "signIn", null)
+                      onPress={async () => {
+                        await this.changeAuthState(userActions, "signIn", null)
                       }}
                     >
                       <Text
