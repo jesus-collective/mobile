@@ -93,7 +93,7 @@ export default class PageItemSettings extends JCComponent<ResourceSetupProp, Sta
                 style={{
                   width: "100%",
                   marginTop: 10,
-                  marginBottom: 30,
+                  marginBottom: 15,
                   fontSize: 16,
                   height: 30,
                   flexGrow: 0,
