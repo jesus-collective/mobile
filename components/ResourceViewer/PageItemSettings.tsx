@@ -113,7 +113,7 @@ export default class PageItemSettings extends JCComponent<ResourceSetupProp, Sta
               </Picker>
               {this.renderAdminRouter()}
               <JCButton
-                buttonType={ButtonTypes.Solid}
+                buttonType={ButtonTypes.ResourceModalSolid}
                 onPress={() => {
                   this.save()
                   this.setState({ showSettingsModal: false })
@@ -122,7 +122,7 @@ export default class PageItemSettings extends JCComponent<ResourceSetupProp, Sta
                 Save
               </JCButton>
               <JCButton
-                buttonType={ButtonTypes.Solid}
+                buttonType={ButtonTypes.ResourceModalSolid}
                 onPress={() => {
                   this.delete()
                   this.setState({ showSettingsModal: false })
