@@ -528,7 +528,7 @@ class BillingImpl extends JCComponent<Props, State> {
   async completePaymentProcess(actions: UserActions, state: UserState) {
     await actions.updateGroups()
     console.log({ Groups: state.groups })
-    actions.updatePaidState()
+    await actions.updatePaidState()
   }
   render() {
     return (
@@ -875,7 +875,7 @@ class BillingImpl extends JCComponent<Props, State> {
                             paddingRight: 45,
                           }}
                         >
-                          Total
+                          {this.state.invoice ? "Total:" : "Getting Prices..."}
                         </Text>
                         <Text
                           style={{
@@ -886,7 +886,7 @@ class BillingImpl extends JCComponent<Props, State> {
                         >
                           {this.state.invoice
                             ? "$" + (this.state.invoice.total / 100).toFixed(2)
-                            : "Processing..."}
+                            : ""}
                         </Text>
                       </View>
 
