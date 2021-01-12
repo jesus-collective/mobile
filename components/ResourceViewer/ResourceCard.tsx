@@ -106,7 +106,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
               {page.state.settings.style == ResourcePageItemStyle.CardManual ||
               page.state.settings.style == null ? (
                 <>
-                  <Text>Title 1:</Text>
+                  <Text style={{ textAlign: 'left', width: '100%', fontWeight: '800' }}>Title 1:</Text>
                   <EditableText
                     onChange={(val: string) => {
                       const tmp = page.state.settings
@@ -115,12 +115,12 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                     }}
                     placeholder="Title 1"
                     multiline={false}
-                    textStyle={{ margin: 10 }}
-                    inputStyle={{ margin: 10 }}
+                    textStyle={{ textAlign: 'left', width: '100%', fontWeight: '400' }}
+                    inputStyle={{ textAlign: 'left', width: '100%', fontWeight: '400' }}
                     value={page.state.settings.title1 ?? ""}
                     isEditable={true}
                   ></EditableText>
-                  <Text>Title 2:</Text>
+                  <Text style={{ textAlign: 'left', width: '100%', fontWeight: '800', marginTop: 15 }}>Title 2:</Text>
 
                   <EditableText
                     onChange={(val: string) => {
@@ -130,12 +130,12 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                     }}
                     placeholder="Title 2"
                     multiline={false}
-                    textStyle={{ margin: 10 }}
-                    inputStyle={{ margin: 10 }}
+                    textStyle={{ textAlign: 'left', width: '100%', fontWeight: '400' }}
+                    inputStyle={{ textAlign: 'left', width: '100%', fontWeight: '400' }}
                     value={page.state.settings.title2 ?? ""}
                     isEditable={true}
                   ></EditableText>
-                  <Text>Description:</Text>
+                  <Text style={{ textAlign: 'left', width: '100%', fontWeight: '800', marginTop: 15 }}>Description:</Text>
                   <EditableText
                     onChange={(val: string) => {
                       const tmp = page.state.settings
@@ -145,12 +145,12 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                     placeholder="Description 1"
                     numberOfLines={4}
                     multiline={false}
-                    textStyle={{ margin: 10 }}
-                    inputStyle={{ margin: 10 }}
+                    textStyle={{ textAlign: 'left', width: '100%', fontWeight: '400' }}
+                    inputStyle={{ textAlign: 'left', width: '100%', fontWeight: '400' }}
                     value={page.state.settings.description1 ?? ""}
                     isEditable={true}
                   ></EditableText>
-                  <Text>Navigate To:</Text>
+                  <Text style={{ textAlign: 'left', width: '100%', fontWeight: '800', marginTop: 15 }}>Navigate To:</Text>
                   <EditableText
                     onChange={(val: string) => {
                       const tmp = page.state.settings
@@ -160,8 +160,8 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                     placeholder="target URL"
                     numberOfLines={4}
                     multiline={false}
-                    textStyle={{ margin: 10 }}
-                    inputStyle={{ margin: 10 }}
+                    textStyle={{ textAlign: 'left', width: '100%', fontWeight: '400', marginBottom: 15 }}
+                    inputStyle={{ textAlign: 'left', width: '100%', fontWeight: '400', marginBottom: 15 }}
                     value={page.state.settings.url ?? ""}
                     isEditable={true}
                   ></EditableText>

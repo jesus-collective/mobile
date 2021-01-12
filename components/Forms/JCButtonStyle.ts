@@ -149,6 +149,18 @@ export default EStyleSheet.create({
     fontSize: 16,
     padding: 5,
   },
+  ResourceModalButton: {
+    backgroundColor: "#FFFFFF",
+    shadowOffset: {"width":0,"height":0},
+    shadowOpacity: 0,
+    shadowRadius: 0, 
+  },
+  ResourceModalText: {
+    color: "#000000",
+    fontFamily: "Graphik-Regular-App",
+    fontSize: 16,
+    padding: 5,
+  },
   AdminModalOrangeButton: {
     backgroundColor: "#FFFFFF",
   },

@@ -71,7 +71,7 @@ export default class JCModal extends JCComponent<Props> {
             >
               <Text style={this.styles.style.adminCRMModalHeading}>{this.props.title}</Text>
               <JCButton
-                buttonType={ButtonTypes.AdminModal}
+                buttonType={ButtonTypes.ResourceModal}
                 onPress={() => {
                   this.props.onHide()
                 }}
