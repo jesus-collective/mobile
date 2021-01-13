@@ -797,7 +797,7 @@ const resourceStyles = EStyleSheet.create({
             marginBottom: 36,
           }
           : {
-            width: '100vw',
+            width: '66vw',
             alignSelf: "flex-start",
             padding: "0%",
             borderRadius: 0,
@@ -982,7 +982,7 @@ const resourceStyles = EStyleSheet.create({
       width: "35%",
     },
     resourceGridContainer: {
-      flexDirection: "row",
+      flexDirection: "column",
     },
     resourcesRichTextContainer: {
       width: '90%',
@@ -1001,7 +1001,7 @@ const resourceStyles = EStyleSheet.create({
       marginBottom: 0,
     },
     resourceGridContainer: {
-      flexDirection: 'row'
+      flexDirection: 'column'
     },
     resourcesRichTextContainer: {
       width: '90%',
