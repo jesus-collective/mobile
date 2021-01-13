@@ -3,6 +3,7 @@ import EStyleSheet from "react-native-extended-stylesheet"
 
 const resourceStyles = EStyleSheet.create({
   resourceRichTextH1: {
+    fontFamily: "Graphik-Regular-App",
     margin: 0,
     fontSize: 36,
     lineHeight: "43px",
@@ -10,6 +11,7 @@ const resourceStyles = EStyleSheet.create({
     color: "#404040",
   },
   resourceRichTextH2: {
+    fontFamily: "Graphik-Regular-App",
     margin: 10,
     fontSize: 24,
     lineHeight: "34px",
@@ -17,6 +19,7 @@ const resourceStyles = EStyleSheet.create({
     color: "#404040",
   },
   resourceRichTextH3: {
+    fontFamily: "Graphik-Regular-App",
     margin: 10,
     fontSize: 14,
     lineHeight: "21px",
@@ -24,6 +27,7 @@ const resourceStyles = EStyleSheet.create({
     color: "#404040",
   },
   resourceRichTextH4: {
+    fontFamily: "Graphik-Regular-App",
     margin: 10,
     fontSize: 12,
     lineHeight: "18px",
@@ -31,6 +35,7 @@ const resourceStyles = EStyleSheet.create({
     color: "#404040",
   },
   resourceRichTextBody1: {
+    fontFamily: "Graphik-Regular-App",
     margin: 10,
     fontSize: 27,
     lineHeight: "38px",
@@ -38,6 +43,7 @@ const resourceStyles = EStyleSheet.create({
     color: "#404040",
   },
   resourceRichTextBody2: {
+    fontFamily: "Graphik-Regular-App",
     margin: 10,
     fontSize: 18,
     lineHeight: "27px",
@@ -45,6 +51,7 @@ const resourceStyles = EStyleSheet.create({
     color: "#404040",
   },
   resourceRichTextBody3: {
+    fontFamily: "Graphik-Regular-App",
     margin: 10,
     fontSize: 16,
     lineHeight: "24px",
