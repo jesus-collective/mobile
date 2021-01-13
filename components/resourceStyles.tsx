@@ -779,6 +779,39 @@ const resourceStyles = EStyleSheet.create({
           marginLeft: 0,
           marginBottom: 0,
         },
+
+  resourceSeries:
+    Platform.OS === "web"
+      ? {
+          width: "66vw",
+          alignSelf: "flex-start",
+          padding: "0%",
+          borderRadius: 0,
+          shadowOffset: { width: 0, height: 0 },
+          shadowColor: "rgba(0, 0, 0, 0.0)",
+          shadowRadius: 0,
+          borderStyle: "solid",
+          borderColor: "#FFFFFF",
+          marginRight: 0,
+          marginTop: 0,
+          marginLeft: 0,
+          marginBottom: 36,
+        }
+      : {
+          width: "66vw",
+          alignSelf: "flex-start",
+          padding: "0%",
+          borderRadius: 0,
+          shadowOffset: { width: 0, height: 0 },
+          shadowColor: "rgba(0, 0, 0, 0.0)",
+          shadowRadius: 0,
+          borderStyle: "solid",
+          borderColor: "#FFFFFF",
+          marginRight: 0,
+          marginTop: 0,
+          marginLeft: 0,
+          marginBottom: 36,
+        },
   resourceGridContainer: {
     overflow: "scroll",
   },
@@ -950,7 +983,7 @@ const resourceStyles = EStyleSheet.create({
       width: "35%",
     },
     resourceGridContainer: {
-      flexDirection: "row",
+      flexDirection: "column",
     },
     resourcesRichTextContainer: {
       width: "90%",
@@ -969,7 +1002,7 @@ const resourceStyles = EStyleSheet.create({
       marginBottom: 0,
     },
     resourceGridContainer: {
-      flexDirection: "row",
+      flexDirection: "column",
     },
     resourcesRichTextContainer: {
       width: "90%",

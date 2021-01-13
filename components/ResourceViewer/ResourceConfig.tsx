@@ -330,6 +330,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
         >
           +
         </JCButton>
+        <View style={{ marginTop: 20 }}></View>
       </>
     )
   }
@@ -436,6 +437,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
         >
           +
         </JCButton>
+        <View style={{ marginTop: 20 }}></View>
       </>
     )
   }
@@ -540,8 +542,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           }}
         >
           <>
-            <View style={{ flexDirection: "row" }}>
-              <Text>Title: </Text>
+            <View style={{ flexDirection: "row", width: '100%' }}>
+              <Text style={{ textAlign: 'left', width: '100%', fontWeight: '800' }}>Title: </Text>
               <TextInput
                 onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
                   const tmp = this.state.currentSeries
@@ -554,8 +556,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
               ></TextInput>
             </View>
 
-            <View style={{ flexDirection: "row" }}>
-              <Text>description: </Text>
+            <View style={{ flexDirection: "row", width: '100%' }}>
+              <Text style={{ textAlign: 'left', width: '100%', fontWeight: '800' }}>description: </Text>
               <TextInput
                 onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
                   const tmp = this.state.currentSeries
@@ -584,8 +586,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
               currentImage={this.state.currentSeries.imageFile}
             ></ResourceImage>
 
-            <View style={{ flexDirection: "row" }}>
-              <Text>status: </Text>
+            <View style={{ flexDirection: "row", width: '100%' }}>
+              <Text style={{ textAlign: 'left', width: '100%', fontWeight: '800' }}>status: </Text>
               <TextInput
                 onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
                   const tmp = this.state.currentSeries
@@ -599,7 +601,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
             </View>
             {this.renderDetailsSeries(resourceState, resourceActions)}
             <JCButton
-              buttonType={ButtonTypes.Solid}
+              buttonType={ButtonTypes.ResourceModalSolid}
               onPress={() => {
                 this.saveSeries(resourceState, resourceActions)
                 this.setState({ showSeriesEditModal: false })
@@ -626,8 +628,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           }}
         >
           <>
-            <View style={{ flexDirection: "row" }}>
-              <Text>Title: </Text>
+            <View style={{ flexDirection: "row", width: '100%' }}>
+              <Text style={{ textAlign: 'left', width: '100%', fontWeight: '800' }}>Title: </Text>
               <TextInput
                 onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
                   const tmp = this.state.currentEpisode
@@ -640,8 +642,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
               ></TextInput>
             </View>
 
-            <View style={{ flexDirection: "row" }}>
-              <Text>episodeNumber: </Text>
+            <View style={{ flexDirection: "row", width: '100%' }}>
+              <Text style={{ textAlign: 'left', width: '100%', fontWeight: '800' }}>Episode Number: </Text>
               <TextInput
                 onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
                   const tmp = this.state.currentEpisode
@@ -654,8 +656,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
               ></TextInput>
             </View>
 
-            <View style={{ flexDirection: "row" }}>
-              <Text>description: </Text>
+            <View style={{ flexDirection: "row", width: '100%' }}>
+              <Text style={{ textAlign: 'left', width: '100%', fontWeight: '800' }}>Description: </Text>
               <TextInput
                 onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
                   const tmp = this.state.currentEpisode
@@ -686,7 +688,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
 
             {this.renderDetailsEpisode(resourceState, resourceActions)}
             <JCButton
-              buttonType={ButtonTypes.Solid}
+              buttonType={ButtonTypes.ResourceModalSolid}
               onPress={() => {
                 this.saveEpisode(resourceState, resourceActions)
                 this.setState({ showEpisodeEditModal: false })
