@@ -782,8 +782,7 @@ const resourceStyles = EStyleSheet.create({
     resourceSeries: 
         Platform.OS === "web" 
         ? {
-            // height: 463,
-            width: '100%',
+            width: '66vw',
             alignSelf: "flex-start",
             padding: "0%",
             borderRadius: 0,
@@ -798,22 +797,19 @@ const resourceStyles = EStyleSheet.create({
             marginBottom: 36,
           }
           : {
-            height: 463,
-            width: 425,
+            width: '100vw',
             alignSelf: "flex-start",
             padding: "0%",
-            // paddingLeft: "0.25rem",
-            // paddingRight: "0.25rem",
-            borderRadius: 8,
-            shadowOffset: { width: 0, height: 7 },
-            shadowColor: "rgba(0, 0, 0, 0.5)",
-            shadowRadius: 30,
+            borderRadius: 0,
+            shadowOffset: { width: 0, height: 0 },
+            shadowColor: "rgba(0, 0, 0, 0.0)",
+            shadowRadius: 0,
             borderStyle: "solid",
             borderColor: "#FFFFFF",
-            marginRight: 36,
+            marginRight: 0,
             marginTop: 0,
             marginLeft: 0,
-            marginBottom: 0,
+            marginBottom: 36,
           },
     resourceGridContainer: {
       overflow: "scroll",

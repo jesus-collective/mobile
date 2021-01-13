@@ -469,7 +469,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                       lineHeight: 36,
                       textAlign: "left",
                       color: '#404040',
-                      marginRight: 50,
+                      marginRight: 100,
                     }}
                     inputStyle={{ margin: 10 }}
                     value={this.props.pageItem.title1 ?? ""}
