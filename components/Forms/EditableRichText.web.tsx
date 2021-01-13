@@ -6,16 +6,30 @@ import { stateToHTML } from "draft-js-export-html"
 import React from "react"
 import { Editor } from "react-draft-wysiwyg"
 import { TouchableOpacity } from "react-native"
+import EStyleSheet from "react-native-extended-stylesheet"
 import { v1 as uuidv1 } from "uuid"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 //import './react-draft-wysiwyg.css';
 //import './EditableRichText.css';
 import "./react-draft-wysiwyg.css"
 
+export enum RichTextStyle {
+  Default,
+  resourceRichTextH1,
+  resourceRichTextH2,
+  resourceRichTextH3,
+  resourceRichTextH4,
+  resourceRichTextBody1,
+  resourceRichTextBody2,
+  resourceRichTextBody3,
+  resourceRichTextBody4,
+  resourceRichTextEdit,
+}
+
 interface Props {
   value: string
   isEditable: boolean
-  textStyle: any
+  textStyle?: React.CSSProperties
   inputStyle?: any
   placeholder?: string
   onChange?(value: string): void
@@ -191,16 +205,20 @@ export default class EditableRichText extends JCComponent<Props, State> {
             dangerouslySetInnerHTML={{
               __html: this.convertCommentFromJSONToHTML(this.state.value),
             }}
-            style={{
-              fontFamily: "Graphik-Regular-App",
-              fontSize: "16px",
-              lineHeight: "26px",
-              color: "#333333",
-              marginTop: 0,
-              paddingTop: 0,
-              minHeight: 50,
-              paddingRight: 15,
-            }}
+            style={
+              this.props.textStyle
+                ? EStyleSheet.flatten(this.props.textStyle)
+                : {
+                    fontFamily: "Graphik-Regular-App",
+                    fontSize: "16px",
+                    lineHeight: "26px",
+                    color: "#333333",
+                    marginTop: 0,
+                    paddingTop: 0,
+                    minHeight: 50,
+                    paddingRight: 15,
+                  }
+            }
           ></div>
         </div>
       )

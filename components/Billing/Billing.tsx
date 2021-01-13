@@ -273,7 +273,6 @@ class BillingImpl extends JCComponent<Props, State> {
                           <EditableRichText
                             value={product?.marketingDescription}
                             isEditable={false}
-                            textStyle=""
                           ></EditableRichText>
                         </Body>
                       </CardItem>

@@ -1113,7 +1113,8 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
   updateEpisodesOrder = (resourceIndex: number, seriesIndex: number): void => {
     try {
       const series = this.getSeries(resourceIndex, seriesIndex)
-      series?.episodes?.items?.forEach((item, index: number) => {
+      series?.episodes?.items?.forEach((item: UpdateResourceEpisodeInput | null, index: number) => {
+        // item.epi = index.toString()
         this.updateEpisode(resourceIndex, seriesIndex, index, "order", index.toString())
       })
     } catch (e) {
@@ -1195,7 +1196,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
             1
           )
           this.setState({ resourceData: temp }, () => {
-            this.updateEpisodesOrder(resourceIndex, seriesIndex)
+            // this.updateEpisodesOrder(resourceIndex, seriesIndex)
           })
         }
       }

@@ -14,7 +14,12 @@ import {
   ResourcePageItemType,
 } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
-import { ResourceSetupProp } from "../../src/types"
+import {
+  GetResourceData,
+  GetResourceEpisodeData,
+  GetResourceSeriesData,
+  ResourceSetupProp,
+} from "../../src/types"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import PageItemSettings from "./PageItemSettings"
 import { ResourceContext } from "./ResourceContext"
@@ -106,7 +111,9 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
               {page.state.settings.style == ResourcePageItemStyle.CardManual ||
               page.state.settings.style == null ? (
                 <>
-                  <Text style={{ textAlign: 'left', width: '100%', fontWeight: '800' }}>Title 1:</Text>
+                  <Text style={{ textAlign: "left", width: "100%", fontWeight: "800" }}>
+                    Title 1:
+                  </Text>
                   <EditableText
                     onChange={(val: string) => {
                       const tmp = page.state.settings
@@ -115,12 +122,16 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                     }}
                     placeholder="Title 1"
                     multiline={false}
-                    textStyle={{ textAlign: 'left', width: '100%', fontWeight: '400' }}
-                    inputStyle={{ textAlign: 'left', width: '100%', fontWeight: '400' }}
+                    textStyle={{ textAlign: "left", width: "100%", fontWeight: "400" }}
+                    inputStyle={{ textAlign: "left", width: "100%", fontWeight: "400" }}
                     value={page.state.settings.title1 ?? ""}
                     isEditable={true}
                   ></EditableText>
-                  <Text style={{ textAlign: 'left', width: '100%', fontWeight: '800', marginTop: 15 }}>Title 2:</Text>
+                  <Text
+                    style={{ textAlign: "left", width: "100%", fontWeight: "800", marginTop: 15 }}
+                  >
+                    Title 2:
+                  </Text>
 
                   <EditableText
                     onChange={(val: string) => {
@@ -130,12 +141,16 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                     }}
                     placeholder="Title 2"
                     multiline={false}
-                    textStyle={{ textAlign: 'left', width: '100%', fontWeight: '400' }}
-                    inputStyle={{ textAlign: 'left', width: '100%', fontWeight: '400' }}
+                    textStyle={{ textAlign: "left", width: "100%", fontWeight: "400" }}
+                    inputStyle={{ textAlign: "left", width: "100%", fontWeight: "400" }}
                     value={page.state.settings.title2 ?? ""}
                     isEditable={true}
                   ></EditableText>
-                  <Text style={{ textAlign: 'left', width: '100%', fontWeight: '800', marginTop: 15 }}>Description:</Text>
+                  <Text
+                    style={{ textAlign: "left", width: "100%", fontWeight: "800", marginTop: 15 }}
+                  >
+                    Description:
+                  </Text>
                   <EditableText
                     onChange={(val: string) => {
                       const tmp = page.state.settings
@@ -145,12 +160,16 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                     placeholder="Description 1"
                     numberOfLines={4}
                     multiline={false}
-                    textStyle={{ textAlign: 'left', width: '100%', fontWeight: '400' }}
-                    inputStyle={{ textAlign: 'left', width: '100%', fontWeight: '400' }}
+                    textStyle={{ textAlign: "left", width: "100%", fontWeight: "400" }}
+                    inputStyle={{ textAlign: "left", width: "100%", fontWeight: "400" }}
                     value={page.state.settings.description1 ?? ""}
                     isEditable={true}
                   ></EditableText>
-                  <Text style={{ textAlign: 'left', width: '100%', fontWeight: '800', marginTop: 15 }}>Navigate To:</Text>
+                  <Text
+                    style={{ textAlign: "left", width: "100%", fontWeight: "800", marginTop: 15 }}
+                  >
+                    Navigate To:
+                  </Text>
                   <EditableText
                     onChange={(val: string) => {
                       const tmp = page.state.settings
@@ -160,8 +179,18 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                     placeholder="target URL"
                     numberOfLines={4}
                     multiline={false}
-                    textStyle={{ textAlign: 'left', width: '100%', fontWeight: '400', marginBottom: 15 }}
-                    inputStyle={{ textAlign: 'left', width: '100%', fontWeight: '400', marginBottom: 15 }}
+                    textStyle={{
+                      textAlign: "left",
+                      width: "100%",
+                      fontWeight: "400",
+                      marginBottom: 15,
+                    }}
+                    inputStyle={{
+                      textAlign: "left",
+                      width: "100%",
+                      fontWeight: "400",
+                      marginBottom: 15,
+                    }}
                     value={page.state.settings.url ?? ""}
                     isEditable={true}
                   ></EditableText>
@@ -344,10 +373,12 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
       </>
     )
   }
-  getYoutubeId(item): string | null {
-    const youtube = item?.details?.filter((z) => z.type == ResourceDetailType.DefaultYoutube)
+  getYoutubeId(
+    item: GetResourceSeriesData | GetResourceEpisodeData | GetResourceData
+  ): string | null {
+    const youtube = item?.details?.filter((z) => z?.type == ResourceDetailType.DefaultYoutube)
     console.log(youtube)
-    if (youtube?.length > 0) return youtube[0].value
+    if (youtube?.length && youtube?.length > 0) return youtube[0]!.value
     else return null
   }
   renderLargeCard() {
@@ -356,7 +387,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
         {({ resourceState, resourceActions }) => {
           if (!resourceState) return null
           if (resourceState.currentResource == null) return null
-          let item
+          let item: GetResourceSeriesData | GetResourceEpisodeData | GetResourceData
           if (this.props.pageItem.episodeID != null && this.props.pageItem.episodeID != undefined)
             item = resourceActions.getEpisodeByID(
               this.props.pageItem.resourceID,

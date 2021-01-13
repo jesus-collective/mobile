@@ -62,9 +62,9 @@ class ResourceRichText extends JCComponent<Props> {
             letterSpacing: 0,
             textAlign: "left",
             color: "#404040",
-            width: '100%'
+            width: "100%",
           }}
-          inputStyle={{ 
+          inputStyle={{
             margin: 10,
             fontSize: 18,
             fontStyle: "normal",
@@ -73,7 +73,8 @@ class ResourceRichText extends JCComponent<Props> {
             letterSpacing: 0,
             textAlign: "left",
             color: "#404040",
-            width: '100%' }}
+            width: "100%",
+          }}
           value={page.state.settings.title1}
           isEditable={true}
         ></EditableRichText>
@@ -86,21 +87,29 @@ class ResourceRichText extends JCComponent<Props> {
     switch (this.props.pageItem.style) {
       case ResourcePageItemStyle.RichTextH1:
         textStyle = this.styles.style.resourceRichTextH1
+        break
       case ResourcePageItemStyle.RichTextH2:
         textStyle = this.styles.style.resourceRichTextH2
+        break
       case ResourcePageItemStyle.RichTextH3:
         textStyle = this.styles.style.resourceRichTextH3
+        break
       case ResourcePageItemStyle.RichTextH4:
         textStyle = this.styles.style.resourceRichTextH4
+        break
       case ResourcePageItemStyle.RichTextBody1:
         textStyle = this.styles.style.resourceRichTextBody1
+        break
       case ResourcePageItemStyle.RichTextBody2:
         textStyle = this.styles.style.resourceRichTextBody2
+        break
       case ResourcePageItemStyle.RichTextBody3:
         textStyle = this.styles.style.resourceRichTextBody3
+        break
       default:
         textStyle = this.styles.style.resourceRichTextBody1
     }
+    console.log(textStyle)
     return (
       <View style={this.styles.style.resourcesRichTextContainer}>
         <PageItemSettings
@@ -112,7 +121,6 @@ class ResourceRichText extends JCComponent<Props> {
           pageItem={this.props.pageItem}
           hideEditButton={this.props.hideEditButton}
         ></PageItemSettings>
-        {/* */}
 
         <EditableRichText
           textStyle={textStyle}

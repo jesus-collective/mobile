@@ -3,51 +3,51 @@ import EStyleSheet from "react-native-extended-stylesheet"
 
 const resourceStyles = EStyleSheet.create({
   resourceRichTextH1: {
-    margin: 10,
+    margin: 0,
     fontSize: 36,
-    lineHeight: 43,
+    lineHeight: "43px",
     fontWeight: 600,
     color: "#404040",
   },
   resourceRichTextH2: {
     margin: 10,
     fontSize: 24,
-    lineHeight: 34,
+    lineHeight: "34px",
     fontWeight: 600,
     color: "#404040",
   },
   resourceRichTextH3: {
     margin: 10,
     fontSize: 14,
-    lineHeight: 21,
+    lineHeight: "21px",
     fontWeight: 600,
     color: "#404040",
   },
   resourceRichTextH4: {
     margin: 10,
     fontSize: 12,
-    lineHeight: 18,
+    lineHeight: "18px",
     fontWeight: 600,
     color: "#404040",
   },
   resourceRichTextBody1: {
     margin: 10,
     fontSize: 27,
-    lineHeight: 38,
+    lineHeight: "38px",
     fontWeight: 400,
     color: "#404040",
   },
   resourceRichTextBody2: {
     margin: 10,
     fontSize: 18,
-    lineHeight: 27,
+    lineHeight: "27px",
     fontWeight: 400,
     color: "#404040",
   },
   resourceRichTextBody3: {
     margin: 10,
     fontSize: 16,
-    lineHeight: 24,
+    lineHeight: "24px",
     fontWeight: 400,
     color: "#404040",
   },
@@ -64,7 +64,7 @@ const resourceStyles = EStyleSheet.create({
       : {
           fontFamily: "Graphik-Regular-App",
           fontSize: 20,
-          lineHeight: 25,
+          lineHeight: "25px",
           color: "#333333",
           paddingBottom: 0,
         },
@@ -741,8 +741,8 @@ const resourceStyles = EStyleSheet.create({
           color: "#333333",
           paddingBottom: 20,
         },
-    resourceGroupCard: 
-      Platform.OS === "web" 
+  resourceGroupCard:
+    Platform.OS === "web"
       ? {
           height: 463,
           width: 425,
@@ -761,7 +761,7 @@ const resourceStyles = EStyleSheet.create({
           marginLeft: 0,
           marginBottom: 36,
         }
-        : {
+      : {
           height: 463,
           width: 425,
           alignSelf: "flex-start",
@@ -779,34 +779,34 @@ const resourceStyles = EStyleSheet.create({
           marginLeft: 0,
           marginBottom: 0,
         },
-    resourceGridContainer: {
-      overflow: "scroll",
-    },
-    resourcesRichTextContainer: {
-      width: '80%',
-    },
-    resourcesListText: {
-      fontFamily: "Graphik-Bold-App",
-      fontSize: 14,
-      fontStyle: "normal",
-      fontWeight: 800,
-      lineHeight: 21,
-      textTransform: "uppercase",
-      letterSpacing: 0.5,
-      textAlign: "left",
-      color: "#404040",
-    },
-    resourcesListText2: {
-      fontFamily: "Graphik-Bold-App",
-      fontSize: 14,
-      fontStyle: "normal",
-      fontWeight: 800,
-      lineHeight: 21,
-      textTransform: "uppercase",
-      letterSpacing: 0.5,
-      textAlign: "left",
-      color: "#404040",
-    },
+  resourceGridContainer: {
+    overflow: "scroll",
+  },
+  resourcesRichTextContainer: {
+    width: "80%",
+  },
+  resourcesListText: {
+    fontFamily: "Graphik-Bold-App",
+    fontSize: 14,
+    fontStyle: "normal",
+    fontWeight: 800,
+    lineHeight: 21,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+    textAlign: "left",
+    color: "#404040",
+  },
+  resourcesListText2: {
+    fontFamily: "Graphik-Bold-App",
+    fontSize: 14,
+    fontStyle: "normal",
+    fontWeight: 800,
+    lineHeight: 21,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+    textAlign: "left",
+    color: "#404040",
+  },
 
   "@media (min-width: 350) and (max-width: 768)": {
     resourcefileFieldWrapper: {
@@ -953,7 +953,7 @@ const resourceStyles = EStyleSheet.create({
       flexDirection: "row",
     },
     resourcesRichTextContainer: {
-      width: '90%',
+      width: "90%",
     },
   },
   "@media (min-width: 769) and (max-width: 1024)": {
@@ -969,10 +969,10 @@ const resourceStyles = EStyleSheet.create({
       marginBottom: 0,
     },
     resourceGridContainer: {
-      flexDirection: 'row'
+      flexDirection: "row",
     },
     resourcesRichTextContainer: {
-      width: '90%',
+      width: "90%",
     },
   },
   "@media (min-width: 769px) and (max-width: 1279px)": {
@@ -1000,8 +1000,8 @@ const resourceStyles = EStyleSheet.create({
     resourcefileFieldWrapper: {
       top: "61vw",
       borderRadius: 0,
-      height: 164, 
-      width: '100%',
+      height: 164,
+      width: "100%",
     },
     resourcesOverviewScreenMainContainer: {
       flexDirection: "column",
@@ -1050,7 +1050,7 @@ const resourceStyles = EStyleSheet.create({
     },
     resourceGroupCard: {
       height: 487,
-      width: '87vw',
+      width: "87vw",
       alignSelf: "center",
       padding: "0%",
       borderRadius: 8,
@@ -1063,28 +1063,28 @@ const resourceStyles = EStyleSheet.create({
       marginTop: 0,
       marginLeft: 21,
       marginBottom: 36,
-      },
+    },
     resourceRichTextH1: {
       marginLeft: 21,
-      },
+    },
     resourceRichTextH2: {
       marginLeft: 21,
-      },
+    },
     resourceRichTextH3: {
       marginLeft: 21,
-      },
+    },
     resourceRichTextH4: {
       marginLeft: 21,
-      },
+    },
     resourceRichTextBody1: {
       marginLeft: 21,
-      },
+    },
     resourceRichTextBody2: {
       marginLeft: 21,
-      },
+    },
     resourceRichTextBody3: {
       marginLeft: 21,
-      },
+    },
     resourcesListText: {
       marginLeft: 21,
     },

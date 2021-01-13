@@ -51,6 +51,17 @@ export default class MainStyles {
         height: "100%",
         borderWidth: 0,
       },
+      editableRichText: {
+        fontFamily: "Graphik-Regular-App",
+        fontSize: "16px",
+        lineHeight: "26px",
+        color: "#333333",
+        marginTop: 0,
+        paddingTop: 0,
+        minHeight: 50,
+        paddingRight: 15,
+      },
+
       groupMoreCard: {
         minHeight: 43,
         alignSelf: "flex-start",
@@ -1538,16 +1549,16 @@ export default class MainStyles {
         paddingLeft: 20,
       },
       mapCardBody: {
-        flex: 1, 
-        flexDirection: "row"
+        flex: 1,
+        flexDirection: "row",
       },
       mapCardJCButtonContainer: {
-        flex: 1, 
-        flexDirection: "column", 
-        paddingTop: 10
+        flex: 1,
+        flexDirection: "column",
+        paddingTop: 10,
       },
       mapCardImage: {
-        marginRight: 10 
+        marginRight: 10,
       },
 
       // Media Query Desktop Tablet
@@ -1884,10 +1895,10 @@ export default class MainStyles {
           flex: 0,
           paddingBottom: 0,
           width: "auto",
-          shadowOffset: {"width": 0, "height": 0},
-          shadowRadius: 0, 
+          shadowOffset: { width: 0, height: 0 },
+          shadowRadius: 0,
           shadowColor: "rgba(0, 0, 0, 0)",
-          minHeight: 'auto'
+          minHeight: "auto",
         },
         profileScreenRightCard: {
           width: "auto",
@@ -1895,13 +1906,13 @@ export default class MainStyles {
           top: 0,
           marginLeft: 0,
           marginRight: 0,
-          shadowOffset: {"width": 0, "height": 0},
-          shadowRadius: 0, 
-          shadowColor: "rgba(0, 0, 0, 0)"
+          shadowOffset: { width: 0, height: 0 },
+          shadowRadius: 0,
+          shadowColor: "rgba(0, 0, 0, 0)",
         },
         myProfileCoordinates: {
           flexDirection: "column",
-          alignSelf: 'flex-start',
+          alignSelf: "flex-start",
           marginBottom: 75,
         },
         myProfileMapSelectorContainer: {
@@ -1989,7 +2000,7 @@ export default class MainStyles {
           paddingRight: 10,
           paddingTop: 0,
           paddingBottom: 0,
-          marginTop: 0, 
+          marginTop: 0,
           marginBottom: 0,
         },
         dashboardConversationBody: {
@@ -2068,7 +2079,7 @@ export default class MainStyles {
         },
         connectWithSliderButton: {
           width: "80%",
-          alignSelf: 'center',
+          alignSelf: "center",
         },
         myProfilePersonalInfoWrapper: {
           top: 0,
@@ -2080,19 +2091,19 @@ export default class MainStyles {
         },
         mapCardBody: {
           flexDirection: "column",
-          alignItems: 'center'
+          alignItems: "center",
         },
         mapCardJCButtonContainer: {
-          alignContent: 'center',
+          alignContent: "center",
         },
         myMapDashboardConversationCard: {
-          width: 'auto',
+          width: "auto",
         },
         mapCardImage: {
-          marginRight: 0 
+          marginRight: 0,
         },
         myMapConversationCardRole: {
-          textAlign: 'center'
+          textAlign: "center",
         },
       },
 

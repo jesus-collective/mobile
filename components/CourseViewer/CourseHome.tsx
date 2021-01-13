@@ -161,7 +161,6 @@ class CourseHomeImpl extends JCComponent<Props> {
                                   }}
                                   value={state.courseData.introduction}
                                   isEditable={state.isEditable && state.editMode}
-                                  textStyle=""
                                 ></EditableRichText>
                               ) : null}
                             </Text>

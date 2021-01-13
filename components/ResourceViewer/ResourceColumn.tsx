@@ -98,7 +98,7 @@ class ResourceColumn extends JCComponent<Props, State> {
               : isTablet
               ? this.getLeftColumnSize()
               : "100%",
-            marginTop: isBrowser ? null : isTablet ? null : 100,
+            marginTop: isBrowser ? undefined : isTablet ? undefined : 100,
           }}
         >
           <ResourceContent

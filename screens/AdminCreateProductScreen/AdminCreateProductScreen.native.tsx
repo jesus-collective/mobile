@@ -212,7 +212,6 @@ export default class AdminScreen extends JCComponent<Props, State> {
                     onChange={(description) => this.setState({ description })}
                     value={this.state.description}
                     isEditable={true}
-                    textStyle={{}}
                   />
 
                   <JCButton buttonType={ButtonTypes.Outline} onPress={() => this.saveProduct()}>

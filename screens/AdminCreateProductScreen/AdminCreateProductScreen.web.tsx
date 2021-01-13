@@ -419,7 +419,6 @@ export default class AdminScreen extends JCComponent<Props, State> {
               }}
               value={this.state.marketingDescription}
               isEditable={true}
-              textStyle=""
             ></EditableRichText>
             <Text>Groups: </Text>
             {this.state.groupList.map((item) => {
@@ -441,7 +440,6 @@ export default class AdminScreen extends JCComponent<Props, State> {
             onChange={(description: any) => this.setState({ description })}
             value={this.state.description}
             isEditable={true}
-            textStyle={{}}
           />
 
           <JCButton buttonType={ButtonTypes.Outline} onPress={() => this.saveProduct()}>

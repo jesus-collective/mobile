@@ -1,10 +1,10 @@
 import { Ionicons } from "@expo/vector-icons"
 import Amplify from "aws-amplify"
-import { Picker, View } from "native-base"
+import { View } from "native-base"
 import React from "react"
 import DropDownPicker from "react-native-dropdown-picker"
-import EditableRichText from "../../components/Forms/EditableRichText"
-import { ResourcePageItemStyle, ResourcePageItemType } from "../../src/API"
+import EditableText from "../../components/Forms/EditableText"
+import { ResourcePageItemType } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
 import { ResourceSetupProp } from "../../src/types"
 import JCComponent from "../JCComponent/JCComponent"
@@ -23,32 +23,8 @@ class ResourceDropDownPicker extends JCComponent<Props> {
   static renderAdmin(page: PageItemSettings): React.ReactNode {
     return (
       <>
-        <Picker
-          mode="dropdown"
-          style={{
-            width: "100%",
-            marginTop: 10,
-            marginBottom: 30,
-            fontSize: 16,
-            height: 30,
-            flexGrow: 0,
-            paddingTop: 3,
-            paddingBottom: 3,
-          }}
-          selectedValue={page.state.settings.style}
-          onValueChange={(value: any) => {
-            const tmp = page.state.settings
-            tmp.style = value
-            page.setState({ settings: tmp })
-          }}
-        >
-          {Object.keys(ResourcePageItemStyle)
-            .filter((z) => z.startsWith("RichText"))
-            .map((org) => {
-              return <Picker.Item key={org} label={org} value={org} />
-            })}
-        </Picker>
-        <EditableRichText
+        <EditableText
+          multiline={false}
           onChange={(val: string) => {
             const tmp = page.state.settings
             tmp.title1 = val
@@ -65,9 +41,9 @@ class ResourceDropDownPicker extends JCComponent<Props> {
             color: "#404040",
           }}
           inputStyle={{ margin: 10 }}
-          value={page.state.settings.title1}
+          value={page.state.settings.title1 ?? ""}
           isEditable={true}
-        ></EditableRichText>
+        ></EditableText>
       </>
     )
   }
@@ -89,6 +65,7 @@ class ResourceDropDownPicker extends JCComponent<Props> {
         <DropDownPicker
           zIndex={5000 + this.props.pageItemIndex.length}
           items={[
+            //TODO
             {
               label: "Menu",
               value: ResourcePageItemType.Menu,

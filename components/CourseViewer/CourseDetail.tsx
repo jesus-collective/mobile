@@ -327,8 +327,6 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
               }}
               value={week.leader}
               isEditable={state.isEditable && state.editMode}
-              textStyle={{ marginLeft: 10 }}
-              inputStyle={{ marginTop: 20, marginLeft: 20 }}
             ></EditableRichText>
           </Container>
           <Container style={this.styles.style.courseLessonContainer}>
@@ -719,8 +717,6 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             }}
             value={lesson.description}
             isEditable={state.isEditable && state.editMode}
-            textStyle={{ marginLeft: 10 }}
-            inputStyle={{ marginTop: 20, marginLeft: 20 }}
           ></EditableRichText>
         </Container>
       </Container>
@@ -808,8 +804,6 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             }}
             value={lesson.description}
             isEditable={state.isEditable && state.editMode}
-            textStyle={{ marginLeft: 10 }}
-            inputStyle={{ marginTop: 20, marginLeft: 20 }}
           ></EditableRichText>
         </Container>
       </Container>
@@ -886,7 +880,6 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             }}
             value={lesson.description}
             isEditable={state.isEditable && state.editMode}
-            textStyle=""
           ></EditableRichText>
           <EditableCourseAssignment
             actions={actions}
@@ -968,7 +961,6 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             }}
             value={lesson.description}
             isEditable={state.isEditable && state.editMode}
-            textStyle=""
           ></EditableRichText>
           <EditableCourseAssignment
             actions={actions}

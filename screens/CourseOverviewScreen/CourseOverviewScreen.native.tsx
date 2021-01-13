@@ -886,7 +886,6 @@ export default class CourseScreen extends JCComponent<Props, State> {
                             }}
                             value={this.state.data.promotionalText}
                             isEditable={true}
-                            textStyle=""
                           ></EditableRichText>
                         ) : null}
 

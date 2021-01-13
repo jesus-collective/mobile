@@ -58,11 +58,12 @@ export default class ResourceSelector {
             }}
           >
             <Picker.Item key={"null"} label={"None"} value={null} />
-            {resourceActions
-              .getResourceByID(page.state.settings.resourceID)
-              .series.items.map((org, index: number) => {
-                return <Picker.Item key={index} label={org?.title ?? ""} value={org.id} />
-              })}
+            {resourceActions &&
+              resourceActions
+                .getResourceByID(page.state.settings.resourceID)!
+                .series?.items?.map((org, index: number) => {
+                  return <Picker.Item key={index} label={org?.title ?? ""} value={org?.id} />
+                })}
           </Picker>
         )}
         {page.state.settings.resourceID != null &&
@@ -90,9 +91,9 @@ export default class ResourceSelector {
             >
               <Picker.Item key={"null"} label={"None"} value={null} />
               {resourceActions
-                .getSeriesByID(page.state.settings.resourceID, page.state.settings.seriesID)
-                .episodes.items.map((org, index: number) => {
-                  return <Picker.Item key={index} label={org?.title ?? ""} value={org.id} />
+                .getSeriesByID(page.state.settings.resourceID, page.state.settings.seriesID)!
+                .episodes?.items?.map((org, index: number) => {
+                  return <Picker.Item key={index} label={org?.title ?? ""} value={org?.id} />
                 })}
             </Picker>
           )}
