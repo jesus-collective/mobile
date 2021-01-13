@@ -393,14 +393,30 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                 }
               }}
             >
-              <Card style={this.styles.style.resourceGroupCard}>
+              <Card style={this.styles.style.resourceSeries}>
                 <CardItem>
                   <>
                     {this.props.pageItem.order && (
                       <EditableText
                         multiline={true}
-                        textStyle={{ margin: 10 }}
-                        inputStyle={{ margin: 10 }}
+                        textStyle={{  
+                          fontFamily: "Graphik-Bold-App",
+                          fontSize: 54,
+                          fontWeight: 600,
+                          lineHeight: 54,
+                          letterSpacing: -1,
+                          textAlign: "left",
+                          color: '#AAAAAA'
+                        }}
+                        inputStyle={{ 
+                          fontFamily: "Graphik-Bold-App",
+                          fontSize: 54,
+                          fontWeight: 600,
+                          lineHeight: 54,
+                          letterSpacing: -1,
+                          textAlign: "left",
+                          color: '#AAAAAA' 
+                        }}
                         value={this.props.pageItem.order.toString().padStart(2, "0") ?? ""}
                         isEditable={false}
                       ></EditableText>
@@ -446,7 +462,15 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                 <CardItem>
                   <EditableText
                     multiline={true}
-                    textStyle={{ margin: 10 }}
+                    textStyle={{ 
+                      fontFamily: "Graphik-Regular-App",
+                      fontSize: 27,
+                      fontWeight: 600,
+                      lineHeight: 36,
+                      textAlign: "left",
+                      color: '#404040',
+                      marginRight: 100,
+                    }}
                     inputStyle={{ margin: 10 }}
                     value={this.props.pageItem.title1 ?? ""}
                     isEditable={false}
@@ -523,8 +547,22 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                 <CardItem>
                   <EditableText
                     multiline={true}
-                    textStyle={{ margin: 10 }}
-                    inputStyle={{ margin: 10 }}
+                    textStyle={{ 
+                      fontFamily: "Graphik-Regular-App",
+                      fontSize: 16,
+                      fontWeight: 400,
+                      lineHeight: 24,
+                      textAlign: "left",
+                      color: '#404040', 
+                    }}
+                    inputStyle={{ 
+                      fontFamily: "Graphik-Regular-App",
+                      fontSize: 16,
+                      fontWeight: 400,
+                      lineHeight: 24,
+                      textAlign: "left",
+                      color: '#404040', 
+                    }}
                     value={this.props.pageItem.title2 ?? ""}
                     isEditable={false}
                   ></EditableText>
@@ -532,8 +570,22 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                 <CardItem>
                   <EditableText
                     multiline={true}
-                    textStyle={{ margin: 10 }}
-                    inputStyle={{ margin: 10 }}
+                    textStyle={{ 
+                      fontFamily: "Graphik-Regular-App",
+                      fontSize: 16,
+                      fontWeight: 400,
+                      lineHeight: 24,
+                      textAlign: "left",
+                      color: '#404040',
+                    }}
+                    inputStyle={{ 
+                      fontFamily: "Graphik-Regular-App",
+                      fontSize: 16,
+                      fontWeight: 400,
+                      lineHeight: 24,
+                      textAlign: "left",
+                      color: '#404040', 
+                    }}
                     value={this.props.pageItem.description1 ?? ""}
                     isEditable={false}
                   ></EditableText>
