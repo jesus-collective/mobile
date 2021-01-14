@@ -783,7 +783,7 @@ export default class MainStyles {
       },
       connectWithSliderButton: {
         padding: 0,
-        height: 36,
+        height: 'auto',
         borderColor: "#F0493E",
         width: "100%",
         alignItems: "center",
