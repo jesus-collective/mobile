@@ -5,6 +5,7 @@ const resourceStyles = EStyleSheet.create({
   resourceRichTextH1: {
     fontFamily: "Graphik-Bold-App",
     margin: 0,
+    marginLeft: 0,
     fontSize: 36,
     lineHeight: "43px",
     fontWeight: "600",
@@ -13,6 +14,7 @@ const resourceStyles = EStyleSheet.create({
   resourceRichTextH2: {
     fontFamily: "Graphik-Bold-App",
     margin: 10,
+    marginLeft: 0,
     fontSize: 24,
     lineHeight: "34px",
     fontWeight: "600",
@@ -21,6 +23,7 @@ const resourceStyles = EStyleSheet.create({
   resourceRichTextH3: {
     fontFamily: "Graphik-Bold-App",
     margin: 10,
+    marginLeft: 0,
     fontSize: 14,
     lineHeight: "21px",
     fontWeight: "600",
@@ -29,6 +32,7 @@ const resourceStyles = EStyleSheet.create({
   resourceRichTextH4: {
     fontFamily: "Graphik-Bold-App",
     margin: 10,
+    marginLeft: 0,
     fontSize: 12,
     lineHeight: "18px",
     fontWeight: "600",
@@ -37,6 +41,7 @@ const resourceStyles = EStyleSheet.create({
   resourceRichTextBody1: {
     fontFamily: "Graphik-Regular-App",
     margin: 10,
+    marginLeft: 0,
     fontSize: 27,
     lineHeight: "38px",
     fontWeight: "400",
@@ -45,6 +50,7 @@ const resourceStyles = EStyleSheet.create({
   resourceRichTextBody2: {
     fontFamily: "Graphik-Regular-App",
     margin: 10,
+    marginLeft: 0,
     fontSize: 18,
     lineHeight: "27px",
     fontWeight: "400",
