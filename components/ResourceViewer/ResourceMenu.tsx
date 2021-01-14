@@ -95,7 +95,7 @@ class ResourceMenu extends JCComponent<Props> {
               {resourceState.resourceData?.menuItems?.items?.map((item, index: number) => {
                 if (item != null)
                   return item.type == ResourceMenuItemType.break ? (
-                    <View key={index}>
+                    <View key={index} style={{ flexDirection: 'row' }}>
                       <View
                         style={this.styles.style.resourceMenuLineBreak}
                       ></View>

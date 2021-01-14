@@ -859,8 +859,10 @@ const resourceStyles = EStyleSheet.create({
     width: 189, 
     marginLeft: 175, 
     borderBottomColor: "#CCCCCC", 
-    marginTop: 15, 
-    marginBottom: 15
+    marginTop: 9,  
+    marginBottom: 9,
+    marginRight: 15,
+    alignSelf: 'center'
   },
 
   "@media (min-width: 350) and (max-width: 768)": {
