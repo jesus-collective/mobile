@@ -770,7 +770,7 @@ const resourceStyles = EStyleSheet.create({
           borderStyle: "solid",
           borderColor: "#FFFFFF",
           marginRight: 36,
-          marginTop: 0,
+          marginTop: 30,
           marginLeft: 0,
           marginBottom: 36,
         }
@@ -859,8 +859,8 @@ const resourceStyles = EStyleSheet.create({
     width: 189, 
     marginLeft: 175, 
     borderBottomColor: "#CCCCCC", 
-    marginTop: 9,  
-    marginBottom: 9,
+    marginTop: 0,  
+    marginBottom: 0,
     marginRight: 15,
     alignSelf: 'center'
   },

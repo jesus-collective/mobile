@@ -111,7 +111,7 @@ class ResourceMenu extends JCComponent<Props> {
                       )}
                     </View>
                   ) : (
-                    <View key={index} style={{ flexDirection: "row", height: 32 }}>
+                    <View key={index} style={{ flexDirection: "row", height: 'auto' }}>
                       {item.depth == "2" && <View style={{ width: 10 }} />}
                       <EditableButton
                         onDelete={() => resourceActions.deleteMenuItem(index)}
