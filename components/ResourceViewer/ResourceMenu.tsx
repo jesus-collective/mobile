@@ -97,7 +97,7 @@ class ResourceMenu extends JCComponent<Props> {
                   return item.type == ResourceMenuItemType.break ? (
                     <View key={index}>
                       <View
-                        style={{ flexDirection: "row", borderBottomWidth: 1, width: 100 }}
+                        style={{ flexDirection: "row", borderBottomWidth: 1, width: 189, marginLeft: 175, borderBottomColor: "#CCCCCC", marginTop: 15, marginBottom: 15 }}
                       ></View>
                       {resourceState.isEditable && (
                         <Button
