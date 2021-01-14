@@ -260,8 +260,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                     return <Picker.Item key={org} label={org} value={org} />
                   })}
                 </Picker>
-                <View style={{ flexDirection: "row" }}>
-                  <Text>Name: </Text>
+                <View style={{ flexDirection: "row", width: '100%' }}>
+                  <Text style={{ textAlign: "left", width: "50%", fontWeight: "800" }}>Name: </Text>
                   <TextInput
                     onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
                       const tmp = this.state.currentEpisode
@@ -273,8 +273,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                     value={item?.name ?? ""}
                   ></TextInput>
                 </View>
-                <View style={{ flexDirection: "row" }}>
-                  <Text>Text: </Text>
+                <View style={{ flexDirection: "row", width: '100%' }}>
+                  <Text style={{ textAlign: "left", width: "50%", fontWeight: "800" }}>Text: </Text>
                   <TextInput
                     onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
                       const tmp = this.state.currentEpisode
@@ -286,8 +286,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                     value={item?.text ?? ""}
                   ></TextInput>
                 </View>
-                <View style={{ flexDirection: "row" }}>
-                  <Text>Value: </Text>
+                <View style={{ flexDirection: "row", width: '100%' }}>
+                  <Text style={{ textAlign: "left", width: "50%", fontWeight: "800" }}>Value: </Text>
                   <TextInput
                     onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
                       const tmp = this.state.currentEpisode
@@ -367,8 +367,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                     return <Picker.Item key={org} label={org} value={org} />
                   })}
                 </Picker>
-                <View style={{ flexDirection: "row" }}>
-                  <Text>Name: </Text>
+                <View style={{ flexDirection: "row", width: '100%' }}>
+                  <Text style={{ textAlign: "left", width: "50%", fontWeight: "800" }}>Name: </Text>
                   <TextInput
                     onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
                       const tmp = this.state.currentSeries
@@ -380,8 +380,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                     value={item?.name ?? ""}
                   ></TextInput>
                 </View>
-                <View style={{ flexDirection: "row" }}>
-                  <Text>Text: </Text>
+                <View style={{ flexDirection: "row", width: '100%' }}>
+                  <Text style={{ textAlign: "left", width: "50%", fontWeight: "800" }}>Text: </Text>
                   <TextInput
                     onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
                       const tmp = this.state.currentSeries
@@ -393,8 +393,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                     value={item?.text ?? ""}
                   ></TextInput>
                 </View>
-                <View style={{ flexDirection: "row" }}>
-                  <Text>Value: </Text>
+                <View style={{ flexDirection: "row", width: '100%' }}>
+                  <Text style={{ textAlign: "left", width: "50%", fontWeight: "800" }}>Value: </Text>
                   <TextInput
                     onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
                       const tmp = this.state.currentSeries

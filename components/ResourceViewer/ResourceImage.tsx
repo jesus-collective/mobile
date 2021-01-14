@@ -40,7 +40,7 @@ class ResourceImage extends JCComponent<Props, State> {
   }
   render() {
     return (
-      <View style={{ alignSelf: 'center' }}>
+      <View style={{ alignSelf: 'center', marginTop: 20 }}>
         {this.state.uploading ? (
           <ActivityIndicator />
         ) : (
