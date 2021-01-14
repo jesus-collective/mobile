@@ -329,7 +329,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
               ></EditableText>
             </CardItem>
             <CardItem
-              style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27, paddingBottom: 0 }}
+              style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27, paddingBottom: 30 }}
             >
               <EditableText
                 multiline={false}

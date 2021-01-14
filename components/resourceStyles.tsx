@@ -5,6 +5,7 @@ const resourceStyles = EStyleSheet.create({
   resourceRichTextH1: {
     fontFamily: "Graphik-Bold-App",
     margin: 0,
+    marginLeft: 0,
     fontSize: 36,
     lineHeight: "43px",
     fontWeight: "600",
@@ -13,6 +14,7 @@ const resourceStyles = EStyleSheet.create({
   resourceRichTextH2: {
     fontFamily: "Graphik-Bold-App",
     margin: 10,
+    marginLeft: 0,
     fontSize: 24,
     lineHeight: "34px",
     fontWeight: "600",
@@ -21,6 +23,7 @@ const resourceStyles = EStyleSheet.create({
   resourceRichTextH3: {
     fontFamily: "Graphik-Bold-App",
     margin: 10,
+    marginLeft: 0,
     fontSize: 14,
     lineHeight: "21px",
     fontWeight: "600",
@@ -29,6 +32,7 @@ const resourceStyles = EStyleSheet.create({
   resourceRichTextH4: {
     fontFamily: "Graphik-Bold-App",
     margin: 10,
+    marginLeft: 0,
     fontSize: 12,
     lineHeight: "18px",
     fontWeight: "600",
@@ -37,6 +41,7 @@ const resourceStyles = EStyleSheet.create({
   resourceRichTextBody1: {
     fontFamily: "Graphik-Regular-App",
     margin: 10,
+    marginLeft: 0,
     fontSize: 27,
     lineHeight: "38px",
     fontWeight: "400",
@@ -45,6 +50,7 @@ const resourceStyles = EStyleSheet.create({
   resourceRichTextBody2: {
     fontFamily: "Graphik-Regular-App",
     margin: 10,
+    marginLeft: 0,
     fontSize: 18,
     lineHeight: "27px",
     fontWeight: "400",
@@ -764,7 +770,7 @@ const resourceStyles = EStyleSheet.create({
           borderStyle: "solid",
           borderColor: "#FFFFFF",
           marginRight: 36,
-          marginTop: 0,
+          marginTop: 30,
           marginLeft: 0,
           marginBottom: 36,
         }
@@ -846,6 +852,17 @@ const resourceStyles = EStyleSheet.create({
     letterSpacing: 0.5,
     textAlign: "left",
     color: "#404040",
+  },
+  resourceMenuLineBreak: {
+    flexDirection: "row", 
+    borderBottomWidth: 1, 
+    width: 189, 
+    marginLeft: 175, 
+    borderBottomColor: "#CCCCCC", 
+    marginTop: 0,  
+    marginBottom: 0,
+    marginRight: 15,
+    alignSelf: 'center'
   },
 
   "@media (min-width: 350) and (max-width: 768)": {
@@ -995,6 +1012,10 @@ const resourceStyles = EStyleSheet.create({
     resourcesRichTextContainer: {
       width: "90%",
     },
+    resourceMenuLineBreak: {
+      marginLeft: 40, 
+      width: 135
+    },
   },
   "@media (min-width: 769) and (max-width: 1024)": {
     resourcefileFieldWrapper: {
@@ -1013,6 +1034,10 @@ const resourceStyles = EStyleSheet.create({
     },
     resourcesRichTextContainer: {
       width: "90%",
+    },
+    resourceMenuLineBreak: {
+      marginLeft: 130, 
+      width: 150
     },
   },
   "@media (min-width: 769px) and (max-width: 1279px)": {
