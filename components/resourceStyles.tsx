@@ -853,6 +853,15 @@ const resourceStyles = EStyleSheet.create({
     textAlign: "left",
     color: "#404040",
   },
+  resourceMenuLineBreak: {
+    flexDirection: "row", 
+    borderBottomWidth: 1, 
+    width: 189, 
+    marginLeft: 175, 
+    borderBottomColor: "#CCCCCC", 
+    marginTop: 15, 
+    marginBottom: 15
+  },
 
   "@media (min-width: 350) and (max-width: 768)": {
     resourcefileFieldWrapper: {
@@ -1001,6 +1010,10 @@ const resourceStyles = EStyleSheet.create({
     resourcesRichTextContainer: {
       width: "90%",
     },
+    resourceMenuLineBreak: {
+      marginLeft: 40, 
+      width: 135
+    },
   },
   "@media (min-width: 769) and (max-width: 1024)": {
     resourcefileFieldWrapper: {
@@ -1019,6 +1032,10 @@ const resourceStyles = EStyleSheet.create({
     },
     resourcesRichTextContainer: {
       width: "90%",
+    },
+    resourceMenuLineBreak: {
+      marginLeft: 130, 
+      width: 150
     },
   },
   "@media (min-width: 769px) and (max-width: 1279px)": {
