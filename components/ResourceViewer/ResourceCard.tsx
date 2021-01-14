@@ -7,12 +7,7 @@ import { Animated, Image, Picker, Text } from "react-native"
 import DropDownPicker from "react-native-dropdown-picker"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import EditableText from "../../components/Forms/EditableText"
-import {
-  ImageInput,
-  ResourceDetailType,
-  ResourcePageItemStyle,
-  ResourcePageItemType,
-} from "../../src/API"
+import { ImageInput, ResourceDetailType, ResourcePageItemStyle } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
 import {
   GetResourceData,
@@ -381,6 +376,18 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
     if (youtube?.length && youtube?.length > 0) return youtube[0]!.value
     else return null
   }
+  getButtonItems(items: GetResourceSeriesData | GetResourceEpisodeData | GetResourceData) {
+    return items?.details
+      ?.filter((e) => e?.type == ResourceDetailType.Button)
+      .map((item) => {
+        return {
+          label: item?.text,
+          value: item?.value,
+          icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
+        }
+      })
+  }
+
   renderLargeCard() {
     return (
       <ResourceCardImpl.Consumer>
@@ -407,6 +414,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
           }
 
           const youtubeID = this.getYoutubeId(item)
+          const buttonItems = this.getButtonItems(item)
           return (
             <TouchableOpacity
               onPress={() => {
@@ -424,29 +432,34 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                 }
               }}
             >
-              <Card style={this.styles.style.resourceSeries}>
+              <Card
+                style={[
+                  this.styles.style.resourceSeries,
+                  { zIndex: 6000 + this.props.pageItemIndex.length },
+                ]}
+              >
                 <CardItem>
                   <>
                     {this.props.pageItem.order && (
                       <EditableText
                         multiline={true}
-                        textStyle={{  
+                        textStyle={{
                           fontFamily: "Graphik-Bold-App",
                           fontSize: 54,
                           fontWeight: 600,
                           lineHeight: 54,
                           letterSpacing: -1,
                           textAlign: "left",
-                          color: '#AAAAAA'
+                          color: "#AAAAAA",
                         }}
-                        inputStyle={{ 
+                        inputStyle={{
                           fontFamily: "Graphik-Bold-App",
                           fontSize: 54,
                           fontWeight: 600,
                           lineHeight: 54,
                           letterSpacing: -1,
                           textAlign: "left",
-                          color: '#AAAAAA' 
+                          color: "#AAAAAA",
                         }}
                         value={this.props.pageItem.order.toString().padStart(2, "0") ?? ""}
                         isEditable={false}
@@ -490,132 +503,102 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                   </>
                 </CardItem>
 
-                <CardItem>
+                <CardItem style={{ zIndex: 6000 + this.props.pageItemIndex.length }}>
                   <EditableText
                     multiline={true}
-                    textStyle={{ 
+                    textStyle={{
                       fontFamily: "Graphik-Regular-App",
                       fontSize: 27,
                       fontWeight: 600,
                       lineHeight: 36,
                       textAlign: "left",
-                      color: '#404040',
+                      color: "#404040",
                       marginRight: 100,
                     }}
                     inputStyle={{ margin: 10 }}
                     value={this.props.pageItem.title1 ?? ""}
                     isEditable={false}
                   ></EditableText>
-                  <DropDownPicker
-                    zIndex={5000 + this.props.pageItemIndex.length}
-                    items={[
-                      {
-                        label: "Menu",
-                        value: ResourcePageItemType.Menu,
-                        icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
-                        hidden: true,
-                      },
-                      {
-                        label: "Header",
-                        value: ResourcePageItemType.Header,
-                        icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
-                      },
-                      {
-                        label: "Rich Text",
-                        value: ResourcePageItemType.RichText,
-                        icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
-                      },
-                      {
-                        label: "List",
-                        value: ResourcePageItemType.List,
-                        icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
-                      },
-                      {
-                        label: "Grid",
-                        value: ResourcePageItemType.Grid,
-                        icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
-                      },
-                      {
-                        label: "Column",
-                        value: ResourcePageItemType.Column,
-                        icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
-                      },
-                      {
-                        label: "Card",
-                        value: ResourcePageItemType.Card,
-                        icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
-                      },
-                    ]}
-                    placeholder="Download"
-                    containerStyle={{
-                      height: 40,
-                      width: 160,
-                      zIndex: 5000 + this.props.pageItemIndex.length,
-                    }}
-                    dropDownStyle={{
-                      backgroundColor: "#fafafa",
-                      width: 150,
-                      zIndex: 5000 + this.props.pageItemIndex.length,
-                    }}
-                    style={{
-                      backgroundColor: "#fafafa",
-                      zIndex: 5000 + this.props.pageItemIndex.length,
-                    }}
-                    itemStyle={{
-                      justifyContent: "flex-start",
-                      width: 100,
-                      zIndex: 5000 + this.props.pageItemIndex.length,
-                    }}
-                    labelStyle={{
-                      fontSize: 14,
-                      textAlign: "left",
-                      color: "#000",
-                      zIndex: 5000 + this.props.pageItemIndex.length,
-                    }}
-                    onChangeItem={(item) => {}}
-                  />
+                  {buttonItems?.length && buttonItems.length > 0 ? (
+                    <View style={{ zIndex: 6000 + this.props.pageItemIndex.length }}>
+                      <DropDownPicker
+                        zIndex={6000 + this.props.pageItemIndex.length}
+                        items={buttonItems}
+                        placeholder="Download"
+                        containerStyle={{
+                          height: 40,
+                          width: 160,
+                          zIndex: 5000 + this.props.pageItemIndex.length,
+                        }}
+                        dropDownStyle={{
+                          backgroundColor: "#fafafa",
+                          width: 150,
+                          zIndex: 5000 + this.props.pageItemIndex.length,
+                        }}
+                        style={{
+                          backgroundColor: "#fafafa",
+                          zIndex: 5000 + this.props.pageItemIndex.length,
+                        }}
+                        itemStyle={{
+                          justifyContent: "flex-start",
+                          width: 100,
+                          zIndex: 5000 + this.props.pageItemIndex.length,
+                        }}
+                        labelStyle={{
+                          fontSize: 14,
+                          textAlign: "left",
+                          color: "#000",
+                          zIndex: 5000 + this.props.pageItemIndex.length,
+                        }}
+                        onChangeItem={(item) => {
+                          window.location = item.value ?? ""
+                        }}
+                      />
+                    </View>
+                  ) : null}
                 </CardItem>
                 <CardItem>
                   <EditableText
                     multiline={true}
-                    textStyle={{ 
+                    textStyle={{
                       fontFamily: "Graphik-Regular-App",
                       fontSize: 16,
                       fontWeight: 400,
                       lineHeight: 24,
                       textAlign: "left",
-                      color: '#404040', 
+                      color: "#404040",
                     }}
-                    inputStyle={{ 
+                    inputStyle={{
                       fontFamily: "Graphik-Regular-App",
                       fontSize: 16,
                       fontWeight: 400,
                       lineHeight: 24,
                       textAlign: "left",
-                      color: '#404040', 
+                      color: "#404040",
                     }}
                     value={this.props.pageItem.title2 ?? ""}
                     isEditable={false}
                   ></EditableText>
                 </CardItem>
-                <CardItem>
+                <CardItem style={{ zIndex: 0 }}>
                   <EditableText
                     multiline={true}
-                    textStyle={{ 
+                    textStyle={{
                       fontFamily: "Graphik-Regular-App",
                       fontSize: 16,
                       fontWeight: 400,
                       lineHeight: 24,
                       textAlign: "left",
-                      color: '#404040',
+                      color: "#404040",
+                      zIndex: 0,
                     }}
-                    inputStyle={{ 
+                    inputStyle={{
                       fontFamily: "Graphik-Regular-App",
                       fontSize: 16,
                       fontWeight: 400,
                       lineHeight: 24,
                       textAlign: "left",
-                      color: '#404040', 
+                      color: "#404040",
                     }}
                     value={this.props.pageItem.description1 ?? ""}
                     isEditable={false}
@@ -781,7 +764,9 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
       (this.state.imageUrl == null || this.state.image != this.props.pageItem.image)
     )
       this.getImage(this.props.pageItem.image)
-    return <View>{this.renderRouter()}</View>
+    return (
+      <View style={{ zIndex: 6000 + this.props.pageItemIndex.length }}>{this.renderRouter()}</View>
+    )
   }
 }
 

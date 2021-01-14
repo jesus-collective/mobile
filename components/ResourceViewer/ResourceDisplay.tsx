@@ -88,6 +88,9 @@ class ResourceDisplay extends JCComponent<Props, State> {
                       type: ResourcePageItemType.DropDownPicker,
                       title1: "Options",
                       style: ResourcePageItemStyle.RichTextBody1,
+                      resourceID: this.props.displayResource,
+                      seriesID: this.props.displaySeries,
+                      episodeID: this.props.displayEpisode,
                     },
                     {
                       type: ResourcePageItemType.Grid,
