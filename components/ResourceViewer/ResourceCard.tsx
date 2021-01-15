@@ -451,6 +451,8 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                           letterSpacing: -1,
                           textAlign: "left",
                           color: "#AAAAAA",
+                          alignSelf: 'flex-start',
+                          marginRight: 15,
                         }}
                         inputStyle={{
                           fontFamily: "Graphik-Bold-App",
@@ -471,6 +473,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                           title="Teaching Pre-roll"
                           className="LiveVideoPlayerIframe"
                           allowFullScreen
+                          style={{ width: 682, height: 382 }}
                           src={
                             "https://www.youtube.com/embed/" +
                             youtubeID +
@@ -503,7 +506,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                   </>
                 </CardItem>
 
-                <CardItem style={{ zIndex: 6000 + this.props.pageItemIndex.length }}>
+                <CardItem style={{ zIndex: 6000 + this.props.pageItemIndex.length, marginLeft: '5rem' }}>
                   <EditableText
                     multiline={true}
                     textStyle={{
