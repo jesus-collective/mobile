@@ -439,7 +439,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                   { zIndex: 6000 + this.props.pageItemIndex.length },
                 ]}
               >
-                <CardItem>
+                <CardItem style={{ paddingLeft: 0, paddingRight: 0 }}>
                   <>
                     {this.props.pageItem.order && (
                       <EditableText
@@ -507,7 +507,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                   </>
                 </CardItem>
 
-                <CardItem style={{ zIndex: 6000 + this.props.pageItemIndex.length, marginLeft: '5rem' }}>
+                <CardItem style={{ zIndex: 6000 + this.props.pageItemIndex.length, marginLeft: '4rem' }}>
                   <EditableText
                     multiline={true}
                     textStyle={{
@@ -584,7 +584,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                     isEditable={false}
                   ></EditableText>
                 </CardItem>
-                <CardItem style={{ zIndex: 0 }}>
+                <CardItem style={{ zIndex: 0, marginLeft: '4rem' }}>
                   <EditableText
                     multiline={true}
                     textStyle={{
