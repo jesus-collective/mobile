@@ -42,7 +42,7 @@ const resourceStyles = EStyleSheet.create({
     fontFamily: "Graphik-Regular-App",
     margin: 10,
     marginLeft: 0,
-    fontSize: 27,
+    fontSize: 22,
     lineHeight: "38px",
     fontWeight: "400",
     color: "#404040",

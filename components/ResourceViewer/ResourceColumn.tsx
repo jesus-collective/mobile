@@ -120,7 +120,7 @@ class ResourceColumn extends JCComponent<Props, State> {
         <View
           style={[
             {
-              width: isMobile ? "100%" : this.getRightColumnSize()
+              width: isTablet ? '70%' : isMobile ? "100%" : this.getRightColumnSize()
             },
             this.props.resourceState.isEditable && border
           ]}
