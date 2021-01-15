@@ -20,6 +20,7 @@ import PageItemSettings from "./PageItemSettings"
 import { ResourceContext } from "./ResourceContext"
 import ResourceImage from "./ResourceImage"
 import ResourceSelector from "./ResourceSelector"
+import { isTablet, isBrowser, isMobile } from "react-device-detect"
 Amplify.configure(awsconfig)
 
 interface Props extends ResourceSetupProp {
@@ -473,7 +474,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                           title="Teaching Pre-roll"
                           className="LiveVideoPlayerIframe"
                           allowFullScreen
-                          style={{ width: 682, height: 382 }}
+                          style={{ width: isBrowser ? 638 : isTablet ? 375 : 320, height: isBrowser ? 382 : isTablet ? 210 : 179 }}
                           src={
                             "https://www.youtube.com/embed/" +
                             youtubeID +
@@ -516,7 +517,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                       lineHeight: 36,
                       textAlign: "left",
                       color: "#404040",
-                      marginRight: 100,
+                      marginRight: isBrowser ? 310 : isTablet ? 50 : 75,
                     }}
                     inputStyle={{ margin: 10 }}
                     value={this.props.pageItem.title1 ?? ""}
