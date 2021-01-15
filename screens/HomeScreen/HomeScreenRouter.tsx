@@ -28,7 +28,7 @@ const MainStack = createStackNavigator()
 
 interface Props {
   authState?: string | undefined
-  onStateChange(state: string, data: AuthStateData): void
+  onStateChange(state: string, data: AuthStateData): Promise<void>
 }
 
 export default class HomeScreenRouter extends JCComponent<Props, UserState> {
@@ -428,8 +428,8 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
               updateHasCompletedPersonalProfile: this.updateHasCompletedPersonalProfile,
               updateHasCompletedOrganizationProfile: this.updateHasCompletedOrganizationProfile,
               updatePaidState: this.updatePaidState,
-              onStateChange: async () => {
-                await this.props.onStateChange
+              onStateChange: async (state, data) => {
+                await this.props.onStateChange(state, data)
               },
               updateGroups: this.updateGroups,
               isMemberOf: this.isMemberOf,

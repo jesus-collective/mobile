@@ -222,7 +222,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
         <TouchableOpacity
           onPress={() => {
             if (this.props.pageItem.url) {
-              window.location = this.props.pageItem.url ?? ""
+              window.location.href = this.props.pageItem.url ?? ""
             } else {
               this.props.navigation.navigate("ResourceDisplayScreen", {
                 id: this.props.resourceState.groupData?.id,
@@ -419,7 +419,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
             <TouchableOpacity
               onPress={() => {
                 if (this.props.pageItem.url) {
-                  window.location = this.props.pageItem.url ?? ""
+                  window.location.href = this.props.pageItem.url ?? ""
                 } else {
                   console.log("NAVIGATE")
                   if (this.props.pageItem.episodeID == null)
@@ -652,7 +652,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
               <TouchableOpacity
                 onPress={() => {
                   if (this.props.pageItem.url) {
-                    window.location = this.props.pageItem.url ?? ""
+                    window.location.href = this.props.pageItem.url ?? ""
                   } else {
                     console.log("NAVIGATE")
                     this.props.navigation.navigate("ResourceDisplayScreen", {

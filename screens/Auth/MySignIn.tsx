@@ -28,6 +28,7 @@ interface State {
   user: string
   authError: string
   fromVerified: boolean
+  brand: string
 }
 
 class MySignInImpl extends React.Component<Props, State> {
@@ -39,6 +40,7 @@ class MySignInImpl extends React.Component<Props, State> {
       user: props.route?.params?.email ?? "",
       authError: "",
       fromVerified: props.route?.params?.fromVerified ?? false,
+      brand: props.route?.params?.brand ?? "jc",
     }
   }
   static UserConsumer = UserContext.Consumer
@@ -136,6 +138,26 @@ class MySignInImpl extends React.Component<Props, State> {
                     >
                       Sign in to Jesus Collective
                     </Text>
+                    {this.state.brand == "oneStory" && (
+                      <Text
+                        style={{
+                          width: "100%",
+                          marginBottom: "5.5%",
+                          fontFamily: "Graphik-Regular-App",
+
+                          fontSize: 14,
+                          lineHeight: 20,
+                        }}
+                      >
+                        You are in the right place to sign up for One Story Curriculum! One Story is
+                        excited to partner with Jesus Collective in this tangible way and provide
+                        our curriculum through the Jesus Collective platform. Through this platform,
+                        you not only access these great discipleship resources for kids and youth in
+                        a super easy to use way, but you also get the benefit of having meaningful
+                        interaction and engagement with other One Story users to give feedback,
+                        share ideas and more.
+                      </Text>
+                    )}
                     <TextInput
                       autoCompleteType="email"
                       textContentType="emailAddress"

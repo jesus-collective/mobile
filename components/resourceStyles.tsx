@@ -564,13 +564,11 @@ const resourceStyles = EStyleSheet.create({
           position: "relative",
           width: "100%",
           height: "100%",
-          opacity: 0.5,
         }
       : {
           position: "relative",
           width: "100%",
           height: "100%",
-          opacity: 0.5,
         },
   resourceHeaderImgView: {
     backgroundColor: "#000000",
@@ -854,15 +852,15 @@ const resourceStyles = EStyleSheet.create({
     color: "#404040",
   },
   resourceMenuLineBreak: {
-    flexDirection: "row", 
-    borderBottomWidth: 1, 
-    width: 189, 
-    marginLeft: 175, 
-    borderBottomColor: "#CCCCCC", 
-    marginTop: 0,  
+    flexDirection: "row",
+    borderBottomWidth: 1,
+    width: 189,
+    marginLeft: 175,
+    borderBottomColor: "#CCCCCC",
+    marginTop: 0,
     marginBottom: 0,
     marginRight: 15,
-    alignSelf: 'center'
+    alignSelf: "center",
   },
 
   "@media (min-width: 350) and (max-width: 768)": {
@@ -1013,8 +1011,8 @@ const resourceStyles = EStyleSheet.create({
       width: "90%",
     },
     resourceMenuLineBreak: {
-      marginLeft: 40, 
-      width: 135
+      marginLeft: 40,
+      width: 135,
     },
   },
   "@media (min-width: 769) and (max-width: 1024)": {
@@ -1036,8 +1034,8 @@ const resourceStyles = EStyleSheet.create({
       width: "90%",
     },
     resourceMenuLineBreak: {
-      marginLeft: 130, 
-      width: 150
+      marginLeft: 130,
+      width: 150,
     },
   },
   "@media (min-width: 769px) and (max-width: 1279px)": {

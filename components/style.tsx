@@ -783,7 +783,7 @@ export default class MainStyles {
       },
       connectWithSliderButton: {
         padding: 0,
-        height: 'auto',
+        height: "auto",
         borderColor: "#F0493E",
         width: "100%",
         alignItems: "center",
@@ -2171,7 +2171,52 @@ export default class MainStyles {
             ? 20
             : 20 + Constants.statusBarHeight,
       },
-
+      signUpSidebarLogoOneStory:
+        Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? {
+              zIndex: 2,
+              position: "absolute",
+              left: 20,
+              width: 150,
+              height: 33,
+              top:
+                Platform.OS === "web" && Dimensions.get("window").width > 720
+                  ? 120
+                  : 20 + Constants.statusBarHeight,
+            }
+          : {
+              zIndex: 2,
+              position: "absolute",
+              left: 250,
+              width: 150,
+              height: 33,
+              top:
+                Platform.OS === "web" && Dimensions.get("window").width > 720
+                  ? 120
+                  : 30 + Constants.statusBarHeight,
+            },
+      signUpSidebarPlus:
+        Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? {
+              zIndex: 2,
+              fontFamily: "Graphik-Bold-App",
+              fontWeight: "bold",
+              fontSize: "65px",
+              position: "absolute",
+              color: "#ffffff",
+              left: 75,
+              top: 57,
+            }
+          : {
+              zIndex: 2,
+              fontFamily: "Graphik-Bold-App",
+              fontWeight: "bold",
+              fontSize: "45px",
+              position: "absolute",
+              color: "#ffffff",
+              left: 200,
+              top: 22,
+            },
       signUpSidebarProgress:
         Platform.OS === "web" && Dimensions.get("window").width > 720
           ? { zIndex: 3, position: "fixed", left: 20, width: 20, height: 300, top: "40%" }

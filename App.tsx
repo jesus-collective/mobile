@@ -127,6 +127,7 @@ class AwesomeApp extends JCComponent<Props, State> {
     this.setState({ authState: state })
     const params = RootNavigation.getRoot()?.params as {
       joinedAs: "individual" | "organization" | null
+      brand: "jc" | "oneStory" | null
     }
     if (state == "signUp") RootNavigation.navigate("signup", { joinedAs: null })
     else if (state == "signIn") {
