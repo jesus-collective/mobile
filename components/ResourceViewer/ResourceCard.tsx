@@ -3,6 +3,7 @@ import { useNavigation, useRoute } from "@react-navigation/native"
 import Amplify, { Storage } from "aws-amplify"
 import { Card, CardItem, View } from "native-base"
 import React from "react"
+import { isBrowser, isMobile, isTablet } from "react-device-detect"
 import { Animated, Image, Picker, Text } from "react-native"
 import DropDownPicker from "react-native-dropdown-picker"
 import { TouchableOpacity } from "react-native-gesture-handler"
@@ -20,7 +21,6 @@ import PageItemSettings from "./PageItemSettings"
 import { ResourceContext } from "./ResourceContext"
 import ResourceImage from "./ResourceImage"
 import ResourceSelector from "./ResourceSelector"
-import { isTablet, isBrowser, isMobile } from "react-device-detect"
 Amplify.configure(awsconfig)
 
 interface Props extends ResourceSetupProp {
@@ -439,7 +439,13 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                   { zIndex: 6000 + this.props.pageItemIndex.length },
                 ]}
               >
-                <CardItem style={{ paddingLeft: isMobile ? 20 : 0, paddingRight: isMobile ? 20 : 0, flexDirection: isMobile ? 'column' : 'row' }}>
+                <CardItem
+                  style={{
+                    paddingLeft: isMobile ? 20 : 0,
+                    paddingRight: isMobile ? 20 : 0,
+                    flexDirection: isMobile ? "column" : "row",
+                  }}
+                >
                   <>
                     {this.props.pageItem.order && (
                       <EditableText
@@ -452,7 +458,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                           letterSpacing: -1,
                           textAlign: "left",
                           color: "#AAAAAA",
-                          alignSelf: 'flex-start',
+                          alignSelf: "flex-start",
                           marginRight: 15,
                         }}
                         inputStyle={{
@@ -474,11 +480,15 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                           title="Teaching Pre-roll"
                           className="LiveVideoPlayerIframe"
                           allowFullScreen
-                          style={{ width: isBrowser ? 638 : isTablet ? 375 : 320, height: isBrowser ? 382 : isTablet ? 210 : 179, marginLeft: isMobile ? 120 : 'null' }}
+                          style={{
+                            width: isBrowser ? 638 : isTablet ? 375 : 320,
+                            height: isBrowser ? 382 : isTablet ? 210 : 179,
+                            marginLeft: isMobile ? 120 : "null",
+                          }}
                           src={
                             "https://www.youtube.com/embed/" +
                             youtubeID +
-                            "?color=white&autoplay=1&cc_load_policy=1&showTitle=0&controls=1&modestbranding=1&rel=0"
+                            "?color=white&autoplay=0&cc_load_policy=1&showTitle=0&controls=1&modestbranding=1&rel=0"
                           }
                           frameBorder="0"
                           allow="speakers; fullscreen; accelerometer; encrypted-media; gyroscope; picture-in-picture"
@@ -507,7 +517,12 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                   </>
                 </CardItem>
 
-                <CardItem style={{ zIndex: 6000 + this.props.pageItemIndex.length, marginLeft: isMobile ? 10 : '4rem' }}>
+                <CardItem
+                  style={{
+                    zIndex: 6000 + this.props.pageItemIndex.length,
+                    marginLeft: isMobile ? 10 : "4rem",
+                  }}
+                >
                   <EditableText
                     multiline={true}
                     textStyle={{
@@ -584,7 +599,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                     isEditable={false}
                   ></EditableText>
                 </CardItem>
-                <CardItem style={{ zIndex: 0, marginLeft: isMobile ? 10 : '4rem' }}>
+                <CardItem style={{ zIndex: 0, marginLeft: isMobile ? 10 : "4rem" }}>
                   <EditableText
                     multiline={true}
                     textStyle={{
@@ -679,7 +694,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                           src={
                             "https://www.youtube.com/embed/" +
                             youtubeID +
-                            "?color=white&autoplay=1&cc_load_policy=1&showTitle=0&controls=1&modestbranding=1&rel=0"
+                            "?color=white&autoplay=0&cc_load_policy=1&showTitle=0&controls=1&modestbranding=1&rel=0"
                           }
                           frameBorder="0"
                           allow="speakers; fullscreen; accelerometer; encrypted-media; gyroscope; picture-in-picture"

@@ -544,14 +544,15 @@ class BillingImpl extends JCComponent<Props, State> {
                         fontFamily: "Graphik-Bold-App",
                       }}
                     >
-                      Payment Successful
+                      We've received your payment.
+                      <br />
                       <JCButton
                         onPress={() => {
                           this.completePaymentProcess(userActions, userState)
                         }}
-                        buttonType={ButtonTypes.TransparentNoPadding}
+                        buttonType={ButtonTypes.Solid}
                       >
-                        Continue...
+                        Continue to Your Profile
                       </JCButton>
                     </Text>
                   </View>

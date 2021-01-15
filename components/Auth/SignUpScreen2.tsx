@@ -1,26 +1,24 @@
-﻿import React from "react";
-import Amplify from "aws-amplify";
-import awsConfig from "../../src/aws-exports";
-import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar";
-Amplify.configure(awsConfig);
-import { View } from "native-base";
-import { Text, Button } from "react-native";
-import * as mutations from "../../src/graphql/mutations";
-import { API, graphqlOperation } from "aws-amplify";
-import { Auth } from "aws-amplify";
-import JCComponent from "../../components/JCComponent/JCComponent";
-import { UserContext } from "../../screens/HomeScreen/UserContext";
+﻿import Amplify, { API, Auth, graphqlOperation } from "aws-amplify"
+import { View } from "native-base"
+import React from "react"
+import { Button, Text } from "react-native"
+import JCComponent from "../../components/JCComponent/JCComponent"
+import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
+import { UserContext } from "../../screens/HomeScreen/UserContext"
+import awsConfig from "../../src/aws-exports"
+import * as mutations from "../../src/graphql/mutations"
+Amplify.configure(awsConfig)
 
 interface Props {
-  authState?: string;
+  authState?: string
 }
 export default class SignUpScreen2 extends JCComponent<Props> {
-  static UserConsumer = UserContext.Consumer;
+  static UserConsumer = UserContext.Consumer
 
   async makePayment(actions: any): Promise<void> {
-    console.log("Finish Payment");
+    console.log("Finish Payment")
     try {
-      const user = await Auth.currentAuthenticatedUser();
+      const user = await Auth.currentAuthenticatedUser()
       await API.graphql(
         graphqlOperation(mutations.updateUser, {
           input: {
@@ -28,10 +26,10 @@ export default class SignUpScreen2 extends JCComponent<Props> {
             hasPaidState: "Success",
           },
         })
-      );
-      actions.updatePaidState();
+      )
+      actions.updatePaidState()
     } catch (e) {
-      console.log({ Error: e });
+      console.log({ Error: e })
     }
   }
 
@@ -39,7 +37,7 @@ export default class SignUpScreen2 extends JCComponent<Props> {
     return (
       <SignUpScreen2.UserConsumer>
         {({ userState, userActions }) => {
-          if (!userState) return null;
+          if (!userState) return null
           return (
             <View style={this.styles.style.signUpScreen1PaymentBody}>
               <SignUpSidebar position="3"></SignUpSidebar>
@@ -58,14 +56,14 @@ export default class SignUpScreen2 extends JCComponent<Props> {
                   color="#F0493E"
                   title="Setup Profile"
                   onPress={() => {
-                    this.makePayment(userActions);
+                    this.makePayment(userActions)
                   }}
                 />
               </View>
             </View>
-          );
+          )
         }}
       </SignUpScreen2.UserConsumer>
-    );
+    )
   }
 }

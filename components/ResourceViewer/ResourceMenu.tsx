@@ -95,10 +95,8 @@ class ResourceMenu extends JCComponent<Props> {
               {resourceState.resourceData?.menuItems?.items?.map((item, index: number) => {
                 if (item != null)
                   return item.type == ResourceMenuItemType.break ? (
-                    <View key={index} style={{ flexDirection: 'row' }}>
-                      <View
-                        style={this.styles.style.resourceMenuLineBreak}
-                      ></View>
+                    <View key={index} style={{ flexDirection: "row" }}>
+                      <View style={this.styles.style.resourceMenuLineBreak}></View>
                       {resourceState.isEditable && (
                         <Button
                           transparent
@@ -123,7 +121,10 @@ class ResourceMenu extends JCComponent<Props> {
                         isEditable={resourceState.isEditable}
                         onPress={() => resourceActions.changeMenuItem(index)}
                         inputStyle={this.headerStyles.style.resourcesMenuButtonsText}
-                        textStyle={this.headerStyles.style.resourcesMenuButtonsText}
+                        textStyle={[
+                          this.headerStyles.style.resourcesMenuButtonsText,
+                          resourceState.currentMenuItem == index && { fontWeight: "bold" },
+                        ]}
                         value={item.menuTitle ?? ""}
                       ></EditableButton>
                       {resourceState.isEditable ? (
