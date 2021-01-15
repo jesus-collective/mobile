@@ -2007,7 +2007,7 @@ export default class MainStyles {
           alignItems: "center",
         },
         profilesCard: {
-          minWidth: 340,
+          minWidth: 320,
         },
         profilesScreenLeftContainer: {
           minHeight: 2000,
