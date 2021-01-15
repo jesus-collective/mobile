@@ -59,6 +59,8 @@ export default class JCModal extends JCComponent<Props> {
               shadowOpacity: 0.25,
               shadowRadius: 3.84,
               elevation: 5,
+              maxHeight: '80vh',
+              overflow: 'scroll'
             }}
           >
             <View
