@@ -439,7 +439,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                   { zIndex: 6000 + this.props.pageItemIndex.length },
                 ]}
               >
-                <CardItem style={{ paddingLeft: 0, paddingRight: 0 }}>
+                <CardItem style={{ paddingLeft: isMobile ? 20 : 0, paddingRight: isMobile ? 20 : 0, flexDirection: isMobile ? 'column' : 'row' }}>
                   <>
                     {this.props.pageItem.order && (
                       <EditableText
@@ -474,7 +474,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                           title="Teaching Pre-roll"
                           className="LiveVideoPlayerIframe"
                           allowFullScreen
-                          style={{ width: isBrowser ? 638 : isTablet ? 375 : 320, height: isBrowser ? 382 : isTablet ? 210 : 179 }}
+                          style={{ width: isBrowser ? 638 : isTablet ? 375 : 320, height: isBrowser ? 382 : isTablet ? 210 : 179, marginLeft: isMobile ? 120 : 'null' }}
                           src={
                             "https://www.youtube.com/embed/" +
                             youtubeID +
@@ -507,7 +507,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                   </>
                 </CardItem>
 
-                <CardItem style={{ zIndex: 6000 + this.props.pageItemIndex.length, marginLeft: '4rem' }}>
+                <CardItem style={{ zIndex: 6000 + this.props.pageItemIndex.length, marginLeft: isMobile ? 10 : '4rem' }}>
                   <EditableText
                     multiline={true}
                     textStyle={{
@@ -517,7 +517,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                       lineHeight: 36,
                       textAlign: "left",
                       color: "#404040",
-                      marginRight: isBrowser ? 310 : isTablet ? 50 : 75,
+                      marginRight: isBrowser ? 310 : isTablet ? 50 : 45,
                     }}
                     inputStyle={{ margin: 10 }}
                     value={this.props.pageItem.title1 ?? ""}
@@ -584,7 +584,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                     isEditable={false}
                   ></EditableText>
                 </CardItem>
-                <CardItem style={{ zIndex: 0, marginLeft: '4rem' }}>
+                <CardItem style={{ zIndex: 0, marginLeft: isMobile ? 10 : '4rem' }}>
                   <EditableText
                     multiline={true}
                     textStyle={{
