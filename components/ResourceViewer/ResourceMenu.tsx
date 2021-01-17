@@ -209,6 +209,8 @@ class ResourceMenu extends JCComponent<Props> {
                     fontWeight: 600,
                     alignSelf: 'center'
                   }}
+                  arrowColor="#FFFFFF"
+
                   onChangeItem={(item) => {
                     if (item.value == "menuitem")
                       resourceActions.createMenuItem(ResourceMenuItemType.menuItem)

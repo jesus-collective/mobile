@@ -180,6 +180,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           fontWeight: 600,
           alignSelf: 'center'
         }}
+        arrowColor="#FFFFFF"
         onChangeItem={(item) => {
           const pageItem: ResourcePageItemInput = {
             id: uuidv4(),
