@@ -195,7 +195,7 @@ class ResourceMenu extends JCComponent<Props> {
                     },
                   ]}
                   placeholder="+"
-                  containerStyle={{ height: 40, width: 60 }}
+                  containerStyle={{ height: 40, width: 160, marginTop: 5, marginBottom: 5 }}
                   dropDownStyle={{ backgroundColor: "#FF4438", width: 150 }}
                   style={{ backgroundColor: "#FF4438" }}
                   itemStyle={{
@@ -210,7 +210,6 @@ class ResourceMenu extends JCComponent<Props> {
                     alignSelf: 'center'
                   }}
                   arrowColor="#FFFFFF"
-
                   onChangeItem={(item) => {
                     if (item.value == "menuitem")
                       resourceActions.createMenuItem(ResourceMenuItemType.menuItem)

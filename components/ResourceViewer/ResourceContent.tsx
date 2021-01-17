@@ -160,7 +160,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           },
         ]}
         placeholder="Add Page Item"
-        containerStyle={{ height: 40, width: 160, zIndex: 5000 + pageItemIndex.length }}
+        containerStyle={{ height: 40, width: 160, zIndex: 5000 + pageItemIndex.length, marginTop: 5, marginBottom: 5 }}
         dropDownStyle={{
           backgroundColor: "#FF4438",
           width: 150,
