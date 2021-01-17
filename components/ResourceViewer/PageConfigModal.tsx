@@ -36,7 +36,7 @@ class JCResourceConfigModalImpl extends JCComponent<Props, State> {
               }}
             >
               <View>
-                <Text>Config</Text>
+                <Text style={{ fontWeight: 'bold'}}>Config</Text>
                 <Picker
                   mode="dropdown"
                   style={{
@@ -75,22 +75,24 @@ class JCResourceConfigModalImpl extends JCComponent<Props, State> {
                   .readGroups?.map((item: UserGroupType, index: number) => {
                     return (
                       <>
-                        <Text>{item}</Text>
-                        <TouchableOpacity
-                          style={{ alignSelf: "center", marginLeft: 15 }}
-                          onPress={() => {
-                            const tmp = resourceActions.getMenuItem(resourceState.currentMenuItem)
-                            if (!tmp.readGroups) tmp.readGroups = []
-                            tmp.readGroups.splice(index, 1)
-                            resourceActions.updateMenuItem(
-                              resourceState.currentMenuItem,
-                              "readGroups",
-                              tmp.readGroups
-                            )
-                          }}
-                        >
-                          <AntDesign name="close" size={20} color="black" />
-                        </TouchableOpacity>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                          <Text style={{ fontWeight: 'bold' }}>{item}</Text>
+                          <TouchableOpacity
+                            style={{ alignSelf: "center", marginLeft: 15 }}
+                            onPress={() => {
+                              const tmp = resourceActions.getMenuItem(resourceState.currentMenuItem)
+                              if (!tmp.readGroups) tmp.readGroups = []
+                              tmp.readGroups.splice(index, 1)
+                              resourceActions.updateMenuItem(
+                                resourceState.currentMenuItem,
+                                "readGroups",
+                                tmp.readGroups
+                              )
+                            }}
+                          >
+                            <AntDesign name="close" size={20} color="black" />
+                          </TouchableOpacity>
+                        </View>
                       </>
                     )
                   })}

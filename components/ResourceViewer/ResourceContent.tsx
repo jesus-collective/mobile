@@ -200,8 +200,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
         }}
       >
         <Card>
-          <CardItem>
-            <Text>Configure Page</Text>
+          <CardItem style={{ backgroundColor: '#FF4438' }}>
+            <Text style={{ color: '#FFFFFF', alignSelf: 'center' }}>Configure Page</Text>
           </CardItem>
         </Card>
       </TouchableOpacity>
@@ -215,8 +215,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
         }}
       >
         <Card>
-          <CardItem>
-            <Text>Configure JC Group</Text>
+          <CardItem style={{ backgroundColor: '#FF4438' }}>
+            <Text style={{ color: '#FFFFFF', alignSelf: 'center' }}>Configure JC Group</Text>
           </CardItem>
         </Card>
       </TouchableOpacity>
@@ -232,8 +232,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
         }}
       >
         <Card>
-          <CardItem>
-            <Text>Configure Resources</Text>
+          <CardItem style={{ backgroundColor: '#FF4438' }}>
+            <Text style={{ color: '#FFFFFF', alignSelf: 'center' }}>Configure Resources</Text>
           </CardItem>
         </Card>
       </TouchableOpacity>
