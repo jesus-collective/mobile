@@ -1749,6 +1749,10 @@ export default class MainStyles {
           color: "#aaaaaa",
           fontSize: 34,
         },
+        resourceIcon: {
+          color: "#ffffff",
+          fontSize: 34,
+        },
 
         partnerFriendsLegend: {
           flexDirection: "column",
@@ -1849,6 +1853,10 @@ export default class MainStyles {
 
         icon: {
           color: "#aaaaaa",
+          fontSize: 28,
+        },
+        resourceIcon: {
+          color: "#ffffff",
           fontSize: 28,
         },
       },
@@ -2064,6 +2072,10 @@ export default class MainStyles {
         },
         icon: {
           color: "#aaaaaa",
+          fontSize: 30,
+        },
+        resourceIcon: {
+          color: "#ffffff",
           fontSize: 30,
         },
         conversationScreenMainContainer: {
