@@ -1560,6 +1560,10 @@ export default class MainStyles {
       mapCardImage: {
         marginRight: 10,
       },
+      resourceIcon: {
+        color: "#ffffff",
+        fontSize: 20,
+      },
 
       // Media Query Desktop Tablet
       "@media (min-width: 350) and (max-width: 768)": {
@@ -1751,7 +1755,7 @@ export default class MainStyles {
         },
         resourceIcon: {
           color: "#ffffff",
-          fontSize: 34,
+          fontSize: 20,
         },
 
         partnerFriendsLegend: {
@@ -2077,6 +2081,7 @@ export default class MainStyles {
         resourceIcon: {
           color: "#ffffff",
           fontSize: 30,
+          alignSelf: 'center'
         },
         conversationScreenMainContainer: {
           flexDirection: "column",

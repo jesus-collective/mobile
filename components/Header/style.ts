@@ -37,7 +37,7 @@ export default class HeaderStyles {
             },
             resourceIcon: {
                 color: '#ffffff',
-                fontSize: 22,
+                fontSize: 20,
             },
             leftButtons: {
 

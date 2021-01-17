@@ -178,6 +178,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           color: "#FFFFFF",
           zIndex: 5000 + pageItemIndex.length,
           fontWeight: 600,
+          alignSelf: 'center'
         }}
         onChangeItem={(item) => {
           const pageItem: ResourcePageItemInput = {

@@ -207,6 +207,7 @@ class ResourceMenu extends JCComponent<Props> {
                     textAlign: "left",
                     color: "#FFFFFF",
                     fontWeight: 600,
+                    alignSelf: 'center'
                   }}
                   onChangeItem={(item) => {
                     if (item.value == "menuitem")
