@@ -1207,10 +1207,10 @@ const courseStyles = EStyleSheet.create({
       overflow: "scroll",
     },
     courseProfileImageContainer: {
-      marginTop: "400",
+      marginTop: 400,
     },
     courseHomeDescriptionText: {
-      marginTop: 300,
+      marginTop: 30,
     },
     courseHomeRightContainer: {
       top: 1450,
@@ -1327,6 +1327,9 @@ const courseStyles = EStyleSheet.create({
     },
     courseDetailJCButtonRegular: {
       marginTop: 20,
+    },
+    courseHomeMainTextContainer: {
+      marginTop: 30,
     },
   },
 })
