@@ -1207,16 +1207,20 @@ const courseStyles = EStyleSheet.create({
       overflow: "scroll",
     },
     courseProfileImageContainer: {
-      marginTop: "400",
+      marginTop: 700,
+      
     },
     courseHomeDescriptionText: {
-      marginTop: 300,
+      marginTop: 0,
+      marginRight: 0
     },
     courseHomeRightContainer: {
-      top: 1450,
+      top: 1600,
+      marginTop: 50
     },
     courseProfileImageButtonsContainer: {
       marginRight: 0,
+      marginBottom: 200
     },
     courseDetailMainContainer: {
       flexDirection: "column",
@@ -1268,7 +1272,7 @@ const courseStyles = EStyleSheet.create({
       width: "100%",
     },
     courseHomeCalendar: {
-      width: "138%",
+      width: "150%",
     },
     courseAssignmentScreenLeftCard: {
       marginLeft: 15,
@@ -1327,6 +1331,12 @@ const courseStyles = EStyleSheet.create({
     },
     courseDetailJCButtonRegular: {
       marginTop: 20,
+    },
+    courseHomeMainTextContainer: {
+      marginTop: 30,
+    },
+    courseHomeCalendarLabels: {
+      marginBottom: 30,
     },
   },
 })

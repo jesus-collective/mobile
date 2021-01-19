@@ -35,6 +35,10 @@ export default class HeaderStyles {
                 color: '#aaaaaa',
                 fontSize: 22,
             },
+            resourceIcon: {
+                color: '#ffffff',
+                fontSize: 20,
+            },
             leftButtons: {
 
                 display: Platform.OS === 'web' && Dimensions.get('window').width > 720 ? 'none' : 'flex',

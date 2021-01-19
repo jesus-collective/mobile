@@ -120,52 +120,53 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     return (
       <DropDownPicker
         zIndex={5000 + pageItemIndex.length}
+        dropDownStyle={{ backgroundColor: '#FF4438' }}
         items={[
           {
             label: "Menu",
             value: ResourcePageItemType.Menu,
-            icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
+            icon: () => <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />,
             hidden: true,
           },
           {
             label: "Header",
             value: ResourcePageItemType.Header,
-            icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
+            icon: () => <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />,
           },
           {
             label: "Rich Text",
             value: ResourcePageItemType.RichText,
-            icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
+            icon: () => <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />,
           },
           {
             label: "List",
             value: ResourcePageItemType.List,
-            icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
+            icon: () => <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />,
           },
           {
             label: "Grid",
             value: ResourcePageItemType.Grid,
-            icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
+            icon: () => <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />,
           },
           {
             label: "Column",
             value: ResourcePageItemType.Column,
-            icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
+            icon: () => <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />,
           },
           {
             label: "Card",
             value: ResourcePageItemType.Card,
-            icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
+            icon: () => <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />,
           },
         ]}
         placeholder="Add Page Item"
-        containerStyle={{ height: 40, width: 160, zIndex: 5000 + pageItemIndex.length }}
+        containerStyle={{ height: 40, width: 160, zIndex: 5000 + pageItemIndex.length, marginTop: 5, marginBottom: 100 }}
         dropDownStyle={{
-          backgroundColor: "#fafafa",
+          backgroundColor: "#FF4438",
           width: 150,
           zIndex: 5000 + pageItemIndex.length,
         }}
-        style={{ backgroundColor: "#fafafa", zIndex: 5000 + pageItemIndex.length }}
+        style={{ backgroundColor: "#FF4438", zIndex: 5000 + pageItemIndex.length }}
         itemStyle={{
           justifyContent: "flex-start",
           width: 100,
@@ -174,9 +175,12 @@ class ResourceContentImpl extends JCComponent<Props, State> {
         labelStyle={{
           fontSize: 14,
           textAlign: "left",
-          color: "#000",
+          color: "#FFFFFF",
           zIndex: 5000 + pageItemIndex.length,
+          fontWeight: 600,
+          alignSelf: 'center'
         }}
+        arrowColor="#FFFFFF"
         onChangeItem={(item) => {
           const pageItem: ResourcePageItemInput = {
             id: uuidv4(),
@@ -196,8 +200,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
         }}
       >
         <Card>
-          <CardItem>
-            <Text>Configure Page</Text>
+          <CardItem style={{ backgroundColor: '#FF4438' }}>
+            <Text style={{ color: '#FFFFFF', alignSelf: 'center' }}>Configure Page</Text>
           </CardItem>
         </Card>
       </TouchableOpacity>
@@ -211,8 +215,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
         }}
       >
         <Card>
-          <CardItem>
-            <Text>Configure JC Group</Text>
+          <CardItem style={{ backgroundColor: '#FF4438' }}>
+            <Text style={{ color: '#FFFFFF', alignSelf: 'center' }}>Configure JC Group</Text>
           </CardItem>
         </Card>
       </TouchableOpacity>
@@ -228,8 +232,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
         }}
       >
         <Card>
-          <CardItem>
-            <Text>Configure Resources</Text>
+          <CardItem style={{ backgroundColor: '#FF4438' }}>
+            <Text style={{ color: '#FFFFFF', alignSelf: 'center' }}>Configure Resources</Text>
           </CardItem>
         </Card>
       </TouchableOpacity>

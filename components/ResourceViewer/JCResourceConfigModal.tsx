@@ -116,6 +116,7 @@ class JCResourceConfigModalImpl extends JCComponent<Props> {
                     flexDirection: "row",
                     height: 30,
                     marginBottom: 20,
+                    justifyContent: 'space-between'
                   }}
                 >
                   <Text

@@ -1560,6 +1560,10 @@ export default class MainStyles {
       mapCardImage: {
         marginRight: 10,
       },
+      resourceIcon: {
+        color: "#ffffff",
+        fontSize: 20,
+      },
 
       // Media Query Desktop Tablet
       "@media (min-width: 350) and (max-width: 768)": {
@@ -1749,6 +1753,10 @@ export default class MainStyles {
           color: "#aaaaaa",
           fontSize: 34,
         },
+        resourceIcon: {
+          color: "#ffffff",
+          fontSize: 20,
+        },
 
         partnerFriendsLegend: {
           flexDirection: "column",
@@ -1849,6 +1857,10 @@ export default class MainStyles {
 
         icon: {
           color: "#aaaaaa",
+          fontSize: 28,
+        },
+        resourceIcon: {
+          color: "#ffffff",
           fontSize: 28,
         },
       },
@@ -2065,6 +2077,11 @@ export default class MainStyles {
         icon: {
           color: "#aaaaaa",
           fontSize: 30,
+        },
+        resourceIcon: {
+          color: "#ffffff",
+          fontSize: 30,
+          alignSelf: 'center'
         },
         conversationScreenMainContainer: {
           flexDirection: "column",

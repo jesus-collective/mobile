@@ -180,24 +180,24 @@ class ResourceMenu extends JCComponent<Props> {
                     {
                       label: "Menu Item",
                       value: "menuitem",
-                      icon: () => <Ionicons name="md-menu" style={this.headerStyles.style.icon} />,
+                      icon: () => <Ionicons name="md-menu" style={this.headerStyles.style.resourceIcon} />,
                       hidden: true,
                     },
                     {
                       label: "Break",
                       value: "break",
-                      icon: () => <Ionicons name="md-menu" style={this.headerStyles.style.icon} />,
+                      icon: () => <Ionicons name="md-menu" style={this.headerStyles.style.resourceIcon} />,
                     },
                     {
                       label: "Schedule",
                       value: "schedule",
-                      icon: () => <Ionicons name="md-menu" style={this.headerStyles.style.icon} />,
+                      icon: () => <Ionicons name="md-menu" style={this.headerStyles.style.resourceIcon} />,
                     },
                   ]}
                   placeholder="+"
-                  containerStyle={{ height: 40, width: 60 }}
-                  dropDownStyle={{ backgroundColor: "#fafafa", width: 150 }}
-                  style={{ backgroundColor: "#fafafa" }}
+                  containerStyle={{ height: 40, width: 160, marginTop: 5, marginBottom: 5 }}
+                  dropDownStyle={{ backgroundColor: "#FF4438", width: 150 }}
+                  style={{ backgroundColor: "#FF4438" }}
                   itemStyle={{
                     justifyContent: "flex-start",
                     width: 100,
@@ -205,8 +205,11 @@ class ResourceMenu extends JCComponent<Props> {
                   labelStyle={{
                     fontSize: 14,
                     textAlign: "left",
-                    color: "#000",
+                    color: "#FFFFFF",
+                    fontWeight: 600,
+                    alignSelf: 'center'
                   }}
+                  arrowColor="#FFFFFF"
                   onChangeItem={(item) => {
                     if (item.value == "menuitem")
                       resourceActions.createMenuItem(ResourceMenuItemType.menuItem)
