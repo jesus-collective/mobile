@@ -115,7 +115,7 @@
         },
         "Runtime": "nodejs12.x",
         "Layers": [],
-        "Timeout": "25",
+        "Timeout": "65",
         "Code": {
           "S3Bucket": "amplify-jc-mobile-beta-155138-deployment",
           "S3Key": "amplify-builds/jcmobileStripWebhook-73556362326a3878576a-build.zip"
