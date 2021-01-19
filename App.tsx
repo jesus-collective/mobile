@@ -150,10 +150,13 @@ class AwesomeApp extends JCComponent<Props, State> {
         user.getSignInUserSession().accessToken.payload["cognito:groups"].includes("admin") ||
         user
           .getSignInUserSession()
-          .accessToken.payload["cognito:groups"].includes("subscriptionValid")
+          .accessToken.payload["cognito:groups"].includes("subscriptionValid") ||
+        user
+          .getSignInUserSession()
+          .accessToken.payload["cognito:groups"].includes("legacyUserGroup1")
       ) {
-        RootNavigation.navigate("app", {
-          screen: "home",
+        RootNavigation.navigate("auth", {
+          screen: "Payment3",
           params: {
             joinedProduct: data?.joinedProduct,
             productType: data?.productType,

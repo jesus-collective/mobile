@@ -373,11 +373,16 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
               loadId: json.data.createGroup.id,
             },
             () => {
-              this.setState({
-                canSave: !this.state.createNew && this.state.isEditable,
-                createNew: this.state.createNew && this.state.isEditable,
-                canDelete: !this.state.createNew && this.state.isEditable,
-              })
+              this.setState(
+                {
+                  canSave: !this.state.createNew && this.state.isEditable,
+                  createNew: this.state.createNew && this.state.isEditable,
+                  canDelete: !this.state.createNew && this.state.isEditable,
+                },
+                () => {
+                  this.joinGroup()
+                }
+              )
             }
           )
           console.log({ "Success mutations.createGroup": json })

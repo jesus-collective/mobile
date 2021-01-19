@@ -58,7 +58,7 @@ export default class SignUpSidebar extends JCComponent<Props> {
           source={require("../../assets/JC-Logo-RGB-KO2.png")}
           style={this.styles.style.signUpSidebarLogo}
         />
-        {brand == "oneStory" && (
+        {brand == "oneStory" ? (
           <>
             <Text style={this.styles.style.signUpSidebarPlus}>+</Text>
             <Image
@@ -66,7 +66,7 @@ export default class SignUpSidebar extends JCComponent<Props> {
               style={this.styles.style.signUpSidebarLogoOneStory}
             />
           </>
-        )}
+        ) : null}
         <Image
           source={require("../../assets/leftPanel.png")}
           style={this.styles.style.signUpSidebarPanel}

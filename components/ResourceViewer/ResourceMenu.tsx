@@ -3,13 +3,17 @@ import { Body, Button, Header, Left, Picker, Right } from "native-base"
 import React from "react"
 import { Dimensions, View } from "react-native"
 import DropDownPicker from "react-native-dropdown-picker"
-import { ResourceMenuItemType, ResourcePageItemStyle } from "../../src/API"
+import {
+  ResourceMenuItemType,
+  ResourcePageItemStyle,
+  UpdateResourceMenuItemInput,
+} from "../../src/API"
 import { ResourceSetupProp } from "../../src/types"
 import EditableButton from "../Forms/EditableButton"
 import HeaderStyles from "../Header/style"
 import JCComponent from "../JCComponent/JCComponent"
 import PageItemSettings from "./PageItemSettings"
-import { ResourceContext } from "./ResourceContext"
+import { ResourceContext, ResourceState } from "./ResourceContext"
 interface Props extends ResourceSetupProp {}
 
 class ResourceMenu extends JCComponent<Props> {
@@ -76,6 +80,39 @@ class ResourceMenu extends JCComponent<Props> {
   renderLeftMenu() {
     return this.renderItems()
   }
+  parentIsSelected(resourceState: ResourceState, index: number): boolean {
+    for (let z: number = index; z--; z >= resourceState.currentMenuItem) {
+      let menuItem: UpdateResourceMenuItemInput = resourceState.resourceData?.menuItems.items[z]
+      if (menuItem?.depth == "1") return z == resourceState.currentMenuItem
+      if (z < 0) return false
+    }
+    return false
+  }
+
+  siblingIsSelected(resourceState: ResourceState, index: number): boolean {
+    if (index < resourceState.currentMenuItem)
+      for (let z: number = index; z++; z <= resourceState.currentMenuItem) {
+        let menuItem: UpdateResourceMenuItemInput = resourceState.resourceData?.menuItems.items[z]
+        if (menuItem?.depth == "1") return false
+        if (z > resourceState.resourceData?.menuItems?.items.length)
+          return z == resourceState.currentMenuItem
+      }
+    else
+      for (let z: number = index; z--; z >= resourceState.currentMenuItem) {
+        let menuItem: UpdateResourceMenuItemInput = resourceState.resourceData?.menuItems.items[z]
+        if (menuItem?.depth == "1") return z == resourceState.currentMenuItem
+        if (z < 0) return false
+      }
+    return true
+  }
+  isMenuItemExpanded(resourceState: ResourceState, index: number): boolean {
+    let menuItem: UpdateResourceMenuItemInput = resourceState.resourceData?.menuItems.items[index]
+    if (menuItem?.depth == "1" || menuItem?.depth == null) return true
+    if (this.parentIsSelected(resourceState, index)) return true
+    else if (index == resourceState.currentMenuItem) return true
+    else if (this.siblingIsSelected(resourceState, index)) return true
+    else return false
+  }
   renderItems() {
     return (
       <ResourceMenu.Consumer>
@@ -108,7 +145,7 @@ class ResourceMenu extends JCComponent<Props> {
                         </Button>
                       )}
                     </View>
-                  ) : (
+                  ) : this.isMenuItemExpanded(resourceState, index) ? (
                     <View key={index} style={{ flexDirection: "row" }}>
                       {item.depth == "2" && <View style={{ width: 10 }} />}
                       <EditableButton
@@ -170,7 +207,7 @@ class ResourceMenu extends JCComponent<Props> {
                         </>
                       ) : null}
                     </View>
-                  )
+                  ) : null
                 else return null
               })}
 
@@ -180,18 +217,24 @@ class ResourceMenu extends JCComponent<Props> {
                     {
                       label: "Menu Item",
                       value: "menuitem",
-                      icon: () => <Ionicons name="md-menu" style={this.headerStyles.style.resourceIcon} />,
+                      icon: () => (
+                        <Ionicons name="md-menu" style={this.headerStyles.style.resourceIcon} />
+                      ),
                       hidden: true,
                     },
                     {
                       label: "Break",
                       value: "break",
-                      icon: () => <Ionicons name="md-menu" style={this.headerStyles.style.resourceIcon} />,
+                      icon: () => (
+                        <Ionicons name="md-menu" style={this.headerStyles.style.resourceIcon} />
+                      ),
                     },
                     {
                       label: "Schedule",
                       value: "schedule",
-                      icon: () => <Ionicons name="md-menu" style={this.headerStyles.style.resourceIcon} />,
+                      icon: () => (
+                        <Ionicons name="md-menu" style={this.headerStyles.style.resourceIcon} />
+                      ),
                     },
                   ]}
                   placeholder="+"
@@ -207,7 +250,7 @@ class ResourceMenu extends JCComponent<Props> {
                     textAlign: "left",
                     color: "#FFFFFF",
                     fontWeight: 600,
-                    alignSelf: 'center'
+                    alignSelf: "center",
                   }}
                   arrowColor="#FFFFFF"
                   onChangeItem={(item) => {

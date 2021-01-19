@@ -857,12 +857,13 @@ enum UserGroupType{
   subscriptionkyyouth	
   subscriptionValid	
   userpool
+  legacyUserGroup1
 }
 type ResourceMenuItem
 @model 
 @auth(rules: [
    {allow: owner, ownerField: "owner", operations: [create, read, update, delete]}
-   {allow: groups, groupsField: "groups", operations: [read] }
+   {allow: groups, groupsField: "readGroups", operations: [read] }
    { allow: groups, groups: ["admin"]}
   ])
  @key(name: "byResourceRoot", fields: ["resourceRootID"])
