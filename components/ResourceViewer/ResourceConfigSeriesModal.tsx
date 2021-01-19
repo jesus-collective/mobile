@@ -215,7 +215,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
               >
                 <>
                   <View style={{ flexDirection: "row", width: "100%" }}>
-                    <Text style={{ textAlign: "left", width: "100%", fontWeight: "800" }}>
+                    <Text style={{ textAlign: "left", fontWeight: "800", width: '37%' }}>
                       Title:{" "}
                     </Text>
                     <TextInput
@@ -231,7 +231,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
                   </View>
 
                   <View style={{ flexDirection: "row", width: "100%" }}>
-                    <Text style={{ textAlign: "left", width: "100%", fontWeight: "800" }}>
+                    <Text style={{ textAlign: "left", fontWeight: "800" }}>
                       description:{" "}
                     </Text>
                     <TextInput
@@ -241,8 +241,9 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
                         this.setState({ currentSeries: tmp })
                       }}
                       placeholder="description"
-                      multiline={false}
+                      multiline={true}
                       value={this.state.currentSeries.description ?? ""}
+                      style={{ height: 130 }}
                     ></TextInput>
                   </View>
                   <ResourceImage

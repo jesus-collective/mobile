@@ -242,7 +242,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
                   </View>
 
                   <View style={{ flexDirection: "row", width: "100%" }}>
-                    <Text style={{ textAlign: "left", width: "100%", fontWeight: "800" }}>
+                    <Text style={{ textAlign: "left", width: "50%", fontWeight: "800" }}>
                       Description:{" "}
                     </Text>
                     <TextInput
@@ -252,8 +252,9 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
                         this.setState({ currentEpisode: tmp })
                       }}
                       placeholder="description"
-                      multiline={false}
+                      multiline={true}
                       value={this.state.currentEpisode.description ?? ""}
+                      style={{ height: 130 }}
                     ></TextInput>
                   </View>
                   <ResourceImage
