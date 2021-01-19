@@ -113,6 +113,7 @@ export default EStyleSheet.create({
     boxShadow: "unset",
     width: "100%",
     marginTop: 10,
+    marginBottom: 10,
   },
   AdminAddText: {
     color: "#FFFFFF",
