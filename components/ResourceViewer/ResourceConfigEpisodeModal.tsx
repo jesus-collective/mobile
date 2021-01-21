@@ -242,17 +242,18 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
                   </View>
 
                   <View style={{ flexDirection: "row", width: "100%" }}>
-                    <Text style={{ textAlign: "left", width: "100%", fontWeight: "800" }}>
+                    <Text style={{ textAlign: "left", width: "50%", fontWeight: "800" }}>
                       Description:{" "}
                     </Text>
                     <TextInput
+                      style={{ height: 130, flexWrap: 'wrap' }}
                       onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
                         const tmp = this.state.currentEpisode
                         tmp.description = val.nativeEvent.text
                         this.setState({ currentEpisode: tmp })
                       }}
                       placeholder="description"
-                      multiline={false}
+                      multiline={true}
                       value={this.state.currentEpisode.description ?? ""}
                     ></TextInput>
                   </View>

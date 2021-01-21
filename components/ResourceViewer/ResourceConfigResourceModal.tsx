@@ -265,6 +265,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
                       description:
                     </Text>
                     <TextInput
+                      style={{ height: 130 }}
                       onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
                         const tmp = this.state.currentResource
                         tmp.description = val.nativeEvent.text
