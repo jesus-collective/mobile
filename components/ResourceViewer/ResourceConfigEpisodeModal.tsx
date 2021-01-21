@@ -177,7 +177,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
           }
         )}
         <JCButton
-          buttonType={ButtonTypes.AdminAdd}
+          buttonType={ButtonTypes.ResourceModalSolid}
           onPress={() => {
             const z = this.state.currentEpisode
             if (z.details == null) z.details = []
