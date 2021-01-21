@@ -624,6 +624,7 @@ export enum UserGroupType {
   subscriptionkyyouth = "subscriptionkyyouth",
   subscriptionValid = "subscriptionValid",
   userpool = "userpool",
+  legacyUserGroup1 = "legacyUserGroup1",
 }
 
 

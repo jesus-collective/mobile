@@ -222,11 +222,16 @@ export default class EventScreen extends JCComponent<Props, State> {
               createNew: false,
             },
             () => {
-              this.setState({
-                canSave: !this.state.createNew && this.state.isEditable,
-                createNew: this.state.createNew && this.state.isEditable,
-                canDelete: !this.state.createNew && this.state.isEditable,
-              })
+              this.setState(
+                {
+                  canSave: !this.state.createNew && this.state.isEditable,
+                  createNew: this.state.createNew && this.state.isEditable,
+                  canDelete: !this.state.createNew && this.state.isEditable,
+                },
+                () => {
+                  this.join()
+                }
+              )
             }
           )
           console.log({ "Success mutations.createGroup": json })

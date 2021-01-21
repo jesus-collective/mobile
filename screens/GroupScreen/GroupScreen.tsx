@@ -264,11 +264,16 @@ export default class GroupScreen extends JCComponent<Props, State> {
               createNew: false,
             },
             () => {
-              this.setState({
-                canSave: !this.state.createNew && this.state.isEditable,
-                createNew: this.state.createNew && this.state.isEditable,
-                canDelete: !this.state.createNew && this.state.isEditable,
-              })
+              this.setState(
+                {
+                  canSave: !this.state.createNew && this.state.isEditable,
+                  createNew: this.state.createNew && this.state.isEditable,
+                  canDelete: !this.state.createNew && this.state.isEditable,
+                },
+                () => {
+                  this.join()
+                }
+              )
             }
           )
           console.log({ "Success mutations.createGroup": json })
@@ -510,7 +515,7 @@ export default class GroupScreen extends JCComponent<Props, State> {
                     justifyContent: "space-between",
                     flexGrow: 0,
                     marginBottom: 20,
-                    height: '1rem',
+                    height: "1rem",
                   }}
                 >
                   <Text

@@ -255,6 +255,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
                       placeholder="description"
                       multiline={true}
                       value={this.state.currentEpisode.description ?? ""}
+                      style={{ height: 130 }}
                     ></TextInput>
                   </View>
                   <ResourceImage

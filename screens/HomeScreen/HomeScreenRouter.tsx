@@ -258,7 +258,10 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
           user.getSignInUserSession().accessToken.payload["cognito:groups"].includes("admin") ||
           user
             .getSignInUserSession()
-            .accessToken.payload["cognito:groups"].includes("subscriptionVerified")
+            .accessToken.payload["cognito:groups"].includes("subscriptionValid") ||
+          user
+            .getSignInUserSession()
+            .accessToken.payload["cognito:groups"].includes("legacyUserGroup1")
         )
           this.setState({ hasPaidState: "Success" }, () => {
             this.onPaidStateChange("Success")

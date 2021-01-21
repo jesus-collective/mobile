@@ -1339,10 +1339,13 @@ export default class MainStyles {
         width: "100%",
         paddingRight: 30,
         paddingLeft: 0,
-        shadowOffset: { height: 0, width: 6 },
-        shadowRadius: 20,
-        shadowColor: "rgba(0,0,0,0.19)",
-        marginTop: 30,
+        // shadowOffset: { height: 0, width: 6 },
+        // shadowRadius: 20,
+        // shadowColor: "rgba(0,0,0,0.19)",
+        // marginTop: 30,
+        borderBottomWidth: 1,
+        borderBottomStyle: 'solid',
+        borderBottomColor: '#ebebeb'
       },
 
       dashboardConversationCardLeft: {

@@ -157,7 +157,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                     numberOfLines={4}
                     multiline={false}
                     textStyle={{ textAlign: "left", width: "100%", fontWeight: "400" }}
-                    inputStyle={{ textAlign: "left", width: "100%", fontWeight: "400" }}
+                    inputStyle={{ textAlign: "left", width: "100%", fontWeight: "400", height: 130 }}
                     value={page.state.settings.description1 ?? ""}
                     isEditable={true}
                   ></EditableText>
@@ -353,6 +353,8 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                 }}
                 value={this.props.pageItem.description1 ?? ""}
                 isEditable={false}
+                numberOfLines={6}
+                ellipsizeMode="tail"
               ></EditableText>
             </CardItem>
           </Card>

@@ -1,63 +1,61 @@
-﻿import React, { lazy } from "react";
-import { Container } from "native-base";
+﻿import { Container } from "native-base"
+import React, { lazy } from "react"
+import { Dimensions, Platform } from "react-native"
+import Cookies from "universal-cookie"
+import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
+import MyGroups, { MapData } from "../../components/MyGroups/MyGroups"
 
-import { Platform } from "react-native";
-import { Dimensions } from "react-native";
-import MyGroups, { MapData } from "../../components/MyGroups/MyGroups";
-import JCComponent, { JCState } from "../../components/JCComponent/JCComponent";
-import Cookies from "universal-cookie";
+const cookies = new Cookies()
 
-const cookies = new Cookies();
-
-const MyConversations = lazy(
-  () => import("../../components/MyConversations/MyConversations")
-);
+const MyConversations = lazy(() => import("../../components/MyConversations/MyConversations"))
 //const MyGroups = lazy(() => import('../../components/MyGroups/MyGroups'));
-const MyPeople = lazy(() => import("../../components/MyPeople/MyPeople"));
+const MyPeople = lazy(() => import("../../components/MyPeople/MyPeople"))
 
-const Header = lazy(() => import("../../components/Header/Header"));
-const FooterJC = lazy(() => import("../../components/Footer/Footer"));
-const MyMap = lazy(() => import("../../components/MyMap/MyMap"));
+const Header = lazy(() => import("../../components/Header/Header"))
+const FooterJC = lazy(() => import("../../components/Footer/Footer"))
+const MyMap = lazy(() => import("../../components/MyMap/MyMap"))
 
 interface Props {
-  navigation: any;
+  navigation: any
 }
 interface State extends JCState {
-  showMap: boolean;
-  width: number;
-  height: number;
-  mapData: MapData[];
+  showMap: boolean
+  width: number
+  height: number
+  mapData: MapData[]
 }
 
 class HomeScreen extends JCComponent<Props, State> {
   constructor(props: Props) {
-    super(props);
+    super(props)
     this.state = {
       ...super.getInitialState(),
       mapData: [],
-      showMap: cookies.get("showMap") ? cookies.get("showMap") == "true" : true,
+      showMap: cookies.get("showMap")
+        ? cookies.get("showMap") == "true"
+        : Dimensions.get("window").width > 720,
       width: Dimensions.get("window").width,
       height: Dimensions.get("window").height,
-    };
+    }
     Dimensions.addEventListener("change", (e) => {
-      const { width, height } = e.window;
-      this.setState({ width, height });
-    });
+      const { width, height } = e.window
+      this.setState({ width, height })
+    })
   }
   mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap }, () => {
-      cookies.set("showMap", this.state.showMap, { path: "/" });
-    });
-  };
+      cookies.set("showMap", this.state.showMap, { path: "/" })
+    })
+  }
   mergeMapData(mapData: MapData[]): void {
-    console.log({ MergedMapData: mapData });
+    console.log({ MergedMapData: mapData })
     //    console.log(mapData)
-    const data = this.state.mapData.concat(mapData);
-    this.setState({ mapData: data });
+    const data = this.state.mapData.concat(mapData)
+    this.setState({ mapData: data })
   }
 
   render(): React.ReactNode {
-    console.log("Homepage");
+    console.log("Homepage")
     return (
       <Container data-testid="homepage">
         <Header
@@ -67,11 +65,7 @@ class HomeScreen extends JCComponent<Props, State> {
         />
 
         <Container style={{ flexGrow: 1, overflow: "scroll" }}>
-          <MyMap
-            type={"filters"}
-            mapData={this.state.mapData}
-            visible={this.state.showMap}
-          ></MyMap>
+          <MyMap type={"filters"} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
           <Container style={this.styles.style.dashboardPrimaryContainer}>
             <Container style={this.styles.style.dashboardMainContainer}>
               <Container style={this.styles.style.dashboardLeftCard}>
@@ -81,7 +75,7 @@ class HomeScreen extends JCComponent<Props, State> {
                   wrap={false}
                   navigation={this.props.navigation}
                   onDataload={(mapData: MapData[]) => {
-                    this.mergeMapData(mapData);
+                    this.mergeMapData(mapData)
                   }}
                 ></MyGroups>
                 <MyGroups
@@ -90,7 +84,7 @@ class HomeScreen extends JCComponent<Props, State> {
                   wrap={false}
                   navigation={this.props.navigation}
                   onDataload={(mapData: MapData[]) => {
-                    this.mergeMapData(mapData);
+                    this.mergeMapData(mapData)
                   }}
                 ></MyGroups>
                 <MyGroups
@@ -99,7 +93,7 @@ class HomeScreen extends JCComponent<Props, State> {
                   wrap={false}
                   navigation={this.props.navigation}
                   onDataload={(mapData: MapData[]) => {
-                    this.mergeMapData(mapData);
+                    this.mergeMapData(mapData)
                   }}
                 ></MyGroups>
                 <MyGroups
@@ -108,7 +102,7 @@ class HomeScreen extends JCComponent<Props, State> {
                   wrap={false}
                   navigation={this.props.navigation}
                   onDataload={(mapData: MapData[]) => {
-                    this.mergeMapData(mapData);
+                    this.mergeMapData(mapData)
                   }}
                 ></MyGroups>
                 <MyGroups
@@ -117,7 +111,7 @@ class HomeScreen extends JCComponent<Props, State> {
                   wrap={false}
                   navigation={this.props.navigation}
                   onDataload={(mapData: MapData[]) => {
-                    this.mergeMapData(mapData);
+                    this.mergeMapData(mapData)
                   }}
                 ></MyGroups>
               </Container>
@@ -126,26 +120,21 @@ class HomeScreen extends JCComponent<Props, State> {
                   wrap={false}
                   navigation={this.props.navigation}
                   onDataload={(mapData: MapData[]) => {
-                    this.mergeMapData(mapData);
+                    this.mergeMapData(mapData)
                   }}
                 ></MyPeople>
-                <MyConversations
-                  navigation={this.props.navigation}
-                ></MyConversations>
+                <MyConversations navigation={this.props.navigation}></MyConversations>
                 <Container style={{ flex: 10 }}></Container>
               </Container>
             </Container>
 
             {Platform.OS == "web" && this.state.width > 720 ? (
-              <FooterJC
-                title="Jesus Collective"
-                navigation={this.props.navigation}
-              ></FooterJC>
+              <FooterJC title="Jesus Collective" navigation={this.props.navigation}></FooterJC>
             ) : null}
           </Container>
         </Container>
       </Container>
-    );
+    )
   }
 }
-export default HomeScreen;
+export default HomeScreen
