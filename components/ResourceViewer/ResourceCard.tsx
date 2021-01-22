@@ -386,7 +386,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
         return {
           label: item?.text,
           value: item?.value,
-          icon: () => <Ionicons name="md-menu" style={this.styles.style.icon} />,
+          icon: () => <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />,
         }
       })
   }
@@ -550,14 +550,16 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                           height: 40,
                           width: 160,
                           zIndex: 5000 + this.props.pageItemIndex.length,
+                          marginTop: 5, 
+                          marginBottom: 5
                         }}
                         dropDownStyle={{
-                          backgroundColor: "#fafafa",
+                          backgroundColor: "#FF4438",
                           width: 150,
                           zIndex: 5000 + this.props.pageItemIndex.length,
                         }}
                         style={{
-                          backgroundColor: "#fafafa",
+                          backgroundColor: "#FF4438",
                           zIndex: 5000 + this.props.pageItemIndex.length,
                         }}
                         itemStyle={{
@@ -568,9 +570,12 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                         labelStyle={{
                           fontSize: 14,
                           textAlign: "left",
-                          color: "#000",
+                          color: "#FFFFFF",
+                          fontWeight: 600,
+                        alignSelf: 'center',
                           zIndex: 5000 + this.props.pageItemIndex.length,
                         }}
+                        arrowColor="#FFFFFF"
                         onChangeItem={(item) => {
                           window.location = item.value ?? ""
                         }}

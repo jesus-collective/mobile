@@ -177,7 +177,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
           }
         )}
         <JCButton
-          buttonType={ButtonTypes.AdminAdd}
+          buttonType={ButtonTypes.ResourceModalSolid}
           onPress={() => {
             const z = this.state.currentEpisode
             if (z.details == null) z.details = []
@@ -246,6 +246,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
                       Description:{" "}
                     </Text>
                     <TextInput
+                      style={{ height: 130, flexWrap: 'wrap' }}
                       onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
                         const tmp = this.state.currentEpisode
                         tmp.description = val.nativeEvent.text

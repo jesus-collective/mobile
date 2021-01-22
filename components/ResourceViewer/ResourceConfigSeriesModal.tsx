@@ -88,7 +88,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
   }
   renderResourceValue(item: ResourceDetailInput | null, index: number): React.ReactNode {
     return (
-      <View style={{ flexDirection: "row", width: "100%" }}>
+      <View style={{ flexDirection: "row", width: "100%", marginBottom: 10 }}>
         <Text style={{ textAlign: "left", width: "50%", fontWeight: "800" }}>Value: </Text>
         <TextInput
           onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
@@ -182,7 +182,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
           }
         )}
         <JCButton
-          buttonType={ButtonTypes.AdminAdd}
+          buttonType={ButtonTypes.ResourceModalSolid}
           onPress={() => {
             const z = this.state.currentSeries
             if (z.details == null) z.details = []
@@ -231,10 +231,11 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
                   </View>
 
                   <View style={{ flexDirection: "row", width: "100%" }}>
-                    <Text style={{ textAlign: "left", fontWeight: "800" }}>
+                    <Text style={{ textAlign: "left", width: "40%", fontWeight: "800" }}>
                       description:{" "}
                     </Text>
                     <TextInput
+                      style={{ height: 130, flexWrap: 'wrap' }}
                       onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
                         const tmp = this.state.currentSeries
                         tmp.description = val.nativeEvent.text

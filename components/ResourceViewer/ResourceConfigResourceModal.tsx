@@ -86,7 +86,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
   }
   renderResourceValue(item: ResourceDetailInput | null, index: number): React.ReactNode {
     return (
-      <View style={{ flexDirection: "row", width: "100%" }}>
+      <View style={{ flexDirection: "row", width: "100%", marginBottom: 10 }}>
         <Text style={{ textAlign: "left", width: "100%", fontWeight: "800" }}>Value: </Text>
         <TextInput
           onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
@@ -265,6 +265,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
                       description:
                     </Text>
                     <TextInput
+                      style={{ height: 130 }}
                       onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
                         const tmp = this.state.currentResource
                         tmp.description = val.nativeEvent.text
