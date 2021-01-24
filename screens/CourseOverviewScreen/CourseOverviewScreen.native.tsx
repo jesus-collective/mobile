@@ -122,6 +122,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
           })
         })
         .catch((e: any) => {
+          console.log({ Error1: e })
           if (e.data) {
             this.setState({ members: this.state.members.concat(e.data.getUser) }, () => {
               this.setState({

@@ -119,7 +119,7 @@ export default class HeaderJC extends JCComponent<Props, State> {
     this.handleResourcesDropdownClose()
     this.props.navigation.push("ResourceScreen", {
       create: false,
-      id: "resource-1580889856205",
+      id: "resource-1611326161952",
     })
   }
   openGroups = (): void => {
@@ -216,9 +216,7 @@ export default class HeaderJC extends JCComponent<Props, State> {
                     </MenuItem>
                     <Divider style={{ backgroundColor: "black" }} />
                     <MenuItem onClick={this.openKids}>
-                      <Text style={this.headerStyles.style.dropdownText}>
-                        Kids &amp; Youth Curriculum
-                      </Text>
+                      <Text style={this.headerStyles.style.dropdownText}>One Story Curriculum</Text>
                     </MenuItem>
                   </Menu>
                 ) : null}

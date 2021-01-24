@@ -106,6 +106,7 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
     if (this.user != null) {
       const { attributes } = this.user
       const handleUser = async (getUser: any) => {
+        console.log(getUser)
         if (getUser.data.getUser === null) {
           console.log("Trying to create")
           const inputData: CreateUserInput = {
@@ -376,6 +377,16 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
               screen: "Payment3",
             })
           })
+        else if (
+          response.result &&
+          this.state.hasPaidState == "Success" &&
+          this.state.hasCompletedPersonalProfile == "Completed"
+        ) {
+          console.log("NAVIGATING TO HOME SCREEN")
+          RootNavigation.navigate("mainApp", {
+            screen: "home",
+          })
+        }
       }
       const getUser: any = API.graphql(
         graphqlOperation(queries.getUser, { id: this.user["username"] })

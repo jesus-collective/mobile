@@ -142,7 +142,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
           else this.setState({ noUserFound: true })
           //console.log(this.state.UserDetails)
         } catch (e) {
-          if (e.data.getUser != null)
+          console.log({ Error: e })
+          if (e.data?.getUser != null)
             this.setState(
               {
                 UserDetails: e.data.getUser,

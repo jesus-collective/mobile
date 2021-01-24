@@ -106,7 +106,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       })
       .catch((e: any) => {
         if (e.data) {
-          this.getProfileImage(e.data.getUser.profileImage)
+          this.getProfileImage(e.data?.getUser?.profileImage)
         }
       })
   }
@@ -119,7 +119,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       })
       .catch((e: any) => {
         if (e.data) {
-          this.getProfileImage(e.data.getUser.profileImage)
+          this.getProfileImage(e.data?.getUser?.profileImage)
         }
       })
   }
