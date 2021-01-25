@@ -98,7 +98,7 @@
         "AdminGroup": {
           "Type" : "AWS::Cognito::UserPoolGroup",
           "Properties" : {
-              "GroupName" : "admin",
+              "GroupName" : "Admin",
               "Precedence" : 2,
               
               "RoleArn" : {
