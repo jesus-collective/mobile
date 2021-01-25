@@ -555,7 +555,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                         }}
                         dropDownStyle={{
                           backgroundColor: "#FF4438",
-                          width: 150,
+                          width: 225,
                           zIndex: 5000 + this.props.pageItemIndex.length,
                         }}
                         style={{
