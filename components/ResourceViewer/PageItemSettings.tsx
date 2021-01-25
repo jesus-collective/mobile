@@ -107,6 +107,9 @@ export default class PageItemSettings extends JCComponent<ResourceSetupProp, Sta
                 onValueChange={(value: any) => {
                   const tmp = this.state.settings
                   tmp.type = value
+                  if (tmp.type == ResourcePageItemType.RichText) {
+                    tmp.title1 = null
+                  }
                   this.setState({ settings: tmp })
                 }}
               >

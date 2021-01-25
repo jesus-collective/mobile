@@ -927,7 +927,9 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     try {
       console.log({ "Updating Resource": index })
       const resource = this.getResource(index)
+
       if (resource) {
+        const value2 = { ...value }
         delete value.series
         delete value.createdAt
         delete value.updatedAt
@@ -941,7 +943,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         console.log(updateResource)
         const temp = this.state.resourceData
         if (temp && temp.resources && temp.resources.items) {
-          temp.resources.items[index] = value
+          temp.resources.items[index] = value2
           this.setState({ resourceData: temp })
         }
       }
@@ -1065,6 +1067,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     try {
       console.log({ "Updating Series": { resource: resourceIndex, series: seriesIndex } })
       const series = this.getSeries(resourceIndex, seriesIndex)
+      const value2 = { ...value }
       delete value.createdAt
       delete value.updatedAt
       delete value.episodes
@@ -1079,7 +1082,8 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         console.log(updateResource)
         const temp = this.state.resourceData
         if (temp && temp.resources && temp.resources.items) {
-          temp.resources.items[resourceIndex]!.series.items[seriesIndex] = value
+          temp.resources.items[resourceIndex]!.series.items[seriesIndex] = value2
+
           this.setState({ resourceData: temp })
         }
       }
@@ -1142,6 +1146,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
           episode: episodeIndex,
         },
       })
+      const value2 = { ...value }
       delete value.createdAt
       delete value.updatedAt
       const episode = this.getEpisode(resourceIndex, seriesIndex, episodeIndex)
@@ -1158,7 +1163,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         if (temp) {
           temp.resources.items[resourceIndex]!.series.items[seriesIndex].episodes.items[
             episodeIndex
-          ] = value
+          ] = value2
           this.setState({ resourceData: temp })
         }
       }

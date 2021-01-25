@@ -4,7 +4,7 @@
         "precedence": 1
     },
     {
-        "groupName": "Admin",
+        "groupName": "admin",
         "precedence": 2,
         "customPolicies": [
             {
