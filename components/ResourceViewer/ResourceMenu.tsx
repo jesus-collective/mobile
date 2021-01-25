@@ -81,9 +81,12 @@ class ResourceMenu extends JCComponent<Props> {
     return this.renderItems()
   }
   parentIsSelected(resourceState: ResourceState, index: number): boolean {
+    console.log({ index: index })
     for (let z: number = index; z--; z >= resourceState.currentMenuItem) {
+      console.log({ z: z })
       let menuItem: UpdateResourceMenuItemInput = resourceState.resourceData?.menuItems.items[z]
-      if (menuItem?.depth == "1") return z == resourceState.currentMenuItem
+      console.log({ depth: menuItem.depth })
+      if ((menuItem?.depth ?? "1") == "1") return z == resourceState.currentMenuItem
       if (z < 0) return false
     }
     return false
@@ -93,14 +96,14 @@ class ResourceMenu extends JCComponent<Props> {
     if (index < resourceState.currentMenuItem)
       for (let z: number = index; z++; z <= resourceState.currentMenuItem) {
         let menuItem: UpdateResourceMenuItemInput = resourceState.resourceData?.menuItems.items[z]
-        if (menuItem?.depth == "1") return false
+        if ((menuItem?.depth ?? "1") == "1") return false
         if (z > resourceState.resourceData?.menuItems?.items.length)
           return z == resourceState.currentMenuItem
       }
     else
       for (let z: number = index; z--; z >= resourceState.currentMenuItem) {
         let menuItem: UpdateResourceMenuItemInput = resourceState.resourceData?.menuItems.items[z]
-        if (menuItem?.depth == "1") return z == resourceState.currentMenuItem
+        if ((menuItem?.depth ?? "1") == "1") return z == resourceState.currentMenuItem
         if (z < 0) return false
       }
     return true
