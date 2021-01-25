@@ -138,7 +138,7 @@ class MyMapImpl extends JCComponent<Props, State> {
               <View style={{ flex: 1, flexDirection: "row", paddingTop: 10 }}>
                 {/*<JCButton buttonType={ButtonTypes.Solid} onPress={() => console.error('messaging not yet supported')}>Start Conversation</JCButton>*/}
                 <JCButton
-                  buttonType={ButtonTypes.TransparentBoldOrange}
+                  buttonType={ButtonTypes.Solid}
                   onPress={() => {
                     this.showOrg(this.state.selectedPlace.mapItem.user.id)
                   }}
@@ -400,20 +400,21 @@ class MyMapImpl extends JCComponent<Props, State> {
                           onClick={this.onMarkerClick}
                           position={{ lat: mapItem.latitude, lng: mapItem.longitude }}
                           icon={
-                            this.state.eventsEnabled
+                            this.state.eventsEnabled && !this.state.organizationsEnabled && !this.state.profilesEnabled
                               ? {
                                   url: require("../../assets/svg/map-icon-red.svg"),
                                   scaledSize: new google.maps.Size(32, 32),
                                 }
-                              : this.state.organizationsEnabled
+                              : this.state.organizationsEnabled && !this.state.eventsEnabled && !this.state.profilesEnabled
                               ? {
                                   url: require("../../assets/svg/business-and-trade.svg"),
                                   scaledSize: new google.maps.Size(32, 32),
                                 }
-                              : {
+                              : this.state.profilesEnabled && !this.state.organizationsEnabled && !this.state.eventsEnabled ? {
                                   url: require("../../assets/svg/person-silhouette.svg"),
                                   scaledSize: new google.maps.Size(32, 32),
                                 }
+                              : null
                           }
                         ></Marker>
                       )
