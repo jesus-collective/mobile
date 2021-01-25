@@ -198,7 +198,7 @@ class MyMapImpl extends JCComponent<Props, State> {
                   Start Conversation
                 </JCButton>
                 <JCButton
-                  buttonType={ButtonTypes.TransparentBoldOrangeMap}
+                  buttonType={ButtonTypes.Solid}
                   onPress={() => {
                     this.showProfile(this.state.selectedPlace.mapItem.user.id)
                   }}
