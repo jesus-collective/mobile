@@ -522,10 +522,10 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                 <CardItem
                   style={{
                     zIndex: 6000 + this.props.pageItemIndex.length,
-                    marginLeft: isMobile ? 10 : "4rem",
+                    marginLeft: isMobile ? 10 : "4rem", justifyContent: 'space-between', width: 670
                   }}
                 >
-                  <View>
+                  <View style={{ width: 320 }}>
                     <EditableText
                       multiline={true}
                       textStyle={{
@@ -543,7 +543,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                     ></EditableText>
                   </View>
                   {buttonItems?.length && buttonItems.length > 0 ? (
-                    <View style={{ zIndex: 6000 + this.props.pageItemIndex.length,  }}>
+                    <View style={{ zIndex: 6000 + this.props.pageItemIndex.length }}>
                       <DropDownPicker
                         zIndex={6000 + this.props.pageItemIndex.length}
                         items={buttonItems}
