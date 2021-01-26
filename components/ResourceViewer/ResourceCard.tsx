@@ -522,24 +522,26 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                 <CardItem
                   style={{
                     zIndex: 6000 + this.props.pageItemIndex.length,
-                    marginLeft: isMobile ? 10 : "4rem",
+                    marginLeft: isMobile ? 10 : "4rem", justifyContent: 'space-between', width: 670
                   }}
                 >
-                  <EditableText
-                    multiline={true}
-                    textStyle={{
-                      fontFamily: "Graphik-Regular-App",
-                      fontSize: 27,
-                      fontWeight: 600,
-                      lineHeight: 36,
-                      textAlign: "left",
-                      color: "#404040",
-                      marginRight: isBrowser ? 310 : isTablet ? 50 : 45,
-                    }}
-                    inputStyle={{ margin: 10 }}
-                    value={this.props.pageItem.title1 ?? ""}
-                    isEditable={false}
-                  ></EditableText>
+                  <View style={{ width: 320 }}>
+                    <EditableText
+                      multiline={true}
+                      textStyle={{
+                        fontFamily: "Graphik-Regular-App",
+                        fontSize: 27,
+                        fontWeight: 600,
+                        lineHeight: 36,
+                        textAlign: "left",
+                        color: "#404040",
+                        // marginRight: isBrowser ? 310 : isTablet ? 50 : 45,
+                      }}
+                      inputStyle={{ margin: 10 }}
+                      value={this.props.pageItem.title1 ?? ""}
+                      isEditable={false}
+                    ></EditableText>
+                  </View>
                   {buttonItems?.length && buttonItems.length > 0 ? (
                     <View style={{ zIndex: 6000 + this.props.pageItemIndex.length }}>
                       <DropDownPicker
@@ -548,14 +550,14 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                         placeholder="Download"
                         containerStyle={{
                           height: 40,
-                          width: 160,
+                          width: 200,
                           zIndex: 5000 + this.props.pageItemIndex.length,
                           marginTop: 5, 
                           marginBottom: 5
                         }}
                         dropDownStyle={{
                           backgroundColor: "#FF4438",
-                          width: 225,
+                          width: 200,
                           zIndex: 5000 + this.props.pageItemIndex.length,
                         }}
                         style={{
