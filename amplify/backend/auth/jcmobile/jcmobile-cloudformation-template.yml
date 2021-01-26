@@ -7,35 +7,35 @@ Parameters:
     Type: String
   unauthRoleArn:
     Type: String
+
   
   
   
-  
-  functionjcmobilePostConfirmationArn: 
+  functionjcmobilePostConfirmationArn:
     Type: String
     Default: functionjcmobilePostConfirmationArn
   
-  functionjcmobilePostConfirmationName: 
+  functionjcmobilePostConfirmationName:
     Type: String
     Default: functionjcmobilePostConfirmationName
   
   
   
-  functionjcmobilePreSignupArn: 
+  functionjcmobilePreSignupArn:
     Type: String
     Default: functionjcmobilePreSignupArn
   
-  functionjcmobilePreSignupName: 
+  functionjcmobilePreSignupName:
     Type: String
     Default: functionjcmobilePreSignupName
   
   
   
-  functionjcmobilePreTokenGenerationArn: 
+  functionjcmobilePreTokenGenerationArn:
     Type: String
     Default: functionjcmobilePreTokenGenerationArn
   
-  functionjcmobilePreTokenGenerationName: 
+  functionjcmobilePreTokenGenerationName:
     Type: String
     Default: functionjcmobilePreTokenGenerationName
   
@@ -45,120 +45,165 @@ Parameters:
     
   identityPoolName:
     Type: String
-                
+  
+            
+  
   allowUnauthenticatedIdentities:
     Type: String
             
   resourceNameTruncated:
     Type: String
-              
+  
+            
   userPoolName:
     Type: String
-                      
+  
+            
+        
   autoVerifiedAttributes:
     Type: CommaDelimitedList
       
   mfaConfiguration:
     Type: String
-                      
+  
+            
+        
   mfaTypes:
     Type: CommaDelimitedList
       
   smsAuthenticationMessage:
     Type: String
-              
+  
+            
   smsVerificationMessage:
     Type: String
-              
+  
+            
   emailVerificationSubject:
     Type: String
-              
+  
+            
   emailVerificationMessage:
     Type: String
-                
+  
+            
+  
   defaultPasswordPolicy:
     Type: String
-                
+            
+    
   passwordPolicyMinLength:
     Type: Number
-                  
+          
+        
   passwordPolicyCharacters:
     Type: CommaDelimitedList
-              
+      
+        
   requiredAttributes:
     Type: CommaDelimitedList
-        
+      
+  
   userpoolClientGenerateSecret:
     Type: String
-                
+            
+    
   userpoolClientRefreshTokenValidity:
     Type: Number
-                  
+          
+        
   userpoolClientWriteAttributes:
     Type: CommaDelimitedList
-              
+      
+        
   userpoolClientReadAttributes:
     Type: CommaDelimitedList
       
   userpoolClientLambdaRole:
     Type: String
-                
+  
+            
+  
   userpoolClientSetAttributes:
     Type: String
             
   useDefault:
     Type: String
-              
+  
+            
   authSelections:
     Type: String
-              
+  
+            
   resourceName:
     Type: String
-                
+  
+            
+  
   thirdPartyAuth:
     Type: String
-                    
+            
+        
   usernameAttributes:
     Type: CommaDelimitedList
       
   triggers:
     Type: String
-                
+  
+            
+  
   hostedUI:
     Type: String
-                                          
+            
+            
+            
+      
   parentStack:
     Type: String
-                
+        
+        
   permissions:
     Type: CommaDelimitedList
-              
+      
+        
   dependsOn:
     Type: CommaDelimitedList
-        
+      
+  
   userPoolGroups:
     Type: String
-              
+            
+  
   adminQueries:
     Type: String
-                    
+            
+        
   userPoolGroupList:
     Type: CommaDelimitedList
       
   adminQueryGroup:
     Type: String
-                      
+  
+            
+        
   authProviders:
     Type: CommaDelimitedList
       
-  facebookAppId:
-    Type: String
-              
-  googleClientId:
-    Type: String
-              
   serviceName:
     Type: String
+  
+            
+  hostedUIProviderCreds:
+    Type: String
+  
+            
+  facebookAppId:
+    Type: String
+  
+            
+  googleClientId:
+    Type: String
+  
             
 Conditions:
   ShouldNotCreateEnvResources: !Equals [ !Ref env, NONE ]
@@ -167,32 +212,32 @@ Resources:
   
   
   # BEGIN SNS ROLE RESOURCE
-  SNSRole: 
+  SNSRole:
   # Created to allow the UserPool SMS Config to publish via the Simple Notification Service during MFA Process
     Type: AWS::IAM::Role
     Properties:
       RoleName: !If [ShouldNotCreateEnvResources, 'jcmobi44a13962_sns-role', !Join ['',[ 'sns', 'undefined', !Select [3, !Split ['-', !Ref 'AWS::StackName']], '-', !Ref env]]]
-      AssumeRolePolicyDocument: 
+      AssumeRolePolicyDocument:
         Version: "2012-10-17"
-        Statement: 
+        Statement:
           - Sid: ""
             Effect: "Allow"
-            Principal: 
+            Principal:
               Service: "cognito-idp.amazonaws.com"
-            Action: 
+            Action:
               - "sts:AssumeRole"
-            Condition: 
+            Condition:
               StringEquals:
                 sts:ExternalId: jcmobi44a13962_role_external_id
-      Policies: 
-        - 
+      Policies:
+        -
           PolicyName: jcmobi44a13962-sns-policy
-          PolicyDocument: 
+          PolicyDocument:
             Version: "2012-10-17"
-            Statement: 
-              - 
+            Statement:
+              -
                 Effect: "Allow"
-                Action: 
+                Action:
                   - "sns:Publish"
                 Resource: "*"
   # BEGIN USER POOL RESOURCES
@@ -204,7 +249,8 @@ Resources:
     Properties:
       UserPoolName: !If [ShouldNotCreateEnvResources, !Ref userPoolName, !Join ['',[!Ref userPoolName, '-', !Ref env]]]
       
-      Schema: 
+      
+      Schema:
         
         -
           Name: email
@@ -251,7 +297,7 @@ Resources:
       
       EmailVerificationMessage: !Ref emailVerificationMessage
       EmailVerificationSubject: !Ref emailVerificationSubject
-            
+      
       Policies:
         PasswordPolicy:
           MinimumLength: !Ref passwordPolicyMinLength
@@ -261,52 +307,52 @@ Resources:
           RequireUppercase: false
       
       UsernameAttributes: !Ref usernameAttributes
-          
+      
       MfaConfiguration: !Ref mfaConfiguration
       SmsVerificationMessage: !Ref smsVerificationMessage
-      SmsConfiguration: 
+      SmsConfiguration:
         SnsCallerArn: !GetAtt SNSRole.Arn
         ExternalId: jcmobi44a13962_role_external_id
-          
+    
     DependsOn: SNSRole
     
   
-    
-    
   
-    
   
-  UserPoolPostConfirmationLambdaInvokePermission: 
+  
+  
+  
+  UserPoolPostConfirmationLambdaInvokePermission:
     Type: "AWS::Lambda::Permission"
     DependsOn: UserPool
-    Properties: 
+    Properties:
       Action: "lambda:invokeFunction"
       Principal: "cognito-idp.amazonaws.com"
       FunctionName: !Ref functionjcmobilePostConfirmationName
       SourceArn: !GetAtt UserPool.Arn
-    
   
   
-  UserPoolPreSignupLambdaInvokePermission: 
+  
+  UserPoolPreSignupLambdaInvokePermission:
     Type: "AWS::Lambda::Permission"
     DependsOn: UserPool
-    Properties: 
+    Properties:
       Action: "lambda:invokeFunction"
       Principal: "cognito-idp.amazonaws.com"
       FunctionName: !Ref functionjcmobilePreSignupName
       SourceArn: !GetAtt UserPool.Arn
   
   
-  UserPoolPreTokenGenerationLambdaInvokePermission: 
+  UserPoolPreTokenGenerationLambdaInvokePermission:
     Type: "AWS::Lambda::Permission"
     DependsOn: UserPool
-    Properties: 
+    Properties:
       Action: "lambda:invokeFunction"
       Principal: "cognito-idp.amazonaws.com"
       FunctionName: !Ref functionjcmobilePreTokenGenerationName
       SourceArn: !GetAtt UserPool.Arn
-   
-    
+  
+  
   # Updating lambda role with permissions to Cognito
   
   
@@ -392,7 +438,7 @@ Resources:
     Type: 'AWS::Lambda::Function'
     Properties:
       Code:
-        ZipFile: !Join 
+        ZipFile: !Join
           - |+
           - - 'const response = require(''cfn-response'');'
             - 'const aws = require(''aws-sdk'');'
@@ -408,7 +454,7 @@ Resources:
             - '   };'
             - '   identity.describeUserPoolClient(params).promise()'
             - '     .then((res) => {'
-            - '       response.send(event, context, response.SUCCESS, {''appSecret'': res.UserPoolClient.ClientSecret});'   
+            - '       response.send(event, context, response.SUCCESS, {''appSecret'': res.UserPoolClient.ClientSecret});'
             - '     })'
             - '     .catch((err) => {'
             - '       response.send(event, context, response.FAILED, {err});'
@@ -418,7 +464,7 @@ Resources:
       Handler: index.handler
       Runtime: nodejs10.x
       Timeout: '300'
-      Role: !GetAtt 
+      Role: !GetAtt
         - UserPoolClientRole
         - Arn
     DependsOn: UserPoolClientRole
@@ -429,7 +475,7 @@ Resources:
     Type: 'AWS::IAM::Policy'
     Properties:
       PolicyName: jcmobi44a13962_userpoolclient_lambda_iam_policy
-      Roles: 
+      Roles:
         - !Ref UserPoolClientRole
       PolicyDocument:
         Version: '2012-10-17'
@@ -446,7 +492,7 @@ Resources:
     Type: 'AWS::IAM::Policy'
     Properties:
       PolicyName: jcmobi44a13962_userpoolclient_lambda_log_policy
-      Roles: 
+      Roles:
         - !Ref UserPoolClientRole
       PolicyDocument:
         Version: 2012-10-17
@@ -456,10 +502,10 @@ Resources:
               - 'logs:CreateLogGroup'
               - 'logs:CreateLogStream'
               - 'logs:PutLogEvents'
-            Resource: !Sub  
+            Resource: !Sub
               - arn:aws:logs:${region}:${account}:log-group:/aws/lambda/${lambda}:log-stream:*
               - { region: !Ref "AWS::Region",  account: !Ref "AWS::AccountId", lambda: !Ref UserPoolClientLambda}
-    DependsOn: UserPoolClientLambdaPolicy  
+    DependsOn: UserPoolClientLambdaPolicy
   UserPoolClientInputs:
   # Values passed to Userpool client Lambda
   # Depends on UserPool for Id
@@ -507,7 +553,7 @@ Resources:
     Type: 'AWS::Lambda::Function'
     Properties:
       Code:
-        ZipFile: !Join 
+        ZipFile: !Join
           - |+
           - - 'const response = require(''cfn-response'');'
             - 'const aws = require(''aws-sdk'');'
@@ -536,7 +582,7 @@ Resources:
             - '   };'
             - '   identity.setUserPoolMfaConfig(totpParams).promise()'
             - '     .then((res) => {'
-            - '       response.send(event, context, response.SUCCESS, {res});'   
+            - '       response.send(event, context, response.SUCCESS, {res});'
             - '     })'
             - '     .catch((err) => {'
             - '       response.send(event, context, response.FAILED, {err});'
@@ -546,7 +592,7 @@ Resources:
       Handler: index.handler
       Runtime: nodejs10.x
       Timeout: '300'
-      Role: !GetAtt 
+      Role: !GetAtt
         - MFALambdaRole
         - Arn
     DependsOn: MFALambdaRole
@@ -557,7 +603,7 @@ Resources:
     Type: 'AWS::IAM::Policy'
     Properties:
       PolicyName: jcmobi44a13962_totp_lambda_iam_policy
-      Roles: 
+      Roles:
         - !If [ShouldNotCreateEnvResources, 'jcmobi44a13962_totp_lambda_role', !Join ['',['jcmobi44a13962_totp_lambda_role', '-', !Ref env]]]
       PolicyDocument:
         Version: '2012-10-17'
@@ -573,7 +619,7 @@ Resources:
     Type: 'AWS::IAM::Policy'
     Properties:
       PolicyName: jcmobi44a13962_totp_lambda_log_policy
-      Roles: 
+      Roles:
         - !If [ShouldNotCreateEnvResources, 'jcmobi44a13962_totp_lambda_role', !Join ['',['jcmobi44a13962_totp_lambda_role', '-', !Ref env]]]
       PolicyDocument:
         Version: 2012-10-17
@@ -583,10 +629,10 @@ Resources:
               - 'logs:CreateLogGroup'
               - 'logs:CreateLogStream'
               - 'logs:PutLogEvents'
-            Resource: !Sub  
+            Resource: !Sub
               - arn:aws:logs:${region}:${account}:log-group:/aws/lambda/${lambda}:log-stream:*
               - { region: !Ref "AWS::Region",  account: !Ref "AWS::AccountId", lambda: !Ref MFALambda}
-    DependsOn: MFALambdaPolicy  
+    DependsOn: MFALambdaPolicy
   MFALambdaInputs:
   # Values passed to MFA Lambda
   # Depends on UserPool for Arn
@@ -606,11 +652,11 @@ Resources:
     
   # BEGIN IDENTITY POOL RESOURCES
   
- 
+
   IdentityPool:
   # Always created
     Type: AWS::Cognito::IdentityPool
-    Properties: 
+    Properties:
       IdentityPoolName: !If [ShouldNotCreateEnvResources, 'jc_mobile44a13962_identitypool_44a13962', !Join ['',['jc_mobile44a13962_identitypool_44a13962', '__', !Ref env]]]
       
       CognitoIdentityProviders:
@@ -623,7 +669,7 @@ Resources:
             - cognito-idp.${region}.amazonaws.com/${client}
             - { region: !Ref "AWS::Region",  client: !Ref UserPool}
             
-      SupportedLoginProviders: 
+      SupportedLoginProviders:
         
         graph.facebook.com: !Ref facebookAppId
         
@@ -633,16 +679,16 @@ Resources:
         
       
       AllowUnauthenticatedIdentities: !Ref allowUnauthenticatedIdentities
-       
-       
-    DependsOn: UserPoolClientInputs 
+      
     
-  
+    DependsOn: UserPoolClientInputs
+    
+
   IdentityPoolRoleMap:
   # Created to map Auth and Unauth roles to the identity pool
   # Depends on Identity Pool for ID ref
     Type: AWS::Cognito::IdentityPoolRoleAttachment
-    Properties: 
+    Properties:
       IdentityPoolId: !Ref IdentityPool
       Roles:
           unauthenticated: !Ref unauthRoleArn
@@ -656,7 +702,7 @@ Outputs :
     Value: !Ref 'IdentityPool'
     Description:  Id for the identity pool
   IdentityPoolName:
-    Value: !GetAtt IdentityPool.Name 
+    Value: !GetAtt IdentityPool.Name
   
   
   
@@ -675,19 +721,19 @@ Outputs :
   AppClientSecret:
     Value: !GetAtt UserPoolClientInputs.appSecret
   
-  CreatedSNSRole: 
+  CreatedSNSRole:
     Value: !GetAtt SNSRole.Arn
     Description: role arn
   
   
   GoogleWebClient:
     Value: !Ref googleClientId
-   
-   
+  
+  
   
   
   FacebookWebClient:
     Value: !Ref facebookAppId
-   
-   
+  
+  
   

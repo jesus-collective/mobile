@@ -254,6 +254,7 @@
                 "dynamodb:DescribeStream",
                 "dynamodb:GetRecords",
                 "dynamodb:GetShardIterator",
+                "dynamodb:ListShards",
                 "dynamodb:ListStreams"
               ],
               "Resource": {
