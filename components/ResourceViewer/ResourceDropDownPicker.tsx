@@ -112,12 +112,12 @@ class ResourceDropDownPicker extends JCComponent<Props> {
                   placeholder={this.props.pageItem.title1 ?? ""}
                   containerStyle={{
                     height: 40,
-                    width: 160,
+                    width: 200,
                     zIndex: 5000 + this.props.pageItemIndex.length,
                   }}
                   dropDownStyle={{
                     backgroundColor: "#FF4438",
-                    width: 225,
+                    width: 200,
                     zIndex: 5000 + this.props.pageItemIndex.length,
                   }}
                   style={{
