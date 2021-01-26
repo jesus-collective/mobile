@@ -29,6 +29,7 @@ import * as customMutations from "../../src/graphql-custom/mutations"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
 import "./CardSectionStyles.css"
+import EULA from "./eula.json"
 import HandleStripePayment from "./HandleStripePayment"
 Amplify.configure(awsConfig)
 
@@ -346,7 +347,11 @@ class BillingImpl extends JCComponent<Props, State> {
           this.setState({ showEULA: false })
         }}
       >
-        <Text>EULA</Text>
+        <Content>
+          {EULA.map((item) => {
+            return <Text>{item}</Text>
+          })}
+        </Content>
       </JCModal>
     )
   }
