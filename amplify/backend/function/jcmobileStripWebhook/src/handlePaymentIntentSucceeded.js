@@ -8,7 +8,7 @@ Amplify.default.configure({
   aws_cloud_logic_custom: [
     {
       name: "AdminQueries",
-      endpoint: "https://y214sfi50m.execute-api.us-east-1.amazonaws.com/dev",
+      endpoint: "https://cvopa45zi3.execute-api.us-east-1.amazonaws.com/beta",
       region: "us-east-1",
     },
   ],
@@ -16,7 +16,7 @@ Amplify.default.configure({
     endpoints: [
       {
         name: "AdminQueries",
-        endpoint: "https://y214sfi50m.execute-api.us-east-1.amazonaws.com/dev",
+        endpoint: "https://cvopa45zi3.execute-api.us-east-1.amazonaws.com/beta",
         region: "us-east-1",
       },
     ],

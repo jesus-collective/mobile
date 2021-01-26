@@ -123,7 +123,7 @@
         "Runtime": "nodejs12.x",
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "jc-mobile-dev-20190809190418-deployment",
+          "S3Bucket": "amplify-jc-mobile-beta-155138-deployment",
           "S3Key": "amplify-builds/jcProcessDMAlerts-41536c746f7656564b67-build.zip"
         },
         "Layers": []
@@ -258,7 +258,7 @@
               ],
               "Resource": {
                 "Fn::ImportValue": {
-                  "Fn::Sub": "2ht5eyf3rfct7f3slbiz6sme5u:GetAtt:DirectMessageTable:StreamArn"
+                  "Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:DirectMessageTable:StreamArn"
                 }
               }
             }
@@ -277,7 +277,7 @@
         "Enabled": true,
         "EventSourceArn": {
           "Fn::ImportValue": {
-            "Fn::Sub": "2ht5eyf3rfct7f3slbiz6sme5u:GetAtt:DirectMessageTable:StreamArn"
+            "Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:DirectMessageTable:StreamArn"
           }
         },
         "FunctionName": {

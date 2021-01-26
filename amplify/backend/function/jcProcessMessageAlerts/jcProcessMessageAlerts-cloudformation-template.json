@@ -124,7 +124,7 @@
         "Layers": [],
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "jc-mobile-dev-20190809190418-deployment",
+          "S3Bucket": "amplify-jc-mobile-beta-155138-deployment",
           "S3Key": "amplify-builds/jcProcessMessageAlerts-75386d6b3778744a766a-build.zip"
         }
       }
@@ -258,7 +258,7 @@
               ],
               "Resource": {
                 "Fn::ImportValue": {
-                  "Fn::Sub": "2ht5eyf3rfct7f3slbiz6sme5u:GetAtt:MessageTable:StreamArn"
+                  "Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:MessageTable:StreamArn"
                 }
               }
             }
@@ -277,7 +277,7 @@
         "Enabled": true,
         "EventSourceArn": {
           "Fn::ImportValue": {
-            "Fn::Sub": "2ht5eyf3rfct7f3slbiz6sme5u:GetAtt:MessageTable:StreamArn"
+            "Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:MessageTable:StreamArn"
           }
         },
         "FunctionName": {

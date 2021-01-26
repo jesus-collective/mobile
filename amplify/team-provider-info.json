@@ -140,7 +140,11 @@
           "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653"
         },
         "jcmobile": {},
-        "jcmobilePreTokenGeneration": {}
+        "jcmobilePreTokenGeneration": {},
+        "jcmobileStripeCreatePaymentIntent": {},
+        "jcmobileGetOrgStripeSubs": {},
+        "jcmobileCreateCognitoOrgUser": {},
+        "jcmobileSendInviteToOrgUser": {}
       },
       "video": {
         "jesuscollectiveCourses": {
