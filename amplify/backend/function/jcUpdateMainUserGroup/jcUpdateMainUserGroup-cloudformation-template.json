@@ -123,8 +123,8 @@
         "Runtime": "nodejs12.x",
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-jc-mobile-beta-155138-deployment",
-          "S3Key": "amplify-builds/jcUpdateMainUserGroup-7077537468724f4f5a34-build.zip"
+          "S3Bucket": "jc-mobile-dev-20190809190418-deployment",
+          "S3Key": "amplify-builds/jcUpdateMainUserGroup-337a667043464a516348-build.zip"
         },
         "Layers": []
       }
@@ -332,6 +332,28 @@
                   ]
                 }
               ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "secretsmanager:GetSecretValue"
+              ],
+              "Resource": {
+                "Fn::Sub": [
+                  "arn:aws:secretsmanager:${region}:${account}:secret:jcmobile/${env}/*",
+                  {
+                    "region": {
+                      "Ref": "AWS::Region"
+                    },
+                    "account": {
+                      "Ref": "AWS::AccountId"
+                    },
+                    "env": {
+                      "Ref": "env"
+                    }
+                  }
+                ]
+              }
             },
             {
               "Effect": "Allow",

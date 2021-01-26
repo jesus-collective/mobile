@@ -1,4 +1,4 @@
-/* 
+/*
 Amplify Params - DO NOT EDIT */ /* Amplify Params - DO NOT EDIT
   ANALYTICS_JCMOBILE_ID
   ANALYTICS_JCMOBILE_REGION
@@ -15,7 +15,6 @@ global.fetch = require("node-fetch")
 const queries = require("./queries")
 const htmlToText = require("html-to-text")
 const configSendAlerts = true
-const amplifyPassword = ""
 
 Amplify.default.configure({
   aws_appsync_graphqlEndpoint: process.env.API_JCMOBILE_GRAPHQLAPIENDPOINTOUTPUT,
@@ -152,6 +151,10 @@ function generateMessage(html, text, name, type) {
     "\r\nPlease login to view it."
 
   // The HTML body of the email.
+  var env
+  if (process.env.ENV == "beta") env = "dev"
+  else if (process.env.ENV == "dev") env = "beta"
+  else env = process.env.ENV
   const body_html =
     `<html>
     <head></head>
@@ -163,7 +166,9 @@ function generateMessage(html, text, name, type) {
     name +
     `</p>` +
     html +
-    `<a href='https://dev.jesuscollective.com/app/conversation?initialUserID=null&initialUserName=null'>Login</a></p>
+    `<a href='https://` +
+    env +
+    `.jesuscollective.com/app/conversation?initialUserID=null&initialUserName=null'>Login</a></p>
     </body>
   </html>`
   //  console.log(body_html)
@@ -221,8 +226,29 @@ async function Execute(event) {
   await asyncForEach(event.Records, async (record) => {
     if (record.eventName == "INSERT") {
       console.log("Insert Detected")
+      console.log("Loading Secret")
+      var AWS = require("aws-sdk"),
+        region = "us-east-1",
+        secretName = "jcmobile/" + process.env.ENV + "/lamdaSecrets",
+        secret,
+        decodedBinarySecret
+
+      // Create a Secrets Manager client
+      var client = new AWS.SecretsManager({
+        region: region,
+      })
       try {
-        await Amplify.Auth.signIn("george.bell@themeetinghouse.com", amplifyPassword)
+        const data = await client.getSecretValue({ SecretId: secretName }).promise()
+
+        if ("SecretString" in data) {
+          secret = JSON.parse(data.SecretString)
+        } else {
+          let buff = new Buffer(data.SecretBinary, "base64")
+          decodedBinarySecret = buff.toString("ascii")
+        }
+        console.log("Loading Secret Done")
+
+        await Amplify.Auth.signIn(secret.userName, secret.password)
         const currentSession = await Amplify.Auth.currentSession()
         Amplify.default.configure({
           Authorization: currentSession.getIdToken().getJwtToken(),

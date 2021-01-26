@@ -2,6 +2,18 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "Lambda Function resource stack creation using Amplify CLI",
   "Parameters": {
+    "userPoolId": {
+      "Type": "String",
+      "Default": ""
+    },
+    "userPoolWebClientId": {
+      "Type": "String",
+      "Default": ""
+    },
+    "identityPoolId": {
+      "Type": "String",
+      "Default": ""
+    },
     "CloudWatchRule": {
       "Type": "String",
       "Default": "NONE",
@@ -9,6 +21,14 @@
     },
     "env": {
       "Type": "String"
+    },
+    "apijcmobileGraphQLAPIIdOutput": {
+      "Type": "String",
+      "Default": "apijcmobileGraphQLAPIIdOutput"
+    },
+    "apijcmobileGraphQLAPIEndpointOutput": {
+      "Type": "String",
+      "Default": "apijcmobileGraphQLAPIEndpointOutput"
     }
   },
   "Conditions": {
@@ -50,11 +70,26 @@
         },
         "Environment": {
           "Variables": {
+            "userPoolId": {
+              "Ref": "userPoolId"
+            },
+            "userPoolWebClientId": {
+              "Ref": "userPoolWebClientId"
+            },
+            "identityPoolId": {
+              "Ref": "identityPoolId"
+            },
             "ENV": {
               "Ref": "env"
             },
             "REGION": {
               "Ref": "AWS::Region"
+            },
+            "API_JCMOBILE_GRAPHQLAPIIDOUTPUT": {
+              "Ref": "apijcmobileGraphQLAPIIdOutput"
+            },
+            "API_JCMOBILE_GRAPHQLAPIENDPOINTOUTPUT": {
+              "Ref": "apijcmobileGraphQLAPIEndpointOutput"
             }
           }
         },
@@ -68,8 +103,8 @@
         "Layers": [],
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-jc-mobile-beta-155138-deployment",
-          "S3Key": "amplify-builds/jcmobileStripeCreatePaymentIntent-4a4c707667417279506c-build.zip"
+          "S3Bucket": "jc-mobile-dev-20190809190418-deployment",
+          "S3Key": "amplify-builds/jcmobileStripeCreatePaymentIntent-69697231534973746b66-build.zip"
         }
       }
     },
@@ -146,6 +181,76 @@
                     },
                     "lambda": {
                       "Ref": "LambdaFunction"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "AmplifyResourcesPolicy": {
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "amplify-lambda-execution-policy",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "appsync:Get*",
+                "appsync:List*"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:appsync:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":apis/",
+                      {
+                        "Ref": "apijcmobileGraphQLAPIIdOutput"
+                      },
+                      "/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "secretsmanager:GetSecretValue"
+              ],
+              "Resource": {
+                "Fn::Sub": [
+                  "arn:aws:secretsmanager:${region}:${account}:secret:jcmobile/${env}/*",
+                  {
+                    "region": {
+                      "Ref": "AWS::Region"
+                    },
+                    "account": {
+                      "Ref": "AWS::AccountId"
+                    },
+                    "env": {
+                      "Ref": "env"
                     }
                   }
                 ]

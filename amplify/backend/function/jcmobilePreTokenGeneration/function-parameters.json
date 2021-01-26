@@ -3,7 +3,6 @@
   "modules": [
     "dynamic-groups"
   ],
-  
   "parentResource": "jcmobile",
   "functionName": "jcmobilePreTokenGeneration",
   "resourceName": "jcmobilePreTokenGeneration",
@@ -13,5 +12,7 @@
   "triggerTemplate": "PreTokenGeneration.json.ejs",
   "roleName": "jcmobilePreTokenGeneration",
   "skipEdit": true,
-  "enableCors": false
+  "enableCors": false,
+  "lambdaLayers": [],
+  "triggerEventPath": "PreTokenGeneration.event.json"
 }

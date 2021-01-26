@@ -123,8 +123,8 @@
         "Runtime": "nodejs12.x",
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-jc-mobile-beta-155138-deployment",
-          "S3Key": "amplify-builds/jcProcessDMAlerts-4a434c6b2b6278704e42-build.zip"
+          "S3Bucket": "jc-mobile-dev-20190809190418-deployment",
+          "S3Key": "amplify-builds/jcProcessDMAlerts-41536c746f7656564b67-build.zip"
         },
         "Layers": []
       }
@@ -258,7 +258,7 @@
               ],
               "Resource": {
                 "Fn::ImportValue": {
-                  "Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:DirectMessageTable:StreamArn"
+                  "Fn::Sub": "2ht5eyf3rfct7f3slbiz6sme5u:GetAtt:DirectMessageTable:StreamArn"
                 }
               }
             }
@@ -277,7 +277,7 @@
         "Enabled": true,
         "EventSourceArn": {
           "Fn::ImportValue": {
-            "Fn::Sub": "kmlktiovonfg5acdl3gn7tx7pq:GetAtt:DirectMessageTable:StreamArn"
+            "Fn::Sub": "2ht5eyf3rfct7f3slbiz6sme5u:GetAtt:DirectMessageTable:StreamArn"
           }
         },
         "FunctionName": {
@@ -312,22 +312,48 @@
               ],
               "Resource": [
                 {
-                  "Fn::Sub": [
-                    "arn:aws:appsync:${region}:${account}:apis/${graph}/*",
-                    {
-                      "region": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:appsync:",
+                      {
                         "Ref": "AWS::Region"
                       },
-                      "account": {
+                      ":",
+                      {
                         "Ref": "AWS::AccountId"
                       },
-                      "graph": {
+                      ":apis/",
+                      {
                         "Ref": "apijcmobileGraphQLAPIIdOutput"
-                      }
-                    }
+                      },
+                      "/*"
+                    ]
                   ]
                 }
               ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "secretsmanager:GetSecretValue"
+              ],
+              "Resource": {
+                "Fn::Sub": [
+                  "arn:aws:secretsmanager:${region}:${account}:secret:jcmobile/${env}/*",
+                  {
+                    "region": {
+                      "Ref": "AWS::Region"
+                    },
+                    "account": {
+                      "Ref": "AWS::AccountId"
+                    },
+                    "env": {
+                      "Ref": "env"
+                    }
+                  }
+                ]
+              }
             },
             {
               "Effect": "Allow",
@@ -342,35 +368,42 @@
               ],
               "Resource": [
                 {
-                  "Fn::Sub": [
-                    "arn:aws:mobiletargeting:${region}:${account}:apps/${mobile}",
-                    {
-                      "region": {
-                        "Ref": "analyticsjcmobileRegion"
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:mobiletargeting:",
+                      {
+                        "Ref": "AWS::Region"
                       },
-                      "account": {
+                      ":",
+                      {
                         "Ref": "AWS::AccountId"
                       },
-                      "mobile": {
+                      ":apps/",
+                      {
                         "Ref": "analyticsjcmobileId"
                       }
-                    }
+                    ]
                   ]
                 },
                 {
-                  "Fn::Sub": [
-                    "arn:aws:mobiletargeting:${region}:${account}:apps/${mobile}/*",
-                    {
-                      "region": {
-                        "Ref": "analyticsjcmobileRegion"
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:mobiletargeting:",
+                      {
+                        "Ref": "AWS::Region"
                       },
-                      "account": {
+                      ":",
+                      {
                         "Ref": "AWS::AccountId"
                       },
-                      "mobile": {
+                      ":apps/",
+                      {
                         "Ref": "analyticsjcmobileId"
-                      }
-                    }
+                      },
+                      "/*"
+                    ]
                   ]
                 }
               ]
