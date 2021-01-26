@@ -911,13 +911,21 @@ class BillingImpl extends JCComponent<Props, State> {
     )
   }
 }
+let env = "unknown"
+if (window.location === undefined) env = "mobile"
+else if (window.location.hostname === "localhost") env = "dev"
+else if (window.location.hostname.includes("beta")) env = "beta"
+else env = "prod"
 
 export default function Billing(props: Props): JSX.Element {
   const route = useRoute()
   const navigation = useNavigation()
+
   const [stripePromise, setStripePromise] = useState(() =>
     loadStripe(
-      "pk_test_51HlyrYLTzrDhiQ921sERNUY2GQBDgpHDOUYMiNZ0lTeTsse9u8oQoBfLg6UzWaxcNkYhek4tkNWILTlAiajet27k00FFv6z0RB"
+      env == "beta"
+        ? "pk_live_51HlyrYLTzrDhiQ9282ydxEkzCmGQuJ6w6m2J7pvWL3DslQGdyZHhi6NFa7lLgErh9YjboGdEs09ce0y9c3H5SfVx00K1massZP"
+        : "pk_test_51HlyrYLTzrDhiQ921sERNUY2GQBDgpHDOUYMiNZ0lTeTsse9u8oQoBfLg6UzWaxcNkYhek4tkNWILTlAiajet27k00FFv6z0RB"
     )
   )
   return (
