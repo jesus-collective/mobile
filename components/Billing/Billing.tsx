@@ -69,6 +69,7 @@ interface State extends JCState {
   quantities: number[][]
   invoice: any
   processing: "entry" | "processing" | "complete"
+  stripeValidation: any
 }
 class BillingImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
@@ -77,6 +78,11 @@ class BillingImpl extends JCComponent<Props, State> {
       ...super.getInitialState(),
       showSubscriptionSelector: false,
       products: [],
+      stripeValidation:{
+          cardNumber:false,
+          expiryDate:false,
+          cvc:false
+      },
       showEULA: false,
       currentProduct: [],
       idempotency: uuidv4(),
@@ -355,6 +361,15 @@ class BillingImpl extends JCComponent<Props, State> {
       </JCModal>
     )
   }
+  stripeFieldValidation = (element, name) =>{
+    console.log(element)
+      if(!element.empty && element.complete){
+        this.setState({stripeValidation:{...this.state.stripeValidation, [name]:true}})        
+      }
+      else{
+        this.setState({stripeValidation:{...this.state.stripeValidation, [name]:false}}) 
+      }
+  }
   renderProduct(item, index: number) {
     return (
       <View
@@ -517,6 +532,9 @@ class BillingImpl extends JCComponent<Props, State> {
     if (!billingAddress.country) return false
     if (!billingAddress.city) return false
     if (!billingAddress.postal_code) return false
+    if (!this.state.stripeValidation.cardNumber) return false 
+    if (!this.state.stripeValidation.expiryDate) return false 
+    if (!this.state.stripeValidation.cvc) return false
     return (
       this.state.currentProduct.length > 0 &&
       billingAddress.line1.length > 0 &&
@@ -822,9 +840,21 @@ class BillingImpl extends JCComponent<Props, State> {
                       <Text style={{ fontFamily: "Graphik-Bold-App" }}>
                         Credit Card Information
                       </Text>
-                      <CardNumberElement options={CARD_ELEMENT_OPTIONS} />
-                      <CardExpiryElement options={CARD_ELEMENT_OPTIONS} />
-                      <CardCvcElement options={CARD_ELEMENT_OPTIONS} />
+                      <Label style={this.styles.style.fontFormSmall}>
+                            <Text style={this.styles.style.fontFormMandatory}>*</Text>
+                            Credit Card Number
+                      </Label>
+                      <CardNumberElement onChange={(el) => this.stripeFieldValidation(el, "cardNumber")} options={CARD_ELEMENT_OPTIONS} />
+                      <Label style={this.styles.style.fontFormSmall}>
+                            <Text style={this.styles.style.fontFormMandatory}>*</Text>
+                            Expiry Date
+                      </Label>
+                      <CardExpiryElement onChange={(el) => this.stripeFieldValidation(el, "expiryDate")}options={CARD_ELEMENT_OPTIONS} />
+                      <Label style={this.styles.style.fontFormSmall}>
+                            <Text style={this.styles.style.fontFormMandatory}>*</Text>
+                            CVC
+                      </Label>
+                      <CardCvcElement onChange={(el) => this.stripeFieldValidation(el, "cvc")} options={CARD_ELEMENT_OPTIONS} />
                     </View>
                     <View style={this.styles.style.signUpScreen1PaymentColumn2}>
                       <JCButton
