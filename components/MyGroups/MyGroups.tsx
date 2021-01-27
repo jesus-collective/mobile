@@ -1150,8 +1150,8 @@ export default class MyGroups extends JCComponent<Props, State> {
   filterEvent = (item: any): boolean => {
     return (
       !(this.props.type === "event") ||
-      (this.state.eventFilter && !moment(item.time).isSameOrAfter(moment.now())) ||
-      (!this.state.eventFilter && moment(item.time).isSameOrAfter(moment.now()))
+      (this.state.eventFilter && !moment(item.time).isSameOrAfter(moment.now(), 'day')) ||
+      (!this.state.eventFilter && moment(item.time).isSameOrAfter(moment.now(), 'day'))
     )
   }
 
