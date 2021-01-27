@@ -27,7 +27,7 @@ export default class SignUpScreen2 extends JCComponent<Props> {
           },
         })
       )
-      actions.updatePaidState()
+      actions.recheckUserState()
     } catch (e) {
       console.log({ Error: e })
     }

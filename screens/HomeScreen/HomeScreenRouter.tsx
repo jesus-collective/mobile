@@ -9,6 +9,7 @@ import { AuthStateData } from "src/types"
 import { v4 as uuidv4 } from "uuid"
 import JCComponent from "../../components/JCComponent/JCComponent"
 import Validate from "../../components/Validate/Validate"
+import * as RootNavigation from "../../screens/HomeScreen//NavigationRoot"
 import {
   CreateOrganizationInput,
   CreateOrganizationMemberInput,
@@ -19,8 +20,7 @@ import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
 import MainAuthRouter from "./MainAuthRouter"
 import MainDrawerRouter from "./MainDrawerRouter"
-import * as RootNavigation from "./NavigationRoot"
-import { UserContext, UserState } from "./UserContext"
+import { PaidStatus, ProfileStatus, UserContext, UserState } from "./UserContext"
 
 Amplify.configure(awsconfig)
 
@@ -30,15 +30,14 @@ interface Props {
   authState?: string | undefined
   onStateChange(state: string, data: AuthStateData): Promise<void>
 }
-
 export default class HomeScreenRouter extends JCComponent<Props, UserState> {
   constructor(props: Props) {
     super(props)
     this.state = {
       ...super.getInitialState(),
       groups: [],
-      hasCompletedPersonalProfile: "Unknown",
-      hasPaidState: "Unknown",
+      hasCompletedPersonalProfile: ProfileStatus.Unknown,
+      hasPaidState: PaidStatus.Unknown,
       userExists: false,
       user: null,
       authState: props.authState,
@@ -89,16 +88,14 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
   }
   async performStartup(): Promise<void> {
     if (this.state.authState == "signedIn") {
-      await this.ensureUserExists()
-      await this.checkIfPaid()
-      await this.checkIfCompletedProfile()
+      await this.recheckUserState()
     } else if (this.state.authState == "signIn") {
       await this.props.onStateChange("signIn", null)
     }
   }
   private user: any
 
-  async ensureUserExists(): Promise<void> {
+  async ensureUserExists(performChecks: () => Promise<void>): Promise<void> {
     let userExists = false
     this.user = await Auth.currentAuthenticatedUser().catch(() => {
       console.log("No current authenticated user")
@@ -220,9 +217,7 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
       await z.then(handleUser).catch(handleUser)
 
       console.log({ userExists: userExists })
-      this.setState({ userExists: userExists }, () => {
-        this.checkIfCompletedProfile()
-      })
+      this.setState({ userExists: userExists }, performChecks)
     }
   }
 
@@ -250,7 +245,8 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
       return false
     }
   }
-  async checkIfPaid(): Promise<void> {
+
+  async checkIfPaid(): Promise<PaidStatus> {
     console.log("checkIfPaid")
     if (this.state.userExists) {
       const handleGetUser = async (getUser: any) => {
@@ -264,58 +260,28 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
             .getSignInUserSession()
             .accessToken.payload["cognito:groups"].includes("legacyUserGroup1")
         )
-          this.setState({ hasPaidState: "Success" }, () => {
-            this.onPaidStateChange("Success")
-          })
+          return PaidStatus.Success
         else {
           if (getUser.data.getUser.stripeCustomerID == null)
             if (await this.createStripeUser(getUser.data.getUser.billingAddress)) {
               if (getUser.data.getUser.stripeSubscriptionID == null) {
                 console.log("No Stripe Subscription, No Stripe Customer")
-                this.setState({ hasPaidState: "InProgress" }, () => {
-                  this.onPaidStateChange("InProgress")
-                })
+                return PaidStatus.InProgress
               } else {
-                this.setState(
-                  {
-                    hasPaidState: "Problem1",
-                  },
-                  () => {
-                    this.onPaidStateChange("Problem1")
-                  }
-                )
+                return PaidStatus.Problem1
               }
             } else if (getUser.data.getUser.stripeSubscriptionID == null) {
               console.log("No Stripe Subscription")
-
-              this.setState({ hasPaidState: "InProgress" }, () => {
-                this.onPaidStateChange("InProgress")
-              })
+              return PaidStatus.InProgress
             } else {
-              this.setState(
-                {
-                  hasPaidState: "Problem2",
-                },
-                () => {
-                  this.onPaidStateChange("Problem2")
-                }
-              )
+              return PaidStatus.Problem2
             }
           else {
             if (getUser.data.getUser.stripeSubscriptionID == null) {
               console.log("No Stripe Subscription")
-              this.setState({ hasPaidState: "InProgress" }, () => {
-                this.onPaidStateChange("InProgress")
-              })
+              return PaidStatus.InProgress
             } else {
-              this.setState(
-                {
-                  hasPaidState: "Problem1",
-                },
-                () => {
-                  this.onPaidStateChange("Problem1")
-                }
-              )
+              return PaidStatus.Problem1
             }
           }
         }
@@ -323,7 +289,9 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
       const getUser: any = API.graphql(
         graphqlOperation(queries.getUser, { id: this.user["username"] })
       )
-      await getUser.then(handleGetUser).catch(handleGetUser)
+      return await getUser.then(handleGetUser).catch(handleGetUser)
+    } else {
+      return PaidStatus.Unknown
     }
     //  console.log(attributes['username'])
   }
@@ -341,58 +309,68 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
     }
   }
   onPaidStateChange(state: string): void {}
-  async updatePaidState(): Promise<void> {
-    console.debug("updatePaidState")
-    await this.ensureUserExists()
-    await this.checkIfPaid()
-    await this.checkIfCompletedProfile()
+
+  recheckUserState = async (): Promise<void> => {
+    console.debug("recheckUserState")
+    await this.ensureUserExists(
+      async (): Promise<void> => {
+        const paidStatus = await this.checkIfPaid()
+        const profileStatus = await this.checkIfCompletedProfile()
+        this.setState(
+          { hasPaidState: paidStatus, hasCompletedPersonalProfile: profileStatus },
+          () => {
+            this.performNavigation()
+          }
+        )
+      }
+    )
   }
-  //  onProfileComplete(): void {
-  //    console.debug("onProfileComplete")
-  //    this.checkIfCompletedProfile()
-  //  }
-  async checkIfCompletedProfile(): Promise<void> {
+  performNavigation() {
+    console.log("NAVIGATING")
+    switch (this.state.hasPaidState) {
+      case PaidStatus.Success:
+        switch (this.state.hasCompletedPersonalProfile) {
+          case ProfileStatus.Completed:
+            RootNavigation.navigate("mainApp", {
+              screen: "home",
+            })
+            break
+          case ProfileStatus.Incomplete:
+            RootNavigation.navigate("auth", {
+              screen: "Payment3",
+            })
+            break
+        }
+        break
+      case PaidStatus.InProgress:
+        RootNavigation.navigate("auth", {
+          screen: "Payment1",
+        })
+        break
+    }
+    console.log("DONE PERFORM NAVIGATION")
+  }
+  async checkIfCompletedProfile(): Promise<ProfileStatus> {
     console.debug("checkIfCompletedProfile")
     console.debug({
       user: this.state.userExists,
       hasPaidState: this.state.hasPaidState,
     })
-    if (this.state.userExists && this.state.hasPaidState == "Success") {
+    if (this.state.userExists) {
       const handleUser = (getUser: any) => {
         const response = Validate.Profile(getUser.data.getUser)
         console.log({ Validate: response })
         console.debug({ checkIfCompletedProfileResult: response.result })
-        if (response.result && this.state.hasCompletedPersonalProfile != "Completed")
-          this.setState({ hasCompletedPersonalProfile: "Completed" }, () => {
-            //TODO THIS IS WRONG ONLY DO THIS FROM
-
-            console.log("Navigate to HomeScreen")
-            RootNavigation.navigate("mainApp", {
-              screen: "home",
-            })
-          })
-        else if (!response.result && this.state.hasCompletedPersonalProfile != "Incomplete")
-          this.setState({ hasCompletedPersonalProfile: "Incomplete" }, () => {
-            RootNavigation.navigate("auth", {
-              screen: "Payment3",
-            })
-          })
-        else if (
-          response.result &&
-          this.state.hasPaidState == "Success" &&
-          this.state.hasCompletedPersonalProfile == "Completed"
-        ) {
-          console.log("NAVIGATING TO HOME SCREEN")
-          RootNavigation.navigate("mainApp", {
-            screen: "home",
-          })
-        }
+        if (response.result) return ProfileStatus.Completed
+        else if (!response.result) return ProfileStatus.Incomplete
+        else return ProfileStatus.Unknown
       }
       const getUser: any = API.graphql(
         graphqlOperation(queries.getUser, { id: this.user["username"] })
       )
-      await getUser.then(handleUser).catch(handleUser)
+      return await getUser.then(handleUser).catch(handleUser)
     }
+    return ProfileStatus.Unknown
   }
   updateHasCompletedPersonalProfile = (): void => {
     this.checkIfCompletedProfile()
@@ -439,9 +417,9 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
             },
             userActions: {
               onSetUser: this.onSetUser,
-              updateHasCompletedPersonalProfile: this.updateHasCompletedPersonalProfile,
-              updateHasCompletedOrganizationProfile: this.updateHasCompletedOrganizationProfile,
-              updatePaidState: this.updatePaidState,
+              updateHasCompletedPersonalProfile: this.recheckUserState,
+              updateHasCompletedOrganizationProfile: this.recheckUserState,
+              recheckUserState: this.recheckUserState,
               onStateChange: async (state, data) => {
                 await this.props.onStateChange(state, data)
               },

@@ -124,6 +124,7 @@ class AwesomeApp extends JCComponent<Props, State> {
   }
 
   async updateState(state: string, data: AuthStateData) {
+    console.log("updateState")
     this.setState({ authState: state })
     const params = RootNavigation.getRoot()?.params as {
       joinedAs: "individual" | "organization" | null

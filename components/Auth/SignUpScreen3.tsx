@@ -1,15 +1,15 @@
-﻿import React from "react"
+﻿import { useNavigation, useRoute } from "@react-navigation/native"
 import Amplify from "aws-amplify"
-import awsConfig from "../../src/aws-exports"
-import MyProfile from "../../components/MyProfile/MyProfile"
-import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
-Amplify.configure(awsConfig)
-import { View, Content } from "native-base"
-import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
-import { useNavigation, useRoute } from "@react-navigation/native"
-import { UserContext } from "../../screens/HomeScreen/UserContext"
-import OrganizationViewer from "../../components/OrganizationViewer/OrganizationViewer"
+import { Content, View } from "native-base"
+import React from "react"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
+import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
+import MyProfile from "../../components/MyProfile/MyProfile"
+import OrganizationViewer from "../../components/OrganizationViewer/OrganizationViewer"
+import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
+import { PaidStatus, ProfileStatus, UserContext } from "../../screens/HomeScreen/UserContext"
+import awsConfig from "../../src/aws-exports"
+Amplify.configure(awsConfig)
 
 interface Props {
   navigation?: any
@@ -47,8 +47,8 @@ class SignUpScreen3Impl extends JCComponent<Props, State> {
           if (!userState) return null
 
           if (
-            userState.hasPaidState == "Success" &&
-            userState.hasCompletedPersonalProfile == "Incomplete"
+            userState.hasPaidState == PaidStatus.Success &&
+            userState.hasCompletedPersonalProfile == ProfileStatus.Incomplete
           ) {
             return (
               <View style={this.styles.style.signUpScreen1PaymentBody}>

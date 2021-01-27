@@ -3,8 +3,8 @@ import * as React from "react"
 import { AuthStateData } from "src/types"
 
 export interface UserState extends JCState {
-  hasCompletedPersonalProfile: string
-  hasPaidState: string
+  hasCompletedPersonalProfile: ProfileStatus
+  hasPaidState: PaidStatus
   userExists: boolean
   user: any
   authState: any
@@ -19,12 +19,24 @@ export interface UserState extends JCState {
 }
 export interface UserActions {
   onSetUser(user: any): void
-  updateHasCompletedPersonalProfile(): void | null
-  updatePaidState(): Promise<void>
-  updateHasCompletedOrganizationProfile(): void | null
+  updateHasCompletedPersonalProfile(): Promise<void> | null
+  recheckUserState(): Promise<void>
+  updateHasCompletedOrganizationProfile(): Promise<void> | null
   onStateChange(state: string, data: AuthStateData): Promise<any> | null
   updateGroups(): Promise<void> | null
   isMemberOf(group: string): boolean
+}
+export enum ProfileStatus {
+  Completed,
+  Incomplete,
+  Unknown,
+}
+export enum PaidStatus {
+  Success,
+  InProgress,
+  Problem1,
+  Problem2,
+  Unknown,
 }
 type UserContextType = {
   userActions: UserActions
@@ -33,9 +45,9 @@ type UserContextType = {
 export const UserContext = React.createContext<UserContextType>({
   userActions: {
     onSetUser: () => {},
-    updateHasCompletedPersonalProfile: () => {},
-    updatePaidState: async () => {},
-    updateHasCompletedOrganizationProfile: () => {},
+    updateHasCompletedPersonalProfile: async () => {},
+    recheckUserState: async () => {},
+    updateHasCompletedOrganizationProfile: async () => {},
     onStateChange: async () => {},
     updateGroups: async () => {},
     isMemberOf: () => {

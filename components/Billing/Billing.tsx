@@ -348,8 +348,8 @@ class BillingImpl extends JCComponent<Props, State> {
         }}
       >
         <Content>
-          {EULA.map((item) => {
-            return <Text>{item}</Text>
+          {EULA.map((item, index) => {
+            return <Text key={index}>{item}</Text>
           })}
         </Content>
       </JCModal>
@@ -513,7 +513,6 @@ class BillingImpl extends JCComponent<Props, State> {
     const billingAddress = this.state.userData?.billingAddress
     if (!billingAddress) return false
     if (!billingAddress.line1) return false
-    if (!billingAddress.line2) return false
     if (!billingAddress.state) return false
     if (!billingAddress.country) return false
     if (!billingAddress.city) return false
@@ -521,7 +520,6 @@ class BillingImpl extends JCComponent<Props, State> {
     return (
       this.state.currentProduct.length > 0 &&
       billingAddress.line1.length > 0 &&
-      billingAddress.line2?.length > 0 &&
       billingAddress.state?.length > 0 &&
       billingAddress.country?.length > 0 &&
       billingAddress.city?.length > 0 &&
@@ -532,7 +530,7 @@ class BillingImpl extends JCComponent<Props, State> {
   async completePaymentProcess(actions: UserActions, state: UserState) {
     await actions.updateGroups()
     console.log({ Groups: state.groups })
-    await actions.updatePaidState()
+    await actions.recheckUserState()
   }
   render() {
     return (
@@ -658,10 +656,7 @@ class BillingImpl extends JCComponent<Props, State> {
                             }
                             isEditable={true}
                           ></EditableText>
-                          <Label style={this.styles.style.fontFormSmall}>
-                            <Text style={this.styles.style.fontFormMandatory}>*</Text>
-                            Billing Line 2
-                          </Label>
+                          <Label style={this.styles.style.fontFormSmall}>Billing Line 2</Label>
 
                           <EditableText
                             onChange={(e) => {

@@ -1,7 +1,7 @@
 import { createStackNavigator } from "@react-navigation/stack"
 import React, { Component, lazy } from "react"
 import JCComponent from "../../components/JCComponent/JCComponent"
-import { UserContext } from "./UserContext"
+import { PaidStatus, ProfileStatus, UserContext } from "./UserContext"
 const Stack = createStackNavigator()
 
 const HomeScreen = lazy(() => import("./HomeScreen"))
@@ -55,8 +55,8 @@ export default class MainAppRouter extends JCComponent {
                 cardOverlayEnabled: false,
               }}
             >
-              {userState.hasPaidState == "Success" &&
-              userState.hasCompletedPersonalProfile == "Completed" ? (
+              {userState.hasPaidState == PaidStatus.Success &&
+              userState.hasCompletedPersonalProfile == ProfileStatus.Completed ? (
                 <>
                   <Stack.Screen
                     name="HomeScreen"

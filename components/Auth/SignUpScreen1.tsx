@@ -1,11 +1,17 @@
 ﻿import { useNavigation, useRoute } from "@react-navigation/native"
 import Amplify from "aws-amplify"
 import React from "react"
-import { ActivityIndicator, View } from "react-native"
+import { ActivityIndicator, Text, View } from "react-native"
 import Billing from "../../components/Billing/Billing"
+import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
-import { UserContext } from "../../screens/HomeScreen/UserContext"
+import {
+  PaidStatus,
+  UserActions,
+  UserContext,
+  UserState,
+} from "../../screens/HomeScreen/UserContext"
 import awsConfig from "../../src/aws-exports"
 Amplify.configure(awsConfig)
 
@@ -21,18 +27,43 @@ class SignUpScreen1Impl extends JCComponent<Props, State> {
     super(props)
   }
   static UserConsumer = UserContext.Consumer
-
+  async completePaymentProcess(actions: UserActions, state: UserState) {
+    await actions.updateGroups()
+    console.log({ Groups: state.groups })
+    await actions.recheckUserState()
+  }
   render(): React.ReactNode {
     return (
       <SignUpScreen1Impl.UserConsumer>
         {({ userState, userActions }) => {
           if (!userState) return null
-          if (userState.hasPaidState == "Unknown") return <ActivityIndicator />
-          if (userState.hasPaidState == "InProgress") {
+          if (userState.hasPaidState == PaidStatus.Unknown) return <ActivityIndicator />
+          if (userState.hasPaidState == PaidStatus.InProgress) {
             return (
               <View style={this.styles.style.signUpScreen1PaymentBody}>
                 <SignUpSidebar position="3"></SignUpSidebar>
                 <Billing></Billing>
+              </View>
+            )
+          } else if (userState.hasPaidState == PaidStatus.Success) {
+            return (
+              <View style={this.styles.style.signUpScreen1PaymentColumn1}>
+                <Text
+                  style={{
+                    fontFamily: "Graphik-Bold-App",
+                  }}
+                >
+                  We've received your payment.
+                  <br />
+                  <JCButton
+                    onPress={() => {
+                      this.completePaymentProcess(userActions, userState)
+                    }}
+                    buttonType={ButtonTypes.Solid}
+                  >
+                    Continue to Your Profile
+                  </JCButton>
+                </Text>
               </View>
             )
           } else return null
