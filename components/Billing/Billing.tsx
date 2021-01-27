@@ -642,7 +642,7 @@ class BillingImpl extends JCComponent<Props, State> {
                       </Text>
                       {this.state.userData && (
                         <>
-                          <Label style={this.styles.style.fontFormSmall}>
+                          <Label style={[this.styles.style.fontFormSmall, !this.state.userData.billingAddress?.line1 ? {opacity:1} : {}]}>
                             <Text style={this.styles.style.fontFormMandatory}>*</Text>
                             Billing Address Line 1
                           </Label>
@@ -703,7 +703,7 @@ class BillingImpl extends JCComponent<Props, State> {
                             }
                             isEditable={true}
                           ></EditableText>
-                          <Label style={this.styles.style.fontFormSmall}>
+                          <Label style={[this.styles.style.fontFormSmall, !this.state.userData.billingAddress?.city ? {opacity:1} : {}]}>
                             <Text style={this.styles.style.fontFormMandatory}>*</Text>
                             City
                           </Label>
@@ -735,7 +735,7 @@ class BillingImpl extends JCComponent<Props, State> {
                             }
                             isEditable={true}
                           ></EditableText>
-                          <Label style={this.styles.style.fontFormSmall}>
+                          <Label style={[this.styles.style.fontFormSmall, !this.state.userData?.billingAddress?.state ? {opacity:1} : {}]}>
                             <Text style={this.styles.style.fontFormMandatory}>*</Text>
                             State/Province
                           </Label>
@@ -767,7 +767,7 @@ class BillingImpl extends JCComponent<Props, State> {
                             }
                             isEditable={true}
                           ></EditableText>
-                          <Label style={this.styles.style.fontFormSmall}>
+                          <Label style={[this.styles.style.fontFormSmall, !this.state.userData?.billingAddress?.country ? {opacity:1} : {}]}>
                             <Text style={this.styles.style.fontFormMandatory}>*</Text>
                             Country
                           </Label>
@@ -799,7 +799,7 @@ class BillingImpl extends JCComponent<Props, State> {
                             }
                             isEditable={true}
                           ></EditableText>
-                          <Label style={this.styles.style.fontFormSmall}>
+                          <Label style={[this.styles.style.fontFormSmall, !this.state.userData?.billingAddress?.postal_code ? {opacity:1} : {}]}>
                             <Text style={this.styles.style.fontFormMandatory}>*</Text>
                             Zip/Postal Code
                           </Label>
@@ -840,17 +840,17 @@ class BillingImpl extends JCComponent<Props, State> {
                       <Text style={{ fontFamily: "Graphik-Bold-App" }}>
                         Credit Card Information
                       </Text>
-                      <Label style={this.styles.style.fontFormSmall}>
+                      <Label style={[this.styles.style.fontFormSmall, !this.state.stripeValidation.cardNumber ? {opacity:1} : {}]}>
                             <Text style={this.styles.style.fontFormMandatory}>*</Text>
                             Credit Card Number
                       </Label>
                       <CardNumberElement onChange={(el) => this.stripeFieldValidation(el, "cardNumber")} options={CARD_ELEMENT_OPTIONS} />
-                      <Label style={this.styles.style.fontFormSmall}>
+                      <Label style={[this.styles.style.fontFormSmall, !this.state.stripeValidation.expiryDate? {opacity:1} : {}]}>
                             <Text style={this.styles.style.fontFormMandatory}>*</Text>
                             Expiry Date
                       </Label>
                       <CardExpiryElement onChange={(el) => this.stripeFieldValidation(el, "expiryDate")}options={CARD_ELEMENT_OPTIONS} />
-                      <Label style={this.styles.style.fontFormSmall}>
+                      <Label style={[this.styles.style.fontFormSmall, !this.state.stripeValidation.cvc ? {opacity:1} : {}]}>
                             <Text style={this.styles.style.fontFormMandatory}>*</Text>
                             CVC
                       </Label>
@@ -925,7 +925,7 @@ class BillingImpl extends JCComponent<Props, State> {
                         onPress={() => {
                           this.makePayment(stripe, elements)
                         }}
-                        enabled={this.isMakePaymentEnabled()}
+                        enabled={!!(this.state.invoice) && this.isMakePaymentEnabled()}
                       >
                         Process Payment
                       </JCButton>
