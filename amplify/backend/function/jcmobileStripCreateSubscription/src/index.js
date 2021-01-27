@@ -10,7 +10,6 @@ const Amplify = require("aws-amplify")
 global.fetch = require("node-fetch")
 const queries = require("./queries")
 const mutations = require("./mutations")
-
 Amplify.default.configure({
   aws_appsync_graphqlEndpoint: process.env.API_JCMOBILE_GRAPHQLAPIENDPOINTOUTPUT,
   aws_appsync_region: process.env.region,

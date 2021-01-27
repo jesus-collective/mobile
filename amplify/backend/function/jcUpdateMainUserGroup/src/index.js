@@ -19,7 +19,6 @@ exports.handler = async function (event, context) {
     secretName = "jcmobile/" + process.env.ENV + "/lamdaSecrets",
     secret,
     decodedBinarySecret
-
   // Create a Secrets Manager client
   var client = new AWS.SecretsManager({
     region: region,
