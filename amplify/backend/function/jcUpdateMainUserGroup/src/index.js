@@ -46,7 +46,9 @@ exports.handler = async function (event, context) {
     var json
     var currentSession
     try {
-      // console.log(process.env)
+      //console.log(process.env)
+
+      //      console.log(API_JCMOBILE_GRAPHQLAPIENDPOINTOUTPUT)
       var region = process.env.REGION
       var API_JCMOBILE_GRAPHQLAPIENDPOINTOUTPUT = process.env.API_JCMOBILE_GRAPHQLAPIENDPOINTOUTPUT
       Amplify.default.configure({
