@@ -367,7 +367,6 @@ class BillingImpl extends JCComponent<Props, State> {
     )
   }
   stripeFieldValidation = (element, name) =>{
-    console.log(element)
       if(!element.empty && element.complete){
         this.setState({stripeValidation:{...this.state.stripeValidation, [name]:true}})        
       }
