@@ -309,10 +309,8 @@ class BillingImpl extends JCComponent<Props, State> {
           () => {
             this.setState({ processing: "complete" })
           },
-          (error) =>{
+          (error) => {
             this.setState({processing:"entry", errorMsg:error?.message})
-            console.log("setting state in billing")
-            console.log(error)
           }
         )
         console.log(status)
@@ -930,13 +928,14 @@ class BillingImpl extends JCComponent<Props, State> {
                       <JCButton
                         buttonType={ButtonTypes.Solid}
                         onPress={() => {
+                          this.setState({errorMsg:""})
                           this.makePayment(stripe, elements)
                         }}
                         enabled={!!(this.state.invoice) && this.isMakePaymentEnabled()}
                       >
                         Process Payment
                       </JCButton>
-                      <Text>{this.state.errorMsg}</Text>
+                      <Text style={{color:"red"}}>{this.state.errorMsg}</Text>
                     </View>
                   </Content>
                   {this.renderAddProductModal(userState)}
