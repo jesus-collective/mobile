@@ -111,7 +111,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-jc-mobile-beta-155138-deployment",
-          "S3Key": "amplify-builds/jcmobileCreateCognitoOrgUser-705761476e366351756b-build.zip"
+          "S3Key": "amplify-builds/jcmobileCreateCognitoOrgUser-7646714f4b415967575a-build.zip"
         }
       }
     },
