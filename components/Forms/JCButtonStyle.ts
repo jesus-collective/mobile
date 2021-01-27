@@ -393,6 +393,11 @@ export default EStyleSheet.create({
     shadowOpacity: 0,
     borderRadius: 4,
   },
+  SolidButtonDisabled: {
+    backgroundColor: "#B5B5B5",
+    borderWidth: 1,
+    borderColor: "#B5B5B5",
+  },
   SolidText: {
     color: "#ffffff",
     fontFamily: "Graphik-Regular-App",
