@@ -537,9 +537,9 @@ class BillingImpl extends JCComponent<Props, State> {
     if (!billingAddress.country) return false
     if (!billingAddress.city) return false
     if (!billingAddress.postal_code) return false
-    /* if (!this.state.stripeValidation.cardNumber) return false 
+    if (!this.state.stripeValidation.cardNumber) return false 
     if (!this.state.stripeValidation.expiryDate) return false 
-    if (!this.state.stripeValidation.cvc) return false */
+    if (!this.state.stripeValidation.cvc) return false
     return (
       this.state.currentProduct.length > 0 &&
       billingAddress.line1.length > 0 &&
