@@ -902,9 +902,19 @@ enum ResourcePageItemStyle{
   RichTextH2
   RichTextH3
   RichTextH4
+  RichTextH5
+  RichTextH6
+  RichTextH1Small
+  RichTextH2Small
+  RichTextH3Small
+  RichTextH4Small
+  RichTextH5Small
+  RichTextH6Small
+
   RichTextBody1
   RichTextBody2
   RichTextBody3
+  RichTextBody4
   GridManual
   GridAuto
   ListManual
