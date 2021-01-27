@@ -626,7 +626,7 @@ class BillingImpl extends JCComponent<Props, State> {
                         <>
                           <Label style={this.styles.style.fontFormSmall}>
                             <Text style={this.styles.style.fontFormMandatory}>*</Text>
-                            Billing Line 1
+                            Billing Address Line 1
                           </Label>
 
                           <EditableText
@@ -656,7 +656,7 @@ class BillingImpl extends JCComponent<Props, State> {
                             }
                             isEditable={true}
                           ></EditableText>
-                          <Label style={this.styles.style.fontFormSmall}>Billing Line 2</Label>
+                          <Label style={this.styles.style.fontFormSmall}>Billing Address Line 2</Label>
 
                           <EditableText
                             onChange={(e) => {
