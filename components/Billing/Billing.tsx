@@ -374,7 +374,7 @@ class BillingImpl extends JCComponent<Props, State> {
       this.setState({ stripeValidation: { ...this.state.stripeValidation, [name]: false } })
     }
   }
-  renderProduct(item: Product, index: number) {
+  renderProduct(stripe, elements, item: Product, index: number) {
     return (
       <View
         key={index}
@@ -593,9 +593,9 @@ class BillingImpl extends JCComponent<Props, State> {
     if (!billingAddress.country) return false
     if (!billingAddress.city) return false
     if (!billingAddress.postal_code) return false
-    if (!this.state.stripeValidation.cardNumber) return false
+   /*  if (!this.state.stripeValidation.cardNumber) return false
     if (!this.state.stripeValidation.expiryDate) return false
-    if (!this.state.stripeValidation.cvc) return false
+    if (!this.state.stripeValidation.cvc) return false */
     if (!this.state.currentProduct) return false
     return (
       this.state.currentProduct.length > 0 &&
@@ -943,7 +943,7 @@ class BillingImpl extends JCComponent<Props, State> {
                       </JCButton>
                       </View>
                         {this.state.currentProduct?.map((item: Product, index: number) => {
-                          return this.renderProduct(item, index)
+                          return this.renderProduct(stripe, elements, item, index)
                         })}
 
 
