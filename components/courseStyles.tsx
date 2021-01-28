@@ -426,7 +426,7 @@ const courseStyles = EStyleSheet.create({
   },
   coursePageMessageBoardLeftMini: {
     alignSelf: "center",
-    flex: 3,
+    flex: 1.5,
   },
   courseConversationCard: {
     paddingTop: 10,
