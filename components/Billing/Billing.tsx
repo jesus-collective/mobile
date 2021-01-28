@@ -23,7 +23,7 @@ import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
 import Sentry from "../../components/Sentry"
 import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/UserContext"
-import { GetProductQuery, GetUserQuery, ListProductsQuery } from "../../src/API"
+import { GetUserQuery, ListProductsQuery } from "../../src/API"
 import awsConfig from "../../src/aws-exports"
 import * as customMutations from "../../src/graphql-custom/mutations"
 import * as mutations from "../../src/graphql/mutations"
@@ -50,7 +50,8 @@ const CARD_ELEMENT_OPTIONS = {
     },
   },
 }
-
+type Products = NonNullable<ListProductsQuery["listProducts"]>["items"]
+type Product = NonNullable<Products>[0]
 interface Props {
   navigation?: any
   route?: any
@@ -58,9 +59,9 @@ interface Props {
 }
 interface State extends JCState {
   showSubscriptionSelector: boolean
-  products: NonNullable<ListProductsQuery["listProducts"]>["items"]
+  products: Products
   userData: NonNullable<GetUserQuery>["getUser"]
-  currentProduct: NonNullable<ListProductsQuery["listProducts"]>["items"]
+  currentProduct: Products
   joinedProduct: string[]
   productType: "Partner" | "OneStory" | null
   idempotency: string
@@ -213,18 +214,19 @@ class BillingImpl extends JCComponent<Props, State> {
       console.log(e)
     }
   }
-  selectProduct(product: any) {
-    this.setState(
-      {
-        showSubscriptionSelector: false,
-        currentProduct: this.state.currentProduct?.concat(product),
-        quantities: [Array(product.tiered?.length).fill(1)],
-        invoice: null,
-      },
-      () => {
-        this.createInvoice()
-      }
-    )
+  selectProduct(product: Product) {
+    if (this.state.currentProduct)
+      this.setState(
+        {
+          showSubscriptionSelector: false,
+          currentProduct: this.state.currentProduct.concat(product),
+          quantities: [Array(product?.tiered?.length).fill(1)],
+          invoice: null,
+        },
+        () => {
+          this.createInvoice()
+        }
+      )
   }
 
   static UserConsumer = UserContext.Consumer
@@ -239,49 +241,47 @@ class BillingImpl extends JCComponent<Props, State> {
       >
         <>
           <Content>
-            {this.state.products?.map(
-              (product: NonNullable<GetProductQuery>["getProduct"], index: number) => {
-                const showProduct =
-                  (userState.isOrg && product?.isOrgTier) ||
-                  (!userState.isOrg && product?.isIndividualTier)
-                return showProduct ? (
-                  <TouchableOpacity
-                    key={index}
-                    onPress={() => {
-                      this.selectProduct(product)
-                    }}
-                  >
-                    <Card>
-                      <CardItem>
-                        <Body>
-                          <Text
-                            style={{
-                              fontFamily: "Graphik-Bold-App",
-                              paddingRight: 0,
-                              fontSize: 20,
-                            }}
-                          >
-                            {product?.name}
-                          </Text>
-                          <Text
-                            style={{
-                              fontFamily: "Graphik-Bold-App",
-                              color: "#F0493E",
-                            }}
-                          >
-                            ${product?.price?.toFixed(2)}/{product?.pricePer}
-                          </Text>
-                          <EditableRichText
-                            value={product?.marketingDescription}
-                            isEditable={false}
-                          ></EditableRichText>
-                        </Body>
-                      </CardItem>
-                    </Card>
-                  </TouchableOpacity>
-                ) : null
-              }
-            )}
+            {this.state.products?.map((product, index: number) => {
+              const showProduct =
+                (userState.isOrg && product?.isOrgTier) ||
+                (!userState.isOrg && product?.isIndividualTier)
+              return showProduct ? (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() => {
+                    this.selectProduct(product)
+                  }}
+                >
+                  <Card>
+                    <CardItem>
+                      <Body>
+                        <Text
+                          style={{
+                            fontFamily: "Graphik-Bold-App",
+                            paddingRight: 0,
+                            fontSize: 20,
+                          }}
+                        >
+                          {product?.name}
+                        </Text>
+                        <Text
+                          style={{
+                            fontFamily: "Graphik-Bold-App",
+                            color: "#F0493E",
+                          }}
+                        >
+                          ${product?.price?.toFixed(2)}/{product?.pricePer}
+                        </Text>
+                        <EditableRichText
+                          value={product?.marketingDescription}
+                          isEditable={false}
+                        ></EditableRichText>
+                      </Body>
+                    </CardItem>
+                  </Card>
+                </TouchableOpacity>
+              ) : null
+            })}
           </Content>
         </>
       </JCModal>
@@ -325,7 +325,7 @@ class BillingImpl extends JCComponent<Props, State> {
       }
     )
   }
-  updateQuantity(index: number, index2: number, value) {
+  updateQuantity(index: number, index2: number, value: number) {
     const temp = this.state.quantities
     temp[index][index2] = value
     this.setState(
@@ -355,7 +355,7 @@ class BillingImpl extends JCComponent<Props, State> {
       </JCModal>
     )
   }
-  renderProduct(item, index: number) {
+  renderProduct(item: Product, index: number) {
     return (
       <View
         key={index}
@@ -378,7 +378,7 @@ class BillingImpl extends JCComponent<Props, State> {
             fontSize: 20,
           }}
         >
-          {item.name}
+          {item?.name ?? ""}
         </Text>
         <TouchableOpacity
           style={{ alignSelf: "flex-end" }}
@@ -388,62 +388,50 @@ class BillingImpl extends JCComponent<Props, State> {
         >
           <AntDesign name="close" size={20} color="black" />
         </TouchableOpacity>
-        {item.stripeIsTiered && (
-          <Text
-            style={{
-              fontFamily: "Graphik-Bold-App",
-              color: "#F0493E",
-            }}
-          >
-            ${item.price.toFixed(2)}/{item.pricePer}
-          </Text>
-        )}
 
-        {!item.stripeIsTiered
-          ? item.tiered.map((item, index2: number) => {
-              return (
-                <View key={index2} style={{ flexDirection: "row" }}>
-                  <Text
-                    style={{
-                      marginTop: 5,
-                      marginBottom: 5,
-                      paddingTop: 5,
-                      paddingBottom: 5,
-                      paddingRight: 10,
-                      paddingLeft: 5,
-                    }}
-                  >
-                    {item.name}
-                  </Text>
-                  <EditableText
-                    placeholder="Quantity"
-                    multiline={false}
-                    data-testid="course-weekTitle"
-                    textStyle={this.styles.style.fontFormSmallDarkGreyCourseTopEditable}
-                    inputStyle={{
-                      borderWidth: 1,
-                      borderColor: "#dddddd",
-                      marginTop: 5,
-                      marginBottom: 5,
-                      width: "20%",
-                      paddingTop: 5,
-                      paddingRight: 5,
-                      paddingBottom: 5,
-                      paddingLeft: 5,
-                      fontFamily: "Graphik-Regular-App",
-                      fontSize: 10,
-                      lineHeight: 15,
-                    }}
-                    onChange={(value) => {
-                      this.updateQuantity(index, index2, value)
-                    }}
-                    value={this.state.quantities[index][index2].toString()}
-                    isEditable={true}
-                  ></EditableText>
-                </View>
-              )
-            })
-          : null}
+        {item?.tiered?.map((item2, index2: number) => {
+          return (
+            <View key={index2} style={{ flexDirection: "row" }}>
+              <Text
+                style={{
+                  marginTop: 5,
+                  marginBottom: 5,
+                  paddingTop: 5,
+                  paddingBottom: 5,
+                  paddingRight: 10,
+                  paddingLeft: 5,
+                }}
+              >
+                {item2?.name ?? ""}
+              </Text>
+              <EditableText
+                placeholder="Quantity"
+                multiline={false}
+                data-testid="course-weekTitle"
+                textStyle={this.styles.style.fontFormSmallDarkGreyCourseTopEditable}
+                inputStyle={{
+                  borderWidth: 1,
+                  borderColor: "#dddddd",
+                  marginTop: 5,
+                  marginBottom: 5,
+                  width: "20%",
+                  paddingTop: 5,
+                  paddingRight: 5,
+                  paddingBottom: 5,
+                  paddingLeft: 5,
+                  fontFamily: "Graphik-Regular-App",
+                  fontSize: 10,
+                  lineHeight: 15,
+                }}
+                onChange={(value) => {
+                  this.updateQuantity(index, index2, parseInt(value))
+                }}
+                value={this.state.quantities[index][index2].toString()}
+                isEditable={true}
+              ></EditableText>
+            </View>
+          )
+        })}
         <JCSwitch
           containerWidth={500}
           switchLabel="I accept the EULA"
@@ -492,16 +480,16 @@ class BillingImpl extends JCComponent<Props, State> {
         })
       } else {
         let temp = this.state.userData
+
         temp.billingAddress[field] = value
         const user = await API.graphql(
           graphqlOperation(mutations.updateUser, {
             input: {
               id: this.state.userData?.id,
-              billingAddress: temp.billingAddress,
+              billingAddress: temp?.billingAddress,
             },
           })
         )
-
         this.setState({ userData: temp })
       }
     } catch (e) {
@@ -517,6 +505,7 @@ class BillingImpl extends JCComponent<Props, State> {
     if (!billingAddress.country) return false
     if (!billingAddress.city) return false
     if (!billingAddress.postal_code) return false
+    if (!this.state.currentProduct) return false
     return (
       this.state.currentProduct.length > 0 &&
       billingAddress.line1.length > 0 &&
@@ -835,7 +824,7 @@ class BillingImpl extends JCComponent<Props, State> {
                       >
                         Add another product
                       </JCButton>
-                      {this.state.currentProduct?.map((item, index: number) => {
+                      {this.state.currentProduct?.map((item: Product, index: number) => {
                         return this.renderProduct(item, index)
                       })}
 
