@@ -43,16 +43,21 @@ class ResourceDisplay extends JCComponent<Props, State> {
           if (episode != null) {
             title = episode?.title ?? ""
             subTitle = series?.title ?? ""
-            description = episode?.description ?? ""
+            description = episode.description
+              ? episode.description.replace(/(\r\n|\n|\r)/gm, "")
+              : ""
           } else if (series != null) {
             title = series?.title ?? ""
             subTitle = resource?.title ?? ""
-            description = series.description ?? ""
+            description = series.description ? series.description.replace(/(\r\n|\n|\r)/gm, "") : ""
           } else {
             title = resource?.title ?? ""
             subTitle = ""
-            description = resource?.description ?? ""
+            description = resource?.description
+              ? resource.description.replace(/(\r\n|\n|\r)/gm, "")
+              : ""
           }
+
           return (
             <ResourceContent
               hideEditButton={true}

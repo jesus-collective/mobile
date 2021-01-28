@@ -39,9 +39,15 @@ class ResourceScreenImpl extends JCComponent<Props, State> {
             navigation={this.props.navigation}
             groupId={this.props.route.params.id}
             showConfig={"detail"}
-            displayResource={this.props.route.params.resource}
-            displaySeries={this.props.route.params.series}
-            displayEpisode={this.props.route.params.episode}
+            displayResource={
+              this.props.route.params.resource == "null" ? null : this.props.route.params.resource
+            }
+            displaySeries={
+              this.props.route.params.series == "null" ? null : this.props.route.params.series
+            }
+            displayEpisode={
+              this.props.route.params.episode == "null" ? null : this.props.route.params.episode
+            }
           ></ResourceViewer>
         </Container>
       </StyleProvider>

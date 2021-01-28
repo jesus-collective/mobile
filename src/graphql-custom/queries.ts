@@ -883,6 +883,10 @@ export const getResourceRoot = /* GraphQL */ `
                 description1
                 description2
                 color
+                resourceID
+                seriesID
+                episodeID
+                url
                 image {
                   userId
                   filenameSmall

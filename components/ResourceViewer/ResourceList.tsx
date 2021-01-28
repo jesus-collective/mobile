@@ -39,7 +39,9 @@ class ResourceList extends JCComponent<Props, State> {
           if (resourceState.currentResource == null) return null
           return (
             <>
-              <Text style={{ textAlign: 'left', width: '100%', fontWeight: '800', marginTop: 15 }}>Title 1:</Text>
+              <Text style={{ textAlign: "left", width: "100%", fontWeight: "800", marginTop: 15 }}>
+                Title 1:
+              </Text>
               <EditableText
                 onChange={(val: string) => {
                   const tmp = page.state.settings
@@ -48,12 +50,14 @@ class ResourceList extends JCComponent<Props, State> {
                 }}
                 placeholder="Title 1"
                 multiline={false}
-                textStyle={{ textAlign: 'left', width: '100%', fontWeight: '400' }}
-                inputStyle={{ textAlign: 'left', width: '100%', fontWeight: '400' }}
+                textStyle={{ textAlign: "left", width: "100%", fontWeight: "400" }}
+                inputStyle={{ textAlign: "left", width: "100%", fontWeight: "400" }}
                 value={page.state.settings.title1 ?? ""}
                 isEditable={true}
               ></EditableText>
-              <Text style={{ textAlign: 'left', width: '100%', fontWeight: '800', marginTop: 15 }}>Title 2:</Text>
+              <Text style={{ textAlign: "left", width: "100%", fontWeight: "800", marginTop: 15 }}>
+                Title 2:
+              </Text>
 
               <EditableText
                 onChange={(val: string) => {
@@ -63,8 +67,13 @@ class ResourceList extends JCComponent<Props, State> {
                 }}
                 placeholder="Title 2"
                 multiline={false}
-                textStyle={{ textAlign: 'left', width: '100%', fontWeight: '400' }}
-                inputStyle={{ textAlign: 'left', width: '100%', fontWeight: '400', marginBottom: 15 }}
+                textStyle={{ textAlign: "left", width: "100%", fontWeight: "400" }}
+                inputStyle={{
+                  textAlign: "left",
+                  width: "100%",
+                  fontWeight: "400",
+                  marginBottom: 15,
+                }}
                 value={page.state.settings.title2 ?? ""}
                 isEditable={true}
               ></EditableText>
@@ -313,32 +322,34 @@ class ResourceList extends JCComponent<Props, State> {
       const resource: GetResourceData = resourceActions.getResourceByID(resourceID)
       const series: GetResourceSeriesData = resourceActions.getSeriesByID(resourceID, seriesID)
       const items: ListResourceEpisodesData | null | undefined = series?.episodes?.items
-      return items?.map((item, index: number) => {
-        if (item) {
-          const z: ResourcePageItemInput = {
-            id: item.id,
-            type: ResourcePageItemType.Card,
-            title1: item.title,
-            //            title2: item.subtitle,
-            style: ResourcePageItemStyle.CardManual,
-            description1: item.description,
-            //           image: item.image,
-            resourceID: resource?.id,
-            seriesID: series?.id,
-            episodeID: item.id,
-          }
-          return (
-            <ResourceCard
-              key={index}
-              resourceActions={this.props.resourceActions}
-              resourceState={this.props.resourceState}
-              pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
-              pageItem={z}
-              hideEditButton={true}
-            ></ResourceCard>
-          )
-        } else return null
-      })
+      return items
+        ?.sort((a, b) => (a?.episodeNumber ?? 0) - (b?.episodeNumber ?? 0))
+        .map((item, index: number) => {
+          if (item) {
+            const z: ResourcePageItemInput = {
+              id: item.id,
+              type: ResourcePageItemType.Card,
+              title1: item.title,
+              //            title2: item.subtitle,
+              style: ResourcePageItemStyle.CardManual,
+              description1: item.description,
+              //           image: item.image,
+              resourceID: resource?.id,
+              seriesID: series?.id,
+              episodeID: item.id,
+            }
+            return (
+              <ResourceCard
+                key={index}
+                resourceActions={this.props.resourceActions}
+                resourceState={this.props.resourceState}
+                pageItemIndex={this.props.pageItemIndex?.concat(this.props.pageItemIndex)}
+                pageItem={z}
+                hideEditButton={true}
+              ></ResourceCard>
+            )
+          } else return null
+        })
     } else return null
   }
   renderSeries(
