@@ -89,8 +89,8 @@ export default class EditableRichText extends JCComponent<Props, State> {
                 data: [...this.state.data, ...json.data.listDirectMessageRooms.items],
               },
               () => {
-                //TODO FIX
-                this.shouldCreateRoom(userActions)
+                // TODO FIX
+                // this.shouldCreateRoom(userActions)
               }
             )
           }
@@ -107,8 +107,8 @@ export default class EditableRichText extends JCComponent<Props, State> {
                 data: [...this.state.data, ...json2.data.listDirectMessageRooms.items],
               },
               () => {
-                //TODO FIX
-                this.shouldCreateRoom(shouldCreateRoom)
+                // TODO FIX
+                // this.shouldCreateRoom(shouldCreateRoom)
               }
             )
           }
