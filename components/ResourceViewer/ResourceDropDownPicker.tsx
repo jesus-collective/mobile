@@ -133,8 +133,8 @@ class ResourceDropDownPicker extends JCComponent<Props> {
                     fontSize: 14,
                     textAlign: "left",
                     color: "#FFFFFF",
-                    fontWeight: 600,
-                    alignSelf: 'center',
+                    fontWeight: "600",
+                    alignSelf: "center",
                     zIndex: 5000 + this.props.pageItemIndex.length,
                   }}
                   arrowColor="#FFFFFF"

@@ -33,7 +33,7 @@ interface Props {
 
   toggleSpacing?: string
   toggleMargin?: number
-  flexDirection?: string
+  flexDirection?: "row" | "column" | "row-reverse" | "column-reverse" | undefined
   toggleMarginLeft?: number
   toggleMarginTop?: number
   toggleMarginBottom?: number
@@ -75,10 +75,10 @@ export default class JCSwitch extends JCComponent<Props, State> {
       <View
         style={{
           width: this.props.containerWidth ? this.props.containerWidth : 175,
-          flexDirection: this.props.flexDirection ? this.props.flexDirection :"row",
-          justifyContent: this.props.toggleSpacing ? "space-between" : null,
-          marginTop: this.props.toggleMargin ? 10 : null,
-          marginBottom: this.props.toggleMargin ? 10 : null,
+          flexDirection: this.props.flexDirection ? this.props.flexDirection : "row",
+          justifyContent: this.props.toggleSpacing ? "space-between" : undefined,
+          marginTop: this.props.toggleMargin ? 10 : undefined,
+          marginBottom: this.props.toggleMargin ? 10 : undefined,
         }}
       >
         <Text style={this.styles.style.fontMyMapOptions}>{this.props.switchLabel}</Text>
@@ -91,9 +91,11 @@ export default class JCSwitch extends JCComponent<Props, State> {
               borderRadius: 25,
               width: 50,
               height: 20,
-              marginLeft: this.props.toggleMarginLeft ? this.props.toggleMarginLeft : null ,
-              marginTop: this.props.toggleMarginTop ? this.props.toggleMarginTop : null ,
-              marginBottom: this.props.toggleMarginBottom ? this.props.toggleMarginBottom : null ,
+              marginLeft: this.props.toggleMarginLeft ? this.props.toggleMarginLeft : undefined,
+              marginTop: this.props.toggleMarginTop ? this.props.toggleMarginTop : undefined,
+              marginBottom: this.props.toggleMarginBottom
+                ? this.props.toggleMarginBottom
+                : undefined,
             }}
           >
             <Animated.View

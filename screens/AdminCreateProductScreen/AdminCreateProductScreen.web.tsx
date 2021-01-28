@@ -386,7 +386,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                     }}
                     placeholder="Tier Name"
                     multiline={false}
-                    value={item.name}
+                    value={item.name ?? ""}
                   ></TextInput>
                   <TextInput
                     onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
@@ -394,7 +394,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                     }}
                     placeholder="Tier StripePaymentID"
                     multiline={false}
-                    value={item.stripePaymentID}
+                    value={item.stripePaymentID ?? ""}
                   ></TextInput>
                   <JCSwitch
                     switchLabel="Is Tier"
@@ -412,7 +412,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                 </>
               )
             })}
-            <AntDesign name="add" size={20} color="black" onPress={() => this.addTier()} />
+            <AntDesign name="plus" size={20} color="black" onPress={() => this.addTier()} />
             <EditableRichText
               onChange={(val: any) => {
                 this.setState({ marketingDescription: val })

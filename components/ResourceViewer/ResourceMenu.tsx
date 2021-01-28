@@ -177,7 +177,7 @@ class ResourceMenu extends JCComponent<Props> {
                               }}
                             >
                               <Ionicons
-                                name="ios-arrow-round-forward"
+                                name="arrow-forward-outline"
                                 style={this.headerStyles.style.icon}
                               />
                             </Button>
@@ -189,7 +189,7 @@ class ResourceMenu extends JCComponent<Props> {
                               }}
                             >
                               <Ionicons
-                                name="ios-arrow-round-back"
+                                name="arrow-back-outline"
                                 style={this.headerStyles.style.icon}
                               />
                             </Button>
@@ -202,7 +202,7 @@ class ResourceMenu extends JCComponent<Props> {
                               }}
                             >
                               <Ionicons
-                                name="ios-arrow-round-up"
+                                name="arrow-up-outline"
                                 style={this.headerStyles.style.icon}
                               />
                             </Button>
@@ -252,7 +252,7 @@ class ResourceMenu extends JCComponent<Props> {
                     fontSize: 14,
                     textAlign: "left",
                     color: "#FFFFFF",
-                    fontWeight: 600,
+                    fontWeight: "600",
                     alignSelf: "center",
                   }}
                   arrowColor="#FFFFFF"

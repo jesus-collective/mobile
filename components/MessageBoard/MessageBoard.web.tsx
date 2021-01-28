@@ -1120,26 +1120,37 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                   {item?.author?.currentRole ?? ""}
                 </Text>
                 {item?.when && (
-                <Text style={this.styles.style.MessageBoardFormDate}>
-                  {new Date(parseInt(item?.when, 10)).toLocaleString()}
-                </Text>
-              )}
+                  <Text style={this.styles.style.MessageBoardFormDate}>
+                    {new Date(parseInt(item?.when, 10)).toLocaleString()}
+                  </Text>
+                )}
               </Body>
             </Left>
-            <Right style={{ justifyContent: 'center' }}>
+            <Right style={{ justifyContent: "center" }}>
               {this.props.replies && (
                 <TouchableOpacity
-                  style={{ alignSelf: "flex-end", margin: 24, borderWidth: 1,borderColor: "#F0493E", borderRadius: 4, paddingTop: 7, paddingBottom: 7, paddingLeft: 23, paddingRight: 23 }}
+                  style={{
+                    alignSelf: "flex-end",
+                    margin: 24,
+                    borderWidth: 1,
+                    borderColor: "#F0493E",
+                    borderRadius: 4,
+                    paddingTop: 7,
+                    paddingBottom: 7,
+                    paddingLeft: 23,
+                    paddingRight: 23,
+                  }}
                   onPress={() => this.handlePressReply(item)}
                 >
                   <Text
                     style={{
                       fontFamily: "Graphik-Regular-App",
-                      fontWeight: "regular",
+                      fontWeight: "normal",
                       fontSize: 14,
                       lineHeight: 20,
                       color: "#F0493E",
-                    }}>
+                    }}
+                  >
                     reply
                   </Text>
                 </TouchableOpacity>
@@ -1162,7 +1173,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
               </TouchableOpacity>
             </Left>
             <Right style={this.styles.style.miniMessageBoardRight}>
-              <View> 
+              <View>
                 <Text style={this.styles.style.courseFormName}>
                   {item?.author?.given_name ?? ""} {item?.author?.family_name ?? ""}
                 </Text>
@@ -1173,23 +1184,34 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                 )}
               </View>
               <View>
-              {this.props.replies && (
-                <TouchableOpacity
-                  style={{ alignSelf: "flex-end", margin: 0, borderWidth: 1,borderColor: "#F0493E", borderRadius: 4, paddingTop: 7, paddingBottom: 7, paddingLeft: 23, paddingRight: 23 }}
-                  onPress={() => this.handlePressReply(item)}
-                >
-                  <Text
+                {this.props.replies && (
+                  <TouchableOpacity
                     style={{
-                      fontFamily: "Graphik-Regular-App",
-                      fontWeight: "regular",
-                      fontSize: 14,
-                      lineHeight: 20,
-                      color: "#F0493E",
-                    }}>
-                    reply
-                  </Text>
-                </TouchableOpacity>
-              )}
+                      alignSelf: "flex-end",
+                      margin: 0,
+                      borderWidth: 1,
+                      borderColor: "#F0493E",
+                      borderRadius: 4,
+                      paddingTop: 7,
+                      paddingBottom: 7,
+                      paddingLeft: 23,
+                      paddingRight: 23,
+                    }}
+                    onPress={() => this.handlePressReply(item)}
+                  >
+                    <Text
+                      style={{
+                        fontFamily: "Graphik-Regular-App",
+                        fontWeight: "normal",
+                        fontSize: 14,
+                        lineHeight: 20,
+                        color: "#F0493E",
+                      }}
+                    >
+                      reply
+                    </Text>
+                  </TouchableOpacity>
+                )}
               </View>
             </Right>
           </CardItem>
