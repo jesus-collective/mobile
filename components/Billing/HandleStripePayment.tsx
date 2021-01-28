@@ -1,10 +1,26 @@
 import { CardNumberElement } from "@stripe/react-stripe-js"
+import { Stripe, StripeElements } from "@stripe/stripe-js"
 import { API } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import * as mutations from "../../src/graphql/mutations"
+type PriceItems =
+  | (
+      | {
+          price: string | null | undefined
+          quantity: number
+        }
+      | undefined
+    )[]
+  | undefined
 
 export default class HandleStripePayment {
-  handleSubmit = async (stripe, elements, idempotency, priceItems, handleComplete) => {
+  handleSubmit = async (
+    stripe: Stripe,
+    elements: StripeElements,
+    idempotency: string,
+    priceItems: PriceItems,
+    handleComplete: () => void
+  ) => {
     // We don't want to let default form submission happen here,
     // which would refresh the page.
     // event.preventDefault();
@@ -37,7 +53,7 @@ export default class HandleStripePayment {
       console.log("[createPaymentMethod error]", error)
     } else {
       console.log("[PaymentMethod]", paymentMethod)
-      const paymentMethodId = paymentMethod.id
+      const paymentMethodId = paymentMethod?.id
       if (latestInvoicePaymentIntentStatus === "requires_payment_method") {
         // Update the payment method and retry invoice payment
         const invoiceId = localStorage.getItem("latestInvoiceId")
@@ -55,7 +71,14 @@ export default class HandleStripePayment {
       }
     }
   }
-  handleRequiresPaymentMethod({ subscription, paymentMethodId, priceItems }) {
+  handleRequiresPaymentMethod({
+    subscription,
+    paymentMethodId,
+    priceItems,
+  }: {
+    priceItems: PriceItems
+    paymentMethodId: string | undefined
+  }) {
     if (subscription.status === "active") {
       // subscription is active, no customer actions required.
       return { subscription, priceItems, paymentMethodId }
@@ -75,7 +98,14 @@ export default class HandleStripePayment {
       return { subscription, priceItems, paymentMethodId }
     }
   }
-  retryInvoiceWithNewPaymentMethod({ paymentMethodId, invoiceId, priceItems }, handleComplete) {
+  retryInvoiceWithNewPaymentMethod(
+    {
+      paymentMethodId,
+      invoiceId,
+      priceItems,
+    }: { invoiceId: string | null; priceItems: PriceItems; paymentMethodId: string | undefined },
+    handleComplete: () => void
+  ) {
     return (
       fetch("/retry-invoice", {
         method: "post",
@@ -126,7 +156,14 @@ export default class HandleStripePayment {
   displayError(error) {
     console.log({ error: error })
   }
-  createSubscription({ paymentMethodId, priceItems, idempotency }, handleComplete) {
+  createSubscription(
+    {
+      paymentMethodId,
+      priceItems,
+      idempotency,
+    }: { priceItems: PriceItems; paymentMethodId: string | undefined; idempotency: string },
+    handleComplete: () => void
+  ) {
     return (
       API.graphql({
         query: mutations.createSubscription,
@@ -137,7 +174,7 @@ export default class HandleStripePayment {
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })
-        .then((response) => {
+        .then((response: StripeSubscriptionData) => {
           return response
         })
         // If the card is declined, display an error to the user.
@@ -183,7 +220,7 @@ export default class HandleStripePayment {
     )
     var split1 = convertToJson1.split(",")
     const obj: any = {}
-    var map = split1.map((row) => {
+    var map = split1.map((row: string) => {
       row = row.toLowerCase().replaceAll("[\\[\\]\\{\\}]", "")
       var key = row.split("=", 2)[0].trim()
       var value = row.split("=", 2)[1].trim()
@@ -197,6 +234,10 @@ export default class HandleStripePayment {
     priceItems,
     paymentMethodId,
     isRetry,
+  }: {
+    priceItems: PriceItems
+    paymentMethodId: string | undefined
+    isRetry: boolean
   }) {
     if (subscription && subscription.status === "active") {
       // Subscription is active, no customer actions required.
@@ -247,7 +288,7 @@ export default class HandleStripePayment {
       return { subscription, priceItems, paymentMethodId }
     }
   }
-  async onSubscriptionComplete(result, handleComplete) {
+  async onSubscriptionComplete(result, handleComplete: () => void) {
     // Payment was successful.
     console.log({ onSubscriptionComplete: result })
     if (result.subscription.status === "active") {
