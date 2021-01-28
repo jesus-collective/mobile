@@ -1063,23 +1063,24 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         {item?.replies?.items?.map((reply, index) => {
           return this.renderMessage(reply, index, true)
         })}
-        {this.props.replies && (
+        {/* {this.props.replies && (
           <TouchableOpacity
-            style={{ alignSelf: "flex-end", marginRight: 24 }}
+            style={{ alignSelf: "flex-end", margin: 24, marginTop: 12, borderWidth: 1,borderColor: "#F0493E", borderRadius: 4, paddingTop: 7, paddingBottom: 7, paddingLeft: 23, paddingRight: 23 }}
             onPress={() => this.handlePressReply(item)}
           >
             <Text
               style={{
                 fontFamily: "Graphik-Regular-App",
-                fontWeight: "bold",
-                fontSize: 12,
-                color: "#333333",
+                fontWeight: "regular",
+                fontSize: 14,
+                lineHeight: 20,
+                color: "#F0493E",
               }}
             >
               reply
             </Text>
           </TouchableOpacity>
-        )}
+        )} */}
       </View>
     )
   }
@@ -1118,14 +1119,31 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                 <Text style={this.styles.style.groupFormRole}>
                   {item?.author?.currentRole ?? ""}
                 </Text>
-              </Body>
-            </Left>
-            <Right>
-              {item?.when && (
-                <Text style={this.styles.style.groupFormDate}>
+                {item?.when && (
+                <Text style={this.styles.style.MessageBoardFormDate}>
                   {new Date(parseInt(item?.when, 10)).toLocaleString()}
                 </Text>
               )}
+              </Body>
+            </Left>
+            <Right style={{ justifyContent: 'center' }}>
+            {this.props.replies && (
+              <TouchableOpacity
+                style={{ alignSelf: "flex-end", margin: 24, borderWidth: 1,borderColor: "#F0493E", borderRadius: 4, paddingTop: 7, paddingBottom: 7, paddingLeft: 23, paddingRight: 23 }}
+                onPress={() => this.handlePressReply(item)}
+              >
+                <Text
+                  style={{
+                    fontFamily: "Graphik-Regular-App",
+                    fontWeight: "regular",
+                    fontSize: 14,
+                    lineHeight: 20,
+                    color: "#F0493E",
+                  }}>
+                  reply
+                </Text>
+              </TouchableOpacity>
+            )}
             </Right>
           </CardItem>
         ) : (

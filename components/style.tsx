@@ -752,6 +752,15 @@ export default class MainStyles {
         color: "#333333",
         opacity: 0.5,
       },
+      MessageBoardFormDate: {
+        fontFamily: "Graphik-Regular-App",
+        fontWeight: "400",
+        fontSize: 12,
+        lineHeight: 16,
+        color: "#333333",
+        opacity: 0.5,
+        marginTop: 3
+      },
       myMapConversationCardRole: {
         fontFamily: "Graphik-Regular-App",
         textTransform: "uppercase",
