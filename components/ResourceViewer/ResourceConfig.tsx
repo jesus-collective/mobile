@@ -17,11 +17,9 @@ import {
   UpdateResourceSeriesInput,
 } from "../../src/API"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
-import ResourceConfigEpisodeModal from "./ResourceConfigEpisodeModal"
 import ResourceConfigEpisodes from "./ResourceConfigEpisodes"
 import ResourceConfigResources from "./ResourceConfigResources"
 import ResourceConfigSeries from "./ResourceConfigSeries"
-import ResourceConfigSeriesModal from "./ResourceConfigSeriesModal"
 import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
 import ResourceImage from "./ResourceImage"
 
@@ -161,19 +159,6 @@ class ResourceContentImpl extends JCComponent<Props, State> {
                 <ResourceConfigResources />
                 <ResourceConfigSeries />
                 <ResourceConfigEpisodes />
-
-                <ResourceConfigSeriesModal
-                  onHide={() => {
-                    this.setState({ showSeriesEditModal: false })
-                  }}
-                  visible={this.state.showSeriesEditModal}
-                />
-                <ResourceConfigEpisodeModal
-                  onHide={() => {
-                    this.setState({ showEpisodeEditModal: false })
-                  }}
-                  visible={this.state.showEpisodeEditModal}
-                />
               </View>
               {this.renderResourceButton(resourceState, resourceActions)}
             </>

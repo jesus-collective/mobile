@@ -36,7 +36,7 @@ class JCResourceConfigModalImpl extends JCComponent<Props, State> {
               }}
             >
               <View>
-                <Text style={{ fontWeight: 'bold'}}>Config</Text>
+                <Text style={{ fontWeight: "bold" }}>Config</Text>
                 <Picker
                   mode="dropdown"
                   style={{
@@ -74,9 +74,9 @@ class JCResourceConfigModalImpl extends JCComponent<Props, State> {
                   .getMenuItem(resourceState.currentMenuItem)
                   .readGroups?.map((item: UserGroupType, index: number) => {
                     return (
-                      <>
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                          <Text style={{ fontWeight: 'bold' }}>{item}</Text>
+                      <React.Fragment key={index}>
+                        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                          <Text style={{ fontWeight: "bold" }}>{item}</Text>
                           <TouchableOpacity
                             style={{ alignSelf: "center", marginLeft: 15 }}
                             onPress={() => {
@@ -93,7 +93,7 @@ class JCResourceConfigModalImpl extends JCComponent<Props, State> {
                             <AntDesign name="close" size={20} color="black" />
                           </TouchableOpacity>
                         </View>
-                      </>
+                      </React.Fragment>
                     )
                   })}
               </View>

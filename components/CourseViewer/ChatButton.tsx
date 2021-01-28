@@ -47,7 +47,7 @@ export default function ChatButton({ setShowChat, floating }: Props) {
         shadowColor: "#333333",
         shadowRadius: 15,
         shadowOffset: { width: 1, height: 3 },
-        shadowOpacity: 0.7,
+        shadowOpacity: 0.25,
         display: "flex",
         flexDirection: "row",
         alignItems: "center",

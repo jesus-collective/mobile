@@ -246,7 +246,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
                       Description:{" "}
                     </Text>
                     <TextInput
-                      style={{ height: 130, flexWrap: 'wrap' }}
+                      style={{ height: 130, flexWrap: "wrap" }}
                       onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
                         const tmp = this.state.currentEpisode
                         tmp.description = val.nativeEvent.text
@@ -255,7 +255,6 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
                       placeholder="description"
                       multiline={true}
                       value={this.state.currentEpisode.description ?? ""}
-                      style={{ height: 130 }}
                     ></TextInput>
                   </View>
                   <ResourceImage

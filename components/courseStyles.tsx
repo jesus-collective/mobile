@@ -426,7 +426,7 @@ const courseStyles = EStyleSheet.create({
   },
   coursePageMessageBoardLeftMini: {
     alignSelf: "center",
-    flex: 3,
+    flex: 1.5,
   },
   courseConversationCard: {
     paddingTop: 10,
@@ -857,6 +857,12 @@ const courseStyles = EStyleSheet.create({
     alignContent: "flex-start",
     alignItems: "flex-start",
     justifyContent: "flex-start",
+  },
+  miniMessageBoardRight: {
+    flexDirection: "row", 
+    flex: 7, 
+    alignItems: "space-between", 
+    justifyContent: 'space-between'
   },
   "@media (min-width: 350) and (max-width: 768)": {
     courseAssignmentScreenRightCard: {
@@ -1337,6 +1343,9 @@ const courseStyles = EStyleSheet.create({
     },
     courseHomeCalendarLabels: {
       marginBottom: 30,
+    },
+    miniMessageBoardRight: {
+      flex: 5, 
     },
   },
 })

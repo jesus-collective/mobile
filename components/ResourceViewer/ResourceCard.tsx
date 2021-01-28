@@ -157,7 +157,12 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                     numberOfLines={4}
                     multiline={false}
                     textStyle={{ textAlign: "left", width: "100%", fontWeight: "400" }}
-                    inputStyle={{ textAlign: "left", width: "100%", fontWeight: "400", height: 130 }}
+                    inputStyle={{
+                      textAlign: "left",
+                      width: "100%",
+                      fontWeight: "400",
+                      height: 130,
+                    }}
                     value={page.state.settings.description1 ?? ""}
                     isEditable={true}
                   ></EditableText>
@@ -218,6 +223,11 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
   }
 
   renderManualCard() {
+    if (
+      this.props.pageItem &&
+      (this.state.imageUrl == null || this.state.image != this.props.pageItem.image)
+    )
+      this.getImage(this.props.pageItem.image)
     return (
       <>
         <TouchableOpacity
@@ -392,6 +402,11 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
   }
 
   renderLargeCard() {
+    if (
+      this.props.pageItem &&
+      (this.state.imageUrl == null || this.state.image != this.props.pageItem.image)
+    )
+      this.getImage(this.props.pageItem.image)
     return (
       <ResourceCardImpl.Consumer>
         {({ resourceState, resourceActions }) => {
@@ -522,7 +537,9 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                 <CardItem
                   style={{
                     zIndex: 6000 + this.props.pageItemIndex.length,
-                    marginLeft: isMobile ? 10 : "4rem", justifyContent: 'space-between', width: 670
+                    marginLeft: isMobile ? 10 : "4rem",
+                    justifyContent: "space-between",
+                    width: 670,
                   }}
                 >
                   <View style={{ width: 320 }}>
@@ -552,8 +569,8 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                           height: 40,
                           width: 200,
                           zIndex: 5000 + this.props.pageItemIndex.length,
-                          marginTop: 5, 
-                          marginBottom: 5
+                          marginTop: 5,
+                          marginBottom: 5,
                         }}
                         dropDownStyle={{
                           backgroundColor: "#FF4438",
@@ -573,8 +590,8 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                           fontSize: 14,
                           textAlign: "left",
                           color: "#FFFFFF",
-                          fontWeight: 600,
-                        alignSelf: 'center',
+                          fontWeight: "600",
+                          alignSelf: "center",
                           zIndex: 5000 + this.props.pageItemIndex.length,
                         }}
                         arrowColor="#FFFFFF"
@@ -674,6 +691,13 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
           else {
             item = resourceActions.getResourceByID(this.props.pageItem.resourceID)
           }
+          if (
+            this.props.pageItem &&
+            (this.state.imageUrl == null ||
+              this.state.image != (item?.imageFile ? item?.imageFile : item?.image))
+          ) {
+            this.getImage(item?.imageFile ? item?.imageFile : item?.image)
+          }
           const youtubeID = this.getYoutubeId(item)
           return (
             <>
@@ -720,41 +744,115 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                         ]}
                       >
                         <Image
-                          style={this.styles.style.resourceHeaderImg}
+                          style={{
+                            width: 425,
+                            height: 211,
+                            borderTopLeftRadius: 8,
+                            borderTopRightRadius: 8,
+                          }}
                           source={this.state.imageUrl}
                           onError={() => {
-                            this.getImage(this.props.pageItem.image)
+                            this.getImage(item?.imageFile ? item?.imageFile : item?.image)
                           }}
                         ></Image>
                       </Animated.View>
                     ) : null}
                   </CardItem>
-
-                  <CardItem>
+                  <CardItem
+                    style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27, paddingBottom: 3 }}
+                  >
                     <EditableText
-                      multiline={true}
-                      textStyle={{ margin: 10 }}
-                      inputStyle={{ margin: 10 }}
-                      value={this.props.pageItem.title1 ?? ""}
+                      multiline={false}
+                      textStyle={{
+                        margin: 0,
+                        fontFamily: "Graphik-Bold-App",
+                        fontSize: 12,
+                        fontStyle: "bold",
+                        fontWeight: 800,
+                        lineHeight: 18,
+                        letterSpacing: 0.5,
+                        textAlign: "left",
+                        color: "#F0493E",
+                        textTransform: "uppercase",
+                      }}
+                      inputStyle={{
+                        margin: 0,
+                        fontFamily: "Graphik-Bold-App",
+                        fontSize: 12,
+                        fontStyle: "bold",
+                        fontWeight: 800,
+                        lineHeight: 18,
+                        letterSpacing: 0.5,
+                        textAlign: "left",
+                        color: "#F0493E",
+                        textTransform: "uppercase",
+                      }}
+                      value={""}
                       isEditable={false}
                     ></EditableText>
                   </CardItem>
-                  <CardItem>
+                  <CardItem
+                    style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27, paddingBottom: 10 }}
+                  >
                     <EditableText
-                      multiline={true}
-                      textStyle={{ margin: 10 }}
-                      inputStyle={{ margin: 10 }}
-                      value={this.props.pageItem.title2 ?? ""}
+                      multiline={false}
+                      textStyle={{
+                        margin: 0,
+                        fontFamily: "Graphik-Bold-App",
+                        fontSize: 24,
+                        fontStyle: "normal",
+                        fontWeight: 800,
+                        lineHeight: 36,
+                        letterSpacing: 0.5,
+                        textAlign: "left",
+                        color: "#404040",
+                      }}
+                      inputStyle={{
+                        margin: 0,
+                        fontFamily: "Graphik-Bold-App",
+                        fontSize: 24,
+                        fontStyle: "normal",
+                        fontWeight: 800,
+                        lineHeight: 36,
+                        letterSpacing: 0.5,
+                        textAlign: "left",
+                        color: "#404040",
+                      }}
+                      value={item?.title ?? ""}
                       isEditable={false}
                     ></EditableText>
                   </CardItem>
-                  <CardItem>
+                  <CardItem
+                    style={{ paddingTop: 0, paddingLeft: 27, paddingRight: 27, paddingBottom: 30 }}
+                  >
                     <EditableText
-                      multiline={true}
-                      textStyle={{ margin: 10 }}
-                      inputStyle={{ margin: 10 }}
-                      value={this.props.pageItem.description1 ?? ""}
+                      multiline={false}
+                      textStyle={{
+                        margin: 0,
+                        fontFamily: "Graphik-Regular-App",
+                        fontSize: 16,
+                        fontStyle: "normal",
+                        fontWeight: 400,
+                        lineHeight: 24,
+                        letterSpacing: 0.5,
+                        textAlign: "left",
+                        color: "#333333",
+                      }}
+                      inputStyle={{
+                        margin: 0,
+                        fontFamily: "Graphik-Regular-App",
+                        fontSize: 16,
+                        fontStyle: "normal",
+                        fontWeight: 400,
+                        lineHeight: 24,
+                        letterSpacing: 0.5,
+                        textAlign: "left",
+                        color: "#333333",
+                      }}
+                      value={item?.description ?? ""}
                       isEditable={false}
+                      numberOfLines={6}
+                      ellipsizeMode="tail"
                     ></EditableText>
                   </CardItem>
                 </Card>
@@ -787,11 +885,6 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
     }
   }
   render(): React.ReactNode {
-    if (
-      this.props.pageItem &&
-      (this.state.imageUrl == null || this.state.image != this.props.pageItem.image)
-    )
-      this.getImage(this.props.pageItem.image)
     return (
       <View style={{ zIndex: 6000 + this.props.pageItemIndex.length }}>{this.renderRouter()}</View>
     )

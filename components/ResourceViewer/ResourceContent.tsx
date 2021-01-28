@@ -120,7 +120,6 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     return (
       <DropDownPicker
         zIndex={5000 + pageItemIndex.length}
-        dropDownStyle={{ backgroundColor: '#FF4438' }}
         items={[
           {
             label: "Menu",
@@ -160,7 +159,13 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           },
         ]}
         placeholder="Add Page Item"
-        containerStyle={{ height: 40, width: 160, zIndex: 5000 + pageItemIndex.length, marginTop: 5, marginBottom: 100 }}
+        containerStyle={{
+          height: 40,
+          width: 160,
+          zIndex: 5000 + pageItemIndex.length,
+          marginTop: 5,
+          marginBottom: 100,
+        }}
         dropDownStyle={{
           backgroundColor: "#FF4438",
           width: 150,
@@ -177,8 +182,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           textAlign: "left",
           color: "#FFFFFF",
           zIndex: 5000 + pageItemIndex.length,
-          fontWeight: 600,
-          alignSelf: 'center'
+          fontWeight: "600",
+          alignSelf: "center",
         }}
         arrowColor="#FFFFFF"
         onChangeItem={(item) => {
@@ -200,8 +205,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
         }}
       >
         <Card>
-          <CardItem style={{ backgroundColor: '#FF4438' }}>
-            <Text style={{ color: '#FFFFFF', alignSelf: 'center' }}>Configure Page</Text>
+          <CardItem style={{ backgroundColor: "#FF4438" }}>
+            <Text style={{ color: "#FFFFFF", alignSelf: "center" }}>Configure Page</Text>
           </CardItem>
         </Card>
       </TouchableOpacity>
@@ -215,8 +220,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
         }}
       >
         <Card>
-          <CardItem style={{ backgroundColor: '#FF4438' }}>
-            <Text style={{ color: '#FFFFFF', alignSelf: 'center' }}>Configure JC Group</Text>
+          <CardItem style={{ backgroundColor: "#FF4438" }}>
+            <Text style={{ color: "#FFFFFF", alignSelf: "center" }}>Configure JC Group</Text>
           </CardItem>
         </Card>
       </TouchableOpacity>
@@ -232,8 +237,8 @@ class ResourceContentImpl extends JCComponent<Props, State> {
         }}
       >
         <Card>
-          <CardItem style={{ backgroundColor: '#FF4438' }}>
-            <Text style={{ color: '#FFFFFF', alignSelf: 'center' }}>Configure Resources</Text>
+          <CardItem style={{ backgroundColor: "#FF4438" }}>
+            <Text style={{ color: "#FFFFFF", alignSelf: "center" }}>Configure Resources</Text>
           </CardItem>
         </Card>
       </TouchableOpacity>
