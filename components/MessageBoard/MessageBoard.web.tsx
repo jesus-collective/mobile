@@ -1161,7 +1161,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                 {isReply && <ProfileImage size="small2" user={item?.author?.id ?? null} />}
               </TouchableOpacity>
             </Left>
-            <Right style={{ flexDirection: "row", flex: 7, alignItems: "space-between", justifyContent: 'space-between' }}>
+            <Right style={this.styles.style.miniMessageBoardRight}>
               <View> 
                 <Text style={this.styles.style.courseFormName}>
                   {item?.author?.given_name ?? ""} {item?.author?.family_name ?? ""}

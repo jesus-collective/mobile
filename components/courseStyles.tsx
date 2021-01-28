@@ -858,6 +858,12 @@ const courseStyles = EStyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "flex-start",
   },
+  miniMessageBoardRight: {
+    flexDirection: "row", 
+    flex: 7, 
+    alignItems: "space-between", 
+    justifyContent: 'space-between'
+  },
   "@media (min-width: 350) and (max-width: 768)": {
     courseAssignmentScreenRightCard: {
       marginLeft: 30,
@@ -1337,6 +1343,9 @@ const courseStyles = EStyleSheet.create({
     },
     courseHomeCalendarLabels: {
       marginBottom: 30,
+    },
+    miniMessageBoardRight: {
+      flex: 5, 
     },
   },
 })
