@@ -589,10 +589,21 @@ class BillingImpl extends JCComponent<Props, State> {
                       <View style={this.styles.style.signUpScreen1PaymentColumn1}>
                         <Text
                           style={{
+                            textAlign:"center",
                             fontFamily: "Graphik-Bold-App",
+                            marginBottom:8
                           }}
                         >
                           Processing Payment
+                        </Text>
+                        <Text
+                          style={{
+                            fontFamily: "Graphik-Bold-App",
+                            fontSize:11,
+                            marginBottom:8
+                          }}
+                        >
+                          Please wait while we process your payment. This may takes several seconds.
                         </Text>
                         <ActivityIndicator />
                       </View>
