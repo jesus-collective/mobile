@@ -15,35 +15,42 @@ Install (for windows replace ~ with c:\)
 ---
 1. Install the latest version of Node/NPM (www.nodejs.org)
 2. Install git (www.git-scm.com) - on mac just open terminal and type git and follow the prompts
-3. Clone the repo
-    From terminal on a linux machine:
-        a. mkdir ~/code
-        b. mkdir ~/code/jc
-        c. cd ~/code/jc
-        d. git clone https://github.com/jesus-collective/mobile.git
+3. Clone the repo - from terminal on a linux machine
 
-4. Install packages:
-    From terminal on a linux machine:
-        a. cd ~/code/jc/mobile
-        b. npm install
+```
+mkdir ~/code
+mkdir ~/code/jc
+cd ~/code/jc
+git clone https://github.com/jesus-collective/mobile.git
+```
+
+4. Install packages - from terminal on a linux machine:
+```
+cd ~/code/jc/mobile
+npm install
+```
     
-5. To Run: 
-    From terminal on a linux machine:
-        a. cd ~/code/jc/mobile
-        b. npm start
-        c. Press w (web), i (ios), a (android) to start the appropriate client
-        d. npm test (to run tests)
+5. To Run - from terminal on a linux machine:
+```
+cd ~/code/jc/mobile
+npm start
+# Press w (web), i (ios), a (android) to start the appropriate client
+npm test (to run tests)
+```
 
 6. Optionally - to setup AWS run:
-    a. npm install -g @aws-amplify/cli
-    b. cd ~/code/jc/mobile
-    c. amplify configure
-    d. amplify push
-    e. amplify publish -c
-        
+```
+npm install -g @aws-amplify/cli
+cd ~/code/jc/mobile
+amplify configure
+amplify push
+amplify publish -c
+```    
+
 To create deployment packages run:
-    a. cd ~/code/jc/mobile
-    b. npm run-script buildExpo
-    c. Download the resulting files.
-    d. Upload the files to the Apple or Google Play store.
+```
+cd ~/code/jc/mobile
+npm run-script buildExpo
+# Download the resulting files.
+# Upload the files to the Apple or Google Play store.
 
