@@ -83,7 +83,7 @@ export default class FooterJC extends JCComponent<Props> {
       name: "Contact Us",
       subMenu: [
         { name: "Get Involved", linkTo: null },
-        { name: "Connect With Us", webLink: "mailto:connect@jesuscollective.com" },
+        { name: "Connect", webLink: "mailto:connect@jesuscollective.com" },
         { name: "Report bugs", webLink: "mailto:bug.report@jesuscollective.com" },
       ],
     },
