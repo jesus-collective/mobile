@@ -531,9 +531,22 @@ class BillingImpl extends JCComponent<Props, State> {
               return this.state.processing == "complete" ? (
                 <Content>
                   <View style={this.styles.style.signUpScreen1PaymentColumn1}>
+                    <View style={{ alignSelf: 'center', width: 'auto' }}>
+                      {/* <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                        width="96" height="96"
+                        viewBox="0 0 172 172"
+                        style=" fill:#000000;"><g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><path d="M0,172v-172h172v172z" fill="none"></path><g fill="#71c209"><path d="M86,21.5c-35.55872,0 -64.5,28.9413 -64.5,64.5c0,35.55869 28.94128,64.5 64.5,64.5c35.55872,0 64.5,-28.94131 64.5,-64.5c0,-35.5587 -28.94128,-64.5 -64.5,-64.5zM86,32.25c29.749,0 53.75,24.00103 53.75,53.75c0,29.74897 -24.001,53.75 -53.75,53.75c-29.749,0 -53.75,-24.00103 -53.75,-53.75c0,-29.74897 24.001,-53.75 53.75,-53.75zM112.60205,64.5l-33.59375,33.59375l-17.46875,-17.46875l-7.5166,7.5271l24.98535,24.99585l41.12085,-41.12085z"></path></g></g>
+                      </svg> */}
+                    </View>
                     <Text
                       style={{
                         fontFamily: "Graphik-Bold-App",
+                        alignSelf: 'center',
+                        fontSize: 42,
+                        lineHeight: '51px',
+                        textAlign: 'center'
+                        width: '100%',
+                        marginBottom: 20
                       }}
                     >
                       We've received your payment.
@@ -557,6 +570,12 @@ class BillingImpl extends JCComponent<Props, State> {
                         <Text
                           style={{
                             fontFamily: "Graphik-Bold-App",
+                            alignSelf: 'center',
+                            fontSize: 42,
+                            lineHeight: '51px',
+                            textAlign: 'center',
+                            width: '100%',
+                            marginBottom: 20
                           }}
                         >
                           Processing Payment
@@ -836,7 +855,7 @@ class BillingImpl extends JCComponent<Props, State> {
                                 fontFamily: "Graphik-Regular-App",
                                 paddingTop: 10,
                                 paddingBottom: 10,
-                                paddingLeft: 45,
+                                paddingLeft: 0,
                                 paddingRight: 45,
                               }}
                             >
