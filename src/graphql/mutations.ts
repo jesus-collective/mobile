@@ -491,6 +491,7 @@ export const createUser = /* GraphQL */ `
         items {
           id
           owner
+          readGroups
           ownerOrgID
           type
           name
@@ -706,6 +707,7 @@ export const updateUser = /* GraphQL */ `
         items {
           id
           owner
+          readGroups
           ownerOrgID
           type
           name
@@ -921,6 +923,7 @@ export const deleteUser = /* GraphQL */ `
         items {
           id
           owner
+          readGroups
           ownerOrgID
           type
           name
@@ -1075,6 +1078,7 @@ export const createGroupMember = /* GraphQL */ `
       group {
         id
         owner
+        readGroups
         ownerOrgID
         ownerOrg {
           id
@@ -1280,6 +1284,7 @@ export const updateGroupMember = /* GraphQL */ `
       group {
         id
         owner
+        readGroups
         ownerOrgID
         ownerOrg {
           id
@@ -1485,6 +1490,7 @@ export const deleteGroupMember = /* GraphQL */ `
       group {
         id
         owner
+        readGroups
         ownerOrgID
         ownerOrg {
           id
@@ -1686,6 +1692,7 @@ export const createGroup = /* GraphQL */ `
     createGroup(input: $input) {
       id
       owner
+      readGroups
       ownerOrgID
       ownerOrg {
         id
@@ -1929,6 +1936,7 @@ export const updateGroup = /* GraphQL */ `
     updateGroup(input: $input) {
       id
       owner
+      readGroups
       ownerOrgID
       ownerOrg {
         id
@@ -2172,6 +2180,7 @@ export const deleteGroup = /* GraphQL */ `
     deleteGroup(input: $input) {
       id
       owner
+      readGroups
       ownerOrgID
       ownerOrg {
         id
@@ -3166,6 +3175,7 @@ export const createOrganization = /* GraphQL */ `
         items {
           id
           owner
+          readGroups
           ownerOrgID
           type
           name
@@ -3379,6 +3389,7 @@ export const updateOrganization = /* GraphQL */ `
         items {
           id
           owner
+          readGroups
           ownerOrgID
           type
           name
@@ -3592,6 +3603,7 @@ export const deleteOrganization = /* GraphQL */ `
         items {
           id
           owner
+          readGroups
           ownerOrgID
           type
           name
@@ -7141,6 +7153,7 @@ export const createMessage = /* GraphQL */ `
       room {
         id
         owner
+        readGroups
         ownerOrgID
         ownerOrg {
           id
@@ -7367,6 +7380,7 @@ export const updateMessage = /* GraphQL */ `
       room {
         id
         owner
+        readGroups
         ownerOrgID
         ownerOrg {
           id
@@ -7593,6 +7607,7 @@ export const deleteMessage = /* GraphQL */ `
       room {
         id
         owner
+        readGroups
         ownerOrgID
         ownerOrg {
           id
@@ -7827,6 +7842,7 @@ export const createReply = /* GraphQL */ `
         room {
           id
           owner
+          readGroups
           ownerOrgID
           type
           name
@@ -8096,6 +8112,7 @@ export const updateReply = /* GraphQL */ `
         room {
           id
           owner
+          readGroups
           ownerOrgID
           type
           name
@@ -8365,6 +8382,7 @@ export const deleteReply = /* GraphQL */ `
         room {
           id
           owner
+          readGroups
           ownerOrgID
           type
           name

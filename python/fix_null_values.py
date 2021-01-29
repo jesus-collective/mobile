@@ -42,11 +42,11 @@ def do_stuff(table, col, default, default_type):
             Key=item,
            
             ExpressionAttributeValues={
-                ':default': {default_type: default},
-                ':isNull': {'NULL': True}
+                ':default': {"L": [ { "S" : "legacyUserGroup1" } ]},
+             #   ':isNull': {'NULL': True}
             },
-            UpdateExpression="SET "+col+" = :default",
-            ConditionExpression="attribute_not_exists("+col+") OR "+col+" = :isNull",
+            UpdateExpression="SET "+col+" = :default"#,
+          #  ConditionExpression="attribute_not_exists("+col+") OR "+col+" = :isNull",
         )
         print(update)
 

@@ -17,6 +17,7 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
       room {
         id
         owner
+        readGroups
         ownerOrgID
         ownerOrg {
           id
@@ -264,6 +265,7 @@ export const onCreateGroupMember = /* GraphQL */ `
       group {
         id
         owner
+        readGroups
         ownerOrgID
         ownerOrg {
           id
@@ -469,6 +471,7 @@ export const onUpdateGroupMember = /* GraphQL */ `
       group {
         id
         owner
+        readGroups
         ownerOrgID
         ownerOrg {
           id
@@ -674,6 +677,7 @@ export const onDeleteGroupMember = /* GraphQL */ `
       group {
         id
         owner
+        readGroups
         ownerOrgID
         ownerOrg {
           id
@@ -871,10 +875,11 @@ export const onDeleteGroupMember = /* GraphQL */ `
   }
 `;
 export const onCreateGroup = /* GraphQL */ `
-  subscription OnCreateGroup {
-    onCreateGroup {
+  subscription OnCreateGroup($owner: String, $ownerOrgID: String) {
+    onCreateGroup(owner: $owner, ownerOrgID: $ownerOrgID) {
       id
       owner
+      readGroups
       ownerOrgID
       ownerOrg {
         id
@@ -1114,10 +1119,11 @@ export const onCreateGroup = /* GraphQL */ `
   }
 `;
 export const onUpdateGroup = /* GraphQL */ `
-  subscription OnUpdateGroup {
-    onUpdateGroup {
+  subscription OnUpdateGroup($owner: String, $ownerOrgID: String) {
+    onUpdateGroup(owner: $owner, ownerOrgID: $ownerOrgID) {
       id
       owner
+      readGroups
       ownerOrgID
       ownerOrg {
         id
@@ -1357,10 +1363,11 @@ export const onUpdateGroup = /* GraphQL */ `
   }
 `;
 export const onDeleteGroup = /* GraphQL */ `
-  subscription OnDeleteGroup {
-    onDeleteGroup {
+  subscription OnDeleteGroup($owner: String, $ownerOrgID: String) {
+    onDeleteGroup(owner: $owner, ownerOrgID: $ownerOrgID) {
       id
       owner
+      readGroups
       ownerOrgID
       ownerOrg {
         id
@@ -2355,6 +2362,7 @@ export const onCreateOrganization = /* GraphQL */ `
         items {
           id
           owner
+          readGroups
           ownerOrgID
           type
           name
@@ -2568,6 +2576,7 @@ export const onUpdateOrganization = /* GraphQL */ `
         items {
           id
           owner
+          readGroups
           ownerOrgID
           type
           name
@@ -2781,6 +2790,7 @@ export const onDeleteOrganization = /* GraphQL */ `
         items {
           id
           owner
+          readGroups
           ownerOrgID
           type
           name
@@ -6324,6 +6334,7 @@ export const onCreateMessage = /* GraphQL */ `
       room {
         id
         owner
+        readGroups
         ownerOrgID
         ownerOrg {
           id
@@ -6550,6 +6561,7 @@ export const onUpdateMessage = /* GraphQL */ `
       room {
         id
         owner
+        readGroups
         ownerOrgID
         ownerOrg {
           id
@@ -6776,6 +6788,7 @@ export const onDeleteMessage = /* GraphQL */ `
       room {
         id
         owner
+        readGroups
         ownerOrgID
         ownerOrg {
           id
@@ -7010,6 +7023,7 @@ export const onCreateReply = /* GraphQL */ `
         room {
           id
           owner
+          readGroups
           ownerOrgID
           type
           name
@@ -7279,6 +7293,7 @@ export const onUpdateReply = /* GraphQL */ `
         room {
           id
           owner
+          readGroups
           ownerOrgID
           type
           name
@@ -7548,6 +7563,7 @@ export const onDeleteReply = /* GraphQL */ `
         room {
           id
           owner
+          readGroups
           ownerOrgID
           type
           name
@@ -9595,6 +9611,7 @@ export const onCreateUser = /* GraphQL */ `
         items {
           id
           owner
+          readGroups
           ownerOrgID
           type
           name
@@ -9810,6 +9827,7 @@ export const onUpdateUser = /* GraphQL */ `
         items {
           id
           owner
+          readGroups
           ownerOrgID
           type
           name
@@ -10025,6 +10043,7 @@ export const onDeleteUser = /* GraphQL */ `
         items {
           id
           owner
+          readGroups
           ownerOrgID
           type
           name

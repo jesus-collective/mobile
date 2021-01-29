@@ -8,6 +8,7 @@ import { Text } from "react-native"
 import { AuthStateData } from "src/types"
 import { v4 as uuidv4 } from "uuid"
 import JCComponent from "../../components/JCComponent/JCComponent"
+import Sentry from "../../components/Sentry"
 import Validate from "../../components/Validate/Validate"
 import * as RootNavigation from "../../screens/HomeScreen//NavigationRoot"
 import {
@@ -104,7 +105,10 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
       const { attributes } = this.user
       const handleUser = async (getUser: any) => {
         console.log(getUser)
-        if (getUser.data.getUser === null) {
+        if (getUser.data == null) {
+          Sentry.captureEvent(getUser)
+        }
+        if (getUser.data.getUser == null) {
           console.log("Trying to create")
           const inputData: CreateUserInput = {
             id: this.user["username"],

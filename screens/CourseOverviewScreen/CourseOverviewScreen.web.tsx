@@ -19,7 +19,7 @@ import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import Validate from "../../components/Validate/Validate"
 import getTheme from "../../native-base-theme/components"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
-import { CreateCourseInfoInput, CreateGroupInput } from "../../src/API"
+import { CreateCourseInfoInput, CreateGroupInput, UserGroupType } from "../../src/API"
 import * as customQueries from "../../src/graphql-custom/queries"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
@@ -102,10 +102,10 @@ export default class CourseScreen extends JCComponent<Props, State> {
         })
     })
   }
-  getValueFromKey(myObject: unknown, string: string): string {
+  /* getValueFromKey(myObject: unknown, string: string): string {
     const key = Object.keys(myObject).filter((k) => k.includes(string))
     return key.length ? myObject[key[0]] : ""
-  }
+  }*/
   setMembers() {
     this.state.memberIDs.map((id) => {
       const getUser: any = API.graphql({
@@ -154,6 +154,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
           promotionalText: JSON.stringify(
             convertToRaw(EditorState.createEmpty().getCurrentContent())
           ),
+          readGroups: [UserGroupType.partners, UserGroupType.legacyUserGroup1],
           //   organizerUser: { name: "" },
           //   instructors: [],
           //   course: []

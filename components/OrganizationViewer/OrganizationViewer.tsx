@@ -314,7 +314,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
         if (this.props.finalizeProfile) this.props.finalizeProfile()
         else this.setState({ dirty: false, editMode: false })
       } catch (e) {
-        Sentry.captureException(e)
+        Sentry.captureException(e.errors || e)
         console.log(e)
       }
     }

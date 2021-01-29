@@ -616,6 +616,7 @@ export const groupByTypeForMyGroups = /* GraphQL */ `
         }
         type
         name
+        readGroups
         description
         memberCount
         image

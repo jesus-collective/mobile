@@ -117,6 +117,23 @@ export type AlertConfigInput = {
   emailPromotions?: string | null,
 };
 
+export enum UserGroupType {
+  verifiedUsers = "verifiedUsers",
+  admin = "admin",
+  courseAdmin = "courseAdmin",
+  courseCoach = "courseCoach",
+  courseUser = "courseUser",
+  friends = "friends",
+  partners = "partners",
+  subscriptionkyearlyyears = "subscriptionkyearlyyears",
+  subscriptionkykids = "subscriptionkykids",
+  subscriptionkyyouth = "subscriptionkyyouth",
+  subscriptionValid = "subscriptionValid",
+  userpool = "userpool",
+  legacyUserGroup1 = "legacyUserGroup1",
+}
+
+
 export type UpdateUserInput = {
   id: string,
   given_name?: string | null,
@@ -174,6 +191,7 @@ export type DeleteGroupMemberInput = {
 export type CreateGroupInput = {
   id?: string | null,
   owner: string,
+  readGroups?: Array< UserGroupType | null > | null,
   ownerOrgID: string,
   type: string,
   name: string,
@@ -197,6 +215,7 @@ export type CreateGroupInput = {
 export type UpdateGroupInput = {
   id: string,
   owner?: string | null,
+  readGroups?: Array< UserGroupType | null > | null,
   ownerOrgID?: string | null,
   type?: string | null,
   name?: string | null,
@@ -611,23 +630,6 @@ export type CreateResourceRootInput = {
   owner?: string | null,
 };
 
-export enum UserGroupType {
-  verifiedUsers = "verifiedUsers",
-  admin = "admin",
-  courseAdmin = "courseAdmin",
-  courseCoach = "courseCoach",
-  courseUser = "courseUser",
-  friends = "friends",
-  partners = "partners",
-  subscriptionkyearlyyears = "subscriptionkyearlyyears",
-  subscriptionkykids = "subscriptionkykids",
-  subscriptionkyyouth = "subscriptionkyyouth",
-  subscriptionValid = "subscriptionValid",
-  userpool = "userpool",
-  legacyUserGroup1 = "legacyUserGroup1",
-}
-
-
 export enum ResourceMenuItemType {
   resource = "resource",
   menuItem = "menuItem",
@@ -952,6 +954,7 @@ export type ModelIDFilterInput = {
 export type ModelGroupFilterInput = {
   id?: ModelIDFilterInput | null,
   owner?: ModelStringFilterInput | null,
+  readGroups?: ModelUserGroupTypeListFilterInput | null,
   ownerOrgID?: ModelIDFilterInput | null,
   type?: ModelStringFilterInput | null,
   name?: ModelStringFilterInput | null,
@@ -985,6 +988,13 @@ export type ModelStringFilterInput = {
   notContains?: string | null,
   between?: Array< string | null > | null,
   beginsWith?: string | null,
+};
+
+export type ModelUserGroupTypeListFilterInput = {
+  eq?: Array< UserGroupType | null > | null,
+  ne?: Array< UserGroupType | null > | null,
+  contains?: UserGroupType | null,
+  notContains?: UserGroupType | null,
 };
 
 export type ModelIntFilterInput = {
@@ -1206,13 +1216,6 @@ export type ModelResourceMenuItemFilterInput = {
   and?: Array< ModelResourceMenuItemFilterInput | null > | null,
   or?: Array< ModelResourceMenuItemFilterInput | null > | null,
   not?: ModelResourceMenuItemFilterInput | null,
-};
-
-export type ModelUserGroupTypeListFilterInput = {
-  eq?: Array< UserGroupType | null > | null,
-  ne?: Array< UserGroupType | null > | null,
-  contains?: UserGroupType | null,
-  notContains?: UserGroupType | null,
 };
 
 export type ModelResourceMenuItemTypeFilterInput = {
@@ -2083,6 +2086,7 @@ export type CreateUserMutation = {
         __typename: "Group",
         id: string,
         owner: string,
+        readGroups: Array< UserGroupType | null > | null,
         ownerOrgID: string,
         type: string,
         name: string,
@@ -2328,6 +2332,7 @@ export type UpdateUserMutation = {
         __typename: "Group",
         id: string,
         owner: string,
+        readGroups: Array< UserGroupType | null > | null,
         ownerOrgID: string,
         type: string,
         name: string,
@@ -2573,6 +2578,7 @@ export type DeleteUserMutation = {
         __typename: "Group",
         id: string,
         owner: string,
+        readGroups: Array< UserGroupType | null > | null,
         ownerOrgID: string,
         type: string,
         name: string,
@@ -2751,6 +2757,7 @@ export type CreateGroupMemberMutation = {
       __typename: "Group",
       id: string,
       owner: string,
+      readGroups: Array< UserGroupType | null > | null,
       ownerOrgID: string,
       ownerOrg:  {
         __typename: "Organization",
@@ -2982,6 +2989,7 @@ export type UpdateGroupMemberMutation = {
       __typename: "Group",
       id: string,
       owner: string,
+      readGroups: Array< UserGroupType | null > | null,
       ownerOrgID: string,
       ownerOrg:  {
         __typename: "Organization",
@@ -3213,6 +3221,7 @@ export type DeleteGroupMemberMutation = {
       __typename: "Group",
       id: string,
       owner: string,
+      readGroups: Array< UserGroupType | null > | null,
       ownerOrgID: string,
       ownerOrg:  {
         __typename: "Organization",
@@ -3439,6 +3448,7 @@ export type CreateGroupMutation = {
     __typename: "Group",
     id: string,
     owner: string,
+    readGroups: Array< UserGroupType | null > | null,
     ownerOrgID: string,
     ownerOrg:  {
       __typename: "Organization",
@@ -3715,6 +3725,7 @@ export type UpdateGroupMutation = {
     __typename: "Group",
     id: string,
     owner: string,
+    readGroups: Array< UserGroupType | null > | null,
     ownerOrgID: string,
     ownerOrg:  {
       __typename: "Organization",
@@ -3991,6 +4002,7 @@ export type DeleteGroupMutation = {
     __typename: "Group",
     id: string,
     owner: string,
+    readGroups: Array< UserGroupType | null > | null,
     ownerOrgID: string,
     ownerOrg:  {
       __typename: "Organization",
@@ -5118,6 +5130,7 @@ export type CreateOrganizationMutation = {
         __typename: "Group",
         id: string,
         owner: string,
+        readGroups: Array< UserGroupType | null > | null,
         ownerOrgID: string,
         type: string,
         name: string,
@@ -5353,6 +5366,7 @@ export type UpdateOrganizationMutation = {
         __typename: "Group",
         id: string,
         owner: string,
+        readGroups: Array< UserGroupType | null > | null,
         ownerOrgID: string,
         type: string,
         name: string,
@@ -5588,6 +5602,7 @@ export type DeleteOrganizationMutation = {
         __typename: "Group",
         id: string,
         owner: string,
+        readGroups: Array< UserGroupType | null > | null,
         ownerOrgID: string,
         type: string,
         name: string,
@@ -9792,6 +9807,7 @@ export type CreateMessageMutation = {
       __typename: "Group",
       id: string,
       owner: string,
+      readGroups: Array< UserGroupType | null > | null,
       ownerOrgID: string,
       ownerOrg:  {
         __typename: "Organization",
@@ -10046,6 +10062,7 @@ export type UpdateMessageMutation = {
       __typename: "Group",
       id: string,
       owner: string,
+      readGroups: Array< UserGroupType | null > | null,
       ownerOrgID: string,
       ownerOrg:  {
         __typename: "Organization",
@@ -10300,6 +10317,7 @@ export type DeleteMessageMutation = {
       __typename: "Group",
       id: string,
       owner: string,
+      readGroups: Array< UserGroupType | null > | null,
       ownerOrgID: string,
       ownerOrg:  {
         __typename: "Organization",
@@ -10563,6 +10581,7 @@ export type CreateReplyMutation = {
         __typename: "Group",
         id: string,
         owner: string,
+        readGroups: Array< UserGroupType | null > | null,
         ownerOrgID: string,
         type: string,
         name: string,
@@ -10863,6 +10882,7 @@ export type UpdateReplyMutation = {
         __typename: "Group",
         id: string,
         owner: string,
+        readGroups: Array< UserGroupType | null > | null,
         ownerOrgID: string,
         type: string,
         name: string,
@@ -11163,6 +11183,7 @@ export type DeleteReplyMutation = {
         __typename: "Group",
         id: string,
         owner: string,
+        readGroups: Array< UserGroupType | null > | null,
         ownerOrgID: string,
         type: string,
         name: string,
@@ -13455,6 +13476,7 @@ export type GetGroupQuery = {
     __typename: "Group",
     id: string,
     owner: string,
+    readGroups: Array< UserGroupType | null > | null,
     ownerOrgID: string,
     ownerOrg:  {
       __typename: "Organization",
@@ -13735,6 +13757,7 @@ export type ListGroupsQuery = {
       __typename: "Group",
       id: string,
       owner: string,
+      readGroups: Array< UserGroupType | null > | null,
       ownerOrgID: string,
       ownerOrg:  {
         __typename: "Organization",
@@ -14032,6 +14055,7 @@ export type GetOrganizationQuery = {
         __typename: "Group",
         id: string,
         owner: string,
+        readGroups: Array< UserGroupType | null > | null,
         ownerOrgID: string,
         type: string,
         name: string,
@@ -16231,6 +16255,7 @@ export type GetMessageQuery = {
       __typename: "Group",
       id: string,
       owner: string,
+      readGroups: Array< UserGroupType | null > | null,
       ownerOrgID: string,
       ownerOrg:  {
         __typename: "Organization",
@@ -16489,6 +16514,7 @@ export type ListMessagesQuery = {
         __typename: "Group",
         id: string,
         owner: string,
+        readGroups: Array< UserGroupType | null > | null,
         ownerOrgID: string,
         type: string,
         name: string,
@@ -17608,6 +17634,7 @@ export type GroupMemberByGroupQuery = {
         __typename: "Group",
         id: string,
         owner: string,
+        readGroups: Array< UserGroupType | null > | null,
         ownerOrgID: string,
         type: string,
         name: string,
@@ -17688,6 +17715,7 @@ export type GroupMemberByUserQuery = {
         __typename: "Group",
         id: string,
         owner: string,
+        readGroups: Array< UserGroupType | null > | null,
         ownerOrgID: string,
         type: string,
         name: string,
@@ -17763,6 +17791,7 @@ export type GroupByTypeQuery = {
       __typename: "Group",
       id: string,
       owner: string,
+      readGroups: Array< UserGroupType | null > | null,
       ownerOrgID: string,
       ownerOrg:  {
         __typename: "Organization",
@@ -18165,6 +18194,7 @@ export type MessagesByRoomQuery = {
         __typename: "Group",
         id: string,
         owner: string,
+        readGroups: Array< UserGroupType | null > | null,
         ownerOrgID: string,
         type: string,
         name: string,
@@ -18243,6 +18273,7 @@ export type SearchGroupsQuery = {
       __typename: "Group",
       id: string,
       owner: string,
+      readGroups: Array< UserGroupType | null > | null,
       ownerOrgID: string,
       ownerOrg:  {
         __typename: "Organization",
@@ -18554,6 +18585,7 @@ export type GetUserQuery = {
         __typename: "Group",
         id: string,
         owner: string,
+        readGroups: Array< UserGroupType | null > | null,
         ownerOrgID: string,
         type: string,
         name: string,
@@ -18867,6 +18899,7 @@ export type OnCreateMessageByRoomIdSubscription = {
       __typename: "Group",
       id: string,
       owner: string,
+      readGroups: Array< UserGroupType | null > | null,
       ownerOrgID: string,
       ownerOrg:  {
         __typename: "Organization",
@@ -19138,6 +19171,7 @@ export type OnCreateGroupMemberSubscription = {
       __typename: "Group",
       id: string,
       owner: string,
+      readGroups: Array< UserGroupType | null > | null,
       ownerOrgID: string,
       ownerOrg:  {
         __typename: "Organization",
@@ -19365,6 +19399,7 @@ export type OnUpdateGroupMemberSubscription = {
       __typename: "Group",
       id: string,
       owner: string,
+      readGroups: Array< UserGroupType | null > | null,
       ownerOrgID: string,
       ownerOrg:  {
         __typename: "Organization",
@@ -19592,6 +19627,7 @@ export type OnDeleteGroupMemberSubscription = {
       __typename: "Group",
       id: string,
       owner: string,
+      readGroups: Array< UserGroupType | null > | null,
       ownerOrgID: string,
       ownerOrg:  {
         __typename: "Organization",
@@ -19809,11 +19845,17 @@ export type OnDeleteGroupMemberSubscription = {
   } | null,
 };
 
+export type OnCreateGroupSubscriptionVariables = {
+  owner?: string | null,
+  ownerOrgID?: string | null,
+};
+
 export type OnCreateGroupSubscription = {
   onCreateGroup:  {
     __typename: "Group",
     id: string,
     owner: string,
+    readGroups: Array< UserGroupType | null > | null,
     ownerOrgID: string,
     ownerOrg:  {
       __typename: "Organization",
@@ -20079,6 +20121,11 @@ export type OnCreateGroupSubscription = {
       updatedAt: string,
     } | null,
   } | null,
+};
+
+export type OnUpdateGroupSubscriptionVariables = {
+  owner?: string | null,
+  ownerOrgID?: string | null,
 };
 
 export type OnUpdateGroupSubscription = {
@@ -20086,6 +20133,7 @@ export type OnUpdateGroupSubscription = {
     __typename: "Group",
     id: string,
     owner: string,
+    readGroups: Array< UserGroupType | null > | null,
     ownerOrgID: string,
     ownerOrg:  {
       __typename: "Organization",
@@ -20353,11 +20401,17 @@ export type OnUpdateGroupSubscription = {
   } | null,
 };
 
+export type OnDeleteGroupSubscriptionVariables = {
+  owner?: string | null,
+  ownerOrgID?: string | null,
+};
+
 export type OnDeleteGroupSubscription = {
   onDeleteGroup:  {
     __typename: "Group",
     id: string,
     owner: string,
+    readGroups: Array< UserGroupType | null > | null,
     ownerOrgID: string,
     ownerOrg:  {
       __typename: "Organization",
@@ -21469,6 +21523,7 @@ export type OnCreateOrganizationSubscription = {
         __typename: "Group",
         id: string,
         owner: string,
+        readGroups: Array< UserGroupType | null > | null,
         ownerOrgID: string,
         type: string,
         name: string,
@@ -21700,6 +21755,7 @@ export type OnUpdateOrganizationSubscription = {
         __typename: "Group",
         id: string,
         owner: string,
+        readGroups: Array< UserGroupType | null > | null,
         ownerOrgID: string,
         type: string,
         name: string,
@@ -21931,6 +21987,7 @@ export type OnDeleteOrganizationSubscription = {
         __typename: "Group",
         id: string,
         owner: string,
+        readGroups: Array< UserGroupType | null > | null,
         ownerOrgID: string,
         type: string,
         name: string,
@@ -26023,6 +26080,7 @@ export type OnCreateMessageSubscription = {
       __typename: "Group",
       id: string,
       owner: string,
+      readGroups: Array< UserGroupType | null > | null,
       ownerOrgID: string,
       ownerOrg:  {
         __typename: "Organization",
@@ -26273,6 +26331,7 @@ export type OnUpdateMessageSubscription = {
       __typename: "Group",
       id: string,
       owner: string,
+      readGroups: Array< UserGroupType | null > | null,
       ownerOrgID: string,
       ownerOrg:  {
         __typename: "Organization",
@@ -26523,6 +26582,7 @@ export type OnDeleteMessageSubscription = {
       __typename: "Group",
       id: string,
       owner: string,
+      readGroups: Array< UserGroupType | null > | null,
       ownerOrgID: string,
       ownerOrg:  {
         __typename: "Organization",
@@ -26782,6 +26842,7 @@ export type OnCreateReplySubscription = {
         __typename: "Group",
         id: string,
         owner: string,
+        readGroups: Array< UserGroupType | null > | null,
         ownerOrgID: string,
         type: string,
         name: string,
@@ -27078,6 +27139,7 @@ export type OnUpdateReplySubscription = {
         __typename: "Group",
         id: string,
         owner: string,
+        readGroups: Array< UserGroupType | null > | null,
         ownerOrgID: string,
         type: string,
         name: string,
@@ -27374,6 +27436,7 @@ export type OnDeleteReplySubscription = {
         __typename: "Group",
         id: string,
         owner: string,
+        readGroups: Array< UserGroupType | null > | null,
         ownerOrgID: string,
         type: string,
         name: string,
@@ -29654,6 +29717,7 @@ export type OnCreateUserSubscription = {
         __typename: "Group",
         id: string,
         owner: string,
+        readGroups: Array< UserGroupType | null > | null,
         ownerOrgID: string,
         type: string,
         name: string,
@@ -29895,6 +29959,7 @@ export type OnUpdateUserSubscription = {
         __typename: "Group",
         id: string,
         owner: string,
+        readGroups: Array< UserGroupType | null > | null,
         ownerOrgID: string,
         type: string,
         name: string,
@@ -30136,6 +30201,7 @@ export type OnDeleteUserSubscription = {
         __typename: "Group",
         id: string,
         owner: string,
+        readGroups: Array< UserGroupType | null > | null,
         ownerOrgID: string,
         type: string,
         name: string,

@@ -8,11 +8,10 @@ const HomeScreen = lazy(() => import("./HomeScreen"))
 const ConversationScreen = lazy(() => import("../ConversationScreen/ConversationScreen"))
 const OrganizationsScreen = lazy(() => import("../OrganizationsScreen/OrganizationsScreen"))
 const OrganizationScreen = lazy(() => import("../OrganizationScreen/OrganizationScreen"))
-const GroupScreen = lazy(() => import("../GroupScreen/GroupScreen"))
+const GenericGroupScreen = lazy(() => import("../GenericGroupScreen/GenericGroupScreen"))
 const CoursesScreen = lazy(() => import("../CoursesScreen/CoursesScreen"))
 const CourseOverviewScreen = lazy(() => import("../CourseOverviewScreen/CourseOverviewScreen"))
 const CourseHomeScreen = lazy(() => import("../CourseHomeScreen/CourseHomeScreen"))
-const EventScreen = lazy(() => import("../EventScreen/EventScreen"))
 const GroupsScreen = lazy(() => import("../GroupsScreen/GroupsScreen"))
 const EventsScreen = lazy(() => import("../EventsScreen/EventsScreen"))
 const ResourceScreen = lazy(() => import("../ResourceScreen/ResourceScreen"))
@@ -64,18 +63,13 @@ export default class MainAppRouter extends JCComponent {
                     options={{ title: "Jesus Collective" }}
                   />
                   <Stack.Screen
-                    name="GroupScreen"
-                    component={GroupScreen}
+                    name="GenericGroupScreen"
+                    component={GenericGroupScreen}
                     options={{ title: "Jesus Collective" }}
                   />
                   <Stack.Screen
                     name="GroupsScreen"
                     component={GroupsScreen}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="EventScreen"
-                    component={EventScreen}
                     options={{ title: "Jesus Collective" }}
                   />
                   <Stack.Screen
@@ -188,17 +182,12 @@ export default class MainAppRouter extends JCComponent {
                     options={{ title: "Jesus Collective" }}
                   />
                   <Stack.Screen
-                    name="GroupScreen"
+                    name="GenericGroupScreen"
                     component={Nothing}
                     options={{ title: "Jesus Collective" }}
                   />
                   <Stack.Screen
                     name="GroupsScreen"
-                    component={Nothing}
-                    options={{ title: "Jesus Collective" }}
-                  />
-                  <Stack.Screen
-                    name="EventScreen"
                     component={Nothing}
                     options={{ title: "Jesus Collective" }}
                   />

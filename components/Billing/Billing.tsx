@@ -118,7 +118,7 @@ class BillingImpl extends JCComponent<Props, State> {
         console.log({ USER: getUser.data?.getUser })
       }
     } catch (e) {
-      Sentry.captureException(e)
+      Sentry.captureException(e.errors || e)
       console.log({ UserError: e })
     }
     try {
@@ -184,7 +184,7 @@ class BillingImpl extends JCComponent<Props, State> {
       console.log({ customer: customer })
       //customerId = customer.data.createCustomer.customer.id;
     } catch (e) {
-      Sentry.captureException(e)
+      Sentry.captureException(e.errors || e)
       console.log(e)
     }
   }
@@ -220,7 +220,7 @@ class BillingImpl extends JCComponent<Props, State> {
       console.log({ invoice: invoice.data.previewInvoice.invoice })
       this.setState({ invoice: invoice.data.previewInvoice.invoice })
     } catch (e) {
-      Sentry.captureException(e)
+      Sentry.captureException(e.errors || e)
       console.log(e)
     }
   }
@@ -317,7 +317,7 @@ class BillingImpl extends JCComponent<Props, State> {
         )
         console.log(status)
       } catch (e) {
-        Sentry.captureException(e)
+        Sentry.captureException(e.errors || e)
         console.log({ "Payment Error": e })
       }
     })
@@ -544,7 +544,7 @@ class BillingImpl extends JCComponent<Props, State> {
         this.setState({ userData: temp })
       }
     } catch (e) {
-      Sentry.captureException(e)
+      Sentry.captureException(e.errors || e)
       console.log({ errorUpdating: e })
     }
   }
@@ -583,7 +583,7 @@ class BillingImpl extends JCComponent<Props, State> {
               return this.state.processing === "complete" ? (
                 <Content>
                   <View style={this.styles.style.signUpScreen1PaymentColumn1}>
-                    <View style={{ alignSelf: 'center', width: 'auto' }}>
+                    <View style={{ alignSelf: "center", width: "auto" }}>
                       {/* <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
                         width="96" height="96"
                         viewBox="0 0 172 172"
@@ -593,7 +593,7 @@ class BillingImpl extends JCComponent<Props, State> {
                     <Text
                       style={{
                         fontFamily: "Graphik-Bold-App",
-                        alignSelf: 'center',
+                        alignSelf: "center",
                         fontSize: 42,
                         lineHeight: 51,
                         textAlign: 'center',
@@ -624,7 +624,7 @@ class BillingImpl extends JCComponent<Props, State> {
                         <Text
                           style={{
                             fontFamily: "Graphik-Bold-App",
-                            alignSelf: 'center',
+                            alignSelf: "center",
                             fontSize: 42,
                             lineHeight: 51,
                             textAlign: 'center',
