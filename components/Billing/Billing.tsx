@@ -544,7 +544,7 @@ class BillingImpl extends JCComponent<Props, State> {
                         alignSelf: 'center',
                         fontSize: 42,
                         lineHeight: '51px',
-                        textAlign: 'center'
+                        textAlign: 'center',
                         width: '100%',
                         marginBottom: 20
                       }}
