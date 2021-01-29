@@ -500,11 +500,11 @@ class BillingImpl extends JCComponent<Props, State> {
         console.log("Subscription is not yet active")
       }
       await userActions.recheckUserState()
-    },[1000])
+    },[2000])
     setTimeout(()=>{
       clearInterval(a)
       this.setState({validatingUser:false, errorMsg:"Something went wrong. Please try again later or contact support."})
-    },5000)
+    },60000)
   }
   async handleInputChange(value: string, field: string) {
     console.log({ field: value })
@@ -991,6 +991,7 @@ class BillingImpl extends JCComponent<Props, State> {
                                 : ""}
                           </Text>
                       </View>
+                      <Text style={{ color: "red", textAlign:"center", marginBottom:4 }}>{this.state.errorMsg}</Text>
                       <JCButton
                           buttonType={ButtonTypes.Solid}
                           onPress={() => {
@@ -1001,7 +1002,6 @@ class BillingImpl extends JCComponent<Props, State> {
                       >
                           Process Payment
                       </JCButton>
-                      <Text style={{ color: "red" }}>{this.state.errorMsg}</Text>
 
                       </View>
                     </Content>
