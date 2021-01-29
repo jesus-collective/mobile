@@ -28,9 +28,8 @@ const linking = {
             path: "",
             screens: {
               HomeScreen: "home",
-              GroupScreen: "group/:id/:create",
+              GenericGroupScreen: "group/:groupType/:id/:create",
               GroupsScreen: "groups",
-              EventScreen: "event",
               EventsScreen: "events",
               ResourceScreen: "resource",
               ResourceConfigureScreen: "resourceconfig/:id",

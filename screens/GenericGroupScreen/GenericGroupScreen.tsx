@@ -1,4 +1,5 @@
-﻿import { Analytics, API, Auth, graphqlOperation } from "aws-amplify"
+﻿import { AntDesign } from "@expo/vector-icons"
+import { Analytics, API, Auth, graphqlOperation } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment-timezone"
 import { CardItem, Container, Content, Icon, Picker, StyleProvider, View } from "native-base"
@@ -17,11 +18,10 @@ import MyMap from "../../components/MyMap/MyMap"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import Validate from "../../components/Validate/Validate"
 import getTheme from "../../native-base-theme/components"
-import { CreateGroupInput, GetUserQuery } from "../../src/API"
+import { CreateGroupInput, GetUserQuery, UserGroupType } from "../../src/API"
 import * as customQueries from "../../src/graphql-custom/queries"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
-
 const MessageBoard = lazy(() => import("../../components/MessageBoard/MessageBoard"))
 
 interface Props {
@@ -29,6 +29,7 @@ interface Props {
   route: any
 }
 interface State extends JCState {
+  groupType: "event" | "group"
   showMap: boolean
   loadId: string
   data: any
@@ -41,7 +42,8 @@ interface State extends JCState {
   validationError: string
   currentUser: string | null
   currentUserProfile: any
-  attendeeIDs: string[]
+  memberIDs: string[]
+  members: any
   mapData: MapData[]
   initCenter: any
   ownsOrgs: GetUserQuery["getUser"]["organizations"]["items"]
@@ -54,6 +56,7 @@ export default class EventScreen extends JCComponent<Props, State> {
     this.state = {
       ...super.getInitialState(),
       showMap: false,
+      groupType: props.route.params.groupType,
       loadId: props.route.params.id,
       createNew:
         props.route.params.create === "true" || props.route.params.create === true ? true : false,
@@ -66,11 +69,13 @@ export default class EventScreen extends JCComponent<Props, State> {
       validationError: "",
       currentUser: null,
       currentUserProfile: null,
-      attendeeIDs: [],
+      memberIDs: [],
+      members: [],
       mapData: [],
-      initCenter: { lat: 44, lng: -78 },
       ownsOrgs: [],
     }
+    if (props.groupType == "event")
+      this.state = { ...this.state, initCenter: { lat: 44, lng: -78 } }
     Auth.currentAuthenticatedUser().then((user: any) => {
       this.setState({
         currentUser: user.username,
@@ -82,10 +87,10 @@ export default class EventScreen extends JCComponent<Props, State> {
         .then((json) => {
           this.setState(
             {
+              currentUserProfile: json.data.getUser,
               ownsOrgs: json.data.getUser.organizations.items.filter(
                 (item) => item.userRole === "superAdmin" || item.userRole === "admin"
               ),
-              currentUserProfile: json.data.getUser,
             },
             () => {
               this.setInitialData(props)
@@ -118,20 +123,21 @@ export default class EventScreen extends JCComponent<Props, State> {
   setInitialData(props: Props): void {
     if (props.route.params.create === true || props.route.params.create === "true")
       Auth.currentAuthenticatedUser().then((user: any) => {
-        const z: CreateGroupInput = {
-          id: "event-" + Date.now(),
+        let z: CreateGroupInput = {
+          id: this.state.groupType + "-" + Date.now(),
           owner: user.username,
-          type: "event",
+          type: this.state.groupType,
           name: "",
-          eventType: "zoom",
           description: "",
           memberCount: 1,
           image: "temp",
           isSponsored: "false",
-          time: null,
-          location: "",
           ownerOrgID: "0000000000000",
+          readGroups: [UserGroupType.legacyUserGroup1, UserGroupType.partners],
         }
+        if (this.state.groupType == "event")
+          z = { ...z, eventType: "zoom", time: null, location: "" }
+
         const isEditable = true
         this.setState({
           data: z,
@@ -155,7 +161,7 @@ export default class EventScreen extends JCComponent<Props, State> {
         this.setState(
           {
             data: json.data.getGroup,
-            attendeeIDs: json.data.getGroup.members.items.map((item) => item.userID),
+            memberIDs: json.data.getGroup.members.items.map((item) => item.userID),
             isEditable: isEditable,
             canLeave: true && !isEditable,
             canJoin: true && !isEditable,
@@ -163,8 +169,10 @@ export default class EventScreen extends JCComponent<Props, State> {
             createNew: this.state.createNew && isEditable,
             canDelete: !this.state.createNew && isEditable,
           },
+
           () => {
-            this.convertEventToMapData()
+            if (this.state.groupType == "event") this.convertEventToMapData()
+            else this.convertProfileToMapData()
             const groupMemberByUser: any = API.graphql({
               query: queries.groupMemberByUser,
               variables: { userID: this.state.currentUser, groupID: { eq: this.state.data.id } },
@@ -176,6 +184,58 @@ export default class EventScreen extends JCComponent<Props, State> {
                 this.setState({ canJoin: false, canLeave: true && !this.state.isEditable })
               else this.setState({ canJoin: true && !this.state.isEditable, canLeave: false })
             })
+            /*
+            this.state.memberIDs.map((id) => {
+              const getUser: any = API.graphql({
+                query: queries.getUser,
+                variables: { id: id },
+                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+              })
+              getUser
+                .then((json: any) => {
+                  this.setState({ members: this.state.members.concat(json.data.getUser) }, () => {
+                    this.setState({
+                      mapData: this.state.mapData.concat(
+                        this.convertProfileToMapData(this.state.members)
+                      ),
+                    })
+                  })
+                })
+                .catch((e: any) => {
+                  if (e.data) {
+                    this.setState({ members: this.state.members.concat(e.data.getUser) }, () => {
+                      this.setState({
+                        mapData: this.state.mapData.concat(
+                          this.convertProfileToMapData(this.state.members)
+                        ),
+                      })
+                    })
+                  }
+                })
+            })
+            const getUser: any = API.graphql({
+              query: queries.getUser,
+              variables: { id: this.state.data.owner },
+              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+            })
+            getUser
+              .then((json: any) => {
+                this.setState({
+                  mapData: this.state.mapData.concat(
+                    this.convertProfileToMapData([json.data.getUser])
+                  ),
+                })
+              })
+              .catch((e: any) => {
+                if (e.data) {
+                  this.setState({
+                    mapData: this.state.mapData.concat(
+                      this.convertProfileToMapData([e.data.getUser])
+                    ),
+                  })
+                }
+              })
+          */
           }
         )
       }
@@ -199,12 +259,31 @@ export default class EventScreen extends JCComponent<Props, State> {
         initCenter: { lat: data.locationLatLong.latitude, lng: data.locationLatLong.longitude },
       })
   }
-
+  convertProfileToMapData(): MapData[] {
+    const data = this.state.data
+    return data
+      .map((dataItem) => {
+        if (dataItem?.location && dataItem?.location?.latitude && dataItem?.location?.longitude) {
+          return {
+            latitude: Number(dataItem.location.latitude) + Number(dataItem.location.randomLatitude),
+            longitude:
+              Number(dataItem.location.longitude) + Number(dataItem.location.randomLongitude),
+            name: dataItem.given_name + " " + dataItem.family_name,
+            user: dataItem,
+            link: "",
+            type: "profile",
+          }
+        } else return null
+      })
+      .filter((o) => o)
+  }
   mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
   }
   validate(): boolean {
-    const validation: any = Validate.Event(this.state.data)
+    let validation
+    if (this.state.groupType == "event") validation = Validate.Event(this.state.data)
+    else validation = Validate.Group(this.state.data)
     this.setState({ validationError: validation.validationError })
     return validation.result
   }
@@ -246,8 +325,8 @@ export default class EventScreen extends JCComponent<Props, State> {
     delete item.messages
     delete item.organizerGroup
     delete item.organizerUser
-    delete item.instructors
     delete item.backOfficeStaff
+    delete item.instructors
     delete item.ownerUser
     delete item._deleted
     delete item._lastChangedAt
@@ -274,7 +353,7 @@ export default class EventScreen extends JCComponent<Props, State> {
   }
   leave(): void {
     Analytics.record({
-      name: "leftEvent",
+      name: "left" + this.state.groupType,
       // Attribute values must be strings
       attributes: { id: this.state.data.id, name: this.state.data.name },
     })
@@ -302,10 +381,10 @@ export default class EventScreen extends JCComponent<Props, State> {
             })
         })
 
-        const remainingUsers = this.state.attendeeIDs.filter(
+        const remainingUsers = this.state.memberIDs.filter(
           (user) => user !== this.state.currentUser
         )
-        this.setState({ canJoin: true, canLeave: false, attendeeIDs: remainingUsers })
+        this.setState({ canJoin: true, canLeave: false, memberIDs: remainingUsers })
         this.renderButtons()
       })
       .catch((err: any) => {
@@ -314,7 +393,7 @@ export default class EventScreen extends JCComponent<Props, State> {
   }
   join(): void {
     Analytics.record({
-      name: "joinedEvent",
+      name: "joined" + this.state.groupType,
       // Attribute values must be strings
       attributes: { id: this.state.data.id, name: this.state.data.name },
     })
@@ -334,7 +413,7 @@ export default class EventScreen extends JCComponent<Props, State> {
     this.setState({
       canJoin: false,
       canLeave: true,
-      attendeeIDs: this.state.attendeeIDs.concat(this.state.currentUser),
+      memberIDs: this.state.memberIDs.concat(this.state.currentUser),
     })
     this.renderButtons()
   }
@@ -366,6 +445,69 @@ export default class EventScreen extends JCComponent<Props, State> {
     console.log("Navigate to org")
     this.props.navigation.push("OrganizationScreen", { id: id, create: false })
   }
+  capitalize(str: string) {
+    return str.charAt(0).toUpperCase() + str.slice(1)
+  }
+  renderPermissions(): React.ReactNode {
+    return (
+      this.state.isEditable && (
+        <View style={{ marginBottom: 35 }}>
+          <Text style={{ fontWeight: "bold" }}>Permissions</Text>
+          <Picker
+            mode="dropdown"
+            style={{
+              width: "100%",
+              marginTop: 10,
+              marginBottom: 30,
+              fontSize: 16,
+              height: 30,
+              flexGrow: 0,
+              paddingTop: 3,
+              paddingBottom: 3,
+            }}
+            selectedValue={null}
+            onValueChange={(value: string) => {
+              console.log({ value: value })
+              let tmp = this.state.data.readGroups
+              if (!tmp) tmp = []
+              tmp.push(value as UserGroupType)
+              this.updateValue("readGroups", tmp)
+            }}
+          >
+            <Picker.Item key={null} label={"Add Group"} value={null} />
+            {Object.keys(UserGroupType).map((org: string) => {
+              return <Picker.Item key={org} label={org} value={org} />
+            })}
+          </Picker>
+          {this.state.data.readGroups?.map((item: UserGroupType, index: number) => {
+            return (
+              <React.Fragment key={index}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Text style={{ fontWeight: "normal" }}>{item}</Text>
+                  <TouchableOpacity
+                    style={{ alignSelf: "center", marginLeft: 15 }}
+                    onPress={() => {
+                      const tmp = this.state.data.readGroups
+                      if (!tmp) tmp = []
+                      tmp.splice(index, 1)
+                      this.updateValue("readGroups", tmp)
+                    }}
+                  >
+                    <AntDesign name="close" size={20} color="black" />
+                  </TouchableOpacity>
+                </View>
+              </React.Fragment>
+            )
+          })}
+        </View>
+      )
+    )
+  }
   renderButtons(): React.ReactNode {
     return (
       <Container style={this.styles.style.eventCreationScreenCreateContainer}>
@@ -376,7 +518,7 @@ export default class EventScreen extends JCComponent<Props, State> {
               this.join()
             }}
           >
-            Attend
+            {this.state.groupType == "event" ? "Attend" : "Join Group"}
           </JCButton>
         ) : null}
         {this.state.canLeave ? (
@@ -386,10 +528,12 @@ export default class EventScreen extends JCComponent<Props, State> {
               this.leave()
             }}
           >
-            Don&apos;t Attend
+            {this.state.groupType == "event" ? "Don't Attend" : "Leave Group"}
           </JCButton>
         ) : null}
-        {this.state.createNew ? <Text>Create as organization:</Text> : null}
+        {this.state.createNew ? (
+          <Text style={{ fontWeight: "bold" }}>Create as organization:</Text>
+        ) : null}
         {this.state.createNew ? (
           <Picker
             mode="dropdown"
@@ -427,7 +571,7 @@ export default class EventScreen extends JCComponent<Props, State> {
               this.createNew()
             }}
           >
-            Create Event
+            Create {this.capitalize(this.state.groupType)}
           </JCButton>
         ) : null}
         {this.state.canSave ? (
@@ -437,7 +581,7 @@ export default class EventScreen extends JCComponent<Props, State> {
               this.save()
             }}
           >
-            Save Event
+            Save {this.capitalize(this.state.groupType)}
           </JCButton>
         ) : null}
         {this.state.canDelete ? (
@@ -447,7 +591,7 @@ export default class EventScreen extends JCComponent<Props, State> {
               if (window.confirm("Are you sure you wish to delete this event?")) this.delete()
             }}
           >
-            Delete Event
+            Delete {this.capitalize(this.state.groupType)}
           </JCButton>
         ) : null}
       </Container>
@@ -456,7 +600,7 @@ export default class EventScreen extends JCComponent<Props, State> {
 
   render(): React.ReactNode {
     //console.log(this.state.data)
-    console.log("EventScreen")
+    console.log("Generic Group Screen")
     return this.state.data ? (
       <StyleProvider style={getTheme()}>
         <Container>
@@ -499,7 +643,7 @@ export default class EventScreen extends JCComponent<Props, State> {
                       flex: 0,
                     }}
                   >
-                    Event
+                    {this.capitalize(this.state.groupType)}
                   </Text>
                   {this.state.isEditable ? (
                     <JCSwitch
@@ -532,7 +676,7 @@ export default class EventScreen extends JCComponent<Props, State> {
                     onChange={(value: any) => {
                       this.updateValue("name", value)
                     }}
-                    placeholder="Enter Event Name"
+                    placeholder={"Enter " + this.capitalize(this.state.groupType) + " Name"}
                     multiline={false}
                     textStyle={this.styles.style.eventNameInput}
                     inputStyle={this.styles.style.eventNameInput}
@@ -543,7 +687,7 @@ export default class EventScreen extends JCComponent<Props, State> {
                     onChange={(value: any) => {
                       this.updateValue("description", value)
                     }}
-                    placeholder="Enter Event Description"
+                    placeholder={"Enter " + this.capitalize(this.state.groupType) + " Description"}
                     multiline={true}
                     textStyle={this.styles.style.eventDescriptionInput}
                     inputStyle={this.styles.style.eventDescriptionInput}
@@ -551,107 +695,110 @@ export default class EventScreen extends JCComponent<Props, State> {
                     isEditable={this.state.isEditable}
                   ></EditableText>
                 </View>
-                <View>
-                  {this.state.isEditable ? (
-                    <EditableDate
-                      type="datetime"
-                      onChange={(time: any, timeZone: any) => {
-                        this.updateValue("time", time)
-                        this.updateValue("tz", timeZone)
-                      }}
-                      placeholder="Enter Event Time"
-                      textStyle={this.styles.style.eventDateInput}
-                      inputStyle={this.styles.style.eventDateInput}
-                      value={this.state.data.time}
-                      tz={this.state.data.tz ? this.state.data.tz : moment.tz.guess()}
-                      isEditable={this.state.isEditable}
-                    ></EditableDate>
-                  ) : (
-                    <EditableDate
-                      type="datetime"
-                      onChange={(time: any, timeZone: any) => {
-                        this.updateValue("time", time)
-                        this.updateValue("tz", timeZone)
-                      }}
-                      placeholder="Enter Event Time"
-                      textStyle={this.styles.style.eventDateInput}
-                      inputStyle={this.styles.style.eventDateInput}
-                      value={this.state.data.time}
-                      tz={moment.tz.guess()}
-                      isEditable={this.state.isEditable}
-                    ></EditableDate>
-                  )}
-                </View>
+                {this.state.groupType == "event" && (
+                  <>
+                    <View>
+                      {this.state.isEditable ? (
+                        <EditableDate
+                          type="datetime"
+                          onChange={(time: any, timeZone: any) => {
+                            this.updateValue("time", time)
+                            this.updateValue("tz", timeZone)
+                          }}
+                          placeholder="Enter Event Time"
+                          textStyle={this.styles.style.eventDateInput}
+                          inputStyle={this.styles.style.eventDateInput}
+                          value={this.state.data.time}
+                          tz={this.state.data.tz ? this.state.data.tz : moment.tz.guess()}
+                          isEditable={this.state.isEditable}
+                        ></EditableDate>
+                      ) : (
+                        <EditableDate
+                          type="datetime"
+                          onChange={(time: any, timeZone: any) => {
+                            this.updateValue("time", time)
+                            this.updateValue("tz", timeZone)
+                          }}
+                          placeholder="Enter Event Time"
+                          textStyle={this.styles.style.eventDateInput}
+                          inputStyle={this.styles.style.eventDateInput}
+                          value={this.state.data.time}
+                          tz={moment.tz.guess()}
+                          isEditable={this.state.isEditable}
+                        ></EditableDate>
+                      )}
+                    </View>
 
-                {this.state.isEditable ? (
-                  <Picker
-                    mode="dropdown"
-                    iosIcon={<Icon name="arrow-down" />}
-                    style={{
-                      width: "50%",
-                      marginBottom: 30,
-                      marginTop: 55,
-                      fontSize: 16,
-                      height: 30,
-                      flexGrow: 0,
-                    }}
-                    placeholder="Event type"
-                    placeholderStyle={{ color: "#bfc6ea" }}
-                    placeholderIconColor="#007aff"
-                    selectedValue={this.state.data.eventType}
-                    onValueChange={(value: any) => {
-                      this.updateValue("eventType", value)
-                    }}
-                  >
-                    <Picker.Item label="Zoom" value="zoom" />
-                    <Picker.Item label="Location" value="location" />
-                    <Picker.Item label="Eventbrite" value="eventbrite" />
-                  </Picker>
-                ) : null}
-                {this.state.data.eventType != "location" ? (
-                  <EditableUrl
-                    title={
-                      this.state.data.eventType == "eventbrite"
-                        ? "Open in Eventbrite"
-                        : "Open in Zoom"
-                    }
-                    onChange={(value: any) => {
-                      this.updateValue("eventUrl", value)
-                    }}
-                    placeholder="Enter Event URL"
-                    multiline={false}
-                    textStyle={ButtonTypes.Solid}
-                    inputStyle={this.styles.style.eventEditableURL}
-                    value={this.state.data.eventUrl}
-                    isEditable={this.state.isEditable}
-                  ></EditableUrl>
-                ) : (
-                  <CardItem style={{ paddingLeft: 0, paddingRight: 0 }}>
-                    <Image
-                      style={{ width: "22px", height: "22px", marginRight: 5 }}
-                      source={require("../../assets/svg/pin 2.svg")}
-                    ></Image>
-                    <EditableLocation
-                      onChange={(value: any, location: any) => {
-                        this.updateValue("location", value)
-                        console.log(location)
-                        if (location != undefined && location != null)
-                          this.updateValue("locationLatLong", {
-                            latitude: location.lat,
-                            longitude: location.lng,
-                          })
-                        else this.updateValue("locationLatLong", null)
-                      }}
-                      placeholder="Enter Event Location"
-                      multiline={false}
-                      textStyle={this.styles.style.fontRegular}
-                      inputStyle={this.styles.style.groupNameInput}
-                      value={this.state.data.location}
-                      isEditable={this.state.isEditable}
-                    ></EditableLocation>
-                  </CardItem>
+                    {this.state.isEditable ? (
+                      <Picker
+                        mode="dropdown"
+                        iosIcon={<Icon name="arrow-down" />}
+                        style={{
+                          width: "50%",
+                          marginBottom: 30,
+                          marginTop: 55,
+                          fontSize: 16,
+                          height: 30,
+                          flexGrow: 0,
+                        }}
+                        placeholder="Event type"
+                        placeholderStyle={{ color: "#bfc6ea" }}
+                        placeholderIconColor="#007aff"
+                        selectedValue={this.state.data.eventType}
+                        onValueChange={(value: any) => {
+                          this.updateValue("eventType", value)
+                        }}
+                      >
+                        <Picker.Item label="Zoom" value="zoom" />
+                        <Picker.Item label="Location" value="location" />
+                        <Picker.Item label="Eventbrite" value="eventbrite" />
+                      </Picker>
+                    ) : null}
+                    {this.state.data.eventType != "location" ? (
+                      <EditableUrl
+                        title={
+                          this.state.data.eventType == "eventbrite"
+                            ? "Open in Eventbrite"
+                            : "Open in Zoom"
+                        }
+                        onChange={(value: any) => {
+                          this.updateValue("eventUrl", value)
+                        }}
+                        placeholder="Enter Event URL"
+                        multiline={false}
+                        textStyle={ButtonTypes.Solid}
+                        inputStyle={this.styles.style.eventEditableURL}
+                        value={this.state.data.eventUrl}
+                        isEditable={this.state.isEditable}
+                      ></EditableUrl>
+                    ) : (
+                      <CardItem style={{ paddingLeft: 0, paddingRight: 0 }}>
+                        <Image
+                          style={{ width: "22px", height: "22px", marginRight: 5 }}
+                          source={require("../../assets/svg/pin 2.svg")}
+                        ></Image>
+                        <EditableLocation
+                          onChange={(value: any, location: any) => {
+                            this.updateValue("location", value)
+                            console.log(location)
+                            if (location != undefined && location != null)
+                              this.updateValue("locationLatLong", {
+                                latitude: location.lat,
+                                longitude: location.lng,
+                              })
+                            else this.updateValue("locationLatLong", null)
+                          }}
+                          placeholder="Enter Event Location"
+                          multiline={false}
+                          textStyle={this.styles.style.fontRegular}
+                          inputStyle={this.styles.style.groupNameInput}
+                          value={this.state.data.location}
+                          isEditable={this.state.isEditable}
+                        ></EditableLocation>
+                      </CardItem>
+                    )}
+                  </>
                 )}
-
                 <Text
                   style={{
                     fontFamily: "Graphik-Regular-App",
@@ -686,7 +833,6 @@ export default class EventScreen extends JCComponent<Props, State> {
                     size="small"
                   />
                 </TouchableOpacity>
-
                 <Text
                   style={{
                     fontFamily: "Graphik-Bold-App",
@@ -698,10 +844,11 @@ export default class EventScreen extends JCComponent<Props, State> {
                     paddingBottom: 12,
                   }}
                 >
-                  Attending ({this.state.attendeeIDs.length})
+                  {this.state.groupType == "event" ? "Attending" : "Members"}(
+                  {this.state.memberIDs.length})
                 </Text>
                 <View style={this.styles.style.eventAttendeesPictures}>
-                  {this.state.attendeeIDs.length == 0 ? (
+                  {this.state.memberIDs.length == 0 ? (
                     <Text
                       style={{
                         fontFamily: "Graphik-Bold-App",
@@ -712,10 +859,10 @@ export default class EventScreen extends JCComponent<Props, State> {
                         marginBottom: 30,
                       }}
                     >
-                      No Attendees Yet
+                      No {this.state.groupType == "event" ? "Attendees" : "Members"} Yet
                     </Text>
                   ) : (
-                    this.state.attendeeIDs.map((id: any, index: any) => {
+                    this.state.memberIDs.map((id: any, index: any) => {
                       return (
                         <TouchableOpacity
                           key={index}
@@ -723,19 +870,20 @@ export default class EventScreen extends JCComponent<Props, State> {
                             this.showProfile(id)
                           }}
                         >
-                          <ProfileImage user={id} key={index} size="small" />
+                          <ProfileImage key={index} user={id} size="small" />
                         </TouchableOpacity>
                       )
                     })
                   )}
                 </View>
+                {this.renderPermissions()}
                 {this.renderButtons()}
                 <Text style={{ marginTop: 170, color: "red", fontWeight: "bold" }}>
                   {this.state.validationError}
                 </Text>
               </Container>
               <Container style={this.styles.style.detailScreenRightCard}>
-                <MessageBoard style="regular" groupId={this.state.data.id} replies></MessageBoard>
+                <MessageBoard replies style="regular" groupId={this.state.data.id}></MessageBoard>
                 {/*  <Zoom></Zoom>*/}
               </Container>
             </Container>

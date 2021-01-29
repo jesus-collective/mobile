@@ -36,6 +36,7 @@ export const getGroup = /* GraphQL */ `
     getGroup(id: $id) {
       id
       owner
+      readGroups
       ownerOrgID
       ownerOrg {
         id
@@ -284,6 +285,7 @@ export const listGroups = /* GraphQL */ `
       items {
         id
         owner
+        readGroups
         ownerOrgID
         ownerOrg {
           id
@@ -556,6 +558,7 @@ export const getOrganization = /* GraphQL */ `
         items {
           id
           owner
+          readGroups
           ownerOrgID
           type
           name
@@ -2490,6 +2493,7 @@ export const getMessage = /* GraphQL */ `
       room {
         id
         owner
+        readGroups
         ownerOrgID
         ownerOrg {
           id
@@ -2721,6 +2725,7 @@ export const listMessages = /* GraphQL */ `
         room {
           id
           owner
+          readGroups
           ownerOrgID
           type
           name
@@ -3723,6 +3728,7 @@ export const groupMemberByGroup = /* GraphQL */ `
         group {
           id
           owner
+          readGroups
           ownerOrgID
           type
           name
@@ -3805,6 +3811,7 @@ export const groupMemberByUser = /* GraphQL */ `
         group {
           id
           owner
+          readGroups
           ownerOrgID
           type
           name
@@ -3883,6 +3890,7 @@ export const groupByType = /* GraphQL */ `
       items {
         id
         owner
+        readGroups
         ownerOrgID
         ownerOrg {
           id
@@ -4289,6 +4297,7 @@ export const messagesByRoom = /* GraphQL */ `
         room {
           id
           owner
+          readGroups
           ownerOrgID
           type
           name
@@ -4368,6 +4377,7 @@ export const searchGroups = /* GraphQL */ `
       items {
         id
         owner
+        readGroups
         ownerOrgID
         ownerOrg {
           id
@@ -4645,6 +4655,7 @@ export const getUser = /* GraphQL */ `
         items {
           id
           owner
+          readGroups
           ownerOrgID
           type
           name

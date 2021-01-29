@@ -164,6 +164,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
           isSponsored: "false",
           image: "temp",
           ownerOrgID: "0000000000000",
+          readGroups: [UserGroupType.partners, UserGroupType.legacyUserGroup1],
         }
         const isEditable = true
         this.setState(

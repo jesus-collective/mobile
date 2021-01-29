@@ -426,20 +426,21 @@ type GroupMember
 type Group
   @model
   @searchable
-  @key(name: "byType", fields: ["type", "id"], queryField: "groupByType")
-  @key(name:"byOwnerOrg", fields:["ownerOrgID","name"])
   @auth(
     rules: [
-      { allow: private, provider:userPools, operations:[read]}
-      { allow: owner, ownerField: "owner" }
-      { allow: owner, ownerField: "ownerOrgID" }
-      { allow: groups, groups: ["verifiedUsers"], operations: [read] }
+      { allow: owner, ownerField: "owner" , operations: [create, read, update, delete]}
+      { allow: owner, ownerField: "ownerOrgID", operations: [create, read, update, delete] }
+      { allow: groups, groupsField: "readGroups", operations: [read] }
       { allow: groups, groups: ["admin"]}
 
     ]
-  ) {
+  )
+    @key(name: "byType", fields: ["type", "id"], queryField: "groupByType")
+  @key(name:"byOwnerOrg", fields:["ownerOrgID","name"])
+ {
   id: ID!
   owner: String!
+  readGroups:[UserGroupType]
   ownerOrgID: ID!
   ownerUser: User @connection(name: "OwnerUser", keyField: "owner")
   ownerOrg: Organization @connection(fields:["ownerOrgID"])

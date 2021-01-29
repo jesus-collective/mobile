@@ -1,14 +1,15 @@
+import { AntDesign } from "@expo/vector-icons"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import React from "react"
-import { Text, TouchableOpacity, View } from "react-native"
+import { Picker, Text, TouchableOpacity, View } from "react-native"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
+import { UserGroupType } from "../../src/API"
 import EditableText from "../Forms/EditableText"
 import JCComponent from "../JCComponent/JCComponent"
 import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
-
 interface Props {
   visible: boolean
   onClose(): void
@@ -95,7 +96,71 @@ class JCResourceConfigModalImpl extends JCComponent<Props> {
       </View>
     )
   }
-
+  renderPermissions(
+    resourceState: ResourceState,
+    resourceActions: ResourceActions
+  ): React.ReactNode {
+    return (
+      resourceState.isEditable && (
+        <View style={{ marginBottom: 35 }}>
+          <Text style={{ fontWeight: "bold" }}>Permissions</Text>
+          <Picker
+            mode="dropdown"
+            style={{
+              width: "100%",
+              marginTop: 10,
+              marginBottom: 30,
+              fontSize: 16,
+              height: 30,
+              flexGrow: 0,
+              paddingTop: 3,
+              paddingBottom: 3,
+            }}
+            selectedValue={null}
+            onValueChange={(value: string) => {
+              console.log({ value: value })
+              let tmp = resourceState?.groupData?.readGroups
+              if (!tmp) tmp = []
+              tmp.push(value as UserGroupType)
+              resourceActions.updateValueGroup("readGroups", tmp)
+            }}
+          >
+            <Picker.Item key={null} label={"Add Group"} value={null} />
+            {Object.keys(UserGroupType).map((org: string) => {
+              return <Picker.Item key={org} label={org} value={org} />
+            })}
+          </Picker>
+          {resourceState?.groupData?.readGroups?.map(
+            (item: UserGroupType | null, index: number) => {
+              return (
+                <React.Fragment key={index}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Text style={{ fontWeight: "normal" }}>{item}</Text>
+                    <TouchableOpacity
+                      style={{ alignSelf: "center", marginLeft: 15 }}
+                      onPress={() => {
+                        let tmp = this.state.data.readGroups
+                        if (!tmp) tmp = []
+                        tmp.splice(index, 1)
+                        resourceActions.updateValueGroup("readGroups", tmp)
+                      }}
+                    >
+                      <AntDesign name="close" size={20} color="black" />
+                    </TouchableOpacity>
+                  </View>
+                </React.Fragment>
+              )
+            }
+          )}
+        </View>
+      )
+    )
+  }
   render() {
     return (
       <JCResourceConfigModalImpl.Consumer>
@@ -116,7 +181,7 @@ class JCResourceConfigModalImpl extends JCComponent<Props> {
                     flexDirection: "row",
                     height: 30,
                     marginBottom: 20,
-                    justifyContent: 'space-between'
+                    justifyContent: "space-between",
                   }}
                 >
                   <Text
@@ -251,7 +316,7 @@ class JCResourceConfigModalImpl extends JCComponent<Props> {
                     })
                   )}
                 </View>
-
+                {this.renderPermissions(resourceState, resourceActions)}
                 {this.renderButtons(resourceState, resourceActions)}
               </View>
             </JCModal>

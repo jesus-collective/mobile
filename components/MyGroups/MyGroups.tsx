@@ -29,6 +29,7 @@ interface State extends JCState {
   eventFilter: boolean
   myTitleScreen: string
   openSingle: string
+  genericGroupType: "group" | "event" | null
   openMultiple: string
   type: string
   cardWidth: any
@@ -64,7 +65,8 @@ export default class MyGroups extends JCComponent<Props, State> {
         myFilter: false || this.props.showMy,
         eventFilter: false,
         myTitleScreen: "My Events",
-        openSingle: "EventScreen",
+        openSingle: "GenericGroupScreen",
+        genericGroupType: "event",
         openMultiple: "EventsScreen",
         createString: "+ Create Event",
         titleString: "Events",
@@ -86,7 +88,8 @@ export default class MyGroups extends JCComponent<Props, State> {
         myFilter: false || this.props.showMy,
         eventFilter: false,
         myTitleScreen: "My Groups",
-        openSingle: "GroupScreen",
+        openSingle: "GenericGroupScreen",
+        genericGroupType: "group",
         openMultiple: "GroupsScreen",
         createString: "+ Create Group",
         titleString: "Groups",
@@ -109,6 +112,7 @@ export default class MyGroups extends JCComponent<Props, State> {
         eventFilter: false,
         myTitleScreen: "My Resources",
         openSingle: "ResourceScreen",
+        genericGroupType: null,
         openMultiple: "ResourcesScreen",
         createString: "+ Create Resource",
         titleString: "Resources",
@@ -131,6 +135,7 @@ export default class MyGroups extends JCComponent<Props, State> {
         eventFilter: false,
         myTitleScreen: "My Organizations",
         openSingle: "OrganizationScreen",
+        genericGroupType: null,
         openMultiple: "OrganizationsScreen",
         createString: "+ Create Organization",
         titleString: "Organizations",
@@ -153,6 +158,7 @@ export default class MyGroups extends JCComponent<Props, State> {
         eventFilter: false,
         myTitleScreen: "My Courses",
         openSingle: "CourseOverviewScreen",
+        genericGroupType: null,
         openMultiple: "CoursesScreen",
         createString: "+ Create Course",
         titleString: "Courses",
@@ -175,6 +181,7 @@ export default class MyGroups extends JCComponent<Props, State> {
         eventFilter: false,
         myTitleScreen: "My Profiles",
         openSingle: "ProfileScreen",
+        genericGroupType: null,
         openMultiple: "ProfilesScreen",
         createString: "+ Create Profile",
         titleString: "Profiles",
@@ -197,6 +204,7 @@ export default class MyGroups extends JCComponent<Props, State> {
         myFilter: false,
         eventFilter: false,
         openSingle: "",
+        genericGroupType: null,
         openMultiple: "",
         type: props.type,
         titleString: "",
@@ -380,6 +388,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       })
 
       const processList = (json: any) => {
+        console.log({ groupData: json })
         this.setCanPay(json.data.groupByType.items)
         this.setIsPaid(json.data.groupByType.items)
         this.setCanLeave(json.data.groupByType.items)
@@ -416,13 +425,17 @@ export default class MyGroups extends JCComponent<Props, State> {
       this.props.navigation.push("CourseHomeScreen", { id: id, create: false })
     else
       this.props.navigation.push(this.state.openSingle, {
+        groupType: this.state.genericGroupType,
         id: id,
         create: false,
       })
   }
   createSingle(): void {
     console.log({ "Navigate to": this.state.openSingle })
-    this.props.navigation.push(this.state.openSingle, { create: true })
+    this.props.navigation.push(this.state.openSingle, {
+      groupType: this.state.genericGroupType,
+      create: true,
+    })
   }
   openMultiple(): void {
     console.log({ "Navigate to": this.state.openMultiple })
@@ -1150,8 +1163,8 @@ export default class MyGroups extends JCComponent<Props, State> {
   filterEvent = (item: any): boolean => {
     return (
       !(this.props.type === "event") ||
-      (this.state.eventFilter && !moment(item.time).isSameOrAfter(moment.now(), 'day')) ||
-      (!this.state.eventFilter && moment(item.time).isSameOrAfter(moment.now(), 'day'))
+      (this.state.eventFilter && !moment(item.time).isSameOrAfter(moment.now(), "day")) ||
+      (!this.state.eventFilter && moment(item.time).isSameOrAfter(moment.now(), "day"))
     )
   }
 
