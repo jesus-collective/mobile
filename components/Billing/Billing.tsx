@@ -489,7 +489,7 @@ class BillingImpl extends JCComponent<Props, State> {
     console.log(state)
     this.setState({validatingUser:true, errorMsg:""})
     const a = setInterval(async() => {
-/*       await userActions.updateGroups()
+      await userActions.updateGroups()
       console.log({ Groups: state.groups })
       if(userActions.isMemberOf('subscriptionValid')){
         console.log("Subscription is active.")
@@ -499,7 +499,7 @@ class BillingImpl extends JCComponent<Props, State> {
       else{
         console.log("Subscription is not yet active")
       }
-      await userActions.recheckUserState() */
+      await userActions.recheckUserState()
     },[1000])
     setTimeout(()=>{
       clearInterval(a)
