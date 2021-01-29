@@ -829,6 +829,7 @@ export default class MainStyles {
       },
       flexRow: {
         flexDirection: "row",
+        marginTop: 10
       },
       groupMiddleText: {
         fontFamily: "Graphik-Bold-App",
@@ -838,6 +839,7 @@ export default class MainStyles {
         color: "#333333",
         paddingTop: 48,
         paddingBottom: 12,
+        paddingLeft: 0
       },
       groupMiddleTextNoPaddingTop: {
         fontFamily: "Graphik-Bold-App",
@@ -2452,8 +2454,8 @@ export default class MainStyles {
           : { position: "absolute", width: "100%", height: "100%", left: 0, top: 0 },
       signUpScreen1PaymentColumn1:
         Platform.OS === "web" && Dimensions.get("window").width > 720
-          ? { position: "absolute", left: "35%", width: "30%", top: 100, height: "100%" }
-          : {marginRight:20, marginLeft:20},
+          ? { position: "absolute", left: "35%", width: "75%", top: 100, height: "100%" }
+          : {},
       signUpScreen1PaymentColumn2:
         Platform.OS === "web" && Dimensions.get("window").width > 720
           ? { position: "absolute", left: "70%", width: "25%", top: 100, height: "100%" }
