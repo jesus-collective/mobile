@@ -35,7 +35,13 @@ npm install
 cd ~/code/jc/mobile
 npm start
 # Press w (web), i (ios), a (android) to start the appropriate client
-npm test (to run tests)
+```
+
+6. To Test - from terminal on a linux machine:
+
+```
+cd ~/code/jc/mobile
+npm test
 ```
 
 6. Optionally - to setup AWS run:
@@ -53,4 +59,4 @@ cd ~/code/jc/mobile
 npm run-script buildExpo
 # Download the resulting files.
 # Upload the files to the Apple or Google Play store.
-
+```
