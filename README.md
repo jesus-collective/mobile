@@ -22,6 +22,7 @@ mkdir ~/code
 mkdir ~/code/jc
 cd ~/code/jc
 git clone https://github.com/jesus-collective/mobile.git
+# be sure to login using your github credentials
 ```
 
 4. Install packages - from terminal on a linux machine:
