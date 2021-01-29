@@ -97,6 +97,30 @@ class ResourceRichText extends JCComponent<Props> {
       case ResourcePageItemStyle.RichTextH4:
         textStyle = this.styles.style.resourceRichTextH4
         break
+      case ResourcePageItemStyle.RichTextH5:
+        textStyle = this.styles.style.resourceRichTextH5
+        break
+      case ResourcePageItemStyle.RichTextH6:
+          textStyle = this.styles.style.resourceRichTextH6
+        break
+        case ResourcePageItemStyle.RichTextH1Small:
+          textStyle = this.styles.style.resourceRichTextH1Small
+          break
+        case ResourcePageItemStyle.RichTextH2Small:
+          textStyle = this.styles.style.resourceRichTextH2Small
+          break
+        case ResourcePageItemStyle.RichTextH3Small:
+          textStyle = this.styles.style.resourceRichTextH3Small
+          break
+        case ResourcePageItemStyle.RichTextH4Small:
+          textStyle = this.styles.style.resourceRichTextH4Small
+          break
+        case ResourcePageItemStyle.RichTextH5Small:
+          textStyle = this.styles.style.resourceRichTextH5Small
+          break
+        case ResourcePageItemStyle.RichTextH6Small:
+            textStyle = this.styles.style.resourceRichTextH6Small
+          break
       case ResourcePageItemStyle.RichTextBody1:
         textStyle = this.styles.style.resourceRichTextBody1
         break
@@ -105,6 +129,9 @@ class ResourceRichText extends JCComponent<Props> {
         break
       case ResourcePageItemStyle.RichTextBody3:
         textStyle = this.styles.style.resourceRichTextBody3
+        break
+      case ResourcePageItemStyle.RichTextBody4:
+        textStyle = this.styles.style.resourceRichTextBody4
         break
       default:
         textStyle = this.styles.style.resourceRichTextBody1
