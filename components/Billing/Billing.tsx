@@ -72,6 +72,7 @@ interface State extends JCState {
   invoice: any
   processing: "entry" | "processing" | "complete"
   stripeValidation: any
+  validatingUser: boolean
 }
 class BillingImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
@@ -90,6 +91,7 @@ class BillingImpl extends JCComponent<Props, State> {
       currentProduct: [],
       idempotency: uuidv4(),
       processing: "entry",
+      validatingUser:false,
       eula: false,
       productType: props.route?.params?.productType,
       joinedProduct: props.route?.params?.joinedProduct
@@ -236,7 +238,7 @@ class BillingImpl extends JCComponent<Props, State> {
         }
       )
   }
-
+  
   static UserConsumer = UserContext.Consumer
   renderAddProductModal(userState: UserState): React.ReactNode {
     return (
@@ -482,6 +484,28 @@ class BillingImpl extends JCComponent<Props, State> {
   showSubscriptionSelector() {
     this.setState({ showSubscriptionSelector: true })
   }
+
+  updateUserAndCheckState = async(userActions: UserActions, state:UserState) =>{
+    console.log(state)
+    this.setState({validatingUser:true, errorMsg:""})
+    const a = setInterval(async() => {
+/*       await userActions.updateGroups()
+      console.log({ Groups: state.groups })
+      if(userActions.isMemberOf('subscriptionValid')){
+        console.log("Subscription is active.")
+        this.setState({validatingUser:false})
+        clearInterval(a);
+      }
+      else{
+        console.log("Subscription is not yet active")
+      }
+      await userActions.recheckUserState() */
+    },[1000])
+    setTimeout(()=>{
+      clearInterval(a)
+      this.setState({validatingUser:false, errorMsg:"Something went wrong. Please try again later or contact support."})
+    },5000)
+  }
   async handleInputChange(value: string, field: string) {
     console.log({ field: value })
     console.log(this.state.userData)
@@ -547,9 +571,7 @@ class BillingImpl extends JCComponent<Props, State> {
     )
   }
   async completePaymentProcess(actions: UserActions, state: UserState) {
-    await actions.updateGroups()
-    console.log({ Groups: state.groups })
-    await actions.recheckUserState()
+    this.updateUserAndCheckState(actions, state)
   }
   render() {
     return (
@@ -558,7 +580,7 @@ class BillingImpl extends JCComponent<Props, State> {
           <BillingImpl.UserConsumer>
             {({ userState, userActions }) => {
               if (!userState) return null
-              return this.state.processing == "complete" ? (
+              return this.state.processing === "complete" ? (
                 <Content>
                   <View style={this.styles.style.signUpScreen1PaymentColumn1}>
                     <View style={{ alignSelf: 'center', width: 'auto' }}>
@@ -587,9 +609,11 @@ class BillingImpl extends JCComponent<Props, State> {
                         }}
                         buttonType={ButtonTypes.Solid}
                       >
-                        Continue to Your Profile
+                         {this.state.validatingUser ? <View style={{flexDirection:"column", width:177.7, top:4}}><ActivityIndicator color="white"></ActivityIndicator></View> : "Continue to Your Profile"}
                       </JCButton>
+                      
                     </Text>
+                    <Text style={{textAlign:"center", color:"red", fontWeight:'bold'}}>{this.state.errorMsg}</Text>
                   </View>
                 </Content>
               ) : (
@@ -900,7 +924,7 @@ class BillingImpl extends JCComponent<Props, State> {
                           Add another product
                       </JCButton>
                       </View>
-                      <View style={{marginBottom:20}}>
+                      <View style={{marginBottom:20, marginTop:20}}>
                       {this.state.currentProduct?.map((item: Product, index: number) => {
                           return this.renderProduct(item, index)
                         })}
