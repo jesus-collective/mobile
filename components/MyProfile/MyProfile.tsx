@@ -354,10 +354,10 @@ class MyProfileImpl extends JCComponent<Props, State> {
           console.log(err)
         })
   }
-  getValueFromKey(myObject: unknown, string: string) {
+  /* getValueFromKey(myObject: unknown, string: string) {
     const key = Object.keys(myObject).filter((k) => k.includes(string))
     return key.length ? myObject[key[0]] : ""
-  }
+  }*/
   logout(actions: UserActions): void {
     //this.props.navigation.navigate("", null)
     Auth.signOut()

@@ -1216,10 +1216,10 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       console.log(e)
     }
   }
-  getValueFromKey(myObject: unknown, string: string) {
+  /* getValueFromKey(myObject: unknown, string: string) {
     const key = Object.keys(myObject).filter((k) => k.includes(string))
     return key.length ? myObject[key[0]] : ""
-  }
+  }*/
 
   findResourceByID(resource: string | undefined): number | undefined {
     //    console.log({ resource: resource })

@@ -1,4 +1,5 @@
-﻿import { AntDesign } from "@expo/vector-icons"
+﻿import { GraphQLResult } from "@aws-amplify/api/lib/types"
+import { AntDesign } from "@expo/vector-icons"
 import { Analytics, API, Auth, graphqlOperation } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment-timezone"
@@ -18,7 +19,18 @@ import MyMap from "../../components/MyMap/MyMap"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import Validate from "../../components/Validate/Validate"
 import getTheme from "../../native-base-theme/components"
-import { CreateGroupInput, GetUserQuery, UserGroupType } from "../../src/API"
+import {
+  CreateGroupInput,
+  CreateGroupMemberMutation,
+  CreateGroupMutation,
+  DeleteGroupMemberMutation,
+  DeleteGroupMutation,
+  GetGroupQuery,
+  GetUserQuery,
+  GroupMemberByUserQuery,
+  UpdateGroupMutation,
+  UserGroupType,
+} from "../../src/API"
 import * as customQueries from "../../src/graphql-custom/queries"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
@@ -32,7 +44,7 @@ interface State extends JCState {
   groupType: "event" | "group"
   showMap: boolean
   loadId: string
-  data: any
+  data: GetGroupQuery["getGroup"] | CreateGroupInput
   createNew: boolean
   canSave: boolean
   canLeave: boolean
@@ -41,7 +53,7 @@ interface State extends JCState {
   canDelete: boolean
   validationError: string
   currentUser: string | null
-  currentUserProfile: any
+  currentUserProfile: GetUserQuery["getUser"]
   memberIDs: string[]
   members: any
   mapData: MapData[]
@@ -74,36 +86,39 @@ export default class EventScreen extends JCComponent<Props, State> {
       mapData: [],
       ownsOrgs: [],
     }
-    if (props.groupType == "event")
+    if (this.state.groupType == "event")
       this.state = { ...this.state, initCenter: { lat: 44, lng: -78 } }
     Auth.currentAuthenticatedUser().then((user: any) => {
       this.setState({
         currentUser: user.username,
       })
-      const getUser: any = API.graphql(
+      const getUser = API.graphql(
         graphqlOperation(customQueries.getUserForGroupOrEvent, { id: user["username"] })
-      )
+      ) as Promise<GraphQLResult<GetUserQuery>>
       getUser
         .then((json) => {
-          this.setState(
-            {
-              currentUserProfile: json.data.getUser,
-              ownsOrgs: json.data.getUser.organizations.items.filter(
-                (item) => item.userRole === "superAdmin" || item.userRole === "admin"
-              ),
-            },
-            () => {
-              this.setInitialData(props)
-            }
-          )
+          console.log(json)
+          if (json.data) {
+            this.setState(
+              {
+                currentUserProfile: json.data.getUser,
+                ownsOrgs: json.data.getUser.organizations.items.filter(
+                  (item) => item?.userRole === "superAdmin" || item?.userRole === "admin"
+                ),
+              },
+              () => {
+                this.setInitialData(props)
+              }
+            )
+          }
         })
-        .catch((e: any) => {
+        .catch((e: GraphQLResult<GetUserQuery>) => {
           if (e.data?.getUser) {
             this.setState(
               {
                 currentUserProfile: e.data.getUser,
                 ownsOrgs: e.data.getUser.organizations.items.filter(
-                  (item) => item.userRole === "superAdmin" || item.userRole === "admin"
+                  (item) => item?.userRole === "superAdmin" || item?.userRole === "admin"
                 ),
               },
               () => {
@@ -116,12 +131,12 @@ export default class EventScreen extends JCComponent<Props, State> {
         })
     })
   }
-  getValueFromKey(myObject: unknown, string: string): string {
+  /* getValueFromKey(myObject: unknown, string: string): string {
     const key = Object.keys(myObject).filter((k) => k.includes(string))
     return key.length ? myObject[key[0]] : ""
-  }
+  }*/
   setInitialData(props: Props): void {
-    if (props.route.params.create === true || props.route.params.create === "true")
+    if (props.route.params.create === true || props.route.params.create === "true") {
       Auth.currentAuthenticatedUser().then((user: any) => {
         let z: CreateGroupInput = {
           id: this.state.groupType + "-" + Date.now(),
@@ -149,42 +164,47 @@ export default class EventScreen extends JCComponent<Props, State> {
           canDelete: !this.state.createNew && isEditable,
         })
       })
-    else {
-      const getGroup: any = API.graphql({
+    } else {
+      const getGroup = API.graphql({
         query: queries.getGroup,
         variables: { id: props.route.params.id, messages: { sortDirection: "ASC" } },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
-      const processResults = (json) => {
-        const isEditable = json.data.getGroup.owner == this.state.currentUser
+      }) as Promise<GraphQLResult<GetGroupQuery>>
+      const processResults = (json: GraphQLResult<GetGroupQuery>) => {
+        if (json.data && json.data.getGroup) {
+          const isEditable = json.data.getGroup.owner == this.state.currentUser
+          this.setState(
+            {
+              data: json.data.getGroup,
+              memberIDs: json.data.getGroup.members.items.map((item) => item?.userID),
+              isEditable: isEditable,
+              canLeave: true && !isEditable,
+              canJoin: true && !isEditable,
+              canSave: !this.state.createNew && isEditable,
+              createNew: this.state.createNew && isEditable,
+              canDelete: !this.state.createNew && isEditable,
+            },
 
-        this.setState(
-          {
-            data: json.data.getGroup,
-            memberIDs: json.data.getGroup.members.items.map((item) => item.userID),
-            isEditable: isEditable,
-            canLeave: true && !isEditable,
-            canJoin: true && !isEditable,
-            canSave: !this.state.createNew && isEditable,
-            createNew: this.state.createNew && isEditable,
-            canDelete: !this.state.createNew && isEditable,
-          },
-
-          () => {
-            if (this.state.groupType == "event") this.convertEventToMapData()
-            else this.convertProfileToMapData()
-            const groupMemberByUser: any = API.graphql({
-              query: queries.groupMemberByUser,
-              variables: { userID: this.state.currentUser, groupID: { eq: this.state.data.id } },
-              authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-            })
-            groupMemberByUser.then((json: any) => {
-              console.log({ groupMemberByUser: json })
-              if (json.data.groupMemberByUser.items.length > 0)
-                this.setState({ canJoin: false, canLeave: true && !this.state.isEditable })
-              else this.setState({ canJoin: true && !this.state.isEditable, canLeave: false })
-            })
-            /*
+            () => {
+              if (this.state.groupType == "event") this.convertEventToMapData()
+              else this.convertProfileToMapData()
+              if (this.state.data) {
+                const groupMemberByUser = API.graphql({
+                  query: queries.groupMemberByUser,
+                  variables: {
+                    userID: this.state.currentUser,
+                    groupID: { eq: this.state.data.id },
+                  },
+                  authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+                }) as Promise<GraphQLResult<GroupMemberByUserQuery>>
+                groupMemberByUser.then((json: GraphQLResult<GroupMemberByUserQuery>) => {
+                  console.log({ groupMemberByUser: json })
+                  if (json.data.groupMemberByUser.items.length > 0)
+                    this.setState({ canJoin: false, canLeave: true && !this.state.isEditable })
+                  else this.setState({ canJoin: true && !this.state.isEditable, canLeave: false })
+                })
+              }
+              /*
             this.state.memberIDs.map((id) => {
               const getUser: any = API.graphql({
                 query: queries.getUser,
@@ -236,32 +256,35 @@ export default class EventScreen extends JCComponent<Props, State> {
                 }
               })
           */
-          }
-        )
+            }
+          )
+        }
       }
       getGroup.then(processResults).catch(processResults)
     }
   }
   convertEventToMapData(): void {
     const data = this.state.data
-    if (data.locationLatLong && data.locationLatLong.latitude && data.locationLatLong.longitude)
-      this.setState({
-        mapData: [
-          {
-            latitude: data.locationLatLong.latitude,
-            longitude: data.locationLatLong.longitude,
-            name: data.name,
-            event: data,
-            link: "",
-            type: "event",
-          },
-        ],
-        initCenter: { lat: data.locationLatLong.latitude, lng: data.locationLatLong.longitude },
-      })
+    if (data)
+      if (data.locationLatLong && data.locationLatLong.latitude && data.locationLatLong.longitude)
+        this.setState({
+          mapData: [
+            {
+              latitude: data.locationLatLong.latitude,
+              longitude: data.locationLatLong.longitude,
+              name: data.name,
+              event: data,
+              link: "",
+              type: "event",
+            },
+          ],
+          initCenter: { lat: data.locationLatLong.latitude, lng: data.locationLatLong.longitude },
+        })
   }
-  convertProfileToMapData(): MapData[] {
+  convertProfileToMapData(): MapData[] | null {
     const data = this.state.data
-    return data
+
+    /* return data
       .map((dataItem) => {
         if (dataItem?.location && dataItem?.location?.latitude && dataItem?.location?.longitude) {
           return {
@@ -275,7 +298,8 @@ export default class EventScreen extends JCComponent<Props, State> {
           }
         } else return null
       })
-      .filter((o) => o)
+      .filter((o) => o)*/
+    return null
   }
   mapChanged = (): void => {
     this.setState({ showMap: !this.state.showMap })
@@ -289,13 +313,13 @@ export default class EventScreen extends JCComponent<Props, State> {
   }
   createNew(): void {
     if (this.validate()) {
-      const createGroup: any = API.graphql({
+      const createGroup = API.graphql({
         query: mutations.createGroup,
         variables: { input: this.state.data },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      }) as Promise<GraphQLResult<CreateGroupMutation>>
       createGroup
-        .then((json: any) => {
+        .then((json: GraphQLResult<CreateGroupMutation>) => {
           this.setState(
             {
               createNew: false,
@@ -315,7 +339,7 @@ export default class EventScreen extends JCComponent<Props, State> {
           )
           console.log({ "Success mutations.createGroup": json })
         })
-        .catch((err: any) => {
+        .catch((err: GraphQLResult<CreateGroupMutation>) => {
           console.log({ "Error mutations.createGroup": err })
         })
     }
@@ -337,100 +361,111 @@ export default class EventScreen extends JCComponent<Props, State> {
   }
   save(): void {
     if (this.validate()) {
-      const updateGroup: any = API.graphql({
+      const updateGroup = API.graphql({
         query: mutations.updateGroup,
         variables: { input: this.clean(this.state.data) },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      }) as Promise<GraphQLResult<UpdateGroupMutation>>
       updateGroup
-        .then((json: any) => {
+        .then((json: GraphQLResult<UpdateGroupMutation>) => {
           console.log({ "Success mutations.updateGroup": json })
         })
-        .catch((err: any) => {
+        .catch((err: GraphQLResult<UpdateGroupMutation>) => {
           console.log({ "Error mutations.updateGroup": err })
         })
     }
   }
   leave(): void {
-    Analytics.record({
-      name: "left" + this.state.groupType,
-      // Attribute values must be strings
-      attributes: { id: this.state.data.id, name: this.state.data.name },
-    })
-    const groupMemberByUser: any = API.graphql({
-      query: queries.groupMemberByUser,
-      variables: { userID: this.state.currentUser, groupID: { eq: this.state.data.id } },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })
-    groupMemberByUser
-      .then((json: any) => {
-        console.log({ "Success queries.groupMemberByUser": json })
+    if (this.state.data) {
+      Analytics.record({
+        name: "left" + this.state.groupType,
+        // Attribute values must be strings
+        attributes: { id: this.state.data.id, name: this.state.data.name },
+      })
 
-        json.data.groupMemberByUser.items.map((item) => {
-          const deleteGroupMember: any = API.graphql({
-            query: mutations.deleteGroupMember,
-            variables: { input: { id: item.id } },
-            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+      const groupMemberByUser = API.graphql({
+        query: queries.groupMemberByUser,
+        variables: { userID: this.state.currentUser, groupID: { eq: this.state.data.id } },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+      }) as Promise<GraphQLResult<GroupMemberByUserQuery>>
+      groupMemberByUser
+        .then((json: GraphQLResult<GroupMemberByUserQuery>) => {
+          console.log({ "Success queries.groupMemberByUser": json })
+
+          json.data?.groupMemberByUser?.items?.map((item) => {
+            if (item?.id) {
+              const deleteGroupMember = API.graphql({
+                query: mutations.deleteGroupMember,
+                variables: { input: { id: item.id } },
+                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+              }) as Promise<GraphQLResult<DeleteGroupMemberMutation>>
+              deleteGroupMember
+                .then((json: GraphQLResult<DeleteGroupMemberMutation>) => {
+                  console.log({ "Success mutations.deleteGroupMember": json })
+                })
+                .catch((err: GraphQLResult<DeleteGroupMemberMutation>) => {
+                  console.log({ "Error mutations.deleteGroupMember": err })
+                })
+            }
           })
-          deleteGroupMember
-            .then((json: any) => {
-              console.log({ "Success mutations.deleteGroupMember": json })
-            })
-            .catch((err: any) => {
-              console.log({ "Error mutations.deleteGroupMember": err })
-            })
-        })
 
-        const remainingUsers = this.state.memberIDs.filter(
-          (user) => user !== this.state.currentUser
-        )
-        this.setState({ canJoin: true, canLeave: false, memberIDs: remainingUsers })
-        this.renderButtons()
-      })
-      .catch((err: any) => {
-        console.log({ "Error queries.groupMemberByUser": err })
-      })
+          const remainingUsers = this.state.memberIDs.filter(
+            (user) => user !== this.state.currentUser
+          )
+          this.setState({ canJoin: true, canLeave: false, memberIDs: remainingUsers })
+          this.renderButtons()
+        })
+        .catch((err: GraphQLResult<GroupMemberByUserQuery>) => {
+          console.log({ "Error queries.groupMemberByUser": err })
+        })
+    }
   }
   join(): void {
-    Analytics.record({
-      name: "joined" + this.state.groupType,
-      // Attribute values must be strings
-      attributes: { id: this.state.data.id, name: this.state.data.name },
-    })
-    const createGroupMember: any = API.graphql({
-      query: mutations.createGroupMember,
-      variables: { input: { groupID: this.state.data.id, userID: this.state.currentUser } },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })
-    createGroupMember
-      .then((json: any) => {
-        console.log({ "Success mutations.createGroupMember": json })
+    if (this.state.data) {
+      Analytics.record({
+        name: "joined" + this.state.groupType,
+        // Attribute values must be strings
+        attributes: { id: this.state.data.id, name: this.state.data.name },
       })
-      .catch((err: any) => {
-        console.log({ "Error mutations.createGroupMember": err })
-      })
+      const createGroupMember = API.graphql({
+        query: mutations.createGroupMember,
+        variables: { input: { groupID: this.state.data.id, userID: this.state.currentUser } },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+      }) as Promise<GraphQLResult<CreateGroupMemberMutation>>
+      createGroupMember
+        .then((json) => {
+          console.log({ "Success mutations.createGroupMember": json })
+        })
+        .catch((err) => {
+          console.log({ "Error mutations.createGroupMember": err })
+        })
 
-    this.setState({
-      canJoin: false,
-      canLeave: true,
-      memberIDs: this.state.memberIDs.concat(this.state.currentUser),
-    })
-    this.renderButtons()
+      this.setState({
+        canJoin: false,
+        canLeave: true,
+        memberIDs: this.state.currentUser
+          ? this.state.memberIDs.concat(this.state.currentUser)
+          : this.state.memberIDs,
+      })
+      this.renderButtons()
+    }
   }
   delete(): void {
-    const deleteGroup: any = API.graphql({
-      query: mutations.deleteGroup,
-      variables: { input: { id: this.state.data.id } },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })
-    deleteGroup
-      .then((json: any) => {
-        console.log({ "Success mutations.deleteGroup": json })
-        this.props.navigation.push("HomeScreen")
-      })
-      .catch((err: any) => {
-        console.log({ "Error mutations.deleteGroup": err })
-      })
+    if (this.state.data) {
+      const deleteGroup = API.graphql({
+        query: mutations.deleteGroup,
+        variables: { input: { id: this.state.data.id } },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+      }) as Promise<GraphQLResult<DeleteGroupMutation>>
+      deleteGroup
+        .then((json: GraphQLResult<DeleteGroupMutation>) => {
+          console.log({ "Success mutations.deleteGroup": json })
+          this.props.navigation.push("HomeScreen")
+        })
+        .catch((err: GraphQLResult<DeleteGroupMutation>) => {
+          console.log({ "Error mutations.deleteGroup": err })
+        })
+    }
   }
   updateValue(field: string, value: any): void {
     const temp = this.state.data
@@ -479,7 +514,7 @@ export default class EventScreen extends JCComponent<Props, State> {
               return <Picker.Item key={org} label={org} value={org} />
             })}
           </Picker>
-          {this.state.data.readGroups?.map((item: UserGroupType, index: number) => {
+          {this.state.data?.readGroups?.map((item: UserGroupType | null, index: number) => {
             return (
               <React.Fragment key={index}>
                 <View
@@ -492,10 +527,12 @@ export default class EventScreen extends JCComponent<Props, State> {
                   <TouchableOpacity
                     style={{ alignSelf: "center", marginLeft: 15 }}
                     onPress={() => {
-                      const tmp = this.state.data.readGroups
-                      if (!tmp) tmp = []
-                      tmp.splice(index, 1)
-                      this.updateValue("readGroups", tmp)
+                      if (this.state.data) {
+                        let tmp = this.state.data.readGroups
+                        if (!tmp) tmp = []
+                        tmp.splice(index, 1)
+                        this.updateValue("readGroups", tmp)
+                      }
                     }}
                   >
                     <AntDesign name="close" size={20} color="black" />
@@ -607,11 +644,12 @@ export default class EventScreen extends JCComponent<Props, State> {
           <Header
             title="Jesus Collective"
             navigation={this.props.navigation}
-            onMapChange={
-              !this.state.createNew && this.state.data.eventType === "location"
-                ? this.mapChanged
-                : null
-            }
+            onMapChange={() => {
+              if (this.state.data)
+                !this.state.createNew && this.state.data.eventType === "location"
+                  ? this.mapChanged
+                  : null
+            }}
           />
           <Content>
             <MyMap
@@ -708,7 +746,7 @@ export default class EventScreen extends JCComponent<Props, State> {
                           placeholder="Enter Event Time"
                           textStyle={this.styles.style.eventDateInput}
                           inputStyle={this.styles.style.eventDateInput}
-                          value={this.state.data.time}
+                          value={this.state.data.time ?? ""}
                           tz={this.state.data.tz ? this.state.data.tz : moment.tz.guess()}
                           isEditable={this.state.isEditable}
                         ></EditableDate>
@@ -722,7 +760,7 @@ export default class EventScreen extends JCComponent<Props, State> {
                           placeholder="Enter Event Time"
                           textStyle={this.styles.style.eventDateInput}
                           inputStyle={this.styles.style.eventDateInput}
-                          value={this.state.data.time}
+                          value={this.state.data.time ?? ""}
                           tz={moment.tz.guess()}
                           isEditable={this.state.isEditable}
                         ></EditableDate>
@@ -768,7 +806,7 @@ export default class EventScreen extends JCComponent<Props, State> {
                         multiline={false}
                         textStyle={ButtonTypes.Solid}
                         inputStyle={this.styles.style.eventEditableURL}
-                        value={this.state.data.eventUrl}
+                        value={this.state.data.eventUrl ?? ""}
                         isEditable={this.state.isEditable}
                       ></EditableUrl>
                     ) : (
@@ -792,7 +830,7 @@ export default class EventScreen extends JCComponent<Props, State> {
                           multiline={false}
                           textStyle={this.styles.style.fontRegular}
                           inputStyle={this.styles.style.groupNameInput}
-                          value={this.state.data.location}
+                          value={this.state.data.location ?? ""}
                           isEditable={this.state.isEditable}
                         ></EditableLocation>
                       </CardItem>
@@ -813,13 +851,14 @@ export default class EventScreen extends JCComponent<Props, State> {
                 </Text>
                 <TouchableOpacity
                   onPress={() => {
-                    this.state.data.ownerOrg
-                      ? this.showOrg(this.state.data.ownerOrg.id)
-                      : this.showProfile(
-                          this.state.data.ownerUser
-                            ? this.state.data.ownerUser.id
-                            : this.state.currentUserProfile.id
-                        )
+                    if (this.state.data)
+                      this.state.data.ownerOrg
+                        ? this.showOrg(this.state.data.ownerOrg.id)
+                        : this.showProfile(
+                            this.state.data.ownerUser
+                              ? this.state.data.ownerUser.id
+                              : this.state.currentUserProfile.id
+                          )
                   }}
                 >
                   <ProfileImage

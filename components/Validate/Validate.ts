@@ -144,9 +144,9 @@ export default class Validate {
             return { result: false, validationError: "Event must have a description" }
         if (data.time == "" || data.time == null)
             return { result: false, validationError: "Event must have a time" }
-        if (data.eventType == "zoom" && !isAbsoluteUrl(data.eventUrl))
+        if (data.eventType == "zoom" && (!data.eventUrl || !isAbsoluteUrl(data.eventUrl)))
             return { result: false, validationError: "Zoom Event must have a valid URL set" }
-        if (data.eventType == "eventbrite" && !isAbsoluteUrl(data.eventUrl))
+        if (data.eventType == "eventbrite" && (!data.eventUrl || !isAbsoluteUrl(data.eventUrl)))
             return { result: false, validationError: "Eventbrite Event must have a valid URL set" }
         if (data.eventType == "location" && data.location == "")
             return { result: false, validationError: "Location Event must have a location" }

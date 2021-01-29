@@ -102,10 +102,10 @@ export default class CourseScreen extends JCComponent<Props, State> {
         })
     })
   }
-  getValueFromKey(myObject: unknown, string: string): string {
+  /* getValueFromKey(myObject: unknown, string: string): string {
     const key = Object.keys(myObject).filter((k) => k.includes(string))
     return key.length ? myObject[key[0]] : ""
-  }
+  }*/
   setMembers() {
     this.state.memberIDs.map((id) => {
       const getUser: any = API.graphql({
