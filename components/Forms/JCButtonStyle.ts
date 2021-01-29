@@ -731,7 +731,7 @@ export default EStyleSheet.create({
     fontWeight: "bold",
   },
   TransparentNoPaddingButton: {
-    marginBottom: 20,
+    marginTop:10,
     paddingTop: 0,
     paddingBottom: 0,
     marginLeft: 10,

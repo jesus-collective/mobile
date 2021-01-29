@@ -374,7 +374,7 @@ class BillingImpl extends JCComponent<Props, State> {
       this.setState({ stripeValidation: { ...this.state.stripeValidation, [name]: false } })
     }
   }
-  renderProduct(stripe, elements, item: Product, index: number) {
+  renderProduct(item: Product, index: number) {
     return (
       <View
         key={index}
@@ -452,72 +452,21 @@ class BillingImpl extends JCComponent<Props, State> {
             </View>
           )
         })}
-        {this.state.invoice?.lines?.data.map((line, index: number) => {
-            return (
-                <View key={index} style={this.styles.style.flexRow}>
-                    <Text
-                        style={{
-                        flex:1,
-                        fontSize:12,
-                        fontFamily: "Graphik-Regular-App",
-                        paddingTop: 10,
-                        paddingBottom: 10,
-                        paddingLeft: 45,
-                        paddingRight: 45,
-                        }}
-                    >
-                        {line.description}
-                    </Text>
-                    <Text
-                        style={{
-                            right:"20%",
-                            fontFamily: "Graphik-Bold-App",
-                            paddingTop: 10,
-                            paddingBottom: 10,
-                        }}
-                    >
-                      ${(line.amount / 100).toFixed(2)}
-                    </Text>
-                </View>
-        )})}
-        <View style={this.styles.style.flexRow}>
-            {!this.state.invoice ? <ActivityIndicator></ActivityIndicator>: null}
-            <Text
-                style={{
-                fontFamily: "Graphik-Bold-App",
-                paddingTop: 10,
-                paddingBottom: 10,
-                paddingLeft: 45,
-                paddingRight: 45,
-                }}
-            >
-                {this.state.invoice ? "Total:" : "Calculating Total..."}
-            </Text>
-            <Text
-                style={{
-                fontFamily: "Graphik-Bold-App",
-                paddingTop: 10,
-                paddingBottom: 10,
-                }}
-            >
-                {this.state.invoice
-                  ? "$" + (this.state.invoice.total / 100).toFixed(2)
-                  : ""}
-            </Text>
-        </View>
+        
         <Label>
-            <Text style={[this.styles.style.fontFormMandatory, !this.state.eula ? {color:"#F0493E"} : { opacity: 0 }]}>*</Text>
+            <Text style={[this.styles.style.fontFormMandatory,{marginRight:-8}, !this.state.eula ? {color:"#F0493E"} : { opacity: 0 }]}>*</Text>
             <JCSwitch
-                flexDirection={"row-reverse"}
-                  containerWidth={300}
+                  containerWidth={"95%"}
                   switchLabel="I accept the End User Licensing Agreement"
                   initState={this.state.eula}
                   onPress={(e) => {
                     this.setState({ eula: e })
                   }}
             ></JCSwitch>
-        </Label>
+            </Label>
+
         <JCButton
+          
           buttonType={ButtonTypes.TransparentNoPadding}
           onPress={() => {
             this.setState({ showEULA: true })
@@ -525,17 +474,7 @@ class BillingImpl extends JCComponent<Props, State> {
         >
           Read the End User Licensing Agreement
         </JCButton>
-        <JCButton
-            buttonType={ButtonTypes.Solid}
-            onPress={() => {
-                this.setState({ errorMsg: "" })
-                this.makePayment(stripe, elements)
-            }}
-            enabled={!!(this.state.invoice) && this.isMakePaymentEnabled()}
-        >
-            Process Payment
-        </JCButton>
-        <Text style={{ color: "red" }}>{this.state.errorMsg}</Text>
+       
         {this.renderEULA()}
       </View>
     )
@@ -634,7 +573,7 @@ class BillingImpl extends JCComponent<Props, State> {
                         fontFamily: "Graphik-Bold-App",
                         alignSelf: 'center',
                         fontSize: 42,
-                        lineHeight: '51px',
+                        lineHeight: 51,
                         textAlign: 'center',
                         width: '100%',
                         marginBottom: 20
@@ -663,7 +602,7 @@ class BillingImpl extends JCComponent<Props, State> {
                             fontFamily: "Graphik-Bold-App",
                             alignSelf: 'center',
                             fontSize: 42,
-                            lineHeight: '51px',
+                            lineHeight: 51,
                             textAlign: 'center',
                             width: '100%',
                             marginBottom: 20
@@ -674,7 +613,9 @@ class BillingImpl extends JCComponent<Props, State> {
                           <Text
                             style={{
                               fontFamily: "Graphik-Bold-App",
-                              fontSize: 11,
+                              textAlign:"center",
+                              width:"100%",
+                              fontSize: 12,
                               marginBottom: 8
                             }}
                           >
@@ -959,10 +900,84 @@ class BillingImpl extends JCComponent<Props, State> {
                           Add another product
                       </JCButton>
                       </View>
-                        {this.state.currentProduct?.map((item: Product, index: number) => {
-                          return this.renderProduct(stripe, elements, item, index)
+                      <View style={{marginBottom:20}}>
+                      {this.state.currentProduct?.map((item: Product, index: number) => {
+                          return this.renderProduct(item, index)
                         })}
-
+                      </View>
+                      
+                      {this.state.invoice?.lines?.data.map((line, index: number) => {
+                          return (
+                              <View key={index} style={this.styles.style.flexRow}>
+                                  <Text
+                                      style={{
+                                      flex:1,
+                                      fontSize:12,
+                                      fontFamily: "Graphik-Regular-App",
+                                      paddingTop: 10,
+                                      paddingBottom: 10,
+                                      paddingLeft: 10,
+                                      paddingRight: 45,
+                                      }}
+                                  >
+                                      {line.description}
+                                  </Text>
+                                  <Text
+                                      style={{
+                                          right:"20%",
+                                          fontFamily: "Graphik-Bold-App",
+                                          paddingTop: 10,
+                                          paddingBottom: 10,
+                                          paddingRight:10
+                                      }}
+                                  >
+                                    ${(line.amount / 100).toFixed(2)}
+                                  </Text>
+                              </View>
+                      )})}
+                      <View style={[this.styles.style.flexRow, {marginBottom:10}]}>
+                          {!this.state.invoice ? 
+                          <View style={{paddingTop:10, marginRight:10}}>
+                            <ActivityIndicator></ActivityIndicator>
+                          </View>: null}
+                          <Text
+                              style={{
+                              flex:1,
+                              textAlign: !this.state.invoice ? "left": "right",
+                              textAlignVertical:"center",
+                              paddingRight:45,
+                              
+                              fontFamily: "Graphik-Bold-App",
+                              paddingTop: 10,
+                              paddingBottom: 10,
+                              }}
+                          >
+                              {this.state.invoice ? "Total:" : "Calculating Total..."}
+                          </Text>
+                          <Text
+                              style={{
+                              fontFamily: "Graphik-Bold-App",
+                              paddingTop: 10,
+                              paddingBottom: 10,
+                              paddingRight:10
+                              }}
+                          >
+                              {this.state.invoice
+                                ? "$" + (this.state.invoice.total / 100).toFixed(2)
+                                : ""}
+                          </Text>
+                      </View>
+                      <JCButton
+                          buttonType={ButtonTypes.Solid}
+                          onPress={() => {
+                          this.setState({ errorMsg: "" })
+                          this.makePayment(stripe, elements)
+                      }}
+                      enabled={!!(this.state.invoice) && this.isMakePaymentEnabled()}
+                      >
+                          Process Payment
+                      </JCButton>
+                      <Text style={{ color: "red" }}>{this.state.errorMsg}</Text>
 
                       </View>
                     </Content>
