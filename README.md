@@ -1,5 +1,10 @@
 # Jesus Collective Mobile App
-To setup a local copy of The Jesus Collective App for development you will need an AWS account.
+The instructions below will setup a local environment using the TMH AWS Development backend. For almost all development this should be sufficient.
+
+There are two other optional ways to develop using your own backend...
+
+1) Using a local "mocked" backend (see below: amplify mock)
+2) Using your own AWS backend (see below: setup aws)
 
 Optional Install Steps
 ---
@@ -45,7 +50,21 @@ cd ~/code/jc/mobile
 npm test
 ```
 
-6. Optionally - to setup AWS run:
+7. Optionally - local backend:
+```
+npm install -g @aws-amplify/cli
+cd ~/code/jc/mobile
+amplify mock
+```    
+
+8. Optionally - to setup AWS backend run:
+
+*** warning - aws offers a free tier, due to some features that are enabled by default this will result in overages and AWS will bill you ***
+
+*** to reduce overages we suggest removing the EC2 elastic search instances that are created ***
+
+*** even with this, you will likely go over some free limits and be billed...you are responsible for setting limits and monitoring your own account ***
+
 ```
 npm install -g @aws-amplify/cli
 cd ~/code/jc/mobile
