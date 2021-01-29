@@ -144,7 +144,7 @@ class JCResourceConfigModalImpl extends JCComponent<Props> {
                     <TouchableOpacity
                       style={{ alignSelf: "center", marginLeft: 15 }}
                       onPress={() => {
-                        let tmp = this.state.data.readGroups
+                        let tmp = resourceState?.groupData?.readGroups
                         if (!tmp) tmp = []
                         tmp.splice(index, 1)
                         resourceActions.updateValueGroup("readGroups", tmp)
