@@ -19,7 +19,8 @@ export default class HandleStripePayment {
     elements: StripeElements,
     idempotency: string,
     priceItems: PriceItems,
-    handleComplete: () => void
+    handleComplete: () => void,
+    handleError: (error: Error) => void
   ) => {
     // We don't want to let default form submission happen here,
     // which would refresh the page.
@@ -51,6 +52,7 @@ export default class HandleStripePayment {
 
     if (error) {
       console.log("[createPaymentMethod error]", error)
+      handleError(error)
     } else {
       console.log("[PaymentMethod]", paymentMethod)
       const paymentMethodId = paymentMethod?.id

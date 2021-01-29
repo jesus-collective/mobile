@@ -1,6 +1,6 @@
 import { View } from "native-base"
 import * as React from "react"
-import { Image, Text } from "react-native"
+import { Image, Text, Platform, Dimensions   } from "react-native"
 import * as RootNavigation from "../../screens/HomeScreen//NavigationRoot"
 import JCComponent from "../JCComponent/JCComponent"
 
@@ -23,11 +23,32 @@ export default class SignUpSidebar extends JCComponent<Props> {
           <Text style={this.styles.style.signUpSidebarText}>{this.props.text}</Text>
         ) : (
           <View style={this.styles.style.signUpSidebarProgressTextView}>
+            {
+               Platform.OS === "web" && Dimensions.get("window").width > 720 ?
+            <>
             <Text style={this.styles.style.signUpSidebarProgressText1}>Account Creation</Text>
             <Text style={this.styles.style.signUpSidebarProgressText2}>Authentication</Text>
             <Text style={this.styles.style.signUpSidebarProgressText3}>Payment</Text>
             <Text style={this.styles.style.signUpSidebarProgressText4}>Individual Profile</Text>
             <Text style={this.styles.style.signUpSidebarProgressText5}>Get In</Text>
+            </>
+            :
+            <>
+
+            {this.props.position === "1" ? 
+            <Text style={this.styles.style.signUpSidebarProgressText1}>Account Creation</Text>
+            : this.props.position === "2" ? 
+            <Text style={this.styles.style.signUpSidebarProgressText2}>Authentication</Text>
+            : this.props.position === "3" ? 
+            <Text style={this.styles.style.signUpSidebarProgressText3}>Payment</Text>
+            : this.props.position === "4" ?
+            <Text style={this.styles.style.signUpSidebarProgressText4}>Individual Profile</Text>
+            : this.props.position === "5" ? 
+            <Text style={this.styles.style.signUpSidebarProgressText5}>Get In</Text>:
+            <Text style={this.styles.style.signUpSidebarProgressText5}>Welcome</Text>
+            }
+            </>
+            }
             {this.props.position == "1" && (
               <Image
                 source={require("../../assets/SignUp/progress-1.png")}

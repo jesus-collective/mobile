@@ -11,7 +11,7 @@ interface Props {
    * Set a larger value if switchLabel does not fit on a single line.
    * @default 170
    */
-  containerWidth?: number
+  containerWidth?: number | string
   /**
    * Sets color of the pill when the switch is on.
    * @default "#333333"
