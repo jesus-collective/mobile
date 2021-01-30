@@ -639,7 +639,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
   getSeries = (
     resourceIndex: number | null | undefined,
     seriesIndex: number | null
-  ): GetResourceSeriesData => {
+  ): GetResourceSeriesData | undefined => {
     if (resourceIndex == null) return null
     if (seriesIndex == null) return null
     const series = this.state.resourceData?.resources?.items[resourceIndex]?.series?.items[
@@ -651,7 +651,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     resourceIndex: number | null | undefined,
     seriesIndex: number | null | undefined,
     episodeIndex: number | null
-  ): GetResourceEpisodeData | null => {
+  ): GetResourceEpisodeData | undefined | null => {
     if (episodeIndex == null || seriesIndex == undefined) return null
     const series = this.getSeries(resourceIndex, seriesIndex)
     if (series && series?.episodes?.items) {
@@ -1052,7 +1052,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
   updateSeriesOrder = (resourceIndex: number) => {
     try {
       this.state.resourceData?.resources.items[resourceIndex]!.series.items.forEach(
-        (item: UpdateResourceSeriesInput, index: number) => {
+        (item, index: number) => {
           const z = item
           z.order = index
           this.updateSeries(resourceIndex, index, z)

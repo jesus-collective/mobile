@@ -42,21 +42,36 @@ export type GetResourceRootQueryResult = GraphQLResult<GetResourceRootQuery>
 export type GetResourceRootQueryResultPromise = Promise< GraphQLResult<GetResourceRootQuery>>
 export type GetResourceRootData= NonNullable<GetResourceRootQuery>["getResourceRoot"]
 
-export type GetResourceRootDataCustom= NonNullable<GetResourceRootQuery>["getResourceRoot"] &{
+export type GetResourceRootDataCustom= NonNullable<GetResourceRootQuery>["getResourceRoot"] & {
   resources:
- {items:
-  [
-   {
-     series:
-    {items:
+    {
+      items:
         [
-          NonNullable<GetResourceSeriesQuery>["getResourceSeries"]
-        ]
-      }
-    }|NonNullable<GetResourceQuery>["getResource"]
-    |{image:ImageInput}
-   ]
-}
+          {
+            series:
+              {
+                items:
+                  [
+                    NonNullable<GetResourceSeriesQuery>["getResourceSeries"]
+                  ]
+              }
+          }&NonNullable<GetResourceQuery>["getResource"]&{image:ImageInput}
+       ]
+    }
+    menuItems:
+    {
+      items:
+      [
+        {
+          pageItems:
+          
+            
+              NonNullable<ResourcePageItemInput[]>
+            
+          
+        }
+      ]
+    }
 }
 
 export type GetResourceQueryResult = GraphQLResult<GetResourceQuery>
