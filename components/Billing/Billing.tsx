@@ -306,6 +306,7 @@ class BillingImpl extends JCComponent<Props, State> {
       let priceItems = this.getPriceItems()
       try {
         if (stripe && elements) {
+          console.log(this.state.freeDays)
           const status = await new HandleStripePayment().handleSubmit(
             stripe,
             elements,
@@ -1111,10 +1112,10 @@ class BillingImpl extends JCComponent<Props, State> {
                           this.setState({ freeDays: value })
                         }}
                       >
-                        <Picker.Item key={"null"} label={"Start Billing Immediately"} value={0} />
-                        <Picker.Item key={"null"} label={"Start Billing In 30 Days"} value={30} />
-                        <Picker.Item key={"null"} label={"Start Billing In 60 Days"} value={60} />
-                        <Picker.Item key={"null"} label={"Start Billing In 90 Days"} value={90} />
+                        <Picker.Item key={"0"} label={"Start Billing Immediately"} value={0} />
+                        <Picker.Item key={"30"} label={"Start Billing In 30 Days"} value={30} />
+                        <Picker.Item key={"60"} label={"Start Billing In 60 Days"} value={60} />
+                        <Picker.Item key={"90"} label={"Start Billing In 90 Days"} value={90} />
                       </Picker>
                       <Text style={{ color: "red", textAlign: "center", marginBottom: 4 }}>
                         {this.state.errorMsg}

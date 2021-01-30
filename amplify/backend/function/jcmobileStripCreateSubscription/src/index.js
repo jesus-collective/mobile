@@ -115,6 +115,7 @@ exports.handler = async (event) => {
     var stripeSubscriptionID = event.arguments.stripeSubscriptionID
     if (stripeCustomerID == null || stripeSubscriptionID == null) {
       const userInfo = await getUser(userID)
+      console.log(stripeCustomerID)
       console.log(userInfo.stripeCustomerID)
       if (stripeCustomerID == null) stripeCustomerID = userInfo.stripeCustomerID
       if (stripeSubscriptionID == null) stripeSubscriptionID = userInfo.stripeSubscriptionID
@@ -164,7 +165,7 @@ exports.handler = async (event) => {
           subscription = await stripe.subscriptions.create(sub, {
             idempotencyKey: idempotency + "SC",
           })
-          await updateSubscription(stripeCustomerID, subscription.id)
+          await updateSubscription(userID, subscription.id)
         } else {
           const sub = {
             customer: stripeCustomerID,

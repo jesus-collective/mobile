@@ -1,5 +1,6 @@
 ﻿import { useNavigation, useRoute } from "@react-navigation/native"
 import Amplify from "aws-amplify"
+import { Content } from "native-base"
 import React from "react"
 import { ActivityIndicator, Text, View } from "react-native"
 import Billing from "../../components/Billing/Billing"
@@ -37,7 +38,25 @@ class SignUpScreen1Impl extends JCComponent<Props, State> {
       <SignUpScreen1Impl.UserConsumer>
         {({ userState, userActions }) => {
           if (!userState) return null
-          if (userState.hasPaidState == PaidStatus.Unknown) return <ActivityIndicator />
+          if (userState.hasPaidState == PaidStatus.Unknown)
+            return (
+              <Content>
+                <View style={this.styles.style.signUpScreen1PaymentColumn1}>
+                  <Text
+                    style={{
+                      fontFamily: "Graphik-Bold-App",
+                      textAlign: "center",
+                      width: "100%",
+                      fontSize: 12,
+                      marginBottom: 8,
+                    }}
+                  >
+                    We're getting you setup. This may takes several seconds.
+                  </Text>
+                  <ActivityIndicator />
+                </View>
+              </Content>
+            )
           if (userState.hasPaidState == PaidStatus.InProgress) {
             return (
               <View style={this.styles.style.signUpScreen1PaymentBody}>

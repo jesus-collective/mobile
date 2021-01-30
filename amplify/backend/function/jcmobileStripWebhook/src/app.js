@@ -13,65 +13,62 @@ or in the "license" file accompanying this file. This file is distributed on an 
 See the License for the specific language governing permissions and limitations under the License.
 */
 
-var express = require("express");
-var bodyParser = require("body-parser");
-var awsServerlessExpressMiddleware = require("aws-serverless-express/middleware");
-var handlePaymentIntentSucceeded = require("./handlePaymentIntentSucceeded");
+var express = require("express")
+var bodyParser = require("body-parser")
+var awsServerlessExpressMiddleware = require("aws-serverless-express/middleware")
+var handlePaymentIntentSucceeded = require("./handlePaymentIntentSucceeded")
 // declare a new express app
-var app = express();
-app.use(bodyParser.json());
-app.use(awsServerlessExpressMiddleware.eventContext());
+var app = express()
+app.use(bodyParser.json())
+app.use(awsServerlessExpressMiddleware.eventContext())
 
 // Enable CORS for all methods
 app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+  next()
+})
 
-app.post(
-  "/webhook",
-  bodyParser.raw({ type: "application/json" }),
-  async (request, response) => {
-    let event;
+app.post("/webhook", bodyParser.raw({ type: "application/json" }), async (request, response) => {
+  let event
 
-    try {
-      event = request.body;
-    } catch (err) {
-      response.status(400).send(`Webhook Error: ${err.message}`);
-    }
-    console.log(event);
-    // Handle the event
-    switch (event.type) {
-      case "payment_intent.succeeded":
-        const paymentIntent = event.data.object;
-        await handlePaymentIntentSucceeded.runIt(paymentIntent);
-        // Then define and call a method to handle the successful payment intent.
-        // handlePaymentIntentSucceeded(paymentIntent);
-        break;
-      case "payment_method.attached":
-        const paymentMethod = event.data.object;
-        // Then define and call a method to handle the successful attachment of a PaymentMethod.
-        // handlePaymentMethodAttached(paymentMethod);
-        break;
-      // ... handle other event types
-      default:
-        console.log(`Unhandled event type ${event.type}`);
-    }
-
-    // Return a response to acknowledge receipt of the event
-    response.json({ received: true });
+  try {
+    event = request.body
+  } catch (err) {
+    response.status(400).send(`Webhook Error: ${err.message}`)
   }
-);
+  console.log(event)
+  // Handle the event
+  switch (event.type) {
+    case "customer.subscription.created":
+      const paymentIntent = event.data.object
+      await handlePaymentIntentSucceeded.runIt(paymentIntent)
+      break
+    case "payment_intent.succeeded":
+      const paymentIntent = event.data.object
+      await handlePaymentIntentSucceeded.runIt(paymentIntent)
+      // Then define and call a method to handle the successful payment intent.
+      // handlePaymentIntentSucceeded(paymentIntent);
+      break
+    case "payment_method.attached":
+      const paymentMethod = event.data.object
+      // Then define and call a method to handle the successful attachment of a PaymentMethod.
+      // handlePaymentMethodAttached(paymentMethod);
+      break
+    // ... handle other event types
+    default:
+      console.log(`Unhandled event type ${event.type}`)
+  }
+
+  // Return a response to acknowledge receipt of the event
+  response.json({ received: true })
+})
 
 app.listen(3000, function () {
-  console.log("App started");
-});
+  console.log("App started")
+})
 
 // Export the app object. When executing the application local this does nothing. However,
 // to port it to AWS Lambda we will create a wrapper around that will load the app from
 // this file
-module.exports = app;
+module.exports = app
