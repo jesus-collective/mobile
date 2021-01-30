@@ -4,7 +4,7 @@ import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { Linking } from "expo"
 import moment from "moment"
 import React from "react"
-import { Text } from "react-native"
+import { Platform, Text } from "react-native"
 import { AuthStateData } from "src/types"
 import { v4 as uuidv4 } from "uuid"
 import JCComponent from "../../components/JCComponent/JCComponent"
@@ -26,7 +26,7 @@ import { PaidStatus, ProfileStatus, UserContext, UserState } from "./UserContext
 Amplify.configure(awsconfig)
 
 const MainStack = createStackNavigator()
-
+const PERSISTENCE_KEY = "NAVIGATION_STATE"
 interface Props {
   authState?: string | undefined
   onStateChange(state: string, data: AuthStateData): Promise<void>
@@ -322,22 +322,47 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
         const profileStatus = await this.checkIfCompletedProfile()
         this.setState(
           { hasPaidState: paidStatus, hasCompletedPersonalProfile: profileStatus },
-          () => {
-            this.performNavigation()
+          async () => {
+            await this.performNavigation()
           }
         )
       }
     )
   }
-  performNavigation() {
+  async performNavigation() {
     console.log("NAVIGATING")
     switch (this.state.hasPaidState) {
       case PaidStatus.Success:
         switch (this.state.hasCompletedPersonalProfile) {
           case ProfileStatus.Completed:
-            RootNavigation.navigate("mainApp", {
-              screen: "home",
-            })
+            const initialUrl = await Linking.getInitialURL()
+            console.log(initialUrl)
+            if (Platform.OS == "web" && initialUrl.includes("auth/payment3")) {
+              if (
+                this.isMemberOf("friends") ||
+                this.isMemberOf("partners") ||
+                this.isMemberOf("admin") ||
+                this.isMemberOf("courseAdmin") ||
+                this.isMemberOf("courseUser") ||
+                this.isMemberOf("courseCoach")
+              )
+                RootNavigation.navigate("mainApp", {})
+              else if (
+                this.isMemberOf("subscriptionkyearlyyears") ||
+                this.isMemberOf("subscriptionkykids") ||
+                this.isMemberOf("subscriptionkyyouth")
+              )
+                RootNavigation.navigate("mainApp", {
+                  screen: "mainDrawer",
+                  params: {
+                    screen: "ResourceScreen",
+                    params: { create: false, id: "resource-1608148143731" },
+                  },
+                })
+              else RootNavigation.navigate("mainApp", {})
+            } else RootNavigation.navigate("mainApp", {})
+            break
+
             break
           case ProfileStatus.Incomplete:
             RootNavigation.navigate("auth", {
