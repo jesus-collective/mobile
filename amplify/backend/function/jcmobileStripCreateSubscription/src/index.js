@@ -108,7 +108,7 @@ exports.handler = async (event) => {
     })
     const userID = event.identity.username
     const priceInfo = event.arguments.priceInfo.prices
-    let freeDays = event.identity.freeDays
+    let freeDays = event.arguments.freeDays
     if (freeDays > 90) freeDays = 90
     var stripeCustomerID = event.arguments.stripeCustomerID
     var stripeSubscriptionID = event.arguments.stripeSubscriptionID
@@ -148,35 +148,32 @@ exports.handler = async (event) => {
         console.log(error)
         return { statusCode: "402", error: { message: error.message } }
       }
-      console.log("Creating subscription")
+
       // Create the subscription
       try {
         var subscription = null
         if (stripeSubscriptionID == null) {
-          subscription = await stripe.subscriptions.create(
-            {
-              customer: stripeCustomerID,
-              items: priceInfo,
-              expand: ["latest_invoice.payment_intent"],
-              trial_period_days: freeDays,
-            },
-            {
-              idempotencyKey: idempotency + "SC",
-            }
-          )
+          const sub = {
+            customer: stripeCustomerID,
+            items: priceInfo,
+            expand: ["latest_invoice.payment_intent"],
+            trial_period_days: freeDays,
+          }
+          console.log({ "Creating subscription": sub })
+          subscription = await stripe.subscriptions.create(sub, {
+            idempotencyKey: idempotency + "SC",
+          })
           await updateSubscription(stripeCustomerID, subscription.id)
         } else {
-          subscription = await stripe.subscriptions.update(
-            stripeSubscriptionID,
-            {
-              customer: stripeCustomerID,
-              items: priceInfo,
-              expand: ["latest_invoice.payment_intent"],
-            },
-            {
-              idempotencyKey: idempotency + "SC",
-            }
-          )
+          const sub = {
+            customer: stripeCustomerID,
+            items: priceInfo,
+            expand: ["latest_invoice.payment_intent"],
+          }
+          console.log({ "Updating subscription": sub })
+          subscription = await stripe.subscriptions.update(stripeSubscriptionID, sub, {
+            idempotencyKey: idempotency + "SC",
+          })
         }
         const response = {
           statusCode: 200,
