@@ -1759,6 +1759,7 @@ export type CreateSubscriptionMutationVariables = {
   idempotency?: string | null,
   paymentMethodId?: string | null,
   priceInfo?: StripePriceInput | null,
+  freeDays?: number | null,
 };
 
 export type CreateSubscriptionMutation = {

@@ -10,7 +10,6 @@ const updateUser = /* GraphQL */ `
       stripeSubscriptionID
       hasPaidState
       profileState
-      freeDays
       createdAt
       updatedAt
     }

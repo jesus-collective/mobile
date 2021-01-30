@@ -189,6 +189,7 @@ export const createSubscription = /* GraphQL */ `
     $idempotency: String
     $paymentMethodId: String
     $priceInfo: StripePriceInput
+    $freeDays: Int
   ) {
     createSubscription(
       stripeCustomerID: $stripeCustomerID
@@ -196,6 +197,7 @@ export const createSubscription = /* GraphQL */ `
       idempotency: $idempotency
       paymentMethodId: $paymentMethodId
       priceInfo: $priceInfo
+      freeDays: $freeDays
     ) {
       subscription {
         id

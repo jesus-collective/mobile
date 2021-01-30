@@ -67,7 +67,8 @@ async function updateSubscription(id, subscriptionID) {
 
     return true
   } catch (json) {
-    console.log({ "Error updating user": json })
+    console.log({ "Error updating subscription": json })
+    console.log({ "Error updating subscription": json.errors[0] })
     return false
   }
 }
