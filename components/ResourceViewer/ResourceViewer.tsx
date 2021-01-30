@@ -1054,7 +1054,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       this.state.resourceData?.resources.items[resourceIndex]!.series.items.forEach(
         (item: UpdateResourceSeriesInput, index: number) => {
           const z = item
-          z.order = index.toString()
+          z.order = index
           this.updateSeries(resourceIndex, index, z)
         }
       )

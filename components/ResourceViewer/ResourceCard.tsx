@@ -673,7 +673,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
         {({ resourceState, resourceActions }) => {
           if (!resourceState) return null
           if (resourceState.currentResource == null) return null
-          let item
+          let item: GetResourceEpisodeData | GetResourceSeriesData | GetResourceData
           if (this.props.pageItem.episodeID != null && this.props.pageItem.episodeID != undefined)
             item = resourceActions.getEpisodeByID(
               this.props.pageItem.resourceID,
@@ -691,13 +691,23 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
           else {
             item = resourceActions.getResourceByID(this.props.pageItem.resourceID)
           }
-          if (
-            this.props.pageItem &&
-            (this.state.imageUrl == null ||
-              this.state.image != (item?.imageFile ? item?.imageFile : item?.image))
-          ) {
-            this.getImage(item?.imageFile ? item?.imageFile : item?.image)
+
+          if (item as GetResourceSeriesData | GetResourceEpisodeData) {
+            if (
+              this.props.pageItem &&
+              (this.state.imageUrl == null ||
+                this.state.image !=
+                  (item as GetResourceSeriesData | GetResourceEpisodeData)?.imageFile)
+            )
+              this.getImage((item as GetResourceSeriesData | GetResourceEpisodeData)?.imageFile)
+          } else {
+            if (
+              this.props.pageItem &&
+              (this.state.imageUrl == null || this.state.image != (item as GetResourceData)?.image)
+            )
+              this.getImage((item as GetResourceData)?.image)
           }
+
           const youtubeID = this.getYoutubeId(item)
           return (
             <>
@@ -752,7 +762,11 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                           }}
                           source={this.state.imageUrl}
                           onError={() => {
-                            this.getImage(item?.imageFile ? item?.imageFile : item?.image)
+                            if (item as GetResourceSeriesData | GetResourceEpisodeData)
+                              this.getImage(
+                                (item as GetResourceSeriesData | GetResourceEpisodeData)?.imageFile
+                              )
+                            else this.getImage((item as GetResourceData)?.image)
                           }}
                         ></Image>
                       </Animated.View>
