@@ -51,11 +51,11 @@ class SignUpScreen1Impl extends JCComponent<Props, State> {
                 <Text
                   style={{
                     fontFamily: "Graphik-Bold-App",
-                    alignSelf: 'center',
+                    alignSelf: "center",
                     fontSize: 42,
-                    lineHeight: '51px',
-                    textAlign: 'center',
-                    marginBottom: 20
+                    lineHeight: 51,
+                    textAlign: "center",
+                    marginBottom: 20,
                   }}
                 >
                   We've received your payment.

@@ -196,7 +196,10 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         this.setState(
           {
             groupData: json.data?.getGroup,
-            memberIDs: json.data?.getGroup?.members?.items?.map((item) => item?.userID),
+            memberIDs:
+              json.data?.getGroup?.members?.items?.map((item) =>
+                item?.userID ? item?.userID : ""
+              ) ?? [],
             isEditable: isEditable,
             canLeave: true && !isEditable,
             canJoin: true && !isEditable,
