@@ -1029,36 +1029,38 @@ class BillingImpl extends JCComponent<Props, State> {
                         })}
                       </View>
 
-                      {this.state.invoice?.lines?.data.map((line, index: number) => {
-                        return (
-                          <View key={index} style={this.styles.style.flexRow}>
-                            <Text
-                              style={{
-                                flex: 1,
-                                fontSize: 12,
-                                fontFamily: "Graphik-Regular-App",
-                                paddingTop: 10,
-                                paddingBottom: 10,
-                                paddingLeft: 10,
-                                paddingRight: 45,
-                              }}
-                            >
-                              {line.description}
-                            </Text>
-                            <Text
-                              style={{
-                                right: "20%",
-                                fontFamily: "Graphik-Bold-App",
-                                paddingTop: 10,
-                                paddingBottom: 10,
-                                paddingRight: 10,
-                              }}
-                            >
-                              ${(line.amount / 100).toFixed(2)}
-                            </Text>
-                          </View>
-                        )
-                      })}
+                      {this.state.invoice?.lines?.data
+                        .filter((item) => item.amount != 0)
+                        .map((line, index: number) => {
+                          return (
+                            <View key={index} style={this.styles.style.flexRow}>
+                              <Text
+                                style={{
+                                  flex: 1,
+                                  fontSize: 12,
+                                  fontFamily: "Graphik-Regular-App",
+                                  paddingTop: 10,
+                                  paddingBottom: 10,
+                                  paddingLeft: 10,
+                                  paddingRight: 45,
+                                }}
+                              >
+                                {line.description}
+                              </Text>
+                              <Text
+                                style={{
+                                  right: "20%",
+                                  fontFamily: "Graphik-Bold-App",
+                                  paddingTop: 10,
+                                  paddingBottom: 10,
+                                  paddingRight: 10,
+                                }}
+                              >
+                                ${(line.amount / 100).toFixed(2)}
+                              </Text>
+                            </View>
+                          )
+                        })}
                       <View style={[this.styles.style.flexRow, { marginBottom: 10 }]}>
                         {!this.state.invoice ? (
                           <View style={{ paddingTop: 10, marginRight: 10 }}>
