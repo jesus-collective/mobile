@@ -108,6 +108,8 @@ exports.handler = async (event) => {
     })
     const userID = event.identity.username
     const priceInfo = event.arguments.priceInfo.prices
+    let freeDays = event.identity.freeDays
+    if (freeDays > 90) freeDays = 90
     var stripeCustomerID = event.arguments.stripeCustomerID
     var stripeSubscriptionID = event.arguments.stripeSubscriptionID
     if (stripeCustomerID == null || stripeSubscriptionID == null) {
@@ -156,6 +158,7 @@ exports.handler = async (event) => {
               customer: stripeCustomerID,
               items: priceInfo,
               expand: ["latest_invoice.payment_intent"],
+              trial_period_days: freeDays,
             },
             {
               idempotencyKey: idempotency + "SC",

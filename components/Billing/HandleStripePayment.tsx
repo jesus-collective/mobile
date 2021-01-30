@@ -19,6 +19,7 @@ export default class HandleStripePayment {
     elements: StripeElements,
     idempotency: string,
     priceItems: PriceItems,
+    freeDays: number,
     handleComplete: () => void,
     handleError: (error: Error) => void
   ) => {
@@ -69,7 +70,10 @@ export default class HandleStripePayment {
         )
       } else {
         // Create the subscription
-        this.createSubscription({ paymentMethodId, priceItems, idempotency }, handleComplete)
+        this.createSubscription(
+          { paymentMethodId, priceItems, idempotency, freeDays },
+          handleComplete
+        )
       }
     }
   }
@@ -163,7 +167,13 @@ export default class HandleStripePayment {
       paymentMethodId,
       priceItems,
       idempotency,
-    }: { priceItems: PriceItems; paymentMethodId: string | undefined; idempotency: string },
+      freeDays,
+    }: {
+      priceItems: PriceItems
+      paymentMethodId: string | undefined
+      idempotency: string
+      freeDays: number
+    },
     handleComplete: () => void
   ) {
     return (
@@ -173,10 +183,11 @@ export default class HandleStripePayment {
           paymentMethodId: paymentMethodId,
           priceInfo: { prices: priceItems },
           idempotency: idempotency,
+          freeDays: freeDays,
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })
-        .then((response: StripeSubscriptionData) => {
+        .then((response) => {
           return response
         })
         // If the card is declined, display an error to the user.

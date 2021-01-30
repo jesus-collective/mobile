@@ -13,7 +13,7 @@ import Amplify, { API, Auth, graphqlOperation } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { Body, Card, CardItem, Content, Label } from "native-base"
 import React, { useState } from "react"
-import { ActivityIndicator, Text, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, Picker, Text, TouchableOpacity, View } from "react-native"
 import { v4 as uuidv4 } from "uuid"
 import EditableRichText from "../../components/Forms/EditableRichText"
 import EditableText from "../../components/Forms/EditableText"
@@ -73,6 +73,7 @@ interface State extends JCState {
   processing: "entry" | "processing" | "complete"
   stripeValidation: any
   validatingUser: boolean
+  freeDays: number
 }
 class BillingImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
@@ -84,14 +85,15 @@ class BillingImpl extends JCComponent<Props, State> {
       stripeValidation: {
         cardNumber: false,
         expiryDate: false,
-        cvc: false
+        cvc: false,
       },
       showEULA: false,
       errorMsg: "",
       currentProduct: [],
       idempotency: uuidv4(),
       processing: "entry",
-      validatingUser:false,
+      validatingUser: false,
+      freeDays: 0,
       eula: false,
       productType: props.route?.params?.productType,
       joinedProduct: props.route?.params?.joinedProduct
@@ -238,7 +240,7 @@ class BillingImpl extends JCComponent<Props, State> {
         }
       )
   }
-  
+
   static UserConsumer = UserContext.Consumer
   renderAddProductModal(userState: UserState): React.ReactNode {
     return (
@@ -303,19 +305,22 @@ class BillingImpl extends JCComponent<Props, State> {
       await this.createStripeUser()
       let priceItems = this.getPriceItems()
       try {
-        const status = await new HandleStripePayment().handleSubmit(
-          stripe,
-          elements,
-          this.state.idempotency,
-          priceItems,
-          () => {
-            this.setState({ processing: "complete" })
-          },
-          (error) => {
-            this.setState({ processing: "entry", errorMsg: error?.message })
-          }
-        )
-        console.log(status)
+        if (stripe && elements) {
+          const status = await new HandleStripePayment().handleSubmit(
+            stripe,
+            elements,
+            this.state.idempotency,
+            priceItems,
+            this.state.freeDays,
+            () => {
+              this.setState({ processing: "complete" })
+            },
+            (error) => {
+              this.setState({ processing: "entry", errorMsg: error?.message })
+            }
+          )
+          console.log(status)
+        }
       } catch (e) {
         Sentry.captureException(e.errors || e)
         console.log({ "Payment Error": e })
@@ -368,11 +373,10 @@ class BillingImpl extends JCComponent<Props, State> {
       </JCModal>
     )
   }
-  stripeFieldValidation = (element, name) => {
+  stripeFieldValidation = (element, name: string) => {
     if (!element.empty && element.complete) {
       this.setState({ stripeValidation: { ...this.state.stripeValidation, [name]: true } })
-    }
-    else {
+    } else {
       this.setState({ stripeValidation: { ...this.state.stripeValidation, [name]: false } })
     }
   }
@@ -402,7 +406,7 @@ class BillingImpl extends JCComponent<Props, State> {
           {item?.name ?? ""}
         </Text>
         <TouchableOpacity
-          style={{ alignSelf: "flex-end", display:'none' }}
+          style={{ alignSelf: "flex-end", display: "none" }}
           onPress={() => {
             this.removeProduct(index)
           }}
@@ -415,7 +419,7 @@ class BillingImpl extends JCComponent<Props, State> {
             <View key={index2} style={{ flexDirection: "row" }}>
               <Text
                 style={{
-                  flex:1,
+                  flex: 1,
                   marginTop: 5,
                   marginBottom: 5,
                   paddingTop: 5,
@@ -454,21 +458,28 @@ class BillingImpl extends JCComponent<Props, State> {
             </View>
           )
         })}
-        
+
         <Label>
-            <Text style={[this.styles.style.fontFormMandatory,{marginRight:-8}, !this.state.eula ? {color:"#F0493E"} : { opacity: 0 }]}>*</Text>
-            <JCSwitch
-                  containerWidth={"95%"}
-                  switchLabel="I accept the End User Licensing Agreement"
-                  initState={this.state.eula}
-                  onPress={(e) => {
-                    this.setState({ eula: e })
-                  }}
-            ></JCSwitch>
-            </Label>
+          <Text
+            style={[
+              this.styles.style.fontFormMandatory,
+              { marginRight: -8 },
+              !this.state.eula ? { color: "#F0493E" } : { opacity: 0 },
+            ]}
+          >
+            *
+          </Text>
+          <JCSwitch
+            containerWidth={"95%"}
+            switchLabel="I accept the End User Licensing Agreement"
+            initState={this.state.eula}
+            onPress={(e) => {
+              this.setState({ eula: e })
+            }}
+          ></JCSwitch>
+        </Label>
 
         <JCButton
-          
           buttonType={ButtonTypes.TransparentNoPadding}
           onPress={() => {
             this.setState({ showEULA: true })
@@ -476,7 +487,7 @@ class BillingImpl extends JCComponent<Props, State> {
         >
           Read the End User Licensing Agreement
         </JCButton>
-       
+
         {this.renderEULA()}
       </View>
     )
@@ -485,26 +496,28 @@ class BillingImpl extends JCComponent<Props, State> {
     this.setState({ showSubscriptionSelector: true })
   }
 
-  updateUserAndCheckState = async(userActions: UserActions, state:UserState) =>{
+  updateUserAndCheckState = async (userActions: UserActions, state: UserState) => {
     console.log(state)
-    this.setState({validatingUser:true, errorMsg:""})
-    const a = setInterval(async() => {
+    this.setState({ validatingUser: true, errorMsg: "" })
+    const a = setInterval(async () => {
       await userActions.updateGroups()
       console.log({ Groups: state.groups })
-      if(userActions.isMemberOf('subscriptionValid')){
+      if (userActions.isMemberOf("subscriptionValid")) {
         console.log("Subscription is active.")
-        this.setState({validatingUser:false})
-        clearInterval(a);
-      }
-      else{
+        this.setState({ validatingUser: false })
+        clearInterval(a)
+      } else {
         console.log("Subscription is not yet active")
       }
       await userActions.recheckUserState()
-    },[2000])
-    setTimeout(()=>{
+    }, [2000])
+    setTimeout(() => {
       clearInterval(a)
-      this.setState({validatingUser:false, errorMsg:"Something went wrong. Please try again later or contact support."})
-    },60000)
+      this.setState({
+        validatingUser: false,
+        errorMsg: "Something went wrong. Please try again later or contact support.",
+      })
+    }, 60000)
   }
   async handleInputChange(value: string, field: string) {
     console.log({ field: value })
@@ -558,7 +571,7 @@ class BillingImpl extends JCComponent<Props, State> {
     if (!billingAddress.postal_code) return false
     if (!this.state.stripeValidation.cardNumber) return false
     if (!this.state.stripeValidation.expiryDate) return false
-    if (!this.state.stripeValidation.cvc) return false 
+    if (!this.state.stripeValidation.cvc) return false
     if (!this.state.currentProduct) return false
     return (
       this.state.currentProduct.length > 0 &&
@@ -596,9 +609,9 @@ class BillingImpl extends JCComponent<Props, State> {
                         alignSelf: "center",
                         fontSize: 42,
                         lineHeight: 51,
-                        textAlign: 'center',
-                        width: '100%',
-                        marginBottom: 20
+                        textAlign: "center",
+                        width: "100%",
+                        marginBottom: 20,
                       }}
                     >
                       We've received your payment.
@@ -609,11 +622,18 @@ class BillingImpl extends JCComponent<Props, State> {
                         }}
                         buttonType={ButtonTypes.Solid}
                       >
-                         {this.state.validatingUser ? <View style={{flexDirection:"column", width:177.7, top:4}}><ActivityIndicator color="white"></ActivityIndicator></View> : "Continue to Your Profile"}
+                        {this.state.validatingUser ? (
+                          <View style={{ flexDirection: "column", width: 177.7, top: 4 }}>
+                            <ActivityIndicator color="white"></ActivityIndicator>
+                          </View>
+                        ) : (
+                          "Continue to Your Profile"
+                        )}
                       </JCButton>
-                      
                     </Text>
-                    <Text style={{textAlign:"center", color:"red", fontWeight:'bold'}}>{this.state.errorMsg}</Text>
+                    <Text style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
+                      {this.state.errorMsg}
+                    </Text>
                   </View>
                 </Content>
               ) : (
@@ -627,46 +647,46 @@ class BillingImpl extends JCComponent<Props, State> {
                             alignSelf: "center",
                             fontSize: 42,
                             lineHeight: 51,
-                            textAlign: 'center',
-                            width: '100%',
-                            marginBottom: 20
+                            textAlign: "center",
+                            width: "100%",
+                            marginBottom: 20,
                           }}
                         >
                           Processing Payment
                         </Text>
-                          <Text
-                            style={{
-                              fontFamily: "Graphik-Bold-App",
-                              textAlign:"center",
-                              width:"100%",
-                              fontSize: 12,
-                              marginBottom: 8
-                            }}
-                          >
-                            Please wait while we process your payment. This may takes several seconds.
+                        <Text
+                          style={{
+                            fontFamily: "Graphik-Bold-App",
+                            textAlign: "center",
+                            width: "100%",
+                            fontSize: 12,
+                            marginBottom: 8,
+                          }}
+                        >
+                          Please wait while we process your payment. This may takes several seconds.
                         </Text>
-                          <ActivityIndicator />
-                        </View>
-                      </Content>
-                    ) : null}
+                        <ActivityIndicator />
+                      </View>
+                    </Content>
+                  ) : null}
 
-                    <Content
-                      style={{
-                        display: this.state.processing == "entry" ? "flex" : "none",
-                      }}
-                    >
-                      <View style={this.styles.style.signUpScreen1PaymentColumn1}>
-                        {this.state.productType == "OneStory" && (
-                          <Text>
-                            You are in the right place to sign up for One Story Curriculum! One Story
-                            is excited to partner with Jesus Collective in this tangible way and
-                            provide our curriculum through the Jesus Collective platform. Through this
-                            platform, you not only access these great discipleship resources for kids
-                            and youth in a super easy to use way, but you also get the benefit of
-                            having meaningful interaction and engagement with other One Story users to
-                            give feedback, share ideas and more.
-                            <br />
-                            <br />
+                  <Content
+                    style={{
+                      display: this.state.processing == "entry" ? "flex" : "none",
+                    }}
+                  >
+                    <View style={this.styles.style.signUpScreen1PaymentColumn1}>
+                      {this.state.productType == "OneStory" && (
+                        <Text>
+                          You are in the right place to sign up for One Story Curriculum! One Story
+                          is excited to partner with Jesus Collective in this tangible way and
+                          provide our curriculum through the Jesus Collective platform. Through this
+                          platform, you not only access these great discipleship resources for kids
+                          and youth in a super easy to use way, but you also get the benefit of
+                          having meaningful interaction and engagement with other One Story users to
+                          give feedback, share ideas and more.
+                          <br />
+                          <br />
                           What is Jesus Collective, you ask? Jesus Collective is a relational
                           Jesus-centred network that provides a place of belonging, learning and
                           resourcing for like-minded churches and leaders, develops and supports
@@ -674,247 +694,326 @@ class BillingImpl extends JCComponent<Props, State> {
                           post-Christian context. Jesus Collective wants to give greater voice and
                           visibility to this Jesus-centred, third-way movement God is raising up
                           around the world. Isn’t that exciting?
-                            <br />
-                            <br />
+                          <br />
+                          <br />
                           Learn more here:{" "}
-                            <a href="https://jesuscollective.com">jesuscollective.com.</a>
-                            <br />
-                            <br />
-                            <a href="https://jesuscollective.com/get-involved">
-                              Apply for Partnerships
+                          <a href="https://jesuscollective.com">jesuscollective.com.</a>
+                          <br />
+                          <br />
+                          <a href="https://jesuscollective.com/get-involved">
+                            Apply for Partnerships
                           </a>
-                            <br />
-                            <br />
-                            <br />
-                          </Text>
-                        )}
-                        <Text
-                          style={{
-                            fontFamily: "Graphik-Bold-App",
-                          }}
-                        >
-                          Billing Information
+                          <br />
+                          <br />
+                          <br />
+                        </Text>
+                      )}
+                      <Text
+                        style={{
+                          fontFamily: "Graphik-Bold-App",
+                        }}
+                      >
+                        Billing Information
                       </Text>
-                        {this.state.userData && (
-                          <>
-                            <Label style={this.styles.style.fontFormSmall}>
-                              <Text style={[this.styles.style.fontFormMandatory, !this.state.userData.billingAddress?.line1 ? { opacity: 1 } : { opacity: 0 }]}>*</Text>
+                      {this.state.userData && (
+                        <>
+                          <Label style={this.styles.style.fontFormSmall}>
+                            <Text
+                              style={[
+                                this.styles.style.fontFormMandatory,
+                                !this.state.userData.billingAddress?.line1
+                                  ? { opacity: 1 }
+                                  : { opacity: 0 },
+                              ]}
+                            >
+                              *
+                            </Text>
                             Billing Address Line 1
                           </Label>
 
-                            <EditableText
-                              onChange={(e) => {
-                                this.handleInputChange(e, "line1")
-                              }}
-                              multiline={false}
-                              data-testid="profile-currentRole"
-                              textStyle={this.styles.style.fontFormSmallDarkGrey}
-                              inputStyle={{
-                                borderWidth: 1,
-                                borderColor: "#dddddd",
-                                width: "100%",
-                                marginBottom: 15,
-                                paddingTop: 10,
-                                paddingRight: 10,
-                                paddingBottom: 10,
-                                paddingLeft: 10,
-                                fontFamily: "Graphik-Regular-App",
-                                fontSize: 16,
-                                lineHeight: 28,
-                              }}
-                              value={
-                                this.state.userData.billingAddress?.line1
-                                  ? this.state.userData.billingAddress?.line1
-                                  : ""
-                              }
-                              isEditable={true}
-                            ></EditableText>
-                            <Label style={this.styles.style.fontFormSmall}>Billing Address Line 2</Label>
+                          <EditableText
+                            onChange={(e) => {
+                              this.handleInputChange(e, "line1")
+                            }}
+                            multiline={false}
+                            data-testid="profile-currentRole"
+                            textStyle={this.styles.style.fontFormSmallDarkGrey}
+                            inputStyle={{
+                              borderWidth: 1,
+                              borderColor: "#dddddd",
+                              width: "100%",
+                              marginBottom: 15,
+                              paddingTop: 10,
+                              paddingRight: 10,
+                              paddingBottom: 10,
+                              paddingLeft: 10,
+                              fontFamily: "Graphik-Regular-App",
+                              fontSize: 16,
+                              lineHeight: 28,
+                            }}
+                            value={
+                              this.state.userData.billingAddress?.line1
+                                ? this.state.userData.billingAddress?.line1
+                                : ""
+                            }
+                            isEditable={true}
+                          ></EditableText>
+                          <Label style={this.styles.style.fontFormSmall}>
+                            Billing Address Line 2
+                          </Label>
 
-                            <EditableText
-                              onChange={(e) => {
-                                this.handleInputChange(e, "line2")
-                              }}
-                              multiline={false}
-                              data-testid="profile-currentRole"
-                              textStyle={this.styles.style.fontFormSmallDarkGrey}
-                              inputStyle={{
-                                borderWidth: 1,
-                                borderColor: "#dddddd",
-                                width: "100%",
-                                marginBottom: 15,
-                                paddingTop: 10,
-                                paddingRight: 10,
-                                paddingBottom: 10,
-                                paddingLeft: 10,
-                                fontFamily: "Graphik-Regular-App",
-                                fontSize: 16,
-                                lineHeight: 28,
-                              }}
-                              value={
-                                this.state.userData.billingAddress?.line2
-                                  ? this.state.userData.billingAddress?.line2
-                                  : ""
-                              }
-                              isEditable={true}
-                            ></EditableText>
-                            <Label style={this.styles.style.fontFormSmall}>
-                              <Text style={[this.styles.style.fontFormMandatory, !this.state.userData.billingAddress?.city ? { opacity: 1 } : { opacity: 0 }]}>*</Text>
+                          <EditableText
+                            onChange={(e) => {
+                              this.handleInputChange(e, "line2")
+                            }}
+                            multiline={false}
+                            data-testid="profile-currentRole"
+                            textStyle={this.styles.style.fontFormSmallDarkGrey}
+                            inputStyle={{
+                              borderWidth: 1,
+                              borderColor: "#dddddd",
+                              width: "100%",
+                              marginBottom: 15,
+                              paddingTop: 10,
+                              paddingRight: 10,
+                              paddingBottom: 10,
+                              paddingLeft: 10,
+                              fontFamily: "Graphik-Regular-App",
+                              fontSize: 16,
+                              lineHeight: 28,
+                            }}
+                            value={
+                              this.state.userData.billingAddress?.line2
+                                ? this.state.userData.billingAddress?.line2
+                                : ""
+                            }
+                            isEditable={true}
+                          ></EditableText>
+                          <Label style={this.styles.style.fontFormSmall}>
+                            <Text
+                              style={[
+                                this.styles.style.fontFormMandatory,
+                                !this.state.userData.billingAddress?.city
+                                  ? { opacity: 1 }
+                                  : { opacity: 0 },
+                              ]}
+                            >
+                              *
+                            </Text>
                             City
                           </Label>
 
-                            <EditableText
-                              onChange={(e) => {
-                                this.handleInputChange(e, "city")
-                              }}
-                              multiline={false}
-                              data-testid="profile-currentRole"
-                              textStyle={this.styles.style.fontFormSmallDarkGrey}
-                              inputStyle={{
-                                borderWidth: 1,
-                                borderColor: "#dddddd",
-                                width: "100%",
-                                marginBottom: 15,
-                                paddingTop: 10,
-                                paddingRight: 10,
-                                paddingBottom: 10,
-                                paddingLeft: 10,
-                                fontFamily: "Graphik-Regular-App",
-                                fontSize: 16,
-                                lineHeight: 28,
-                              }}
-                              value={
-                                this.state.userData.billingAddress?.city
-                                  ? this.state.userData.billingAddress?.city
-                                  : ""
-                              }
-                              isEditable={true}
-                            ></EditableText>
-                            <Label style={this.styles.style.fontFormSmall}>
-                              <Text style={[this.styles.style.fontFormMandatory, !this.state.userData?.billingAddress?.state ? { opacity: 1 } : { opacity: 0 }]}>*</Text>
+                          <EditableText
+                            onChange={(e) => {
+                              this.handleInputChange(e, "city")
+                            }}
+                            multiline={false}
+                            data-testid="profile-currentRole"
+                            textStyle={this.styles.style.fontFormSmallDarkGrey}
+                            inputStyle={{
+                              borderWidth: 1,
+                              borderColor: "#dddddd",
+                              width: "100%",
+                              marginBottom: 15,
+                              paddingTop: 10,
+                              paddingRight: 10,
+                              paddingBottom: 10,
+                              paddingLeft: 10,
+                              fontFamily: "Graphik-Regular-App",
+                              fontSize: 16,
+                              lineHeight: 28,
+                            }}
+                            value={
+                              this.state.userData.billingAddress?.city
+                                ? this.state.userData.billingAddress?.city
+                                : ""
+                            }
+                            isEditable={true}
+                          ></EditableText>
+                          <Label style={this.styles.style.fontFormSmall}>
+                            <Text
+                              style={[
+                                this.styles.style.fontFormMandatory,
+                                !this.state.userData?.billingAddress?.state
+                                  ? { opacity: 1 }
+                                  : { opacity: 0 },
+                              ]}
+                            >
+                              *
+                            </Text>
                             State/Province
                           </Label>
 
-                            <EditableText
-                              onChange={(e) => {
-                                this.handleInputChange(e, "state")
-                              }}
-                              multiline={false}
-                              data-testid="profile-currentRole"
-                              textStyle={this.styles.style.fontFormSmallDarkGrey}
-                              inputStyle={{
-                                borderWidth: 1,
-                                borderColor: "#dddddd",
-                                width: "100%",
-                                marginBottom: 15,
-                                paddingTop: 10,
-                                paddingRight: 10,
-                                paddingBottom: 10,
-                                paddingLeft: 10,
-                                fontFamily: "Graphik-Regular-App",
-                                fontSize: 16,
-                                lineHeight: 28,
-                              }}
-                              value={
-                                this.state.userData.billingAddress?.state
-                                  ? this.state.userData.billingAddress?.state
-                                  : ""
-                              }
-                              isEditable={true}
-                            ></EditableText>
-                            <Label style={this.styles.style.fontFormSmall}>
-                              <Text style={[this.styles.style.fontFormMandatory, !this.state.userData?.billingAddress?.country ? { opacity: 1 } : { opacity: 0 }]}>*</Text>
+                          <EditableText
+                            onChange={(e) => {
+                              this.handleInputChange(e, "state")
+                            }}
+                            multiline={false}
+                            data-testid="profile-currentRole"
+                            textStyle={this.styles.style.fontFormSmallDarkGrey}
+                            inputStyle={{
+                              borderWidth: 1,
+                              borderColor: "#dddddd",
+                              width: "100%",
+                              marginBottom: 15,
+                              paddingTop: 10,
+                              paddingRight: 10,
+                              paddingBottom: 10,
+                              paddingLeft: 10,
+                              fontFamily: "Graphik-Regular-App",
+                              fontSize: 16,
+                              lineHeight: 28,
+                            }}
+                            value={
+                              this.state.userData.billingAddress?.state
+                                ? this.state.userData.billingAddress?.state
+                                : ""
+                            }
+                            isEditable={true}
+                          ></EditableText>
+                          <Label style={this.styles.style.fontFormSmall}>
+                            <Text
+                              style={[
+                                this.styles.style.fontFormMandatory,
+                                !this.state.userData?.billingAddress?.country
+                                  ? { opacity: 1 }
+                                  : { opacity: 0 },
+                              ]}
+                            >
+                              *
+                            </Text>
                             Country
                           </Label>
 
-                            <EditableText
-                              onChange={(e) => {
-                                this.handleInputChange(e, "country")
-                              }}
-                              multiline={false}
-                              data-testid="profile-currentRole"
-                              textStyle={this.styles.style.fontFormSmallDarkGrey}
-                              inputStyle={{
-                                borderWidth: 1,
-                                borderColor: "#dddddd",
-                                width: "100%",
-                                marginBottom: 15,
-                                paddingTop: 10,
-                                paddingRight: 10,
-                                paddingBottom: 10,
-                                paddingLeft: 10,
-                                fontFamily: "Graphik-Regular-App",
-                                fontSize: 16,
-                                lineHeight: 28,
-                              }}
-                              value={
-                                this.state.userData.billingAddress?.country
-                                  ? this.state.userData.billingAddress?.country
-                                  : ""
-                              }
-                              isEditable={true}
-                            ></EditableText>
-                            <Label style={this.styles.style.fontFormSmall}>
-                              <Text style={[this.styles.style.fontFormMandatory, !this.state.userData?.billingAddress?.postal_code ? { opacity: 1 } : { opacity: 0 }]}>*</Text>
+                          <EditableText
+                            onChange={(e) => {
+                              this.handleInputChange(e, "country")
+                            }}
+                            multiline={false}
+                            data-testid="profile-currentRole"
+                            textStyle={this.styles.style.fontFormSmallDarkGrey}
+                            inputStyle={{
+                              borderWidth: 1,
+                              borderColor: "#dddddd",
+                              width: "100%",
+                              marginBottom: 15,
+                              paddingTop: 10,
+                              paddingRight: 10,
+                              paddingBottom: 10,
+                              paddingLeft: 10,
+                              fontFamily: "Graphik-Regular-App",
+                              fontSize: 16,
+                              lineHeight: 28,
+                            }}
+                            value={
+                              this.state.userData.billingAddress?.country
+                                ? this.state.userData.billingAddress?.country
+                                : ""
+                            }
+                            isEditable={true}
+                          ></EditableText>
+                          <Label style={this.styles.style.fontFormSmall}>
+                            <Text
+                              style={[
+                                this.styles.style.fontFormMandatory,
+                                !this.state.userData?.billingAddress?.postal_code
+                                  ? { opacity: 1 }
+                                  : { opacity: 0 },
+                              ]}
+                            >
+                              *
+                            </Text>
                             Zip/Postal Code
                           </Label>
 
-                            <EditableText
-                              onChange={(e) => {
-                                this.handleInputChange(e, "postal_code")
-                              }}
-                              multiline={false}
-                              data-testid="profile-currentRole"
-                              textStyle={this.styles.style.fontFormSmallDarkGrey}
-                              inputStyle={{
-                                borderWidth: 1,
-                                borderColor: "#dddddd",
-                                width: "100%",
-                                marginBottom: 15,
-                                paddingTop: 10,
-                                paddingRight: 10,
-                                paddingBottom: 10,
-                                paddingLeft: 10,
-                                fontFamily: "Graphik-Regular-App",
-                                fontSize: 16,
-                                lineHeight: 28,
-                              }}
-                              value={
-                                this.state.userData.billingAddress?.postal_code
-                                  ? this.state.userData.billingAddress?.postal_code
-                                  : ""
-                              }
-                              isEditable={true}
-                            ></EditableText>
-                          </>
-                        )}
-                        <div>
-                          <br></br>
-                          <br></br>
-                        </div>
-                        <Text style={{ fontFamily: "Graphik-Bold-App" }}>
-                          Credit Card Information
+                          <EditableText
+                            onChange={(e) => {
+                              this.handleInputChange(e, "postal_code")
+                            }}
+                            multiline={false}
+                            data-testid="profile-currentRole"
+                            textStyle={this.styles.style.fontFormSmallDarkGrey}
+                            inputStyle={{
+                              borderWidth: 1,
+                              borderColor: "#dddddd",
+                              width: "100%",
+                              marginBottom: 15,
+                              paddingTop: 10,
+                              paddingRight: 10,
+                              paddingBottom: 10,
+                              paddingLeft: 10,
+                              fontFamily: "Graphik-Regular-App",
+                              fontSize: 16,
+                              lineHeight: 28,
+                            }}
+                            value={
+                              this.state.userData.billingAddress?.postal_code
+                                ? this.state.userData.billingAddress?.postal_code
+                                : ""
+                            }
+                            isEditable={true}
+                          ></EditableText>
+                        </>
+                      )}
+                      <div>
+                        <br></br>
+                        <br></br>
+                      </div>
+                      <Text style={{ fontFamily: "Graphik-Bold-App" }}>
+                        Credit Card Information
                       </Text>
-                        <Label style={this.styles.style.fontFormSmall}>
-                          <Text style={[this.styles.style.fontFormMandatory, !this.state.stripeValidation.cardNumber ? { opacity: 1 } : { opacity: 0 }]}>*</Text>
-                            Credit Card Number
+                      <Label style={this.styles.style.fontFormSmall}>
+                        <Text
+                          style={[
+                            this.styles.style.fontFormMandatory,
+                            !this.state.stripeValidation.cardNumber
+                              ? { opacity: 1 }
+                              : { opacity: 0 },
+                          ]}
+                        >
+                          *
+                        </Text>
+                        Credit Card Number
                       </Label>
-                        <CardNumberElement onChange={(el) => this.stripeFieldValidation(el, "cardNumber")} options={CARD_ELEMENT_OPTIONS} />
-                        <Label style={this.styles.style.fontFormSmall}>
-                          <Text style={[this.styles.style.fontFormMandatory, !this.state.stripeValidation.expiryDate ? { opacity: 1 } : { opacity: 0 }]}>*</Text>
-                            Expiry Date
+                      <CardNumberElement
+                        onChange={(el) => this.stripeFieldValidation(el, "cardNumber")}
+                        options={CARD_ELEMENT_OPTIONS}
+                      />
+                      <Label style={this.styles.style.fontFormSmall}>
+                        <Text
+                          style={[
+                            this.styles.style.fontFormMandatory,
+                            !this.state.stripeValidation.expiryDate
+                              ? { opacity: 1 }
+                              : { opacity: 0 },
+                          ]}
+                        >
+                          *
+                        </Text>
+                        Expiry Date
                       </Label>
-                        <CardExpiryElement onChange={(el) => this.stripeFieldValidation(el, "expiryDate")} options={CARD_ELEMENT_OPTIONS} />
-                        <Label style={this.styles.style.fontFormSmall}>
-                          <Text style={[this.styles.style.fontFormMandatory, !this.state.stripeValidation.cvc ? { opacity: 1 } : { opacity: 0 }]}>*</Text>
-                            CVC
+                      <CardExpiryElement
+                        onChange={(el) => this.stripeFieldValidation(el, "expiryDate")}
+                        options={CARD_ELEMENT_OPTIONS}
+                      />
+                      <Label style={this.styles.style.fontFormSmall}>
+                        <Text
+                          style={[
+                            this.styles.style.fontFormMandatory,
+                            !this.state.stripeValidation.cvc ? { opacity: 1 } : { opacity: 0 },
+                          ]}
+                        >
+                          *
+                        </Text>
+                        CVC
                       </Label>
-                        <CardCvcElement onChange={(el) => this.stripeFieldValidation(el, "cvc")} options={CARD_ELEMENT_OPTIONS} />
-                      </View>
-                      <View style={this.styles.style.signUpScreen1PaymentColumn2}>
-                        <View style={{display:"none"}}>
-
-                        
+                      <CardCvcElement
+                        onChange={(el) => this.stripeFieldValidation(el, "cvc")}
+                        options={CARD_ELEMENT_OPTIONS}
+                      />
+                    </View>
+                    <View style={this.styles.style.signUpScreen1PaymentColumn2}>
+                      <View style={{ display: "none" }}>
                         <JCButton
                           buttonType={ButtonTypes.TransparentNoPadding}
                           onPress={() => {
@@ -922,92 +1021,117 @@ class BillingImpl extends JCComponent<Props, State> {
                           }}
                         >
                           Add another product
-                      </JCButton>
+                        </JCButton>
                       </View>
-                      <View style={{marginBottom:20, marginTop:20}}>
-                      {this.state.currentProduct?.map((item: Product, index: number) => {
+                      <View style={{ marginBottom: 20, marginTop: 20 }}>
+                        {this.state.currentProduct?.map((item: Product, index: number) => {
                           return this.renderProduct(item, index)
                         })}
                       </View>
-                      
+
                       {this.state.invoice?.lines?.data.map((line, index: number) => {
-                          return (
-                              <View key={index} style={this.styles.style.flexRow}>
-                                  <Text
-                                      style={{
-                                      flex:1,
-                                      fontSize:12,
-                                      fontFamily: "Graphik-Regular-App",
-                                      paddingTop: 10,
-                                      paddingBottom: 10,
-                                      paddingLeft: 10,
-                                      paddingRight: 45,
-                                      }}
-                                  >
-                                      {line.description}
-                                  </Text>
-                                  <Text
-                                      style={{
-                                          right:"20%",
-                                          fontFamily: "Graphik-Bold-App",
-                                          paddingTop: 10,
-                                          paddingBottom: 10,
-                                          paddingRight:10
-                                      }}
-                                  >
-                                    ${(line.amount / 100).toFixed(2)}
-                                  </Text>
-                              </View>
-                      )})}
-                      <View style={[this.styles.style.flexRow, {marginBottom:10}]}>
-                          {!this.state.invoice ? 
-                          <View style={{paddingTop:10, marginRight:10}}>
+                        return (
+                          <View key={index} style={this.styles.style.flexRow}>
+                            <Text
+                              style={{
+                                flex: 1,
+                                fontSize: 12,
+                                fontFamily: "Graphik-Regular-App",
+                                paddingTop: 10,
+                                paddingBottom: 10,
+                                paddingLeft: 10,
+                                paddingRight: 45,
+                              }}
+                            >
+                              {line.description}
+                            </Text>
+                            <Text
+                              style={{
+                                right: "20%",
+                                fontFamily: "Graphik-Bold-App",
+                                paddingTop: 10,
+                                paddingBottom: 10,
+                                paddingRight: 10,
+                              }}
+                            >
+                              ${(line.amount / 100).toFixed(2)}
+                            </Text>
+                          </View>
+                        )
+                      })}
+                      <View style={[this.styles.style.flexRow, { marginBottom: 10 }]}>
+                        {!this.state.invoice ? (
+                          <View style={{ paddingTop: 10, marginRight: 10 }}>
                             <ActivityIndicator></ActivityIndicator>
-                          </View>: null}
-                          <Text
-                              style={{
-                              flex:1,
-                              textAlign: !this.state.invoice ? "left": "right",
-                              textAlignVertical:"center",
-                              paddingRight:45,
-                              
-                              fontFamily: "Graphik-Bold-App",
-                              paddingTop: 10,
-                              paddingBottom: 10,
-                              }}
-                          >
-                              {this.state.invoice ? "Total:" : "Calculating Total..."}
-                          </Text>
-                          <Text
-                              style={{
-                              fontFamily: "Graphik-Bold-App",
-                              paddingTop: 10,
-                              paddingBottom: 10,
-                              paddingRight:10
-                              }}
-                          >
-                              {this.state.invoice
-                                ? "$" + (this.state.invoice.total / 100).toFixed(2)
-                                : ""}
-                          </Text>
+                          </View>
+                        ) : null}
+                        <Text
+                          style={{
+                            flex: 1,
+                            textAlign: !this.state.invoice ? "left" : "right",
+                            textAlignVertical: "center",
+                            paddingRight: 45,
+
+                            fontFamily: "Graphik-Bold-App",
+                            paddingTop: 10,
+                            paddingBottom: 10,
+                          }}
+                        >
+                          {this.state.invoice ? "Total:" : "Calculating Total..."}
+                        </Text>
+                        <Text
+                          style={{
+                            fontFamily: "Graphik-Bold-App",
+                            paddingTop: 10,
+                            paddingBottom: 10,
+                            paddingRight: 10,
+                          }}
+                        >
+                          {this.state.invoice
+                            ? "$" + (this.state.invoice.total / 100).toFixed(2)
+                            : ""}
+                        </Text>
                       </View>
-                      <Text style={{ color: "red", textAlign:"center", marginBottom:4 }}>{this.state.errorMsg}</Text>
+                      <Picker
+                        mode="dropdown"
+                        style={{
+                          width: "100%",
+                          marginTop: 10,
+                          marginBottom: 30,
+                          fontSize: 16,
+                          height: 30,
+                          flexGrow: 0,
+                          paddingTop: 3,
+                          paddingBottom: 3,
+                        }}
+                        selectedValue={this.state.freeDays}
+                        onValueChange={(value: any) => {
+                          this.setState({ freeDays: value })
+                        }}
+                      >
+                        <Picker.Item key={"null"} label={"Start Billing Immediately"} value={0} />
+                        <Picker.Item key={"null"} label={"Start Billing In 30 Days"} value={30} />
+                        <Picker.Item key={"null"} label={"Start Billing In 60 Days"} value={60} />
+                        <Picker.Item key={"null"} label={"Start Billing In 90 Days"} value={90} />
+                      </Picker>
+                      <Text style={{ color: "red", textAlign: "center", marginBottom: 4 }}>
+                        {this.state.errorMsg}
+                      </Text>
                       <JCButton
-                          buttonType={ButtonTypes.Solid}
-                          onPress={() => {
+                        buttonType={ButtonTypes.Solid}
+                        onPress={() => {
                           this.setState({ errorMsg: "" })
                           this.makePayment(stripe, elements)
-                      }}
-                      enabled={!!(this.state.invoice) && this.isMakePaymentEnabled()}
+                        }}
+                        enabled={!!this.state.invoice && this.isMakePaymentEnabled()}
                       >
-                          Process Payment
+                        Process Payment
                       </JCButton>
-
-                      </View>
-                    </Content>
-                    {this.renderAddProductModal(userState)}
-                  </>
-                )
+                    </View>
+                  </Content>
+                  {this.renderAddProductModal(userState)}
+                </>
+              )
             }}
           </BillingImpl.UserConsumer>
         )}
