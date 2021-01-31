@@ -1040,7 +1040,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     }
   }
 
-  handlePressReply(item: Message) {
+  handlePressReply(item: Message | Reply, isReply: boolean) {
     const peopleInThread: string[] = []
 
     if (item?.author?.given_name) {
@@ -1053,13 +1053,16 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       }
     })
 
-    this.setState({ replyToId: item?.id ?? "", replyToWho: peopleInThread })
+    this.setState({
+      replyToId: isReply ? item?.messageId : item?.id ?? "",
+      replyToWho: peopleInThread,
+    })
   }
 
   renderMessageWithReplies(item: Message, index: number) {
     return (
       <View style={{ marginBottom: 35 }} key={index}>
-        {this.renderMessage(item, index)}
+        {this.renderMessage(item, index, false)}
         {item?.replies?.items?.map((reply, index) => {
           return this.renderMessage(reply, index, true)
         })}
@@ -1085,7 +1088,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     )
   }
 
-  renderMessage(item: Message | Reply, index: number, isReply?: boolean) {
+  renderMessage(item: Message | Reply, index: number, isReply: boolean) {
     const { style } = this.props
 
     return (
@@ -1140,7 +1143,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                     paddingLeft: 23,
                     paddingRight: 23,
                   }}
-                  onPress={() => this.handlePressReply(item)}
+                  onPress={() => this.handlePressReply(item, isReply)}
                 >
                   <Text
                     style={{
@@ -1197,7 +1200,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                       paddingLeft: 23,
                       paddingRight: 23,
                     }}
-                    onPress={() => this.handlePressReply(item)}
+                    onPress={() => this.handlePressReply(item, isReply)}
                   >
                     <Text
                       style={{
