@@ -40,22 +40,26 @@ class SignUpScreen1Impl extends JCComponent<Props, State> {
           if (!userState) return null
           if (userState.hasPaidState == PaidStatus.Unknown)
             return (
-              <Content>
-                <View style={this.styles.style.signUpScreen1PaymentColumn1}>
-                  <Text
-                    style={{
-                      fontFamily: "Graphik-Bold-App",
-                      textAlign: "center",
-                      width: "100%",
-                      fontSize: 12,
-                      marginBottom: 8,
-                    }}
-                  >
-                    We're getting you setup. This may takes several seconds.
-                  </Text>
-                  <ActivityIndicator />
-                </View>
-              </Content>
+              <View style={this.styles.style.signUpScreen1PaymentBody}>
+                <SignUpSidebar position="3"></SignUpSidebar>
+
+                <Content>
+                  <View style={this.styles.style.signUpScreen1PaymentColumn1}>
+                    <Text
+                      style={{
+                        fontFamily: "Graphik-Bold-App",
+                        textAlign: "center",
+                        width: "100%",
+                        fontSize: 12,
+                        marginBottom: 8,
+                      }}
+                    >
+                      We're getting you setup. This may takes several seconds.
+                    </Text>
+                    <ActivityIndicator />
+                  </View>
+                </Content>
+              </View>
             )
           if (userState.hasPaidState == PaidStatus.InProgress) {
             return (
@@ -66,31 +70,104 @@ class SignUpScreen1Impl extends JCComponent<Props, State> {
             )
           } else if (userState.hasPaidState == PaidStatus.Success) {
             return (
-              <View style={this.styles.style.signUpScreen1PaymentColumn1}>
-                <Text
-                  style={{
-                    fontFamily: "Graphik-Bold-App",
-                    alignSelf: "center",
-                    fontSize: 42,
-                    lineHeight: 51,
-                    textAlign: "center",
-                    marginBottom: 20,
-                  }}
-                >
-                  We've received your payment.
-                  <br />
-                  <JCButton
-                    onPress={() => {
-                      this.completePaymentProcess(userActions, userState)
-                    }}
-                    buttonType={ButtonTypes.Solid}
-                  >
-                    Continue to Your Profile
-                  </JCButton>
-                </Text>
+              <View style={this.styles.style.signUpScreen1PaymentBody}>
+                <SignUpSidebar position="3"></SignUpSidebar>
+                <Content>
+                  <View style={this.styles.style.signUpScreen1PaymentColumn1}>
+                    <Text
+                      style={{
+                        fontFamily: "Graphik-Bold-App",
+                        alignSelf: "center",
+                        fontSize: 42,
+                        lineHeight: 51,
+                        textAlign: "center",
+                        marginBottom: 20,
+                      }}
+                    >
+                      We've received your payment.
+                      <br />
+                      <JCButton
+                        onPress={() => {
+                          this.completePaymentProcess(userActions, userState)
+                        }}
+                        buttonType={ButtonTypes.Solid}
+                      >
+                        Continue to Your Profile
+                      </JCButton>
+                    </Text>
+                  </View>
+                </Content>
               </View>
             )
-          } else return null
+          } else if (userState.hasPaidState == PaidStatus.PermissionNotGranted) {
+            return (
+              <View style={this.styles.style.signUpScreen1PaymentBody}>
+                <SignUpSidebar position="3"></SignUpSidebar>
+                <Content>
+                  <View style={this.styles.style.signUpScreen1PaymentColumn1}>
+                    <Text
+                      style={{
+                        fontFamily: "Graphik-Bold-App",
+                        alignSelf: "center",
+                        fontSize: 22,
+                        lineHeight: 51,
+                        textAlign: "center",
+                        marginBottom: 20,
+                      }}
+                    >
+                      We're just waiting for your account to be fully setup. Please check back soon!
+                      <br />
+                    </Text>
+                  </View>
+                </Content>
+              </View>
+            )
+          } else if (userState.hasPaidState == PaidStatus.MissingCustomer) {
+            return (
+              <View style={this.styles.style.signUpScreen1PaymentBody}>
+                <SignUpSidebar position="3"></SignUpSidebar>
+                <Content>
+                  <View style={this.styles.style.signUpScreen1PaymentColumn1}>
+                    <Text
+                      style={{
+                        fontFamily: "Graphik-Bold-App",
+                        alignSelf: "center",
+                        fontSize: 22,
+                        lineHeight: 51,
+                        textAlign: "center",
+                        marginBottom: 20,
+                      }}
+                    >
+                      There may have been a problem, please contact support!
+                      <br />
+                    </Text>
+                  </View>
+                </Content>
+              </View>
+            )
+          } else
+            return (
+              <View style={this.styles.style.signUpScreen1PaymentBody}>
+                <SignUpSidebar position="3"></SignUpSidebar>
+                <Content>
+                  <View style={this.styles.style.signUpScreen1PaymentColumn1}>
+                    <Text
+                      style={{
+                        fontFamily: "Graphik-Bold-App",
+                        alignSelf: "center",
+                        fontSize: 22,
+                        lineHeight: 51,
+                        textAlign: "center",
+                        marginBottom: 20,
+                      }}
+                    >
+                      There has been a problem, please contact support!
+                      <br />
+                    </Text>
+                  </View>
+                </Content>
+              </View>
+            )
         }}
       </SignUpScreen1Impl.UserConsumer>
     )

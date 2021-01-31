@@ -272,7 +272,7 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
                 console.log("No Stripe Subscription, No Stripe Customer")
                 return PaidStatus.InProgress
               } else {
-                return PaidStatus.Problem1
+                return PaidStatus.MissingCustomer
               }
             } else if (getUser.data.getUser.stripeSubscriptionID == null) {
               console.log("No Stripe Subscription")
@@ -285,7 +285,7 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
               console.log("No Stripe Subscription")
               return PaidStatus.InProgress
             } else {
-              return PaidStatus.Problem1
+              return PaidStatus.PermissionNotGranted
             }
           }
         }

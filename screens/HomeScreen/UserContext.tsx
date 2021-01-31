@@ -34,7 +34,8 @@ export enum ProfileStatus {
 export enum PaidStatus {
   Success,
   InProgress,
-  Problem1,
+  PermissionNotGranted,
+  MissingCustomer,
   Problem2,
   Unknown,
 }
