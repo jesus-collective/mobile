@@ -1,45 +1,44 @@
-import * as React from 'react';
-import { Container, Content, List, ListItem, Header } from 'native-base';
-import { Entypo } from '@expo/vector-icons';
-import { Text } from 'react-native'
-import JCComponent, { JCState } from '../JCComponent/JCComponent';
+import { Entypo } from "@expo/vector-icons"
+import { Container, Content, Header, List, ListItem } from "native-base"
+import * as React from "react"
+import { Text } from "react-native"
+import JCComponent, { JCState } from "../JCComponent/JCComponent"
 
 const routes = [
   {
     name: "Home",
-    route: "HomeScreen"
+    route: "HomeScreen",
   },
   {
     name: "Events",
-    route: "EventsScreen"
+    route: "EventsScreen",
   },
   {
     name: "Groups",
-    route: "GroupsScreen"
+    route: "GroupsScreen",
   },
   {
     name: "Resources",
-    route: "ResourcesScreen"
+    route: "ResourcesScreen",
   },
 
   {
     name: "Courses",
-    route: "CoursesScreen"
-  }
-
-];
+    route: "CoursesScreen",
+  },
+]
 
 const resourceRoutes = [
   {
     name: "All Resources",
     route: "ResourcesScreen",
-    props: {}
+    props: {},
   },
   {
     name: "Kids & Youth Curriculum",
     route: "ResourceScreen",
-    props: { create: false, id: 'resource-1580889856205' }
-  }
+    props: { create: false, id: "resource-1611326161952" },
+  },
 ]
 
 interface Props {
@@ -54,23 +53,45 @@ class SideBar extends JCComponent<Props, State> {
     super(props)
     this.state = {
       ...super.getInitialState(),
-      showResourcesSubMenu: false
+      showResourcesSubMenu: false,
     }
   }
 
   renderResourcesSubMenu(): React.ReactNode {
-    return <List
-      dataArray={resourceRoutes}
-      keyExtractor={data => data.name}
-      renderRow={data => {
-        return <ListItem
-          style={data.name === "All Resources" ? { marginRight: 20, height: 40 } : { marginRight: 20, borderBottomWidth: 0, height: 40 }}
-          button
-          onPress={() => { this.props.navigation.navigate(data.route, data.props); this.setState({ showResourcesSubMenu: false }) }}>
-          <Text style={{ fontFamily: "Graphik-Regular-App", fontSize: 16, lineHeight: 30, color: "#333333", marginLeft: 24 }}>{data.name}</Text>
-        </ListItem>
-      }}
-    />
+    return (
+      <List
+        dataArray={resourceRoutes}
+        keyExtractor={(data) => data.name}
+        renderRow={(data) => {
+          return (
+            <ListItem
+              style={
+                data.name === "All Resources"
+                  ? { marginRight: 20, height: 40 }
+                  : { marginRight: 20, borderBottomWidth: 0, height: 40 }
+              }
+              button
+              onPress={() => {
+                this.props.navigation.navigate(data.route, data.props)
+                this.setState({ showResourcesSubMenu: false })
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: "Graphik-Regular-App",
+                  fontSize: 16,
+                  lineHeight: 30,
+                  color: "#333333",
+                  marginLeft: 24,
+                }}
+              >
+                {data.name}
+              </Text>
+            </ListItem>
+          )
+        }}
+      />
+    )
   }
 
   render(): React.ReactNode {
@@ -80,18 +101,35 @@ class SideBar extends JCComponent<Props, State> {
           <Header style={{ backgroundColor: "#FFFFFF" }}></Header>
           <List
             dataArray={routes}
-            keyExtractor={data => data.name}
-            renderRow={data => {
-              if (data.name === 'Resources')
+            keyExtractor={(data) => data.name}
+            renderRow={(data) => {
+              if (data.name === "Resources")
                 return (
                   <Container>
                     <ListItem
                       style={{ marginRight: 20 }}
                       button
-                      onPress={() => { this.setState({ showResourcesSubMenu: !this.state.showResourcesSubMenu }) }}
+                      onPress={() => {
+                        this.setState({ showResourcesSubMenu: !this.state.showResourcesSubMenu })
+                      }}
                     >
-                      <Text style={{ fontFamily: "Graphik-Regular-App", fontSize: 18, lineHeight: 30, color: "#333333", fontWeight: '800' }}>{data.name}</Text>
-                      <Entypo name={this.state.showResourcesSubMenu ? "chevron-up" : "chevron-down"} size={22} color="#333333" style={{marginTop: 5}} />
+                      <Text
+                        style={{
+                          fontFamily: "Graphik-Regular-App",
+                          fontSize: 18,
+                          lineHeight: 30,
+                          color: "#333333",
+                          fontWeight: "800",
+                        }}
+                      >
+                        {data.name}
+                      </Text>
+                      <Entypo
+                        name={this.state.showResourcesSubMenu ? "chevron-up" : "chevron-down"}
+                        size={22}
+                        color="#333333"
+                        style={{ marginTop: 5 }}
+                      />
                     </ListItem>
                     {this.state.showResourcesSubMenu ? this.renderResourcesSubMenu() : null}
                   </Container>
@@ -100,9 +138,22 @@ class SideBar extends JCComponent<Props, State> {
                 <ListItem
                   style={{ marginRight: 20 }}
                   button
-                  onPress={() => { this.props.navigation.navigate(data.route); this.setState({ showResourcesSubMenu: false }) }}
+                  onPress={() => {
+                    this.props.navigation.navigate(data.route)
+                    this.setState({ showResourcesSubMenu: false })
+                  }}
                 >
-                  <Text style={{ fontFamily: "Graphik-Regular-App", fontSize: 18, lineHeight: 30, color: "#333333", fontWeight: '800' }}>{data.name}</Text>
+                  <Text
+                    style={{
+                      fontFamily: "Graphik-Regular-App",
+                      fontSize: 18,
+                      lineHeight: 30,
+                      color: "#333333",
+                      fontWeight: "800",
+                    }}
+                  >
+                    {data.name}
+                  </Text>
                 </ListItem>
               )
             }}
@@ -112,6 +163,5 @@ class SideBar extends JCComponent<Props, State> {
     )
   }
 }
-
 
 export default SideBar

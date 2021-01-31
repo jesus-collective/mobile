@@ -356,7 +356,7 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
                   screen: "mainDrawer",
                   params: {
                     screen: "ResourceScreen",
-                    params: { create: false, id: "resource-1608148143731" },
+                    params: { create: false, id: "resource-1611326161952" },
                   },
                 })
               else RootNavigation.navigate("mainApp", {})
