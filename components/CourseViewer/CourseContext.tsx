@@ -1,18 +1,19 @@
 import { JCState } from "components/JCComponent/JCComponent"
 import * as React from "react"
+import { GetCourseInfoQuery, GetGroupQuery } from "src/API"
 
 export interface CourseState extends JCState {
   showMap: boolean
   loadId: string
-  data: any
-  courseData: any
+  data: NonNullable<GetGroupQuery>["getGroup"]
+  courseData: NonNullable<GetCourseInfoQuery>["getCourseInfo"]
   editMode: boolean
   isEditable: boolean
   validationError: string
   currentScreen: string
   currentUser: string
   activeWeek: number
-  activeLesson: number
+  activeLesson: number | null
   activeMessageBoard: string
   activeCourseActivity: string
   showChat: boolean
