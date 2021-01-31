@@ -17,6 +17,7 @@ var express = require("express")
 var bodyParser = require("body-parser")
 var awsServerlessExpressMiddleware = require("aws-serverless-express/middleware")
 var handlePaymentIntentSucceeded = require("./handlePaymentIntentSucceeded")
+var handleSubscriptionCreated = require("./handleSubscriptionCreated")
 // declare a new express app
 var app = express()
 app.use(bodyParser.json())
@@ -41,8 +42,8 @@ app.post("/webhook", bodyParser.raw({ type: "application/json" }), async (reques
   // Handle the event
   switch (event.type) {
     case "customer.subscription.created":
-      const paymentIntent = event.data.object
-      await handlePaymentIntentSucceeded.runIt(paymentIntent)
+      const subscriptionCreated = event.data.object
+      await handleSubscriptionCreated.runIt(subscriptionCreated)
       break
     case "payment_intent.succeeded":
       const paymentIntent = event.data.object

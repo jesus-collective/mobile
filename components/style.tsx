@@ -759,7 +759,7 @@ export default class MainStyles {
         lineHeight: 16,
         color: "#333333",
         opacity: 0.5,
-        marginTop: 3
+        marginTop: 3,
       },
       myMapConversationCardRole: {
         fontFamily: "Graphik-Regular-App",
@@ -829,7 +829,7 @@ export default class MainStyles {
       },
       flexRow: {
         flexDirection: "row",
-        marginTop: 10
+        marginTop: 10,
       },
       groupMiddleText: {
         fontFamily: "Graphik-Bold-App",
@@ -839,7 +839,7 @@ export default class MainStyles {
         color: "#333333",
         paddingTop: 48,
         paddingBottom: 12,
-        paddingLeft: 0
+        paddingLeft: 0,
       },
       groupMiddleTextNoPaddingTop: {
         fontFamily: "Graphik-Bold-App",
@@ -1355,8 +1355,8 @@ export default class MainStyles {
         // shadowColor: "rgba(0,0,0,0.19)",
         // marginTop: 30,
         borderBottomWidth: 1,
-        borderBottomStyle: 'solid',
-        borderBottomColor: '#ebebeb'
+        borderBottomStyle: "solid",
+        borderBottomColor: "#ebebeb",
       },
 
       dashboardConversationCardLeft: {
@@ -1440,7 +1440,7 @@ export default class MainStyles {
         width: "100%",
         alignItems: "flex-start",
         marginTop: 5,
-        flexGrow: 0.5,
+        //flexGrow: 0.5,
       },
       myprofilePicker: {
         height: 45,
@@ -2095,7 +2095,7 @@ export default class MainStyles {
         resourceIcon: {
           color: "#ffffff",
           fontSize: 30,
-          alignSelf: 'center'
+          alignSelf: "center",
         },
         conversationScreenMainContainer: {
           flexDirection: "column",
@@ -2455,7 +2455,7 @@ export default class MainStyles {
       signUpScreen1PaymentColumn1:
         Platform.OS === "web" && Dimensions.get("window").width > 720
           ? { position: "absolute", left: "35%", width: "25%", top: 100, height: "100%" }
-          : {marginLeft:20, marginRight:20},
+          : { marginLeft: 20, marginRight: 20 },
       signUpScreen1PaymentColumn2:
         Platform.OS === "web" && Dimensions.get("window").width > 720
           ? { position: "absolute", left: "70%", width: "25%", top: 100, height: "100%" }

@@ -85,19 +85,17 @@ export default class HandleStripePayment {
     priceItems: PriceItems
     paymentMethodId: string | undefined
   }) {
-    if (subscription.status === "active") {
+    if (subscription.status === "active" || subscription.status === "trialing") {
       // subscription is active, no customer actions required.
       return { subscription, priceItems, paymentMethodId }
-    } else if (
-      subscription.subscription.latest_invoice.payment_intent.status === "requires_payment_method"
-    ) {
+    } else if (subscription.latest_invoice.payment_intent.status === "requires_payment_method") {
       // Using localStorage to manage the state of the retry here,
       // feel free to replace with what you prefer.
       // Store the latest invoice ID and status.
-      localStorage.setItem("latestInvoiceId", subscription.subscription.latest_invoice.id)
+      localStorage.setItem("latestInvoiceId", subscription.latest_invoice.id)
       localStorage.setItem(
         "latestInvoicePaymentIntentStatus",
-        subscription.subscription.latest_invoice.payment_intent.status
+        subscription.latest_invoice.payment_intent.status
       )
       throw { error: { message: "Your card was declined." } }
     } else {
@@ -252,7 +250,7 @@ export default class HandleStripePayment {
     paymentMethodId: string | undefined
     isRetry: boolean
   }) {
-    if (subscription && subscription.status === "active") {
+    if ((subscription && subscription.status === "active") || subscription.status === "trialing") {
       // Subscription is active, no customer actions required.
       return { subscription, priceItems, paymentMethodId }
     }
@@ -262,7 +260,7 @@ export default class HandleStripePayment {
     // If it's a retry, the payment intent will be on the invoice itself.
     let paymentIntent = invoice
       ? invoice.payment_intent
-      : subscription.subscription.latest_invoice.payment_intent
+      : subscription.latest_invoice.payment_intent
 
     console.log(paymentIntent.status)
     if (
@@ -304,7 +302,7 @@ export default class HandleStripePayment {
   async onSubscriptionComplete(result, handleComplete: () => void) {
     // Payment was successful.
     console.log({ onSubscriptionComplete: result })
-    if (result.subscription.status === "active") {
+    if (result.subscription.status === "active" || result.subscription.status === "trialing") {
       handleComplete()
 
       // Change your UI to show a success message to your customer.
