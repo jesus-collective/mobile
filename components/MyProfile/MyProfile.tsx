@@ -483,13 +483,13 @@ class MyProfileImpl extends JCComponent<Props, State> {
       return true
     }
 
-    if (orgTypesChurches.includes(user?.orgType)) {
+    if (user?.orgType && orgTypesChurches.includes(user?.orgType)) {
       if (user?.orgSize || user?.sundayAttendance || user?.numberVolunteers || user?.denomination) {
         return true
       }
     }
 
-    if (orgTypesNonChurch.includes(user?.orgType)) {
+    if (user?.orgType && orgTypesNonChurch.includes(user?.orgType)) {
       if (user?.orgSize || user?.numberVolunteers || user?.pplServed) {
         return true
       }
@@ -1172,6 +1172,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                             this.handleInputChange(itemValue, "orgType")
                           }}
                           selectedValue={
+                            this.state.UserDetails?.orgType &&
                             orgTypes.includes(this.state.UserDetails?.orgType)
                               ? this.state.UserDetails.orgType
                               : this.state.UserDetails.orgType === null ||
@@ -1187,9 +1188,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
                           <Picker.Item label={"Other"} value={""} />
                         </Picker>
                         {this.state.UserDetails.orgType === "" ||
-                        (!orgTypes.includes(this.state.UserDetails?.orgType) &&
-                          this.state.UserDetails.orgType !== "None" &&
-                          this.state.UserDetails.orgType !== null) ? (
+                        (this.state.UserDetails.orgType !== null &&
+                          !orgTypes.includes(this.state.UserDetails?.orgType) &&
+                          this.state.UserDetails.orgType !== "None") ? (
                           <EditableText
                             onChange={(e) => {
                               this.handleInputChange(e, "orgType")
@@ -1214,7 +1215,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   </View>
                 ) : null}
 
-                {orgTypes.includes(this.state.UserDetails?.orgType) &&
+                {this.state.UserDetails?.orgType &&
+                orgTypes.includes(this.state.UserDetails?.orgType) &&
                 (this.state.UserDetails.orgSize || this.state.editMode) ? (
                   <View style={{ marginTop: 15 }}>
                     {this.state.isEditable && this.state.editMode ? (
@@ -1250,7 +1252,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   </View>
                 ) : null}
 
-                {orgTypesChurches.includes(this.state.UserDetails?.orgType) &&
+                {this.state.UserDetails?.orgType &&
+                orgTypesChurches.includes(this.state.UserDetails?.orgType) &&
                 (this.state.UserDetails.sundayAttendance || this.state.editMode) ? (
                   <View style={{ marginTop: 15 }}>
                     {this.state.isEditable && this.state.editMode ? (
@@ -1287,7 +1290,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   </View>
                 ) : null}
 
-                {orgTypes.includes(this.state.UserDetails?.orgType) &&
+                {this.state.UserDetails?.orgType &&
+                orgTypes.includes(this.state.UserDetails?.orgType) &&
                 (this.state.UserDetails.numberVolunteers || this.state.editMode) ? (
                   <View style={{ marginTop: 15 }}>
                     {this.state.isEditable && this.state.editMode ? (
@@ -1320,7 +1324,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   </View>
                 ) : null}
 
-                {orgTypesChurches.includes(this.state.UserDetails?.orgType) &&
+                {this.state.UserDetails?.orgType &&
+                orgTypesChurches.includes(this.state.UserDetails?.orgType) &&
                 (this.state.UserDetails.denomination || this.state.editMode) ? (
                   <View style={{ marginTop: 15 }}>
                     <Text style={this.styles.style.fontFormSmall}>Denomination</Text>
@@ -1351,7 +1356,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   </View>
                 ) : null}
 
-                {orgTypesNonChurch.includes(this.state.UserDetails?.orgType) &&
+                {this.state.UserDetails?.orgType &&
+                orgTypesNonChurch.includes(this.state.UserDetails?.orgType) &&
                 (this.state.UserDetails.pplServed || this.state.editMode) ? (
                   <View style={{ marginTop: 15 }}>
                     <Text style={this.styles.style.fontFormSmall}>
@@ -1626,7 +1632,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 return (
                   <View style={{ flexDirection: "row", width: "80%" }}>
                     <Text>
-                      <a href={item?.invoice_pdf}>{item?.number}</a>
+                      {item?.invoice_pdf ? (
+                        <a href={item?.invoice_pdf}>{item?.number}</a>
+                      ) : (
+                        item?.invoice_pdf
+                      )}
                     </Text>
                     <Text>{moment.unix(parseInt(item?.created ?? "0")).format("MM/DD/YYYY")}</Text>
                     <Text>{item?.status}</Text>
