@@ -203,7 +203,7 @@ class BillingImpl extends JCComponent<Props, State> {
       })
       .flat()
     console.log(priceItems)
-    return priceItems
+    return priceItems?.filter((x) => x != undefined && x.quantity > 0)
   }
   async createInvoice() {
     let priceItems = this.getPriceItems()

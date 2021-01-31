@@ -52,6 +52,11 @@
           "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
           "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca"
         },
+        "jcmobileStripListInvoices": {
+          "userPoolId": "us-east-1_fe30GuOOt",
+          "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
+          "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca"
+        },
         "jcProcessDMAlerts": {
           "userPoolId": "us-east-1_fe30GuOOt",
           "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
@@ -62,6 +67,7 @@
           "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
           "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca"
         },
+
         "jcmobile": {},
         "jcmobileStripeCreatePaymentIntent": {},
         "jcmobilePreTokenGeneration": {},
@@ -125,6 +131,11 @@
           "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653"
         },
         "jcmobileStripCreateCustomer": {
+          "userPoolId": "us-east-1_Bq1YZMmzA",
+          "userPoolWebClientId": "3jrk6b5qnnper8p4osnaptfa65",
+          "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653"
+        },
+        "jcmobileStripListInvoices": {
           "userPoolId": "us-east-1_Bq1YZMmzA",
           "userPoolWebClientId": "3jrk6b5qnnper8p4osnaptfa65",
           "identityPoolId": "us-east-1:137d63a4-dcbb-4cdf-ac58-b0936a197653"

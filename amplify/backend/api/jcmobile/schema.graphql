@@ -4,6 +4,8 @@ type Mutation {
   createCustomer(idempotency:String,phone:String,email:String,firstName:String,lastName:String,billingAddress:StripeAddressInput): StripeCustomerData @function(name: "jcmobileStripCreateCustomer-${env}")
   createSubscription(stripeCustomerID:String,stripeSubscriptionID:String,idempotency:String,paymentMethodId: String,priceInfo: StripePriceInput,freeDays:Int): StripeSubscriptionData @function(name: "jcmobileStripCreateSubscription-${env}")
   previewInvoice(stripeCustomerID:String,idempotency:String,priceInfo: StripePriceInput): StripeInvoiceData @function(name: "jcmobileStripPreviewInvoice-${env}")
+  listInvoices(idempotency:String): StripeInvoicesListData @function(name: "jcmobileStripListInvoices-${env}")
+  cancelSubscription(idempotency:String): StripeSubscriptionData @function(name: "jcmobileStripCancelSubscription-${env}")
 }
 input StripeAddressInput
 {
@@ -26,6 +28,10 @@ type StripeSubscriptionData{
 }
 type StripeInvoiceData{
   invoice:StripeInvoice
+}
+
+type StripeInvoicesListData{
+  data:[StripeInvoice]
 }
 type StripeCustomerData{
   customer:StripeCustomer

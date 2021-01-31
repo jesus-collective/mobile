@@ -1,3 +1,4 @@
+import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { AntDesign } from "@expo/vector-icons"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import Amplify, { API, Auth, graphqlOperation, Storage } from "aws-amplify"
@@ -5,14 +6,14 @@ import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment"
 import { Badge, Button, Content, Form, Label, Picker, View } from "native-base"
 import * as React from "react"
-import { Image, Text, TextInput, TouchableOpacity } from "react-native"
+import { ActivityIndicator, Image, Text, TextInput, TouchableOpacity } from "react-native"
 import EditableLocation from "../../components/Forms/EditableLocation"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
 import MyMap from "../../components/MyMap/MyMap"
 import Sentry from "../../components/Sentry"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
-import { GetUserQuery } from "../../src/API"
+import { GetUserQuery, ListInvoicesMutation } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
 import { constants } from "../../src/constants"
 import * as mutations from "../../src/graphql/mutations"
@@ -51,7 +52,7 @@ interface State extends JCState {
   mapVisible: boolean
 
   isEditable: boolean
-  showPage: "profile" | "settings" | "billing"
+  showPage: "profile" | "settings" | "billing" | "admin"
   editMode: boolean
   mapData: MapData[]
   initCenter: any
@@ -60,6 +61,7 @@ interface State extends JCState {
   newPass: string
   passError: string
   noUserFound: boolean
+  invoices: NonNullable<NonNullable<ListInvoicesMutation>["listInvoices"]>["data"]
 }
 class MyProfileImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
@@ -86,7 +88,22 @@ class MyProfileImpl extends JCComponent<Props, State> {
     }
     this.getUserDetails()
   }
-
+  async listInvoices() {
+    try {
+      const invoice = (await API.graphql({
+        query: mutations.listInvoices,
+        variables: {
+          idempotency: "",
+        },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+      })) as GraphQLResult<ListInvoicesMutation>
+      console.log({ invoice: invoice })
+      this.setState({ invoices: invoice.data?.listInvoices?.data ?? [] })
+    } catch (e) {
+      Sentry.captureException(e.errors || e)
+      console.log(e)
+    }
+  }
   convertProfileToMapData() {
     if (
       this.state.UserDetails?.location &&
@@ -584,7 +601,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       )
     else return null
   }
-  renderLeftBar() {
+  renderLeftBar(userActions: UserActions) {
     if (this.state.UserDetails)
       return (
         <View style={this.styles.style.profileScreenLeftCard}>
@@ -774,13 +791,42 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   data-testid="profile-setmap"
                   buttonType={ButtonTypes.TransparentBoldBlackNoMargin}
                   onPress={() =>
+                    this.setState(
+                      {
+                        showPage: "billing",
+                        editMode: false,
+                      },
+                      () => {
+                        this.listInvoices()
+                      }
+                    )
+                  }
+                >
+                  Billing
+                </JCButton>
+              </View>
+            ) : null}
+            {userActions.isMemberOf("admin") ? (
+              <View
+                style={{
+                  borderBottomWidth: 1,
+                  borderBottomColor: "#33333320",
+                  paddingVertical: 10,
+                  borderRightWidth: this.state.showPage == "billing" ? 7 : 0,
+                  borderRightColor: "#F0493E",
+                }}
+              >
+                <JCButton
+                  data-testid="profile-setmap"
+                  buttonType={ButtonTypes.TransparentBoldBlackNoMargin}
+                  onPress={() =>
                     this.setState({
-                      showPage: "billing",
+                      showPage: "admin",
                       editMode: false,
                     })
                   }
                 >
-                  Billing
+                  Admin
                 </JCButton>
               </View>
             ) : null}
@@ -1575,6 +1621,28 @@ class MyProfileImpl extends JCComponent<Props, State> {
             >
               Invoices
             </Label>
+            {this.state.invoices ? (
+              this.state.invoices.map((item) => {
+                return (
+                  <View style={{ flexDirection: "row", width: "80%" }}>
+                    <Text>
+                      <a href={item?.invoice_pdf}>{item?.number}</a>
+                    </Text>
+                    <Text>{moment.unix(parseInt(item?.created ?? "0")).format("MM/DD/YYYY")}</Text>
+                    <Text>{item?.status}</Text>
+                    <Text>
+                      {parseInt(item?.total ?? "0").toFixed(2)}$ {item?.currency}
+                    </Text>
+                    <Text></Text>
+                  </View>
+                )
+              })
+            ) : (
+              <View>
+                <Text>Loading Invoices</Text>
+                <ActivityIndicator />
+              </View>
+            )}
           </View>
           <View style={{ marginTop: 40 }}>
             <Label
@@ -1610,6 +1678,13 @@ class MyProfileImpl extends JCComponent<Props, State> {
       )
     else return null
   }
+  renderAdmin(): React.ReactNode {
+    return (
+      <View style={this.styles.style.profileScreenRightCard}>
+        <Text style={this.styles.style.myprofileAboutMe}>Admin</Text>
+      </View>
+    )
+  }
   render(): React.ReactNode {
     return (
       <MyProfileImpl.UserConsumer>
@@ -1623,8 +1698,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
               {this.renderTopBar(userActions)}
 
               <Form style={this.styles.style.myProfileMainContainer}>
-                {this.renderLeftBar()}
-
+                {this.renderLeftBar(userActions)}
+                {this.state.showPage == "admin" && this.renderAdmin()}
                 {this.state.showPage == "billing" && this.renderBilling()}
                 {this.state.showPage == "profile" && this.renderProfile()}
                 {this.state.showPage == "settings" && this.renderAccountSettings()}

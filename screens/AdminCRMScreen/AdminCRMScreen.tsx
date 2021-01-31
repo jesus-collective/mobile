@@ -7,7 +7,7 @@ import moment from "moment"
 import { Button, Container, Content, Text } from "native-base"
 import React from "react"
 import { isMobile } from "react-device-detect"
-import { Picker, TextInput, View } from "react-native"
+import { Picker, TextInput, TouchableOpacity, View } from "react-native"
 import { v4 as uuidv4 } from "uuid"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCModal from "../../components/Forms/JCModal"
@@ -373,23 +373,43 @@ export default class AdminScreen extends JCComponent<Props, State> {
       }
     )
   }
-
+  showProfile(id: string) {
+    this.props.navigation.push("ProfileScreen", { id: id, create: false })
+  }
   renderRow(item: any, index: number): React.ReactNode {
     return (
       <View key={index} style={this.styles.style.AdminTableRowContainer}>
         <View style={this.styles.style.AdminFirstNameTableRow}>
           <Text style={this.styles.style.adminCRMTableParagraph}>
-            {item.Attributes.find((e) => e.Name == "given_name")?.Value}
+            <TouchableOpacity
+              onPress={() => {
+                this.showProfile(item.Username)
+              }}
+            >
+              {item.Attributes.find((e) => e.Name == "given_name")?.Value}
+            </TouchableOpacity>
           </Text>
         </View>
         <View style={this.styles.style.AdminLastNameTableRow}>
           <Text style={this.styles.style.adminCRMTableParagraph}>
-            {item.Attributes.find((e) => e.Name == "family_name")?.Value}
+            <TouchableOpacity
+              onPress={() => {
+                this.showProfile(item.Username)
+              }}
+            >
+              {item.Attributes.find((e) => e.Name == "family_name")?.Value}
+            </TouchableOpacity>
           </Text>
         </View>
         {this.state.showUid ? (
           <View style={this.styles.style.AdminUserIdTableRow}>
-            <Text style={this.styles.style.fontRegular}>{item.Username}</Text>
+            <TouchableOpacity
+              onPress={() => {
+                this.showProfile(item.Username)
+              }}
+            >
+              <Text style={this.styles.style.fontRegular}>{item.Username}</Text>
+            </TouchableOpacity>
           </View>
         ) : null}
         {this.state.showEmail ? (
@@ -416,6 +436,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             <Text style={this.styles.style.fontRegular}>{item.Enabled.toString()}</Text>
           </View>
         ) : null}
+
         <View style={this.styles.style.AdminGroupBTTableRow}>
           {!isMobile ? (
             <JCButton
