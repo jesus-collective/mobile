@@ -73,6 +73,7 @@ interface State extends JCState {
   processing: "entry" | "processing" | "complete"
   stripeValidation: any
   validatingUser: boolean
+  updatingQty:number
   freeDays: number
 }
 class BillingImpl extends JCComponent<Props, State> {
@@ -94,6 +95,7 @@ class BillingImpl extends JCComponent<Props, State> {
       processing: "entry",
       validatingUser: false,
       freeDays: 0,
+      updatingQty:0,
       eula: false,
       productType: props.route?.params?.productType,
       joinedProduct: props.route?.params?.joinedProduct
@@ -206,8 +208,8 @@ class BillingImpl extends JCComponent<Props, State> {
     return priceItems?.filter((x) => x != undefined && x.quantity > 0)
   }
   async createInvoice() {
+    this.setState({updatingQty:this.state.updatingQty+1})
     let priceItems = this.getPriceItems()
-
     try {
       const invoice: any = await API.graphql({
         query: customMutations.previewInvoice,
@@ -220,7 +222,11 @@ class BillingImpl extends JCComponent<Props, State> {
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })
       console.log({ invoice: invoice.data.previewInvoice.invoice })
-      this.setState({ invoice: invoice.data.previewInvoice.invoice })
+      if(this.state.updatingQty <2)
+        this.setState({ invoice: invoice.data.previewInvoice.invoice, updatingQty:this.state.updatingQty-1})
+      else{
+        this.setState({updatingQty:this.state.updatingQty-1})
+      }
     } catch (e) {
       Sentry.captureException(e.errors || e)
       console.log(e)
@@ -1030,7 +1036,7 @@ class BillingImpl extends JCComponent<Props, State> {
                         })}
                       </View>
 
-                      {this.state.invoice?.lines?.data
+                      {this.state.updatingQty < 2 ? this.state.invoice?.lines?.data
                         .filter((item) => item.amount != 0)
                         .map((line, index: number) => {
                           return (
@@ -1061,7 +1067,7 @@ class BillingImpl extends JCComponent<Props, State> {
                               </Text>
                             </View>
                           )
-                        })}
+                        }) : null}
                       <View style={[this.styles.style.flexRow, { marginBottom: 10 }]}>
                         {!this.state.invoice ? (
                           <View style={{ paddingTop: 10, marginRight: 10 }}>
