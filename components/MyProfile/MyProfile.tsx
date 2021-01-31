@@ -3,7 +3,7 @@ import { useNavigation, useRoute } from "@react-navigation/native"
 import Amplify, { API, Auth, graphqlOperation, Storage } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment"
-import { Badge, Button, Container, Content, Form, Label, Picker, View } from "native-base"
+import { Badge, Button, Content, Form, Label, Picker, View } from "native-base"
 import * as React from "react"
 import { Image, Text, TextInput, TouchableOpacity } from "react-native"
 import EditableLocation from "../../components/Forms/EditableLocation"
@@ -876,7 +876,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
           )}
 
           {this.state.isEditable && this.state.editMode ? (
-            <Container style={this.styles.style.myprofilePickerMainContainer}>
+            <View style={this.styles.style.myprofilePickerMainContainer}>
               <View style={this.styles.style.myprofilePickerContainer}>
                 <View style={this.styles.style.myprofilePickerContainerView}>
                   <Picker
@@ -941,7 +941,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                     })
                   : null}
               </View>
-            </Container>
+            </View>
           ) : (
             <View
               style={{
