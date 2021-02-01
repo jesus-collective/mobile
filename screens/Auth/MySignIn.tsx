@@ -4,6 +4,7 @@ import { Auth } from "aws-amplify"
 import { View } from "native-base"
 import React from "react"
 import {
+  ActivityIndicator,
   Dimensions,
   NativeSyntheticEvent,
   Platform,
@@ -29,6 +30,7 @@ interface State {
   authError: string
   fromVerified: boolean
   brand: string
+  signingIn:boolean
 }
 
 class MySignInImpl extends React.Component<Props, State> {
@@ -41,6 +43,7 @@ class MySignInImpl extends React.Component<Props, State> {
       authError: "",
       fromVerified: props.route?.params?.fromVerified ?? false,
       brand: props.route?.params?.brand ?? "jc",
+      signingIn:false
     }
   }
   static UserConsumer = UserContext.Consumer
@@ -75,16 +78,22 @@ class MySignInImpl extends React.Component<Props, State> {
 
   async handleSignIn(actions: any): Promise<void> {
     try {
+      this.setState({signingIn:true})
       await Auth.signIn(this.state.user.toLowerCase(), this.state.pass).then(async (user) => {
-        if (user.challengeName == "NEW_PASSWORD_REQUIRED")
+        if (user.challengeName == "NEW_PASSWORD_REQUIRED"){
           await this.changeAuthState(actions, "requireNewPassword", user)
-        else await this.changeAuthState(actions, "signedIn")
+          this.setState({signingIn:false})
+        }
+        else {
+          await this.changeAuthState(actions, "signedIn")
+          this.setState({signingIn:false})
+        }
       })
     } catch (err) {
       if (!this.state.pass && this.state.user) {
-        this.setState({ authError: "Password cannot be empty" })
+        this.setState({ authError: "Password cannot be empty", signingIn:false })
       } else {
-        this.setState({ authError: err.message })
+        this.setState({ authError: err.message, signingIn:false })
       }
     }
   }
@@ -206,12 +215,17 @@ class MySignInImpl extends React.Component<Props, State> {
                       }}
                     ></TextInput>
                     <JCButton
+
                       buttonType={ButtonTypes.SolidSignIn}
                       onPress={() => {
                         this.handleSignIn(userActions)
                       }}
                     >
-                      Sign In
+                      
+                      {this.state.signingIn ? 
+                      <View style={{ flexDirection: "column", width: 50.95, top: 4 }}>
+                            <ActivityIndicator color="white"></ActivityIndicator>
+                          </View> : "Sign In"}
                     </JCButton>
                     <TouchableOpacity
                       onPress={async () => {
