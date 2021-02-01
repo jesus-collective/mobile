@@ -637,8 +637,7 @@ class BillingImpl extends JCComponent<Props, State> {
               ) : (
                 <>
                   {this.state.processing == "processing" ? (
-                    <Content>
-                      <View style={this.styles.style.signUpScreen1PaymentColumn1}>
+                    <Content style={this.styles.style.signUpScreen1PaymentColumn1}>
                         <Text
                           style={{
                             fontFamily: "Graphik-Bold-App",
@@ -664,16 +663,13 @@ class BillingImpl extends JCComponent<Props, State> {
                           Please wait while we process your payment. This may take several seconds.
                         </Text>
                         <ActivityIndicator />
-                      </View>
                     </Content>
                   ) : null}
 
                   <Content
-                    style={{
-                      display: this.state.processing == "entry" ? "flex" : "none",
-                    }}
+                    style={{display: this.state.processing == "entry" ? "flex" : "none"}}
                   >
-                    <View style={this.styles.style.signUpScreen1PaymentColumn1}>
+                    <View style={this.styles.style.signUpScreen1PaymentColumn1Form}>
                       {this.state.productType == "OneStory" && (
                         <Text>
                           You are in the right place to sign up for One Story Curriculum! One Story
