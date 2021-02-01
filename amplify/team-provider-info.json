@@ -155,7 +155,8 @@
         "jcmobileStripeCreatePaymentIntent": {},
         "jcmobileGetOrgStripeSubs": {},
         "jcmobileCreateCognitoOrgUser": {},
-        "jcmobileSendInviteToOrgUser": {}
+        "jcmobileSendInviteToOrgUser": {},
+        "jcmobileStripCancelSubscription": {}
       },
       "video": {
         "jesuscollectiveCourses": {
