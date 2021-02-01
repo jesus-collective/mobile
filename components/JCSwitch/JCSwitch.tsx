@@ -37,6 +37,7 @@ interface Props {
   toggleMarginLeft?: number
   toggleMarginTop?: number
   toggleMarginBottom?: number
+  testId?: string
 }
 interface State extends JCState {
   enabled: boolean
@@ -82,7 +83,7 @@ export default class JCSwitch extends JCComponent<Props, State> {
         }}
       >
         <Text style={this.styles.style.fontMyMapOptions}>{this.props.switchLabel}</Text>
-        <TouchableWithoutFeedback onPress={() => this.onPress()}>
+        <TouchableWithoutFeedback testID={this.props.testId} onPress={() => this.onPress()}>
           <View
             style={{
               backgroundColor: this.state.enabled ? this.state.onColor : this.state.offColor,

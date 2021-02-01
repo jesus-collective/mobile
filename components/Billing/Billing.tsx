@@ -471,6 +471,7 @@ class BillingImpl extends JCComponent<Props, State> {
             *
           </Text>
           <JCSwitch
+            testId={"billing-accept-eula"}
             containerWidth={"95%"}
             switchLabel="I accept the End User Licensing Agreement"
             initState={this.state.eula}
@@ -612,10 +613,12 @@ class BillingImpl extends JCComponent<Props, State> {
                       We've received your payment.
                       <br />
                       <JCButton
+                        data-testid={"billing-continueToProfile-button"}
                         onPress={() => {
                           this.completePaymentProcess(userActions, userState)
                         }}
                         buttonType={ButtonTypes.Solid}
+                        enabled={!this.state.validatingUser}
                       >
                         {this.state.validatingUser ? (
                           <View style={{ flexDirection: "column", width: 177.7, top: 4 }}>
@@ -1115,6 +1118,7 @@ class BillingImpl extends JCComponent<Props, State> {
                         {this.state.errorMsg}
                       </Text>
                       <JCButton
+                        data-testid={"billing-processPayment-button"}
                         buttonType={ButtonTypes.Solid}
                         onPress={() => {
                           this.setState({ errorMsg: "" })

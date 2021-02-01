@@ -1,8 +1,8 @@
-import React from "react"
 import { Button } from "native-base"
+import React from "react"
 import { Text } from "react-native"
-import styles from "./JCButtonStyle"
 import JCComponent from "../JCComponent/JCComponent"
+import styles from "./JCButtonStyle"
 
 export enum ButtonTypes {
   AdminModal,
@@ -79,6 +79,7 @@ class JCButton extends JCComponent<Props> {
     return (
       <Button
         disabled={!this.props.enabled}
+        testID={this.props["data-testid"]}
         data-testid={this.props["data-testid"]}
         style={[
           styles[ButtonTypes[this.props.buttonType] + "Button"],
