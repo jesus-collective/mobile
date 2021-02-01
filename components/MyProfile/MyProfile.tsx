@@ -1618,7 +1618,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               billing concerns.
             </Label>
           </View>
-          <View style={{ marginTop: 40 }}>
+          <View style={{ marginTop: 40, width:"100%" }}>
             <Label
               style={{
                 ...this.styles.style.fontFormSmallDarkGrey,
@@ -1627,27 +1627,34 @@ class MyProfileImpl extends JCComponent<Props, State> {
             >
               Invoices
             </Label>
-            {this.state.invoices ? (
-              this.state.invoices.map((item) => {
+            {this.state.invoices ? 
+            <>
+              <View style={{flex:1, flexDirection:"row"}}>
+                <Text style={{flex:1}}>Invoice Number</Text>
+                <Text style={{flex:1}}>Transaction Date</Text>
+                <Text style={{flex:1}}>Status</Text>
+                <Text style={{flex:1}}>Amount</Text>
+              </View>
+              {this.state.invoices.map((item, index) => {
                 return (
-                  <View style={{ flexDirection: "row", width: "80%" }}>
-                    <Text>
+                  <View style={{ flex:1,flexDirection: "row"}}>
+                    <Text style={{flex:1}}>
                       {item?.invoice_pdf ? (
                         <a href={item?.invoice_pdf}>{item?.number}</a>
                       ) : (
                         item?.invoice_pdf
                       )}
                     </Text>
-                    <Text>{moment.unix(parseInt(item?.created ?? "0")).format("MM/DD/YYYY")}</Text>
-                    <Text>{item?.status}</Text>
-                    <Text>
-                      {parseInt(item?.total ?? "0").toFixed(2)}$ {item?.currency}
+                    <Text style={{flex:1}}>{moment.unix(parseInt(item?.created ?? "0")).format("MM/DD/YYYY")}</Text>
+                    <Text style={{flex:1}} >{item?.status}</Text>
+                    <Text style={{flex:1}}>
+                      {"$" + parseInt(item?.total ?? "0").toFixed(2)} {item?.currency?.toUpperCase()}
                     </Text>
-                    <Text></Text>
                   </View>
                 )
-              })
-            ) : (
+              })}
+              </>
+             : (
               <View>
                 <Text>Loading Invoices</Text>
                 <ActivityIndicator />
