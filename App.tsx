@@ -20,8 +20,9 @@ import { version } from "./src/version"
 let env = "unknown"
 
 if (window.location === undefined) env = "mobile"
-else if (window.location.hostname === "localhost") env = "dev"
+else if (window.location.hostname === "localhost") env = "localhost"
 else if (window.location.hostname.includes("beta")) env = "beta"
+else if (window.location.hostname.includes("dev")) env = "dev"
 else env = "prod"
 Sentry.init({
   dsn: "https://8c8703a620444c97ba6e8bb4a60c17d0@o390245.ingest.sentry.io/5231908",

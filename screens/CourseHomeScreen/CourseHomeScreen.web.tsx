@@ -1,11 +1,18 @@
-﻿import { API, Auth } from "aws-amplify"
+﻿import { GraphQLResult } from "@aws-amplify/api/lib/types"
+import { API, Auth } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { convertToRaw, EditorState } from "draft-js"
 import moment from "moment-timezone"
 import { Container, Drawer, StyleProvider } from "native-base"
 import React from "react"
 import { Dimensions } from "react-native"
-import { CreateCourseLessonInput, CreateCourseTriadsInput, CreateCourseWeekInput } from "src/API"
+import {
+  CreateCourseLessonInput,
+  CreateCourseTriadsInput,
+  CreateCourseWeekInput,
+  GetCourseInfoQuery,
+  GetGroupQuery,
+} from "src/API"
 import CourseSidebar from "../../components/CourseSidebar/CourseSidebar"
 import ChatButton from "../../components/CourseViewer/ChatButton"
 import CourseChat from "../../components/CourseViewer/CourseChat"
@@ -62,18 +69,18 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       query: queries.getGroup,
       variables: { id: props.route.params.id },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })
+    }) as GraphQLResult<GetGroupQuery>
     const getCourse: any = API.graphql({
       query: customQueries.getCourseInfo,
       variables: { id: props.route.params.id },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })
-    const processResults2 = (json) => {
+    }) as GraphQLResult<GetCourseInfoQuery>
+    const processResults2 = (json: GraphQLResult<GetCourseInfoQuery>) => {
       console.log({ courseData: json })
       this.setState({ courseData: json.data.getCourseInfo })
     }
     getCourse.then(processResults2).catch(processResults2)
-    const processResults = (json) => {
+    const processResults = (json: GraphQLResult<GetGroupQuery>) => {
       const isEditable =
         json.data.getGroup.owner == this.state.currentUser || groups.includes("courseAdmin")
       console.log({

@@ -67,13 +67,13 @@
           "userPoolWebClientId": "68v5dgb5s96v9lf87cjfpeqmn9",
           "identityPoolId": "us-east-1:7b6acfbf-d55c-46e9-a0de-d3bf264f8fca"
         },
-
         "jcmobile": {},
         "jcmobileStripeCreatePaymentIntent": {},
         "jcmobilePreTokenGeneration": {},
         "jcmobileGetOrgStripeSubs": {},
         "jcmobileCreateCognitoOrgUser": {},
-        "jcmobileSendInviteToOrgUser": {}
+        "jcmobileSendInviteToOrgUser": {},
+        "jcmobileStripCancelSubscription": {}
       },
       "video": {
         "jesuscollectiveCourses": {
@@ -155,7 +155,8 @@
         "jcmobileStripeCreatePaymentIntent": {},
         "jcmobileGetOrgStripeSubs": {},
         "jcmobileCreateCognitoOrgUser": {},
-        "jcmobileSendInviteToOrgUser": {}
+        "jcmobileSendInviteToOrgUser": {},
+        "jcmobileStripCancelSubscription": {}
       },
       "video": {
         "jesuscollectiveCourses": {

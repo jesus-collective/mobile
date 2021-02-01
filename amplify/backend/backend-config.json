@@ -114,7 +114,8 @@
     "jcmobilePreTokenGeneration": {
       "build": true,
       "providerPlugin": "awscloudformation",
-      "service": "Lambda"
+      "service": "Lambda",
+      "dependsOn": []
     },
     "jcmobileStripWebhook": {
       "build": true,

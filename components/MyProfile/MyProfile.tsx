@@ -483,13 +483,13 @@ class MyProfileImpl extends JCComponent<Props, State> {
       return true
     }
 
-    if (orgTypesChurches.includes(user?.orgType)) {
+    if (user?.orgType && orgTypesChurches.includes(user?.orgType)) {
       if (user?.orgSize || user?.sundayAttendance || user?.numberVolunteers || user?.denomination) {
         return true
       }
     }
 
-    if (orgTypesNonChurch.includes(user?.orgType)) {
+    if (user?.orgType && orgTypesNonChurch.includes(user?.orgType)) {
       if (user?.orgSize || user?.numberVolunteers || user?.pplServed) {
         return true
       }
@@ -1172,6 +1172,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                             this.handleInputChange(itemValue, "orgType")
                           }}
                           selectedValue={
+                            this.state.UserDetails?.orgType &&
                             orgTypes.includes(this.state.UserDetails?.orgType)
                               ? this.state.UserDetails.orgType
                               : this.state.UserDetails.orgType === null ||
@@ -1187,9 +1188,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
                           <Picker.Item label={"Other"} value={""} />
                         </Picker>
                         {this.state.UserDetails.orgType === "" ||
-                        (!orgTypes.includes(this.state.UserDetails?.orgType) &&
-                          this.state.UserDetails.orgType !== "None" &&
-                          this.state.UserDetails.orgType !== null) ? (
+                        (this.state.UserDetails.orgType !== null &&
+                          !orgTypes.includes(this.state.UserDetails?.orgType) &&
+                          this.state.UserDetails.orgType !== "None") ? (
                           <EditableText
                             onChange={(e) => {
                               this.handleInputChange(e, "orgType")
@@ -1214,7 +1215,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   </View>
                 ) : null}
 
-                {orgTypes.includes(this.state.UserDetails?.orgType) &&
+                {this.state.UserDetails?.orgType &&
+                orgTypes.includes(this.state.UserDetails?.orgType) &&
                 (this.state.UserDetails.orgSize || this.state.editMode) ? (
                   <View style={{ marginTop: 15 }}>
                     {this.state.isEditable && this.state.editMode ? (
@@ -1250,7 +1252,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   </View>
                 ) : null}
 
-                {orgTypesChurches.includes(this.state.UserDetails?.orgType) &&
+                {this.state.UserDetails?.orgType &&
+                orgTypesChurches.includes(this.state.UserDetails?.orgType) &&
                 (this.state.UserDetails.sundayAttendance || this.state.editMode) ? (
                   <View style={{ marginTop: 15 }}>
                     {this.state.isEditable && this.state.editMode ? (
@@ -1287,7 +1290,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   </View>
                 ) : null}
 
-                {orgTypes.includes(this.state.UserDetails?.orgType) &&
+                {this.state.UserDetails?.orgType &&
+                orgTypes.includes(this.state.UserDetails?.orgType) &&
                 (this.state.UserDetails.numberVolunteers || this.state.editMode) ? (
                   <View style={{ marginTop: 15 }}>
                     {this.state.isEditable && this.state.editMode ? (
@@ -1320,7 +1324,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   </View>
                 ) : null}
 
-                {orgTypesChurches.includes(this.state.UserDetails?.orgType) &&
+                {this.state.UserDetails?.orgType &&
+                orgTypesChurches.includes(this.state.UserDetails?.orgType) &&
                 (this.state.UserDetails.denomination || this.state.editMode) ? (
                   <View style={{ marginTop: 15 }}>
                     <Text style={this.styles.style.fontFormSmall}>Denomination</Text>
@@ -1351,7 +1356,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   </View>
                 ) : null}
 
-                {orgTypesNonChurch.includes(this.state.UserDetails?.orgType) &&
+                {this.state.UserDetails?.orgType &&
+                orgTypesNonChurch.includes(this.state.UserDetails?.orgType) &&
                 (this.state.UserDetails.pplServed || this.state.editMode) ? (
                   <View style={{ marginTop: 15 }}>
                     <Text style={this.styles.style.fontFormSmall}>
@@ -1502,11 +1508,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
             </Label>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"column"}
+              flexDirection={"row"}
               toggleMargin={20}
               toggleMarginLeft={10}
-              toggleMarginTop={10}
-              toggleMarginBottom={15}
+              toggleMarginTop={0}
+              toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Direct Messages"
               initState={this.state.UserDetails.alertConfig?.emailDirectMessage == "true"}
               onPress={(e) => {
@@ -1515,11 +1521,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ></JCSwitch>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"column"}
+              flexDirection={"row"}
               toggleMargin={20}
               toggleMarginLeft={10}
-              toggleMarginTop={10}
-              toggleMarginBottom={15}
+              toggleMarginTop={0}
+              toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Group Messages"
               initState={this.state.UserDetails.alertConfig?.emailGroupMessage == "true"}
               onPress={(e) => {
@@ -1528,11 +1534,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ></JCSwitch>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"column"}
+              flexDirection={"row"}
               toggleMargin={20}
               toggleMarginLeft={10}
-              toggleMarginTop={10}
-              toggleMarginBottom={15}
+              toggleMarginTop={0}
+              toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Event Messages"
               initState={this.state.UserDetails.alertConfig?.emailEventMessage == "true"}
               onPress={(e) => {
@@ -1541,11 +1547,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ></JCSwitch>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"column"}
+              flexDirection={"row"}
               toggleMargin={20}
               toggleMarginLeft={10}
-              toggleMarginTop={10}
-              toggleMarginBottom={15}
+              toggleMarginTop={0}
+              toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Resource Messages"
               initState={this.state.UserDetails.alertConfig?.emailResourceMessage == "true"}
               onPress={(e) => {
@@ -1554,11 +1560,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ></JCSwitch>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"column"}
+              flexDirection={"row"}
               toggleMargin={20}
               toggleMarginLeft={10}
-              toggleMarginTop={10}
-              toggleMarginBottom={15}
+              toggleMarginTop={0}
+              toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Course Messages"
               initState={this.state.UserDetails.alertConfig?.emailCourseMessage == "true"}
               onPress={(e) => {
@@ -1567,11 +1573,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ></JCSwitch>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"column"}
+              flexDirection={"row"}
               toggleMargin={20}
               toggleMarginLeft={10}
-              toggleMarginTop={10}
-              toggleMarginBottom={15}
+              toggleMarginTop={0}
+              toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Organization Messages"
               initState={this.state.UserDetails.alertConfig?.emailOrgMessage == "true"}
               onPress={(e) => {
@@ -1580,11 +1586,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ></JCSwitch>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"column"}
+              flexDirection={"row"}
               toggleMargin={20}
               toggleMarginLeft={10}
-              toggleMarginTop={10}
-              toggleMarginBottom={15}
+              toggleMarginTop={0}
+              toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Org Messages"
               initState={this.state.UserDetails.alertConfig?.emailPromotions == "true"}
               onPress={(e) => {
@@ -1612,7 +1618,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               billing concerns.
             </Label>
           </View>
-          <View style={{ marginTop: 40 }}>
+          <View style={{ marginTop: 40, width:"100%" }}>
             <Label
               style={{
                 ...this.styles.style.fontFormSmallDarkGrey,
@@ -1621,23 +1627,34 @@ class MyProfileImpl extends JCComponent<Props, State> {
             >
               Invoices
             </Label>
-            {this.state.invoices ? (
-              this.state.invoices.map((item) => {
+            {this.state.invoices ? 
+            <>
+              <View style={{flex:1, flexDirection:"row"}}>
+                <Text style={{flex:1}}>Invoice Number</Text>
+                <Text style={{flex:1}}>Transaction Date</Text>
+                <Text style={{flex:1}}>Status</Text>
+                <Text style={{flex:1}}>Amount</Text>
+              </View>
+              {this.state.invoices.map((item, index) => {
                 return (
-                  <View style={{ flexDirection: "row", width: "80%" }}>
-                    <Text>
-                      <a href={item?.invoice_pdf}>{item?.number}</a>
+                  <View style={{ flex:1,flexDirection: "row"}}>
+                    <Text style={{flex:1}}>
+                      {item?.invoice_pdf ? (
+                        <a href={item?.invoice_pdf}>{item?.number}</a>
+                      ) : (
+                        item?.invoice_pdf
+                      )}
                     </Text>
-                    <Text>{moment.unix(parseInt(item?.created ?? "0")).format("MM/DD/YYYY")}</Text>
-                    <Text>{item?.status}</Text>
-                    <Text>
-                      {parseInt(item?.total ?? "0").toFixed(2)}$ {item?.currency}
+                    <Text style={{flex:1}}>{moment.unix(parseInt(item?.created ?? "0")).format("MM/DD/YYYY")}</Text>
+                    <Text style={{flex:1}} >{item?.status}</Text>
+                    <Text style={{flex:1}}>
+                      {"$" + parseInt(item?.total ?? "0").toFixed(2)} {item?.currency?.toUpperCase()}
                     </Text>
-                    <Text></Text>
                   </View>
                 )
-              })
-            ) : (
+              })}
+              </>
+             : (
               <View>
                 <Text>Loading Invoices</Text>
                 <ActivityIndicator />

@@ -12,7 +12,6 @@ import { UserContext } from "../../screens/HomeScreen/UserContext"
 import { constants } from "../../src/constants"
 import HeaderStyles from "../Header/style"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
-
 interface Props {
   navigation: any
   title: string
@@ -119,7 +118,7 @@ export default class HeaderJC extends JCComponent<Props, State> {
     this.handleResourcesDropdownClose()
     this.props.navigation.push("ResourceScreen", {
       create: false,
-      id: "resource-1611326161952",
+      id: constants["SETTING_KY_GROUP_ID"],
     })
   }
   openGroups = (): void => {

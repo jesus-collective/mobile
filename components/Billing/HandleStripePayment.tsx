@@ -270,7 +270,6 @@ export default class HandleStripePayment {
     isRetry,
     handleError
   }: {
-    invoice?: any,
     subscription: Subscription
     stripe: Stripe
     priceItems: PriceItems

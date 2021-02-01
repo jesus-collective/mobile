@@ -42,7 +42,7 @@ def do_stuff(table, col, default, default_type):
             Key=item,
            
             ExpressionAttributeValues={
-                ':default': {"L": [ { "S" : "legacyUserGroup1" } ]},
+                ':default': {"L": [ { "S" : "legacyUserGroup1" }, { "S" : "partners" } ]},
              #   ':isNull': {'NULL': True}
             },
             UpdateExpression="SET "+col+" = :default"#,

@@ -94,6 +94,7 @@ class MyConfirmSignUpImpl extends React.Component<Props, State> {
                 <View style={{ width: "100%", left: 0, top: 0, height: "100%" }}>
                   <View style={this.styles.style.signUpBackButtonWrapper}>
                     <TouchableOpacity
+                      testID="myConfirmSignup-back"
                       onPress={async () => {
                         await this.changeAuthState(userActions, "signIn", null)
                       }}
