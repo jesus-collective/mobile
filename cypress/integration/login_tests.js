@@ -1,5 +1,9 @@
 import TestHelper from "../../components/TestHelpers/TestHelpers"
 const sizes = ["iphone-6", "ipad-2", [1024, 768]]
+//const user = "george.bell@jesuscollective.com" //George
+const user = "test1@jesuscollective.com" //Lucas
+//const user = "test2@jesuscollective.com" //Mateus
+//const user = "test3@jesuscollective.com" //Igor
 
 describe("Login Page Test", () => {
   sizes.forEach((size) => {
@@ -12,13 +16,11 @@ describe("Login Page Test", () => {
 
       cy.visit("/")
         .then(() => {
-          TestHelper.DeleteUser("george.bell@jesuscollective.com", "TestTest#1")
+          TestHelper.DeleteUser(user, "TestTest#1")
         })
         .contains("Sign In")
         .click()
-      cy.contains("Username cannot be empty")
-        .get('input[placeholder="Email"]')
-        .type("george.bell@jesuscollective.com")
+      cy.contains("Username cannot be empty").get('input[placeholder="Email"]').type(user)
       cy.contains("Sign In").click()
       cy.contains("Password cannot be empty")
         .get('input[placeholder="Password"]')
@@ -27,7 +29,7 @@ describe("Login Page Test", () => {
       cy.contains("User does not exist")
       cy.contains("Create an Account").click()
       cy.contains("Individual").click()
-      cy.get('input[placeholder="Email address"]').type("george.bell@jesuscollective.com")
+      cy.get('input[placeholder="Email address"]').type(user)
       cy.get('input[placeholder="Create Password"]').type("TestTest#1")
       cy.get('input[placeholder="Confirm Password"]').type("TestTest#1")
       cy.get('input[placeholder="Phone number"]').type("1234567890")
@@ -38,7 +40,7 @@ describe("Login Page Test", () => {
       cy.get('input[placeholder="One-time security code"]')
         .get('div[data-testId="myConfirmSignup-back"]')
         .click()
-      cy.get('input[placeholder="Email"]').type("george.bell@jesuscollective.com")
+      cy.get('input[placeholder="Email"]').type(user)
       cy.get('input[placeholder="Password"]').type("TestTest#1")
 
       cy.contains("Sign In").click()
