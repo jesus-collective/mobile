@@ -596,9 +596,7 @@ class BillingImpl extends JCComponent<Props, State> {
             {({ userState, userActions }) => {
               if (!userState) return null
               return this.state.processing === "complete" ? (
-                <Content>
-                  <View style={this.styles.style.signUpScreen1PaymentColumn1}>
-                    <View style={{ alignSelf: "center", width: "auto" }}></View>
+                <Content style={this.styles.style.signUpScreen1PaymentColumn1}>
                     <Text
                       style={{
                         fontFamily: "Graphik-Semibold-App",
@@ -632,7 +630,7 @@ class BillingImpl extends JCComponent<Props, State> {
                     <Text style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
                       {this.state.errorMsg}
                     </Text>
-                  </View>
+      
                 </Content>
               ) : (
                 <>
