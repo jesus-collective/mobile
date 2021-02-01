@@ -1881,7 +1881,7 @@ export default class MainStyles {
 
       "@media (min-width: 320px) and (max-width: 720px)": {
         authView2: { left: "2%", width: "96%", top: "12%", height: "100%" },
-        createAccountButtonWrapper: { position: "absolute", top: "0%", right: "5%" },
+        createAccountButtonWrapper: { position: "absolute", top: "0%", left: "2%", marginTop: 5 },
         confirmationCodeWrapper: { display: "flex", flexDirection: "column" },
         signUpBackButtonWrapper: { position: "absolute", top: "0%", left: "5%" },
         // rightCardWidth: {
