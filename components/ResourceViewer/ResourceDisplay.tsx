@@ -82,12 +82,12 @@ class ResourceDisplay extends JCComponent<Props, State> {
                     {
                       type: ResourcePageItemType.RichText,
                       title1: this.generateRichText(subTitle),
-                      style: ResourcePageItemStyle.RichTextH2,
+                      style: ResourcePageItemStyle.RichTextH4Small,
                     },
                     {
                       type: ResourcePageItemType.RichText,
                       title1: this.generateRichText(description),
-                      style: ResourcePageItemStyle.RichTextBody1,
+                      style: ResourcePageItemStyle.RichTextBody3,
                     },
                     {
                       type: ResourcePageItemType.DropDownPicker,
