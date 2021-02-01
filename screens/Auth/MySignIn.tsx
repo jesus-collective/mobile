@@ -215,7 +215,7 @@ class MySignInImpl extends React.Component<Props, State> {
                       }}
                     ></TextInput>
                     <JCButton
-
+                      enabled={!this.state.signingIn}
                       buttonType={ButtonTypes.SolidSignIn}
                       onPress={() => {
                         this.handleSignIn(userActions)
@@ -223,7 +223,7 @@ class MySignInImpl extends React.Component<Props, State> {
                     >
                       
                       {this.state.signingIn ? 
-                      <View style={{ flexDirection: "column", width: 50.95, top: 4 }}>
+                      <View style={{ flexDirection: "column", width: 50.95, top: 2 }}>
                             <ActivityIndicator color="white"></ActivityIndicator>
                           </View> : "Sign In"}
                     </JCButton>
