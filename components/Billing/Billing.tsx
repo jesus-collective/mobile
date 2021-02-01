@@ -390,7 +390,7 @@ class BillingImpl extends JCComponent<Props, State> {
           borderStyle: "solid",
           borderRadius: 4,
           borderColor: "rgba(51, 51, 51, 0.1)",
-          shadowColor: "rgba(0, 0, 0, 0.45)",
+          shadowColor: "rgba(0, 0, 0, 0.09)",
           padding: 25,
           shadowOffset: { width: 5, height: 5 },
           shadowRadius: 30,
