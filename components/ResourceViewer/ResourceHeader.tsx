@@ -38,7 +38,7 @@ class ResourceHeader extends JCComponent<Props, State> {
   fadeAnimation = (): void => {
     Animated.timing(this.state.fadeValue, {
       toValue: 1,
-      duration: 3250,
+      duration: 5600,
       useNativeDriver: true,
     }).start()
   }
