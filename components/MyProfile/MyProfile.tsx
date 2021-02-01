@@ -1508,11 +1508,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
             </Label>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"column"}
+              flexDirection={"row"}
               toggleMargin={20}
               toggleMarginLeft={10}
-              toggleMarginTop={10}
-              toggleMarginBottom={15}
+              toggleMarginTop={0}
+              toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Direct Messages"
               initState={this.state.UserDetails.alertConfig?.emailDirectMessage == "true"}
               onPress={(e) => {
@@ -1521,11 +1521,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ></JCSwitch>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"column"}
+              flexDirection={"row"}
               toggleMargin={20}
               toggleMarginLeft={10}
-              toggleMarginTop={10}
-              toggleMarginBottom={15}
+              toggleMarginTop={0}
+              toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Group Messages"
               initState={this.state.UserDetails.alertConfig?.emailGroupMessage == "true"}
               onPress={(e) => {
@@ -1534,11 +1534,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ></JCSwitch>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"column"}
+              flexDirection={"row"}
               toggleMargin={20}
               toggleMarginLeft={10}
-              toggleMarginTop={10}
-              toggleMarginBottom={15}
+              toggleMarginTop={0}
+              toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Event Messages"
               initState={this.state.UserDetails.alertConfig?.emailEventMessage == "true"}
               onPress={(e) => {
@@ -1547,11 +1547,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ></JCSwitch>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"column"}
+              flexDirection={"row"}
               toggleMargin={20}
               toggleMarginLeft={10}
-              toggleMarginTop={10}
-              toggleMarginBottom={15}
+              toggleMarginTop={0}
+              toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Resource Messages"
               initState={this.state.UserDetails.alertConfig?.emailResourceMessage == "true"}
               onPress={(e) => {
@@ -1560,11 +1560,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ></JCSwitch>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"column"}
+              flexDirection={"row"}
               toggleMargin={20}
               toggleMarginLeft={10}
-              toggleMarginTop={10}
-              toggleMarginBottom={15}
+              toggleMarginTop={0}
+              toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Course Messages"
               initState={this.state.UserDetails.alertConfig?.emailCourseMessage == "true"}
               onPress={(e) => {
@@ -1573,11 +1573,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ></JCSwitch>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"column"}
+              flexDirection={"row"}
               toggleMargin={20}
               toggleMarginLeft={10}
-              toggleMarginTop={10}
-              toggleMarginBottom={15}
+              toggleMarginTop={0}
+              toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Organization Messages"
               initState={this.state.UserDetails.alertConfig?.emailOrgMessage == "true"}
               onPress={(e) => {
@@ -1586,11 +1586,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ></JCSwitch>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"column"}
+              flexDirection={"row"}
               toggleMargin={20}
               toggleMarginLeft={10}
-              toggleMarginTop={10}
-              toggleMarginBottom={15}
+              toggleMarginTop={0}
+              toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Org Messages"
               initState={this.state.UserDetails.alertConfig?.emailPromotions == "true"}
               onPress={(e) => {

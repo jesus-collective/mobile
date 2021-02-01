@@ -1017,7 +1017,7 @@ export default class MainStyles {
               shadowOffset: { width: 0, height: 5 },
               shadowColor: "rgba(0, 0, 0, 0.05)",
               shadowRadius: 30,
-              minHeight: 700,
+              // height: 'auto',
               width: 446,
             }
           : {
@@ -1051,7 +1051,7 @@ export default class MainStyles {
               shadowOffset: { width: 0, height: 5 },
               shadowColor: "rgba(0, 0, 0, 0.05)",
               shadowRadius: 30,
-              minHeight: 1500,
+              // minHeight: 1500,
               width: 446,
               paddingTop: 30,
               paddingRight: 30,
