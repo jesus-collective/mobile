@@ -11,7 +11,7 @@ interface Props {
   placeholder?: string
   placeholderTextColor?: string
   onChange?(value: string): void
-  "data-testid"?: any
+  "data-testid"?: string
   ellipsizeMode?: "head" | "middle" | "tail" | "clip"
   numberOfLines?: number
 }
@@ -49,6 +49,7 @@ export default class EditableText extends JCComponent<Props, State> {
     if (this.state.isEditable)
       return (
         <TextInput
+          testID={this.props["data-testid"]}
           data-testid={this.props["data-testid"]}
           onBlur={(val: any) => {
             this.onChanged(val.target.value)

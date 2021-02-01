@@ -731,7 +731,7 @@ class BillingImpl extends JCComponent<Props, State> {
                               this.handleInputChange(e, "line1")
                             }}
                             multiline={false}
-                            data-testid="profile-currentRole"
+                            data-testid="billing-line1"
                             textStyle={this.styles.style.fontFormSmallDarkGrey}
                             inputStyle={{
                               borderWidth: 1,
@@ -762,7 +762,7 @@ class BillingImpl extends JCComponent<Props, State> {
                               this.handleInputChange(e, "line2")
                             }}
                             multiline={false}
-                            data-testid="profile-currentRole"
+                            data-testid="billing-line2"
                             textStyle={this.styles.style.fontFormSmallDarkGrey}
                             inputStyle={{
                               borderWidth: 1,
@@ -803,7 +803,7 @@ class BillingImpl extends JCComponent<Props, State> {
                               this.handleInputChange(e, "city")
                             }}
                             multiline={false}
-                            data-testid="profile-currentRole"
+                            data-testid="billing-city"
                             textStyle={this.styles.style.fontFormSmallDarkGrey}
                             inputStyle={{
                               borderWidth: 1,
@@ -844,7 +844,7 @@ class BillingImpl extends JCComponent<Props, State> {
                               this.handleInputChange(e, "state")
                             }}
                             multiline={false}
-                            data-testid="profile-currentRole"
+                            data-testid="billing-state"
                             textStyle={this.styles.style.fontFormSmallDarkGrey}
                             inputStyle={{
                               borderWidth: 1,
@@ -885,7 +885,7 @@ class BillingImpl extends JCComponent<Props, State> {
                               this.handleInputChange(e, "country")
                             }}
                             multiline={false}
-                            data-testid="profile-currentRole"
+                            data-testid="billing-country"
                             textStyle={this.styles.style.fontFormSmallDarkGrey}
                             inputStyle={{
                               borderWidth: 1,
@@ -926,7 +926,7 @@ class BillingImpl extends JCComponent<Props, State> {
                               this.handleInputChange(e, "postal_code")
                             }}
                             multiline={false}
-                            data-testid="profile-currentRole"
+                            data-testid="billing-postalcode"
                             textStyle={this.styles.style.fontFormSmallDarkGrey}
                             inputStyle={{
                               borderWidth: 1,
