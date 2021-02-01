@@ -1,4 +1,5 @@
 import TestHelper from "../../components/TestHelpers/TestHelpers"
+//const sizes = ["iphone-6", "ipad-2", [1024, 768]]
 const sizes = ["iphone-6", "ipad-2", [1024, 768]]
 const user = "george.bell@jesuscollective.com" //George
 //const user = "test1@jesuscollective.com" //Lucas
@@ -80,11 +81,14 @@ describe("Login Page Test", () => {
         .get('[data-testId="profile-orgName"]')
         .type("TMH", { force: true })
         .get('[data-testId="profile-orgType"]')
-        .type("Software", { force: true })
+        .select("Church", { force: true })
         .get('[data-testId="profile-orgSize"]')
-        .type("123", { force: true })
+        .select("1-25", { force: true })
         .get('[data-testId="profile-orgDescription"]')
         .type("We make things", { force: true })
+
+      cy.get('[data-testId="profile-interest-picker"]').select("Equipping")
+      cy.get('[data-testId="profile-interest-button"]').click()
       const fileName = "test.jpeg"
       cy.fixture(fileName).then((fileContent) => {
         cy.get('[data-testid="profile-image"]').upload({
@@ -93,10 +97,10 @@ describe("Login Page Test", () => {
           mimeType: "image/jpeg",
         })
       })
-      cy.get('[data-testId="profile-setmap"]')
-        .click("topLeft", { force: true })
-        .get('[data-testId="mapselector-save"]')
-        .click("topLeft", { force: true })
+      cy.get('input[placeholder="Search Places ..."]')
+        .type("Toronto")
+        .contains("Toronto, ON, Canada")
+        .click()
 
       cy.get('[data-testId="profile-save"]').click("topLeft", { force: true })
 

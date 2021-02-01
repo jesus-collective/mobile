@@ -926,6 +926,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               <View style={this.styles.style.myprofilePickerContainer}>
                 <View style={this.styles.style.myprofilePickerContainerView}>
                   <Picker
+                    testID="profile-interest-picker"
                     style={this.styles.style.myprofilePicker}
                     onValueChange={(itemValue) => this.setState({ interest: itemValue })}
                     selectedValue={this.state.interest}
@@ -936,6 +937,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                     })}
                   </Picker>
                   <JCButton
+                    data-testid="profile-interest-button"
                     buttonType={ButtonTypes.SolidAboutMe}
                     onPress={() => this.handleAddInterest()}
                   >
@@ -1167,6 +1169,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                     {this.state.isEditable && this.state.editMode ? (
                       <View style={this.styles.style.myProfileOrgView}>
                         <Picker
+                          testID="profile-orgType"
                           style={this.styles.style.myprofilePicker}
                           onValueChange={(itemValue) => {
                             this.handleInputChange(itemValue, "orgType")
@@ -1225,6 +1228,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                           How many employees are there in the organization?
                         </Label>
                         <Picker
+                          testID="profile-orgSize"
                           style={this.styles.style.myprofilePicker}
                           onValueChange={(itemValue) => {
                             this.handleInputChange(itemValue, "orgSize")
@@ -1618,7 +1622,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               billing concerns.
             </Label>
           </View>
-          <View style={{ marginTop: 40, width:"100%" }}>
+          <View style={{ marginTop: 40, width: "100%" }}>
             <Label
               style={{
                 ...this.styles.style.fontFormSmallDarkGrey,
@@ -1627,34 +1631,37 @@ class MyProfileImpl extends JCComponent<Props, State> {
             >
               Invoices
             </Label>
-            {this.state.invoices ? 
-            <>
-              <View style={{flex:1, flexDirection:"row"}}>
-                <Text style={{flex:1}}>Invoice Number</Text>
-                <Text style={{flex:1}}>Transaction Date</Text>
-                <Text style={{flex:1}}>Status</Text>
-                <Text style={{flex:1}}>Amount</Text>
-              </View>
-              {this.state.invoices.map((item, index) => {
-                return (
-                  <View style={{ flex:1,flexDirection: "row"}}>
-                    <Text style={{flex:1}}>
-                      {item?.invoice_pdf ? (
-                        <a href={item?.invoice_pdf}>{item?.number}</a>
-                      ) : (
-                        item?.invoice_pdf
-                      )}
-                    </Text>
-                    <Text style={{flex:1}}>{moment.unix(parseInt(item?.created ?? "0")).format("MM/DD/YYYY")}</Text>
-                    <Text style={{flex:1}} >{item?.status}</Text>
-                    <Text style={{flex:1}}>
-                      {"$" + parseInt(item?.total ?? "0").toFixed(2)} {item?.currency?.toUpperCase()}
-                    </Text>
-                  </View>
-                )
-              })}
+            {this.state.invoices ? (
+              <>
+                <View style={{ flex: 1, flexDirection: "row" }}>
+                  <Text style={{ flex: 1 }}>Invoice Number</Text>
+                  <Text style={{ flex: 1 }}>Transaction Date</Text>
+                  <Text style={{ flex: 1 }}>Status</Text>
+                  <Text style={{ flex: 1 }}>Amount</Text>
+                </View>
+                {this.state.invoices.map((item, index) => {
+                  return (
+                    <View style={{ flex: 1, flexDirection: "row" }}>
+                      <Text style={{ flex: 1 }}>
+                        {item?.invoice_pdf ? (
+                          <a href={item?.invoice_pdf}>{item?.number}</a>
+                        ) : (
+                          item?.invoice_pdf
+                        )}
+                      </Text>
+                      <Text style={{ flex: 1 }}>
+                        {moment.unix(parseInt(item?.created ?? "0")).format("MM/DD/YYYY")}
+                      </Text>
+                      <Text style={{ flex: 1 }}>{item?.status}</Text>
+                      <Text style={{ flex: 1 }}>
+                        {"$" + parseInt(item?.total ?? "0").toFixed(2)}{" "}
+                        {item?.currency?.toUpperCase()}
+                      </Text>
+                    </View>
+                  )
+                })}
               </>
-             : (
+            ) : (
               <View>
                 <Text>Loading Invoices</Text>
                 <ActivityIndicator />

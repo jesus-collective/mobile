@@ -2454,7 +2454,7 @@ export default class MainStyles {
           : { position: "absolute", width: "100%", height: "100%", left: 0, top: 0 },
       signUpScreen1PaymentColumn1:
         Platform.OS === "web" && Dimensions.get("window").width > 720
-          ? { position: "absolute", left: "7.5%", width: "100%", top: '50vh', height: "100%" }
+          ? { position: "absolute", left: "7.5%", width: "100%", top: "50vh", height: "100%" }
           : { marginLeft: 20, marginRight: 20 },
       signUpScreen1PaymentColumn2:
         Platform.OS === "web" && Dimensions.get("window").width > 720
