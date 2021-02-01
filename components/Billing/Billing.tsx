@@ -597,9 +597,7 @@ class BillingImpl extends JCComponent<Props, State> {
               return this.state.processing === "complete" ? (
                 <Content>
                   <View style={this.styles.style.signUpScreen1PaymentColumn1}>
-                    <View style={{ alignSelf: "center", width: "auto" }}>
-                      
-                    </View>
+                    <View style={{ alignSelf: "center", width: "auto" }}></View>
                     <Text
                       style={{
                         fontFamily: "Graphik-Semibold-App",
@@ -1142,6 +1140,7 @@ let env = "unknown"
 if (window.location === undefined) env = "mobile"
 else if (window.location.hostname === "localhost") env = "dev"
 else if (window.location.hostname.includes("beta")) env = "beta"
+else if (window.location.hostname.includes("dev")) env = "dev"
 else env = "prod"
 
 export default function Billing(props: Props): JSX.Element {

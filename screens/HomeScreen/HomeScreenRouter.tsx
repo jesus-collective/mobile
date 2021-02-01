@@ -17,6 +17,7 @@ import {
   CreateUserInput,
 } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
+import { constants } from "../../src/constants"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
 import MainAuthRouter from "./MainAuthRouter"
@@ -356,7 +357,7 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
                   screen: "mainDrawer",
                   params: {
                     screen: "ResourceScreen",
-                    params: { create: false, id: "resource-1611326161952" },
+                    params: { create: false, id: constants["SETTING_KY_GROUP_ID"] },
                   },
                 })
               else RootNavigation.navigate("mainApp", {})

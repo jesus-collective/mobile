@@ -71,8 +71,8 @@ export default class FooterJC extends JCComponent<Props> {
             {
               name: "Kids & Youth",
               linkTo: "ResourceScreen",
-              navProps: { create: false, id: "resource-1611326161952" },
-              webLink: `${window.location.origin}/app/resource?create=false&id=resource-1611326161952`,
+              navProps: { create: false, id: constants["SETTING_KY_GROUP_ID"] },
+              webLink: `${window.location.origin}/app/resource?create=false&id=${constants["SETTING_KY_GROUP_ID"]}`,
             },
             { name: "Training", linkTo: null },
             { name: "Adult Teaching", linkTo: null },

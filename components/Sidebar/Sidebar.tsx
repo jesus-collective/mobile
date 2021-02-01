@@ -2,8 +2,8 @@ import { Entypo } from "@expo/vector-icons"
 import { Container, Content, Header, List, ListItem } from "native-base"
 import * as React from "react"
 import { Text } from "react-native"
+import { constants } from "../../src/constants"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
-
 const routes = [
   {
     name: "Home",
@@ -37,7 +37,7 @@ const resourceRoutes = [
   {
     name: "Kids & Youth Curriculum",
     route: "ResourceScreen",
-    props: { create: false, id: "resource-1611326161952" },
+    props: { create: false, id: constants["SETTING_KY_GROUP_ID"] },
   },
 ]
 

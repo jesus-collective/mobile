@@ -1,3 +1,9 @@
+let env
+if (window.location === undefined) env = "mobile"
+else if (window.location.hostname === "localhost") env = "dev"
+else if (window.location.hostname.includes("beta")) env = "beta"
+else if (window.location.hostname.includes("dev")) env = "dev"
+else env = "prod"
 export const constants =
 {
     SETTING_ISVISIBLE_course: true,
@@ -25,6 +31,7 @@ export const constants =
     SETTING_ISVISIBLE_SHOWMYFILTER: true,
     SETTING_ISVISIBLE_SHOWEVENTFILTER: true,
     SETTING_ISVISIBLE_ADMIN: true,
-    SETTING_ISVISIBLE_MEMBER_COUNT: false
-
+    SETTING_ISVISIBLE_MEMBER_COUNT: false,
+   
+    SETTING_KY_GROUP_ID:(env=="beta")?"resource-1611326161952":"resource-1608148143731"
 }
