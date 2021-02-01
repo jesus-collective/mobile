@@ -71,13 +71,15 @@ export default class HandleStripePayment {
             invoiceId,
             priceItems,
           },
-          handleComplete
+          handleComplete,
+          handleError
         )
       } else {
         // Create the subscription
         this.createSubscription(
           { stripe, paymentMethodId, priceItems, idempotency, freeDays },
-          handleComplete
+          handleComplete,
+          handleError
         )
       }
     }
@@ -91,22 +93,22 @@ export default class HandleStripePayment {
     priceItems: PriceItems
     paymentMethodId: string | undefined
   }) {
-    if (subscription.status === "active" || subscription.status === "trialing") {
-      // subscription is active, no customer actions required.
-      return { subscription, priceItems, paymentMethodId }
-    } else if (subscription.latest_invoice.payment_intent.status === "requires_payment_method") {
-      // Using localStorage to manage the state of the retry here,
-      // feel free to replace with what you prefer.
-      // Store the latest invoice ID and status.
-      localStorage.setItem("latestInvoiceId", subscription.latest_invoice.id)
-      localStorage.setItem(
-        "latestInvoicePaymentIntentStatus",
-        subscription.latest_invoice.payment_intent.status
-      )
-      throw { error: { message: "Your card was declined." } }
-    } else {
-      return { subscription, priceItems, paymentMethodId }
-    }
+      if (subscription.status === "active" || subscription.status === "trialing") {
+        // subscription is active, no customer actions required.
+        return { subscription, priceItems, paymentMethodId }
+      } else if (subscription.latest_invoice.payment_intent.status === "requires_payment_method") {
+        // Using localStorage to manage the state of the retry here,
+        // feel free to replace with what you prefer.
+        // Store the latest invoice ID and status.
+        localStorage.setItem("latestInvoiceId", subscription.latest_invoice.id)
+        localStorage.setItem(
+          "latestInvoicePaymentIntentStatus",
+          subscription.latest_invoice.payment_intent.status
+        )
+        throw { error: { message: "Your card was declined." } }
+      } else {
+        return { subscription, priceItems, paymentMethodId }
+      }
   }
   retryInvoiceWithNewPaymentMethod(
     {
@@ -120,7 +122,8 @@ export default class HandleStripePayment {
       priceItems: PriceItems
       paymentMethodId: string | undefined
     },
-    handleComplete: () => void
+    handleComplete: () => void,
+    handleError: (error: Error | StripeError) => void
   ) {
     return (
       fetch("/retry-invoice", {
@@ -139,6 +142,7 @@ export default class HandleStripePayment {
         // If the card is declined, display an error to the user.
         .then((result) => {
           if (result.error) {
+            handleError(result?.error ?? {message:"Something went wrong."})
             // The card had an error when trying to attach it to a customer.
             throw result
           }
@@ -160,7 +164,7 @@ export default class HandleStripePayment {
         // Some payment methods require a customer to be on session
         // to complete the payment process. Check the status of the
         // payment intent to handle these actions.
-        .then(this.handlePaymentThatRequiresCustomerAction)
+        .then((result) => this.handlePaymentThatRequiresCustomerAction({...result, handleError}))
         // No more actions required. Provision your service for the user.
         .then((result) => this.onSubscriptionComplete(result, handleComplete))
         .catch((error) => {
@@ -187,7 +191,8 @@ export default class HandleStripePayment {
       idempotency: string
       freeDays: number
     },
-    handleComplete: () => void
+    handleComplete: () => void,
+    handleError: (error :any) => void
   ) {
     return (
       (API.graphql({
@@ -207,6 +212,7 @@ export default class HandleStripePayment {
         .then((result) => {
           if (result.errors) {
             // The card had an error when trying to attach it to a customer.
+            handleError(result?.error ?? {message:"Something went wrong."})
             throw result
           }
           return result
@@ -225,11 +231,11 @@ export default class HandleStripePayment {
         // Some payment methods require a customer to be on session
         // to complete the payment process. Check the status of the
         // payment intent to handle these actions.
-        .then(this.handlePaymentThatRequiresCustomerAction)
+        .then((result) => this.handlePaymentThatRequiresCustomerAction({...result, handleError}))
         // If attaching this card to a Customer object succeeds,
         // but attempts to charge the customer fail, you
         // get a requires_payment_method error.
-        .then(this.handleRequiresPaymentMethod)
+        .then((result) =>this.handleRequiresPaymentMethod({...result}))
         // No more actions required. Provision your service for the user.
         .then((result) => this.onSubscriptionComplete(result, handleComplete))
         .catch((error: any) => {
@@ -262,14 +268,16 @@ export default class HandleStripePayment {
     priceItems,
     paymentMethodId,
     isRetry,
+    handleError
   }: {
     subscription: Subscription
     stripe: Stripe
     priceItems: PriceItems
     paymentMethodId: string | undefined
     isRetry: boolean
+    handleError: (error:Error | StripeError) => void
   }) {
-    if ((subscription && subscription.status === "active") || subscription.status === "trialing") {
+    if ((subscription && subscription.status === "active") || (subscription && subscription.status === "trialing")) {
       // Subscription is active, no customer actions required.
       return { subscription, priceItems, paymentMethodId }
     }
@@ -279,8 +287,11 @@ export default class HandleStripePayment {
     // If it's a retry, the payment intent will be on the invoice itself.
     let paymentIntent = invoice
       ? invoice.payment_intent
-      : subscription.latest_invoice.payment_intent
-
+      : subscription?.latest_invoice?.payment_intent
+    if(!paymentIntent?.status){
+      handleError({message:"Something went wrong. Please verify your payment information and try again."} as StripeError);
+      return;
+    }
     console.log(paymentIntent.status)
     if (
       paymentIntent.status === "requires_action" ||
@@ -292,6 +303,7 @@ export default class HandleStripePayment {
         })
         .then((result) => {
           if (result.error) {
+            handleError(result?.error ?? {message:"Something went wrong."})
             // Start code flow to handle updating the payment details.
             // Display error message in your UI.
             // The card was declined (i.e. insufficient funds, card has expired, etc).
@@ -311,6 +323,7 @@ export default class HandleStripePayment {
           }
         })
         .catch((error: any) => {
+          handleError(error ?? {message:"Something went wrong."})
           this.displayError(error)
         })
     } else {

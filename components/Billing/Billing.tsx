@@ -658,7 +658,7 @@ class BillingImpl extends JCComponent<Props, State> {
                             marginBottom: 8,
                           }}
                         >
-                          Please wait while we process your payment. This may takes several seconds.
+                          Please wait while we process your payment. This may take several seconds.
                         </Text>
                         <ActivityIndicator />
                       </View>
