@@ -9,6 +9,7 @@ import {
   ElementsConsumer,
 } from "@stripe/react-stripe-js"
 import { loadStripe, Stripe, StripeElements } from "@stripe/stripe-js"
+import { Mutex } from "async-mutex"
 import Amplify, { API, Auth, graphqlOperation } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { Body, Card, CardItem, Content, Label } from "native-base"
@@ -32,7 +33,7 @@ import "./CardSectionStyles.css"
 import EULA from "./eula.json"
 import HandleStripePayment from "./HandleStripePayment"
 Amplify.configure(awsConfig)
-
+const handleInputMutex = new Mutex()
 const CARD_ELEMENT_OPTIONS = {
   style: {
     base: {
@@ -141,8 +142,8 @@ class BillingImpl extends JCComponent<Props, State> {
                   Array(listProducts.data.listProducts.items[0]?.tiered?.length).fill(1),
                 ],
               },
-              () => {
-                this.createInvoice()
+              async () => {
+                await this.createInvoice()
               }
             )
             console.log(listProducts.data.listProducts.items[0])
@@ -191,9 +192,9 @@ class BillingImpl extends JCComponent<Props, State> {
     }
   }
   getPriceItems() {
-    let priceItems = this.state.currentProduct
+    const priceItems = this.state.currentProduct
       ?.map((item, index: number) => {
-        let priceItems2 = item?.tiered?.map((item2, index2: number) => {
+        const priceItems2 = item?.tiered?.map((item2, index2: number) => {
           return {
             price: item2?.stripePaymentID,
             quantity: this.state.quantities[index][index2],
@@ -206,7 +207,7 @@ class BillingImpl extends JCComponent<Props, State> {
     return priceItems?.filter((x) => x != undefined && x.quantity > 0)
   }
   async createInvoice() {
-    let priceItems = this.getPriceItems()
+    const priceItems = this.getPriceItems()
 
     try {
       const invoice: any = await API.graphql({
@@ -235,8 +236,8 @@ class BillingImpl extends JCComponent<Props, State> {
           quantities: [Array(product?.tiered?.length).fill(1)],
           invoice: null,
         },
-        () => {
-          this.createInvoice()
+        async () => {
+          await this.createInvoice()
         }
       )
   }
@@ -303,7 +304,7 @@ class BillingImpl extends JCComponent<Props, State> {
   async makePayment(stripe: Stripe | null, elements: StripeElements | null): Promise<void> {
     this.setState({ processing: "processing" }, async () => {
       await this.createStripeUser()
-      let priceItems = this.getPriceItems()
+      const priceItems = this.getPriceItems()
       try {
         if (stripe && elements) {
           console.log(this.state.freeDays)
@@ -339,8 +340,8 @@ class BillingImpl extends JCComponent<Props, State> {
         quantities: temp2,
         invoice: null,
       },
-      () => {
-        this.createInvoice()
+      async () => {
+        await this.createInvoice()
       }
     )
   }
@@ -352,8 +353,8 @@ class BillingImpl extends JCComponent<Props, State> {
         quantities: temp,
         invoice: null,
       },
-      () => {
-        this.createInvoice()
+      async () => {
+        await this.createInvoice()
       }
     )
   }
@@ -434,7 +435,7 @@ class BillingImpl extends JCComponent<Props, State> {
               <EditableText
                 placeholder="Quantity"
                 multiline={false}
-                data-testid="course-weekTitle"
+                testID="course-weekTitle"
                 textStyle={this.styles.style.fontFormSmallDarkGreyCourseTopEditable}
                 inputStyle={{
                   borderWidth: 1,
@@ -521,9 +522,10 @@ class BillingImpl extends JCComponent<Props, State> {
       })
     }, 60000)
   }
+
   async handleInputChange(value: string, field: string) {
-    console.log({ field: value })
-    console.log(this.state.userData)
+    const release = await handleInputMutex.acquire()
+
     try {
       if (this.state.userData && this.state.userData.billingAddress == null) {
         const user = (await API.graphql(
@@ -541,11 +543,12 @@ class BillingImpl extends JCComponent<Props, State> {
             },
           })
         )) as GraphQLResult<UpdateUserMutation>
-        this.setState({ userData: user.data.updateUser }, async () => {
-          await this.handleInputChange(value, field)
-        })
+        if (user.data)
+          this.setState({ userData: user.data.updateUser }, async () => {
+            await this.handleInputChange(value, field)
+          })
       } else {
-        let temp = this.state.userData
+        const temp = this.state.userData
 
         temp.billingAddress[field] = value
         const user = await API.graphql(
@@ -561,6 +564,8 @@ class BillingImpl extends JCComponent<Props, State> {
     } catch (e) {
       Sentry.captureException(e.errors || e)
       console.log({ errorUpdating: e })
+    } finally {
+      release()
     }
   }
   isMakePaymentEnabled(): boolean {
@@ -613,10 +618,10 @@ class BillingImpl extends JCComponent<Props, State> {
                       marginBottom: 20,
                     }}
                   >
-                    We've received your payment.
+                    We&apos;ve received your payment.
                     <br />
                     <JCButton
-                      data-testid={"billing-continueToProfile-button"}
+                      testID={"billing-continueToProfile-button"}
                       onPress={() => {
                         this.completePaymentProcess(userActions, userState)
                       }}
@@ -726,11 +731,11 @@ class BillingImpl extends JCComponent<Props, State> {
                           </Label>
 
                           <EditableText
-                            onChange={(e) => {
-                              this.handleInputChange(e, "line1")
+                            onChange={async (e) => {
+                              await this.handleInputChange(e, "line1")
                             }}
                             multiline={false}
-                            data-testid="billing-line1"
+                            testID="billing-line1"
                             textStyle={this.styles.style.fontFormSmallDarkGrey}
                             inputStyle={{
                               borderWidth: 1,
@@ -757,11 +762,11 @@ class BillingImpl extends JCComponent<Props, State> {
                           </Label>
 
                           <EditableText
-                            onChange={(e) => {
-                              this.handleInputChange(e, "line2")
+                            onChange={async (e) => {
+                              await this.handleInputChange(e, "line2")
                             }}
                             multiline={false}
-                            data-testid="billing-line2"
+                            testID="billing-line2"
                             textStyle={this.styles.style.fontFormSmallDarkGrey}
                             inputStyle={{
                               borderWidth: 1,
@@ -798,11 +803,11 @@ class BillingImpl extends JCComponent<Props, State> {
                           </Label>
 
                           <EditableText
-                            onChange={(e) => {
-                              this.handleInputChange(e, "city")
+                            onChange={async (e) => {
+                              await this.handleInputChange(e, "city")
                             }}
                             multiline={false}
-                            data-testid="billing-city"
+                            testID="billing-city"
                             textStyle={this.styles.style.fontFormSmallDarkGrey}
                             inputStyle={{
                               borderWidth: 1,
@@ -839,11 +844,11 @@ class BillingImpl extends JCComponent<Props, State> {
                           </Label>
 
                           <EditableText
-                            onChange={(e) => {
-                              this.handleInputChange(e, "state")
+                            onChange={async (e) => {
+                              await this.handleInputChange(e, "state")
                             }}
                             multiline={false}
-                            data-testid="billing-state"
+                            testID="billing-state"
                             textStyle={this.styles.style.fontFormSmallDarkGrey}
                             inputStyle={{
                               borderWidth: 1,
@@ -880,11 +885,11 @@ class BillingImpl extends JCComponent<Props, State> {
                           </Label>
 
                           <EditableText
-                            onChange={(e) => {
-                              this.handleInputChange(e, "country")
+                            onChange={async (e) => {
+                              await this.handleInputChange(e, "country")
                             }}
                             multiline={false}
-                            data-testid="billing-country"
+                            testID="billing-country"
                             textStyle={this.styles.style.fontFormSmallDarkGrey}
                             inputStyle={{
                               borderWidth: 1,
@@ -921,11 +926,11 @@ class BillingImpl extends JCComponent<Props, State> {
                           </Label>
 
                           <EditableText
-                            onChange={(e) => {
-                              this.handleInputChange(e, "postal_code")
+                            onChange={async (e) => {
+                              await this.handleInputChange(e, "postal_code")
                             }}
                             multiline={false}
-                            data-testid="billing-postalcode"
+                            testID="billing-postalcode"
                             textStyle={this.styles.style.fontFormSmallDarkGrey}
                             inputStyle={{
                               borderWidth: 1,
@@ -1114,13 +1119,13 @@ class BillingImpl extends JCComponent<Props, State> {
                         {this.state.errorMsg}
                       </Text>
                       <JCButton
-                        data-testid={"billing-processPayment-button"}
+                        testID={"billing-processPayment-button"}
                         buttonType={ButtonTypes.Solid}
                         onPress={() => {
                           this.setState({ errorMsg: "" })
                           this.makePayment(stripe, elements)
                         }}
-                        enabled={!!this.state.invoice && this.isMakePaymentEnabled()}
+                        enabled={this.isMakePaymentEnabled() && !!this.state.invoice}
                       >
                         Process Payment
                       </JCButton>

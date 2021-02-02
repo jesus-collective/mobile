@@ -36,6 +36,7 @@
     "@stripe/stripe-js": "^1.11.0",
     "@zoomus/websdk": "^1.7.8",
     "asset": "^0.4.13",
+    "async-mutex": "^0.2.6",
     "aws-amplify": "^3.0.24",
     "aws-amplify-react-native": "^4.2.5",
     "babel-preset-expo": "8.3.0",
