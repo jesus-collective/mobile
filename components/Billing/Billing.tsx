@@ -596,9 +596,7 @@ class BillingImpl extends JCComponent<Props, State> {
             {({ userState, userActions }) => {
               if (!userState) return null
               return this.state.processing === "complete" ? (
-                <Content>
-                  <View style={this.styles.style.signUpScreen1PaymentColumn1}>
-                    <View style={{ alignSelf: "center", width: "auto" }}></View>
+                <Content style={this.styles.style.signUpScreen1PaymentColumn1}>
                     <Text
                       style={{
                         fontFamily: "Graphik-Semibold-App",
@@ -632,13 +630,12 @@ class BillingImpl extends JCComponent<Props, State> {
                     <Text style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
                       {this.state.errorMsg}
                     </Text>
-                  </View>
+      
                 </Content>
               ) : (
                 <>
                   {this.state.processing == "processing" ? (
-                    <Content>
-                      <View style={this.styles.style.signUpScreen1PaymentColumn1}>
+                    <Content style={this.styles.style.signUpScreen1PaymentColumn1}>
                         <Text
                           style={{
                             fontFamily: "Graphik-Bold-App",
@@ -664,16 +661,13 @@ class BillingImpl extends JCComponent<Props, State> {
                           Please wait while we process your payment. This may take several seconds.
                         </Text>
                         <ActivityIndicator />
-                      </View>
                     </Content>
                   ) : null}
 
                   <Content
-                    style={{
-                      display: this.state.processing == "entry" ? "flex" : "none",
-                    }}
+                    style={{display: this.state.processing == "entry" ? "flex" : "none"}}
                   >
-                    <View style={this.styles.style.signUpScreen1PaymentColumn1}>
+                    <View style={this.styles.style.signUpScreen1PaymentColumn1Form}>
                       {this.state.productType == "OneStory" && (
                         <Text>
                           You are in the right place to sign up for One Story Curriculum! One Story
