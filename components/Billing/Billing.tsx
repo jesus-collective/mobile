@@ -13,7 +13,7 @@ import Amplify, { API, Auth, graphqlOperation } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { Body, Card, CardItem, Content, Label } from "native-base"
 import React, { useState } from "react"
-import { ActivityIndicator, Picker, Text, TouchableOpacity, View, Image } from "react-native"
+import { ActivityIndicator, Image, Picker, Text, TouchableOpacity, View } from "react-native"
 import { v4 as uuidv4 } from "uuid"
 import EditableRichText from "../../components/Forms/EditableRichText"
 import EditableText from "../../components/Forms/EditableText"
@@ -23,7 +23,7 @@ import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
 import Sentry from "../../components/Sentry"
 import { UserActions, UserContext, UserState } from "../../screens/HomeScreen/UserContext"
-import { GetUserQuery, ListProductsQuery } from "../../src/API"
+import { GetUserQuery, ListProductsQuery, UpdateUserMutation } from "../../src/API"
 import awsConfig from "../../src/aws-exports"
 import * as customMutations from "../../src/graphql-custom/mutations"
 import * as mutations from "../../src/graphql/mutations"
@@ -67,7 +67,7 @@ interface State extends JCState {
   idempotency: string
   eula: boolean
   showEULA: boolean
-  errorMsg: string
+  errorMsg: string | undefined
   quantities: number[][]
   invoice: any
   processing: "entry" | "processing" | "complete"
@@ -526,7 +526,7 @@ class BillingImpl extends JCComponent<Props, State> {
     console.log(this.state.userData)
     try {
       if (this.state.userData && this.state.userData.billingAddress == null) {
-        const user = await API.graphql(
+        const user = (await API.graphql(
           graphqlOperation(mutations.updateUser, {
             input: {
               id: this.state.userData.id,
@@ -540,7 +540,7 @@ class BillingImpl extends JCComponent<Props, State> {
               },
             },
           })
-        )
+        )) as GraphQLResult<UpdateUserMutation>
         this.setState({ userData: user.data.updateUser }, async () => {
           await this.handleInputChange(value, field)
         })
@@ -596,82 +596,79 @@ class BillingImpl extends JCComponent<Props, State> {
             {({ userState, userActions }) => {
               if (!userState) return null
               return this.state.processing === "complete" ? (
-
                 <Content style={this.styles.style.signUpScreen1PaymentColumn1}>
-                     <Image
-                      style={{ alignSelf: 'center', marginBottom: 20 }}
-                        source={require("../../assets/svg/checkmark-circle.svg")}/>
+                  <Image
+                    style={{ alignSelf: "center", marginBottom: 20 }}
+                    source={require("../../assets/svg/checkmark-circle.svg")}
+                  />
 
-                    <Text
-                      style={{
-                        fontFamily: "Graphik-Semibold-App",
-                        alignSelf: "center",
-                        fontSize: 42,
-                        lineHeight: 51,
-                        textAlign: "center",
-                        width: "100%",
-                        marginBottom: 20,
+                  <Text
+                    style={{
+                      fontFamily: "Graphik-Semibold-App",
+                      alignSelf: "center",
+                      fontSize: 42,
+                      lineHeight: 51,
+                      textAlign: "center",
+                      width: "100%",
+                      marginBottom: 20,
+                    }}
+                  >
+                    We've received your payment.
+                    <br />
+                    <JCButton
+                      data-testid={"billing-continueToProfile-button"}
+                      onPress={() => {
+                        this.completePaymentProcess(userActions, userState)
                       }}
+                      buttonType={ButtonTypes.Solid}
+                      enabled={!this.state.validatingUser}
                     >
-                      We've received your payment.
-                      <br />
-                      <JCButton
-                        data-testid={"billing-continueToProfile-button"}
-                        onPress={() => {
-                          this.completePaymentProcess(userActions, userState)
-                        }}
-                        buttonType={ButtonTypes.Solid}
-                        enabled={!this.state.validatingUser}
-                      >
-                        {this.state.validatingUser ? (
-                          <View style={{ flexDirection: "column", width: 177.7, top: 4 }}>
-                            <ActivityIndicator color="white"></ActivityIndicator>
-                          </View>
-                        ) : (
-                          "Continue to your profile"
-                        )}
-                      </JCButton>
-                    </Text>
-                    <Text style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
-                      {this.state.errorMsg}
-                    </Text>
-      
+                      {this.state.validatingUser ? (
+                        <View style={{ flexDirection: "column", width: 177.7, top: 4 }}>
+                          <ActivityIndicator color="white"></ActivityIndicator>
+                        </View>
+                      ) : (
+                        "Continue to your profile"
+                      )}
+                    </JCButton>
+                  </Text>
+                  <Text style={{ textAlign: "center", color: "red", fontWeight: "bold" }}>
+                    {this.state.errorMsg}
+                  </Text>
                 </Content>
               ) : (
                 <>
                   {this.state.processing == "processing" ? (
                     <Content style={this.styles.style.signUpScreen1PaymentColumn1}>
-                        <Text
-                          style={{
-                            fontFamily: "Graphik-Bold-App",
-                            alignSelf: "center",
-                            fontSize: 42,
-                            lineHeight: 51,
-                            textAlign: "center",
-                            width: "100%",
-                            marginBottom: 20,
-                          }}
-                        >
-                          Processing Payment
-                        </Text>
-                        <Text
-                          style={{
-                            fontFamily: "Graphik-Bold-App",
-                            textAlign: "center",
-                            width: "100%",
-                            fontSize: 12,
-                            marginBottom: 8,
-                          }}
-                        >
-                          Please wait while we process your payment. This may take several seconds.
-                        </Text>
-                        <ActivityIndicator />
+                      <Text
+                        style={{
+                          fontFamily: "Graphik-Bold-App",
+                          alignSelf: "center",
+                          fontSize: 42,
+                          lineHeight: 51,
+                          textAlign: "center",
+                          width: "100%",
+                          marginBottom: 20,
+                        }}
+                      >
+                        Processing Payment
+                      </Text>
+                      <Text
+                        style={{
+                          fontFamily: "Graphik-Bold-App",
+                          textAlign: "center",
+                          width: "100%",
+                          fontSize: 12,
+                          marginBottom: 8,
+                        }}
+                      >
+                        Please wait while we process your payment. This may take several seconds.
+                      </Text>
+                      <ActivityIndicator />
                     </Content>
                   ) : null}
 
-                  <Content
-                    style={{display: this.state.processing == "entry" ? "flex" : "none"}}
-                  >
+                  <Content style={{ display: this.state.processing == "entry" ? "flex" : "none" }}>
                     <View style={this.styles.style.signUpScreen1PaymentColumn1Form}>
                       {this.state.productType == "OneStory" && (
                         <Text>
