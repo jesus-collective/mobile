@@ -86,7 +86,7 @@ describe("Login Page Test", () => {
         .select("1-25", { force: true })
         .get('[data-testId="profile-orgDescription"]')
         .type("We make things", { force: true })
-
+      /*
       cy.get('[data-testId="profile-interest-picker"]').select("Equipping")
       cy.get('[data-testId="profile-interest-button"]').click()
       const fileName = "test.jpeg"
@@ -97,7 +97,7 @@ describe("Login Page Test", () => {
           mimeType: "image/jpeg",
         })
       })
-      /*
+      
       cy.get('input[placeholder="Search Places ..."]')
         .type("Toronto")
         .contains("Toronto, ON, Canada")
