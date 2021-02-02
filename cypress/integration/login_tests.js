@@ -6,7 +6,7 @@ const user = "george.bell@jesuscollective.com" //George
 //const user = "test2@jesuscollective.com" //Mateus
 //const user = "test3@jesuscollective.com" //Igor
 
-describe("Login Page Test", () => {
+describe("Create User Flow Test", () => {
   sizes.forEach((size) => {
     it("Visits the Login Page - " + size, () => {
       if (Cypress._.isArray(size)) {
