@@ -63,7 +63,7 @@ export interface Props {
   onPress(): any
   children: any
   buttonType: ButtonTypes
-  "data-testid"?: any
+  testID?: any
 }
 class JCButton extends JCComponent<Props> {
   static defaultProps = {
@@ -79,8 +79,7 @@ class JCButton extends JCComponent<Props> {
     return (
       <Button
         disabled={!this.props.enabled}
-        testID={this.props["data-testid"]}
-        data-testid={this.props["data-testid"]}
+        testID={this.props.testID + "-" + this.props.enabled}
         style={[
           styles[ButtonTypes[this.props.buttonType] + "Button"],
           !this.props.enabled ? styles[ButtonTypes[this.props.buttonType] + "ButtonDisabled"] : "",

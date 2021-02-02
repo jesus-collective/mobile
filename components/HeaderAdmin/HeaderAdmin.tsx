@@ -1,84 +1,79 @@
-import { Header, Left, Body, Right, Button } from 'native-base';
-import { DrawerActions } from '@react-navigation/native';
-
-import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
-import { Text, Dimensions } from 'react-native';
+import { DrawerActions } from "@react-navigation/native"
 //import styles from '../Header/style'
-import { Auth } from 'aws-amplify';
-import HeaderStyles from '../Header/style';
-import JCComponent from '../JCComponent/JCComponent';
+import { Auth } from "aws-amplify"
+import { Body, Button, Header } from "native-base"
+import React from "react"
+import { Dimensions, Text } from "react-native"
+import HeaderStyles from "../Header/style"
+import JCComponent from "../JCComponent/JCComponent"
 
 interface Props {
   navigation: any
-  title: string,
+  title: string
   onMapChange?(): any
 }
 
 export default class HeaderJC extends JCComponent<Props> {
-
   constructor(props: Props) {
-    super(props);
+    super(props)
   }
-  headerStyles = HeaderStyles.getInstance();
+  headerStyles = HeaderStyles.getInstance()
 
   updateStyles = (): void => {
     this.headerStyles.update()
-    this.forceUpdate();
-  };
+    this.forceUpdate()
+  }
   componentDidMount(): void {
-    Dimensions.addEventListener('change', this.updateStyles)
+    Dimensions.addEventListener("change", this.updateStyles)
   }
   componentWillUnmount(): void {
     // Important to stop updating state after unmount
-    Dimensions.removeEventListener("change", this.updateStyles);
+    Dimensions.removeEventListener("change", this.updateStyles)
   }
 
   openDrawer = (): void => {
-    this.props.navigation.dispatch(DrawerActions.openDrawer());
+    this.props.navigation.dispatch(DrawerActions.openDrawer())
   }
   openProfile = async (): Promise<void> => {
-    const user = await Auth.currentAuthenticatedUser();
-    this.props.navigation.push("ProfileScreen", { id: user['username'], create: false });
+    const user = await Auth.currentAuthenticatedUser()
+    this.props.navigation.push("ProfileScreen", { id: user["username"], create: false })
   }
   openAdmin = async (): Promise<void> => {
-    const user = await Auth.currentAuthenticatedUser();
-    this.props.navigation.push("AdminScreen", { id: user['username'], create: false });
+    const user = await Auth.currentAuthenticatedUser()
+    this.props.navigation.push("AdminScreen", { id: user["username"], create: false })
   }
   openAdminCRM = async (): Promise<void> => {
-    const user = await Auth.currentAuthenticatedUser();
-    this.props.navigation.push("AdminCRMScreen", { id: user['username'], create: false });
+    const user = await Auth.currentAuthenticatedUser()
+    this.props.navigation.push("AdminCRMScreen", { id: user["username"], create: false })
   }
   openProducts = async (): Promise<void> => {
-    const user = await Auth.currentAuthenticatedUser();
-    this.props.navigation.push("AdminCreateProductScreen", { id: user['username'], create: false });
+    const user = await Auth.currentAuthenticatedUser()
+    this.props.navigation.push("AdminCreateProductScreen", { id: user["username"], create: false })
   }
   openSearch = (): void => {
-    this.props.navigation.push("SearchScreen");
+    this.props.navigation.push("SearchScreen")
   }
   openEvents = (): void => {
-    this.props.navigation.push("EventsScreen");
+    this.props.navigation.push("EventsScreen")
   }
   openResources = (): void => {
-    this.props.navigation.push("ResourcesScreen");
+    this.props.navigation.push("ResourcesScreen")
   }
   openGroups = (): void => {
-    this.props.navigation.push("GroupsScreen");
+    this.props.navigation.push("GroupsScreen")
   }
   openHome = (): void => {
-    this.props.navigation.push("HomeScreen");
+    this.props.navigation.push("HomeScreen")
   }
   openCourses = (): void => {
-    this.props.navigation.push("CoursesScreen");
+    this.props.navigation.push("CoursesScreen")
   }
   showMap = (): void => {
-    if (this.props.onMapChange != null)
-      this.props.onMapChange()
+    if (this.props.onMapChange != null) this.props.onMapChange()
   }
   render(): React.ReactNode {
     //const { navigate } = this.props.navigation;
     return (
-
       <Header style={this.headerStyles.style.adminContainer}>
         {/* <Left>
           <Button style={this.headerStyles.style.leftButtonsSubNav}
@@ -90,41 +85,45 @@ export default class HeaderJC extends JCComponent<Props> {
         <Body style={this.styles.style.adminSubNav}>
           <Button
             transparent
-            data-testId="header-events"
+            testID="header-events"
             onPress={this.openAdmin}
-            style={this.headerStyles.style.centerMenuButtonsSubNav}>
+            style={this.headerStyles.style.centerMenuButtonsSubNav}
+          >
             <Text style={this.headerStyles.style.centerMenuButtonsText}>Admin</Text>
           </Button>
           <Button
             transparent
-            data-testid="header-events"
+            testID="header-events"
             onPress={this.openAdminCRM}
-            style={this.headerStyles.style.centerMenuButtonsSubNav}>
+            style={this.headerStyles.style.centerMenuButtonsSubNav}
+          >
             <Text style={this.headerStyles.style.centerMenuButtonsText}>CRM</Text>
           </Button>
-        
+
           <Button
             transparent
-            data-testid="header-events"
+            testID="header-events"
             onPress={this.openProducts}
-            style={this.headerStyles.style.centerMenuButtonsSubNav}>
+            style={this.headerStyles.style.centerMenuButtonsSubNav}
+          >
             <Text style={this.headerStyles.style.centerMenuButtonsText}>Products</Text>
           </Button>
           <Button
             transparent
-            data-testId="header-events"
+            testID="header-events"
             onPress={this.openEvents}
-            style={this.headerStyles.style.centerMenuButtonsSubNav}>
+            style={this.headerStyles.style.centerMenuButtonsSubNav}
+          >
             <Text style={this.headerStyles.style.centerMenuButtonsText}>Stats</Text>
           </Button>
           <Button
             transparent
-            data-testId="header-events"
+            testID="header-events"
             onPress={this.openEvents}
-            style={this.headerStyles.style.centerMenuButtonsSubNav}>
+            style={this.headerStyles.style.centerMenuButtonsSubNav}
+          >
             <Text style={this.headerStyles.style.centerMenuButtonsText}>Config</Text>
           </Button>
-
         </Body>
         {/* <Right>
 

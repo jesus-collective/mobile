@@ -569,7 +569,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 {this.state.editMode ? (
                   <JCButton
                     enabled={this.state.dirty}
-                    data-testid="profile-save"
+                    testID="profile-save"
                     buttonType={ButtonTypes.SolidRightMargin}
                     onPress={() => {
                       this.finalizeProfile()
@@ -628,7 +628,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                   Set Profile Picture
                 </JCButton>
                 <input
-                  data-testid="profile-image"
+                  data-testId="profile-image"
                   style={{
                     cursor: "pointer",
                     fontSize: 200,
@@ -668,7 +668,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               placeholderTextColor="#757575"
               textStyle={this.styles.style.fontFormSmallDarkGrey}
               inputStyle={this.styles.style.fontFormAboutMe}
-              data-testid="profile-aboutMeShort"
+              testID="profile-aboutMeShort"
               value={this.state.UserDetails.aboutMeShort ?? ""}
               isEditable={this.state.isEditable && this.state.editMode}
             ></EditableText>
@@ -736,7 +736,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 }}
               >
                 <JCButton
-                  data-testid="profile-setmap"
+                  testID="profile-setmap"
                   buttonType={ButtonTypes.TransparentBoldBlackNoMargin}
                   onPress={() => {
                     this.props.navigation.push("ConversationScreen", {
@@ -762,7 +762,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 }}
               >
                 <JCButton
-                  data-testid="profile-setmap"
+                  testID="profile-setmap"
                   buttonType={ButtonTypes.TransparentBoldBlackNoMargin}
                   onPress={() =>
                     this.setState({
@@ -788,7 +788,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 }}
               >
                 <JCButton
-                  data-testid="profile-setmap"
+                  testID="profile-setmap"
                   buttonType={ButtonTypes.TransparentBoldBlackNoMargin}
                   onPress={() =>
                     this.setState(
@@ -817,7 +817,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 }}
               >
                 <JCButton
-                  data-testid="profile-setmap"
+                  testID="profile-setmap"
                   buttonType={ButtonTypes.TransparentBoldBlackNoMargin}
                   onPress={() =>
                     this.setState({
@@ -891,7 +891,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
             }}
             placeholder="type here"
             multiline={true}
-            data-testid="profile-aboutMeLong"
+            testID="profile-aboutMeLong"
             textStyle={this.styles.style.fontFormSmallDarkGrey}
             inputStyle={{
               borderWidth: 1,
@@ -937,7 +937,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                     })}
                   </Picker>
                   <JCButton
-                    data-testid="profile-interest-button"
+                    testID="profile-interest-button"
                     buttonType={ButtonTypes.SolidAboutMe}
                     onPress={() => this.handleAddInterest()}
                   >
@@ -1048,7 +1048,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 this.handleInputChange(e, "currentRole")
               }}
               multiline={false}
-              data-testid="profile-currentRole"
+              testID="profile-currentRole"
               textStyle={this.styles.style.fontFormSmallDarkGrey}
               inputStyle={{
                 borderWidth: 1,
@@ -1082,7 +1082,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
             }}
             multiline={true}
             placeholder="Type here."
-            data-testid="profile-currentScope"
+            testID="profile-currentScope"
             textStyle={this.styles.style.fontFormSmallDarkGrey}
             inputStyle={{
               borderWidth: 1,
@@ -1114,7 +1114,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               this.handleInputChange(e, "personality")
             }}
             multiline={true}
-            data-testid="profile-personality"
+            testID="profile-personality"
             placeholder="Type here. like (MBTI, DISC, APEST, Birkman, Enneagram + Wing, Kolbe Index, other, N/A"
             textStyle={this.styles.style.fontFormSmallDarkGrey}
             inputStyle={{
@@ -1153,7 +1153,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                         this.handleInputChange(e, "orgName")
                       }}
                       multiline={false}
-                      data-testid="profile-orgName"
+                      testID="profile-orgName"
                       textStyle={this.styles.style.fontFormSmallDarkGrey}
                       inputStyle={this.styles.style.myProfileOrgTypeInput}
                       value={this.state.UserDetails.orgName ?? ""}
@@ -1338,7 +1338,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                         this.handleInputChange(e, "denomination")
                       }}
                       multiline={true}
-                      data-testid="profile-denomination"
+                      testID="profile-denomination"
                       textStyle={this.styles.style.fontFormSmallDarkGrey}
                       placeholder="Type here."
                       inputStyle={{
@@ -1374,7 +1374,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                         this.handleInputChange(e, "pplServed")
                       }}
                       multiline={true}
-                      data-testid="profile-pplServed"
+                      testID="profile-pplServed"
                       textStyle={this.styles.style.fontFormSmallDarkGrey}
                       placeholder="Type here."
                       inputStyle={{
@@ -1406,7 +1406,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                         this.handleInputChange(e, "orgDescription")
                       }}
                       multiline={true}
-                      data-testid="profile-orgDescription"
+                      testID="profile-orgDescription"
                       textStyle={this.styles.style.fontFormSmallDarkGrey}
                       placeholder="Type here."
                       inputStyle={{
@@ -1641,7 +1641,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 </View>
                 {this.state.invoices.map((item, index) => {
                   return (
-                    <View style={{ flex: 1, flexDirection: "row" }}>
+                    <View key={index} style={{ flex: 1, flexDirection: "row" }}>
                       <Text style={{ flex: 1 }}>
                         {item?.invoice_pdf ? (
                           <a href={item?.invoice_pdf}>{item?.number}</a>

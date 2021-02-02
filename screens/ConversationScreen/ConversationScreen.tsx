@@ -248,7 +248,7 @@ export default class ConversationScreen extends JCComponent<Props, State> {
                       this.setState({ newToList: value })
                     }}
                     multiline={false}
-                    data-testid="profile-currentRole"
+                    testID="profile-currentRole"
                     showProfileImages={true}
                     textStyle={this.styles.style.fontFormSmallDarkGrey}
                     inputStyle={this.styles.style.fontFormLargeInput}

@@ -158,7 +158,7 @@ export default class HeaderJC extends JCComponent<Props, State> {
                 </Button>
               </Left>
               <Body style={this.styles.style.headerMiddleBody}>
-                <Button transparent data-testid="header-logo" onPress={this.openHome}>
+                <Button transparent onPress={this.openHome} testID="header-logo">
                   <Image
                     style={this.headerStyles.style.logo}
                     source={require("../../assets/header/icon.png")}
@@ -167,7 +167,7 @@ export default class HeaderJC extends JCComponent<Props, State> {
                 {constants["SETTING_ISVISIBLE_event"] ? (
                   <Button
                     transparent
-                    data-testid="header-events"
+                    testID="header-events"
                     onPress={this.openEvents}
                     style={this.headerStyles.style.centerMenuButtons}
                   >
@@ -177,7 +177,7 @@ export default class HeaderJC extends JCComponent<Props, State> {
                 {constants["SETTING_ISVISIBLE_group"] ? (
                   <Button
                     transparent
-                    data-testid="header-groups"
+                    testID="header-groups"
                     onPress={this.openGroups}
                     style={this.headerStyles.style.centerMenuButtons}
                   >
@@ -186,6 +186,7 @@ export default class HeaderJC extends JCComponent<Props, State> {
                 ) : null}
                 {constants["SETTING_ISVISIBLE_resource"] ? (
                   <button
+                    data-testId="header-resources"
                     onClick={this.handleResourcesDropdownClick}
                     onMouseEnter={() => this.setState({ resourcesStyle: resourcesStyle2 })}
                     onMouseLeave={() => this.setState({ resourcesStyle: resourcesStyle1 })}
@@ -211,7 +212,12 @@ export default class HeaderJC extends JCComponent<Props, State> {
                     style={{ marginTop: 40 }}
                   >
                     <MenuItem onClick={this.openResources}>
-                      <Text style={this.headerStyles.style.dropdownText}>All Resources</Text>
+                      <Text
+                        testID="header-resources-all"
+                        style={this.headerStyles.style.dropdownText}
+                      >
+                        All Resources
+                      </Text>
                     </MenuItem>
                     <Divider style={{ backgroundColor: "black" }} />
                     <MenuItem onClick={this.openKids}>
@@ -225,7 +231,7 @@ export default class HeaderJC extends JCComponent<Props, State> {
                   userActions.isMemberOf("courseAdmin")) ? (
                   <Button
                     transparent
-                    data-testid="header-courses"
+                    testID="header-courses"
                     onPress={this.openCourses}
                     style={this.headerStyles.style.centerMenuButtons}
                   >
@@ -235,24 +241,24 @@ export default class HeaderJC extends JCComponent<Props, State> {
               </Body>
               <Right style={this.headerStyles.style.headerRightContainer}>
                 {constants["SETTING_ISVISIBLE_ADMIN"] && userActions.isMemberOf("admin") ? (
-                  <Button transparent data-testid="header-map" onPress={this.openAdmin}>
+                  <Button transparent testID="header-map" onPress={this.openAdmin}>
                     <Ionicons name="ios-rocket" style={this.headerStyles.style.icon} />
                   </Button>
                 ) : null}
                 {constants["SETTING_ISVISIBLE_MAP"] ? (
                   this.props.onMapChange != null ? (
-                    <Button transparent data-testid="header-map" onPress={this.showMap}>
+                    <Button transparent testID="header-map" onPress={this.showMap}>
                       <Ionicons name="md-map" style={this.headerStyles.style.icon} />
                     </Button>
                   ) : null
                 ) : null}
                 {constants["SETTING_ISVISIBLE_SEARCH"] ? (
-                  <Button transparent data-testid="header-search" onPress={this.openSearch}>
+                  <Button transparent testID="header-search" onPress={this.openSearch}>
                     <Ionicons name="md-search" style={this.headerStyles.style.icon} />
                   </Button>
                 ) : null}
 
-                <Button transparent data-testid="header-profile" onPress={this.openProfile}>
+                <Button transparent testID="header-profile" onPress={this.openProfile}>
                   <Ionicons name="md-person" style={this.headerStyles.style.icon} />
                 </Button>
               </Right>

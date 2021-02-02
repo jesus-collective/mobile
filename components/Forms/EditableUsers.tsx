@@ -19,7 +19,7 @@ interface Props {
   listOfSuggestedUsers?: string[]
   showProfileImages: boolean
   onChange?(value: any[]): void
-  "data-testid"?: any
+  testID?: any
 }
 interface UserProps {
   children: any

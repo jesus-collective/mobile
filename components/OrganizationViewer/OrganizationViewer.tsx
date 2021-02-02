@@ -540,7 +540,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                 {this.state.editMode ? (
                   <JCButton
                     enabled={this.state.dirty}
-                    data-testid="org-save"
+                    testID="org-save"
                     buttonType={ButtonTypes.SolidRightMargin}
                     onPress={() => {
                       this.finalizeProfile()
@@ -592,7 +592,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                     Set Profile Picture
                   </JCButton>
                   <input
-                    data-testid="org-image"
+                    testID="org-image"
                     style={{
                       cursor: "pointer",
                       fontSize: 200,
@@ -625,7 +625,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                 placeholderTextColor="#757575"
                 textStyle={this.styles.style.fontFormSmallDarkGrey}
                 inputStyle={this.styles.style.fontFormAboutMe}
-                data-testid="org-aboutMeShort"
+                testID="org-aboutMeShort"
                 value={this.state.OrganizationDetails.aboutMeShort ?? ""}
                 isEditable={this.state.isEditable && this.state.editMode}
               ></EditableText>
@@ -685,7 +685,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   }}
                 >
                   <JCButton
-                    data-testid="org-setmap"
+                    testID="org-setmap"
                     buttonType={ButtonTypes.TransparentBoldBlackNoMargin}
                     onPress={() => console.error("messages not yet supported")}
                   >
@@ -706,7 +706,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   }}
                 >
                   <JCButton
-                    data-testid="org-setmap"
+                    testID
                     buttonType={ButtonTypes.TransparentBoldBlackNoMargin}
                     onPress={() =>
                       this.setState({
@@ -818,7 +818,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>Address
                   </Label>
                   <Input
-                    data-testid="org-Address"
+                    testID="org-Address"
                     style={this.styles.style.fontFormMediumInput}
                     value={this.state.OrganizationDetails.address ?? ""}
                     onChange={(e) => {
@@ -831,7 +831,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>City
                   </Label>
                   <Input
-                    data-testid="org-City"
+                    testID="org-City"
                     style={this.styles.style.fontFormMediumInput}
                     value={this.state.OrganizationDetails.city ?? ""}
                     onChange={(e) => {
@@ -844,7 +844,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>Province/State
                   </Label>
                   <Input
-                    data-testid="org-Province"
+                    testID="org-Province"
                     style={this.styles.style.fontFormMediumInput}
                     value={this.state.OrganizationDetails.province ?? ""}
                     onChange={(e) => {
@@ -857,7 +857,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>Postal/Zip Code
                   </Label>
                   <Input
-                    data-testid="org-PostalCode"
+                    testID="org-PostalCode"
                     style={this.styles.style.fontFormMediumInput}
                     value={this.state.OrganizationDetails.postalCode ?? ""}
                     onChange={(e) => {
@@ -870,7 +870,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>Country
                   </Label>
                   <Input
-                    data-testid="org-Country"
+                    testID="org-Country"
                     style={this.styles.style.fontFormMediumInput}
                     value={this.state.OrganizationDetails.country ?? ""}
                     onChange={(e) => {
@@ -883,7 +883,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>Admin Email Address
                   </Label>
                   <Input
-                    data-testid="org-Email"
+                    testID="org-Email"
                     style={this.styles.style.fontFormMediumInput}
                     value={this.state.OrganizationDetails.adminEmail ?? ""}
                     onChange={(e) => {
@@ -896,7 +896,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                     <Text style={this.styles.style.fontFormMandatory}>*</Text>Admin Phone #
                   </Label>
                   <Input
-                    data-testid="org-Phone"
+                    testID="org-Phone"
                     style={this.styles.style.fontFormMediumInput}
                     value={this.state.OrganizationDetails.phone ?? ""}
                     onChange={(e) => {
@@ -927,7 +927,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                 }}
                 placeholder="type here"
                 multiline={true}
-                data-testid="org-aboutMeLong"
+                testID="org-aboutMeLong"
                 textStyle={this.styles.style.fontFormSmallDarkGrey}
                 inputStyle={{
                   borderWidth: 1,
@@ -963,7 +963,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                           this.handleInputChange(e, "orgName")
                         }}
                         multiline={false}
-                        data-testid="org-orgName"
+                        testID="org-orgName"
                         textStyle={this.styles.style.fontFormSmallDarkGrey}
                         inputStyle={this.styles.style.myProfileOrgTypeInput}
                         value={this.state.OrganizationDetails.orgName}
@@ -1146,7 +1146,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                           this.handleInputChange(e, "denomination")
                         }}
                         multiline={true}
-                        data-testid="org-denomination"
+                        testID="org-denomination"
                         textStyle={this.styles.style.fontFormSmallDarkGrey}
                         placeholder="Type here."
                         inputStyle={{
@@ -1181,7 +1181,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                           this.handleInputChange(e, "pplServed")
                         }}
                         multiline={true}
-                        data-testid="org-pplServed"
+                        testID="org-pplServed"
                         textStyle={this.styles.style.fontFormSmallDarkGrey}
                         placeholder="Type here."
                         inputStyle={{
@@ -1213,7 +1213,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                           this.handleInputChange(e, "orgDescription")
                         }}
                         multiline={true}
-                        data-testid="org-orgDescription"
+                        testID="org-orgDescription"
                         textStyle={this.styles.style.fontFormSmallDarkGrey}
                         placeholder="Type here."
                         inputStyle={{

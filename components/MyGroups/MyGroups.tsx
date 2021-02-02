@@ -1250,7 +1250,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                         >
                           <JCButton
                             buttonType={ButtonTypes.TransparentBoldOrange}
-                            data-testid={"mygroup-showall-" + this.state.titleString}
+                            testID={"mygroup-showall-" + this.state.titleString}
                             onPress={() => {
                               this.openMultiple()
                             }}
@@ -1260,7 +1260,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                           {constants["SETTING_ISVISIBLE_SHOWRECOMMENDED"] ? (
                             <JCButton
                               buttonType={ButtonTypes.TransparentBoldOrange}
-                              data-testid={"mygroup-recommended-" + this.state.titleString}
+                              testID={"mygroup-recommended-" + this.state.titleString}
                               onPress={() => {
                                 this.openMultiple()
                               }}
@@ -1271,7 +1271,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                           {constants["SETTING_ISVISIBLE_SHOWMYFILTER"] ? (
                             <JCButton
                               buttonType={ButtonTypes.TransparentBoldOrange}
-                              data-testid={"mygroup-showmyfilter-" + this.state.titleString}
+                              testID={"mygroup-showmyfilter-" + this.state.titleString}
                               onPress={() => {
                                 this.setState({
                                   myFilter: !this.state.myFilter,
@@ -1286,7 +1286,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                           (deviceWidth >= 950 || this.props.wrap) ? (
                             <JCButton
                               buttonType={ButtonTypes.TransparentBoldOrange}
-                              data-testid={"mygroup-showeventfilter-" + this.state.titleString}
+                              testID={"mygroup-showeventfilter-" + this.state.titleString}
                               onPress={() => {
                                 this.setState({
                                   eventFilter: !this.state.eventFilter,
@@ -1300,7 +1300,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                           constants["SETTING_ISVISIBLE_CREATE_" + this.state.type] ? (
                             <JCButton
                               buttonType={ButtonTypes.OutlineBold}
-                              data-testid={"mygroup-create-" + this.state.titleString}
+                              testID={"mygroup-create-" + this.state.titleString}
                               onPress={() => {
                                 this.createSingle()
                               }}

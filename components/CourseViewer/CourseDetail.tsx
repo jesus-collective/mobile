@@ -60,7 +60,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             }}
             placeholder="Word Count"
             multiline={false}
-            data-testid="course-wordCount"
+            testID="course-wordCount"
             textStyle={this.styles.style.fontFormSmallDarkGreyCourseTopEditable}
             inputStyle={{
               borderWidth: 1,
@@ -146,7 +146,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
               }}
               placeholder="Word Count"
               multiline={false}
-              data-testid="course-wordCount"
+              testID="course-wordCount"
               textStyle={this.styles.style.fontFormSmallDarkGreyCourseTopEditable}
               inputStyle={{
                 borderWidth: 1,
@@ -301,7 +301,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
               }}
               placeholder="Week Title"
               multiline={false}
-              data-testid="course-weekTitle"
+              testID="course-weekTitle"
               textStyle={this.styles.style.fontFormSmallDarkGreyCourseTopEditable}
               inputStyle={{
                 borderWidth: 1,
@@ -377,7 +377,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                           }}
                           placeholder="Title"
                           multiline={true}
-                          data-testid="course-lessonTitle"
+                          testID="course-lessonTitle"
                           textStyle={this.styles.style.courseDetailHeading}
                           inputStyle={{
                             borderWidth: 1,
@@ -424,7 +424,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                               }}
                               placeholder="Duration"
                               multiline={false}
-                              data-testid="course-lessonDuration"
+                              testID="course-lessonDuration"
                               textStyle={this.styles.style.courseTimeNonEditable}
                               inputStyle={
                                 state.isEditable && state.editMode

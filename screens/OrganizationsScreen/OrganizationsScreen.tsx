@@ -1,11 +1,11 @@
-﻿import React from 'react';
-import { Container, Content } from 'native-base';
-import Header from '../../components/Header/Header'
-import MyMap from '../../components/MyMap/MyMap';
-import MyConversations from '../../components/MyConversations/MyConversations';
-import MyGroups, { MapData } from '../../components/MyGroups/MyGroups';
-import MyPeople from '../../components/MyPeople/MyPeople';
-import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
+﻿import { Container, Content } from "native-base"
+import React from "react"
+import Header from "../../components/Header/Header"
+import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
+import MyConversations from "../../components/MyConversations/MyConversations"
+import MyGroups, { MapData } from "../../components/MyGroups/MyGroups"
+import MyMap from "../../components/MyMap/MyMap"
+import MyPeople from "../../components/MyPeople/MyPeople"
 
 interface Props {
   navigation: any
@@ -15,14 +15,13 @@ interface State extends JCState {
   mapData: MapData[]
 }
 
-
-export default class HomeScreen extends JCComponent<Props, State>{
+export default class HomeScreen extends JCComponent<Props, State> {
   constructor(props: Props) {
-    super(props);
+    super(props)
     this.state = {
       ...super.getInitialState(),
       mapData: [],
-      showMap: false
+      showMap: false,
     }
   }
   mapChanged = (): void => {
@@ -36,26 +35,56 @@ export default class HomeScreen extends JCComponent<Props, State>{
   render(): React.ReactNode {
     console.log("OrganizationScreen")
     return (
-
-      <Container data-testid="organizations">
-        <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
+      <Container testID="organizations">
+        <Header
+          title="Jesus Collective"
+          navigation={this.props.navigation}
+          onMapChange={this.mapChanged}
+        />
         <Content>
-          <MyMap type={'no-filter'} size={'50%'} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
+          <MyMap
+            type={"no-filter"}
+            size={"50%"}
+            mapData={this.state.mapData}
+            visible={this.state.showMap}
+          ></MyMap>
 
-          <Container style={{ display: "flex", flexDirection: "row", justifyContent: 'flex-start' }}>
-            <Container style={{ flex: 70, flexDirection: "column", justifyContent: 'flex-start' }}>
-              <MyGroups showMore={true} type="organization" wrap={true} navigation={this.props.navigation} onDataload={(mapData: MapData[]) => { this.mergeMapData(mapData) }}></MyGroups>
+          <Container
+            style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start" }}
+          >
+            <Container style={{ flex: 70, flexDirection: "column", justifyContent: "flex-start" }}>
+              <MyGroups
+                showMore={true}
+                type="organization"
+                wrap={true}
+                navigation={this.props.navigation}
+                onDataload={(mapData: MapData[]) => {
+                  this.mergeMapData(mapData)
+                }}
+              ></MyGroups>
             </Container>
-            <Container style={{ flex: 30, flexDirection: "column", alignContent: 'flex-start', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
-              <MyPeople wrap={false} navigation={this.props.navigation} onDataload={(mapData: MapData[]) => { this.mergeMapData(mapData) }}></MyPeople>
+            <Container
+              style={{
+                flex: 30,
+                flexDirection: "column",
+                alignContent: "flex-start",
+                alignItems: "flex-start",
+                justifyContent: "flex-start",
+              }}
+            >
+              <MyPeople
+                wrap={false}
+                navigation={this.props.navigation}
+                onDataload={(mapData: MapData[]) => {
+                  this.mergeMapData(mapData)
+                }}
+              ></MyPeople>
               <MyConversations navigation={this.props.navigation}> </MyConversations>
-              <Container ></Container>
+              <Container></Container>
             </Container>
           </Container>
         </Content>
       </Container>
-
-
-    );
+    )
   }
 }

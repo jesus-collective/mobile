@@ -1,10 +1,9 @@
-﻿import React from 'react';
-import { Container, Content } from 'native-base';
-import Header from '../../components/Header/Header'
-import MyMap from '../../components/MyMap/MyMap';
-import MyGroups, { MapData } from '../../components/MyGroups/MyGroups';
-
-import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
+﻿import { Container, Content } from "native-base"
+import React from "react"
+import Header from "../../components/Header/Header"
+import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
+import MyGroups, { MapData } from "../../components/MyGroups/MyGroups"
+import MyMap from "../../components/MyMap/MyMap"
 
 interface Props {
   navigation: any
@@ -14,14 +13,13 @@ interface State extends JCState {
   mapData: MapData[]
 }
 
-
-export default class HomeScreen extends JCComponent<Props, State>{
+export default class HomeScreen extends JCComponent<Props, State> {
   constructor(props: Props) {
-    super(props);
+    super(props)
     this.state = {
       ...super.getInitialState(),
       mapData: [],
-      showMap: false
+      showMap: false,
     }
   }
   mapChanged = (): void => {
@@ -36,16 +34,26 @@ export default class HomeScreen extends JCComponent<Props, State>{
   render(): React.ReactNode {
     console.log("ResourcesScreen")
     return (
-
-      <Container data-testid="resources" >
+      <Container testID="resources">
         <Header title="Jesus Collective" navigation={this.props.navigation} />
         <Content>
-          <MyMap type={"no-filters"} size={'50%'} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
+          <MyMap
+            type={"no-filters"}
+            size={"50%"}
+            mapData={this.state.mapData}
+            visible={this.state.showMap}
+          ></MyMap>
           <Container style={this.styles.style.resourcesScreenMainContainer}>
             <Container style={this.styles.style.resourcesScreenLeftContainer}>
-
-              <MyGroups showMore={true} type="resource" wrap={true} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyGroups>
-
+              <MyGroups
+                showMore={true}
+                type="resource"
+                wrap={true}
+                navigation={this.props.navigation}
+                onDataload={(mapData) => {
+                  this.mergeMapData(mapData)
+                }}
+              ></MyGroups>
             </Container>
             {/*
             <Container style={this.styles.style.resourcesScreenRightContainer}>
@@ -57,8 +65,6 @@ export default class HomeScreen extends JCComponent<Props, State>{
           </Container>
         </Content>
       </Container>
-
-
-    );
+    )
   }
 }

@@ -1,12 +1,12 @@
-﻿import React from 'react';
-import Amplify from 'aws-amplify';
-import awsConfig from '../../src/aws-exports';
-import Header from '../../components/Header/Header'
-import OrganizationViewer from '../../components/OrganizationViewer/OrganizationViewer'
-import { Container } from 'native-base';
-import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
+﻿import Amplify from "aws-amplify"
+import { Container } from "native-base"
+import React from "react"
+import Header from "../../components/Header/Header"
+import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
+import OrganizationViewer from "../../components/OrganizationViewer/OrganizationViewer"
+import awsConfig from "../../src/aws-exports"
 
-Amplify.configure(awsConfig);
+Amplify.configure(awsConfig)
 
 interface Props {
   navigation: any
@@ -16,22 +16,26 @@ interface State extends JCState {
   loadId: string
   createNew: boolean
 }
-export default class OrganizationScreen extends JCComponent<Props, State>{
+export default class OrganizationScreen extends JCComponent<Props, State> {
   constructor(props: Props) {
-    super(props);
+    super(props)
     this.state = {
       ...super.getInitialState(),
       loadId: props.route.params.id,
-      createNew: props.route.params.create === "true" || props.route.params.create === true ? true : false,
-
+      createNew:
+        props.route.params.create === "true" || props.route.params.create === true ? true : false,
     }
   }
   render(): React.ReactNode {
     return (
-      <Container data-testid="organization">
+      <Container testID="organization">
         <Header title="Jesus Collective" navigation={this.props.navigation} />
-        <OrganizationViewer loadId={this.state.loadId} create={this.state.createNew} navigation={this.props.navigation} />
+        <OrganizationViewer
+          loadId={this.state.loadId}
+          create={this.state.createNew}
+          navigation={this.props.navigation}
+        />
       </Container>
-    );
+    )
   }
 }

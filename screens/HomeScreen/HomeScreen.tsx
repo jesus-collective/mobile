@@ -57,7 +57,7 @@ class HomeScreen extends JCComponent<Props, State> {
   render(): React.ReactNode {
     console.log("Homepage")
     return (
-      <Container data-testid="homepage">
+      <Container testID="homepage">
         <Header
           title="Jesus Collective"
           navigation={this.props.navigation}

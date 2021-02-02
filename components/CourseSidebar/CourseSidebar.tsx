@@ -76,7 +76,7 @@ class CourseSidebarImpl extends JCComponent<Props> {
 
           return (
             <Container style={this.styles.style.courseSideBar}>
-              <Button transparent data-testid="header-logo" onPress={this.openHome}>
+              <Button transparent testID="header-logo" onPress={this.openHome}>
                 <Image
                   style={this.headerStyles.style.logo}
                   source={require("../../assets/header/icon.png")}

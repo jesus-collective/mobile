@@ -48,7 +48,7 @@ class MapSelector extends JCComponent<Props, State> {
               Select a location (this will be public)
             </Text>
             <JCButton
-              data-testid="mapselector-save"
+              testID="mapselector-save"
               buttonType={ButtonTypes.SolidMap}
               onPress={() => this.props.onClose(this.state.mapCoord)}
             >

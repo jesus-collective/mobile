@@ -98,18 +98,18 @@ class CourseHomeImpl extends JCComponent<Props> {
           const backOfficeStaff = state.courseData?.backOfficeStaff?.items.map((item) => {
             return item.user
           })
-          var markedDates = {}
-          for (var i = 0; i < actions.myCourseDates().zoom?.length; i++)
+          const markedDates = {}
+          for (let i = 0; i < actions.myCourseDates().zoom?.length; i++)
             markedDates[actions.myCourseDates().zoom[i]] = { marked: true, dotColor: "red" }
-          for (var i = 0; i < actions.myCourseDates().assignments?.length; i++)
+          for (let i = 0; i < actions.myCourseDates().assignments?.length; i++)
             markedDates[actions.myCourseDates().assignments[i]] = {
               marked: true,
               dotColor: "green",
             }
-          for (var i = 0; i < actions.myCourseDates().respond?.length; i++)
+          for (let i = 0; i < actions.myCourseDates().respond?.length; i++)
             markedDates[actions.myCourseDates().respond[i]] = { marked: true, dotColor: "blue" }
 
-          var toDo = actions.myCourseTodo()
+          const toDo = actions.myCourseTodo()
 
           return state.data && state.currentScreen == "Home" ? (
             <StyleProvider style={getTheme()}>
@@ -235,7 +235,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                                     actions.updateInstructors(value)
                                   }}
                                   multiline={false}
-                                  data-testid="profile-currentRole"
+                                  testID="profile-currentRole"
                                   showProfileImages={true}
                                   textStyle={this.styles.style.fontFormSmallDarkGrey}
                                   inputStyle={this.styles.style.fontFormLargeInput}
@@ -259,7 +259,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                                     actions.updateBackOfficeStaff(value)
                                   }}
                                   multiline={false}
-                                  data-testid="profile-backOfficeStaff"
+                                  testID="profile-backOfficeStaff"
                                   showProfileImages={true}
                                   textStyle={this.styles.style.fontFormSmallDarkGrey}
                                   inputStyle={this.styles.style.fontFormLargeInput}
@@ -321,7 +321,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                                                 actions.updateTriadCoaches(index, value)
                                               }}
                                               multiline={false}
-                                              data-testid="profile-currentRole"
+                                              testID="profile-currentRole"
                                               showProfileImages={true}
                                               textStyle={this.styles.style.fontFormSmallDarkGrey}
                                               inputStyle={this.styles.style.fontFormLargeInput}
@@ -349,7 +349,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                                                 actions.updateTriadUsers(index, value)
                                               }}
                                               multiline={false}
-                                              data-testid="profile-currentRole"
+                                              testID="profile-currentRole"
                                               showProfileImages={true}
                                               textStyle={this.styles.style.fontFormSmallDarkGrey}
                                               inputStyle={this.styles.style.fontFormLargeInput}

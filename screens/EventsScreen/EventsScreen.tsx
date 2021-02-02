@@ -1,10 +1,9 @@
-﻿import React from 'react';
-import { Container, Content } from 'native-base';
-import Header from '../../components/Header/Header'
-import MyMap from '../../components/MyMap/MyMap';
-import MyGroups, { MapData } from '../../components/MyGroups/MyGroups';
-import JCComponent, { JCState } from '../../components/JCComponent/JCComponent';
-
+﻿import { Container, Content } from "native-base"
+import React from "react"
+import Header from "../../components/Header/Header"
+import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
+import MyGroups, { MapData } from "../../components/MyGroups/MyGroups"
+import MyMap from "../../components/MyMap/MyMap"
 
 interface Props {
   navigation: any
@@ -16,15 +15,14 @@ interface State extends JCState {
   showMy: boolean
 }
 
-
-export default class HomeScreen extends JCComponent<Props, State>{
+export default class HomeScreen extends JCComponent<Props, State> {
   constructor(props: Props) {
-    super(props);
+    super(props)
     this.state = {
       ...super.getInitialState(),
       mapData: [],
       showMap: false,
-      showMy: this.props.route.params ? this.props.route.params.mine : false
+      showMy: this.props.route.params ? this.props.route.params.mine : false,
     }
   }
   mapChanged = (): void => {
@@ -38,17 +36,33 @@ export default class HomeScreen extends JCComponent<Props, State>{
   render(): React.ReactNode {
     console.log("EventsScreen")
     return (
-
-      <Container data-testid="events">
-        <Header title="Jesus Collective" navigation={this.props.navigation} onMapChange={this.mapChanged} />
+      <Container testID="events">
+        <Header
+          title="Jesus Collective"
+          navigation={this.props.navigation}
+          onMapChange={this.mapChanged}
+        />
         <Content>
-          <MyMap type={"no-filters"} size={'50%'} mapData={this.state.mapData} visible={this.state.showMap}></MyMap>
+          <MyMap
+            type={"no-filters"}
+            size={"50%"}
+            mapData={this.state.mapData}
+            visible={this.state.showMap}
+          ></MyMap>
           <Container style={this.styles.style.eventsScreenMainContainer}>
             <Container style={this.styles.style.eventsScreenLeftContainer}>
-              <MyGroups showMy={this.state.showMy} showMore={true} type="event" wrap={true} navigation={this.props.navigation} onDataload={(mapData: MapData[]) => { this.mergeMapData(mapData) }}></MyGroups>
-
+              <MyGroups
+                showMy={this.state.showMy}
+                showMore={true}
+                type="event"
+                wrap={true}
+                navigation={this.props.navigation}
+                onDataload={(mapData: MapData[]) => {
+                  this.mergeMapData(mapData)
+                }}
+              ></MyGroups>
             </Container>
-            { /*
+            {/*
             <Container style={style.eventsScreenRightContainer}>
               <MyPeople wrap={false} navigation={this.props.navigation} onDataload={(mapData) => { this.mergeMapData(mapData) }}></MyPeople>
               <MyConversations navigation={this.props.navigation}> </MyConversations>
@@ -57,8 +71,6 @@ export default class HomeScreen extends JCComponent<Props, State>{
           </Container>
         </Content>
       </Container>
-
-
-    );
+    )
   }
 }

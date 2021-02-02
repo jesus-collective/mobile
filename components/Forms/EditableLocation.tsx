@@ -137,6 +137,7 @@ export default class EditableLocation extends JCComponent<Props, State> {
                       key={index}
                     >
                       <span
+                        data-testId={"profile-location-" + index}
                         style={{
                           lineHeight: 2,
                           fontSize: 16,

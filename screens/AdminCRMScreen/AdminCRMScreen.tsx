@@ -599,7 +599,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
   }
   async sendInvite(email: string, inviteType: InviteType): Promise<void> {
     console.log({ "inviting:": email })
-    let z = await this.adminCreateUser(email.toLowerCase())
+    const z = await this.adminCreateUser(email.toLowerCase())
     await this.addUserToGroup(z.User.Username, "verifiedUsers")
     if (inviteType == InviteType.course) {
       await this.addUserToGroup(z.User.Username, "courseUser")
@@ -881,7 +881,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
           if (!userState) return null
           console.log("AdminScreen")
           return (
-            <Container data-testid="events">
+            <Container testID="events">
               <Header title="Jesus Collective" navigation={this.props.navigation} />
 
               <HeaderAdmin title="Jesus Collective" navigation={this.props.navigation} />
