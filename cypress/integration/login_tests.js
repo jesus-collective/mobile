@@ -38,7 +38,7 @@ describe("Login Page Test", () => {
       cy.get('input[placeholder="Last Name"]').type("User 1")
       cy.contains("Continue").click({ force: true })
 
-      cy.get('input[placeholder="One-time security code"]')
+      cy.get('input[placeholder="One-time security code"]', { timeout: 30000 })
         .get('div[data-testId="myConfirmSignup-back"]')
         .click()
       cy.get('input[placeholder="Email"]').type(user)
