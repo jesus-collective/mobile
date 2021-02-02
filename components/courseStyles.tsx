@@ -1181,7 +1181,7 @@ const courseStyles = EStyleSheet.create({
       marginRight: "5%",
     },
     courseHeaderContainer: {
-      flex: 95,
+      display: 'none',
     },
     fontCourseHeaderDescription: {
       marginRight: "5%",
@@ -1221,7 +1221,7 @@ const courseStyles = EStyleSheet.create({
       marginRight: 0
     },
     courseHomeRightContainer: {
-      top: 1600,
+      top: 1350,
       marginTop: 50
     },
     courseProfileImageButtonsContainer: {
@@ -1278,7 +1278,7 @@ const courseStyles = EStyleSheet.create({
       width: "100%",
     },
     courseHomeCalendar: {
-      width: "150%",
+      width: "140%",
     },
     courseAssignmentScreenLeftCard: {
       marginLeft: 15,

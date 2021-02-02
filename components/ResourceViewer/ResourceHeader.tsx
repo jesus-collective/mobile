@@ -38,7 +38,7 @@ class ResourceHeader extends JCComponent<Props, State> {
   fadeAnimation = (): void => {
     Animated.timing(this.state.fadeValue, {
       toValue: 1,
-      duration: 3250,
+      duration: 2200,
       useNativeDriver: true,
     }).start()
   }
@@ -134,7 +134,6 @@ class ResourceHeader extends JCComponent<Props, State> {
               <View style={this.styles.style.resourceHeaderImgContainer}>
                 {this.state.imageUrl ? (
                   <Animated.View
-                    onLayout={this.fadeAnimation}
                     style={[
                       this.styles.style.resourceHeaderImgView,
                       { opacity: this.state.fadeValue },
@@ -143,6 +142,7 @@ class ResourceHeader extends JCComponent<Props, State> {
                     <Image
                       style={this.styles.style.resourceHeaderImg}
                       source={this.state.imageUrl}
+                      onLoad={this.fadeAnimation}
                       onError={() => {
                         this.getImage(this.props.pageItem.image)
                       }}

@@ -13,7 +13,7 @@ import Amplify, { API, Auth, graphqlOperation } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { Body, Card, CardItem, Content, Label } from "native-base"
 import React, { useState } from "react"
-import { ActivityIndicator, Picker, Text, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, Picker, Text, TouchableOpacity, View, Image } from "react-native"
 import { v4 as uuidv4 } from "uuid"
 import EditableRichText from "../../components/Forms/EditableRichText"
 import EditableText from "../../components/Forms/EditableText"
@@ -596,7 +596,12 @@ class BillingImpl extends JCComponent<Props, State> {
             {({ userState, userActions }) => {
               if (!userState) return null
               return this.state.processing === "complete" ? (
+
                 <Content style={this.styles.style.signUpScreen1PaymentColumn1}>
+                     <Image
+                      style={{ alignSelf: 'center', marginBottom: 20 }}
+                        source={require("../../assets/svg/checkmark-circle.svg")}/>
+
                     <Text
                       style={{
                         fontFamily: "Graphik-Semibold-App",
@@ -623,7 +628,7 @@ class BillingImpl extends JCComponent<Props, State> {
                             <ActivityIndicator color="white"></ActivityIndicator>
                           </View>
                         ) : (
-                          "Continue to Your Profile"
+                          "Continue to your profile"
                         )}
                       </JCButton>
                     </Text>
