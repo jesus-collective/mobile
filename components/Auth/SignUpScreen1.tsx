@@ -115,7 +115,7 @@ class SignUpScreen1Impl extends JCComponent<Props, State> {
                         marginBottom: 20,
                       }}
                     >
-                      We're just waiting for your account to be fully setup. Please check back soon!
+                      Please wait a moment while we set up your account.
                       <br />
                     </Text>
                   </View>
