@@ -77,3 +77,4 @@ report.*.json
 coverage/
 
 *.log
+.eslintcache

@@ -22,6 +22,7 @@ exports.handler = (event, context, callback) => {
     "courseCoach2@jesuscollective.com",
     "courseCoach3@jesuscollective.com",
     "courseCoach4@jesuscollective.com",
+    "legacyUserGroup1@jesuscollective.com",
   ]
   if (emailList.includes(event.request.userAttributes.email)) {
     event.response.autoConfirmUser = "true"
