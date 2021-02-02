@@ -41,7 +41,7 @@ jobs:
     - name: Cypress run
       uses: cypress-io/github-action@v2
       with:
-        start: npm testWeb
+        start: npm run testWeb
         wait-on: 'http://localhost:19006'
     - name: Coveralls
       uses: coverallsapp/github-action@master
