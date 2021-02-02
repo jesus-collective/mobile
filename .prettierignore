@@ -1,0 +1,12 @@
+build
+coverage
+dist
+backup
+amplify/**/*.yml
+amplify/**/*.json
+*.graphql
+.github
+.vscode
+src/API.ts
+src/aws-exports.js
+src/graphql/schema.json
