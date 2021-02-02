@@ -625,7 +625,7 @@ class BillingImpl extends JCComponent<Props, State> {
                             <ActivityIndicator color="white"></ActivityIndicator>
                           </View>
                         ) : (
-                          "Continue to Your Profile"
+                          "Continue to your profile"
                         )}
                       </JCButton>
                     </Text>
