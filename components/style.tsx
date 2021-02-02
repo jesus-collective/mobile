@@ -1578,6 +1578,21 @@ export default class MainStyles {
         color: "#ffffff",
         fontSize: 20,
       },
+      mySignUpText: {
+        width: "100%",
+        marginBottom: "8.33%",
+        fontFamily: "Graphik-Regular-App",
+        fontWeight: "bold",
+        fontSize: 22,
+        lineHeight: 30,
+        alignSelf: "center",
+      },
+      mySignUpButton: {
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+      },
 
       // Media Query Desktop Tablet
       "@media (min-width: 350) and (max-width: 768)": {
@@ -1780,6 +1795,13 @@ export default class MainStyles {
         },
         friendsLegend: {
           paddingLeft: 40,
+        },
+        mySignUpText: {
+          width: "65%",
+        },
+        mySignUpButton: {
+          flexDirection: "column",
+          height: 'auto'
         },
       },
 

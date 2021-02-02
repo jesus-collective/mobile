@@ -834,25 +834,12 @@ class MySignUpImpl extends React.Component<Props, State> {
                   ) : (
                     <View style={this.styles.style.authView3}>
                       <Text
-                        style={{
-                          width: "100%",
-                          marginBottom: "8.33%",
-                          fontFamily: "Graphik-Regular-App",
-                          fontWeight: "bold",
-                          fontSize: 22,
-                          lineHeight: 30,
-                          alignSelf: "center",
-                        }}
+                        style={this.styles.style.mySignUpText}
                       >
                         Welcome. What type of account would you like to create?
                       </Text>
                       <View
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
+                        style={this.styles.style.mySignUpButton}
                       >
                         <JCButton
                           buttonType={ButtonTypes.SolidSignIn2}
