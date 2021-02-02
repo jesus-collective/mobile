@@ -38,8 +38,11 @@ jobs:
     # Runs a set of commands using the runners shell
     - name: Build
       run: npm ci
-    - name: Test
-      run: npm test
+    - name: Cypress run
+      uses: cypress-io/github-action@v2
+      with:
+        start: npm start:web
+        wait-on: 'http://localhost:19006'
     - name: Coveralls
       uses: coverallsapp/github-action@master
       with:
