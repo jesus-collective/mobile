@@ -97,6 +97,7 @@ describe("Login Page Test", () => {
           mimeType: "image/jpeg",
         })
       })
+      /*
       cy.get('input[placeholder="Search Places ..."]')
         .type("Toronto")
         .contains("Toronto, ON, Canada")
@@ -160,6 +161,7 @@ describe("Login Page Test", () => {
       cy.get('[data-testId="mygroup-create-Resources"]').last().click()
       cy.contains("No Members Yet")
       cy.get('[data-testId="header-logo"]').last().click()
+      */
     })
   })
 })
