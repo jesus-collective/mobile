@@ -388,6 +388,11 @@ export default class MyGroups extends JCComponent<Props, State> {
       })
 
       const processList = (json: any) => {
+        if(props.type === "event"){ // sorting events by date
+          if(json?.data?.groupByType?.items){
+            json.data.groupByType.items = json.data.groupByType.items.sort((a:any,b:any) => a.time.localeCompare(b.time))
+          }
+        }
         console.log({ groupData: json })
         this.setCanPay(json.data.groupByType.items)
         this.setIsPaid(json.data.groupByType.items)
@@ -1327,7 +1332,11 @@ export default class MyGroups extends JCComponent<Props, State> {
                           0 ? (
                             this.state.data
                               .filter(this.filterMy)
-                              .filter(this.filterEvent)
+                              .filter(this.filterEvent).sort((a:any,b:any) => {
+                                if(this.state.type =="event" && this.state.eventFilter)
+                                return b.time.localeCompare(a.time)
+                                else return 0
+                              }) 
                               .map((item: any, index: number) => {
                                 return (
                                   <ErrorBoundry key={index}>
