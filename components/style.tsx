@@ -386,6 +386,14 @@ export default class MainStyles {
         color: "#333333",
         fontWeight: "bold",
       },
+      fontFormNamev2: {
+        fontFamily: "Graphik-Bold-App",
+        fontSize: 19.8,
+        lineHeight: 36,
+        textAlign: "center",
+        color: "#333333",
+        fontWeight: "bold",
+      },
       fontFormText: {
         fontFamily: "Graphik-Regular-App",
         fontSize: 18,
@@ -412,6 +420,14 @@ export default class MainStyles {
         color: "#333333",
         opacity: 0.6,
       },
+      fontFormRolev2: {
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 10.56,
+        lineHeight: 21,
+        textAlign: "center",
+        color: "#333333",
+        opacity: 0.6,
+      },
       fontFormUserType: {
         fontFamily: "Graphik-Regular-App",
         fontSize: 14,
@@ -420,6 +436,16 @@ export default class MainStyles {
         textTransform: "uppercase",
         color: "#333333",
         marginTop: 18,
+        marginBottom: 18,
+      },
+      fontFormUserTypev2: {
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 9.25,
+        lineHeight: 16,
+        textAlign: "center",
+        textTransform: "uppercase",
+        color: "#333333",
+        marginTop: 5,
         marginBottom: 18,
       },
       fontFormAboutMe: {
@@ -442,6 +468,14 @@ export default class MainStyles {
         paddingTop: 6,
         width: "100%",
       },
+      fontFormSmallDarkGreyv2: {
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 10.56,
+        lineHeight: 26,
+        color: "#333333",
+        paddingTop: 0,
+        width: "100%",
+      },
 
       fontFormSmallDarkGreyCourseTopEditable: {
         fontFamily: "Graphik-Regular-App",
@@ -453,6 +487,14 @@ export default class MainStyles {
         marginBottom: 15,
       },
       fontFormSmallDarkGreyCoordinates: {
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 16,
+        lineHeight: 22,
+        color: "#333333",
+        paddingTop: 5,
+        width: "100%",
+      },
+      fontFormSmallDarkGreyCoordinatesv2: {
         fontFamily: "Graphik-Regular-App",
         fontSize: 16,
         lineHeight: 22,
@@ -505,6 +547,14 @@ export default class MainStyles {
         opacity: 0.5,
         marginBottom: 19,
       },
+      fontFormSmallGreyv2: {
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 10.56,
+        lineHeight: 16,
+        color: "#333333",
+        opacity: 0.5,
+        marginBottom: 19,
+      },
       fontFormSmallHeader: {
         fontFamily: "Graphik-Regular-App",
         fontSize: 14,
@@ -530,10 +580,24 @@ export default class MainStyles {
         opacity: 0.5,
         marginTop: 10,
       },
+      fontFormSmallv2: {
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 8,
+        lineHeight: 12,
+        textTransform: "uppercase",
+        color: "#333333",
+        opacity: 0.5,
+        marginTop: 10,
+      },
       fontBold: {
         fontFamily: "Graphik-Bold-App",
         fontWeight: "bold",
         fontSize: 24,
+      },
+      fontBoldv2: {
+        fontFamily: "Graphik-Bold-App",
+        fontWeight: "bold",
+        fontSize: 15.84,
       },
       myprofileAboutMe: {
         fontFamily: "Graphik-Bold-App",
@@ -541,7 +605,12 @@ export default class MainStyles {
         fontSize: 24,
         marginTop: 60,
       },
-
+      myprofileAboutMev2: {
+        fontFamily: "Graphik-Bold-App",
+        fontWeight: "bold",
+        fontSize: 15.84,
+        marginTop: 30,
+      },
       fontTitle: {
         fontFamily: "Graphik-Bold-App",
         fontWeight: "bold",
@@ -606,6 +675,14 @@ export default class MainStyles {
         fontFamily: "Graphik-Bold-App",
         fontWeight: "bold",
         fontSize: 20,
+        height: 75,
+        lineHeight: 32,
+        flex: 3,
+      },
+      profileFontTitleV2: {
+        fontFamily: "Graphik-Bold-App",
+        fontWeight: "bold",
+        fontSize: 18.5,
         height: 75,
         lineHeight: 32,
         flex: 3,
@@ -1036,6 +1113,43 @@ export default class MainStyles {
               minHeight: 700,
               width: 446,
             },
+      profileScreenLeftCardv2:
+        Platform.OS === "web"
+          ? {
+              // flex: 19.8,
+              flexDirection: "column",
+              alignContent: "flex-start",
+              alignItems: "flex-start",
+              justifyContent: "flex-start",
+              paddingLeft: 30,
+              paddingRight: 30,
+              paddingTop: 40,
+              marginLeft: 32,
+              marginRight: 32,
+              marginTop: 0,
+              borderRadius: 4,
+              shadowOffset: { width: 0, height: 5 },
+              shadowColor: "rgba(0, 0, 0, 0.05)",
+              shadowRadius: 30,
+              // height: 'auto',
+              width: 294,
+            }
+          : {
+              flex: 30,
+              flexDirection: "column",
+              alignContent: "flex-start",
+              alignItems: "flex-start",
+              justifyContent: "flex-start",
+              paddingLeft: 30,
+              paddingRight: 30,
+              paddingTop: 40,
+              marginLeft: 32,
+              marginRight: 32,
+              marginTop: 0,
+              borderRadius: 4,
+              minHeight: 700,
+              width: 294,
+            },
       profileScreenRightCard:
         Platform.OS === "web"
           ? {
@@ -1075,6 +1189,45 @@ export default class MainStyles {
               paddingBottom: 30,
               paddingLeft: 30,
             },
+      profileScreenRightCardv2:
+        Platform.OS === "web"
+          ? {
+              // flex: 0,
+              flexDirection: "column",
+              alignContent: "flex-start",
+              alignItems: "flex-start",
+              justifyContent: "flex-start",
+              marginLeft: 32,
+              marginRight: 32,
+              marginTop: 0,
+              borderRadius: 4,
+              shadowOffset: { width: 0, height: 5 },
+              shadowColor: "rgba(0, 0, 0, 0.05)",
+              shadowRadius: 30,
+              // minHeight: 1500,
+              width: 642,
+              paddingTop: 30,
+              paddingRight: 30,
+              paddingBottom: 30,
+              paddingLeft: 30,
+            }
+          : {
+              flex: 46.2,
+              flexDirection: "column",
+              alignContent: "flex-start",
+              alignItems: "flex-start",
+              justifyContent: "flex-start",
+              marginLeft: 32,
+              marginRight: 32,
+              marginTop: 0,
+              borderRadius: 4,
+              minHeight: 1500,
+              maxWidth: 642,
+              paddingTop: 30,
+              paddingRight: 30,
+              paddingBottom: 30,
+              paddingLeft: 30,
+            },
       myProfileTopButtons: {
         justifyContent: "space-between",
         flexDirection: "row",
@@ -1089,9 +1242,18 @@ export default class MainStyles {
         alignSelf: "center",
         marginBottom: 90,
       },
+      myProfileImageWrapperv2: {
+        alignSelf: "center",
+        marginBottom: 20,
+      },
       myProfileImage: {
         width: "250px",
         height: "290px",
+        borderRadius: 120,
+      },
+      myProfileImagev2: {
+        width: "165px",
+        height: "191px",
         borderRadius: 120,
       },
       fileInputWrapper: {
@@ -1125,6 +1287,16 @@ export default class MainStyles {
         width: "100%",
         flexGrow: 0,
         marginTop: 30,
+        alignSelf: "flex-start",
+        height: "2.75rem",
+      },
+      myProfileCoordinatesv2: {
+        justifyContent: "space-between",
+        flexDirection: "column",
+        marginBottom: 80,
+        width: "100%",
+        flexGrow: 0,
+        marginTop: 15,
         alignSelf: "flex-start",
         height: "2.75rem",
       },
@@ -1801,7 +1973,7 @@ export default class MainStyles {
         },
         mySignUpButton: {
           flexDirection: "column",
-          height: 'auto'
+          height: "auto",
         },
       },
 
@@ -2476,12 +2648,12 @@ export default class MainStyles {
           : { position: "absolute", width: "100%", height: "100%", left: 0, top: 0 },
       signUpScreen1PaymentColumn1:
         Platform.OS === "web" && Dimensions.get("window").width > 720
-          ? { position: "absolute", left: "7.5%", width: "100%", top: '40vh', height: "100%" }
+          ? { position: "absolute", left: "7.5%", width: "100%", top: "40vh", height: "100%" }
           : { marginLeft: 20, marginRight: 20 },
       signUpScreen1PaymentColumn1Form:
-          Platform.OS === "web" && Dimensions.get("window").width > 720
-            ? { position: "absolute", left: "35%", width: "25%", top: 100, height:"100%" }
-            : { marginLeft: 20, marginRight: 20 },
+        Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? { position: "absolute", left: "35%", width: "25%", top: 100, height: "100%" }
+          : { marginLeft: 20, marginRight: 20 },
       signUpScreen1PaymentColumn2:
         Platform.OS === "web" && Dimensions.get("window").width > 720
           ? { position: "absolute", left: "70%", width: "25%", top: 100, height: "100%" }

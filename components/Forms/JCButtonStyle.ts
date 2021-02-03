@@ -152,8 +152,8 @@ export default EStyleSheet.create({
   },
   ResourceModalButton: {
     backgroundColor: "#FFFFFF",
-    shadowOffset: {"width":0,"height":0},
-    shadowOpacity: 0, 
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0,
   },
   ResourceModalText: {
     color: "#000000",
@@ -176,7 +176,7 @@ export default EStyleSheet.create({
     shadowOffset: { height: 0, width: 0 },
     shadowOpacity: 0,
     borderRadius: 4,
-    width: '100%',
+    width: "100%",
   },
   ResourceModalSolidText: {
     color: "#ffffff",
@@ -184,8 +184,8 @@ export default EStyleSheet.create({
     fontSize: 16,
     padding: 10,
     fontWeight: "600",
-    width: '100%',
-    textAlign: 'center'
+    width: "100%",
+    textAlign: "center",
   },
   ResourceModalTransparentButton: {
     paddingTop: 10,
@@ -731,7 +731,7 @@ export default EStyleSheet.create({
     fontWeight: "bold",
   },
   TransparentNoPaddingButton: {
-    marginTop:10,
+    marginTop: 10,
     paddingTop: 0,
     paddingBottom: 0,
     marginLeft: 10,
@@ -812,6 +812,29 @@ export default EStyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
   },
+  EditButtonv2Button: {
+    paddingTop: 0,
+    paddingBottom: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    backgroundColor: "#ffffff00",
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: "#C4CDD5",
+    shadowOffset: { height: 0, width: 0 },
+    shadowOpacity: 0,
+    alignSelf: "center",
+    height: 32,
+    marginBottom: 50,
+    marginTop: 20,
+  },
+  EditButtonv2Text: {
+    color: "#333333",
+    fontFamily: "Graphik-Regular-App",
+    fontSize: 10.56,
+    paddingLeft: 16,
+    paddingRight: 16,
+  },
   courseTransparentRegularBlackButton: {
     paddingTop: 10,
     paddingBottom: 10,
@@ -887,6 +910,23 @@ export default EStyleSheet.create({
     color: "#000000",
     fontFamily: "Graphik-Bold-App",
     fontSize: 20,
+    lineHeight: 25,
+    padding: 10,
+    fontWeight: "bold",
+  },
+  TransparentBoldBlackNoMarginv2Button: {
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: "#ffffff",
+    borderWidth: 0,
+    borderColor: "#ffffff",
+    shadowOffset: { height: 0, width: 0 },
+    shadowOpacity: 0,
+  },
+  TransparentBoldBlackNoMarginv2Text: {
+    color: "#000000",
+    fontFamily: "Graphik-Bold-App",
+    fontSize: 13.2,
     lineHeight: 25,
     padding: 10,
     fontWeight: "bold",
@@ -1204,42 +1244,39 @@ export default EStyleSheet.create({
     },
     SolidProfileText: {
       width: "100%",
-    
-  },
-    TransparentBoldOrangeMapButton:
-    {
-        paddingTop: 10,
-        paddingBottom: 10,
-        marginBottom: 20,
-        marginLeft: 10,
-        marginRight: 10,
-        // color:"#ffffff",
-        backgroundColor: "#ffffff00",
-        borderWidth: 0,
-        borderColor: "#ffffff",
-        shadowOffset: { height: 0, width: 0 },
-        shadowOpacity: 0,
+    },
+    TransparentBoldOrangeMapButton: {
+      paddingTop: 10,
+      paddingBottom: 10,
+      marginBottom: 20,
+      marginLeft: 10,
+      marginRight: 10,
+      // color:"#ffffff",
+      backgroundColor: "#ffffff00",
+      borderWidth: 0,
+      borderColor: "#ffffff",
+      shadowOffset: { height: 0, width: 0 },
+      shadowOpacity: 0,
     },
     TransparentBoldOrangeMapText: {
-        color: "#F0493E",
-        fontFamily: 'Graphik-Bold-App',
-        fontSize: 16,
-        padding: 10,
-        fontWeight: "bold"
+      color: "#F0493E",
+      fontFamily: "Graphik-Bold-App",
+      fontSize: 16,
+      padding: 10,
+      fontWeight: "bold",
     },
 
-    TransparentRegularOrangeButton:
-    {
-        paddingTop: 10,
-        paddingBottom: 10,
-        marginLeft: 10,
-        marginRight: 10,
-        // color:"#ffffff",
-        backgroundColor: "#ffffff00",
-        borderWidth: 0,
-        borderColor: "#ffffff",
-        shadowOffset: { height: 0, width: 0 },
-        shadowOpacity: 0
+    TransparentRegularOrangeButton: {
+      paddingTop: 10,
+      paddingBottom: 10,
+      marginLeft: 10,
+      marginRight: 10,
+      // color:"#ffffff",
+      backgroundColor: "#ffffff00",
+      borderWidth: 0,
+      borderColor: "#ffffff",
+      shadowOffset: { height: 0, width: 0 },
+      shadowOpacity: 0,
     },
     SolidRightJustifiedButton: {
       alignSelf: "center",
@@ -1301,85 +1338,85 @@ export default EStyleSheet.create({
     },
     AdminSmallOutlineButton: {
       marginLeft: 0,
-  },
-  // Media Query Mobile
-    '@media (min-width: 320px) and (max-width: 480px)': {
-        SolidRightMarginButton: {
-            paddingLeft: 0,
-            paddingRight: 0,
-            marginLeft: 0,
-            marginRight: 0,
-            textAlign: "center"
-        },
-        SolidRightMarginText: {
-            width: "100%"
-        },
-        SolidProfileDeleteButton: {
-            marginLeft: 0,
-            textAlign: 'center',
-            width: '100%',
-            paddingLeft: 0,
-            paddingRight: 0,
-            justifyContent: 'center'
-        },
-        SolidButton: {
-            textAlign: "center",
-            paddingLeft: 0,
-            paddingRight: 0,
-            width: "100%"
-        },
-        SolidText: {
-            width: "100%"
-        },
-        SolidProfileButton: {
-            textAlign: "center",
-            paddingLeft: 0,
-            paddingRight: 0,
-            width: "100%"
-        },
-        SolidProfileNameButton: {
-            textAlign: "center",
-            paddingLeft: 0,
-            paddingRight: 0,
-            width: "100%"
-        },
-        SolidProfileText: {
-            width: "100%"
-        },
-        SolidRightJustifiedButton: {
-            alignSelf: "center",
-            width: "100%"
-        },
-        SolidRightJustifiedText: {
-            width: "100%",
-            textAlign: "center"
-        },
-        OutlineSmallButton: {
-            marginLeft: 0,
-            marginBottom: 10,
-            justifyContent: "center",
-        },
-        SolidAboutMeButton: {
-            justifyContent: "center",
-        },
-        CourseTransparentBoldOrangeButton: {
-            justifyContent: "center",
-            marginRight: 0,
-            marginLeft: 0,
-        },
-        TransparentActivityCourseButton: {
-            marginBottom: 5,
-        },
-        courseActivityTransparentRegularBlackButton: {
-            marginBottom: 5,
-        },
-        TransparentBoldOrangeMapButton: {
-            marginBottom: 0,
-            marginLeft: 0,
-            marginRight: 0,
-            alignSelf: 'center',
-            paddingTop: 0,
-        },
+    },
+    // Media Query Mobile
+    "@media (min-width: 320px) and (max-width: 480px)": {
+      SolidRightMarginButton: {
+        paddingLeft: 0,
+        paddingRight: 0,
+        marginLeft: 0,
+        marginRight: 0,
+        textAlign: "center",
+      },
+      SolidRightMarginText: {
+        width: "100%",
+      },
+      SolidProfileDeleteButton: {
+        marginLeft: 0,
+        textAlign: "center",
+        width: "100%",
+        paddingLeft: 0,
+        paddingRight: 0,
+        justifyContent: "center",
+      },
+      SolidButton: {
+        textAlign: "center",
+        paddingLeft: 0,
+        paddingRight: 0,
+        width: "100%",
+      },
+      SolidText: {
+        width: "100%",
+      },
+      SolidProfileButton: {
+        textAlign: "center",
+        paddingLeft: 0,
+        paddingRight: 0,
+        width: "100%",
+      },
+      SolidProfileNameButton: {
+        textAlign: "center",
+        paddingLeft: 0,
+        paddingRight: 0,
+        width: "100%",
+      },
+      SolidProfileText: {
+        width: "100%",
+      },
+      SolidRightJustifiedButton: {
+        alignSelf: "center",
+        width: "100%",
+      },
+      SolidRightJustifiedText: {
+        width: "100%",
+        textAlign: "center",
+      },
+      OutlineSmallButton: {
+        marginLeft: 0,
+        marginBottom: 10,
+        justifyContent: "center",
+      },
+      SolidAboutMeButton: {
+        justifyContent: "center",
+      },
+      CourseTransparentBoldOrangeButton: {
+        justifyContent: "center",
+        marginRight: 0,
+        marginLeft: 0,
+      },
+      TransparentActivityCourseButton: {
+        marginBottom: 5,
+      },
+      courseActivityTransparentRegularBlackButton: {
+        marginBottom: 5,
+      },
+      TransparentBoldOrangeMapButton: {
+        marginBottom: 0,
+        marginLeft: 0,
+        marginRight: 0,
+        alignSelf: "center",
+        paddingTop: 0,
+      },
     },
   },
 })
