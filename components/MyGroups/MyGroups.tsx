@@ -1206,28 +1206,22 @@ export default class MyGroups extends JCComponent<Props, State> {
   handlePickerChange(itemValue:string){
     this.setState({pickerState:itemValue})
     if(itemValue === "Previous Events"){
-      console.log("previous case")
       this.setState({
         eventFilter: !this.state.eventFilter,
       })
     }
     else if(itemValue === "Upcoming Events"){
-      console.log("upcoming case")
       this.setState({
         eventFilter: this.state.eventFilter,
       })
     }
     else if (itemValue==="Show All"){
-      console.log("Show All Case")
         this.openMultiple();
-      
     }
     else if (itemValue === "Show Recommended"){
-      console.log("Show Recommended Case")
       this.openMultiple();
     }
     else if (itemValue === this.state.myTitleScreen){
-      console.log("myTitleScreen case")
       this.setState({
         myFilter: !this.state.myFilter,
       })
@@ -1270,8 +1264,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                     >
                       <Container style={this.styles.style.sectionHeadingDashboard}>
                         
-                        {Platform.OS !== "web" || Dimensions.get("window").width < 720 ?
-                        <>
+                        {Platform.OS !== "web" || Dimensions.get("window").width < 720 ?                     
                          <Picker
                          
                          style={{
@@ -1294,8 +1287,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                             {constants["SETTING_ISVISIBLE_SHOWEVENTFILTER"] && this.props.type == "event" ? <Picker.Item label="Upcoming Events" value="Upcoming Events"></Picker.Item > : null}
                             {constants["SETTING_ISVISIBLE_SHOWEVENTFILTER"] && this.props.type == "event" ? <Picker.Item  label="Previous Events" value="Previous Events"></Picker.Item >: null}
                             {this.state.showCreateButton && constants["SETTING_ISVISIBLE_CREATE_" + this.state.type] ? <Picker.Item label={`Create ${this.state.titleString.slice(0,-1)}`} value="Create"></Picker.Item >: null}
-                       </Picker>      
-                       </>                     
+                       </Picker>                    
                         : <>
                         <JCButton
                           buttonType={ButtonTypes.TransparentBoldBlack}
