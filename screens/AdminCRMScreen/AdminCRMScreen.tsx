@@ -21,6 +21,7 @@ import {
   CreateOrganizationMemberInput,
   CreateUserInput,
   GetProductQuery,
+  UserGroupType,
 } from "../../src/API"
 import * as customQueries from "../../src/graphql-custom/queries"
 import * as mutations from "../../src/graphql/mutations"
@@ -76,15 +77,9 @@ export default class AdminScreen extends JCComponent<Props, State> {
       inviteType: InviteType.JC,
       inviteData: null,
       inviteDataList: [],
-      groupList: [
-        "admin",
-        "verifiedUsers",
-        "partners",
-        "friends",
-        "courseUser",
-        "courseAdmin",
-        "courseCoach",
-      ],
+      groupList: Object.keys(UserGroupType).map((org: string) => {
+        return org
+      }),
     }
     this.setInitialData()
   }

@@ -313,7 +313,6 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
       )
     }
   }
-  onPaidStateChange(state: string): void {}
 
   recheckUserState = async (): Promise<void> => {
     console.debug("recheckUserState")
@@ -343,6 +342,8 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
                 this.isMemberOf("friends") ||
                 this.isMemberOf("partners") ||
                 this.isMemberOf("admin") ||
+                this.isMemberOf("legacyUserGroup1") ||
+                this.isMemberOf("subscriptionPartners") ||
                 this.isMemberOf("courseAdmin") ||
                 this.isMemberOf("courseUser") ||
                 this.isMemberOf("courseCoach")
@@ -425,9 +426,9 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
       this.setState({ initialAuthType: "signin", initialParams: initialParams })
     }
   }
-  updateHasCompletedOrganizationProfile = (): void => {}
+
   static UserProvider = UserContext.Provider
-  render() {
+  render(): React.ReactNode {
     console.log({
       UserState: [
         "User has signed in",

@@ -859,6 +859,7 @@ enum UserGroupType{
   courseUser
   friends
   partners
+  subscriptionPartners
   subscriptionkyearlyyears	
   subscriptionkykids
   subscriptionkyyouth	

@@ -125,6 +125,7 @@ export enum UserGroupType {
   courseUser = "courseUser",
   friends = "friends",
   partners = "partners",
+  subscriptionPartners = "subscriptionPartners",
   subscriptionkyearlyyears = "subscriptionkyearlyyears",
   subscriptionkykids = "subscriptionkykids",
   subscriptionkyyouth = "subscriptionkyyouth",
