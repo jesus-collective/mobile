@@ -1,10 +1,13 @@
 import { Tooltip } from "@material-ui/core"
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+
 import { Analytics, API, Auth } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment-timezone"
-import { Body, Card, CardItem, Container, Left, ListItem, Right, StyleProvider } from "native-base"
+import { Body, Card, CardItem, Container, Left, ListItem, Picker, Right, StyleProvider } from "native-base"
 import * as React from "react"
-import { Dimensions, Image, Modal, Text, TouchableOpacity, View } from "react-native"
+import { Dimensions, Image, Modal, Platform, Text, TouchableOpacity, View } from "react-native"
 import ErrorBoundry from "../../components/ErrorBoundry"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
@@ -43,7 +46,7 @@ interface State extends JCState {
   isOwner: any
   canPay: any
   isPaid: any
-
+  pickerState:any
   joinCourse: any
 }
 export interface MapData {
@@ -64,6 +67,7 @@ export default class MyGroups extends JCComponent<Props, State> {
         ...super.getInitialState(),
         myFilter: false || this.props.showMy,
         eventFilter: false,
+        pickerState:"",
         myTitleScreen: "My Events",
         openSingle: "GenericGroupScreen",
         genericGroupType: "event",
@@ -1204,6 +1208,33 @@ export default class MyGroups extends JCComponent<Props, State> {
       </View>
     ) : null
   }
+  handlePickerChange(itemValue:string){
+    this.setState({pickerState:itemValue})
+    if(itemValue === "Previous Events"){
+      this.setState({
+        eventFilter: !this.state.eventFilter,
+      })
+    }
+    else if(itemValue === "Upcoming Events"){
+      this.setState({
+        eventFilter: this.state.eventFilter,
+      })
+    }
+    else if (itemValue==="Show All"){
+        this.openMultiple();
+    }
+    else if (itemValue === "Show Recommended"){
+      this.openMultiple();
+    }
+    else if (itemValue === this.state.myTitleScreen){
+      this.setState({
+        myFilter: !this.state.myFilter,
+      })
+    }
+    else if(itemValue ==="Create"){
+      this.createSingle()
+    }
+  }
   static UserConsumer = UserContext.Consumer
   render(): React.ReactNode {
     return (
@@ -1237,6 +1268,32 @@ export default class MyGroups extends JCComponent<Props, State> {
                       }}
                     >
                       <Container style={this.styles.style.sectionHeadingDashboard}>
+                        
+                        {Platform.OS !== "web" || Dimensions.get("window").width < 720 ?                     
+                         <Picker
+                         
+                         style={{
+                           borderWidth:0,
+                           backgroundColor:"white",
+                          width:"100%",
+                         color: "#000000",
+                         fontFamily: "Graphik-Bold-App",
+                         fontSize: 20,
+                         lineHeight: 25,
+                         padding: 10,
+                         fontWeight: "bold",}}
+                         selectedValue={this.state.pickerState}
+                         onValueChange={(itemValue) => this.handlePickerChange(itemValue)}
+                       >       
+                            <Picker.Item label={this.state.titleString} value=""></Picker.Item>
+                            <Picker.Item label="Show All" value="Show All"></Picker.Item>
+                            {constants["SETTING_ISVISIBLE_SHOWRECOMMENDED"] ? <Picker.Item label="Show Recommended" value={"Show Recommended"}></Picker.Item > : null}
+                            {constants["SETTING_ISVISIBLE_SHOWMYFILTER"] ?  <Picker.Item label={this.state.myTitleScreen}  value={this.state.myTitleScreen}></Picker.Item > : null}
+                            {constants["SETTING_ISVISIBLE_SHOWEVENTFILTER"] && this.props.type == "event" ? <Picker.Item label="Upcoming Events" value="Upcoming Events"></Picker.Item > : null}
+                            {constants["SETTING_ISVISIBLE_SHOWEVENTFILTER"] && this.props.type == "event" ? <Picker.Item  label="Previous Events" value="Previous Events"></Picker.Item >: null}
+                            {this.state.showCreateButton && constants["SETTING_ISVISIBLE_CREATE_" + this.state.type] ? <Picker.Item label={`Create ${this.state.titleString.slice(0,-1)}`} value="Create"></Picker.Item >: null}
+                       </Picker>                    
+                        : <>
                         <JCButton
                           buttonType={ButtonTypes.TransparentBoldBlack}
                           onPress={() => {
@@ -1315,7 +1372,9 @@ export default class MyGroups extends JCComponent<Props, State> {
                                 : this.state.createString}
                             </JCButton>
                           ) : null}
+           
                         </Container>
+                        </>}
                       </Container>
 
                       <Container
