@@ -31,6 +31,7 @@ import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
 import "./CardSectionStyles.css"
 import EULA from "./eula.json"
+import moment from "moment"
 import HandleStripePayment from "./HandleStripePayment"
 Amplify.configure(awsConfig)
 const handleInputMutex = new Mutex()
@@ -1093,11 +1094,21 @@ class BillingImpl extends JCComponent<Props, State> {
                             : ""}
                         </Text>
                       </View>
+                      <Text
+                        style={{
+                          marginHorizontal: 10,
+                          fontFamily: "Graphik-Regular-App",
+                          fontSize: 12,
+                        }}
+                      >
+                        Select your billing option
+                      </Text>
                       <Picker
                         mode="dropdown"
                         style={{
-                          width: "100%",
+                          width: "95%",
                           marginTop: 10,
+                          marginHorizontal: 10,
                           marginBottom: 30,
                           fontSize: 16,
                           height: 30,
@@ -1113,22 +1124,35 @@ class BillingImpl extends JCComponent<Props, State> {
                         <Picker.Item key={"0"} label={"Start Billing Immediately"} value={0} />
                         <Picker.Item key={"30"} label={"Start Billing In 30 Days"} value={30} />
                         <Picker.Item key={"60"} label={"Start Billing In 60 Days"} value={60} />
-                        <Picker.Item key={"90"} label={"Start Billing In 90 Days"} value={90} />
+                        {["2021-05-01"].map((date: string) => {
+                          const daysUntil = moment().diff(moment(date), "days") * -1
+                          if (daysUntil > 60)
+                            return (
+                              <Picker.Item
+                                key={daysUntil.toString()}
+                                label={`Start Billing In ${daysUntil} Days`}
+                                value={daysUntil}
+                              />
+                            )
+                          else return null
+                        })}
                       </Picker>
                       <Text style={{ color: "red", textAlign: "center", marginBottom: 4 }}>
                         {this.state.errorMsg}
                       </Text>
-                      <JCButton
-                        testID={"billing-processPayment-button"}
-                        buttonType={ButtonTypes.Solid}
-                        onPress={() => {
-                          this.setState({ errorMsg: "" })
-                          this.makePayment(stripe, elements)
-                        }}
-                        enabled={this.isMakePaymentEnabled() && !!this.state.invoice}
-                      >
-                        Process Payment
-                      </JCButton>
+                      <View style={{ marginHorizontal: 10 }}>
+                        <JCButton
+                          testID={"billing-processPayment-button"}
+                          buttonType={ButtonTypes.Solid}
+                          onPress={() => {
+                            this.setState({ errorMsg: "" })
+                            this.makePayment(stripe, elements)
+                          }}
+                          enabled={this.isMakePaymentEnabled() && !!this.state.invoice}
+                        >
+                          Process Payment
+                        </JCButton>
+                      </View>
                     </View>
                   </Content>
                   {this.renderAddProductModal(userState)}
