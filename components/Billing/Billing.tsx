@@ -31,6 +31,7 @@ import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
 import "./CardSectionStyles.css"
 import EULA from "./eula.json"
+import moment from "moment"
 import HandleStripePayment from "./HandleStripePayment"
 Amplify.configure(awsConfig)
 const handleInputMutex = new Mutex()
@@ -1123,7 +1124,18 @@ class BillingImpl extends JCComponent<Props, State> {
                         <Picker.Item key={"0"} label={"Start Billing Immediately"} value={0} />
                         <Picker.Item key={"30"} label={"Start Billing In 30 Days"} value={30} />
                         <Picker.Item key={"60"} label={"Start Billing In 60 Days"} value={60} />
-                        <Picker.Item key={"85"} label={"Start Billing In 85 Days"} value={85} />
+                        {["2021-05-01"].map((date: string) => {
+                          const daysUntil = moment().diff(moment(date), "days") * -1
+                          if (daysUntil > 0 && daysUntil > 60)
+                            return (
+                              <Picker.Item
+                                key={daysUntil.toString()}
+                                label={`Start Billing In ${daysUntil} Days`}
+                                value={daysUntil}
+                              />
+                            )
+                          else return null
+                        })}
                       </Picker>
                       <Text style={{ color: "red", textAlign: "center", marginBottom: 4 }}>
                         {this.state.errorMsg}
