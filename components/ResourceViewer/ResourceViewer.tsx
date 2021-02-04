@@ -164,7 +164,11 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
           isSponsored: "false",
           image: "temp",
           ownerOrgID: "0000000000000",
-          readGroups: [UserGroupType.partners, UserGroupType.legacyUserGroup1],
+          readGroups: [
+            UserGroupType.partners,
+            UserGroupType.legacyUserGroup1,
+            UserGroupType.subscriptionPartners,
+          ],
         }
         const isEditable = true
         this.setState(
@@ -748,14 +752,14 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     pageItemIndex: PageItemIndex,
     value: ResourcePageItemInput
   ): any {
-    let rootPageItems2 = rootPageItems
+    const rootPageItems2 = rootPageItems
     console.log({ rootPageItems2, pageItemIndex, value })
     if (pageItemIndex.length == 1) {
       return rootPageItems2
     } else {
       //      if (rootPageItems2.pageItems == null) rootPageItems2.pageItems = []
       console.log({ pageItemIndexA: pageItemIndex })
-      let z = this.updateToRoot(
+      const z = this.updateToRoot(
         rootPageItems2[pageItemIndex[0]][pageItemIndex[1]]
           ? rootPageItems2[pageItemIndex[0]][pageItemIndex[1]]
           : [],
@@ -775,7 +779,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     pageItem: ResourcePageItemInput,
     pageItemIndex: PageItemIndex
   ): any {
-    let rootPageItems2 = rootPageItems
+    const rootPageItems2 = rootPageItems
     console.log({ rootPageItems2, pageItem, pageItemIndex })
     if (pageItemIndex.length == 0) {
       rootPageItems2.push(pageItem)
@@ -784,7 +788,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     } else {
       //      if (rootPageItems2.pageItems == null) rootPageItems2.pageItems = []
       console.log({ pageItemIndexA: pageItemIndex })
-      let z = this.addToRoot(
+      const z = this.addToRoot(
         rootPageItems2[pageItemIndex[0]][pageItemIndex[1]]
           ? rootPageItems2[pageItemIndex[0]][pageItemIndex[1]]
           : [],
@@ -803,7 +807,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
 
     pageItemIndex: PageItemIndex
   ): any {
-    let rootPageItems2 = rootPageItems
+    const rootPageItems2 = rootPageItems
     console.log({ rootPageItems2, pageItemIndex })
     if (pageItemIndex.length == 1) {
       rootPageItems2.splice(pageItemIndex[0] as number, 1)
@@ -812,7 +816,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     } else {
       //      if (rootPageItems2.pageItems == null) rootPageItems2.pageItems = []
       console.log({ pageItemIndexA: pageItemIndex })
-      let z = this.deleteToRoot(
+      const z = this.deleteToRoot(
         rootPageItems2[pageItemIndex[0]][pageItemIndex[1]]
           ? rootPageItems2[pageItemIndex[0]][pageItemIndex[1]]
           : [],

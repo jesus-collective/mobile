@@ -154,7 +154,11 @@ export default class CourseScreen extends JCComponent<Props, State> {
           promotionalText: JSON.stringify(
             convertToRaw(EditorState.createEmpty().getCurrentContent())
           ),
-          readGroups: [UserGroupType.partners, UserGroupType.legacyUserGroup1],
+          readGroups: [
+            UserGroupType.partners,
+            UserGroupType.legacyUserGroup1,
+            UserGroupType.subscriptionPartners,
+          ],
           //   organizerUser: { name: "" },
           //   instructors: [],
           //   course: []
@@ -888,7 +892,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                                 <View>
                                   {item.lessons.items.map((lesson, index2: number) => {
                                     return (
-                                      <Text>
+                                      <Text key={index2}>
                                         {index1 + 1}.{index2 + 1} - {lesson.name}
                                       </Text>
                                     )

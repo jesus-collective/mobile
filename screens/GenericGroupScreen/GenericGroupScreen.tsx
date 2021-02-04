@@ -148,7 +148,11 @@ export default class EventScreen extends JCComponent<Props, State> {
           image: "temp",
           isSponsored: "false",
           ownerOrgID: "0000000000000",
-          readGroups: [UserGroupType.legacyUserGroup1, UserGroupType.partners],
+          readGroups: [
+            UserGroupType.legacyUserGroup1,
+            UserGroupType.partners,
+            UserGroupType.subscriptionPartners,
+          ],
         }
         if (this.state.groupType == "event")
           z = { ...z, eventType: "zoom", time: null, location: "" }

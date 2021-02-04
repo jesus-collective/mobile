@@ -19,6 +19,7 @@ import {
   ListProductsQuery,
   TieredProductInput,
   UpdateProductInput,
+  UserGroupType,
 } from "../../src/API"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
@@ -81,15 +82,9 @@ export default class AdminScreen extends JCComponent<Props, State> {
       enabled: "true",
       isStripe: "true",
       isPaypal: "false",
-      groupList: [
-        "admin",
-        "verifiedUsers",
-        "partners",
-        "friends",
-        "courseUser",
-        "courseAdmin",
-        "courseCoach",
-      ],
+      groupList: Object.keys(UserGroupType).map((org: string) => {
+        return org
+      }),
       showAddProductModal: false,
     }
     this.setInitialData()
@@ -249,23 +244,23 @@ export default class AdminScreen extends JCComponent<Props, State> {
   }
   updateTierList(val: any) {
     const tmp = this.state.groupsIncluded
-    var index = tmp.indexOf(val)
+    const index = tmp.indexOf(val)
     if (index !== -1) tmp.splice(index, 1)
     else tmp.push(val)
     this.setState({ groupsIncluded: tmp })
   }
   addTier() {
-    let temp = this.state.tiered ? this.state.tiered : []
+    const temp = this.state.tiered ? this.state.tiered : []
     temp.push({ name: "", stripeIsTiered: "false", stripePaymentID: "" })
     this.setState({ tiered: temp })
   }
   deleteTier(index) {
-    let temp = this.state.tiered
+    const temp = this.state.tiered
     temp.splice(index, 1)
     this.setState({ tiered: temp })
   }
   updateTier(index: number, field: string, value) {
-    let temp = this.state.tiered
+    const temp = this.state.tiered
     temp[index][field] = value
     this.setState({ tiered: temp })
   }
@@ -379,7 +374,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
             ></JCSwitch>
             {this.state.tiered?.map((item, index) => {
               return (
-                <>
+                <React.Fragment key={index}>
                   <TextInput
                     onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
                       this.updateTier(index, "name", val.nativeEvent.text)
@@ -409,7 +404,7 @@ export default class AdminScreen extends JCComponent<Props, State> {
                     color="black"
                     onPress={() => this.deleteTier(index)}
                   />
-                </>
+                </React.Fragment>
               )
             })}
             <AntDesign name="plus" size={20} color="black" onPress={() => this.addTier()} />
@@ -421,9 +416,10 @@ export default class AdminScreen extends JCComponent<Props, State> {
               isEditable={true}
             ></EditableRichText>
             <Text>Groups: </Text>
-            {this.state.groupList.map((item) => {
+            {this.state.groupList.map((item, index) => {
               return (
                 <JCSwitch
+                  key={index}
                   switchLabel={item}
                   initState={this.state.groupsIncluded?.includes(item)}
                   onPress={(val) => {
