@@ -1,13 +1,12 @@
+import { Ionicons } from "@expo/vector-icons"
 import { Tooltip } from "@material-ui/core"
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-
 import { Analytics, API, Auth } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment-timezone"
-import { Body, Card, CardItem, Container, Left, ListItem, Picker, Right, StyleProvider } from "native-base"
+import { Body, Card, CardItem, Container, Left, ListItem, Right, StyleProvider } from "native-base"
 import * as React from "react"
 import { Dimensions, Image, Modal, Platform, Text, TouchableOpacity, View } from "react-native"
+import DropDownPicker from "react-native-dropdown-picker"
 import ErrorBoundry from "../../components/ErrorBoundry"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
@@ -46,7 +45,7 @@ interface State extends JCState {
   isOwner: any
   canPay: any
   isPaid: any
-  pickerState:any
+  pickerState: any
   joinCourse: any
 }
 export interface MapData {
@@ -67,7 +66,7 @@ export default class MyGroups extends JCComponent<Props, State> {
         ...super.getInitialState(),
         myFilter: false || this.props.showMy,
         eventFilter: false,
-        pickerState:"",
+        pickerState: "",
         myTitleScreen: "My Events",
         openSingle: "GenericGroupScreen",
         genericGroupType: "event",
@@ -392,9 +391,12 @@ export default class MyGroups extends JCComponent<Props, State> {
       })
 
       const processList = (json: any) => {
-        if(props.type === "event"){ // sorting events by date
-          if(json?.data?.groupByType?.items){
-            json.data.groupByType.items = json.data.groupByType.items.sort((a:any,b:any) => a.time.localeCompare(b.time))
+        if (props.type === "event") {
+          // sorting events by date
+          if (json?.data?.groupByType?.items) {
+            json.data.groupByType.items = json.data.groupByType.items.sort((a: any, b: any) =>
+              a.time.localeCompare(b.time)
+            )
           }
         }
         console.log({ groupData: json })
@@ -1208,34 +1210,74 @@ export default class MyGroups extends JCComponent<Props, State> {
       </View>
     ) : null
   }
-  handlePickerChange(itemValue:string){
-    this.setState({pickerState:itemValue})
-    if(itemValue === "Previous Events"){
+  handlePickerChange(itemValue: string) {
+    this.setState({ pickerState: itemValue })
+    if (itemValue === "Previous Events") {
       this.setState({
         eventFilter: !this.state.eventFilter,
       })
-    }
-    else if(itemValue === "Upcoming Events"){
+    } else if (itemValue === "Upcoming Events") {
       this.setState({
         eventFilter: this.state.eventFilter,
       })
-    }
-    else if (itemValue==="Show All"){
-        this.openMultiple();
-    }
-    else if (itemValue === "Show Recommended"){
-      this.openMultiple();
-    }
-    else if (itemValue === this.state.myTitleScreen){
+    } else if (itemValue === "Show All") {
+      this.openMultiple()
+    } else if (itemValue === "Show Recommended") {
+      this.openMultiple()
+    } else if (itemValue === this.state.myTitleScreen) {
       this.setState({
         myFilter: !this.state.myFilter,
       })
-    }
-    else if(itemValue ==="Create"){
+    } else if (itemValue === "Create") {
       this.createSingle()
     }
   }
   static UserConsumer = UserContext.Consumer
+  icon = () => {
+    return <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />
+  }
+  getButtonItems() {
+    const z = []
+
+    z.push({
+      label: "Show All",
+      value: "Show All",
+      icon: this.icon,
+    })
+    if (constants["SETTING_ISVISIBLE_SHOWRECOMMENDED"])
+      z.push({
+        label: "Show Recommended",
+        value: "Show Recommended",
+        icon: this.icon,
+      })
+
+    if (constants["SETTING_ISVISIBLE_SHOWMYFILTER"])
+      z.push({
+        label: this.state.myTitleScreen,
+        value: this.state.myTitleScreen,
+        icon: this.icon,
+      })
+    if (constants["SETTING_ISVISIBLE_SHOWEVENTFILTER"] && this.props.type == "event")
+      z.push({
+        label: "Upcoming Events",
+        value: "Upcoming Events",
+        icon: this.icon,
+      })
+    if (constants["SETTING_ISVISIBLE_SHOWEVENTFILTER"] && this.props.type == "event")
+      z.push({
+        label: "Previous Events",
+        value: "Previous Events",
+        icon: this.icon,
+      })
+    if (constants["SETTING_ISVISIBLE_CREATE_" + this.state.type])
+      z.push({
+        label: `Create ${this.state.titleString.slice(0, -1)}`,
+        value: "Create",
+        icon: this.icon,
+      })
+
+    return z
+  }
   render(): React.ReactNode {
     return (
       <MyGroups.UserConsumer>
@@ -1267,114 +1309,146 @@ export default class MyGroups extends JCComponent<Props, State> {
                         justifyContent: "flex-start",
                       }}
                     >
-                      <Container style={this.styles.style.sectionHeadingDashboard}>
-                        
-                        {Platform.OS !== "web" || Dimensions.get("window").width < 720 ?                     
-                         <Picker
-                         
-                         style={{
-                           borderWidth:0,
-                           backgroundColor:"white",
-                          width:"100%",
-                         color: "#000000",
-                         fontFamily: "Graphik-Bold-App",
-                         fontSize: 20,
-                         lineHeight: 25,
-                         padding: 10,
-                         fontWeight: "bold",}}
-                         selectedValue={this.state.pickerState}
-                         onValueChange={(itemValue) => this.handlePickerChange(itemValue)}
-                       >       
-                            <Picker.Item label={this.state.titleString} value=""></Picker.Item>
-                            <Picker.Item label="Show All" value="Show All"></Picker.Item>
-                            {constants["SETTING_ISVISIBLE_SHOWRECOMMENDED"] ? <Picker.Item label="Show Recommended" value={"Show Recommended"}></Picker.Item > : null}
-                            {constants["SETTING_ISVISIBLE_SHOWMYFILTER"] ?  <Picker.Item label={this.state.myTitleScreen}  value={this.state.myTitleScreen}></Picker.Item > : null}
-                            {constants["SETTING_ISVISIBLE_SHOWEVENTFILTER"] && this.props.type == "event" ? <Picker.Item label="Upcoming Events" value="Upcoming Events"></Picker.Item > : null}
-                            {constants["SETTING_ISVISIBLE_SHOWEVENTFILTER"] && this.props.type == "event" ? <Picker.Item  label="Previous Events" value="Previous Events"></Picker.Item >: null}
-                            {this.state.showCreateButton && constants["SETTING_ISVISIBLE_CREATE_" + this.state.type] ? <Picker.Item label={`Create ${this.state.titleString.slice(0,-1)}`} value="Create"></Picker.Item >: null}
-                       </Picker>                    
-                        : <>
-                        <JCButton
-                          buttonType={ButtonTypes.TransparentBoldBlack}
-                          onPress={() => {
-                            this.openMultiple()
-                          }}
-                        >
-                          {this.state.titleString}
-                        </JCButton>
-                        <Container
-                          style={{
-                            maxHeight: 45,
-                            flexDirection: "row",
-                            justifyContent: "flex-end",
-                            alignItems: "flex-start",
-                          }}
-                        >
+                      <Container
+                        style={[this.styles.style.sectionHeadingDashboard, { zIndex: 6000 }]}
+                      >
+                        <>
                           <JCButton
-                            buttonType={ButtonTypes.TransparentBoldOrange}
-                            testID={"mygroup-showall-" + this.state.titleString}
+                            buttonType={ButtonTypes.TransparentBoldBlack}
                             onPress={() => {
                               this.openMultiple()
                             }}
                           >
-                            Show All
+                            {this.state.titleString}
                           </JCButton>
-                          {constants["SETTING_ISVISIBLE_SHOWRECOMMENDED"] ? (
-                            <JCButton
-                              buttonType={ButtonTypes.TransparentBoldOrange}
-                              testID={"mygroup-recommended-" + this.state.titleString}
-                              onPress={() => {
-                                this.openMultiple()
-                              }}
-                            >
-                              Show Recommended
-                            </JCButton>
-                          ) : null}
-                          {constants["SETTING_ISVISIBLE_SHOWMYFILTER"] ? (
-                            <JCButton
-                              buttonType={ButtonTypes.TransparentBoldOrange}
-                              testID={"mygroup-showmyfilter-" + this.state.titleString}
-                              onPress={() => {
-                                this.setState({
-                                  myFilter: !this.state.myFilter,
-                                })
-                              }}
-                            >
-                              {this.state.myTitleScreen}
-                            </JCButton>
-                          ) : null}
-                          {constants["SETTING_ISVISIBLE_SHOWEVENTFILTER"] &&
-                          this.props.type == "event" &&
-                          (deviceWidth >= 950 || this.props.wrap) ? (
-                            <JCButton
-                              buttonType={ButtonTypes.TransparentBoldOrange}
-                              testID={"mygroup-showeventfilter-" + this.state.titleString}
-                              onPress={() => {
-                                this.setState({
-                                  eventFilter: !this.state.eventFilter,
-                                })
-                              }}
-                            >
-                              {this.state.eventFilter ? "Upcoming Events" : "Previous Events"}
-                            </JCButton>
-                          ) : null}
-                          {this.state.showCreateButton &&
-                          constants["SETTING_ISVISIBLE_CREATE_" + this.state.type] ? (
-                            <JCButton
-                              buttonType={ButtonTypes.OutlineBold}
-                              testID={"mygroup-create-" + this.state.titleString}
-                              onPress={() => {
-                                this.createSingle()
-                              }}
-                            >
-                              {deviceWidth < 950 && !this.props.wrap
-                                ? "+"
-                                : this.state.createString}
-                            </JCButton>
-                          ) : null}
-           
-                        </Container>
-                        </>}
+                          <Container
+                            style={{
+                              zIndex: 6000,
+                              maxHeight: 45,
+                              flexDirection: "row",
+                              justifyContent: "flex-end",
+                              alignItems: "flex-start",
+                            }}
+                          >
+                            {Platform.OS !== "web" || Dimensions.get("window").width < 720 ? (
+                              <DropDownPicker
+                                zIndex={6000}
+                                containerStyle={{
+                                  height: 40,
+                                  width: 80,
+                                  zIndex: 5000,
+                                  marginTop: 5,
+                                  marginBottom: 5,
+                                }}
+                                dropDownStyle={{
+                                  backgroundColor: "#FF4438",
+                                  right: 0,
+                                  width: 200,
+                                  zIndex: 5000,
+                                }}
+                                style={{
+                                  backgroundColor: "#FF4438",
+                                  zIndex: 5000,
+                                }}
+                                itemStyle={{
+                                  justifyContent: "flex-start",
+                                  width: 100,
+                                  zIndex: 5000,
+                                }}
+                                customArrowUp={() => (
+                                  <Ionicons
+                                    name="cog-outline"
+                                    style={this.styles.style.resourceIcon}
+                                  />
+                                )}
+                                customArrowDown={() => (
+                                  <Ionicons
+                                    name="cog-outline"
+                                    style={this.styles.style.resourceIcon}
+                                  />
+                                )}
+                                placeholder=""
+                                labelStyle={{
+                                  fontSize: 14,
+                                  textAlign: "left",
+                                  color: "#FFFFFF",
+                                  fontWeight: "600",
+                                  alignSelf: "center",
+                                  zIndex: 5000,
+                                }}
+                                items={this.getButtonItems()}
+                                onChangeItem={(itemValue) =>
+                                  this.handlePickerChange(itemValue.value)
+                                }
+                              />
+                            ) : (
+                              <>
+                                <JCButton
+                                  buttonType={ButtonTypes.TransparentBoldOrange}
+                                  testID={"mygroup-showall-" + this.state.titleString}
+                                  onPress={() => {
+                                    this.openMultiple()
+                                  }}
+                                >
+                                  Show All
+                                </JCButton>
+                                {constants["SETTING_ISVISIBLE_SHOWRECOMMENDED"] ? (
+                                  <JCButton
+                                    buttonType={ButtonTypes.TransparentBoldOrange}
+                                    testID={"mygroup-recommended-" + this.state.titleString}
+                                    onPress={() => {
+                                      this.openMultiple()
+                                    }}
+                                  >
+                                    Show Recommended
+                                  </JCButton>
+                                ) : null}
+                                {constants["SETTING_ISVISIBLE_SHOWMYFILTER"] ? (
+                                  <JCButton
+                                    buttonType={ButtonTypes.TransparentBoldOrange}
+                                    testID={"mygroup-showmyfilter-" + this.state.titleString}
+                                    onPress={() => {
+                                      this.setState({
+                                        myFilter: !this.state.myFilter,
+                                      })
+                                    }}
+                                  >
+                                    {this.state.myTitleScreen}
+                                  </JCButton>
+                                ) : null}
+                                {constants["SETTING_ISVISIBLE_SHOWEVENTFILTER"] &&
+                                this.props.type == "event" &&
+                                (deviceWidth >= 950 || this.props.wrap) ? (
+                                  <JCButton
+                                    buttonType={ButtonTypes.TransparentBoldOrange}
+                                    testID={"mygroup-showeventfilter-" + this.state.titleString}
+                                    onPress={() => {
+                                      this.setState({
+                                        eventFilter: !this.state.eventFilter,
+                                      })
+                                    }}
+                                  >
+                                    {this.state.eventFilter ? "Upcoming Events" : "Previous Events"}
+                                  </JCButton>
+                                ) : null}
+                                {this.state.showCreateButton &&
+                                constants["SETTING_ISVISIBLE_CREATE_" + this.state.type] ? (
+                                  <JCButton
+                                    buttonType={ButtonTypes.OutlineBold}
+                                    testID={"mygroup-create-" + this.state.titleString}
+                                    onPress={() => {
+                                      this.createSingle()
+                                    }}
+                                  >
+                                    {deviceWidth < 950 && !this.props.wrap
+                                      ? "+"
+                                      : this.state.createString}
+                                  </JCButton>
+                                ) : null}
+                              </>
+                            )}
+                          </Container>
+                        </>
                       </Container>
 
                       <Container
@@ -1391,11 +1465,12 @@ export default class MyGroups extends JCComponent<Props, State> {
                           0 ? (
                             this.state.data
                               .filter(this.filterMy)
-                              .filter(this.filterEvent).sort((a:any,b:any) => {
-                                if(this.state.type =="event" && this.state.eventFilter)
-                                return b.time.localeCompare(a.time)
+                              .filter(this.filterEvent)
+                              .sort((a: any, b: any) => {
+                                if (this.state.type == "event" && this.state.eventFilter)
+                                  return b.time.localeCompare(a.time)
                                 else return 0
-                              }) 
+                              })
                               .map((item: any, index: number) => {
                                 return (
                                   <ErrorBoundry key={index}>
