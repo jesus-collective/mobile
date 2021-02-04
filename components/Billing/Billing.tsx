@@ -1126,7 +1126,7 @@ class BillingImpl extends JCComponent<Props, State> {
                         <Picker.Item key={"60"} label={"Start Billing In 60 Days"} value={60} />
                         {["2021-05-01"].map((date: string) => {
                           const daysUntil = moment().diff(moment(date), "days") * -1
-                          if (daysUntil > 0 && daysUntil > 60)
+                          if (daysUntil > 60)
                             return (
                               <Picker.Item
                                 key={daysUntil.toString()}
