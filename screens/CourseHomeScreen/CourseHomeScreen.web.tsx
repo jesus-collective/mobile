@@ -1,4 +1,5 @@
 ﻿import { GraphQLResult } from "@aws-amplify/api/lib/types"
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons"
 import { API, Auth } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { convertToRaw, EditorState } from "draft-js"
@@ -14,12 +15,13 @@ import {
   GetGroupQuery,
 } from "src/API"
 import CourseSidebar from "../../components/CourseSidebar/CourseSidebar"
-import ChatButton from "../../components/CourseViewer/ChatButton"
 import CourseChat from "../../components/CourseViewer/CourseChat"
 import CourseCoaching from "../../components/CourseViewer/CourseCoaching"
 import { CourseContext, CourseState } from "../../components/CourseViewer/CourseContext"
 import CourseDetail from "../../components/CourseViewer/CourseDetail"
 import CourseHome from "../../components/CourseViewer/CourseHome"
+import FloatingButton from "../../components/FloatingButton/FloatingButton"
+import FloatingButtonStyles from "../../components/FloatingButton/FloatingButtonStyles"
 import JCComponent from "../../components/JCComponent/JCComponent"
 import Validate from "../../components/Validate/Validate"
 import getTheme from "../../native-base-theme/components"
@@ -930,9 +932,13 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         <StyleProvider style={getTheme()}>
           <>
             {this.state.currentScreen == "Details" && !this.state.showChat ? (
-              <ChatButton
-                setShowChat={() => this.setState({ showChat: true })}
-                floating={smallScreen}
+              <FloatingButton
+                label="Chat"
+                customStyle={FloatingButtonStyles.ChatFloatingButtonStyle}
+                customLabelStyle={FloatingButtonStyles.ChatFloatingButtonTextStyle}
+                smallIcon={<MaterialCommunityIcons name="chat" size={24} color="white" />}
+                largeIcon={<AntDesign name="left" size={24} color="#333333" />}
+                setShow={() => this.setState({ showChat: true })}
               />
             ) : null}
 
