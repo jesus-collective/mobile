@@ -1593,6 +1593,12 @@ export default class MainStyles {
         alignItems: "center",
         justifyContent: "center",
       },
+      mySignUpOr: {
+        fontFamily: "Graphik-Regular-App",
+        fontWeight: "bold",
+        fontSize: 22,
+        marginHorizontal: 15,
+      },
 
       // Media Query Desktop Tablet
       "@media (min-width: 350) and (max-width: 768)": {
@@ -2160,6 +2166,19 @@ export default class MainStyles {
         },
         myMapConversationCardRole: {
           textAlign: "center",
+        },
+        mySignUpText: {
+          marginTop: 50,
+          width: '100%'
+        },
+        authView3: {
+          marginLeft: 15,
+          marginRight: 15,
+        },
+        mySignUpOr: {
+          marginTop: 15,
+          marginBottom: 15,
+          width: '40%'
         },
       },
 
