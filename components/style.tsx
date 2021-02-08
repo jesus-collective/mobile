@@ -1914,7 +1914,7 @@ export default class MainStyles {
             ? { position: "absolute", top: "0%", left: "2%", marginTop: 5 }
             : { position: "absolute", top: "0%", left: "2%", marginTop: 5 },
         confirmationCodeWrapper: { display: "flex", flexDirection: "column" },
-        signUpBackButtonWrapper: { position: "absolute", top: "0%", left: "5%" },
+        signUpBackButtonWrapper: { position: "absolute", top: "0%", left: "2%" },
         // rightCardWidth: {
         //     width: "100%"
         // },
@@ -2169,16 +2169,16 @@ export default class MainStyles {
         },
         mySignUpText: {
           marginTop: 50,
-          width: '100%'
+          width: "100%",
         },
         authView3: {
-          marginLeft: 15,
-          marginRight: 15,
+          marginLeft: 5,
+          marginRight: 5,
         },
         mySignUpOr: {
           marginTop: 15,
           marginBottom: 15,
-          width: '40%'
+          width: "40%",
         },
       },
 
