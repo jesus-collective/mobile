@@ -1801,7 +1801,7 @@ export default class MainStyles {
         },
         mySignUpButton: {
           flexDirection: "column",
-          height: 'auto'
+          height: "auto",
         },
       },
 
@@ -1903,7 +1903,10 @@ export default class MainStyles {
 
       "@media (min-width: 320px) and (max-width: 720px)": {
         authView2: { left: "2%", width: "96%", top: "12%", height: "100%" },
-        createAccountButtonWrapper: { position: "absolute", top: "0%", left: "2%", marginTop: 5 },
+        createAccountButtonWrapper:
+          Platform.OS === "web"
+            ? { position: "absolute", top: "0%", left: "2%", marginTop: 5 }
+            : { position: "absolute", top: "0%", left: "2%", marginTop: 5 },
         confirmationCodeWrapper: { display: "flex", flexDirection: "column" },
         signUpBackButtonWrapper: { position: "absolute", top: "0%", left: "5%" },
         // rightCardWidth: {
@@ -2476,12 +2479,12 @@ export default class MainStyles {
           : { position: "absolute", width: "100%", height: "100%", left: 0, top: 0 },
       signUpScreen1PaymentColumn1:
         Platform.OS === "web" && Dimensions.get("window").width > 720
-          ? { position: "absolute", left: "7.5%", width: "100%", top: '40vh', height: "100%" }
+          ? { position: "absolute", left: "7.5%", width: "100%", top: "40vh", height: "100%" }
           : { marginLeft: 20, marginRight: 20 },
       signUpScreen1PaymentColumn1Form:
-          Platform.OS === "web" && Dimensions.get("window").width > 720
-            ? { position: "absolute", left: "35%", width: "25%", top: 100, height:"100%" }
-            : { marginLeft: 20, marginRight: 20 },
+        Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? { position: "absolute", left: "35%", width: "25%", top: 100, height: "100%" }
+          : { marginLeft: 20, marginRight: 20 },
       signUpScreen1PaymentColumn2:
         Platform.OS === "web" && Dimensions.get("window").width > 720
           ? { position: "absolute", left: "70%", width: "25%", top: 100, height: "100%" }
