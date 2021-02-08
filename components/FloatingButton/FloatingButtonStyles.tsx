@@ -29,13 +29,13 @@ const FloatingButtonStyles = EStyleSheet.create({
     marginLeft: 5,
     paddingBottom: 2,
   },
-  /* ================ Right Positioned ============ */
+  /* ================ Left Positioned ============ */
   HelpFloatingButtonStyle: {
-    position: "absolute",
+    position: "relative",
     zIndex: 9999,
     bottom: smallScreen ? 25 : 42,
-    right: smallScreen ? 25 : "unset",
-    left: smallScreen ? "unset" : 25,
+    right: "unset",
+    left: 25,
     width: smallScreen ? 50 : 175,
     height: 50,
     borderRadius: smallScreen ? 50 : 56,

@@ -17,11 +17,6 @@ const HelpModalStyles = EStyleSheet.create({
   HelpModalContainer: {
     paddingHorizontal: 12,
     paddingVertical: 16,
-    top: smallScreen ? 0 : "unset",
-    position: "absolute",
-    right: "unset",
-    left: smallScreen ? "unset" : 25,
-    bottom: 120,
     backgroundColor: "white",
     shadowColor: "#333333",
     shadowRadius: 15,
@@ -29,6 +24,11 @@ const HelpModalStyles = EStyleSheet.create({
     shadowOpacity: 0.25,
     width: smallScreen ? width : 400,
     height: smallScreen ? height : 300,
+    top: smallScreen ? 0 : "unset",
+    position: "absolute",
+    right: "unset",
+    left: smallScreen ? "unset" : 25,
+    bottom: 120,
   },
   HelpModalTextInput: {
     marginVertical: 4,
