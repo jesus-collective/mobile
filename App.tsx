@@ -1,4 +1,4 @@
-import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons"
+import { Ionicons } from "@expo/vector-icons"
 import { NavigationProp } from "@react-navigation/native"
 import Amplify, { Auth, I18n } from "aws-amplify"
 import { Authenticator } from "aws-amplify-react-native"
@@ -7,12 +7,9 @@ import { Asset } from "expo-asset"
 import * as Font from "expo-font"
 import { View } from "native-base"
 import React, { lazy, Suspense } from "react"
-import { Dimensions, Image, Platform } from "react-native"
+import { Dimensions, Platform } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { AuthStateData } from "src/types"
-import FloatingButton from "./components/FloatingButton/FloatingButton"
-import FloatingButtonStyles from "./components/FloatingButton/FloatingButtonStyles"
-import HelpModal from "./components/HelpModal/HelpModal"
 import JCComponent, { JCState } from "./components/JCComponent/JCComponent"
 import Sentry from "./components/Sentry"
 import * as RootNavigation from "./screens/HomeScreen//NavigationRoot"
@@ -69,7 +66,6 @@ interface State extends JCState {
   authState: any
   joinedAs: "individual" | "organization"
   username: any
-  helpModal: boolean
 }
 const federated = {
   google_client_id: "",
@@ -92,7 +88,6 @@ class AwesomeApp extends JCComponent<Props, State> {
       isLoggedIn: false,
       authState: "",
       username: "",
-      helpModal: false,
     }
     //  this.ionViewCanEnter();
   }
@@ -186,50 +181,7 @@ class AwesomeApp extends JCComponent<Props, State> {
     if (initialUrl.toLowerCase().includes("/auth/signup")) return "signUp"
     return "signIn"
   }
-  renderHelpModal(): JSX.Element | null {
-    return <HelpModal></HelpModal>
-  }
-  renderHelpFab(): JSX.Element | null {
-    return (
-      <FloatingButton
-        setShow={() => this.setState({ helpModal: !this.state.helpModal })}
-        smallIcon={
-          this.state.helpModal ? (
-            <MaterialCommunityIcons name="close-thick" size={24} color="white" />
-          ) : (
-            <MaterialCommunityIcons name="help-circle" size={24} color="white" />
-          )
-        }
-        customStyle={FloatingButtonStyles.HelpFloatingButtonStyle}
-        customLabelStyle={FloatingButtonStyles.HelpFloatingButtonTextStyle}
-        largeIcon={
-          this.state.helpModal ? (
-            <MaterialCommunityIcons name="close-thick" size={24} color="white" />
-          ) : (
-            <View
-              style={{
-                marginLeft: -24,
-                height: 41,
-                width: 41,
-                borderRadius: 50,
-                backgroundColor: "#F0493E",
-                justifyContent: "center",
-                alignContent: "center",
-              }}
-            >
-              <Image
-                style={{
-                  flex: 1,
-                }}
-                source={require("./assets/svg/JC-Logo.svg")}
-              ></Image>
-            </View>
-          )
-        }
-        label={this.state.helpModal ? "" : "Need Help?"}
-      />
-    )
-  }
+
   render(): React.ReactNode {
     //    console.log({ AwesomeApp: this.state.authState })
     if (this.state.fontLoaded && this.state.authState != "") {
@@ -270,8 +222,6 @@ class AwesomeApp extends JCComponent<Props, State> {
               authState={this.state.authState}
             />
           </Authenticator>
-          {this.renderHelpFab()}
-          {this.state.helpModal ? this.renderHelpModal() : null}
         </View>
       )
     } else {
