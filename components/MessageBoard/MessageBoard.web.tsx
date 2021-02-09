@@ -133,12 +133,12 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         query: onCreateMessageByRoomId,
         variables: { roomId: this.props.groupId },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Observable<object>
+      }) as Observable<{
+        provider: any
+        value: GraphQLResult<OnCreateMessageByRoomIdSubscription>
+      }>
       this.messageUnsubscribe = messageSub.subscribe({
-        next: (incoming: {
-          provider: any
-          value: GraphQLResult<OnCreateMessageByRoomIdSubscription>
-        }) => {
+        next: (incoming) => {
           console.debug(incoming)
           if (incoming.value.data?.onCreateMessageByRoomId) {
             this.setState({
@@ -153,12 +153,12 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       const replySub = API.graphql({
         query: onCreateReply,
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Observable<object>
+      }) as Observable<{
+        provider: any
+        value: GraphQLResult<OnCreateReplySubscription>
+      }>
       this.replyUnsubscribe = replySub.subscribe({
-        next: async (incoming: {
-          provider: any
-          value: GraphQLResult<OnCreateReplySubscription>
-        }) => {
+        next: async (incoming) => {
           console.debug(incoming)
           if (
             incoming.value?.data?.onCreateReply?.parentMessage &&
@@ -206,12 +206,12 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       const dmSub = (await API.graphql({
         query: onCreateDirectMessage,
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as Observable<object>
+      })) as Observable<{
+        provider: any
+        value: GraphQLResult<OnCreateDirectMessageSubscription>
+      }>
       this.dmUnsubscribe = dmSub.subscribe({
-        next: async (incoming: {
-          provider: any
-          value: GraphQLResult<OnCreateDirectMessageSubscription>
-        }) => {
+        next: async (incoming) => {
           console.debug(incoming)
           if (
             incoming.value?.data?.onCreateDirectMessage &&
@@ -748,7 +748,10 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                     },
                   }}
                   toolbarCustomButtons={[
-                    <FileUpload handleUploadCallback={(e) => this.handleUpload(e)} />,
+                    <FileUpload
+                      key="fileupload"
+                      handleUploadCallback={(e) => this.handleUpload(e)}
+                    />,
                   ]}
                 />
                 {this.renderWordCount()}
