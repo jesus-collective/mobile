@@ -1234,7 +1234,22 @@ export default class MyGroups extends JCComponent<Props, State> {
   }
   static UserConsumer = UserContext.Consumer
   icon = () => {
-    return <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />
+    return <Ionicons name="md-eye-outline" style={this.styles.style.resourceIcon} />
+  }
+  icon2 = () => {
+    return <Ionicons name="thumbs-up" style={this.styles.style.resourceIcon} />
+  }
+  icon3 = () => {
+    return <Ionicons name="documents-outline" style={this.styles.style.resourceIcon} />
+  }
+  icon4 = () => {
+    return <Ionicons name="arrow-forward-outline" style={this.styles.style.resourceIcon} />
+  }
+  icon5 = () => {
+    return <Ionicons name="arrow-back-outline" style={this.styles.style.resourceIcon} />
+  }
+  icon6 = () => {
+    return <Ionicons name="add-outline" style={this.styles.style.resourceIcon} />
   }
   getButtonItems() {
     const z = []
@@ -1248,32 +1263,32 @@ export default class MyGroups extends JCComponent<Props, State> {
       z.push({
         label: "Show Recommended",
         value: "Show Recommended",
-        icon: this.icon,
+        icon: this.icon2,
       })
 
     if (constants["SETTING_ISVISIBLE_SHOWMYFILTER"])
       z.push({
         label: this.state.myTitleScreen,
         value: this.state.myTitleScreen,
-        icon: this.icon,
+        icon: this.icon3,
       })
     if (constants["SETTING_ISVISIBLE_SHOWEVENTFILTER"] && this.props.type == "event")
       z.push({
         label: "Upcoming Events",
         value: "Upcoming Events",
-        icon: this.icon,
+        icon: this.icon4,
       })
     if (constants["SETTING_ISVISIBLE_SHOWEVENTFILTER"] && this.props.type == "event")
       z.push({
         label: "Previous Events",
         value: "Previous Events",
-        icon: this.icon,
+        icon: this.icon5,
       })
     if (constants["SETTING_ISVISIBLE_CREATE_" + this.state.type])
       z.push({
         label: `Create ${this.state.titleString.slice(0, -1)}`,
         value: "Create",
-        icon: this.icon,
+        icon: this.icon6,
       })
 
     return z
