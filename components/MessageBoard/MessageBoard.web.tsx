@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { GraphQLResult } from "@aws-amplify/api/src/types"
 import { AntDesign, FontAwesome5 } from "@expo/vector-icons"
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native"
@@ -88,6 +89,7 @@ interface State extends JCState {
   nextToken: string | null
   replyToWho: string[]
   replyToId: string
+  replyToRoomId: string
   fetchingData: boolean
 }
 class MessageBoardImpl extends JCComponent<Props, State> {
@@ -117,6 +119,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       nextToken: null,
       replyToWho: [],
       replyToId: "",
+      replyToRoomId: "",
       fetchingData: false,
     }
     this.setInitialData(props)
@@ -148,7 +151,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           }
         },
       })
-
+      // eslint-disable-line
       const replySub = API.graphql({
         query: onCreateReply,
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
@@ -202,6 +205,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     }
 
     if (this.props.roomId) {
+      // eslint-disable-line
       const dmSub = (await API.graphql({
         query: onCreateDirectMessage,
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
@@ -755,7 +759,6 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             )}
           </>
         )}
-
         <View
           style={
             style == "regular" || style == "courseResponse"
@@ -803,7 +806,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
               </Text>
               <TouchableOpacity
                 onPress={() => {
-                  this.setState({ replyToId: "", replyToWho: [] })
+                  this.setState({ replyToRoomId: "", replyToId: "", replyToWho: [] })
                 }}
               >
                 <AntDesign name="closecircleo" size={20} color="#333333" />
@@ -991,12 +994,13 @@ class MessageBoardImpl extends JCComponent<Props, State> {
   }
 
   async sendReply() {
-    const { editorState, attachment, attachmentName, replyToId } = this.state
-
-    if (!editorState.getCurrentContent().hasText() || !replyToId) {
+    const { editorState, attachment, attachmentName, replyToId, replyToRoomId } = this.state
+    console.log("TEST2")
+    console.log(replyToRoomId)
+    if (!editorState.getCurrentContent().hasText() || !replyToId || !replyToRoomId) {
       return
     }
-
+    console.log("TEST1")
     try {
       const message = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
       const user = await Auth.currentAuthenticatedUser()
@@ -1007,21 +1011,24 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         when: Date.now().toString(),
         attachment: attachment,
         attachmentName: attachmentName,
+        roomId: replyToRoomId,
         userId: user.username,
         messageId: replyToId,
         parentReplyId: "0000-0000-0000-0000", // void value
       }
-      const createReply = API.graphql({
+
+      const createReply = (await API.graphql({
         query: mutations.createReply,
         variables: { input },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<CreateReplyMutation>>
+      })) as GraphQLResult<CreateReplyMutation>
       console.log({ "Success mutations.createReply": createReply })
       this.setState({
         editorState: EditorState.createEmpty(),
         attachmentName: "",
         attachment: "",
         replyToId: "",
+        replyToRoomId: "",
         replyToWho: [],
       })
     } catch (e) {
@@ -1032,6 +1039,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           attachmentName: "",
           attachment: "",
           replyToId: "",
+          replyToRoomId: "",
           replyToWho: [],
         })
       } else {
@@ -1052,9 +1060,10 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         peopleInThread.push(reply?.author?.given_name)
       }
     })
-
+    console.log(item?.roomId)
     this.setState({
       replyToId: isReply ? item?.messageId : item?.id ?? "",
+      replyToRoomId: isReply ? item?.roomId : item?.roomId,
       replyToWho: peopleInThread,
     })
   }

@@ -3,9 +3,7 @@
 // this is an auto generated file. This will be overwritten
 
 export const batchCreateDirectMessageUsers = /* GraphQL */ `
-  mutation BatchCreateDirectMessageUsers(
-    $dmusers: [batchCreateDirectMessageUsersInput]
-  ) {
+  mutation BatchCreateDirectMessageUsers($dmusers: [batchCreateDirectMessageUsersInput]) {
     batchCreateDirectMessageUsers(dmusers: $dmusers) {
       id
       userName
@@ -125,7 +123,7 @@ export const batchCreateDirectMessageUsers = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const createPaymentIntent = /* GraphQL */ `
   mutation CreatePaymentIntent($msg: String) {
     createPaymentIntent(msg: $msg) {
@@ -134,7 +132,7 @@ export const createPaymentIntent = /* GraphQL */ `
       status
     }
   }
-`;
+`
 export const createCustomer = /* GraphQL */ `
   mutation CreateCustomer(
     $idempotency: String
@@ -181,7 +179,7 @@ export const createCustomer = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const createSubscription = /* GraphQL */ `
   mutation CreateSubscription(
     $stripeCustomerID: String
@@ -301,7 +299,7 @@ export const createSubscription = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const previewInvoice = /* GraphQL */ `
   mutation PreviewInvoice(
     $stripeCustomerID: String
@@ -395,7 +393,7 @@ export const previewInvoice = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const listInvoices = /* GraphQL */ `
   mutation ListInvoices($idempotency: String) {
     listInvoices(idempotency: $idempotency) {
@@ -481,7 +479,7 @@ export const listInvoices = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const cancelSubscription = /* GraphQL */ `
   mutation CancelSubscription($idempotency: String) {
     cancelSubscription(idempotency: $idempotency) {
@@ -587,7 +585,7 @@ export const cancelSubscription = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const createApplicationProcess = /* GraphQL */ `
   mutation CreateApplicationProcess($input: CreateApplicationProcessInput!) {
     createApplicationProcess(input: $input) {
@@ -596,7 +594,7 @@ export const createApplicationProcess = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const updateApplicationProcess = /* GraphQL */ `
   mutation UpdateApplicationProcess($input: UpdateApplicationProcessInput!) {
     updateApplicationProcess(input: $input) {
@@ -605,7 +603,7 @@ export const updateApplicationProcess = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const deleteApplicationProcess = /* GraphQL */ `
   mutation DeleteApplicationProcess($input: DeleteApplicationProcessInput!) {
     deleteApplicationProcess(input: $input) {
@@ -614,7 +612,7 @@ export const deleteApplicationProcess = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const createUser = /* GraphQL */ `
   mutation CreateUser($input: CreateUserInput!) {
     createUser(input: $input) {
@@ -758,6 +756,7 @@ export const createUser = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -830,7 +829,7 @@ export const createUser = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const updateUser = /* GraphQL */ `
   mutation UpdateUser($input: UpdateUserInput!) {
     updateUser(input: $input) {
@@ -974,6 +973,7 @@ export const updateUser = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -1046,7 +1046,7 @@ export const updateUser = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const deleteUser = /* GraphQL */ `
   mutation DeleteUser($input: DeleteUserInput!) {
     deleteUser(input: $input) {
@@ -1190,6 +1190,7 @@ export const deleteUser = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -1262,7 +1263,7 @@ export const deleteUser = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const createGroupMember = /* GraphQL */ `
   mutation CreateGroupMember($input: CreateGroupMemberInput!) {
     createGroupMember(input: $input) {
@@ -1468,7 +1469,7 @@ export const createGroupMember = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const updateGroupMember = /* GraphQL */ `
   mutation UpdateGroupMember($input: UpdateGroupMemberInput!) {
     updateGroupMember(input: $input) {
@@ -1674,7 +1675,7 @@ export const updateGroupMember = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const deleteGroupMember = /* GraphQL */ `
   mutation DeleteGroupMember($input: DeleteGroupMemberInput!) {
     deleteGroupMember(input: $input) {
@@ -1880,7 +1881,7 @@ export const deleteGroupMember = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const createGroup = /* GraphQL */ `
   mutation CreateGroup($input: CreateGroupInput!) {
     createGroup(input: $input) {
@@ -2124,7 +2125,7 @@ export const createGroup = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const updateGroup = /* GraphQL */ `
   mutation UpdateGroup($input: UpdateGroupInput!) {
     updateGroup(input: $input) {
@@ -2368,7 +2369,7 @@ export const updateGroup = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const deleteGroup = /* GraphQL */ `
   mutation DeleteGroup($input: DeleteGroupInput!) {
     deleteGroup(input: $input) {
@@ -2612,7 +2613,7 @@ export const deleteGroup = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const createOrganizationMember = /* GraphQL */ `
   mutation CreateOrganizationMember($input: CreateOrganizationMemberInput!) {
     createOrganizationMember(input: $input) {
@@ -2806,7 +2807,7 @@ export const createOrganizationMember = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const updateOrganizationMember = /* GraphQL */ `
   mutation UpdateOrganizationMember($input: UpdateOrganizationMemberInput!) {
     updateOrganizationMember(input: $input) {
@@ -3000,7 +3001,7 @@ export const updateOrganizationMember = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const deleteOrganizationMember = /* GraphQL */ `
   mutation DeleteOrganizationMember($input: DeleteOrganizationMemberInput!) {
     deleteOrganizationMember(input: $input) {
@@ -3194,7 +3195,7 @@ export const deleteOrganizationMember = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const createOrganization = /* GraphQL */ `
   mutation CreateOrganization($input: CreateOrganizationInput!) {
     createOrganization(input: $input) {
@@ -3408,7 +3409,7 @@ export const createOrganization = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const updateOrganization = /* GraphQL */ `
   mutation UpdateOrganization($input: UpdateOrganizationInput!) {
     updateOrganization(input: $input) {
@@ -3622,7 +3623,7 @@ export const updateOrganization = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const deleteOrganization = /* GraphQL */ `
   mutation DeleteOrganization($input: DeleteOrganizationInput!) {
     deleteOrganization(input: $input) {
@@ -3836,7 +3837,7 @@ export const deleteOrganization = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const createPayment = /* GraphQL */ `
   mutation CreatePayment($input: CreatePaymentInput!) {
     createPayment(input: $input) {
@@ -3972,7 +3973,7 @@ export const createPayment = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const updatePayment = /* GraphQL */ `
   mutation UpdatePayment($input: UpdatePaymentInput!) {
     updatePayment(input: $input) {
@@ -4108,7 +4109,7 @@ export const updatePayment = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const deletePayment = /* GraphQL */ `
   mutation DeletePayment($input: DeletePaymentInput!) {
     deletePayment(input: $input) {
@@ -4244,7 +4245,7 @@ export const deletePayment = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const createCourseInfo = /* GraphQL */ `
   mutation CreateCourseInfo($input: CreateCourseInfoInput!) {
     createCourseInfo(input: $input) {
@@ -4303,7 +4304,7 @@ export const createCourseInfo = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const updateCourseInfo = /* GraphQL */ `
   mutation UpdateCourseInfo($input: UpdateCourseInfoInput!) {
     updateCourseInfo(input: $input) {
@@ -4362,7 +4363,7 @@ export const updateCourseInfo = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const deleteCourseInfo = /* GraphQL */ `
   mutation DeleteCourseInfo($input: DeleteCourseInfoInput!) {
     deleteCourseInfo(input: $input) {
@@ -4421,7 +4422,7 @@ export const deleteCourseInfo = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const createCourseTriads = /* GraphQL */ `
   mutation CreateCourseTriads($input: CreateCourseTriadsInput!) {
     createCourseTriads(input: $input) {
@@ -4474,7 +4475,7 @@ export const createCourseTriads = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const updateCourseTriads = /* GraphQL */ `
   mutation UpdateCourseTriads($input: UpdateCourseTriadsInput!) {
     updateCourseTriads(input: $input) {
@@ -4527,7 +4528,7 @@ export const updateCourseTriads = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const deleteCourseTriads = /* GraphQL */ `
   mutation DeleteCourseTriads($input: DeleteCourseTriadsInput!) {
     deleteCourseTriads(input: $input) {
@@ -4580,11 +4581,9 @@ export const deleteCourseTriads = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const createCourseBackOfficeStaff = /* GraphQL */ `
-  mutation CreateCourseBackOfficeStaff(
-    $input: CreateCourseBackOfficeStaffInput!
-  ) {
+  mutation CreateCourseBackOfficeStaff($input: CreateCourseBackOfficeStaffInput!) {
     createCourseBackOfficeStaff(input: $input) {
       id
       courseInfoID
@@ -4713,11 +4712,9 @@ export const createCourseBackOfficeStaff = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const updateCourseBackOfficeStaff = /* GraphQL */ `
-  mutation UpdateCourseBackOfficeStaff(
-    $input: UpdateCourseBackOfficeStaffInput!
-  ) {
+  mutation UpdateCourseBackOfficeStaff($input: UpdateCourseBackOfficeStaffInput!) {
     updateCourseBackOfficeStaff(input: $input) {
       id
       courseInfoID
@@ -4846,11 +4843,9 @@ export const updateCourseBackOfficeStaff = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const deleteCourseBackOfficeStaff = /* GraphQL */ `
-  mutation DeleteCourseBackOfficeStaff(
-    $input: DeleteCourseBackOfficeStaffInput!
-  ) {
+  mutation DeleteCourseBackOfficeStaff($input: DeleteCourseBackOfficeStaffInput!) {
     deleteCourseBackOfficeStaff(input: $input) {
       id
       courseInfoID
@@ -4979,7 +4974,7 @@ export const deleteCourseBackOfficeStaff = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const createCourseInstructors = /* GraphQL */ `
   mutation CreateCourseInstructors($input: CreateCourseInstructorsInput!) {
     createCourseInstructors(input: $input) {
@@ -5110,7 +5105,7 @@ export const createCourseInstructors = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const updateCourseInstructors = /* GraphQL */ `
   mutation UpdateCourseInstructors($input: UpdateCourseInstructorsInput!) {
     updateCourseInstructors(input: $input) {
@@ -5241,7 +5236,7 @@ export const updateCourseInstructors = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const deleteCourseInstructors = /* GraphQL */ `
   mutation DeleteCourseInstructors($input: DeleteCourseInstructorsInput!) {
     deleteCourseInstructors(input: $input) {
@@ -5372,7 +5367,7 @@ export const deleteCourseInstructors = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const createCourseTriadCoaches = /* GraphQL */ `
   mutation CreateCourseTriadCoaches($input: CreateCourseTriadCoachesInput!) {
     createCourseTriadCoaches(input: $input) {
@@ -5503,7 +5498,7 @@ export const createCourseTriadCoaches = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const updateCourseTriadCoaches = /* GraphQL */ `
   mutation UpdateCourseTriadCoaches($input: UpdateCourseTriadCoachesInput!) {
     updateCourseTriadCoaches(input: $input) {
@@ -5634,7 +5629,7 @@ export const updateCourseTriadCoaches = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const deleteCourseTriadCoaches = /* GraphQL */ `
   mutation DeleteCourseTriadCoaches($input: DeleteCourseTriadCoachesInput!) {
     deleteCourseTriadCoaches(input: $input) {
@@ -5765,7 +5760,7 @@ export const deleteCourseTriadCoaches = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const createCourseTriadUsers = /* GraphQL */ `
   mutation CreateCourseTriadUsers($input: CreateCourseTriadUsersInput!) {
     createCourseTriadUsers(input: $input) {
@@ -5896,7 +5891,7 @@ export const createCourseTriadUsers = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const updateCourseTriadUsers = /* GraphQL */ `
   mutation UpdateCourseTriadUsers($input: UpdateCourseTriadUsersInput!) {
     updateCourseTriadUsers(input: $input) {
@@ -6027,7 +6022,7 @@ export const updateCourseTriadUsers = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const deleteCourseTriadUsers = /* GraphQL */ `
   mutation DeleteCourseTriadUsers($input: DeleteCourseTriadUsersInput!) {
     deleteCourseTriadUsers(input: $input) {
@@ -6158,7 +6153,7 @@ export const deleteCourseTriadUsers = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const createCourseWeek = /* GraphQL */ `
   mutation CreateCourseWeek($input: CreateCourseWeekInput!) {
     createCourseWeek(input: $input) {
@@ -6217,7 +6212,7 @@ export const createCourseWeek = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const updateCourseWeek = /* GraphQL */ `
   mutation UpdateCourseWeek($input: UpdateCourseWeekInput!) {
     updateCourseWeek(input: $input) {
@@ -6276,7 +6271,7 @@ export const updateCourseWeek = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const deleteCourseWeek = /* GraphQL */ `
   mutation DeleteCourseWeek($input: DeleteCourseWeekInput!) {
     deleteCourseWeek(input: $input) {
@@ -6335,7 +6330,7 @@ export const deleteCourseWeek = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const createCourseLesson = /* GraphQL */ `
   mutation CreateCourseLesson($input: CreateCourseLessonInput!) {
     createCourseLesson(input: $input) {
@@ -6382,7 +6377,7 @@ export const createCourseLesson = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const updateCourseLesson = /* GraphQL */ `
   mutation UpdateCourseLesson($input: UpdateCourseLessonInput!) {
     updateCourseLesson(input: $input) {
@@ -6429,7 +6424,7 @@ export const updateCourseLesson = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const deleteCourseLesson = /* GraphQL */ `
   mutation DeleteCourseLesson($input: DeleteCourseLessonInput!) {
     deleteCourseLesson(input: $input) {
@@ -6476,7 +6471,7 @@ export const deleteCourseLesson = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const createDirectMessageUser = /* GraphQL */ `
   mutation CreateDirectMessageUser($input: CreateDirectMessageUserInput!) {
     createDirectMessageUser(input: $input) {
@@ -6598,7 +6593,7 @@ export const createDirectMessageUser = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const updateDirectMessageUser = /* GraphQL */ `
   mutation UpdateDirectMessageUser($input: UpdateDirectMessageUserInput!) {
     updateDirectMessageUser(input: $input) {
@@ -6720,7 +6715,7 @@ export const updateDirectMessageUser = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const deleteDirectMessageUser = /* GraphQL */ `
   mutation DeleteDirectMessageUser($input: DeleteDirectMessageUserInput!) {
     deleteDirectMessageUser(input: $input) {
@@ -6842,7 +6837,7 @@ export const deleteDirectMessageUser = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const createDirectMessageRoom = /* GraphQL */ `
   mutation CreateDirectMessageRoom($input: CreateDirectMessageRoomInput!) {
     createDirectMessageRoom(input: $input) {
@@ -6879,7 +6874,7 @@ export const createDirectMessageRoom = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const updateDirectMessageRoom = /* GraphQL */ `
   mutation UpdateDirectMessageRoom($input: UpdateDirectMessageRoomInput!) {
     updateDirectMessageRoom(input: $input) {
@@ -6916,7 +6911,7 @@ export const updateDirectMessageRoom = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const deleteDirectMessageRoom = /* GraphQL */ `
   mutation DeleteDirectMessageRoom($input: DeleteDirectMessageRoomInput!) {
     deleteDirectMessageRoom(input: $input) {
@@ -6953,7 +6948,7 @@ export const deleteDirectMessageRoom = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const createDirectMessage = /* GraphQL */ `
   mutation CreateDirectMessage($input: CreateDirectMessageInput!) {
     createDirectMessage(input: $input) {
@@ -7079,7 +7074,7 @@ export const createDirectMessage = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const updateDirectMessage = /* GraphQL */ `
   mutation UpdateDirectMessage($input: UpdateDirectMessageInput!) {
     updateDirectMessage(input: $input) {
@@ -7205,7 +7200,7 @@ export const updateDirectMessage = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const deleteDirectMessage = /* GraphQL */ `
   mutation DeleteDirectMessage($input: DeleteDirectMessageInput!) {
     deleteDirectMessage(input: $input) {
@@ -7331,7 +7326,7 @@ export const deleteDirectMessage = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const createMessage = /* GraphQL */ `
   mutation CreateMessage($input: CreateMessageInput!) {
     createMessage(input: $input) {
@@ -7451,6 +7446,7 @@ export const createMessage = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -7558,7 +7554,7 @@ export const createMessage = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const updateMessage = /* GraphQL */ `
   mutation UpdateMessage($input: UpdateMessageInput!) {
     updateMessage(input: $input) {
@@ -7678,6 +7674,7 @@ export const updateMessage = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -7785,7 +7782,7 @@ export const updateMessage = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const deleteMessage = /* GraphQL */ `
   mutation DeleteMessage($input: DeleteMessageInput!) {
     deleteMessage(input: $input) {
@@ -7905,6 +7902,7 @@ export const deleteMessage = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -8012,7 +8010,7 @@ export const deleteMessage = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const createReply = /* GraphQL */ `
   mutation CreateReply($input: CreateReplyInput!) {
     createReply(input: $input) {
@@ -8094,6 +8092,7 @@ export const createReply = /* GraphQL */ `
           updatedAt
         }
       }
+      roomId
       parentReplyId
       parentReply {
         id
@@ -8116,6 +8115,7 @@ export const createReply = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        roomId
         parentReplyId
         parentReply {
           id
@@ -8125,6 +8125,7 @@ export const createReply = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -8175,6 +8176,7 @@ export const createReply = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -8282,7 +8284,7 @@ export const createReply = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const updateReply = /* GraphQL */ `
   mutation UpdateReply($input: UpdateReplyInput!) {
     updateReply(input: $input) {
@@ -8364,6 +8366,7 @@ export const updateReply = /* GraphQL */ `
           updatedAt
         }
       }
+      roomId
       parentReplyId
       parentReply {
         id
@@ -8386,6 +8389,7 @@ export const updateReply = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        roomId
         parentReplyId
         parentReply {
           id
@@ -8395,6 +8399,7 @@ export const updateReply = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -8445,6 +8450,7 @@ export const updateReply = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -8552,7 +8558,7 @@ export const updateReply = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const deleteReply = /* GraphQL */ `
   mutation DeleteReply($input: DeleteReplyInput!) {
     deleteReply(input: $input) {
@@ -8634,6 +8640,7 @@ export const deleteReply = /* GraphQL */ `
           updatedAt
         }
       }
+      roomId
       parentReplyId
       parentReply {
         id
@@ -8656,6 +8663,7 @@ export const deleteReply = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        roomId
         parentReplyId
         parentReply {
           id
@@ -8665,6 +8673,7 @@ export const deleteReply = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -8715,6 +8724,7 @@ export const deleteReply = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -8822,7 +8832,7 @@ export const deleteReply = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const createResourceRoot = /* GraphQL */ `
   mutation CreateResourceRoot($input: CreateResourceRootInput!) {
     createResourceRoot(input: $input) {
@@ -8951,7 +8961,7 @@ export const createResourceRoot = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const updateResourceRoot = /* GraphQL */ `
   mutation UpdateResourceRoot($input: UpdateResourceRootInput!) {
     updateResourceRoot(input: $input) {
@@ -9080,7 +9090,7 @@ export const updateResourceRoot = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const deleteResourceRoot = /* GraphQL */ `
   mutation DeleteResourceRoot($input: DeleteResourceRootInput!) {
     deleteResourceRoot(input: $input) {
@@ -9209,7 +9219,7 @@ export const deleteResourceRoot = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const createResourceMenuItem = /* GraphQL */ `
   mutation CreateResourceMenuItem($input: CreateResourceMenuItemInput!) {
     createResourceMenuItem(input: $input) {
@@ -9323,7 +9333,7 @@ export const createResourceMenuItem = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const updateResourceMenuItem = /* GraphQL */ `
   mutation UpdateResourceMenuItem($input: UpdateResourceMenuItemInput!) {
     updateResourceMenuItem(input: $input) {
@@ -9437,7 +9447,7 @@ export const updateResourceMenuItem = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const deleteResourceMenuItem = /* GraphQL */ `
   mutation DeleteResourceMenuItem($input: DeleteResourceMenuItemInput!) {
     deleteResourceMenuItem(input: $input) {
@@ -9551,7 +9561,7 @@ export const deleteResourceMenuItem = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const createResource = /* GraphQL */ `
   mutation CreateResource($input: CreateResourceInput!) {
     createResource(input: $input) {
@@ -9649,7 +9659,7 @@ export const createResource = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const updateResource = /* GraphQL */ `
   mutation UpdateResource($input: UpdateResourceInput!) {
     updateResource(input: $input) {
@@ -9747,7 +9757,7 @@ export const updateResource = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const deleteResource = /* GraphQL */ `
   mutation DeleteResource($input: DeleteResourceInput!) {
     deleteResource(input: $input) {
@@ -9845,7 +9855,7 @@ export const deleteResource = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const createResourceSeries = /* GraphQL */ `
   mutation CreateResourceSeries($input: CreateResourceSeriesInput!) {
     createResourceSeries(input: $input) {
@@ -9937,7 +9947,7 @@ export const createResourceSeries = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const updateResourceSeries = /* GraphQL */ `
   mutation UpdateResourceSeries($input: UpdateResourceSeriesInput!) {
     updateResourceSeries(input: $input) {
@@ -10029,7 +10039,7 @@ export const updateResourceSeries = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const deleteResourceSeries = /* GraphQL */ `
   mutation DeleteResourceSeries($input: DeleteResourceSeriesInput!) {
     deleteResourceSeries(input: $input) {
@@ -10121,7 +10131,7 @@ export const deleteResourceSeries = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const createResourceEpisode = /* GraphQL */ `
   mutation CreateResourceEpisode($input: CreateResourceEpisodeInput!) {
     createResourceEpisode(input: $input) {
@@ -10201,7 +10211,7 @@ export const createResourceEpisode = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const updateResourceEpisode = /* GraphQL */ `
   mutation UpdateResourceEpisode($input: UpdateResourceEpisodeInput!) {
     updateResourceEpisode(input: $input) {
@@ -10281,7 +10291,7 @@ export const updateResourceEpisode = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const deleteResourceEpisode = /* GraphQL */ `
   mutation DeleteResourceEpisode($input: DeleteResourceEpisodeInput!) {
     deleteResourceEpisode(input: $input) {
@@ -10361,7 +10371,7 @@ export const deleteResourceEpisode = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const createProduct = /* GraphQL */ `
   mutation CreateProduct($input: CreateProductInput!) {
     createProduct(input: $input) {
@@ -10400,7 +10410,7 @@ export const createProduct = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const updateProduct = /* GraphQL */ `
   mutation UpdateProduct($input: UpdateProductInput!) {
     updateProduct(input: $input) {
@@ -10439,7 +10449,7 @@ export const updateProduct = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const deleteProduct = /* GraphQL */ `
   mutation DeleteProduct($input: DeleteProductInput!) {
     deleteProduct(input: $input) {
@@ -10478,7 +10488,7 @@ export const deleteProduct = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const createVodAsset = /* GraphQL */ `
   mutation CreateVodAsset($input: CreateVodAssetInput!) {
     createVodAsset(input: $input) {
@@ -10494,7 +10504,7 @@ export const createVodAsset = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const updateVodAsset = /* GraphQL */ `
   mutation UpdateVodAsset($input: UpdateVodAssetInput!) {
     updateVodAsset(input: $input) {
@@ -10510,7 +10520,7 @@ export const updateVodAsset = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const deleteVodAsset = /* GraphQL */ `
   mutation DeleteVodAsset($input: DeleteVodAssetInput!) {
     deleteVodAsset(input: $input) {
@@ -10526,7 +10536,7 @@ export const deleteVodAsset = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const createVideoObject = /* GraphQL */ `
   mutation CreateVideoObject($input: CreateVideoObjectInput!) {
     createVideoObject(input: $input) {
@@ -10535,7 +10545,7 @@ export const createVideoObject = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const updateVideoObject = /* GraphQL */ `
   mutation UpdateVideoObject($input: UpdateVideoObjectInput!) {
     updateVideoObject(input: $input) {
@@ -10544,7 +10554,7 @@ export const updateVideoObject = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const deleteVideoObject = /* GraphQL */ `
   mutation DeleteVideoObject($input: DeleteVideoObjectInput!) {
     deleteVideoObject(input: $input) {
@@ -10553,4 +10563,4 @@ export const deleteVideoObject = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`

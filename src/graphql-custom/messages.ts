@@ -405,6 +405,7 @@ export const onCreateReply = /* GraphQL */ `
       attachmentName
       userId
       messageId
+      roomId
       parentMessage {
         roomId
       }

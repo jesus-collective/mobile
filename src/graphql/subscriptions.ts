@@ -121,6 +121,7 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -228,7 +229,7 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onCreateApplicationProcess = /* GraphQL */ `
   subscription OnCreateApplicationProcess {
     onCreateApplicationProcess {
@@ -237,7 +238,7 @@ export const onCreateApplicationProcess = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onUpdateApplicationProcess = /* GraphQL */ `
   subscription OnUpdateApplicationProcess {
     onUpdateApplicationProcess {
@@ -246,7 +247,7 @@ export const onUpdateApplicationProcess = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onDeleteApplicationProcess = /* GraphQL */ `
   subscription OnDeleteApplicationProcess {
     onDeleteApplicationProcess {
@@ -255,7 +256,7 @@ export const onDeleteApplicationProcess = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onCreateGroupMember = /* GraphQL */ `
   subscription OnCreateGroupMember {
     onCreateGroupMember {
@@ -461,7 +462,7 @@ export const onCreateGroupMember = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onUpdateGroupMember = /* GraphQL */ `
   subscription OnUpdateGroupMember {
     onUpdateGroupMember {
@@ -667,7 +668,7 @@ export const onUpdateGroupMember = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onDeleteGroupMember = /* GraphQL */ `
   subscription OnDeleteGroupMember {
     onDeleteGroupMember {
@@ -873,7 +874,7 @@ export const onDeleteGroupMember = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onCreateGroup = /* GraphQL */ `
   subscription OnCreateGroup($owner: String, $ownerOrgID: String) {
     onCreateGroup(owner: $owner, ownerOrgID: $ownerOrgID) {
@@ -1117,7 +1118,7 @@ export const onCreateGroup = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onUpdateGroup = /* GraphQL */ `
   subscription OnUpdateGroup($owner: String, $ownerOrgID: String) {
     onUpdateGroup(owner: $owner, ownerOrgID: $ownerOrgID) {
@@ -1361,7 +1362,7 @@ export const onUpdateGroup = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onDeleteGroup = /* GraphQL */ `
   subscription OnDeleteGroup($owner: String, $ownerOrgID: String) {
     onDeleteGroup(owner: $owner, ownerOrgID: $ownerOrgID) {
@@ -1605,7 +1606,7 @@ export const onDeleteGroup = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onCreateOrganizationMember = /* GraphQL */ `
   subscription OnCreateOrganizationMember {
     onCreateOrganizationMember {
@@ -1799,7 +1800,7 @@ export const onCreateOrganizationMember = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onUpdateOrganizationMember = /* GraphQL */ `
   subscription OnUpdateOrganizationMember {
     onUpdateOrganizationMember {
@@ -1993,7 +1994,7 @@ export const onUpdateOrganizationMember = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onDeleteOrganizationMember = /* GraphQL */ `
   subscription OnDeleteOrganizationMember {
     onDeleteOrganizationMember {
@@ -2187,7 +2188,7 @@ export const onDeleteOrganizationMember = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onCreateOrganization = /* GraphQL */ `
   subscription OnCreateOrganization {
     onCreateOrganization {
@@ -2401,7 +2402,7 @@ export const onCreateOrganization = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onUpdateOrganization = /* GraphQL */ `
   subscription OnUpdateOrganization {
     onUpdateOrganization {
@@ -2615,7 +2616,7 @@ export const onUpdateOrganization = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onDeleteOrganization = /* GraphQL */ `
   subscription OnDeleteOrganization {
     onDeleteOrganization {
@@ -2829,7 +2830,7 @@ export const onDeleteOrganization = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onCreatePayment = /* GraphQL */ `
   subscription OnCreatePayment {
     onCreatePayment {
@@ -2965,7 +2966,7 @@ export const onCreatePayment = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onUpdatePayment = /* GraphQL */ `
   subscription OnUpdatePayment {
     onUpdatePayment {
@@ -3101,7 +3102,7 @@ export const onUpdatePayment = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onDeletePayment = /* GraphQL */ `
   subscription OnDeletePayment {
     onDeletePayment {
@@ -3237,7 +3238,7 @@ export const onDeletePayment = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onCreateCourseInfo = /* GraphQL */ `
   subscription OnCreateCourseInfo($owner: String) {
     onCreateCourseInfo(owner: $owner) {
@@ -3296,7 +3297,7 @@ export const onCreateCourseInfo = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onUpdateCourseInfo = /* GraphQL */ `
   subscription OnUpdateCourseInfo($owner: String) {
     onUpdateCourseInfo(owner: $owner) {
@@ -3355,7 +3356,7 @@ export const onUpdateCourseInfo = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onDeleteCourseInfo = /* GraphQL */ `
   subscription OnDeleteCourseInfo($owner: String) {
     onDeleteCourseInfo(owner: $owner) {
@@ -3414,7 +3415,7 @@ export const onDeleteCourseInfo = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onCreateCourseTriads = /* GraphQL */ `
   subscription OnCreateCourseTriads {
     onCreateCourseTriads {
@@ -3467,7 +3468,7 @@ export const onCreateCourseTriads = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onUpdateCourseTriads = /* GraphQL */ `
   subscription OnUpdateCourseTriads {
     onUpdateCourseTriads {
@@ -3520,7 +3521,7 @@ export const onUpdateCourseTriads = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onDeleteCourseTriads = /* GraphQL */ `
   subscription OnDeleteCourseTriads {
     onDeleteCourseTriads {
@@ -3573,7 +3574,7 @@ export const onDeleteCourseTriads = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onCreateCourseBackOfficeStaff = /* GraphQL */ `
   subscription OnCreateCourseBackOfficeStaff {
     onCreateCourseBackOfficeStaff {
@@ -3704,7 +3705,7 @@ export const onCreateCourseBackOfficeStaff = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onUpdateCourseBackOfficeStaff = /* GraphQL */ `
   subscription OnUpdateCourseBackOfficeStaff {
     onUpdateCourseBackOfficeStaff {
@@ -3835,7 +3836,7 @@ export const onUpdateCourseBackOfficeStaff = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onDeleteCourseBackOfficeStaff = /* GraphQL */ `
   subscription OnDeleteCourseBackOfficeStaff {
     onDeleteCourseBackOfficeStaff {
@@ -3966,7 +3967,7 @@ export const onDeleteCourseBackOfficeStaff = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onCreateCourseInstructors = /* GraphQL */ `
   subscription OnCreateCourseInstructors {
     onCreateCourseInstructors {
@@ -4097,7 +4098,7 @@ export const onCreateCourseInstructors = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onUpdateCourseInstructors = /* GraphQL */ `
   subscription OnUpdateCourseInstructors {
     onUpdateCourseInstructors {
@@ -4228,7 +4229,7 @@ export const onUpdateCourseInstructors = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onDeleteCourseInstructors = /* GraphQL */ `
   subscription OnDeleteCourseInstructors {
     onDeleteCourseInstructors {
@@ -4359,7 +4360,7 @@ export const onDeleteCourseInstructors = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onCreateCourseTriadCoaches = /* GraphQL */ `
   subscription OnCreateCourseTriadCoaches {
     onCreateCourseTriadCoaches {
@@ -4490,7 +4491,7 @@ export const onCreateCourseTriadCoaches = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onUpdateCourseTriadCoaches = /* GraphQL */ `
   subscription OnUpdateCourseTriadCoaches {
     onUpdateCourseTriadCoaches {
@@ -4621,7 +4622,7 @@ export const onUpdateCourseTriadCoaches = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onDeleteCourseTriadCoaches = /* GraphQL */ `
   subscription OnDeleteCourseTriadCoaches {
     onDeleteCourseTriadCoaches {
@@ -4752,7 +4753,7 @@ export const onDeleteCourseTriadCoaches = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onCreateCourseTriadUsers = /* GraphQL */ `
   subscription OnCreateCourseTriadUsers {
     onCreateCourseTriadUsers {
@@ -4883,7 +4884,7 @@ export const onCreateCourseTriadUsers = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onUpdateCourseTriadUsers = /* GraphQL */ `
   subscription OnUpdateCourseTriadUsers {
     onUpdateCourseTriadUsers {
@@ -5014,7 +5015,7 @@ export const onUpdateCourseTriadUsers = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onDeleteCourseTriadUsers = /* GraphQL */ `
   subscription OnDeleteCourseTriadUsers {
     onDeleteCourseTriadUsers {
@@ -5145,7 +5146,7 @@ export const onDeleteCourseTriadUsers = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onCreateCourseWeek = /* GraphQL */ `
   subscription OnCreateCourseWeek($owner: String) {
     onCreateCourseWeek(owner: $owner) {
@@ -5204,7 +5205,7 @@ export const onCreateCourseWeek = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onUpdateCourseWeek = /* GraphQL */ `
   subscription OnUpdateCourseWeek($owner: String) {
     onUpdateCourseWeek(owner: $owner) {
@@ -5263,7 +5264,7 @@ export const onUpdateCourseWeek = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onDeleteCourseWeek = /* GraphQL */ `
   subscription OnDeleteCourseWeek($owner: String) {
     onDeleteCourseWeek(owner: $owner) {
@@ -5322,7 +5323,7 @@ export const onDeleteCourseWeek = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onCreateCourseLesson = /* GraphQL */ `
   subscription OnCreateCourseLesson($owner: String) {
     onCreateCourseLesson(owner: $owner) {
@@ -5369,7 +5370,7 @@ export const onCreateCourseLesson = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onUpdateCourseLesson = /* GraphQL */ `
   subscription OnUpdateCourseLesson($owner: String) {
     onUpdateCourseLesson(owner: $owner) {
@@ -5416,7 +5417,7 @@ export const onUpdateCourseLesson = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onDeleteCourseLesson = /* GraphQL */ `
   subscription OnDeleteCourseLesson($owner: String) {
     onDeleteCourseLesson(owner: $owner) {
@@ -5463,7 +5464,7 @@ export const onDeleteCourseLesson = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onCreateDirectMessageUser = /* GraphQL */ `
   subscription OnCreateDirectMessageUser {
     onCreateDirectMessageUser {
@@ -5585,7 +5586,7 @@ export const onCreateDirectMessageUser = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onUpdateDirectMessageUser = /* GraphQL */ `
   subscription OnUpdateDirectMessageUser {
     onUpdateDirectMessageUser {
@@ -5707,7 +5708,7 @@ export const onUpdateDirectMessageUser = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onDeleteDirectMessageUser = /* GraphQL */ `
   subscription OnDeleteDirectMessageUser {
     onDeleteDirectMessageUser {
@@ -5829,7 +5830,7 @@ export const onDeleteDirectMessageUser = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onCreateDirectMessageRoom = /* GraphQL */ `
   subscription OnCreateDirectMessageRoom {
     onCreateDirectMessageRoom {
@@ -5866,7 +5867,7 @@ export const onCreateDirectMessageRoom = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onUpdateDirectMessageRoom = /* GraphQL */ `
   subscription OnUpdateDirectMessageRoom {
     onUpdateDirectMessageRoom {
@@ -5903,7 +5904,7 @@ export const onUpdateDirectMessageRoom = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onDeleteDirectMessageRoom = /* GraphQL */ `
   subscription OnDeleteDirectMessageRoom {
     onDeleteDirectMessageRoom {
@@ -5940,7 +5941,7 @@ export const onDeleteDirectMessageRoom = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onCreateDirectMessage = /* GraphQL */ `
   subscription OnCreateDirectMessage {
     onCreateDirectMessage {
@@ -6066,7 +6067,7 @@ export const onCreateDirectMessage = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onUpdateDirectMessage = /* GraphQL */ `
   subscription OnUpdateDirectMessage {
     onUpdateDirectMessage {
@@ -6192,7 +6193,7 @@ export const onUpdateDirectMessage = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onDeleteDirectMessage = /* GraphQL */ `
   subscription OnDeleteDirectMessage {
     onDeleteDirectMessage {
@@ -6318,7 +6319,7 @@ export const onDeleteDirectMessage = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onCreateMessage = /* GraphQL */ `
   subscription OnCreateMessage {
     onCreateMessage {
@@ -6438,6 +6439,7 @@ export const onCreateMessage = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -6545,7 +6547,7 @@ export const onCreateMessage = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onUpdateMessage = /* GraphQL */ `
   subscription OnUpdateMessage {
     onUpdateMessage {
@@ -6665,6 +6667,7 @@ export const onUpdateMessage = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -6772,7 +6775,7 @@ export const onUpdateMessage = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onDeleteMessage = /* GraphQL */ `
   subscription OnDeleteMessage {
     onDeleteMessage {
@@ -6892,6 +6895,7 @@ export const onDeleteMessage = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -6999,7 +7003,7 @@ export const onDeleteMessage = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onCreateReply = /* GraphQL */ `
   subscription OnCreateReply {
     onCreateReply {
@@ -7081,6 +7085,7 @@ export const onCreateReply = /* GraphQL */ `
           updatedAt
         }
       }
+      roomId
       parentReplyId
       parentReply {
         id
@@ -7103,6 +7108,7 @@ export const onCreateReply = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        roomId
         parentReplyId
         parentReply {
           id
@@ -7112,6 +7118,7 @@ export const onCreateReply = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -7162,6 +7169,7 @@ export const onCreateReply = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -7269,7 +7277,7 @@ export const onCreateReply = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onUpdateReply = /* GraphQL */ `
   subscription OnUpdateReply {
     onUpdateReply {
@@ -7351,6 +7359,7 @@ export const onUpdateReply = /* GraphQL */ `
           updatedAt
         }
       }
+      roomId
       parentReplyId
       parentReply {
         id
@@ -7373,6 +7382,7 @@ export const onUpdateReply = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        roomId
         parentReplyId
         parentReply {
           id
@@ -7382,6 +7392,7 @@ export const onUpdateReply = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -7432,6 +7443,7 @@ export const onUpdateReply = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -7539,7 +7551,7 @@ export const onUpdateReply = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onDeleteReply = /* GraphQL */ `
   subscription OnDeleteReply {
     onDeleteReply {
@@ -7621,6 +7633,7 @@ export const onDeleteReply = /* GraphQL */ `
           updatedAt
         }
       }
+      roomId
       parentReplyId
       parentReply {
         id
@@ -7643,6 +7656,7 @@ export const onDeleteReply = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        roomId
         parentReplyId
         parentReply {
           id
@@ -7652,6 +7666,7 @@ export const onDeleteReply = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -7702,6 +7717,7 @@ export const onDeleteReply = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -7809,7 +7825,7 @@ export const onDeleteReply = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const onCreateResourceRoot = /* GraphQL */ `
   subscription OnCreateResourceRoot {
     onCreateResourceRoot {
@@ -7938,7 +7954,7 @@ export const onCreateResourceRoot = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onUpdateResourceRoot = /* GraphQL */ `
   subscription OnUpdateResourceRoot {
     onUpdateResourceRoot {
@@ -8067,7 +8083,7 @@ export const onUpdateResourceRoot = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onDeleteResourceRoot = /* GraphQL */ `
   subscription OnDeleteResourceRoot {
     onDeleteResourceRoot {
@@ -8196,7 +8212,7 @@ export const onDeleteResourceRoot = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onCreateResourceMenuItem = /* GraphQL */ `
   subscription OnCreateResourceMenuItem($owner: String) {
     onCreateResourceMenuItem(owner: $owner) {
@@ -8310,7 +8326,7 @@ export const onCreateResourceMenuItem = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onUpdateResourceMenuItem = /* GraphQL */ `
   subscription OnUpdateResourceMenuItem($owner: String) {
     onUpdateResourceMenuItem(owner: $owner) {
@@ -8424,7 +8440,7 @@ export const onUpdateResourceMenuItem = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onDeleteResourceMenuItem = /* GraphQL */ `
   subscription OnDeleteResourceMenuItem($owner: String) {
     onDeleteResourceMenuItem(owner: $owner) {
@@ -8538,7 +8554,7 @@ export const onDeleteResourceMenuItem = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onCreateResource = /* GraphQL */ `
   subscription OnCreateResource($owner: String) {
     onCreateResource(owner: $owner) {
@@ -8636,7 +8652,7 @@ export const onCreateResource = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onUpdateResource = /* GraphQL */ `
   subscription OnUpdateResource($owner: String) {
     onUpdateResource(owner: $owner) {
@@ -8734,7 +8750,7 @@ export const onUpdateResource = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onDeleteResource = /* GraphQL */ `
   subscription OnDeleteResource($owner: String) {
     onDeleteResource(owner: $owner) {
@@ -8832,7 +8848,7 @@ export const onDeleteResource = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onCreateResourceSeries = /* GraphQL */ `
   subscription OnCreateResourceSeries($owner: String) {
     onCreateResourceSeries(owner: $owner) {
@@ -8924,7 +8940,7 @@ export const onCreateResourceSeries = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onUpdateResourceSeries = /* GraphQL */ `
   subscription OnUpdateResourceSeries($owner: String) {
     onUpdateResourceSeries(owner: $owner) {
@@ -9016,7 +9032,7 @@ export const onUpdateResourceSeries = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onDeleteResourceSeries = /* GraphQL */ `
   subscription OnDeleteResourceSeries($owner: String) {
     onDeleteResourceSeries(owner: $owner) {
@@ -9108,7 +9124,7 @@ export const onDeleteResourceSeries = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onCreateResourceEpisode = /* GraphQL */ `
   subscription OnCreateResourceEpisode($owner: String) {
     onCreateResourceEpisode(owner: $owner) {
@@ -9188,7 +9204,7 @@ export const onCreateResourceEpisode = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onUpdateResourceEpisode = /* GraphQL */ `
   subscription OnUpdateResourceEpisode($owner: String) {
     onUpdateResourceEpisode(owner: $owner) {
@@ -9268,7 +9284,7 @@ export const onUpdateResourceEpisode = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onDeleteResourceEpisode = /* GraphQL */ `
   subscription OnDeleteResourceEpisode($owner: String) {
     onDeleteResourceEpisode(owner: $owner) {
@@ -9348,7 +9364,7 @@ export const onDeleteResourceEpisode = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onCreateProduct = /* GraphQL */ `
   subscription OnCreateProduct {
     onCreateProduct {
@@ -9387,7 +9403,7 @@ export const onCreateProduct = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onUpdateProduct = /* GraphQL */ `
   subscription OnUpdateProduct {
     onUpdateProduct {
@@ -9426,7 +9442,7 @@ export const onUpdateProduct = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onDeleteProduct = /* GraphQL */ `
   subscription OnDeleteProduct {
     onDeleteProduct {
@@ -9465,7 +9481,7 @@ export const onDeleteProduct = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onCreateVodAsset = /* GraphQL */ `
   subscription OnCreateVodAsset {
     onCreateVodAsset {
@@ -9481,7 +9497,7 @@ export const onCreateVodAsset = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onUpdateVodAsset = /* GraphQL */ `
   subscription OnUpdateVodAsset {
     onUpdateVodAsset {
@@ -9497,7 +9513,7 @@ export const onUpdateVodAsset = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onDeleteVodAsset = /* GraphQL */ `
   subscription OnDeleteVodAsset {
     onDeleteVodAsset {
@@ -9513,7 +9529,7 @@ export const onDeleteVodAsset = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onCreateVideoObject = /* GraphQL */ `
   subscription OnCreateVideoObject {
     onCreateVideoObject {
@@ -9522,7 +9538,7 @@ export const onCreateVideoObject = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onUpdateVideoObject = /* GraphQL */ `
   subscription OnUpdateVideoObject {
     onUpdateVideoObject {
@@ -9531,7 +9547,7 @@ export const onUpdateVideoObject = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onDeleteVideoObject = /* GraphQL */ `
   subscription OnDeleteVideoObject {
     onDeleteVideoObject {
@@ -9540,7 +9556,7 @@ export const onDeleteVideoObject = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onCreateUser = /* GraphQL */ `
   subscription OnCreateUser {
     onCreateUser {
@@ -9684,6 +9700,7 @@ export const onCreateUser = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -9756,7 +9773,7 @@ export const onCreateUser = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onUpdateUser = /* GraphQL */ `
   subscription OnUpdateUser {
     onUpdateUser {
@@ -9900,6 +9917,7 @@ export const onUpdateUser = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -9972,7 +9990,7 @@ export const onUpdateUser = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const onDeleteUser = /* GraphQL */ `
   subscription OnDeleteUser {
     onDeleteUser {
@@ -10116,6 +10134,7 @@ export const onDeleteUser = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -10188,4 +10207,4 @@ export const onDeleteUser = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`

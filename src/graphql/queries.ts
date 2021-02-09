@@ -10,18 +10,14 @@ export const getApplicationProcess = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const listApplicationProcesss = /* GraphQL */ `
   query ListApplicationProcesss(
     $filter: ModelApplicationProcessFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listApplicationProcesss(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
+    listApplicationProcesss(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         createdAt
@@ -30,7 +26,7 @@ export const listApplicationProcesss = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getGroup = /* GraphQL */ `
   query GetGroup($id: ID!) {
     getGroup(id: $id) {
@@ -274,13 +270,9 @@ export const getGroup = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const listGroups = /* GraphQL */ `
-  query ListGroups(
-    $filter: ModelGroupFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
+  query ListGroups($filter: ModelGroupFilterInput, $limit: Int, $nextToken: String) {
     listGroups(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -383,7 +375,7 @@ export const listGroups = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getOrganization = /* GraphQL */ `
   query GetOrganization($id: ID!) {
     getOrganization(id: $id) {
@@ -597,13 +589,9 @@ export const getOrganization = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const listOrganizations = /* GraphQL */ `
-  query ListOrganizations(
-    $filter: ModelOrganizationFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
+  query ListOrganizations($filter: ModelOrganizationFilterInput, $limit: Int, $nextToken: String) {
     listOrganizations(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -692,7 +680,7 @@ export const listOrganizations = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getPayment = /* GraphQL */ `
   query GetPayment($id: ID!) {
     getPayment(id: $id) {
@@ -828,7 +816,7 @@ export const getPayment = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const listPayments = /* GraphQL */ `
   query ListPayments(
     $id: ID
@@ -905,7 +893,7 @@ export const listPayments = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getCourseInfo = /* GraphQL */ `
   query GetCourseInfo($id: ID!) {
     getCourseInfo(id: $id) {
@@ -964,13 +952,9 @@ export const getCourseInfo = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const listCourseInfos = /* GraphQL */ `
-  query ListCourseInfos(
-    $filter: ModelCourseInfoFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
+  query ListCourseInfos($filter: ModelCourseInfoFilterInput, $limit: Int, $nextToken: String) {
     listCourseInfos(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -998,7 +982,7 @@ export const listCourseInfos = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getCourseTriads = /* GraphQL */ `
   query GetCourseTriads($id: ID!) {
     getCourseTriads(id: $id) {
@@ -1051,13 +1035,9 @@ export const getCourseTriads = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const listCourseTriadss = /* GraphQL */ `
-  query ListCourseTriadss(
-    $filter: ModelCourseTriadsFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
+  query ListCourseTriadss($filter: ModelCourseTriadsFilterInput, $limit: Int, $nextToken: String) {
     listCourseTriadss(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -1085,7 +1065,7 @@ export const listCourseTriadss = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getCourseBackOfficeStaff = /* GraphQL */ `
   query GetCourseBackOfficeStaff($id: ID!) {
     getCourseBackOfficeStaff(id: $id) {
@@ -1216,18 +1196,14 @@ export const getCourseBackOfficeStaff = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const listCourseBackOfficeStaffs = /* GraphQL */ `
   query ListCourseBackOfficeStaffs(
     $filter: ModelCourseBackOfficeStaffFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listCourseBackOfficeStaffs(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
+    listCourseBackOfficeStaffs(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         courseInfoID
@@ -1280,7 +1256,7 @@ export const listCourseBackOfficeStaffs = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getCourseInstructors = /* GraphQL */ `
   query GetCourseInstructors($id: ID!) {
     getCourseInstructors(id: $id) {
@@ -1411,18 +1387,14 @@ export const getCourseInstructors = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const listCourseInstructorss = /* GraphQL */ `
   query ListCourseInstructorss(
     $filter: ModelCourseInstructorsFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listCourseInstructorss(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
+    listCourseInstructorss(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         courseInfoID
@@ -1475,7 +1447,7 @@ export const listCourseInstructorss = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getCourseTriadCoaches = /* GraphQL */ `
   query GetCourseTriadCoaches($id: ID!) {
     getCourseTriadCoaches(id: $id) {
@@ -1606,18 +1578,14 @@ export const getCourseTriadCoaches = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const listCourseTriadCoachess = /* GraphQL */ `
   query ListCourseTriadCoachess(
     $filter: ModelCourseTriadCoachesFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listCourseTriadCoachess(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
+    listCourseTriadCoachess(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         triadID
@@ -1665,7 +1633,7 @@ export const listCourseTriadCoachess = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getCourseTriadUsers = /* GraphQL */ `
   query GetCourseTriadUsers($id: ID!) {
     getCourseTriadUsers(id: $id) {
@@ -1796,7 +1764,7 @@ export const getCourseTriadUsers = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const listCourseTriadUserss = /* GraphQL */ `
   query ListCourseTriadUserss(
     $id: ID
@@ -1859,7 +1827,7 @@ export const listCourseTriadUserss = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getCourseWeek = /* GraphQL */ `
   query GetCourseWeek($id: ID!) {
     getCourseWeek(id: $id) {
@@ -1918,13 +1886,9 @@ export const getCourseWeek = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const listCourseWeeks = /* GraphQL */ `
-  query ListCourseWeeks(
-    $filter: ModelCourseWeekFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
+  query ListCourseWeeks($filter: ModelCourseWeekFilterInput, $limit: Int, $nextToken: String) {
     listCourseWeeks(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -1955,7 +1919,7 @@ export const listCourseWeeks = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getCourseLesson = /* GraphQL */ `
   query GetCourseLesson($id: ID!) {
     getCourseLesson(id: $id) {
@@ -2002,13 +1966,9 @@ export const getCourseLesson = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const listCourseLessons = /* GraphQL */ `
-  query ListCourseLessons(
-    $filter: ModelCourseLessonFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
+  query ListCourseLessons($filter: ModelCourseLessonFilterInput, $limit: Int, $nextToken: String) {
     listCourseLessons(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -2042,7 +2002,7 @@ export const listCourseLessons = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getDirectMessageUser = /* GraphQL */ `
   query GetDirectMessageUser($id: ID!) {
     getDirectMessageUser(id: $id) {
@@ -2164,18 +2124,14 @@ export const getDirectMessageUser = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const listDirectMessageUsers = /* GraphQL */ `
   query ListDirectMessageUsers(
     $filter: ModelDirectMessageUserFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listDirectMessageUsers(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
+    listDirectMessageUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         userName
@@ -2225,7 +2181,7 @@ export const listDirectMessageUsers = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getDirectMessageRoom = /* GraphQL */ `
   query GetDirectMessageRoom($id: ID!) {
     getDirectMessageRoom(id: $id) {
@@ -2262,18 +2218,14 @@ export const getDirectMessageRoom = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const listDirectMessageRooms = /* GraphQL */ `
   query ListDirectMessageRooms(
     $filter: ModelDirectMessageRoomFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listDirectMessageRooms(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
+    listDirectMessageRooms(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         name
@@ -2290,7 +2242,7 @@ export const listDirectMessageRooms = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getDirectMessage = /* GraphQL */ `
   query GetDirectMessage($id: ID!) {
     getDirectMessage(id: $id) {
@@ -2416,7 +2368,7 @@ export const getDirectMessage = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const listDirectMessages = /* GraphQL */ `
   query ListDirectMessages(
     $filter: ModelDirectMessageFilterInput
@@ -2477,7 +2429,7 @@ export const listDirectMessages = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getMessage = /* GraphQL */ `
   query GetMessage($id: ID!) {
     getMessage(id: $id) {
@@ -2597,6 +2549,7 @@ export const getMessage = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -2704,13 +2657,9 @@ export const getMessage = /* GraphQL */ `
       }
     }
   }
-`;
+`
 export const listMessages = /* GraphQL */ `
-  query ListMessages(
-    $filter: ModelMessageFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
+  query ListMessages($filter: ModelMessageFilterInput, $limit: Int, $nextToken: String) {
     listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -2786,7 +2735,7 @@ export const listMessages = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getResourceRoot = /* GraphQL */ `
   query GetResourceRoot($id: ID!) {
     getResourceRoot(id: $id) {
@@ -2915,13 +2864,9 @@ export const getResourceRoot = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const listResourceRoots = /* GraphQL */ `
-  query ListResourceRoots(
-    $filter: ModelResourceRootFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
+  query ListResourceRoots($filter: ModelResourceRootFilterInput, $limit: Int, $nextToken: String) {
     listResourceRoots(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -2969,7 +2914,7 @@ export const listResourceRoots = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getResourceMenuItem = /* GraphQL */ `
   query GetResourceMenuItem($id: ID!) {
     getResourceMenuItem(id: $id) {
@@ -3083,18 +3028,14 @@ export const getResourceMenuItem = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const listResourceMenuItems = /* GraphQL */ `
   query ListResourceMenuItems(
     $filter: ModelResourceMenuItemFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listResourceMenuItems(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
+    listResourceMenuItems(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         owner
@@ -3135,7 +3076,7 @@ export const listResourceMenuItems = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getResource = /* GraphQL */ `
   query GetResource($id: ID!) {
     getResource(id: $id) {
@@ -3233,13 +3174,9 @@ export const getResource = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const listResources = /* GraphQL */ `
-  query ListResources(
-    $filter: ModelResourceFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
+  query ListResources($filter: ModelResourceFilterInput, $limit: Int, $nextToken: String) {
     listResources(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -3283,7 +3220,7 @@ export const listResources = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getResourceSeries = /* GraphQL */ `
   query GetResourceSeries($id: ID!) {
     getResourceSeries(id: $id) {
@@ -3375,7 +3312,7 @@ export const getResourceSeries = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const listResourceSeriess = /* GraphQL */ `
   query ListResourceSeriess(
     $filter: ModelResourceSeriesFilterInput
@@ -3430,7 +3367,7 @@ export const listResourceSeriess = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getResourceEpisode = /* GraphQL */ `
   query GetResourceEpisode($id: ID!) {
     getResourceEpisode(id: $id) {
@@ -3510,18 +3447,14 @@ export const getResourceEpisode = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const listResourceEpisodes = /* GraphQL */ `
   query ListResourceEpisodes(
     $filter: ModelResourceEpisodeFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listResourceEpisodes(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
+    listResourceEpisodes(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         owner
@@ -3564,7 +3497,7 @@ export const listResourceEpisodes = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getProduct = /* GraphQL */ `
   query GetProduct($id: ID!) {
     getProduct(id: $id) {
@@ -3603,13 +3536,9 @@ export const getProduct = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const listProducts = /* GraphQL */ `
-  query ListProducts(
-    $filter: ModelProductFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
+  query ListProducts($filter: ModelProductFilterInput, $limit: Int, $nextToken: String) {
     listProducts(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -3639,7 +3568,7 @@ export const listProducts = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getVodAsset = /* GraphQL */ `
   query GetVodAsset($id: ID!) {
     getVodAsset(id: $id) {
@@ -3655,13 +3584,9 @@ export const getVodAsset = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const listVodAssets = /* GraphQL */ `
-  query ListVodAssets(
-    $filter: ModelvodAssetFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
+  query ListVodAssets($filter: ModelvodAssetFilterInput, $limit: Int, $nextToken: String) {
     listVodAssets(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -3678,7 +3603,7 @@ export const listVodAssets = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getVideoObject = /* GraphQL */ `
   query GetVideoObject($id: ID!) {
     getVideoObject(id: $id) {
@@ -3687,13 +3612,9 @@ export const getVideoObject = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const listVideoObjects = /* GraphQL */ `
-  query ListVideoObjects(
-    $filter: ModelvideoObjectFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
+  query ListVideoObjects($filter: ModelvideoObjectFilterInput, $limit: Int, $nextToken: String) {
     listVideoObjects(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -3703,7 +3624,7 @@ export const listVideoObjects = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const groupMemberByGroup = /* GraphQL */ `
   query GroupMemberByGroup(
     $groupID: ID
@@ -3786,7 +3707,7 @@ export const groupMemberByGroup = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const groupMemberByUser = /* GraphQL */ `
   query GroupMemberByUser(
     $userID: ID
@@ -3869,7 +3790,7 @@ export const groupMemberByUser = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const groupByType = /* GraphQL */ `
   query GroupByType(
     $type: String
@@ -3988,7 +3909,7 @@ export const groupByType = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const paymentByUser = /* GraphQL */ `
   query PaymentByUser(
     $userID: String
@@ -4065,7 +3986,7 @@ export const paymentByUser = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const courseTriadUserByUser = /* GraphQL */ `
   query CourseTriadUserByUser(
     $userID: String
@@ -4128,7 +4049,7 @@ export const courseTriadUserByUser = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const dmUsersByUser = /* GraphQL */ `
   query DmUsersByUser(
     $roomID: ID
@@ -4195,7 +4116,7 @@ export const dmUsersByUser = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const directMessagesByRoom = /* GraphQL */ `
   query DirectMessagesByRoom(
     $messageRoomID: ID
@@ -4266,7 +4187,7 @@ export const directMessagesByRoom = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const messagesByRoom = /* GraphQL */ `
   query MessagesByRoom(
     $roomId: ID
@@ -4358,7 +4279,7 @@ export const messagesByRoom = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const searchGroups = /* GraphQL */ `
   query SearchGroups(
     $filter: SearchableGroupFilterInput
@@ -4367,13 +4288,7 @@ export const searchGroups = /* GraphQL */ `
     $nextToken: String
     $from: Int
   ) {
-    searchGroups(
-      filter: $filter
-      sort: $sort
-      limit: $limit
-      nextToken: $nextToken
-      from: $from
-    ) {
+    searchGroups(filter: $filter, sort: $sort, limit: $limit, nextToken: $nextToken, from: $from) {
       items {
         id
         owner
@@ -4476,13 +4391,9 @@ export const searchGroups = /* GraphQL */ `
       total
     }
   }
-`;
+`
 export const listUsers = /* GraphQL */ `
-  query ListUsers(
-    $filter: ModelUserFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
+  query ListUsers($filter: ModelUserFilterInput, $limit: Int, $nextToken: String) {
     listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
@@ -4584,7 +4495,7 @@ export const listUsers = /* GraphQL */ `
       nextToken
     }
   }
-`;
+`
 export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
@@ -4728,6 +4639,7 @@ export const getUser = /* GraphQL */ `
           attachmentName
           userId
           messageId
+          roomId
           parentReplyId
           createdAt
           updatedAt
@@ -4800,7 +4712,7 @@ export const getUser = /* GraphQL */ `
       updatedAt
     }
   }
-`;
+`
 export const searchUsers = /* GraphQL */ `
   query SearchUsers(
     $filter: SearchableUserFilterInput
@@ -4809,13 +4721,7 @@ export const searchUsers = /* GraphQL */ `
     $nextToken: String
     $from: Int
   ) {
-    searchUsers(
-      filter: $filter
-      sort: $sort
-      limit: $limit
-      nextToken: $nextToken
-      from: $from
-    ) {
+    searchUsers(filter: $filter, sort: $sort, limit: $limit, nextToken: $nextToken, from: $from) {
       items {
         id
         given_name
@@ -4917,4 +4823,4 @@ export const searchUsers = /* GraphQL */ `
       total
     }
   }
-`;
+`

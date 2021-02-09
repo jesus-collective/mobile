@@ -814,7 +814,7 @@ type Reply @model(queries: null)
     # reply to top-level message
     messageId: ID!
     parentMessage: Message @connection(fields: ["messageId"])
-
+    roomId: ID
     # replies to reply (recursive definition)
     parentReplyId: ID!
     parentReply: Reply @connection(fields: ["parentReplyId"])
