@@ -1599,6 +1599,13 @@ export default class MainStyles {
         fontSize: 22,
         marginHorizontal: 15,
       },
+      dashboardSectionSubNav: {
+        zIndex: 6000,
+        maxHeight: 45,
+        flexDirection: "row",
+        justifyContent: "flex-end",
+        alignItems: "flex-start",
+      },
 
       // Media Query Desktop Tablet
       "@media (min-width: 350) and (max-width: 768)": {
@@ -2179,6 +2186,9 @@ export default class MainStyles {
           marginTop: 15,
           marginBottom: 15,
           width: "40%",
+        },
+        dashboardSectionSubNav: {
+          marginRight: 10,
         },
       },
 

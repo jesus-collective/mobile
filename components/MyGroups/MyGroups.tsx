@@ -1321,15 +1321,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                           >
                             {this.state.titleString}
                           </JCButton>
-                          <Container
-                            style={{
-                              zIndex: 6000,
-                              maxHeight: 45,
-                              flexDirection: "row",
-                              justifyContent: "flex-end",
-                              alignItems: "flex-start",
-                            }}
-                          >
+                          <Container style={this.styles.style.dashboardSectionSubNav}>
                             {Platform.OS !== "web" || Dimensions.get("window").width < 720 ? (
                               <DropDownPicker
                                 zIndex={6000}
@@ -1339,6 +1331,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                                   zIndex: 5000,
                                   marginTop: 5,
                                   marginBottom: 5,
+                                  alignSelf: "center",
                                 }}
                                 dropDownStyle={{
                                   backgroundColor: "#FF4438",
@@ -1349,6 +1342,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                                 style={{
                                   backgroundColor: "#FF4438",
                                   zIndex: 5000,
+                                  alignSelf: "center",
                                 }}
                                 itemStyle={{
                                   justifyContent: "flex-start",
