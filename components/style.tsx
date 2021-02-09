@@ -1578,6 +1578,10 @@ export default class MainStyles {
         color: "#ffffff",
         fontSize: 20,
       },
+      dashboardSubNavIcon: {
+        color: "FF4438",
+        fontSize: 20,
+      },
       mySignUpText: {
         width: "100%",
         marginBottom: "8.33%",
@@ -1799,7 +1803,10 @@ export default class MainStyles {
           color: "#ffffff",
           fontSize: 20,
         },
-
+        dashboardSubNavIcon: {
+          color: "#FF4438",
+          fontSize: 20,
+        },
         partnerFriendsLegend: {
           flexDirection: "column",
         },
@@ -1910,6 +1917,10 @@ export default class MainStyles {
         },
         resourceIcon: {
           color: "#ffffff",
+          fontSize: 28,
+        },
+        dashboardSubNavIcon: {
+          color: "#FF4438",
           fontSize: 28,
         },
       },
@@ -2132,6 +2143,11 @@ export default class MainStyles {
         },
         resourceIcon: {
           color: "#ffffff",
+          fontSize: 30,
+          alignSelf: "center",
+        },
+        dashboardSubNavIcon: {
+          color: "#FF4438",
           fontSize: 30,
           alignSelf: "center",
         },
