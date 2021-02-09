@@ -185,7 +185,6 @@ class AwesomeApp extends JCComponent<Props, State> {
 
   render(): React.ReactNode {
     //    console.log({ AwesomeApp: this.state.authState })
-    ;<NeedHelpButton></NeedHelpButton>
     if (this.state.fontLoaded && this.state.authState != "") {
       return (
         <View
