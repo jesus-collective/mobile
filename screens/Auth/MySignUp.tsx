@@ -848,12 +848,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                           Individual
                         </JCButton>
                         <Text
-                          style={{
-                            fontFamily: "Graphik-Regular-App",
-                            fontWeight: "bold",
-                            fontSize: 22,
-                            marginHorizontal: 15,
-                          }}
+                          style={this.styles.style.mySignUpOr}
                         >
                           or
                         </Text>

@@ -1124,7 +1124,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               marginBottom: 15,
               paddingTop: 10,
               paddingRight: 10,
-              paddingBottom: 10,
+              paddingBottom: 30,
               paddingLeft: 10,
               fontFamily: "Graphik-Regular-App",
               fontSize: 16,
