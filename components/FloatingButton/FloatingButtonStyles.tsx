@@ -29,13 +29,11 @@ const FloatingButtonStyles = EStyleSheet.create({
     marginLeft: 5,
     paddingBottom: 2,
   },
-  /* ================ Left Positioned ============ */
-  HelpFloatingButtonStyle: {
-    position: "relative",
-    zIndex: 9999,
-    bottom: smallScreen ? 25 : 42,
-    right: "unset",
-    left: 25,
+  HelpFloatingButton: {
+    position: "absolute",
+    right: smallScreen ? 20 : 40,
+    bottom: smallScreen ? 20 : 40,
+    zIndex: 99999,
     width: smallScreen ? 50 : 175,
     height: 50,
     borderRadius: smallScreen ? 50 : 56,
@@ -48,7 +46,7 @@ const FloatingButtonStyles = EStyleSheet.create({
     shadowOffset: { width: 1, height: 3 },
     shadowOpacity: 0.25,
   },
-  /* ============================================== */
+
   HelpFloatingButtonTextStyle: {
     fontFamily: "Graphik-Bold-App",
     color: "white",

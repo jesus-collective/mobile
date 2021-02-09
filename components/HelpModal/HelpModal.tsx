@@ -47,15 +47,20 @@ export default function HelpModal({ setShow }: Props): JSX.Element {
   if (sent) {
     return (
       <View style={HelpModalStyles.HelpModalContainer}>
-        <TouchableOpacity
-          onPress={() => setShow()}
-          style={{ padding: 16, position: "absolute", right: 25, top: 18, zIndex: 99999 }}
-        >
-          <MaterialCommunityIcons name="close-thick" size={24} color="black" />
-        </TouchableOpacity>
+        {!errorMsg ? (
+          <View style={{ flexDirection: "row" }}>
+            <Text style={HelpModalStyles.HelpModalHeader}>Message Sent</Text>
+            <TouchableOpacity
+              onPress={() => setShow()}
+              style={{ flexDirection: "row-reverse", flex: 0, padding: 16, zIndex: 9999 }}
+            >
+              <MaterialCommunityIcons name="close-thick" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
+        ) : null}
+
         {!errorMsg ? (
           <View>
-            <Text style={HelpModalStyles.HelpModalHeader}>Message sent</Text>
             <Text style={HelpModalStyles.HelpModalLabel}>
               We will get back to you as soon as we can
             </Text>
@@ -77,7 +82,15 @@ export default function HelpModal({ setShow }: Props): JSX.Element {
           </View>
         ) : (
           <View>
-            <Text style={HelpModalStyles.HelpModalHeader}>Sorry, an error occurred</Text>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={HelpModalStyles.HelpModalHeader}>Sorry, an error occurred</Text>
+              <TouchableOpacity
+                onPress={() => setShow()}
+                style={{ flexDirection: "row-reverse", flex: 0, padding: 16, zIndex: 9999 }}
+              >
+                <MaterialCommunityIcons name="close-thick" size={24} color="black" />
+              </TouchableOpacity>
+            </View>
             <Text style={HelpModalStyles.HelpModalLabel}>{errorMsg}</Text>
           </View>
         )}
@@ -86,13 +99,16 @@ export default function HelpModal({ setShow }: Props): JSX.Element {
   }
   return (
     <View style={HelpModalStyles.HelpModalContainer}>
-      <TouchableOpacity
-        onPress={() => setShow()}
-        style={{ padding: 16, position: "absolute", right: 25, top: 18 }}
-      >
-        <MaterialCommunityIcons name="close-thick" size={24} color="black" />
-      </TouchableOpacity>
-      <Text style={HelpModalStyles.HelpModalHeader}>How can we assist?</Text>
+      <View style={{ flexDirection: "row" }}>
+        <Text style={HelpModalStyles.HelpModalHeader}>How can we assist?</Text>
+        <TouchableOpacity
+          onPress={() => setShow()}
+          style={{ flexDirection: "row-reverse", flex: 0, padding: 16, zIndex: 9999 }}
+        >
+          <MaterialCommunityIcons name="close-thick" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
+
       {showEmailField ? (
         <TextInput
           autoFocus

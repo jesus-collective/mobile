@@ -10,6 +10,7 @@ import React, { lazy, Suspense } from "react"
 import { Dimensions, Platform } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
 import { AuthStateData } from "src/types"
+import NeedHelpButton from "./components/FloatingButton/NeedHelpButton"
 import JCComponent, { JCState } from "./components/JCComponent/JCComponent"
 import Sentry from "./components/Sentry"
 import * as RootNavigation from "./screens/HomeScreen//NavigationRoot"
@@ -184,6 +185,7 @@ class AwesomeApp extends JCComponent<Props, State> {
 
   render(): React.ReactNode {
     //    console.log({ AwesomeApp: this.state.authState })
+    ;<NeedHelpButton></NeedHelpButton>
     if (this.state.fontLoaded && this.state.authState != "") {
       return (
         <View
@@ -194,6 +196,7 @@ class AwesomeApp extends JCComponent<Props, State> {
             height: "100%",
           }}
         >
+          <NeedHelpButton></NeedHelpButton>
           {Platform.OS !== "web" || Dimensions.get("window").width <= 720 ? (
             this.state.authState != "signedIn" &&
             this.state.authState != "loading" &&

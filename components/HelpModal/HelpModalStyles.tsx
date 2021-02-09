@@ -7,6 +7,7 @@ const HelpModalStyles = EStyleSheet.create({
   HelpModalHeader: {
     fontSize: 24,
     marginVertical: 16,
+    flex: 2,
     fontFamily: "Graphik-Bold-App",
   },
   HelpModalLabel: {
@@ -15,7 +16,11 @@ const HelpModalStyles = EStyleSheet.create({
     fontSize: 14,
   },
   HelpModalContainer: {
+    top: smallScreen ? 0 : "unset",
+    bottom: smallScreen ? "unset" : 20,
+    right: smallScreen ? "unset" : 20,
     paddingHorizontal: 12,
+    zIndex: 99999,
     paddingVertical: 16,
     backgroundColor: "white",
     shadowColor: "#333333",
@@ -24,11 +29,7 @@ const HelpModalStyles = EStyleSheet.create({
     shadowOpacity: 0.25,
     width: smallScreen ? width : 400,
     height: smallScreen ? height : 300,
-    top: smallScreen ? 0 : "unset",
     position: "absolute",
-    right: "unset",
-    left: smallScreen ? "unset" : 25,
-    bottom: 120,
   },
   HelpModalTextInput: {
     marginVertical: 4,
