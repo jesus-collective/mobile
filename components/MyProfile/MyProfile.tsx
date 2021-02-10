@@ -16,6 +16,7 @@ import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 import { GetUserQuery, ListInvoicesMutation } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
 import { constants } from "../../src/constants"
+import * as customQueries from "../../src/graphql-custom/queries"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
 import EditableText from "../Forms/EditableText"
@@ -142,7 +143,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       if (this.props.loadId) {
         try {
           const getUser: any = await API.graphql(
-            graphqlOperation(queries.getUser, { id: this.props.loadId })
+            graphqlOperation(customQueries.getUserCustom, { id: this.props.loadId })
           )
           if (getUser.data.getUser != null)
             this.setState(
@@ -159,6 +160,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
           else this.setState({ noUserFound: true })
           //console.log(this.state.UserDetails)
         } catch (e) {
+          console.log("tripped here")
           console.log({ Error: e })
           if (e.data?.getUser != null)
             this.setState(

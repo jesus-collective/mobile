@@ -31,6 +31,7 @@ import {
   UpdateGroupMutation,
   UserGroupType,
 } from "../../src/API"
+import * as customMutations from "../../src/graphql-custom/mutations"
 import * as customQueries from "../../src/graphql-custom/queries"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
@@ -399,7 +400,7 @@ export default class EventScreen extends JCComponent<Props, State> {
           json.data?.groupMemberByUser?.items?.map((item) => {
             if (item?.id) {
               const deleteGroupMember = API.graphql({
-                query: mutations.deleteGroupMember,
+                query: customMutations.deleteGroupMember,
                 variables: { input: { id: item.id } },
                 authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
               }) as Promise<GraphQLResult<DeleteGroupMemberMutation>>
@@ -432,7 +433,7 @@ export default class EventScreen extends JCComponent<Props, State> {
         attributes: { id: this.state.data.id, name: this.state.data.name },
       })
       const createGroupMember = API.graphql({
-        query: mutations.createGroupMember,
+        query: customMutations.createGroupMember,
         variables: { input: { groupID: this.state.data.id, userID: this.state.currentUser } },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       }) as Promise<GraphQLResult<CreateGroupMemberMutation>>

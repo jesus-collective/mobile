@@ -13,8 +13,8 @@ import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import getTheme from "../../native-base-theme/components"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 import { constants } from "../../src/constants"
+import * as customMutations from "../../src/graphql-custom/mutations"
 import * as customQueries from "../../src/graphql-custom/queries"
-import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 
@@ -553,7 +553,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     })
 
     const createGroupMember: any = API.graphql({
-      query: mutations.createGroupMember,
+      query: customMutations.createGroupMember,
       variables: {
         input: { groupID: group.id, userID: this.state.currentUser },
       },
@@ -594,7 +594,7 @@ export default class MyGroups extends JCComponent<Props, State> {
 
         json.data.groupMemberByUser.items.map((item: any) => {
           const deleteGroupMember: any = API.graphql({
-            query: mutations.deleteGroupMember,
+            query: customMutations.deleteGroupMember,
             variables: { input: { id: item.id } },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
           })

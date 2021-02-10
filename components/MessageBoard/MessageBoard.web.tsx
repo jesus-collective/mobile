@@ -41,6 +41,7 @@ import {
   onCreateMessageByRoomId,
   onCreateReply,
 } from "../../src/graphql-custom/messages"
+import * as customMutations from "../../src/graphql-custom/mutations"
 import * as customQueries from "../../src/graphql-custom/queries"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
@@ -560,7 +561,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           //authorOrgId: "0"
         }
         const createMessage = API.graphql({
-          query: mutations.createMessage,
+          query: customMutations.createMessage,
           variables: { input },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
         }) as Promise<GraphQLResult<CreateMessageMutation>>

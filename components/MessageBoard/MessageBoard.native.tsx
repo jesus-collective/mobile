@@ -10,8 +10,8 @@ import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import getTheme from "../../native-base-theme/components"
 import material from "../../native-base-theme/variables/material"
 import { CreateMessageInput } from "../../src/API"
+import * as customMutations from "../../src/graphql-custom/mutations"
 import * as customQueries from "../../src/graphql-custom/queries"
-import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
 import * as subscriptions from "../../src/graphql/subscriptions"
 //import './react-draft-wysiwyg.css';
@@ -109,7 +109,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         authorOrgId: "0",
       }
       const createMessage: any = API.graphql({
-        query: mutations.createMessage,
+        query: customMutations.createMessage,
         variables: { input: z },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })
