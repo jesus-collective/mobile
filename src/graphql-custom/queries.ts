@@ -96,11 +96,8 @@ export const listUsersCustom = /* GraphQL */ `
         id
         given_name
         family_name
-        email
         owner
         mainUserGroup
-        stripeCustomerID
-        stripeSubscriptionID
         hasPaidState
         profileState
         location {
