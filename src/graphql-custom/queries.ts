@@ -1,3 +1,98 @@
+export const listUsersCustom = /* GraphQL */ `
+  query ListUsers($filter: ModelUserFilterInput, $limit: Int, $nextToken: String) {
+    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        given_name
+        family_name
+        email
+        owner
+        mainUserGroup
+        stripeCustomerID
+        stripeSubscriptionID
+        hasPaidState
+        profileState
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        messageReplies {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
+          nextToken
+        }
+        payments {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`
 export const listOrganizationsMyGroups = /* GraphQL */ `
   query ListOrganizations($filter: ModelOrganizationFilterInput, $limit: Int, $nextToken: String) {
     listOrganizations(filter: $filter, limit: $limit, nextToken: $nextToken) {

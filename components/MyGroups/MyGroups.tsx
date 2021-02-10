@@ -331,7 +331,7 @@ export default class MyGroups extends JCComponent<Props, State> {
   setInitialData(props: Props): void {
     if (props.type == "profile") {
       const listUsers: any = API.graphql({
-        query: queries.listUsers,
+        query: customQueries.listUsersCustom,
         variables: {
           limit: 20,
           filter: { profileState: { eq: "Complete" } },

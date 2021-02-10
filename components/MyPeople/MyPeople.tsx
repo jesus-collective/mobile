@@ -8,7 +8,7 @@ import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import getTheme from "../../native-base-theme/components"
 import { ListUsersQuery } from "../../src/API"
 import { constants } from "../../src/constants"
-import * as queries from "../../src/graphql/queries"
+import * as customQueries from "../../src/graphql-custom/queries"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import { MapData } from "../MyGroups/MyGroups"
 interface Props {
@@ -66,7 +66,7 @@ export default class MyPeople extends JCComponent<Props, State> {
 
   setInitialData(): void {
     const listUsers = API.graphql({
-      query: queries.listUsers,
+      query: customQueries.listUsersCustom,
       variables: { filter: { profileState: { eq: "Complete" } } },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as Promise<GraphQLResult<ListUsersQuery>>
