@@ -10,6 +10,7 @@ import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import getTheme from "../../native-base-theme/components"
 import material from "../../native-base-theme/variables/material"
 import { CreateMessageInput } from "../../src/API"
+import * as customQueries from "../../src/graphql-custom/queries"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
 import * as subscriptions from "../../src/graphql/subscriptions"
@@ -76,7 +77,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       this.setState({ created: false })
     else {
       const messagesByRoom: any = API.graphql({
-        query: queries.messagesByRoom,
+        query: customQueries.messagesByRoomCustom,
         variables: { roomId: this.props.groupId, sortDirection: "DESC" },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })

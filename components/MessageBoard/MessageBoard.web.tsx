@@ -41,6 +41,7 @@ import {
   onCreateMessageByRoomId,
   onCreateReply,
 } from "../../src/graphql-custom/messages"
+import * as customQueries from "../../src/graphql-custom/queries"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
 import { onCreateDirectMessage } from "../../src/graphql/subscriptions"
@@ -283,7 +284,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
   async getMessages() {
     try {
       const messages = (await API.graphql({
-        query: messagesByRoom,
+        query: customQueries.messagesByRoomCustom,
         variables: {
           roomId: this.props.groupId,
           sortDirection: "DESC",

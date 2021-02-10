@@ -1,3 +1,94 @@
+export const messagesByRoomCustom = /* GraphQL */ `
+  query MessagesByRoom(
+    $roomId: ID
+    $when: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelMessageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    messagesByRoom(
+      roomId: $roomId
+      when: $when
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        content
+        when
+        attachment
+        attachmentName
+        roomId
+        userId
+        postingAs
+        owner
+        room {
+          id
+          owner
+          readGroups
+          ownerOrgID
+          type
+          name
+          description
+          memberCount
+          image
+          time
+          lastUpdated
+          location
+          length
+          effort
+          cost
+          promotionalText
+          eventType
+          eventUrl
+          tz
+          isSponsored
+          createdAt
+          updatedAt
+        }
+        replies {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        author {
+          id
+          given_name
+          family_name
+
+          owner
+          mainUserGroup
+
+          hasPaidState
+          profileState
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`
+
 export const listUsersCustom = /* GraphQL */ `
   query ListUsers($filter: ModelUserFilterInput, $limit: Int, $nextToken: String) {
     listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
