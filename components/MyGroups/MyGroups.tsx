@@ -356,7 +356,7 @@ export default class MyGroups extends JCComponent<Props, State> {
       listUsers.then(processList).catch(processList)
     } else if (props.type == "organization") {
       const listOrgs: any = API.graphql({
-        query: queries.listOrganizations,
+        query: customQueries.listOrganizationsMyGroups,
         variables: {
           limit: 20,
           filter: { profileState: { eq: "Complete" } },
@@ -481,8 +481,8 @@ export default class MyGroups extends JCComponent<Props, State> {
       })
       getPayment
         .then((json: any) => {
-          console.log(json)
           if (json.data.getPayment != null) {
+            console.log(json)
             this.setState({ isPaid: this.state.isPaid.concat([item.id]) })
           }
         })

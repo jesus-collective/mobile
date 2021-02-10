@@ -1,3 +1,83 @@
+export const listOrganizationsMyGroups = /* GraphQL */ `
+  query ListOrganizations($filter: ModelOrganizationFilterInput, $limit: Int, $nextToken: String) {
+    listOrganizations(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        orgName
+        admins
+        superAdmin
+        hasPaidState
+        profileState
+        country
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        parentOrganizationId
+        parentOrganization {
+          id
+          orgName
+          admins
+          superAdmin
+          hasPaidState
+          profileState
+          country
+          aboutMeShort
+          aboutMeLong
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          parentOrganizationId
+          createdAt
+          updatedAt
+        }
+        subOrganizations {
+          nextToken
+        }
+        members {
+          nextToken
+        }
+        ownsGroups {
+          nextToken
+        }
+        resource {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`
+
 export const listDirectMessageRooms = /* GraphQL */ `
   query ListDirectMessageRooms(
     $filter: ModelDirectMessageRoomFilterInput
@@ -967,61 +1047,58 @@ export const getResourceRoot = /* GraphQL */ `
           extendedDescription
           series {
             items {
-
-                id
+              id
+              type
+              title
+              description
+              imageFile {
+                userId
+                filenameSmall
+                filenameMedium
+                filenameLarge
+                filenameUpload
+              }
+              details {
                 type
-                title
-                description
-                imageFile {
+                name
+                text
+                value
+                image {
                   userId
                   filenameSmall
                   filenameMedium
                   filenameLarge
                   filenameUpload
                 }
-                details {
+              }
+              category
+              status
+              episodes {
+                items {
+                  id
+                  episodeNumber
                   type
-                  name
-                  text
-                  value
-                  image {
-                    userId
-                    filenameSmall
-                    filenameMedium
-                    filenameLarge
-                    filenameUpload
-                  }
-                }
-                category
-                status
-                episodes {
-                    items {
-                      id
-                      episodeNumber
-                      type
-                      title
-                      description
-                      details {
-                        type
-                        name
-                        text
-                        value
-                        image {
-                          userId
-                          filenameSmall
-                          filenameMedium
-                          filenameLarge
-                          filenameUpload
-                        }
-                      }
-                      episodeID
-                    
-                      createdAt
-                      updatedAt
+                  title
+                  description
+                  details {
+                    type
+                    name
+                    text
+                    value
+                    image {
+                      userId
+                      filenameSmall
+                      filenameMedium
+                      filenameLarge
+                      filenameUpload
                     }
-                    nextToken
-                
-                
+                  }
+                  episodeID
+
+                  createdAt
+                  updatedAt
+                }
+                nextToken
               }
               seriesID
               createdAt
