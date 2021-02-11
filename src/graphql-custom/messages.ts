@@ -86,6 +86,7 @@ export const getMessage = /* GraphQL */ `
           updatedAt
           userId
           when
+          roomId
         }
       }
     }
@@ -196,6 +197,7 @@ export const messagesByRoom = /* GraphQL */ `
             updatedAt
             userId
             when
+            roomId
           }
         }
       }
@@ -324,6 +326,7 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
           parentReplyId
           createdAt
           updatedAt
+          roomId
           author {
             id
             given_name
