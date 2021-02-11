@@ -3,11 +3,12 @@ import React, { useState } from "react"
 import { Image, View } from "react-native"
 import FloatingButton from "../../components/FloatingButton/FloatingButton"
 import FloatingButtonStyles from "../../components/FloatingButton/FloatingButtonStyles"
+import { constants } from "../../src/constants"
 import HelpModal from "../HelpModal/HelpModal"
 
 export default function NeedHelpButton(): JSX.Element {
   const [showModal, setShowModal] = useState(false)
-  return (
+  return constants["SETTING_ISVISIBLE_NEED_HELP"] ? (
     <>
       {showModal ? (
         <HelpModal setShow={() => setShowModal(!showModal)}></HelpModal>
@@ -41,5 +42,7 @@ export default function NeedHelpButton(): JSX.Element {
         />
       )}
     </>
+  ) : (
+    <></>
   )
 }
