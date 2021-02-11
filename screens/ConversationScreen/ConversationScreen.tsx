@@ -2,7 +2,7 @@
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { Container, Content } from "native-base"
 import React from "react"
-import { Text, TouchableOpacity } from "react-native"
+import { Text, TouchableOpacity, View } from "react-native"
 import EditableUsers from "../../components/Forms/EditableUsers"
 import Header from "../../components/Header/Header"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
@@ -239,7 +239,9 @@ export default class ConversationScreen extends JCComponent<Props, State> {
           <MyMap type={"no-filters"} visible={this.state.showMap} mapData={[]}></MyMap>
           <Container style={this.styles.style.conversationScreenMainContainer}>
             <Container style={this.styles.style.conversationScreenLeftCard}>
-              <Text style={this.styles.style.eventNameInput}>Direct Messages</Text>
+              <Text style={[this.styles.style.eventNameInput, { fontSize: 20, paddingLeft: 30 }]}>
+                Direct Messages
+              </Text>
 
               {false ? (
                 <div>
@@ -278,33 +280,42 @@ export default class ConversationScreen extends JCComponent<Props, State> {
                         <TouchableOpacity
                           style={{
                             backgroundColor: this.state.selectedRoom == index ? "#eeeeee" : "unset",
-                            borderRadius: 10,
                             width: "100%",
-                            paddingTop: 8,
-                            paddingBottom: 8,
-                            display: "flex",
-                            alignItems: "center",
                           }}
                           key={item.id}
                           onPress={() => this.switchRoom(index)}
                         >
-                          <Text
+                          <View
                             style={{
-                              fontSize: 20,
-                              lineHeight: 25,
-                              fontWeight: "normal",
-                              fontFamily: "Graphik-Regular-App",
-                              width: "100%",
-                              display: "flex",
-                              alignItems: "center",
+                              alignSelf: "stretch",
+                              marginLeft: 30,
+                              marginRight: 60,
+                              paddingTop: 8,
+                              borderBottomWidth: 1,
+                              borderColor: "rgba(51, 51, 51, .1)",
+                              paddingBottom: 8,
                             }}
                           >
-                            <ProfileImage
-                              user={otherUsers.ids.length === 1 ? otherUsers.ids[0] : null}
-                              size="small2"
-                            ></ProfileImage>
-                            {item.room.name ? item.room.name : stringOfNames}
-                          </Text>
+                            <Text
+                              style={[
+                                this.state.selectedRoom == index ? { fontWeight: "700" } : {},
+                                {
+                                  fontSize: 20,
+                                  lineHeight: 25,
+                                  fontWeight: "normal",
+                                  fontFamily: "Graphik-Regular-App",
+                                  display: "flex",
+                                  alignItems: "center",
+                                },
+                              ]}
+                            >
+                              <ProfileImage
+                                user={otherUsers.ids.length === 1 ? otherUsers.ids[0] : null}
+                                size="small2"
+                              ></ProfileImage>
+                              {item.room.name ? item.room.name : stringOfNames}
+                            </Text>
+                          </View>
                         </TouchableOpacity>
                       )
                     })
