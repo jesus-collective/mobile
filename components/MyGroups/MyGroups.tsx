@@ -780,7 +780,7 @@ export default class MyGroups extends JCComponent<Props, State> {
               </Text>
               <Text style={this.styles.style.fontConnectWithRole}>{item.currentRole}</Text>
               <JCButton
-                buttonType={ButtonTypes.OutlineSmall}
+                buttonType={ButtonTypes.ProfileSmall}
                 onPress={() => {
                   this.openConversation(item.id, item.user.given_name + " " + item.user.family_name)
                 }}

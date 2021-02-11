@@ -2239,7 +2239,7 @@ export default class MainStyles {
           width: "40%",
         },
         mySignUpInputFieldscontainer: {
-          marginRight: 20
+          marginRight: 20,
         },
         mySignUpEmailContainer: {
           marginRight: 20,
@@ -2259,7 +2259,10 @@ export default class MainStyles {
         },
         mySignUpPlaceholderText: {
           fontSize: 15,
-        }
+        },
+        fontConnectWithRole: {
+          textAlign: "center",
+        },
       },
 
       dashboardMainContainer:
