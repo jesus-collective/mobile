@@ -1349,6 +1349,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                                 style={{
                                   backgroundColor: "#FF4438",
                                   zIndex: 5000,
+                                  alignSelf: "center",
                                 }}
                                 itemStyle={{
                                   justifyContent: "flex-start",
