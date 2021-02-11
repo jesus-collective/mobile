@@ -43,6 +43,7 @@ import {
   GetUserQueryResultPromise,
   GroupMemberByUserQueryResult,
   GroupMemberByUserQueryResultPromise,
+  JCCognitoUser,
   ListResourceRootsQueryResult,
   ListResourceRootsQueryResultPromise,
   PageItemIndex,
@@ -125,7 +126,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       currentUserProfile: null,
       memberIDs: [],
     })
-    Auth.currentAuthenticatedUser().then((user: any) => {
+    Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
       this.setState({
         currentUser: user.username,
       })
@@ -153,7 +154,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
   setInitialData(props: Props): void {
     if (props.route.params.create === "true" || props.route.params.create === true) {
       console.log("creating Resource")
-      Auth.currentAuthenticatedUser().then((user: any) => {
+      Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
         const z: CreateGroupInput = {
           id: "resource-" + Date.now(),
           owner: user.username,

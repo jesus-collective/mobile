@@ -4,6 +4,7 @@ import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { Body, Button, Card, CardItem, Container, Content, Left, StyleProvider } from "native-base"
 import * as React from "react"
 import { Text, TouchableOpacity } from "react-native"
+import { JCCognitoUser } from "src/types"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import getTheme from "../../native-base-theme/components"
 import { ListUsersQuery } from "../../src/API"
@@ -42,7 +43,7 @@ export default class MyPeople extends JCComponent<Props, State> {
       // showCreateButton: false
     }
     const user = Auth.currentAuthenticatedUser()
-    user.then((user) => {
+    user.then((user: JCCognitoUser) => {
       this.setState({ currentUser: user.username }, () => this.setInitialData())
     })
   }

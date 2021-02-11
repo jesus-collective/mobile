@@ -8,6 +8,7 @@ import { Auth } from "aws-amplify"
 import { Body, Button, Header, Left, Right } from "native-base"
 import React, { HTMLAttributes } from "react"
 import { Dimensions, Image, Text } from "react-native"
+import { JCCognitoUser } from "src/types"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
 import { constants } from "../../src/constants"
 import HeaderStyles from "../Header/style"
@@ -91,14 +92,14 @@ export default class HeaderJC extends JCComponent<Props, State> {
     this.props.navigation.dispatch(DrawerActions.openDrawer())
   }
   openProfile = async (): Promise<void> => {
-    const user = await Auth.currentAuthenticatedUser()
+    const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
     this.props.navigation.push("ProfileScreen", {
       id: user["username"],
       create: false,
     })
   }
   openAdmin = async (): Promise<void> => {
-    const user = await Auth.currentAuthenticatedUser()
+    const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
     this.props.navigation.push("AdminScreen", {
       id: user["username"],
       create: false,

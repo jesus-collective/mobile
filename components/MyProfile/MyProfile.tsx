@@ -7,6 +7,7 @@ import moment from "moment"
 import { Badge, Button, Content, Form, Label, Picker, View } from "native-base"
 import * as React from "react"
 import { ActivityIndicator, Image, Text, TextInput, TouchableOpacity } from "react-native"
+import { JCCognitoUser } from "src/types"
 import EditableLocation from "../../components/Forms/EditableLocation"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
@@ -138,7 +139,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
   async getUserDetails(): Promise<void> {
     console.log("getUserDetails")
     try {
-      const user = await Auth.currentAuthenticatedUser()
+      const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       if (this.props.loadId) {
         try {
           const getUser: any = await API.graphql(
@@ -433,7 +434,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
     }
   }
   deleteUser(): void {
-    Auth.currentAuthenticatedUser().then((user) => {
+    Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
       const deleteUser: any = API.graphql({
         query: mutations.deleteUser,
         variables: {
@@ -517,7 +518,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       return
     }
     try {
-      const user = await Auth.currentAuthenticatedUser()
+      const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       const result = await Auth.changePassword(user, this.state.oldPass, this.state.newPass)
       this.setState({ passError: result })
     } catch (e) {

@@ -1,6 +1,6 @@
 ﻿import { useNavigation, useRoute } from "@react-navigation/native"
 import Amplify from "aws-amplify"
-import { Content, View } from "native-base"
+import { View } from "native-base"
 import React from "react"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
@@ -53,83 +53,82 @@ class SignUpScreen3Impl extends JCComponent<Props, State> {
             return (
               <View style={this.styles.style.signUpScreen1PaymentBody}>
                 <SignUpSidebar position="4"></SignUpSidebar>
-                <Content>
-                  {userState.isOrg ? (
-                    <View style={this.styles.style.signUpProfile}>
+
+                {userState.isOrg ? (
+                  <View style={this.styles.style.signUpProfile}>
+                    <View
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        paddingLeft: 30,
+                        borderBottomColor: "#33333320",
+                        borderBottomWidth: 1,
+                      }}
+                    >
                       <View
                         style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          paddingLeft: 30,
-                          borderBottomColor: "#33333320",
-                          borderBottomWidth: 1,
+                          marginRight: 15,
+                          paddingVertical: 5,
+                          borderBottomWidth: this.state.selected === "profile" ? 7 : 0,
+                          borderBottomColor: "#F0493E",
                         }}
                       >
-                        <View
-                          style={{
-                            marginRight: 15,
-                            paddingVertical: 5,
-                            borderBottomWidth: this.state.selected === "profile" ? 7 : 0,
-                            borderBottomColor: "#F0493E",
-                          }}
+                        <JCButton
+                          buttonType={
+                            this.state.selected === "profile"
+                              ? ButtonTypes.TransparentBoldBlackNoMargin
+                              : ButtonTypes.TransparentBoldGreyNoMargin
+                          }
+                          onPress={() => this.setState({ selected: "profile" })}
                         >
-                          <JCButton
-                            buttonType={
-                              this.state.selected === "profile"
-                                ? ButtonTypes.TransparentBoldBlackNoMargin
-                                : ButtonTypes.TransparentBoldGreyNoMargin
-                            }
-                            onPress={() => this.setState({ selected: "profile" })}
-                          >
-                            Individual Profile
-                          </JCButton>
-                        </View>
-                        <View
-                          style={{
-                            paddingVertical: 5,
-                            borderBottomWidth: this.state.selected === "organization" ? 7 : 0,
-                            borderBottomColor: "#F0493E",
-                          }}
-                        >
-                          <JCButton
-                            buttonType={
-                              this.state.selected === "organization"
-                                ? ButtonTypes.TransparentBoldBlackNoMargin
-                                : ButtonTypes.TransparentBoldGreyNoMargin
-                            }
-                            onPress={() => this.setState({ selected: "organization" })}
-                          >
-                            Organization Profile
-                          </JCButton>
-                        </View>
+                          Individual Profile
+                        </JCButton>
                       </View>
-                      {this.state.selected === "profile" ? (
-                        <MyProfile
-                          hideOrg
-                          finalizeProfile={() => {
-                            this.setState({ selected: "organization" })
-                          }}
-                        />
-                      ) : (
-                        <OrganizationViewer
-                          finalizeProfile={() => {
-                            this.onFinalizeProfile(userActions)
-                          }}
-                          create={false}
-                          loadId={userState.orgId}
-                        />
-                      )}
+                      <View
+                        style={{
+                          paddingVertical: 5,
+                          borderBottomWidth: this.state.selected === "organization" ? 7 : 0,
+                          borderBottomColor: "#F0493E",
+                        }}
+                      >
+                        <JCButton
+                          buttonType={
+                            this.state.selected === "organization"
+                              ? ButtonTypes.TransparentBoldBlackNoMargin
+                              : ButtonTypes.TransparentBoldGreyNoMargin
+                          }
+                          onPress={() => this.setState({ selected: "organization" })}
+                        >
+                          Organization Profile
+                        </JCButton>
+                      </View>
                     </View>
-                  ) : (
-                    <View style={this.styles.style.signUpProfile}>
+                    {this.state.selected === "profile" ? (
                       <MyProfile
+                        hideOrg
+                        finalizeProfile={() => {
+                          this.setState({ selected: "organization" })
+                        }}
+                      />
+                    ) : (
+                      <OrganizationViewer
                         finalizeProfile={() => {
                           this.onFinalizeProfile(userActions)
                         }}
+                        create={false}
+                        loadId={userState.orgId}
                       />
-                    </View>
-                  )}
-                </Content>
+                    )}
+                  </View>
+                ) : (
+                  <View style={this.styles.style.signUpProfile}>
+                    <MyProfile
+                      finalizeProfile={() => {
+                        this.onFinalizeProfile(userActions)
+                      }}
+                    />
+                  </View>
+                )}
               </View>
             )
           } else return null

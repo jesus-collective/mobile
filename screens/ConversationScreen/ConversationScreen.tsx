@@ -3,6 +3,7 @@ import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { Container, Content } from "native-base"
 import React from "react"
 import { Text, TouchableOpacity } from "react-native"
+import { JCCognitoUser } from "src/types"
 import EditableUsers from "../../components/Forms/EditableUsers"
 import Header from "../../components/Header/Header"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
@@ -39,7 +40,7 @@ export default class ConversationScreen extends JCComponent<Props, State> {
     }
     console.log(this.props.route.params.initialUser)
 
-    Auth.currentAuthenticatedUser().then((user: any) => {
+    Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
       this.setState({ currentUser: user.username })
     })
 
@@ -48,7 +49,7 @@ export default class ConversationScreen extends JCComponent<Props, State> {
   createRoom = (toUserID: string, toUserName: string): void => {
     console.log("CreateRoom")
     Auth.currentAuthenticatedUser()
-      .then((user: any) => {
+      .then((user: JCCognitoUser) => {
         const createDirectMessageRoom: any = API.graphql({
           query: mutations.createDirectMessageRoom,
           variables: { input: { name: "", roomType: "directMessage" } },
@@ -158,7 +159,7 @@ export default class ConversationScreen extends JCComponent<Props, State> {
 
   async getInitialData(next: string): Promise<void> {
     try {
-      const user = await Auth.currentAuthenticatedUser()
+      const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       try {
         const query = { limit: 20, filter: { userID: { eq: user["username"] } }, nextToken: next }
         const json: any = await API.graphql({

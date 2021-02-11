@@ -2,6 +2,7 @@
 import { View } from "native-base"
 import React from "react"
 import { Button, Text } from "react-native"
+import { JCCognitoUser } from "src/types"
 import JCComponent from "../../components/JCComponent/JCComponent"
 import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
@@ -18,7 +19,7 @@ export default class SignUpScreen2 extends JCComponent<Props> {
   async makePayment(actions: any): Promise<void> {
     console.log("Finish Payment")
     try {
-      const user = await Auth.currentAuthenticatedUser()
+      const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       await API.graphql(
         graphqlOperation(mutations.updateUser, {
           input: {
