@@ -90,6 +90,7 @@ interface State extends JCState {
   replyToId: string
   replyToRoomId: string
   fetchingData: boolean
+  isLoading: boolean
 }
 class MessageBoardImpl extends JCComponent<Props, State> {
   flatListRef: React.RefObject<FlatList<any>>
@@ -533,8 +534,12 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       return errorMarkdown
     }
   }
-
-  saveMessage() {
+  async handleSaveMessage() {
+    this.setState({ isLoading: true })
+    await this.saveMessage()
+    this.setState({ isLoading: false })
+  }
+  async saveMessage() {
     const { editorState, attachment, attachmentName } = this.state
 
     if (!editorState.getCurrentContent().hasText()) {
@@ -542,8 +547,9 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     }
 
     const message = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
-    Auth.currentAuthenticatedUser().then((user) => {
-      if (this.props.groupId) {
+    const user = await Auth.currentAuthenticatedUser()
+    if (this.props.groupId) {
+      try {
         const input: CreateMessageInput = {
           id: uuidv4(),
           content: message,
@@ -555,32 +561,29 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           owner: user.username,
           //authorOrgId: "0"
         }
-        const createMessage = API.graphql({
+        const createMessage = (await API.graphql({
           query: mutations.createMessage,
           variables: { input },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        }) as Promise<GraphQLResult<CreateMessageMutation>>
-
-        createMessage
-          .then((json) => {
-            console.log({ "Success mutations.createMessage": json })
-            this.setState({
-              editorState: EditorState.createEmpty(),
-              attachmentName: "",
-              attachment: "",
-            })
+        })) as Promise<GraphQLResult<CreateMessageMutation>>
+        console.log({ "Success mutations.createMessage": createMessage })
+        this.setState({
+          editorState: EditorState.createEmpty(),
+          attachmentName: "",
+          attachment: "",
+        })
+      } catch (err) {
+        console.error({ "Error mutations.createMessage": err })
+        if (err.data.createMessage) {
+          this.setState({
+            editorState: EditorState.createEmpty(),
+            attachmentName: "",
+            attachment: "",
           })
-          .catch((err) => {
-            console.error({ "Error mutations.createMessage": err })
-            if (err.data.createMessage) {
-              this.setState({
-                editorState: EditorState.createEmpty(),
-                attachmentName: "",
-                attachment: "",
-              })
-            }
-          })
-      } else if (this.props.roomId) {
+        }
+      }
+    } else if (this.props.roomId) {
+      try {
         const input: CreateDirectMessageInput = {
           id: uuidv4(),
           userId: user.username,
@@ -591,33 +594,27 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           messageRoomID: this.props.roomId,
           recipients: this.props.recipients ?? [],
         }
-        const createDirectMessage = API.graphql({
+        const createDirectMessage = (await API.graphql({
           query: mutations.createDirectMessage,
           variables: { input },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        }) as Promise<GraphQLResult<CreateDirectMessageMutation>>
-
-        createDirectMessage
-          .then((json) => {
-            console.log({ "Success mutations.createDirectMessage ": json })
-            this.setState({
-              editorState: EditorState.createEmpty(),
-              attachmentName: "",
-              attachment: "",
-            })
+        })) as Promise<GraphQLResult<CreateDirectMessageMutation>>
+        console.log({ "Success mutations.createDirectMessage ": createDirectMessage })
+        this.setState({
+          editorState: EditorState.createEmpty(),
+          attachmentName: "",
+          attachment: "",
+        })
+      } catch (err) {
+        if (err.data.createDirectMessage) {
+          this.setState({
+            editorState: EditorState.createEmpty(),
+            attachmentName: "",
+            attachment: "",
           })
-          .catch((err) => {
-            console.error({ "Error mutations.createDirectMessage ": err })
-            if (err.data.createDirectMessage) {
-              this.setState({
-                editorState: EditorState.createEmpty(),
-                attachmentName: "",
-                attachment: "",
-              })
-            }
-          })
+        }
       }
-    })
+    }
   }
   showVideo() {
     this.setState({ showVideo: !this.state.showVideo })
@@ -821,10 +818,22 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                 : ButtonTypes.SolidRightJustifiedMini
             }
             onPress={() => {
-              this.state.replyToId ? this.sendReply() : this.saveMessage()
+              if (this.state.replyToId) {
+                this.handleSendReply()
+              } else {
+                this.handleSaveMessage()
+              }
             }}
           >
-            {style == "course" || style == "courseResponse" ? "Save" : "Post"}
+            {this.state.isLoading ? (
+              <View style={{ paddingTop: 4, width: 32 }}>
+                <ActivityIndicator color="white"></ActivityIndicator>
+              </View>
+            ) : style == "course" || style == "courseResponse" ? (
+              "Save"
+            ) : (
+              "Post"
+            )}
           </JCButton>
         </View>
       </View>
@@ -992,7 +1001,11 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     }
     this.setState({ fetchingData: false })
   }
-
+  async handleSendReply() {
+    this.setState({ isLoading: true })
+    await this.sendReply()
+    this.setState({ isLoading: false })
+  }
   async sendReply() {
     const { editorState, attachment, attachmentName, replyToId, replyToRoomId } = this.state
     console.log(replyToRoomId)
