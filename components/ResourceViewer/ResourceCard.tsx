@@ -386,7 +386,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
   ): string | null {
     const youtube = item?.details?.filter((z) => z?.type == ResourceDetailType.DefaultYoutube)
     console.log({ youtube: youtube })
-    if (youtube?.length && youtube?.length > 0) return youtube[0]!.value
+    if (youtube && youtube?.length && youtube?.length > 0) return youtube[0]!.value
     else return null
   }
   icon = () => {
@@ -563,7 +563,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                       isEditable={false}
                     ></EditableText>
                   </View>
-                  {buttonItems?.length && buttonItems.length > 0 ? (
+                  {buttonItems && buttonItems?.length && buttonItems.length > 0 ? (
                     <View style={{ zIndex: 6000 + this.props.pageItemIndex.length }}>
                       <DropDownPicker
                         zIndex={6000 + this.props.pageItemIndex.length}
