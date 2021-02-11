@@ -1599,6 +1599,64 @@ export default class MainStyles {
         fontSize: 22,
         marginHorizontal: 15,
       },
+      mySignUpInputFieldscontainer: {
+        display: "flex",
+        flexDirection: "row",
+        marginBottom: "5.5%",
+      },
+      mySignUpEmailContainer: {
+        display: "flex",
+        flexDirection: "row",
+        marginBottom: "1.4%",
+      },
+      mySignUpPasswordContainer: {
+        display: "flex",
+        flexDirection: "row",
+        marginBottom: "5.5%",
+      },
+      mySignUpLeftPasswordContainer: {
+        borderBottomWidth: 1,
+        borderColor: "#00000020",
+        marginBottom: "1.4%",
+        marginRight: 30,
+        width: "100%",
+        paddingTop: 10,
+        paddingRight: 10,
+        paddingBottom: 10,
+        paddingLeft: 5,
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 18,
+        lineHeight: 24,
+      },
+      mySignUpPhoneContainer: {
+        display: "flex",
+        flexDirection: "row",
+        marginBottom: "8.33%",
+      },
+      mySignUpConfirmCode: {
+        alignSelf: "flex-end",
+        marginRight: 30,
+        fontSize: 14,
+        fontFamily: "Graphik-Regular-App",
+        lineHeight: 22,
+        color: "#333333",
+        opacity: 0.7,
+        marginTop: 20,
+      },
+      mySignUpPlaceholderText: {
+        borderBottomWidth: 1,
+        borderColor: "#00000020",
+        marginBottom: "1.4%",
+        marginRight: 30,
+        width: "100%",
+        paddingTop: 10,
+        paddingRight: 10,
+        paddingBottom: 10,
+        paddingLeft: 5,
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 18,
+        lineHeight: 24,
+      },
 
       // Media Query Desktop Tablet
       "@media (min-width: 350) and (max-width: 768)": {
@@ -2180,6 +2238,28 @@ export default class MainStyles {
           marginBottom: 15,
           width: "40%",
         },
+        mySignUpInputFieldscontainer: {
+          marginRight: 20
+        },
+        mySignUpEmailContainer: {
+          marginRight: 20,
+        },
+        mySignUpPasswordContainer: {
+          marginRight: 20,
+        },
+        mySignUpLeftPasswordContainer: {
+          marginRight: 10,
+          fontSize: 15,
+        },
+        mySignUpPhoneContainer: {
+          marginRight: 20,
+        },
+        mySignUpConfirmCode: {
+          alignSelf: "flex-start",
+        },
+        mySignUpPlaceholderText: {
+          fontSize: 15,
+        }
       },
 
       dashboardMainContainer:
