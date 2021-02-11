@@ -21,8 +21,8 @@ import ResourceSelector from "./ResourceSelector"
 
 Amplify.configure(awsconfig)
 
-interface Props extends ResourceSetupProp {}
-interface State extends JCState {}
+type Props = ResourceSetupProp
+type State = JCState
 class ResourceList extends JCComponent<Props, State> {
   static Consumer = ResourceContext.Consumer
   constructor(props: Props) {
@@ -91,7 +91,7 @@ class ResourceList extends JCComponent<Props, State> {
                 }}
                 selectedValue={page.state.settings.style}
                 onValueChange={(value: any) => {
-                  console.log(value)
+                  console.log({ value: value })
                   const tmp = page.state.settings
                   tmp.style = value
                   page.setState({ settings: tmp })
@@ -103,7 +103,7 @@ class ResourceList extends JCComponent<Props, State> {
                     return <Picker.Item key={org} label={org} value={org} />
                   })}
               </Picker>
-              {console.log(page.state.settings.style)}
+              {console.log({ style: page.state.settings.style })}
               {page.state.settings.style == ResourcePageItemStyle.ListAuto
                 ? ResourceSelector.render(page, resourceState, resourceActions)
                 : null}

@@ -238,7 +238,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
     }
   }
   async setInitialResourceData(): Promise<void> {
-    console.log(this.state.groupData)
+    console.log({ groupData: this.state.groupData })
     const listResourceRoots: ListResourceRootsQueryResultPromise = API.graphql({
       query: queries.listResourceRoots,
       variables: {
@@ -251,7 +251,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
 
     listResourceRoots
       .then((json: ListResourceRootsQueryResult) => {
-        console.log(json)
+        console.log({ json: json })
         if (json.data?.listResourceRoots?.items?.length == 0) {
           console.log("starting from scratch")
           this.createResourceRoot()
@@ -268,7 +268,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
 
             getResourceRoot
               .then((json) => {
-                console.log(json)
+                console.log({ json: json })
                 if (json.data?.getResourceRoot)
                   this.setState({
                     resourceData: json.data.getResourceRoot as GetResourceRootDataCustom,
@@ -276,14 +276,14 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
                   })
               })
               .catch((e: any) => {
-                console.log(e)
+                console.log({ Error: e })
               })
           }
           //   console.log(getResourceRoot2)
         }
       })
       .catch((e: any) => {
-        console.log(e)
+        console.log({ error: e })
       })
 
     //  const getResourceRoot2 = await DataStore.query(ResourceEpisode);
@@ -305,7 +305,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         variables: { input: resourceRoot },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })) as CreateResourceRootMutationResult
-      console.log(createResourceRoot)
+      console.log({ createResourceRoot: createResourceRoot })
       if (createResourceRoot.data?.createResourceRoot) {
         const menuItem: CreateResourceMenuItemInput = {
           type: ResourceMenuItemType.menuItem,
@@ -321,7 +321,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
           variables: { input: menuItem },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
         })) as CreateResourceMenuItemMutationResult
-        console.log(createMenuItem)
+        console.log({ createMenuItem: createMenuItem })
 
         const getResourceRoot: GetResourceRootQueryResult = (await API.graphql({
           query: customQueries.getResourceRoot,
@@ -329,7 +329,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
         })) as GetResourceRootQueryResult
 
-        console.log(createResourceRoot)
+        console.log({ createResourceRoot: createResourceRoot })
         console.log({ resourceRoot: getResourceRoot })
         if (getResourceRoot.data?.getResourceRoot)
           this.setState({
@@ -340,7 +340,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
           })
       }
     } catch (e) {
-      console.log(e)
+      console.log({ error: e })
     }
   }
 
@@ -502,7 +502,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         memberIDs: this.state.memberIDs.concat(this.state.currentUser),
       })
       // this.renderButtons()
-      console.log(this.state.memberIDs)
+      console.log({ memberIds: this.state.memberIDs })
     }
   }
   deleteGroup = (): void => {
@@ -561,15 +561,14 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
           variables: { input: menuItem },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
         })) as CreateResourceMenuItemMutationResult
-        console.log(createMenuItem)
+        console.log({ createMenuItem: createMenuItem })
         const temp = this.state.resourceData
         if (createMenuItem.data?.createResourceMenuItem) {
           temp.menuItems?.items?.push(createMenuItem.data?.createResourceMenuItem)
-          console.log(temp)
           this.setState({ resourceData: temp }, () => this.forceUpdate())
         }
       } catch (e) {
-        console.log(e)
+        console.log({ error: e })
       }
     }
   }
@@ -594,10 +593,9 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
           variables: { input: resource },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
         })
-        console.log(createResource)
+        console.log({ createResource: createResource })
         const temp = this.state.resourceData
         temp.resources?.items?.push(createResource.data.createResource)
-        console.log(temp)
         this.setState({ resourceData: temp }, () => this.forceUpdate())
       } catch (e) {
         console.log(e)
@@ -628,7 +626,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
           variables: { input: series },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
         })
-        console.log(createResource)
+        console.log({ createResource: createResource })
         const temp = this.state.resourceData
         if (this.state.currentResource != null && temp) {
           temp.resources.items[this.state.currentResource]?.series.items.push(

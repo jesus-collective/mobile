@@ -36,7 +36,7 @@ export default class ResourceSelector {
             return <Picker.Item key={index} label={org?.title ?? ""} value={org?.id} />
           })}
         </Picker>
-        {console.log(page.state.settings.resourceID)}
+        {console.log({ resourceID: page.state.settings.resourceID })}
         {page.state.settings.resourceID != null && page.state.settings.resourceID != undefined && (
           <Picker
             mode="dropdown"

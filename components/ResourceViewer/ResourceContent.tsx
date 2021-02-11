@@ -41,7 +41,7 @@ class ResourceContentImpl extends JCComponent<Props, State> {
 
   constructor(props: Props) {
     super(props)
-    console.log(props.route.params.create)
+    console.log({ create: props.route.params.create })
     this.state = {
       ...super.getInitialState(),
       showPageConfigModal: false,
@@ -112,6 +112,10 @@ class ResourceContentImpl extends JCComponent<Props, State> {
     })
     return firstEpisodeIndex
   }
+  icon = () => {
+    return <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />
+  }
+
   renderAddPageItemButton(
     resourceState: ResourceState,
     resourceActions: ResourceActions,
@@ -124,38 +128,38 @@ class ResourceContentImpl extends JCComponent<Props, State> {
           {
             label: "Menu",
             value: ResourcePageItemType.Menu,
-            icon: () => <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />,
+            icon: this.icon,
             hidden: true,
           },
           {
             label: "Header",
             value: ResourcePageItemType.Header,
-            icon: () => <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />,
+            icon: this.icon,
           },
           {
             label: "Rich Text",
             value: ResourcePageItemType.RichText,
-            icon: () => <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />,
+            icon: this.icon,
           },
           {
             label: "List",
             value: ResourcePageItemType.List,
-            icon: () => <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />,
+            icon: this.icon,
           },
           {
             label: "Grid",
             value: ResourcePageItemType.Grid,
-            icon: () => <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />,
+            icon: this.icon,
           },
           {
             label: "Column",
             value: ResourcePageItemType.Column,
-            icon: () => <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />,
+            icon: this.icon,
           },
           {
             label: "Card",
             value: ResourcePageItemType.Card,
-            icon: () => <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />,
+            icon: this.icon,
           },
         ]}
         placeholder="Add Page Item"

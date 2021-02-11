@@ -197,7 +197,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                   ></EditableText>
                   <ResourceImage
                     onUpdate={(image: ImageInput) => {
-                      let tmp = page.state.settings
+                      const tmp = page.state.settings
                       tmp.image = image
                       console.log({ settings: tmp })
                       page.setState({ settings: tmp })
@@ -385,10 +385,14 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
     item: GetResourceSeriesData | GetResourceEpisodeData | GetResourceData
   ): string | null {
     const youtube = item?.details?.filter((z) => z?.type == ResourceDetailType.DefaultYoutube)
-    console.log(youtube)
+    console.log({ youtube: youtube })
     if (youtube?.length && youtube?.length > 0) return youtube[0]!.value
     else return null
   }
+  icon = () => {
+    return <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />
+  }
+
   getButtonItems(items: GetResourceSeriesData | GetResourceEpisodeData | GetResourceData) {
     return items?.details
       ?.filter((e) => e?.type == ResourceDetailType.Button)
@@ -396,7 +400,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
         return {
           label: item?.text,
           value: item?.value,
-          icon: () => <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />,
+          icon: this.icon,
         }
       })
   }

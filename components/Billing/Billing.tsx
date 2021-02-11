@@ -205,7 +205,7 @@ class BillingImpl extends JCComponent<Props, State> {
         return priceItems2
       })
       .flat()
-    console.log(priceItems)
+    console.log({ priceItems: priceItems })
     return priceItems?.filter((x) => x != undefined && x.quantity > 0)
   }
   async createInvoice() {
@@ -222,8 +222,8 @@ class BillingImpl extends JCComponent<Props, State> {
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })
-      console.log({ invoice: invoice.data.previewInvoice.invoice })
-      this.setState({ invoice: invoice.data.previewInvoice.invoice })
+      console.log({ invoice: invoice.data.previewInvoice?.invoice })
+      this.setState({ invoice: invoice.data.previewInvoice?.invoice })
     } catch (e) {
       Sentry.captureException(e.errors || e)
       console.log(e)
