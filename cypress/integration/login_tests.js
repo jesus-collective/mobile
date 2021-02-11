@@ -50,10 +50,11 @@ const completeProfileScreen = () => {
   cy.get('[data-testId="profile-interest-picker"]').select("Equipping")
   cy.get('[data-testId="profile-interest-button-true"]').click()
   const fileName = "test.jpeg"
+
   cy.fixture(fileName).then((fileContent) => {
-    cy.get('[data-testid="profile-image"]').upload({
+    cy.get('[data-testid="profile-image"]').attachFile({
       fileContent,
-      fileName,
+      fileName: fileName,
       mimeType: "image/jpeg",
     })
   })
