@@ -223,7 +223,6 @@ class ResourceMenu extends JCComponent<Props> {
                       icon: () => (
                         <Ionicons name="md-menu" style={this.headerStyles.style.resourceIcon} />
                       ),
-                      hidden: true,
                     },
                     {
                       label: "Break",
