@@ -27,6 +27,10 @@ export type EmptyProps = WithoutKeys<Record<string, never>>
 
 export type JCUserData = {
   sub: string
+  given_name: string
+  family_name: string
+  phone_number: string
+
   // eslint-disable-next-line camelcase
   email_verified: boolean
   email: string

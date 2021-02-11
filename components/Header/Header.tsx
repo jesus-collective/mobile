@@ -151,6 +151,7 @@ export default class HeaderJC extends JCComponent<Props, State> {
             <Header style={this.headerStyles.style.container}>
               <Left style={this.styles.style.headerLeft}>
                 <Button
+                  testID="header-hamburger"
                   style={this.headerStyles.style.leftButtons}
                   transparent
                   onPress={this.openDrawer}

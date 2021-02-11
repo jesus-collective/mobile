@@ -236,17 +236,28 @@ export default class MyGroups extends JCComponent<Props, State> {
         this.setState({
           showCreateButton:
             this.props.type == "resource"
-              ? user.getSignInUserSession().accessToken.payload["cognito:groups"]?.includes("admin")
+              ? user
+                  .getSignInUserSession()
+                  ?.getAccessToken()
+                  .payload["cognito:groups"]?.includes("admin")
               : this.props.type == "course"
               ? user
                   .getSignInUserSession()
-                  .accessToken.payload["cognito:groups"]?.includes("courseAdmin") ||
-                user.signInUserSession.accessToken.payload["cognito:groups"]?.includes("admin")
+                  ?.getAccessToken()
+                  .payload["cognito:groups"]?.includes("courseAdmin") ||
+                user
+                  .getSignInUserSession()
+                  ?.getAccessToken()
+                  .payload["cognito:groups"]?.includes("admin")
               : this.props.type == "organization"
-              ? user.getSignInUserSession().accessToken.payload["cognito:groups"]?.includes("admin")
+              ? user
+                  .getSignInUserSession()
+                  ?.getAccessToken()
+                  .payload["cognito:groups"]?.includes("admin")
               : user
                   .getSignInUserSession()
-                  .accessToken.payload["cognito:groups"]?.includes("verifiedUsers"),
+                  ?.getAccessToken()
+                  .payload["cognito:groups"]?.includes("verifiedUsers"),
         })
     })
   }
