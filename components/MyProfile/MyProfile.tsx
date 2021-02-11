@@ -61,6 +61,7 @@ interface State extends JCState {
   newPass: string
   passError: string
   noUserFound: boolean
+  isLoading: boolean
   invoices: NonNullable<NonNullable<ListInvoicesMutation>["listInvoices"]>["data"]
 }
 class MyProfileImpl extends JCComponent<Props, State> {
@@ -75,7 +76,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       validationText: "",
       showPage: "profile",
       mapVisible: false,
-
+      isLoading: false,
       isEditable: false,
       editMode: false,
       mapData: [],
@@ -297,6 +298,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
     if (item.profileImage) delete item.profileImage["__typename"]
     delete item.directMessages
     return item
+  }
+  async handleFinalizeProfile() {
+    this.setState({ isLoading: true })
+    await this.finalizeProfile()
+    this.setState({ isLoading: false })
   }
   async finalizeProfile(): Promise<void> {
     const validation = Validate.Profile(this.state.UserDetails)
@@ -572,10 +578,16 @@ class MyProfileImpl extends JCComponent<Props, State> {
                     testID="profile-save"
                     buttonType={ButtonTypes.SolidRightMargin}
                     onPress={() => {
-                      this.finalizeProfile()
+                      this.handleFinalizeProfile()
                     }}
                   >
-                    Save Profile
+                    {this.state.isLoading ? (
+                      <View style={{ paddingTop: 4, minWidth: 87 }}>
+                        <ActivityIndicator color="white"></ActivityIndicator>
+                      </View>
+                    ) : (
+                      "Save Profile"
+                    )}
                   </JCButton>
                 ) : null}
                 <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.logout(userActions)}>
