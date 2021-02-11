@@ -995,12 +995,10 @@ class MessageBoardImpl extends JCComponent<Props, State> {
 
   async sendReply() {
     const { editorState, attachment, attachmentName, replyToId, replyToRoomId } = this.state
-    console.log("TEST2")
     console.log(replyToRoomId)
     if (!editorState.getCurrentContent().hasText() || !replyToId || !replyToRoomId) {
       return
     }
-    console.log("TEST1")
     try {
       const message = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
       const user = await Auth.currentAuthenticatedUser()
