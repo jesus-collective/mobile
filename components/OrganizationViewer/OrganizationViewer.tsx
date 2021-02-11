@@ -5,7 +5,7 @@ import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment"
 import { Content, Form, Input, Item, Label, Picker, View } from "native-base"
 import * as React from "react"
-import { Image, Text, TouchableOpacity } from "react-native"
+import { ActivityIndicator, Image, Text, TouchableOpacity } from "react-native"
 import Sentry from "../../components/Sentry"
 import {
   CreateOrganizationInput,
@@ -64,6 +64,7 @@ interface State extends JCState {
   oldPass: string
   newPass: string
   passError: string
+  isLoading: boolean
   currentUser: string | null
   newAdmins: any[]
   toAddAdmin: any
@@ -78,6 +79,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
       interest: null,
       interestsArray: [],
       profileImage: "",
+      isLoading: false,
       validationText: null,
       showAccountSettings: false,
       mapVisible: false,
@@ -303,6 +305,11 @@ class OrganizationImpl extends JCComponent<Props, State> {
     delete item.updatedAt
     if (item.profileImage) delete item.profileImage["__typename"]
     return item
+  }
+  async handleFinalizeProfile() {
+    this.setState({ isLoading: true })
+    await this.finalizeProfile()
+    this.setState({ isLoading: false })
   }
   async finalizeProfile(): Promise<void> {
     const validation = Validate.Organization(this.state.OrganizationDetails)
@@ -543,10 +550,16 @@ class OrganizationImpl extends JCComponent<Props, State> {
                     testID="org-save"
                     buttonType={ButtonTypes.SolidRightMargin}
                     onPress={() => {
-                      this.finalizeProfile()
+                      this.handleFinalizeProfile()
                     }}
                   >
-                    Save Profile
+                    {this.state.isLoading ? (
+                      <View style={{ paddingTop: 4, minWidth: 87 }}>
+                        <ActivityIndicator color="white"></ActivityIndicator>
+                      </View>
+                    ) : (
+                      "Save Profile"
+                    )}
                   </JCButton>
                 ) : null}
                 {this.props.loadId && this.state.showAccountSettings ? (
