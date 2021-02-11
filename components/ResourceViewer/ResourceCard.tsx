@@ -394,15 +394,17 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
   }
 
   getButtonItems(items: GetResourceSeriesData | GetResourceEpisodeData | GetResourceData) {
-    return items?.details
-      ?.filter((e) => e?.type == ResourceDetailType.Button)
-      .map((item) => {
-        return {
-          label: item?.text,
-          value: item?.value,
-          icon: this.icon,
-        }
-      })
+    return items && items.details
+      ? items.details
+          .filter((e) => e?.type == ResourceDetailType.Button)
+          .map((item) => {
+            return {
+              label: item?.text ?? "",
+              value: item?.value ?? "",
+              icon: this.icon,
+            }
+          })
+      : []
   }
 
   renderLargeCard() {
