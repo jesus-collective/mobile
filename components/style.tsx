@@ -1578,6 +1578,10 @@ export default class MainStyles {
         color: "#ffffff",
         fontSize: 20,
       },
+      dashboardSubNavIcon: {
+        color: "FF4438",
+        fontSize: 20,
+      },
       mySignUpText: {
         width: "100%",
         marginBottom: "8.33%",
@@ -1598,6 +1602,13 @@ export default class MainStyles {
         fontWeight: "bold",
         fontSize: 22,
         marginHorizontal: 15,
+      },
+      dashboardSectionSubNav: {
+        zIndex: 6000,
+        maxHeight: 45,
+        flexDirection: "row",
+        justifyContent: "flex-end",
+        alignItems: "flex-start",
       },
 
       // Media Query Desktop Tablet
@@ -1792,7 +1803,10 @@ export default class MainStyles {
           color: "#ffffff",
           fontSize: 20,
         },
-
+        dashboardSubNavIcon: {
+          color: "#FF4438",
+          fontSize: 20,
+        },
         partnerFriendsLegend: {
           flexDirection: "column",
         },
@@ -1903,6 +1917,10 @@ export default class MainStyles {
         },
         resourceIcon: {
           color: "#ffffff",
+          fontSize: 28,
+        },
+        dashboardSubNavIcon: {
+          color: "#FF4438",
           fontSize: 28,
         },
       },
@@ -2128,6 +2146,11 @@ export default class MainStyles {
           fontSize: 30,
           alignSelf: "center",
         },
+        dashboardSubNavIcon: {
+          color: "#FF4438",
+          fontSize: 30,
+          alignSelf: "center",
+        },
         conversationScreenMainContainer: {
           flexDirection: "column",
         },
@@ -2179,6 +2202,9 @@ export default class MainStyles {
           marginTop: 15,
           marginBottom: 15,
           width: "40%",
+        },
+        dashboardSectionSubNav: {
+          marginRight: 10,
         },
       },
 
