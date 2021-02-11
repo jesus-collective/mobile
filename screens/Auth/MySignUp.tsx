@@ -230,14 +230,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                     this.state.joinedAs === "individual" ? (
                       <View style={this.styles.style.authView3}>
                         <Text
-                          style={{
-                            width: "100%",
-                            marginBottom: "8.33%",
-                            fontFamily: "Graphik-Regular-App",
-                            fontWeight: "bold",
-                            fontSize: 22,
-                            lineHeight: 30,
-                          }}
+                          style={this.styles.style.mySignUpText}
                         >
                           Create your account
                         </Text>
