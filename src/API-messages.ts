@@ -163,6 +163,7 @@ export type GetMessageQuery = {
         updatedAt: string,
         userId: string,
         when: string,
+        roomId: string | null,
       } | null > | null,
     } | null,
   } | null,
@@ -272,6 +273,7 @@ export type MessagesByRoomQuery = {
           updatedAt: string,
           userId: string,
           when: string,
+          roomId: string | null,
         } | null > | null,
       } | null,
     } | null > | null,
@@ -411,6 +413,7 @@ export type OnCreateMessageByRoomIdSubscription = {
         parentReplyId: string,
         createdAt: string,
         updatedAt: string,
+        roomId: string | null,
         author:  {
           __typename: "User",
           id: string,
@@ -493,6 +496,7 @@ export type OnCreateReplySubscription = {
     attachmentName: string | null,
     userId: string,
     messageId: string,
+    roomId: string | null,
     parentMessage:  {
       __typename: "Message",
       roomId: string | null,

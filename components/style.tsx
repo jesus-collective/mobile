@@ -1578,6 +1578,10 @@ export default class MainStyles {
         color: "#ffffff",
         fontSize: 20,
       },
+      dashboardSubNavIcon: {
+        color: "FF4438",
+        fontSize: 20,
+      },
       mySignUpText: {
         width: "100%",
         marginBottom: "8.33%",
@@ -1598,6 +1602,71 @@ export default class MainStyles {
         fontWeight: "bold",
         fontSize: 22,
         marginHorizontal: 15,
+      },
+      mySignUpInputFieldscontainer: {
+        display: "flex",
+        flexDirection: "row",
+        marginBottom: "5.5%",
+      },
+      mySignUpEmailContainer: {
+        display: "flex",
+        flexDirection: "row",
+        marginBottom: "1.4%",
+      },
+      mySignUpPasswordContainer: {
+        display: "flex",
+        flexDirection: "row",
+        marginBottom: "5.5%",
+      },
+      mySignUpLeftPasswordContainer: {
+        borderBottomWidth: 1,
+        borderColor: "#00000020",
+        marginBottom: "1.4%",
+        marginRight: 30,
+        width: "100%",
+        paddingTop: 10,
+        paddingRight: 10,
+        paddingBottom: 10,
+        paddingLeft: 5,
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 18,
+        lineHeight: 24,
+      },
+      mySignUpPhoneContainer: {
+        display: "flex",
+        flexDirection: "row",
+        marginBottom: "8.33%",
+      },
+      mySignUpConfirmCode: {
+        alignSelf: "flex-end",
+        marginRight: 30,
+        fontSize: 14,
+        fontFamily: "Graphik-Regular-App",
+        lineHeight: 22,
+        color: "#333333",
+        opacity: 0.7,
+        marginTop: 20,
+      },
+      mySignUpPlaceholderText: {
+        borderBottomWidth: 1,
+        borderColor: "#00000020",
+        marginBottom: "1.4%",
+        marginRight: 30,
+        width: "100%",
+        paddingTop: 10,
+        paddingRight: 10,
+        paddingBottom: 10,
+        paddingLeft: 5,
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 18,
+        lineHeight: 24,
+      },
+      dashboardSectionSubNav: {
+        zIndex: 6000,
+        maxHeight: 45,
+        flexDirection: "row",
+        justifyContent: "flex-end",
+        alignItems: "flex-start",
       },
 
       // Media Query Desktop Tablet
@@ -1792,7 +1861,10 @@ export default class MainStyles {
           color: "#ffffff",
           fontSize: 20,
         },
-
+        dashboardSubNavIcon: {
+          color: "#FF4438",
+          fontSize: 20,
+        },
         partnerFriendsLegend: {
           flexDirection: "column",
         },
@@ -1903,6 +1975,10 @@ export default class MainStyles {
         },
         resourceIcon: {
           color: "#ffffff",
+          fontSize: 28,
+        },
+        dashboardSubNavIcon: {
+          color: "#FF4438",
           fontSize: 28,
         },
       },
@@ -2128,6 +2204,11 @@ export default class MainStyles {
           fontSize: 30,
           alignSelf: "center",
         },
+        dashboardSubNavIcon: {
+          color: "#FF4438",
+          fontSize: 30,
+          alignSelf: "center",
+        },
         conversationScreenMainContainer: {
           flexDirection: "column",
         },
@@ -2179,6 +2260,34 @@ export default class MainStyles {
           marginTop: 15,
           marginBottom: 15,
           width: "40%",
+        },
+        mySignUpInputFieldscontainer: {
+          marginRight: 20,
+        },
+        mySignUpEmailContainer: {
+          marginRight: 20,
+        },
+        mySignUpPasswordContainer: {
+          marginRight: 20,
+        },
+        mySignUpLeftPasswordContainer: {
+          marginRight: 10,
+          fontSize: 15,
+        },
+        mySignUpPhoneContainer: {
+          marginRight: 20,
+        },
+        mySignUpConfirmCode: {
+          alignSelf: "flex-start",
+        },
+        mySignUpPlaceholderText: {
+          fontSize: 15,
+        },
+        fontConnectWithRole: {
+          textAlign: "center",
+        },
+        dashboardSectionSubNav: {
+          marginRight: 10,
         },
       },
 
