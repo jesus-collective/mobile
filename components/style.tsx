@@ -1647,6 +1647,16 @@ export default class MainStyles {
         opacity: 0.7,
         marginTop: 20,
       },
+      mySignInForgotPassword: {
+        alignSelf: "flex-end",
+        marginRight: 30,
+        fontSize: 14,
+        fontFamily: "Graphik-Regular-App",
+        lineHeight: 22,
+        color: "#333333",
+        opacity: 0.7,
+        marginTop: 20,
+      },
       mySignUpPlaceholderText: {
         borderBottomWidth: 1,
         borderColor: "#00000020",
@@ -2279,6 +2289,9 @@ export default class MainStyles {
         },
         mySignUpConfirmCode: {
           alignSelf: "flex-start",
+        },
+        mySignInForgotPassword: {
+          alignSelf: 'flex-start',
         },
         mySignUpPlaceholderText: {
           fontSize: 15,
