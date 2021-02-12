@@ -30,6 +30,7 @@ import {
   orgTypesNonChurch,
   sundayAttendance,
 } from "./dropdown"
+import { isBrowser, isMobile, isTablet } from "react-device-detect"
 
 const orgTypes = orgTypesChurches.concat(orgTypesNonChurch)
 
@@ -1513,9 +1514,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
             </Label>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"row"}
+              flexDirection={isTablet || isBrowser ? "row" : "column"}
               toggleMargin={20}
-              toggleMarginLeft={10}
+              toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
               toggleMarginTop={0}
               toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Direct Messages"
@@ -1526,9 +1527,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ></JCSwitch>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"row"}
+              flexDirection={isTablet || isBrowser ? "row" : "column"}
               toggleMargin={20}
-              toggleMarginLeft={10}
+              toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
               toggleMarginTop={0}
               toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Group Messages"
@@ -1539,9 +1540,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ></JCSwitch>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"row"}
+              flexDirection={isTablet || isBrowser ? "row" : "column"}
               toggleMargin={20}
-              toggleMarginLeft={10}
+              toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
               toggleMarginTop={0}
               toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Event Messages"
@@ -1552,9 +1553,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ></JCSwitch>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"row"}
+              flexDirection={isTablet || isBrowser ? "row" : "column"}
               toggleMargin={20}
-              toggleMarginLeft={10}
+              toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
               toggleMarginTop={0}
               toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Resource Messages"
@@ -1565,9 +1566,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ></JCSwitch>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"row"}
+              flexDirection={isTablet || isBrowser ? "row" : "column"}
               toggleMargin={20}
-              toggleMarginLeft={10}
+              toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
               toggleMarginTop={0}
               toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Course Messages"
@@ -1578,9 +1579,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ></JCSwitch>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"row"}
+              flexDirection={isTablet || isBrowser ? "row" : "column"}
               toggleMargin={20}
-              toggleMarginLeft={10}
+              toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
               toggleMarginTop={0}
               toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Organization Messages"
@@ -1591,9 +1592,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ></JCSwitch>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"row"}
+              flexDirection={isTablet || isBrowser ? "row" : "column"}
               toggleMargin={20}
-              toggleMarginLeft={10}
+              toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
               toggleMarginTop={0}
               toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Org Messages"

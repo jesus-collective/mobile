@@ -2289,6 +2289,10 @@ export default class MainStyles {
         dashboardSectionSubNav: {
           marginRight: 10,
         },
+        fontMyMapOptions: {
+          marginLeft: 0,
+          marginBottom: 8,
+        },
       },
 
       dashboardMainContainer:
