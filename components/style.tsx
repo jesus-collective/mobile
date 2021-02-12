@@ -120,7 +120,7 @@ export default class MainStyles {
         paddingRight: "0.25rem",
         borderRadius: 4,
         shadowOffset: { width: 0, height: 5 },
-        shadowColor: "rgba(0, 0, 0, 0.45)",
+        shadowColor: "rgba(0, 0, 0, 0.15)",
         shadowRadius: 30,
       },
 
@@ -130,7 +130,7 @@ export default class MainStyles {
         paddingRight: "1.5rem",
         borderRadius: 4,
         shadowOffset: { width: 0, height: 5 },
-        shadowColor: "rgba(0, 0, 0, 0.45)",
+        shadowColor: "rgba(0, 0, 0, 0.15)",
         shadowRadius: 30,
         borderStyle: "solid",
         borderColor: "#FFFFFF",
