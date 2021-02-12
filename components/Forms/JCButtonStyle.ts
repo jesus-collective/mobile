@@ -1291,6 +1291,9 @@ export default EStyleSheet.create({
     courseActivityTransparentRegularBlackButton: {
       marginBottom: 5,
     },
+    SolidSignIn2Button: {  
+      alignSelf: "center",
+    },
   },
   // Media Query Desktop Large Tablet
   "@media (min-width: 769) and (max-width: 1024)": {

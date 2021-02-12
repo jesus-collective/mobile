@@ -1596,6 +1596,7 @@ export default class MainStyles {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "center",
+        marginRight: 15,
       },
       mySignUpOr: {
         fontFamily: "Graphik-Regular-App",
@@ -2261,6 +2262,7 @@ export default class MainStyles {
         mySignUpText: {
           marginTop: 50,
           width: "100%",
+          textAlign: 'center',
         },
         authView3: {
           marginLeft: 5,
