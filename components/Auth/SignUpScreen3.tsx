@@ -1,6 +1,6 @@
 ﻿import { useNavigation, useRoute } from "@react-navigation/native"
 import Amplify from "aws-amplify"
-import { View } from "native-base"
+import { Container, View } from "native-base"
 import React from "react"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
@@ -104,12 +104,14 @@ class SignUpScreen3Impl extends JCComponent<Props, State> {
                       </View>
                     </View>
                     {this.state.selected === "profile" ? (
-                      <MyProfile
-                        hideOrg
-                        finalizeProfile={() => {
-                          this.setState({ selected: "organization" })
-                        }}
-                      />
+                      <Container style={this.styles.style.signUpProfile}>
+                        <MyProfile
+                          hideOrg
+                          finalizeProfile={() => {
+                            this.setState({ selected: "organization" })
+                          }}
+                        />
+                      </Container>
                     ) : (
                       <OrganizationViewer
                         finalizeProfile={() => {
@@ -121,13 +123,13 @@ class SignUpScreen3Impl extends JCComponent<Props, State> {
                     )}
                   </View>
                 ) : (
-                  <View style={this.styles.style.signUpProfile}>
+                  <Container style={this.styles.style.signUpProfile}>
                     <MyProfile
                       finalizeProfile={() => {
                         this.onFinalizeProfile(userActions)
                       }}
                     />
-                  </View>
+                  </Container>
                 )}
               </View>
             )

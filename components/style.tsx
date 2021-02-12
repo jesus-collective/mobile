@@ -429,7 +429,7 @@ export default class MainStyles {
         color: "#333333",
         borderColor: "#dddddd",
         borderWidth: 1,
-        height: 40,
+        height: 80,
         width: "100%",
         paddingBottom: 60,
         paddingLeft: 10,
@@ -2588,17 +2588,17 @@ export default class MainStyles {
 
       signUpProfile:
         Platform.OS === "web" && Dimensions.get("window").width > 1024
-          ? { position: "absolute", left: "15%", width: "85%", top: 10 }
+          ? { position: "absolute", left: "20%", width: "78%", top: 10 }
           : Platform.OS === "web" && Dimensions.get("window").width > 768
-          ? { position: "absolute", left: "18%", width: "82.5%", top: 10 }
+          ? { position: "absolute", left: "24%", width: "74%", top: 10 }
           : Platform.OS === "web" && Dimensions.get("window").width > 720
-          ? { position: "absolute", left: "24%", width: "78%", top: 10 }
+          ? { position: "absolute", left: "28%", width: "78%", top: 10 }
           : {
               position: "absolute",
-              left: "2%",
-              width: "96%",
+              left: "0%",
+              width: "100%",
               top: 100 + Constants.statusBarHeight,
-              height: "100%",
+              height: Dimensions.get("window").height - 100 + Constants.statusBarHeight,
             },
 
       signUpScreen1Content:
