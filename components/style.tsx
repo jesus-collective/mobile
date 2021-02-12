@@ -683,9 +683,7 @@ export default class MainStyles {
               alignContent: "flex-start",
               alignItems: "flex-start",
               justifyContent: "flex-start",
-              paddingLeft: 30,
-              paddingRight: 30,
-              paddingTop: 40,
+              paddingTop: 20,
               marginLeft: 32,
               marginRight: 32,
               marginTop: 30,
@@ -693,10 +691,10 @@ export default class MainStyles {
               shadowOffset: { width: 0, height: 5 },
               shadowColor: "rgba(0, 0, 0, 0.45)",
               shadowRadius: 30,
-              height: "auto",
+              height: "80vh",
               width: 446,
               paddingBottom: 40,
-              overflowY: "scroll",
+              overflowY: "auto",
             }
           : {
               flex: 30,
@@ -804,7 +802,7 @@ export default class MainStyles {
               shadowOffset: { width: 0, height: 5 },
               shadowColor: "rgba(0, 0, 0, 0.45)",
               shadowRadius: 30,
-              height: "auto",
+              height: "80vh",
               width: 446,
             }
           : {
