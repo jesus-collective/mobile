@@ -43,6 +43,10 @@ jobs:
       with:
         start: npm run testWeb
         wait-on: 'http://localhost:19006'
+        record: true
+      env:
+        CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Coveralls
       uses: coverallsapp/github-action@master
       with:
