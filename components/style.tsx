@@ -2338,6 +2338,7 @@ export default class MainStyles {
         position: "absolute",
         top: "6%",
         left: "20%",
+        marginTop: Platform.OS === "android" ? 50 : 10,
       },
 
       confirmationCodeWrapper: { display: "flex", flexDirection: "row" },
