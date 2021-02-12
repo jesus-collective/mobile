@@ -270,7 +270,6 @@ class OrganizationImpl extends JCComponent<Props, State> {
         console.log(updateUser)
       } catch (e) {
         console.log(e)
-
       }
     });
   }*/
@@ -306,12 +305,8 @@ class OrganizationImpl extends JCComponent<Props, State> {
     if (item.profileImage) delete item.profileImage["__typename"]
     return item
   }
-  async handleFinalizeProfile() {
-    this.setState({ isLoading: true })
-    await this.finalizeProfile()
-    this.setState({ isLoading: false })
-  }
   async finalizeProfile(): Promise<void> {
+    this.setState({ isLoading: true })
     const validation = Validate.Organization(this.state.OrganizationDetails)
     if (validation.result) {
       try {
@@ -320,8 +315,10 @@ class OrganizationImpl extends JCComponent<Props, State> {
         await API.graphql(graphqlOperation(mutations.updateOrganization, { input: toSave }))
         if (this.props.finalizeProfile) this.props.finalizeProfile()
         else this.setState({ dirty: false, editMode: false })
+        this.setState({ isLoading: false })
       } catch (e) {
         Sentry.captureException(e.errors || e)
+        this.setState({ isLoading: false })
         console.log(e)
       }
     }
@@ -550,7 +547,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                     testID="org-save"
                     buttonType={ButtonTypes.SolidRightMargin}
                     onPress={() => {
-                      this.handleFinalizeProfile()
+                      this.finalizeProfile()
                     }}
                   >
                     {this.state.isLoading ? (

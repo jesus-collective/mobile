@@ -323,40 +323,40 @@ export default class EventScreen extends JCComponent<Props, State> {
     this.setState({ validationError: validation.validationError })
     return validation.result
   }
-  async handleCreateNew(): Promise<void> {
-    this.setState({ isLoading: { ...this.state.isLoading, create: true } })
-    await this.createNew()
-    this.setState({ isLoading: { ...this.state.isLoading, create: false } })
-  }
-  async createNew(): Promise<void> {
+  createNew(): void {
     if (this.validate()) {
-      try {
-        const createGroup = (await API.graphql({
-          query: mutations.createGroup,
-          variables: { input: this.state.data },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as Promise<GraphQLResult<CreateGroupMutation>>
-        this.setState(
-          {
-            createNew: false,
-          },
-          () => {
-            this.setState(
-              {
-                canSave: !this.state.createNew && this.state.isEditable,
-                createNew: this.state.createNew && this.state.isEditable,
-                canDelete: !this.state.createNew && this.state.isEditable,
-              },
-              () => {
-                this.join()
-              }
-            )
-          }
-        )
-        console.log({ "Success mutations.createGroup": createGroup })
-      } catch (err) {
-        console.log({ "Error mutations.createGroup": err })
-      }
+      this.setState({ isLoading: { ...this.state.isLoading, create: true } })
+      const createGroup = API.graphql({
+        query: mutations.createGroup,
+        variables: { input: this.state.data },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+      }) as Promise<GraphQLResult<CreateGroupMutation>>
+      createGroup
+        .then((json: GraphQLResult<CreateGroupMutation>) => {
+          this.setState(
+            {
+              createNew: false,
+            },
+            () => {
+              this.setState(
+                {
+                  canSave: !this.state.createNew && this.state.isEditable,
+                  createNew: this.state.createNew && this.state.isEditable,
+                  canDelete: !this.state.createNew && this.state.isEditable,
+                },
+                () => {
+                  this.join()
+                }
+              )
+            }
+          )
+          console.log({ "Success mutations.createGroup": json })
+          this.setState({ isLoading: { ...this.state.isLoading, create: false } })
+        })
+        .catch((err: GraphQLResult<CreateGroupMutation>) => {
+          console.log({ "Error mutations.createGroup": err })
+          this.setState({ isLoading: { ...this.state.isLoading, create: false } })
+        })
     }
   }
   clean(item: any): void {
@@ -374,23 +374,23 @@ export default class EventScreen extends JCComponent<Props, State> {
     delete item.ownerOrg
     return item
   }
-  async handleSave() {
-    this.setState({ isLoading: { ...this.state.isLoading, save: true } })
-    await this.save()
-    this.setState({ isLoading: { ...this.state.isLoading, save: false } })
-  }
-  async save(): Promise<void> {
+  save(): void {
     if (this.validate()) {
-      try {
-        const updateGroup = (await API.graphql({
-          query: mutations.updateGroup,
-          variables: { input: this.clean(this.state.data) },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as Promise<GraphQLResult<UpdateGroupMutation>>
-        console.log({ "Success mutations.updateGroup": updateGroup })
-      } catch (err) {
-        console.log({ "Error mutations.updateGroup": err })
-      }
+      this.setState({ isLoading: { ...this.state.isLoading, save: true } })
+      const updateGroup = API.graphql({
+        query: mutations.updateGroup,
+        variables: { input: this.clean(this.state.data) },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+      }) as Promise<GraphQLResult<UpdateGroupMutation>>
+      updateGroup
+        .then((json: GraphQLResult<UpdateGroupMutation>) => {
+          console.log({ "Success mutations.updateGroup": json })
+          this.setState({ isLoading: { ...this.state.isLoading, save: false } })
+        })
+        .catch((err: GraphQLResult<UpdateGroupMutation>) => {
+          console.log({ "Error mutations.updateGroup": err })
+          this.setState({ isLoading: { ...this.state.isLoading, save: false } })
+        })
     }
   }
   leave(): void {
@@ -468,24 +468,24 @@ export default class EventScreen extends JCComponent<Props, State> {
       this.renderButtons()
     }
   }
-  async handleDelete(): Promise<void> {
-    this.setState({ isLoading: { ...this.state.isLoading, delete: true } })
-    await this.delete()
-    this.setState({ isLoading: { ...this.state.isLoading, delete: false } })
-  }
-  async delete(): Promise<void> {
+  delete(): void {
     if (this.state.data) {
-      try {
-        const deleteGroup = (await API.graphql({
-          query: mutations.deleteGroup,
-          variables: { input: { id: this.state.data.id } },
-          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as Promise<GraphQLResult<DeleteGroupMutation>>
-        console.log({ "Success mutations.deleteGroup": deleteGroup })
-        this.props.navigation.push("HomeScreen")
-      } catch (err) {
-        console.log({ "Error mutations.deleteGroup": err })
-      }
+      this.setState({ isLoading: { ...this.state.isLoading, delete: true } })
+      const deleteGroup = API.graphql({
+        query: mutations.deleteGroup,
+        variables: { input: { id: this.state.data.id } },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+      }) as Promise<GraphQLResult<DeleteGroupMutation>>
+      deleteGroup
+        .then((json: GraphQLResult<DeleteGroupMutation>) => {
+          console.log({ "Success mutations.deleteGroup": json })
+          this.setState({ isLoading: { ...this.state.isLoading, delete: false } })
+          this.props.navigation.push("HomeScreen")
+        })
+        .catch((err: GraphQLResult<DeleteGroupMutation>) => {
+          console.log({ "Error mutations.deleteGroup": err })
+          this.setState({ isLoading: { ...this.state.isLoading, delete: false } })
+        })
     }
   }
   updateValue(field: string, value: any): void {
@@ -626,7 +626,7 @@ export default class EventScreen extends JCComponent<Props, State> {
           <JCButton
             buttonType={ButtonTypes.OutlineBoldNoMargin}
             onPress={() => {
-              this.handleCreateNew()
+              this.createNew()
             }}
           >
             {this.state.isLoading.create ? (
@@ -642,7 +642,7 @@ export default class EventScreen extends JCComponent<Props, State> {
           <JCButton
             buttonType={ButtonTypes.OutlineBoldNoMargin}
             onPress={() => {
-              this.handleSave()
+              this.save()
             }}
           >
             {this.state.isLoading.save ? (
@@ -658,9 +658,7 @@ export default class EventScreen extends JCComponent<Props, State> {
           <JCButton
             buttonType={ButtonTypes.OutlineBoldNoMargin}
             onPress={() => {
-              if (window.confirm("Are you sure you wish to delete this event?")) {
-                this.handleDelete()
-              }
+              if (window.confirm("Are you sure you wish to delete this event?")) this.delete()
             }}
           >
             {this.state.isLoading.delete ? (

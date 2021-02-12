@@ -299,12 +299,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
     delete item.directMessages
     return item
   }
-  async handleFinalizeProfile() {
-    this.setState({ isLoading: true })
-    await this.finalizeProfile()
-    this.setState({ isLoading: false })
-  }
   async finalizeProfile(): Promise<void> {
+    this.setState({ isLoading: true })
     const validation = Validate.Profile(this.state.UserDetails)
     if (validation.result) {
       try {
@@ -313,12 +309,13 @@ class MyProfileImpl extends JCComponent<Props, State> {
         const updateUser = await API.graphql(
           graphqlOperation(mutations.updateUser, { input: toSave })
         )
-        this.setState({ dirty: false })
+        this.setState({ dirty: false, isLoading: false })
         console.log({ "updateUser:": updateUser })
         if (this.props.finalizeProfile) this.props.finalizeProfile()
-        else this.setState({ editMode: false })
+        else this.setState({ editMode: false, isLoading: false })
       } catch (e) {
         Sentry.captureException(e.errors || e)
+        this.setState({ isLoading: false })
         console.log(e)
       }
     }
@@ -578,7 +575,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                     testID="profile-save"
                     buttonType={ButtonTypes.SolidRightMargin}
                     onPress={() => {
-                      this.handleFinalizeProfile()
+                      this.finalizeProfile()
                     }}
                   >
                     {this.state.isLoading ? (

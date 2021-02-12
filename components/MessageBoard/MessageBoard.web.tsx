@@ -111,6 +111,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       dataAssignment: [],
       created: false,
       UserDetails: null,
+      isLoading: false,
       editorState: EditorState.createEmpty(),
       attachment: "",
       attachmentName: "",
@@ -372,7 +373,6 @@ class MessageBoardImpl extends JCComponent<Props, State> {
 
     /* hack to get natural scrolling in an inverted flatlist
     https://github.com/necolas/react-native-web/issues/995#issuecomment-511242048 
-
     natural scroll occurs by default on firefox
     chromium-based browsers require this hack
     */
@@ -534,12 +534,8 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       return errorMarkdown
     }
   }
-  async handleSaveMessage() {
-    this.setState({ isLoading: true })
-    await this.saveMessage()
-    this.setState({ isLoading: false })
-  }
-  async saveMessage() {
+
+  saveMessage() {
     const { editorState, attachment, attachmentName } = this.state
 
     if (!editorState.getCurrentContent().hasText()) {
@@ -547,9 +543,9 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     }
 
     const message = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
-    const user = await Auth.currentAuthenticatedUser()
-    if (this.props.groupId) {
-      try {
+    Auth.currentAuthenticatedUser().then((user) => {
+      this.setState({ isLoading: true })
+      if (this.props.groupId) {
         const input: CreateMessageInput = {
           id: uuidv4(),
           content: message,
@@ -561,29 +557,34 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           owner: user.username,
           //authorOrgId: "0"
         }
-        const createMessage = (await API.graphql({
+        const createMessage = API.graphql({
           query: mutations.createMessage,
           variables: { input },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as Promise<GraphQLResult<CreateMessageMutation>>
-        console.log({ "Success mutations.createMessage": createMessage })
-        this.setState({
-          editorState: EditorState.createEmpty(),
-          attachmentName: "",
-          attachment: "",
-        })
-      } catch (err) {
-        console.error({ "Error mutations.createMessage": err })
-        if (err.data.createMessage) {
-          this.setState({
-            editorState: EditorState.createEmpty(),
-            attachmentName: "",
-            attachment: "",
+        }) as Promise<GraphQLResult<CreateMessageMutation>>
+
+        createMessage
+          .then((json) => {
+            console.log({ "Success mutations.createMessage": json })
+            this.setState({
+              editorState: EditorState.createEmpty(),
+              attachmentName: "",
+              attachment: "",
+              isLoading: false,
+            })
           })
-        }
-      }
-    } else if (this.props.roomId) {
-      try {
+          .catch((err) => {
+            console.error({ "Error mutations.createMessage": err })
+            if (err.data.createMessage) {
+              this.setState({
+                editorState: EditorState.createEmpty(),
+                attachmentName: "",
+                attachment: "",
+                isLoading: false,
+              })
+            }
+          })
+      } else if (this.props.roomId) {
         const input: CreateDirectMessageInput = {
           id: uuidv4(),
           userId: user.username,
@@ -594,27 +595,35 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           messageRoomID: this.props.roomId,
           recipients: this.props.recipients ?? [],
         }
-        const createDirectMessage = (await API.graphql({
+        const createDirectMessage = API.graphql({
           query: mutations.createDirectMessage,
           variables: { input },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })) as Promise<GraphQLResult<CreateDirectMessageMutation>>
-        console.log({ "Success mutations.createDirectMessage ": createDirectMessage })
-        this.setState({
-          editorState: EditorState.createEmpty(),
-          attachmentName: "",
-          attachment: "",
-        })
-      } catch (err) {
-        if (err.data.createDirectMessage) {
-          this.setState({
-            editorState: EditorState.createEmpty(),
-            attachmentName: "",
-            attachment: "",
+        }) as Promise<GraphQLResult<CreateDirectMessageMutation>>
+
+        createDirectMessage
+          .then((json) => {
+            console.log({ "Success mutations.createDirectMessage ": json })
+            this.setState({
+              editorState: EditorState.createEmpty(),
+              attachmentName: "",
+              attachment: "",
+              isLoading: false,
+            })
           })
-        }
+          .catch((err) => {
+            console.error({ "Error mutations.createDirectMessage ": err })
+            if (err.data.createDirectMessage) {
+              this.setState({
+                editorState: EditorState.createEmpty(),
+                attachmentName: "",
+                attachment: "",
+                isLoading: false,
+              })
+            }
+          })
       }
-    }
+    })
   }
   showVideo() {
     this.setState({ showVideo: !this.state.showVideo })
@@ -818,11 +827,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                 : ButtonTypes.SolidRightJustifiedMini
             }
             onPress={() => {
-              if (this.state.replyToId) {
-                this.handleSendReply()
-              } else {
-                this.handleSaveMessage()
-              }
+              this.state.replyToId ? this.sendReply() : this.saveMessage()
             }}
           >
             {this.state.isLoading ? (
@@ -1001,13 +1006,10 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     }
     this.setState({ fetchingData: false })
   }
-  async handleSendReply() {
-    this.setState({ isLoading: true })
-    await this.sendReply()
-    this.setState({ isLoading: false })
-  }
+
   async sendReply() {
     const { editorState, attachment, attachmentName, replyToId, replyToRoomId } = this.state
+    this.setState({ isLoading: true })
     console.log(replyToRoomId)
     if (!editorState.getCurrentContent().hasText() || !replyToId || !replyToRoomId) {
       return
@@ -1041,6 +1043,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         replyToId: "",
         replyToRoomId: "",
         replyToWho: [],
+        isLoading: false,
       })
     } catch (e) {
       if (e.data?.createReply) {
@@ -1052,9 +1055,11 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           replyToId: "",
           replyToRoomId: "",
           replyToWho: [],
+          isLoading: false,
         })
       } else {
         console.error({ "Error mutations.createReply": e })
+        this.setState({ isLoading: false })
       }
     }
   }
