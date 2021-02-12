@@ -5,11 +5,11 @@ import { Authenticator } from "aws-amplify-react-native"
 import { Linking } from "expo"
 import { Asset } from "expo-asset"
 import * as Font from "expo-font"
-import { View } from "native-base"
 import React, { lazy, Suspense } from "react"
-import { Dimensions, Platform } from "react-native"
+import { Dimensions, Platform, View } from "react-native"
 import EStyleSheet from "react-native-extended-stylesheet"
-import { AuthStateData } from "src/types"
+import { AuthStateData, JCCognitoUser } from "src/types"
+import NeedHelpButton from "./components/FloatingButton/NeedHelpButton"
 import JCComponent, { JCState } from "./components/JCComponent/JCComponent"
 import Sentry from "./components/Sentry"
 import * as RootNavigation from "./screens/HomeScreen//NavigationRoot"
@@ -111,14 +111,15 @@ class AwesomeApp extends JCComponent<Props, State> {
     }
 
     this.setState({ fontLoaded: true })
-    Asset.fromModule(require("./assets/header/icon.png")).downloadAsync()
-    Asset.fromModule(require("./assets/JC-Logo-RGB-KO2.png")).downloadAsync()
-    Asset.fromModule(require("./assets/leftPanel.png")).downloadAsync()
-    Asset.fromModule(require("./assets/profile-placeholder.png")).downloadAsync()
-    Asset.fromModule(require("./assets/SignUp/progress-1.png")).downloadAsync()
-    Asset.fromModule(require("./assets/SignUp/progress-2.png")).downloadAsync()
-    Asset.fromModule(require("./assets/SignUp/progress-3.png")).downloadAsync()
-    Asset.fromModule(require("./assets/SignUp/progress-4.png")).downloadAsync()
+
+    Asset.fromModule(require("./assets/header/icon.png")).downloadAsync() // eslint-disable-line @typescript-eslint/no-var-requires
+    Asset.fromModule(require("./assets/JC-Logo-RGB-KO2.png")).downloadAsync() // eslint-disable-line @typescript-eslint/no-var-requires
+    Asset.fromModule(require("./assets/leftPanel.png")).downloadAsync() // eslint-disable-line @typescript-eslint/no-var-requires
+    Asset.fromModule(require("./assets/profile-placeholder.png")).downloadAsync() // eslint-disable-line @typescript-eslint/no-var-requires
+    Asset.fromModule(require("./assets/SignUp/progress-1.png")).downloadAsync() // eslint-disable-line @typescript-eslint/no-var-requires
+    Asset.fromModule(require("./assets/SignUp/progress-2.png")).downloadAsync() // eslint-disable-line @typescript-eslint/no-var-requires
+    Asset.fromModule(require("./assets/SignUp/progress-3.png")).downloadAsync() // eslint-disable-line @typescript-eslint/no-var-requires
+    Asset.fromModule(require("./assets/SignUp/progress-4.png")).downloadAsync() // eslint-disable-line @typescript-eslint/no-var-requires
   }
   renderFallback(): string {
     return ""
@@ -147,15 +148,17 @@ class AwesomeApp extends JCComponent<Props, State> {
     else if (state == "confirmSignUp")
       RootNavigation.navigate("confirmsignup", { email: data?.email })
     else if (state == "signedIn") {
-      const user = await Auth.currentAuthenticatedUser()
+      const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       if (
-        user.getSignInUserSession().accessToken.payload["cognito:groups"].includes("admin") ||
+        user.getSignInUserSession()?.getAccessToken().payload["cognito:groups"].includes("admin") ||
         user
           .getSignInUserSession()
-          .accessToken.payload["cognito:groups"].includes("subscriptionValid") ||
+          ?.getAccessToken()
+          .payload["cognito:groups"].includes("subscriptionValid") ||
         user
           .getSignInUserSession()
-          .accessToken.payload["cognito:groups"].includes("legacyUserGroup1")
+          ?.getAccessToken()
+          .payload["cognito:groups"].includes("legacyUserGroup1")
       ) {
         RootNavigation.navigate("auth", {
           screen: "Payment3",
@@ -181,6 +184,7 @@ class AwesomeApp extends JCComponent<Props, State> {
     if (initialUrl.toLowerCase().includes("/auth/signup")) return "signUp"
     return "signIn"
   }
+
   render(): React.ReactNode {
     //    console.log({ AwesomeApp: this.state.authState })
     if (this.state.fontLoaded && this.state.authState != "") {
@@ -193,6 +197,7 @@ class AwesomeApp extends JCComponent<Props, State> {
             height: "100%",
           }}
         >
+          <NeedHelpButton></NeedHelpButton>
           {Platform.OS !== "web" || Dimensions.get("window").width <= 720 ? (
             this.state.authState != "signedIn" &&
             this.state.authState != "loading" &&

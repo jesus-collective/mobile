@@ -4,6 +4,7 @@ import { Auth } from "aws-amplify"
 import { Body, Button, Header } from "native-base"
 import React from "react"
 import { Dimensions, Text } from "react-native"
+import { JCCognitoUser } from "src/types"
 import HeaderStyles from "../Header/style"
 import JCComponent from "../JCComponent/JCComponent"
 
@@ -35,19 +36,19 @@ export default class HeaderJC extends JCComponent<Props> {
     this.props.navigation.dispatch(DrawerActions.openDrawer())
   }
   openProfile = async (): Promise<void> => {
-    const user = await Auth.currentAuthenticatedUser()
+    const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
     this.props.navigation.push("ProfileScreen", { id: user["username"], create: false })
   }
   openAdmin = async (): Promise<void> => {
-    const user = await Auth.currentAuthenticatedUser()
+    const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
     this.props.navigation.push("AdminScreen", { id: user["username"], create: false })
   }
   openAdminCRM = async (): Promise<void> => {
-    const user = await Auth.currentAuthenticatedUser()
+    const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
     this.props.navigation.push("AdminCRMScreen", { id: user["username"], create: false })
   }
   openProducts = async (): Promise<void> => {
-    const user = await Auth.currentAuthenticatedUser()
+    const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
     this.props.navigation.push("AdminCreateProductScreen", { id: user["username"], create: false })
   }
   openSearch = (): void => {

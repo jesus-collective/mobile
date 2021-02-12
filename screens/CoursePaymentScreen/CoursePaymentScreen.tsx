@@ -2,6 +2,7 @@ import { GraphQLResult } from "@aws-amplify/api/lib/types"
 import { API, Auth, graphqlOperation } from "aws-amplify"
 import { Container, Content, Text } from "native-base"
 import React, { useEffect, useState } from "react"
+import { JCCognitoUser } from "src/types"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import PaymentFrom from "../../components/Forms/PaymentForm"
 import Header from "../../components/Header/Header"
@@ -38,7 +39,7 @@ export default function CoursePayment({ navigation, route }: Params): JSX.Elemen
     const productId = details?.purchase_units[0]?.custom_id
     const id = details?.purchase_units[0]?.invoice_id
     const create_time = details?.create_time
-    const user = await Auth.currentAuthenticatedUser()
+    const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
 
     try {
       const saveResult = (await API.graphql(

@@ -73,7 +73,7 @@ class CourseChatImpl extends JCComponent<Props, State> {
                     Cohort
                   </JCButton>
                   <Button
-                    style={{ marginLeft: "auto", backgroundColor: "#ffffff00" }}
+                    style={{ zIndex: 1000000, marginLeft: "auto", backgroundColor: "#ffffff00" }}
                     onPress={() => actions.setShowChat()}
                   >
                     <AntDesign name="close" size={24} color="black" />

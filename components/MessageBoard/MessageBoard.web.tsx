@@ -1,5 +1,4 @@
-/* eslint-disable */
-import { GraphQLResult } from "@aws-amplify/api/src/types"
+import { GraphQLResult } from "@aws-amplify/api"
 import { AntDesign, FontAwesome5 } from "@expo/vector-icons"
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native"
 import { API, Auth, graphqlOperation, Storage } from "aws-amplify"
@@ -12,6 +11,7 @@ import { isFirefox } from "react-device-detect"
 import { Editor } from "react-draft-wysiwyg"
 import { ActivityIndicator, Dimensions, Text, TouchableOpacity, View } from "react-native"
 import { FlatList } from "react-native-gesture-handler"
+import { JCCognitoUser } from "src/types"
 import { v4 as uuidv4 } from "uuid"
 import Observable, { ZenObservable } from "zen-observable-ts"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
@@ -134,12 +134,12 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         query: onCreateMessageByRoomId,
         variables: { roomId: this.props.groupId },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Observable<object>
+      }) as Observable<{
+        provider: any
+        value: GraphQLResult<OnCreateMessageByRoomIdSubscription>
+      }>
       this.messageUnsubscribe = messageSub.subscribe({
-        next: (incoming: {
-          provider: any
-          value: GraphQLResult<OnCreateMessageByRoomIdSubscription>
-        }) => {
+        next: (incoming) => {
           console.debug(incoming)
           if (incoming.value.data?.onCreateMessageByRoomId) {
             this.setState({
@@ -151,16 +151,15 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           }
         },
       })
-      // eslint-disable-line
       const replySub = API.graphql({
         query: onCreateReply,
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Observable<object>
+      }) as Observable<{
+        provider: any
+        value: GraphQLResult<OnCreateReplySubscription>
+      }>
       this.replyUnsubscribe = replySub.subscribe({
-        next: async (incoming: {
-          provider: any
-          value: GraphQLResult<OnCreateReplySubscription>
-        }) => {
+        next: async (incoming) => {
           console.debug(incoming)
           if (
             incoming.value?.data?.onCreateReply?.parentMessage &&
@@ -205,16 +204,15 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     }
 
     if (this.props.roomId) {
-      // eslint-disable-line
       const dmSub = (await API.graphql({
         query: onCreateDirectMessage,
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as Observable<object>
+      })) as Observable<{
+        provider: any
+        value: GraphQLResult<OnCreateDirectMessageSubscription>
+      }>
       this.dmUnsubscribe = dmSub.subscribe({
-        next: async (incoming: {
-          provider: any
-          value: GraphQLResult<OnCreateDirectMessageSubscription>
-        }) => {
+        next: async (incoming) => {
           console.debug(incoming)
           if (
             incoming.value?.data?.onCreateDirectMessage &&
@@ -406,7 +404,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
   }
 
   async setInitialData(props: Props) {
-    const user = await Auth.currentAuthenticatedUser()
+    const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
     try {
       const getUser = (await API.graphql(
         graphqlOperation(queries.getUser, { id: user["username"] })
@@ -545,7 +543,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     }
 
     const message = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
-    Auth.currentAuthenticatedUser().then((user) => {
+    Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
       if (this.props.groupId) {
         const input: CreateMessageInput = {
           id: uuidv4(),
@@ -751,7 +749,10 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                     },
                   }}
                   toolbarCustomButtons={[
-                    <FileUpload handleUploadCallback={(e) => this.handleUpload(e)} />,
+                    <FileUpload
+                      key="fileupload"
+                      handleUploadCallback={(e) => this.handleUpload(e)}
+                    />,
                   ]}
                 />
                 {this.renderWordCount()}
@@ -995,15 +996,13 @@ class MessageBoardImpl extends JCComponent<Props, State> {
 
   async sendReply() {
     const { editorState, attachment, attachmentName, replyToId, replyToRoomId } = this.state
-    console.log("TEST2")
     console.log(replyToRoomId)
     if (!editorState.getCurrentContent().hasText() || !replyToId || !replyToRoomId) {
       return
     }
-    console.log("TEST1")
     try {
       const message = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
-      const user = await Auth.currentAuthenticatedUser()
+      const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
 
       const input: CreateReplyInput = {
         id: uuidv4(),
@@ -1048,24 +1047,26 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     }
   }
 
-  handlePressReply(item: Message | Reply, isReply: boolean) {
-    const peopleInThread: string[] = []
+  handlePressReply(item: Message | Reply) {
+    if (item) {
+      const peopleInThread: string[] = []
 
-    if (item?.author?.given_name) {
-      peopleInThread.push(item?.author?.given_name)
-    }
-
-    item?.replies?.items?.slice(10).forEach((reply) => {
-      if (reply?.author?.given_name && !peopleInThread.includes(reply?.author?.given_name)) {
-        peopleInThread.push(reply?.author?.given_name)
+      if (item.author?.given_name) {
+        peopleInThread.push(item.author.given_name)
       }
-    })
-    console.log(item?.roomId)
-    this.setState({
-      replyToId: isReply ? item?.messageId : item?.id ?? "",
-      replyToRoomId: isReply ? item?.roomId : item?.roomId,
-      replyToWho: peopleInThread,
-    })
+
+      if ("replies" in item) {
+        item.replies?.items?.slice(10).forEach((reply) => {
+          if (reply?.author?.given_name && !peopleInThread.includes(reply.author.given_name)) {
+            peopleInThread.push(reply?.author?.given_name)
+          }
+        })
+        this.setState({ replyToId: item.id })
+      } else {
+        this.setState({ replyToId: item.messageId })
+      }
+      this.setState({ replyToWho: peopleInThread, replyToRoomId: item.roomId ?? "" })
+    }
   }
 
   renderMessageWithReplies(item: Message, index: number) {
@@ -1075,30 +1076,12 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         {item?.replies?.items?.map((reply, index) => {
           return this.renderMessage(reply, index, true)
         })}
-        {/* {this.props.replies && (
-          <TouchableOpacity
-            style={{ alignSelf: "flex-end", margin: 24, marginTop: 12, borderWidth: 1,borderColor: "#F0493E", borderRadius: 4, paddingTop: 7, paddingBottom: 7, paddingLeft: 23, paddingRight: 23 }}
-            onPress={() => this.handlePressReply(item)}
-          >
-            <Text
-              style={{
-                fontFamily: "Graphik-Regular-App",
-                fontWeight: "regular",
-                fontSize: 14,
-                lineHeight: 20,
-                color: "#F0493E",
-              }}
-            >
-              reply
-            </Text>
-          </TouchableOpacity>
-        )} */}
       </View>
     )
   }
 
   renderMessage(item: Message | Reply, index: number, isReply: boolean) {
-    const { style } = this.props
+    const { style, replies } = this.props
 
     return (
       <Card
@@ -1139,7 +1122,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
               </Body>
             </Left>
             <Right style={{ justifyContent: "center" }}>
-              {this.props.replies && (
+              {replies && (
                 <TouchableOpacity
                   style={{
                     alignSelf: "flex-end",
@@ -1152,7 +1135,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                     paddingLeft: 23,
                     paddingRight: 23,
                   }}
-                  onPress={() => this.handlePressReply(item, isReply)}
+                  onPress={() => this.handlePressReply(item)}
                 >
                   <Text
                     style={{
@@ -1196,7 +1179,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                 )}
               </View>
               <View>
-                {this.props.replies && (
+                {replies && (
                   <TouchableOpacity
                     style={{
                       alignSelf: "flex-end",
@@ -1209,7 +1192,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                       paddingLeft: 23,
                       paddingRight: 23,
                     }}
-                    onPress={() => this.handlePressReply(item, isReply)}
+                    onPress={() => this.handlePressReply(item)}
                   >
                     <Text
                       style={{

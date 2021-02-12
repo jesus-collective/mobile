@@ -3,6 +3,7 @@ import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import { Container } from "native-base"
 import React from "react"
 import { Text, TouchableOpacity } from "react-native"
+import { JCCognitoUser } from "src/types"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
 import * as customQueries from "../../src/graphql-custom/queries"
@@ -17,7 +18,7 @@ enum initialPostState {
 }
 interface Props {
   wordCount: number
-  assignmentId: String
+  assignmentId: string
   actions: any
 }
 interface State extends JCState {
@@ -45,7 +46,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
     }
     console.log({ userList: this.state.userList })
 
-    Auth.currentAuthenticatedUser().then((user: any) => {
+    Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
       this.setState({ currentRoomId: null, currentUser: user.username })
     })
     this.getInitialData(null)
@@ -62,7 +63,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
           currentRoomId: "course-" + this.props.assignmentId + "-" + this.state.currentUser,
         })
         console.log({ Assignment: this.props.assignmentId })
-        const user = await Auth.currentAuthenticatedUser()
+        const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
         try {
           const query = {
             limit: 20,
@@ -120,7 +121,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
   createRoom = (): void => {
     console.log("CreateRoom")
     Auth.currentAuthenticatedUser()
-      .then((user: any) => {
+      .then((user: JCCognitoUser) => {
         const createDirectMessageRoom: any = API.graphql({
           query: mutations.createDirectMessageRoom,
           variables: {
@@ -168,7 +169,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
   }
   shouldCreateRoom = async (userActions: UserActions): Promise<void> => {
     console.log({ "Number of rooms": this.state.data.length })
-    const user = await Auth.currentAuthenticatedUser()
+    const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
     if (
       this.state.data.filter(
         (item) => item.id == "course-" + this.props.assignmentId + "-" + user["username"]

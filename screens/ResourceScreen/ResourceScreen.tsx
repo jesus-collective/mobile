@@ -24,11 +24,9 @@ class ResourceScreenImpl extends JCComponent<Props, State> {
       showMap: false,
     }
   }
-
   render(): React.ReactNode {
     //console.log(this.state)
     console.log("ResourceScreen")
-
     return (
       <StyleProvider style={getTheme(material)}>
         <Container>

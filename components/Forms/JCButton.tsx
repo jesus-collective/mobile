@@ -42,6 +42,7 @@ export enum ButtonTypes {
   OutlineBoldNoMargin,
   OutlineSmall,
   PostOutline,
+  ProfileSmall,
   Transparent,
   TransparentNoPadding,
   TransparentCourse,
