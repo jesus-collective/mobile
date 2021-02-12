@@ -79,26 +79,16 @@ export default class MainStyles {
         paddingRight: 30,
         marginBottom: 60,
       },
-      mapSelectorView:
-        Platform.OS === "web"
-          ? {
-              position: "fixed",
-              left: 0,
-              top: 0,
-              width: "100%",
-              height: "100%",
-              zIndex: 100,
-              backgroundColor: "#33333366",
-            }
-          : {
-              position: "absolute",
-              left: 0,
-              top: 0,
-              width: "100%",
-              height: "100%",
-              zIndex: 100,
-              backgroundColor: "#33333366",
-            },
+      mapSelectorView: {
+        position: Platform.OS === "web" ? "fixed" : "absolute",
+        left: 0,
+        top: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: 100,
+        backgroundColor: "#33333366",
+      },
+
       peopleContainer: {
         width: "100%",
         flexDirection: "column",
@@ -111,18 +101,6 @@ export default class MainStyles {
         shadowRadius: 30,
       },
       dashboardPrimaryContainer: Platform.OS === "web" ? { display: "block" } : { display: "flex" },
-
-      orgCard: {
-        minHeight: 330,
-        alignSelf: "flex-start",
-        padding: "0%",
-        paddingLeft: "0.25rem",
-        paddingRight: "0.25rem",
-        borderRadius: 4,
-        shadowOffset: { width: 0, height: 5 },
-        shadowColor: "rgba(0, 0, 0, 0.15)",
-        shadowRadius: 30,
-      },
 
       profileCard: {
         padding: "0%",
@@ -168,46 +146,24 @@ export default class MainStyles {
         shadowColor: "rgba(0, 0, 0, 0.45)",
         shadowRadius: 30,
       },
-      messageBoardContainer:
-        Platform.OS === "web"
-          ? {
-              display: "inline",
-              overflow: "visible",
-              width: "100%",
-              paddingTop: 0,
-              paddingLeft: 0,
-              paddingRight: 0,
-              marginBottom: 60,
-            }
-          : {
-              display: "flex",
-              overflow: "visible",
-              width: "100%",
-              paddingTop: 0,
-              paddingLeft: 0,
-              paddingRight: 0,
-              marginBottom: 60,
-            },
-      messageBoardContainerFullSize:
-        Platform.OS === "web"
-          ? {
-              display: "inline",
-              overflow: "visible",
-              width: "100%",
-              paddingTop: 0,
-              paddingLeft: 30,
-              paddingRight: 30,
-              marginBottom: 60,
-            }
-          : {
-              display: "flex",
-              overflow: "visible",
-              width: "100%",
-              paddingTop: 0,
-              paddingLeft: 30,
-              paddingRight: 30,
-              marginBottom: 60,
-            },
+      messageBoardContainer: {
+        display: Platform.OS === "web" ? "inline" : "flex",
+        overflow: "visible",
+        width: "100%",
+        paddingTop: 0,
+        paddingLeft: 0,
+        paddingRight: 0,
+        marginBottom: 60,
+      },
+      messageBoardContainerFullSize: {
+        display: Platform.OS === "web" ? "inline" : "flex",
+        overflow: "visible",
+        width: "100%",
+        paddingTop: 0,
+        paddingLeft: 30,
+        paddingRight: 30,
+        marginBottom: 60,
+      },
       groupNameInput: {
         borderColor: "white",
         borderWidth: 1,
@@ -312,11 +268,6 @@ export default class MainStyles {
         fontFamily: "Graphik-Regular-App",
       },
 
-      editableURLText: {
-        fontFamily: "Graphik-Bold-App",
-        fontSize: 16,
-        color: "#ffffff",
-      },
       font: {
         fontFamily: "Graphik-Regular-App",
         fontSize: 16,
@@ -336,28 +287,6 @@ export default class MainStyles {
         lineHeight: 36,
         marginBottom: 18,
         marginTop: 18,
-      },
-      fontGroupNameDetailPage: {
-        fontSize: 30,
-        lineHeight: 36,
-        color: "#333333",
-        fontFamily: "Graphik-Regular-App",
-      },
-      saveProfileButton: {
-        backgroundColor: "#F0493E",
-        textTransform: "capitalize",
-      },
-      saveProfileButtonText: {
-        fontFamily: "Graphik-Bold-App",
-        fontWeight: "bold",
-        fontSize: 16,
-        lineHeight: 24,
-        display: "flex",
-        alignItems: "center",
-        textAlign: "center",
-        letterSpacing: -0.3,
-        color: "#FFFFFF",
-        textTransform: null,
       },
 
       fontFormProfileImageText: {
@@ -386,24 +315,7 @@ export default class MainStyles {
         color: "#333333",
         fontWeight: "bold",
       },
-      fontFormText: {
-        fontFamily: "Graphik-Regular-App",
-        fontSize: 18,
-        lineHeight: 25,
-        letterSpacing: -0.3,
-        color: "#333333",
-        opacity: 0.7,
-        marginTop: 40,
-      },
-      fontFormText2: {
-        fontFamily: "Graphik-Regular-App",
-        fontSize: 18,
-        lineHeight: 25,
-        letterSpacing: -0.3,
-        color: "#333333",
-        opacity: 0.7,
-        marginTop: 20,
-      },
+
       fontFormRole: {
         fontFamily: "Graphik-Regular-App",
         fontSize: 16,
@@ -460,17 +372,7 @@ export default class MainStyles {
         paddingTop: 5,
         width: "100%",
       },
-      fontFormSmallInput: {
-        fontFamily: "Graphik-Regular-App",
-        fontSize: 14,
-        lineHeight: 25,
-        letterSpacing: -0.3,
-        color: "#333333",
-        maxWidth: 250,
-        height: 18,
-        borderWidth: 0,
-        borderColor: "#dddddd",
-      },
+
       fontFormMediumInput: {
         fontFamily: "Graphik-Regular-App",
         fontSize: 16,
@@ -585,14 +487,7 @@ export default class MainStyles {
         height: "100%",
         color: "#000000",
       },
-      conversationsLoadMoreFont: {
-        fontFamily: "Graphik-Bold-App",
-        fontWeight: "bold",
-        fontSize: 16,
-        lineHeight: 24,
-        height: "100%",
-        color: "#ffffff",
-      },
+
       fontTitleGroup: {
         fontFamily: "Graphik-Bold-App",
         fontWeight: "bold",
@@ -665,31 +560,12 @@ export default class MainStyles {
         color: "#333333",
         opacity: 0.5,
       },
-      fontSliderHeader: {
-        fontFamily: "Graphik-Bold-App",
-        fontWeight: "bold",
-        fontSize: 16,
-        color: "#000000",
-      },
-      fontSliderButtons: {
-        fontFamily: "Graphik-Bold-App",
-        fontSize: 16,
-        color: "#F0493E",
-        fontWeight: "bold",
-        padding: 10,
-      },
+
       fontStartConversation: {
         fontFamily: "Graphik-Regular-App",
         fontSize: 16,
         color: "#F0493E",
         padding: 5,
-      },
-
-      fontOrangeButton: {
-        fontFamily: "Graphik-Regular-App",
-        fontSize: 12,
-        color: "#ffffFF",
-        padding: 10,
       },
 
       fontConnectWith: {
@@ -781,15 +657,7 @@ export default class MainStyles {
         flexWrap: "wrap",
         width: 330,
       },
-      homePageContainers: {
-        flex: 70,
-        flexDirection: "column",
-        backgroundColor: "#F9FAFC",
-      },
-      connectWithTopSectionButton: {
-        paddingTop: 30,
-        paddingBottom: 25,
-      },
+
       connectWithSliderButton: {
         padding: 0,
         height: "auto",
@@ -799,57 +667,11 @@ export default class MainStyles {
         justifyContent: "center",
       },
 
-      myMapConnectWithSliderButton: {
-        padding: 0,
-        height: 25,
-        borderColor: "#F0493E",
-        width: "100%",
-        alignItems: "center",
-        justifyContent: "center",
-        paddingLeft: 10,
-        paddingRight: 10,
-      },
-      postButton: {
-        paddingTop: 10,
-        paddingBottom: 10,
-        alignSelf: "flex-end",
-        marginBottom: 20,
-        marginLeft: 10,
-        marginRight: 10,
-        color: "#F0493E",
-      },
-      postButtonText: {
-        color: "#F0493E",
-        fontFamily: "Graphik-Regular-App",
-        fontSize: 16,
-        padding: 5,
-      },
-      sliderButton: {
-        // color:'#F0493E'
-      },
       flexRow: {
         flexDirection: "row",
         marginTop: 10,
       },
-      groupMiddleText: {
-        fontFamily: "Graphik-Bold-App",
-        fontSize: 20,
-        lineHeight: 25,
-        letterSpacing: -0.3,
-        color: "#333333",
-        paddingTop: 48,
-        paddingBottom: 12,
-        paddingLeft: 0,
-      },
-      groupMiddleTextNoPaddingTop: {
-        fontFamily: "Graphik-Bold-App",
-        fontSize: 20,
-        lineHeight: 25,
-        letterSpacing: -0.3,
-        color: "#333333",
-        paddingTop: 0,
-        paddingBottom: 12,
-      },
+
       rightCardWidth: {
         minWidth: "100%",
       },
@@ -1128,12 +950,7 @@ export default class MainStyles {
         alignSelf: "flex-start",
         height: "2.75rem",
       },
-      // dashboardMainContainer: {
-      //     height: 2300,
-      //     flex: 1,
-      //     display: "flex",
-      //     flexDirection: "row"
-      // },
+
       dashboardLeftCard: {
         flex: 70,
         flexDirection: "column",
@@ -1157,26 +974,15 @@ export default class MainStyles {
       myProfileTopButtonsExternalContainer: {
         flexDirection: "column",
       },
-      myProfileMapSelectorContainer:
-        Platform.OS === "web"
-          ? {
-              position: "fixed",
-              left: 0,
-              top: 0,
-              width: "100%",
-              height: 1955,
-              zIndex: 100,
-              backgroundColor: "#33333366",
-            }
-          : {
-              position: "relative",
-              left: 0,
-              top: 0,
-              width: "100%",
-              height: 1955,
-              zIndex: 100,
-              backgroundColor: "#33333366",
-            },
+      myProfileMapSelectorContainer: {
+        position: Platform.OS === "web" ? "fixed" : "relative",
+        left: 0,
+        top: 0,
+        width: "100%",
+        height: 1955,
+        zIndex: 100,
+        backgroundColor: "#33333366",
+      },
       myProfileMapSelectorInnerContainer: {
         backgroundColor: "#ffffff",
         borderRadius: 10,
@@ -1313,13 +1119,9 @@ export default class MainStyles {
       },
 
       profileMyGroupsWrap: {
-        // overflowX: "scroll",
-        // overflowY: "hidden",
-        //minHeight: "100vw",
         flexWrap: "wrap",
         flexGrow: 1,
         width: "100%",
-        //  height: "100%",
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "flex-start",
@@ -1350,10 +1152,7 @@ export default class MainStyles {
         width: "100%",
         paddingRight: 30,
         paddingLeft: 0,
-        // shadowOffset: { height: 0, width: 6 },
-        // shadowRadius: 20,
-        // shadowColor: "rgba(0,0,0,0.19)",
-        // marginTop: 30,
+
         borderBottomWidth: 1,
         borderBottomStyle: "solid",
         borderBottomColor: "#ebebeb",
@@ -1697,11 +1496,6 @@ export default class MainStyles {
           width: "100%",
         },
 
-        connectWithTopSectionButton: {
-          paddingTop: 50,
-          paddingBottom: 35,
-          paddingRight: 15,
-        },
         fontConnectWithName: {
           fontSize: 18,
           lineHeight: 23,
@@ -1860,13 +1654,6 @@ export default class MainStyles {
           width: "100%",
         },
 
-        // courseDetailCalendarImage: {
-        //     top: 30
-        // },
-        // detailsYoutubeDateText: {
-        //     top: 30,
-        // },
-
         icon: {
           color: "#aaaaaa",
           fontSize: 34,
@@ -1904,11 +1691,6 @@ export default class MainStyles {
           width: "100%",
         },
 
-        connectWithTopSectionButton: {
-          paddingTop: 50,
-          paddingBottom: 35,
-          paddingRight: 15,
-        },
         rightCardWidth: {
           minWidth: "100%",
         },
@@ -2005,9 +1787,7 @@ export default class MainStyles {
             : { position: "absolute", top: "0%", left: "2%", marginTop: 5 },
         confirmationCodeWrapper: { display: "flex", flexDirection: "column" },
         signUpBackButtonWrapper: { position: "absolute", top: "0%", left: "2%" },
-        // rightCardWidth: {
-        //     width: "100%"
-        // },
+
         dashboardLeftCard: {
           flexBasis: "auto",
         },
