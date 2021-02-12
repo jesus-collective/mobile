@@ -5,7 +5,16 @@ import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment-timezone"
 import { Body, Card, CardItem, Container, Left, ListItem, Right, StyleProvider } from "native-base"
 import * as React from "react"
-import { Dimensions, Image, Modal, Platform, Text, TouchableOpacity, View } from "react-native"
+import {
+  ActivityIndicator,
+  Dimensions,
+  Image,
+  Modal,
+  Platform,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native"
 import DropDownPicker from "react-native-dropdown-picker"
 import ErrorBoundry from "../../components/ErrorBoundry"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
@@ -42,6 +51,7 @@ interface State extends JCState {
   currentUser: string | null
   nextToken: string | null
   canLeave: any
+  isLoading: any
   isOwner: any
   canPay: any
   isPaid: any
@@ -67,6 +77,11 @@ export default class MyGroups extends JCComponent<Props, State> {
         myFilter: false || this.props.showMy,
         eventFilter: false,
         pickerState: "",
+        isLoading: {
+          item: null,
+          join: false,
+          leave: false,
+        },
         myTitleScreen: "My Events",
         openSingle: "GenericGroupScreen",
         genericGroupType: "event",
@@ -89,6 +104,11 @@ export default class MyGroups extends JCComponent<Props, State> {
       this.state = {
         ...super.getInitialState(),
         myFilter: false || this.props.showMy,
+        isLoading: {
+          item: null,
+          join: false,
+          leave: false,
+        },
         eventFilter: false,
         myTitleScreen: "My Groups",
         openSingle: "GenericGroupScreen",
@@ -112,6 +132,11 @@ export default class MyGroups extends JCComponent<Props, State> {
       this.state = {
         ...super.getInitialState(),
         myFilter: false,
+        isLoading: {
+          item: null,
+          join: false,
+          leave: false,
+        },
         eventFilter: false,
         myTitleScreen: "My Resources",
         openSingle: "ResourceScreen",
@@ -136,6 +161,11 @@ export default class MyGroups extends JCComponent<Props, State> {
         ...super.getInitialState(),
         myFilter: false,
         eventFilter: false,
+        isLoading: {
+          item: null,
+          join: false,
+          leave: false,
+        },
         myTitleScreen: "My Organizations",
         openSingle: "OrganizationScreen",
         genericGroupType: null,
@@ -159,6 +189,11 @@ export default class MyGroups extends JCComponent<Props, State> {
         ...super.getInitialState(),
         myFilter: false,
         eventFilter: false,
+        isLoading: {
+          item: null,
+          join: false,
+          leave: false,
+        },
         myTitleScreen: "My Courses",
         openSingle: "CourseOverviewScreen",
         genericGroupType: null,
@@ -183,6 +218,11 @@ export default class MyGroups extends JCComponent<Props, State> {
         myFilter: false,
         eventFilter: false,
         myTitleScreen: "My Profiles",
+        isLoading: {
+          item: null,
+          join: false,
+          leave: false,
+        },
         openSingle: "ProfileScreen",
         genericGroupType: null,
         openMultiple: "ProfilesScreen",
@@ -207,6 +247,11 @@ export default class MyGroups extends JCComponent<Props, State> {
         myFilter: false,
         eventFilter: false,
         openSingle: "",
+        isLoading: {
+          item: null,
+          join: false,
+          leave: false,
+        },
         genericGroupType: null,
         openMultiple: "",
         type: props.type,
@@ -546,6 +591,7 @@ export default class MyGroups extends JCComponent<Props, State> {
   }
 
   join(userActions: UserActions, group: any, groupType: string): void {
+    this.setState({ isLoading: { ...this.state.isLoading, join: true, item: group } })
     Analytics.record({
       name: "joined" + groupType,
       // Attribute values must be strings
@@ -562,13 +608,20 @@ export default class MyGroups extends JCComponent<Props, State> {
     createGroupMember
       .then((json: any) => {
         console.log({ "Success mutations.createGroupMember": json })
+        this.setState({
+          canLeave: this.state.canLeave.concat([group.id]),
+          isLoading: { ...this.state.isLoading, join: false, item: null },
+        })
+        this.renderByType(userActions, group, groupType)
       })
       .catch((err: any) => {
         console.log({ "Error mutations.createGroupMember": err })
+        this.setState({
+          canLeave: this.state.canLeave.concat([group.id]),
+          isLoading: { ...this.state.isLoading, join: false, item: null },
+        })
+        this.renderByType(userActions, group, groupType)
       })
-
-    this.setState({ canLeave: this.state.canLeave.concat([group.id]) })
-    this.renderByType(userActions, group, groupType)
   }
   openConversation(initialUser: string, name: string): void {
     console.log("Navigate to conversationScreen")
@@ -578,6 +631,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     })
   }
   leave(userActions: UserActions, group: any, groupType: string): void {
+    this.setState({ isLoading: { ...this.state.isLoading, leave: true, item: group } })
     Analytics.record({
       name: "left" + groupType,
       // Attribute values must be strings
@@ -591,7 +645,6 @@ export default class MyGroups extends JCComponent<Props, State> {
     groupMemberByUser
       .then((json: any) => {
         console.log({ "Success queries.groupMemberByUser": json })
-
         json.data.groupMemberByUser.items.map((item: any) => {
           const deleteGroupMember: any = API.graphql({
             query: mutations.deleteGroupMember,
@@ -601,17 +654,28 @@ export default class MyGroups extends JCComponent<Props, State> {
           deleteGroupMember
             .then((json: any) => {
               console.log({ "Success mutations.deleteGroupMember": json })
+
+              const index = this.state.canLeave.indexOf(group.id)
+              const canLeave = this.state.canLeave
+              canLeave.splice(index, 1)
+              this.setState({
+                canLeave: canLeave,
+                isLoading: { ...this.state.isLoading, leave: false, item: null },
+              })
+              this.renderByType(userActions, group, groupType)
             })
             .catch((err: Error) => {
               console.log({ "Error mutations.deleteGroupMember": err })
+              const index = this.state.canLeave.indexOf(group.id)
+              const canLeave = this.state.canLeave
+              canLeave.splice(index, 1)
+              this.setState({
+                canLeave: canLeave,
+                isLoading: { ...this.state.isLoading, leave: false, item: null },
+              })
+              this.renderByType(userActions, group, groupType)
             })
         })
-
-        const index = this.state.canLeave.indexOf(group.id)
-        const canLeave = this.state.canLeave
-        canLeave.splice(index, 1)
-        this.setState({ canLeave: canLeave })
-        this.renderByType(userActions, group, groupType)
       })
       .catch((err: Error) => {
         console.log({ "Error queries.groupMemberByUser": err })
@@ -738,7 +802,13 @@ export default class MyGroups extends JCComponent<Props, State> {
                   this.join(userActions, item, "Group")
                 }}
               >
-                Join
+                {this.state.isLoading.join && this.state.isLoading.item.id === item.id ? (
+                  <View style={{ paddingTop: 4, minWidth: 43 }}>
+                    <ActivityIndicator color="white"></ActivityIndicator>
+                  </View>
+                ) : (
+                  "Join"
+                )}
               </JCButton>
               <Right></Right>
             </CardItem>
@@ -751,7 +821,13 @@ export default class MyGroups extends JCComponent<Props, State> {
                   this.leave(userActions, item, "Group")
                 }}
               >
-                Leave
+                {this.state.isLoading.leave && this.state.isLoading.item.id === item.id ? (
+                  <View style={{ paddingTop: 4, minWidth: 43 }}>
+                    <ActivityIndicator color="white"></ActivityIndicator>
+                  </View>
+                ) : (
+                  "Leave"
+                )}
               </JCButton>
               <Right></Right>
             </CardItem>
@@ -905,7 +981,11 @@ export default class MyGroups extends JCComponent<Props, State> {
                   this.join(userActions, item, "Event")
                 }}
               >
-                Attend
+                {this.state.isLoading.join && this.state.isLoading.item.id === item.id ? (
+                  <ActivityIndicator color="white"></ActivityIndicator>
+                ) : (
+                  "Attend"
+                )}
               </JCButton>
               <Right></Right>
             </CardItem>
@@ -918,7 +998,13 @@ export default class MyGroups extends JCComponent<Props, State> {
                   this.leave(userActions, item, "Event")
                 }}
               >
-                Don&apos;t Attend
+                {this.state.isLoading.leave && this.state.isLoading.item.id === item.id ? (
+                  <View style={{ paddingTop: 4, minWidth: 94 }}>
+                    <ActivityIndicator color="white"></ActivityIndicator>
+                  </View>
+                ) : (
+                  "Don't Attend"
+                )}
               </JCButton>
               <Right></Right>
             </CardItem>
@@ -978,7 +1064,13 @@ export default class MyGroups extends JCComponent<Props, State> {
                   this.join(userActions, item, "Resource")
                 }}
               >
-                Join
+                {this.state.isLoading.join && this.state.isLoading.item.id === item.id ? (
+                  <View style={{ paddingTop: 4, minWidth: 43 }}>
+                    <ActivityIndicator color="white"></ActivityIndicator>
+                  </View>
+                ) : (
+                  "Join"
+                )}
               </JCButton>
               <Right></Right>
             </CardItem>
@@ -991,7 +1083,13 @@ export default class MyGroups extends JCComponent<Props, State> {
                   this.leave(userActions, item, "Resource")
                 }}
               >
-                Leave
+                {this.state.isLoading.leave && this.state.isLoading.item.id === item.id ? (
+                  <View style={{ paddingTop: 4, minWidth: 43 }}>
+                    <ActivityIndicator color="white"></ActivityIndicator>
+                  </View>
+                ) : (
+                  "Leave"
+                )}
               </JCButton>
               <Right></Right>
             </CardItem>

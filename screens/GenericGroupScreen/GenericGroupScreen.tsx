@@ -394,6 +394,7 @@ export default class EventScreen extends JCComponent<Props, State> {
     }
   }
   leave(): void {
+    this.setState({ isLoading: { ...this.state.isLoading, leave: true } })
     if (this.state.data) {
       Analytics.record({
         name: "left" + this.state.groupType,
@@ -420,25 +421,41 @@ export default class EventScreen extends JCComponent<Props, State> {
               deleteGroupMember
                 .then((json: GraphQLResult<DeleteGroupMemberMutation>) => {
                   console.log({ "Success mutations.deleteGroupMember": json })
+                  const remainingUsers = this.state.memberIDs.filter(
+                    (user) => user !== this.state.currentUser
+                  )
+                  this.setState({
+                    canJoin: true,
+                    canLeave: false,
+                    memberIDs: remainingUsers,
+                    isLoading: { ...this.state.isLoading, leave: false },
+                  })
+                  this.renderButtons()
                 })
                 .catch((err: GraphQLResult<DeleteGroupMemberMutation>) => {
                   console.log({ "Error mutations.deleteGroupMember": err })
+                  const remainingUsers = this.state.memberIDs.filter(
+                    (user) => user !== this.state.currentUser
+                  )
+                  this.setState({
+                    canJoin: true,
+                    canLeave: false,
+                    memberIDs: remainingUsers,
+                    isLoading: { ...this.state.isLoading, leave: false },
+                  })
+                  this.renderButtons()
                 })
             }
           })
-
-          const remainingUsers = this.state.memberIDs.filter(
-            (user) => user !== this.state.currentUser
-          )
-          this.setState({ canJoin: true, canLeave: false, memberIDs: remainingUsers })
-          this.renderButtons()
         })
         .catch((err: GraphQLResult<GroupMemberByUserQuery>) => {
           console.log({ "Error queries.groupMemberByUser": err })
+          this.setState({ isLoading: { ...this.state.isLoading, leave: false } })
         })
     }
   }
   join(): void {
+    this.setState({ isLoading: { ...this.state.isLoading, join: true } })
     if (this.state.data) {
       Analytics.record({
         name: "joined" + this.state.groupType,
@@ -453,19 +470,28 @@ export default class EventScreen extends JCComponent<Props, State> {
       createGroupMember
         .then((json) => {
           console.log({ "Success mutations.createGroupMember": json })
+          this.setState({
+            canJoin: false,
+            canLeave: true,
+            memberIDs: this.state.currentUser
+              ? this.state.memberIDs.concat(this.state.currentUser)
+              : this.state.memberIDs,
+            isLoading: { ...this.state.isLoading, join: false },
+          })
+          this.renderButtons()
         })
         .catch((err) => {
           console.log({ "Error mutations.createGroupMember": err })
+          this.setState({
+            canJoin: false,
+            canLeave: true,
+            memberIDs: this.state.currentUser
+              ? this.state.memberIDs.concat(this.state.currentUser)
+              : this.state.memberIDs,
+            isLoading: { ...this.state.isLoading, join: false },
+          })
+          this.renderButtons()
         })
-
-      this.setState({
-        canJoin: false,
-        canLeave: true,
-        memberIDs: this.state.currentUser
-          ? this.state.memberIDs.concat(this.state.currentUser)
-          : this.state.memberIDs,
-      })
-      this.renderButtons()
     }
   }
   delete(): void {
@@ -576,7 +602,15 @@ export default class EventScreen extends JCComponent<Props, State> {
               this.join()
             }}
           >
-            {this.state.groupType == "event" ? "Attend" : "Join Group"}
+            {this.state.isLoading.join ? (
+              <View style={{ paddingTop: 4, minWidth: 99 }}>
+                <ActivityIndicator color="#F0493E"></ActivityIndicator>
+              </View>
+            ) : this.state.groupType == "event" ? (
+              "Attend"
+            ) : (
+              "Join Group"
+            )}
           </JCButton>
         ) : null}
         {this.state.canLeave ? (
@@ -586,7 +620,15 @@ export default class EventScreen extends JCComponent<Props, State> {
               this.leave()
             }}
           >
-            {this.state.groupType == "event" ? "Don't Attend" : "Leave Group"}
+            {this.state.isLoading.leave ? (
+              <View style={{ paddingTop: 4, minWidth: 85 }}>
+                <ActivityIndicator color="#F0493E"></ActivityIndicator>
+              </View>
+            ) : this.state.groupType == "event" ? (
+              "Don't Attend"
+            ) : (
+              "Leave Group"
+            )}
           </JCButton>
         ) : null}
         {this.state.createNew ? (
