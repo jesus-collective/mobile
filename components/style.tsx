@@ -1683,7 +1683,10 @@ export default class MainStyles {
       // Media Query Desktop Tablet
       "@media (min-width: 350) and (max-width: 768)": {
         confirmationCodeWrapper: { display: "flex", flexDirection: "column" },
-        signUpBackButtonWrapper: { position: "absolute", top: "10%", left: "30%" },
+        signUpBackButtonWrapper:
+          Platform.OS === "android"
+            ? { position: "absolute", top: "10%", left: "30%" }
+            : { position: "absolute", top: "10%", left: "30%" },
         authView2: { left: "37.5%", width: 300, top: "20%", height: "auto" },
         connectWithSliderButton: {
           height: 45,
@@ -2260,9 +2263,9 @@ export default class MainStyles {
           textAlign: "center",
         },
         mySignUpText: {
-          marginTop: 50,
+          marginTop: Platform.OS === "android" ? 50 : 50,
           width: "100%",
-          textAlign: 'center',
+          textAlign: "center",
         },
         authView3: {
           marginLeft: 5,
@@ -2293,7 +2296,7 @@ export default class MainStyles {
           alignSelf: "flex-start",
         },
         mySignInForgotPassword: {
-          alignSelf: 'flex-start',
+          alignSelf: "flex-start",
         },
         mySignUpPlaceholderText: {
           fontSize: 15,
