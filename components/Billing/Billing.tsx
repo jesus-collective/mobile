@@ -1043,10 +1043,12 @@ class BillingImpl extends JCComponent<Props, State> {
                                   paddingTop: 10,
                                   paddingBottom: 10,
                                   paddingLeft: 10,
-                                  paddingRight: 45,
+                                  paddingRight: 25,
                                 }}
                               >
-                                {line.description}
+                                {line.description.split("(")?.[0]?.split("×")[1]?.trim() ??
+                                  line.description.split("(")[0] ??
+                                  line.description}
                               </Text>
                               <Text
                                 style={{
