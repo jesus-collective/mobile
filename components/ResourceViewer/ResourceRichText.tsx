@@ -11,7 +11,7 @@ import { ResourceContext } from "./ResourceContext"
 
 Amplify.configure(awsconfig)
 
-interface Props extends ResourceSetupProp {}
+type Props = ResourceSetupProp
 
 class ResourceRichText extends JCComponent<Props> {
   static Consumer = ResourceContext.Consumer
@@ -101,26 +101,26 @@ class ResourceRichText extends JCComponent<Props> {
         textStyle = this.styles.style.resourceRichTextH5
         break
       case ResourcePageItemStyle.RichTextH6:
-          textStyle = this.styles.style.resourceRichTextH6
+        textStyle = this.styles.style.resourceRichTextH6
         break
-        case ResourcePageItemStyle.RichTextH1Small:
-          textStyle = this.styles.style.resourceRichTextH1Small
-          break
-        case ResourcePageItemStyle.RichTextH2Small:
-          textStyle = this.styles.style.resourceRichTextH2Small
-          break
-        case ResourcePageItemStyle.RichTextH3Small:
-          textStyle = this.styles.style.resourceRichTextH3Small
-          break
-        case ResourcePageItemStyle.RichTextH4Small:
-          textStyle = this.styles.style.resourceRichTextH4Small
-          break
-        case ResourcePageItemStyle.RichTextH5Small:
-          textStyle = this.styles.style.resourceRichTextH5Small
-          break
-        case ResourcePageItemStyle.RichTextH6Small:
-            textStyle = this.styles.style.resourceRichTextH6Small
-          break
+      case ResourcePageItemStyle.RichTextH1Small:
+        textStyle = this.styles.style.resourceRichTextH1Small
+        break
+      case ResourcePageItemStyle.RichTextH2Small:
+        textStyle = this.styles.style.resourceRichTextH2Small
+        break
+      case ResourcePageItemStyle.RichTextH3Small:
+        textStyle = this.styles.style.resourceRichTextH3Small
+        break
+      case ResourcePageItemStyle.RichTextH4Small:
+        textStyle = this.styles.style.resourceRichTextH4Small
+        break
+      case ResourcePageItemStyle.RichTextH5Small:
+        textStyle = this.styles.style.resourceRichTextH5Small
+        break
+      case ResourcePageItemStyle.RichTextH6Small:
+        textStyle = this.styles.style.resourceRichTextH6Small
+        break
       case ResourcePageItemStyle.RichTextBody1:
         textStyle = this.styles.style.resourceRichTextBody1
         break
@@ -136,7 +136,7 @@ class ResourceRichText extends JCComponent<Props> {
       default:
         textStyle = this.styles.style.resourceRichTextBody1
     }
-    console.log(textStyle)
+    console.log({ textStyle: textStyle })
     return (
       <View style={this.styles.style.resourcesRichTextContainer}>
         <PageItemSettings

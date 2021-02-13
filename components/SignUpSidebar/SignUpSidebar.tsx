@@ -1,6 +1,5 @@
-import { View } from "native-base"
 import * as React from "react"
-import { Dimensions, Image, Platform, Text } from "react-native"
+import { Dimensions, Image, Platform, Text, View } from "react-native"
 import * as RootNavigation from "../../screens/HomeScreen//NavigationRoot"
 import JCComponent from "../JCComponent/JCComponent"
 

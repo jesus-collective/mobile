@@ -197,7 +197,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                   ></EditableText>
                   <ResourceImage
                     onUpdate={(image: ImageInput) => {
-                      let tmp = page.state.settings
+                      const tmp = page.state.settings
                       tmp.image = image
                       console.log({ settings: tmp })
                       page.setState({ settings: tmp })
@@ -385,20 +385,26 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
     item: GetResourceSeriesData | GetResourceEpisodeData | GetResourceData
   ): string | null {
     const youtube = item?.details?.filter((z) => z?.type == ResourceDetailType.DefaultYoutube)
-    console.log(youtube)
-    if (youtube?.length && youtube?.length > 0) return youtube[0]!.value
+    console.log({ youtube: youtube })
+    if (youtube && youtube?.length && youtube?.length > 0) return youtube[0]!.value
     else return null
   }
+  icon = () => {
+    return <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />
+  }
+
   getButtonItems(items: GetResourceSeriesData | GetResourceEpisodeData | GetResourceData) {
-    return items?.details
-      ?.filter((e) => e?.type == ResourceDetailType.Button)
-      .map((item) => {
-        return {
-          label: item?.text,
-          value: item?.value,
-          icon: () => <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />,
-        }
-      })
+    return items && items.details
+      ? items.details
+          .filter((e) => e?.type == ResourceDetailType.Button)
+          .map((item) => {
+            return {
+              label: item?.text ?? "",
+              value: item?.value ?? "",
+              icon: this.icon,
+            }
+          })
+      : []
   }
 
   renderLargeCard() {
@@ -559,7 +565,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                       isEditable={false}
                     ></EditableText>
                   </View>
-                  {buttonItems?.length && buttonItems.length > 0 ? (
+                  {buttonItems && buttonItems?.length && buttonItems.length > 0 ? (
                     <View style={{ zIndex: 6000 + this.props.pageItemIndex.length }}>
                       <DropDownPicker
                         zIndex={6000 + this.props.pageItemIndex.length}

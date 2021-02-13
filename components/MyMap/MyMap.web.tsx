@@ -9,6 +9,7 @@ import moment from "moment"
 import { Body, Card, CardItem, View } from "native-base"
 import * as React from "react"
 import { Text, TouchableOpacity } from "react-native"
+import { JCCognitoUser } from "src/types"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import * as queries from "../../src/graphql/queries"
@@ -52,7 +53,7 @@ class MyMapImpl extends JCComponent<Props, State> {
       currentUserLocation: null,
       currentUser: null,
     }
-    Auth.currentAuthenticatedUser().then((user: any) => {
+    Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
       this.setState({
         currentUser: user.username,
       })

@@ -14,6 +14,7 @@ import {
   GetCourseInfoQuery,
   GetGroupQuery,
 } from "src/API"
+import { JCCognitoUser } from "src/types"
 import CourseSidebar from "../../components/CourseSidebar/CourseSidebar"
 import CourseChat from "../../components/CourseViewer/CourseChat"
 import CourseCoaching from "../../components/CourseViewer/CourseCoaching"
@@ -55,11 +56,11 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       activeCourseActivity: "today",
       showChat: false,
     }
-    Auth.currentAuthenticatedUser().then((user: any) => {
+    Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
       this.setState({ currentUser: user.username }, () => {
         this.setInitialData(
           props,
-          user.getSignInUserSession().accessToken.payload["cognito:groups"]
+          user.getSignInUserSession()?.getAccessToken().payload["cognito:groups"]
         )
       })
     })
@@ -358,10 +359,10 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     })
   }
   removeDuplicates(originalArray, prop) {
-    var newArray = []
-    var lookupObject = {}
+    const newArray = []
+    const lookupObject = {}
 
-    for (var i in originalArray) {
+    for (const i in originalArray) {
       lookupObject[originalArray[i][prop]] = originalArray[i]
     }
 

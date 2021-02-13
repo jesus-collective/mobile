@@ -40,7 +40,7 @@ class ResourceImage extends JCComponent<Props, State> {
   }
   render() {
     return (
-      <View style={{ alignSelf: 'center', marginTop: 20 }}>
+      <View style={{ alignSelf: "center", marginTop: 20 }}>
         {this.state.uploading ? (
           <ActivityIndicator />
         ) : (
@@ -119,7 +119,7 @@ class ResourceImage extends JCComponent<Props, State> {
                     })
                     .catch((err) => {
                       this.setState({ uploading: false })
-                      console.log(err)
+                      console.log({ error: err })
                     })
                 }
               }}

@@ -746,7 +746,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                         <Text
                           style={this.styles.style.mySignUpOr}
                         >
-                          or
+                          {/* or */}
                         </Text>
                         <JCButton
                           buttonType={ButtonTypes.SolidSignIn2}

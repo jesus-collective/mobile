@@ -12,7 +12,7 @@ import { ResourceContext } from "./ResourceContext"
 import ResourceImage from "./ResourceImage"
 Amplify.configure(awsconfig)
 
-interface Props extends ResourceSetupProp {}
+type Props = ResourceSetupProp
 interface State extends JCState {
   imageUrl: any
   image: any
@@ -46,7 +46,7 @@ class ResourceHeader extends JCComponent<Props, State> {
     if (this.state.retries > 3) return
     if (img == null) return
     if (img != null) {
-      console.log(img)
+      console.log({ image: img })
       const z = await Storage.get(img.filenameLarge, {
         level: "protected",
         contentType: "image/png",
@@ -100,7 +100,7 @@ class ResourceHeader extends JCComponent<Props, State> {
               />
               <ResourceImage
                 onUpdate={(image: ImageInput) => {
-                  let tmp = page.state.settings
+                  const tmp = page.state.settings
                   tmp.image = image
                   console.log({ settings: tmp })
                   page.setState({ settings: tmp })

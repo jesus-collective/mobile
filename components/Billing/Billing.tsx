@@ -12,9 +12,11 @@ import { loadStripe, Stripe, StripeElements } from "@stripe/stripe-js"
 import { Mutex } from "async-mutex"
 import Amplify, { API, Auth, graphqlOperation } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import moment from "moment"
 import { Body, Card, CardItem, Content, Label } from "native-base"
 import React, { useState } from "react"
 import { ActivityIndicator, Image, Picker, Text, TouchableOpacity, View } from "react-native"
+import { JCCognitoUser } from "src/types"
 import { v4 as uuidv4 } from "uuid"
 import EditableRichText from "../../components/Forms/EditableRichText"
 import EditableText from "../../components/Forms/EditableText"
@@ -31,7 +33,6 @@ import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
 import "./CardSectionStyles.css"
 import EULA from "./eula.json"
-import moment from "moment"
 import HandleStripePayment from "./HandleStripePayment"
 Amplify.configure(awsConfig)
 const handleInputMutex = new Mutex()
@@ -111,7 +112,7 @@ class BillingImpl extends JCComponent<Props, State> {
 
   async setInitialData(): Promise<void> {
     try {
-      const user = await Auth.currentAuthenticatedUser()
+      const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       const getUser = (await API.graphql({
         query: queries.getUser,
         variables: { id: user["username"] },
@@ -171,7 +172,7 @@ class BillingImpl extends JCComponent<Props, State> {
   }
   async createStripeUser() {
     try {
-      const user = await Auth.currentAuthenticatedUser()
+      const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       console.log(user)
       const customer: any = await API.graphql({
         query: mutations.createCustomer,
@@ -204,7 +205,7 @@ class BillingImpl extends JCComponent<Props, State> {
         return priceItems2
       })
       .flat()
-    console.log(priceItems)
+    console.log({ priceItems: priceItems })
     return priceItems?.filter((x) => x != undefined && x.quantity > 0)
   }
   async createInvoice() {
@@ -221,8 +222,8 @@ class BillingImpl extends JCComponent<Props, State> {
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })
-      console.log({ invoice: invoice.data.previewInvoice.invoice })
-      this.setState({ invoice: invoice.data.previewInvoice.invoice })
+      console.log({ invoice: invoice.data.previewInvoice?.invoice })
+      this.setState({ invoice: invoice.data.previewInvoice?.invoice })
     } catch (e) {
       Sentry.captureException(e.errors || e)
       console.log(e)
