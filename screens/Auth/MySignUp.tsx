@@ -229,14 +229,8 @@ class MySignUpImpl extends React.Component<Props, State> {
                   {this.state.joinedAs ? (
                     this.state.joinedAs === "individual" ? (
                       <View style={this.styles.style.authView3}>
-                        <Text
-                          style={this.styles.style.mySignUpText}
-                        >
-                          Create your account
-                        </Text>
-                        <View
-                          style={this.styles.style.mySignUpInputFieldscontainer}
-                        >
+                        <Text style={this.styles.style.mySignUpText}>Create your account</Text>
+                        <View style={this.styles.style.mySignUpInputFieldscontainer}>
                           <Text
                             style={{
                               fontSize: 22,
@@ -270,9 +264,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             style={this.styles.style.mySignUpPlaceholderText}
                           ></TextInput>
                         </View>
-                        <View
-                          style={this.styles.style.mySignUpEmailContainer}
-                        >
+                        <View style={this.styles.style.mySignUpEmailContainer}>
                           <Text
                             style={{
                               fontSize: 22,
@@ -292,9 +284,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             style={this.styles.style.mySignUpPlaceholderText}
                           ></TextInput>
                         </View>
-                        <View
-                          style={this.styles.style.mySignUpPasswordContainer}
-                        >
+                        <View style={this.styles.style.mySignUpPasswordContainer}>
                           <Text
                             style={{
                               fontSize: 22,
@@ -330,9 +320,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             style={this.styles.style.mySignUpPlaceholderText}
                           ></TextInput>
                         </View>
-                        <View
-                          style={this.styles.style.mySignUpPhoneContainer}
-                        >
+                        <View style={this.styles.style.mySignUpPhoneContainer}>
                           <Picker
                             selectedValue={this.state.user.code}
                             onValueChange={(val) => this.handleChange("code", val)}
@@ -361,7 +349,14 @@ class MySignUpImpl extends React.Component<Props, State> {
                             keyboardType="phone-pad"
                             placeholder="Phone number"
                             value={this.state.user.phone}
-                            onChange={(e) => this.handleChange("phone", e.nativeEvent.text)}
+                            onChange={(e) => {
+                              if (
+                                e.nativeEvent.text.length < 11 &&
+                                !e.nativeEvent.text.match(/\D/g)
+                              ) {
+                                this.handleChange("phone", e.nativeEvent.text)
+                              }
+                            }}
                             style={this.styles.style.mySignUpPlaceholderText}
                           ></TextInput>
                         </View>
@@ -388,11 +383,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             })
                           }
                         >
-                          <Text
-                            style={this.styles.style.mySignUpConfirmCode}
-                          >
-                            Confirm a code
-                          </Text>
+                          <Text style={this.styles.style.mySignUpConfirmCode}>Confirm a code</Text>
                         </TouchableOpacity>
                         <Text
                           style={{
@@ -729,25 +720,17 @@ class MySignUpImpl extends React.Component<Props, State> {
                     )
                   ) : (
                     <View style={this.styles.style.authView3}>
-                      <Text
-                        style={this.styles.style.mySignUpText}
-                      >
+                      <Text style={this.styles.style.mySignUpText}>
                         Welcome. What type of account would you like to create?
                       </Text>
-                      <View
-                        style={this.styles.style.mySignUpButton}
-                      >
+                      <View style={this.styles.style.mySignUpButton}>
                         <JCButton
                           buttonType={ButtonTypes.SolidSignIn2}
                           onPress={() => this.setState({ joinedAs: "individual" })}
                         >
                           Individual
                         </JCButton>
-                        <Text
-                          style={this.styles.style.mySignUpOr}
-                        >
-                          {/* or */}
-                        </Text>
+                        <Text style={this.styles.style.mySignUpOr}>{/* or */}</Text>
                         <JCButton
                           buttonType={ButtonTypes.SolidSignIn2}
                           onPress={() => this.setState({ joinedAs: "organization" })}
