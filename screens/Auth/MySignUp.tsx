@@ -360,46 +360,63 @@ class MySignUpImpl extends React.Component<Props, State> {
                             style={this.styles.style.mySignUpPlaceholderText}
                           ></TextInput>
                         </View>
-                        <JCButton
-                          enabled={this.state.enabled}
-                          buttonType={
-                            this.state.enabled
-                              ? ButtonTypes.SolidSignIn
-                              : ButtonTypes.DisabledSignIn
-                          }
-                          onPress={() => this.signUp(userActions)}
-                        >
-                          {this.state.sendingData ? (
-                            <ActivityIndicator animating color="#333333" />
-                          ) : (
-                            "Continue"
-                          )}
-                        </JCButton>
-                        <TouchableOpacity
-                          onPress={async () =>
-                            await this.changeAuthState(userActions, "confirmSignUp", {
-                              joinedProduct: this.state.joinedProduct,
-                              productType: this.state.productType,
-                            })
-                          }
-                        >
-                          <Text style={this.styles.style.mySignUpConfirmCode}>Confirm a code</Text>
-                        </TouchableOpacity>
+                        <View style={{ flexDirection: "row" }}>
+                          <View style={{ flex: 1 }}>
+                            <JCButton
+                              enabled={this.state.enabled}
+                              buttonType={
+                                this.state.enabled
+                                  ? ButtonTypes.SolidSignIn
+                                  : ButtonTypes.DisabledSignIn
+                              }
+                              onPress={() => this.signUp(userActions)}
+                            >
+                              {this.state.sendingData ? (
+                                <ActivityIndicator animating color="#333333" />
+                              ) : (
+                                "Continue"
+                              )}
+                            </JCButton>
+                          </View>
+                          <TouchableOpacity
+                            style={this.styles.style.mySignUpConfirmCode}
+                            onPress={async () =>
+                              await this.changeAuthState(userActions, "confirmSignUp", {
+                                joinedProduct: this.state.joinedProduct,
+                                productType: this.state.productType,
+                              })
+                            }
+                          >
+                            <Text
+                              style={{
+                                fontSize: 14,
+                                fontFamily: "Graphik-Regular-App",
+                                color: "#333333",
+                                opacity: 0.7,
+                              }}
+                            >
+                              Confirm a code
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+
                         <Text
                           style={{
+                            flex: 1,
                             alignSelf: "center",
                             alignItems: "center",
                             fontSize: 14,
                             fontFamily: "Graphik-Regular-App",
                             lineHeight: 22,
-                            marginTop: 20,
+                            marginTop: 4,
                           }}
                         >
                           {this.state.authError ? (
                             <Entypo name="warning" size={18} color="#F0493E" />
                           ) : null}{" "}
-                          {this.state.authError}
+                          {" " + this.state.authError}
                         </Text>
+
                         <Copyright />
                       </View>
                     ) : (
