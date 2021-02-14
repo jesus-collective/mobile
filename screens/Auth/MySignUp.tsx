@@ -229,14 +229,8 @@ class MySignUpImpl extends React.Component<Props, State> {
                   {this.state.joinedAs ? (
                     this.state.joinedAs === "individual" ? (
                       <View style={this.styles.style.authView3}>
-                        <Text
-                          style={this.styles.style.mySignUpText}
-                        >
-                          Create your account
-                        </Text>
-                        <View
-                          style={this.styles.style.mySignUpInputFieldscontainer}
-                        >
+                        <Text style={this.styles.style.mySignUpText}>Create your account</Text>
+                        <View style={this.styles.style.mySignUpInputFieldscontainer}>
                           <Text
                             style={{
                               fontSize: 22,
@@ -270,9 +264,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             style={this.styles.style.mySignUpPlaceholderText}
                           ></TextInput>
                         </View>
-                        <View
-                          style={this.styles.style.mySignUpEmailContainer}
-                        >
+                        <View style={this.styles.style.mySignUpEmailContainer}>
                           <Text
                             style={{
                               fontSize: 22,
@@ -292,9 +284,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             style={this.styles.style.mySignUpPlaceholderText}
                           ></TextInput>
                         </View>
-                        <View
-                          style={this.styles.style.mySignUpPasswordContainer}
-                        >
+                        <View style={this.styles.style.mySignUpPasswordContainer}>
                           <Text
                             style={{
                               fontSize: 22,
@@ -330,9 +320,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             style={this.styles.style.mySignUpPlaceholderText}
                           ></TextInput>
                         </View>
-                        <View
-                          style={this.styles.style.mySignUpPhoneContainer}
-                        >
+                        <View style={this.styles.style.mySignUpPhoneContainer}>
                           <Picker
                             selectedValue={this.state.user.code}
                             onValueChange={(val) => this.handleChange("code", val)}
@@ -361,54 +349,74 @@ class MySignUpImpl extends React.Component<Props, State> {
                             keyboardType="phone-pad"
                             placeholder="Phone number"
                             value={this.state.user.phone}
-                            onChange={(e) => this.handleChange("phone", e.nativeEvent.text)}
+                            onChange={(e) => {
+                              if (
+                                e.nativeEvent.text.length < 11 &&
+                                !e.nativeEvent.text.match(/\D/g)
+                              ) {
+                                this.handleChange("phone", e.nativeEvent.text)
+                              }
+                            }}
                             style={this.styles.style.mySignUpPlaceholderText}
                           ></TextInput>
                         </View>
-                        <JCButton
-                          enabled={this.state.enabled}
-                          buttonType={
-                            this.state.enabled
-                              ? ButtonTypes.SolidSignIn
-                              : ButtonTypes.DisabledSignIn
-                          }
-                          onPress={() => this.signUp(userActions)}
-                        >
-                          {this.state.sendingData ? (
-                            <ActivityIndicator animating color="#333333" />
-                          ) : (
-                            "Continue"
-                          )}
-                        </JCButton>
-                        <TouchableOpacity
-                          onPress={async () =>
-                            await this.changeAuthState(userActions, "confirmSignUp", {
-                              joinedProduct: this.state.joinedProduct,
-                              productType: this.state.productType,
-                            })
-                          }
-                        >
-                          <Text
+                        <View style={{ flexDirection: "row" }}>
+                          <View style={{ flex: 1 }}>
+                            <JCButton
+                              enabled={this.state.enabled}
+                              buttonType={
+                                this.state.enabled
+                                  ? ButtonTypes.SolidSignIn
+                                  : ButtonTypes.DisabledSignIn
+                              }
+                              onPress={() => this.signUp(userActions)}
+                            >
+                              {this.state.sendingData ? (
+                                <ActivityIndicator animating color="#333333" />
+                              ) : (
+                                "Continue"
+                              )}
+                            </JCButton>
+                          </View>
+                          <TouchableOpacity
                             style={this.styles.style.mySignUpConfirmCode}
+                            onPress={async () =>
+                              await this.changeAuthState(userActions, "confirmSignUp", {
+                                joinedProduct: this.state.joinedProduct,
+                                productType: this.state.productType,
+                              })
+                            }
                           >
-                            Confirm a code
-                          </Text>
-                        </TouchableOpacity>
+                            <Text
+                              style={{
+                                fontSize: 14,
+                                fontFamily: "Graphik-Regular-App",
+                                color: "#333333",
+                                opacity: 0.7,
+                              }}
+                            >
+                              Confirm a code
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
+
                         <Text
                           style={{
+                            flex: 1,
                             alignSelf: "center",
                             alignItems: "center",
                             fontSize: 14,
                             fontFamily: "Graphik-Regular-App",
                             lineHeight: 22,
-                            marginTop: 20,
+                            marginTop: 4,
                           }}
                         >
                           {this.state.authError ? (
                             <Entypo name="warning" size={18} color="#F0493E" />
                           ) : null}{" "}
-                          {this.state.authError}
+                          {" " + this.state.authError}
                         </Text>
+
                         <Copyright />
                       </View>
                     ) : (
@@ -729,25 +737,17 @@ class MySignUpImpl extends React.Component<Props, State> {
                     )
                   ) : (
                     <View style={this.styles.style.authView3}>
-                      <Text
-                        style={this.styles.style.mySignUpText}
-                      >
+                      <Text style={this.styles.style.mySignUpText}>
                         Welcome. What type of account would you like to create?
                       </Text>
-                      <View
-                        style={this.styles.style.mySignUpButton}
-                      >
+                      <View style={this.styles.style.mySignUpButton}>
                         <JCButton
                           buttonType={ButtonTypes.SolidSignIn2}
                           onPress={() => this.setState({ joinedAs: "individual" })}
                         >
                           Individual
                         </JCButton>
-                        <Text
-                          style={this.styles.style.mySignUpOr}
-                        >
-                          {/* or */}
-                        </Text>
+                        <Text style={this.styles.style.mySignUpOr}>{/* or */}</Text>
                         <JCButton
                           buttonType={ButtonTypes.SolidSignIn2}
                           onPress={() => this.setState({ joinedAs: "organization" })}
