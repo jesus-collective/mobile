@@ -478,11 +478,11 @@ export default class CourseScreen extends JCComponent<Props, State> {
     console.log("Navigate to profileScreen")
     this.props.navigation.push("ProfileScreen", { id: id, create: false })
   }
-  canPurchase() {
+  canPurchase(userActions: UserActions) {
     const id = this.state.data.id
     if (this.isOwner(id)) return false
-    else if (this.isCourseCoach(id)) return false
-    else if (this.isCourseAdmin(id)) return false
+    else if (this.isCourseCoach(userActions, id)) return false
+    else if (this.isCourseAdmin(userActions, id)) return false
     else if (this.canCoursePay(id)) return true
     else if (this.isCoursePaid(id)) return false
     else if (this.canCourseApply(id)) return false
@@ -568,8 +568,9 @@ export default class CourseScreen extends JCComponent<Props, State> {
     return (
       <Container style={{ minHeight: 30 }}>
         {this.isCourseClosed(userActions) ? <Text>Course Closed</Text> : null}
-        {this.canPurchase() ? (
+        {this.canPurchase(userActions) ? (
           <JCButton
+            testID="course-purchase"
             buttonType={ButtonTypes.courseMktOutlineBoldNoMargin}
             onPress={() => {
               this.purchase()
@@ -580,6 +581,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
         ) : null}
         {this.canGotoCourse(userActions) ? (
           <JCButton
+            testID="course-goto"
             buttonType={ButtonTypes.courseMktOutlineBoldNoMargin}
             onPress={() => this.gotoActiveCourse()}
           >
@@ -588,6 +590,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
         ) : null}
         {this.state.createNew ? (
           <JCButton
+            testID="course-createNew"
             buttonType={ButtonTypes.courseMktOutlineBoldNoMargin}
             onPress={() => {
               this.createNew()
@@ -598,6 +601,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
         ) : null}
         {this.state.canSave ? (
           <JCButton
+            testID="course-save"
             buttonType={ButtonTypes.courseMktOutlineBoldNoMargin}
             onPress={() => {
               this.save()
@@ -608,6 +612,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
         ) : null}
         {this.state.canDelete ? (
           <JCButton
+            testID="course-delete"
             buttonType={ButtonTypes.courseMktOutlineBoldNoMargin}
             onPress={() => {
               if (window.confirm("Are you sure you wish to delete this course?")) this.delete()
@@ -690,6 +695,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                           onChange={(value: any) => {
                             this.updateValue("name", value)
                           }}
+                          testID="course-name"
                           placeholder="Enter Course Name"
                           multiline={false}
                           textStyle={this.styles.style.courseMktNameInput}
@@ -701,6 +707,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                           onChange={(value: any) => {
                             this.updateValue("description", value)
                           }}
+                          testID="course-description"
                           placeholder="Enter Course Description"
                           multiline={true}
                           textStyle={this.styles.style.courseMktDescriptionInput}
@@ -724,6 +731,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                         </Text>
                         <EditableDate
                           type="date"
+                          testID="course-startDate"
                           onChange={(time: any, timeZone: any) => {
                             this.updateValue("time", time)
                             this.updateValue("tz", timeZone)
@@ -750,6 +758,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                           Duration
                         </Text>
                         <EditableText
+                          testID="course-duration"
                           onChange={(value: any) => {
                             this.updateValue("length", value)
                           }}
@@ -774,6 +783,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                           Effort
                         </Text>
                         <EditableText
+                          testID="course-effort"
                           onChange={(value: any) => {
                             this.updateValue("effort", value)
                           }}

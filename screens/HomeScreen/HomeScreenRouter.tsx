@@ -37,7 +37,7 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
     super(props)
     this.state = {
       ...super.getInitialState(),
-      groups: [],
+      groups: null,
       hasCompletedPersonalProfile: ProfileStatus.Unknown,
       hasPaidState: PaidStatus.Unknown,
       userExists: false,
@@ -62,6 +62,13 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
     }
     await this.getAuthInitialState()
     await this.performStartup()
+  }
+  isReady = (): boolean => {
+    if (this.state.groups) return true
+    else {
+      this.updateGroups()
+      return false
+    }
   }
   isMemberOf = (group: string): boolean => {
     if (this.state.groups) return this.state.groups.includes(group)
@@ -460,6 +467,7 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
                 await this.props.onStateChange(state, data)
               },
               updateGroups: this.updateGroups,
+              isReady: this.isReady,
               isMemberOf: this.isMemberOf,
             },
           }}

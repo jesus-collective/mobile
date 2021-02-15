@@ -1312,7 +1312,7 @@ export default class MyGroups extends JCComponent<Props, State> {
           if (!userState) return null
 
           const deviceWidth = Dimensions.get("window").width
-
+          if (!userActions.isReady()) return null
           if (!constants["SETTING_ISVISIBLE_" + this.state.type]) return null
           else if (
             this.state.type == "course" &&
@@ -1322,7 +1322,7 @@ export default class MyGroups extends JCComponent<Props, State> {
           ) {
             return null
           } else if (this.state.titleString == null) return null
-          else
+          else {
             return (
               <ErrorBoundry>
                 <StyleProvider style={getTheme()}>
@@ -1591,6 +1591,7 @@ export default class MyGroups extends JCComponent<Props, State> {
                 </StyleProvider>
               </ErrorBoundry>
             )
+          }
         }}
       </MyGroups.UserConsumer>
     )

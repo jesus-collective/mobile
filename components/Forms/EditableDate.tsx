@@ -46,6 +46,7 @@ const materialTheme = createMuiTheme({
 })
 
 interface Props {
+  testID?: string
   value: string
   isEditable: boolean
   textStyle: any
@@ -75,6 +76,7 @@ export default class EditableDate extends JCComponent<Props> {
           <Container style={{ height: "unset", width: "55%", marginTop: 22 }}>
             <ThemeProvider theme={materialTheme}>
               <KeyboardDateTimePicker
+                data-testid={this.props.testID + "datetime"}
                 variant="inline"
                 ampm={true}
                 placeholder={this.props.placeholder}
@@ -106,6 +108,7 @@ export default class EditableDate extends JCComponent<Props> {
                   paddingTop: 3,
                   paddingBottom: 3,
                 }}
+                testID={this.props.testID + "-tz"}
                 selectedValue={this.props.tz}
                 placeholder="Timezone"
                 placeholderStyle={{ color: "#bfc6ea" }}
@@ -138,7 +141,6 @@ export default class EditableDate extends JCComponent<Props> {
                 onChange={(value) => {
                   this.onChanged(value, this.props.tz)
                 }}
-                onError={console.log}
                 disablePast
                 emptyLabel="Date not set"
               />

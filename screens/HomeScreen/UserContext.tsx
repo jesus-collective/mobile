@@ -12,9 +12,9 @@ export interface UserState extends JCState {
   orgId: string
   isOrg: boolean
   initialAuthType: string | null
-  initialParams: {}
+  initialParams: any
   idempotency: string
-  groups: string[]
+  groups: string[] | null
   groupsLoaded: boolean
 }
 export interface UserActions {
@@ -25,6 +25,7 @@ export interface UserActions {
   onStateChange(state: string, data: AuthStateData): Promise<any> | null
   updateGroups(): Promise<void> | null
   isMemberOf(group: string): boolean
+  isReady(): boolean
 }
 export enum ProfileStatus {
   Completed,
@@ -45,12 +46,23 @@ type UserContextType = {
 }
 export const UserContext = React.createContext<UserContextType>({
   userActions: {
-    onSetUser: () => {},
-    updateHasCompletedPersonalProfile: async () => {},
-    recheckUserState: async () => {},
-    updateHasCompletedOrganizationProfile: async () => {},
-    onStateChange: async () => {},
-    updateGroups: async () => {},
+    onSetUser: () => null,
+    updateHasCompletedPersonalProfile: async () => {
+      return
+    },
+    recheckUserState: async () => {
+      return
+    },
+    updateHasCompletedOrganizationProfile: async () => {
+      return
+    },
+    onStateChange: async () => null,
+    updateGroups: async () => {
+      return
+    },
+    isReady: () => {
+      return false
+    },
     isMemberOf: () => {
       return false
     },
