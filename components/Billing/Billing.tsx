@@ -226,7 +226,7 @@ class BillingImpl extends JCComponent<Props, State> {
       })
       this.setState({ invoiceQueue: [...this.state.invoiceQueue, newInvoice] }, async () => {
         const currentIndex = this.state.invoiceQueue.length - 1
-        const invoice = await this.state.invoiceQueue[this.state.invoiceQueue.length - 1]
+        const invoice = await this.state.invoiceQueue[currentIndex]
 
         if (currentIndex === this.state.invoiceQueue.length - 1) {
           console.log({ invoice: invoice.data.previewInvoice?.invoice })
