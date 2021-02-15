@@ -15,6 +15,7 @@ import {
 } from "react-native"
 import { Copyright } from "../../components/Auth/Copyright"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
+import Sentry from "../../components/Sentry"
 import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
 import MainStyles from "../../components/style"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
@@ -30,7 +31,7 @@ interface State {
   authError: string
   fromVerified: boolean
   brand: string
-  signingIn:boolean
+  signingIn: boolean
 }
 
 class MySignInImpl extends React.Component<Props, State> {
@@ -43,11 +44,11 @@ class MySignInImpl extends React.Component<Props, State> {
       authError: "",
       fromVerified: props.route?.params?.fromVerified ?? false,
       brand: props.route?.params?.brand ?? "jc",
-      signingIn:false
+      signingIn: false,
     }
   }
   static UserConsumer = UserContext.Consumer
-  componentWillMount(): void {
+  UNSAFE_componentWillMount(): void {
     console.log(this.props.route)
     this.setState({
       user: this.props.route?.params?.email ?? "",
@@ -78,23 +79,24 @@ class MySignInImpl extends React.Component<Props, State> {
 
   async handleSignIn(actions: any): Promise<void> {
     try {
-      this.setState({signingIn:true})
+      this.setState({ signingIn: true })
+      Sentry.setUser({ email: this.state.user.toLowerCase() })
       await Auth.signIn(this.state.user.toLowerCase(), this.state.pass).then(async (user) => {
-        if (user.challengeName == "NEW_PASSWORD_REQUIRED"){
+        if (user.challengeName == "NEW_PASSWORD_REQUIRED") {
           await this.changeAuthState(actions, "requireNewPassword", user)
-          this.setState({signingIn:false})
-        }
-        else {
+          this.setState({ signingIn: false })
+        } else {
           await this.changeAuthState(actions, "signedIn")
-          this.setState({signingIn:false})
+          this.setState({ signingIn: false })
         }
       })
     } catch (err) {
       if (!this.state.pass && this.state.user) {
-        this.setState({ authError: "Password cannot be empty", signingIn:false })
+        this.setState({ authError: "Password cannot be empty", signingIn: false })
       } else {
-        this.setState({ authError: err.message, signingIn:false })
+        this.setState({ authError: err.message, signingIn: false })
       }
+      Sentry.configureScope((scope) => scope.setUser(null))
     }
   }
 
@@ -221,22 +223,20 @@ class MySignInImpl extends React.Component<Props, State> {
                         this.handleSignIn(userActions)
                       }}
                     >
-                      
-                      {this.state.signingIn ? 
-                      <View style={{ flexDirection: "column", width: 50.95, top: 2 }}>
-                            <ActivityIndicator color="white"></ActivityIndicator>
-                          </View> : "Sign In"}
+                      {this.state.signingIn ? (
+                        <View style={{ flexDirection: "column", width: 50.95, top: 2 }}>
+                          <ActivityIndicator color="white"></ActivityIndicator>
+                        </View>
+                      ) : (
+                        "Sign In"
+                      )}
                     </JCButton>
                     <TouchableOpacity
                       onPress={async () => {
                         await this.changeAuthState(userActions, "forgotPassword")
                       }}
                     >
-                      <Text
-                        style={this.styles.style.mySignInForgotPassword}
-                      >
-                        Forgot password?
-                      </Text>
+                      <Text style={this.styles.style.mySignInForgotPassword}>Forgot password?</Text>
                     </TouchableOpacity>
                     <Text
                       style={{

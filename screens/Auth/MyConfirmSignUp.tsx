@@ -16,6 +16,7 @@ import {
 import { AuthStateData } from "src/types"
 import { Copyright } from "../../components/Auth/Copyright"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
+import Sentry from "../../components/Sentry"
 import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
 import MainStyles from "../../components/style"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
@@ -57,6 +58,7 @@ class MyConfirmSignUpImpl extends React.Component<Props, State> {
   async handleConfirmSignUp(actions: UserActions): Promise<void> {
     try {
       this.setState({ sendingData: true })
+      Sentry.setUser({ email: this.state.email.toLowerCase() })
       await Auth.confirmSignUp(this.state.email.toLowerCase(), this.state.code).then(async () => {
         await this.changeAuthState(actions, "signIn", {
           email: this.state.email.toLowerCase(),
@@ -65,6 +67,7 @@ class MyConfirmSignUpImpl extends React.Component<Props, State> {
       })
     } catch (e) {
       this.setState({ authError: e.message, sendingData: false })
+      Sentry.configureScope((scope) => scope.setUser(null))
     }
   }
 

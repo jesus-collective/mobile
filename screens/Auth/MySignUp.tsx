@@ -18,6 +18,7 @@ import {
 import { AuthStateData } from "src/types"
 import { Copyright } from "../../components/Auth/Copyright"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
+import Sentry from "../../components/Sentry"
 import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
 import MainStyles from "../../components/style"
 import * as RootNavigation from "../../screens/HomeScreen/NavigationRoot"
@@ -137,6 +138,7 @@ class MySignUpImpl extends React.Component<Props, State> {
         return
       }
       if (!this.validate()) return
+      Sentry.setUser({ email: this.state.user.email.toLowerCase() })
 
       this.setState({ sendingData: true })
       await Auth.signUp({
@@ -160,6 +162,7 @@ class MySignUpImpl extends React.Component<Props, State> {
       )
     } catch (e) {
       this.setState({ authError: e.message, sendingData: false })
+      Sentry.configureScope((scope) => scope.setUser(null))
     }
   }
 
@@ -177,7 +180,7 @@ class MySignUpImpl extends React.Component<Props, State> {
   }
 
   styles = MainStyles.getInstance()
-  componentWillMount(): void {
+  UNSAFE_componentWillMount(): void {
     const params = RootNavigation.getRoot()?.params as {
       joinedAs: "individual" | "organization" | null
     }

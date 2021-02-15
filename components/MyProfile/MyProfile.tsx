@@ -6,6 +6,7 @@ import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment"
 import { Badge, Button, Content, Form, Label, Picker, View } from "native-base"
 import * as React from "react"
+import { isBrowser, isTablet } from "react-device-detect"
 import { ActivityIndicator, Image, Text, TextInput, TouchableOpacity } from "react-native"
 import { JCCognitoUser } from "src/types"
 import EditableLocation from "../../components/Forms/EditableLocation"
@@ -30,7 +31,6 @@ import {
   orgTypesNonChurch,
   sundayAttendance,
 } from "./dropdown"
-import { isBrowser, isMobile, isTablet } from "react-device-detect"
 
 const orgTypes = orgTypesChurches.concat(orgTypesNonChurch)
 
@@ -380,14 +380,17 @@ class MyProfileImpl extends JCComponent<Props, State> {
   }*/
   logout(actions: UserActions): void {
     //this.props.navigation.navigate("", null)
+
     Auth.signOut()
       .then((data) => {
         console.log("SIGNED OUT")
         actions.onStateChange("signedOut", null)
+        Sentry.configureScope((scope) => scope.setUser(null))
       })
       .catch((err) => {
         console.log("SIGNED OUT CATCH")
         actions.onStateChange("signedOut", null)
+        Sentry.configureScope((scope) => scope.setUser(null))
       })
   }
   showMap(): void {
