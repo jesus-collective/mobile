@@ -584,7 +584,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         ),
         resourceID: this.state.resourceData.id,
         order: (this.state.resourceData.resources.items.length + 1).toString(),
-        readGroups: [],
+        readGroups: [UserGroupType.verifiedUsers],
       }
       try {
         console.log("Creating Resource")
