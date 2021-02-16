@@ -2755,6 +2755,7 @@ export const getResourceRoot = /* GraphQL */ `
           description
           whoIsThisFor
           extendedDescription
+          readGroups
           resourceID
           createdAt
           updatedAt
@@ -3096,6 +3097,7 @@ export const getResource = /* GraphQL */ `
       description
       whoIsThisFor
       extendedDescription
+      readGroups
       details {
         type
         name
@@ -3195,6 +3197,7 @@ export const listResources = /* GraphQL */ `
         description
         whoIsThisFor
         extendedDescription
+        readGroups
         details {
           type
           name
@@ -3286,6 +3289,7 @@ export const getResourceSeries = /* GraphQL */ `
         description
         whoIsThisFor
         extendedDescription
+        readGroups
         details {
           type
           name
@@ -3357,6 +3361,7 @@ export const listResourceSeriess = /* GraphQL */ `
           description
           whoIsThisFor
           extendedDescription
+          readGroups
           resourceID
           createdAt
           updatedAt
@@ -3436,6 +3441,7 @@ export const getResourceEpisode = /* GraphQL */ `
           description
           whoIsThisFor
           extendedDescription
+          readGroups
           resourceID
           createdAt
           updatedAt

@@ -952,7 +952,7 @@ type Resource
 @model 
 @auth(rules: [
    {allow: owner, ownerField: "owner", operations: [create, read, update, delete]}
-  { allow: groups, groups: ["verifiedUsers"], operations: [read] }
+   { allow: groups, groups: ["verifiedUsers"], operations: [read] }
    { allow: groups, groups: ["admin"]}
   ])
  @key(name: "byResource", fields: ["resourceID"])
