@@ -228,18 +228,27 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
     )
   }
 
+  isExternalUrl(url: string): boolean {
+    if (url.includes("jesuscollective.com/app")) {
+      return false
+    }
+    return true
+  }
+
   renderManualCard() {
     if (
       this.props.pageItem &&
       (this.state.imageUrl == null || this.state.image != this.props.pageItem.image)
-    )
+    ) {
       this.getImage(this.props.pageItem.image)
+    }
+    const { url } = this.props.pageItem
     return (
       <>
         <TouchableOpacity
           onPress={() => {
-            if (this.props.pageItem.url) {
-              window.location.href = this.props.pageItem.url ?? ""
+            if (url && this.isExternalUrl(url)) {
+              window.location.href = url
             } else {
               this.props.navigation.navigate("ResourceDisplayScreen", {
                 id: this.props.resourceState.groupData?.id,
@@ -417,8 +426,11 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
     if (
       this.props.pageItem &&
       (this.state.imageUrl == null || this.state.image != this.props.pageItem.image)
-    )
+    ) {
       this.getImage(this.props.pageItem.image)
+    }
+
+    const { url } = this.props.pageItem
     return (
       <ResourceCardImpl.UserConsumer>
         {({ userActions }) => {
@@ -466,10 +478,9 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                 return (
                   <TouchableOpacity
                     onPress={() => {
-                      if (this.props.pageItem.url) {
-                        window.location.href = this.props.pageItem.url ?? ""
+                      if (url && this.isExternalUrl(url)) {
+                        window.location.href = url
                       } else {
-                        console.log("NAVIGATE")
                         if (this.props.pageItem.episodeID == null)
                           this.props.navigation.navigate("ResourceDisplayScreen", {
                             id: this.props.resourceState.groupData?.id,
@@ -749,20 +760,21 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
           }
 
           const youtubeID = this.getYoutubeId(item)
+          const { url } = this.props.pageItem
           return (
             <>
               <TouchableOpacity
                 onPress={() => {
-                  if (this.props.pageItem.url) {
-                    window.location.href = this.props.pageItem.url ?? ""
+                  if (url && this.isExternalUrl(url)) {
+                    window.location.href = url
                   } else {
-                    console.log("NAVIGATE")
-                    this.props.navigation.navigate("ResourceDisplayScreen", {
-                      id: this.props.resourceState.groupData?.id,
-                      resource: this.props.pageItem.resourceID,
-                      series: this.props.pageItem.seriesID,
-                      episode: this.props.pageItem.episodeID,
-                    })
+                    if (this.props.pageItem.episodeID == null)
+                      this.props.navigation.navigate("ResourceDisplayScreen", {
+                        id: this.props.resourceState.groupData?.id,
+                        resource: this.props.pageItem.resourceID,
+                        series: this.props.pageItem.seriesID,
+                        episode: this.props.pageItem.episodeID,
+                      })
                   }
                 }}
               >
