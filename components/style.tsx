@@ -2037,7 +2037,7 @@ export default class MainStyles {
           textAlign: "center",
         },
         mySignUpText: {
-          marginTop: Platform.OS === "android" ? 50 : 50,
+          marginTop: Platform.OS === "android" || Platform.OS === "web" ? 50 : 50,
           width: "100%",
           textAlign: "center",
         },
@@ -2051,20 +2051,20 @@ export default class MainStyles {
           width: "40%",
         },
         mySignUpInputFieldscontainer: {
-          marginRight: 20,
+          marginRight: 0,
         },
         mySignUpEmailContainer: {
-          marginRight: 20,
+          marginRight: 0,
         },
         mySignUpPasswordContainer: {
-          marginRight: 20,
+          marginRight: 0,
         },
         mySignUpLeftPasswordContainer: {
-          marginRight: 10,
+          marginRight: 0,
           fontSize: 15,
         },
         mySignUpPhoneContainer: {
-          marginRight: 20,
+          marginRight: 0,
         },
         mySignUpConfirmCode: {
           alignSelf: "flex-start",

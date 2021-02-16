@@ -424,16 +424,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                       </View>
                     ) : (
                       <View style={this.styles.style.authView3}>
-                        <Text
-                          style={{
-                            width: "100%",
-                            marginBottom: "8.33%",
-                            fontFamily: "Graphik-Regular-App",
-                            fontWeight: "bold",
-                            fontSize: 22,
-                            lineHeight: 30,
-                          }}
-                        >
+                        <Text style={this.styles.style.mySignUpText}>
                           Set up the account for the administrator of your organization first
                         </Text>
                         <View
@@ -457,20 +448,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             placeholder="First Name"
                             value={this.state.user.first}
                             onChange={(e) => this.handleChange("first", e.nativeEvent.text)}
-                            style={{
-                              borderBottomWidth: 1,
-                              borderColor: "#00000020",
-                              marginBottom: "1.4%",
-                              marginRight: 30,
-                              width: "100%",
-                              paddingTop: 10,
-                              paddingRight: 10,
-                              paddingBottom: 10,
-                              paddingLeft: 5,
-                              fontFamily: "Graphik-Regular-App",
-                              fontSize: 18,
-                              lineHeight: 24,
-                            }}
+                            style={this.styles.style.mySignUpPlaceholderText}
                           ></TextInput>
                           <Text
                             style={{
@@ -486,19 +464,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             placeholder="Last Name"
                             value={this.state.user.last}
                             onChange={(e) => this.handleChange("last", e.nativeEvent.text)}
-                            style={{
-                              borderBottomWidth: 1,
-                              borderColor: "#00000020",
-                              marginBottom: "1.4%",
-                              width: "100%",
-                              paddingTop: 10,
-                              paddingRight: 10,
-                              paddingBottom: 10,
-                              paddingLeft: 5,
-                              fontFamily: "Graphik-Regular-App",
-                              fontSize: 18,
-                              lineHeight: 24,
-                            }}
+                            style={this.styles.style.mySignUpPlaceholderText}
                           ></TextInput>
                         </View>
                         <View
@@ -524,19 +490,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             placeholder="Email Address"
                             value={this.state.user.email}
                             onChange={(e) => this.handleChange("email", e.nativeEvent.text)}
-                            style={{
-                              borderBottomWidth: 1,
-                              marginRight: 30,
-                              borderColor: "#00000020",
-                              width: "100%",
-                              paddingTop: 10,
-                              paddingRight: 10,
-                              paddingBottom: 10,
-                              paddingLeft: 5,
-                              fontFamily: "Graphik-Regular-App",
-                              fontSize: 18,
-                              lineHeight: 24,
-                            }}
+                            style={this.styles.style.mySignUpPlaceholderText}
                           ></TextInput>
                           <Text
                             style={{
@@ -551,18 +505,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             placeholder="Organization Name"
                             value={this.state.user.orgName}
                             onChange={(e) => this.handleChange("orgName", e.nativeEvent.text)}
-                            style={{
-                              borderBottomWidth: 1,
-                              borderColor: "#00000020",
-                              width: "100%",
-                              paddingTop: 10,
-                              paddingRight: 10,
-                              paddingBottom: 10,
-                              paddingLeft: 5,
-                              fontFamily: "Graphik-Regular-App",
-                              fontSize: 18,
-                              lineHeight: 24,
-                            }}
+                            style={this.styles.style.mySignUpPlaceholderText}
                           ></TextInput>
                         </View>
                         <View
@@ -587,20 +530,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             value={this.state.user.pass}
                             onChange={(e) => this.handleChange("pass", e.nativeEvent.text)}
                             secureTextEntry={true}
-                            style={{
-                              borderBottomWidth: 1,
-                              borderColor: "#00000020",
-                              marginBottom: "1.4%",
-                              marginRight: 30,
-                              width: "100%",
-                              paddingTop: 10,
-                              paddingRight: 10,
-                              paddingBottom: 10,
-                              paddingLeft: 5,
-                              fontFamily: "Graphik-Regular-App",
-                              fontSize: 18,
-                              lineHeight: 24,
-                            }}
+                            style={this.styles.style.mySignUpPlaceholderText}
                           ></TextInput>
                           <Text
                             style={{
@@ -617,19 +547,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             value={this.state.user.pass2}
                             onChange={(e) => this.handleChange("pass2", e.nativeEvent.text)}
                             secureTextEntry={true}
-                            style={{
-                              borderBottomWidth: 1,
-                              borderColor: "#00000020",
-                              marginBottom: "1.4%",
-                              width: "100%",
-                              paddingTop: 10,
-                              paddingRight: 10,
-                              paddingBottom: 10,
-                              paddingLeft: 5,
-                              fontFamily: "Graphik-Regular-App",
-                              fontSize: 18,
-                              lineHeight: 24,
-                            }}
+                            style={this.styles.style.mySignUpPlaceholderText}
                           ></TextInput>
                         </View>
                         <View
@@ -668,18 +586,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             placeholder="Phone number"
                             value={this.state.user.phone}
                             onChange={(e) => this.handleChange("phone", e.nativeEvent.text)}
-                            style={{
-                              borderBottomWidth: 1,
-                              borderColor: "#00000020",
-                              width: "100%",
-                              paddingTop: 10,
-                              paddingRight: 10,
-                              paddingBottom: 10,
-                              paddingLeft: 5,
-                              fontFamily: "Graphik-Regular-App",
-                              fontSize: 18,
-                              lineHeight: 24,
-                            }}
+                            style={this.styles.style.mySignUpPlaceholderText}
                           ></TextInput>
                         </View>
                         <JCButton
