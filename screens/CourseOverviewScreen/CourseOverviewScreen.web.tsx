@@ -868,17 +868,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                     </Container>
                     <Container style={this.styles.style.detailScreenRightCard}>
                       <Container style={this.styles.style.coursesRightCard}>
-                        {this.state.data ? (
-                          <EditableRichText
-                            onChange={(val) => {
-                              this.updateValue("promotionalText", val)
-                            }}
-                            value={this.state.data.promotionalText}
-                            isEditable={true}
-                          ></EditableRichText>
-                        ) : null}
-
-                        <Text style={this.styles.style.courseDetails}>Course Details</Text>
+                        <Text style={this.styles.style.courseDetailsMain}>Course Details</Text>
 
                         {this.state.courseData?.courseWeeks?.items.map(
                           (item: any, index1: number) => {
@@ -914,6 +904,16 @@ export default class CourseScreen extends JCComponent<Props, State> {
                             )
                           }
                         )}
+
+                        {this.state.data ? (
+                          <EditableRichText
+                            onChange={(val) => {
+                              this.updateValue("promotionalText", val)
+                            }}
+                            value={this.state.data.promotionalText}
+                            isEditable={true}
+                          ></EditableRichText>
+                        ) : null}
                       </Container>
                     </Container>
                   </Container>
