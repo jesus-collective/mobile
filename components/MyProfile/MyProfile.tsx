@@ -1522,7 +1522,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
               toggleMarginTop={0}
               toggleMarginBottom={0}
-              switchLabel="Receive Email Alerts for Direct Messages"
+              switchLabel="Email Alerts for Direct Messages"
               initState={this.state.UserDetails.alertConfig?.emailDirectMessage == "true"}
               onPress={(e) => {
                 this.handleAlertInputChange(e, "emailDirectMessage")
@@ -1535,7 +1535,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
               toggleMarginTop={0}
               toggleMarginBottom={0}
-              switchLabel="Receive Email Alerts for Group Messages"
+              switchLabel="Email Alerts for Group Messages"
               initState={this.state.UserDetails.alertConfig?.emailGroupMessage == "true"}
               onPress={(e) => {
                 this.handleAlertInputChange(e, "emailGroupMessage")
@@ -1548,7 +1548,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
               toggleMarginTop={0}
               toggleMarginBottom={0}
-              switchLabel="Receive Email Alerts for Event Messages"
+              switchLabel="Email Alerts for Event Messages"
               initState={this.state.UserDetails.alertConfig?.emailEventMessage == "true"}
               onPress={(e) => {
                 this.handleAlertInputChange(e, "emailEventMessage")
@@ -1561,7 +1561,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
               toggleMarginTop={0}
               toggleMarginBottom={0}
-              switchLabel="Receive Email Alerts for Resource Messages"
+              switchLabel="Email Alerts for Resource Messages"
               initState={this.state.UserDetails.alertConfig?.emailResourceMessage == "true"}
               onPress={(e) => {
                 this.handleAlertInputChange(e, "emailResourceMessage")
@@ -1574,7 +1574,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
               toggleMarginTop={0}
               toggleMarginBottom={0}
-              switchLabel="Receive Email Alerts for Course Messages"
+              switchLabel="Email Alerts for Course Messages"
               initState={this.state.UserDetails.alertConfig?.emailCourseMessage == "true"}
               onPress={(e) => {
                 this.handleAlertInputChange(e, "emailCourseMessage")
@@ -1587,7 +1587,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
               toggleMarginTop={0}
               toggleMarginBottom={0}
-              switchLabel="Receive Email Alerts for Organization Messages"
+              switchLabel="Email Alerts for Organization Messages"
               initState={this.state.UserDetails.alertConfig?.emailOrgMessage == "true"}
               onPress={(e) => {
                 this.handleAlertInputChange(e, "emailOrgMessage")
@@ -1600,7 +1600,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
               toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
               toggleMarginTop={0}
               toggleMarginBottom={0}
-              switchLabel="Receive Email Alerts for Org Messages"
+              switchLabel="Email Alerts for Org Messages"
               initState={this.state.UserDetails.alertConfig?.emailPromotions == "true"}
               onPress={(e) => {
                 this.handleAlertInputChange(e, "emailPromotions")
