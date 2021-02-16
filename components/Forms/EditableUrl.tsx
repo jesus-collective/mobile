@@ -46,6 +46,10 @@ export default class EditableUrlImpl extends JCComponent<Props, State> {
             this.setState({ url: e.nativeEvent.text })
           }}
           onBlur={() => onChange(url)}
+          onStartShouldSetResponder={() => true}
+          onMoveShouldSetResponderCapture={() => true}
+          onStartShouldSetResponderCapture={() => true}
+          onMoveShouldSetResponder={() => true}
           placeholder={placeholder}
           multiline={multiline}
           style={inputStyle}
