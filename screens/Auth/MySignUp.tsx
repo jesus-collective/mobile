@@ -424,16 +424,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                       </View>
                     ) : (
                       <View style={this.styles.style.authView3}>
-                        <Text
-                          style={{
-                            width: "100%",
-                            marginBottom: "8.33%",
-                            fontFamily: "Graphik-Regular-App",
-                            fontWeight: "bold",
-                            fontSize: 22,
-                            lineHeight: 30,
-                          }}
-                        >
+                        <Text style={this.styles.style.mySignUpText}>
                           Set up the account for the administrator of your organization first
                         </Text>
                         <View

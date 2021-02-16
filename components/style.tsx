@@ -2037,7 +2037,7 @@ export default class MainStyles {
           textAlign: "center",
         },
         mySignUpText: {
-          marginTop: Platform.OS === "android" ? 50 : 50,
+          marginTop: Platform.OS === "android" || Platform.OS === "web" ? 50 : 50,
           width: "100%",
           textAlign: "center",
         },
