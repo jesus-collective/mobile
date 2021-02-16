@@ -385,12 +385,16 @@ class MyProfileImpl extends JCComponent<Props, State> {
       .then((data) => {
         console.log("SIGNED OUT")
         actions.onStateChange("signedOut", null)
-        Sentry.configureScope((scope) => scope.setUser(null))
+        Sentry.configureScope((scope) => {
+          scope.setUser(null)
+        })
       })
       .catch((err) => {
         console.log("SIGNED OUT CATCH")
         actions.onStateChange("signedOut", null)
-        Sentry.configureScope((scope) => scope.setUser(null))
+        Sentry.configureScope((scope) => {
+          scope.setUser(null)
+        })
       })
   }
   showMap(): void {

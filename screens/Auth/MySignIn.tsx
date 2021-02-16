@@ -81,6 +81,7 @@ class MySignInImpl extends React.Component<Props, State> {
     try {
       this.setState({ signingIn: true })
       Sentry.setUser({ email: this.state.user.toLowerCase() })
+      Sentry.setTag("User Email", this.state.user.toLowerCase())
       await Auth.signIn(this.state.user.toLowerCase(), this.state.pass).then(async (user) => {
         if (user.challengeName == "NEW_PASSWORD_REQUIRED") {
           await this.changeAuthState(actions, "requireNewPassword", user)
@@ -96,7 +97,9 @@ class MySignInImpl extends React.Component<Props, State> {
       } else {
         this.setState({ authError: err.message, signingIn: false })
       }
-      Sentry.configureScope((scope) => scope.setUser(null))
+      Sentry.configureScope((scope) => {
+        scope.setUser(null)
+      })
     }
   }
 

@@ -67,7 +67,9 @@ class MyConfirmSignUpImpl extends React.Component<Props, State> {
       })
     } catch (e) {
       this.setState({ authError: e.message, sendingData: false })
-      Sentry.configureScope((scope) => scope.setUser(null))
+      Sentry.configureScope((scope) => {
+        scope.setUser(null)
+      })
     }
   }
 

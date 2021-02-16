@@ -70,7 +70,9 @@ class MyForgotPassword extends React.Component<EmptyProps, State> {
       )
     } catch (e) {
       this.setState({ authError: e.message, sendingCode: false })
-      Sentry.configureScope((scope) => scope.setUser(null))
+      Sentry.configureScope((scope) => {
+        scope.setUser(null)
+      })
     }
   }
 
@@ -92,7 +94,9 @@ class MyForgotPassword extends React.Component<EmptyProps, State> {
       })
     } catch (e) {
       this.setState({ authError: e.message, resetting: false })
-      Sentry.configureScope((scope) => scope.setUser(null))
+      Sentry.configureScope((scope) => {
+        scope.setUser(null)
+      })
     }
   }
 

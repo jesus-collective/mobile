@@ -28,14 +28,10 @@ const completeBillingScreen = () => {
   cy.contains("One Story Curriculum", { timeout: 30000 })
   cy.contains("Total:", { timeout: 30000 })
 
-  cy.get('input[data-testId="billing-line1"]')
-    .type("123 Sesame Street", { force: true })
-    .get('input[data-testId="billing-city"]')
-    .type("Toronto", { force: true })
-    .get('input[data-testId="billing-state"]')
-    .type("Ontario", { force: true })
-    .get('input[data-testId="billing-postalcode"]')
-    .type("M4W2Z7", { force: true })
+  cy.get('input[data-testId="billing-line1"]').type("123 Sesame Street", { force: true })
+  cy.get('input[data-testId="billing-city"]').type("Toronto", { force: true })
+  cy.get('input[data-testId="billing-state"]').type("Ontario", { force: true })
+  cy.get('input[data-testId="billing-postalcode"]').type("M4W2Z7", { force: true })
   cy.get('input[data-testId="billing-country"]').type("Canada", { force: true })
 
   cy.getWithinIframe(0, '[name="cardnumber"]').type("4242424242424242")
@@ -72,7 +68,7 @@ const completeOrgScreen = () => {
 
   cy.get('input[data-testId="org-save-true"]').click()
 }
-const completeProfileScreen = () => {
+const completeProfileScreen = (hasOrgFields) => {
   cy.get('[data-testId="profile-aboutMeShort"]', { timeout: 30000 })
     .type("I test", { force: true })
     .get('[data-testId="profile-aboutMeLong"]')
@@ -97,14 +93,15 @@ const completeProfileScreen = () => {
     .type("Testing", { force: true })
     .get('[data-testId="profile-personality"]')
     .type("Detailed", { force: true })
-    .get('[data-testId="profile-orgName"]')
-    .type("TMH", { force: true })
-    .get('[data-testId="profile-orgType"]')
-    .select("Church", { force: true })
-    .get('[data-testId="profile-orgSize"]')
-    .select("1-25", { force: true })
-    .get('[data-testId="profile-orgDescription"]')
-    .type("We make things", { force: true })
+  if (hasOrgFields)
+    cy.get('[data-testId="profile-orgName"]')
+      .type("TMH", { force: true })
+      .get('[data-testId="profile-orgType"]')
+      .select("Church", { force: true })
+      .get('[data-testId="profile-orgSize"]')
+      .select("1-25", { force: true })
+      .get('[data-testId="profile-orgDescription"]')
+      .type("We make things", { force: true })
 
   cy.get('[data-testId="profile-save-true"]').click("topLeft", { force: true })
 }
@@ -144,7 +141,7 @@ describe("Create User Flow Test", () => {
       cy.contains("Sign In").click()
 
       completeBillingScreen()
-      completeProfileScreen()
+      completeProfileScreen(true)
 
       cy.get('[data-testid="header-logo"]').should("be.visible")
     })
@@ -186,7 +183,7 @@ describe("Create User + Org Flow Test", () => {
       cy.contains("Sign In").click()
 
       completeBillingScreen()
-      completeProfileScreen()
+      completeProfileScreen(false)
       completeOrgScreen()
 
       cy.get('[data-testid="header-logo"]').should("be.visible")
