@@ -113,8 +113,9 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
       const { attributes } = this.user
       const handleUser = async (getUser: any) => {
         console.log(getUser)
-        if (getUser.data == null) {
+        if (getUser.data == null || getUser.data == undefined) {
           Sentry.captureEvent(getUser)
+          console.log({ Errors: getUser.errors })
         }
         if (getUser.data.getUser == null) {
           console.log("Trying to create")
@@ -160,7 +161,7 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
 
         if (attributes["custom:isOrg"] === "true" && getUser) {
           this.setState({ isOrg: true })
-          if (getUser?.data.getUser.organizations.items.length === 0) {
+          if (getUser?.data?.getUser?.organizations?.items?.length === 0) {
             console.log("creating Organization")
             const id = `organization-${Date.now()}`
             const orgInput: CreateOrganizationInput = {

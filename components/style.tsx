@@ -2398,6 +2398,39 @@ export default class MainStyles {
               height: Dimensions.get("window").height - 100 + Constants.statusBarHeight,
             },
 
+      signUpProfileOrg:
+        Platform.OS === "web" && Dimensions.get("window").width > 1024
+          ? {
+              position: "absolute",
+              left: "20%",
+              width: "78%",
+              top: 100,
+              height: Dimensions.get("window").height - 100,
+            }
+          : Platform.OS === "web" && Dimensions.get("window").width > 768
+          ? {
+              position: "absolute",
+              left: "24%",
+              width: "74%",
+              top: 100,
+              height: Dimensions.get("window").height - 100,
+            }
+          : Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? {
+              position: "absolute",
+              left: "28%",
+              width: "78%",
+              top: 100,
+              height: Dimensions.get("window").height - 100,
+            }
+          : {
+              position: "absolute",
+              left: "0%",
+              width: "100%",
+              top: 200 + Constants.statusBarHeight,
+              height: Dimensions.get("window").height - 200 + Constants.statusBarHeight,
+            },
+
       signUpScreen1Content:
         Platform.OS === "web" && Dimensions.get("window").width > 720
           ? { position: "absolute", width: "100%" }

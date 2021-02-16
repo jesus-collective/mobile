@@ -527,7 +527,7 @@ class BillingImpl extends JCComponent<Props, State> {
 
   async handleInputChange(value: string, field: string) {
     const release = await handleInputMutex.acquire()
-
+    console.log({ field: field, value: value })
     try {
       if (this.state.userData && this.state.userData.billingAddress == null) {
         const user = (await API.graphql(
@@ -547,7 +547,18 @@ class BillingImpl extends JCComponent<Props, State> {
         )) as GraphQLResult<UpdateUserMutation>
         if (user.data)
           this.setState({ userData: user.data.updateUser }, async () => {
-            await this.handleInputChange(value, field)
+            const temp = this.state.userData
+
+            temp.billingAddress[field] = value
+            const user = await API.graphql(
+              graphqlOperation(mutations.updateUser, {
+                input: {
+                  id: this.state.userData?.id,
+                  billingAddress: temp?.billingAddress,
+                },
+              })
+            )
+            this.setState({ userData: temp })
           })
       } else {
         const temp = this.state.userData
@@ -571,17 +582,28 @@ class BillingImpl extends JCComponent<Props, State> {
     }
   }
   isMakePaymentEnabled(): boolean {
+    console.log("1")
     const billingAddress = this.state.userData?.billingAddress
     if (!billingAddress) return false
+    console.log("2")
     if (!billingAddress.line1) return false
+    console.log("3")
     if (!billingAddress.state) return false
+    console.log("4")
     if (!billingAddress.country) return false
+    console.log("5")
     if (!billingAddress.city) return false
+    console.log("6")
     if (!billingAddress.postal_code) return false
+    console.log("7")
     if (!this.state.stripeValidation.cardNumber) return false
+    console.log("8")
     if (!this.state.stripeValidation.expiryDate) return false
+    console.log("9")
     if (!this.state.stripeValidation.cvc) return false
+    console.log("10")
     if (!this.state.currentProduct) return false
+    console.log("11")
     return (
       this.state.currentProduct.length > 0 &&
       billingAddress.line1.length > 0 &&

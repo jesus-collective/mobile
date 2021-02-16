@@ -35,7 +35,7 @@ export type JCUserData = {
   email_verified: boolean
   email: string
   "custom:orgName"?: string
-  "custom:isOrg"?: "app" | "web"
+  "custom:isOrg"?: "true" | "false"
 } | null
 
 export interface JCCognitoUser extends CognitoUser {

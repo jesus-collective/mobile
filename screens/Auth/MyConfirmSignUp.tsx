@@ -134,7 +134,7 @@ class MyConfirmSignUpImpl extends React.Component<Props, State> {
                       autoCompleteType="email"
                       textContentType="emailAddress"
                       keyboardType="email-address"
-                      placeholder="Email address"
+                      placeholder="Email Address"
                       value={this.state.email}
                       onChange={(e) => this.setState({ email: e.nativeEvent.text })}
                       style={{
