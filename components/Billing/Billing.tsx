@@ -76,6 +76,7 @@ interface State extends JCState {
   processing: "entry" | "processing" | "complete"
   stripeValidation: any
   validatingUser: boolean
+  invoiceQueue: Array<Promise<any>>
   freeDays: number
 }
 class BillingImpl extends JCComponent<Props, State> {
@@ -93,6 +94,7 @@ class BillingImpl extends JCComponent<Props, State> {
       showEULA: false,
       errorMsg: "",
       currentProduct: [],
+      invoiceQueue: [],
       idempotency: uuidv4(),
       processing: "entry",
       validatingUser: false,
@@ -212,7 +214,7 @@ class BillingImpl extends JCComponent<Props, State> {
     const priceItems = this.getPriceItems()
 
     try {
-      const invoice: any = await API.graphql({
+      const newInvoice: any = API.graphql({
         query: customMutations.previewInvoice,
         variables: {
           idempotency: this.state.idempotency,
@@ -222,8 +224,15 @@ class BillingImpl extends JCComponent<Props, State> {
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })
-      console.log({ invoice: invoice.data.previewInvoice?.invoice })
-      this.setState({ invoice: invoice.data.previewInvoice?.invoice })
+      this.setState({ invoiceQueue: [...this.state.invoiceQueue, newInvoice] }, async () => {
+        const currentIndex = this.state.invoiceQueue.length - 1
+        const invoice = await this.state.invoiceQueue[currentIndex]
+
+        if (currentIndex === this.state.invoiceQueue.length - 1) {
+          console.log({ invoice: invoice.data.previewInvoice?.invoice })
+          this.setState({ invoice: invoice.data.previewInvoice?.invoice })
+        }
+      })
     } catch (e) {
       Sentry.captureException(e.errors || e)
       console.log(e)
