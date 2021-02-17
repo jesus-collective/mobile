@@ -1,13 +1,14 @@
 import { Ionicons } from "@expo/vector-icons"
 import { useNavigation, useRoute } from "@react-navigation/native"
 import Amplify, { Storage } from "aws-amplify"
-import { Card, CardItem, View } from "native-base"
+import { Card, CardItem, Picker, View } from "native-base"
 import React from "react"
 import { isBrowser, isMobile, isTablet } from "react-device-detect"
-import { Animated, Image, Picker, Text } from "react-native"
+import { Animated, Image, Text } from "react-native"
 import DropDownPicker from "react-native-dropdown-picker"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import EditableText from "../../components/Forms/EditableText"
+import { UserContext } from "../../screens/HomeScreen/UserContext"
 import { ImageInput, ResourceDetailType, ResourcePageItemStyle } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
 import {
@@ -17,6 +18,7 @@ import {
   ResourceSetupProp,
 } from "../../src/types"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
+import NotSubscribedModal, { NotSubscribedButton } from "./NotSubscribed"
 import PageItemSettings from "./PageItemSettings"
 import { ResourceContext } from "./ResourceContext"
 import ResourceImage from "./ResourceImage"
@@ -32,9 +34,12 @@ interface State extends JCState {
   image: any
   fadeValue: any
   retry: number
+  notSubscribedModal: boolean
 }
+
 export class ResourceCardImpl extends JCComponent<Props, State> {
   static Consumer = ResourceContext.Consumer
+  static UserConsumer = UserContext.Consumer
   constructor(props: Props) {
     super(props)
     this.state = {
@@ -43,6 +48,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
       image: null,
       fadeValue: new Animated.Value(0),
       retry: 5,
+      notSubscribedModal: false,
     }
   }
   componentDidMount() {
@@ -414,265 +420,293 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
     )
       this.getImage(this.props.pageItem.image)
     return (
-      <ResourceCardImpl.Consumer>
-        {({ resourceState, resourceActions }) => {
-          if (!resourceState) return null
-          if (resourceState.currentResource == null) return null
-          let item: GetResourceSeriesData | GetResourceEpisodeData | GetResourceData
-          if (this.props.pageItem.episodeID != null && this.props.pageItem.episodeID != undefined)
-            item = resourceActions.getEpisodeByID(
-              this.props.pageItem.resourceID,
-              this.props.pageItem.seriesID,
-              this.props.pageItem.episodeID
-            )
-          else if (
-            this.props.pageItem.seriesID != null &&
-            this.props.pageItem.seriesID != undefined
-          )
-            item = resourceActions.getSeriesByID(
-              this.props.pageItem.resourceID,
-              this.props.pageItem.seriesID
-            )
-          else {
-            item = resourceActions.getResourceByID(this.props.pageItem.resourceID)
+      <ResourceCardImpl.UserConsumer>
+        {({ userActions }) => {
+          if (!userActions) {
+            return null
           }
-
-          const youtubeID = this.getYoutubeId(item)
-          const buttonItems = this.getButtonItems(item)
           return (
-            <TouchableOpacity
-              onPress={() => {
-                if (this.props.pageItem.url) {
-                  window.location.href = this.props.pageItem.url ?? ""
-                } else {
-                  console.log("NAVIGATE")
-                  if (this.props.pageItem.episodeID == null)
-                    this.props.navigation.navigate("ResourceDisplayScreen", {
-                      id: this.props.resourceState.groupData?.id,
-                      resource: this.props.pageItem.resourceID,
-                      series: this.props.pageItem.seriesID,
-                      episode: this.props.pageItem.episodeID,
-                    })
+            <ResourceCardImpl.Consumer>
+              {({ resourceState, resourceActions }) => {
+                if (!resourceState) return null
+                if (resourceState.currentResource == null) return null
+                let item: GetResourceSeriesData | GetResourceEpisodeData | GetResourceData
+                let readGroups: NonNullable<GetResourceData>["readGroups"] | undefined = []
+                let isSubscribed = false
+                const resourceById = resourceActions.getResourceByID(this.props.pageItem.resourceID)
+                readGroups = resourceById?.readGroups
+                if (
+                  this.props.pageItem.episodeID != null &&
+                  this.props.pageItem.episodeID != undefined
+                )
+                  item = resourceActions.getEpisodeByID(
+                    this.props.pageItem.resourceID,
+                    this.props.pageItem.seriesID,
+                    this.props.pageItem.episodeID
+                  )
+                else if (
+                  this.props.pageItem.seriesID != null &&
+                  this.props.pageItem.seriesID != undefined
+                )
+                  item = resourceActions.getSeriesByID(
+                    this.props.pageItem.resourceID,
+                    this.props.pageItem.seriesID
+                  )
+                else {
+                  item = resourceById
                 }
-              }}
-            >
-              <Card
-                style={[
-                  this.styles.style.resourceSeries,
-                  { zIndex: 6000 + this.props.pageItemIndex.length },
-                ]}
-              >
-                <CardItem
-                  style={{
-                    paddingLeft: isMobile ? 20 : 0,
-                    paddingRight: isMobile ? 20 : 0,
-                    flexDirection: isMobile ? "column" : "row",
-                  }}
-                >
-                  <>
-                    {this.props.pageItem.order && (
-                      <EditableText
-                        multiline={true}
-                        textStyle={{
-                          fontFamily: "Graphik-Bold-App",
-                          fontSize: 54,
-                          fontWeight: 600,
-                          lineHeight: 54,
-                          letterSpacing: -1,
-                          textAlign: "left",
-                          color: "#AAAAAA",
-                          alignSelf: "flex-start",
-                          marginRight: 15,
-                        }}
-                        inputStyle={{
-                          fontFamily: "Graphik-Bold-App",
-                          fontSize: 54,
-                          fontWeight: 600,
-                          lineHeight: 54,
-                          letterSpacing: -1,
-                          textAlign: "left",
-                          color: "#AAAAAA",
-                        }}
-                        value={this.props.pageItem.order.toString().padStart(2, "0") ?? ""}
-                        isEditable={false}
-                      ></EditableText>
-                    )}
-                    {youtubeID && (
-                      <div>
-                        <iframe
-                          title="Teaching Pre-roll"
-                          className="LiveVideoPlayerIframe"
-                          allowFullScreen
-                          style={{
-                            width: isBrowser ? 638 : isTablet ? 375 : 320,
-                            height: isBrowser ? 382 : isTablet ? 210 : 179,
-                            marginLeft: isMobile ? 120 : "null",
-                          }}
-                          src={
-                            "https://www.youtube.com/embed/" +
-                            youtubeID +
-                            "?color=white&autoplay=0&cc_load_policy=1&showTitle=0&controls=1&modestbranding=1&rel=0"
-                          }
-                          frameBorder="0"
-                          allow="speakers; fullscreen; accelerometer; encrypted-media; gyroscope; picture-in-picture"
-                        ></iframe>
-                        <br />
-                      </div>
-                    )}
 
-                    {this.state.imageUrl && !youtubeID ? (
-                      <Animated.View
-                        onLayout={this.fadeAnimation}
-                        style={[
-                          this.styles.style.resourceHeaderImgView,
-                          { opacity: this.state.fadeValue },
-                        ]}
-                      >
-                        <Image
-                          style={this.styles.style.resourceHeaderImg}
-                          source={this.state.imageUrl}
-                          onError={() => {
-                            this.getImage(this.props.pageItem.image)
-                          }}
-                        ></Image>
-                      </Animated.View>
-                    ) : null}
-                  </>
-                </CardItem>
+                const youtubeID = this.getYoutubeId(item)
+                const buttonItems = this.getButtonItems(item)
 
-                <CardItem
-                  style={{
-                    zIndex: 6000 + this.props.pageItemIndex.length,
-                    marginLeft: isMobile ? 10 : "4rem",
-                    justifyContent: "space-between",
-                    width: 670,
-                  }}
-                >
-                  <View style={{ width: 320 }}>
-                    <EditableText
-                      multiline={true}
-                      textStyle={{
-                        fontFamily: "Graphik-Regular-App",
-                        fontSize: 27,
-                        fontWeight: 600,
-                        lineHeight: 36,
-                        textAlign: "left",
-                        color: "#404040",
-                        // marginRight: isBrowser ? 310 : isTablet ? 50 : 45,
-                      }}
-                      inputStyle={{ margin: 10 }}
-                      value={this.props.pageItem.title1 ?? ""}
-                      isEditable={false}
-                    ></EditableText>
-                  </View>
-                  {buttonItems && buttonItems?.length && buttonItems.length > 0 ? (
-                    <View style={{ zIndex: 6000 + this.props.pageItemIndex.length }}>
-                      <DropDownPicker
-                        zIndex={6000 + this.props.pageItemIndex.length}
-                        items={buttonItems}
-                        placeholder="Download"
-                        containerStyle={{
-                          height: 40,
-                          width: 200,
-                          zIndex: 5000 + this.props.pageItemIndex.length,
-                          marginTop: 5,
-                          marginBottom: 5,
-                        }}
-                        dropDownStyle={{
-                          backgroundColor: "#FF4438",
-                          width: 200,
-                          zIndex: 5000 + this.props.pageItemIndex.length,
-                        }}
+                isSubscribed = !!readGroups?.some((group) => {
+                  return userActions.isMemberOf(group as string)
+                })
+
+                return (
+                  <TouchableOpacity
+                    onPress={() => {
+                      if (this.props.pageItem.url) {
+                        window.location.href = this.props.pageItem.url ?? ""
+                      } else {
+                        console.log("NAVIGATE")
+                        if (this.props.pageItem.episodeID == null)
+                          this.props.navigation.navigate("ResourceDisplayScreen", {
+                            id: this.props.resourceState.groupData?.id,
+                            resource: this.props.pageItem.resourceID,
+                            series: this.props.pageItem.seriesID,
+                            episode: this.props.pageItem.episodeID,
+                          })
+                      }
+                    }}
+                  >
+                    <Card
+                      style={[
+                        this.styles.style.resourceSeries,
+                        { zIndex: 6000 + this.props.pageItemIndex.length },
+                      ]}
+                    >
+                      <CardItem
                         style={{
-                          backgroundColor: "#FF4438",
-                          zIndex: 5000 + this.props.pageItemIndex.length,
+                          paddingLeft: isMobile ? 20 : 0,
+                          paddingRight: isMobile ? 20 : 0,
+                          flexDirection: isMobile ? "column" : "row",
                         }}
-                        itemStyle={{
-                          justifyContent: "flex-start",
-                          width: 100,
-                          zIndex: 5000 + this.props.pageItemIndex.length,
+                      >
+                        <>
+                          {this.props.pageItem.order && (
+                            <EditableText
+                              multiline={true}
+                              textStyle={{
+                                fontFamily: "Graphik-Bold-App",
+                                fontSize: 54,
+                                fontWeight: 600,
+                                lineHeight: 54,
+                                letterSpacing: -1,
+                                textAlign: "left",
+                                color: "#AAAAAA",
+                                alignSelf: "flex-start",
+                                marginRight: 15,
+                              }}
+                              inputStyle={{
+                                fontFamily: "Graphik-Bold-App",
+                                fontSize: 54,
+                                fontWeight: 600,
+                                lineHeight: 54,
+                                letterSpacing: -1,
+                                textAlign: "left",
+                                color: "#AAAAAA",
+                              }}
+                              value={this.props.pageItem.order.toString().padStart(2, "0") ?? ""}
+                              isEditable={false}
+                            ></EditableText>
+                          )}
+                          {youtubeID && (
+                            <div>
+                              <iframe
+                                title="Teaching Pre-roll"
+                                className="LiveVideoPlayerIframe"
+                                allowFullScreen
+                                style={{
+                                  width: isBrowser ? 638 : isTablet ? 375 : 320,
+                                  height: isBrowser ? 382 : isTablet ? 210 : 179,
+                                  marginLeft: isMobile ? 120 : "null",
+                                }}
+                                src={
+                                  "https://www.youtube.com/embed/" +
+                                  youtubeID +
+                                  "?color=white&autoplay=0&cc_load_policy=1&showTitle=0&controls=1&modestbranding=1&rel=0"
+                                }
+                                frameBorder="0"
+                                allow="speakers; fullscreen; accelerometer; encrypted-media; gyroscope; picture-in-picture"
+                              ></iframe>
+                              <br />
+                            </div>
+                          )}
+
+                          {this.state.imageUrl && !youtubeID ? (
+                            <Animated.View
+                              onLayout={this.fadeAnimation}
+                              style={[
+                                this.styles.style.resourceHeaderImgView,
+                                { opacity: this.state.fadeValue },
+                              ]}
+                            >
+                              <Image
+                                style={this.styles.style.resourceHeaderImg}
+                                source={this.state.imageUrl}
+                                onError={() => {
+                                  this.getImage(this.props.pageItem.image)
+                                }}
+                              ></Image>
+                            </Animated.View>
+                          ) : null}
+                        </>
+                      </CardItem>
+
+                      <CardItem
+                        style={{
+                          zIndex: 6000 + this.props.pageItemIndex.length,
+                          marginLeft: isMobile ? 10 : "4rem",
+                          justifyContent: "space-between",
+                          width: 670,
                         }}
-                        labelStyle={{
-                          fontSize: 14,
-                          textAlign: "left",
-                          color: "#FFFFFF",
-                          fontWeight: "600",
-                          alignSelf: "center",
-                          zIndex: 5000 + this.props.pageItemIndex.length,
-                        }}
-                        arrowColor="#FFFFFF"
-                        onChangeItem={(item) => {
-                          window.location = item.value ?? ""
-                        }}
-                      />
-                    </View>
-                  ) : null}
-                </CardItem>
-                <CardItem>
-                  <EditableText
-                    multiline={true}
-                    textStyle={{
-                      fontFamily: "Graphik-Regular-App",
-                      fontSize: 16,
-                      fontWeight: 400,
-                      lineHeight: 24,
-                      textAlign: "left",
-                      color: "#404040",
-                    }}
-                    inputStyle={{
-                      fontFamily: "Graphik-Regular-App",
-                      fontSize: 16,
-                      fontWeight: 400,
-                      lineHeight: 24,
-                      textAlign: "left",
-                      color: "#404040",
-                    }}
-                    value={this.props.pageItem.title2 ?? ""}
-                    isEditable={false}
-                  ></EditableText>
-                </CardItem>
-                <CardItem style={{ zIndex: 0, marginLeft: isMobile ? 10 : "4rem" }}>
-                  <EditableText
-                    multiline={true}
-                    textStyle={{
-                      fontFamily: "Graphik-Regular-App",
-                      fontSize: 16,
-                      fontWeight: 400,
-                      lineHeight: 24,
-                      textAlign: "left",
-                      color: "#404040",
-                      zIndex: 0,
-                    }}
-                    inputStyle={{
-                      fontFamily: "Graphik-Regular-App",
-                      fontSize: 16,
-                      fontWeight: 400,
-                      lineHeight: 24,
-                      textAlign: "left",
-                      color: "#404040",
-                    }}
-                    value={this.props.pageItem.description1 ?? ""}
-                    isEditable={false}
-                  ></EditableText>
-                </CardItem>
-                <CardItem>
-                  <PageItemSettings
-                    resourceActions={this.props.resourceActions}
-                    resourceState={this.props.resourceState}
-                    pageItemIndex={this.props.pageItemIndex}
-                    save={this.props.save}
-                    delete={this.props.delete}
-                    pageItem={this.props.pageItem}
-                    hideEditButton={this.props.hideEditButton}
-                  ></PageItemSettings>
-                </CardItem>
-              </Card>
-            </TouchableOpacity>
+                      >
+                        <View style={{ width: 320 }}>
+                          <EditableText
+                            multiline={true}
+                            textStyle={{
+                              fontFamily: "Graphik-Regular-App",
+                              fontSize: 27,
+                              fontWeight: 600,
+                              lineHeight: 36,
+                              textAlign: "left",
+                              color: "#404040",
+                              // marginRight: isBrowser ? 310 : isTablet ? 50 : 45,
+                            }}
+                            inputStyle={{ margin: 10 }}
+                            value={this.props.pageItem.title1 ?? ""}
+                            isEditable={false}
+                          ></EditableText>
+                        </View>
+                        {buttonItems.length > 0 ? (
+                          <View style={{ zIndex: 6000 + this.props.pageItemIndex.length }}>
+                            {isSubscribed ? (
+                              <DropDownPicker
+                                zIndex={6000 + this.props.pageItemIndex.length}
+                                items={buttonItems}
+                                placeholder="Download"
+                                containerStyle={{
+                                  height: 40,
+                                  width: 200,
+                                  zIndex: 5000 + this.props.pageItemIndex.length,
+                                  marginTop: 5,
+                                  marginBottom: 5,
+                                }}
+                                dropDownStyle={{
+                                  backgroundColor: "#FF4438",
+                                  width: 200,
+                                  zIndex: 5000 + this.props.pageItemIndex.length,
+                                }}
+                                style={{
+                                  backgroundColor: "#FF4438",
+                                  zIndex: 5000 + this.props.pageItemIndex.length,
+                                }}
+                                itemStyle={{
+                                  justifyContent: "flex-start",
+                                  width: 100,
+                                  zIndex: 5000 + this.props.pageItemIndex.length,
+                                }}
+                                labelStyle={{
+                                  fontSize: 14,
+                                  textAlign: "left",
+                                  color: "#FFFFFF",
+                                  fontWeight: "600",
+                                  alignSelf: "center",
+                                  zIndex: 5000 + this.props.pageItemIndex.length,
+                                }}
+                                arrowColor="#FFFFFF"
+                                onChangeItem={(item: typeof buttonItems[0]) => {
+                                  window.location.href = item.value
+                                }}
+                              />
+                            ) : (
+                              <NotSubscribedButton
+                                onPress={() => this.setState({ notSubscribedModal: true })}
+                              />
+                            )}
+                          </View>
+                        ) : null}
+                      </CardItem>
+                      <CardItem>
+                        <EditableText
+                          multiline={true}
+                          textStyle={{
+                            fontFamily: "Graphik-Regular-App",
+                            fontSize: 16,
+                            fontWeight: 400,
+                            lineHeight: 24,
+                            textAlign: "left",
+                            color: "#404040",
+                          }}
+                          inputStyle={{
+                            fontFamily: "Graphik-Regular-App",
+                            fontSize: 16,
+                            fontWeight: 400,
+                            lineHeight: 24,
+                            textAlign: "left",
+                            color: "#404040",
+                          }}
+                          value={this.props.pageItem.title2 ?? ""}
+                          isEditable={false}
+                        ></EditableText>
+                      </CardItem>
+                      <CardItem style={{ zIndex: 0, marginLeft: isMobile ? 10 : "4rem" }}>
+                        <EditableText
+                          multiline={true}
+                          textStyle={{
+                            fontFamily: "Graphik-Regular-App",
+                            fontSize: 16,
+                            fontWeight: 400,
+                            lineHeight: 24,
+                            textAlign: "left",
+                            color: "#404040",
+                            zIndex: 0,
+                          }}
+                          inputStyle={{
+                            fontFamily: "Graphik-Regular-App",
+                            fontSize: 16,
+                            fontWeight: 400,
+                            lineHeight: 24,
+                            textAlign: "left",
+                            color: "#404040",
+                          }}
+                          value={this.props.pageItem.description1 ?? ""}
+                          isEditable={false}
+                        ></EditableText>
+                      </CardItem>
+                      <CardItem>
+                        <PageItemSettings
+                          resourceActions={this.props.resourceActions}
+                          resourceState={this.props.resourceState}
+                          pageItemIndex={this.props.pageItemIndex}
+                          save={this.props.save}
+                          delete={this.props.delete}
+                          pageItem={this.props.pageItem}
+                          hideEditButton={this.props.hideEditButton}
+                        ></PageItemSettings>
+                      </CardItem>
+                    </Card>
+                  </TouchableOpacity>
+                )
+              }}
+            </ResourceCardImpl.Consumer>
           )
         }}
-      </ResourceCardImpl.Consumer>
+      </ResourceCardImpl.UserConsumer>
     )
   }
+
   renderAutoCard() {
     return (
       <ResourceCardImpl.Consumer>
@@ -906,7 +940,15 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
   }
   render(): React.ReactNode {
     return (
-      <View style={{ zIndex: 6000 + this.props.pageItemIndex.length }}>{this.renderRouter()}</View>
+      <>
+        <NotSubscribedModal
+          visible={this.state.notSubscribedModal}
+          onHide={() => this.setState({ notSubscribedModal: false })}
+        />
+        <View style={{ zIndex: 6000 + this.props.pageItemIndex.length }}>
+          {this.renderRouter()}
+        </View>
+      </>
     )
   }
 }

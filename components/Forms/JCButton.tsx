@@ -58,6 +58,7 @@ export enum ButtonTypes {
   ResourceModal,
   ResourceModalSolid,
   ResourceModalTransparent,
+  UpgradeToDownload,
 }
 export interface Props {
   enabled?: boolean
