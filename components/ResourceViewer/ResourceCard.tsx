@@ -229,10 +229,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
   }
 
   isExternalUrl(url: string): boolean {
-    if (url.includes("jesuscollective.com/app")) {
-      return false
-    }
-    return true
+    return !url.includes("jesuscollective.com/app")
   }
 
   renderManualCard() {
