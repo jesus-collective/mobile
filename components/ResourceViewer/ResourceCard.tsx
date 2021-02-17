@@ -4,12 +4,10 @@ import Amplify, { Storage } from "aws-amplify"
 import { Card, CardItem, Picker, View } from "native-base"
 import React from "react"
 import { isBrowser, isMobile, isTablet } from "react-device-detect"
-import { Animated, Image, Linking, Platform, Text } from "react-native"
+import { Animated, Image, Text } from "react-native"
 import DropDownPicker from "react-native-dropdown-picker"
 import { TouchableOpacity } from "react-native-gesture-handler"
 import EditableText from "../../components/Forms/EditableText"
-import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
-import JCModal from "../../components/Forms/JCModal"
 import { UserContext } from "../../screens/HomeScreen/UserContext"
 import { ImageInput, ResourceDetailType, ResourcePageItemStyle } from "../../src/API"
 import awsconfig from "../../src/aws-exports"
@@ -20,6 +18,7 @@ import {
   ResourceSetupProp,
 } from "../../src/types"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
+import NotSubscribedModal, { NotSubscribedButton } from "./NotSubscribed"
 import PageItemSettings from "./PageItemSettings"
 import { ResourceContext } from "./ResourceContext"
 import ResourceImage from "./ResourceImage"
@@ -632,12 +631,9 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                                 }}
                               />
                             ) : (
-                              <JCButton
+                              <NotSubscribedButton
                                 onPress={() => this.setState({ notSubscribedModal: true })}
-                                buttonType={ButtonTypes.UpgradeToDownload}
-                              >
-                                Upgrade to download
-                              </JCButton>
+                              />
                             )}
                           </View>
                         ) : null}
@@ -945,48 +941,10 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
   render(): React.ReactNode {
     return (
       <>
-        <JCModal
-          onHide={() => this.setState({ notSubscribedModal: false })}
+        <NotSubscribedModal
           visible={this.state.notSubscribedModal}
-          title="Time for an upgrade?"
-          noScroll
-        >
-          <View style={{ maxWidth: 600, paddingBottom: 10 }}>
-            <Text
-              style={{
-                margin: 0,
-                fontFamily: "Graphik-Regular-App",
-                fontSize: 16,
-                fontWeight: "400",
-                lineHeight: 24,
-                textAlign: "left",
-                color: "#333333",
-              }}
-            >
-              You haven&apos;t subscribed to this age group yet. If you&apos;d like to, please reach
-              out to us at{" "}
-              {Platform.OS === "web" ? (
-                <a
-                  href="mailto:support@onestorycurriculum.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: "#333333" }}
-                >
-                  support@onestorycurriculum.com
-                </a>
-              ) : (
-                <Text
-                  style={{ textDecorationLine: "underline" }}
-                  accessibilityRole="link"
-                  onPress={() => Linking.openURL("mailto:support@onestorycurriculum.com")}
-                >
-                  support@onestorycurriculum.com
-                </Text>
-              )}
-              . In the meantime, feel free to look around and preview the videos.
-            </Text>
-          </View>
-        </JCModal>
+          onHide={() => this.setState({ notSubscribedModal: false })}
+        />
         <View style={{ zIndex: 6000 + this.props.pageItemIndex.length }}>
           {this.renderRouter()}
         </View>
