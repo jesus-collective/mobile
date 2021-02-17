@@ -33,7 +33,6 @@ import {
 } from "../MyProfile/dropdown"
 import ProfileImage from "../ProfileImage/ProfileImage"
 import Validate from "../Validate/Validate"
-
 //import JCSwitch from '../../components/JCSwitch/JCSwitch';
 
 const orgTypes = orgTypesChurches.concat(orgTypesNonChurch)
