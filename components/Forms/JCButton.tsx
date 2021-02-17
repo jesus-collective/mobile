@@ -1,6 +1,6 @@
 import { Button } from "native-base"
 import React from "react"
-import { ActivityIndicator, Text } from "react-native"
+import { ActivityIndicator, Text, View } from "react-native"
 import JCComponent from "../JCComponent/JCComponent"
 import styles from "./JCButtonStyle"
 
@@ -108,13 +108,14 @@ class JCButton extends JCComponent<Props> {
           this.onPress()
         }}
       >
-        {this.state.busy ? (
-          <ActivityIndicator color={this.determineSpinnerColor()}></ActivityIndicator>
-        ) : (
-          <Text style={styles[ButtonTypes[this.props.buttonType] + "Text"]}>
-            {this.props.children}
-          </Text>
-        )}
+        <Text style={styles[ButtonTypes[this.props.buttonType] + "Text"]}>
+          <Text style={this.state.busy ? { color: "transparent" } : {}}>{this.props.children}</Text>
+          {this.state.busy ? (
+            <View style={{ position: "absolute", left: 0, right: 0, alignItems: "center" }}>
+              <ActivityIndicator color={this.determineSpinnerColor()}></ActivityIndicator>
+            </View>
+          ) : null}
+        </Text>
       </Button>
     )
   }
