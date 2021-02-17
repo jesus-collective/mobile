@@ -262,12 +262,12 @@ class CourseHomeImpl extends JCComponent<Props> {
           const backOfficeStaff = state.courseData?.backOfficeStaff?.items?.map((item) => {
             return item?.user
           })
-          const markedDates = {}
+          const markedDates: { [key: string]: any } = {}
 
           const { zoom, assignments, respond } = actions.myCourseDates() as {
-            zoom: any[]
-            assignments: any[]
-            respond: any[]
+            zoom: string[]
+            assignments: string[]
+            respond: string[]
           }
 
           for (let i = 0; i < zoom?.length; i++)
