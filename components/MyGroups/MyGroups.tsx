@@ -5,16 +5,7 @@ import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment-timezone"
 import { Body, Card, CardItem, Container, Left, ListItem, Right, StyleProvider } from "native-base"
 import * as React from "react"
-import {
-  ActivityIndicator,
-  Dimensions,
-  Image,
-  Modal,
-  Platform,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native"
+import { Dimensions, Image, Modal, Platform, Text, TouchableOpacity, View } from "react-native"
 import DropDownPicker from "react-native-dropdown-picker"
 import ErrorBoundry from "../../components/ErrorBoundry"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
@@ -51,7 +42,6 @@ interface State extends JCState {
   currentUser: string | null
   nextToken: string | null
   canLeave: any
-  isLoading: any
   isOwner: any
   canPay: any
   isPaid: any
@@ -77,11 +67,6 @@ export default class MyGroups extends JCComponent<Props, State> {
         myFilter: false || this.props.showMy,
         eventFilter: false,
         pickerState: "",
-        isLoading: {
-          item: null,
-          join: false,
-          leave: false,
-        },
         myTitleScreen: "My Events",
         openSingle: "GenericGroupScreen",
         genericGroupType: "event",
@@ -104,11 +89,6 @@ export default class MyGroups extends JCComponent<Props, State> {
       this.state = {
         ...super.getInitialState(),
         myFilter: false || this.props.showMy,
-        isLoading: {
-          item: null,
-          join: false,
-          leave: false,
-        },
         eventFilter: false,
         myTitleScreen: "My Groups",
         openSingle: "GenericGroupScreen",
@@ -132,11 +112,6 @@ export default class MyGroups extends JCComponent<Props, State> {
       this.state = {
         ...super.getInitialState(),
         myFilter: false,
-        isLoading: {
-          item: null,
-          join: false,
-          leave: false,
-        },
         eventFilter: false,
         myTitleScreen: "My Resources",
         openSingle: "ResourceScreen",
@@ -161,11 +136,6 @@ export default class MyGroups extends JCComponent<Props, State> {
         ...super.getInitialState(),
         myFilter: false,
         eventFilter: false,
-        isLoading: {
-          item: null,
-          join: false,
-          leave: false,
-        },
         myTitleScreen: "My Organizations",
         openSingle: "OrganizationScreen",
         genericGroupType: null,
@@ -189,11 +159,6 @@ export default class MyGroups extends JCComponent<Props, State> {
         ...super.getInitialState(),
         myFilter: false,
         eventFilter: false,
-        isLoading: {
-          item: null,
-          join: false,
-          leave: false,
-        },
         myTitleScreen: "My Courses",
         openSingle: "CourseOverviewScreen",
         genericGroupType: null,
@@ -218,11 +183,6 @@ export default class MyGroups extends JCComponent<Props, State> {
         myFilter: false,
         eventFilter: false,
         myTitleScreen: "My Profiles",
-        isLoading: {
-          item: null,
-          join: false,
-          leave: false,
-        },
         openSingle: "ProfileScreen",
         genericGroupType: null,
         openMultiple: "ProfilesScreen",
@@ -247,11 +207,6 @@ export default class MyGroups extends JCComponent<Props, State> {
         myFilter: false,
         eventFilter: false,
         openSingle: "",
-        isLoading: {
-          item: null,
-          join: false,
-          leave: false,
-        },
         genericGroupType: null,
         openMultiple: "",
         type: props.type,
@@ -590,38 +545,32 @@ export default class MyGroups extends JCComponent<Props, State> {
     else return false
   }
 
-  join(userActions: UserActions, group: any, groupType: string): void {
-    this.setState({ isLoading: { ...this.state.isLoading, join: true, item: group } })
+  async join(userActions: UserActions, group: any, groupType: string): Promise<void> {
     Analytics.record({
       name: "joined" + groupType,
       // Attribute values must be strings
       attributes: { id: group.id, name: group.name },
     })
-
-    const createGroupMember: any = API.graphql({
-      query: mutations.createGroupMember,
-      variables: {
-        input: { groupID: group.id, userID: this.state.currentUser },
-      },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })
-    createGroupMember
-      .then((json: any) => {
-        console.log({ "Success mutations.createGroupMember": json })
-        this.setState({
-          canLeave: this.state.canLeave.concat([group.id]),
-          isLoading: { ...this.state.isLoading, join: false, item: null },
-        })
-        this.renderByType(userActions, group, groupType)
+    try {
+      const createGroupMember: any = await API.graphql({
+        query: mutations.createGroupMember,
+        variables: {
+          input: { groupID: group.id, userID: this.state.currentUser },
+        },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
       })
-      .catch((err: any) => {
-        console.log({ "Error mutations.createGroupMember": err })
-        this.setState({
-          canLeave: this.state.canLeave.concat([group.id]),
-          isLoading: { ...this.state.isLoading, join: false, item: null },
-        })
-        this.renderByType(userActions, group, groupType)
+      console.log({ "Success mutations.createGroupMember": createGroupMember })
+      this.setState({
+        canLeave: this.state.canLeave.concat([group.id]),
       })
+      this.renderByType(userActions, group, groupType)
+    } catch (err) {
+      console.log({ "Error mutations.createGroupMember": err })
+      this.setState({
+        canLeave: this.state.canLeave.concat([group.id]),
+      })
+      this.renderByType(userActions, group, groupType)
+    }
   }
   openConversation(initialUser: string, name: string): void {
     console.log("Navigate to conversationScreen")
@@ -630,56 +579,50 @@ export default class MyGroups extends JCComponent<Props, State> {
       initialUserName: name,
     })
   }
-  leave(userActions: UserActions, group: any, groupType: string): void {
-    this.setState({ isLoading: { ...this.state.isLoading, leave: true, item: group } })
-    Analytics.record({
-      name: "left" + groupType,
-      // Attribute values must be strings
-      attributes: { id: group.id, name: group.name },
-    })
-    const groupMemberByUser: any = API.graphql({
-      query: queries.groupMemberByUser,
-      variables: { userID: this.state.currentUser, groupID: { eq: group.id } },
-      authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    })
-    groupMemberByUser
-      .then((json: any) => {
-        console.log({ "Success queries.groupMemberByUser": json })
-        json.data.groupMemberByUser.items.map((item: any) => {
-          const deleteGroupMember: any = API.graphql({
+  async leave(userActions: UserActions, group: any, groupType: string): Promise<void> {
+    try {
+      Analytics.record({
+        name: "left" + groupType,
+        // Attribute values must be strings
+        attributes: { id: group.id, name: group.name },
+      })
+      const groupMemberByUser: any = await API.graphql({
+        query: queries.groupMemberByUser,
+        variables: { userID: this.state.currentUser, groupID: { eq: group.id } },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+      })
+      console.log({ "Success queries.groupMemberByUser": groupMemberByUser })
+      const groupMember = groupMemberByUser?.data?.groupMemberByUser?.items
+      for (let i = 0; i < groupMember?.length; i++) {
+        try {
+          const deleteGroupMember: any = await API.graphql({
             query: mutations.deleteGroupMember,
-            variables: { input: { id: item.id } },
+            variables: { input: { id: groupMember[i].id } },
             authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
           })
-          deleteGroupMember
-            .then((json: any) => {
-              console.log({ "Success mutations.deleteGroupMember": json })
+          console.log({ "Success mutations.deleteGroupMember": deleteGroupMember })
 
-              const index = this.state.canLeave.indexOf(group.id)
-              const canLeave = this.state.canLeave
-              canLeave.splice(index, 1)
-              this.setState({
-                canLeave: canLeave,
-                isLoading: { ...this.state.isLoading, leave: false, item: null },
-              })
-              this.renderByType(userActions, group, groupType)
-            })
-            .catch((err: Error) => {
-              console.log({ "Error mutations.deleteGroupMember": err })
-              const index = this.state.canLeave.indexOf(group.id)
-              const canLeave = this.state.canLeave
-              canLeave.splice(index, 1)
-              this.setState({
-                canLeave: canLeave,
-                isLoading: { ...this.state.isLoading, leave: false, item: null },
-              })
-              this.renderByType(userActions, group, groupType)
-            })
-        })
-      })
-      .catch((err: Error) => {
-        console.log({ "Error queries.groupMemberByUser": err })
-      })
+          const index = this.state.canLeave.indexOf(group.id)
+          const canLeave = this.state.canLeave
+          canLeave.splice(index, 1)
+          this.setState({
+            canLeave: canLeave,
+          })
+          this.renderByType(userActions, group, groupType)
+        } catch (err) {
+          console.log({ "Error mutations.deleteGroupMember": err })
+          const index = this.state.canLeave.indexOf(group.id)
+          const canLeave = this.state.canLeave
+          canLeave.splice(index, 1)
+          this.setState({
+            canLeave: canLeave,
+          })
+          this.renderByType(userActions, group, groupType)
+        }
+      }
+    } catch (err) {
+      console.log({ "Error queries.groupMemberByUser": err })
+    }
   }
 
   renderByType(userActions: UserActions, item: any, type: string): React.ReactNode {
@@ -798,17 +741,11 @@ export default class MyGroups extends JCComponent<Props, State> {
             <CardItem>
               <JCButton
                 buttonType={ButtonTypes.Solid}
-                onPress={() => {
-                  this.join(userActions, item, "Group")
+                onPress={async () => {
+                  await this.join(userActions, item, "Group")
                 }}
               >
-                {this.state.isLoading.join && this.state.isLoading.item.id === item.id ? (
-                  <View style={{ paddingTop: 4, minWidth: 43 }}>
-                    <ActivityIndicator color="white"></ActivityIndicator>
-                  </View>
-                ) : (
-                  "Join"
-                )}
+                Join
               </JCButton>
               <Right></Right>
             </CardItem>
@@ -817,17 +754,11 @@ export default class MyGroups extends JCComponent<Props, State> {
             <CardItem>
               <JCButton
                 buttonType={ButtonTypes.Solid}
-                onPress={() => {
-                  this.leave(userActions, item, "Group")
+                onPress={async () => {
+                  await this.leave(userActions, item, "Group")
                 }}
               >
-                {this.state.isLoading.leave && this.state.isLoading.item.id === item.id ? (
-                  <View style={{ paddingTop: 4, minWidth: 43 }}>
-                    <ActivityIndicator color="white"></ActivityIndicator>
-                  </View>
-                ) : (
-                  "Leave"
-                )}
+                Leave
               </JCButton>
               <Right></Right>
             </CardItem>
@@ -977,15 +908,11 @@ export default class MyGroups extends JCComponent<Props, State> {
             <CardItem>
               <JCButton
                 buttonType={ButtonTypes.Solid}
-                onPress={() => {
-                  this.join(userActions, item, "Event")
+                onPress={async () => {
+                  await this.join(userActions, item, "Event")
                 }}
               >
-                {this.state.isLoading.join && this.state.isLoading.item.id === item.id ? (
-                  <ActivityIndicator color="white"></ActivityIndicator>
-                ) : (
-                  "Attend"
-                )}
+                Attend
               </JCButton>
               <Right></Right>
             </CardItem>
@@ -994,17 +921,11 @@ export default class MyGroups extends JCComponent<Props, State> {
             <CardItem>
               <JCButton
                 buttonType={ButtonTypes.Solid}
-                onPress={() => {
-                  this.leave(userActions, item, "Event")
+                onPress={async () => {
+                  await this.leave(userActions, item, "Event")
                 }}
               >
-                {this.state.isLoading.leave && this.state.isLoading.item.id === item.id ? (
-                  <View style={{ paddingTop: 4, minWidth: 94 }}>
-                    <ActivityIndicator color="white"></ActivityIndicator>
-                  </View>
-                ) : (
-                  "Don't Attend"
-                )}
+                {"Don't Attend"}
               </JCButton>
               <Right></Right>
             </CardItem>
@@ -1056,40 +977,20 @@ export default class MyGroups extends JCComponent<Props, State> {
               Last Updated: {item.lastupdated}
             </Text>
           </CardItem>
-          {this.canJoin(item.id) && !this.isOwner(item.id) ? (
+          {(!this.isOwner(item.id) && this.canJoin(item.id)) ||
+          (!this.isOwner(item.id) && this.canLeave(item.id)) ? (
             <CardItem>
               <JCButton
                 buttonType={ButtonTypes.Solid}
-                onPress={() => {
-                  this.join(userActions, item, "Resource")
+                onPress={async () => {
+                  if (!this.isOwner(item.id) && this.canJoin(item.id)) {
+                    await this.join(userActions, item, "Resource")
+                  } else if (!this.isOwner(item.id) && this.canLeave(item.id)) {
+                    await this.leave(userActions, item, "Resource")
+                  }
                 }}
               >
-                {this.state.isLoading.join && this.state.isLoading.item.id === item.id ? (
-                  <View style={{ paddingTop: 4, minWidth: 43 }}>
-                    <ActivityIndicator color="white"></ActivityIndicator>
-                  </View>
-                ) : (
-                  "Join"
-                )}
-              </JCButton>
-              <Right></Right>
-            </CardItem>
-          ) : null}
-          {this.canLeave(item.id) && !this.isOwner(item.id) ? (
-            <CardItem>
-              <JCButton
-                buttonType={ButtonTypes.Solid}
-                onPress={() => {
-                  this.leave(userActions, item, "Resource")
-                }}
-              >
-                {this.state.isLoading.leave && this.state.isLoading.item.id === item.id ? (
-                  <View style={{ paddingTop: 4, minWidth: 43 }}>
-                    <ActivityIndicator color="white"></ActivityIndicator>
-                  </View>
-                ) : (
-                  "Leave"
-                )}
+                {this.canJoin(item.id) ? "Join" : this.canLeave(item.id) ? "Leave" : null}
               </JCButton>
               <Right></Right>
             </CardItem>

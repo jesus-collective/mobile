@@ -5,7 +5,7 @@ import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment"
 import { Content, Form, Input, Item, Label, Picker, View } from "native-base"
 import * as React from "react"
-import { ActivityIndicator, Image, Text, TouchableOpacity } from "react-native"
+import { Image, Text, TouchableOpacity } from "react-native"
 import Sentry from "../../components/Sentry"
 import {
   CreateOrganizationInput,
@@ -64,7 +64,6 @@ interface State extends JCState {
   oldPass: string
   newPass: string
   passError: string
-  isLoading: boolean
   currentUser: string | null
   newAdmins: any[]
   toAddAdmin: any
@@ -79,7 +78,6 @@ class OrganizationImpl extends JCComponent<Props, State> {
       interest: null,
       interestsArray: [],
       profileImage: "",
-      isLoading: false,
       validationText: null,
       showAccountSettings: false,
       mapVisible: false,
@@ -306,7 +304,6 @@ class OrganizationImpl extends JCComponent<Props, State> {
     return item
   }
   async finalizeProfile(): Promise<void> {
-    this.setState({ isLoading: true })
     const validation = Validate.Organization(this.state.OrganizationDetails)
     if (validation.result) {
       try {
@@ -315,10 +312,8 @@ class OrganizationImpl extends JCComponent<Props, State> {
         await API.graphql(graphqlOperation(mutations.updateOrganization, { input: toSave }))
         if (this.props.finalizeProfile) this.props.finalizeProfile()
         else this.setState({ dirty: false, editMode: false })
-        this.setState({ isLoading: false })
       } catch (e) {
         Sentry.captureException(e.errors || e)
-        this.setState({ isLoading: false })
         console.log(e)
       }
     }
@@ -546,17 +541,11 @@ class OrganizationImpl extends JCComponent<Props, State> {
                     enabled={this.state.dirty}
                     testID="org-save"
                     buttonType={ButtonTypes.SolidRightMargin}
-                    onPress={() => {
-                      this.finalizeProfile()
+                    onPress={async () => {
+                      await this.finalizeProfile()
                     }}
                   >
-                    {this.state.isLoading ? (
-                      <View style={{ paddingTop: 4, minWidth: 87 }}>
-                        <ActivityIndicator color="white"></ActivityIndicator>
-                      </View>
-                    ) : (
-                      "Save Profile"
-                    )}
+                    Save Profile
                   </JCButton>
                 ) : null}
                 {this.props.loadId && this.state.showAccountSettings ? (

@@ -61,7 +61,6 @@ interface State extends JCState {
   newPass: string
   passError: string
   noUserFound: boolean
-  isLoading: boolean
   invoices: NonNullable<NonNullable<ListInvoicesMutation>["listInvoices"]>["data"]
 }
 class MyProfileImpl extends JCComponent<Props, State> {
@@ -76,7 +75,6 @@ class MyProfileImpl extends JCComponent<Props, State> {
       validationText: "",
       showPage: "profile",
       mapVisible: false,
-      isLoading: false,
       isEditable: false,
       editMode: false,
       mapData: [],
@@ -300,7 +298,6 @@ class MyProfileImpl extends JCComponent<Props, State> {
     return item
   }
   async finalizeProfile(): Promise<void> {
-    this.setState({ isLoading: true })
     const validation = Validate.Profile(this.state.UserDetails)
     if (validation.result) {
       try {
@@ -309,13 +306,12 @@ class MyProfileImpl extends JCComponent<Props, State> {
         const updateUser = await API.graphql(
           graphqlOperation(mutations.updateUser, { input: toSave })
         )
-        this.setState({ dirty: false, isLoading: false })
+        this.setState({ dirty: false })
         console.log({ "updateUser:": updateUser })
         if (this.props.finalizeProfile) this.props.finalizeProfile()
-        else this.setState({ editMode: false, isLoading: false })
+        else this.setState({ editMode: false })
       } catch (e) {
         Sentry.captureException(e.errors || e)
-        this.setState({ isLoading: false })
         console.log(e)
       }
     }
@@ -574,17 +570,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
                     enabled={this.state.dirty}
                     testID="profile-save"
                     buttonType={ButtonTypes.SolidRightMargin}
-                    onPress={() => {
-                      this.finalizeProfile()
+                    onPress={async () => {
+                      await this.finalizeProfile()
                     }}
                   >
-                    {this.state.isLoading ? (
-                      <View style={{ paddingTop: 4, minWidth: 87 }}>
-                        <ActivityIndicator color="white"></ActivityIndicator>
-                      </View>
-                    ) : (
-                      "Save Profile"
-                    )}
+                    Save Profile
                   </JCButton>
                 ) : null}
                 <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.logout(userActions)}>
