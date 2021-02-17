@@ -1,6 +1,7 @@
 import TestHelper from "../../components/TestHelpers/TestHelpers"
 const sizes = ["iphone-6", "ipad-2", [1024, 768]]
-const user = "george.bell@jesuscollective.com" //George
+const random = Math.floor(Math.random() * 10)
+const user = "login.test." + random + "@jesuscollective.com" //George
 //const user = "test1@jesuscollective.com" //Lucas
 //const user = "test2@jesuscollective.com" //Mateus
 //const user = "test3@jesuscollective.com" //Igor
