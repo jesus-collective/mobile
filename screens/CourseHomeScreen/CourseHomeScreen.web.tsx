@@ -722,15 +722,15 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
   }
   myCourseTodo = () => {
     if (this.state.courseData != null) {
-      const assignments = this.state.courseData?.courseWeeks.items
+      const toDo = this.state.courseData?.courseWeeks.items
         .map((week) => {
           return week.lessons.items.map((lesson) => {
-            if (lesson.lessonType == "assignment") return lesson
+            return { ...lesson, week: week?.week }
           })
         })
         .flat()
         .filter((item) => item != null)
-        .map((item: any) => {
+        .map((item: any, index) => {
           const tz = item.tz ? item.tz : moment.tz.guess()
           const time = moment.tz(item.time, tz).format("hh:mm")
           const date = moment.tz(item.time, tz).format("YYYY-MM-DD")
@@ -740,6 +740,8 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
             time: time,
             date: date,
             moment: m,
+            weekNumber: item.week,
+            lessonNumber: index,
           }
         })
         .filter((item) => {
@@ -747,56 +749,11 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
           return item.time != "Invalid date"
         })
 
-      const zoom = this.state.courseData?.courseWeeks.items
-        .map((week) => {
-          return week.lessons.items.map((lesson) => {
-            if (lesson.lessonType == "zoom" || lesson.lessonType == null) return lesson
-          })
-        })
-        .flat()
-        .filter((item) => item != null)
-        .map((item: any) => {
-          const tz = item.tz ? item.tz : moment.tz.guess()
-          const time = moment.tz(item.time, tz).format("hh:mm")
-          const date = moment.tz(item.time, tz).format("YYYY-MM-DD")
-          const m = moment.tz(item.time, tz)
-          return {
-            lessonType: item.lessonType,
-            time: time,
-            date: date,
-            moment: m,
-          }
-        })
-        .filter((item) => item.time != "Invalid date")
-
-      const respond = this.state.courseData?.courseWeeks.items
-        .map((week) => {
-          return week.lessons.items.map((lesson) => {
-            if (lesson.lessonType == "respond") return lesson
-          })
-        })
-        .flat()
-        .filter((item) => item != null)
-        .map((item: any) => {
-          const tz = item.tz ? item.tz : moment.tz.guess()
-          const time = moment.tz(item.time, tz).format("hh:mm")
-          const date = moment.tz(item.time, tz).format("YYYY-MM-DD")
-          const m = moment.tz(item.time, tz)
-          return {
-            lessonType: item.lessonType,
-            time: time,
-            date: date,
-            moment: m,
-          }
-        })
-        .filter((item) => item.time != "Invalid date")
-
-      return [...assignments, ...zoom, ...respond]
+      return toDo
         .filter((item) => item.moment > moment())
         .sort((a, b) => {
           return a.moment.diff(b.moment)
         })
-        .slice(0, 7)
     } else return []
   }
   myCourseDates = () => {
@@ -843,7 +800,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       })
       .filter((item) => item != "Invalid date")
     console.log({ zoom: zoom, assignments: assignments, respond: respond })
-    return { zoom: zoom, assignments: assignments, respond: respond }
+    return { zoom, assignments, respond }
   }
   deleteWeek = async (index: number): Promise<void> => {
     try {

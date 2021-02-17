@@ -98,18 +98,22 @@ class CourseHomeImpl extends JCComponent<Props> {
           const backOfficeStaff = state.courseData?.backOfficeStaff?.items.map((item) => {
             return item.user
           })
-          const markedDates = {}
+
+          const markedDates: { [key: string]: any } = {}
           for (let i = 0; i < actions.myCourseDates().zoom?.length; i++)
-            markedDates[actions.myCourseDates().zoom[i]] = { marked: true, dotColor: "red" }
+            markedDates[actions.myCourseDates().zoom[i]] = { marked: true, dotColor: "#ff0000" }
           for (let i = 0; i < actions.myCourseDates().assignments?.length; i++)
             markedDates[actions.myCourseDates().assignments[i]] = {
               marked: true,
-              dotColor: "green",
+              dotColor: "#71C209",
             }
           for (let i = 0; i < actions.myCourseDates().respond?.length; i++)
-            markedDates[actions.myCourseDates().respond[i]] = { marked: true, dotColor: "blue" }
+            markedDates[actions.myCourseDates().respond[i]] = { marked: true, dotColor: "#0000ff" }
 
           const toDo = actions.myCourseTodo()
+          console.log("********************************")
+          console.log(markedDates)
+          console.log(toDo)
 
           return state.data && state.currentScreen == "Home" ? (
             <StyleProvider style={getTheme()}>
@@ -707,6 +711,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                           style={this.styles.style.courseHomeCalendar}
                           current={moment().format("YYYY-MM-DD")}
                           markedDates={markedDates}
+                          onDayPress={(day) => console.log(markedDates[day.dateString])}
                         />
                         <Container style={this.styles.style.courseHomeCalendarLabels}>
                           <Text

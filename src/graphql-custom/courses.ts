@@ -180,7 +180,6 @@ export const getCourseInfo = /* GraphQL */ `
           updatedAt
         }
       }
-
       courseWeeks {
         items {
           id
