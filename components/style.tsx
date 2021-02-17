@@ -1684,7 +1684,7 @@ export default class MainStyles {
         },
         authView3: {
           left: "30%",
-          width: "50vw",
+          width: "70vw",
           top: "15%",
           height: "auto",
           alignSelf: "flex-start",
