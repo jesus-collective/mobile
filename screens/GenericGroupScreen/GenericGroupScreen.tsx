@@ -621,7 +621,7 @@ export default class EventScreen extends JCComponent<Props, State> {
               await this.createNew()
             }}
           >
-            {`Create ${this.capitalize(this.state.groupType)}`}
+            Create {this.capitalize(this.state.groupType)}
           </JCButton>
         ) : null}
         {this.state.canSave ? (
@@ -631,7 +631,7 @@ export default class EventScreen extends JCComponent<Props, State> {
               await this.save()
             }}
           >
-            {`Save ${this.capitalize(this.state.groupType)}`}
+            Save {this.capitalize(this.state.groupType)}
           </JCButton>
         ) : null}
         {this.state.canDelete ? (
@@ -642,7 +642,7 @@ export default class EventScreen extends JCComponent<Props, State> {
                 await this.delete()
             }}
           >
-            {`Delete ${this.capitalize(this.state.groupType)}`}
+            Delete {this.capitalize(this.state.groupType)}
           </JCButton>
         ) : null}
       </Container>
