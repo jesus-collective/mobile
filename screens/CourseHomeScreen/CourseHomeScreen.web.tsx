@@ -145,12 +145,12 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     })
   }
   updateBackOfficeStaff = async (value: any): Promise<void> => {
-    console.log(this.state.courseData.backOfficeStaff.items)
-    const del = this.state.courseData.backOfficeStaff.items.filter(
-      (x) => !value.map((z) => z.id).includes(x.userID)
+    console.log(this.state.courseData?.backOfficeStaff?.items)
+    const del = this.state.courseData?.backOfficeStaff?.items?.filter(
+      (x) => !value.map((z) => z.id).includes(x?.userID)
     )
     const add = value.filter(
-      (x) => !this.state.courseData.backOfficeStaff.items.map((z) => z.userID).includes(x.id)
+      (x) => !this.state.courseData?.backOfficeStaff?.items?.map((z) => z.userID).includes(x.id)
     )
     // const delTriadID= this.state.courseData.triads.items[index].users.items.map((item)=>{del.contains(item.})
     console.log({ del: del })
@@ -163,7 +163,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
           query: mutations.createCourseBackOfficeStaff,
           variables: {
             input: {
-              courseInfoID: this.state.courseData.id,
+              courseInfoID: this.state.courseData?.id,
               userID: item.id,
             },
           },
@@ -171,7 +171,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         })
         console.log(createCourseBackOfficeStaff)
         const temp = this.state.courseData
-        temp.backOfficeStaff.items.push(
+        temp.backOfficeStaff?.items?.push(
           createCourseBackOfficeStaff.data.createCourseBackOfficeStaff
         )
         console.log(temp)
@@ -179,7 +179,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       } catch (createCourseBackOfficeStaff) {
         console.log(createCourseBackOfficeStaff)
         const temp = this.state.courseData
-        temp.backOfficeStaff.items.push(
+        temp.backOfficeStaff?.items?.push(
           createCourseBackOfficeStaff.data.createCourseBackOfficeStaff
         )
         console.log(temp)
@@ -187,7 +187,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       }
     })
 
-    del.map(async (item) => {
+    del?.map(async (item) => {
       try {
         console.log({ Deleting: item })
 
@@ -195,15 +195,15 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
           query: mutations.deleteCourseBackOfficeStaff,
           variables: {
             input: {
-              id: item.id,
+              id: item?.id,
             },
           },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
         })
         console.log(deleteCourseBackOfficeStaff)
         const temp = this.state.courseData
-        temp.backOfficeStaff.items = temp.backOfficeStaff.items.filter(
-          (user) => user.id !== item.id
+        temp.backOfficeStaff.items = temp.backOfficeStaff?.items?.filter(
+          (user) => user?.id !== item?.id
         )
         console.log(temp)
         this.setState({ courseData: temp })
@@ -792,11 +792,10 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         .filter((item) => item.time != "Invalid date")
 
       return [...assignments, ...zoom, ...respond]
-        .filter((item) => item.moment > moment())
+        .filter((item) => item.moment.isSameOrAfter(moment()))
         .sort((a, b) => {
           return a.moment.diff(b.moment)
         })
-        .slice(0, 7)
     } else return []
   }
   myCourseDates = () => {
