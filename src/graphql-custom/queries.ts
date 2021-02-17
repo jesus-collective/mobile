@@ -963,65 +963,64 @@ export const getResourceRoot = /* GraphQL */ `
             filenameUpload
           }
           title
+          subtitle
           description
           extendedDescription
+          readGroups
           series {
             items {
-
-                id
+              id
+              type
+              title
+              description
+              imageFile {
+                userId
+                filenameSmall
+                filenameMedium
+                filenameLarge
+                filenameUpload
+              }
+              details {
                 type
-                title
-                description
-                imageFile {
+                name
+                text
+                value
+                image {
                   userId
                   filenameSmall
                   filenameMedium
                   filenameLarge
                   filenameUpload
                 }
-                details {
+              }
+              category
+              status
+              episodes {
+                items {
+                  id
+                  episodeNumber
                   type
-                  name
-                  text
-                  value
-                  image {
-                    userId
-                    filenameSmall
-                    filenameMedium
-                    filenameLarge
-                    filenameUpload
-                  }
-                }
-                category
-                status
-                episodes {
-                    items {
-                      id
-                      episodeNumber
-                      type
-                      title
-                      description
-                      details {
-                        type
-                        name
-                        text
-                        value
-                        image {
-                          userId
-                          filenameSmall
-                          filenameMedium
-                          filenameLarge
-                          filenameUpload
-                        }
-                      }
-                      episodeID
-                    
-                      createdAt
-                      updatedAt
+                  title
+                  description
+                  details {
+                    type
+                    name
+                    text
+                    value
+                    image {
+                      userId
+                      filenameSmall
+                      filenameMedium
+                      filenameLarge
+                      filenameUpload
                     }
-                    nextToken
-                
-                
+                  }
+                  episodeID
+
+                  createdAt
+                  updatedAt
+                }
+                nextToken
               }
               seriesID
               createdAt
