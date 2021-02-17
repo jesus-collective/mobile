@@ -2470,6 +2470,32 @@ export default class MainStyles {
         Platform.OS === "web" && Dimensions.get("window").width > 720
           ? { display: "inline-block", width: 200, height: 40 }
           : {},
+
+      changeNamePasswordContainer: {
+        display: "flex",
+        flexDirection: Dimensions.get("window").width > 800 ? "row" : "column",
+        marginTop: 40,
+      },
+
+      changePasswordContainer:
+        Dimensions.get("window").width > 800
+          ? { marginRight: 20, marginBottom: 0 }
+          : { marginRight: 0, marginBottom: 20 },
+
+      changeNamePasswordInput: {
+        borderWidth: 1,
+        borderColor: "#dddddd",
+        width: "100%",
+        marginBottom: 15,
+        paddingTop: 10,
+        paddingRight: 10,
+        paddingBottom: 10,
+        paddingLeft: 10,
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 16,
+        lineHeight: 28,
+        minWidth: 240,
+      },
     })
   }
 }
