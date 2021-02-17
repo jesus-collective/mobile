@@ -1670,11 +1670,24 @@ export default class MainStyles {
           paddingLeft: 40,
         },
         mySignUpText: {
-          width: "65%",
+          width: "100%",
+          alignSelf: "flex-start",
         },
         mySignUpButton: {
           flexDirection: "column",
           height: "auto",
+        },
+        mySignUpOr: {
+          marginTop: 15,
+          marginBottom: 15,
+          width: "40%",
+        },
+        authView3: {
+          left: "30%",
+          width: "50vw",
+          top: "15%",
+          height: "auto",
+          alignSelf: "flex-start",
         },
       },
 
