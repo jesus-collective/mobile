@@ -2070,22 +2070,28 @@ export default class MainStyles {
         },
         mySignUpInputFieldscontainer: {
           marginRight: 0,
+          marginLeft: 10,
         },
         mySignUpEmailContainer: {
           marginRight: 0,
+          marginLeft: 10,
         },
         mySignUpPasswordContainer: {
           marginRight: 0,
+          marginLeft: 10,
         },
         mySignUpLeftPasswordContainer: {
           marginRight: 0,
           fontSize: 15,
+          marginLeft: 10,
         },
         mySignUpPhoneContainer: {
           marginRight: 0,
+          marginLeft: 10,
         },
         mySignUpConfirmCode: {
           alignSelf: "flex-start",
+          marginLeft: 10,
         },
         mySignInForgotPassword: {
           alignSelf: "flex-start",
