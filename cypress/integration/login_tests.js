@@ -43,7 +43,7 @@ const completeBillingScreen = () => {
   cy.get('[data-testId="billing-continueToProfile-button-true"]', { timeout: 30000 }).click()
 }
 const completeOrgScreen = () => {
-  cy.get('input[data-testId="org-aboutMeShort"]').type("Test ORG")
+  cy.get('input[data-testId="org-aboutMeShort"]', { timeout: 30000 }).type("Test ORG")
   cy.get('input[data-testId="org-Address"]').type("123 Sesame St.")
   cy.get('input[data-testId="org-City"]').type("Toronto")
   cy.get('input[data-testId="org-Province"]').type("Ontario")
@@ -105,9 +105,9 @@ const completeProfileScreen = (hasOrgFields) => {
 
   cy.get('[data-testId="profile-save-true"]').click("topLeft", { force: true })
 }
-describe("Create User Flow Test", () => {
+describe("Create User", () => {
   sizes.forEach((size) => {
-    it("Visits the Login Page - " + size, () => {
+    it("Size - " + size, () => {
       if (Cypress._.isArray(size)) {
         cy.viewport(size[0], size[1])
       } else {
@@ -148,9 +148,9 @@ describe("Create User Flow Test", () => {
   })
 })
 
-describe("Create User + Org Flow Test", () => {
+describe("Create User + Org", () => {
   sizes.forEach((size) => {
-    it("Visits the Login Page - " + size, () => {
+    it("Size - " + size, () => {
       if (Cypress._.isArray(size)) {
         cy.viewport(size[0], size[1])
       } else {

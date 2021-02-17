@@ -9,9 +9,9 @@ const login = (userType) => {
   })
 }
 
-describe("Check Course Admin Test", () => {
+describe("Course Admin", () => {
   sizes.forEach((size) => {
-    it("Visits the Login Page - " + size, () => {
+    it("Size - " + size, () => {
       if (Cypress._.isArray(size)) {
         cy.viewport(size[0], size[1])
       } else {
