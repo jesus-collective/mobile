@@ -146,3 +146,5 @@ export interface ResourceSetupProp {
     pageItemIndex: PageItemIndex
   ): void
 }
+
+export type NullFunction<T> = { [P in keyof T]: T[P] | (() => null) }

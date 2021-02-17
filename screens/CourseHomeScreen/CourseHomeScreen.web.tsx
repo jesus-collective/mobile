@@ -26,7 +26,7 @@ import FloatingButtonStyles from "../../components/FloatingButton/FloatingButton
 import JCComponent from "../../components/JCComponent/JCComponent"
 import Validate from "../../components/Validate/Validate"
 import getTheme from "../../native-base-theme/components"
-import * as customQueries from "../../src/graphql-custom/queries"
+import * as courseQueries from "../../src/graphql-custom/courses"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
 
@@ -74,7 +74,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as GraphQLResult<GetGroupQuery>
     const getCourse: any = API.graphql({
-      query: customQueries.getCourseInfo,
+      query: courseQueries.getCourseInfo,
       variables: { id: props.route.params.id },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     }) as GraphQLResult<GetCourseInfoQuery>
@@ -620,7 +620,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       console.log(e)
     }
   }
-  getLessonById = (id): any => {
+  getLessonById = (id: string): any => {
     return this.state.courseData.courseWeeks.items
       .map((week) => {
         return week.lessons.items.filter((lesson) => {
@@ -629,7 +629,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       })
       .flat()[0]
   }
-  getAssignmentList = (): void => {
+  getAssignmentList = (): any[] => {
     return this.state.courseData.courseWeeks.items
       .map((week) => {
         return week.lessons.items.map((lesson) => {
