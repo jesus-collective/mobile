@@ -6,6 +6,7 @@ import moment from "moment"
 import { Content, Form, Input, Item, Label, Picker, View } from "native-base"
 import * as React from "react"
 import { Image, Text, TouchableOpacity } from "react-native"
+import { JCCognitoUser } from "src/types"
 import Sentry from "../../components/Sentry"
 import {
   CreateOrganizationInput,
@@ -32,6 +33,7 @@ import {
 } from "../MyProfile/dropdown"
 import ProfileImage from "../ProfileImage/ProfileImage"
 import Validate from "../Validate/Validate"
+
 //import JCSwitch from '../../components/JCSwitch/JCSwitch';
 
 const orgTypes = orgTypesChurches.concat(orgTypesNonChurch)
@@ -131,7 +133,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
 
   async getUserDetails(): Promise<void> {
     try {
-      const user = await Auth.currentAuthenticatedUser()
+      const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       this.setState({ currentUser: user["username"] })
     } catch (e) {
       console.log(e)
@@ -471,7 +473,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
   }
 
   deleteOrg(): void {
-    Auth.currentAuthenticatedUser().then((user) => {
+    Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
       if (this.state.OrganizationDetails.superAdmin === user["username"]) {
         const deleteOrganization: any = API.graphql({
           query: mutations.deleteOrganization,

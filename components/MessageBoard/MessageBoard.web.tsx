@@ -11,6 +11,7 @@ import { isFirefox } from "react-device-detect"
 import { Editor } from "react-draft-wysiwyg"
 import { ActivityIndicator, Dimensions, Text, TouchableOpacity, View } from "react-native"
 import { FlatList } from "react-native-gesture-handler"
+import { JCCognitoUser } from "src/types"
 import { v4 as uuidv4 } from "uuid"
 import Observable, { ZenObservable } from "zen-observable-ts"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
@@ -402,7 +403,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
   }
 
   async setInitialData(props: Props) {
-    const user = await Auth.currentAuthenticatedUser()
+    const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
     try {
       const getUser = (await API.graphql(
         graphqlOperation(queries.getUser, { id: user["username"] })
@@ -997,7 +998,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     }
     try {
       const message = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
-      const user = await Auth.currentAuthenticatedUser()
+      const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
 
       const input: CreateReplyInput = {
         id: uuidv4(),

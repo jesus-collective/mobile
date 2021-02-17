@@ -7,6 +7,7 @@ import { Body, Card, CardItem, Container, Left, ListItem, Right, StyleProvider }
 import * as React from "react"
 import { Dimensions, Image, Modal, Platform, Text, TouchableOpacity, View } from "react-native"
 import DropDownPicker from "react-native-dropdown-picker"
+import { JCCognitoUser } from "src/types"
 import ErrorBoundry from "../../components/ErrorBoundry"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
@@ -229,23 +230,34 @@ export default class MyGroups extends JCComponent<Props, State> {
     this.setInitialData(this.props)
 
     const user = Auth.currentAuthenticatedUser()
-    user.then((user: any) => {
+    user.then((user: JCCognitoUser) => {
       this.setState({ currentUser: user.username })
       if (this.props.type != "profile")
         this.setState({
           showCreateButton:
             this.props.type == "resource"
-              ? user.getSignInUserSession().accessToken.payload["cognito:groups"]?.includes("admin")
+              ? user
+                  .getSignInUserSession()
+                  ?.getAccessToken()
+                  .payload["cognito:groups"]?.includes("admin")
               : this.props.type == "course"
               ? user
                   .getSignInUserSession()
-                  .accessToken.payload["cognito:groups"]?.includes("courseAdmin") ||
-                user.signInUserSession.accessToken.payload["cognito:groups"]?.includes("admin")
+                  ?.getAccessToken()
+                  .payload["cognito:groups"]?.includes("courseAdmin") ||
+                user
+                  .getSignInUserSession()
+                  ?.getAccessToken()
+                  .payload["cognito:groups"]?.includes("admin")
               : this.props.type == "organization"
-              ? user.getSignInUserSession().accessToken.payload["cognito:groups"]?.includes("admin")
+              ? user
+                  .getSignInUserSession()
+                  ?.getAccessToken()
+                  .payload["cognito:groups"]?.includes("admin")
               : user
                   .getSignInUserSession()
-                  .accessToken.payload["cognito:groups"]?.includes("verifiedUsers"),
+                  ?.getAccessToken()
+                  .payload["cognito:groups"]?.includes("verifiedUsers"),
         })
     })
   }

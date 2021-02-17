@@ -5,6 +5,7 @@ import { Body, Card, CardItem, Container, Content, Left, Right, StyleProvider } 
 import * as React from "react"
 import { Editor } from "react-draft-wysiwyg"
 import { Text, TouchableOpacity } from "react-native"
+import { JCCognitoUser } from "src/types"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import getTheme from "../../native-base-theme/components"
@@ -60,7 +61,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
   }
 
   async setInitialData(props) {
-    const user = await Auth.currentAuthenticatedUser()
+    const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
     try {
       const getUser: any = await API.graphql(
         graphqlOperation(queries.getUser, { id: user["username"] })
@@ -97,7 +98,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     this.setState({ message: JSON.stringify(value) })
   }
   saveMessage() {
-    Auth.currentAuthenticatedUser().then((user: any) => {
+    Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
       const z: CreateMessageInput = {
         id: Date.now().toString(),
         content: this.state.message,

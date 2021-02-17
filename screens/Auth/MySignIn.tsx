@@ -221,16 +221,7 @@ class MySignInImpl extends React.Component<Props, State> {
                       }}
                     >
                       <Text
-                        style={{
-                          alignSelf: "flex-end",
-                          marginRight: 30,
-                          fontSize: 14,
-                          fontFamily: "Graphik-Regular-App",
-                          lineHeight: 22,
-                          color: "#333333",
-                          opacity: 0.7,
-                          marginTop: 20,
-                        }}
+                        style={this.styles.style.mySignInForgotPassword}
                       >
                         Forgot password?
                       </Text>

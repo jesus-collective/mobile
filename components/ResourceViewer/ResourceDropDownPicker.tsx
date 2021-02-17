@@ -17,7 +17,7 @@ import PageItemSettings from "./PageItemSettings"
 import { ResourceContext } from "./ResourceContext"
 Amplify.configure(awsconfig)
 
-interface Props extends ResourceSetupProp {}
+type Props = ResourceSetupProp
 
 class ResourceDropDownPicker extends JCComponent<Props> {
   static Consumer = ResourceContext.Consumer
@@ -52,16 +52,22 @@ class ResourceDropDownPicker extends JCComponent<Props> {
       </>
     )
   }
+
+  icon = () => {
+    return <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />
+  }
   getButtonItems(items: GetResourceSeriesData | GetResourceEpisodeData | GetResourceData) {
-    return items?.details
-      ?.filter((e) => e?.type == ResourceDetailType.Button)
-      .map((item) => {
-        return {
-          label: item?.text ?? "",
-          value: item?.value ?? "",
-          icon: () => <Ionicons name="md-menu" style={this.styles.style.resourceIcon} />,
-        }
-      })
+    return items && items.details
+      ? items.details
+          .filter((e) => e?.type == ResourceDetailType.Button)
+          .map((item) => {
+            return {
+              label: item?.text ?? "",
+              value: item?.value ?? "",
+              icon: this.icon,
+            }
+          })
+      : []
   }
   render(): React.ReactNode {
     return (

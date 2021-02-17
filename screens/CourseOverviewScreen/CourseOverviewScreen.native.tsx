@@ -7,6 +7,7 @@ import { Container, Content, StyleProvider, View } from "native-base"
 import React from "react"
 import { Text, TouchableOpacity } from "react-native"
 import { UserActions, UserContext } from "screens/HomeScreen/UserContext"
+import { JCCognitoUser } from "src/types"
 import EditableDate from "../../components/Forms/EditableDate"
 import EditableDollar from "../../components/Forms/EditableDollar"
 import EditableRichText from "../../components/Forms/EditableRichText"
@@ -79,7 +80,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
       canGotoActiveCourse: false,
     }
 
-    Auth.currentAuthenticatedUser().then((user: any) => {
+    Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
       this.setState({
         currentUser: user.username,
       })
@@ -137,7 +138,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
   }
   setInitialData(props: Props): void {
     if (props.route.params.create === true || props.route.params.create === "true")
-      Auth.currentAuthenticatedUser().then((user: any) => {
+      Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
         const z: CreateGroupInput = {
           id: "course-" + Date.now(),
           owner: user.username,

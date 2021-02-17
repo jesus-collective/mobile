@@ -7,6 +7,7 @@ import moment from "moment"
 import { Badge, Button, Content, Form, Label, Picker, View } from "native-base"
 import * as React from "react"
 import { ActivityIndicator, Image, Text, TextInput, TouchableOpacity } from "react-native"
+import { JCCognitoUser } from "src/types"
 import EditableLocation from "../../components/Forms/EditableLocation"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
@@ -29,6 +30,7 @@ import {
   orgTypesNonChurch,
   sundayAttendance,
 } from "./dropdown"
+import { isBrowser, isMobile, isTablet } from "react-device-detect"
 
 const orgTypes = orgTypesChurches.concat(orgTypesNonChurch)
 
@@ -137,7 +139,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
   async getUserDetails(): Promise<void> {
     console.log("getUserDetails")
     try {
-      const user = await Auth.currentAuthenticatedUser()
+      const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       if (this.props.loadId) {
         try {
           const getUser: any = await API.graphql(
@@ -432,7 +434,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
     }
   }
   deleteUser(): void {
-    Auth.currentAuthenticatedUser().then((user) => {
+    Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
       const deleteUser: any = API.graphql({
         query: mutations.deleteUser,
         variables: {
@@ -516,7 +518,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       return
     }
     try {
-      const user = await Auth.currentAuthenticatedUser()
+      const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       const result = await Auth.changePassword(user, this.state.oldPass, this.state.newPass)
       this.setState({ passError: result })
     } catch (e) {
@@ -1511,9 +1513,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
             </Label>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"row"}
+              flexDirection={isTablet || isBrowser ? "row" : "column"}
               toggleMargin={20}
-              toggleMarginLeft={10}
+              toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
               toggleMarginTop={0}
               toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Direct Messages"
@@ -1524,9 +1526,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ></JCSwitch>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"row"}
+              flexDirection={isTablet || isBrowser ? "row" : "column"}
               toggleMargin={20}
-              toggleMarginLeft={10}
+              toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
               toggleMarginTop={0}
               toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Group Messages"
@@ -1537,9 +1539,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ></JCSwitch>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"row"}
+              flexDirection={isTablet || isBrowser ? "row" : "column"}
               toggleMargin={20}
-              toggleMarginLeft={10}
+              toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
               toggleMarginTop={0}
               toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Event Messages"
@@ -1550,9 +1552,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ></JCSwitch>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"row"}
+              flexDirection={isTablet || isBrowser ? "row" : "column"}
               toggleMargin={20}
-              toggleMarginLeft={10}
+              toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
               toggleMarginTop={0}
               toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Resource Messages"
@@ -1563,9 +1565,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ></JCSwitch>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"row"}
+              flexDirection={isTablet || isBrowser ? "row" : "column"}
               toggleMargin={20}
-              toggleMarginLeft={10}
+              toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
               toggleMarginTop={0}
               toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Course Messages"
@@ -1576,9 +1578,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ></JCSwitch>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"row"}
+              flexDirection={isTablet || isBrowser ? "row" : "column"}
               toggleMargin={20}
-              toggleMarginLeft={10}
+              toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
               toggleMarginTop={0}
               toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Organization Messages"
@@ -1589,9 +1591,9 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ></JCSwitch>
             <JCSwitch
               containerWidth={500}
-              flexDirection={"row"}
+              flexDirection={isTablet || isBrowser ? "row" : "column"}
               toggleMargin={20}
-              toggleMarginLeft={10}
+              toggleMarginLeft={isTablet || isBrowser ? 10 : 0}
               toggleMarginTop={0}
               toggleMarginBottom={0}
               switchLabel="Receive Email Alerts for Org Messages"

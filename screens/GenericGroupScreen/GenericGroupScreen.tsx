@@ -6,6 +6,7 @@ import moment from "moment-timezone"
 import { CardItem, Container, Content, Icon, Picker, StyleProvider, View } from "native-base"
 import React, { lazy } from "react"
 import { Image, Text, TouchableOpacity } from "react-native"
+import { JCCognitoUser } from "src/types"
 import EditableDate from "../../components/Forms/EditableDate"
 import EditableLocation from "../../components/Forms/EditableLocation"
 import EditableText from "../../components/Forms/EditableText"
@@ -88,7 +89,7 @@ export default class EventScreen extends JCComponent<Props, State> {
     }
     if (this.state.groupType == "event")
       this.state = { ...this.state, initCenter: { lat: 44, lng: -78 } }
-    Auth.currentAuthenticatedUser().then((user: any) => {
+    Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
       this.setState({
         currentUser: user.username,
       })
@@ -137,7 +138,7 @@ export default class EventScreen extends JCComponent<Props, State> {
   }*/
   setInitialData(props: Props): void {
     if (props.route.params.create === true || props.route.params.create === "true") {
-      Auth.currentAuthenticatedUser().then((user: any) => {
+      Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
         let z: CreateGroupInput = {
           id: this.state.groupType + "-" + Date.now(),
           owner: user.username,

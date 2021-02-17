@@ -5,7 +5,7 @@ import { Linking } from "expo"
 import moment from "moment"
 import React from "react"
 import { Platform, Text } from "react-native"
-import { AuthStateData } from "src/types"
+import { AuthStateData, JCCognitoUser } from "src/types"
 import { v4 as uuidv4 } from "uuid"
 import JCComponent from "../../components/JCComponent/JCComponent"
 import Sentry from "../../components/Sentry"
@@ -69,20 +69,20 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
   }
   updateGroups = async () => {
     try {
-      const currentUser = await Auth.currentAuthenticatedUser()
+      const currentUser = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       const userSession = currentUser.getSignInUserSession()
       const refreshToken = userSession.getRefreshToken()
-      await currentUser.refreshSession(refreshToken, (err: any, session: any) => {
+      currentUser.refreshSession(refreshToken, (err: any, session: any) => {
         console.log("UPDATED GROUPS!")
         currentUser.setSignInUserSession(session)
       })
-      const user = await Auth.currentAuthenticatedUser()
+      const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       this.setState({
-        groups: user.getSignInUserSession().accessToken.payload["cognito:groups"],
+        groups: user.getSignInUserSession()?.getAccessToken().payload["cognito:groups"],
         groupsLoaded: true,
       })
       console.log({
-        "DONE ": user.getSignInUserSession().accessToken.payload["cognito:groups"],
+        "DONE ": user.getSignInUserSession()?.getAccessToken().payload["cognito:groups"],
       })
     } catch (e) {
       console.log(e)
@@ -95,7 +95,7 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
       await this.props.onStateChange("signIn", null)
     }
   }
-  private user: any
+  private user: JCCognitoUser | undefined | null
 
   async ensureUserExists(performChecks: () => Promise<void>): Promise<void> {
     let userExists = false
@@ -228,7 +228,7 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
 
   async createStripeUser(billingAddress: any) {
     try {
-      const user = await Auth.currentAuthenticatedUser()
+      const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
       console.log(user)
       const customer: any = await API.graphql({
         query: mutations.createCustomer,
@@ -255,15 +255,20 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
     console.log("checkIfPaid")
     if (this.state.userExists) {
       const handleGetUser = async (getUser: any) => {
-        const user = await Auth.currentAuthenticatedUser()
+        const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
         if (
-          user.getSignInUserSession().accessToken.payload["cognito:groups"].includes("admin") ||
           user
             .getSignInUserSession()
-            .accessToken.payload["cognito:groups"].includes("subscriptionValid") ||
+            ?.getAccessToken()
+            .payload["cognito:groups"].includes("admin") ||
           user
             .getSignInUserSession()
-            .accessToken.payload["cognito:groups"].includes("legacyUserGroup1")
+            ?.getAccessToken()
+            .payload["cognito:groups"].includes("subscriptionValid") ||
+          user
+            .getSignInUserSession()
+            ?.getAccessToken()
+            .payload["cognito:groups"].includes("legacyUserGroup1")
         )
           return PaidStatus.Success
         else {
@@ -500,7 +505,7 @@ const toArrayOfStrings = (value: any) => [`${value}`]
 const mapToArrayOfStrings = mapObj(toArrayOfStrings)
 async function trackUserId() {
   try {
-    const { attributes } = await Auth.currentAuthenticatedUser()
+    const { attributes } = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
     const userAttributes = mapToArrayOfStrings(attributes)
     Analytics.updateEndpoint({
       address: attributes.email,
