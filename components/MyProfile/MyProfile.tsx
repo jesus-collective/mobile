@@ -64,6 +64,8 @@ interface State extends JCState {
   passError: string
   noUserFound: boolean
   invoices: NonNullable<NonNullable<ListInvoicesMutation>["listInvoices"]>["data"]
+  firstName: string
+  lastName: string
 }
 class MyProfileImpl extends JCComponent<Props, State> {
   constructor(props: Props) {
@@ -87,6 +89,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
       newPass: "",
       passError: "",
       noUserFound: false,
+      firstName: "",
+      lastName: "",
     }
     this.getUserDetails()
   }
@@ -152,6 +156,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 UserDetails: getUser.data.getUser,
                 isEditable: getUser.data.getUser.id == user["username"],
                 interestsArray: getUser.data.getUser.interests,
+                firstName: getUser.data.getUser.given_name,
+                lastName: getUser.data.getUser.family_name,
               },
               () => {
                 this.getProfileImage()
@@ -159,7 +165,6 @@ class MyProfileImpl extends JCComponent<Props, State> {
               }
             )
           else this.setState({ noUserFound: true })
-          //console.log(this.state.UserDetails)
         } catch (e) {
           console.log({ Error: e })
           if (e.data?.getUser != null)
@@ -186,6 +191,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
               isEditable: true,
               editMode: true,
               interestsArray: getUser.data.getUser.interests,
+              firstName: getUser.data.getUser.given_name,
+              lastName: getUser.data.getUser.family_name,
             },
             () => {
               this.getProfileImage()
@@ -281,7 +288,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       }
     )
   }
-  clean(item): void {
+  clean(item) {
     delete item.organizations
     delete item.groups
     delete item.messages
@@ -520,6 +527,44 @@ class MyProfileImpl extends JCComponent<Props, State> {
       })
   }
 
+  async handleChangeName(): Promise<void> {
+    const { firstName, lastName } = this.state
+
+    if (!firstName || !lastName) {
+      this.setState({ passError: "Required: First name, Last name" })
+      return
+    }
+
+    const UserDetails = { ...this.state.UserDetails } as UserData
+
+    UserDetails["given_name"] = firstName
+    UserDetails["family_name"] = lastName
+
+    this.setState({ UserDetails })
+
+    try {
+      const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
+      const oldAttributes = user.attributes
+      const newAttributes = { ...oldAttributes, given_name: firstName, family_name: lastName }
+      const updateCognitoUser = await Auth.updateUserAttributes(user, newAttributes)
+
+      console.debug({ updateCognito: updateCognitoUser })
+
+      const updateUser = await API.graphql({
+        query: mutations.updateUser,
+        variables: {
+          input: this.clean(UserDetails),
+        },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+      })
+
+      console.debug({ updateUser: updateUser })
+      this.setState({ passError: "" })
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   async handlePasswordChange(): Promise<void> {
     if (!this.state.oldPass || !this.state.newPass) {
       this.setState({ passError: "Required: Current password, New password" })
@@ -534,7 +579,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       if (e.message.includes("validation")) this.setState({ passError: e.message.split(":")[0] })
       else this.setState({ passError: e.message })
     }
-    this.setState({ oldPass: "", newPass: "" })
+    this.setState({ oldPass: "", newPass: "", passError: "" })
   }
 
   renderMainUserGroup(group: string) {
@@ -1448,59 +1493,66 @@ class MyProfileImpl extends JCComponent<Props, State> {
       return (
         <View style={this.styles.style.profileScreenRightCard}>
           <Text style={this.styles.style.myprofileAboutMe}>Account Settings</Text>
-          <View style={{ marginTop: 40 }}>
-            <Label
-              style={{
-                ...this.styles.style.fontFormSmallDarkGrey,
-                marginBottom: 15,
-              }}
-            >
-              Change your password
-            </Label>
-            <TextInput
-              placeholder="Current password"
-              value={this.state.oldPass}
-              onChange={(e) => this.setState({ oldPass: e.nativeEvent.text })}
-              secureTextEntry={true}
-              style={{
-                borderWidth: 1,
-                borderColor: "#dddddd",
-                width: "100%",
-                marginBottom: 15,
-                paddingTop: 10,
-                paddingRight: 10,
-                paddingBottom: 10,
-                paddingLeft: 10,
-                fontFamily: "Graphik-Regular-App",
-                fontSize: 16,
-                lineHeight: 28,
-              }}
-            ></TextInput>
-            <TextInput
-              placeholder="New password"
-              value={this.state.newPass}
-              onChange={(e) => this.setState({ newPass: e.nativeEvent.text })}
-              secureTextEntry={true}
-              style={{
-                borderWidth: 1,
-                borderColor: "#dddddd",
-                width: "100%",
-                marginBottom: 15,
-                paddingTop: 10,
-                paddingRight: 10,
-                paddingBottom: 10,
-                paddingLeft: 10,
-                fontFamily: "Graphik-Regular-App",
-                fontSize: 16,
-                lineHeight: 28,
-              }}
-            ></TextInput>
-            <JCButton
-              buttonType={ButtonTypes.SolidAboutMe}
-              onPress={() => this.handlePasswordChange()}
-            >
-              <Text> Change Password</Text>
-            </JCButton>
+
+          <View style={this.styles.style.changeNamePasswordContainer}>
+            <View style={this.styles.style.changePasswordContainer}>
+              <Label
+                style={{
+                  ...this.styles.style.fontFormSmallDarkGrey,
+                  marginBottom: 15,
+                }}
+              >
+                Change your password
+              </Label>
+              <TextInput
+                placeholder="Current password"
+                value={this.state.oldPass}
+                onChange={(e) => this.setState({ oldPass: e.nativeEvent.text })}
+                secureTextEntry={true}
+                style={this.styles.style.changeNamePasswordInput}
+              />
+              <TextInput
+                placeholder="New password"
+                value={this.state.newPass}
+                onChange={(e) => this.setState({ newPass: e.nativeEvent.text })}
+                secureTextEntry={true}
+                style={this.styles.style.changeNamePasswordInput}
+              />
+              <JCButton
+                buttonType={ButtonTypes.SolidAboutMe}
+                onPress={() => this.handlePasswordChange()}
+              >
+                <Text> Change Password</Text>
+              </JCButton>
+            </View>
+            <View>
+              <Label
+                style={{
+                  ...this.styles.style.fontFormSmallDarkGrey,
+                  marginBottom: 15,
+                }}
+              >
+                Change your name
+              </Label>
+              <TextInput
+                placeholder="First name"
+                value={this.state.firstName}
+                onChange={(e) => this.setState({ firstName: e.nativeEvent.text })}
+                style={this.styles.style.changeNamePasswordInput}
+              />
+              <TextInput
+                placeholder="Last name"
+                value={this.state.lastName}
+                onChange={(e) => this.setState({ lastName: e.nativeEvent.text })}
+                style={this.styles.style.changeNamePasswordInput}
+              />
+              <JCButton
+                buttonType={ButtonTypes.SolidAboutMe}
+                onPress={() => this.handleChangeName()}
+              >
+                <Text>Change Name</Text>
+              </JCButton>
+            </View>
           </View>
           <Text
             style={{
