@@ -13,7 +13,7 @@ export interface CourseState extends JCState {
   isEditable: boolean
   validationError: string
   currentScreen: string
-  currentUser: string
+  currentUser: string | null
   activeWeek: number
   activeLesson: number | null
   activeMessageBoard: string
@@ -37,8 +37,8 @@ interface NonNullCourseActions {
   updateLesson: (week: number, lesson: number, item: string, value: any) => Promise<void>
   deleteLesson: (week: number, lesson: number) => Promise<void>
   updateTriad: (index: number, item: string, value: any) => Promise<void>
-  createTriad: (index: number, item: string, value: any) => Promise<void>
-  deleteTriad: (index: number, item: string, value: any) => Promise<void>
+  createTriad: () => Promise<void>
+  deleteTriad: (index: number) => Promise<void>
   setEditMode: (editMode: boolean) => void
   updateTriadUsers: (index: number, value: any) => Promise<void>
   updateTriadCoaches: (index: number, value: any) => Promise<void>
@@ -46,7 +46,7 @@ interface NonNullCourseActions {
   updateBackOfficeStaff: (value: any) => Promise<void>
   setActiveMessageBoard: (messageBoard: string) => void
   setActiveCourseActivity: (courseActivity: string) => void
-  myCourseGroups: (courseActivity: string) => void
+  myCourseGroups: () => { all: any[]; cohort: any[]; completeTriad: any[] }
   getAssignmentList: () => any[]
   getLessonById: (id: string) => any
   myCourseDates: () => {
@@ -55,7 +55,7 @@ interface NonNullCourseActions {
     respond: string[] | undefined
   }
   myCourseTodo: () => {
-    lessonType: any
+    lessonType: string
     time: string
     date: string
     moment: moment.Moment
