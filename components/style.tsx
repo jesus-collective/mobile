@@ -2057,6 +2057,11 @@ export default class MainStyles {
         authView3: {
           marginLeft: 5,
           marginRight: 5,
+          left: "0%",
+          width: "100%",
+          top: "5%",
+          height: "auto",
+          alignSelf: "flex-start",
         },
         mySignUpOr: {
           marginTop: 15,
