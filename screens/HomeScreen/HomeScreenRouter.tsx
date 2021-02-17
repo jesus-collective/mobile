@@ -37,7 +37,7 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
     super(props)
     this.state = {
       ...super.getInitialState(),
-      groups: [],
+      groups: null,
       hasCompletedPersonalProfile: ProfileStatus.Unknown,
       hasPaidState: PaidStatus.Unknown,
       userExists: false,
@@ -62,6 +62,13 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
     }
     await this.getAuthInitialState()
     await this.performStartup()
+  }
+  isReady = (): boolean => {
+    if (this.state.groups) return true
+    else {
+      this.updateGroups()
+      return false
+    }
   }
   isMemberOf = (group: string): boolean => {
     if (this.state.groups) return this.state.groups.includes(group)
@@ -106,8 +113,9 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
       const { attributes } = this.user
       const handleUser = async (getUser: any) => {
         console.log(getUser)
-        if (getUser.data == null) {
+        if (getUser.data == null || getUser.data == undefined) {
           Sentry.captureEvent(getUser)
+          console.log({ Errors: getUser.errors })
         }
         if (getUser.data.getUser == null) {
           console.log("Trying to create")
@@ -153,7 +161,7 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
 
         if (attributes["custom:isOrg"] === "true" && getUser) {
           this.setState({ isOrg: true })
-          if (getUser?.data.getUser.organizations.items.length === 0) {
+          if (getUser?.data?.getUser?.organizations?.items?.length === 0) {
             console.log("creating Organization")
             const id = `organization-${Date.now()}`
             const orgInput: CreateOrganizationInput = {
@@ -460,6 +468,7 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
                 await this.props.onStateChange(state, data)
               },
               updateGroups: this.updateGroups,
+              isReady: this.isReady,
               isMemberOf: this.isMemberOf,
             },
           }}

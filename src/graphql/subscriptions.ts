@@ -7845,6 +7845,7 @@ export const onCreateResourceRoot = /* GraphQL */ `
           description
           whoIsThisFor
           extendedDescription
+          readGroups
           resourceID
           createdAt
           updatedAt
@@ -7974,6 +7975,7 @@ export const onUpdateResourceRoot = /* GraphQL */ `
           description
           whoIsThisFor
           extendedDescription
+          readGroups
           resourceID
           createdAt
           updatedAt
@@ -8103,6 +8105,7 @@ export const onDeleteResourceRoot = /* GraphQL */ `
           description
           whoIsThisFor
           extendedDescription
+          readGroups
           resourceID
           createdAt
           updatedAt
@@ -8574,6 +8577,7 @@ export const onCreateResource = /* GraphQL */ `
       description
       whoIsThisFor
       extendedDescription
+      readGroups
       details {
         type
         name
@@ -8672,6 +8676,7 @@ export const onUpdateResource = /* GraphQL */ `
       description
       whoIsThisFor
       extendedDescription
+      readGroups
       details {
         type
         name
@@ -8770,6 +8775,7 @@ export const onDeleteResource = /* GraphQL */ `
       description
       whoIsThisFor
       extendedDescription
+      readGroups
       details {
         type
         name
@@ -8914,6 +8920,7 @@ export const onCreateResourceSeries = /* GraphQL */ `
         description
         whoIsThisFor
         extendedDescription
+        readGroups
         details {
           type
           name
@@ -9006,6 +9013,7 @@ export const onUpdateResourceSeries = /* GraphQL */ `
         description
         whoIsThisFor
         extendedDescription
+        readGroups
         details {
           type
           name
@@ -9098,6 +9106,7 @@ export const onDeleteResourceSeries = /* GraphQL */ `
         description
         whoIsThisFor
         extendedDescription
+        readGroups
         details {
           type
           name
@@ -9193,6 +9202,7 @@ export const onCreateResourceEpisode = /* GraphQL */ `
           description
           whoIsThisFor
           extendedDescription
+          readGroups
           resourceID
           createdAt
           updatedAt
@@ -9273,6 +9283,7 @@ export const onUpdateResourceEpisode = /* GraphQL */ `
           description
           whoIsThisFor
           extendedDescription
+          readGroups
           resourceID
           createdAt
           updatedAt
@@ -9353,6 +9364,7 @@ export const onDeleteResourceEpisode = /* GraphQL */ `
           description
           whoIsThisFor
           extendedDescription
+          readGroups
           resourceID
           createdAt
           updatedAt
