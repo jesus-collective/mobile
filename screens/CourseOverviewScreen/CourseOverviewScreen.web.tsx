@@ -123,6 +123,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
           })
         })
         .catch((e: any) => {
+          console.log({ Error1: e })
           if (e.data) {
             this.setState({ members: this.state.members.concat(e.data.getUser) }, () => {
               this.setState({
@@ -541,6 +542,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
         {this.isCourseClosed(userActions) ? <Text>Course Closed</Text> : null}
         {this.canPurchase(userActions) ? (
           <JCButton
+            testID="course-purchase"
             buttonType={ButtonTypes.courseMktOutlineBoldNoMargin}
             onPress={() => {
               this.purchase()
@@ -551,6 +553,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
         ) : null}
         {this.canGotoCourse(userActions) ? (
           <JCButton
+            testID="course-goto"
             buttonType={ButtonTypes.courseMktOutlineBoldNoMargin}
             onPress={() => this.gotoActiveCourse()}
           >
@@ -559,6 +562,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
         ) : null}
         {this.state.createNew ? (
           <JCButton
+            testID="course-createNew"
             buttonType={ButtonTypes.courseMktOutlineBoldNoMargin}
             onPress={() => {
               this.createNew()
@@ -569,6 +573,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
         ) : null}
         {this.state.canSave ? (
           <JCButton
+            testID="course-save"
             buttonType={ButtonTypes.courseMktOutlineBoldNoMargin}
             onPress={() => {
               this.save()
@@ -579,6 +584,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
         ) : null}
         {this.state.canDelete ? (
           <JCButton
+            testID="course-delete"
             buttonType={ButtonTypes.courseMktOutlineBoldNoMargin}
             onPress={() => {
               if (window.confirm("Are you sure you wish to delete this course?")) this.delete()
@@ -661,6 +667,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                           onChange={(value: any) => {
                             this.updateValue("name", value)
                           }}
+                          testID="course-name"
                           placeholder="Enter Course Name"
                           multiline={false}
                           textStyle={this.styles.style.courseMktNameInput}
@@ -672,6 +679,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                           onChange={(value: any) => {
                             this.updateValue("description", value)
                           }}
+                          testID="course-description"
                           placeholder="Enter Course Description"
                           multiline={true}
                           textStyle={this.styles.style.courseMktDescriptionInput}
@@ -695,6 +703,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                         </Text>
                         <EditableDate
                           type="date"
+                          testID="course-startDate"
                           onChange={(time: any, timeZone: any) => {
                             this.updateValue("time", time)
                             this.updateValue("tz", timeZone)
@@ -721,6 +730,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                           Duration
                         </Text>
                         <EditableText
+                          testID="course-duration"
                           onChange={(value: any) => {
                             this.updateValue("length", value)
                           }}
@@ -745,6 +755,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                           Effort
                         </Text>
                         <EditableText
+                          testID="course-effort"
                           onChange={(value: any) => {
                             this.updateValue("effort", value)
                           }}

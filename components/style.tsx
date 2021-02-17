@@ -1437,13 +1437,9 @@ export default class MainStyles {
       },
       mySignUpConfirmCode: {
         alignSelf: "flex-end",
-        marginRight: 30,
-        fontSize: 14,
-        fontFamily: "Graphik-Regular-App",
-        lineHeight: 22,
-        color: "#333333",
-        opacity: 0.7,
-        marginTop: 20,
+        paddingHorizontal: 30,
+        paddingBottom: 15,
+        paddingTop: 15,
       },
       mySignInForgotPassword: {
         alignSelf: "flex-end",
@@ -2041,7 +2037,7 @@ export default class MainStyles {
           textAlign: "center",
         },
         mySignUpText: {
-          marginTop: Platform.OS === "android" ? 50 : 50,
+          marginTop: Platform.OS === "android" || Platform.OS === "web" ? 50 : 50,
           width: "100%",
           textAlign: "center",
         },
@@ -2055,20 +2051,20 @@ export default class MainStyles {
           width: "40%",
         },
         mySignUpInputFieldscontainer: {
-          marginRight: 20,
+          marginRight: 0,
         },
         mySignUpEmailContainer: {
-          marginRight: 20,
+          marginRight: 0,
         },
         mySignUpPasswordContainer: {
-          marginRight: 20,
+          marginRight: 0,
         },
         mySignUpLeftPasswordContainer: {
-          marginRight: 10,
+          marginRight: 0,
           fontSize: 15,
         },
         mySignUpPhoneContainer: {
-          marginRight: 20,
+          marginRight: 0,
         },
         mySignUpConfirmCode: {
           alignSelf: "flex-start",
@@ -2400,6 +2396,39 @@ export default class MainStyles {
               width: "100%",
               top: 100 + Constants.statusBarHeight,
               height: Dimensions.get("window").height - 100 + Constants.statusBarHeight,
+            },
+
+      signUpProfileOrg:
+        Platform.OS === "web" && Dimensions.get("window").width > 1024
+          ? {
+              position: "absolute",
+              left: "20%",
+              width: "78%",
+              top: 100,
+              height: Dimensions.get("window").height - 100,
+            }
+          : Platform.OS === "web" && Dimensions.get("window").width > 768
+          ? {
+              position: "absolute",
+              left: "24%",
+              width: "74%",
+              top: 100,
+              height: Dimensions.get("window").height - 100,
+            }
+          : Platform.OS === "web" && Dimensions.get("window").width > 720
+          ? {
+              position: "absolute",
+              left: "28%",
+              width: "78%",
+              top: 100,
+              height: Dimensions.get("window").height - 100,
+            }
+          : {
+              position: "absolute",
+              left: "0%",
+              width: "100%",
+              top: 200 + Constants.statusBarHeight,
+              height: Dimensions.get("window").height - 200 + Constants.statusBarHeight,
             },
 
       signUpScreen1Content:

@@ -12,13 +12,13 @@ import {
   TextInputKeyPressEventData,
   TouchableOpacity,
 } from "react-native"
+import { EmptyProps } from "src/types"
 import { Copyright } from "../../components/Auth/Copyright"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
+import Sentry from "../../components/Sentry"
 import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
 import MainStyles from "../../components/style"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
-
-interface Props {}
 
 interface State {
   email: string
@@ -31,8 +31,8 @@ interface State {
   resetting: boolean
 }
 
-class MyForgotPassword extends React.Component<Props, State> {
-  constructor(props: Props) {
+class MyForgotPassword extends React.Component<EmptyProps, State> {
+  constructor(props: EmptyProps) {
     super(props)
     this.state = {
       email: "",
@@ -64,11 +64,15 @@ class MyForgotPassword extends React.Component<Props, State> {
   async sendCode(): Promise<void> {
     try {
       this.setState({ sendingCode: true })
+      Sentry.setUser({ email: this.state.email.toLowerCase() })
       await Auth.forgotPassword(this.state.email.toLowerCase()).then(() =>
         this.setState({ codeSent: true })
       )
     } catch (e) {
       this.setState({ authError: e.message, sendingCode: false })
+      Sentry.configureScope((scope) => {
+        scope.setUser(null)
+      })
     }
   }
 
@@ -79,6 +83,8 @@ class MyForgotPassword extends React.Component<Props, State> {
         return
       }
       this.setState({ resetting: true })
+      Sentry.setUser({ email: this.state.email.toLowerCase() })
+
       await Auth.forgotPasswordSubmit(
         this.state.email.toLowerCase(),
         this.state.code,
@@ -88,6 +94,9 @@ class MyForgotPassword extends React.Component<Props, State> {
       })
     } catch (e) {
       this.setState({ authError: e.message, resetting: false })
+      Sentry.configureScope((scope) => {
+        scope.setUser(null)
+      })
     }
   }
 

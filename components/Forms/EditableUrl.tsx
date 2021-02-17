@@ -1,6 +1,5 @@
-import { useNavigation, useRoute } from "@react-navigation/native"
 import React from "react"
-import { TextInput } from "react-native"
+import { StyleProp, TextInput, TextStyle } from "react-native"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
 import JCComponent from "../JCComponent/JCComponent"
 
@@ -9,54 +8,69 @@ interface Props {
   title: string
   isEditable: boolean
   textStyle: ButtonTypes
-  inputStyle?: any
+  inputStyle?: StyleProp<TextStyle>
   multiline: boolean
   placeholder?: string
-  onChange?(value: string): void
-  navigation?: any
-  route?: any
+  onChange(value: string): void
 }
-class EditableUrlImpl extends JCComponent<Props> {
-  onChanged(val: any) {
-    if (this.props.onChange) this.props.onChange(val.target.value)
+
+interface State {
+  url: string
+}
+
+export default class EditableUrlImpl extends JCComponent<Props, State> {
+  constructor(props: Props) {
+    super(props)
+    this.state = {
+      url: props.value,
+    }
   }
-  navigate(id: string) {
-    // window.location.href = id
-    window.open(this.props.value, "_blank")
-  }
-  render() {
-    if (this.props.isEditable)
+
+  render(): JSX.Element | null {
+    const {
+      onChange,
+      isEditable,
+      placeholder,
+      multiline,
+      inputStyle,
+      textStyle,
+      value,
+      title,
+    } = this.props
+    const { url } = this.state
+
+    if (isEditable) {
       return (
         <TextInput
-          onChange={(value) => {
-            this.onChanged(value)
+          onChange={(e) => {
+            this.setState({ url: e.nativeEvent.text })
           }}
-          placeholder={this.props.placeholder}
-          multiline={this.props.multiline}
+          onBlur={() => onChange(url)}
           onStartShouldSetResponder={() => true}
           onMoveShouldSetResponderCapture={() => true}
           onStartShouldSetResponderCapture={() => true}
           onMoveShouldSetResponder={() => true}
-          style={this.props.inputStyle}
-          value={this.props.value}
-        ></TextInput>
+          placeholder={placeholder}
+          multiline={multiline}
+          style={inputStyle}
+          value={url}
+        />
       )
-    else
-      return this.props.value && this.props.value != "" ? (
+    }
+
+    if (value) {
+      return (
         <JCButton
-          buttonType={this.props.textStyle}
+          buttonType={textStyle}
           onPress={() => {
-            this.navigate(this.props.value)
+            window.open(value, "_blank")
           }}
         >
-          {this.props.title}
+          {title}
         </JCButton>
-      ) : null
-  }
-}
+      )
+    }
 
-export default function EditableUrl(props: Props): JSX.Element {
-  const route = useRoute()
-  const navigation = useNavigation()
-  return <EditableUrlImpl {...props} navigation={navigation} route={route} />
+    return null
+  }
 }

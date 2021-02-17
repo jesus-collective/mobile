@@ -55,56 +55,59 @@ class SignUpScreen3Impl extends JCComponent<Props, State> {
                 <SignUpSidebar position="4"></SignUpSidebar>
 
                 {userState.isOrg ? (
-                  <View style={this.styles.style.signUpProfile}>
-                    <View
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        paddingLeft: 30,
-                        borderBottomColor: "#33333320",
-                        borderBottomWidth: 1,
-                      }}
-                    >
+                  <>
+                    <View style={this.styles.style.signUpProfile}>
                       <View
                         style={{
-                          marginRight: 15,
-                          paddingVertical: 5,
-                          borderBottomWidth: this.state.selected === "profile" ? 7 : 0,
-                          borderBottomColor: "#F0493E",
+                          display: "flex",
+                          flexDirection: "row",
+                          paddingLeft: 30,
+                          borderBottomColor: "#33333320",
+                          borderBottomWidth: 1,
                         }}
                       >
-                        <JCButton
-                          buttonType={
-                            this.state.selected === "profile"
-                              ? ButtonTypes.TransparentBoldBlackNoMargin
-                              : ButtonTypes.TransparentBoldGreyNoMargin
-                          }
-                          onPress={() => this.setState({ selected: "profile" })}
+                        <View
+                          style={{
+                            marginRight: 15,
+                            paddingVertical: 5,
+                            borderBottomWidth: this.state.selected === "profile" ? 7 : 0,
+                            borderBottomColor: "#F0493E",
+                          }}
                         >
-                          Individual Profile
-                        </JCButton>
-                      </View>
-                      <View
-                        style={{
-                          paddingVertical: 5,
-                          borderBottomWidth: this.state.selected === "organization" ? 7 : 0,
-                          borderBottomColor: "#F0493E",
-                        }}
-                      >
-                        <JCButton
-                          buttonType={
-                            this.state.selected === "organization"
-                              ? ButtonTypes.TransparentBoldBlackNoMargin
-                              : ButtonTypes.TransparentBoldGreyNoMargin
-                          }
-                          onPress={() => this.setState({ selected: "organization" })}
+                          <JCButton
+                            buttonType={
+                              this.state.selected === "profile"
+                                ? ButtonTypes.TransparentBoldBlackNoMargin
+                                : ButtonTypes.TransparentBoldGreyNoMargin
+                            }
+                            onPress={() => this.setState({ selected: "profile" })}
+                          >
+                            Individual Profile
+                          </JCButton>
+                        </View>
+                        <View
+                          style={{
+                            paddingVertical: 5,
+                            borderBottomWidth: this.state.selected === "organization" ? 7 : 0,
+                            borderBottomColor: "#F0493E",
+                          }}
                         >
-                          Organization Profile
-                        </JCButton>
+                          <JCButton
+                            buttonType={
+                              this.state.selected === "organization"
+                                ? ButtonTypes.TransparentBoldBlackNoMargin
+                                : ButtonTypes.TransparentBoldGreyNoMargin
+                            }
+                            onPress={() => this.setState({ selected: "organization" })}
+                          >
+                            Organization Profile
+                          </JCButton>
+                        </View>
                       </View>
                     </View>
+
                     {this.state.selected === "profile" ? (
-                      <Container style={this.styles.style.signUpProfile}>
+                      <Container style={this.styles.style.signUpProfileOrg}>
                         <MyProfile
                           hideOrg
                           finalizeProfile={() => {
@@ -113,15 +116,17 @@ class SignUpScreen3Impl extends JCComponent<Props, State> {
                         />
                       </Container>
                     ) : (
-                      <OrganizationViewer
-                        finalizeProfile={() => {
-                          this.onFinalizeProfile(userActions)
-                        }}
-                        create={false}
-                        loadId={userState.orgId}
-                      />
+                      <Container style={this.styles.style.signUpProfileOrg}>
+                        <OrganizationViewer
+                          finalizeProfile={() => {
+                            this.onFinalizeProfile(userActions)
+                          }}
+                          create={false}
+                          loadId={userState.orgId}
+                        />
+                      </Container>
                     )}
-                  </View>
+                  </>
                 ) : (
                   <Container style={this.styles.style.signUpProfile}>
                     <MyProfile

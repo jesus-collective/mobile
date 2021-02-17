@@ -188,7 +188,7 @@ export default class HeaderJC extends JCComponent<Props, State> {
                 ) : null}
                 {constants["SETTING_ISVISIBLE_resource"] ? (
                   <button
-                    data-testId="header-resources"
+                    data-testid="header-resources"
                     onClick={this.handleResourcesDropdownClick}
                     onMouseEnter={() => this.setState({ resourcesStyle: resourcesStyle2 })}
                     onMouseLeave={() => this.setState({ resourcesStyle: resourcesStyle1 })}

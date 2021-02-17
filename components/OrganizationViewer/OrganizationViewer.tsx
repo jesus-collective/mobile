@@ -706,7 +706,6 @@ class OrganizationImpl extends JCComponent<Props, State> {
                   }}
                 >
                   <JCButton
-                    testID
                     buttonType={ButtonTypes.TransparentBoldBlackNoMargin}
                     onPress={() =>
                       this.setState({
@@ -912,7 +911,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
             <View style={this.styles.style.profileScreenRightCard}>
               <View style={{ width: "100%" }}>{this.renderMap()}</View>
               {this.state.isEditable && this.state.editMode ? (
-                <Text style={this.styles.style.fontMyProfileLeftTop}>Tell us more about you</Text>
+                <Text style={this.styles.style.fontMyProfileLeftTop}>Tell us about your Org</Text>
               ) : null}
               {this.state.isEditable && this.state.editMode ? (
                 <Text style={this.styles.style.myprofileAboutMe}>

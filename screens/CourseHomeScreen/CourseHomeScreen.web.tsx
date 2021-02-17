@@ -366,7 +366,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       lookupObject[originalArray[i][prop]] = originalArray[i]
     }
 
-    for (i in lookupObject) {
+    for (const i in lookupObject) {
       newArray.push(lookupObject[i])
     }
     return newArray
