@@ -742,16 +742,6 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             >
               {week?.name}
             </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                lineHeight: 21,
-                fontFamily: "Graphik-Bold-App",
-                color: "#333333",
-              }}
-            >
-              {lesson?.date}
-            </Text>
             <Text style={this.styles.style.courseDetailLessonText}>
               Lesson {(state.activeLesson as number) + 1} - {lesson?.name}
             </Text>
@@ -821,16 +811,6 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
               }}
             >
               {week?.name}
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                lineHeight: 21,
-                fontFamily: "Graphik-Bold-App",
-                color: "#333333",
-              }}
-            >
-              {lesson?.date}
             </Text>
             <Text style={this.styles.style.courseDetailLessonText}>
               Lesson {(state.activeLesson as number) + 1} - {lesson?.name}
@@ -919,16 +899,6 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             >
               {week?.name}
             </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                lineHeight: 21,
-                fontFamily: "Graphik-Bold-App",
-                color: "#333333",
-              }}
-            >
-              {lesson?.date}
-            </Text>
             <Text style={this.styles.style.courseDetailLessonText}>
               Lesson {(state.activeLesson as number) + 1} - {lesson?.name}
             </Text>
@@ -1009,16 +979,6 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
               }}
             >
               {week?.name}
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                lineHeight: 21,
-                fontFamily: "Graphik-Bold-App",
-                color: "#333333",
-              }}
-            >
-              {lesson?.date}
             </Text>
             <Text style={this.styles.style.courseDetailLessonText}>
               Lesson {(state.activeLesson as number) + 1} - {lesson?.name}
