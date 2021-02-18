@@ -769,6 +769,51 @@ type DirectMessage
   messageRoom:DirectMessageRoom @connection(fields:["messageRoomID"])
 }
 
+type CRMRoot @model
+  @auth(
+    rules: [
+      { allow: groups, groups: ["admin"]}
+    ]
+  ) {
+  id: ID!
+  messages: [CRMMessage] @connection(keyName: "crmMessagesByRoot", fields: ["id"])
+}
+
+type CRMMessage @model
+  @key(name: "crmMessagesByRoot", fields: ["rootId", "when"])
+  @auth(
+    rules: [
+      { allow: groups, groups: ["admin"]}
+    ]
+  ) {
+  id: ID!
+  rootId: ID!
+  crmRoot: CRMRoot @connection(fields: ["rootId"])
+  content: String!
+  when: String!
+  authorName: String!
+  authorId: ID!
+  attachment: String
+  thread: [CRMReply] @connection(keyName: "crmReplyByMessage", fields: ["id"])
+}
+
+type CRMReply @model
+  @key(name: "crmReplyByMessage", fields: ["parentId", "when"])
+  @auth(
+    rules: [
+      { allow: groups, groups: ["admin"]} 
+    ]
+  ) {
+  id: ID!
+  content: String!
+  when: String!
+  authorName: String!
+  authorId: ID!
+  attachment: String
+  parentId: ID!
+  parent: CRMMessage @connection(fields: ["parentId"])
+}
+
 type Message
   @model
   @key(name: "ByRoom", fields: ["roomId", "when"], queryField: "messagesByRoom")
