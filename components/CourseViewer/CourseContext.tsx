@@ -2,7 +2,6 @@ import { JCState } from "components/JCComponent/JCComponent"
 import * as React from "react"
 import { GetGroupQuery } from "../../src/API"
 import { GetCourseInfoQuery } from "../../src/API-courses"
-import { NullFunction } from "../../src/types"
 
 export interface CourseState extends JCState {
   showMap: boolean
@@ -13,7 +12,7 @@ export interface CourseState extends JCState {
   isEditable: boolean
   validationError: string
   currentScreen: string
-  currentUser: string
+  currentUser: string | null
   activeWeek: number
   activeLesson: number | null
   activeMessageBoard: string
@@ -21,7 +20,21 @@ export interface CourseState extends JCState {
   showChat: boolean
 }
 
-interface NonNullCourseActions {
+export type CourseToDo = {
+  lessonType: string
+  time: string
+  date: string
+  moment: moment.Moment
+  weekNumber: string
+  lessonNumber: string
+}
+
+export type CourseDates = Record<
+  string,
+  { marked: true; dotColor: string; weekNumber: string; lessonNumber: string }
+>
+
+export interface CourseActions {
   createCourse: null
   changeCourse: null
   updateCourse: (item: string, value: any) => Promise<void>
@@ -31,14 +44,14 @@ interface NonNullCourseActions {
   setActiveLesson: (index: number) => void
   createWeek: () => Promise<void>
   updateWeek: (index: number, item: string, value: any) => Promise<void>
-  deleteWeek: (index: number, item: string, value: any) => Promise<void>
+  deleteWeek: (index: number) => Promise<void>
   updateWeekOrder: () => void
   createLesson: () => Promise<void>
   updateLesson: (week: number, lesson: number, item: string, value: any) => Promise<void>
   deleteLesson: (week: number, lesson: number) => Promise<void>
   updateTriad: (index: number, item: string, value: any) => Promise<void>
-  createTriad: (index: number, item: string, value: any) => Promise<void>
-  deleteTriad: (index: number, item: string, value: any) => Promise<void>
+  createTriad: () => Promise<void>
+  deleteTriad: (index: number) => Promise<void>
   setEditMode: (editMode: boolean) => void
   updateTriadUsers: (index: number, value: any) => Promise<void>
   updateTriadCoaches: (index: number, value: any) => Promise<void>
@@ -46,24 +59,13 @@ interface NonNullCourseActions {
   updateBackOfficeStaff: (value: any) => Promise<void>
   setActiveMessageBoard: (messageBoard: string) => void
   setActiveCourseActivity: (courseActivity: string) => void
-  myCourseGroups: (courseActivity: string) => void
-  getAssignmentList: () => any[]
+  myCourseGroups: () => { all: any[]; cohort: any[]; completeTriad: any[] }
+  getAssignmentList: () => any[] | undefined
   getLessonById: (id: string) => any
-  myCourseDates: () => {
-    zoom: string[] | undefined
-    assignments: string[] | undefined
-    respond: string[] | undefined
-  }
-  myCourseTodo: () => {
-    lessonType: any
-    time: string
-    date: string
-    moment: moment.Moment
-  }[]
+  myCourseDates: () => CourseDates
+  myCourseTodo: () => CourseToDo[]
   setShowChat: () => void
 }
-
-export type CourseActions = NullFunction<NonNullCourseActions>
 
 type CourseContextType = {
   actions: CourseActions
@@ -72,35 +74,41 @@ type CourseContextType = {
 
 export const CourseContext = React.createContext<CourseContextType>({
   actions: {
-    createCourse: () => null,
-    changeCourse: () => null,
-    updateCourse: () => null,
-    deleteCourse: () => null,
+    createCourse: null,
+    changeCourse: null,
+    updateCourse: () => Promise.resolve(),
+    deleteCourse: null,
     setActiveScreen: () => null,
     setActiveWeek: () => null,
     setActiveLesson: () => null,
-    createWeek: () => null,
-    updateWeek: () => null,
-    deleteWeek: () => null,
+    createWeek: () => Promise.resolve(),
+    updateWeek: () => Promise.resolve(),
+    deleteWeek: () => Promise.resolve(),
     updateWeekOrder: () => null,
-    createLesson: () => null,
-    updateLesson: () => null,
-    deleteLesson: () => null,
-    updateTriad: () => null,
-    createTriad: () => null,
-    deleteTriad: () => null,
+    createLesson: () => Promise.resolve(),
+    updateLesson: () => Promise.resolve(),
+    deleteLesson: () => Promise.resolve(),
+    updateTriad: () => Promise.resolve(),
+    createTriad: () => Promise.resolve(),
+    deleteTriad: () => Promise.resolve(),
     setEditMode: () => null,
-    updateTriadUsers: () => null,
-    updateTriadCoaches: () => null,
-    updateInstructors: () => null,
-    updateBackOfficeStaff: () => null,
+    updateTriadUsers: () => Promise.resolve(),
+    updateTriadCoaches: () => Promise.resolve(),
+    updateInstructors: () => Promise.resolve(),
+    updateBackOfficeStaff: () => Promise.resolve(),
     setActiveMessageBoard: () => null,
     setActiveCourseActivity: () => null,
-    myCourseGroups: () => null,
-    getAssignmentList: () => null,
+    myCourseGroups: () => {
+      return { all: [], cohort: [], completeTriad: [] }
+    },
+    getAssignmentList: () => [],
     getLessonById: () => null,
-    myCourseDates: () => null,
-    myCourseTodo: () => null,
+    myCourseDates: () => {
+      return {}
+    },
+    myCourseTodo: () => {
+      return []
+    },
     setShowChat: () => null,
   },
   state: undefined,

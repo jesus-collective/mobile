@@ -26,11 +26,12 @@ class CourseDetailMenu extends JCComponent<EmptyProps> {
   }
   headerStyles = new HeaderStyles()
   render(): React.ReactNode {
-    //const { navigate } = this.props.navigation;
     return (
       <CourseDetailMenu.Consumer>
         {({ state, actions }) => {
-          if (!state) return null
+          if (!state) {
+            return null
+          }
           return (
             <Header style={this.headerStyles.style.resourceContainer}>
               <Body
@@ -42,7 +43,7 @@ class CourseDetailMenu extends JCComponent<EmptyProps> {
                   marginLeft: "4.5%",
                 }}
               >
-                {state.courseData?.courseWeeks.items.map((item, index: number) => {
+                {state.courseData?.courseWeeks?.items?.map((item, index: number) => {
                   if (item) {
                     return (
                       <EditableButton
@@ -58,8 +59,8 @@ class CourseDetailMenu extends JCComponent<EmptyProps> {
                             ? this.headerStyles.style.centerMenuButtonsTextSelected
                             : this.headerStyles.style.centerMenuButtonsText
                         }
-                        value={item.name}
-                      ></EditableButton>
+                        value={item.name ?? ""}
+                      />
                     )
                   }
 
