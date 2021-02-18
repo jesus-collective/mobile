@@ -269,7 +269,6 @@ class OrganizationImpl extends JCComponent<Props, State> {
         console.log(updateUser)
       } catch (e) {
         console.log(e)
-
       }
     });
   }*/
@@ -543,8 +542,8 @@ class OrganizationImpl extends JCComponent<Props, State> {
                     enabled={this.state.dirty}
                     testID="org-save"
                     buttonType={ButtonTypes.SolidRightMargin}
-                    onPress={() => {
-                      this.finalizeProfile()
+                    onPress={async () => {
+                      await this.finalizeProfile()
                     }}
                   >
                     Save Profile

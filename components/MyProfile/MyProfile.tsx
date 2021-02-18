@@ -79,7 +79,6 @@ class MyProfileImpl extends JCComponent<Props, State> {
       validationText: "",
       showPage: "profile",
       mapVisible: false,
-
       isEditable: false,
       editMode: false,
       mapData: [],
@@ -625,8 +624,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
                     enabled={this.state.dirty}
                     testID="profile-save"
                     buttonType={ButtonTypes.SolidRightMargin}
-                    onPress={() => {
-                      this.finalizeProfile()
+                    onPress={async () => {
+                      await this.finalizeProfile()
                     }}
                   >
                     Save Profile
