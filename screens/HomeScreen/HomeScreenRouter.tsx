@@ -32,7 +32,12 @@ interface Props {
   authState?: string | undefined
   onStateChange(state: string, data: AuthStateData): Promise<void>
 }
-export default class HomeScreenRouter extends JCComponent<Props, UserState> {
+
+interface State extends UserState {
+  initialUrl: string
+}
+
+export default class HomeScreenRouter extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props)
     this.state = {
@@ -49,6 +54,7 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
       groupsLoaded: false,
       initialAuthType: null,
       idempotency: uuidv4(),
+      initialUrl: "",
     }
   }
   onSetUser = (user: any): void => {
@@ -360,13 +366,15 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
                 this.isMemberOf("courseAdmin") ||
                 this.isMemberOf("courseUser") ||
                 this.isMemberOf("courseCoach")
-              )
+              ) {
                 RootNavigation.navigate("mainApp", {})
-              else if (
-                this.isMemberOf("subscriptionkyearlyyears") ||
-                this.isMemberOf("subscriptionkykids") ||
-                this.isMemberOf("subscriptionkyyouth")
-              )
+                break
+              } else if (
+                !this.state.initialUrl.includes("app/resource") &&
+                (this.isMemberOf("subscriptionkyearlyyears") ||
+                  this.isMemberOf("subscriptionkykids") ||
+                  this.isMemberOf("subscriptionkyyouth"))
+              ) {
                 RootNavigation.navigate("mainApp", {
                   screen: "mainDrawer",
                   params: {
@@ -374,10 +382,10 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
                     params: { create: false, id: constants["SETTING_KY_GROUP_ID"] },
                   },
                 })
-              else RootNavigation.navigate("mainApp", {})
-            } else RootNavigation.navigate("mainApp", {})
-            break
-
+                break
+              }
+            }
+            RootNavigation.navigate("mainApp", {})
             break
           case ProfileStatus.Incomplete:
             RootNavigation.navigate("auth", {
@@ -427,16 +435,16 @@ export default class HomeScreenRouter extends JCComponent<Props, UserState> {
     const initialUrl: string = await Linking.getInitialURL()
     const initialParams = Linking.parse(initialUrl).queryParams
 
-    //const initialParams =
+    this.setState({ initialUrl })
     console.log({ "INITIAL URL": initialUrl })
     console.log({ initialParams: initialParams })
     if (initialUrl.toLowerCase().includes("/auth/signup"))
       this.setState({
         initialAuthType: "signup",
-        initialParams: initialParams,
+        initialParams,
       })
     else {
-      this.setState({ initialAuthType: "signin", initialParams: initialParams })
+      this.setState({ initialAuthType: "signin", initialParams })
     }
   }
 
