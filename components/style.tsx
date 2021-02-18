@@ -1476,10 +1476,7 @@ export default class MainStyles {
       // Media Query Desktop Tablet
       "@media (min-width: 350) and (max-width: 768)": {
         confirmationCodeWrapper: { display: "flex", flexDirection: "column" },
-        signUpBackButtonWrapper:
-          Platform.OS === "android"
-            ? { position: "absolute", top: "10%", left: "30%" }
-            : { position: "absolute", top: "10%", left: "30%" },
+        signUpBackButtonWrapper: { position: "absolute", top: "10%", left: "30%", zIndex: 9999 },
         authView2: { left: "37.5%", width: 300, top: "20%", height: "auto" },
         connectWithSliderButton: {
           height: 45,
@@ -1780,7 +1777,7 @@ export default class MainStyles {
             ? { position: "absolute", top: "0%", left: "2%", marginTop: 5 }
             : { position: "absolute", top: "0%", left: "2%", marginTop: 5 },
         confirmationCodeWrapper: { display: "flex", flexDirection: "column" },
-        signUpBackButtonWrapper: { position: "absolute", top: "0%", left: "2%" },
+        signUpBackButtonWrapper: { position: "absolute", top: "0%", left: "2%", zIndex: 9999 },
 
         dashboardLeftCard: {
           flexBasis: "auto",
@@ -2113,6 +2110,7 @@ export default class MainStyles {
         top: "6%",
         left: "20%",
         marginTop: Platform.OS === "android" ? 50 : 10,
+        zIndex: 9999,
       },
 
       confirmationCodeWrapper: { display: "flex", flexDirection: "row" },
