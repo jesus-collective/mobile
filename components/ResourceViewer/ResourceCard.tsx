@@ -110,6 +110,44 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                     return <Picker.Item key={org} label={org} value={org} />
                   })}
               </Picker>
+              {page.state.settings.style === ResourcePageItemStyle.CardAuto ? (
+                <>
+                  <Text style={{ textAlign: "left", width: "100%", fontWeight: "800" }}>
+                    Title 1:
+                  </Text>
+                  <EditableText
+                    onChange={(val: string) => {
+                      const tmp = page.state.settings
+                      tmp.title1 = val
+                      page.setState({ settings: tmp })
+                    }}
+                    placeholder="Title 1"
+                    multiline={false}
+                    textStyle={{ textAlign: "left", width: "100%", fontWeight: "400" }}
+                    inputStyle={{ textAlign: "left", width: "100%", fontWeight: "400" }}
+                    value={page.state.settings.title1 ?? ""}
+                    isEditable={true}
+                  />
+                  <Text
+                    style={{ textAlign: "left", width: "100%", fontWeight: "800", marginTop: 15 }}
+                  >
+                    Title 2 (replaces the auto title):
+                  </Text>
+                  <EditableText
+                    onChange={(val: string) => {
+                      const tmp = page.state.settings
+                      tmp.title2 = val
+                      page.setState({ settings: tmp })
+                    }}
+                    placeholder="Title 2"
+                    multiline={false}
+                    textStyle={{ textAlign: "left", width: "100%", fontWeight: "400" }}
+                    inputStyle={{ textAlign: "left", width: "100%", fontWeight: "400" }}
+                    value={page.state.settings.title2 ?? ""}
+                    isEditable={true}
+                  />
+                </>
+              ) : null}
               {page.state.settings.style == ResourcePageItemStyle.CardManual ||
               page.state.settings.style == null ? (
                 <>
@@ -850,7 +888,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                         color: "#F0493E",
                         textTransform: "uppercase",
                       }}
-                      value={""}
+                      value={this.props.pageItem.title1 ?? ""}
                       isEditable={false}
                     ></EditableText>
                   </CardItem>
@@ -881,7 +919,7 @@ export class ResourceCardImpl extends JCComponent<Props, State> {
                         textAlign: "left",
                         color: "#404040",
                       }}
-                      value={item?.title ?? ""}
+                      value={this.props.pageItem.title2 || (item?.title ?? "")}
                       isEditable={false}
                     ></EditableText>
                   </CardItem>
