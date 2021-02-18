@@ -9,16 +9,30 @@ import React from "react"
 import { Dimensions } from "react-native"
 import {
   CreateCourseLessonInput,
+  CreateCourseLessonMutation,
   CreateCourseTriadsInput,
+  CreateCourseTriadsMutation,
   CreateCourseWeekInput,
+  CreateCourseWeekMutation,
+  DeleteCourseLessonMutation,
+  DeleteCourseTriadCoachesMutation,
+  DeleteCourseWeekMutation,
   GetCourseInfoQuery,
   GetGroupQuery,
+  UpdateCourseInfoMutation,
+  UpdateCourseTriadsMutation,
+  UpdateCourseWeekMutation,
 } from "src/API"
 import { JCCognitoUser } from "src/types"
 import CourseSidebar from "../../components/CourseSidebar/CourseSidebar"
 import CourseChat from "../../components/CourseViewer/CourseChat"
 import CourseCoaching from "../../components/CourseViewer/CourseCoaching"
-import { CourseContext, CourseState } from "../../components/CourseViewer/CourseContext"
+import {
+  CourseContext,
+  CourseDates,
+  CourseState,
+  CourseToDo,
+} from "../../components/CourseViewer/CourseContext"
 import CourseDetail from "../../components/CourseViewer/CourseDetail"
 import CourseHome from "../../components/CourseViewer/CourseHome"
 import FloatingButton from "../../components/FloatingButton/FloatingButton"
@@ -67,30 +81,30 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
   }
   static Provider = CourseContext.Provider
 
-  setInitialData(props: Props, groups): void {
-    const getGroup: any = API.graphql({
+  setInitialData(props: Props, groups: string[]): void {
+    const getGroup = API.graphql({
       query: queries.getGroup,
       variables: { id: props.route.params.id },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    }) as GraphQLResult<GetGroupQuery>
-    const getCourse: any = API.graphql({
+    }) as Promise<GraphQLResult<GetGroupQuery>>
+    const getCourse = API.graphql({
       query: courseQueries.getCourseInfo,
       variables: { id: props.route.params.id },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-    }) as GraphQLResult<GetCourseInfoQuery>
+    }) as Promise<GraphQLResult<GetCourseInfoQuery>>
     const processResults2 = (json: GraphQLResult<GetCourseInfoQuery>) => {
       console.log({ courseData: json })
-      this.setState({ courseData: json.data.getCourseInfo })
+      this.setState({ courseData: json.data?.getCourseInfo })
     }
     getCourse.then(processResults2).catch(processResults2)
     const processResults = (json: GraphQLResult<GetGroupQuery>) => {
       const isEditable =
-        json.data.getGroup.owner == this.state.currentUser || groups.includes("courseAdmin")
+        json.data?.getGroup?.owner == this.state.currentUser || groups.includes("courseAdmin")
       console.log({
         isEditable: isEditable,
         groupData: json,
       })
-      this.setState({ isEditable: isEditable, data: json.data.getGroup })
+      this.setState({ isEditable: isEditable, data: json.data?.getGroup })
     }
     getGroup.then(processResults).catch(processResults)
   }
@@ -107,16 +121,12 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     return validation.result
   }
 
-  updateValue(field: string, value: any): void {
-    const temp = this.state.data
-    temp[field] = value
-    this.setState({ data: temp })
-  }
   setEditMode = (editMode: boolean): void => {
     this.setState({ editMode: editMode }, () => {
       this.forceUpdate()
     })
   }
+
   setActiveScreen = (screen: string): void => {
     this.setState({
       currentScreen: screen,
@@ -129,21 +139,25 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       activeLesson: null,
     })
   }
+
   setActiveLesson = (index: number): void => {
     this.setState({
       activeLesson: index,
     })
   }
+
   setActiveMessageBoard = (messageBoard: string): void => {
     this.setState({
       activeMessageBoard: messageBoard,
     })
   }
+
   setActiveCourseActivity = (courseActivity: string): void => {
     this.setState({
       activeCourseActivity: courseActivity,
     })
   }
+
   updateBackOfficeStaff = async (value: any): Promise<void> => {
     console.log(this.state.courseData?.backOfficeStaff?.items)
     const del = this.state.courseData?.backOfficeStaff?.items?.filter(
@@ -171,7 +185,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         })
         console.log(createCourseBackOfficeStaff)
         const temp = this.state.courseData
-        temp.backOfficeStaff?.items?.push(
+        temp?.backOfficeStaff?.items?.push(
           createCourseBackOfficeStaff.data.createCourseBackOfficeStaff
         )
         console.log(temp)
@@ -179,7 +193,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       } catch (createCourseBackOfficeStaff) {
         console.log(createCourseBackOfficeStaff)
         const temp = this.state.courseData
-        temp.backOfficeStaff?.items?.push(
+        temp?.backOfficeStaff?.items?.push(
           createCourseBackOfficeStaff.data.createCourseBackOfficeStaff
         )
         console.log(temp)
@@ -371,6 +385,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     }
     return newArray
   }
+
   myCourseGroups = (): { all: any[]; cohort: any[]; completeTriad: any[] } => {
     const z: [{ cohort; completeTriad }] = this.state.courseData?.triads?.items.map((item) => {
       let triadTemp = [],
@@ -479,19 +494,19 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       try {
         console.log({ Deleting: item })
 
-        const deleteCourseTriadCoaches: any = await API.graphql({
+        const deleteCourseTriadCoaches = (await API.graphql({
           query: mutations.deleteCourseTriadCoaches,
           variables: {
             input: {
-              id: item.id,
+              id: item?.id,
             },
           },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })
+        })) as GraphQLResult<DeleteCourseTriadCoachesMutation>
         console.log(deleteCourseTriadCoaches)
         const temp = this.state.courseData
         temp.triads.items[index].coaches.items = temp.triads.items[index].coaches.items.filter(
-          (user) => user.id !== item.id
+          (user) => user?.id !== item?.id
         )
         console.log(temp)
         this.setState({ courseData: temp })
@@ -499,7 +514,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         console.log(deleteCourseTriadCoaches)
         const temp = this.state.courseData
         temp.triads.items[index].coaches.items = temp.triads.items[index].coaches.items.filter(
-          (user) => user.id !== item.id
+          (user) => user?.id !== item?.id
         )
         console.log(temp)
         this.setState({ courseData: temp })
@@ -510,16 +525,16 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     try {
       console.log({ "Updating Triad": index })
 
-      const updateCourseTriads: any = await API.graphql({
+      const updateCourseTriads = (await API.graphql({
         query: mutations.updateCourseTriads,
         variables: {
           input: {
-            id: this.state.courseData.triads.items[index].id,
+            id: this.state.courseData?.triads?.items?.[index]?.id,
             [item]: value,
           },
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      })) as GraphQLResult<UpdateCourseTriadsMutation>
       console.log(updateCourseTriads)
       const temp = this.state.courseData
       temp.triads.items[index][item] = value
@@ -532,16 +547,16 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     try {
       console.log("Deleting Triad")
 
-      const createTriad: any = await API.graphql({
+      const createTriad = (await API.graphql({
         query: mutations.deleteCourseTriads,
         variables: {
-          input: { id: this.state.courseData.triads.items[index].id },
+          input: { id: this.state.courseData?.triads?.items?.[index]?.id },
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      })) as GraphQLResult<DeleteCourseTriadsMutation>
       console.log(createTriad)
       const temp = this.state.courseData
-      temp.triads.items.splice(index, 1)
+      temp?.triads?.items?.splice(index, 1)
       this.setState({ courseData: temp })
     } catch (e) {
       console.log(e)
@@ -549,98 +564,107 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
   }
   createTriad = async (): Promise<void> => {
     const triad: CreateCourseTriadsInput = {
-      courseInfoID: this.state.courseData.id,
+      courseInfoID: this.state.courseData?.id,
     }
     try {
       console.log("Creating Triad")
 
-      const createTriad: any = await API.graphql({
+      const createTriad = (await API.graphql({
         query: mutations.createCourseTriads,
         variables: { input: triad },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      })) as GraphQLResult<CreateCourseTriadsMutation>
       console.log(createTriad)
-      const temp = this.state.courseData
-      temp.triads.items.push(createTriad.data.createCourseTriads)
-      console.log(temp)
-      this.setState({ courseData: temp }, () => this.forceUpdate())
+      if (createTriad?.data?.createCourseTriads) {
+        const temp = this.state.courseData
+        temp?.triads?.items?.push(createTriad.data.createCourseTriads)
+        console.log(temp)
+        this.setState({ courseData: temp }, () => this.forceUpdate())
+      }
     } catch (e) {
       console.log(e)
     }
   }
   createWeek = async (): Promise<void> => {
     const resource: CreateCourseWeekInput = {
-      week: this.state.courseData.courseWeeks.items.length + 1,
+      week: ((this.state.courseData?.courseWeeks?.items?.length as number) + 1).toString(),
       name: "New Menu Item",
       leader: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
-      courseInfoID: this.state.courseData.id,
+      courseInfoID: this.state.courseData?.id,
     }
     try {
       console.log("Creating Resource")
 
-      const createCourse: any = await API.graphql({
+      const createCourse = (await API.graphql({
         query: mutations.createCourseWeek,
         variables: { input: resource },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      })) as GraphQLResult<CreateCourseWeekMutation>
       console.log(createCourse)
-      const temp = this.state.courseData
-      temp.courseWeeks.items.push(createCourse.data.createCourseWeek)
-      console.log(temp)
-      this.setState({ courseData: temp }, () => this.forceUpdate())
+      if (createCourse?.data?.createCourseWeek) {
+        const temp = this.state.courseData
+        temp?.courseWeeks?.items?.push(createCourse.data.createCourseWeek)
+        console.log(temp)
+        this.setState({ courseData: temp }, () => this.forceUpdate())
+      }
     } catch (e) {
       console.log(e)
     }
   }
   createLesson = async (): Promise<void> => {
     const resource: CreateCourseLessonInput = {
-      name: "New Lesson", //this.state.courseData.courseWeeks.items.length + 1,
-      lesson:
-        this.state.courseData.courseWeeks.items[this.state.activeWeek].lessons.items.length + 1,
-      //time: "",
+      name: "New Lesson",
+      lesson: (
+        (this.state.courseData?.courseWeeks?.items?.[this.state.activeWeek]?.lessons?.items
+          ?.length as number) + 1
+      ).toString(),
       description: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
-      courseWeekID: this.state.courseData.courseWeeks.items[this.state.activeWeek].id,
+      courseWeekID: this.state.courseData?.courseWeeks?.items?.[this.state.activeWeek]?.id,
     }
     try {
       console.log("Creating Resource")
 
-      const createCourse: any = await API.graphql({
+      const createCourse = (await API.graphql({
         query: mutations.createCourseLesson,
         variables: { input: resource },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      })) as GraphQLResult<CreateCourseLessonMutation>
       console.log(createCourse)
-      const temp = this.state.courseData
-      temp.courseWeeks.items[this.state.activeWeek].lessons.items.push(
-        createCourse.data.createCourseLesson
-      )
-      console.log(temp)
-      this.setState({ courseData: temp }, () => this.forceUpdate())
+      if (createCourse?.data?.createCourseLesson) {
+        const temp = this.state.courseData
+        temp?.courseWeeks?.items?.[this.state.activeWeek]?.lessons?.items?.push(
+          createCourse.data.createCourseLesson
+        )
+        console.log(temp)
+        this.setState({ courseData: temp }, () => this.forceUpdate())
+      }
     } catch (e) {
       console.log(e)
     }
   }
-  getLessonById = (id: string): any => {
-    return this.state.courseData.courseWeeks.items
-      .map((week) => {
-        return week.lessons.items.filter((lesson) => {
-          if (lesson.id == id) return lesson
+  getLessonById = (id: string) => {
+    return this.state.courseData?.courseWeeks?.items
+      ?.map((week) => {
+        return week?.lessons?.items?.filter((lesson) => {
+          if (lesson?.id == id) return lesson
         })
       })
       .flat()[0]
   }
-  getAssignmentList = (): any[] => {
-    return this.state.courseData.courseWeeks.items
-      .map((week) => {
-        return week.lessons.items.map((lesson) => {
-          if (lesson.lessonType == "assignment") return lesson
+
+  getAssignmentList = () => {
+    return this.state.courseData?.courseWeeks?.items
+      ?.map((week) => {
+        return week?.lessons?.items?.map((lesson) => {
+          if (lesson?.lessonType == "assignment") return lesson
         })
       })
       .flat()
   }
+
   updateWeekOrder = (): void => {
     try {
-      this.state.courseData.courseWeeks.items.forEach((item, index: number) => {
+      this.state.courseData?.courseWeeks?.items?.forEach((item, index: number) => {
         this.updateWeek(index, "week", index)
       })
 
@@ -658,16 +682,16 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     try {
       console.log({ "Updating Lesson": lesson })
 
-      const updateWeek: any = await API.graphql({
+      const updateWeek = (await API.graphql({
         query: mutations.updateCourseLesson,
         variables: {
           input: {
-            id: this.state.courseData.courseWeeks.items[week].lessons.items[lesson].id,
+            id: this.state.courseData?.courseWeeks?.items?.[week]?.lessons?.items?.[lesson]?.id,
             [item]: value,
           },
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      })) as GraphQLResult<UpdateCourseLessonMutation>
       console.log(updateWeek)
       const temp = this.state.courseData
       temp.courseWeeks.items[week].lessons.items[lesson][item] = value
@@ -680,16 +704,16 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     try {
       console.log({ "Updating Course": item })
 
-      const updateCourseInfo: any = await API.graphql({
+      const updateCourseInfo = (await API.graphql({
         query: mutations.updateCourseInfo,
         variables: {
           input: {
-            id: this.state.courseData.id,
+            id: this.state.courseData?.id,
             [item]: value,
           },
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      })) as GraphQLResult<UpdateCourseInfoMutation>
       console.log(updateCourseInfo)
       const temp = this.state.courseData
       temp[item] = value
@@ -702,16 +726,16 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
     try {
       console.log({ "Updating Week": index })
 
-      const updateWeek: any = await API.graphql({
+      const updateWeek = (await API.graphql({
         query: mutations.updateCourseWeek,
         variables: {
           input: {
-            id: this.state.courseData.courseWeeks.items[index].id,
+            id: this.state.courseData?.courseWeeks?.items?.[index]?.id,
             [item]: value,
           },
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      })) as GraphQLResult<UpdateCourseWeekMutation>
       console.log(updateWeek)
       const temp = this.state.courseData
       temp.courseWeeks.items[index][item] = value
@@ -720,32 +744,31 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       console.log(e)
     }
   }
-  myCourseTodo = () => {
-    if (this.state.courseData != null) {
-      const toDo = this.state.courseData?.courseWeeks.items
+  myCourseTodo = (): CourseToDo[] => {
+    if (this.state.courseData?.courseWeeks?.items) {
+      const toDo = this.state.courseData.courseWeeks.items
         .map((week) => {
-          return week.lessons.items.map((lesson) => {
+          return week?.lessons?.items?.map((lesson) => {
             return { ...lesson, week: week?.week }
           })
         })
         .flat()
-        .filter((item) => item != null)
-        .map((item: any, index) => {
-          const tz = item.tz ? item.tz : moment.tz.guess()
-          const time = moment.tz(item.time, tz).format("hh:mm")
-          const date = moment.tz(item.time, tz).format("YYYY-MM-DD")
-          const m = moment.tz(item.time, tz)
+        .filter((item) => !!item)
+        .map((item, index) => {
+          const tz = item?.tz || moment.tz.guess()
+          const time = moment.tz(item?.time, tz).format("hh:mm")
+          const date = moment.tz(item?.time, tz).format("YYYY-MM-DD")
+          const m = moment.tz(item?.time, tz)
           return {
-            lessonType: item.lessonType,
+            lessonType: item?.lessonType as string,
             time: time,
             date: date,
             moment: m,
-            weekNumber: item.week,
+            weekNumber: item?.week as string,
             lessonNumber: index,
           }
         })
         .filter((item) => {
-          console.log({ z: item })
           return item.time != "Invalid date"
         })
 
@@ -754,87 +777,87 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         .sort((a, b) => {
           return a.moment.diff(b.moment)
         })
-    } else return []
-  }
-  myCourseDates = () => {
-    console.log({ courseData: this.state.courseData })
-    const assignments = this.state.courseData?.courseWeeks.items
-      .map((week) => {
-        return week.lessons.items.map((lesson) => {
-          if (lesson.lessonType == "assignment") return lesson
-        })
-      })
-      .flat()
-      .filter((item) => item != null)
-      .map((item: any) => {
-        const tz = item.tz ? item.tz : moment.tz.guess()
-        return moment.tz(item.time, tz).format("YYYY-MM-DD")
-      })
-      .filter((item) => item != "Invalid date")
+    }
 
-    const zoom = this.state.courseData?.courseWeeks.items
-      .map((week) => {
-        return week.lessons.items.map((lesson) => {
-          if (lesson.lessonType == "zoom" || lesson.lessonType == null) return lesson
-        })
-      })
-      .flat()
-      .filter((item) => item != null)
-      .map((item: any) => {
-        const tz = item?.tz ? item.tz : moment.tz.guess()
-        return moment.tz(item.time, tz).format("YYYY-MM-DD")
-      })
-      .filter((item) => item != "Invalid date")
-
-    const respond = this.state.courseData?.courseWeeks.items
-      .map((week) => {
-        return week.lessons.items.map((lesson) => {
-          if (lesson.lessonType == "respond") return lesson
-        })
-      })
-      .flat()
-      .filter((item) => item != null)
-      .map((item: any) => {
-        const tz = item?.tz ? item.tz : moment.tz.guess()
-        return moment.tz(item.time, tz).format("YYYY-MM-DD")
-      })
-      .filter((item) => item != "Invalid date")
-    console.log({ zoom: zoom, assignments: assignments, respond: respond })
-    return { zoom, assignments, respond }
+    return []
   }
+
+  getDotColour = (lessonType: string): string => {
+    switch (lessonType) {
+      case "assignment":
+        return "#71C209"
+      case "response":
+        return "#0000ff"
+      default:
+        return "#ff0000"
+    }
+  }
+
+  myCourseDates = (): CourseDates => {
+    if (this.state.courseData?.courseWeeks?.items) {
+      const markedDates: CourseDates = {}
+
+      this.state.courseData.courseWeeks.items
+        .map((week) => {
+          return week?.lessons?.items?.map((lesson) => {
+            return { ...lesson, week: week?.week }
+          })
+        })
+        .flat()
+        .filter((item) => !!item)
+        .forEach((item, index) => {
+          const tz = item?.tz || moment.tz.guess()
+          const dateKey = moment.tz(item?.time, tz).format("YYYY-MM-DD")
+          if (dateKey !== "Invalid date") {
+            markedDates[moment.tz(item?.time, tz).format("YYYY-MM-DD")] = {
+              marked: true,
+              dotColor: this.getDotColour(item?.lessonType ?? ""),
+              weekNumber: item?.week as string,
+              lessonNumber: index,
+            }
+          }
+        })
+
+      return markedDates
+    }
+
+    return {}
+  }
+
   deleteWeek = async (index: number): Promise<void> => {
     try {
       console.log({ "Deleting Course Week": index })
-      const deleteResource: any = await API.graphql({
+      const deleteCourseWeek = (await API.graphql({
         query: mutations.deleteCourseWeek,
         variables: {
-          input: { id: this.state.courseData.courseWeeks.items[index].id },
+          input: { id: this.state.courseData?.courseWeeks?.items?.[index]?.id },
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
-      console.log(deleteResource)
+      })) as GraphQLResult<DeleteCourseWeekMutation>
+      console.log(deleteCourseWeek)
       const temp = this.state.courseData
-      temp.courseWeeks.items.splice(index, 1)
+      temp?.courseWeeks?.items?.splice(index, 1)
       this.setState({ courseData: temp }, this.updateWeekOrder)
     } catch (e) {
       console.log(e)
     }
   }
+
   deleteLesson = async (week: number, lesson: number): Promise<void> => {
     try {
       console.log({ "Deleting Course lesson": week + " " + lesson })
-      const deleteResource: any = await API.graphql({
+      const deleteResource = (await API.graphql({
         query: mutations.deleteCourseLesson,
         variables: {
           input: {
-            id: this.state.courseData.courseWeeks.items[week].lessons.items[lesson].id,
+            id: this.state.courseData?.courseWeeks?.items?.[week]?.lessons?.items?.[lesson]?.id,
           },
         },
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })
+      })) as GraphQLResult<DeleteCourseLessonMutation>
       console.log(deleteResource)
       const temp = this.state.courseData
-      temp.courseWeeks.items[week].lessons.items.splice(lesson, 1)
+      temp?.courseWeeks?.items?.[week]?.lessons?.items?.splice(lesson, 1)
       this.setState({ courseData: temp }, this.updateWeekOrder)
     } catch (e) {
       console.log(e)
@@ -845,7 +868,6 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
 
     const { width } = Dimensions.get("window")
     const chatWidth = Math.min(width, 563)
-    const smallScreen = width < 563
 
     return this.state.data ? (
       <CourseHomeScreenImpl.Provider
@@ -916,7 +938,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
                 ]}
               >
                 <CourseSidebar courseId={this.state.data.id} />
-                <CourseHome />
+                <CourseHome courseId={this.state.data.id} />
                 <CourseDetail />
                 <CourseCoaching />
               </Container>

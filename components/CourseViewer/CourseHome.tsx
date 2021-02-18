@@ -24,21 +24,16 @@ import getTheme from "../../native-base-theme/components"
 import CourseHeader from "../CourseHeader/CourseHeader"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
 import JCComponent from "../JCComponent/JCComponent"
-import { CourseContext } from "./CourseContext"
+import { CourseActions, CourseContext, CourseDates, CourseToDo } from "./CourseContext"
 
 interface Props {
   navigation?: any
   route?: any
-}
-
-type ToDoItem = {
-  lessonType: string
-  time: string
-  date: string
-  moment: moment.Moment
+  courseId: string
 }
 
 class CourseHomeImpl extends JCComponent<Props> {
+  static Consumer = CourseContext.Consumer
   constructor(props: Props) {
     super(props)
   }
@@ -54,7 +49,6 @@ class CourseHomeImpl extends JCComponent<Props> {
     console.log("Navigate to profileScreen")
     this.props.navigation.push("ProfileScreen", { id: id, create: false })
   }
-  static Consumer = CourseContext.Consumer
   renderProfileCard(user: UserData): React.ReactNode {
     if (user)
       return (
@@ -91,20 +85,36 @@ class CourseHomeImpl extends JCComponent<Props> {
           </Card>
         </TouchableOpacity>
       )
-    else null
+    return null
   }
 
-  renderToDo(item: ToDoItem): JSX.Element {
+  handlePressCalendar(actions: CourseActions, calendarItem: CourseDates[0] | undefined): void {
+    if (calendarItem) {
+      // if no key error, navigate to lesson
+      actions.setActiveWeek(parseInt(calendarItem.weekNumber, 10))
+      actions.setActiveLesson(calendarItem.lessonNumber)
+      actions.setActiveScreen("Details")
+    }
+  }
+
+  handlePressToDo(actions: CourseActions, week: string, lesson: number): void {
+    actions.setActiveWeek(parseInt(week, 10))
+    actions.setActiveLesson(lesson)
+    actions.setActiveScreen("Details")
+  }
+
+  renderToDo(item: CourseToDo, actions: CourseActions): JSX.Element {
     switch (item.lessonType) {
       case "assignment":
         return (
-          <Container
+          <TouchableOpacity
             style={{
               flexDirection: "row",
               height: "unset",
               marginTop: 10,
               marginBottom: 10,
             }}
+            onPress={() => this.handlePressToDo(actions, item.weekNumber, item.lessonNumber)}
           >
             <Left style={{ flex: 1 }}>
               <Image
@@ -143,18 +153,19 @@ class CourseHomeImpl extends JCComponent<Props> {
                 Assignment due @ {item.time}
               </Text>
             </Right>
-          </Container>
+          </TouchableOpacity>
         )
 
       case "respond":
         return (
-          <Container
+          <TouchableOpacity
             style={{
               flexDirection: "row",
               height: "unset",
               marginTop: 10,
               marginBottom: 10,
             }}
+            onPress={() => this.handlePressToDo(actions, item.weekNumber, item.lessonNumber)}
           >
             <Left style={{ flex: 1 }}>
               <Image
@@ -193,19 +204,20 @@ class CourseHomeImpl extends JCComponent<Props> {
                 Responses due @ {item.time}
               </Text>
             </Right>
-          </Container>
+          </TouchableOpacity>
         )
 
       default:
         // zoom
         return (
-          <Container
+          <TouchableOpacity
             style={{
               flexDirection: "row",
               height: "unset",
               marginTop: 10,
               marginBottom: 10,
             }}
+            onPress={() => this.handlePressToDo(actions, item.weekNumber, item.lessonNumber)}
           >
             <Left style={{ flex: 1 }}>
               <Image
@@ -244,7 +256,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                 Zoom call @ {item.time}
               </Text>
             </Right>
-          </Container>
+          </TouchableOpacity>
         )
     }
   }
@@ -263,24 +275,7 @@ class CourseHomeImpl extends JCComponent<Props> {
             return item?.user
           })
 
-          const { zoom, assignments, respond } = actions.myCourseDates() as {
-            zoom: string[]
-            assignments: string[]
-            respond: string[]
-          }
-
-          const markedDates: { [key: string]: any } = {}
-
-          for (let i = 0; i < zoom?.length; i++)
-            markedDates[zoom[i]] = { marked: true, dotColor: "ff0000" }
-          for (let i = 0; i < assignments?.length; i++)
-            markedDates[assignments[i]] = {
-              marked: true,
-              dotColor: "#71C209",
-            }
-          for (let i = 0; i < respond?.length; i++)
-            markedDates[respond[i]] = { marked: true, dotColor: "#0000ff" }
-
+          const markedDates = actions.myCourseDates()
           const toDo = actions.myCourseTodo()
 
           return state.data && state.currentScreen == "Home" ? (
@@ -668,13 +663,13 @@ class CourseHomeImpl extends JCComponent<Props> {
                         <Card style={this.styles.style.courseHomeCoachingCard}>
                           {Dimensions.get("window").width > 720 ? (
                             <FlatList
-                              renderItem={({ item }) => this.renderToDo(item)}
+                              renderItem={({ item }) => this.renderToDo(item, actions)}
                               data={toDo}
                               style={{ height: 200 }}
                             />
                           ) : (
                             toDo?.slice(0, 7).map((item) => {
-                              return this.renderToDo(item)
+                              return this.renderToDo(item, actions)
                             })
                           )}
                         </Card>
@@ -690,12 +685,14 @@ class CourseHomeImpl extends JCComponent<Props> {
                         >
                           My Calendar
                         </Text>
-
                         <Calendar
                           style={this.styles.style.courseHomeCalendar}
                           current={moment().format("YYYY-MM-DD")}
                           markedDates={markedDates}
-                          onDayPress={(day) => console.log(markedDates[day.dateString])}
+                          onDayPress={(day) =>
+                            this.handlePressCalendar(actions, markedDates[day.dateString])
+                          }
+                          theme={{ todayTextColor: "#F0493E" }}
                         />
                         <Container style={this.styles.style.courseHomeCalendarLabels}>
                           <Text
