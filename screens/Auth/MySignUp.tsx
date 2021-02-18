@@ -41,7 +41,6 @@ interface State {
     orgName: string
   }
   authError: string
-  enabled: boolean
   joinedAs: "individual" | "organization" | null
   joinedProduct: string
   productType: "Partner" | "OneStory" | null
@@ -64,7 +63,6 @@ class MySignUpImpl extends React.Component<Props, State> {
         orgName: "",
       },
       authError: "",
-      enabled: true,
       joinedAs: props.route?.params.joinedAs,
       joinedProduct: props.route?.params.joinedProduct,
       productType: props.route?.params.productType,
@@ -87,7 +85,6 @@ class MySignUpImpl extends React.Component<Props, State> {
         orgName: "",
       },
       authError: "",
-      enabled: false,
       joinedAs: null,
       joinedProduct: this.props.route?.params.joinedProduct,
       productType: this.props.route?.params.productType,
@@ -372,12 +369,8 @@ class MySignUpImpl extends React.Component<Props, State> {
                         <View style={{ flexDirection: "row" }}>
                           <View style={{ flex: 1 }}>
                             <JCButton
-                              enabled={this.state.enabled}
-                              buttonType={
-                                this.state.enabled
-                                  ? ButtonTypes.SolidSignIn
-                                  : ButtonTypes.DisabledSignIn
-                              }
+                              enabled={true}
+                              buttonType={ButtonTypes.SolidSignIn}
                               onPress={() => this.signUp(userActions)}
                             >
                               {this.state.sendingData ? (
@@ -596,12 +589,8 @@ class MySignUpImpl extends React.Component<Props, State> {
                           ></TextInput>
                         </View>
                         <JCButton
-                          enabled={this.state.enabled}
-                          buttonType={
-                            this.state.enabled
-                              ? ButtonTypes.SolidSignIn
-                              : ButtonTypes.DisabledSignIn
-                          }
+                          enabled={true}
+                          buttonType={ButtonTypes.SolidSignIn}
                           onPress={() => this.signUp(userActions)}
                         >
                           {this.state.sendingData ? (
