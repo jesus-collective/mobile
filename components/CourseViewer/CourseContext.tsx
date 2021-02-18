@@ -26,12 +26,12 @@ export type CourseToDo = {
   date: string
   moment: moment.Moment
   weekNumber: string
-  lessonNumber: number
+  lessonNumber: string
 }
 
 export type CourseDates = Record<
   string,
-  { marked: true; dotColor: string; weekNumber: string; lessonNumber: number }
+  { marked: true; dotColor: string; weekNumber: string; lessonNumber: string }
 >
 
 export interface CourseActions {

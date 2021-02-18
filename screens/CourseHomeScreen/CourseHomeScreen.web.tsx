@@ -754,7 +754,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         })
         .flat()
         .filter((item) => !!item)
-        .map((item, index) => {
+        .map((item) => {
           const tz = item?.tz || moment.tz.guess()
           const time = moment.tz(item?.time, tz).format("hh:mm")
           const date = moment.tz(item?.time, tz).format("YYYY-MM-DD")
@@ -765,11 +765,11 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
             date: date,
             moment: m,
             weekNumber: item?.week as string,
-            lessonNumber: index,
+            lessonNumber: item?.lesson as string,
           }
         })
         .filter((item) => {
-          return item.time != "Invalid date"
+          return item.time !== "Invalid date" && item.lessonType !== "youtube"
         })
 
       return toDo
@@ -805,15 +805,15 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
         })
         .flat()
         .filter((item) => !!item)
-        .forEach((item, index) => {
+        .forEach((item) => {
           const tz = item?.tz || moment.tz.guess()
           const dateKey = moment.tz(item?.time, tz).format("YYYY-MM-DD")
-          if (dateKey !== "Invalid date") {
+          if (dateKey !== "Invalid date" && item?.lessonType !== "youtube") {
             markedDates[moment.tz(item?.time, tz).format("YYYY-MM-DD")] = {
               marked: true,
               dotColor: this.getDotColour(item?.lessonType ?? ""),
               weekNumber: item?.week as string,
-              lessonNumber: index,
+              lessonNumber: item?.lesson as string,
             }
           }
         })

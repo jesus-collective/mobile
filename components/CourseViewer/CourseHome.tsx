@@ -91,15 +91,13 @@ class CourseHomeImpl extends JCComponent<Props> {
   handlePressCalendar(actions: CourseActions, calendarItem: CourseDates[0] | undefined): void {
     if (calendarItem) {
       // if no key error, navigate to lesson
-      actions.setActiveWeek(parseInt(calendarItem.weekNumber, 10))
-      actions.setActiveLesson(calendarItem.lessonNumber)
-      actions.setActiveScreen("Details")
+      this.goToLesson(actions, calendarItem.weekNumber, calendarItem.lessonNumber)
     }
   }
 
-  handlePressToDo(actions: CourseActions, week: string, lesson: number): void {
+  goToLesson(actions: CourseActions, week: string, lesson: string): void {
     actions.setActiveWeek(parseInt(week, 10))
-    actions.setActiveLesson(lesson)
+    actions.setActiveLesson(parseInt(lesson, 10) - 1)
     actions.setActiveScreen("Details")
   }
 
@@ -114,7 +112,7 @@ class CourseHomeImpl extends JCComponent<Props> {
               marginTop: 10,
               marginBottom: 10,
             }}
-            onPress={() => this.handlePressToDo(actions, item.weekNumber, item.lessonNumber)}
+            onPress={() => this.goToLesson(actions, item.weekNumber, item.lessonNumber)}
           >
             <Left style={{ flex: 1 }}>
               <Image
@@ -165,7 +163,7 @@ class CourseHomeImpl extends JCComponent<Props> {
               marginTop: 10,
               marginBottom: 10,
             }}
-            onPress={() => this.handlePressToDo(actions, item.weekNumber, item.lessonNumber)}
+            onPress={() => this.goToLesson(actions, item.weekNumber, item.lessonNumber)}
           >
             <Left style={{ flex: 1 }}>
               <Image
@@ -217,7 +215,7 @@ class CourseHomeImpl extends JCComponent<Props> {
               marginTop: 10,
               marginBottom: 10,
             }}
-            onPress={() => this.handlePressToDo(actions, item.weekNumber, item.lessonNumber)}
+            onPress={() => this.goToLesson(actions, item.weekNumber, item.lessonNumber)}
           >
             <Left style={{ flex: 1 }}>
               <Image

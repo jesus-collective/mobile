@@ -1086,7 +1086,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
     actions: CourseActions,
     week: CourseWeek
   ): React.ReactNode {
-    if (week?.lessons && state.activeLesson) {
+    if (week?.lessons && state.activeLesson !== null) {
       const lesson = week.lessons?.items?.[state.activeLesson]
       return this.renderLessonType(state, actions, week, lesson)
     } else {
