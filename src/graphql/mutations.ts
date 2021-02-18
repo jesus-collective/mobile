@@ -7327,6 +7327,288 @@ export const deleteDirectMessage = /* GraphQL */ `
     }
   }
 `
+export const createCrmRoot = /* GraphQL */ `
+  mutation CreateCrmRoot($input: CreateCRMRootInput!) {
+    createCRMRoot(input: $input) {
+      id
+      messages {
+        items {
+          id
+          rootId
+          content
+          when
+          authorName
+          authorId
+          attachment
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const updateCrmRoot = /* GraphQL */ `
+  mutation UpdateCrmRoot($input: UpdateCRMRootInput!) {
+    updateCRMRoot(input: $input) {
+      id
+      messages {
+        items {
+          id
+          rootId
+          content
+          when
+          authorName
+          authorId
+          attachment
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const deleteCrmRoot = /* GraphQL */ `
+  mutation DeleteCrmRoot($input: DeleteCRMRootInput!) {
+    deleteCRMRoot(input: $input) {
+      id
+      messages {
+        items {
+          id
+          rootId
+          content
+          when
+          authorName
+          authorId
+          attachment
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const createCrmMessage = /* GraphQL */ `
+  mutation CreateCrmMessage($input: CreateCRMMessageInput!) {
+    createCRMMessage(input: $input) {
+      id
+      rootId
+      crmRoot {
+        id
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      content
+      when
+      authorName
+      authorId
+      attachment
+      thread {
+        items {
+          id
+          content
+          when
+          authorName
+          authorId
+          attachment
+          parentId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const updateCrmMessage = /* GraphQL */ `
+  mutation UpdateCrmMessage($input: UpdateCRMMessageInput!) {
+    updateCRMMessage(input: $input) {
+      id
+      rootId
+      crmRoot {
+        id
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      content
+      when
+      authorName
+      authorId
+      attachment
+      thread {
+        items {
+          id
+          content
+          when
+          authorName
+          authorId
+          attachment
+          parentId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const deleteCrmMessage = /* GraphQL */ `
+  mutation DeleteCrmMessage($input: DeleteCRMMessageInput!) {
+    deleteCRMMessage(input: $input) {
+      id
+      rootId
+      crmRoot {
+        id
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      content
+      when
+      authorName
+      authorId
+      attachment
+      thread {
+        items {
+          id
+          content
+          when
+          authorName
+          authorId
+          attachment
+          parentId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const createCrmReply = /* GraphQL */ `
+  mutation CreateCrmReply($input: CreateCRMReplyInput!) {
+    createCRMReply(input: $input) {
+      id
+      content
+      when
+      authorName
+      authorId
+      attachment
+      parentId
+      parent {
+        id
+        rootId
+        crmRoot {
+          id
+          createdAt
+          updatedAt
+        }
+        content
+        when
+        authorName
+        authorId
+        attachment
+        thread {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const updateCrmReply = /* GraphQL */ `
+  mutation UpdateCrmReply($input: UpdateCRMReplyInput!) {
+    updateCRMReply(input: $input) {
+      id
+      content
+      when
+      authorName
+      authorId
+      attachment
+      parentId
+      parent {
+        id
+        rootId
+        crmRoot {
+          id
+          createdAt
+          updatedAt
+        }
+        content
+        when
+        authorName
+        authorId
+        attachment
+        thread {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const deleteCrmReply = /* GraphQL */ `
+  mutation DeleteCrmReply($input: DeleteCRMReplyInput!) {
+    deleteCRMReply(input: $input) {
+      id
+      content
+      when
+      authorName
+      authorId
+      attachment
+      parentId
+      parent {
+        id
+        rootId
+        crmRoot {
+          id
+          createdAt
+          updatedAt
+        }
+        content
+        when
+        authorName
+        authorId
+        attachment
+        thread {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
 export const createMessage = /* GraphQL */ `
   mutation CreateMessage($input: CreateMessageInput!) {
     createMessage(input: $input) {

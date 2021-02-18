@@ -6320,6 +6320,288 @@ export const onDeleteDirectMessage = /* GraphQL */ `
     }
   }
 `
+export const onCreateCrmRoot = /* GraphQL */ `
+  subscription OnCreateCrmRoot {
+    onCreateCRMRoot {
+      id
+      messages {
+        items {
+          id
+          rootId
+          content
+          when
+          authorName
+          authorId
+          attachment
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const onUpdateCrmRoot = /* GraphQL */ `
+  subscription OnUpdateCrmRoot {
+    onUpdateCRMRoot {
+      id
+      messages {
+        items {
+          id
+          rootId
+          content
+          when
+          authorName
+          authorId
+          attachment
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const onDeleteCrmRoot = /* GraphQL */ `
+  subscription OnDeleteCrmRoot {
+    onDeleteCRMRoot {
+      id
+      messages {
+        items {
+          id
+          rootId
+          content
+          when
+          authorName
+          authorId
+          attachment
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const onCreateCrmMessage = /* GraphQL */ `
+  subscription OnCreateCrmMessage {
+    onCreateCRMMessage {
+      id
+      rootId
+      crmRoot {
+        id
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      content
+      when
+      authorName
+      authorId
+      attachment
+      thread {
+        items {
+          id
+          content
+          when
+          authorName
+          authorId
+          attachment
+          parentId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const onUpdateCrmMessage = /* GraphQL */ `
+  subscription OnUpdateCrmMessage {
+    onUpdateCRMMessage {
+      id
+      rootId
+      crmRoot {
+        id
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      content
+      when
+      authorName
+      authorId
+      attachment
+      thread {
+        items {
+          id
+          content
+          when
+          authorName
+          authorId
+          attachment
+          parentId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const onDeleteCrmMessage = /* GraphQL */ `
+  subscription OnDeleteCrmMessage {
+    onDeleteCRMMessage {
+      id
+      rootId
+      crmRoot {
+        id
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      content
+      when
+      authorName
+      authorId
+      attachment
+      thread {
+        items {
+          id
+          content
+          when
+          authorName
+          authorId
+          attachment
+          parentId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const onCreateCrmReply = /* GraphQL */ `
+  subscription OnCreateCrmReply {
+    onCreateCRMReply {
+      id
+      content
+      when
+      authorName
+      authorId
+      attachment
+      parentId
+      parent {
+        id
+        rootId
+        crmRoot {
+          id
+          createdAt
+          updatedAt
+        }
+        content
+        when
+        authorName
+        authorId
+        attachment
+        thread {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const onUpdateCrmReply = /* GraphQL */ `
+  subscription OnUpdateCrmReply {
+    onUpdateCRMReply {
+      id
+      content
+      when
+      authorName
+      authorId
+      attachment
+      parentId
+      parent {
+        id
+        rootId
+        crmRoot {
+          id
+          createdAt
+          updatedAt
+        }
+        content
+        when
+        authorName
+        authorId
+        attachment
+        thread {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const onDeleteCrmReply = /* GraphQL */ `
+  subscription OnDeleteCrmReply {
+    onDeleteCRMReply {
+      id
+      content
+      when
+      authorName
+      authorId
+      attachment
+      parentId
+      parent {
+        id
+        rootId
+        crmRoot {
+          id
+          createdAt
+          updatedAt
+        }
+        content
+        when
+        authorName
+        authorId
+        attachment
+        thread {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
 export const onCreateMessage = /* GraphQL */ `
   subscription OnCreateMessage {
     onCreateMessage {
