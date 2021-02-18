@@ -938,7 +938,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
                 ]}
               >
                 <CourseSidebar courseId={this.state.data.id} />
-                <CourseHome courseId={this.state.data.id} />
+                <CourseHome />
                 <CourseDetail />
                 <CourseCoaching />
               </Container>

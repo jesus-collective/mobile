@@ -29,7 +29,6 @@ import { CourseActions, CourseContext, CourseDates, CourseToDo } from "./CourseC
 interface Props {
   navigation?: any
   route?: any
-  courseId: string
 }
 
 class CourseHomeImpl extends JCComponent<Props> {
