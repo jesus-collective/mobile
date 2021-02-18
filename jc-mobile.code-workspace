@@ -68,6 +68,7 @@
       "awsconfig",
       "awsmobile",
       "awsvideoconfig",
+      "boto",
       "cardnumber",
       "cardstyle",
       "closecircleo",
