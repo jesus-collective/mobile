@@ -128,7 +128,11 @@ class MySignUpImpl extends React.Component<Props, State> {
     this.setState({ authError: errorMsg })
     return val
   }
-
+  componentDidUpdate(_prevProps: Props, prevState: State): void {
+    if (prevState.user !== this.state.user) {
+      this.setState({ authError: "" })
+    }
+  }
   async signUp(actions: any): Promise<void> {
     if (this.validate()) {
       this.setState({ authError: "" })
