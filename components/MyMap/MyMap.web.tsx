@@ -380,18 +380,16 @@ class MyMapImpl extends JCComponent<Props, State> {
                 >
                   {this.props.mapData.map((mapItem, index) => {
                     const filters = []
-                    if (!this.state.organizationsEnabled) {
+                    if (this.state.organizationsEnabled) {
                       filters.push("organization")
                     }
-                    if (!this.state.eventsEnabled) {
+                    if (this.state.eventsEnabled) {
                       filters.push("event")
                     }
-                    if (!this.state.profilesEnabled) {
+                    if (this.state.profilesEnabled) {
                       filters.push("profile")
                     }
-
-                    const filtered = filters.filter((item) => mapItem.type === item)
-                    if (filtered.length === 0) {
+                    if (filters.find((item) => item === mapItem.type) === mapItem.type) {
                       return (
                         <Marker
                           key={index}
@@ -401,23 +399,17 @@ class MyMapImpl extends JCComponent<Props, State> {
                           onClick={this.onMarkerClick}
                           position={{ lat: mapItem.latitude, lng: mapItem.longitude }}
                           icon={
-                            this.state.eventsEnabled &&
-                            !this.state.organizationsEnabled &&
-                            !this.state.profilesEnabled
+                            mapItem.type === "event"
                               ? {
                                   url: require("../../assets/svg/map-icon-red.svg"),
                                   scaledSize: new google.maps.Size(32, 32),
                                 }
-                              : this.state.organizationsEnabled &&
-                                !this.state.eventsEnabled &&
-                                !this.state.profilesEnabled
+                              : mapItem.type === "organization"
                               ? {
                                   url: require("../../assets/svg/business-and-trade.svg"),
                                   scaledSize: new google.maps.Size(32, 32),
                                 }
-                              : this.state.profilesEnabled &&
-                                !this.state.organizationsEnabled &&
-                                !this.state.eventsEnabled
+                              : mapItem.type === "profile"
                               ? {
                                   url: require("../../assets/svg/person-silhouette.svg"),
                                   scaledSize: new google.maps.Size(32, 32),
