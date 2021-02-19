@@ -8,7 +8,7 @@ import moment from "moment"
 //import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { Body, Card, CardItem, View } from "native-base"
 import * as React from "react"
-import { Text, TouchableOpacity } from "react-native"
+import { ScrollView, Text, TouchableOpacity } from "react-native"
 import { JCCognitoUser } from "src/types"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
@@ -37,6 +37,7 @@ interface State extends JCState {
   eventsEnabled: boolean
   currentUserLocation: { lat: string; lng: string }
   currentUser: string
+  mapHeight: number
 }
 
 class MyMapImpl extends JCComponent<Props, State> {
@@ -52,6 +53,7 @@ class MyMapImpl extends JCComponent<Props, State> {
       eventsEnabled: false,
       currentUserLocation: null,
       currentUser: null,
+      mapHeight: 0,
     }
     Auth.currentAuthenticatedUser().then((user: JCCognitoUser) => {
       this.setState({
@@ -302,64 +304,68 @@ class MyMapImpl extends JCComponent<Props, State> {
     )
   }
   render() {
-    //console.log(this.props.mapData)
     if (this.props.type === "filters") {
       return (
         <ErrorBoundary>
-          <View style={{ display: "flex", height: this.props.visible ? "75%" : 0 }}>
-            <View style={{ flex: 1, minHeight: 50 }}>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "flex-start",
-                  paddingLeft: "4.5%",
-                }}
-              >
-                <JCSwitch
-                  switchLabel="Show Events"
-                  initState={false}
-                  onPress={() => this.setState({ eventsEnabled: !this.state.eventsEnabled })}
-                ></JCSwitch>
-                <JCSwitch
-                  switchLabel="Show Profiles"
-                  initState={true}
-                  onPress={() => this.setState({ profilesEnabled: !this.state.profilesEnabled })}
-                ></JCSwitch>
-                <JCSwitch
-                  switchLabel="Show Organizations"
-                  initState={true}
-                  containerWidth={200}
-                  onPress={() =>
-                    this.setState({ organizationsEnabled: !this.state.organizationsEnabled })
-                  }
-                ></JCSwitch>
-                <View style={this.styles.style.partnerFriendsLegend}>
-                  <View style={this.styles.style.partnerLegend}>
-                    <View
-                      style={{
-                        backgroundColor: "#f0493e",
-                        borderRadius: 25,
-                        width: 25,
-                        height: 13,
-                      }}
-                    ></View>
-                    <Text style={this.styles.style.fontMyMapLegend}>Partners</Text>
-                  </View>
-                  <View style={this.styles.style.friendsLegend}>
-                    <View
-                      style={{
-                        backgroundColor: "#ffb931",
-                        borderRadius: 25,
-                        width: 25,
-                        height: 13,
-                      }}
-                    ></View>
-                    <Text style={this.styles.style.fontMyMapLegend}>Friends</Text>
+          <View
+            style={{ display: "flex", height: this.props.visible ? "75%" : 0 }}
+            onLayout={(e) => this.setState({ mapHeight: e.nativeEvent.layout.height })}
+          >
+            <View style={{ flex: 1, minHeight: 50, maxHeight: 75 }}>
+              <ScrollView horizontal contentContainerStyle={{ flexGrow: 1 }}>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    paddingLeft: "4.5%",
+                  }}
+                >
+                  <JCSwitch
+                    switchLabel="Show Events"
+                    initState={false}
+                    onPress={() => this.setState({ eventsEnabled: !this.state.eventsEnabled })}
+                  ></JCSwitch>
+                  <JCSwitch
+                    switchLabel="Show Profiles"
+                    initState={true}
+                    onPress={() => this.setState({ profilesEnabled: !this.state.profilesEnabled })}
+                  ></JCSwitch>
+                  <JCSwitch
+                    switchLabel="Show Organizations"
+                    initState={true}
+                    containerWidth={200}
+                    onPress={() =>
+                      this.setState({ organizationsEnabled: !this.state.organizationsEnabled })
+                    }
+                  ></JCSwitch>
+                  <View style={this.styles.style.partnerFriendsLegend}>
+                    <View style={this.styles.style.partnerLegend}>
+                      <View
+                        style={{
+                          backgroundColor: "#f0493e",
+                          borderRadius: 25,
+                          width: 25,
+                          height: 13,
+                        }}
+                      ></View>
+                      <Text style={this.styles.style.fontMyMapLegend}>Partners</Text>
+                    </View>
+                    <View style={this.styles.style.friendsLegend}>
+                      <View
+                        style={{
+                          backgroundColor: "#ffb931",
+                          borderRadius: 25,
+                          width: 25,
+                          height: 13,
+                        }}
+                      ></View>
+                      <Text style={this.styles.style.fontMyMapLegend}>Friends</Text>
+                    </View>
                   </View>
                 </View>
-              </View>
+              </ScrollView>
             </View>
             <View style={{ flex: 9 }}>
               {window.google ? (
@@ -431,8 +437,8 @@ class MyMapImpl extends JCComponent<Props, State> {
                 style={{
                   position: "absolute",
                   alignSelf: "center",
-                  height: "100%",
                   justifyContent: "center",
+                  top: (this.state.mapHeight - 250) / 2,
                 }}
               >
                 {this.state.selectedPlace != null
