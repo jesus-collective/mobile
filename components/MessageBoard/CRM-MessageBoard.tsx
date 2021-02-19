@@ -20,13 +20,16 @@ import {
   CreateCRMReplyInput,
   CreateCrmReplyMutation,
   GetUserQuery,
-  OnCreateCrmMessageSubscription,
-  OnCreateCrmReplySubscription,
+  OnCreateCrmMessageByRootIdSubscription,
+  OnCreateCrmReplyByRootIdSubscription,
 } from "../../src/API"
 import { GetCrmRootQuery } from "../../src/API-crm"
 import { createCrmMessage, createCrmReply } from "../../src/graphql/mutations"
 import { getUser } from "../../src/graphql/queries"
-import { onCreateCrmMessage, onCreateCrmReply } from "../../src/graphql/subscriptions"
+import {
+  onCreateCrmMessageByRootId,
+  onCreateCrmReplyByRootId,
+} from "../../src/graphql/subscriptions"
 import { JCCognitoUser } from "../../src/types"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import FileUpload from "./FileUpload"
@@ -74,39 +77,48 @@ class CrmMessageBoardImpl extends JCComponent<Props, State> {
 
   async connectSubscriptions() {
     const { rootId } = this.props
+    const variables = {
+      rootId,
+    }
 
     const crmMessageListener = (await API.graphql({
-      query: onCreateCrmMessage,
+      query: onCreateCrmMessageByRootId,
+      variables,
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     })) as Observable<{
       provider: any
-      value: GraphQLResult<OnCreateCrmMessageSubscription>
+      value: GraphQLResult<OnCreateCrmMessageByRootIdSubscription>
     }>
 
     this.messageUnsubscribe = crmMessageListener.subscribe({
       next: (incoming) => {
-        console.debug(incoming)
-        const newMessage = incoming.value.data?.onCreateCRMMessage
+        console.debug("new message:", incoming)
 
-        if (newMessage && newMessage.rootId === rootId) {
+        if (incoming.value.data?.onCreateCrmMessageByRootId) {
           this.setState({
-            messages: [...[newMessage], ...(this.state.messages ?? [])],
+            messages: [
+              ...[incoming.value.data.onCreateCrmMessageByRootId],
+              ...(this.state.messages ?? []),
+            ],
           })
         }
       },
     })
 
     const crmReplyListener = (await API.graphql({
-      query: onCreateCrmReply,
+      query: onCreateCrmReplyByRootId,
+      variables,
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     })) as Observable<{
       provider: any
-      value: GraphQLResult<OnCreateCrmReplySubscription>
+      value: GraphQLResult<OnCreateCrmReplyByRootIdSubscription>
     }>
     this.replyUnsubscribe = crmReplyListener.subscribe({
       next: async (incoming) => {
-        const newReply = incoming.value?.data?.onCreateCRMReply
-        if (newReply && newReply?.parent?.rootId === rootId) {
+        console.debug("new reply:", incoming)
+        const newReply = incoming.value?.data?.onCreateCrmReplyByRootId
+
+        if (newReply) {
           const { messages } = this.state
           const index = messages?.findIndex((m) => m?.id === newReply?.parentId)
 
@@ -436,13 +448,20 @@ class CrmMessageBoardImpl extends JCComponent<Props, State> {
 
   async sendReply() {
     const { editorState, attachment, userDetails, replyToParentId } = this.state
-    if (!editorState.getCurrentContent().hasText() || !replyToParentId || !userDetails?.id) {
+    const { rootId } = this.props
+    if (
+      !editorState.getCurrentContent().hasText() ||
+      !replyToParentId ||
+      !userDetails?.id ||
+      !rootId
+    ) {
       return
     }
     try {
       const message = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
       const input: CreateCRMReplyInput = {
         id: uuidv4(),
+        rootId,
         content: message,
         when: Date.now().toString(),
         authorName: `${userDetails?.given_name} ${userDetails?.family_name}`,
@@ -499,83 +518,95 @@ class CrmMessageBoardImpl extends JCComponent<Props, State> {
   handlePressReply(item: Message | Reply, parentId: string, isReply: boolean) {
     this.setState({
       replyToParentId: parentId,
-      replyToWho: `${isReply ? "Continuing thread with" : "Starting thread with"} ${
-        item?.authorName
-      }`,
+      replyToWho: `${
+        isReply || (item && "thread" in item && item.thread?.items?.length)
+          ? "Continuing thread with"
+          : "Starting thread with"
+      } ${item?.authorName}`,
     })
   }
 
   renderMessage(item: Message | Reply, index: number, parentId: string, isReply: boolean) {
-    return (
-      <Card
-        key={index}
-        style={{
-          borderRadius: 10,
-          minHeight: 50,
-          borderColor: "#ffffff",
-          marginLeft: isReply ? 50 : 0,
-        }}
-      >
-        <CardItem style={this.styles.style.coursePageMessageBoard}>
-          <Left style={this.styles.style.coursePageMessageBoardLeftMini}>
-            <TouchableOpacity
-              key={item?.id}
-              onPress={() =>
-                this.props.navigation?.push("ProfileScreen", { id: item?.authorId, create: false })
-              }
-            >
-              <ProfileImage size="small2" user={item?.authorId ?? null} />
-            </TouchableOpacity>
-          </Left>
-          <Right style={this.styles.style.miniMessageBoardRight}>
-            <View>
-              <Text style={this.styles.style.courseFormName}>{item?.authorName}</Text>
-              {item?.when && (
-                <Text style={this.styles.style.groupFormDate}>
-                  {new Date(parseInt(item?.when, 10)).toLocaleString()}
-                </Text>
-              )}
-            </View>
-            <View>
+    if (item) {
+      return (
+        <Card
+          key={index}
+          style={{
+            borderRadius: 10,
+            minHeight: 50,
+            borderColor: "#ffffff",
+            marginLeft: isReply ? 50 : 0,
+          }}
+        >
+          <CardItem style={this.styles.style.coursePageMessageBoard}>
+            <Left style={this.styles.style.coursePageMessageBoardLeftMini}>
               <TouchableOpacity
-                style={{
-                  alignSelf: "flex-end",
-                  margin: 0,
-                  borderWidth: 1,
-                  borderColor: "#F0493E",
-                  borderRadius: 4,
-                  paddingVertical: 7,
-                  paddingHorizontal: 23,
-                }}
-                onPress={() => this.handlePressReply(item, parentId, isReply)}
+                key={item?.id}
+                onPress={() =>
+                  this.props.navigation?.push("ProfileScreen", {
+                    id: item?.authorId,
+                    create: false,
+                  })
+                }
               >
-                <Text
-                  style={{
-                    fontFamily: "Graphik-Regular-App",
-                    fontWeight: "normal",
-                    fontSize: 14,
-                    lineHeight: 20,
-                    color: "#F0493E",
-                  }}
-                >
-                  {`${isReply ? "continue" : "start"} thread`}
-                </Text>
+                <ProfileImage size="small2" user={item?.authorId ?? null} />
               </TouchableOpacity>
-            </View>
-          </Right>
-        </CardItem>
-        <CardItem style={this.styles.style.eventPageMessageBoardInnerCard}>
-          <div id="comment-div">
-            <div
-              dangerouslySetInnerHTML={{
-                __html: this.convertCommentFromJSONToHTML(item?.content),
-              }}
-            ></div>
-          </div>
-        </CardItem>
-        {item?.attachment ? <CardItem>{this.renderFileDownloadBadge(item)}</CardItem> : null}
-      </Card>
-    )
+            </Left>
+            <Right style={this.styles.style.miniMessageBoardRight}>
+              <View>
+                <Text style={this.styles.style.courseFormName}>{item?.authorName}</Text>
+                {item?.when && (
+                  <Text style={this.styles.style.groupFormDate}>
+                    {new Date(parseInt(item?.when, 10)).toLocaleString()}
+                  </Text>
+                )}
+              </View>
+              <View>
+                <TouchableOpacity
+                  style={{
+                    alignSelf: "flex-end",
+                    margin: 0,
+                    borderWidth: 1,
+                    borderColor: "#F0493E",
+                    borderRadius: 4,
+                    paddingVertical: 7,
+                    paddingHorizontal: 23,
+                  }}
+                  onPress={() => this.handlePressReply(item, parentId, isReply)}
+                >
+                  <Text
+                    style={{
+                      fontFamily: "Graphik-Regular-App",
+                      fontWeight: "normal",
+                      fontSize: 14,
+                      lineHeight: 20,
+                      color: "#F0493E",
+                    }}
+                  >
+                    {`${
+                      isReply || ("thread" in item && item.thread?.items?.length)
+                        ? "continue"
+                        : "start"
+                    } thread`}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </Right>
+          </CardItem>
+          <CardItem style={this.styles.style.eventPageMessageBoardInnerCard}>
+            <div id="comment-div">
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: this.convertCommentFromJSONToHTML(item?.content),
+                }}
+              ></div>
+            </div>
+          </CardItem>
+          {item?.attachment ? <CardItem>{this.renderFileDownloadBadge(item)}</CardItem> : null}
+        </Card>
+      )
+    }
+    return null
   }
 
   render() {
