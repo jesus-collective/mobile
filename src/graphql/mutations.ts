@@ -7417,6 +7417,7 @@ export const createCrmMessage = /* GraphQL */ `
       thread {
         items {
           id
+          rootId
           content
           when
           authorName
@@ -7454,6 +7455,7 @@ export const updateCrmMessage = /* GraphQL */ `
       thread {
         items {
           id
+          rootId
           content
           when
           authorName
@@ -7491,6 +7493,7 @@ export const deleteCrmMessage = /* GraphQL */ `
       thread {
         items {
           id
+          rootId
           content
           when
           authorName
@@ -7511,6 +7514,7 @@ export const createCrmReply = /* GraphQL */ `
   mutation CreateCrmReply($input: CreateCRMReplyInput!) {
     createCRMReply(input: $input) {
       id
+      rootId
       content
       when
       authorName
@@ -7545,6 +7549,7 @@ export const updateCrmReply = /* GraphQL */ `
   mutation UpdateCrmReply($input: UpdateCRMReplyInput!) {
     updateCRMReply(input: $input) {
       id
+      rootId
       content
       when
       authorName
@@ -7579,6 +7584,7 @@ export const deleteCrmReply = /* GraphQL */ `
   mutation DeleteCrmReply($input: DeleteCRMReplyInput!) {
     deleteCRMReply(input: $input) {
       id
+      rootId
       content
       when
       authorName

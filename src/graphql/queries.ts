@@ -2489,6 +2489,7 @@ export const getCrmMessage = /* GraphQL */ `
       thread {
         items {
           id
+          rootId
           content
           when
           authorName
@@ -2535,6 +2536,7 @@ export const getCrmReply = /* GraphQL */ `
   query GetCrmReply($id: ID!) {
     getCRMReply(id: $id) {
       id
+      rootId
       content
       when
       authorName
@@ -2570,6 +2572,7 @@ export const listCrmReplys = /* GraphQL */ `
     listCRMReplys(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        rootId
         content
         when
         authorName

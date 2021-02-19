@@ -607,6 +607,7 @@ export type DeleteCRMMessageInput = {
 
 export type CreateCRMReplyInput = {
   id?: string | null,
+  rootId: string,
   content: string,
   when: string,
   authorName: string,
@@ -617,6 +618,7 @@ export type CreateCRMReplyInput = {
 
 export type UpdateCRMReplyInput = {
   id: string,
+  rootId?: string | null,
   content?: string | null,
   when?: string | null,
   authorName?: string | null,
@@ -1265,6 +1267,7 @@ export type ModelCRMMessageFilterInput = {
 
 export type ModelCRMReplyFilterInput = {
   id?: ModelIDFilterInput | null,
+  rootId?: ModelIDFilterInput | null,
   content?: ModelStringFilterInput | null,
   when?: ModelStringFilterInput | null,
   authorName?: ModelStringFilterInput | null,
@@ -10213,6 +10216,7 @@ export type CreateCrmMessageMutation = {
       items:  Array< {
         __typename: "CRMReply",
         id: string,
+        rootId: string,
         content: string,
         when: string,
         authorName: string,
@@ -10258,6 +10262,7 @@ export type UpdateCrmMessageMutation = {
       items:  Array< {
         __typename: "CRMReply",
         id: string,
+        rootId: string,
         content: string,
         when: string,
         authorName: string,
@@ -10303,6 +10308,7 @@ export type DeleteCrmMessageMutation = {
       items:  Array< {
         __typename: "CRMReply",
         id: string,
+        rootId: string,
         content: string,
         when: string,
         authorName: string,
@@ -10327,6 +10333,7 @@ export type CreateCrmReplyMutation = {
   createCRMReply:  {
     __typename: "CRMReply",
     id: string,
+    rootId: string,
     content: string,
     when: string,
     authorName: string,
@@ -10368,6 +10375,7 @@ export type UpdateCrmReplyMutation = {
   updateCRMReply:  {
     __typename: "CRMReply",
     id: string,
+    rootId: string,
     content: string,
     when: string,
     authorName: string,
@@ -10409,6 +10417,7 @@ export type DeleteCrmReplyMutation = {
   deleteCRMReply:  {
     __typename: "CRMReply",
     id: string,
+    rootId: string,
     content: string,
     when: string,
     authorName: string,
@@ -16998,6 +17007,7 @@ export type GetCrmMessageQuery = {
       items:  Array< {
         __typename: "CRMReply",
         id: string,
+        rootId: string,
         content: string,
         when: string,
         authorName: string,
@@ -17057,6 +17067,7 @@ export type GetCrmReplyQuery = {
   getCRMReply:  {
     __typename: "CRMReply",
     id: string,
+    rootId: string,
     content: string,
     when: string,
     authorName: string,
@@ -17102,6 +17113,7 @@ export type ListCrmReplysQuery = {
     items:  Array< {
       __typename: "CRMReply",
       id: string,
+      rootId: string,
       content: string,
       when: string,
       authorName: string,
@@ -20032,6 +20044,94 @@ export type OnCreateMessageByRoomIdSubscription = {
       createdAt: string,
       updatedAt: string,
     } | null,
+  } | null,
+};
+
+export type OnCreateCrmMessageByRootIdSubscriptionVariables = {
+  rootId: string,
+};
+
+export type OnCreateCrmMessageByRootIdSubscription = {
+  onCreateCrmMessageByRootId:  {
+    __typename: "CRMMessage",
+    id: string,
+    rootId: string,
+    crmRoot:  {
+      __typename: "CRMRoot",
+      id: string,
+      messages:  {
+        __typename: "ModelCRMMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    content: string,
+    when: string,
+    authorName: string,
+    authorId: string,
+    attachment: string | null,
+    thread:  {
+      __typename: "ModelCRMReplyConnection",
+      items:  Array< {
+        __typename: "CRMReply",
+        id: string,
+        rootId: string,
+        content: string,
+        when: string,
+        authorName: string,
+        authorId: string,
+        attachment: string | null,
+        parentId: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateCrmReplyByRootIdSubscriptionVariables = {
+  rootId: string,
+};
+
+export type OnCreateCrmReplyByRootIdSubscription = {
+  onCreateCrmReplyByRootId:  {
+    __typename: "CRMReply",
+    id: string,
+    rootId: string,
+    content: string,
+    when: string,
+    authorName: string,
+    authorId: string,
+    attachment: string | null,
+    parentId: string,
+    parent:  {
+      __typename: "CRMMessage",
+      id: string,
+      rootId: string,
+      crmRoot:  {
+        __typename: "CRMRoot",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      content: string,
+      when: string,
+      authorName: string,
+      authorId: string,
+      attachment: string | null,
+      thread:  {
+        __typename: "ModelCRMReplyConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
@@ -27065,6 +27165,7 @@ export type OnCreateCrmMessageSubscription = {
       items:  Array< {
         __typename: "CRMReply",
         id: string,
+        rootId: string,
         content: string,
         when: string,
         authorName: string,
@@ -27106,6 +27207,7 @@ export type OnUpdateCrmMessageSubscription = {
       items:  Array< {
         __typename: "CRMReply",
         id: string,
+        rootId: string,
         content: string,
         when: string,
         authorName: string,
@@ -27147,6 +27249,7 @@ export type OnDeleteCrmMessageSubscription = {
       items:  Array< {
         __typename: "CRMReply",
         id: string,
+        rootId: string,
         content: string,
         when: string,
         authorName: string,
@@ -27167,6 +27270,7 @@ export type OnCreateCrmReplySubscription = {
   onCreateCRMReply:  {
     __typename: "CRMReply",
     id: string,
+    rootId: string,
     content: string,
     when: string,
     authorName: string,
@@ -27204,6 +27308,7 @@ export type OnUpdateCrmReplySubscription = {
   onUpdateCRMReply:  {
     __typename: "CRMReply",
     id: string,
+    rootId: string,
     content: string,
     when: string,
     authorName: string,
@@ -27241,6 +27346,7 @@ export type OnDeleteCrmReplySubscription = {
   onDeleteCRMReply:  {
     __typename: "CRMReply",
     id: string,
+    rootId: string,
     content: string,
     when: string,
     authorName: string,

@@ -230,6 +230,79 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
     }
   }
 `
+export const onCreateCrmMessageByRootId = /* GraphQL */ `
+  subscription OnCreateCrmMessageByRootId($rootId: ID!) {
+    onCreateCrmMessageByRootId(rootId: $rootId) {
+      id
+      rootId
+      crmRoot {
+        id
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      content
+      when
+      authorName
+      authorId
+      attachment
+      thread {
+        items {
+          id
+          rootId
+          content
+          when
+          authorName
+          authorId
+          attachment
+          parentId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const onCreateCrmReplyByRootId = /* GraphQL */ `
+  subscription OnCreateCrmReplyByRootId($rootId: ID!) {
+    onCreateCrmReplyByRootId(rootId: $rootId) {
+      id
+      rootId
+      content
+      when
+      authorName
+      authorId
+      attachment
+      parentId
+      parent {
+        id
+        rootId
+        crmRoot {
+          id
+          createdAt
+          updatedAt
+        }
+        content
+        when
+        authorName
+        authorId
+        attachment
+        thread {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
 export const onCreateApplicationProcess = /* GraphQL */ `
   subscription OnCreateApplicationProcess {
     onCreateApplicationProcess {
@@ -6410,6 +6483,7 @@ export const onCreateCrmMessage = /* GraphQL */ `
       thread {
         items {
           id
+          rootId
           content
           when
           authorName
@@ -6447,6 +6521,7 @@ export const onUpdateCrmMessage = /* GraphQL */ `
       thread {
         items {
           id
+          rootId
           content
           when
           authorName
@@ -6484,6 +6559,7 @@ export const onDeleteCrmMessage = /* GraphQL */ `
       thread {
         items {
           id
+          rootId
           content
           when
           authorName
@@ -6504,6 +6580,7 @@ export const onCreateCrmReply = /* GraphQL */ `
   subscription OnCreateCrmReply {
     onCreateCRMReply {
       id
+      rootId
       content
       when
       authorName
@@ -6538,6 +6615,7 @@ export const onUpdateCrmReply = /* GraphQL */ `
   subscription OnUpdateCrmReply {
     onUpdateCRMReply {
       id
+      rootId
       content
       when
       authorName
@@ -6572,6 +6650,7 @@ export const onDeleteCrmReply = /* GraphQL */ `
   subscription OnDeleteCrmReply {
     onDeleteCRMReply {
       id
+      rootId
       content
       when
       authorName

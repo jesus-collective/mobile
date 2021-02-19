@@ -871,8 +871,8 @@ type Subscription {
   onCreateMessageByRoomId(roomId: ID!): Message
     @aws_subscribe(mutations: ["createMessage"])
 
-  onCreateCrmMessageByRootId(rootId: ID!): CRMMessage @aws_subscribe(mutations: "createCrmMessage")
-  onCreateCrmReplyByRootId(rootId: ID!): CRMReply @aws_subscribe(mutations: "createCrmReply")
+  onCreateCrmMessageByRootId(rootId: ID!): CRMMessage @aws_subscribe(mutations: ["createCRMMessage"])
+  onCreateCrmReplyByRootId(rootId: ID!): CRMReply @aws_subscribe(mutations: ["createCRMReply"])
 }
 
 type ResourceRoot 
