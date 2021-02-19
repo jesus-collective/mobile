@@ -124,6 +124,7 @@ class CrmMessageBoardImpl extends JCComponent<Props, State> {
 
           const {
             id,
+            rootId,
             content,
             when,
             authorName,
@@ -142,6 +143,7 @@ class CrmMessageBoardImpl extends JCComponent<Props, State> {
               ...[
                 {
                   id,
+                  rootId,
                   content,
                   when,
                   authorName,

@@ -40,6 +40,7 @@ export type ModelCRMReplyConnection = {
 export type CRMReply = {
   __typename: "CRMReply"
   id?: string
+  rootId?: string
   content?: string
   when?: string
   authorName?: string
@@ -75,6 +76,7 @@ export type GetCrmRootQuery = {
           items?: Array<{
             __typename: "CRMReply"
             id: string
+            rootId: string
             content: string
             when: string
             authorName: string

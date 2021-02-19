@@ -14,6 +14,7 @@ export const getCrmRoot = /* GraphQL */ `
           thread {
             items {
               id
+              rootId
               content
               when
               authorName
