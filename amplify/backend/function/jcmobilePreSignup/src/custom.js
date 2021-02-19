@@ -34,7 +34,7 @@ exports.handler = (event, context, callback) => {
     "courseCoach4@jesuscollective.com",
     "legacyUserGroup1@jesuscollective.com",
   ]
-  if (emailList.includes(event.request.userAttributes.email)) {
+  if (process.env.ENV == "beta" && emailList.includes(event.request.userAttributes.email)) {
     event.response.autoConfirmUser = "true"
     event.response.autoVerifyPhone = "true"
     event.response.autoVerifyEmail = "true"
