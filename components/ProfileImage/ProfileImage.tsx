@@ -65,11 +65,10 @@ class MyProfileImpl extends JCComponent<Props, State> {
   }
   getProfileImage(user: any): void {
     if (user == "" || user == null) {
-      this.state = {
-        ...super.getInitialState(),
+      this.setState({
         profileImage: null,
         showEmpty: true,
-      }
+      })
     } else {
       Storage.get(
         this.props.size == "small" || this.props.size == "xsmall"
