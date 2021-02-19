@@ -1,19 +1,14 @@
 import { Button } from "native-base"
 import React from "react"
+import { Text } from "react-native"
 
 interface Props {
   handleUploadCallback(e: React.ChangeEvent<HTMLInputElement>): Promise<void>
 }
 
-export default function FileUpload({ handleUploadCallback }: Props) {
+export default function FileUpload({ handleUploadCallback }: Props): JSX.Element {
   return (
     <Button
-      textStyle={{
-        fontFamily: "Graphik-Regular-App",
-        fontWeight: "600",
-        fontSize: 16,
-        color: "#333333",
-      }}
       style={{
         borderRadius: 4,
         backgroundColor: "#c4c4c450",
@@ -26,7 +21,16 @@ export default function FileUpload({ handleUploadCallback }: Props) {
         marginRight: 40,
       }}
     >
-      Upload File
+      <Text
+        style={{
+          fontFamily: "Graphik-Regular-App",
+          fontWeight: "600",
+          fontSize: 16,
+          color: "#333333",
+        }}
+      >
+        Upload File
+      </Text>
       <input
         multiple={false}
         style={{
