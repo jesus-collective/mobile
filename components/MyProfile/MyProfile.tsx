@@ -6,18 +6,22 @@ import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment"
 import { Badge, Button, Content, Form, Label, Picker, View } from "native-base"
 import * as React from "react"
+import { useContext } from "react"
 import { isBrowser, isTablet } from "react-device-detect"
 import { ActivityIndicator, Image, Text, TextInput, TouchableOpacity } from "react-native"
 import { JCCognitoUser } from "src/types"
 import EditableLocation from "../../components/Forms/EditableLocation"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
+import CrmMessageBoard from "../../components/MessageBoard/CRM-MessageBoard"
 import MyMap from "../../components/MyMap/MyMap"
 import Sentry from "../../components/Sentry"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
-import { GetUserQuery, ListInvoicesMutation } from "../../src/API"
+import { CreateCrmRootMutation, GetUserQuery, ListInvoicesMutation } from "../../src/API"
+import { GetCrmRootQuery } from "../../src/API-crm"
 import awsconfig from "../../src/aws-exports"
 import { constants } from "../../src/constants"
+import { getCrmRoot } from "../../src/graphql-custom/crm"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
 import EditableText from "../Forms/EditableText"
@@ -42,8 +46,11 @@ interface Props {
   route?: any
   loadId?: any
   hideOrg?: boolean
+  userActions: UserActions
 }
 export type UserData = NonNullable<GetUserQuery["getUser"]>
+
+type CrmMessages = NonNullable<NonNullable<GetCrmRootQuery["getCRMRoot"]>["messages"]>["items"]
 
 interface State extends JCState {
   UserDetails: UserData | null
@@ -52,7 +59,6 @@ interface State extends JCState {
   profileImage: string
   validationText: string
   mapVisible: boolean
-
   isEditable: boolean
   showPage: "profile" | "settings" | "billing" | "admin"
   editMode: boolean
@@ -66,8 +72,17 @@ interface State extends JCState {
   invoices: NonNullable<NonNullable<ListInvoicesMutation>["listInvoices"]>["data"]
   firstName: string
   lastName: string
+  messages: CrmMessages
 }
+
+type ScrollRef = {
+  _root: {
+    scrollToPosition(x: number, y: number): void
+  }
+} | null
+
 class MyProfileImpl extends JCComponent<Props, State> {
+  scrollRef?: ScrollRef = null
   constructor(props: Props) {
     super(props)
     this.state = {
@@ -90,9 +105,47 @@ class MyProfileImpl extends JCComponent<Props, State> {
       noUserFound: false,
       firstName: "",
       lastName: "",
+      messages: null,
     }
-    this.getUserDetails()
   }
+
+  async componentDidMount() {
+    await this.getUserDetails()
+    await this.fetchCrm()
+  }
+
+  async fetchCrm() {
+    if (this.props.userActions.isMemberOf("admin")) {
+      const variables = { id: this.state.UserDetails?.id }
+      try {
+        // fetch CRM root
+        const crmRoot = (await API.graphql({
+          query: getCrmRoot,
+          variables,
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })) as GraphQLResult<GetCrmRootQuery>
+
+        if (crmRoot.data?.getCRMRoot) {
+          console.debug("crmRoot exists:", crmRoot.data.getCRMRoot)
+          this.setState({ messages: crmRoot.data?.getCRMRoot?.messages?.items ?? [] })
+        } else {
+          // if CRM does not exist, create it
+          const createCrmRoot = (await API.graphql({
+            query: mutations.createCrmRoot,
+            variables: { input: variables },
+            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+          })) as GraphQLResult<CreateCrmRootMutation>
+
+          console.debug("crmRoot created:", createCrmRoot.data?.createCRMRoot)
+          // recursive call to fetch data after CRM root is created
+          this.fetchCrm()
+        }
+      } catch (e) {
+        console.error(e)
+      }
+    }
+  }
+
   async listInvoices() {
     try {
       const invoice = (await API.graphql({
@@ -872,12 +925,14 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 <JCButton
                   testID="profile-setmap"
                   buttonType={ButtonTypes.TransparentBoldBlackNoMargin}
-                  onPress={() =>
+                  onPress={() => {
                     this.setState({
                       showPage: "admin",
                       editMode: false,
                     })
-                  }
+
+                    this.scrollRef?._root.scrollToPosition(0, 80)
+                  }}
                 >
                   Admin
                 </JCButton>
@@ -1763,11 +1818,20 @@ class MyProfileImpl extends JCComponent<Props, State> {
     else return null
   }
   renderAdmin(): React.ReactNode {
-    return (
-      <View style={this.styles.style.profileScreenRightCard}>
-        <Text style={this.styles.style.myprofileAboutMe}>Admin</Text>
-      </View>
-    )
+    if (this.props.userActions.isMemberOf("admin")) {
+      return (
+        <View style={this.styles.style.profileScreenRightCard}>
+          <View style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+            <View>
+              <Text style={this.styles.style.fontBold}>Admin/CRM</Text>
+            </View>
+            <CrmMessageBoard messages={this.state.messages} rootId={this.state.UserDetails?.id} />
+          </View>
+        </View>
+      )
+    }
+
+    return null
   }
   render(): React.ReactNode {
     return (
@@ -1778,7 +1842,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
           if (this.state.noUserFound) return <Text>No User Found</Text>
 
           return this.state.UserDetails != null ? (
-            <Content>
+            <Content ref={(ref) => (this.scrollRef = ref as ScrollRef)}>
               {this.renderTopBar(userActions)}
 
               <Form style={this.styles.style.myProfileMainContainer}>
@@ -1799,5 +1863,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
 export default function MyProfile(props: Props): JSX.Element {
   const route = useRoute()
   const navigation = useNavigation()
-  return <MyProfileImpl {...props} navigation={navigation} route={route} />
+  const { userActions } = useContext(UserContext)
+  return (
+    <MyProfileImpl {...props} navigation={navigation} route={route} userActions={userActions} />
+  )
 }
