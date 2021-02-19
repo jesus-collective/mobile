@@ -1036,6 +1036,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                             How many employees are there in the organization?
                           </Label>
                           <Picker
+                            testID="org-numEmployees"
                             style={this.styles.style.myprofilePicker}
                             onValueChange={(itemValue) => {
                               this.handleInputChange(itemValue, "orgSize")
@@ -1072,6 +1073,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                             Average Sunday morning attendance
                           </Label>
                           <Picker
+                            testID="org-aveSunday"
                             style={this.styles.style.myprofilePicker}
                             onValueChange={(itemValue) => {
                               this.handleInputChange(itemValue, "sundayAttendance")
@@ -1109,6 +1111,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                             Number of volunteers
                           </Label>
                           <Picker
+                            testID="org-numVolunteers"
                             style={this.styles.style.myprofilePicker}
                             onValueChange={(itemValue) => {
                               this.handleInputChange(itemValue, "numberVolunteers")

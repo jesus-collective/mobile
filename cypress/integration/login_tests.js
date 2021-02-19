@@ -65,8 +65,11 @@ const completeOrgScreen = () => {
   cy.get('input[placeholder="Search Places ..."]').type("Toronto")
   cy.get('[data-testId="profile-location-0"]').click()
   cy.get('[data-testId="org-typeOfOrg"]').select("Church", { force: true })
+  cy.get('[data-testId="org-numEmployees"]').select("1-25", { force: true })
+  cy.get('[data-testId="org-aveSunday"]').select("1-50", { force: true })
+  cy.get('[data-testId="org-numVolunteers"]').select("1-25", { force: true })
 
-  //cy.get('[data-testId="org-denomination"]').type("Moon")
+  cy.get('[data-testId="org-denomination"]').type("Moon")
   //cy.get('[data-testId="org-pplServed"]').type("1000")
   cy.get('[data-testId="org-orgDescription"]').type("About the org...")
 
