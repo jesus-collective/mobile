@@ -979,6 +979,7 @@ class OrganizationImpl extends JCComponent<Props, State> {
                       {this.state.isEditable && this.state.editMode ? (
                         <View style={this.styles.style.myProfileOrgView}>
                           <Picker
+                            testId="org-typeOfOrg"
                             style={this.styles.style.myprofilePicker}
                             onValueChange={(itemValue) => {
                               this.handleInputChange(itemValue, "orgType")
