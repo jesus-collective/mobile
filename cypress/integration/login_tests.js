@@ -50,6 +50,13 @@ const completeOrgScreen = () => {
   cy.get('[data-testId="org-Province"]').type("Ontario")
   cy.get('[data-testId="org-PostalCode"]').type("M4W 2Z7")
   cy.get('[data-testId="org-Country"]').type("Canada")
+  cy.fixture(fileName).then((fileContent) => {
+    cy.get('[data-testid="org-image"]').attachFile({
+      fileContent,
+      fileName: fileName,
+      mimeType: "image/jpeg",
+    })
+  })
   //  cy.get('[data-testId="org-Email"]').type("test@jesuscollective.com")
   //  cy.get('[data-testId="org-Phone"]').type("555-555-5555")
   cy.get('[data-testId="org-aboutMeLong"]').type("Test ORG 123")
@@ -63,15 +70,7 @@ const completeOrgScreen = () => {
   //cy.get('[data-testId="org-pplServed"]').type("1000")
   cy.get('[data-testId="org-orgDescription"]').type("About the org...")
 
-  cy.fixture(fileName).then((fileContent) => {
-    cy.get('[data-testid="org-image"]').attachFile({
-      fileContent,
-      fileName: fileName,
-      mimeType: "image/jpeg",
-    })
-  })
-
-  cy.get('input[data-testId="org-save-true"]').click()
+  cy.get('[data-testId="org-save-true"]').click()
 }
 const completeProfileScreen = (hasOrgFields) => {
   cy.get('[data-testId="profile-aboutMeShort"]', { timeout: 30000 })
