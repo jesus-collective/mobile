@@ -120,7 +120,7 @@
     "babel-plugin-dynamic-import-node": "^2.3.3",
     "babel-plugin-istanbul": "^6.0.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
-    "cypress": "6.4.0",
+    "cypress": "^6.5.0",
     "cypress-file-upload": "^5.0.2",
     "dynamic-cdn-webpack-plugin": "^5.0.0",
     "eslint": "^7.3.1",
