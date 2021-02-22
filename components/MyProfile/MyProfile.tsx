@@ -1769,7 +1769,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       </Text>
                       <Text style={{ flex: 1 }}>{item?.status}</Text>
                       <Text style={{ flex: 1 }}>
-                        {"$" + parseInt(item?.total ?? "0").toFixed(2)}{" "}
+                        {"$" + (parseInt(item?.total ?? "0") / 100).toFixed(2)}{" "}
                         {item?.currency?.toUpperCase()}
                       </Text>
                     </View>
