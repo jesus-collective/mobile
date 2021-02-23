@@ -859,10 +859,10 @@ const courseStyles = EStyleSheet.create({
     justifyContent: "flex-start",
   },
   miniMessageBoardRight: {
-    flexDirection: "row", 
-    flex: 7, 
-    alignItems: "space-between", 
-    justifyContent: 'space-between'
+    flexDirection: "row",
+    flex: 7,
+    alignItems: "space-between",
+    justifyContent: "space-between",
   },
   "@media (min-width: 350) and (max-width: 768)": {
     courseAssignmentScreenRightCard: {
@@ -1181,7 +1181,7 @@ const courseStyles = EStyleSheet.create({
       marginRight: "5%",
     },
     courseHeaderContainer: {
-      display: 'none',
+      display: "none",
     },
     fontCourseHeaderDescription: {
       marginRight: "5%",
@@ -1214,19 +1214,18 @@ const courseStyles = EStyleSheet.create({
     },
     courseProfileImageContainer: {
       marginTop: 700,
-      
     },
     courseHomeDescriptionText: {
       marginTop: 0,
-      marginRight: 0
+      marginRight: 0,
     },
     courseHomeRightContainer: {
       top: 1350,
-      marginTop: 50
+      marginTop: 50,
     },
     courseProfileImageButtonsContainer: {
       marginRight: 0,
-      marginBottom: 200
+      marginBottom: 200,
     },
     courseDetailMainContainer: {
       flexDirection: "column",
@@ -1300,7 +1299,7 @@ const courseStyles = EStyleSheet.create({
     },
     courseMktDescriptionInput: {
       width: "110%",
-      minHeight: 300,
+      paddingBottom: 20,
     },
     courseZoomMainContainer: {
       flex: "none",
@@ -1345,7 +1344,7 @@ const courseStyles = EStyleSheet.create({
       marginBottom: 30,
     },
     miniMessageBoardRight: {
-      flex: 5, 
+      flex: 5,
     },
   },
 })
