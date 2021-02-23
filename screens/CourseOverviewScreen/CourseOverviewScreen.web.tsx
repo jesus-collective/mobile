@@ -779,6 +779,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                           Cost
                         </Text>
                         <EditableDollar
+                          testID="course-amount"
                           onChange={(value: any) => {
                             this.updateValue("cost", value)
                           }}

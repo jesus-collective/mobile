@@ -23,18 +23,35 @@ describe("Course Admin", () => {
         timeout: 30000,
       })
       cy.get('[data-testId="mygroup-create-Courses-true"]', { timeout: 30000 }).last().click()
-      cy.contains("No Members Yet")
+      cy.contains("No Members Yet", { timeout: 15000 })
       cy.get('[data-testId="course-name"]', { timeout: 30000 }).last().type("Test Course 1")
       cy.get('[data-testId="course-description"]').last().type("Test Course")
       cy.get('[data-testId="course-duration"]').last().type("1 hour")
       cy.get('[data-testId="course-effort"]').last().type("3 days")
-      cy.get('input[placeholder="Enter Course Start Date"]').type("1/1/1")
+      cy.on("uncaught:exception", (err, runnable) => {
+        // returning false here prevents Cypress from
+        // failing the test
+        return false
+      })
+      cy.get('input[placeholder="Enter Course Start Date"]').type("20300202")
+      cy.get('[data-testId="course-amount"]').type("100")
 
-      cy.get('[data-testId="course-createNew"]').last().click()
+      cy.get('[data-testId="course-createNew-true"]').last().click()
 
-      cy.get('[data-testId="course-name"]').last().type("Test Course 1 - updated")
-      cy.get('[data-testId="course-save"]').last().click()
-      cy.get('[data-testId="course-goto"]').last().click()
+      cy.get('[data-testId="course-name"]').last().type("-edit")
+      cy.get('[data-testId="course-save-true"]').last().click()
+      cy.get('[data-testId="course-goto-true"]').last().click()
+
+      cy.get('[data-testId="course-edit-true"]').last().click()
+
+      cy.get('[data-testId="course-menu-home-true"]').last().click()
+
+      //TODO UPLOAD FILE
+      //TODO EDIT Course Description
+      //TODO ADD USERS
+
+      cy.get('[data-testId="course-menu-details-true"]').last().click()
+      //TODO SETUP COURSE
 
       //      cy.get('[data-testId="course-delete"]').last()
       //      cy.get('[data-testId="course-purchase"]').last()

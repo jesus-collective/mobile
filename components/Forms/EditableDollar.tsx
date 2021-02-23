@@ -13,6 +13,7 @@ interface Props {
   inputStyle?: any
   multiline: boolean
   placeholder?: string
+  testID?: string
   onChange?(value: string): void
 }
 interface State extends JCState {
@@ -47,6 +48,7 @@ export default class EditableDollar extends JCComponent<Props, State> {
         <FormControl fullWidth>
           <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>
           <Input
+            data-testid={this.props.testID}
             style={{ width: "70%" }}
             value={this.props.value}
             onChange={(value) => {
