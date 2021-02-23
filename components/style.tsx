@@ -1472,6 +1472,10 @@ export default class MainStyles {
         justifyContent: "flex-end",
         alignItems: "flex-start",
       },
+      mapTogglesContainer: {
+        flex: 1,
+        minHeight: 50,
+      },
 
       // Media Query Desktop Tablet
       "@media (min-width: 350) and (max-width: 768)": {
@@ -2108,6 +2112,10 @@ export default class MainStyles {
         fontMyMapOptions: {
           marginLeft: 0,
           marginBottom: 8,
+        },
+        mapTogglesContainer: {
+          overflow: "scroll",
+          marginRight: "4.5%",
         },
       },
 

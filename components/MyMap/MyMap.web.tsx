@@ -307,7 +307,7 @@ class MyMapImpl extends JCComponent<Props, State> {
       return (
         <ErrorBoundary>
           <View style={{ display: "flex", height: this.props.visible ? "75%" : 0 }}>
-            <View style={{ flex: 1, minHeight: 50 }}>
+            <View style={this.styles.style.mapTogglesContainer}>
               <View
                 style={{
                   flex: 1,
