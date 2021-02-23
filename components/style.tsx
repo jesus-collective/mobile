@@ -1476,6 +1476,9 @@ export default class MainStyles {
         flex: 1,
         minHeight: 50,
       },
+      profileCardContent: {
+        paddingTop: 15,
+      },
 
       // Media Query Desktop Tablet
       "@media (min-width: 350) and (max-width: 768)": {
@@ -2116,6 +2119,12 @@ export default class MainStyles {
         mapTogglesContainer: {
           overflow: "scroll",
           marginRight: "4.5%",
+        },
+        profileCardContent: {
+          paddingTop: 0,
+        },
+        smallProfileImageConversations: {
+          marginBottom: 0,
         },
       },
 
