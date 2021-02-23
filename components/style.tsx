@@ -2090,7 +2090,7 @@ export default class MainStyles {
         mySignUpLeftPasswordContainer: {
           marginRight: 0,
           fontSize: 15,
-          marginLeft: 10,
+          marginLeft: 0,
         },
         mySignUpPhoneContainer: {
           marginRight: 0,
