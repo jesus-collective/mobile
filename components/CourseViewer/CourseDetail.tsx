@@ -53,6 +53,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
       >
         {state.isEditable && state.editMode ? (
           <EditableDate
+            testID={"course-lessonConfig-zoomDate-" + lesson}
             type="datetime"
             onChange={(time, timeZone) => {
               actions.updateLesson(state.activeWeek, lesson, "time", time)
@@ -73,7 +74,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             }}
             placeholder="Word Count"
             multiline={false}
-            testID="course-wordCount"
+            testID={"course-lessonConfig-wordCount-" + lesson}
             textStyle={this.styles.style.fontFormSmallDarkGreyCourseTopEditable}
             inputStyle={{
               borderWidth: 1,
@@ -114,6 +115,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
         {state.isEditable && state.editMode ? (
           <EditableDate
             type="datetime"
+            testID={"course-lessonConfig-zoomDate-" + lesson}
             onChange={(time, timeZone) => {
               actions.updateLesson(state.activeWeek, lesson, "time", time)
               actions.updateLesson(state.activeWeek, lesson, "tz", timeZone)
@@ -164,7 +166,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
               }}
               placeholder="Word Count"
               multiline={false}
-              testID="course-wordCount"
+              testID={"course-lessonConfig-wordCount-" + lesson}
               textStyle={this.styles.style.fontFormSmallDarkGreyCourseTopEditable}
               inputStyle={{
                 borderWidth: 1,
@@ -208,6 +210,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
           onChange={(e) => {
             actions.updateLesson(state.activeWeek, lesson, "zoomUrl", e)
           }}
+          testID={"course-lessonConfig-zoomUrl-" + lesson}
           placeholder="Enter Event URL"
           multiline={false}
           textStyle={ButtonTypes.courseCardSolid}
@@ -220,6 +223,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
           onChange={(e) => {
             actions.updateLesson(state.activeWeek, lesson, "zoomRecording", e)
           }}
+          testID={"course-lessonConfig-zoomRecordingUrl-" + lesson}
           placeholder="Enter Recording URL"
           multiline={false}
           textStyle={ButtonTypes.courseCardSolid}
@@ -230,6 +234,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
         {state.isEditable && state.editMode ? (
           <EditableDate
             type="datetime"
+            testID={"course-lessonConfig-zoomDate-" + lesson}
             onChange={(time, timeZone) => {
               actions.updateLesson(state.activeWeek, lesson, "time", time)
               actions.updateLesson(state.activeWeek, lesson, "tz", timeZone)
@@ -277,6 +282,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
         {state.isEditable && state.editMode ? (
           <EditableDate
             type="datetime"
+            testID={"course-lessonConfig-zoomDate-" + lesson}
             onChange={(time, timeZone) => {
               actions.updateLesson(state.activeWeek, lesson, "time", time)
               actions.updateLesson(state.activeWeek, lesson, "tz", timeZone)
@@ -454,6 +460,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             ></EditableText>
 
             <EditableRichText
+              testID="course-leader"
               onChange={(val: string) => {
                 actions.updateWeek(state.activeWeek, "leader", val)
               }}
@@ -466,6 +473,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
               return (
                 <TouchableOpacity
                   key={lesson}
+                  testID={"course-lessonButton-" + lesson}
                   onPress={() => {
                     !state.editMode ? actions.setActiveLesson(lesson) : null
                   }}
@@ -509,7 +517,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                           }}
                           placeholder="Title"
                           multiline={true}
-                          testID="course-lessonTitle"
+                          testID={"course-lessonTitle-" + lesson}
                           textStyle={this.styles.style.courseDetailHeading}
                           inputStyle={{
                             borderWidth: 1,
@@ -556,7 +564,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                               }}
                               placeholder="Duration"
                               multiline={false}
-                              testID="course-lessonDuration"
+                              testID={"course-lessonDuration-" + lesson}
                               textStyle={this.styles.style.courseTimeNonEditable}
                               inputStyle={
                                 state.isEditable && state.editMode
@@ -598,6 +606,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
 
                           {state.isEditable && state.editMode ? (
                             <Picker
+                              testID={"course-eventType-" + lesson}
                               onStartShouldSetResponder={() => true}
                               onMoveShouldSetResponderCapture={() => true}
                               onStartShouldSetResponderCapture={() => true}
@@ -644,6 +653,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
                       ) : null}
                       {state.isEditable && state.editMode ? (
                         <TouchableOpacity
+                          testID={"course-deleteLesson-" + lesson}
                           style={{ alignSelf: "center", marginLeft: 15 }}
                           onPress={() => {
                             actions.deleteLesson(state.activeWeek, lesson)
@@ -660,6 +670,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
 
             {state.isEditable && state.editMode ? (
               <TouchableOpacity
+                testID="course-createLesson"
                 onPress={() => {
                   actions.createLesson()
                 }}

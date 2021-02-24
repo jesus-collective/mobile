@@ -62,6 +62,11 @@ const richTextEdit = (id, value) => {
 const addMenuItem = () => {
   cy.get('[data-testId="course-menu-createWeek"]').click({ force: true })
 }
+const gotoMenuItem = (id) => {
+  cy.get('[data-testId="menu-item-' + id + '-button"]')
+    .first()
+    .click({ force: true })
+}
 const editMenuItem = (id, value) => {
   cy.get('[data-testId="menu-item-' + id + '-button"]')
     .first()
@@ -89,6 +94,78 @@ const deleteMenuItem = (id) => {
   cy.get('[data-testId="menu-item-' + id + '-editor"]').clear()
   cy.get('[data-testId="course-menu-createWeek"]').focus()
 }
+const addLesson = () => {
+  cy.get('[data-testId="course-createLesson"]').click()
+}
+const editLesson = (lesson, type) => {
+  cy.get('[data-testId="course-lessonTitle-' + lesson + '"]')
+    .clear()
+    .type("Lesson 1")
+  cy.get('[data-testId="course-lessonDuration-' + lesson + '"]')
+    .clear()
+    .type("2 hours")
+  if (type == "zoom") {
+    cy.get('[data-testId="course-eventType-' + lesson + '"]').select("zoom") //"assignment"|"respond"|"youtube"
+    cy.get('[data-testId="course-lessonConfig-zoomDate-' + lesson + '"]')
+      .clear()
+      .type("2 hours")
+    cy.get('[data-testId="course-lessonConfig-zoomUrl-' + lesson + '"]')
+      .clear()
+      .type("https://google.com")
+    cy.get('[data-testId="course-lessonConfig-zoomRecordingUrl-' + lesson + '"]')
+      .clear()
+      .type("https://google.com")
+  }
+  if (type == "assignment") {
+    cy.get('[data-testId="course-eventType-' + lesson + '"]').select("assignment") //"assignment"|"respond"|"youtube"
+    cy.get('[data-testId="course-lessonConfig-zoomDate-' + lesson + '"]')
+      .clear()
+      .type("2 hours")
+    cy.get('[data-testId="course-lessonConfig-zoomUrl-' + lesson + '"]')
+      .clear()
+      .type("https://google.com")
+    cy.get('[data-testId="course-lessonConfig-zoomRecordingUrl-' + lesson + '"]')
+      .clear()
+      .type("https://google.com")
+    cy.get('[data-testId="course-lessonConfig-wordCount-' + lesson + '"]')
+      .clear()
+      .type("100")
+  }
+  if (type == "respond") {
+    cy.get('[data-testId="course-eventType-' + lesson + '"]').select("respond") //"assignment"|"respond"|"youtube"
+    cy.get('[data-testId="course-lessonConfig-zoomDate-' + lesson + '"]')
+      .clear()
+      .type("2 hours")
+    cy.get('[data-testId="course-lessonConfig-zoomUrl-' + lesson + '"]')
+      .clear()
+      .type("https://google.com")
+    cy.get('[data-testId="course-lessonConfig-zoomRecordingUrl-' + lesson + '"]')
+      .clear()
+      .type("https://google.com")
+    cy.get('[data-testId="course-lessonConfig-wordCount-' + lesson + '"]')
+      .clear()
+      .type("100")
+  }
+  if (type == "youtube") {
+    cy.get('[data-testId="course-eventType-' + lesson + '"]').select("youtube") //"assignment"|"respond"|"youtube"
+    cy.get('[data-testId="course-lessonConfig-zoomDate-' + lesson + '"]')
+      .clear()
+      .type("2 hours")
+    cy.get('[data-testId="course-lessonConfig-zoomUrl-' + lesson + '"]')
+      .clear()
+      .type("https://google.com")
+    cy.get('[data-testId="course-lessonConfig-zoomRecordingUrl-' + lesson + '"]')
+      .clear()
+      .type("https://google.com")
+    cy.get('[data-testId="course-lessonConfig-wordCount-' + lesson + '"]')
+      .clear()
+      .type("100")
+  }
+}
+const deleteLesson = (lesson) => {
+  cy.get('[data-testId="course-deleteLesson-' + lesson + '"]').click()
+}
+
 describe("Course Admin", () => {
   sizes.forEach((size) => {
     it("Size - " + size, () => {
@@ -108,17 +185,29 @@ describe("Course Admin", () => {
 
       cy.get('[data-testId="course-edit-true"]', { timeout: 15000 }).last().click()
 
-      richTextEdit("course-introduction", "Test123")
+      //   richTextEdit("course-introduction", "Test123")
 
       cy.get('[data-testId="course-menu-details-true"]', { timeout: 15000 })
         .last()
         .click({ force: true })
-      deleteMenuItem(3)
-      deleteMenuItem(2)
-      deleteMenuItem(1)
-      deleteMenuItem(0)
-      addMenuItem()
-      editMenuItem(0, "Week 1")
+      //deleteMenuItem(3)
+      //deleteMenuItem(2)
+      //deleteMenuItem(1)
+      //deleteMenuItem(0)
+      //addMenuItem()
+      //editMenuItem(0, "Week 1")
+      gotoMenuItem(0)
+      cy.get('[data-testId="course-edit-true"]', { timeout: 15000 }).last().click()
+
+      cy.get('[data-testId="course-weekTitle"]', { timeout: 15000 })
+        .last()
+        .clear()
+        .type("Science 101")
+      richTextEdit("course-leader", "Test 123")
+      deleteLesson(1)
+      deleteLesson(0)
+      addLesson()
+      editLesson(0, "zoom")
       //cy.get('[data-testId="course-menu-home-true"]', { timeout: 15000 }).last().click()
       //TODO UPLOAD FILE
       //TODO EDIT Course Description
@@ -129,7 +218,7 @@ describe("Course Admin", () => {
       //      cy.get('[data-testId="course-delete"]').last()
       //      cy.get('[data-testId="course-purchase"]').last()
 
-      cy.get('[data-testId="header-logo"]').last().click()
+      // cy.get('[data-testId="header-logo"]').last().click()
     })
   })
 })
