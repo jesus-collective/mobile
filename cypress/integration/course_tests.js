@@ -55,17 +55,39 @@ const gotoCourse = (courseName) => {
 }
 const richTextEdit = (id, value) => {
   cy.get('[data-testId="' + id + '-holdToEdit"]').click()
-  cy.get('[data-testId="' + id + '-editor"]').type(value)
+  cy.get('[data-testId="' + id + '-editor"]')
+    .clear()
+    .type(value)
 }
-const addMenuItem = (value) => {
-  cy.get('[data-testId="course-menu-createWeek"]').click()
-  cy.get('[data-testId="menu-item-0-button"]').trigger("mousedown")
-  cy.wait(2000)
-  cy.get('[data-testId="menu-item-0-button"]').trigger("mouseleave")
-  cy.get('[data-testId="menu-item-0-button"]').trigger("mousedown")
-  cy.wait(2000)
-  cy.get('[data-testId="menu-item-0-button"]').trigger("mouseleave")
-  cy.get('[data-testId="menu-item-0-editor"]').type(value)
+const addMenuItem = () => {
+  cy.get('[data-testId="course-menu-createWeek"]').click({ force: true })
+}
+const editMenuItem = (id, value) => {
+  cy.get('[data-testId="menu-item-' + id + '-button"]')
+    .first()
+    .click({ force: true })
+
+  cy.get('[data-testId="menu-item-' + id + '-button"]')
+    .first()
+    .trigger("touchstart", { force: true })
+    .wait(3000)
+  cy.get('[data-testId="menu-item-' + id + '-editor"]').trigger("touchleave")
+  cy.get('[data-testId="menu-item-' + id + '-editor"]')
+    .clear()
+    .type(value)
+}
+const deleteMenuItem = (id) => {
+  cy.get('[data-testId="menu-item-' + id + '-button"]')
+    .first()
+    .click({ force: true })
+
+  cy.get('[data-testId="menu-item-' + id + '-button"]')
+    .first()
+    .trigger("touchstart", { force: true })
+    .wait(3000)
+  cy.get('[data-testId="menu-item-' + id + '-editor"]').trigger("touchleave")
+  cy.get('[data-testId="menu-item-' + id + '-editor"]').clear()
+  cy.get('[data-testId="course-menu-createWeek"]').focus()
 }
 describe("Course Admin", () => {
   sizes.forEach((size) => {
@@ -91,7 +113,12 @@ describe("Course Admin", () => {
       cy.get('[data-testId="course-menu-details-true"]', { timeout: 15000 })
         .last()
         .click({ force: true })
-      addMenuItem("Week 1")
+      deleteMenuItem(3)
+      deleteMenuItem(2)
+      deleteMenuItem(1)
+      deleteMenuItem(0)
+      addMenuItem()
+      editMenuItem(0, "Week 1")
       //cy.get('[data-testId="course-menu-home-true"]', { timeout: 15000 }).last().click()
       //TODO UPLOAD FILE
       //TODO EDIT Course Description
