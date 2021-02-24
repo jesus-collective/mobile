@@ -320,6 +320,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                             <Text style={this.styles.style.courseHomeDescriptionText}>
                               {state.courseData ? (
                                 <EditableRichText
+                                  testID="course-introduction"
                                   onChange={(val: string) => {
                                     actions.updateCourse("introduction", val)
                                   }}

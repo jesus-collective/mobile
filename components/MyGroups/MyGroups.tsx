@@ -1161,6 +1161,7 @@ export default class MyGroups extends JCComponent<Props, State> {
           </CardItem>
           <CardItem>
             <Text
+              testID="group-course-title"
               ellipsizeMode="tail"
               numberOfLines={3}
               style={this.styles.style.fontTitleGroup}

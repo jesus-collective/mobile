@@ -47,6 +47,7 @@ class CourseDetailMenu extends JCComponent<EmptyProps> {
                   if (item) {
                     return (
                       <EditableButton
+                        testID={"menu-item-" + index}
                         onDelete={() => actions.deleteWeek(index)}
                         onChange={(value) => actions.updateWeek(index, "name", value)}
                         key={index}
@@ -68,7 +69,7 @@ class CourseDetailMenu extends JCComponent<EmptyProps> {
                 })}
 
                 {state.isEditable ? (
-                  <Button transparent onPress={actions.createWeek}>
+                  <Button testID="course-menu-createWeek" transparent onPress={actions.createWeek}>
                     <Text style={this.headerStyles.style.centerMenuButtonsText}>+</Text>
                   </Button>
                 ) : null}
