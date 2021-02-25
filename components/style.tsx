@@ -1165,7 +1165,6 @@ export default class MainStyles {
         marginLeft: 0,
       },
       myMapDashboardConversationCard: {
-        height: 233,
         paddingTop: 20,
         paddingBottom: 20,
         width: 500,
@@ -1362,10 +1361,11 @@ export default class MainStyles {
       mapCardBody: {
         flex: 1,
         flexDirection: "row",
+        justifyContent: "center",
       },
       mapCardJCButtonContainer: {
         flex: 1,
-        flexDirection: "column",
+        flexDirection: "row",
         paddingTop: 10,
       },
       mapCardImage: {

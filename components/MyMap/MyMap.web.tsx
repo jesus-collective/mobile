@@ -186,7 +186,7 @@ class MyMapImpl extends JCComponent<Props, State> {
               ) : null}
               <View style={this.styles.style.mapCardJCButtonContainer}>
                 <JCButton
-                  buttonType={ButtonTypes.Solid}
+                  buttonType={ButtonTypes.SolidMap}
                   onPress={() => {
                     this.openConversation(
                       this.state.selectedPlace.mapItem.user.id,
@@ -199,7 +199,7 @@ class MyMapImpl extends JCComponent<Props, State> {
                   Start Conversation
                 </JCButton>
                 <JCButton
-                  buttonType={ButtonTypes.Solid}
+                  buttonType={ButtonTypes.TransparentRegularOrange}
                   onPress={() => {
                     this.showProfile(this.state.selectedPlace.mapItem.user.id)
                   }}
