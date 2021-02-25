@@ -172,7 +172,7 @@ class MyMapImpl extends JCComponent<Props, State> {
               />
             </View>
             <View>
-              <Text style={this.styles.style.fontConnectWithName}>
+              <Text style={this.styles.style.fontConnectWithNameMap}>
                 {this.state.selectedPlace.mapItem.user.given_name}{" "}
                 {this.state.selectedPlace.mapItem.user.family_name}
               </Text>

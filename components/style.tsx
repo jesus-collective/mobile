@@ -588,6 +588,16 @@ export default class MainStyles {
         alignSelf: "flex-start",
       },
 
+      fontConnectWithNameMap: {
+        fontFamily: "Graphik-Bold-App",
+        fontWeight: "bold",
+        fontSize: 20,
+        lineHeight: 25,
+        color: "#000000",
+        letterSpacing: -0.3,
+        alignSelf: "flex-start",
+      },
+
       fontConnectWithRole: {
         fontFamily: "Graphik-Regular-App",
         fontSize: 14,
@@ -655,7 +665,6 @@ export default class MainStyles {
         color: "#333333",
         marginTop: 10,
         flexWrap: "wrap",
-        width: 330,
       },
 
       connectWithSliderButton: {
@@ -1370,6 +1379,7 @@ export default class MainStyles {
       },
       mapCardImage: {
         marginRight: 10,
+        alignSelf: "center",
       },
       resourceIcon: {
         color: "#ffffff",
@@ -1501,6 +1511,11 @@ export default class MainStyles {
           fontSize: 18,
           lineHeight: 23,
           alignSelf: "center",
+          marginTop: 10,
+        },
+        fontConnectWithNameMap: {
+          fontSize: 18,
+          lineHeight: 23,
           marginTop: 10,
         },
         rightCardWidth: {
@@ -2046,6 +2061,7 @@ export default class MainStyles {
         },
         mapCardJCButtonContainer: {
           alignContent: "center",
+          flexDirection: "column",
         },
         myMapDashboardConversationCard: {
           width: "auto",
@@ -2125,6 +2141,12 @@ export default class MainStyles {
         },
         smallProfileImageConversations: {
           marginBottom: 0,
+        },
+        fontConnectWithNameMap: {
+          alignSelf: "center",
+        },
+        myMapConversationCardAboutMe: {
+          alignSelf: "center",
         },
       },
 

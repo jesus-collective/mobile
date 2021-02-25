@@ -1266,6 +1266,7 @@ export default EStyleSheet.create({
       borderColor: "#ffffff",
       shadowOffset: { height: 0, width: 0 },
       shadowOpacity: 0,
+      alignSelf: "center",
     },
     SolidRightJustifiedButton: {
       alignSelf: "center",
