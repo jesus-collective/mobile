@@ -1356,6 +1356,7 @@ export default class MainStyles {
         flexDirection: "row",
         justifyContent: "flex-end",
         paddingRight: "2%",
+        display: "none",
       },
       partnerLegend: {
         flexDirection: "row",
