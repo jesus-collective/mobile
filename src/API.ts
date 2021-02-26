@@ -2276,6 +2276,19 @@ export type CancelSubscriptionMutation = {
   } | null,
 };
 
+export type SendHelpRequestMutationVariables = {
+  email?: string | null,
+  body?: string | null,
+};
+
+export type SendHelpRequestMutation = {
+  sendHelpRequest:  {
+    __typename: "sendHelpResponse",
+    err: string | null,
+    data: string | null,
+  } | null,
+};
+
 export type CreateApplicationProcessMutationVariables = {
   input: CreateApplicationProcessInput,
 };

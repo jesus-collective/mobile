@@ -6,6 +6,12 @@ type Mutation {
   previewInvoice(stripeCustomerID:String,idempotency:String,priceInfo: StripePriceInput): StripeInvoiceData @function(name: "jcmobileStripPreviewInvoice-${env}")
   listInvoices(idempotency:String): StripeInvoicesListData @function(name: "jcmobileStripListInvoices-${env}")
   cancelSubscription(idempotency:String): StripeSubscriptionData @function(name: "jcmobileStripCancelSubscription-${env}")
+  sendHelpRequest(email:String,body:String):sendHelpResponse @function(name:"jcmobileSendHelpRequest-${env}")
+ 
+}
+type sendHelpResponse {
+  err:String
+  data:String
 }
 input StripeAddressInput
 {

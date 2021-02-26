@@ -586,6 +586,14 @@ export const cancelSubscription = /* GraphQL */ `
     }
   }
 `
+export const sendHelpRequest = /* GraphQL */ `
+  mutation SendHelpRequest($email: String, $body: String) {
+    sendHelpRequest(email: $email, body: $body) {
+      err
+      data
+    }
+  }
+`
 export const createApplicationProcess = /* GraphQL */ `
   mutation CreateApplicationProcess($input: CreateApplicationProcessInput!) {
     createApplicationProcess(input: $input) {
