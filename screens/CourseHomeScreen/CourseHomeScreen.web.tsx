@@ -587,7 +587,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
   }
   createWeek = async (): Promise<void> => {
     const resource: CreateCourseWeekInput = {
-      week: ((this.state.courseData?.courseWeeks?.items?.length as number) + 1).toString(),
+      week: ((this.state.courseData?.courseWeeks?.items?.length ?? 0) + 1).toString(),
       name: "New Menu Item",
       leader: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
       courseInfoID: this.state.courseData?.id,
@@ -616,7 +616,7 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
       name: "New Lesson",
       lesson: (
         (this.state.courseData?.courseWeeks?.items?.[this.state.activeWeek]?.lessons?.items
-          ?.length as number) + 1
+          ?.length ?? 0) + 1
       ).toString(),
       description: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
       courseWeekID: this.state.courseData?.courseWeeks?.items?.[this.state.activeWeek]?.id,
