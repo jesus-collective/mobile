@@ -95,7 +95,7 @@ class CourseHomeImpl extends JCComponent<Props> {
   }
 
   goToLesson(actions: CourseActions, week: string, lesson: string): void {
-    actions.setActiveWeek(parseInt(week, 10))
+    actions.setActiveWeek(parseInt(week, 10) - 1)
     actions.setActiveLesson(parseInt(lesson, 10) - 1)
     actions.setActiveScreen("Details")
   }
