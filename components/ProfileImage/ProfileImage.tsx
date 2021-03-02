@@ -217,6 +217,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 marginRight: 10,
                 marginLeft: 10,
                 marginBottom: 0,
+                alignSelf: "center",
               })
         }
         resizeMode={this.props.size == "xsmall" ? "contain" : "cover"}

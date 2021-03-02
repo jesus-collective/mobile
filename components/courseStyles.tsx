@@ -280,6 +280,7 @@ const courseStyles = EStyleSheet.create({
     letterSpacing: -0.3,
     alignSelf: "center",
     marginBottom: 10,
+    marginTop: 10,
   },
   courseFontConnectConversation: {
     fontFamily: "Graphik-Regular-App",
@@ -313,6 +314,7 @@ const courseStyles = EStyleSheet.create({
     shadowOpacity: 0,
     borderRadius: 4,
     justifyContent: "center",
+    width: "100%",
   },
   courseAssignmentScreenLeftCard:
     Platform.OS === "web"
@@ -513,6 +515,7 @@ const courseStyles = EStyleSheet.create({
   },
   courseHomeSyllabusContainer: {
     flexDirection: "row",
+    minHeight: 200,
   },
   CourseHomeActivityContainer:
     Platform.OS === "web"

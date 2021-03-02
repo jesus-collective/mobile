@@ -655,6 +655,7 @@ export default class CourseScreen extends JCComponent<Props, State> {
                               color: "#979797",
                               textTransform: "uppercase",
                               flex: 0,
+                              marginRight: 20,
                             }}
                           >
                             Sponsored

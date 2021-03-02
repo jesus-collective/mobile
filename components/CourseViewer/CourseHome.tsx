@@ -73,7 +73,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                     }}
                   >
                     <Text style={this.styles.style.courseFontStartConversation}>
-                      Start Conversation
+                      Send a Message
                     </Text>
                   </Button>
                   {/*<Button bordered style={this.styles.style.courseHomeConversationButton} onPress={() => { this.openConversation(user.id, user.given_name + " " + user.family_name) }}><Text style={this.styles.style.courseFontStartConversation}>Book Call</Text></Button>*/}
@@ -132,9 +132,9 @@ class CourseHomeImpl extends JCComponent<Props> {
                               {state.courseData?.instructors?.items[0]?.user?.given_name}{" "}
                               {state.courseData?.instructors?.items[0]?.user?.family_name}
                             </Text>
-                            <Text style={this.styles.style.courseFontConnectConversation}>
+                            {/* <Text style={this.styles.style.courseFontConnectConversation}>
                               {state.courseData?.instructors?.items[0]?.user?.currentRole}
-                            </Text>
+                            </Text> */}
                             {/*  <JCButton onPress={() => { null }} buttonType={ButtonTypes.CourseHome}>Book a Call</JCButton>*/}
                             {state.courseData?.instructors?.items[0]?.user?.id ? (
                               <JCButton
