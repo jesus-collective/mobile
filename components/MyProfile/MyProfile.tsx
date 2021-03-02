@@ -941,7 +941,10 @@ class MyProfileImpl extends JCComponent<Props, State> {
           </View>
 
           {this.state.isEditable && this.state.editMode ? (
-            <Text style={this.styles.style.fontFormSmallHeader}>Public Location</Text>
+            <Text style={this.styles.style.fontFormSmallHeader}>
+              <Text style={this.styles.style.fontFormMandatory}>*</Text>
+              Public Location
+            </Text>
           ) : null}
           {this.state.isEditable && this.state.editMode ? (
             <EditableLocation
