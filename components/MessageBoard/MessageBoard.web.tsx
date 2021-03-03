@@ -1071,7 +1071,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
 
   renderMessageWithReplies(item: Message, index: number) {
     return (
-      <View style={{ marginBottom: 35 }} key={index}>
+      <View style={{ marginBottom: 20 }} key={index}>
         {this.renderMessage(item, index, false)}
         {item?.replies?.items?.map((reply, index) => {
           return this.renderMessage(reply, index, true)
