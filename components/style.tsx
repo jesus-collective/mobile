@@ -162,7 +162,7 @@ export default class MainStyles {
         paddingTop: 0,
         paddingLeft: 30,
         paddingRight: 30,
-        marginBottom: 60,
+        marginBottom: 20,
       },
       groupNameInput: {
         borderColor: "white",

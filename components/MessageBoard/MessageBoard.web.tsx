@@ -903,7 +903,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             data={this.state.messages}
             inverted={this.props.inputAt === "bottom"}
             onEndReached={!this.state.fetchingData ? () => this.getMoreMessages() : undefined}
-            style={{ height: 0.5 * height }}
+            style={{ height: "45vw" }}
             ListFooterComponent={() => this.messagesLoader()}
             refreshing={this.state.fetchingData}
             onEndReachedThreshold={0.1}
