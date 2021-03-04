@@ -46,7 +46,7 @@ interface Props {
   route?: any
   loadId?: any
   hideOrg?: boolean
-  userActions: UserActions
+  userActions?: UserActions
 }
 export type UserData = NonNullable<GetUserQuery["getUser"]>
 
@@ -115,7 +115,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
   }
 
   async fetchCrm() {
-    if (this.props.userActions.isMemberOf("admin")) {
+    if (this.props.userActions?.isMemberOf("admin")) {
       const variables = { id: this.state.UserDetails?.id }
       try {
         // fetch CRM root
@@ -1820,8 +1820,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
       )
     else return null
   }
-  renderAdmin(): React.ReactNode {
-    if (this.props.userActions.isMemberOf("admin")) {
+  renderAdmin(userActions: UserActions): React.ReactNode {
+    if (userActions.isMemberOf("admin")) {
       return (
         <View style={this.styles.style.profileScreenRightCard}>
           <View style={{ display: "flex", flexDirection: "column", width: "100%" }}>
@@ -1850,7 +1850,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
 
               <Form style={this.styles.style.myProfileMainContainer}>
                 {this.renderLeftBar(userActions)}
-                {this.state.showPage == "admin" && this.renderAdmin()}
+                {this.state.showPage == "admin" && this.renderAdmin(userActions)}
                 {this.state.showPage == "billing" && this.renderBilling()}
                 {this.state.showPage == "profile" && this.renderProfile()}
                 {this.state.showPage == "settings" && this.renderAccountSettings()}
@@ -1867,7 +1867,20 @@ export default function MyProfile(props: Props): JSX.Element {
   const route = useRoute()
   const navigation = useNavigation()
   const { userActions } = useContext(UserContext)
+
   return (
-    <MyProfileImpl {...props} navigation={navigation} route={route} userActions={userActions} />
+    <MyProfile.UserConsumer>
+      {({ userActions }) => {
+        return (
+          <MyProfileImpl
+            {...props}
+            navigation={navigation}
+            route={route}
+            userActions={userActions}
+          />
+        )
+      }}
+    </MyProfile.UserConsumer>
   )
 }
+MyProfile.UserConsumer = UserContext.Consumer
