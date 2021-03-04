@@ -1,43 +1,11 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "Lambda resource stack creation using Amplify CLI",
+  "Description": "Lambda Function resource stack creation using Amplify CLI",
   "Parameters": {
-    "DOMAINBLACKLIST": {
+    "CloudWatchRule": {
       "Type": "String",
-      "Default": ""
-    },
-    "DOMAINWHITELIST": {
-      "Type": "String",
-      "Default": ""
-    },
-    "modules": {
-      "Type": "String",
-      "Default": "",
-      "Description": "Comma-delimmited list of modules to be executed by a lambda trigger. Sent to resource as an env variable."
-    },
-    "resourceName": {
-      "Type": "String",
-      "Default": ""
-    },
-    "trigger": {
-      "Type": "String",
-      "Default": "true"
-    },
-    "functionName": {
-      "Type": "String",
-      "Default": ""
-    },
-    "roleName": {
-      "Type": "String",
-      "Default": ""
-    },
-    "parentResource": {
-      "Type": "String",
-      "Default": ""
-    },
-    "parentStack": {
-      "Type": "String",
-      "Default": ""
+      "Default": "NONE",
+      "Description": " Schedule Expression"
     },
     "env": {
       "Type": "String"
@@ -65,12 +33,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "jcmobilePreSignup",
+            "jcmobileSendHelpRequest",
             {
               "Fn::Join": [
                 "",
                 [
-                  "jcmobilePreSignup",
+                  "jcmobileSendHelpRequest",
                   "-",
                   {
                     "Ref": "env"
@@ -85,17 +53,8 @@
             "ENV": {
               "Ref": "env"
             },
-            "MODULES": {
-              "Ref": "modules"
-            },
             "REGION": {
               "Ref": "AWS::Region"
-            },
-            "DOMAINWHITELIST": {
-              "Ref": "DOMAINWHITELIST"
-            },
-            "DOMAINBLACKLIST": {
-              "Ref": "DOMAINBLACKLIST"
             }
           }
         },
@@ -105,13 +64,13 @@
             "Arn"
           ]
         },
-        "Runtime": "nodejs10.x",
+        "Runtime": "nodejs12.x",
+        "Layers": [],
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-jc-mobile-beta-155138-deployment",
-          "S3Key": "amplify-builds/jcmobilePreSignup-4c4a6f316675646a7654-build.zip"
-        },
-        "Layers": []
+          "S3Key": "amplify-builds/jcmobileSendHelpRequest-54425670516230734b44-build.zip"
+        }
       }
     },
     "LambdaExecutionRole": {
@@ -120,12 +79,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "jcmobilePreSignup",
+            "jcmobileLambdaRoled57f89c1",
             {
               "Fn::Join": [
                 "",
                 [
-                  "jcmobilePreSignup",
+                  "jcmobileLambdaRoled57f89c1",
                   "-",
                   {
                     "Ref": "env"
@@ -191,6 +150,14 @@
                   }
                 ]
               }
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "ses:SendEmail",
+                "ses:SendRawEmail"
+              ],
+              "Resource": "*"
             }
           ]
         }
@@ -211,14 +178,14 @@
         ]
       }
     },
-    "LambdaExecutionRole": {
-      "Value": {
-        "Ref": "LambdaExecutionRole"
-      }
-    },
     "Region": {
       "Value": {
         "Ref": "AWS::Region"
+      }
+    },
+    "LambdaExecutionRole": {
+      "Value": {
+        "Ref": "LambdaExecutionRole"
       }
     }
   }

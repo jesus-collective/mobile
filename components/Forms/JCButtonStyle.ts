@@ -1,6 +1,24 @@
 import EStyleSheet from "react-native-extended-stylesheet"
 
 export default EStyleSheet.create({
+  UpgradeToDownloadButton: {
+    backgroundColor: "#FF4438",
+    height: 40,
+    marginTop: 5,
+    marginBottom: 5,
+    paddingTop: 6,
+    paddingBottom: 6,
+    paddingLeft: 29,
+    paddingRight: 29,
+    borderRadius: 4,
+  },
+
+  UpgradeToDownloadText: {
+    fontSize: 14,
+    color: "#FFFFFF",
+    fontWeight: "600",
+  },
+
   PostOutlineButton: {
     top: -100,
     paddingTop: 10,

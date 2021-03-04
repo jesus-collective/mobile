@@ -12,6 +12,7 @@ interface Props {
   multiline: boolean
   placeholder?: string
   onChange(value: string): void
+  testID?: string
 }
 
 interface State {
@@ -45,6 +46,7 @@ export default class EditableUrlImpl extends JCComponent<Props, State> {
           onChange={(e) => {
             this.setState({ url: e.nativeEvent.text })
           }}
+          testID={this.props.testID}
           onBlur={() => onChange(url)}
           onStartShouldSetResponder={() => true}
           onMoveShouldSetResponderCapture={() => true}

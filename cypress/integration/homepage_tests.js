@@ -32,9 +32,9 @@ const menuResourceAll = (size) => {
     cy.get('[data-testId="header-resources-all"]').last().click({ force: true })
   }
 }
-describe("Check Homepage Admin Test", () => {
+describe("Homepage Admin", () => {
   sizes.forEach((size) => {
-    it("Visits the Login Page - " + size, () => {
+    it("Size - " + size, () => {
       if (Cypress._.isArray(size)) {
         cy.viewport(size[0], size[1])
       } else {
@@ -104,9 +104,9 @@ describe("Check Homepage Admin Test", () => {
   })
 })
 
-describe("Check Homepage Partner Test", () => {
+describe("Homepage Partner", () => {
   sizes.forEach((size) => {
-    it("Visits the Login Page - " + size, () => {
+    it("Size - " + size, () => {
       if (Cypress._.isArray(size)) {
         cy.viewport(size[0], size[1])
       } else {

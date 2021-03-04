@@ -316,37 +316,35 @@ export default class EventScreen extends JCComponent<Props, State> {
     this.setState({ validationError: validation.validationError })
     return validation.result
   }
-  createNew(): void {
+  async createNew(): Promise<void> {
     if (this.validate()) {
-      const createGroup = API.graphql({
-        query: mutations.createGroup,
-        variables: { input: this.state.data },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<CreateGroupMutation>>
-      createGroup
-        .then((json: GraphQLResult<CreateGroupMutation>) => {
-          this.setState(
-            {
-              createNew: false,
-            },
-            () => {
-              this.setState(
-                {
-                  canSave: !this.state.createNew && this.state.isEditable,
-                  createNew: this.state.createNew && this.state.isEditable,
-                  canDelete: !this.state.createNew && this.state.isEditable,
-                },
-                () => {
-                  this.join()
-                }
-              )
-            }
-          )
-          console.log({ "Success mutations.createGroup": json })
-        })
-        .catch((err: GraphQLResult<CreateGroupMutation>) => {
-          console.log({ "Error mutations.createGroup": err })
-        })
+      try {
+        const createGroup = (await API.graphql({
+          query: mutations.createGroup,
+          variables: { input: this.state.data },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })) as Promise<GraphQLResult<CreateGroupMutation>>
+        this.setState(
+          {
+            createNew: false,
+          },
+          () => {
+            this.setState(
+              {
+                canSave: !this.state.createNew && this.state.isEditable,
+                createNew: this.state.createNew && this.state.isEditable,
+                canDelete: !this.state.createNew && this.state.isEditable,
+              },
+              async () => {
+                await this.join()
+              }
+            )
+          }
+        )
+        console.log({ "Success mutations.createGroup": createGroup })
+      } catch (err) {
+        console.log({ "Error mutations.createGroup": err })
+      }
     }
   }
   clean(item: any): void {
@@ -364,112 +362,122 @@ export default class EventScreen extends JCComponent<Props, State> {
     delete item.ownerOrg
     return item
   }
-  save(): void {
+  async save(): Promise<void> {
     if (this.validate()) {
-      const updateGroup = API.graphql({
-        query: mutations.updateGroup,
-        variables: { input: this.clean(this.state.data) },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<UpdateGroupMutation>>
-      updateGroup
-        .then((json: GraphQLResult<UpdateGroupMutation>) => {
-          console.log({ "Success mutations.updateGroup": json })
-        })
-        .catch((err: GraphQLResult<UpdateGroupMutation>) => {
-          console.log({ "Error mutations.updateGroup": err })
-        })
+      try {
+        const updateGroup = (await API.graphql({
+          query: mutations.updateGroup,
+          variables: { input: this.clean(this.state.data) },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })) as Promise<GraphQLResult<UpdateGroupMutation>>
+        console.log({ "Success mutations.updateGroup": updateGroup })
+      } catch (err) {
+        console.log({ "Error mutations.updateGroup": err })
+      }
     }
   }
-  leave(): void {
+  async leave(): Promise<void> {
     if (this.state.data) {
-      Analytics.record({
-        name: "left" + this.state.groupType,
-        // Attribute values must be strings
-        attributes: { id: this.state.data.id, name: this.state.data.name },
-      })
-
-      const groupMemberByUser = API.graphql({
-        query: queries.groupMemberByUser,
-        variables: { userID: this.state.currentUser, groupID: { eq: this.state.data.id } },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<GroupMemberByUserQuery>>
-      groupMemberByUser
-        .then((json: GraphQLResult<GroupMemberByUserQuery>) => {
-          console.log({ "Success queries.groupMemberByUser": json })
-
-          json.data?.groupMemberByUser?.items?.map((item) => {
-            if (item?.id) {
-              const deleteGroupMember = API.graphql({
-                query: mutations.deleteGroupMember,
-                variables: { input: { id: item.id } },
-                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-              }) as Promise<GraphQLResult<DeleteGroupMemberMutation>>
-              deleteGroupMember
-                .then((json: GraphQLResult<DeleteGroupMemberMutation>) => {
-                  console.log({ "Success mutations.deleteGroupMember": json })
+      try {
+        Analytics.record({
+          name: "left" + this.state.groupType,
+          // Attribute values must be strings
+          attributes: { id: this.state.data.id, name: this.state.data.name },
+        })
+        const groupMemberByUser = (await await API.graphql({
+          query: queries.groupMemberByUser,
+          variables: { userID: this.state.currentUser, groupID: { eq: this.state.data.id } },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })) as Promise<GraphQLResult<GroupMemberByUserQuery>>
+        console.log({ "Success queries.groupMemberByUser": groupMemberByUser })
+        const groupResponse = await groupMemberByUser
+        const responseArr = groupResponse?.data?.groupMemberByUser?.items
+        if (responseArr)
+          for (let i = 0; i < responseArr?.length; i++) {
+            if (responseArr?.[i]?.id) {
+              try {
+                const deleteGroupMember = (await API.graphql({
+                  query: mutations.deleteGroupMember,
+                  variables: { input: { id: responseArr[i]?.id } },
+                  authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+                })) as Promise<GraphQLResult<DeleteGroupMemberMutation>>
+                console.log({ "Success mutations.deleteGroupMember": deleteGroupMember })
+                const remainingUsers = this.state.memberIDs.filter(
+                  (user) => user !== this.state.currentUser
+                )
+                this.setState({
+                  canJoin: true,
+                  canLeave: false,
+                  memberIDs: remainingUsers,
                 })
-                .catch((err: GraphQLResult<DeleteGroupMemberMutation>) => {
-                  console.log({ "Error mutations.deleteGroupMember": err })
+                this.renderButtons()
+              } catch (err) {
+                console.log({ "Error mutations.deleteGroupMember": err })
+                const remainingUsers = this.state.memberIDs.filter(
+                  (user) => user !== this.state.currentUser
+                )
+                this.setState({
+                  canJoin: true,
+                  canLeave: false,
+                  memberIDs: remainingUsers,
                 })
+                this.renderButtons()
+              }
             }
-          })
-
-          const remainingUsers = this.state.memberIDs.filter(
-            (user) => user !== this.state.currentUser
-          )
-          this.setState({ canJoin: true, canLeave: false, memberIDs: remainingUsers })
-          this.renderButtons()
-        })
-        .catch((err: GraphQLResult<GroupMemberByUserQuery>) => {
-          console.log({ "Error queries.groupMemberByUser": err })
-        })
+          }
+      } catch (err) {
+        console.log({ "Error queries.groupMemberByUser": err })
+      }
     }
   }
-  join(): void {
+  async join(): Promise<void> {
     if (this.state.data) {
-      Analytics.record({
-        name: "joined" + this.state.groupType,
-        // Attribute values must be strings
-        attributes: { id: this.state.data.id, name: this.state.data.name },
-      })
-      const createGroupMember = API.graphql({
-        query: mutations.createGroupMember,
-        variables: { input: { groupID: this.state.data.id, userID: this.state.currentUser } },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<CreateGroupMemberMutation>>
-      createGroupMember
-        .then((json) => {
-          console.log({ "Success mutations.createGroupMember": json })
+      try {
+        Analytics.record({
+          name: "joined" + this.state.groupType,
+          // Attribute values must be strings
+          attributes: { id: this.state.data.id, name: this.state.data.name },
         })
-        .catch((err) => {
-          console.log({ "Error mutations.createGroupMember": err })
+        const createGroupMember = (await API.graphql({
+          query: mutations.createGroupMember,
+          variables: { input: { groupID: this.state.data.id, userID: this.state.currentUser } },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })) as Promise<GraphQLResult<CreateGroupMemberMutation>>
+        console.log({ "Success mutations.createGroupMember": createGroupMember })
+        this.setState({
+          canJoin: false,
+          canLeave: true,
+          memberIDs: this.state.currentUser
+            ? this.state.memberIDs.concat(this.state.currentUser)
+            : this.state.memberIDs,
         })
-
-      this.setState({
-        canJoin: false,
-        canLeave: true,
-        memberIDs: this.state.currentUser
-          ? this.state.memberIDs.concat(this.state.currentUser)
-          : this.state.memberIDs,
-      })
-      this.renderButtons()
+        this.renderButtons()
+      } catch (err) {
+        console.log({ "Error mutations.createGroupMember": err })
+        this.setState({
+          canJoin: false,
+          canLeave: true,
+          memberIDs: this.state.currentUser
+            ? this.state.memberIDs.concat(this.state.currentUser)
+            : this.state.memberIDs,
+        })
+        this.renderButtons()
+      }
     }
   }
-  delete(): void {
+  async delete(): Promise<void> {
     if (this.state.data) {
-      const deleteGroup = API.graphql({
-        query: mutations.deleteGroup,
-        variables: { input: { id: this.state.data.id } },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      }) as Promise<GraphQLResult<DeleteGroupMutation>>
-      deleteGroup
-        .then((json: GraphQLResult<DeleteGroupMutation>) => {
-          console.log({ "Success mutations.deleteGroup": json })
-          this.props.navigation.push("HomeScreen")
-        })
-        .catch((err: GraphQLResult<DeleteGroupMutation>) => {
-          console.log({ "Error mutations.deleteGroup": err })
-        })
+      try {
+        const deleteGroup = (await API.graphql({
+          query: mutations.deleteGroup,
+          variables: { input: { id: this.state.data.id } },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })) as Promise<GraphQLResult<DeleteGroupMutation>>
+        console.log({ "Success mutations.deleteGroup": deleteGroup })
+        this.props.navigation.push("HomeScreen")
+      } catch (err) {
+        console.log({ "Error mutations.deleteGroup": err })
+      }
     }
   }
   updateValue(field: string, value: any): void {
@@ -556,8 +564,8 @@ export default class EventScreen extends JCComponent<Props, State> {
         {this.state.canJoin ? (
           <JCButton
             buttonType={ButtonTypes.OutlineBoldNoMargin}
-            onPress={() => {
-              this.join()
+            onPress={async () => {
+              await this.join()
             }}
           >
             {this.state.groupType == "event" ? "Attend" : "Join Group"}
@@ -566,8 +574,8 @@ export default class EventScreen extends JCComponent<Props, State> {
         {this.state.canLeave ? (
           <JCButton
             buttonType={ButtonTypes.OutlineBoldNoMargin}
-            onPress={() => {
-              this.leave()
+            onPress={async () => {
+              await this.leave()
             }}
           >
             {this.state.groupType == "event" ? "Don't Attend" : "Leave Group"}
@@ -609,8 +617,8 @@ export default class EventScreen extends JCComponent<Props, State> {
         {this.state.createNew ? (
           <JCButton
             buttonType={ButtonTypes.OutlineBoldNoMargin}
-            onPress={() => {
-              this.createNew()
+            onPress={async () => {
+              await this.createNew()
             }}
           >
             Create {this.capitalize(this.state.groupType)}
@@ -619,8 +627,8 @@ export default class EventScreen extends JCComponent<Props, State> {
         {this.state.canSave ? (
           <JCButton
             buttonType={ButtonTypes.OutlineBoldNoMargin}
-            onPress={() => {
-              this.save()
+            onPress={async () => {
+              await this.save()
             }}
           >
             Save {this.capitalize(this.state.groupType)}
@@ -629,8 +637,9 @@ export default class EventScreen extends JCComponent<Props, State> {
         {this.state.canDelete ? (
           <JCButton
             buttonType={ButtonTypes.OutlineBoldNoMargin}
-            onPress={() => {
-              if (window.confirm("Are you sure you wish to delete this event?")) this.delete()
+            onPress={async () => {
+              if (window.confirm(`Are you sure you wish to delete this ${this.state.groupType}?`))
+                await this.delete()
             }}
           >
             Delete {this.capitalize(this.state.groupType)}

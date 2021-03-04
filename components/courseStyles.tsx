@@ -32,7 +32,6 @@ const courseStyles = EStyleSheet.create({
     width: "90%",
     borderColor: "#FFFFFF",
     paddingLeft: 30,
-    paddingRight: 30,
     shadowOffset: { width: 0, height: 6 },
     shadowColor: "rgba(0, 0, 0, 1)",
     shadowRadius: 20,

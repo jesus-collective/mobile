@@ -1,6 +1,7 @@
 import TestHelper from "../../components/TestHelpers/TestHelpers"
 const sizes = ["iphone-6", "ipad-2", [1024, 768]]
-const user = "george.bell@jesuscollective.com" //George
+const random = Math.floor(Math.random() * 10)
+const user = "login.test." + random + "@jesuscollective.com" //George
 //const user = "test1@jesuscollective.com" //Lucas
 //const user = "test2@jesuscollective.com" //Mateus
 //const user = "test3@jesuscollective.com" //Igor
@@ -33,31 +34,22 @@ const completeBillingScreen = () => {
   cy.get('input[data-testId="billing-state"]').type("Ontario", { force: true })
   cy.get('input[data-testId="billing-postalcode"]').type("M4W2Z7", { force: true })
   cy.get('input[data-testId="billing-country"]').type("Canada", { force: true })
+  cy.get('[data-testId="billing-accept-eula"]').click()
 
   cy.getWithinIframe(0, '[name="cardnumber"]').type("4242424242424242")
   cy.getWithinIframe(1, '[name="exp-date"]').type("424")
   cy.getWithinIframe(2, '[name="cvc"]').type("242")
-  cy.get('[data-testId="billing-accept-eula"]').click()
   cy.get('[data-testId="billing-processPayment-button-true"]', { timeout: 30000 }).click()
   cy.contains("Processing Payment")
   cy.get('[data-testId="billing-continueToProfile-button-true"]', { timeout: 30000 }).click()
 }
 const completeOrgScreen = () => {
-  cy.get('input[data-testId="org-aboutMeShort"]').type("Test ORG")
-  cy.get('input[data-testId="org-Address"]').type("123 Sesame St.")
-  cy.get('input[data-testId="org-City"]').type("Toronto")
-  cy.get('input[data-testId="org-Province"]').type("Ontario")
-  cy.get('input[data-testId="org-PostalCode"]').type("M4W 2Z7")
-  cy.get('input[data-testId="org-Country"]').type("Canada")
-  cy.get('input[data-testId="org-Email"]').type("test@jesuscollective.com")
-  cy.get('input[data-testId="org-Phone"]').type("555-555-5555")
-  cy.get('input[data-testId="org-aboutMeLong"]').type("Test ORG 123")
-  cy.get('input[data-testId="org-orgName"]').type("Space Products Inc.")
-  cy.get('input[data-testId="org-denomination"]').type("Moon")
-  cy.get('input[data-testId="org-pplServed"]').type("1000")
-  cy.get('input[data-testId="org-orgDescription"]').type("About the org...")
-  cy.get('input[data-testId="org-setmap"]')
-
+  cy.get('[data-testId="org-aboutMeShort"]', { timeout: 30000 }).type("Test ORG")
+  cy.get('[data-testId="org-Address"]').type("123 Sesame St.")
+  cy.get('[data-testId="org-City"]').type("Toronto")
+  cy.get('[data-testId="org-Province"]').type("Ontario")
+  cy.get('[data-testId="org-PostalCode"]').type("M4W 2Z7")
+  cy.get('[data-testId="org-Country"]').type("Canada")
   cy.fixture(fileName).then((fileContent) => {
     cy.get('[data-testid="org-image"]').attachFile({
       fileContent,
@@ -65,8 +57,23 @@ const completeOrgScreen = () => {
       mimeType: "image/jpeg",
     })
   })
+  //  cy.get('[data-testId="org-Email"]').type("test@jesuscollective.com")
+  //  cy.get('[data-testId="org-Phone"]').type("555-555-5555")
+  cy.get('[data-testId="org-aboutMeLong"]').type("Test ORG 123")
+  cy.get('[data-testId="org-orgName"]').type("Space Products Inc.")
 
-  cy.get('input[data-testId="org-save-true"]').click()
+  cy.get('input[placeholder="Search Places ..."]').type("Toronto")
+  cy.get('[data-testId="profile-location-0"]').click()
+  cy.get('[data-testId="org-typeOfOrg"]').select("Church", { force: true })
+  cy.get('[data-testId="org-numEmployees"]').select("1-25", { force: true })
+  cy.get('[data-testId="org-aveSunday"]').select("1-50", { force: true })
+  cy.get('[data-testId="org-numVolunteers"]').select("1-25", { force: true })
+
+  cy.get('[data-testId="org-denomination"]').type("Moon")
+  //cy.get('[data-testId="org-pplServed"]').type("1000")
+  cy.get('[data-testId="org-orgDescription"]').type("About the org...")
+
+  cy.get('[data-testId="org-save-true"]').click()
 }
 const completeProfileScreen = (hasOrgFields) => {
   cy.get('[data-testId="profile-aboutMeShort"]', { timeout: 30000 })
@@ -105,9 +112,9 @@ const completeProfileScreen = (hasOrgFields) => {
 
   cy.get('[data-testId="profile-save-true"]').click("topLeft", { force: true })
 }
-describe("Create User Flow Test", () => {
+describe("Create User", () => {
   sizes.forEach((size) => {
-    it("Visits the Login Page - " + size, () => {
+    it("Size - " + size, () => {
       if (Cypress._.isArray(size)) {
         cy.viewport(size[0], size[1])
       } else {
@@ -148,9 +155,9 @@ describe("Create User Flow Test", () => {
   })
 })
 
-describe("Create User + Org Flow Test", () => {
+describe("Create User + Org", () => {
   sizes.forEach((size) => {
-    it("Visits the Login Page - " + size, () => {
+    it("Size - " + size, () => {
       if (Cypress._.isArray(size)) {
         cy.viewport(size[0], size[1])
       } else {

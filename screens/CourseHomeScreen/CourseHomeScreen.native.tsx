@@ -13,7 +13,7 @@ import CourseHome from "../../components/CourseViewer/CourseHome"
 import JCComponent from "../../components/JCComponent/JCComponent"
 import Validate from "../../components/Validate/Validate"
 import getTheme from "../../native-base-theme/components"
-import * as customQueries from "../../src/graphql-custom/queries"
+import * as courseQueries from "../../src/graphql-custom/courses"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
 
@@ -56,13 +56,13 @@ export default class CourseHomeScreenImpl extends JCComponent<Props, CourseState
   static Provider = CourseContext.Provider
 
   setInitialData(props: Props, groups): void {
-    const getGroup: any = API.graphql({
+    const getGroup = API.graphql({
       query: queries.getGroup,
       variables: { id: props.route.params.id },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     })
-    const getCourse: any = API.graphql({
-      query: customQueries.getCourseInfo,
+    const getCourse = API.graphql({
+      query: courseQueries.getCourseInfo,
       variables: { id: props.route.params.id },
       authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
     })
