@@ -6,6 +6,12 @@ type Mutation {
   previewInvoice(stripeCustomerID:String,idempotency:String,priceInfo: StripePriceInput): StripeInvoiceData @function(name: "jcmobileStripPreviewInvoice-${env}")
   listInvoices(idempotency:String): StripeInvoicesListData @function(name: "jcmobileStripListInvoices-${env}")
   cancelSubscription(idempotency:String): StripeSubscriptionData @function(name: "jcmobileStripCancelSubscription-${env}")
+  sendHelpRequest(email:String,body:String):sendHelpResponse @function(name:"jcmobileSendHelpRequest-${env}")
+ 
+}
+type sendHelpResponse {
+  err:String
+  data:String
 }
 input StripeAddressInput
 {
@@ -769,6 +775,52 @@ type DirectMessage
   messageRoom:DirectMessageRoom @connection(fields:["messageRoomID"])
 }
 
+type CRMRoot @model
+  @auth(
+    rules: [
+      { allow: groups, groups: ["admin"]}
+    ]
+  ) {
+  id: ID!
+  messages: [CRMMessage] @connection(keyName: "crmMessagesByRoot", fields: ["id"])
+}
+
+type CRMMessage @model
+  @key(name: "crmMessagesByRoot", fields: ["rootId", "when"])
+  @auth(
+    rules: [
+      { allow: groups, groups: ["admin"]}
+    ]
+  ) {
+  id: ID!
+  rootId: ID!
+  crmRoot: CRMRoot @connection(fields: ["rootId"])
+  content: String!
+  when: String!
+  authorName: String!
+  authorId: ID!
+  attachment: String
+  thread: [CRMReply] @connection(keyName: "crmReplyByMessage", fields: ["id"])
+}
+
+type CRMReply @model
+  @key(name: "crmReplyByMessage", fields: ["parentId", "when"])
+  @auth(
+    rules: [
+      { allow: groups, groups: ["admin"]} 
+    ]
+  ) {
+  id: ID!
+  rootId: ID!
+  content: String!
+  when: String!
+  authorName: String!
+  authorId: ID!
+  attachment: String
+  parentId: ID!
+  parent: CRMMessage @connection(fields: ["parentId"])
+}
+
 type Message
   @model
   @key(name: "ByRoom", fields: ["roomId", "when"], queryField: "messagesByRoom")
@@ -824,6 +876,9 @@ type Reply @model(queries: null)
 type Subscription {
   onCreateMessageByRoomId(roomId: ID!): Message
     @aws_subscribe(mutations: ["createMessage"])
+
+  onCreateCrmMessageByRootId(rootId: ID!): CRMMessage @aws_subscribe(mutations: ["createCRMMessage"])
+  onCreateCrmReplyByRootId(rootId: ID!): CRMReply @aws_subscribe(mutations: ["createCRMReply"])
 }
 
 type ResourceRoot 

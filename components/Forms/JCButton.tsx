@@ -1,6 +1,6 @@
 import { Button } from "native-base"
 import React from "react"
-import { Text } from "react-native"
+import { ActivityIndicator, Text, View } from "react-native"
 import JCComponent from "../JCComponent/JCComponent"
 import styles from "./JCButtonStyle"
 
@@ -58,10 +58,11 @@ export enum ButtonTypes {
   ResourceModal,
   ResourceModalSolid,
   ResourceModalTransparent,
+  UpgradeToDownload,
 }
 export interface Props {
   enabled?: boolean
-  onPress(): any
+  onPress(): any //Promise<void> | void | null
   children: any
   buttonType: ButtonTypes
   testID?: any
@@ -72,14 +73,33 @@ class JCButton extends JCComponent<Props> {
   }
   constructor(props: Props) {
     super(props)
+    this.state = {
+      busy: false,
+    }
   }
-  onPress(): void {
-    this.props.onPress()
+  setBusy(): void {
+    this.setState({ busy: true })
+  }
+  setNotBusy(): void {
+    this.setState({ busy: false })
+  }
+  async onPress(): Promise<void> {
+    this.setBusy()
+    await this.props.onPress()
+    this.setNotBusy()
+  }
+  determineSpinnerColor(): string {
+    // This can be used for changing color depending on button background color
+    if (this.props.buttonType === 34) {
+      return "#F0493E"
+    } else {
+      return "white"
+    }
   }
   render(): React.ReactNode {
     return (
       <Button
-        disabled={!this.props.enabled}
+        disabled={!this.props.enabled || this.state.busy}
         testID={this.props.testID + "-" + this.props.enabled}
         style={[
           styles[ButtonTypes[this.props.buttonType] + "Button"],
@@ -90,7 +110,12 @@ class JCButton extends JCComponent<Props> {
         }}
       >
         <Text style={styles[ButtonTypes[this.props.buttonType] + "Text"]}>
-          {this.props.children}
+          <Text style={this.state.busy ? { color: "transparent" } : {}}>{this.props.children}</Text>
+          {this.state.busy ? (
+            <View style={{ position: "absolute", left: 0, right: 0, alignItems: "center" }}>
+              <ActivityIndicator color={this.determineSpinnerColor()}></ActivityIndicator>
+            </View>
+          ) : null}
         </Text>
       </Button>
     )

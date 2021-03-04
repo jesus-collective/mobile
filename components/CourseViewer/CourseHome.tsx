@@ -13,8 +13,9 @@ import {
   StyleProvider,
 } from "native-base"
 import React from "react"
-import { Image, Text, TouchableOpacity, View } from "react-native"
+import { Dimensions, FlatList, Image, Text, TouchableOpacity, View } from "react-native"
 import { Calendar } from "react-native-calendars"
+import { UserData } from "src/types"
 import EditableFileUpload from "../../components/Forms/EditableFileUpload"
 import EditableRichText from "../../components/Forms/EditableRichText"
 import EditableUsers from "../../components/Forms/EditableUsers"
@@ -23,7 +24,7 @@ import getTheme from "../../native-base-theme/components"
 import CourseHeader from "../CourseHeader/CourseHeader"
 import JCButton, { ButtonTypes } from "../Forms/JCButton"
 import JCComponent from "../JCComponent/JCComponent"
-import { CourseContext } from "./CourseContext"
+import { CourseActions, CourseContext, CourseDates, CourseToDo } from "./CourseContext"
 
 interface Props {
   navigation?: any
@@ -31,6 +32,7 @@ interface Props {
 }
 
 class CourseHomeImpl extends JCComponent<Props> {
+  static Consumer = CourseContext.Consumer
   constructor(props: Props) {
     super(props)
   }
@@ -46,8 +48,7 @@ class CourseHomeImpl extends JCComponent<Props> {
     console.log("Navigate to profileScreen")
     this.props.navigation.push("ProfileScreen", { id: id, create: false })
   }
-  static Consumer = CourseContext.Consumer
-  renderProfileCard(user): React.ReactNode {
+  renderProfileCard(user: UserData): React.ReactNode {
     if (user)
       return (
         <TouchableOpacity
@@ -83,8 +84,180 @@ class CourseHomeImpl extends JCComponent<Props> {
           </Card>
         </TouchableOpacity>
       )
-    else null
+    return null
   }
+
+  handlePressCalendar(actions: CourseActions, calendarItem: CourseDates[0] | undefined): void {
+    if (calendarItem) {
+      // if no key error, navigate to lesson
+      this.goToLesson(actions, calendarItem.weekNumber, calendarItem.lessonNumber)
+    }
+  }
+
+  goToLesson(actions: CourseActions, week: string, lesson: string): void {
+    actions.setActiveWeek(parseInt(week, 10) - 1)
+    actions.setActiveLesson(parseInt(lesson, 10) - 1)
+    actions.setActiveScreen("Details")
+  }
+
+  renderToDo(item: CourseToDo, actions: CourseActions): JSX.Element {
+    switch (item.lessonType) {
+      case "assignment":
+        return (
+          <TouchableOpacity
+            style={{
+              flexDirection: "row",
+              height: "unset",
+              marginTop: 10,
+              marginBottom: 10,
+            }}
+            onPress={() => this.goToLesson(actions, item.weekNumber, item.lessonNumber)}
+          >
+            <Left style={{ flex: 1 }}>
+              <Image
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  alignSelf: "center",
+                }}
+                source={require("../../assets/svg/document.svg")}
+              />
+            </Left>
+            <Right
+              style={{
+                flex: 9,
+                alignItems: "flex-start",
+                marginLeft: 20,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 18,
+                  lineHeight: 25,
+                  fontFamily: "Graphik-Bold-App",
+                }}
+              >
+                {item.date}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 11,
+                  lineHeight: 17,
+                  fontFamily: "Graphik-Regular-App",
+                  textTransform: "uppercase",
+                }}
+              >
+                Assignment due @ {item.time}
+              </Text>
+            </Right>
+          </TouchableOpacity>
+        )
+
+      case "respond":
+        return (
+          <TouchableOpacity
+            style={{
+              flexDirection: "row",
+              height: "unset",
+              marginTop: 10,
+              marginBottom: 10,
+            }}
+            onPress={() => this.goToLesson(actions, item.weekNumber, item.lessonNumber)}
+          >
+            <Left style={{ flex: 1 }}>
+              <Image
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  alignSelf: "center",
+                }}
+                source={require("../../assets/svg/document.svg")}
+              />
+            </Left>
+            <Right
+              style={{
+                flex: 9,
+                alignItems: "flex-start",
+                marginLeft: 20,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 18,
+                  lineHeight: 25,
+                  fontFamily: "Graphik-Bold-App",
+                }}
+              >
+                {item.date}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 11,
+                  lineHeight: 17,
+                  fontFamily: "Graphik-Regular-App",
+                  textTransform: "uppercase",
+                }}
+              >
+                Responses due @ {item.time}
+              </Text>
+            </Right>
+          </TouchableOpacity>
+        )
+
+      default:
+        // zoom
+        return (
+          <TouchableOpacity
+            style={{
+              flexDirection: "row",
+              height: "unset",
+              marginTop: 10,
+              marginBottom: 10,
+            }}
+            onPress={() => this.goToLesson(actions, item.weekNumber, item.lessonNumber)}
+          >
+            <Left style={{ flex: 1 }}>
+              <Image
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  alignSelf: "center",
+                }}
+                source={require("../../assets/svg/document.svg")}
+              />
+            </Left>
+            <Right
+              style={{
+                flex: 9,
+                alignItems: "flex-start",
+                marginLeft: 20,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 18,
+                  lineHeight: 25,
+                  fontFamily: "Graphik-Bold-App",
+                }}
+              >
+                {item.date}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 11,
+                  lineHeight: 17,
+                  fontFamily: "Graphik-Regular-App",
+                  textTransform: "uppercase",
+                }}
+              >
+                Zoom call @ {item.time}
+              </Text>
+            </Right>
+          </TouchableOpacity>
+        )
+    }
+  }
+
   render(): React.ReactNode {
     console.log("CourseHome")
     return (
@@ -92,23 +265,14 @@ class CourseHomeImpl extends JCComponent<Props> {
         {({ state, actions }) => {
           if (!state) return null
 
-          const instructors = state.courseData?.instructors?.items.map((item) => {
-            return item.user
+          const instructors = state.courseData?.instructors?.items?.map((item) => {
+            return item?.user
           })
-          const backOfficeStaff = state.courseData?.backOfficeStaff?.items.map((item) => {
-            return item.user
+          const backOfficeStaff = state.courseData?.backOfficeStaff?.items?.map((item) => {
+            return item?.user
           })
-          const markedDates = {}
-          for (let i = 0; i < actions.myCourseDates().zoom?.length; i++)
-            markedDates[actions.myCourseDates().zoom[i]] = { marked: true, dotColor: "red" }
-          for (let i = 0; i < actions.myCourseDates().assignments?.length; i++)
-            markedDates[actions.myCourseDates().assignments[i]] = {
-              marked: true,
-              dotColor: "green",
-            }
-          for (let i = 0; i < actions.myCourseDates().respond?.length; i++)
-            markedDates[actions.myCourseDates().respond[i]] = { marked: true, dotColor: "blue" }
 
+          const markedDates = actions.myCourseDates()
           const toDo = actions.myCourseTodo()
 
           return state.data && state.currentScreen == "Home" ? (
@@ -123,27 +287,27 @@ class CourseHomeImpl extends JCComponent<Props> {
                           <Container style={this.styles.style.courseProfileImageButtonsContainer}>
                             <ProfileImage
                               linkToProfile={true}
-                              user={state.courseData?.instructors?.items[0]?.user}
+                              user={state.courseData?.instructors?.items?.[0]?.user}
                               size="medium"
                               style="courseProfile"
                             />
 
                             <Text style={this.styles.style.courseFontConnectWithName}>
-                              {state.courseData?.instructors?.items[0]?.user?.given_name}{" "}
-                              {state.courseData?.instructors?.items[0]?.user?.family_name}
+                              {state.courseData?.instructors?.items?.[0]?.user?.given_name}{" "}
+                              {state.courseData?.instructors?.items?.[0]?.user?.family_name}
                             </Text>
                             {/* <Text style={this.styles.style.courseFontConnectConversation}>
                               {state.courseData?.instructors?.items[0]?.user?.currentRole}
                             </Text> */}
                             {/*  <JCButton onPress={() => { null }} buttonType={ButtonTypes.CourseHome}>Book a Call</JCButton>*/}
-                            {state.courseData?.instructors?.items[0]?.user?.id ? (
+                            {state.courseData?.instructors?.items?.[0]?.user?.id ? (
                               <JCButton
                                 onPress={() => {
                                   this.openConversation(
-                                    state.courseData?.instructors?.items[0]?.user?.id,
-                                    state.courseData?.instructors?.items[0]?.user?.given_name +
+                                    state.courseData?.instructors?.items?.[0]?.user?.id as string,
+                                    state.courseData?.instructors?.items?.[0]?.user?.given_name +
                                       " " +
-                                      state.courseData.instructors?.items[0]?.user?.family_name
+                                      state.courseData?.instructors?.items?.[0]?.user?.family_name
                                   )
                                 }}
                                 buttonType={ButtonTypes.CourseTransparentBoldOrange}
@@ -156,7 +320,8 @@ class CourseHomeImpl extends JCComponent<Props> {
                             <Text style={this.styles.style.courseHomeDescriptionText}>
                               {state.courseData ? (
                                 <EditableRichText
-                                  onChange={(val) => {
+                                  testID="course-introduction"
+                                  onChange={(val: string) => {
                                     actions.updateCourse("introduction", val)
                                   }}
                                   value={state.courseData.introduction}
@@ -184,9 +349,9 @@ class CourseHomeImpl extends JCComponent<Props> {
                               <EditableFileUpload
                                 textStyle={null}
                                 inputStyle={null}
-                                attachment={state.courseData.sylabusAttachment}
+                                attachment={state.courseData.sylabusAttachment as string}
                                 isEditable={state.isEditable && state.editMode}
-                                attachmentName={state.courseData.sylabusAttachmentName}
+                                attachmentName={state.courseData.sylabusAttachmentName as string}
                                 onChange={(obj) => {
                                   console.log({
                                     attachmentName: obj.attachmentName,
@@ -280,12 +445,12 @@ class CourseHomeImpl extends JCComponent<Props> {
                                       Cohorts:
                                     </Text>
 
-                                    {state.courseData?.triads?.items.map((item, index: number) => {
-                                      const coaches = item.coaches.items.map((item) => {
-                                        return item.user
+                                    {state.courseData?.triads?.items?.map((item, index: number) => {
+                                      const coaches = item?.coaches?.items?.map((item) => {
+                                        return item?.user
                                       })
-                                      const users = item.users.items.map((item) => {
-                                        return item.user
+                                      const users = item?.users?.items?.map((item) => {
+                                        return item?.user
                                       })
                                       return (
                                         <Card key={index}>
@@ -389,7 +554,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                             <>
                               {actions
                                 .myCourseGroups()
-                                .completeTriad?.map((completeTriad, index: number) => {
+                                ?.completeTriad?.map((completeTriad, index: number) => {
                                   return (
                                     <React.Fragment key={index}>
                                       <Text
@@ -405,7 +570,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                                       </Text>
                                       <View style={this.styles.style.courseMyFacilitatorContainer}>
                                         {completeTriad.coach ? (
-                                          completeTriad.coach.map((user) => {
+                                          completeTriad.coach.map((user: UserData) => {
                                             return this.renderProfileCard(user)
                                           })
                                         ) : (
@@ -437,7 +602,7 @@ class CourseHomeImpl extends JCComponent<Props> {
                                         style={this.styles.style.courseMyLearningGroupContainer}
                                       >
                                         {completeTriad.triad ? (
-                                          completeTriad.triad.map((user) => {
+                                          completeTriad.triad.map((user: UserData) => {
                                             return this.renderProfileCard(user)
                                           })
                                         ) : (
@@ -469,8 +634,8 @@ class CourseHomeImpl extends JCComponent<Props> {
                                 Learning Collective
                               </Text>
                               <View style={this.styles.style.courseMyCohortContainer}>
-                                {actions.myCourseGroups().cohort ? (
-                                  actions.myCourseGroups().cohort.map((user) => {
+                                {actions.myCourseGroups()?.cohort ? (
+                                  actions.myCourseGroups()?.cohort.map((user) => {
                                     return this.renderProfileCard(user)
                                   })
                                 ) : (
@@ -494,201 +659,17 @@ class CourseHomeImpl extends JCComponent<Props> {
                           To-Do
                         </Text>
                         <Card style={this.styles.style.courseHomeCoachingCard}>
-                          {toDo.map((item, index: number) => {
-                            return (
-                              <React.Fragment key={index}>
-                                {{
-                                  assignment: (
-                                    <Container
-                                      style={{
-                                        flexDirection: "row",
-                                        height: "unset",
-                                        marginTop: 10,
-                                        marginBottom: 10,
-                                      }}
-                                    >
-                                      <Left style={{ flex: 1 }}>
-                                        <Image
-                                          style={{
-                                            width: "40px",
-                                            height: "40px",
-                                            alignSelf: "center",
-                                          }}
-                                          source={require("../../assets/svg/document.svg")}
-                                        />
-                                      </Left>
-                                      <Right
-                                        style={{
-                                          flex: 9,
-                                          alignItems: "flex-start",
-                                          marginLeft: 20,
-                                        }}
-                                      >
-                                        <Text
-                                          style={{
-                                            fontSize: 18,
-                                            lineHeight: 25,
-                                            fontFamily: "Graphik-Bold-App",
-                                          }}
-                                        >
-                                          {item.date}
-                                        </Text>
-                                        <Text
-                                          style={{
-                                            fontSize: 11,
-                                            lineHeight: 17,
-                                            fontFamily: "Graphik-Regular-App",
-                                            textTransform: "uppercase",
-                                          }}
-                                        >
-                                          Assignment due @ {item.time}
-                                        </Text>
-                                      </Right>
-                                    </Container>
-                                  ),
-                                  respond: (
-                                    <Container
-                                      style={{
-                                        flexDirection: "row",
-                                        height: "unset",
-                                        marginTop: 10,
-                                        marginBottom: 10,
-                                      }}
-                                    >
-                                      <Left style={{ flex: 1 }}>
-                                        <Image
-                                          style={{
-                                            width: "40px",
-                                            height: "40px",
-                                            alignSelf: "center",
-                                          }}
-                                          source={require("../../assets/svg/document.svg")}
-                                        />
-                                      </Left>
-                                      <Right
-                                        style={{
-                                          flex: 9,
-                                          alignItems: "flex-start",
-                                          marginLeft: 20,
-                                        }}
-                                      >
-                                        <Text
-                                          style={{
-                                            fontSize: 18,
-                                            lineHeight: 25,
-                                            fontFamily: "Graphik-Bold-App",
-                                          }}
-                                        >
-                                          {item.date}
-                                        </Text>
-                                        <Text
-                                          style={{
-                                            fontSize: 11,
-                                            lineHeight: 17,
-                                            fontFamily: "Graphik-Regular-App",
-                                            textTransform: "uppercase",
-                                          }}
-                                        >
-                                          Responses due @ {item.time}
-                                        </Text>
-                                      </Right>
-                                    </Container>
-                                  ),
-                                  zoom: (
-                                    <Container
-                                      style={{
-                                        flexDirection: "row",
-                                        height: "unset",
-                                        marginTop: 10,
-                                        marginBottom: 10,
-                                      }}
-                                    >
-                                      <Left style={{ flex: 1 }}>
-                                        <Image
-                                          style={{
-                                            width: "40px",
-                                            height: "40px",
-                                            alignSelf: "center",
-                                          }}
-                                          source={require("../../assets/svg/document.svg")}
-                                        />
-                                      </Left>
-                                      <Right
-                                        style={{
-                                          flex: 9,
-                                          alignItems: "flex-start",
-                                          marginLeft: 20,
-                                        }}
-                                      >
-                                        <Text
-                                          style={{
-                                            fontSize: 18,
-                                            lineHeight: 25,
-                                            fontFamily: "Graphik-Bold-App",
-                                          }}
-                                        >
-                                          {item.date}
-                                        </Text>
-                                        <Text
-                                          style={{
-                                            fontSize: 11,
-                                            lineHeight: 17,
-                                            fontFamily: "Graphik-Regular-App",
-                                            textTransform: "uppercase",
-                                          }}
-                                        >
-                                          Zoom call @ {item.time}
-                                        </Text>
-                                      </Right>
-                                    </Container>
-                                  ),
-                                }[item.lessonType] || (
-                                  <Container
-                                    style={{
-                                      flexDirection: "row",
-                                      height: "unset",
-                                      marginTop: 10,
-                                      marginBottom: 10,
-                                    }}
-                                  >
-                                    <Left style={{ flex: 1 }}>
-                                      <Image
-                                        style={{
-                                          width: "40px",
-                                          height: "40px",
-                                          alignSelf: "center",
-                                        }}
-                                        source={require("../../assets/svg/document.svg")}
-                                      />
-                                    </Left>
-                                    <Right
-                                      style={{ flex: 9, alignItems: "flex-start", marginLeft: 20 }}
-                                    >
-                                      <Text
-                                        style={{
-                                          fontSize: 18,
-                                          lineHeight: 25,
-                                          fontFamily: "Graphik-Bold-App",
-                                        }}
-                                      >
-                                        {item.date}
-                                      </Text>
-                                      <Text
-                                        style={{
-                                          fontSize: 11,
-                                          lineHeight: 17,
-                                          fontFamily: "Graphik-Regular-App",
-                                          textTransform: "uppercase",
-                                        }}
-                                      >
-                                        Zoom call @ {item.time}
-                                      </Text>
-                                    </Right>
-                                  </Container>
-                                )}
-                              </React.Fragment>
-                            )
-                          })}
+                          {Dimensions.get("window").width > 720 ? (
+                            <FlatList
+                              renderItem={({ item }) => this.renderToDo(item, actions)}
+                              data={toDo}
+                              style={{ height: 200 }}
+                            />
+                          ) : (
+                            toDo?.slice(0, 7).map((item) => {
+                              return this.renderToDo(item, actions)
+                            })
+                          )}
                         </Card>
 
                         <Text
@@ -702,11 +683,14 @@ class CourseHomeImpl extends JCComponent<Props> {
                         >
                           My Calendar
                         </Text>
-
                         <Calendar
                           style={this.styles.style.courseHomeCalendar}
                           current={moment().format("YYYY-MM-DD")}
                           markedDates={markedDates}
+                          onDayPress={(day) =>
+                            this.handlePressCalendar(actions, markedDates[day.dateString])
+                          }
+                          theme={{ todayTextColor: "#F0493E" }}
                         />
                         <Container style={this.styles.style.courseHomeCalendarLabels}>
                           <Text

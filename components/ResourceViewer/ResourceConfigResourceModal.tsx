@@ -1,11 +1,13 @@
+import { AntDesign } from "@expo/vector-icons"
 import { useNavigation, useRoute } from "@react-navigation/native"
+import { Picker } from "native-base"
 import React from "react"
 import {
   NativeSyntheticEvent,
-  Picker,
   Text,
   TextInput,
   TextInputChangeEventData,
+  TouchableOpacity,
   View,
 } from "react-native"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
@@ -15,10 +17,12 @@ import {
   ResourceDetailInput,
   ResourceDetailType,
   UpdateResourceInput,
+  UserGroupType,
 } from "../../src/API"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
 import { ResourceActions, ResourceContext, ResourceState } from "./ResourceContext"
 import ResourceImage from "./ResourceImage"
+
 interface Props {
   navigation?: any
   route?: any
@@ -43,11 +47,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
   }
   saveResource(resourceState: ResourceState, resourceActions: ResourceActions) {
     if (resourceState.currentResource == null) return
-    resourceActions.updateResource(
-      resourceState.currentResource,
-
-      this.state.currentResource
-    )
+    resourceActions.updateResource(resourceState.currentResource, this.state.currentResource)
   }
 
   renderResourceName(item: ResourceDetailInput | null, index: number): React.ReactNode {
@@ -101,15 +101,11 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
       </View>
     )
   }
-  renderResourceImage(
-    resourceState: ResourceState,
-    item: ResourceDetailInput | null,
-    index: number
-  ): React.ReactNode {
+  renderResourceImage(resourceState: ResourceState): React.ReactNode {
     return (
       <ResourceImage
         onUpdate={(image: ImageInput) => {
-          let tmp = this.state.currentResource
+          const tmp = this.state.currentResource
           tmp.image = image
           console.log({ currentResource: tmp })
           this.setState({ currentResource: tmp })
@@ -172,7 +168,7 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
                     {this.renderResourceName(item, index)}
                     {this.renderResourceText(item, index)}
                     {this.renderResourceValue(item, index)}
-                    {this.renderResourceImage(resourceState, item, index)}
+                    {this.renderResourceImage(resourceState)}
                   </>
                 )}
               </>
@@ -195,6 +191,72 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
     )
   }
 
+  permissionsPicker(): React.ReactNode {
+    return (
+      <View style={{ marginLeft: 15 }}>
+        <Text style={{ fontWeight: "bold" }}>Permissions</Text>
+        <Picker
+          mode="dropdown"
+          style={{
+            width: "100%",
+            marginTop: 10,
+            marginBottom: 30,
+            fontSize: 16,
+            height: 30,
+            flexGrow: 0,
+            paddingTop: 3,
+            paddingBottom: 3,
+          }}
+          selectedValue={null}
+          onValueChange={(value: string) => {
+            const readGroups = this.state.currentResource.readGroups
+              ? [...this.state.currentResource.readGroups]
+              : []
+            readGroups.push(value as UserGroupType)
+            this.setState((prevState) => ({
+              currentResource: { ...prevState.currentResource, readGroups },
+            }))
+          }}
+        >
+          <Picker.Item key={null} label={"Add Group"} value={null} />
+          {Object.keys(UserGroupType).map((org: string) => {
+            return <Picker.Item key={org} label={org} value={org} />
+          })}
+        </Picker>
+        {this.state.currentResource?.readGroups?.map(
+          (item: UserGroupType | null, index: number) => {
+            return (
+              <React.Fragment key={index}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Text style={{ fontWeight: "normal" }}>{item}</Text>
+                  <TouchableOpacity
+                    style={{ alignSelf: "center", marginLeft: 15 }}
+                    onPress={() => {
+                      const readGroups = this.state.currentResource.readGroups
+                        ? [...this.state.currentResource.readGroups]
+                        : []
+                      readGroups.splice(index, 1)
+                      this.setState((prevState) => ({
+                        currentResource: { ...prevState.currentResource, readGroups },
+                      }))
+                    }}
+                  >
+                    <AntDesign name="close" size={20} color="black" />
+                  </TouchableOpacity>
+                </View>
+              </React.Fragment>
+            )
+          }
+        )}
+      </View>
+    )
+  }
+
   render(): React.ReactNode {
     return (
       <ResourceConfigResourceImpl.Consumer>
@@ -212,81 +274,111 @@ class ResourceConfigResourceImpl extends JCComponent<Props, State> {
                   this.props.onHide()
                 }}
               >
-                <>
-                  <View style={{ flexDirection: "row", width: "100%" }}>
-                    <Text style={{ textAlign: "left", width: "50%", fontWeight: "800" }}>
-                      Title:{" "}
-                    </Text>
-                    <TextInput
-                      onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
-                        const tmp = this.state.currentResource
-                        tmp.title = val.nativeEvent.text
-                        this.setState({ currentResource: tmp })
-                      }}
-                      placeholder="title"
-                      multiline={false}
-                      value={this.state.currentResource.title ?? ""}
-                    ></TextInput>
-                  </View>
-                  <View style={{ flexDirection: "row", width: "100%" }}>
-                    <Text style={{ textAlign: "left", width: "50%", fontWeight: "800" }}>
-                      subtitle:{" "}
-                    </Text>
-                    <TextInput
-                      onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
-                        const tmp = this.state.currentResource
-                        tmp.subtitle = val.nativeEvent.text
-                        this.setState({ currentResource: tmp })
-                      }}
-                      placeholder="subtitle"
-                      multiline={false}
-                      value={this.state.currentResource.subtitle ?? ""}
-                    ></TextInput>
-                  </View>
-                  <ResourceImage
-                    onUpdate={(image: ImageInput) => {
-                      let tmp = this.state.currentResource
-                      tmp.image = image
-                      console.log({ currentResource: tmp })
-                      this.setState({ currentResource: tmp })
-                    }}
-                    fileName={
-                      "resources/upload/group-" +
-                      resourceState.resourceData?.id +
-                      "-resource-" +
-                      this.state.currentResource.id +
-                      "-"
-                    }
-                    currentImage={this.state.currentResource.image}
-                  ></ResourceImage>
-
-                  <View style={{ flexDirection: "row", width: "100%" }}>
-                    <Text style={{ textAlign: "left", width: "50%", fontWeight: "800" }}>
-                      description:
-                    </Text>
-                    <TextInput
-                      style={{ height: 130 }}
-                      onChange={(val: NativeSyntheticEvent<TextInputChangeEventData>) => {
-                        const tmp = this.state.currentResource
-                        tmp.description = val.nativeEvent.text
-                        this.setState({ currentResource: tmp })
-                      }}
-                      placeholder="description"
-                      multiline={true}
-                      value={this.state.currentResource.description ?? ""}
-                    ></TextInput>
-                  </View>
-                  {this.renderDetailsResource(resourceState, resourceActions)}
-                  <JCButton
-                    buttonType={ButtonTypes.ResourceModalSolid}
-                    onPress={() => {
-                      this.saveResource(resourceState, resourceActions)
-                      this.props.onHide()
+                <View style={{ display: "flex", flexDirection: "row" }}>
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      borderRightColor: "#333333",
+                      borderRightWidth: 1,
+                      borderStyle: "dashed",
+                      paddingRight: 15,
                     }}
                   >
-                    Save
-                  </JCButton>
-                </>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        width: "100%",
+                      }}
+                    >
+                      <Text style={{ textAlign: "left", width: "50%", fontWeight: "800" }}>
+                        Title:{" "}
+                      </Text>
+                      <TextInput
+                        onChange={(val) => {
+                          const title = val.nativeEvent.text
+                          this.setState((prevState) => ({
+                            currentResource: {
+                              ...prevState.currentResource,
+                              title,
+                            },
+                          }))
+                        }}
+                        placeholder="title"
+                        multiline={false}
+                        value={this.state.currentResource.title ?? ""}
+                      />
+                    </View>
+                    <View style={{ flexDirection: "row", width: "100%" }}>
+                      <Text style={{ textAlign: "left", width: "50%", fontWeight: "800" }}>
+                        subtitle:{" "}
+                      </Text>
+                      <TextInput
+                        onChange={(val) => {
+                          const subtitle = val.nativeEvent.text
+                          this.setState((prevState) => ({
+                            currentResource: {
+                              ...prevState.currentResource,
+                              subtitle,
+                            },
+                          }))
+                        }}
+                        placeholder="subtitle"
+                        multiline={false}
+                        value={this.state.currentResource.subtitle ?? ""}
+                      />
+                    </View>
+                    <ResourceImage
+                      onUpdate={(image: ImageInput) => {
+                        this.setState((prevState) => ({
+                          currentResource: {
+                            ...prevState.currentResource,
+                            image,
+                          },
+                        }))
+                      }}
+                      fileName={
+                        "resources/upload/group-" +
+                        resourceState.resourceData?.id +
+                        "-resource-" +
+                        this.state.currentResource.id +
+                        "-"
+                      }
+                      currentImage={this.state.currentResource.image}
+                    />
+                    <View style={{ flexDirection: "row", width: "100%" }}>
+                      <Text style={{ textAlign: "left", width: "50%", fontWeight: "800" }}>
+                        description:
+                      </Text>
+                      <TextInput
+                        style={{ height: 130 }}
+                        onChange={(val) => {
+                          const description = val.nativeEvent.text
+                          this.setState((prevState) => ({
+                            currentResource: {
+                              ...prevState.currentResource,
+                              description,
+                            },
+                          }))
+                        }}
+                        placeholder="description"
+                        multiline={true}
+                        value={this.state.currentResource.description ?? ""}
+                      ></TextInput>
+                    </View>
+                    {this.renderDetailsResource(resourceState, resourceActions)}
+                    <JCButton
+                      buttonType={ButtonTypes.ResourceModalSolid}
+                      onPress={() => {
+                        this.saveResource(resourceState, resourceActions)
+                        this.props.onHide()
+                      }}
+                    >
+                      Save
+                    </JCButton>
+                  </View>
+                  {this.permissionsPicker()}
+                </View>
               </JCModal>
             )
           )

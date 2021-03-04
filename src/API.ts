@@ -569,6 +569,68 @@ export type DeleteDirectMessageInput = {
   id?: string | null,
 };
 
+export type CreateCRMRootInput = {
+  id?: string | null,
+};
+
+export type UpdateCRMRootInput = {
+  id: string,
+};
+
+export type DeleteCRMRootInput = {
+  id?: string | null,
+};
+
+export type CreateCRMMessageInput = {
+  id?: string | null,
+  rootId: string,
+  content: string,
+  when: string,
+  authorName: string,
+  authorId: string,
+  attachment?: string | null,
+};
+
+export type UpdateCRMMessageInput = {
+  id: string,
+  rootId?: string | null,
+  content?: string | null,
+  when?: string | null,
+  authorName?: string | null,
+  authorId?: string | null,
+  attachment?: string | null,
+};
+
+export type DeleteCRMMessageInput = {
+  id?: string | null,
+};
+
+export type CreateCRMReplyInput = {
+  id?: string | null,
+  rootId: string,
+  content: string,
+  when: string,
+  authorName: string,
+  authorId: string,
+  attachment?: string | null,
+  parentId: string,
+};
+
+export type UpdateCRMReplyInput = {
+  id: string,
+  rootId?: string | null,
+  content?: string | null,
+  when?: string | null,
+  authorName?: string | null,
+  authorId?: string | null,
+  attachment?: string | null,
+  parentId?: string | null,
+};
+
+export type DeleteCRMReplyInput = {
+  id?: string | null,
+};
+
 export type CreateMessageInput = {
   id?: string | null,
   content: string,
@@ -1181,6 +1243,40 @@ export type ModelDirectMessageFilterInput = {
   and?: Array< ModelDirectMessageFilterInput | null > | null,
   or?: Array< ModelDirectMessageFilterInput | null > | null,
   not?: ModelDirectMessageFilterInput | null,
+};
+
+export type ModelCRMRootFilterInput = {
+  id?: ModelIDFilterInput | null,
+  and?: Array< ModelCRMRootFilterInput | null > | null,
+  or?: Array< ModelCRMRootFilterInput | null > | null,
+  not?: ModelCRMRootFilterInput | null,
+};
+
+export type ModelCRMMessageFilterInput = {
+  id?: ModelIDFilterInput | null,
+  rootId?: ModelIDFilterInput | null,
+  content?: ModelStringFilterInput | null,
+  when?: ModelStringFilterInput | null,
+  authorName?: ModelStringFilterInput | null,
+  authorId?: ModelIDFilterInput | null,
+  attachment?: ModelStringFilterInput | null,
+  and?: Array< ModelCRMMessageFilterInput | null > | null,
+  or?: Array< ModelCRMMessageFilterInput | null > | null,
+  not?: ModelCRMMessageFilterInput | null,
+};
+
+export type ModelCRMReplyFilterInput = {
+  id?: ModelIDFilterInput | null,
+  rootId?: ModelIDFilterInput | null,
+  content?: ModelStringFilterInput | null,
+  when?: ModelStringFilterInput | null,
+  authorName?: ModelStringFilterInput | null,
+  authorId?: ModelIDFilterInput | null,
+  attachment?: ModelStringFilterInput | null,
+  parentId?: ModelIDFilterInput | null,
+  and?: Array< ModelCRMReplyFilterInput | null > | null,
+  or?: Array< ModelCRMReplyFilterInput | null > | null,
+  not?: ModelCRMReplyFilterInput | null,
 };
 
 export type ModelMessageFilterInput = {
@@ -2177,6 +2273,19 @@ export type CancelSubscriptionMutation = {
       trial_end: string | null,
       trial_start: string | null,
     } | null,
+  } | null,
+};
+
+export type SendHelpRequestMutationVariables = {
+  email?: string | null,
+  body?: string | null,
+};
+
+export type SendHelpRequestMutation = {
+  sendHelpRequest:  {
+    __typename: "sendHelpResponse",
+    err: string | null,
+    data: string | null,
   } | null,
 };
 
@@ -10004,6 +10113,357 @@ export type DeleteDirectMessageMutation = {
   } | null,
 };
 
+export type CreateCrmRootMutationVariables = {
+  input: CreateCRMRootInput,
+};
+
+export type CreateCrmRootMutation = {
+  createCRMRoot:  {
+    __typename: "CRMRoot",
+    id: string,
+    messages:  {
+      __typename: "ModelCRMMessageConnection",
+      items:  Array< {
+        __typename: "CRMMessage",
+        id: string,
+        rootId: string,
+        content: string,
+        when: string,
+        authorName: string,
+        authorId: string,
+        attachment: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateCrmRootMutationVariables = {
+  input: UpdateCRMRootInput,
+};
+
+export type UpdateCrmRootMutation = {
+  updateCRMRoot:  {
+    __typename: "CRMRoot",
+    id: string,
+    messages:  {
+      __typename: "ModelCRMMessageConnection",
+      items:  Array< {
+        __typename: "CRMMessage",
+        id: string,
+        rootId: string,
+        content: string,
+        when: string,
+        authorName: string,
+        authorId: string,
+        attachment: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteCrmRootMutationVariables = {
+  input: DeleteCRMRootInput,
+};
+
+export type DeleteCrmRootMutation = {
+  deleteCRMRoot:  {
+    __typename: "CRMRoot",
+    id: string,
+    messages:  {
+      __typename: "ModelCRMMessageConnection",
+      items:  Array< {
+        __typename: "CRMMessage",
+        id: string,
+        rootId: string,
+        content: string,
+        when: string,
+        authorName: string,
+        authorId: string,
+        attachment: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateCrmMessageMutationVariables = {
+  input: CreateCRMMessageInput,
+};
+
+export type CreateCrmMessageMutation = {
+  createCRMMessage:  {
+    __typename: "CRMMessage",
+    id: string,
+    rootId: string,
+    crmRoot:  {
+      __typename: "CRMRoot",
+      id: string,
+      messages:  {
+        __typename: "ModelCRMMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    content: string,
+    when: string,
+    authorName: string,
+    authorId: string,
+    attachment: string | null,
+    thread:  {
+      __typename: "ModelCRMReplyConnection",
+      items:  Array< {
+        __typename: "CRMReply",
+        id: string,
+        rootId: string,
+        content: string,
+        when: string,
+        authorName: string,
+        authorId: string,
+        attachment: string | null,
+        parentId: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateCrmMessageMutationVariables = {
+  input: UpdateCRMMessageInput,
+};
+
+export type UpdateCrmMessageMutation = {
+  updateCRMMessage:  {
+    __typename: "CRMMessage",
+    id: string,
+    rootId: string,
+    crmRoot:  {
+      __typename: "CRMRoot",
+      id: string,
+      messages:  {
+        __typename: "ModelCRMMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    content: string,
+    when: string,
+    authorName: string,
+    authorId: string,
+    attachment: string | null,
+    thread:  {
+      __typename: "ModelCRMReplyConnection",
+      items:  Array< {
+        __typename: "CRMReply",
+        id: string,
+        rootId: string,
+        content: string,
+        when: string,
+        authorName: string,
+        authorId: string,
+        attachment: string | null,
+        parentId: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteCrmMessageMutationVariables = {
+  input: DeleteCRMMessageInput,
+};
+
+export type DeleteCrmMessageMutation = {
+  deleteCRMMessage:  {
+    __typename: "CRMMessage",
+    id: string,
+    rootId: string,
+    crmRoot:  {
+      __typename: "CRMRoot",
+      id: string,
+      messages:  {
+        __typename: "ModelCRMMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    content: string,
+    when: string,
+    authorName: string,
+    authorId: string,
+    attachment: string | null,
+    thread:  {
+      __typename: "ModelCRMReplyConnection",
+      items:  Array< {
+        __typename: "CRMReply",
+        id: string,
+        rootId: string,
+        content: string,
+        when: string,
+        authorName: string,
+        authorId: string,
+        attachment: string | null,
+        parentId: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateCrmReplyMutationVariables = {
+  input: CreateCRMReplyInput,
+};
+
+export type CreateCrmReplyMutation = {
+  createCRMReply:  {
+    __typename: "CRMReply",
+    id: string,
+    rootId: string,
+    content: string,
+    when: string,
+    authorName: string,
+    authorId: string,
+    attachment: string | null,
+    parentId: string,
+    parent:  {
+      __typename: "CRMMessage",
+      id: string,
+      rootId: string,
+      crmRoot:  {
+        __typename: "CRMRoot",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      content: string,
+      when: string,
+      authorName: string,
+      authorId: string,
+      attachment: string | null,
+      thread:  {
+        __typename: "ModelCRMReplyConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateCrmReplyMutationVariables = {
+  input: UpdateCRMReplyInput,
+};
+
+export type UpdateCrmReplyMutation = {
+  updateCRMReply:  {
+    __typename: "CRMReply",
+    id: string,
+    rootId: string,
+    content: string,
+    when: string,
+    authorName: string,
+    authorId: string,
+    attachment: string | null,
+    parentId: string,
+    parent:  {
+      __typename: "CRMMessage",
+      id: string,
+      rootId: string,
+      crmRoot:  {
+        __typename: "CRMRoot",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      content: string,
+      when: string,
+      authorName: string,
+      authorId: string,
+      attachment: string | null,
+      thread:  {
+        __typename: "ModelCRMReplyConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteCrmReplyMutationVariables = {
+  input: DeleteCRMReplyInput,
+};
+
+export type DeleteCrmReplyMutation = {
+  deleteCRMReply:  {
+    __typename: "CRMReply",
+    id: string,
+    rootId: string,
+    content: string,
+    when: string,
+    authorName: string,
+    authorId: string,
+    attachment: string | null,
+    parentId: string,
+    parent:  {
+      __typename: "CRMMessage",
+      id: string,
+      rootId: string,
+      crmRoot:  {
+        __typename: "CRMRoot",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      content: string,
+      when: string,
+      authorName: string,
+      authorId: string,
+      attachment: string | null,
+      thread:  {
+        __typename: "ModelCRMReplyConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type CreateMessageMutationVariables = {
   input: CreateMessageInput,
 };
@@ -16479,6 +16939,219 @@ export type ListDirectMessagesQuery = {
   } | null,
 };
 
+export type GetCrmRootQueryVariables = {
+  id: string,
+};
+
+export type GetCrmRootQuery = {
+  getCRMRoot:  {
+    __typename: "CRMRoot",
+    id: string,
+    messages:  {
+      __typename: "ModelCRMMessageConnection",
+      items:  Array< {
+        __typename: "CRMMessage",
+        id: string,
+        rootId: string,
+        content: string,
+        when: string,
+        authorName: string,
+        authorId: string,
+        attachment: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListCrmRootsQueryVariables = {
+  filter?: ModelCRMRootFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListCrmRootsQuery = {
+  listCRMRoots:  {
+    __typename: "ModelCRMRootConnection",
+    items:  Array< {
+      __typename: "CRMRoot",
+      id: string,
+      messages:  {
+        __typename: "ModelCRMMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type GetCrmMessageQueryVariables = {
+  id: string,
+};
+
+export type GetCrmMessageQuery = {
+  getCRMMessage:  {
+    __typename: "CRMMessage",
+    id: string,
+    rootId: string,
+    crmRoot:  {
+      __typename: "CRMRoot",
+      id: string,
+      messages:  {
+        __typename: "ModelCRMMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    content: string,
+    when: string,
+    authorName: string,
+    authorId: string,
+    attachment: string | null,
+    thread:  {
+      __typename: "ModelCRMReplyConnection",
+      items:  Array< {
+        __typename: "CRMReply",
+        id: string,
+        rootId: string,
+        content: string,
+        when: string,
+        authorName: string,
+        authorId: string,
+        attachment: string | null,
+        parentId: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListCrmMessagesQueryVariables = {
+  filter?: ModelCRMMessageFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListCrmMessagesQuery = {
+  listCRMMessages:  {
+    __typename: "ModelCRMMessageConnection",
+    items:  Array< {
+      __typename: "CRMMessage",
+      id: string,
+      rootId: string,
+      crmRoot:  {
+        __typename: "CRMRoot",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      content: string,
+      when: string,
+      authorName: string,
+      authorId: string,
+      attachment: string | null,
+      thread:  {
+        __typename: "ModelCRMReplyConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type GetCrmReplyQueryVariables = {
+  id: string,
+};
+
+export type GetCrmReplyQuery = {
+  getCRMReply:  {
+    __typename: "CRMReply",
+    id: string,
+    rootId: string,
+    content: string,
+    when: string,
+    authorName: string,
+    authorId: string,
+    attachment: string | null,
+    parentId: string,
+    parent:  {
+      __typename: "CRMMessage",
+      id: string,
+      rootId: string,
+      crmRoot:  {
+        __typename: "CRMRoot",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      content: string,
+      when: string,
+      authorName: string,
+      authorId: string,
+      attachment: string | null,
+      thread:  {
+        __typename: "ModelCRMReplyConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListCrmReplysQueryVariables = {
+  filter?: ModelCRMReplyFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListCrmReplysQuery = {
+  listCRMReplys:  {
+    __typename: "ModelCRMReplyConnection",
+    items:  Array< {
+      __typename: "CRMReply",
+      id: string,
+      rootId: string,
+      content: string,
+      when: string,
+      authorName: string,
+      authorId: string,
+      attachment: string | null,
+      parentId: string,
+      parent:  {
+        __typename: "CRMMessage",
+        id: string,
+        rootId: string,
+        content: string,
+        when: string,
+        authorName: string,
+        authorId: string,
+        attachment: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
 export type GetMessageQueryVariables = {
   id: string,
 };
@@ -19384,6 +20057,94 @@ export type OnCreateMessageByRoomIdSubscription = {
       createdAt: string,
       updatedAt: string,
     } | null,
+  } | null,
+};
+
+export type OnCreateCrmMessageByRootIdSubscriptionVariables = {
+  rootId: string,
+};
+
+export type OnCreateCrmMessageByRootIdSubscription = {
+  onCreateCrmMessageByRootId:  {
+    __typename: "CRMMessage",
+    id: string,
+    rootId: string,
+    crmRoot:  {
+      __typename: "CRMRoot",
+      id: string,
+      messages:  {
+        __typename: "ModelCRMMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    content: string,
+    when: string,
+    authorName: string,
+    authorId: string,
+    attachment: string | null,
+    thread:  {
+      __typename: "ModelCRMReplyConnection",
+      items:  Array< {
+        __typename: "CRMReply",
+        id: string,
+        rootId: string,
+        content: string,
+        when: string,
+        authorName: string,
+        authorId: string,
+        attachment: string | null,
+        parentId: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateCrmReplyByRootIdSubscriptionVariables = {
+  rootId: string,
+};
+
+export type OnCreateCrmReplyByRootIdSubscription = {
+  onCreateCrmReplyByRootId:  {
+    __typename: "CRMReply",
+    id: string,
+    rootId: string,
+    content: string,
+    when: string,
+    authorName: string,
+    authorId: string,
+    attachment: string | null,
+    parentId: string,
+    parent:  {
+      __typename: "CRMMessage",
+      id: string,
+      rootId: string,
+      crmRoot:  {
+        __typename: "CRMRoot",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      content: string,
+      when: string,
+      authorName: string,
+      authorId: string,
+      attachment: string | null,
+      thread:  {
+        __typename: "ModelCRMReplyConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
@@ -26314,6 +27075,321 @@ export type OnDeleteDirectMessageSubscription = {
       createdAt: string,
       updatedAt: string,
     } | null,
+  } | null,
+};
+
+export type OnCreateCrmRootSubscription = {
+  onCreateCRMRoot:  {
+    __typename: "CRMRoot",
+    id: string,
+    messages:  {
+      __typename: "ModelCRMMessageConnection",
+      items:  Array< {
+        __typename: "CRMMessage",
+        id: string,
+        rootId: string,
+        content: string,
+        when: string,
+        authorName: string,
+        authorId: string,
+        attachment: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateCrmRootSubscription = {
+  onUpdateCRMRoot:  {
+    __typename: "CRMRoot",
+    id: string,
+    messages:  {
+      __typename: "ModelCRMMessageConnection",
+      items:  Array< {
+        __typename: "CRMMessage",
+        id: string,
+        rootId: string,
+        content: string,
+        when: string,
+        authorName: string,
+        authorId: string,
+        attachment: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteCrmRootSubscription = {
+  onDeleteCRMRoot:  {
+    __typename: "CRMRoot",
+    id: string,
+    messages:  {
+      __typename: "ModelCRMMessageConnection",
+      items:  Array< {
+        __typename: "CRMMessage",
+        id: string,
+        rootId: string,
+        content: string,
+        when: string,
+        authorName: string,
+        authorId: string,
+        attachment: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateCrmMessageSubscription = {
+  onCreateCRMMessage:  {
+    __typename: "CRMMessage",
+    id: string,
+    rootId: string,
+    crmRoot:  {
+      __typename: "CRMRoot",
+      id: string,
+      messages:  {
+        __typename: "ModelCRMMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    content: string,
+    when: string,
+    authorName: string,
+    authorId: string,
+    attachment: string | null,
+    thread:  {
+      __typename: "ModelCRMReplyConnection",
+      items:  Array< {
+        __typename: "CRMReply",
+        id: string,
+        rootId: string,
+        content: string,
+        when: string,
+        authorName: string,
+        authorId: string,
+        attachment: string | null,
+        parentId: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateCrmMessageSubscription = {
+  onUpdateCRMMessage:  {
+    __typename: "CRMMessage",
+    id: string,
+    rootId: string,
+    crmRoot:  {
+      __typename: "CRMRoot",
+      id: string,
+      messages:  {
+        __typename: "ModelCRMMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    content: string,
+    when: string,
+    authorName: string,
+    authorId: string,
+    attachment: string | null,
+    thread:  {
+      __typename: "ModelCRMReplyConnection",
+      items:  Array< {
+        __typename: "CRMReply",
+        id: string,
+        rootId: string,
+        content: string,
+        when: string,
+        authorName: string,
+        authorId: string,
+        attachment: string | null,
+        parentId: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteCrmMessageSubscription = {
+  onDeleteCRMMessage:  {
+    __typename: "CRMMessage",
+    id: string,
+    rootId: string,
+    crmRoot:  {
+      __typename: "CRMRoot",
+      id: string,
+      messages:  {
+        __typename: "ModelCRMMessageConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    content: string,
+    when: string,
+    authorName: string,
+    authorId: string,
+    attachment: string | null,
+    thread:  {
+      __typename: "ModelCRMReplyConnection",
+      items:  Array< {
+        __typename: "CRMReply",
+        id: string,
+        rootId: string,
+        content: string,
+        when: string,
+        authorName: string,
+        authorId: string,
+        attachment: string | null,
+        parentId: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateCrmReplySubscription = {
+  onCreateCRMReply:  {
+    __typename: "CRMReply",
+    id: string,
+    rootId: string,
+    content: string,
+    when: string,
+    authorName: string,
+    authorId: string,
+    attachment: string | null,
+    parentId: string,
+    parent:  {
+      __typename: "CRMMessage",
+      id: string,
+      rootId: string,
+      crmRoot:  {
+        __typename: "CRMRoot",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      content: string,
+      when: string,
+      authorName: string,
+      authorId: string,
+      attachment: string | null,
+      thread:  {
+        __typename: "ModelCRMReplyConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateCrmReplySubscription = {
+  onUpdateCRMReply:  {
+    __typename: "CRMReply",
+    id: string,
+    rootId: string,
+    content: string,
+    when: string,
+    authorName: string,
+    authorId: string,
+    attachment: string | null,
+    parentId: string,
+    parent:  {
+      __typename: "CRMMessage",
+      id: string,
+      rootId: string,
+      crmRoot:  {
+        __typename: "CRMRoot",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      content: string,
+      when: string,
+      authorName: string,
+      authorId: string,
+      attachment: string | null,
+      thread:  {
+        __typename: "ModelCRMReplyConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteCrmReplySubscription = {
+  onDeleteCRMReply:  {
+    __typename: "CRMReply",
+    id: string,
+    rootId: string,
+    content: string,
+    when: string,
+    authorName: string,
+    authorId: string,
+    attachment: string | null,
+    parentId: string,
+    parent:  {
+      __typename: "CRMMessage",
+      id: string,
+      rootId: string,
+      crmRoot:  {
+        __typename: "CRMRoot",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+      } | null,
+      content: string,
+      when: string,
+      authorName: string,
+      authorId: string,
+      attachment: string | null,
+      thread:  {
+        __typename: "ModelCRMReplyConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 

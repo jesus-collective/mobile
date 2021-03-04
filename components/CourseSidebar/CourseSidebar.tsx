@@ -83,7 +83,11 @@ class CourseSidebarImpl extends JCComponent<Props> {
                 />
               </Button>
 
-              <JCButton buttonType={ButtonTypes.CourseSideBarFirst} onPress={this.openCourseHome}>
+              <JCButton
+                testID={"course-menu-home"}
+                buttonType={ButtonTypes.CourseSideBarFirst}
+                onPress={this.openCourseHome}
+              >
                 <Image
                   style={
                     state.currentScreen == "Home"
@@ -102,7 +106,11 @@ class CourseSidebarImpl extends JCComponent<Props> {
                   Home
                 </Text>
               </JCButton>
-              <JCButton buttonType={ButtonTypes.CourseSideBar} onPress={this.openCourseDetails}>
+              <JCButton
+                testID={"course-menu-details"}
+                buttonType={ButtonTypes.CourseSideBar}
+                onPress={this.openCourseDetails}
+              >
                 <Image
                   style={
                     state.currentScreen == "Details"
@@ -146,6 +154,7 @@ class CourseSidebarImpl extends JCComponent<Props> {
                     </Container>*/}
               {state.isEditable ? (
                 <JCButton
+                  testID={"course-edit"}
                   buttonType={ButtonTypes.EditButton}
                   onPress={() => {
                     actions.setEditMode(!state.editMode)

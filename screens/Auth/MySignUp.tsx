@@ -4,6 +4,7 @@ import { Auth } from "aws-amplify"
 import countryDialCodes from "aws-amplify-react-native/src/CountryDialCodes"
 import { View } from "native-base"
 import React from "react"
+import { isMobile } from "react-device-detect"
 import {
   ActivityIndicator,
   Dimensions,
@@ -23,7 +24,6 @@ import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
 import MainStyles from "../../components/style"
 import * as RootNavigation from "../../screens/HomeScreen/NavigationRoot"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
-import { isMobile } from "react-device-detect"
 
 interface Props {
   navigation?: any
@@ -42,7 +42,6 @@ interface State {
     orgName: string
   }
   authError: string
-  enabled: boolean
   joinedAs: "individual" | "organization" | null
   joinedProduct: string
   productType: "Partner" | "OneStory" | null
@@ -65,7 +64,6 @@ class MySignUpImpl extends React.Component<Props, State> {
         orgName: "",
       },
       authError: "",
-      enabled: false,
       joinedAs: props.route?.params.joinedAs,
       joinedProduct: props.route?.params.joinedProduct,
       productType: props.route?.params.productType,
@@ -88,7 +86,6 @@ class MySignUpImpl extends React.Component<Props, State> {
         orgName: "",
       },
       authError: "",
-      enabled: false,
       joinedAs: null,
       joinedProduct: this.props.route?.params.joinedProduct,
       productType: this.props.route?.params.productType,
@@ -99,73 +96,81 @@ class MySignUpImpl extends React.Component<Props, State> {
 
   validate(): boolean {
     let val = true
+    let errorMsg = ""
     if (!this.state.user.first) {
       val = false
-    }
-
-    if (!this.state.user.last) {
+      errorMsg = "Please enter your first name"
+    } else if (!this.state.user.last) {
       val = false
-    }
-
-    if (!this.state.user.pass || !this.state.user.pass) {
+      errorMsg = "Please enter your last name"
+    } else if (!this.state.user.email || !this.state.user.email.includes("@")) {
       val = false
-    }
-
-    if (!this.state.user.email || !this.state.user.email.includes("@")) {
+      errorMsg = "Please enter a valid email"
+    } else if (!this.state.user.pass) {
       val = false
-    }
-
-    if (!this.state.user.phone) {
+      errorMsg = "Please enter a password"
+    } else if (this.state.user.pass.length < 8) {
+      errorMsg = "Password must be at least 8 characters"
       val = false
+    } else if (!this.state.user.pass2) {
+      val = false
+      errorMsg = "Please confirm your password"
+    } else if (this.state.user.pass !== this.state.user.pass2) {
+      errorMsg = "Passwords do not match"
+      val = false
+    } else if (!this.state.user.phone) {
+      val = false
+      errorMsg = "Please enter a phone number"
     }
-
     if (!this.state.user.orgName && this.state.joinedAs === "organization") {
       val = false
+      errorMsg = "Please enter your organization name"
     }
-
+    this.setState({ authError: errorMsg })
     return val
   }
-
   componentDidUpdate(_prevProps: Props, prevState: State): void {
     if (prevState.user !== this.state.user) {
-      this.setState({ enabled: this.validate() })
+      this.setState({ authError: "" })
     }
   }
-
   async signUp(actions: any): Promise<void> {
-    try {
-      if (this.state.user.pass !== this.state.user.pass2) {
-        this.setState({ authError: "Passwords do not match" })
-        return
-      }
-      if (!this.validate()) return
-      Sentry.setUser({ email: this.state.user.email.toLowerCase() })
+    if (this.validate()) {
+      this.setState({ authError: "" })
+      try {
+        if (this.state.user.pass !== this.state.user.pass2) {
+          this.setState({ authError: "Passwords do not match" })
+          return
+        }
+        if (!this.validate()) return
+        Sentry.setUser({ email: this.state.user.email.toLowerCase() })
 
-      this.setState({ sendingData: true })
-      await Auth.signUp({
-        username: this.state.user.email.toLowerCase(),
-        password: this.state.user.pass,
-        attributes: {
-          family_name: this.state.user.last,
-          given_name: this.state.user.first,
-          phone_number: this.state.user.code + this.state.user.phone,
-          email: this.state.user.email.toLowerCase(),
-          "custom:orgName": this.state.user.orgName,
-          "custom:isOrg": Boolean(this.state.joinedAs === "organization").toString(),
-        },
-      }).then(
-        async () =>
-          await this.changeAuthState(actions, "confirmSignUp", {
-            joinedProduct: this.state.joinedProduct,
-            productType: this.state.productType,
+        this.setState({ sendingData: true })
+        await Auth.signUp({
+          username: this.state.user.email.toLowerCase(),
+          password: this.state.user.pass,
+          attributes: {
+            family_name: this.state.user.last,
+            given_name: this.state.user.first,
+            phone_number: this.state.user.code + this.state.user.phone,
             email: this.state.user.email.toLowerCase(),
-          })
-      )
-    } catch (e) {
-      this.setState({ authError: e.message, sendingData: false })
-      Sentry.configureScope((scope) => {
-        scope.setUser(null)
-      })
+            "custom:orgName": this.state.user.orgName,
+            "custom:isOrg": Boolean(this.state.joinedAs === "organization").toString(),
+          },
+        }).then(
+          async () =>
+            await this.changeAuthState(actions, "confirmSignUp", {
+              joinedProduct: this.state.joinedProduct,
+              productType: this.state.productType,
+              email: this.state.user.email.toLowerCase(),
+            })
+        )
+      } catch (e) {
+        this.setState({ authError: e.message, sendingData: false })
+        Sentry.configureScope((scope) => {
+          scope.setUser(null)
+        })
+      }
     }
   }
 
@@ -369,12 +374,8 @@ class MySignUpImpl extends React.Component<Props, State> {
                         <View style={{ flexDirection: "row", marginLeft: isMobile ? 10 : null }}>
                           <View style={{ flex: 1 }}>
                             <JCButton
-                              enabled={this.state.enabled}
-                              buttonType={
-                                this.state.enabled
-                                  ? ButtonTypes.SolidSignIn
-                                  : ButtonTypes.DisabledSignIn
-                              }
+                              enabled={true}
+                              buttonType={ButtonTypes.SolidSignIn}
                               onPress={() => this.signUp(userActions)}
                             >
                               {this.state.sendingData ? (

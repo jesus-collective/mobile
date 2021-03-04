@@ -26,11 +26,12 @@ class CourseDetailMenu extends JCComponent<EmptyProps> {
   }
   headerStyles = new HeaderStyles()
   render(): React.ReactNode {
-    //const { navigate } = this.props.navigation;
     return (
       <CourseDetailMenu.Consumer>
         {({ state, actions }) => {
-          if (!state) return null
+          if (!state) {
+            return null
+          }
           return (
             <Header style={this.headerStyles.style.resourceContainer}>
               <Body
@@ -42,10 +43,11 @@ class CourseDetailMenu extends JCComponent<EmptyProps> {
                   marginLeft: "4.5%",
                 }}
               >
-                {state.courseData?.courseWeeks.items.map((item, index: number) => {
+                {state.courseData?.courseWeeks?.items?.map((item, index: number) => {
                   if (item) {
                     return (
                       <EditableButton
+                        testID={"menu-item-" + index}
                         onDelete={() => actions.deleteWeek(index)}
                         onChange={(value) => actions.updateWeek(index, "name", value)}
                         key={index}
@@ -58,8 +60,8 @@ class CourseDetailMenu extends JCComponent<EmptyProps> {
                             ? this.headerStyles.style.centerMenuButtonsTextSelected
                             : this.headerStyles.style.centerMenuButtonsText
                         }
-                        value={item.name}
-                      ></EditableButton>
+                        value={item.name ?? ""}
+                      />
                     )
                   }
 
@@ -67,7 +69,7 @@ class CourseDetailMenu extends JCComponent<EmptyProps> {
                 })}
 
                 {state.isEditable ? (
-                  <Button transparent onPress={actions.createWeek}>
+                  <Button testID="course-menu-createWeek" transparent onPress={actions.createWeek}>
                     <Text style={this.headerStyles.style.centerMenuButtonsText}>+</Text>
                   </Button>
                 ) : null}

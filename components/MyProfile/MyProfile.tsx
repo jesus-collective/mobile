@@ -6,18 +6,22 @@ import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
 import moment from "moment"
 import { Badge, Button, Content, Form, Label, Picker, View } from "native-base"
 import * as React from "react"
+import { useContext } from "react"
 import { isBrowser, isTablet } from "react-device-detect"
 import { ActivityIndicator, Image, Text, TextInput, TouchableOpacity } from "react-native"
 import { JCCognitoUser } from "src/types"
 import EditableLocation from "../../components/Forms/EditableLocation"
 import JCButton, { ButtonTypes } from "../../components/Forms/JCButton"
 import JCSwitch from "../../components/JCSwitch/JCSwitch"
+import CrmMessageBoard from "../../components/MessageBoard/CRM-MessageBoard"
 import MyMap from "../../components/MyMap/MyMap"
 import Sentry from "../../components/Sentry"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
-import { GetUserQuery, ListInvoicesMutation } from "../../src/API"
+import { CreateCrmRootMutation, GetUserQuery, ListInvoicesMutation } from "../../src/API"
+import { GetCrmRootQuery } from "../../src/API-crm"
 import awsconfig from "../../src/aws-exports"
 import { constants } from "../../src/constants"
+import { getCrmRoot } from "../../src/graphql-custom/crm"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
 import EditableText from "../Forms/EditableText"
@@ -42,8 +46,11 @@ interface Props {
   route?: any
   loadId?: any
   hideOrg?: boolean
+  userActions?: UserActions
 }
 export type UserData = NonNullable<GetUserQuery["getUser"]>
+
+type CrmMessages = NonNullable<NonNullable<GetCrmRootQuery["getCRMRoot"]>["messages"]>["items"]
 
 interface State extends JCState {
   UserDetails: UserData | null
@@ -52,7 +59,6 @@ interface State extends JCState {
   profileImage: string
   validationText: string
   mapVisible: boolean
-
   isEditable: boolean
   showPage: "profile" | "settings" | "billing" | "admin"
   editMode: boolean
@@ -64,8 +70,19 @@ interface State extends JCState {
   passError: string
   noUserFound: boolean
   invoices: NonNullable<NonNullable<ListInvoicesMutation>["listInvoices"]>["data"]
+  firstName: string
+  lastName: string
+  messages: CrmMessages
 }
+
+type ScrollRef = {
+  _root: {
+    scrollToPosition(x: number, y: number): void
+  }
+} | null
+
 class MyProfileImpl extends JCComponent<Props, State> {
+  scrollRef?: ScrollRef = null
   constructor(props: Props) {
     super(props)
     this.state = {
@@ -77,7 +94,6 @@ class MyProfileImpl extends JCComponent<Props, State> {
       validationText: "",
       showPage: "profile",
       mapVisible: false,
-
       isEditable: false,
       editMode: false,
       mapData: [],
@@ -87,9 +103,49 @@ class MyProfileImpl extends JCComponent<Props, State> {
       newPass: "",
       passError: "",
       noUserFound: false,
+      firstName: "",
+      lastName: "",
+      messages: null,
     }
-    this.getUserDetails()
   }
+
+  async componentDidMount() {
+    await this.getUserDetails()
+    await this.fetchCrm()
+  }
+
+  async fetchCrm() {
+    if (this.props.userActions?.isMemberOf("admin")) {
+      const variables = { id: this.state.UserDetails?.id }
+      try {
+        // fetch CRM root
+        const crmRoot = (await API.graphql({
+          query: getCrmRoot,
+          variables,
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })) as GraphQLResult<GetCrmRootQuery>
+
+        if (crmRoot.data?.getCRMRoot) {
+          console.debug("crmRoot exists:", crmRoot.data.getCRMRoot)
+          this.setState({ messages: crmRoot.data?.getCRMRoot?.messages?.items ?? [] })
+        } else {
+          // if CRM does not exist, create it
+          const createCrmRoot = (await API.graphql({
+            query: mutations.createCrmRoot,
+            variables: { input: variables },
+            authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+          })) as GraphQLResult<CreateCrmRootMutation>
+
+          console.debug("crmRoot created:", createCrmRoot.data?.createCRMRoot)
+          // recursive call to fetch data after CRM root is created
+          this.fetchCrm()
+        }
+      } catch (e) {
+        console.error(e)
+      }
+    }
+  }
+
   async listInvoices() {
     try {
       const invoice = (await API.graphql({
@@ -152,6 +208,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 UserDetails: getUser.data.getUser,
                 isEditable: getUser.data.getUser.id == user["username"],
                 interestsArray: getUser.data.getUser.interests,
+                firstName: getUser.data.getUser.given_name,
+                lastName: getUser.data.getUser.family_name,
               },
               () => {
                 this.getProfileImage()
@@ -159,7 +217,6 @@ class MyProfileImpl extends JCComponent<Props, State> {
               }
             )
           else this.setState({ noUserFound: true })
-          //console.log(this.state.UserDetails)
         } catch (e) {
           console.log({ Error: e })
           if (e.data?.getUser != null)
@@ -186,6 +243,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
               isEditable: true,
               editMode: true,
               interestsArray: getUser.data.getUser.interests,
+              firstName: getUser.data.getUser.given_name,
+              lastName: getUser.data.getUser.family_name,
             },
             () => {
               this.getProfileImage()
@@ -281,7 +340,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       }
     )
   }
-  clean(item): void {
+  clean(item) {
     delete item.organizations
     delete item.groups
     delete item.messages
@@ -520,6 +579,44 @@ class MyProfileImpl extends JCComponent<Props, State> {
       })
   }
 
+  async handleChangeName(): Promise<void> {
+    const { firstName, lastName } = this.state
+
+    if (!firstName || !lastName) {
+      this.setState({ passError: "Required: First name, Last name" })
+      return
+    }
+
+    const UserDetails = { ...this.state.UserDetails } as UserData
+
+    UserDetails["given_name"] = firstName
+    UserDetails["family_name"] = lastName
+
+    this.setState({ UserDetails })
+
+    try {
+      const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
+      const oldAttributes = user.attributes
+      const newAttributes = { ...oldAttributes, given_name: firstName, family_name: lastName }
+      const updateCognitoUser = await Auth.updateUserAttributes(user, newAttributes)
+
+      console.debug({ updateCognito: updateCognitoUser })
+
+      const updateUser = await API.graphql({
+        query: mutations.updateUser,
+        variables: {
+          input: this.clean(UserDetails),
+        },
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+      })
+
+      console.debug({ updateUser: updateUser })
+      this.setState({ passError: "" })
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
   async handlePasswordChange(): Promise<void> {
     if (!this.state.oldPass || !this.state.newPass) {
       this.setState({ passError: "Required: Current password, New password" })
@@ -534,7 +631,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
       if (e.message.includes("validation")) this.setState({ passError: e.message.split(":")[0] })
       else this.setState({ passError: e.message })
     }
-    this.setState({ oldPass: "", newPass: "" })
+    this.setState({ oldPass: "", newPass: "", passError: "" })
   }
 
   renderMainUserGroup(group: string) {
@@ -580,8 +677,8 @@ class MyProfileImpl extends JCComponent<Props, State> {
                     enabled={this.state.dirty}
                     testID="profile-save"
                     buttonType={ButtonTypes.SolidRightMargin}
-                    onPress={() => {
-                      this.finalizeProfile()
+                    onPress={async () => {
+                      await this.finalizeProfile()
                     }}
                   >
                     Save Profile
@@ -828,12 +925,14 @@ class MyProfileImpl extends JCComponent<Props, State> {
                 <JCButton
                   testID="profile-setmap"
                   buttonType={ButtonTypes.TransparentBoldBlackNoMargin}
-                  onPress={() =>
+                  onPress={() => {
                     this.setState({
                       showPage: "admin",
                       editMode: false,
                     })
-                  }
+
+                    this.scrollRef?._root.scrollToPosition(0, 80)
+                  }}
                 >
                   Admin
                 </JCButton>
@@ -842,7 +941,10 @@ class MyProfileImpl extends JCComponent<Props, State> {
           </View>
 
           {this.state.isEditable && this.state.editMode ? (
-            <Text style={this.styles.style.fontFormSmallHeader}>Public Location</Text>
+            <Text style={this.styles.style.fontFormSmallHeader}>
+              <Text style={this.styles.style.fontFormMandatory}>*</Text>
+              Public Location
+            </Text>
           ) : null}
           {this.state.isEditable && this.state.editMode ? (
             <EditableLocation
@@ -1448,59 +1550,66 @@ class MyProfileImpl extends JCComponent<Props, State> {
       return (
         <View style={this.styles.style.profileScreenRightCard}>
           <Text style={this.styles.style.myprofileAboutMe}>Account Settings</Text>
-          <View style={{ marginTop: 40 }}>
-            <Label
-              style={{
-                ...this.styles.style.fontFormSmallDarkGrey,
-                marginBottom: 15,
-              }}
-            >
-              Change your password
-            </Label>
-            <TextInput
-              placeholder="Current password"
-              value={this.state.oldPass}
-              onChange={(e) => this.setState({ oldPass: e.nativeEvent.text })}
-              secureTextEntry={true}
-              style={{
-                borderWidth: 1,
-                borderColor: "#dddddd",
-                width: "100%",
-                marginBottom: 15,
-                paddingTop: 10,
-                paddingRight: 10,
-                paddingBottom: 10,
-                paddingLeft: 10,
-                fontFamily: "Graphik-Regular-App",
-                fontSize: 16,
-                lineHeight: 28,
-              }}
-            ></TextInput>
-            <TextInput
-              placeholder="New password"
-              value={this.state.newPass}
-              onChange={(e) => this.setState({ newPass: e.nativeEvent.text })}
-              secureTextEntry={true}
-              style={{
-                borderWidth: 1,
-                borderColor: "#dddddd",
-                width: "100%",
-                marginBottom: 15,
-                paddingTop: 10,
-                paddingRight: 10,
-                paddingBottom: 10,
-                paddingLeft: 10,
-                fontFamily: "Graphik-Regular-App",
-                fontSize: 16,
-                lineHeight: 28,
-              }}
-            ></TextInput>
-            <JCButton
-              buttonType={ButtonTypes.SolidAboutMe}
-              onPress={() => this.handlePasswordChange()}
-            >
-              <Text> Change Password</Text>
-            </JCButton>
+
+          <View style={this.styles.style.changeNamePasswordContainer}>
+            <View style={this.styles.style.changePasswordContainer}>
+              <Label
+                style={{
+                  ...this.styles.style.fontFormSmallDarkGrey,
+                  marginBottom: 15,
+                }}
+              >
+                Change your password
+              </Label>
+              <TextInput
+                placeholder="Current password"
+                value={this.state.oldPass}
+                onChange={(e) => this.setState({ oldPass: e.nativeEvent.text })}
+                secureTextEntry={true}
+                style={this.styles.style.changeNamePasswordInput}
+              />
+              <TextInput
+                placeholder="New password"
+                value={this.state.newPass}
+                onChange={(e) => this.setState({ newPass: e.nativeEvent.text })}
+                secureTextEntry={true}
+                style={this.styles.style.changeNamePasswordInput}
+              />
+              <JCButton
+                buttonType={ButtonTypes.SolidAboutMe}
+                onPress={() => this.handlePasswordChange()}
+              >
+                <Text> Change Password</Text>
+              </JCButton>
+            </View>
+            <View>
+              <Label
+                style={{
+                  ...this.styles.style.fontFormSmallDarkGrey,
+                  marginBottom: 15,
+                }}
+              >
+                Change your name
+              </Label>
+              <TextInput
+                placeholder="First name"
+                value={this.state.firstName}
+                onChange={(e) => this.setState({ firstName: e.nativeEvent.text })}
+                style={this.styles.style.changeNamePasswordInput}
+              />
+              <TextInput
+                placeholder="Last name"
+                value={this.state.lastName}
+                onChange={(e) => this.setState({ lastName: e.nativeEvent.text })}
+                style={this.styles.style.changeNamePasswordInput}
+              />
+              <JCButton
+                buttonType={ButtonTypes.SolidAboutMe}
+                onPress={() => this.handleChangeName()}
+              >
+                <Text>Change Name</Text>
+              </JCButton>
+            </View>
           </View>
           <Text
             style={{
@@ -1663,7 +1772,7 @@ class MyProfileImpl extends JCComponent<Props, State> {
                       </Text>
                       <Text style={{ flex: 1 }}>{item?.status}</Text>
                       <Text style={{ flex: 1 }}>
-                        {"$" + parseInt(item?.total ?? "0").toFixed(2)}{" "}
+                        {"$" + (parseInt(item?.total ?? "0") / 100).toFixed(2)}{" "}
                         {item?.currency?.toUpperCase()}
                       </Text>
                     </View>
@@ -1711,12 +1820,21 @@ class MyProfileImpl extends JCComponent<Props, State> {
       )
     else return null
   }
-  renderAdmin(): React.ReactNode {
-    return (
-      <View style={this.styles.style.profileScreenRightCard}>
-        <Text style={this.styles.style.myprofileAboutMe}>Admin</Text>
-      </View>
-    )
+  renderAdmin(userActions: UserActions): React.ReactNode {
+    if (userActions.isMemberOf("admin")) {
+      return (
+        <View style={this.styles.style.profileScreenRightCard}>
+          <View style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+            <View>
+              <Text style={this.styles.style.fontBold}>Admin/CRM</Text>
+            </View>
+            <CrmMessageBoard messages={this.state.messages} rootId={this.state.UserDetails?.id} />
+          </View>
+        </View>
+      )
+    }
+
+    return null
   }
   render(): React.ReactNode {
     return (
@@ -1727,12 +1845,12 @@ class MyProfileImpl extends JCComponent<Props, State> {
           if (this.state.noUserFound) return <Text>No User Found</Text>
 
           return this.state.UserDetails != null ? (
-            <Content>
+            <Content ref={(ref) => (this.scrollRef = ref as ScrollRef)}>
               {this.renderTopBar(userActions)}
 
               <Form style={this.styles.style.myProfileMainContainer}>
                 {this.renderLeftBar(userActions)}
-                {this.state.showPage == "admin" && this.renderAdmin()}
+                {this.state.showPage == "admin" && this.renderAdmin(userActions)}
                 {this.state.showPage == "billing" && this.renderBilling()}
                 {this.state.showPage == "profile" && this.renderProfile()}
                 {this.state.showPage == "settings" && this.renderAccountSettings()}
@@ -1748,5 +1866,21 @@ class MyProfileImpl extends JCComponent<Props, State> {
 export default function MyProfile(props: Props): JSX.Element {
   const route = useRoute()
   const navigation = useNavigation()
-  return <MyProfileImpl {...props} navigation={navigation} route={route} />
+  const { userActions } = useContext(UserContext)
+
+  return (
+    <MyProfile.UserConsumer>
+      {({ userActions }) => {
+        return (
+          <MyProfileImpl
+            {...props}
+            navigation={navigation}
+            route={route}
+            userActions={userActions}
+          />
+        )
+      }}
+    </MyProfile.UserConsumer>
+  )
 }
+MyProfile.UserConsumer = UserContext.Consumer
