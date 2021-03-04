@@ -899,7 +899,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
             data={this.state.messages}
             inverted={this.props.inputAt === "bottom"}
             onEndReached={!this.state.fetchingData ? () => this.getMoreMessages() : undefined}
-            style={{ height: 0.5 * height }}
+            style={{ height: "45vw" }}
             ListFooterComponent={() => this.messagesLoader()}
             refreshing={this.state.fetchingData}
             onEndReachedThreshold={0.1}
@@ -1067,7 +1067,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
 
   renderMessageWithReplies(item: Message, index: number) {
     return (
-      <View style={{ marginBottom: 35 }} key={index}>
+      <View style={{ marginBottom: 20 }} key={index}>
         {this.renderMessage(item, index, false)}
         {item?.replies?.items?.map((reply, index) => {
           return this.renderMessage(reply, index, true)

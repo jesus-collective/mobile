@@ -4,6 +4,7 @@ import { Auth } from "aws-amplify"
 import countryDialCodes from "aws-amplify-react-native/src/CountryDialCodes"
 import { View } from "native-base"
 import React from "react"
+import { isMobile } from "react-device-detect"
 import {
   ActivityIndicator,
   Dimensions,
@@ -23,7 +24,6 @@ import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
 import MainStyles from "../../components/style"
 import * as RootNavigation from "../../screens/HomeScreen/NavigationRoot"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
-import { isMobile } from "react-device-detect"
 
 interface Props {
   navigation?: any
@@ -594,7 +594,6 @@ class MySignUpImpl extends React.Component<Props, State> {
                                 productType: this.state.productType,
                               })
                             }
-
                           >
                             <Text
                               style={{

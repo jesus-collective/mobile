@@ -307,7 +307,6 @@ class MyMapImpl extends JCComponent<Props, State> {
     if (this.props.type === "filters") {
       return (
         <ErrorBoundary>
-
           <View
             style={{ display: "flex", height: this.props.visible ? "75%" : 0 }}
             onLayout={(e) => this.setState({ mapHeight: e.nativeEvent.layout.height })}
