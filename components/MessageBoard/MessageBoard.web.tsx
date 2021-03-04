@@ -1087,6 +1087,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           minHeight: 50,
           borderColor: "#ffffff",
           marginLeft: isReply ? 50 : 0,
+          shadowColor: "#ffffff",
         }}
       >
         {style === "regular" || style === "course" || style === "courseResponse" ? (
@@ -1183,10 +1184,10 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                       borderWidth: 1,
                       borderColor: "#F0493E",
                       borderRadius: 4,
-                      paddingTop: 7,
-                      paddingBottom: 7,
-                      paddingLeft: 23,
-                      paddingRight: 23,
+                      paddingTop: 4,
+                      paddingBottom: 4,
+                      paddingLeft: 10,
+                      paddingRight: 10,
                     }}
                     onPress={() => this.handlePressReply(item)}
                   >

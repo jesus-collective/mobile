@@ -1199,6 +1199,14 @@ export default EStyleSheet.create({
       paddingLeft: 3,
       paddingRight: 3,
     },
+    SolidSignIn2Button: {
+      paddingTop: 6,
+      paddingBottom: 6,
+      paddingLeft: 60,
+      paddingRight: 60,
+      marginLeft: 0,
+      marginRight: 0,
+    },
   },
   // Media Query Mobile
   "@media (min-width: 320px) and (max-width: 480px)": {
@@ -1276,6 +1284,7 @@ export default EStyleSheet.create({
       borderColor: "#ffffff",
       shadowOffset: { height: 0, width: 0 },
       shadowOpacity: 0,
+      alignSelf: "center",
     },
     SolidRightJustifiedButton: {
       alignSelf: "center",

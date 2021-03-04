@@ -791,7 +791,7 @@ export default class MyGroups extends JCComponent<Props, State> {
     return (
       <Card key={item.id} style={this.styles.style.profilesCard}>
         <CardItem style={this.styles.style.profileCard}>
-          <Left style={{ paddingTop: 15 }}>
+          <Left style={this.styles.style.profileCardContent}>
             <ProfileImage user={item} size="small3"></ProfileImage>
             <Body>
               <Text style={this.styles.style.fontConnectWithName}>

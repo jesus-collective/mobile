@@ -588,6 +588,16 @@ export default class MainStyles {
         alignSelf: "flex-start",
       },
 
+      fontConnectWithNameMap: {
+        fontFamily: "Graphik-Bold-App",
+        fontWeight: "bold",
+        fontSize: 20,
+        lineHeight: 25,
+        color: "#000000",
+        letterSpacing: -0.3,
+        alignSelf: "flex-start",
+      },
+
       fontConnectWithRole: {
         fontFamily: "Graphik-Regular-App",
         fontSize: 14,
@@ -655,7 +665,6 @@ export default class MainStyles {
         color: "#333333",
         marginTop: 10,
         flexWrap: "wrap",
-        width: 330,
       },
 
       connectWithSliderButton: {
@@ -1165,7 +1174,6 @@ export default class MainStyles {
         marginLeft: 0,
       },
       myMapDashboardConversationCard: {
-        height: 233,
         paddingTop: 20,
         paddingBottom: 20,
         width: 500,
@@ -1348,6 +1356,7 @@ export default class MainStyles {
         flexDirection: "row",
         justifyContent: "flex-end",
         paddingRight: "2%",
+        display: "none",
       },
       partnerLegend: {
         flexDirection: "row",
@@ -1362,14 +1371,16 @@ export default class MainStyles {
       mapCardBody: {
         flex: 1,
         flexDirection: "row",
+        justifyContent: "center",
       },
       mapCardJCButtonContainer: {
         flex: 1,
-        flexDirection: "column",
+        flexDirection: "row",
         paddingTop: 10,
       },
       mapCardImage: {
         marginRight: 10,
+        alignSelf: "center",
       },
       resourceIcon: {
         color: "#ffffff",
@@ -1472,6 +1483,13 @@ export default class MainStyles {
         justifyContent: "flex-end",
         alignItems: "flex-start",
       },
+      mapTogglesContainer: {
+        flex: 1,
+        minHeight: 50,
+      },
+      profileCardContent: {
+        paddingTop: 15,
+      },
 
       // Media Query Desktop Tablet
       "@media (min-width: 350) and (max-width: 768)": {
@@ -1491,6 +1509,11 @@ export default class MainStyles {
           fontSize: 18,
           lineHeight: 23,
           alignSelf: "center",
+          marginTop: 10,
+        },
+        fontConnectWithNameMap: {
+          fontSize: 18,
+          lineHeight: 23,
           marginTop: 10,
         },
         rightCardWidth: {
@@ -1667,11 +1690,24 @@ export default class MainStyles {
           paddingLeft: 40,
         },
         mySignUpText: {
-          width: "65%",
+          width: "100%",
+          alignSelf: "flex-start",
         },
         mySignUpButton: {
           flexDirection: "column",
           height: "auto",
+        },
+        mySignUpOr: {
+          marginTop: 15,
+          marginBottom: 15,
+          width: "40%",
+        },
+        authView3: {
+          left: "30%",
+          width: "70vw",
+          top: "15%",
+          height: "auto",
+          alignSelf: "flex-start",
         },
       },
 
@@ -2023,6 +2059,7 @@ export default class MainStyles {
         },
         mapCardJCButtonContainer: {
           alignContent: "center",
+          flexDirection: "column",
         },
         myMapDashboardConversationCard: {
           width: "auto",
@@ -2041,6 +2078,11 @@ export default class MainStyles {
         authView3: {
           marginLeft: 5,
           marginRight: 5,
+          left: "0%",
+          width: "100%",
+          top: "5%",
+          height: "auto",
+          alignSelf: "flex-start",
         },
         mySignUpOr: {
           marginTop: 15,
@@ -2049,22 +2091,28 @@ export default class MainStyles {
         },
         mySignUpInputFieldscontainer: {
           marginRight: 0,
+          marginLeft: 10,
         },
         mySignUpEmailContainer: {
           marginRight: 0,
+          marginLeft: 10,
         },
         mySignUpPasswordContainer: {
           marginRight: 0,
+          marginLeft: 10,
         },
         mySignUpLeftPasswordContainer: {
           marginRight: 0,
           fontSize: 15,
+          marginLeft: 0,
         },
         mySignUpPhoneContainer: {
           marginRight: 0,
+          marginLeft: 10,
         },
         mySignUpConfirmCode: {
           alignSelf: "flex-start",
+          marginLeft: 10,
         },
         mySignInForgotPassword: {
           alignSelf: "flex-start",
@@ -2081,6 +2129,22 @@ export default class MainStyles {
         fontMyMapOptions: {
           marginLeft: 0,
           marginBottom: 8,
+        },
+        mapTogglesContainer: {
+          overflow: "scroll",
+          marginRight: "4.5%",
+        },
+        profileCardContent: {
+          paddingTop: 0,
+        },
+        smallProfileImageConversations: {
+          marginBottom: 0,
+        },
+        fontConnectWithNameMap: {
+          alignSelf: "center",
+        },
+        myMapConversationCardAboutMe: {
+          alignSelf: "center",
         },
       },
 

@@ -174,7 +174,7 @@ class MyMapImpl extends JCComponent<Props, State> {
               />
             </View>
             <View>
-              <Text style={this.styles.style.fontConnectWithName}>
+              <Text style={this.styles.style.fontConnectWithNameMap}>
                 {this.state.selectedPlace.mapItem.user.given_name}{" "}
                 {this.state.selectedPlace.mapItem.user.family_name}
               </Text>
@@ -188,7 +188,7 @@ class MyMapImpl extends JCComponent<Props, State> {
               ) : null}
               <View style={this.styles.style.mapCardJCButtonContainer}>
                 <JCButton
-                  buttonType={ButtonTypes.Solid}
+                  buttonType={ButtonTypes.SolidMap}
                   onPress={() => {
                     this.openConversation(
                       this.state.selectedPlace.mapItem.user.id,
@@ -201,7 +201,7 @@ class MyMapImpl extends JCComponent<Props, State> {
                   Start Conversation
                 </JCButton>
                 <JCButton
-                  buttonType={ButtonTypes.Solid}
+                  buttonType={ButtonTypes.TransparentRegularOrange}
                   onPress={() => {
                     this.showProfile(this.state.selectedPlace.mapItem.user.id)
                   }}
@@ -307,6 +307,7 @@ class MyMapImpl extends JCComponent<Props, State> {
     if (this.props.type === "filters") {
       return (
         <ErrorBoundary>
+
           <View
             style={{ display: "flex", height: this.props.visible ? "75%" : 0 }}
             onLayout={(e) => this.setState({ mapHeight: e.nativeEvent.layout.height })}

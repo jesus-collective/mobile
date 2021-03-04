@@ -23,6 +23,7 @@ import SignUpSidebar from "../../components/SignUpSidebar/SignUpSidebar"
 import MainStyles from "../../components/style"
 import * as RootNavigation from "../../screens/HomeScreen/NavigationRoot"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
+import { isMobile } from "react-device-detect"
 
 interface Props {
   navigation?: any
@@ -370,7 +371,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             style={this.styles.style.mySignUpPlaceholderText}
                           ></TextInput>
                         </View>
-                        <View style={{ flexDirection: "row" }}>
+                        <View style={{ flexDirection: "row", marginLeft: isMobile ? 10 : null }}>
                           <View style={{ flex: 1 }}>
                             <JCButton
                               enabled={true}
@@ -430,13 +431,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                         <Text style={this.styles.style.mySignUpText}>
                           Set up the account for the administrator of your organization first
                         </Text>
-                        <View
-                          style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            marginBottom: "5.5%",
-                          }}
-                        >
+                        <View style={this.styles.style.mySignUpInputFieldscontainer}>
                           <Text
                             style={{
                               fontSize: 22,
@@ -470,13 +465,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             style={this.styles.style.mySignUpPlaceholderText}
                           ></TextInput>
                         </View>
-                        <View
-                          style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            marginBottom: "1.4%",
-                          }}
-                        >
+                        <View style={this.styles.style.mySignUpEmailContainer}>
                           <Text
                             style={{
                               fontSize: 22,
@@ -511,13 +500,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             style={this.styles.style.mySignUpPlaceholderText}
                           ></TextInput>
                         </View>
-                        <View
-                          style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            marginBottom: "5.5%",
-                          }}
-                        >
+                        <View style={this.styles.style.mySignUpPasswordContainer}>
                           <Text
                             style={{
                               fontSize: 22,
@@ -553,13 +536,7 @@ class MySignUpImpl extends React.Component<Props, State> {
                             style={this.styles.style.mySignUpPlaceholderText}
                           ></TextInput>
                         </View>
-                        <View
-                          style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            marginBottom: "8.33%",
-                          }}
-                        >
+                        <View style={this.styles.style.mySignUpPhoneContainer}>
                           <Picker
                             selectedValue={this.state.user.code}
                             onValueChange={(val) => this.handleChange("code", val)}
@@ -592,40 +569,49 @@ class MySignUpImpl extends React.Component<Props, State> {
                             style={this.styles.style.mySignUpPlaceholderText}
                           ></TextInput>
                         </View>
-                        <JCButton
-                          enabled={true}
-                          buttonType={ButtonTypes.SolidSignIn}
-                          onPress={() => this.signUp(userActions)}
-                        >
-                          {this.state.sendingData ? (
-                            <ActivityIndicator animating color="#333333" />
-                          ) : (
-                            "Continue"
-                          )}
-                        </JCButton>
-                        <TouchableOpacity
-                          onPress={async () =>
-                            await this.changeAuthState(userActions, "confirmSignUp", {
-                              joinedProduct: this.state.joinedProduct,
-                              productType: this.state.productType,
-                            })
-                          }
-                        >
-                          <Text
-                            style={{
-                              alignSelf: "flex-end",
-                              marginRight: 30,
-                              fontSize: 14,
-                              fontFamily: "Graphik-Regular-App",
-                              lineHeight: 22,
-                              color: "#333333",
-                              opacity: 0.7,
-                              marginTop: 20,
-                            }}
+                        <View style={{ flexDirection: "row", marginLeft: isMobile ? 10 : null }}>
+                          <View style={{ flex: 1 }}>
+                            <JCButton
+                              enabled={this.state.enabled}
+                              buttonType={
+                                this.state.enabled
+                                  ? ButtonTypes.SolidSignIn
+                                  : ButtonTypes.DisabledSignIn
+                              }
+                              onPress={() => this.signUp(userActions)}
+                            >
+                              {this.state.sendingData ? (
+                                <ActivityIndicator animating color="#333333" />
+                              ) : (
+                                "Continue"
+                              )}
+                            </JCButton>
+                          </View>
+                          <TouchableOpacity
+                            onPress={async () =>
+                              await this.changeAuthState(userActions, "confirmSignUp", {
+                                joinedProduct: this.state.joinedProduct,
+                                productType: this.state.productType,
+                              })
+                            }
+
                           >
-                            Confirm a code
-                          </Text>
-                        </TouchableOpacity>
+                            <Text
+                              style={{
+                                alignSelf: "flex-end",
+                                marginRight: 30,
+                                fontSize: 14,
+                                fontFamily: "Graphik-Regular-App",
+                                lineHeight: 22,
+                                color: "#333333",
+                                opacity: 0.7,
+                                marginTop: 20,
+                              }}
+                            >
+                              Confirm a code
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
                         <Text
                           style={{
                             alignSelf: "center",
