@@ -149,12 +149,12 @@ class MyProfileImpl extends JCComponent<Props, State> {
               }
             : this.props.size == "smallReply"
             ? {
-                width: "30px",
-                height: "39px",
+                width: "35px",
+                height: "45px",
                 borderRadius: 120,
-                marginRight: 10,
+                marginRight: 20,
                 marginBottom: 0,
-                marginLeft: 10,
+                marginLeft: 20,
                 top: 0,
               }
             : this.props.style === "map" || this.props.style === "my-people"

@@ -1072,6 +1072,7 @@ export default class MainStyles {
               fontFamily: "Graphik-Regular-App",
               fontSize: 16,
               lineHeight: 22,
+              paddingLeft: 100,
             }
           : {
               marginTop: 0,
