@@ -423,7 +423,7 @@ const courseStyles = EStyleSheet.create({
     borderBottomRightRadius: 0,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    backgroundColor: "#F9FAFC",
+    // backgroundColor: "#F9FAFC",
   },
   coursePageMessageBoardLeftMini: {
     alignSelf: "center",
@@ -865,6 +865,12 @@ const courseStyles = EStyleSheet.create({
     flex: 7,
     alignItems: "space-between",
     justifyContent: "space-between",
+    backgroundColor: "#F9FAFC",
+    paddingTop: 15,
+    paddingBottom: 15,
+    paddingLeft: 20,
+    paddingRight: 20,
+    borderRadius: 4,
   },
   "@media (min-width: 350) and (max-width: 768)": {
     courseAssignmentScreenRightCard: {
