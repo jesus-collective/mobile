@@ -10,7 +10,7 @@ Amplify.configure(awsconfig)
 
 interface Props {
   user: any
-  size: "small" | "xsmall" | "medium" | "large" | "small2" | "small3" | "small4"
+  size: "small" | "xsmall" | "medium" | "large" | "small2" | "small3" | "small4" | "smallReply"
   style?: "map" | "my-people" | "courseProfile"
   inlineStyle?: ImageStyle
   isOrg?: boolean
@@ -141,6 +141,16 @@ class MyProfileImpl extends JCComponent<Props, State> {
             ? {
                 width: "50px",
                 height: "66px",
+                borderRadius: 120,
+                marginRight: 10,
+                marginBottom: 0,
+                marginLeft: 10,
+                top: 0,
+              }
+            : this.props.size == "smallReply"
+            ? {
+                width: "30px",
+                height: "39px",
                 borderRadius: 120,
                 marginRight: 10,
                 marginBottom: 0,

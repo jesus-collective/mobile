@@ -1107,7 +1107,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                 {item && "owner" in item && (
                   <ProfileImage size="small2" user={item?.owner ?? null} />
                 )}
-                {isReply && <ProfileImage size="small2" user={item?.author?.id ?? null} />}
+                {isReply && <ProfileImage size="smallReply" user={item?.author?.id ?? null} />}
               </TouchableOpacity>
               <Body>
                 <Text style={this.styles.style.groupFormName}>
@@ -1166,7 +1166,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                 {item && "owner" in item && (
                   <ProfileImage size="small2" user={item?.owner ?? null} />
                 )}
-                {isReply && <ProfileImage size="small2" user={item?.author?.id ?? null} />}
+                {isReply && <ProfileImage size="smallReply" user={item?.author?.id ?? null} />}
               </TouchableOpacity>
             </Left>
             <Right style={this.styles.style.miniMessageBoardRight}>
