@@ -86,25 +86,22 @@ export default class EditableDate extends JCComponent<Props, State> {
           <Container style={{ height: "unset", width: "55%", marginTop: 22 }}>
             <ThemeProvider theme={materialTheme}>
               <KeyboardDateTimePicker
-                data-testid={this.props.testID + "datetime"}
+                data-testid={this.props.testID + "-datetime"}
+                format="YYYY-MM-DD, hh:mm A"
                 variant="inline"
                 ampm={true}
                 placeholder={this.props.placeholder}
-                value={
-                  this.props.value == null || this.props.tz == null
-                    ? moment().add(7, "days").tz(this.props.tz)
-                    : moment(this.props.value).tz(this.props.tz)
-                }
-                format="MMMM Do YYYY, h:mm a "
-                onChange={(value: MaterialUiPickersDate) => {
-                  this.onChanged(value, this.props.tz)
+                value={this.props.value == "" ? null : this.props.value}
+                inputValue={this.state.inputValue ?? ""}
+                onChange={(date, value) => {
+                  this.setState({ inputValue: value ?? null })
+                  this.onChanged(date, this.props.tz)
                 }}
                 onError={(e) => {
                   console.log({ Error: e })
                 }}
                 disablePast
                 minutesStep={15}
-                emptyLabel="Date not set"
               />
               <Picker
                 mode="dropdown"
@@ -137,6 +134,7 @@ export default class EditableDate extends JCComponent<Props, State> {
           <Container style={{ height: "unset", width: "70%" }}>
             <ThemeProvider theme={materialTheme}>
               <KeyboardDatePicker
+                data-testid={this.props.testID + "-date"}
                 format="YYYY-MM-DD"
                 placeholder={this.props.placeholder}
                 value={this.props.value == "" ? null : this.props.value}
@@ -152,6 +150,7 @@ export default class EditableDate extends JCComponent<Props, State> {
                 style={this.styles.style.pickerDropDown}
                 selectedValue={this.props.tz}
                 placeholder="Timezone"
+                testID={this.props.testID + "-tz"}
                 //placeholderStyle={{ color: "#bfc6ea" }}
                 //placeholderIconColor="#007aff"
                 // style={{ width: "75%", marginBottom: 30, marginTop: 30, fontSize: 16, height: 30, flexGrow: 0 }}

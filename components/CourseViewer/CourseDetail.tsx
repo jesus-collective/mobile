@@ -131,6 +131,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
         {state.isEditable && state.editMode ? (
           <>
             <Picker
+              testID={"course-lessonConfig-response-" + lesson}
               onStartShouldSetResponder={() => true}
               onMoveShouldSetResponderCapture={() => true}
               onStartShouldSetResponderCapture={() => true}
@@ -733,6 +734,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
     return (
       <Container style={this.styles.style.courseDetailLeftSide}>
         <JCButton
+          testID={"course-returnToWeekButton"}
           buttonType={ButtonTypes.CourseHomeSidebarTop}
           onPress={() => {
             actions.setActiveWeek(state.activeWeek)
@@ -776,6 +778,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             ></iframe>
           ) : null}
           <EditableRichText
+            testID={"course-lesson-description"}
             onChange={(val: string) => {
               actions.updateLesson(
                 state.activeWeek,
@@ -803,6 +806,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
         }}
       >
         <JCButton
+          testID={"course-returnToWeekButton"}
           buttonType={ButtonTypes.CourseHomeSidebarTop}
           onPress={() => {
             actions.setActiveWeek(state.activeWeek)
@@ -858,6 +862,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
         <Container>
           <Container style={this.styles.style.courseDetailHR}></Container>
           <EditableRichText
+            testID={"course-lesson-description"}
             onChange={(val: string) => {
               actions.updateLesson(
                 state.activeWeek,
@@ -890,6 +895,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
         }}
       >
         <JCButton
+          testID={"course-returnToWeekButton"}
           buttonType={ButtonTypes.CourseHomeSidebarTop}
           onPress={() => {
             actions.setActiveWeek(state.activeWeek)
@@ -934,6 +940,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             }}
           ></Container>
           <EditableRichText
+            testID={"course-lesson-description"}
             onChange={(val: string) => {
               actions.updateLesson(
                 state.activeWeek,
@@ -971,6 +978,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
         }}
       >
         <JCButton
+          testID={"course-returnToWeekButton"}
           buttonType={ButtonTypes.courseAssignment}
           onPress={() => {
             actions.setActiveWeek(state.activeWeek)
@@ -1015,6 +1023,7 @@ class CourseDetailImpl extends JCComponent<Props, JCState> {
             }}
           ></Container>
           <EditableRichText
+            testID={"course-lesson-description"}
             onChange={(val: string) => {
               actions.updateLesson(
                 state.activeWeek,

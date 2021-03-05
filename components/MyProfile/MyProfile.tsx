@@ -684,7 +684,11 @@ class MyProfileImpl extends JCComponent<Props, State> {
                     Save Profile
                   </JCButton>
                 ) : null}
-                <JCButton buttonType={ButtonTypes.Solid} onPress={() => this.logout(userActions)}>
+                <JCButton
+                  testID={"logout"}
+                  buttonType={ButtonTypes.Solid}
+                  onPress={() => this.logout(userActions)}
+                >
                   Logout
                 </JCButton>
                 {this.props.loadId && this.state.showPage == "settings" ? (

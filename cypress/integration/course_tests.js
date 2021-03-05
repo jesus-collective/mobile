@@ -100,15 +100,15 @@ const addLesson = () => {
 const editLesson = (lesson, type) => {
   cy.get('[data-testId="course-lessonTitle-' + lesson + '"]')
     .clear()
-    .type("Lesson 1")
+    .type("Lesson " + lesson, { force: true })
   cy.get('[data-testId="course-lessonDuration-' + lesson + '"]')
     .clear()
     .type("2 hours")
   if (type == "zoom") {
-    cy.get('[data-testId="course-eventType-' + lesson + '"]').select("zoom") //"assignment"|"respond"|"youtube"
-    cy.get('[data-testId="course-lessonConfig-zoomDate-' + lesson + '"]')
-      .clear()
-      .type("2 hours")
+    cy.get('[data-testId="course-eventType-' + lesson + '"]').select("zoom")
+    cy.get('[data-testId="course-lessonConfig-zoomDate-' + lesson + '-datetime"]').type(
+      "202212011130pm"
+    )
     cy.get('[data-testId="course-lessonConfig-zoomUrl-' + lesson + '"]')
       .clear()
       .type("https://google.com")
@@ -117,40 +117,32 @@ const editLesson = (lesson, type) => {
       .type("https://google.com")
   }
   if (type == "assignment") {
-    cy.get('[data-testId="course-eventType-' + lesson + '"]').select("assignment") //"assignment"|"respond"|"youtube"
-    cy.get('[data-testId="course-lessonConfig-zoomDate-' + lesson + '"]')
-      .clear()
-      .type("2 hours")
-    cy.get('[data-testId="course-lessonConfig-zoomUrl-' + lesson + '"]')
-      .clear()
-      .type("https://google.com")
-    cy.get('[data-testId="course-lessonConfig-zoomRecordingUrl-' + lesson + '"]')
-      .clear()
-      .type("https://google.com")
+    cy.get('[data-testId="course-eventType-' + lesson + '"]').select("assignment")
+    cy.get('[data-testId="course-lessonConfig-wordCount-' + lesson + '"]').click()
+    cy.get('[data-testId="course-lessonConfig-zoomDate-' + lesson + '-datetime"]').type(
+      "202212011130pm"
+    )
     cy.get('[data-testId="course-lessonConfig-wordCount-' + lesson + '"]')
       .clear()
       .type("100")
   }
   if (type == "respond") {
-    cy.get('[data-testId="course-eventType-' + lesson + '"]').select("respond") //"assignment"|"respond"|"youtube"
-    cy.get('[data-testId="course-lessonConfig-zoomDate-' + lesson + '"]')
-      .clear()
-      .type("2 hours")
-    cy.get('[data-testId="course-lessonConfig-zoomUrl-' + lesson + '"]')
-      .clear()
-      .type("https://google.com")
-    cy.get('[data-testId="course-lessonConfig-zoomRecordingUrl-' + lesson + '"]')
-      .clear()
-      .type("https://google.com")
+    cy.get('[data-testId="course-eventType-' + lesson + '"]').select("respond")
+    cy.get('[data-testId="course-lessonConfig-wordCount-' + lesson + '"]').click()
+    cy.get('[data-testId="course-lessonConfig-zoomDate-' + lesson + '-datetime"]').type(
+      "202212011130pm"
+    )
+    cy.get('[data-testId="course-lessonConfig-response-' + lesson + '"]').select("Lesson 1")
+
     cy.get('[data-testId="course-lessonConfig-wordCount-' + lesson + '"]')
       .clear()
       .type("100")
   }
   if (type == "youtube") {
-    cy.get('[data-testId="course-eventType-' + lesson + '"]').select("youtube") //"assignment"|"respond"|"youtube"
-    cy.get('[data-testId="course-lessonConfig-zoomDate-' + lesson + '"]')
-      .clear()
-      .type("2 hours")
+    cy.get('[data-testId="course-eventType-' + lesson + '"]').select("youtube")
+    cy.get('[data-testId="course-lessonConfig-zoomDate-' + lesson + '-datetime"]').type(
+      "202212011130pm"
+    )
     cy.get('[data-testId="course-lessonConfig-zoomUrl-' + lesson + '"]')
       .clear()
       .type("https://google.com")
@@ -165,7 +157,14 @@ const editLesson = (lesson, type) => {
 const deleteLesson = (lesson) => {
   cy.get('[data-testId="course-deleteLesson-' + lesson + '"]').click()
 }
-
+const openLesson = (lesson) => {
+  cy.get('[data-testId="course-lessonButton-' + lesson + '"]', { timeout: 15000 }).click("topLeft")
+}
+const logout = () => {
+  cy.get('[data-testId="header-logo"]').last().click()
+  cy.get('[data-testId="header-profile"]').last().click()
+  cy.get('[data-testId="logout-true"]', { timeout: 15000 }).last().click()
+}
 describe("Course Admin", () => {
   sizes.forEach((size) => {
     it("Size - " + size, () => {
@@ -204,10 +203,50 @@ describe("Course Admin", () => {
         .clear()
         .type("Science 101")
       richTextEdit("course-leader", "Test 123")
-      deleteLesson(1)
-      deleteLesson(0)
+      /* deleteLesson(0)
       addLesson()
       editLesson(0, "zoom")
+      addLesson()
+      editLesson(1, "assignment")
+      addLesson()
+      editLesson(2, "respond")*/
+      /*
+      cy.get('[data-testId="course-edit-true"]', { timeout: 15000 }).last().click()
+      openLesson(0)
+      cy.contains("Admin/Coach View")
+      cy.contains("Review Assignments")
+      cy.contains("Nothing to review")
+      cy.get('[data-testId="course-edit-true"]', { timeout: 15000 }).last().click()
+      richTextEdit("course-lesson-description", "Test 123")
+      cy.get('[data-testId="course-edit-true"]', { timeout: 15000 }).last().click()
+
+      cy.get('[data-testId="course-returnToWeekButton-true"]', { timeout: 15000 }).click()
+      openLesson(1)
+      cy.get('[data-testId="course-edit-true"]', { timeout: 15000 }).last().click()
+      richTextEdit("course-lesson-description", "Test 123")
+      cy.get('[data-testId="course-edit-true"]', { timeout: 15000 }).last().click()
+
+      cy.get('[data-testId="course-returnToWeekButton-true"]', { timeout: 15000 }).click()
+      openLesson(2)
+      cy.contains("Admin/Coach View")
+      cy.contains("Review Assignments")
+      cy.contains("Nothing to review")
+      cy.get('[data-testId="course-edit-true"]', { timeout: 15000 }).last().click()
+      richTextEdit("course-lesson-description", "Test 123")
+      cy.get('[data-testId="course-edit-true"]', { timeout: 15000 }).last().click()
+
+      cy.get('[data-testId="course-returnToWeekButton-true"]', { timeout: 15000 }).click()
+*/
+      logout()
+      login("courseUser")
+
+      //   deleteCourse("Test Course 1")
+      //   deleteCourse("Test Course 1-edit")
+      //   createCourse("Test Course 1")
+      //   editCourse("Test Course 1", "-edit")
+
+      gotoCourse("Test Course 1")
+
       //cy.get('[data-testId="course-menu-home-true"]', { timeout: 15000 }).last().click()
       //TODO UPLOAD FILE
       //TODO EDIT Course Description
