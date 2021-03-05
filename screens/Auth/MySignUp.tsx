@@ -371,7 +371,9 @@ class MySignUpImpl extends React.Component<Props, State> {
                             style={this.styles.style.mySignUpPlaceholderText}
                           ></TextInput>
                         </View>
-                        <View style={{ flexDirection: "row", marginLeft: isMobile ? 10 : null }}>
+                        <View
+                          style={{ flexDirection: "row", marginLeft: isMobile ? 10 : undefined }}
+                        >
                           <View style={{ flex: 1 }}>
                             <JCButton
                               enabled={true}
