@@ -202,18 +202,20 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         },
       })
     }
-
+  }
+  connectDirectSubscriptions() {
     if (this.props.roomId) {
-      const dmSub = (await API.graphql({
+      console.log("Setup subscription")
+      const dmSub = API.graphql({
         query: onCreateDirectMessage,
         authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as Observable<{
+      }) as Observable<{
         provider: any
         value: GraphQLResult<OnCreateDirectMessageSubscription>
       }>
       this.dmUnsubscribe = dmSub.subscribe({
         next: async (incoming) => {
-          console.debug(incoming)
+          console.log(incoming)
           if (
             incoming.value?.data?.onCreateDirectMessage &&
             incoming.value?.data?.onCreateDirectMessage?.messageRoomID === this.props.roomId
@@ -246,15 +248,15 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       })
     }
   }
-
+  removeDirectSubscriptions() {
+    if (this.props.roomId) {
+      this.dmUnsubscribe?.unsubscribe()
+    }
+  }
   removeSubscriptions() {
     if (this.props.groupId) {
       this.messageUnsubscribe?.unsubscribe()
       this.replyUnsubscribe?.unsubscribe()
-    }
-
-    if (this.props.roomId) {
-      this.dmUnsubscribe?.unsubscribe
     }
   }
 
@@ -363,6 +365,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
 
   componentDidUpdate(prevProps: Props) {
     if (this.props !== prevProps) {
+      this.removeDirectSubscriptions()
       this.setInitialData(this.props)
     }
   }
@@ -390,7 +393,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
 
   componentWillUnmount() {
     this.removeSubscriptions()
-
+    this.removeDirectSubscriptions()
     /* remove event listener on unmount */
     if (this.props.inputAt !== "bottom" && !isFirefox) {
       const scrollNode = this.flatListRef.current && this.flatListRef.current?.getScrollableNode()
@@ -421,6 +424,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     } else if (this.props.roomId) {
       this.getDirectMessages()
       this.getCourseAssignment()
+      this.connectDirectSubscriptions()
     }
   }
 
