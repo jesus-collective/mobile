@@ -21,6 +21,28 @@ projects:
         codeGenTarget: typescript
         generatedFileName: src/API-messages.ts
         docsFilePath: src/graphql
+  courses:
+    schemaPath: src/graphql/schema.json
+    includes:
+      - src/graphql-custom/courses.ts
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: typescript
+        generatedFileName: src/API-courses.ts
+        docsFilePath: src/graphql
+  CRM:
+    schemaPath: src/graphql/schema.json
+    includes:
+      - src/graphql-custom/crm.ts
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: typescript
+        generatedFileName: src/API-crm.ts
+        docsFilePath: src/graphql
 extensions:
   amplify:
     version: 3

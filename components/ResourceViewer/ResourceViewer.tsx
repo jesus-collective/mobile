@@ -941,6 +941,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
         delete value.series
         delete value.createdAt
         delete value.updatedAt
+
         const updateResource: any = await API.graphql({
           query: mutations.updateResource,
           variables: {
@@ -1079,6 +1080,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       delete value.createdAt
       delete value.updatedAt
       delete value.episodes
+      if (value.parentResource) delete value.parentResource
       if (series) {
         const updateResource: any = await API.graphql({
           query: mutations.updateResourceSeries,
@@ -1157,6 +1159,7 @@ class ResourceViewerImpl extends JCComponent<Props, ResourceState> {
       const value2 = { ...value }
       delete value.createdAt
       delete value.updatedAt
+      if (value.parentSeries) delete value.parentSeries
       const episode = this.getEpisode(resourceIndex, seriesIndex, episodeIndex)
       if (episode) {
         const updateResourceEpisode: any = await API.graphql({

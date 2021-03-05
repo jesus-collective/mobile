@@ -56,19 +56,29 @@ interface Props {
   type: string
   tz: string
 }
-export default class EditableDate extends JCComponent<Props> {
+interface State {
+  inputValue: string
+}
+export default class EditableDate extends JCComponent<Props, State> {
   constructor(props: Props) {
     super(props)
+    this.state = {
+      inputValue: "",
+    }
   }
-
   onChanged(dateTime: MaterialUiPickersDate, tz: string): void {
-    if (this.props.onChange) this.props.onChange(dateTime?.tz(this.props.tz).format() ?? "", tz)
+    if (dateTime?.isValid()) {
+      console.log("isValid")
+      if (this.props.onChange) this.props.onChange(dateTime?.tz(this.props.tz).format() ?? "", tz)
+    }
   }
 
   onTzChanged(tz: string): void {
     this.onChanged(moment(this.props.value), tz)
   }
-
+  dateFormatter = (str) => {
+    return str
+  }
   render(): React.ReactNode {
     if (this.props.isEditable) {
       if (this.props.type == "datetime")
@@ -82,7 +92,7 @@ export default class EditableDate extends JCComponent<Props> {
                 placeholder={this.props.placeholder}
                 value={
                   this.props.value == null || this.props.tz == null
-                    ? moment.now()
+                    ? moment().add(7, "days").tz(this.props.tz)
                     : moment(this.props.value).tz(this.props.tz)
                 }
                 format="MMMM Do YYYY, h:mm a "
@@ -111,13 +121,9 @@ export default class EditableDate extends JCComponent<Props> {
                 testID={this.props.testID + "-tz"}
                 selectedValue={this.props.tz}
                 placeholder="Timezone"
-                placeholderStyle={{ color: "#bfc6ea" }}
-                placeholderIconColor="#007aff"
+                //placeholderStyle={{ color: "#bfc6ea" }}
+                //placeholderIconColor="#007aff"
                 onValueChange={(value) => this.onTzChanged(value)}
-                onStartShouldSetResponder={() => true}
-                onMoveShouldSetResponderCapture={() => true}
-                onStartShouldSetResponderCapture={() => true}
-                onMoveShouldSetResponder={() => true}
               >
                 {moment.tz.names().map((item, index) => {
                   return <Picker.Item key={index} label={item} value={item}></Picker.Item>
@@ -131,32 +137,27 @@ export default class EditableDate extends JCComponent<Props> {
           <Container style={{ height: "unset", width: "70%" }}>
             <ThemeProvider theme={materialTheme}>
               <KeyboardDatePicker
-                format="MMMM Do YYYY"
+                format="YYYY-MM-DD"
                 placeholder={this.props.placeholder}
-                value={
-                  this.props.value == null || this.props.tz == null
-                    ? moment.now()
-                    : moment(this.props.value).tz(this.props.tz)
-                }
-                onChange={(value) => {
-                  this.onChanged(value, this.props.tz)
+                value={this.props.value == "" ? null : this.props.value}
+                inputValue={this.state.inputValue ?? ""}
+                onChange={(date, value) => {
+                  this.setState({ inputValue: value ?? null })
+                  this.onChanged(date, this.props.tz)
                 }}
                 disablePast
-                emptyLabel="Date not set"
               />
               <Picker
                 mode="dropdown"
                 style={this.styles.style.pickerDropDown}
                 selectedValue={this.props.tz}
                 placeholder="Timezone"
-                placeholderStyle={{ color: "#bfc6ea" }}
-                placeholderIconColor="#007aff"
+                //placeholderStyle={{ color: "#bfc6ea" }}
+                //placeholderIconColor="#007aff"
                 // style={{ width: "75%", marginBottom: 30, marginTop: 30, fontSize: 16, height: 30, flexGrow: 0 }}
-                onValueChange={(value) => this.onTzChanged(value)}
-                onStartShouldSetResponder={() => true}
-                onMoveShouldSetResponderCapture={() => true}
-                onStartShouldSetResponderCapture={() => true}
-                onMoveShouldSetResponder={() => true}
+                onValueChange={(value) => {
+                  this.onTzChanged(value)
+                }}
               >
                 {moment.tz.names().map((item, index) => {
                   return <Picker.Item key={index} label={item} value={item}></Picker.Item>

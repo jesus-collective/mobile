@@ -2430,6 +2430,173 @@ export const listDirectMessages = /* GraphQL */ `
     }
   }
 `
+export const getCrmRoot = /* GraphQL */ `
+  query GetCrmRoot($id: ID!) {
+    getCRMRoot(id: $id) {
+      id
+      messages {
+        items {
+          id
+          rootId
+          content
+          when
+          authorName
+          authorId
+          attachment
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const listCrmRoots = /* GraphQL */ `
+  query ListCrmRoots($filter: ModelCRMRootFilterInput, $limit: Int, $nextToken: String) {
+    listCRMRoots(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`
+export const getCrmMessage = /* GraphQL */ `
+  query GetCrmMessage($id: ID!) {
+    getCRMMessage(id: $id) {
+      id
+      rootId
+      crmRoot {
+        id
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      content
+      when
+      authorName
+      authorId
+      attachment
+      thread {
+        items {
+          id
+          rootId
+          content
+          when
+          authorName
+          authorId
+          attachment
+          parentId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const listCrmMessages = /* GraphQL */ `
+  query ListCrmMessages($filter: ModelCRMMessageFilterInput, $limit: Int, $nextToken: String) {
+    listCRMMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        rootId
+        crmRoot {
+          id
+          createdAt
+          updatedAt
+        }
+        content
+        when
+        authorName
+        authorId
+        attachment
+        thread {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`
+export const getCrmReply = /* GraphQL */ `
+  query GetCrmReply($id: ID!) {
+    getCRMReply(id: $id) {
+      id
+      rootId
+      content
+      when
+      authorName
+      authorId
+      attachment
+      parentId
+      parent {
+        id
+        rootId
+        crmRoot {
+          id
+          createdAt
+          updatedAt
+        }
+        content
+        when
+        authorName
+        authorId
+        attachment
+        thread {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const listCrmReplys = /* GraphQL */ `
+  query ListCrmReplys($filter: ModelCRMReplyFilterInput, $limit: Int, $nextToken: String) {
+    listCRMReplys(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        rootId
+        content
+        when
+        authorName
+        authorId
+        attachment
+        parentId
+        parent {
+          id
+          rootId
+          content
+          when
+          authorName
+          authorId
+          attachment
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`
 export const getMessage = /* GraphQL */ `
   query GetMessage($id: ID!) {
     getMessage(id: $id) {

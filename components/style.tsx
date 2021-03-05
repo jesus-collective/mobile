@@ -1495,10 +1495,7 @@ export default class MainStyles {
       // Media Query Desktop Tablet
       "@media (min-width: 350) and (max-width: 768)": {
         confirmationCodeWrapper: { display: "flex", flexDirection: "column" },
-        signUpBackButtonWrapper:
-          Platform.OS === "android"
-            ? { position: "absolute", top: "10%", left: "30%" }
-            : { position: "absolute", top: "10%", left: "30%" },
+        signUpBackButtonWrapper: { position: "absolute", top: "10%", left: "30%", zIndex: 9999 },
         authView2: { left: "37.5%", width: 300, top: "20%", height: "auto" },
         connectWithSliderButton: {
           height: 45,
@@ -1817,7 +1814,7 @@ export default class MainStyles {
             ? { position: "absolute", top: "0%", left: "2%", marginTop: 5 }
             : { position: "absolute", top: "0%", left: "2%", marginTop: 5 },
         confirmationCodeWrapper: { display: "flex", flexDirection: "column" },
-        signUpBackButtonWrapper: { position: "absolute", top: "0%", left: "2%" },
+        signUpBackButtonWrapper: { position: "absolute", top: "0%", left: "2%", zIndex: 9999 },
 
         dashboardLeftCard: {
           flexBasis: "auto",
@@ -2178,6 +2175,7 @@ export default class MainStyles {
         top: "6%",
         left: "20%",
         marginTop: Platform.OS === "android" ? 50 : 10,
+        zIndex: 9999,
       },
 
       confirmationCodeWrapper: { display: "flex", flexDirection: "row" },
@@ -2535,6 +2533,32 @@ export default class MainStyles {
         Platform.OS === "web" && Dimensions.get("window").width > 720
           ? { display: "inline-block", width: 200, height: 40 }
           : {},
+
+      changeNamePasswordContainer: {
+        display: "flex",
+        flexDirection: Dimensions.get("window").width > 800 ? "row" : "column",
+        marginTop: 40,
+      },
+
+      changePasswordContainer:
+        Dimensions.get("window").width > 800
+          ? { marginRight: 20, marginBottom: 0 }
+          : { marginRight: 0, marginBottom: 20 },
+
+      changeNamePasswordInput: {
+        borderWidth: 1,
+        borderColor: "#dddddd",
+        width: "100%",
+        marginBottom: 15,
+        paddingTop: 10,
+        paddingRight: 10,
+        paddingBottom: 10,
+        paddingLeft: 10,
+        fontFamily: "Graphik-Regular-App",
+        fontSize: 16,
+        lineHeight: 28,
+        minWidth: 240,
+      },
     })
   }
 }

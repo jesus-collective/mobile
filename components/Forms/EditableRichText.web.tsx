@@ -34,6 +34,7 @@ interface Props {
   placeholder?: string
   onChange?(value: string): void
   toolBar?: any
+  testID?: string
 }
 interface State extends JCState {
   value: string
@@ -107,6 +108,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
       if (this.state.isEditMode)
         return (
           <Editor
+            webDriverTestID={this.props.testID + "-editor"}
             placeholder={this.props.placeholder ?? "Empty Content"}
             initialContentState={ContentState.createFromText(this.state.value)}
             editorState={this.state.editorState}
@@ -158,6 +160,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
       else {
         return (
           <TouchableOpacity
+            testID={this.props.testID + "-holdToEdit"}
             onPress={() => {
               this.setState({ isEditMode: true })
             }}
