@@ -1,6 +1,6 @@
 import React from "react"
-import { View, Text } from "react-native"
 import { isMobile } from "react-device-detect"
+import { Text, View } from "react-native"
 
 export function Copyright(props: { marginTop?: number }): JSX.Element {
   return (
@@ -12,7 +12,7 @@ export function Copyright(props: { marginTop?: number }): JSX.Element {
         marginTop: props.marginTop ?? 30,
         flexWrap: "wrap",
         marginRight: 20,
-        marginLeft: isMobile ? 10 : null,
+        marginLeft: isMobile ? 10 : undefined,
       }}
     >
       <Text
