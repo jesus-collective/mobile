@@ -50,6 +50,7 @@ import FileUpload from "./FileUpload"
 //TODO FIGURE OUT WHY THIS DOESN'T WORK
 import "./MessageBoard.css"
 import "./react-draft-wysiwyg.css"
+import moment from "moment-timezone"
 
 const configShowVideo = false
 
@@ -862,7 +863,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           </Left>
           <Right>
             <Text style={this.styles.style.groupFormDate}>
-              {new Date(parseInt(item.when, 10)).toLocaleString()}
+              {new Date(parseInt(item.when, 10)).toLocaleDateString()}
             </Text>
           </Right>
         </CardItem>
@@ -1117,7 +1118,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                 </Text>
                 {item?.when && (
                   <Text style={this.styles.style.MessageBoardFormDate}>
-                    {new Date(parseInt(item?.when, 10)).toLocaleString()}
+                    {new Date(parseInt(item?.when, 10)).toLocaleDateString()}
                   </Text>
                 )}
               </Body>
@@ -1175,7 +1176,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
                 </Text>
                 {item?.when && (
                   <Text style={this.styles.style.groupFormDate}>
-                    {new Date(parseInt(item?.when, 10)).toLocaleString()}
+                    {new Date(parseInt(item?.when, 10)).toLocaleDateString()}
                   </Text>
                 )}
               </View>
