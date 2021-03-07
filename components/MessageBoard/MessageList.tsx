@@ -27,6 +27,7 @@ import MessageUtils from "./MessageUtils"
 type Messages = NonNullable<MessagesByRoomQuery["messagesByRoom"]>["items"]
 type Message = NonNullable<Messages>[0]
 type Reply = NonNullable<NonNullable<NonNullable<Message>["replies"]>["items"]>[0]
+
 interface Props {
   groupId?: string
   inputAt?: "top" | "bottom"
@@ -243,7 +244,6 @@ class MessageListImpl extends JCComponent<Props, State> {
     }
     this.setState({ fetchingData: false })
   }
-
   showProfile(id: string | undefined) {
     if (id) this.props.navigation?.push("ProfileScreen", { id: id, create: false })
   }
@@ -260,7 +260,6 @@ class MessageListImpl extends JCComponent<Props, State> {
 
   renderMessage(item: Message | Reply, index: number, isReply: boolean) {
     const { style, replies } = this.props
-
     return (
       <Card
         key={index}

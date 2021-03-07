@@ -2253,6 +2253,22 @@ export const getDirectMessage = /* GraphQL */ `
       when
       recipients
       userId
+      replies {
+        items {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          messageRoomID
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       messageRoomID
       messageRoom {
         id
@@ -2384,6 +2400,9 @@ export const listDirectMessages = /* GraphQL */ `
         when
         recipients
         userId
+        replies {
+          nextToken
+        }
         messageRoomID
         messageRoom {
           id
@@ -4315,6 +4334,9 @@ export const directMessagesByRoom = /* GraphQL */ `
         when
         recipients
         userId
+        replies {
+          nextToken
+        }
         messageRoomID
         messageRoom {
           id

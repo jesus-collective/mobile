@@ -6,14 +6,16 @@ import { convertFromRaw } from "draft-js"
 import { stateToHTML } from "draft-js-export-html"
 import { Body, Card, CardItem, Left, Right } from "native-base"
 import React from "react"
-import { ActivityIndicator, Dimensions, FlatList, Text, TouchableOpacity } from "react-native"
+import { ActivityIndicator, Dimensions, FlatList, Text, TouchableOpacity, View } from "react-native"
 import Observable, { ZenObservable } from "zen-observable-ts"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import {
   DirectMessagesByRoomQuery,
   GetDirectMessageQuery,
+  OnCreateDirectMessageReplySubscription,
   OnCreateDirectMessageSubscription,
-} from "../../src/API"
+} from "../../src/API-messages"
+import { getMessage, onCreateDirectMessageReply } from "../../src/graphql-custom/messages"
 import * as queries from "../../src/graphql/queries"
 import { onCreateDirectMessage } from "../../src/graphql/subscriptions"
 import ProfileImage from "../ProfileImage/ProfileImage"
@@ -21,11 +23,13 @@ import MessageUtils from "./MessageUtils"
 
 type DMs = NonNullable<DirectMessagesByRoomQuery["directMessagesByRoom"]>["items"]
 type DM = NonNullable<DMs>[0]
+type DMReply = NonNullable<NonNullable<NonNullable<DM>["replies"]>["items"]>[0]
 
 interface Props {
   roomId?: string
   inputAt?: "top" | "bottom"
   style: "mini" | "regular" | "course" | "courseResponse"
+  onHandlePressReply(item: DM | DMReply): void
   onHandleCreated(): void
   route?: RouteProp<any, any>
   navigation?: any
@@ -41,10 +45,12 @@ interface State extends JCState {
 
 class MessageListDirectImpl extends JCComponent<Props, State> {
   dmUnsubscribe?: ZenObservable.Subscription
+  dmReplyUnsubscribe?: ZenObservable.Subscription
 
   constructor(props: Props) {
     super(props)
     this.dmUnsubscribe = undefined
+    this.dmReplyUnsubscribe = undefined
 
     this.state = {
       ...super.getInitialState(),
@@ -111,11 +117,64 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
           }
         },
       })
+
+      const dmReplySub = API.graphql({
+        query: onCreateDirectMessageReply,
+        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+      }) as Observable<{
+        provider: any
+        value: GraphQLResult<OnCreateDirectMessageReplySubscription>
+      }>
+      this.dmReplyUnsubscribe = dmReplySub.subscribe({
+        next: async (incoming) => {
+          console.debug(incoming)
+          if (
+            incoming.value?.data?.onCreateDirectMessageReply?.parentMessage &&
+            incoming.value?.data.onCreateDirectMessageReply?.parentMessage?.messageRoomID ===
+              this.props.roomId
+          ) {
+            const { dms } = this.state
+            // find incoming reply's parent message in current state
+            const index = dms?.findIndex(
+              (m) => m?.id === incoming.value?.data?.onCreateDirectMessageReply?.messageId
+            )
+
+            try {
+              const updatedMessage = (await API.graphql({
+                query: getMessage,
+                variables: {
+                  id: incoming.value.data.onCreateDirectMessageReply.messageId,
+                },
+                authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+              })) as GraphQLResult<GetDirectMessageQuery>
+
+              if (
+                updatedMessage.data?.getDirectMessage &&
+                index !== undefined &&
+                dms &&
+                dms[index]
+              ) {
+                // replace old message/replies with incoming data
+                dms[index] = updatedMessage.data.getDirectMessage
+                this.setState({ dms })
+              }
+            } catch (e) {
+              console.debug(e)
+              if (e.data?.getMessage && index !== undefined && dms && dms[index]) {
+                // replace old message/replies with incoming data
+                dms[index] = e.data.getMessage
+                this.setState({ dms })
+              }
+            }
+          }
+        },
+      })
     }
   }
   removeDirectSubscriptions() {
     if (this.props.roomId) {
       this.dmUnsubscribe?.unsubscribe()
+      this.dmReplyUnsubscribe?.unsubscribe()
     }
   }
   async getDirectMessages() {
@@ -205,15 +264,31 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
       directMessagesByRoom.then(processAssignment).catch(processAssignment)
     }
   }
-
-  renderDirectMessage(item: DM, index: number) {
+  renderDirectMessageWithReplies(item: DM, index: number) {
+    return (
+      <View style={{ marginBottom: 20 }} key={index}>
+        {this.renderDirectMessage(item, index, false)}
+        {item?.replies?.items?.map((reply, index) => {
+          return this.renderDirectMessage(reply, index, true)
+        })}
+      </View>
+    )
+  }
+  renderDirectMessage(item: DM | DMReply, index: number, isReply: boolean) {
+    const { style, replies } = this.props
     if (!item?.author) {
       return null
     }
     return (
       <Card
         key={index}
-        style={{ borderRadius: 10, minHeight: 50, marginBottom: 35, borderColor: "#ffffff" }}
+        style={{
+          borderRadius: 10,
+          minHeight: 50,
+          borderColor: "#ffffff",
+          marginLeft: isReply ? 50 : 0,
+          marginBottom: 35,
+        }}
       >
         <CardItem style={this.styles.style.eventPageMessageBoard}>
           <Left style={this.styles.style.eventPageMessageBoardLeft}>
@@ -227,18 +302,45 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
             </TouchableOpacity>
             <Body>
               <Text style={this.styles.style.groupFormName}>
-                {item.author != null ? item.author.given_name : null}{" "}
-                {item.author != null ? item.author.family_name : null}
+                {item?.author?.given_name ?? ""} {item?.author?.family_name ?? ""}
               </Text>
-              <Text style={this.styles.style.groupFormRole}>
-                {item.author != null ? item.author.currentRole : null}
-              </Text>
+              <Text style={this.styles.style.groupFormRole}>{item?.author?.currentRole ?? ""}</Text>
+              {item?.when && (
+                <Text style={this.styles.style.MessageBoardFormDate}>
+                  {new Date(parseInt(item?.when, 10)).toLocaleDateString()}
+                </Text>
+              )}
             </Body>
           </Left>
-          <Right>
-            <Text style={this.styles.style.groupFormDate}>
-              {new Date(parseInt(item.when, 10)).toLocaleDateString()}
-            </Text>
+          <Right style={{ justifyContent: "center" }}>
+            {replies && (
+              <TouchableOpacity
+                style={{
+                  alignSelf: "flex-end",
+                  margin: 24,
+                  borderWidth: 1,
+                  borderColor: "#F0493E",
+                  borderRadius: 4,
+                  paddingTop: 7,
+                  paddingBottom: 7,
+                  paddingLeft: 23,
+                  paddingRight: 23,
+                }}
+                onPress={() => this.props.onHandlePressReply(item)}
+              >
+                <Text
+                  style={{
+                    fontFamily: "Graphik-Regular-App",
+                    fontWeight: "normal",
+                    fontSize: 14,
+                    lineHeight: 20,
+                    color: "#F0493E",
+                  }}
+                >
+                  reply
+                </Text>
+              </TouchableOpacity>
+            )}
           </Right>
         </CardItem>
         <CardItem style={this.styles.style.eventPageMessageBoardInnerCard}>
@@ -275,7 +377,7 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
   }
   renderAssignment() {
     if (this.state.dataAssignment?.length > 0) {
-      return this.renderDirectMessage(this.state.dataAssignment[0], -1)
+      return this.renderDirectMessage(this.state.dataAssignment[0], -1, false)
     }
   }
 
@@ -286,7 +388,7 @@ class MessageListDirectImpl extends JCComponent<Props, State> {
         {this.props.style === "courseResponse" && this.renderAssignment()}
         <FlatList
           scrollEnabled
-          renderItem={({ item, index }) => this.renderDirectMessage(item, index)}
+          renderItem={({ item, index }) => this.renderDirectMessageWithReplies(item, index)}
           data={this.state.dms}
           inverted={this.props.inputAt === "bottom"}
           onEndReached={!this.state.fetchingData ? () => this.getMoreDirectMessages() : undefined}

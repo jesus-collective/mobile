@@ -92,7 +92,123 @@ export const getMessage = /* GraphQL */ `
     }
   }
 `
-
+export const directMessagesByRoom = /* GraphQL */ `
+  query DirectMessagesByRoom(
+    $messageRoomID: ID
+    $when: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelDirectMessageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    directMessagesByRoom(
+      messageRoomID: $messageRoomID
+      when: $when
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        content
+        attachment
+        attachmentName
+        when
+        recipients
+        userId
+        replies {
+          items {
+            attachment
+            attachmentName
+            author {
+              aboutMeLong
+              aboutMeShort
+              createdAt
+              currentRole
+              currentScope
+              denomination
+              email
+              family_name
+              given_name
+              hasPaidState
+              id
+              interests
+              joined
+              mainUserGroup
+              numberVolunteers
+              orgDescription
+              orgName
+              orgSize
+              orgType
+              owner
+              personality
+              phone
+              pplServed
+              primaryOrganization
+              updatedAt
+              sundayAttendance
+              stripeCustomerID
+              stripeSubscriptionID
+              profileState
+            }
+            content
+            createdAt
+            id
+            messageId
+            parentReplyId
+            updatedAt
+            userId
+            when
+            messageRoomID
+          }
+        }
+        messageRoomID
+        messageRoom {
+          id
+          name
+          roomType
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+        author {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
+          hasPaidState
+          profileState
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`
 export const messagesByRoom = /* GraphQL */ `
   query MessagesByRoom(
     $roomId: ID
@@ -414,6 +530,276 @@ export const onCreateReply = /* GraphQL */ `
       }
       createdAt
       updatedAt
+    }
+  }
+`
+export const onCreateDirectMessage = /* GraphQL */ `
+  subscription OnCreateDirectMessage {
+    onCreateDirectMessage {
+      id
+      content
+      attachment
+      attachmentName
+      when
+      recipients
+      userId
+      replies {
+        items {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          messageRoomID
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messageRoomID
+      messageRoom {
+        id
+        name
+        messageUsers {
+          nextToken
+        }
+        directMessage {
+          nextToken
+        }
+        roomType
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      author {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        stripeCustomerID
+        stripeSubscriptionID
+        hasPaidState
+        profileState
+        billingAddress {
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        messageReplies {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
+          nextToken
+        }
+        payments {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`
+
+export const onCreateDirectMessageReply = /* GraphQL */ `
+  subscription OnCreateDirectMessageReply {
+    onCreateDirectMessageReply {
+      id
+      content
+      when
+      attachment
+      attachmentName
+      userId
+      messageId
+      parentMessage {
+        messageRoomID
+      }
+      messageRoomID
+      parentReplyId
+      createdAt
+      updatedAt
+    }
+  }
+`
+export const getDirectMessage = /* GraphQL */ `
+  query GetDirectMessage($id: ID!) {
+    getDirectMessage(id: $id) {
+      id
+      content
+      attachment
+      attachmentName
+      when
+      recipients
+      userId
+      replies {
+        items {
+          attachment
+          attachmentName
+          author {
+            aboutMeLong
+            aboutMeShort
+            createdAt
+            currentRole
+            currentScope
+            denomination
+            email
+            family_name
+            given_name
+            hasPaidState
+            id
+            interests
+            joined
+            mainUserGroup
+            numberVolunteers
+            orgDescription
+            orgName
+            orgSize
+            orgType
+            owner
+            personality
+            phone
+            pplServed
+            primaryOrganization
+            updatedAt
+            sundayAttendance
+            stripeCustomerID
+            stripeSubscriptionID
+            profileState
+          }
+          content
+          createdAt
+          id
+          messageId
+          parentReplyId
+          updatedAt
+          userId
+          when
+          messageRoomID
+        }
+      }
+
+      messageRoomID
+      messageRoom {
+        id
+        name
+        messageUsers {
+          nextToken
+        }
+        directMessage {
+          nextToken
+        }
+        roomType
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      author {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        stripeCustomerID
+        stripeSubscriptionID
+        hasPaidState
+        profileState
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        createdAt
+        updatedAt
+      }
     }
   }
 `

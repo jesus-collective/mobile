@@ -3,14 +3,14 @@ import { Auth, Storage } from "aws-amplify"
 import { Badge } from "native-base"
 import React from "react"
 import { Text, TouchableOpacity, View } from "react-native"
-import { DirectMessagesByRoomQuery } from "src/API"
-import { MessagesByRoomQuery } from "src/API-messages"
+import { DirectMessagesByRoomQuery, MessagesByRoomQuery } from "src/API-messages"
 
 type DMs = NonNullable<DirectMessagesByRoomQuery["directMessagesByRoom"]>["items"]
 type DM = NonNullable<DMs>[0]
 type Messages = NonNullable<MessagesByRoomQuery["messagesByRoom"]>["items"]
 type Message = NonNullable<Messages>[0]
 type Reply = NonNullable<NonNullable<NonNullable<Message>["replies"]>["items"]>[0]
+type DMReply = NonNullable<NonNullable<NonNullable<DM>["replies"]>["items"]>[0]
 
 export default class Utils {
   static renderFileIcon(filePath?: string | null): React.ReactNode {
@@ -61,7 +61,7 @@ export default class Utils {
       console.error(e)
     }
   }
-  static renderFileDownloadBadge(item: DM | Message | Reply): React.ReactNode {
+  static renderFileDownloadBadge(item: DM | DMReply | Message | Reply): React.ReactNode {
     return (
       <TouchableOpacity onPress={() => this.getAttachment(item?.attachment)}>
         <Badge style={{ backgroundColor: "#EFF1F5", marginRight: 10, marginTop: 5, height: 30 }}>

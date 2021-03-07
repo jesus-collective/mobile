@@ -6967,6 +6967,22 @@ export const createDirectMessage = /* GraphQL */ `
       when
       recipients
       userId
+      replies {
+        items {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          messageRoomID
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       messageRoomID
       messageRoom {
         id
@@ -7093,6 +7109,22 @@ export const updateDirectMessage = /* GraphQL */ `
       when
       recipients
       userId
+      replies {
+        items {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          messageRoomID
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       messageRoomID
       messageRoom {
         id
@@ -7219,6 +7251,22 @@ export const deleteDirectMessage = /* GraphQL */ `
       when
       recipients
       userId
+      replies {
+        items {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          messageRoomID
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       messageRoomID
       messageRoom {
         id
@@ -7232,6 +7280,771 @@ export const deleteDirectMessage = /* GraphQL */ `
         roomType
         createdAt
         updatedAt
+      }
+      createdAt
+      updatedAt
+      author {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        stripeCustomerID
+        stripeSubscriptionID
+        hasPaidState
+        profileState
+        billingAddress {
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        messageReplies {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
+          nextToken
+        }
+        payments {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`
+export const createDirectMessageReply = /* GraphQL */ `
+  mutation CreateDirectMessageReply($input: CreateDirectMessageReplyInput!) {
+    createDirectMessageReply(input: $input) {
+      id
+      content
+      when
+      attachment
+      attachmentName
+      userId
+      messageId
+      parentMessage {
+        id
+        content
+        attachment
+        attachmentName
+        when
+        recipients
+        userId
+        replies {
+          nextToken
+        }
+        messageRoomID
+        messageRoom {
+          id
+          name
+          roomType
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+        author {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
+          hasPaidState
+          profileState
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+      }
+      messageRoomID
+      parentReplyId
+      parentReply {
+        id
+        content
+        when
+        attachment
+        attachmentName
+        userId
+        messageId
+        parentMessage {
+          id
+          content
+          attachment
+          attachmentName
+          when
+          recipients
+          userId
+          messageRoomID
+          createdAt
+          updatedAt
+        }
+        messageRoomID
+        parentReplyId
+        parentReply {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          messageRoomID
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        subReplies {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        author {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
+          hasPaidState
+          profileState
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+      }
+      subReplies {
+        items {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          messageRoomID
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      author {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        stripeCustomerID
+        stripeSubscriptionID
+        hasPaidState
+        profileState
+        billingAddress {
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        messageReplies {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
+          nextToken
+        }
+        payments {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`
+export const updateDirectMessageReply = /* GraphQL */ `
+  mutation UpdateDirectMessageReply($input: UpdateDirectMessageReplyInput!) {
+    updateDirectMessageReply(input: $input) {
+      id
+      content
+      when
+      attachment
+      attachmentName
+      userId
+      messageId
+      parentMessage {
+        id
+        content
+        attachment
+        attachmentName
+        when
+        recipients
+        userId
+        replies {
+          nextToken
+        }
+        messageRoomID
+        messageRoom {
+          id
+          name
+          roomType
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+        author {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
+          hasPaidState
+          profileState
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+      }
+      messageRoomID
+      parentReplyId
+      parentReply {
+        id
+        content
+        when
+        attachment
+        attachmentName
+        userId
+        messageId
+        parentMessage {
+          id
+          content
+          attachment
+          attachmentName
+          when
+          recipients
+          userId
+          messageRoomID
+          createdAt
+          updatedAt
+        }
+        messageRoomID
+        parentReplyId
+        parentReply {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          messageRoomID
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        subReplies {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        author {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
+          hasPaidState
+          profileState
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+      }
+      subReplies {
+        items {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          messageRoomID
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+      author {
+        id
+        given_name
+        family_name
+        email
+        phone
+        owner
+        mainUserGroup
+        stripeCustomerID
+        stripeSubscriptionID
+        hasPaidState
+        profileState
+        billingAddress {
+          city
+          country
+          line1
+          line2
+          postal_code
+          state
+        }
+        location {
+          latitude
+          longitude
+          geocodeFull
+          geocodeCity
+          geocodeRegion
+          randomLatitude
+          randomLongitude
+        }
+        profileImage {
+          userId
+          filenameSmall
+          filenameMedium
+          filenameLarge
+          filenameUpload
+        }
+        aboutMeShort
+        aboutMeLong
+        interests
+        currentRole
+        currentScope
+        personality
+        orgName
+        orgType
+        orgSize
+        denomination
+        pplServed
+        sundayAttendance
+        numberVolunteers
+        orgDescription
+        joined
+        primaryOrganization
+        organizations {
+          nextToken
+        }
+        owns {
+          nextToken
+        }
+        groups {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        directMessages {
+          nextToken
+        }
+        messageReplies {
+          nextToken
+        }
+        coachingTriad {
+          nextToken
+        }
+        userTriad {
+          nextToken
+        }
+        courseInstructing {
+          nextToken
+        }
+        courseBackOfficeStaff {
+          nextToken
+        }
+        payments {
+          nextToken
+        }
+        alertConfig {
+          emailDirectMessage
+          emailGroupMessage
+          emailEventMessage
+          emailOrgMessage
+          emailResourceMessage
+          emailCourseMessage
+          emailPromotions
+        }
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`
+export const deleteDirectMessageReply = /* GraphQL */ `
+  mutation DeleteDirectMessageReply($input: DeleteDirectMessageReplyInput!) {
+    deleteDirectMessageReply(input: $input) {
+      id
+      content
+      when
+      attachment
+      attachmentName
+      userId
+      messageId
+      parentMessage {
+        id
+        content
+        attachment
+        attachmentName
+        when
+        recipients
+        userId
+        replies {
+          nextToken
+        }
+        messageRoomID
+        messageRoom {
+          id
+          name
+          roomType
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+        author {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
+          hasPaidState
+          profileState
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+      }
+      messageRoomID
+      parentReplyId
+      parentReply {
+        id
+        content
+        when
+        attachment
+        attachmentName
+        userId
+        messageId
+        parentMessage {
+          id
+          content
+          attachment
+          attachmentName
+          when
+          recipients
+          userId
+          messageRoomID
+          createdAt
+          updatedAt
+        }
+        messageRoomID
+        parentReplyId
+        parentReply {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          messageRoomID
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        subReplies {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        author {
+          id
+          given_name
+          family_name
+          email
+          phone
+          owner
+          mainUserGroup
+          stripeCustomerID
+          stripeSubscriptionID
+          hasPaidState
+          profileState
+          aboutMeShort
+          aboutMeLong
+          interests
+          currentRole
+          currentScope
+          personality
+          orgName
+          orgType
+          orgSize
+          denomination
+          pplServed
+          sundayAttendance
+          numberVolunteers
+          orgDescription
+          joined
+          primaryOrganization
+          createdAt
+          updatedAt
+        }
+      }
+      subReplies {
+        items {
+          id
+          content
+          when
+          attachment
+          attachmentName
+          userId
+          messageId
+          messageRoomID
+          parentReplyId
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       createdAt
       updatedAt

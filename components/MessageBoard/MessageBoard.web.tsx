@@ -16,14 +16,15 @@ import getTheme from "../../native-base-theme/components"
 import {
   CreateDirectMessageInput,
   CreateDirectMessageMutation,
+  CreateDirectMessageReplyInput,
+  CreateDirectMessageReplyMutation,
   CreateMessageInput,
   CreateMessageMutation,
   CreateReplyInput,
   CreateReplyMutation,
-  DirectMessagesByRoomQuery,
   GetUserQuery,
 } from "../../src/API"
-import { MessagesByRoomQuery } from "../../src/API-messages"
+import { DirectMessagesByRoomQuery, MessagesByRoomQuery } from "../../src/API-messages"
 import * as mutations from "../../src/graphql/mutations"
 import * as queries from "../../src/graphql/queries"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
@@ -43,6 +44,7 @@ type Reply = NonNullable<NonNullable<NonNullable<Message>["replies"]>["items"]>[
 
 type DMs = NonNullable<DirectMessagesByRoomQuery["directMessagesByRoom"]>["items"]
 type DM = NonNullable<DMs>[0]
+type DMReply = NonNullable<NonNullable<NonNullable<DM>["replies"]>["items"]>[0]
 
 interface Props {
   groupId?: string
@@ -496,6 +498,7 @@ class MessageBoardImpl extends JCComponent<Props, State> {
         ) : this.props.roomId ? (
           <MessageListDirect
             {...this.props}
+            onHandlePressReply={this.handlePressReplyDM}
             onHandleCreated={() => {
               this.setState({ created: true })
             }}
@@ -511,39 +514,29 @@ class MessageBoardImpl extends JCComponent<Props, State> {
     if (!editorState.getCurrentContent().hasText() || !replyToId || !replyToRoomId) {
       return
     }
-    try {
-      const message = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
-      const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
+    if (this.props.groupId) {
+      try {
+        const message = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
+        const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
 
-      const input: CreateReplyInput = {
-        id: uuidv4(),
-        content: message,
-        when: Date.now().toString(),
-        attachment: attachment,
-        attachmentName: attachmentName,
-        roomId: replyToRoomId,
-        userId: user.username,
-        messageId: replyToId,
-        parentReplyId: "0000-0000-0000-0000", // void value
-      }
+        const input: CreateReplyInput = {
+          id: uuidv4(),
+          content: message,
+          when: Date.now().toString(),
+          attachment: attachment,
+          attachmentName: attachmentName,
+          roomId: replyToRoomId,
+          userId: user.username,
+          messageId: replyToId,
+          parentReplyId: "0000-0000-0000-0000", // void value
+        }
 
-      const createReply = (await API.graphql({
-        query: mutations.createReply,
-        variables: { input },
-        authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-      })) as GraphQLResult<CreateReplyMutation>
-      console.log({ "Success mutations.createReply": createReply })
-      this.setState({
-        editorState: EditorState.createEmpty(),
-        attachmentName: "",
-        attachment: "",
-        replyToId: "",
-        replyToRoomId: "",
-        replyToWho: [],
-      })
-    } catch (e) {
-      if (e.data?.createReply) {
-        console.log({ "Success mutations.createReply": e.data })
+        const createReply = (await API.graphql({
+          query: mutations.createReply,
+          variables: { input },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })) as GraphQLResult<CreateReplyMutation>
+        console.log({ "Success mutations.createReply": createReply })
         this.setState({
           editorState: EditorState.createEmpty(),
           attachmentName: "",
@@ -552,8 +545,66 @@ class MessageBoardImpl extends JCComponent<Props, State> {
           replyToRoomId: "",
           replyToWho: [],
         })
-      } else {
-        console.error({ "Error mutations.createReply": e })
+      } catch (e) {
+        if (e.data?.createReply) {
+          console.log({ "Success mutations.createReply": e.data })
+          this.setState({
+            editorState: EditorState.createEmpty(),
+            attachmentName: "",
+            attachment: "",
+            replyToId: "",
+            replyToRoomId: "",
+            replyToWho: [],
+          })
+        } else {
+          console.error({ "Error mutations.createReply": e })
+        }
+      }
+    } else if (this.props.roomId) {
+      try {
+        const message = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
+        const user = (await Auth.currentAuthenticatedUser()) as JCCognitoUser
+
+        const input: CreateDirectMessageReplyInput = {
+          id: uuidv4(),
+          content: message,
+          when: Date.now().toString(),
+          attachment: attachment,
+          attachmentName: attachmentName,
+          messageRoomID: replyToRoomId,
+          userId: user.username,
+          messageId: replyToId,
+          parentReplyId: "0000-0000-0000-0000", // void value
+        }
+
+        const createReply = (await API.graphql({
+          query: mutations.createDirectMessageReply,
+          variables: { input },
+          authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
+        })) as GraphQLResult<CreateDirectMessageReplyMutation>
+        console.log({ "Success mutations.createReply": createReply })
+        this.setState({
+          editorState: EditorState.createEmpty(),
+          attachmentName: "",
+          attachment: "",
+          replyToId: "",
+          replyToRoomId: "",
+          replyToWho: [],
+        })
+      } catch (e) {
+        if (e.data?.createDirectMessageReply) {
+          console.log({ "Success mutations.createReply": e.data })
+          this.setState({
+            editorState: EditorState.createEmpty(),
+            attachmentName: "",
+            attachment: "",
+            replyToId: "",
+            replyToRoomId: "",
+            replyToWho: [],
+          })
+        } else {
+          console.error({ "Error mutations.createReply": e })
+        }
       }
     }
   }
@@ -579,7 +630,27 @@ class MessageBoardImpl extends JCComponent<Props, State> {
       this.setState({ replyToWho: peopleInThread, replyToRoomId: item.roomId ?? "" })
     }
   }
+  handlePressReplyDM(item: DM | DMReply) {
+    if (item) {
+      const peopleInThread: string[] = []
 
+      if (item.author?.given_name) {
+        peopleInThread.push(item.author.given_name)
+      }
+
+      if ("replies" in item) {
+        item.replies?.items?.slice(10).forEach((reply) => {
+          if (reply?.author?.given_name && !peopleInThread.includes(reply.author.given_name)) {
+            peopleInThread.push(reply?.author?.given_name)
+          }
+        })
+        this.setState({ replyToId: item.id })
+      } else {
+        this.setState({ replyToId: item.messageId })
+      }
+      this.setState({ replyToWho: peopleInThread, replyToRoomId: item.messageRoomID ?? "" })
+    }
+  }
   render() {
     const { groupId, roomId, style, inputAt } = this.props
 

@@ -771,10 +771,36 @@ type DirectMessage
   recipients: [String]!
   userId: ID!
   author: User @connection(fields: ["userId"])
+  replies: [DirectMessageReply] @connection(keyName: "repliesByDirectMessage", fields: ["id"])
   messageRoomID:ID!
   messageRoom:DirectMessageRoom @connection(fields:["messageRoomID"])
 }
 
+type DirectMessageReply @model(queries: null)
+  @key(name: "repliesByDirectMessage", fields: ["messageId", "when"])
+  @key(name: "subRepliesByReply", fields: ["parentReplyId", "when"])
+  @key(name: "repliesByUser", fields: ["userId"])
+  @auth(rules: [
+      { allow: owner, ownerField: "userId", operations: [create, update, delete] },
+      { allow: private, operations: [read] }
+  ]) {
+    id: ID!
+    content: String!
+    when: String!
+    attachment: String
+    attachmentName: String
+    userId: ID!
+    author: User @connection(fields: ["userId"])
+
+    # reply to top-level message
+    messageId: ID!
+    parentMessage: DirectMessage @connection(fields: ["messageId"])
+    messageRoomID: ID
+    # replies to reply (recursive definition)
+    parentReplyId: ID!
+    parentReply: DirectMessageReply @connection(fields: ["parentReplyId"])
+    subReplies: [DirectMessageReply] @connection(keyName: "subRepliesByReply", fields: ["id"])
+}
 type CRMRoot @model
   @auth(
     rules: [

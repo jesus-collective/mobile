@@ -1,11 +1,14 @@
+import { GraphQLResult } from "@aws-amplify/api"
 import { API, Auth } from "aws-amplify"
 import GRAPHQL_AUTH_MODE from "aws-amplify-react-native"
+import { CourseActions } from "components/CourseViewer/CourseContext"
 import { Container } from "native-base"
 import React from "react"
 import { Text, TouchableOpacity } from "react-native"
 import { JCCognitoUser } from "src/types"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
 import { UserActions, UserContext } from "../../screens/HomeScreen/UserContext"
+import { CreateDirectMessageRoomMutation } from "../../src/API"
 import * as customQueries from "../../src/graphql-custom/queries"
 import * as mutations from "../../src/graphql/mutations"
 import JCComponent, { JCState } from "../JCComponent/JCComponent"
@@ -19,7 +22,7 @@ enum initialPostState {
 interface Props {
   wordCount: number
   assignmentId: string
-  actions: any
+  actions: CourseActions
 }
 interface State extends JCState {
   assignmentComplete: boolean
@@ -122,22 +125,20 @@ export default class EditableRichText extends JCComponent<Props, State> {
     console.log("CreateRoom")
     Auth.currentAuthenticatedUser()
       .then((user: JCCognitoUser) => {
-        const createDirectMessageRoom: any = API.graphql({
+        if (user == null) return
+        const createDirectMessageRoom = API.graphql({
           query: mutations.createDirectMessageRoom,
           variables: {
             input: {
               id: "course-" + this.props.assignmentId + "-" + user["username"],
               roomType: "assignment",
               name:
-                user.attributes["given_name"] +
-                " " +
-                user.attributes["family_name"] +
-                "'s assignment",
+                user.attributes?.given_name + " " + user.attributes?.family_name + "'s assignment",
             },
           },
           authMode: GRAPHQL_AUTH_MODE.AMAZON_COGNITO_USER_POOLS,
-        })
-        createDirectMessageRoom.then((json: any) => {
+        }) as Promise<GraphQLResult<CreateDirectMessageRoomMutation>>
+        createDirectMessageRoom.then((json) => {
           console.log({ createDirectMessageRoom: json })
           console.log("createDMUser")
           const userList = this.state.userList
@@ -281,6 +282,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
         {this.state.data != null && this.state.data.length != 0 ? (
           <Container style={this.styles.style.courseAssignmentScreenRightCard}>
             <MessageBoard
+              replies
               inputAt="bottom"
               showWordCount={true}
               totalWordCount={this.props.wordCount}
@@ -358,6 +360,7 @@ export default class EditableRichText extends JCComponent<Props, State> {
                 this.renderCourseReview()
               ) : this.hasInitialPost() == initialPostState.No ? (
                 <MessageBoard
+                  replies
                   showWordCount={true}
                   totalWordCount={this.props.wordCount}
                   style="course"
