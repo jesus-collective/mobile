@@ -6,8 +6,9 @@ import { convertFromRaw } from "draft-js"
 import { stateToHTML } from "draft-js-export-html"
 import { Body, Card, CardItem, Left, Right } from "native-base"
 import React from "react"
+
 import { isFirefox } from "react-device-detect"
-import { ActivityIndicator, FlatList, Text, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, FlatList, Text, TouchableOpacity, View,Dimensions } from "react-native"
 import Observable, { ZenObservable } from "zen-observable-ts"
 import JCComponent, { JCState } from "../../components/JCComponent/JCComponent"
 import ProfileImage from "../../components/ProfileImage/ProfileImage"
@@ -436,7 +437,7 @@ class MessageListImpl extends JCComponent<Props, State> {
         data={this.state.messages}
         inverted={this.props.inputAt === "bottom"}
         onEndReached={!this.state.fetchingData ? () => this.getMoreMessages() : undefined}
-        style={{ height: "45vw" }}
+        style={{ height: Dimensions.get("window").height - 250 }}
         ListFooterComponent={() => this.messagesLoader()}
         refreshing={this.state.fetchingData}
         onEndReachedThreshold={0.1}

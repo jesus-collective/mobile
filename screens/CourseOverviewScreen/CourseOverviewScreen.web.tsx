@@ -6,7 +6,7 @@ import { convertToRaw, EditorState } from "draft-js"
 import moment from "moment-timezone"
 import { Container, Content, StyleProvider, View } from "native-base"
 import React from "react"
-import { Text, TouchableOpacity } from "react-native"
+import { Text, TouchableOpacity, Image } from "react-native"
 import { JCCognitoUser } from "src/types"
 import EditableDate from "../../components/Forms/EditableDate"
 import EditableDollar from "../../components/Forms/EditableDollar"
@@ -699,20 +699,24 @@ export default class CourseScreen extends JCComponent<Props, State> {
                           value={this.state.data.description}
                           isEditable={this.state.isEditable}
                         ></EditableText>
-
-                        <Text
-                          style={{
-                            fontSize: 12,
-                            lineHeight: 16,
-                            fontFamily: "Graphik-Regular-App",
-                            color: "#333333",
-                            textTransform: "uppercase",
-                            flex: 0,
-                            marginTop: 20,
-                          }}
-                        >
-                          Start Date
-                        </Text>
+                        <View style={{ flexDirection: "row" }}>
+                          <Image
+                            style={this.styles.style.courseMainIcons}
+                            source={require("../../assets/svg/education.svg")}
+                          />
+                          <Text
+                            style={{
+                              fontSize: 12,
+                              lineHeight: 16,
+                              fontFamily: "Graphik-Regular-App",
+                              color: "#333333",
+                              textTransform: "uppercase",
+                              marginTop: 20,
+                            }}
+                          >
+                            Start Date
+                          </Text>
+                        </View>
                         <EditableDate
                           type="date"
                           testID="course-startDate"
@@ -735,7 +739,6 @@ export default class CourseScreen extends JCComponent<Props, State> {
                             fontFamily: "Graphik-Regular-App",
                             color: "#333333",
                             textTransform: "uppercase",
-                            flex: 0,
                             marginTop: 8,
                           }}
                         >
@@ -761,7 +764,6 @@ export default class CourseScreen extends JCComponent<Props, State> {
                             fontFamily: "Graphik-Regular-App",
                             color: "#333333",
                             textTransform: "uppercase",
-                            flex: 0,
                           }}
                         >
                           Effort
@@ -785,7 +787,6 @@ export default class CourseScreen extends JCComponent<Props, State> {
                             fontFamily: "Graphik-Regular-App",
                             color: "#333333",
                             textTransform: "uppercase",
-                            flex: 0,
                           }}
                         >
                           Cost

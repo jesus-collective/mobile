@@ -872,6 +872,12 @@ const courseStyles = EStyleSheet.create({
     paddingRight: 20,
     borderRadius: 4,
   },
+  courseMainIcons: {
+    color: "#000000",
+    width: 15,
+    height: 15,
+  },
+
   "@media (min-width: 350) and (max-width: 768)": {
     courseAssignmentScreenRightCard: {
       marginLeft: 30,
