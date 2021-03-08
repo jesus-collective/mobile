@@ -126,13 +126,13 @@ export default class HomeScreenRouter extends JCComponent<Props, State> {
         if (getUser.data.getUser == null) {
           console.log("Trying to create")
           const inputData: CreateUserInput = {
-            id: this.user["username"],
-            given_name: attributes["given_name"],
-            family_name: attributes["family_name"],
-            email: attributes["email"],
-            phone: attributes["phone_number"],
+            id: this.user?.username,
+            given_name: attributes?.given_name ?? "",
+            family_name: attributes?.family_name ?? "",
+            email: attributes?.email,
+            phone: attributes?.phone_number,
             profileState: "Incomplete",
-            orgName: attributes["custom:orgName"],
+            orgName: attributes?.["custom:orgName"],
             billingAddress: {},
             alertConfig: {
               emailDirectMessage: "true",
