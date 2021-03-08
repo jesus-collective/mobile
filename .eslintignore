@@ -5,3 +5,4 @@ native-base-theme
 native-base-theme/components
 node_modules
 **/*.d.ts
+**/*.native.tsx
