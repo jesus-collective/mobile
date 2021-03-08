@@ -174,7 +174,7 @@ export default class EditableDate extends JCComponent<Props, State> {
             fontFamily: "Graphik-Regular-App",
             width: "90%",
             marginBottom: 20,
-            marginTop: 20,
+            marginTop: 0,
           }}
         >
           {moment.tz(this.props.value, this.props.tz).format("dddd, MMMM D, YYYY @ h:mm a")}
@@ -191,7 +191,7 @@ export default class EditableDate extends JCComponent<Props, State> {
             fontFamily: "Graphik-Regular-App",
             width: "90%",
             marginBottom: 20,
-            marginTop: 20,
+            marginTop: 0,
           }}
         >
           {moment.tz(this.props.value, this.props.tz).format("dddd, MMMM D")}
